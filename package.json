@@ -1,0 +1,29 @@
+{
+  "name": "RSSHub",
+  "version": "0.0.1",
+  "description": "Make RSS Great Again!",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DIYgod/RSSHub.git"
+  },
+  "keywords": [
+    "RSS"
+  ],
+  "author": "DIYgod",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DIYgod/RSSHub/issues"
+  },
+  "homepage": "https://github.com/DIYgod/RSSHub#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "art-template": "4.12.2",
+    "eslint": "4.19.1",
+    "express": "^4.16.3",
+    "express-art-template": "1.0.1",
+    "redis": "2.8.0",
+    "request": "^2.85.0",
+    "winston": "3.0.0-rc3"
+  }
+}

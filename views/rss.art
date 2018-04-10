@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+    <channel>
+        <title><![CDATA[{{ title || 'RSSHub' }}]]></title>
+        <link>{{ link }}</link>
+        <description><![CDATA[{{ description }}]]></description>
+        <generator>RSSHub</generator>
+        <webMaster>i@html.love</webMaster>
+        <language>zh-cn</language>
+        <lastBuildDate>{{ lastBuildDate }}</lastBuildDate>
+        <ttl>300</ttl>
+        {{ each item }}
+        <item>
+            <title><![CDATA[{{ $value.title }}]]></title>
+            <description><![CDATA[{{@ $value.description }}]]></description>
+            {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
+            <guid>{{ $value.link }}</guid>
+            <link>{{ $value.link }}</link>
+        </item>
+        {{ /each }}
+    </channel>
+</rss>
