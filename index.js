@@ -24,4 +24,7 @@ app.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
 // 掘金
 app.get('/juejin/category/:category', require('./routes/juejin/category'));
 
+// 自如
+app.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
+
 app.listen(1200);
