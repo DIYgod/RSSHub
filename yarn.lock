@@ -565,10 +565,6 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "http://registry.npm.taobao.org/etag/download/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
-express-art-template@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/express-art-template/-/express-art-template-1.0.1.tgz#fbde936adce0462cde191d35dd9ce70b4af57798"
-
 express@^4.16.3:
   version "4.16.3"
   resolved "https://registry.npmjs.org/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
