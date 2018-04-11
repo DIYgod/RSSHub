@@ -27,4 +27,7 @@ app.get('/juejin/category/:category', require('./routes/juejin/category'));
 // 自如
 app.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
 
+// 快递
+app.get('/express/:company/:number', require('./routes/express/express'));
+
 app.listen(1200);
