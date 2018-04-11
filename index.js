@@ -15,10 +15,13 @@ app.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
 app.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
 app.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
 
-// Weibo
+// 微博
 app.get('/weibo/user/:uid', require('./routes/weibo/user'));
 
-// NetEaseCloudMusic
+// 网易云音乐
 app.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
+
+// 掘金
+app.get('/juejin/category/:category', require('./routes/juejin/category'));
 
 app.listen(1200);

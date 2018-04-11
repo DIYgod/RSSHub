@@ -50,6 +50,7 @@
         "no-useless-rename": 1,
         "rest-spread-spacing": 1,
         "no-trailing-spaces": 1,
-        "quotes": [1, "single"]
+        "quotes": [1, "single"],
+        "no-control-regex": 0
     }
 }
