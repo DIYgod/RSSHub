@@ -24,7 +24,7 @@ module.exports = (req, res) => {
             }, function (err, httpResponse, body) {
                 const name = JSON.parse(body).data.name;
                 request.get({
-                    url: `https://api.bilibili.com/x/v2/fav/video?vmid=${uid}&ps=30&tid=0&keyword=&pn=1&order=fav_time`,
+                    url: `https://space.bilibili.com/ajax/member/getSubmitVideos?mid=${uid}`,
                     headers: {
                         'User-Agent': mix.ua,
                         'Referer': `https://space.bilibili.com/${uid}/`,
@@ -43,10 +43,10 @@ module.exports = (req, res) => {
                         link: `https://space.bilibili.com/${uid}`,
                         description: `${name} 的 bilibili 空间`,
                         lastBuildDate: new Date().toUTCString(),
-                        item: data.data && data.data.archives && data.data.archives.map((item) => ({
-                            title: `${item.title} - ${item.owner.name}`,
-                            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
-                            pubDate: new Date(item.pubdate * 1000).toUTCString(),
+                        item: data.data && data.data.vlist && data.data.vlist.map((item) => ({
+                            title: item.title,
+                            description: `${item.description}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+                            pubDate: new Date(item.created * 1000).toUTCString(),
                             link: `https://www.bilibili.com/video/av${item.aid}`
                         })),
                     });
