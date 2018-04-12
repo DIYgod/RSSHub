@@ -208,6 +208,10 @@ keyword: 关键词
 
 #### 快递
 
+<p class="warning">
+  快递送达后请及时取消订阅，以免不必要地浪费服务器资源
+</p>
+
 举例: https://rss.prprpr.me/express/youzhengguoji/CV054432809US
 
 路由: `/express/:company/:number`
