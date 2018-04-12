@@ -10,10 +10,16 @@ module.exports = (options) => {
             options.res.send(reply);
         }
         else {
-            options.getHTML((html) => {
-                redis.set(options.req.url, html);
-                options.res.send(html);
-            });
+            try {
+                options.getHTML((html) => {
+                    redis.set(options.req.url, html);
+                    options.res.send(html);
+                });
+            }
+            catch (e) {
+                redis.set(options.req.url, '');
+                options.res.send('');
+            }
         }
     });
 };
