@@ -4,7 +4,7 @@ search: zh-Hans
 
 # RSSHub
 
-🍭 Make RSS Great Again!
+🍭 使用 RSS 连接全世界
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
@@ -205,8 +205,6 @@ room: 房间数
 keyword: 关键词
 
 ### 快递
-
-#### 快递
 
 <p class="warning">
   快递送达后请及时取消订阅，以免不必要地浪费服务器资源
