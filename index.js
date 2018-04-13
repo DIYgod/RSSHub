@@ -20,6 +20,7 @@ app.get('/weibo/user/:uid', require('./routes/weibo/user'));
 
 // 网易云音乐
 app.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
+app.get('/ncm/user/playlist/:uid', require('./routes/ncm/userplaylist'));
 
 // 掘金
 app.get('/juejin/category/:category', require('./routes/juejin/category'));
