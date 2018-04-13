@@ -30,7 +30,7 @@ module.exports = (req, res) => {
                         item = $(item);
                         return {
                             title: item.find('.zm-item-title a').text(),
-                            description: `高票答案：${item.find('textarea').text()}`,
+                            description: `内容：${item.find('textarea').text()}`,
                             link: `https://www.zhihu.com${item.find('.zm-item-title a').attr('href')}`
                         };
                     }).get(),
