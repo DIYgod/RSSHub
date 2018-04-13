@@ -172,6 +172,14 @@ s
 
 参数: id，歌单 id，可在歌单页 URL 中找到
 
+#### 歌手专辑
+
+举例: https://rss.prprpr.me/ncm/artist/2116
+
+路由: `/ncm/artist/:id`
+
+参数: id，歌手 id，可在歌手详情页 URL 中找到
+
 ### 掘金
 
 #### 分类
