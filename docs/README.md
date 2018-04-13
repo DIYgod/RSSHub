@@ -198,17 +198,17 @@ s
 
 #### 7 日热门
 
-举例: https://rss.prprpr.me/jianshu/weekly
+举例: https://rss.prprpr.me/jianshu/trending/weekly
 
-路由: `/jianshu/weekly`
+路由: `/jianshu/trending/weekly`
 
 参数: 无
 
 #### 30 日热门
 
-举例: https://rss.prprpr.me/jianshu/monthly
+举例: https://rss.prprpr.me/jianshu/trending/monthly
 
-路由: `/jianshu/monthly`
+路由: `/jianshu/trending/monthly`
 
 参数: 无
 
