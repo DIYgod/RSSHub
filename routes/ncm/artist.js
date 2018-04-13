@@ -29,7 +29,7 @@ module.exports = (req, res) => {
 
                 const html = art(path.resolve(__dirname, '../../views/rss.art'), {
                     title: result.artist.name,
-                    link: `https://music.163.com/#/album?id=${id}`,
+                    link: `https://music.163.com/#/artist/album?id=${id}`,
                     description: `网易云音乐歌手专辑 - ${result.artist.name}`,
                     lastBuildDate: new Date().toUTCString(),
                     item: result.hotAlbums && result.hotAlbums.map((item) => {
