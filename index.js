@@ -37,4 +37,8 @@ app.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
 app.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
 app.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 
+
+// 知乎
+app.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
+
 app.listen(1200);
