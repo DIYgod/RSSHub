@@ -164,13 +164,21 @@ s
 
 ### 网易云音乐
 
-#### 歌单
+#### 歌单歌曲
 
 举例: https://rss.prprpr.me/ncm/playlist/35798529
 
 路由: `/ncm/playlist/:id`
 
 参数: id，歌单 id，可在歌单页 URL 中找到
+
+#### 用户歌单
+
+举例: https://rss.prprpr.me/ncm/user/playlist/45441555
+
+路由: `/ncm/user/playlist/:uid`
+
+参数: uid，用户 uid，可在用户主页 URL 中找到
 
 #### 歌手专辑
 
