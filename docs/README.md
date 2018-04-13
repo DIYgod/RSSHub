@@ -228,6 +228,17 @@ s
 
 参数: id，作者 id，可在作者主页 URL 中找到
 
+
+### 知乎
+
+#### 收藏夹
+
+举例: https://rss.prprpr.me/zhihu/collection/26444956
+
+路由: `/zhihu/collection/:id`
+
+参数: id，收藏夹 id，可在收藏夹页面 URL 中找到
+
 ### 自如
 
 #### 房源
