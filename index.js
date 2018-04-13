@@ -21,6 +21,7 @@ app.get('/weibo/user/:uid', require('./routes/weibo/user'));
 // 网易云音乐
 app.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
 app.get('/ncm/user/playlist/:uid', require('./routes/ncm/userplaylist'));
+app.get('/ncm/artist/:id', require('./routes/ncm/artist'));
 
 // 掘金
 app.get('/juejin/category/:category', require('./routes/juejin/category'));
@@ -37,5 +38,8 @@ app.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
 app.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
 app.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
 app.get('/jianshu/user/:id', require('./routes/jianshu/user'));
+
+// 知乎
+app.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
 
 app.listen(1200);

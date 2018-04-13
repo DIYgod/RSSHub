@@ -164,7 +164,7 @@ s
 
 ### 网易云音乐
 
-#### 歌单
+#### 歌单歌曲
 
 举例: https://rss.prprpr.me/ncm/playlist/35798529
 
@@ -172,13 +172,21 @@ s
 
 参数: id，歌单 id，可在歌单页 URL 中找到
 
-#### 用户全部歌单
+#### 用户歌单
 
 举例: https://rss.prprpr.me/ncm/user/playlist/45441555
 
 路由: `/ncm/user/playlist/:uid`
 
 参数: uid，用户 uid，可在用户主页 URL 中找到
+
+#### 歌手专辑
+
+举例: https://rss.prprpr.me/ncm/artist/2116
+
+路由: `/ncm/artist/:id`
+
+参数: id，歌手 id，可在歌手详情页 URL 中找到
 
 ### 掘金
 
@@ -235,6 +243,17 @@ s
 路由: `/jianshu/user/:id`
 
 参数: id，作者 id，可在作者主页 URL 中找到
+
+
+### 知乎
+
+#### 收藏夹
+
+举例: https://rss.prprpr.me/zhihu/collection/26444956
+
+路由: `/zhihu/collection/:id`
+
+参数: id，收藏夹 id，可在收藏夹页面 URL 中找到
 
 ### 自如
 
