@@ -1,6 +1,7 @@
 docute.init({
     title: 'RSSHub',
     repo: 'DIYgod/RSSHub',
+    tocVisibleDepth: 3,
     twitter: 'DIYgod',
     'edit-link': 'https://github.com/DIYgod/RSSHub/tree/master/docs',
     nav: {
