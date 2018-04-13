@@ -30,4 +30,11 @@ app.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/r
 // 快递
 app.get('/express/:company/:number', require('./routes/express/express'));
 
+// 简书
+app.get('/jianshu/home', require('./routes/jianshu/home'));
+app.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
+app.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
+app.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
+app.get('/jianshu/user/:id', require('./routes/jianshu/user'));
+
 app.listen(1200);

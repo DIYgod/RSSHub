@@ -19,6 +19,7 @@
   "devDependencies": {},
   "dependencies": {
     "art-template": "4.12.2",
+    "cheerio": "1.0.0-rc.2",
     "eslint": "4.19.1",
     "express": "^4.16.3",
     "redis": "2.8.0",

@@ -186,6 +186,48 @@ s
 | -------- | ------- | ---- | ------- | ------ | ------- | ------- | ------- | ---- |
 | frontend | android | ios  | backend | design | product | freebie | article | ai   |
 
+### 简书
+
+#### 首页
+
+举例: https://rss.prprpr.me/jianshu/home
+
+路由: `/jianshu/home`
+
+参数: 无
+
+#### 7 日热门
+
+举例: https://rss.prprpr.me/jianshu/weekly
+
+路由: `/jianshu/weekly`
+
+参数: 无
+
+#### 30 日热门
+
+举例: https://rss.prprpr.me/jianshu/monthly
+
+路由: `/jianshu/monthly`
+
+参数: 无
+
+#### 专题
+
+举例: https://rss.prprpr.me/jianshu/collection/xYuZYD
+
+路由: `/jianshu/collection/:id`
+
+参数: id，专题 id，可在专题页 URL 中找到
+
+#### 作者
+
+举例: https://rss.prprpr.me/jianshu/user/yZq3ZV
+
+路由: `/jianshu/user/:id`
+
+参数: id，作者 id，可在作者主页 URL 中找到
+
 ### 自如
 
 #### 房源
