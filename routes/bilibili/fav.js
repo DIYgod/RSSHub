@@ -1,58 +1,48 @@
-const request = require('request');
+const axios = require('axios');
+const qs = require('querystring');
 const art = require('art-template');
 const path = require('path');
-const base = require('../base');
-const mix = require('../../utils/mix');
+const config = require('../../config');
 
-module.exports = (req, res) => {
-    const uid = req.params.uid;
+module.exports = async (ctx, next) => {
+    const uid = ctx.params.uid;
 
-    base({
-        req: req,
-        res: res,
-        getHTML: (callback) => {
-            request.post({
-                url: 'https://space.bilibili.com/ajax/member/GetInfo',
-                headers: {
-                    'User-Agent': mix.ua,
-                    'Referer': `https://space.bilibili.com/${uid}/`,
-                    'Origin': 'https://space.bilibili.com'
-                },
-                form: {
-                    mid: uid
-                }
-            }, function (err, httpResponse, body) {
-                const name = JSON.parse(body).data.name;
-                request.get({
-                    url: `https://api.bilibili.com/x/v2/fav/video?vmid=${uid}&ps=30&tid=0&keyword=&pn=1&order=fav_time`,
-                    headers: {
-                        'User-Agent': mix.ua,
-                        'Referer': `https://space.bilibili.com/${uid}/#/favlist`
-                    }
-                }, function (err, httpResponse, body) {
-                    let data;
-                    try {
-                        data = JSON.parse(body);
-                    }
-                    catch (e) {
-                        data = {};
-                    }
+    const nameResponse = await axios({
+        method: 'post',
+        url: 'https://space.bilibili.com/ajax/member/GetInfo',
+        headers: {
+            'User-Agent': config.ua,
+            'Referer': `https://space.bilibili.com/${uid}/`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: qs.stringify({
+            mid: uid
+        }),
+    });
+    const name = nameResponse.data.data.name;
 
-                    const html = art(path.resolve(__dirname, '../../views/rss.art'), {
-                        title: `${name} 的 bilibili 收藏夹`,
-                        link: `https://space.bilibili.com/${uid}/#/favlist`,
-                        description: `${name} 的 bilibili 收藏夹`,
-                        lastBuildDate: new Date().toUTCString(),
-                        item: data.data && data.data.archives && data.data.archives.map((item) => ({
-                            title: item.title,
-                            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
-                            pubDate: new Date(item.fav_at * 1000).toUTCString(),
-                            link: `https://www.bilibili.com/video/av${item.aid}`
-                        })),
-                    });
-                    callback(html);
-                });
-            });
+    const response = await axios({
+        method: 'get',
+        url: `https://api.bilibili.com/x/v2/fav/video?vmid=${uid}&ps=30&tid=0&keyword=&pn=1&order=fav_time`,
+        headers: {
+            'User-Agent': config.ua,
+            'Referer': `https://space.bilibili.com/${uid}/#/favlist`
         }
     });
+    const data = response.data;
+
+    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+        title: `${name} 的 bilibili 收藏夹`,
+        link: `https://space.bilibili.com/${uid}/#/favlist`,
+        description: `${name} 的 bilibili 收藏夹`,
+        lastBuildDate: new Date().toUTCString(),
+        item: data.data && data.data.archives && data.data.archives.map((item) => ({
+            title: item.title,
+            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+            pubDate: new Date(item.fav_at * 1000).toUTCString(),
+            link: `https://www.bilibili.com/video/av${item.aid}`
+        })),
+    });
+
+    next();
 };

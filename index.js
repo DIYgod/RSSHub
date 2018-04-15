@@ -1,45 +1,37 @@
-const express = require('express');
+const Koa = require('koa');
+const cache = require('koa-redis-cache');
+
 const logger = require('./utils/logger');
+const config = require('./config');
+
+const onerror = require('./middleware/onerror');
+const header = require('./middleware/header.js');
+
+const router = require('./router');
+
+process.on('uncaughtException', (e) => {
+    logger.error('uncaughtException: ' + e);
+});
 
 logger.info('🍻 RSSHub start! Cheers!');
 
-const app = express();
+const app = new Koa();
 
-app.all('*', require('./routes/all'));
+// global error handing
+app.use(onerror);
 
-// bilibili
-app.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
-app.get('/bilibili/user/fav/:uid', require('./routes/bilibili/fav'));
-app.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
-app.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
-app.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
-app.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
+// set header
+app.use(header);
 
-// 微博
-app.get('/weibo/user/:uid', require('./routes/weibo/user'));
+// cache
+app.use(cache({
+    expire: config.cacheExpire,
+    onerror: (e) => {
+        logger.error('cache error', e);
+    }
+}));
 
-// 网易云音乐
-app.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
-app.get('/ncm/user/playlist/:uid', require('./routes/ncm/userplaylist'));
-app.get('/ncm/artist/:id', require('./routes/ncm/artist'));
+// router
+app.use(router.routes()).use(router.allowedMethods());
 
-// 掘金
-app.get('/juejin/category/:category', require('./routes/juejin/category'));
-
-// 自如
-app.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
-
-// 快递
-app.get('/express/:company/:number', require('./routes/express/express'));
-
-// 简书
-app.get('/jianshu/home', require('./routes/jianshu/home'));
-app.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
-app.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
-app.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
-app.get('/jianshu/user/:id', require('./routes/jianshu/user'));
-
-// 知乎
-app.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
-
-app.listen(1200);
+app.listen(config.port);
