@@ -255,6 +255,14 @@ s
 
 参数: id，收藏夹 id，可在收藏夹页面 URL 中找到
 
+#### 用户动态
+
+举例: https://rss.prprpr.me/zhihu/people/activities/diygod
+
+路由: `/zhihu/people/activities/:id`
+
+参数: id，用户 id，可在用户主页 URL 中找到
+
 ### 自如
 
 #### 房源

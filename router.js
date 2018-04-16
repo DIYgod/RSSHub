@@ -35,5 +35,6 @@ router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 
 // // 知乎
 router.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
+router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'));
 
 module.exports = router;
