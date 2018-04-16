@@ -4,7 +4,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../../config');
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const city = ctx.params.city || 'sh';
     const keyword = ctx.params.keyword || '';
     const iswhole = ctx.params.iswhole || 0;
@@ -41,6 +41,4 @@ module.exports = async (ctx, next) => {
             link: `http://${domain}/${city.toUpperCase()}/room/${item.id}.html`
         })),
     });
-
-    next();
 };

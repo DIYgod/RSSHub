@@ -40,7 +40,7 @@ function format (status) {
     return temp;
 }
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const uid = ctx.params.uid;
 
     const containerResponse = await axios({
@@ -78,6 +78,4 @@ module.exports = async (ctx, next) => {
             };
         }),
     });
-
-    next();
 };

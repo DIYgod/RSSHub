@@ -3,7 +3,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../../config');
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const tid = ctx.params.tid;
 
     const response = await axios({
@@ -33,6 +33,4 @@ module.exports = async (ctx, next) => {
             link: `https://www.bilibili.com/video/av${item.aid}`
         })),
     });
-
-    next();
 };

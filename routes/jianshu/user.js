@@ -4,7 +4,7 @@ const path = require('path');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const id = ctx.params.id;
 
     const response = await axios({
@@ -36,6 +36,4 @@ module.exports = async (ctx, next) => {
             };
         }).get(),
     });
-
-    next();
 };

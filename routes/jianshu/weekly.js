@@ -4,7 +4,7 @@ const path = require('path');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: 'https://www.jianshu.com/trending/weekly',
@@ -34,6 +34,4 @@ module.exports = async (ctx, next) => {
             };
         }).get(),
     });
-
-    next();
 };

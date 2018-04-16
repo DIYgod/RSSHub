@@ -4,7 +4,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../../config');
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const uid = ctx.params.uid;
 
     const response = await axios({
@@ -40,6 +40,4 @@ module.exports = async (ctx, next) => {
             link: `http://music.163.com/playlist?id=${pl.id}`
         }))
     });
-
-    next();
 };

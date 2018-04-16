@@ -3,7 +3,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../../config');
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const company = ctx.params.company;
     const number = ctx.params.number;
 
@@ -30,6 +30,4 @@ module.exports = async (ctx, next) => {
             link: item.context
         })),
     });
-
-    next();
 };

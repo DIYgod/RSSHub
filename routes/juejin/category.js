@@ -3,7 +3,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../../config');
 
-module.exports = async (ctx, next) => {
+module.exports = async (ctx) => {
     const category = ctx.params.category;
 
     const idResponse = await axios({
@@ -45,6 +45,4 @@ module.exports = async (ctx, next) => {
             link: item.originalUrl
         })),
     });
-
-    next();
 };
