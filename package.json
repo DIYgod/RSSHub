@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Make RSS Great Again!",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DIYgod/RSSHub.git"

@@ -1,5 +1,14 @@
 const Router = require('koa-router');
 const router = new Router();
+const art = require('art-template');
+const path = require('path');
+
+router.get('/', async (ctx) => {
+    ctx.set({
+        'Content-Type': 'text/html; charset=UTF-8',
+    });
+    ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {});
+});
 
 // // bilibili
 router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));

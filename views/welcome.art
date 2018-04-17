@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to RSSHub!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to <span style="color: #F5712C;">RSSHub</span>!</h1>
+
+<p>If you see this page, the RSSHub is successfully installed and working.</p>
+
+<p>For online documentation and support please refer to <a href="https://rsshub.js.org" target="_blank">rsshub.js.org</a>.</p>
+
+<p>-- Made with <i style="color:#d43f57">♥</i> by <a href="https://diygod.me" target="_blank">DIYgod</a></p>
+</body>
+</html>
