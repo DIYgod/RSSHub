@@ -19,7 +19,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ## 使用
 
-域名为 rss.prprpr.me，缓存时间 5 分钟
+域名为 rss.now.sh，缓存时间 5 分钟
 
 下面是目前支持的内容
 
@@ -27,7 +27,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 #### 番剧
 
-举例: https://rss.prprpr.me/bilibili/bangumi/21680
+举例: https://rss.now.sh/bilibili/bangumi/21680
 
 路由: `/bilibili/bangumi/:seasonid`
 
@@ -35,7 +35,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 #### UP 主投稿
 
-举例: https://rss.prprpr.me/bilibili/user/video/2267573
+举例: https://rss.now.sh/bilibili/user/video/2267573
 
 路由: `/bilibili/user/video/:uid`
 
@@ -43,7 +43,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 #### UP 主动态
 
-举例: https://rss.prprpr.me/bilibili/user/dynamic/2267573
+举例: https://rss.now.sh/bilibili/user/dynamic/2267573
 
 路由: `/bilibili/user/dynamic/:uid`
 
@@ -51,7 +51,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 #### UP 主收藏夹
 
-举例: https://rss.prprpr.me/bilibili/user/fav/2267573
+举例: https://rss.now.sh/bilibili/user/fav/2267573
 
 路由: `/bilibili/user/fav/:uid`
 
@@ -59,7 +59,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 #### UP 主投币视频
 
-举例: https://rss.prprpr.me/bilibili/user/coin/2267573
+举例: https://rss.now.sh/bilibili/user/coin/2267573
 
 路由: `/bilibili/user/coin/:uid`
 
@@ -67,7 +67,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 #### 分区视频
 
-举例: https://rss.prprpr.me/bilibili/partion/33
+举例: https://rss.now.sh/bilibili/partion/33
 
 路由: `/bilibili/partion/:tid`
 
@@ -156,7 +156,7 @@ s
 
 #### 博主
 
-举例: https://rss.prprpr.me/weibo/user/3306934123
+举例: https://rss.now.sh/weibo/user/3306934123
 
 路由: `/weibo/user/:uid`
 
@@ -166,7 +166,7 @@ s
 
 #### 歌单歌曲
 
-举例: https://rss.prprpr.me/ncm/playlist/35798529
+举例: https://rss.now.sh/ncm/playlist/35798529
 
 路由: `/ncm/playlist/:id`
 
@@ -174,7 +174,7 @@ s
 
 #### 用户歌单
 
-举例: https://rss.prprpr.me/ncm/user/playlist/45441555
+举例: https://rss.now.sh/ncm/user/playlist/45441555
 
 路由: `/ncm/user/playlist/:uid`
 
@@ -182,7 +182,7 @@ s
 
 #### 歌手专辑
 
-举例: https://rss.prprpr.me/ncm/artist/2116
+举例: https://rss.now.sh/ncm/artist/2116
 
 路由: `/ncm/artist/:id`
 
@@ -192,7 +192,7 @@ s
 
 #### 分类
 
-举例: https://rss.prprpr.me/juejin/category/frontend
+举例: https://rss.now.sh/juejin/category/frontend
 
 路由: `/juejin/category/:category`
 
@@ -206,7 +206,7 @@ s
 
 #### 首页
 
-举例: https://rss.prprpr.me/jianshu/home
+举例: https://rss.now.sh/jianshu/home
 
 路由: `/jianshu/home`
 
@@ -214,7 +214,7 @@ s
 
 #### 7 日热门
 
-举例: https://rss.prprpr.me/jianshu/trending/weekly
+举例: https://rss.now.sh/jianshu/trending/weekly
 
 路由: `/jianshu/trending/weekly`
 
@@ -222,7 +222,7 @@ s
 
 #### 30 日热门
 
-举例: https://rss.prprpr.me/jianshu/trending/monthly
+举例: https://rss.now.sh/jianshu/trending/monthly
 
 路由: `/jianshu/trending/monthly`
 
@@ -230,7 +230,7 @@ s
 
 #### 专题
 
-举例: https://rss.prprpr.me/jianshu/collection/xYuZYD
+举例: https://rss.now.sh/jianshu/collection/xYuZYD
 
 路由: `/jianshu/collection/:id`
 
@@ -238,7 +238,7 @@ s
 
 #### 作者
 
-举例: https://rss.prprpr.me/jianshu/user/yZq3ZV
+举例: https://rss.now.sh/jianshu/user/yZq3ZV
 
 路由: `/jianshu/user/:id`
 
@@ -249,7 +249,7 @@ s
 
 #### 收藏夹
 
-举例: https://rss.prprpr.me/zhihu/collection/26444956
+举例: https://rss.now.sh/zhihu/collection/26444956
 
 路由: `/zhihu/collection/:id`
 
@@ -257,7 +257,7 @@ s
 
 #### 用户动态
 
-举例: https://rss.prprpr.me/zhihu/people/activities/diygod
+举例: https://rss.now.sh/zhihu/people/activities/diygod
 
 路由: `/zhihu/people/activities/:id`
 
@@ -267,7 +267,7 @@ s
 
 #### 房源
 
-举例: https://rss.prprpr.me/ziroom/room/sh/1/2/五角场
+举例: https://rss.now.sh/ziroom/room/sh/1/2/五角场
 
 路由: `/ziroom/room/:city/:iswhole/:room/:keyword`
 
@@ -287,7 +287,7 @@ keyword: 关键词
   快递送达后请及时取消订阅，以免不必要地浪费服务器资源
 </p>
 
-举例: https://rss.prprpr.me/express/youzhengguoji/CV054432809US
+举例: https://rss.now.sh/express/youzhengguoji/CV054432809US
 
 路由: `/express/:company/:number`
 
@@ -305,7 +305,7 @@ number: 快递单号
 
 #### 帖子列表
 
-举例: https://rss.prprpr.me/tieba/forum/女图
+举例: https://rss.now.sh/tieba/forum/女图
 
 路由: `/tieba/forum/:kw`
 
