@@ -1,0 +1,90 @@
+const axios = require('axios');
+const art = require('art-template');
+const path = require('path');
+const cheerio = require('cheerio');
+const config = require('../../config');
+
+function isNormalTime (time) {
+    return /^(\d{2}):(\d{2})$/.test(time);
+}
+
+function isNormalDate (time) {
+    return /^(\d{1,2})-(\d{1,2})$/.test(time);
+}
+
+function isDate (time) {
+    return /^(\d{4})-(\d{1,2})-(\d{1,2})$/.test(time);
+}
+
+function getPubDate (time) {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const date = now.getDate();
+    if (isNormalTime(time)) {
+        return new Date(`${year}-${month}-${date} ${time}`);
+    }
+    if (isNormalDate(time)) {
+        return new Date(`${year}-${time}`);
+    }
+    if (isDate(time)) {
+        return new Date();
+    }
+    return now;
+}
+
+module.exports = async (ctx) => {
+    const { kw } = ctx.params;
+    // PC端：https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}
+    // 移动端接口：https://tieba.baidu.com/mo/q/m?kw=${encodeURIComponent(kw)}&lp=5024&forum_recommend=1&lm=0&cid=0&has_url_param=1&pn=0&is_ajax=1
+
+    const { data } = await axios({
+        method: 'get',
+        url: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
+        headers: {
+            'User-Agent': config.ua,
+            Referer: 'https://tieba.baidu.com/',
+        },
+    });
+
+    const threadListHTML = cheerio.
+        load(data)('code[id="pagelet_html_frs-list/pagelet/thread_list"]').
+        html().
+        replace(/<!--|-->/g, '');
+
+    const $ = cheerio.load(threadListHTML);
+    const list = $('#thread_list > .j_thread_list[data-field]');
+
+    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+        title: `${kw}吧`,
+        link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
+        lastBuildDate: new Date().toUTCString(),
+        item:
+            list &&
+            list.
+                map((index, element) => {
+                    const item = $(element);
+                    const tid = item.data('field').id; // prettier-ignore
+                    const time = item.find('.threadlist_reply_date').text().trim(); // prettier-ignore
+                    const title = item.find('a.j_th_tit').text().trim(); // prettier-ignore
+                    const details = item.find('.threadlist_abs').text().trim(); // prettier-ignore
+                    const author = item.find('.frs-author-name').text().trim(); // prettier-ignore
+                    const medias = item.
+                        find('.threadlist_media img').
+                        map((index, element) => {
+                            const item = $(element);
+                            return `<img referrerpolicy="no-referrer" src="${item.attr('bpic')}">`; // prettier-ignore
+                        }).
+                        get().
+                        join('');
+
+                    return {
+                        title,
+                        description: `<p>${details}</p><p>${medias}</p><p>作者：${author}</p>`,
+                        pubDate: getPubDate(time).toUTCString(),
+                        link: `https://tieba.baidu.com/p/${tid}`,
+                    };
+                }).
+                get(),
+    });
+};
