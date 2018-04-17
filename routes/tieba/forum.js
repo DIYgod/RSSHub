@@ -64,7 +64,7 @@ module.exports = async (ctx) => {
             list.
                 map((index, element) => {
                     const item = $(element);
-                    const tid = item.data('field').id; // prettier-ignore
+                    const tid = item.data('field').id;
                     const time = item.find('.threadlist_reply_date').text().trim(); // prettier-ignore
                     const title = item.find('a.j_th_tit').text().trim(); // prettier-ignore
                     const details = item.find('.threadlist_abs').text().trim(); // prettier-ignore
