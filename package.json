@@ -21,10 +21,14 @@
     "art-template": "4.12.2",
     "axios": "0.18.0",
     "cheerio": "1.0.0-rc.2",
+    "crypto": "1.0.1",
     "eslint": "4.19.1",
     "koa": "2.5.0",
     "koa-redis-cache": "3.0.0",
     "koa-router": "7.4.0",
+    "lru-cache": "4.1.2",
+    "path-to-regexp": "2.2.0",
+    "readall": "1.0.0",
     "winston": "3.0.0-rc3"
   }
 }

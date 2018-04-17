@@ -1,11 +1,12 @@
 const Koa = require('koa');
-const cache = require('koa-redis-cache');
 
 const logger = require('./utils/logger');
 const config = require('./config');
 
 const onerror = require('./middleware/onerror');
 const header = require('./middleware/header.js');
+const memoryCache = require('./middleware/cache.js');
+const redisCache = require('koa-redis-cache');
 
 const router = require('./router');
 
@@ -24,12 +25,19 @@ app.use(onerror);
 app.use(header);
 
 // cache
-app.use(cache({
-    expire: config.cacheExpire,
-    onerror: (e) => {
-        logger.error('cache error', e);
-    }
-}));
+if (config.cacheType === 'memory') {
+    app.use(memoryCache({
+        expire: config.cacheExpire
+    }));
+}
+else if (config.cacheType === 'redis') {
+    app.use(redisCache({
+        expire: config.cacheExpire,
+        onerror: (e) => {
+            logger.error('cache error', e);
+        }
+    }));
+}
 
 // router
 app.use(router.routes()).use(router.allowedMethods());

@@ -306,6 +306,10 @@ cross-spawn@^5.1.0:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
+crypto@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/crypto/-/crypto-1.0.1.tgz#2af1b7cad8175d24c8a1b0778255794a21803037"
+
 css-select@~1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -928,7 +932,7 @@ lower-case@^1.1.1:
   version "1.1.4"
   resolved "https://registry.npmjs.org/lower-case/-/lower-case-1.1.4.tgz#9a2cabd1b9e8e0ae993a4bf7d5875c39c42e8eac"
 
-lru-cache@^4.0.1:
+lru-cache@4.1.2, lru-cache@^4.0.1:
   version "4.1.2"
   resolved "https://registry.npmjs.org/lru-cache/-/lru-cache-4.1.2.tgz#45234b2e6e2f2b33da125624c4664929a0224c3f"
   dependencies:
@@ -1082,6 +1086,10 @@ path-to-regexp@1, path-to-regexp@^1.1.1:
   dependencies:
     isarray "0.0.1"
 
+path-to-regexp@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-2.2.0.tgz#80f0ff45c1e0e641da74df313644eaf115050972"
+
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
@@ -1128,7 +1136,7 @@ readable-stream@^2.0.2, readable-stream@^2.2.2:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-readall@1:
+readall@1, readall@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/readall/-/readall-1.0.0.tgz#8b4bfc412e687dbfbb00e0a6ede7e3a0f001b7c7"
   dependencies:
