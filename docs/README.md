@@ -297,6 +297,20 @@ company: 快递公司代码，参考 [API URL 所支持的快递公司及参数�
 
 number: 快递单号
 
+### 贴吧
+
+<p class="warning">
+  吧名如果包含中文，应该使用 `encodeURIComponent` 编码后使用
+</p>
+
+#### 帖子列表
+
+举例: https://rss.prprpr.me/tieba/forum/女图
+
+路由: `/tieba/forum/:kw`
+
+参数: kw，吧名
+
 ## 搭建
 
 环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
