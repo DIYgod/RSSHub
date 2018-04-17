@@ -296,11 +296,3 @@ keyword: 关键词
 company: 快递公司代码，参考 [API URL 所支持的快递公司及参数说明](https://www.kuaidi100.com/download/api_kuaidi100_com%2820140729%29.doc)
 
 number: 快递单号
-
-## 搭建
-
-依赖：
-
-- Redis
-
-- Node.js

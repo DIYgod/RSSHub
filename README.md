@@ -47,6 +47,16 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 - [Telegram 群](https://t.me/rsshub)
 - [QQ 群](https://jq.qq.com/?_wv=1027&k=5kIvhps): 711799039
 
+## 搭建
+
+环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
+
+安装依赖：`yarn`
+
+修改配置：配置文件为 `config.js`
+
+启动程序：`node index.js`
+
 ## Author
 
 **RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [MIT](./LICENSE) License.<br>
