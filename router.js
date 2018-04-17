@@ -37,4 +37,7 @@ router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 router.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
 router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'));
 
+// // 贴吧
+router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
+
 module.exports = router;
