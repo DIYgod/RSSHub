@@ -68,7 +68,7 @@ module.exports = async (ctx) => {
                     const time = item.find('.threadlist_reply_date').text().trim(); // prettier-ignore
                     const title = item.find('a.j_th_tit').text().trim(); // prettier-ignore
                     const details = item.find('.threadlist_abs').text().trim(); // prettier-ignore
-                    const author = item.find('.frs-author-name').text().trim(); // prettier-ignore
+                    const author = item.find('.frs-author-name').first().text().trim(); // prettier-ignore
                     const medias = item.
                         find('.threadlist_media img').
                         map((index, element) => {
