@@ -263,6 +263,14 @@ s
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
+#### 专栏
+
+举例: https://rss.now.sh/zhihu/zhuanlan/googledevelopers
+
+路由: `/zhihu/zhuanlan/:id`
+
+参数: id，专栏 id，可在专栏主页 URL 中找到
+
 ### 自如
 
 #### 房源

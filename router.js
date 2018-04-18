@@ -45,6 +45,7 @@ router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 // // 知乎
 router.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
 router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'));
+router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 
 // // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
