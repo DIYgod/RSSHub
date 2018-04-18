@@ -35,9 +35,9 @@ function getPubDate (time) {
 
 module.exports = async (ctx) => {
     const { kw } = ctx.params;
+
     // PC端：https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}
     // 移动端接口：https://tieba.baidu.com/mo/q/m?kw=${encodeURIComponent(kw)}&lp=5024&forum_recommend=1&lm=0&cid=0&has_url_param=1&pn=0&is_ajax=1
-
     const { data } = await axios({
         method: 'get',
         url: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
@@ -64,11 +64,10 @@ module.exports = async (ctx) => {
             list.
                 map((index, element) => {
                     const item = $(element);
-                    const tid = item.data('field').id;
+                    const { id, author_name } = item.data('field');
                     const time = item.find('.threadlist_reply_date').text().trim(); // prettier-ignore
                     const title = item.find('a.j_th_tit').text().trim(); // prettier-ignore
                     const details = item.find('.threadlist_abs').text().trim(); // prettier-ignore
-                    const author = item.find('.frs-author-name').first().text().trim(); // prettier-ignore
                     const medias = item.
                         find('.threadlist_media img').
                         map((index, element) => {
@@ -80,9 +79,9 @@ module.exports = async (ctx) => {
 
                     return {
                         title,
-                        description: `<p>${details}</p><p>${medias}</p><p>作者：${author}</p>`,
+                        description: `<p>${details}</p><p>${medias}</p><p>作者：${author_name}</p>`,
                         pubDate: getPubDate(time).toUTCString(),
-                        link: `https://tieba.baidu.com/p/${tid}`,
+                        link: `https://tieba.baidu.com/p/${id}`,
                     };
                 }).
                 get(),
