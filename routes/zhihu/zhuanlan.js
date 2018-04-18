@@ -1,33 +1,43 @@
-const phantom = require('phantom');
+const axios = require('axios');
 const art = require('art-template');
 const path = require('path');
-const cheerio = require('cheerio');
+const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
 
-    const instance = await phantom.create();
-    const page = await instance.createPage();
-    await page.on('onResourceRequested', function(requestData){});
-    await page.open(`https://zhuanlan.zhihu.com/${id}`);
-    const content = await page.property('content');
-    await instance.exit();
+    const listRes = await axios({
+        method: 'get',
+        url: `https://zhuanlan.zhihu.com/api/columns/${id}/posts?limit=20`,
+        headers: {
+            'User-Agent': config.ua,
+            'Referer': `https://zhuanlan.zhihu.com/${id}`,
+        }
+    });
+    const infoRes = await axios({
+        method: 'get',
+        url: `https://zhuanlan.zhihu.com/api/columns/${id}`,
+        headers: {
+            'User-Agent': config.ua,
+            'Referer': `https://zhuanlan.zhihu.com/${id}`,
+        }
+    });
 
-    const $ = cheerio.load(content);
-    const list = $(".PostListItem");
+    const list = listRes.data;
+    const info = infoRes.data;
 
     ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
-        title: $('title').text(),
-        link: `https://www.zhihu.com/collection/${id}`,
-        description: `知乎专栏-${$('title').text()}`,
+        title: `知乎专栏-${info.name}`,
+        link: `https://zhuanlan.zhihu.com/${id}`,
+        description: info.description,
         lastBuildDate: new Date().toUTCString(),
-        item: list && list.map((index, item) => {
-            item = $(item);
-            return {
-                title: item.find('.PostListItem-title').text(),
-                description: `内容：${item.find('.PostListItem-summary').text()}`,
-                link: `https://zhuanlan.zhihu.com${item.find('.PostListItem-info a').attr('href')}`
+        item: list.map((item) => {
+                return {
+                    title: item.title,
+                    description: item.content,
+                    pubDate: new Date(item.publishedTime).toUTCString(),
+                    link: `https://zhuanlan.zhihu.com${item.url}`
             };
-        }).get(),
+        }),
     });
 };
