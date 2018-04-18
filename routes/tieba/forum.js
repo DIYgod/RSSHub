@@ -28,7 +28,7 @@ function getPubDate (time) {
         return new Date(`${year}-${time}`);
     }
     if (isDate(time)) {
-        return new Date();
+        return new Date(time);
     }
     return now;
 }
