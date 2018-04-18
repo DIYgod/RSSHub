@@ -31,7 +31,6 @@
     "koa-router": "7.4.0",
     "lru-cache": "4.1.2",
     "path-to-regexp": "2.2.0",
-    "phantom": "^4.0.12",
     "readall": "1.0.0",
     "winston": "3.0.0-rc3"
   }
