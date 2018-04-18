@@ -26,7 +26,6 @@
     "cheerio": "1.0.0-rc.2",
     "crypto": "1.0.1",
     "eslint": "4.19.1",
-    "git-rev-sync": "1.11.1",
     "koa": "2.5.0",
     "koa-redis-cache": "3.0.0",
     "koa-router": "7.4.0",

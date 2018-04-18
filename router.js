@@ -2,15 +2,12 @@ const Router = require('koa-router');
 const router = new Router();
 const art = require('art-template');
 const path = require('path');
-const gitHash = require('git-rev-sync');
 
 router.get('/', async (ctx) => {
     ctx.set({
         'Content-Type': 'text/html; charset=UTF-8',
     });
-    ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
-        hash: gitHash.short()
-    });
+    ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {});
 });
 
 // // bilibili
