@@ -48,16 +48,24 @@ module.exports = async (ctx) => {
 
   const title = $('title').text();
 
+  const reg = /[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d/;
+
   ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
     title: title,
     link: url,
     description: $('meta[name="description"]').attr('content') || title,
     lastBuildDate: new Date().toUTCString(),
     item: list && list.map((item) => {
+      let date = new Date();
+      const dateStr = $('.main-meta > span:nth-child(2)').text();
+      if (reg.test(dateStr)) {
+        date = new Date(dateStr.match(reg)[0]);
+      }
+
       return {
         title: `${title}（${item.page}）`,
         description: `分类：${$('.main-meta > span:nth-child(1) > a').text()}<br>描述：${title}（${item.page}）<br><img referrerpolicy="no-referrer" src="${item.imgUrl}">`,
-        pubDate: new Date($('.main-meta > span:nth-child(2)').text().replace('发布于 ', '')).toUTCString(),
+        pubDate: date.toUTCString(),
         link: item.url
       };
     })
