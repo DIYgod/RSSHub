@@ -50,4 +50,15 @@ router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 // // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
 
+// // 妹子图
+router.get('/mzitu', require('./routes/mzitu/category'));
+router.get('/mzitu/tags', require('./routes/mzitu/tags'));
+router.get('/mzitu/:page', require('./routes/mzitu/category'));
+router.get('/mzitu/category/:category', require('./routes/mzitu/category'));
+router.get('/mzitu/category/:category/:page', require('./routes/mzitu/category'));
+router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
+router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
+router.get('/mzitu/tag/:tag/:page', require('./routes/mzitu/tag'));
+
+
 module.exports = router;
