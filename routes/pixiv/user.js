@@ -120,7 +120,8 @@ module.exports = async (ctx) => {
         },
         params: {
             user_id: id,
-            filter: 'for_ios'
+            filter: 'for_ios',
+            type: 'illust'
         },
     });
 
