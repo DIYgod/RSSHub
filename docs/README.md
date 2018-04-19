@@ -352,15 +352,16 @@ number: 快递单号
 
 路由: `/mzitu/tag/:tag`
 
-参数: tag，专题名 `通过获取所有专题接口获取`
+参数: tag，专题名，可在专题页 URL 中找到
 
 #### 详情
 
-举例: https://rss.now.sh/mzitu/129452
+举例: https://rss.now.sh/mzitu/post/129452
 
-路由: `/mzitu/:id`
+路由: `/mzitu/post/:id`
 
-参数: id，详情id `直接将地址栏最后一串数字复制`
+参数: id，详情 id，可在详情页 URL 中找到
+
 ## 搭建
 
 环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
