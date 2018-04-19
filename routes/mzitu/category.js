@@ -6,13 +6,10 @@ const config = require('../../config');
 
 module.exports = async (ctx) => {
     let category = ctx.params.category;
-    let page = ctx.params.page;
 
     category = (category === undefined || category === 'undefined') ? '' : category;
 
-    page = (page === undefined || page === 'undefined') ? '' : `/page/${page}`;
-
-    const url = `http://www.mzitu.com/${category}${page}`;
+    const url = `http://www.mzitu.com/${category}`;
 
     const response = await axios({
         method: 'get',

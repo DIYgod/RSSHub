@@ -3,24 +3,17 @@
 #### 首页（最新）
 
 举例: https://rss.now.sh/mzitu
-举例2: https://rss.now.sh/mzitu/2
 
 路由: `/mzitu/`
-路由: `/mzitu/:page`
-
-参数: page，页码[可选，默认第一页]
 
 #### 分类
 
 举例: https://rss.now.sh/mzitu/category/hot
-举例2: https://rss.now.sh/mzitu/category/hot/3
 
 路由: `/mzitu/category/:category`
-路由: `/mzitu/category/:category/:page`
 
 参数
 category，分类名
-page，页码[可选，默认第一页]
 
 | 热门     | 推荐 | 性感妹子  | 日本妹子      | 台湾妹子     | 清纯妹子 |
 | -------- | ------- | ---- | ------- | ------ | ------- |
@@ -36,14 +29,11 @@ page，页码[可选，默认第一页]
 #### 专题详情
 
 举例: https://rss.now.sh/mzitu/tag/shishen
-举例2: https://rss.now.sh/mzitu/tag/shishen/2
 
 路由: `/mzitu/tag/:tag`
-路由: `/mzitu/tag/:tag/:page`
 
 参数
 tag，专题名 `通过获取所有专题接口获取`
-page，页码[可选，默认第一页]
 
 #### 详情
 

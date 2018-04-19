@@ -6,13 +6,9 @@ const config = require('../../config');
 
 module.exports = async (ctx) => {
     let tag = ctx.params.tag;
-    let page = ctx.params.page;
-
     tag = (tag === undefined || tag === 'undefined') ? '' : tag;
 
-    page = (page === undefined || page === 'undefined') ? '' : `/page/${page}`;
-
-    const url = `http://www.mzitu.com/tag/${tag}${page}`;
+    const url = `http://www.mzitu.com/tag/${tag}`;
 
     const response = await axios({
         method: 'get',
