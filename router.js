@@ -60,4 +60,6 @@ router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 // // Pixiv
 router.get('/pixiv/user/:id', require('./routes/pixiv/user'));
 
+// 豆瓣
+router.get('/douban/playing-movie/:city/:score', require('./routes/douban/playingMovie'));
 module.exports = router;
