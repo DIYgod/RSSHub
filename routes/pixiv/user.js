@@ -136,10 +136,10 @@ module.exports = async (ctx) => {
         item: illusts.map((illust) => {
             const images = [];
             if (illust.page_count === 1) {
-                images.push(`<p><img src="https://pixiv.cat/${illust.id}.jpg"/></p>`);
+                images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}.jpg"/></p>`);
             } else {
                 for (let i = 0; i < illust.page_count; i++) {
-                    images.push(`<p><img src="https://pixiv.cat/${illust.id}-${i+1}.jpg"/></p>`);
+                    images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}-${i+1}.jpg"/></p>`);
                 }
             }
             return {
