@@ -362,6 +362,16 @@ number: 快递单号
 
 参数: id，详情 id，可在详情页 URL 中找到
 
+## pixiv
+
+#### 用户动态
+
+举例: https://rss.now.sh/pixiv/user/11
+
+路由: `/pixiv/user/:id`
+
+参数: id，用户 id，可在用户主页 URL 中找到
+
 ## 搭建
 
 环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
