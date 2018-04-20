@@ -129,9 +129,9 @@ module.exports = async (ctx) => {
     const username = illusts[0].user.name
 
     ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
-        title: `${username} 的 Pixiv 动态`,
-        link: `https://music.163.com/#/playlist?id=${id}`,
-        description: `${username} 的 Pixiv 最新动态`,
+        title: `${username} 的 pixiv 动态`,
+        link: `https://www.pixiv.net/member.php?id=${id}`,
+        description: `${username} 的 pixiv 最新动态`,
         lastBuildDate: new Date().toUTCString(),
         item: illusts.map((illust) => {
             const images = [];
