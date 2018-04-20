@@ -57,4 +57,7 @@ router.get('/mzitu/category/:category', require('./routes/mzitu/category'));
 router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
 router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 
+// // Pixiv
+router.get('/pixiv/user/:id', require('./routes/pixiv/user'));
+
 module.exports = router;
