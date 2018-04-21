@@ -1,0 +1,11 @@
+version: '2.1'
+
+services:
+  rsshub:
+    image: rsshub
+    container_name: rsshub
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 1200:1200
