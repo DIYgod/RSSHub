@@ -372,16 +372,27 @@ number: 快递单号
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
-
 ### 豆瓣
 
-#### 正在热映的高分电影
+#### 正在上映的电影
 
-举例: https://rss.now.sh/douban/playing-movie/上海/8
+举例: https://rss.now.sh/douban/movie/intheaters
 
-路由: `/douban/playing-movie/:city/:score`
+路由: `/douban/movie/intheaters`
 
-参数: city，城市的中文名 score，返回大于等于这个分数的电影，
+参数: 无
+
+#### 正在上映的高分电影
+
+举例: https://rss.now.sh/douban/movie/intheaters/7.5
+
+路由: `/douban/movie/intheaters/:score/:city`
+
+参数
+
+score: 返回大于等于这个分数的电影
+
+city: 城市的中文名，可选，默认北京
 
 ## 搭建
 
