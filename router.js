@@ -61,8 +61,10 @@ router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 router.get('/pixiv/user/:id', require('./routes/pixiv/user'));
 
 // 豆瓣
-router.get('/douban/movie/intheaters', require('./routes/douban/intheaters'));
-router.get('/douban/movie/intheaters/:score', require('./routes/douban/intheaters'));
-router.get('/douban/movie/intheaters/:score/:city', require('./routes/douban/intheaters'));
+router.get('/douban/movie/playing', require('./routes/douban/playing'));
+router.get('/douban/movie/playing/:score', require('./routes/douban/playing'));
+router.get('/douban/movie/playing/:score/:city', require('./routes/douban/playing'));
+router.get('/douban/movie/later', require('./routes/douban/later'));
+router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 
 module.exports = router;

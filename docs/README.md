@@ -376,23 +376,43 @@ number: 快递单号
 
 #### 正在上映的电影
 
-举例: https://rss.now.sh/douban/movie/intheaters
+举例: https://rss.now.sh/douban/movie/playing
 
-路由: `/douban/movie/intheaters`
+路由: `/douban/movie/playing`
 
 参数: 无
 
 #### 正在上映的高分电影
 
-举例: https://rss.now.sh/douban/movie/intheaters/7.5
+举例: https://rss.now.sh/douban/movie/playing/7.5
 
-路由: `/douban/movie/intheaters/:score/:city`
+路由
+
+`/douban/movie/playing/:score`
+
+`/douban/movie/playing/:score/:city`
 
 参数
 
 score: 返回大于等于这个分数的电影
 
 city: 城市的中文名，可选，默认北京
+
+#### 即将上映的电影
+
+举例: https://rss.now.sh/douban/movie/later
+
+路由: `/douban/movie/later`
+
+参数: 无
+
+#### 北美票房榜
+
+举例: https://rss.now.sh/douban/movie/ustop
+
+路由: `/douban/movie/ustop`
+
+参数: 无
 
 ## 搭建
 
