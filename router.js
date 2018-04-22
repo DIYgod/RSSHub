@@ -65,4 +65,7 @@ router.get('/douban/movie/intheaters', require('./routes/douban/intheaters'));
 router.get('/douban/movie/intheaters/:score', require('./routes/douban/intheaters'));
 router.get('/douban/movie/intheaters/:score/:city', require('./routes/douban/intheaters'));
 
+// 煎蛋
+router.get('/jandan/pic', require('./routes/jandan/pic'));
+
 module.exports = router;
