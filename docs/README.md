@@ -414,6 +414,16 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
+### 煎蛋
+
+#### 无聊图
+
+举例: https://rss.now.sh/jandan/pic
+
+路由: `/jandan/pic`
+
+参数: 无
+
 ## 搭建
 
 环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
