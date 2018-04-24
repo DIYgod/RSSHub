@@ -70,4 +70,8 @@ router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 // 煎蛋
 router.get('/jandan/pic', require('./routes/jandan/pic'));
 
+// 酷壳
+router.get('/coolshell', require('./routes/other/coolshell'));
+
+
 module.exports = router;
