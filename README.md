@@ -74,6 +74,12 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 启动程序：`node index.js`
 
+## Contributors
+
+This project exists thanks to all the people who contribute.
+
+<a href="https://github.com/MoePlayer/RSSHub/graphs/contributors"><img src="https://opencollective.com/RSSHub/contributors.svg?width=890" /></a>
+
 ## Author
 
 **RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [MIT](./LICENSE) License.<br>
