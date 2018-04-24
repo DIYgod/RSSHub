@@ -15,7 +15,6 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 可以通过以下途径参与讨论：
 
 - [Telegram 群](https://t.me/rsshub)
-- [QQ 群](https://jq.qq.com/?_wv=1027&k=5kIvhps): 711799039
 
 ## 使用
 
