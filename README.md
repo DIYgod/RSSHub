@@ -78,7 +78,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 This project exists thanks to all the people who contribute.
 
-<a href="https://github.com/MoePlayer/RSSHub/graphs/contributors"><img src="https://opencollective.com/RSSHub/contributors.svg?width=890" /></a>
+<a href="https://github.com/DIYgod/RSSHub/graphs/contributors"><img src="https://opencollective.com/RSSHub/contributors.svg?width=890" /></a>
 
 ## Author
 
