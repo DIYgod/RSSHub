@@ -70,4 +70,7 @@ router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 // 煎蛋
 router.get('/jandan/pic', require('./routes/jandan/pic'));
 
+// GitHub
+router.get('/github/release/:owner/:repo', require('./routes/github/release'));
+
 module.exports = router;
