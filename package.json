@@ -4,7 +4,8 @@
   "description": "Make RSS Great Again!",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "postinstall": "opencollective postinstall"
   },
   "repository": {
     "type": "git",
@@ -31,8 +32,13 @@
     "koa-redis-cache": "3.0.0",
     "koa-router": "7.4.0",
     "lru-cache": "4.1.2",
+    "opencollective": "^1.0.3",
     "path-to-regexp": "2.2.0",
     "readall": "1.0.0",
     "winston": "3.0.0-rc3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/RSSHub"
   }
 }
