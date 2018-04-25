@@ -334,9 +334,9 @@ number: 快递单号
 
 参数：category，分类名
 
-| 热门     | 推荐 | 性感妹子  | 日本妹子      | 台湾妹子     | 清纯妹子 |
-| -------- | ------- | ---- | ------- | ------ | ------- |
-| hot | best | xinggan  | japan | taiwan | mm  |
+| 热门   | 推荐   | 性感妹子    | 日本妹子  | 台湾妹子   | 清纯妹子 |
+| ---- | ---- | ------- | ----- | ------ | ---- |
+| hot  | best | xinggan | japan | taiwan | mm   |
 
 
 #### 所有专题
@@ -370,6 +370,22 @@ number: 快递单号
 路由: `/pixiv/user/:id`
 
 参数: id，用户 id，可在用户主页 URL 中找到
+
+#### 排行榜
+
+举例: https://rss.now.sh/pixiv/ranking/week
+
+路由: `/pixiv/ranking/:mode/:date?`
+
+参数
+
+mode: 排行榜类型
+
+| 名称 | pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行  | pixiv 新人排行  | pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
+| --------- | --------- | --------- | --------- | ------------- | ------------- | ------------- | ----------- | -------------- | ------------------ | ------------------ | -------------- | -------------- |
+| 取值       | day       | week      | month     | day_male      | day_female    | week_original | week_rookie | day_r18        | day_male_r18       | day_female_r18     | week_r18       | week_r18g      |
+
+date: 日期，取值形如 `2018-4-25`
 
 ### 豆瓣
 
@@ -422,6 +438,20 @@ city: 城市的中文名，可选，默认北京
 路由: `/jandan/pic`
 
 参数: 无
+
+### GitHub
+
+#### Releases
+
+举例: https://rss.now.sh/github/release/MoePlayer/APlayer
+
+路由: `/github/release/:owner/:repo`
+
+参数
+
+owner: 用户名或组织名
+
+repo: 仓库名
 
 ## 搭建
 

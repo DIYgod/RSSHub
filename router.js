@@ -59,8 +59,6 @@ router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 
 // // Pixiv
 router.get('/pixiv/user/:id', require('./routes/pixiv/user'));
-// mode: [ day, week, month, day_male, day_female, week_original, week_rookie, day_r18, day_male_r18, day_female_r18, week_r18, week_r18g]
-// date: 2018-4-25
 router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
 
 // 豆瓣
