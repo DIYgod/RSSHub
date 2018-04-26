@@ -8,5 +8,6 @@ module.exports = {
         client_secret: 'lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj',
         username: 'rsshub@tmpmail.org',
         password: 'rsshubpixiv'
-    }
+    },
+    github_token: '', // your github personal access token
 };
