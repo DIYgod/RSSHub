@@ -31,6 +31,7 @@
     "koa-redis-cache": "3.0.0",
     "koa-router": "7.4.0",
     "lru-cache": "4.1.2",
+    "marked": "^0.3.19",
     "path-to-regexp": "2.2.0",
     "readall": "1.0.0",
     "winston": "3.0.0-rc3"
