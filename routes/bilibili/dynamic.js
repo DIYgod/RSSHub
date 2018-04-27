@@ -1,6 +1,7 @@
 const axios = require('axios');
 const art = require('art-template');
 const path = require('path');
+const JSONbig = require('json-bigint');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -22,7 +23,7 @@ module.exports = async (ctx) => {
         description: `${data[0].desc.user_profile.info.uname} 的 bilibili 动态`,
         lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => {
-            const parsed = JSON.parse(item.card);
+            const parsed = JSONbig.parse(item.card);
             const data = parsed.item || parsed;
 
             // img

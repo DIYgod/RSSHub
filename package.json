@@ -27,6 +27,7 @@
     "crypto": "1.0.1",
     "eslint": "4.19.1",
     "form-data": "^2.3.2",
+    "json-bigint": "0.2.3",
     "koa": "2.5.0",
     "koa-redis-cache": "3.0.0",
     "koa-router": "7.4.0",
