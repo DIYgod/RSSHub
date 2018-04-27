@@ -439,20 +439,6 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
-### GitHub
-
-#### Releases
-
-举例: https://rss.now.sh/github/release/MoePlayer/APlayer
-
-路由: `/github/release/:owner/:repo`
-
-参数
-
-owner: 用户名或组织名
-
-repo: 仓库名
-
 ## 搭建
 
 环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
