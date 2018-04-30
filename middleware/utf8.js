@@ -1,0 +1,6 @@
+// https://stackoverflow.com/questions/2507608/error-input-is-not-proper-utf-8-indicate-encoding-using-phps-simplexml-lo/40552083#40552083
+// https://stackoverflow.com/questions/1497885/remove-control-characters-from-php-string/1497928#1497928
+module.exports = async (ctx, next) => {
+    await next();
+    ctx.body = ctx.body.replace(/[\x00-\x1F\x7F]/g, '');
+};
