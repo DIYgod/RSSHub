@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
             responseType: 'arraybuffer'
         });
         const convert_data = iconv.decode(original_data.data, 'gbk');
-        const detail_data = cheerio.load(convert_data)('div[class="oblog_text"]');
+        const detail_data = cheerio.load(convert_data, {decodeEntities: false})('div[class="oblog_text"]');
         const item = {
             title: el.text(),
             description: detail_data,
