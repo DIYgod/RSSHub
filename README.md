@@ -1,6 +1,8 @@
 # RSSHub
 
 > 🍭 使用 RSS 连接全世界
+[![Backers on Open Collective](https://opencollective.com/RSShub/backers/badge.svg)](#backers)
+ [![Sponsors on Open Collective](https://opencollective.com/RSShub/sponsors/badge.svg)](#sponsors) 
 
 ## 介绍
 
@@ -81,7 +83,30 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 This project exists thanks to all the people who contribute.
 
-<a href="https://github.com/DIYgod/RSSHub/graphs/contributors"><img src="https://opencollective.com/RSSHub/contributors.svg?width=890" /></a>
+<a href="https://github.com/DIYgod/RSSHub/graphs/contributors"><img src="https://opencollective.com/RSSHub/contributors.svg?width=890&button=false" /></a>
+
+### Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/RSSHub#backer)]
+
+<a href="https://opencollective.com/RSSHub#backers" target="_blank"><img src="https://opencollective.com/RSSHub/backers.svg?width=890"></a>
+
+### Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/RSSHub#sponsor)]
+
+<a href="https://opencollective.com/RSSHub/sponsor/0/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/1/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/2/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/3/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/4/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/5/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/6/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/7/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/8/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/RSSHub/sponsor/9/website" target="_blank"><img src="https://opencollective.com/RSSHub/sponsor/9/avatar.svg"></a>
+
+
 
 ## Author
 
@@ -89,3 +114,9 @@ This project exists thanks to all the people who contribute.
 Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/DPlayer/contributors)).
 
 > Blog [@DIYgod](https://diygod.me) · GitHub [@DIYgod](https://github.com/DIYgod) · Twitter [@DIYgod](https://twitter.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
+
+
+
+
+
+
