@@ -439,6 +439,16 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
+### 喷嚏
+
+#### 图卦
+
+举例: https://rss.now.sh/dapenti/tugua
+
+路由: `/dapenti/tugua`
+
+参数: 无
+
 ## 搭建
 
 环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis

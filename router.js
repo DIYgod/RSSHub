@@ -71,7 +71,7 @@ router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 // 煎蛋
 router.get('/jandan/pic', require('./routes/jandan/pic'));
 
-// 图卦
+// 喷嚏
 router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));
 
 module.exports = router;
