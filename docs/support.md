@@ -21,4 +21,5 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 周期性赞助可以获得额外的回报，比如你的名字 会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
 
+- 通过 [OpenCollective](https://opencollective.com/RSSHub) 赞助成为 backer 或 sponsor
 - 给我们发邮件联系赞助事宜: i#html.love
