@@ -75,6 +75,6 @@ router.get('/jandan/pic', require('./routes/jandan/pic'));
 router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));
 
 // Dockone
-router.get('/dockone/weekly',require('./routes/dockone/weekly'));
+router.get('/dockone/weekly', require('./routes/dockone/weekly'));
 
 module.exports = router;
