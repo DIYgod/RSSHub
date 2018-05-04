@@ -74,4 +74,7 @@ router.get('/jandan/pic', require('./routes/jandan/pic'));
 // 喷嚏
 router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));
 
+// Dockone
+router.get('/dockone/weekly',require('./routes/dockone/weekly'));
+
 module.exports = router;
