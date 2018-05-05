@@ -27,10 +27,12 @@ module.exports = async (ctx) => {
         lastBuildDate: new Date().toUTCString(),
         item: list && list.map((index, item) => {
             item = $(item);
+            let linkUrl = item.find('.zm-item-title a').attr('href');
+            if (linkUrl.startsWith('/')) linkUrl = 'https://www.zhihu.com' + linkUrl;
             return {
                 title: item.find('.zm-item-title a').text(),
                 description: `内容：${item.find('textarea').text()}`,
-                link: `https://www.zhihu.com${item.find('.zm-item-title a').attr('href')}`
+                link: linkUrl
             };
         }).get(),
     });
