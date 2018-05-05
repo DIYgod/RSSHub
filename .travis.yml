@@ -9,6 +9,8 @@ script:
   - npm run docs:build
   - cd docs/.vuepress/dist
   - echo 'rsshub.js.org' > CNAME
+
+after_script:
   - git init
   - git config user.name "Travis CI"
   - git config user.email "no-reply@html.love"
