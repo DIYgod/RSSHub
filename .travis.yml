@@ -16,11 +16,7 @@ after_script:
   - git config user.email "no-reply@html.love"
   - git add -A
   - git commit -m 'deploy'
-  - git push -f 'https://${GH_TOKEN}@${GH_REF}' master:gh-pages
-
-env:
- global:
-   - GH_REF: github.com/DIYgod/RSSHub.git
+  - git push -f 'https://${GH_TOKEN}@github.com/DIYgod/RSSHub.git' master:gh-pages
 
 cache:
   yarn: true
