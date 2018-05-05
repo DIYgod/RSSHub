@@ -74,4 +74,6 @@ router.get('/jandan/pic', require('./routes/jandan/pic'));
 // 喷嚏
 router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));
 
+// 腾讯吐个槽
+router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 module.exports = router;
