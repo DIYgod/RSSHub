@@ -449,15 +449,29 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
+### Dockone
+
+#### 周报
+
+举例: https://rss.now.sh/dockone/weekly
+
+路由: `/dockone/weekly`
+
+参数: 无
+
 ### 腾讯吐个槽
 
 #### 吐槽新帖
 
 举例: https://rss.now.sh/tucaoqq/post/28564/CdRI0728
 
-路由: `/tucaoqq/post`
+路由: `/tucaoqq/post/:project/:key`
 
-参数: project 产品ID  key 产品密钥
+参数
+
+project: 产品ID
+
+key: 产品密钥
 
 ## 搭建
 

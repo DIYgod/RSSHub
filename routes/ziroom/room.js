@@ -27,8 +27,9 @@ module.exports = async (ctx) => {
             'step': 0
         }),
     });
-
-    const data = response.data.data;
+    let data = response.data.data; //当查询的结果不存在时,该 data 是个对象 { info: '数据加载完毕' }
+    //判断数据的类型,如果有数据就是数组类型的,没有数据的话，就赋值为空数组
+    data = (data instanceof Array) ? data : [{title:"我们找不到任何与您的搜索条件匹配的结果，但是调整您的搜索条件可能会有所帮助",room_name:"",list_img:"",city:"",id:""}];
 
     ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
         title: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
