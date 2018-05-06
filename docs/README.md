@@ -52,7 +52,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主粉丝
 
-举例: https://rss.now.sh/bilibili/user/followers/2267573
+举例: [https://rss.now.sh/bilibili/user/followers/2267573](https://rss.now.sh/bilibili/user/followers/2267573)
 
 路由: `/bilibili/user/followers/:uid`
 
@@ -60,7 +60,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主关注用户
 
-举例: https://rss.now.sh/bilibili/user/followings/2267573
+举例: [https://rss.now.sh/bilibili/user/followings/2267573](https://rss.now.sh/bilibili/user/followings/2267573)
 
 路由: `/bilibili/user/followings/:uid`
 
@@ -154,7 +154,7 @@ s
 
 ### 视频评论
 
-举例: https://rss.now.sh/bilibili/video/reply/21669336
+举例: [https://rss.now.sh/bilibili/video/reply/21669336](https://rss.now.sh/bilibili/video/reply/21669336)
 
 路由: `/bilibili/video/reply/:aid`
 
