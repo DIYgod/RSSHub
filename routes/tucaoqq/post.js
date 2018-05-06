@@ -1,7 +1,8 @@
 const axios = require('axios');
 const template = require('../../utils/template');
 const config = require('../../config');
-const md5 = require('js-md5');
+const md5 = require('../../utils/md5');
+
 
 module.exports = async (ctx) => {
     const projectID = ctx.params.project;
