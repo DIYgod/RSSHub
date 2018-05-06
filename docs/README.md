@@ -6,7 +6,9 @@ sidebar: auto
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
-演示域名为 rss.now.sh，缓存时间 5 分钟
+::: tip 提示
+演示域名为 [rss.now.sh](https://rss.now.sh)，缓存时间 5 分钟，可以随意使用
+:::
 
 ## bilibili
 
@@ -299,7 +301,7 @@ keyword: 关键词
 
 ## 快递
 
-::: warning COMPATIBILITY NOTE
+::: warning 注意
 快递送达后请及时取消订阅，以免不必要地浪费服务器资源
 :::
 
@@ -315,10 +317,6 @@ number: 快递单号
 
 ## 贴吧
 
-::: warning COMPATIBILITY NOTE
-吧名如果包含中文，应该使用 `encodeURIComponent` 编码后使用
-:::
-
 ### 帖子列表
 
 举例: [https://rss.now.sh/tieba/forum/女图](https://rss.now.sh/tieba/forum/女图)
@@ -328,6 +326,10 @@ number: 快递单号
 参数: kw，吧名
 
 ## 妹子图
+
+::: warning 注意
+该网站在国外无法访问，故以下演示无效
+:::
 
 ### 首页（最新）
 
@@ -371,6 +373,14 @@ number: 快递单号
 参数: id，详情 id，可在详情页 URL 中找到
 
 ## pixiv
+
+### 用户收藏
+
+举例: [https://rss.now.sh/pixiv/user/bookmarks/15288095](https://rss.now.sh/pixiv/user/bookmarks/15288095)
+
+路由: `/pixiv/user/bookmarks/:id`
+
+参数: id，用户 id，可在用户主页 URL 中找到
 
 ### 用户动态
 
