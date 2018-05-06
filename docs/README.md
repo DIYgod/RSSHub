@@ -12,7 +12,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### 番剧
 
-举例: https://rss.now.sh/bilibili/bangumi/21680
+举例: [https://rss.now.sh/bilibili/bangumi/21680](https://rss.now.sh/bilibili/bangumi/21680)
 
 路由: `/bilibili/bangumi/:seasonid`
 
@@ -20,7 +20,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主投稿
 
-举例: https://rss.now.sh/bilibili/user/video/2267573
+举例: [https://rss.now.sh/bilibili/user/video/2267573](https://rss.now.sh/bilibili/user/video/2267573)
 
 路由: `/bilibili/user/video/:uid`
 
@@ -28,7 +28,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主动态
 
-举例: https://rss.now.sh/bilibili/user/dynamic/2267573
+举例: [https://rss.now.sh/bilibili/user/dynamic/2267573](https://rss.now.sh/bilibili/user/dynamic/2267573)
 
 路由: `/bilibili/user/dynamic/:uid`
 
@@ -36,7 +36,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主收藏夹
 
-举例: https://rss.now.sh/bilibili/user/fav/2267573
+举例: [https://rss.now.sh/bilibili/user/fav/2267573](https://rss.now.sh/bilibili/user/fav/2267573)
 
 路由: `/bilibili/user/fav/:uid`
 
@@ -44,7 +44,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主投币视频
 
-举例: https://rss.now.sh/bilibili/user/coin/2267573
+举例: [https://rss.now.sh/bilibili/user/coin/2267573](https://rss.now.sh/bilibili/user/coin/2267573)
 
 路由: `/bilibili/user/coin/:uid`
 
@@ -52,7 +52,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### 分区视频
 
-举例: https://rss.now.sh/bilibili/partion/33
+举例: [https://rss.now.sh/bilibili/partion/33](https://rss.now.sh/bilibili/partion/33)
 
 路由: `/bilibili/partion/:tid`
 
@@ -141,7 +141,7 @@ s
 
 ### 博主
 
-举例: https://rss.now.sh/weibo/user/3306934123
+举例: [https://rss.now.sh/weibo/user/3306934123](https://rss.now.sh/weibo/user/3306934123)
 
 路由: `/weibo/user/:uid`
 
@@ -151,7 +151,7 @@ s
 
 ### 歌单歌曲
 
-举例: https://rss.now.sh/ncm/playlist/35798529
+举例: [https://rss.now.sh/ncm/playlist/35798529](https://rss.now.sh/ncm/playlist/35798529)
 
 路由: `/ncm/playlist/:id`
 
@@ -159,7 +159,7 @@ s
 
 ### 用户歌单
 
-举例: https://rss.now.sh/ncm/user/playlist/45441555
+举例: [https://rss.now.sh/ncm/user/playlist/45441555](https://rss.now.sh/ncm/user/playlist/45441555)
 
 路由: `/ncm/user/playlist/:uid`
 
@@ -167,7 +167,7 @@ s
 
 ### 歌手专辑
 
-举例: https://rss.now.sh/ncm/artist/2116
+举例: [https://rss.now.sh/ncm/artist/2116](https://rss.now.sh/ncm/artist/2116)
 
 路由: `/ncm/artist/:id`
 
@@ -177,7 +177,7 @@ s
 
 ### 分类
 
-举例: https://rss.now.sh/juejin/category/frontend
+举例: [https://rss.now.sh/juejin/category/frontend](https://rss.now.sh/juejin/category/frontend)
 
 路由: `/juejin/category/:category`
 
@@ -191,7 +191,7 @@ s
 
 ### 首页
 
-举例: https://rss.now.sh/jianshu/home
+举例: [https://rss.now.sh/jianshu/home](https://rss.now.sh/jianshu/home)
 
 路由: `/jianshu/home`
 
@@ -199,7 +199,7 @@ s
 
 ### 7 日热门
 
-举例: https://rss.now.sh/jianshu/trending/weekly
+举例: [https://rss.now.sh/jianshu/trending/weekly](https://rss.now.sh/jianshu/trending/weekly)
 
 路由: `/jianshu/trending/weekly`
 
@@ -207,7 +207,7 @@ s
 
 ### 30 日热门
 
-举例: https://rss.now.sh/jianshu/trending/monthly
+举例: [https://rss.now.sh/jianshu/trending/monthly](https://rss.now.sh/jianshu/trending/monthly)
 
 路由: `/jianshu/trending/monthly`
 
@@ -215,7 +215,7 @@ s
 
 ### 专题
 
-举例: https://rss.now.sh/jianshu/collection/xYuZYD
+举例: [https://rss.now.sh/jianshu/collection/xYuZYD](https://rss.now.sh/jianshu/collection/xYuZYD)
 
 路由: `/jianshu/collection/:id`
 
@@ -223,7 +223,7 @@ s
 
 ### 作者
 
-举例: https://rss.now.sh/jianshu/user/yZq3ZV
+举例: [https://rss.now.sh/jianshu/user/yZq3ZV](https://rss.now.sh/jianshu/user/yZq3ZV)
 
 路由: `/jianshu/user/:id`
 
@@ -234,7 +234,7 @@ s
 
 ### 收藏夹
 
-举例: https://rss.now.sh/zhihu/collection/26444956
+举例: [https://rss.now.sh/zhihu/collection/26444956](https://rss.now.sh/zhihu/collection/26444956)
 
 路由: `/zhihu/collection/:id`
 
@@ -242,7 +242,7 @@ s
 
 ### 用户动态
 
-举例: https://rss.now.sh/zhihu/people/activities/diygod
+举例: [https://rss.now.sh/zhihu/people/activities/diygod](https://rss.now.sh/zhihu/people/activities/diygod)
 
 路由: `/zhihu/people/activities/:id`
 
@@ -250,7 +250,7 @@ s
 
 ### 专栏
 
-举例: https://rss.now.sh/zhihu/zhuanlan/googledevelopers
+举例: [https://rss.now.sh/zhihu/zhuanlan/googledevelopers](https://rss.now.sh/zhihu/zhuanlan/googledevelopers)
 
 路由: `/zhihu/zhuanlan/:id`
 
@@ -260,7 +260,7 @@ s
 
 ### 房源
 
-举例: https://rss.now.sh/ziroom/room/sh/1/2/五角场
+举例: [https://rss.now.sh/ziroom/room/sh/1/2/五角场](https://rss.now.sh/ziroom/room/sh/1/2/五角场)
 
 路由: `/ziroom/room/:city/:iswhole/:room/:keyword`
 
@@ -276,11 +276,11 @@ keyword: 关键词
 
 ## 快递
 
-<p class="warning">
-  快递送达后请及时取消订阅，以免不必要地浪费服务器资源
-</p>
+::: warning COMPATIBILITY NOTE
+快递送达后请及时取消订阅，以免不必要地浪费服务器资源
+:::
 
-举例: https://rss.now.sh/express/youzhengguoji/CV054432809US
+举例: [https://rss.now.sh/express/youzhengguoji/CV054432809US](https://rss.now.sh/express/youzhengguoji/CV054432809US)
 
 路由: `/express/:company/:number`
 
@@ -292,13 +292,13 @@ number: 快递单号
 
 ## 贴吧
 
-<p class="warning">
-  吧名如果包含中文，应该使用 `encodeURIComponent` 编码后使用
-</p>
+::: warning COMPATIBILITY NOTE
+吧名如果包含中文，应该使用 `encodeURIComponent` 编码后使用
+:::
 
 ### 帖子列表
 
-举例: https://rss.now.sh/tieba/forum/女图
+举例: [https://rss.now.sh/tieba/forum/女图](https://rss.now.sh/tieba/forum/女图)
 
 路由: `/tieba/forum/:kw`
 
@@ -308,13 +308,13 @@ number: 快递单号
 
 ### 首页（最新）
 
-举例: https://rss.now.sh/mzitu
+举例: [https://rss.now.sh/mzitu](https://rss.now.sh/mzitu)
 
 路由: `/mzitu/`
 
 ### 分类
 
-举例: https://rss.now.sh/mzitu/category/hot
+举例: [https://rss.now.sh/mzitu/category/hot](https://rss.now.sh/mzitu/category/hot)
 
 路由: `/mzitu/category/:category`
 
@@ -327,13 +327,13 @@ number: 快递单号
 
 ### 所有专题
 
-举例: https://rss.now.sh/mzitu/tags
+举例: [https://rss.now.sh/mzitu/tags](https://rss.now.sh/mzitu/tags)
 
 路由: `/mzitu/tags`
 
 ### 专题详情
 
-举例: https://rss.now.sh/mzitu/tag/shishen
+举例: [https://rss.now.sh/mzitu/tag/shishen](https://rss.now.sh/mzitu/tag/shishen)
 
 路由: `/mzitu/tag/:tag`
 
@@ -341,7 +341,7 @@ number: 快递单号
 
 ### 详情
 
-举例: https://rss.now.sh/mzitu/post/129452
+举例: [https://rss.now.sh/mzitu/post/129452](https://rss.now.sh/mzitu/post/129452)
 
 路由: `/mzitu/post/:id`
 
@@ -351,7 +351,7 @@ number: 快递单号
 
 ### 用户动态
 
-举例: https://rss.now.sh/pixiv/user/11
+举例: [https://rss.now.sh/pixiv/user/11](https://rss.now.sh/pixiv/user/11)
 
 路由: `/pixiv/user/:id`
 
@@ -359,7 +359,7 @@ number: 快递单号
 
 ### 排行榜
 
-举例: https://rss.now.sh/pixiv/ranking/week
+举例: [https://rss.now.sh/pixiv/ranking/week](https://rss.now.sh/pixiv/ranking/week)
 
 路由: `/pixiv/ranking/:mode/:date?`
 
@@ -368,11 +368,11 @@ number: 快递单号
 mode: 排行榜类型
 
 | pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行  | pixiv 新人排行  |
-| --------- | --------- |-------------- | ------------------ | ------------------ | -------------- | -------------- |
+| --------- | --------- | --------- | ------------- | ------------- | ------------- | ----------- |
 | day       | week      | month     | day_male      | day_female    | week_original | week_rookie |
 
 | pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
-| --------- | ------------- | ------------- | ------------- | ----------- | 
+| -------------- | ------------------ | ------------------ | -------------- | -------------- |
 | day_r18        | day_male_r18       | day_female_r18     | week_r18       | week_r18g      |
 
 date: 日期，取值形如 `2018-4-25`
@@ -381,7 +381,7 @@ date: 日期，取值形如 `2018-4-25`
 
 ### 正在上映的电影
 
-举例: https://rss.now.sh/douban/movie/playing
+举例: [https://rss.now.sh/douban/movie/playing](https://rss.now.sh/douban/movie/playing)
 
 路由: `/douban/movie/playing`
 
@@ -389,7 +389,7 @@ date: 日期，取值形如 `2018-4-25`
 
 ### 正在上映的高分电影
 
-举例: https://rss.now.sh/douban/movie/playing/7.5
+举例: [https://rss.now.sh/douban/movie/playing/7.5](https://rss.now.sh/douban/movie/playing/7.5)
 
 路由
 
@@ -405,7 +405,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 即将上映的电影
 
-举例: https://rss.now.sh/douban/movie/later
+举例: [https://rss.now.sh/douban/movie/later](https://rss.now.sh/douban/movie/later)
 
 路由: `/douban/movie/later`
 
@@ -413,7 +413,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 北美票房榜
 
-举例: https://rss.now.sh/douban/movie/ustop
+举例: [https://rss.now.sh/douban/movie/ustop](https://rss.now.sh/douban/movie/ustop)
 
 路由: `/douban/movie/ustop`
 
@@ -423,7 +423,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 无聊图
 
-举例: https://rss.now.sh/jandan/pic
+举例: [https://rss.now.sh/jandan/pic](https://rss.now.sh/jandan/pic)
 
 路由: `/jandan/pic`
 
@@ -433,7 +433,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 图卦
 
-举例: https://rss.now.sh/dapenti/tugua
+举例: [https://rss.now.sh/dapenti/tugua](https://rss.now.sh/dapenti/tugua)
 
 路由: `/dapenti/tugua`
 
@@ -443,7 +443,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 周报
 
-举例: https://rss.now.sh/dockone/weekly
+举例: [https://rss.now.sh/dockone/weekly](https://rss.now.sh/dockone/weekly)
 
 路由: `/dockone/weekly`
 
@@ -453,7 +453,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 吐槽新帖
 
-举例: https://rss.now.sh/tucaoqq/post/28564/CdRI0728
+举例: [https://rss.now.sh/tucaoqq/post/28564/CdRI0728](https://rss.now.sh/tucaoqq/post/28564/CdRI0728)
 
 路由: `/tucaoqq/post/:project/:key`
 
@@ -467,7 +467,7 @@ key: 产品密钥
 
 ### 小说章节
 
-举例: https://rss.now.sh/biquge/novel/latestchapter/52_52542
+举例: [https://rss.now.sh/biquge/novel/latestchapter/52_52542](https://rss.now.sh/biquge/novel/latestchapter/52_52542)
 
 路由: `/biquge/novel/latestchapter/:id`
 
