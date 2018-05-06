@@ -7,6 +7,13 @@
         <generator>RSSHub</generator>
         <webMaster>i@html.love</webMaster>
         <language>zh-cn</language>
+        {{ if image }}
+        <image>
+            <url>{{ image }}</url>
+            <title><![CDATA[{{ title || 'RSSHub' }}]]></title>
+            <link>{{ link }}</link>
+        </image>
+        {{ /if }}
         <lastBuildDate>{{ lastBuildDate }}</lastBuildDate>
         <ttl>300</ttl>
         {{ each item }}
