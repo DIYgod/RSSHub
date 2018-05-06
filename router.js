@@ -19,7 +19,7 @@ router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers
 router.get('/bilibili/user/followings/:uid', require('./routes/bilibili/followings'));
 router.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
 router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
-router.get('/bilibili/video/reply/:avid', require('./routes/bilibili/videoReply'));
+router.get('/bilibili/video/reply/:aid', require('./routes/bilibili/reply'));
 
 // // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));

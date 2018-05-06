@@ -154,11 +154,11 @@ s
 
 ### 视频评论
 
-举例: https://rss.now.sh/bilibili/video/reply/7
+举例: https://rss.now.sh/bilibili/video/reply/21669336
 
-路由: `/bilibili/video/reply/:avid`
+路由: `/bilibili/video/reply/:aid`
 
-参数: avid，视频 AV 号(仅数字)
+参数: aid，可在视频页 URL 中找到
 
 ## 微博
 
