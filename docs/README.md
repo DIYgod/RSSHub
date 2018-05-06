@@ -1,30 +1,16 @@
 ---
-search: zh-Hans
+sidebar: auto
 ---
 
-# RSSHub
-
-🍭 使用 RSS 连接全世界
+# 使用
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
-## 参与我们
+演示域名为 rss.now.sh，缓存时间 5 分钟
 
-如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
+## bilibili
 
-可以通过以下途径参与讨论：
-
-- [Telegram 群](https://t.me/rsshub)
-
-## 使用
-
-域名为 rss.now.sh，缓存时间 5 分钟
-
-下面是目前支持的内容
-
-### bilibili
-
-#### 番剧
+### 番剧
 
 举例: https://rss.now.sh/bilibili/bangumi/21680
 
@@ -32,7 +18,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 参数: seasonid，番剧 id，可在番剧主页 URL 中找到
 
-#### UP 主投稿
+### UP 主投稿
 
 举例: https://rss.now.sh/bilibili/user/video/2267573
 
@@ -40,7 +26,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-#### UP 主动态
+### UP 主动态
 
 举例: https://rss.now.sh/bilibili/user/dynamic/2267573
 
@@ -48,7 +34,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-#### UP 主收藏夹
+### UP 主收藏夹
 
 举例: https://rss.now.sh/bilibili/user/fav/2267573
 
@@ -56,7 +42,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-#### UP 主投币视频
+### UP 主投币视频
 
 举例: https://rss.now.sh/bilibili/user/coin/2267573
 
@@ -64,7 +50,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-#### 分区视频
+### 分区视频
 
 举例: https://rss.now.sh/bilibili/partion/33
 
@@ -151,9 +137,9 @@ s
 | 182  | 183  | 85   | 184   | 86   |
 
 
-### 微博
+## 微博
 
-#### 博主
+### 博主
 
 举例: https://rss.now.sh/weibo/user/3306934123
 
@@ -161,9 +147,9 @@ s
 
 参数: uid，用户 id，博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
 
-### 网易云音乐
+## 网易云音乐
 
-#### 歌单歌曲
+### 歌单歌曲
 
 举例: https://rss.now.sh/ncm/playlist/35798529
 
@@ -171,7 +157,7 @@ s
 
 参数: id，歌单 id，可在歌单页 URL 中找到
 
-#### 用户歌单
+### 用户歌单
 
 举例: https://rss.now.sh/ncm/user/playlist/45441555
 
@@ -179,7 +165,7 @@ s
 
 参数: uid，用户 uid，可在用户主页 URL 中找到
 
-#### 歌手专辑
+### 歌手专辑
 
 举例: https://rss.now.sh/ncm/artist/2116
 
@@ -187,9 +173,9 @@ s
 
 参数: id，歌手 id，可在歌手详情页 URL 中找到
 
-### 掘金
+## 掘金
 
-#### 分类
+### 分类
 
 举例: https://rss.now.sh/juejin/category/frontend
 
@@ -201,9 +187,9 @@ s
 | -------- | ------- | ---- | ------- | ------ | ------- | ------- | ------- | ---- |
 | frontend | android | ios  | backend | design | product | freebie | article | ai   |
 
-### 简书
+## 简书
 
-#### 首页
+### 首页
 
 举例: https://rss.now.sh/jianshu/home
 
@@ -211,7 +197,7 @@ s
 
 参数: 无
 
-#### 7 日热门
+### 7 日热门
 
 举例: https://rss.now.sh/jianshu/trending/weekly
 
@@ -219,7 +205,7 @@ s
 
 参数: 无
 
-#### 30 日热门
+### 30 日热门
 
 举例: https://rss.now.sh/jianshu/trending/monthly
 
@@ -227,7 +213,7 @@ s
 
 参数: 无
 
-#### 专题
+### 专题
 
 举例: https://rss.now.sh/jianshu/collection/xYuZYD
 
@@ -235,7 +221,7 @@ s
 
 参数: id，专题 id，可在专题页 URL 中找到
 
-#### 作者
+### 作者
 
 举例: https://rss.now.sh/jianshu/user/yZq3ZV
 
@@ -244,9 +230,9 @@ s
 参数: id，作者 id，可在作者主页 URL 中找到
 
 
-### 知乎
+## 知乎
 
-#### 收藏夹
+### 收藏夹
 
 举例: https://rss.now.sh/zhihu/collection/26444956
 
@@ -254,7 +240,7 @@ s
 
 参数: id，收藏夹 id，可在收藏夹页面 URL 中找到
 
-#### 用户动态
+### 用户动态
 
 举例: https://rss.now.sh/zhihu/people/activities/diygod
 
@@ -262,7 +248,7 @@ s
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
-#### 专栏
+### 专栏
 
 举例: https://rss.now.sh/zhihu/zhuanlan/googledevelopers
 
@@ -270,9 +256,9 @@ s
 
 参数: id，专栏 id，可在专栏主页 URL 中找到
 
-### 自如
+## 自如
 
-#### 房源
+### 房源
 
 举例: https://rss.now.sh/ziroom/room/sh/1/2/五角场
 
@@ -288,7 +274,7 @@ room: 房间数
 
 keyword: 关键词
 
-### 快递
+## 快递
 
 <p class="warning">
   快递送达后请及时取消订阅，以免不必要地浪费服务器资源
@@ -304,13 +290,13 @@ company: 快递公司代码，参考 [API URL 所支持的快递公司及参数�
 
 number: 快递单号
 
-### 贴吧
+## 贴吧
 
 <p class="warning">
   吧名如果包含中文，应该使用 `encodeURIComponent` 编码后使用
 </p>
 
-#### 帖子列表
+### 帖子列表
 
 举例: https://rss.now.sh/tieba/forum/女图
 
@@ -318,15 +304,15 @@ number: 快递单号
 
 参数: kw，吧名
 
-### 妹子图
+## 妹子图
 
-#### 首页（最新）
+### 首页（最新）
 
 举例: https://rss.now.sh/mzitu
 
 路由: `/mzitu/`
 
-#### 分类
+### 分类
 
 举例: https://rss.now.sh/mzitu/category/hot
 
@@ -339,13 +325,13 @@ number: 快递单号
 | hot  | best | xinggan | japan | taiwan | mm   |
 
 
-#### 所有专题
+### 所有专题
 
 举例: https://rss.now.sh/mzitu/tags
 
 路由: `/mzitu/tags`
 
-#### 专题详情
+### 专题详情
 
 举例: https://rss.now.sh/mzitu/tag/shishen
 
@@ -353,7 +339,7 @@ number: 快递单号
 
 参数: tag，专题名，可在专题页 URL 中找到
 
-#### 详情
+### 详情
 
 举例: https://rss.now.sh/mzitu/post/129452
 
@@ -361,9 +347,9 @@ number: 快递单号
 
 参数: id，详情 id，可在详情页 URL 中找到
 
-### pixiv
+## pixiv
 
-#### 用户动态
+### 用户动态
 
 举例: https://rss.now.sh/pixiv/user/11
 
@@ -371,7 +357,7 @@ number: 快递单号
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
-#### 排行榜
+### 排行榜
 
 举例: https://rss.now.sh/pixiv/ranking/week
 
@@ -381,15 +367,19 @@ number: 快递单号
 
 mode: 排行榜类型
 
-| 名称 | pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行  | pixiv 新人排行  | pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
-| --------- | --------- | --------- | --------- | ------------- | ------------- | ------------- | ----------- | -------------- | ------------------ | ------------------ | -------------- | -------------- |
-| 取值       | day       | week      | month     | day_male      | day_female    | week_original | week_rookie | day_r18        | day_male_r18       | day_female_r18     | week_r18       | week_r18g      |
+| pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行  | pixiv 新人排行  |
+| --------- | --------- |-------------- | ------------------ | ------------------ | -------------- | -------------- |
+| day       | week      | month     | day_male      | day_female    | week_original | week_rookie |
+
+| pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
+| --------- | ------------- | ------------- | ------------- | ----------- | 
+| day_r18        | day_male_r18       | day_female_r18     | week_r18       | week_r18g      |
 
 date: 日期，取值形如 `2018-4-25`
 
-### 豆瓣
+## 豆瓣
 
-#### 正在上映的电影
+### 正在上映的电影
 
 举例: https://rss.now.sh/douban/movie/playing
 
@@ -397,7 +387,7 @@ date: 日期，取值形如 `2018-4-25`
 
 参数: 无
 
-#### 正在上映的高分电影
+### 正在上映的高分电影
 
 举例: https://rss.now.sh/douban/movie/playing/7.5
 
@@ -413,7 +403,7 @@ score: 返回大于等于这个分数的电影
 
 city: 城市的中文名，可选，默认北京
 
-#### 即将上映的电影
+### 即将上映的电影
 
 举例: https://rss.now.sh/douban/movie/later
 
@@ -421,7 +411,7 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
-#### 北美票房榜
+### 北美票房榜
 
 举例: https://rss.now.sh/douban/movie/ustop
 
@@ -429,9 +419,9 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
-### 煎蛋
+## 煎蛋
 
-#### 无聊图
+### 无聊图
 
 举例: https://rss.now.sh/jandan/pic
 
@@ -439,9 +429,9 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
-### 喷嚏
+## 喷嚏
 
-#### 图卦
+### 图卦
 
 举例: https://rss.now.sh/dapenti/tugua
 
@@ -449,9 +439,9 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
-### Dockone
+## Dockone
 
-#### 周报
+### 周报
 
 举例: https://rss.now.sh/dockone/weekly
 
@@ -459,9 +449,9 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
-### 腾讯吐个槽
+## 腾讯吐个槽
 
-#### 吐槽新帖
+### 吐槽新帖
 
 举例: https://rss.now.sh/tucaoqq/post/28564/CdRI0728
 
@@ -473,12 +463,12 @@ project: 产品ID
 
 key: 产品密钥
 
-## 搭建
+## 笔趣阁
 
-环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
+### 小说章节
 
-安装依赖：`yarn`
+举例: https://rss.now.sh/biquge/novel/latestchapter/52_52542
 
-修改配置：配置文件为 `config.js`
+路由: `/biquge/novel/latestchapter/:id`
 
-启动程序：`node index.js`
+参数: id，小说 id，可在对应小说页 URL 中找到

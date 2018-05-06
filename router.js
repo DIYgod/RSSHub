@@ -80,4 +80,7 @@ router.get('/dockone/weekly', require('./routes/dockone/weekly'));
 // 腾讯吐个槽
 router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 
+// 笔趣阁
+router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter'));
+
 module.exports = router;

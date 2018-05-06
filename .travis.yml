@@ -1,0 +1,24 @@
+language: node_js
+
+node_js: stable
+
+install:
+  - yarn
+
+script:
+  - npm run docs:build
+  - cd docs/.vuepress/dist
+  - echo 'rsshub.js.org' > CNAME
+
+after_script:
+  - git init
+  - git config user.name "Travis CI"
+  - git config user.email "no-reply@html.love"
+  - git add -A
+  - git commit -m 'deploy'
+  - git push -f "https://${GH_TOKEN}@github.com/DIYgod/RSSHub.git" master:gh-pages
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
