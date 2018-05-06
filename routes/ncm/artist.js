@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -17,11 +16,10 @@ module.exports = async (ctx) => {
 
     const data = response.data;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: data.artist.name,
         link: `https://music.163.com/#/artist/album?id=${id}`,
         description: `网易云音乐歌手专辑 - ${data.artist.name}`,
-        lastBuildDate: new Date().toUTCString(),
         item: data.hotAlbums.map((item) => {
             const singer = item.artists.length === 1 ? item.artists[0].name : item.artists.reduce((prev, cur) => (prev.name || prev) + '/' + cur.name);
             return {

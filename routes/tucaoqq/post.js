@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 const md5 = require('js-md5');
 
@@ -19,11 +18,10 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${projectID} 的 吐个槽新帖`,
         link: `https://support.qq.com/product/${projectID}`,
         description: `${projectID} 的 吐个槽新帖`,
-        lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => {
             let pubdate = new Date(item.created_at.replace(' ', 'T') + "+08:00");
             let imgHTML = '';

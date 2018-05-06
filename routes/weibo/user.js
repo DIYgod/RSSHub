@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 // 格式化每条微博的HTML
@@ -92,11 +91,10 @@ module.exports = async (ctx) => {
         }
     });
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${name}的微博`,
         link: `http://weibo.com/${uid}/`,
         description: `${name}的微博`,
-        lastBuildDate: new Date().toUTCString(),
         item: response.data.data.cards.filter((item) => item.mblog && !item.mblog.isTop).map((item) => {
             const title = item.mblog.text.replace(/<.*?>/g, '');
             return {

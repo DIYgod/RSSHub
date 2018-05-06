@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -17,11 +16,10 @@ module.exports = async (ctx) => {
 
     const data = JSON.parse(response.data.match(/^seasonListCallback\((.*)\);$/)[1]).result || {};
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: data.title,
         link: `https://bangumi.bilibili.com/anime/${seasonid}/`,
         description: data.evaluate,
-        lastBuildDate: new Date().toUTCString(),
         item: data.episodes && data.episodes.map((item) => ({
             title: `第${item.index}话 ${item.index_title}`,
             description: `更新时间：${item.update_time}<img referrerpolicy="no-referrer" src="${item.cover}">`,

@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 
 module.exports = async (ctx) => {
     const response = await axios({
@@ -9,10 +8,9 @@ module.exports = async (ctx) => {
     });
     const movieList = response.data.subjects;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: '豆瓣电影北美票房榜',
         link: 'https://movie.douban.com/chart',
-        lastBuildDate: new Date().toUTCString(),
         item: movieList.map((item) => {
             item = item.subject;
             return {

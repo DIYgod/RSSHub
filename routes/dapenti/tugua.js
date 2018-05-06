@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 const iconv = require('iconv-lite');
@@ -47,11 +46,10 @@ module.exports = async (ctx) => {
         result_item.push(item)
     }
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `喷嚏图卦`,
         link: `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70`,
         description: `喷嚏图卦`,
-        lastBuildDate: new Date().toUTCString(),
         item: result_item,
     });
 };

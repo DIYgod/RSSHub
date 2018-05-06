@@ -9,8 +9,7 @@ if (!pixivConfig) {
 }
 
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const FormData = require('form-data');
 const getToken = require('./token');
 const maskHeader = require('./constants').maskHeader;
@@ -40,11 +39,10 @@ module.exports = async (ctx) => {
     const illusts = response.data.illusts;
     const username = illusts[0].user.name
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${username} 的 pixiv 动态`,
         link: `https://www.pixiv.net/member.php?id=${id}`,
         description: `${username} 的 pixiv 最新动态`,
-        lastBuildDate: new Date().toUTCString(),
         item: illusts.map((illust) => {
             const images = [];
             if (illust.page_count === 1) {

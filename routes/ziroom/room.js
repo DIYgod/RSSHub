@@ -1,7 +1,6 @@
 const axios = require('axios');
 const qs = require('querystring');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -31,11 +30,10 @@ module.exports = async (ctx) => {
     //判断数据的类型,如果有数据就是数组类型的,没有数据的话，就赋值为空数组
     data = (data instanceof Array) ? data : [{title:"我们找不到任何与您的搜索条件匹配的结果，但是调整您的搜索条件可能会有所帮助",room_name:"",list_img:"",city:"",id:""}];
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
         link: `http://${domain}`,
         description: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
-        lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
             title: item.title,
             description: `${item.room_name}<img referrerpolicy="no-referrer" src="${item.list_img}">`,

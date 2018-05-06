@@ -77,7 +77,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 1. 在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径添加获取 RSS 内容的脚本
 
-1. 更新文档 [/docs/README.md](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md)
+1. 更新 README 和文档: [/README.md](https://github.com/DIYgod/RSSHub/blob/master/README.md) [/docs/README.md](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md)
 
 ### 参与讨论
 

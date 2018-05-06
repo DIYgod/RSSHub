@@ -9,8 +9,7 @@ if (!pixivConfig) {
 }
 
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const FormData = require('form-data');
 const getToken = require('./token');
 const maskHeader = require('./constants').maskHeader;
@@ -82,11 +81,10 @@ module.exports = async (ctx) => {
 
     const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 `;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: (ctx.params.date ? dateStr : '') + titles[mode],
         link: links[mode],
         description: dateStr + titles[mode],
-        lastBuildDate: new Date().toUTCString(),
         item: illusts.map((illust, index) => {
             const images = [];
             if (illust.page_count === 1) {

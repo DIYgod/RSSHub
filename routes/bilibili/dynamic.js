@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const JSONbig = require('json-bigint');
 const config = require('../../config');
 
@@ -17,11 +16,10 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data.cards;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${data[0].desc.user_profile.info.uname} 的 bilibili 动态`,
         link: `https://space.bilibili.com/${uid}/#/dynamic`,
         description: `${data[0].desc.user_profile.info.uname} 的 bilibili 动态`,
-        lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => {
             const parsed = JSONbig.parse(item.card);
             const data = parsed.item || parsed;
