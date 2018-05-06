@@ -31,7 +31,6 @@
     "crypto": "1.0.1",
     "eslint": "4.19.1",
     "form-data": "^2.3.2",
-    "js-md5": "^0.7.3",
     "json-bigint": "0.2.3",
     "koa": "2.5.0",
     "koa-redis-cache": "3.0.0",
