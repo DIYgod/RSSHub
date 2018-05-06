@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -33,11 +32,10 @@ module.exports = async (ctx) => {
 
     const data = response.data;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `掘金${cat.name}`,
         link: `https://juejin.im/welcome/${category}`,
         description: `掘金${cat.name}`,
-        lastBuildDate: new Date().toUTCString(),
         item: data.d && data.d.entrylist && data.d.entrylist.map((item) => ({
             title: item.title,
             description: `${(item.content || item.summaryInfo || '无描述').replace(/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/g, '')}`,

@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -24,11 +23,10 @@ module.exports = async (ctx) => {
     const name = data.users[id].name;
     const list = Object.values(data.activities).sort((a, b) => b.createdTime - a.createdTime);
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${name}的知乎动态`,
         link: `https://www.zhihu.com/people/${id}/activities`,
         description: data.users[id].headline || data.users[id].description,
-        lastBuildDate: new Date().toUTCString(),
         item: list && list.map((item) => {
             const type = item.target.schema;
             const detail = data[`${type}s`][item.target.id];

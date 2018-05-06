@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -26,18 +25,15 @@ module.exports = async (ctx) => {
     const list = listRes.data;
     const info = infoRes.data;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `知乎专栏-${info.name}`,
         link: `https://zhuanlan.zhihu.com/${id}`,
         description: info.description,
-        lastBuildDate: new Date().toUTCString(),
-        item: list.map((item) => {
-                return {
-                    title: item.title,
-                    description: item.content,
-                    pubDate: new Date(item.publishedTime).toUTCString(),
-                    link: `https://zhuanlan.zhihu.com${item.url}`
-            };
-        }),
+        item: list.map((item) => ({
+            title: item.title,
+            description: item.content.replace(/<img src="/g, '<img referrerpolicy="no-referrer" src="https://pic4.zhimg.com/'),
+            pubDate: new Date(item.publishedTime).toUTCString(),
+            link: `https://zhuanlan.zhihu.com${item.url}`
+        })),
     });
 };

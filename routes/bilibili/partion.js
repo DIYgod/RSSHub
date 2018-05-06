@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -21,11 +20,10 @@ module.exports = async (ctx) => {
         name = list[0].tname;
     }
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `bilibili ${name}分区`,
         link: 'https://www.bilibili.com',
         description: `bilibili ${name}分区`,
-        lastBuildDate: new Date().toUTCString(),
         item: list && list.map((item) => ({
             title: `${item.title} - ${item.owner.name}`,
             description: `${item.desc}<img referrerpolicy="no-referrer" src="${item.pic}">`,

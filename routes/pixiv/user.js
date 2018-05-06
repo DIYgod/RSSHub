@@ -8,12 +8,9 @@ if (!pixivConfig) {
     return;
 }
 
-const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
-const FormData = require('form-data');
+const template = require('../../utils/template');
 const getToken = require('./token');
-const maskHeader = require('./constants').maskHeader;
+const getIllusts = require('./api/getIllusts');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -23,28 +20,15 @@ module.exports = async (ctx) => {
         return;
     }
 
-    const response = await axios({
-        method: 'get',
-        url: 'https://app-api.pixiv.net/v1/user/illusts',
-        headers: {
-            ...maskHeader,
-            'Authorization': 'Bearer ' + getToken()
-        },
-        params: {
-            user_id: id,
-            filter: 'for_ios',
-            type: 'illust'
-        },
-    });
+    const response = await getIllusts(id, getToken());
 
     const illusts = response.data.illusts;
     const username = illusts[0].user.name
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${username} 的 pixiv 动态`,
         link: `https://www.pixiv.net/member.php?id=${id}`,
         description: `${username} 的 pixiv 最新动态`,
-        lastBuildDate: new Date().toUTCString(),
         item: illusts.map((illust) => {
             const images = [];
             if (illust.page_count === 1) {

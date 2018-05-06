@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -20,17 +19,18 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(data);
     const list = $('div.zm-item');
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: $('title').text(),
         link: `https://www.zhihu.com/collection/${id}`,
         description: `${$('#zh-fav-head-description').text()}`,
-        lastBuildDate: new Date().toUTCString(),
         item: list && list.map((index, item) => {
             item = $(item);
+            let linkUrl = item.find('.zm-item-title a').attr('href');
+            if (linkUrl.startsWith('/')) linkUrl = 'https://www.zhihu.com' + linkUrl;
             return {
                 title: item.find('.zm-item-title a').text(),
                 description: `内容：${item.find('textarea').text()}`,
-                link: `https://www.zhihu.com${item.find('.zm-item-title a').attr('href')}`
+                link: linkUrl
             };
         }).get(),
     });

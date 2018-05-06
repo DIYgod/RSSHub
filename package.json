@@ -4,7 +4,9 @@
   "description": "Make RSS Great Again!",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,9 @@
     "url": "https://github.com/DIYgod/RSSHub/issues"
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "vuepress": "0.8.4"
+  },
   "dependencies": {
     "art-template": "4.12.2",
     "axios": "0.18.0",
