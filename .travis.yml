@@ -5,6 +5,13 @@ node_js: stable
 install:
   - yarn
 
+before_install:
+- |
+    if [ ! (git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(^docs)/') ]
+    then
+      exit 1
+    fi
+
 script:
   - npm run docs:build
   - cd docs/.vuepress/dist
