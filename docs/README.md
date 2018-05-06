@@ -50,6 +50,22 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
+### UP 主粉丝
+
+举例: https://rss.now.sh/bilibili/user/followers/2267573
+
+路由: `/bilibili/user/followers/:uid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主关注用户
+
+举例: https://rss.now.sh/bilibili/user/followings/2267573
+
+路由: `/bilibili/user/followings/:uid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
 ### 分区视频
 
 举例: https://rss.now.sh/bilibili/partion/33

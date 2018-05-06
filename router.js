@@ -15,6 +15,8 @@ router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
 router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/fav'));
 router.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
 router.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
+router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers'));
+router.get('/bilibili/user/followings/:uid', require('./routes/bilibili/followings'));
 router.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
 router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
 
