@@ -61,7 +61,7 @@ router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
 router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 
 // // Pixiv
-router.get('/pixiv/user/:id/bookmarks', require('./routes/pixiv/bookmarks'));
+router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
 router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
 router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
 
