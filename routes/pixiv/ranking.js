@@ -8,17 +8,9 @@ if (!pixivConfig) {
     return;
 }
 
-const axios = require('axios');
 const template = require('../../utils/template');
-const FormData = require('form-data');
 const getToken = require('./token');
-const maskHeader = require('./constants').maskHeader;
-const assert = require('assert');
-const util = require('util');
-
-const allowMode = [
-  'day', 'week', 'month', 'day_male', 'day_female', 'week_original', 'week_rookie', 'day_r18', 'day_male_r18', 'day_female_r18', 'week_r18', 'week_r18g'
-];
+const getRanking = require('./api/getRanking');
 
 const titles = {
   'day': 'pixiv 日排行',
@@ -54,28 +46,12 @@ module.exports = async (ctx) => {
     const mode = ctx.params.mode;
     const date = ctx.params.date ? new Date(ctx.params.date) : new Date();
 
-    assert(allowMode.includes(mode), 'Mode not allow.');
-
     if (typeof getToken() === 'null') {
         ctx.throw(500);
         return;
     }
 
-    const response = await axios({
-        method: 'get',
-        url: 'https://app-api.pixiv.net/v1/illust/ranking',
-        headers: {
-            ...maskHeader,
-            'Authorization': 'Bearer ' + getToken()
-        },
-        params: {
-            mode: mode,
-            filter: 'for_ios',
-            ...(ctx.params.date && {
-              date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-            })
-        },
-    });
+    const response = await getRanking(mode, ctx.params.date && date, getToken());
 
     const illusts = response.data.illusts;
 
