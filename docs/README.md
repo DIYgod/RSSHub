@@ -462,3 +462,13 @@ city: 城市的中文名，可选，默认北京
 project: 产品ID
 
 key: 产品密钥
+
+## 笔趣阁
+
+### 小说章节
+
+举例: https://rss.now.sh/biquge/novel/latestchapter/52_52542
+
+路由: `/biquge/novel/latestchapter/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
