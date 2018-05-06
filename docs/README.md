@@ -152,6 +152,13 @@ s
 | ---- | ---- | ---- | ----- | ---- |
 | 182  | 183  | 85   | 184   | 86   |
 
+### 视频评论
+
+举例: https://rss.now.sh/bilibili/video/reply/7
+
+路由: `/bilibili/video/reply/:avid`
+
+参数: avid，视频 AV 号(仅数字)
 
 ## 微博
 
