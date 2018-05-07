@@ -505,3 +505,19 @@ key: 产品密钥
 路由: `/biquge/novel/latestchapter/:id`
 
 参数: id，小说 id，可在对应小说页 URL 中找到
+
+## 开发者头条
+
+### 今天头条
+
+举例: [https://rss.now.sh/toutiao/today](https://rss.now.sh/toutiao/today)
+
+路由: `/toutiao/today`
+
+### 独家号
+
+举例: [https://rss.now.sh/toutiao/user/:id](https://rss.now.sh/toutiao/user/:id)
+
+路由: `/toutiao/user/:id`
+
+参数: id，独家号 id，可在对应独家号页 URL 中找到
