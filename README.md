@@ -1,4 +1,7 @@
-# RSSHub
+<p align="center">
+<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+</p>
+<h1 align="center">RSSHub</h1>
 
 > 🍭 使用 RSS 连接全世界
 
@@ -68,6 +71,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
   - 吐槽新帖
 - 笔趣阁
   - 小说章节
+- 开发者头条
+  - 今天头条
+  - 独家号
 
 ## 参与我们
 

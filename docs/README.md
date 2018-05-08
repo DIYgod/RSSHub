@@ -2,7 +2,10 @@
 sidebar: auto
 ---
 
-# 使用
+<p align="center">
+<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+</p>
+<h1 align="center" class="logo">RSSHub</h1>
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
