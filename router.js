@@ -87,4 +87,8 @@ router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 // 笔趣阁
 router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter'));
 
+// 开发者头条
+router.get('/toutiao/today', require('./routes/toutiao/today'));
+router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
+
 module.exports = router;
