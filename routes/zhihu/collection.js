@@ -25,7 +25,7 @@ module.exports = async (ctx) => {
         description: `${$('#zh-fav-head-description').text()}`,
         item: list && list.map((index, item) => {
             item = $(item);
-            let linkUrl = item.find('.zm-item-title a').attr('href');
+            let linkUrl = item.find('link').attr('href');
             if (linkUrl.startsWith('/')) linkUrl = 'https://www.zhihu.com' + linkUrl;
             return {
                 title: item.find('.zm-item-title a').text(),
