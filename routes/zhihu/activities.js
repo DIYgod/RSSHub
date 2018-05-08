@@ -49,14 +49,17 @@ module.exports = async (ctx) => {
                 title = detail.excerptTitle.length > 17 ? detail.excerptTitle.slice(0, 17) + '...' : detail.excerptTitle;
                 const images = [];
                 let text = "";
+                let link = "";
                 detail.content.forEach(contentItem => {
                     if (contentItem.type === "text") {
-                        text = contentItem.ownText;
+                        text = `<p>${contentItem.ownText}</p>`;
                     } else if (contentItem.type === "image") {
                         images.push(`<p><img referrerpolicy="no-referrer" src="${contentItem.url.replace('xl', 'r')}"/></p>`);
+                    } else if (contentItem.type === "link") {
+                        link = `<p><a href="${contentItem.url}" target="_blank">${contentItem.title}</a></p>`
                     }
                 })
-                description = `<p>${text}</p>${images.join('')}`;
+                description = `${text}${link}${images.join('')}`;
                 url = `https://www.zhihu.com/pin/${detail.id}`;
                 break;
             case 'question':
