@@ -47,13 +47,27 @@ module.exports = async (ctx) => {
                 break;
             case 'pin':
                 title = detail.excerptTitle.length > 17 ? detail.excerptTitle.slice(0, 17) + '...' : detail.excerptTitle;
-                description = detail.excerptTitle;
+                const images = [];
+                let text = "";
+                detail.content.forEach(contentItem => {
+                    if (contentItem.type === "text") {
+                        text = contentItem.ownText;
+                    } else if (contentItem.type === "image") {
+                        images.push(`<p><img referrerpolicy="no-referrer" src="${contentItem.url.replace('xl', 'r')}"/></p>`);
+                    }
+                })
+                description = `<p>${text}</p>${images.join('')}`;
                 url = `https://www.zhihu.com/pin/${detail.id}`;
                 break;
             case 'question':
                 title = detail.title;
                 description = detail.excerpt;
                 url = `https://www.zhihu.com/question/${detail.id}`;
+                break;
+            case 'column':
+                title = detail.title;
+                description = `<p>${detail.intro}</p><p><img referrerpolicy="no-referrer" src="${detail.imageUrl}"/></p>`;
+                url = `${detail.url}`;
                 break;
             }
 
