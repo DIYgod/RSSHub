@@ -516,7 +516,7 @@ key: 产品密钥
 
 ### 独家号
 
-举例: [https://rss.now.sh/toutiao/user/:id](https://rss.now.sh/toutiao/user/:id)
+举例: [https://rss.now.sh/toutiao/user/140544](https://rss.now.sh/toutiao/user/140544)
 
 路由: `/toutiao/user/:id`
 

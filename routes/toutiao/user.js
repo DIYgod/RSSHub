@@ -4,10 +4,9 @@ const cheerio = require('cheerio');
 const config = require('../../config');
 
 const baseUrl = 'https://toutiao.io';
-let requestUrl = `${baseUrl}/subjects/userID?f=new`
 module.exports = async (ctx)=>{
     const id = ctx.params.id;
-    requestUrl = requestUrl.replace('userID',id);
+    let requestUrl = `${baseUrl}/subjects/${id}?f=new`;
     const response = await axios({
         method:'get',
         url:requestUrl,
