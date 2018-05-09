@@ -11,5 +11,11 @@ module.exports = {
     },
     disqus: {
         api_key: 'E8Uh5l5fHZ6gD8U3KycjAIAk46f68Zw7C6eW8WSjZvCLXebZ7p0r1yrYDrLilk2F',
+    },
+    twitter: {
+        consumer_key: 'ElluTL2zGDpHXj37FH3JEVOwe',
+        consumer_secret: '0UTWfADFbu1jsxz6x9BHHR8J661Szkc0z6SXDnSAwKunKzQpXf',
+        access_token: '887098930139418624-1XJ8XODop113RbFSC5F3ChJneABrfXX',
+        access_token_secret: '7pauzYfJqmdZrdZetmZwBlMlkBBECGs1I2M68Okbv8Yyv'
     }
 };

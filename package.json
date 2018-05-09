@@ -38,6 +38,7 @@
     "lru-cache": "4.1.2",
     "path-to-regexp": "2.2.0",
     "readall": "1.0.0",
+    "twit": "2.2.9",
     "winston": "3.0.0-rc3"
   }
 }

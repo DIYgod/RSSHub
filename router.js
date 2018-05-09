@@ -97,4 +97,7 @@ router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 // Disqus
 router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
 
+// Twitter
+router.get('/twitter/user/:id', require('./routes/twitter/user'));
+
 module.exports = router;

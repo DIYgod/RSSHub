@@ -550,3 +550,13 @@ key: 产品密钥
 路由: `/disqus/posts/:forum`
 
 参数: forum，网站的 disqus name
+
+## Twitter
+
+### 用户
+
+举例: [https://rss.now.sh/twitter/user/DIYgod](https://rss.now.sh/twitter/user/DIYgod)
+
+路由: `/twitter/user/:id`
+
+参数: id，用户 id
