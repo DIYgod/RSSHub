@@ -38,6 +38,7 @@ module.exports = async (ctx) => {
 
     ctx.body = template({
         title: `${forum} 的评论`,
+        link: `https://disqus.com/home/forums/${forum}`,
         description: `${forum} 的 disqus 评论`,
         item: data.map((item) => {
             const thread = threads.filter((i) => i.id === item.thread)[0];
