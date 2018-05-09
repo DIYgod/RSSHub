@@ -97,21 +97,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 1. [Telegram 群](https://t.me/rsshub)
 
-## 搭建
+## 部署
 
-环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
-
-安装依赖：`yarn`
-
-修改配置：配置文件为 `config.js`
-
-启动程序：`node index.js`
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
-
-<a href="https://github.com/DIYgod/RSSHub/graphs/contributors"><img src="https://opencollective.com/RSSHub/contributors.svg?width=890&button=false" /></a>
+见[文档](https://rsshub.js.org/install/)
 
 ## 赞助 RSSHub 的研发
 
