@@ -8,5 +8,8 @@ module.exports = {
         client_secret: 'lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj',
         username: 'rsshub@tmpmail.org',
         password: 'rsshubpixiv'
+    },
+    disqus: {
+        api_key: 'E8Uh5l5fHZ6gD8U3KycjAIAk46f68Zw7C6eW8WSjZvCLXebZ7p0r1yrYDrLilk2F',
     }
 };

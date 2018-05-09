@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -24,11 +23,10 @@ module.exports = async (ctx) => {
     const name = data.users[id].name;
     const list = Object.values(data.activities).sort((a, b) => b.createdTime - a.createdTime);
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${name}的知乎动态`,
         link: `https://www.zhihu.com/people/${id}/activities`,
         description: data.users[id].headline || data.users[id].description,
-        lastBuildDate: new Date().toUTCString(),
         item: list && list.map((item) => {
             const type = item.target.schema;
             const detail = data[`${type}s`][item.target.id];
@@ -49,13 +47,30 @@ module.exports = async (ctx) => {
                 break;
             case 'pin':
                 title = detail.excerptTitle.length > 17 ? detail.excerptTitle.slice(0, 17) + '...' : detail.excerptTitle;
-                description = detail.excerptTitle;
+                const images = [];
+                let text = "";
+                let link = "";
+                detail.content.forEach(contentItem => {
+                    if (contentItem.type === "text") {
+                        text = `<p>${contentItem.ownText}</p>`;
+                    } else if (contentItem.type === "image") {
+                        images.push(`<p><img referrerpolicy="no-referrer" src="${contentItem.url.replace('xl', 'r')}"/></p>`);
+                    } else if (contentItem.type === "link") {
+                        link = `<p><a href="${contentItem.url}" target="_blank">${contentItem.title}</a></p>`
+                    }
+                })
+                description = `${text}${link}${images.join('')}`;
                 url = `https://www.zhihu.com/pin/${detail.id}`;
                 break;
             case 'question':
                 title = detail.title;
                 description = detail.excerpt;
                 url = `https://www.zhihu.com/question/${detail.id}`;
+                break;
+            case 'column':
+                title = detail.title;
+                description = `<p>${detail.intro}</p><p><img referrerpolicy="no-referrer" src="${detail.imageUrl}"/></p>`;
+                url = `${detail.url}`;
                 break;
             }
 

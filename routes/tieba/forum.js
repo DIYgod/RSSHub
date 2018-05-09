@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -55,10 +54,9 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(threadListHTML);
     const list = $('#thread_list > .j_thread_list[data-field]');
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${kw}吧`,
         link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
-        lastBuildDate: new Date().toUTCString(),
         item:
             list &&
             list.

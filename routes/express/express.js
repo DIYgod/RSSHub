@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -18,11 +17,10 @@ module.exports = async (ctx) => {
 
     const data = response.data.data;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `快递 ${company}-${number}`,
         link: 'https://www.kuaidi100.com',
         description: `快递 ${company}-${number}`,
-        lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
             title: item.context,
             description: item.context,

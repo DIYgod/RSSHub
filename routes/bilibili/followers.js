@@ -1,7 +1,6 @@
 const axios = require('axios');
 const qs = require('querystring');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -41,11 +40,10 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data.list;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${name} 的 bilibili 粉丝`,
         link: `https://space.bilibili.com/${uid}/#/fans/fans`,
         description: `${name} 的 bilibili 粉丝`,
-        lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
             title: `${name} 新粉丝 ${item.uname}`,
             description: `${item.uname}<br>${item.sign}<br>总计${count}`,

@@ -1,7 +1,6 @@
 const axios = require('axios');
 const qs = require('querystring');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -28,11 +27,10 @@ module.exports = async (ctx) => {
 
     const { nickname, signature } = creator;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${nickname} 的所有歌单`,
         link: `http://music.163.com/user/home?id=${uid}`,
         description: signature,
-        lastBuildDate: new Date().toUTCString(),
         item: playlist.map((pl) => ({
             title: pl.name,
             description: pl.description,

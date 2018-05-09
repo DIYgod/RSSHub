@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const config = require('../../config');
 
 // 格式化每条微博的HTML
@@ -42,7 +41,6 @@ function format (status) {
 
 // 格式化时间
 function getTime (html) {
-    console.log(html);
     let math;
     let date = new Date();
     if (/(\d+)分钟前/.exec(html)) {
@@ -63,7 +61,15 @@ function getTime (html) {
         return date.toUTCString();
     } else if (/(\d+)月(\d+)日 (\d+):(\d+)/.exec(html)) {
         math = /(\d+)月(\d+)日 (\d+):(\d+)/.exec(html);
-        date = new Date(date.getFullYear(), math[1] - 1, parseInt(math[2]), math[3], math[4]);
+        date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2], math[3], math[4]);
+        return date.toUTCString();
+    } else if (/(\d+)-(\d+)-(\d+)/.exec(html)) {
+        math = /(\d+)-(\d+)-(\d+)/.exec(html);
+        date = new Date(math[1], parseInt(math[2]) - 1, math[3]);
+        return date.toUTCString();
+    } else if (/(\d+)-(\d+)/.exec(html)) {
+        math = /(\d+)-(\d+)/.exec(html);
+        date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2]);
         return date.toUTCString();
     }
     return html;
@@ -92,11 +98,10 @@ module.exports = async (ctx) => {
         }
     });
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `${name}的微博`,
         link: `http://weibo.com/${uid}/`,
         description: `${name}的微博`,
-        lastBuildDate: new Date().toUTCString(),
         item: response.data.data.cards.filter((item) => item.mblog && !item.mblog.isTop).map((item) => {
             const title = item.mblog.text.replace(/<.*?>/g, '');
             return {

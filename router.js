@@ -19,7 +19,7 @@ router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers
 router.get('/bilibili/user/followings/:uid', require('./routes/bilibili/followings'));
 router.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
 router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
-router.get('/bilibili/video/reply/:avid', require('./routes/bilibili/videoReply'));
+router.get('/bilibili/video/reply/:aid', require('./routes/bilibili/reply'));
 
 // // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
@@ -61,7 +61,8 @@ router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
 router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 
 // // Pixiv
-router.get('/pixiv/user/:id', require('./routes/pixiv/user'));
+router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
+router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
 router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
 
 // 豆瓣
@@ -85,5 +86,12 @@ router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 
 // 笔趣阁
 router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter'));
+
+// 开发者头条
+router.get('/toutiao/today', require('./routes/toutiao/today'));
+router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
+
+// Disqus
+router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
 
 module.exports = router;

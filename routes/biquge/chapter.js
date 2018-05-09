@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 const iconv = require('iconv-lite');
@@ -38,12 +37,11 @@ module.exports = async (ctx) => {
         chapter_item.push(item);
     }
     // console.log('chapter_item',chapter_item)
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.body = template({
         title: `笔趣阁 ${title}`,
         link: `${baseUrl}${id}/`,
         image: cover_url,
         description: description,
-        lastBuildDate: new Date().toUTCString(),
         item: chapter_item,
     });
 };

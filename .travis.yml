@@ -2,6 +2,8 @@ language: node_js
 
 node_js: stable
 
+before_install:
+
 install:
   - yarn
 
@@ -11,12 +13,16 @@ script:
   - echo 'rsshub.js.org' > CNAME
 
 after_script:
-  - git init
-  - git config user.name "Travis CI"
-  - git config user.email "no-reply@html.love"
-  - git add -A
-  - git commit -m 'deploy'
-  - git push -f "https://${GH_TOKEN}@github.com/DIYgod/RSSHub.git" master:gh-pages
+  - |
+      if git diff --name-only $TRAVIS_COMMIT_RANGE | grep '^docs/'
+      then
+        git init
+        git config user.name "Travis CI"
+        git config user.email "no-reply@html.love"
+        git add -A
+        git commit -m 'deploy'
+        git push -f "https://${GH_TOKEN}@github.com/DIYgod/RSSHub.git" master:gh-pages
+      fi
 
 cache:
   yarn: true

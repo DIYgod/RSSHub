@@ -1,4 +1,7 @@
-# RSSHub
+<p align="center">
+<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+</p>
+<h1 align="center">RSSHub</h1>
 
 > 🍭 使用 RSS 连接全世界
 
@@ -50,6 +53,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
   - 专题详情
   - 详情
 - pixiv
+  - 用户收藏
   - 用户动态
   - 排行榜
 - 豆瓣
@@ -65,14 +69,29 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
   - 周报
 - 腾讯吐个槽
   - 吐槽新帖
+- 笔趣阁
+  - 小说章节
+- 开发者头条
+  - 今天头条
+  - 独家号
+- Disqus
+  - 评论
 
 ## 参与我们
 
 如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
 
-可以通过以下途径参与讨论：
+### 提交新的 RSS 内容
 
-- [Telegram 群](https://t.me/rsshub)
+1. 在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由
+
+1. 在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径添加获取 RSS 内容的脚本
+
+1. 更新 README 和文档: [/README.md](https://github.com/DIYgod/RSSHub/blob/master/README.md) [/docs/README.md](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md)
+
+### 参与讨论
+
+1. [Telegram 群](https://t.me/rsshub)
 
 ## 搭建
 

@@ -2,7 +2,7 @@
 <rss version="2.0">
     <channel>
         <title><![CDATA[{{ title || 'RSSHub' }}]]></title>
-        <link>{{ link }}</link>
+        <link>{{ link || 'https://github.com/DIYgod/RSSHub' }}</link>
         <description><![CDATA[{{ description || title }} - 使用 RSSHub(https://github.com/DIYgod/RSSHub) 构建]]></description>
         <generator>RSSHub</generator>
         <webMaster>i@html.love</webMaster>
@@ -15,7 +15,7 @@
         </image>
         {{ /if }}
         <lastBuildDate>{{ lastBuildDate }}</lastBuildDate>
-        <ttl>300</ttl>
+        <ttl>{{ ttl }}</ttl>
         {{ each item }}
         <item>
             <title><![CDATA[{{ $value.title }}]]></title>

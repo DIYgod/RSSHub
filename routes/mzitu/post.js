@@ -1,6 +1,5 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
+const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -50,11 +49,10 @@ module.exports = async (ctx) => {
 
   const reg = /[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d/;
 
-  ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+  ctx.body = template({
     title: title,
     link: url,
     description: $('meta[name="description"]').attr('content') || title,
-    lastBuildDate: new Date().toUTCString(),
     item: list && list.map((item) => {
       let date = new Date();
       const dateStr = $('.main-meta > span:nth-child(2)').text();
