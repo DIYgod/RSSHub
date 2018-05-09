@@ -165,6 +165,14 @@ s
 
 参数: aid，可在视频页 URL 中找到
 
+### link 公告
+
+举例: https://rss.now.sh/bilibili/link/news/live
+
+路由: `/bilibili/link/news/:product`
+
+参数: product 公告分类 包括 直播:live 小视频:vc 相簿:wh
+
 ## 微博
 
 ### 博主
