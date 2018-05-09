@@ -183,6 +183,14 @@ s
 
 参数: uid，用户 id，博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
 
+### 关键词
+
+举例: [https://rss.now.sh/weibo/keyword/DIYgod](https://rss.now.sh/weibo/keyword/DIYgod)
+
+路由: `/weibo/keyword/:keyword`
+
+参数: keyword，你想订阅的微博关键词
+
 ## 网易云音乐
 
 ### 歌单歌曲

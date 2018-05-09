@@ -25,6 +25,7 @@ router.get('/bilibili/link/news/:product', require('./routes/bilibili/linkNews')
 
 // // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
+router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
 
 // // 网易云音乐
 router.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
