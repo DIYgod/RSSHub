@@ -524,3 +524,13 @@ key: 产品密钥
 路由: `/toutiao/user/:id`
 
 参数: id，独家号 id，可在对应独家号页 URL 中找到
+
+## Disqus
+
+### 评论
+
+举例: [https://rss.now.sh/disqus/posts/diygod-me](https://rss.now.sh/disqus/posts/diygod-me)
+
+路由: `/disqus/posts/:forum`
+
+参数: forum，网站的 disqus name

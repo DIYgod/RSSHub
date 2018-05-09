@@ -91,4 +91,7 @@ router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter')
 router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 
+// Disqus
+router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
+
 module.exports = router;
