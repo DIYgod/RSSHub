@@ -560,3 +560,13 @@ key: 产品密钥
 路由: `/twitter/user/:id`
 
 参数: id，用户 id
+
+## Instagram
+
+### 用户
+
+举例: [https://rss.now.sh/instagram/user/diygod](https://rss.now.sh/instagram/user/diygod)
+
+路由: `/instagram/user/:id`
+
+参数: id，用户 id

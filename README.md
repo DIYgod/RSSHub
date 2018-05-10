@@ -80,6 +80,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
   - 评论
 - Twitter
   - 用户
+- Instagram
+  - 用户
 
 ## 参与我们
 

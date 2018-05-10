@@ -100,4 +100,7 @@ router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
 // Twitter
 router.get('/twitter/user/:id', require('./routes/twitter/user'));
 
+// Instagram
+router.get('/instagram/user/:id', require('./routes/instagram/user'));
+
 module.exports = router;
