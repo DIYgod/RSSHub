@@ -103,4 +103,8 @@ router.get('/twitter/user/:id', require('./routes/twitter/user'));
 // Instagram
 router.get('/instagram/user/:id', require('./routes/instagram/user'));
 
+// Youtube
+router.get('/youtube/user/:username', require('./routes/youtube/user'));
+router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
+
 module.exports = router;

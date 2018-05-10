@@ -570,3 +570,21 @@ key: 产品密钥
 路由: `/instagram/user/:id`
 
 参数: id，用户 id
+
+## Youtube
+
+### 用户
+
+举例: [https://rss.now.sh/youtube/user/JFlaMusic](https://rss.now.sh/youtube/user/JFlaMusic)
+
+路由: `/youtube/user/:username`
+
+参数: username，用户名
+
+### 频道
+
+举例: [https://rss.now.sh/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ](https://rss.now.sh/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ)
+
+路由: `/youtube/channel/:id`
+
+参数: id，频道 id
