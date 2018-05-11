@@ -13,6 +13,7 @@ module.exports = function (options = {}) {
         exclude = [],
         passParam = '',
         maxLength = Infinity,
+        ignoreQuery = false,
     } = options;
 
     const memoryCache = lru({
@@ -23,7 +24,7 @@ module.exports = function (options = {}) {
     return async function cache (ctx, next) {
         const { url, path } = ctx.request;
         const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
-        const key = resolvedPrefix + md5(url);
+        const key = resolvedPrefix + md5(ignoreQuery ? path : url);
         const tkey = key + ':type';
         let match = false;
         let routeExpire = false;
