@@ -1,6 +1,5 @@
 const axios = require('axios');
 const template = require('../../utils/template');
-const cheerio = require('cheerio');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -8,7 +7,7 @@ module.exports = async (ctx) => {
 
     const response = await axios({
         method: 'get',
-        url: `https://www.zhihu.com/people/${id}/activities`,
+        url: `https://www.zhihu.com/api/v4/members/${id}/activities?limit=7`,
         headers: {
             'User-Agent': config.ua,
             'Referer': `https://www.zhihu.com/people/${id}/activities`,
@@ -17,24 +16,22 @@ module.exports = async (ctx) => {
         }
     });
 
-    const $ = cheerio.load(response.data);
-    const data = $('#data').data('state').entities;
-
-    const name = data.users[id].name;
-    const list = Object.values(data.activities).sort((a, b) => b.createdTime - a.createdTime);
+    const data = response.data.data;
 
     ctx.body = template({
-        title: `${name}的知乎动态`,
+        title: `${data[0].actor.name}的知乎动态`,
         link: `https://www.zhihu.com/people/${id}/activities`,
-        description: data.users[id].headline || data.users[id].description,
-        item: list && list.map((item) => {
-            const type = item.target.schema;
-            const detail = data[`${type}s`][item.target.id];
+        description: data[0].actor.headline || data[0].actor.description,
+        item: data && data.map((item) => {
+            const detail = item.target;
             let title;
             let description;
             let url;
+            const images = [];
+            let text = '';
+            let link = '';
 
-            switch (type) {
+            switch (item.target.type) {
             case 'answer':
                 title = detail.question.title;
                 description = detail.content;
@@ -46,19 +43,16 @@ module.exports = async (ctx) => {
                 url = `https://zhuanlan.zhihu.com/p/${detail.id}`;
                 break;
             case 'pin':
-                title = detail.excerptTitle.length > 17 ? detail.excerptTitle.slice(0, 17) + '...' : detail.excerptTitle;
-                const images = [];
-                let text = "";
-                let link = "";
-                detail.content.forEach(contentItem => {
-                    if (contentItem.type === "text") {
-                        text = `<p>${contentItem.ownText}</p>`;
-                    } else if (contentItem.type === "image") {
+                title = detail.excerpt_title.length > 17 ? detail.excerpt_title.slice(0, 17) + '...' : detail.excerpt_title;
+                detail.content.forEach((contentItem) => {
+                    if (contentItem.type === 'text') {
+                        text = `<p>${contentItem.own_text}</p>`;
+                    } else if (contentItem.type === 'image') {
                         images.push(`<p><img referrerpolicy="no-referrer" src="${contentItem.url.replace('xl', 'r')}"/></p>`);
-                    } else if (contentItem.type === "link") {
-                        link = `<p><a href="${contentItem.url}" target="_blank">${contentItem.title}</a></p>`
+                    } else if (contentItem.type === 'link') {
+                        link = `<p><a href="${contentItem.url}" target="_blank">${contentItem.title}</a></p>`;
                     }
-                })
+                });
                 description = `${text}${link}${images.join('')}`;
                 url = `https://www.zhihu.com/pin/${detail.id}`;
                 break;
@@ -69,15 +63,15 @@ module.exports = async (ctx) => {
                 break;
             case 'column':
                 title = detail.title;
-                description = `<p>${detail.intro}</p><p><img referrerpolicy="no-referrer" src="${detail.imageUrl}"/></p>`;
+                description = `<p>${detail.intro}</p><p><img referrerpolicy="no-referrer" src="${detail.image_url}"/></p>`;
                 url = `${detail.url}`;
                 break;
             }
 
             return {
-                title: `${item.actionText}: ${title}`,
+                title: `${item.action_text}: ${title}`,
                 description: description,
-                pubDate: new Date(item.createdTime * 1000).toUTCString(),
+                pubDate: new Date(item.created_time * 1000).toUTCString(),
                 link: url
             };
         }),
