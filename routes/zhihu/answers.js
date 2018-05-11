@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -18,7 +17,7 @@ module.exports = async (ctx) => {
 
     const data = response.data.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${data[0].author.name}的知乎回答`,
         link: `https://www.zhihu.com/people/${id}/answers`,
         description: data[0].author.headline || data[0].author.description,
@@ -28,5 +27,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.created_time * 1000).toUTCString(),
             link: `https://www.zhihu.com/question/${item.question.id}/answer/${item.id}`
         })),
-    });
+    };
 };

@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const crypto = require('crypto');
 const config = require('../../config');
@@ -121,10 +120,10 @@ module.exports = async (ctx) => {
         });
     });
 
-    ctx.body = template({
+    ctx.state.data = {
         title: '煎蛋无聊图',
         link: 'http://jandan.net/pic',
         description: '煎蛋官方无聊图，无限活力的热门图区。',
         item: items
-    });
+    };
 };

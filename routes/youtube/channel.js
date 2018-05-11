@@ -1,6 +1,5 @@
 const { google } = require('googleapis');
 const config = require('../../config');
-const template = require('../../utils/template');
 
 const youtube = google.youtube({
     version: 'v3',
@@ -22,7 +21,7 @@ module.exports = async (ctx) => {
     });
     const data = responst.data.items;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${data[0].snippet.channelTitle} 的 Youtube 视频`,
         link: `https://www.youtube.com/channel/${id}`,
         description: `${data[0].snippet.channelTitle} 的 Youtube 视频`,
@@ -36,5 +35,5 @@ module.exports = async (ctx) => {
                 link: `https://www.youtube.com/watch?v=${snippet.resourceId.videoId}`
             };
         }),
-    });
+    };
 };

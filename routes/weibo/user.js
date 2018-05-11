@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 const weiboUtils = require('./utils');
 
@@ -26,7 +25,7 @@ module.exports = async (ctx) => {
         }
     });
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${name}的微博`,
         link: `http://weibo.com/${uid}/`,
         description: `${name}的微博`,
@@ -39,5 +38,5 @@ module.exports = async (ctx) => {
                 link: `https://weibo.com/${uid}/${item.mblog.bid}`
             };
         }),
-    });
+    };
 };

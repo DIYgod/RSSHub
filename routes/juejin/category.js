@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -32,7 +31,7 @@ module.exports = async (ctx) => {
 
     const data = response.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `掘金${cat.name}`,
         link: `https://juejin.im/welcome/${category}`,
         description: `掘金${cat.name}`,
@@ -42,5 +41,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.createdAt).toUTCString(),
             link: item.originalUrl
         })),
-    });
+    };
 };

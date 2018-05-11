@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -27,9 +26,9 @@ module.exports = async (ctx)=>{
         };
         article_item.push(item);
     };
-    ctx.body = template({
+    ctx.state.data = {
         title: '开发者头条:' + title,
         link: baseUrl,
         item: article_item,
-    });
+    };
 };

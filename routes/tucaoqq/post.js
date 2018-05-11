@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 const md5 = require('../../utils/md5');
 
@@ -19,7 +18,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${projectID} 的 吐个槽新帖`,
         link: `https://support.qq.com/product/${projectID}`,
         description: `${projectID} 的 吐个槽新帖`,
@@ -38,5 +37,5 @@ module.exports = async (ctx) => {
                 link: `https://support.qq.com/products/${projectID}`
             };
         }),
-    });
+    };
 };

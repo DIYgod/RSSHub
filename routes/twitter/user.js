@@ -1,4 +1,3 @@
-const template = require('../../utils/template');
 const Twit = require('twit');
 const config = require('../../config');
 
@@ -13,7 +12,7 @@ module.exports = async (ctx) => {
 
     const data = result.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${data[0].user.name} 的 Twitter`,
         link: `https://twitter.com/${id}/`,
         description: data[0].user.description,
@@ -23,5 +22,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.createdTime).toUTCString(),
             link: `https://twitter.com/${id}/status/${item.id_str}`
         })),
-    });
+    };
 };

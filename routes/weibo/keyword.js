@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 const weiboUtils = require('./utils');
 
@@ -16,7 +15,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data.cards[0].card_group;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `又有人在微博提到${keyword}了`,
         link: `http://s.weibo.com/weibo/${encodeURIComponent(keyword)}&b=1&nodup=1`,
         description: `又有人在微博提到${keyword}了`,
@@ -29,5 +28,5 @@ module.exports = async (ctx) => {
                 link: `https://weibo.com/${item.mblog.user.id}/${item.mblog.bid}`
             };
         }),
-    });
+    };
 };

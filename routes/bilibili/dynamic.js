@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const JSONbig = require('json-bigint');
 const config = require('../../config');
 
@@ -16,7 +15,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data.cards;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${data[0].desc.user_profile.info.uname} 的 bilibili 动态`,
         link: `https://space.bilibili.com/${uid}/#/dynamic`,
         description: `${data[0].desc.user_profile.info.uname} 的 bilibili 动态`,
@@ -54,5 +53,5 @@ module.exports = async (ctx) => {
                 link: link
             };
         }),
-    });
+    };
 };

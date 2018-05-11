@@ -88,7 +88,11 @@ module.exports = function (options = {}) {
             if (Buffer.isBuffer(type)) {type = type.toString();}
             ctx.response.set('X-Koa-Memory-Cache', 'true');
             ctx.response.type = type;
-            ctx.response.body = value;
+            try {
+                ctx.state.data = JSON.parse(value);
+            } catch (e) {
+                ctx.state.data = {};
+            }
             ok = true;
         }
 
@@ -99,34 +103,16 @@ module.exports = function (options = {}) {
      * setCache
      */
     async function setCache (ctx, key, tkey) {
-        let body = ctx.response.body;
+        ctx.state.data.lastBuildDate = new Date().toUTCString();
+        const body = JSON.stringify(ctx.state.data);
 
-        if (ctx.request.method !== 'GET' || ctx.response.status !== 200 || !body) {
+        if (ctx.request.method !== 'GET' || !body) {
             return;
         }
-
-        if (typeof body === 'string') {
-            // string
-            if (Buffer.byteLength(body) > maxLength) {return;}
-            memoryCache.set(key, body);
-        } else if (Buffer.isBuffer(body)) {
-            // buffer
-            if (body.length > maxLength) {return;}
-            memoryCache.set(key, body);
-        } else if (typeof body === 'object' && ctx.response.type === 'application/json') {
-            // json
-            body = JSON.stringify(body);
-            if (Buffer.byteLength(body) > maxLength) {return;}
-            memoryCache.set(key, body);
-        } else if (typeof body.pipe === 'function') {
-            // stream
-            body = await read(body);
-            ctx.response.body = body;
-            if (Buffer.byteLength(body) > maxLength) {return;}
-            memoryCache.set(key, body);
-        } else {
+        if (Buffer.byteLength(body) > maxLength) {
             return;
         }
+        memoryCache.set(key, body);
 
         await cacheType(ctx, tkey);
     }

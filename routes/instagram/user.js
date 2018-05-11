@@ -1,6 +1,5 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -21,7 +20,7 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(response.data);
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${name}(@${id}) 的 Instagram`,
         link: `https://www.instagram.com/${id}/`,
         description: $('meta[name="description"]').attr('content'),
@@ -46,5 +45,5 @@ module.exports = async (ctx) => {
                 link: `https://www.instagram.com/p/${item.shortcode}/`
             };
         }),
-    });
+    };
 };

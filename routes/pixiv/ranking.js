@@ -8,7 +8,6 @@ if (!pixivConfig) {
     return;
 }
 
-const template = require('../../utils/template');
 const getToken = require('./token');
 const getRanking = require('./api/getRanking');
 
@@ -57,7 +56,7 @@ module.exports = async (ctx) => {
 
     const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 `;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: (ctx.params.date ? dateStr : '') + titles[mode],
         link: links[mode],
         description: dateStr + titles[mode],
@@ -76,5 +75,5 @@ module.exports = async (ctx) => {
                 link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`
             };
         })
-    });
+    };
 };

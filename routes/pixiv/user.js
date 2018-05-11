@@ -8,7 +8,6 @@ if (!pixivConfig) {
     return;
 }
 
-const template = require('../../utils/template');
 const getToken = require('./token');
 const getIllusts = require('./api/getIllusts');
 
@@ -25,7 +24,7 @@ module.exports = async (ctx) => {
     const illusts = response.data.illusts;
     const username = illusts[0].user.name
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${username} 的 pixiv 动态`,
         link: `https://www.pixiv.net/member.php?id=${id}`,
         description: `${username} 的 pixiv 最新动态`,
@@ -44,5 +43,5 @@ module.exports = async (ctx) => {
                 link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`
             };
         })
-    });
+    };
 };

@@ -1,6 +1,5 @@
 const axios = require('axios');
 const qs = require('querystring');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -30,7 +29,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${name} 的 bilibili 收藏夹`,
         link: `https://space.bilibili.com/${uid}/#/favlist`,
         description: `${name} 的 bilibili 收藏夹`,
@@ -41,5 +40,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.fav_at * 1000).toUTCString(),
             link: `https://www.bilibili.com/video/av${item.aid}`
         })),
-    });
+    };
 };

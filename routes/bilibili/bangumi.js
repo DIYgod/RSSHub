@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -16,7 +15,7 @@ module.exports = async (ctx) => {
 
     const data = JSON.parse(response.data.match(/^seasonListCallback\((.*)\);$/)[1]).result || {};
 
-    ctx.body = template({
+    ctx.state.data = {
         title: data.title,
         link: `https://bangumi.bilibili.com/anime/${seasonid}/`,
         description: data.evaluate,
@@ -26,5 +25,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.update_time).toUTCString(),
             link: item.webplay_url
         })),
-    });
+    };
 };

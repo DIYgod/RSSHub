@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -18,7 +17,7 @@ module.exports = async (ctx) => {
 
     const data = response.data.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${data[0].actor.name}的知乎动态`,
         link: `https://www.zhihu.com/people/${id}/activities`,
         description: data[0].actor.headline || data[0].actor.description,
@@ -75,5 +74,5 @@ module.exports = async (ctx) => {
                 link: url
             };
         }),
-    });
+    };
 };

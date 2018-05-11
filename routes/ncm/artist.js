@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -16,7 +15,7 @@ module.exports = async (ctx) => {
 
     const data = response.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: data.artist.name,
         link: `https://music.163.com/#/artist/album?id=${id}`,
         description: `网易云音乐歌手专辑 - ${data.artist.name}`,
@@ -28,5 +27,5 @@ module.exports = async (ctx) => {
                 link: `https://music.163.com/#/album?id=${item.id}`
             };
         }),
-    });
+    };
 };

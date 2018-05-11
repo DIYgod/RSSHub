@@ -9,6 +9,7 @@ const utf8 = require('./middleware/utf8');
 const memoryCache = require('./middleware/cache.js');
 const redisCache = require('koa-redis-cache');
 const filter = require('./middleware/filter.js');
+const template = require('./middleware/template.js');
 
 const router = require('./router');
 
@@ -29,6 +30,10 @@ app.use(header);
 // fix incorrect `utf-8` characters
 app.use(utf8);
 
+// generate body
+app.use(template);
+
+// filter content
 app.use(filter);
 
 // cache

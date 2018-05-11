@@ -7,7 +7,6 @@ if (!pixivConfig) {
     return;
 }
 
-const template = require('../../utils/template');
 const getToken = require('./token');
 const getBookmarks = require('./api/getBookmarks');
 const getUserDetail = require('./api/getUserDetail');
@@ -28,7 +27,7 @@ module.exports = async (ctx) => {
     const illusts = bookmarksResponse.data.illusts;
     const username = userDetailResponse.data.user.name
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${username} 的收藏`,
         link: `https://www.pixiv.net/bookmark.php?id=${id}`,
         description: `${username} 的 pixiv 最新收藏`,
@@ -47,5 +46,5 @@ module.exports = async (ctx) => {
                 link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`
             };
         })
-    });
+    };
 };
