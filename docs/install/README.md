@@ -29,3 +29,5 @@
 `disqus`: [申请地址](https://disqus.com/api/applications/)
 
 `twitter`: [申请地址](https://apps.twitter.com)
+
+`youtube`: [申请地址](https://console.developers.google.com/)
