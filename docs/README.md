@@ -292,6 +292,14 @@ s
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
+### 用户回答
+
+举例: [https://rss.now.sh/zhihu/people/answers/diygod](https://rss.now.sh/zhihu/people/answers/diygod)
+
+路由: `/zhihu/people/answers/:id`
+
+参数: id，用户 id，可在用户主页 URL 中找到
+
 ### 专栏
 
 举例: [https://rss.now.sh/zhihu/zhuanlan/googledevelopers](https://rss.now.sh/zhihu/zhuanlan/googledevelopers)
