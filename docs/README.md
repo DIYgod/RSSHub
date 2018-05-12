@@ -203,6 +203,24 @@ s
 
 参数: keyword，你想订阅的微博关键词
 
+## 即刻
+
+### 主题
+
+举例: [https://rss.now.sh/jike/topic/54dffb40e4b0f57466e675f0](https://rss.now.sh/jike/topic/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/:id`
+
+参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+### 用户动态
+
+举例: [https://rss.now.sh/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rss.now.sh/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
+
+路由: `/jike/user/:id`
+
+参数: id，用户 id，可在即刻 web 端用户页 URL 中找到
+
 ## 网易云音乐
 
 ### 歌单歌曲

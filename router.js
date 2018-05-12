@@ -108,4 +108,8 @@ router.get('/instagram/user/:id', require('./routes/instagram/user'));
 router.get('/youtube/user/:username', require('./routes/youtube/user'));
 router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
 
+// 即刻
+router.get('/jike/topic/:id', require('./routes/jike/topic'));
+router.get('/jike/user/:id', require('./routes/jike/user'));
+
 module.exports = router;
