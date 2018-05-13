@@ -1,6 +1,4 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -31,7 +29,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data.items;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.state.data = {
         title: `bilibili ${productTitle}公告`,
         link: `https://link.bilibili.com/p/eden/news#/?tab=${product}&tag=all&page_no=1`,
         description: `bilibili ${productTitle}公告`,
@@ -42,5 +40,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.ctime.replace(' ', 'T') + "+08:00").toUTCString(),
             link: item.announce_link ? item.announce_link : `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`
         })),
-    });
+    };
 };

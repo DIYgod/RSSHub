@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -49,7 +48,7 @@ module.exports = async (ctx) => {
 
   const reg = /[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d:[0-5]\d/;
 
-  ctx.body = template({
+  ctx.state.data = {
     title: title,
     link: url,
     description: $('meta[name="description"]').attr('content') || title,
@@ -67,5 +66,5 @@ module.exports = async (ctx) => {
         link: item.url
       };
     })
-  });
+  };
 };

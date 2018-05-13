@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -54,7 +53,7 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(threadListHTML);
     const list = $('#thread_list > .j_thread_list[data-field]');
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${kw}吧`,
         link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
         item:
@@ -83,5 +82,5 @@ module.exports = async (ctx) => {
                     };
                 }).
                 get(),
-    });
+    };
 };

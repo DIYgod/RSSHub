@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 
 module.exports = async (ctx) => {
     const city = ctx.params.city;
@@ -11,7 +10,7 @@ module.exports = async (ctx) => {
     });
     const movieList = score ? response.data.subjects.filter((item) => item.rating.average >= score) : response.data.subjects;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${city ? city : ''}正在上映的${score ? `超过 ${score} 分的` : ''}电影`,
         link: 'https://movie.douban.com/cinema/nowplaying/',
         item: movieList.map((item) => ({
@@ -19,5 +18,5 @@ module.exports = async (ctx) => {
             description: `标题：${item.title}<br> 影片类型：${item.genres.join(' | ')}  <br>评分：${item.rating.average} <br/> <img referrerpolicy="no-referrer" src="${item.images.large}">`,
             link: item.alt
         })),
-    });
+    };
 };
