@@ -199,7 +199,8 @@ s
 
 路由: `bilibili/live/search/:key/:order`
 
-参数: key, 搜索关键字  
+参数: key, 搜索关键字
+
 order ,排序方式 开播时间: live_time,人气:online
 
 ### 直播分区
