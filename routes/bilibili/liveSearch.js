@@ -24,15 +24,15 @@ module.exports = async (ctx) => {
         url: `https://search.bilibili.com/api/search?search_type=live_room&keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live_user`
+            'Referer': `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`
         }
     });
     const data = response.data.result;
 
     ctx.state.data = {
-        title: `哔哩哔哩直播-${key} ${orderTitle}`,
-        link: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live_user`,
-        description: `哔哩哔哩直播-${key} ${orderTitle}`,
+        title: `哔哩哔哩直播-${key}-${orderTitle}`,
+        link: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`,
+        description: `哔哩哔哩直播-${key}-${orderTitle}`,
         lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
             title: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,

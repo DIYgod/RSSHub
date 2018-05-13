@@ -192,18 +192,18 @@ order ,排序方式 开播时间: live_time,人气:online
 
 ### 直播分区
 
+::: warning 注意
+由于接口未提供开播时间,
+如果直播间未更换标题与分区,将只会出现一次
+如果直播间更换分区与标题,将再出现一次
+:::
+
 举例: [https://rss.now.sh/bilibili/live/area/143/online](https://rss.now.sh/bilibili/live/area/143/online)
 
 路由: `bilibili/live/area/:areaID/:order`
 
 参数: areaID , 分区ID 分区增删较多,可通过 [https://api.live.bilibili.com/room/v1/Area/getList](分区列表)查询
 order ,排序方式 开播时间: live_time,人气:online
-
-::: warning 注意
-由于接口未提供开播时间,
-如果直播间未更换标题与分区,将只会出现一次
-如果直播间更换分区与标题,将再出现一次
-:::
 
 ## 微博
 
