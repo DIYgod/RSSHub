@@ -193,9 +193,7 @@ order ,排序方式 开播时间: live_time,人气:online
 ### 直播分区
 
 ::: warning 注意
-由于接口未提供开播时间,
-如果直播间未更换标题与分区,将只会出现一次
-如果直播间更换分区与标题,将再出现一次
+由于接口未提供开播时间,如果直播间未更换标题与分区,将只会出现一次.如果直播间更换分区与标题,将再出现一次
 :::
 
 举例: [https://rss.now.sh/bilibili/live/area/143/online](https://rss.now.sh/bilibili/live/area/143/online)
