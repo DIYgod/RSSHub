@@ -2,6 +2,8 @@ const Router = require('koa-router');
 const router = new Router();
 const art = require('art-template');
 const path = require('path');
+const config = require('./config');
+const logger = require('./utils/logger');
 
 router.get('/', async (ctx) => {
     ctx.set({
@@ -10,7 +12,7 @@ router.get('/', async (ctx) => {
     ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {});
 });
 
-// // bilibili
+// bilibili
 router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
 router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/fav'));
 router.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
@@ -26,51 +28,55 @@ router.get('/bilibili/live/search/:key/:order', require('./routes/bilibili/liveS
 router.get('/bilibili/live/area/:areaID/:order', require('./routes/bilibili/liveArea'));
 
 
-// // 微博
+// 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
 router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
 
-// // 网易云音乐
+// 网易云音乐
 router.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
 router.get('/ncm/user/playlist/:uid', require('./routes/ncm/userplaylist'));
 router.get('/ncm/artist/:id', require('./routes/ncm/artist'));
 
-// // 掘金
+// 掘金
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
 
-// // 自如
+// 自如
 router.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
 
-// // 快递
+// 快递
 router.get('/express/:company/:number', require('./routes/express/express'));
 
-// // 简书
+// 简书
 router.get('/jianshu/home', require('./routes/jianshu/home'));
 router.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
 router.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
 router.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
 router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 
-// // 知乎
+// 知乎
 router.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
 router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'));
 router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 
-// // 贴吧
+// 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
 
-// // 妹子图
+// 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
 router.get('/mzitu/tags', require('./routes/mzitu/tags'));
 router.get('/mzitu/category/:category', require('./routes/mzitu/category'));
 router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
 router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 
-// // Pixiv
-router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
-router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
-router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
+// pixiv
+if (config.pixiv && config.pixiv.client_id && config.pixiv.client_secret && config.pixiv.username && config.pixiv.password) {
+    router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
+    router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
+    router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
+} else {
+    logger.warn('pixiv RSS is disabled for lacking config.');
+}
 
 // 豆瓣
 router.get('/douban/movie/playing', require('./routes/douban/playing'));
@@ -99,17 +105,29 @@ router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 
 // Disqus
-router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
+if (config.disqus && config.disqus.api_key) {
+    router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
+} else {
+    logger.warn('Disqus RSS is disabled for lacking config.');
+}
 
 // Twitter
-router.get('/twitter/user/:id', require('./routes/twitter/user'));
+if (config.twitter && config.twitter.consumer_key && config.twitter.consumer_secret && config.twitter.access_token && config.twitter.access_token_secret) {
+    router.get('/twitter/user/:id', require('./routes/twitter/user'));
+} else {
+    logger.warn('Twitter RSS is disabled for lacking config.');
+}
 
 // Instagram
 router.get('/instagram/user/:id', require('./routes/instagram/user'));
 
 // Youtube
-router.get('/youtube/user/:username', require('./routes/youtube/user'));
-router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
+if (config.youtube && config.youtube.key) {
+    router.get('/youtube/user/:username', require('./routes/youtube/user'));
+    router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
+} else {
+    logger.warn('Youtube RSS is disabled for lacking config.');
+}
 
 // 即刻
 router.get('/jike/topic/:id', require('./routes/jike/topic'));

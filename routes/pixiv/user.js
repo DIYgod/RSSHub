@@ -1,20 +1,10 @@
-const config = require('../../config');
-
-const pixivConfig = config.pixiv;
-
-if (!pixivConfig) {
-    logger.info('Pixiv RSS disable.');
-    module.exports = () => {};
-    return;
-}
-
 const getToken = require('./token');
 const getIllusts = require('./api/getIllusts');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
 
-    if (typeof getToken() === 'null') {
+    if (!getToken()) {
         ctx.throw(500);
         return;
     }
@@ -22,7 +12,7 @@ module.exports = async (ctx) => {
     const response = await getIllusts(id, getToken());
 
     const illusts = response.data.illusts;
-    const username = illusts[0].user.name
+    const username = illusts[0].user.name;
 
     ctx.state.data = {
         title: `${username} 的 pixiv 动态`,
@@ -34,7 +24,7 @@ module.exports = async (ctx) => {
                 images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}.jpg"/></p>`);
             } else {
                 for (let i = 0; i < illust.page_count; i++) {
-                    images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}-${i+1}.jpg"/></p>`);
+                    images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}-${i + 1}.jpg"/></p>`);
                 }
             }
             return {
