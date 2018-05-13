@@ -214,6 +214,7 @@ order ,排序方式 开播时间: live_time,人气:online
 路由: `bilibili/live/area/:areaID/:order`
 
 参数: areaID , 分区ID 分区增删较多,可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询  
+
 order ,排序方式 开播时间: live_time,人气:online
 
 ## 微博
