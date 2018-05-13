@@ -179,11 +179,41 @@ s
 
 ### link 公告
 
-举例: https://rss.now.sh/bilibili/link/news/live
+举例: [https://rss.now.sh/bilibili/link/news/live](https://rss.now.sh/bilibili/link/news/live)
 
 路由: `/bilibili/link/news/:product`
 
-参数: product 公告分类 包括 直播:live 小视频:vc 相簿:wh
+参数: product, 公告分类 包括 直播:live 小视频:vc 相簿:wh
+
+### 直播开播
+
+举例: [https://rss.now.sh/bilibili/live/room/3](https://rss.now.sh/bilibili/live/room/3)
+
+路由: `bilibili/live/room/:roomID`
+
+参数: roomID, 房间号 可在直播间 URL 中找到,长短号均可
+
+### 直播搜索
+
+举例: [https://rss.now.sh/bilibili/live/search/编程/online](https://rss.now.sh/bilibili/live/search/编程/online)
+
+路由: `bilibili/live/search/:key/:order`
+
+参数: key, 搜索关键字
+order ,排序方式 开播时间: live_time,人气:online
+
+### 直播分区
+
+::: warning 注意
+由于接口未提供开播时间,如果直播间未更换标题与分区,将只会出现一次.如果直播间更换分区与标题,将再出现一次
+:::
+
+举例: [https://rss.now.sh/bilibili/live/area/143/online](https://rss.now.sh/bilibili/live/area/143/online)
+
+路由: `bilibili/live/area/:areaID/:order`
+
+参数: areaID , 分区ID 分区增删较多,可通过 [https://api.live.bilibili.com/room/v1/Area/getList](分区列表)查询
+order ,排序方式 开播时间: live_time,人气:online
 
 ## 微博
 
