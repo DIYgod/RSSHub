@@ -65,6 +65,11 @@ module.exports = async (ctx) => {
                 description = `<p>${detail.intro}</p><p><img referrerpolicy="no-referrer" src="${detail.image_url}"/></p>`;
                 url = `${detail.url}`;
                 break;
+            case 'topic':
+                title = detail.name;
+                description = `<p>${detail.introduction}</p><p>话题关注者人数：${detail.followers_count}</p>`;
+                url = `${detail.url}`;
+                break;
             }
 
             return {
