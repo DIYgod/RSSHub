@@ -42,9 +42,21 @@ module.exports = async (ctx) => {
                 imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
             });
 
-            const content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content;
+            let content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content;
+            const shortenTitle = content.length > 75 ? `${content.substr(0, 75)}...` : content;
+
+            if (item.type === 'REPOST') {
+                let repostImgTemplate = '';
+                item.target.pictures && item.target.pictures.forEach((item) => {
+                    repostImgTemplate += `<p><img style="box-shadow: 0 0 1px rgba(0,0,0,.2);" referrerpolicy="no-referrer" src="${item.thumbnailUrl}"></p>`;
+                });
+
+                let repostContent = `<a style="padding:15px;margin-top:10px;display:block;border-radius:4px;background-color:#fff;border:1px solid rgba(0,0,0,.08);text-decoration:none;" href="https://web.okjike.com/post-detail/${item.target.id}/originalPost" target="_blank"><p>@${item.target.user.screenName}</p>${item.target.content}${repostImgTemplate}</a>`;
+                content = `${content}${repostContent}`;
+            }
+
             return {
-                title: `${typeMap[item.type]}了: ${content}`,
+                title: `${typeMap[item.type]}了: ${shortenTitle}`,
                 description: `${content}${linkTemplate}${imgTemplate}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
                 link: `https://web.okjike.com/message-detail/${item.id}/officialMessage`
