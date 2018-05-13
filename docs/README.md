@@ -199,9 +199,11 @@ s
 
 路由: `bilibili/live/search/:key/:order`
 
-参数: key, 搜索关键字
+参数
 
-order ,排序方式 开播时间: live_time,人气:online
+key: 搜索关键字
+
+order: 排序方式，live_time 开播时间，online 人气
 
 ### 直播分区
 
@@ -213,9 +215,11 @@ order ,排序方式 开播时间: live_time,人气:online
 
 路由: `bilibili/live/area/:areaID/:order`
 
-参数: areaID , 分区ID 分区增删较多,可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询  
+参数
 
-order ,排序方式 开播时间: live_time,人气:online
+areaID: 分区ID 分区增删较多，可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询  
+
+order: 排序方式，live_time 开播时间，online 人气
 
 ## 微博
 
@@ -226,6 +230,14 @@ order ,排序方式 开播时间: live_time,人气:online
 路由: `/weibo/user/:uid`
 
 参数: uid，用户 id，博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
+
+::: warning 注意
+**个别**博主会有明显的数据缺失，原因未知，所以这里提供另外一种方式，但这种方式的缺点是描述不如第一种完善。出现缺失的情况较少，建议优先选择第一种方案
+:::
+
+举例: [https://rss.now.sh/weibo/user2/3306934123](https://rss.now.sh/weibo/user2/3306934123)
+
+路由: `/weibo/user2/:uid`
 
 ### 关键词
 

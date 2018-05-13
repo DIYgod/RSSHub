@@ -27,9 +27,9 @@ router.get('/bilibili/live/room/:roomID', require('./routes/bilibili/liveRoom'))
 router.get('/bilibili/live/search/:key/:order', require('./routes/bilibili/liveSearch'));
 router.get('/bilibili/live/area/:areaID/:order', require('./routes/bilibili/liveArea'));
 
-
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
+router.get('/weibo/user2/:uid', require('./routes/weibo/user2'));
 router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
 
 // 网易云音乐
