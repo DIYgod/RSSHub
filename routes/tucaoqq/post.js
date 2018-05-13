@@ -35,7 +35,8 @@ module.exports = async (ctx) => {
                 title: item.nick_name + ' 的吐槽',
                 description: `${item.content}${imgHTML}`,
                 pubDate: pubdate.toUTCString(),
-                link: `https://support.qq.com/products/${projectID}`
+                link: `https://support.qq.com/products/${projectID}`,
+                guid: `https://support.qq.com/products/${projectID} ${item.id}`
             };
         }),
     });
