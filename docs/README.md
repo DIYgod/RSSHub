@@ -179,11 +179,19 @@ s
 
 ### link 公告
 
-举例: https://rss.now.sh/bilibili/link/news/live
+举例: [https://rss.now.sh/bilibili/link/news/live](https://rss.now.sh/bilibili/link/news/live)
 
 路由: `/bilibili/link/news/:product`
 
-参数: product 公告分类 包括 直播:live 小视频:vc 相簿:wh
+参数: product, 公告分类 包括 直播:live 小视频:vc 相簿:wh
+
+### 直播开播
+
+举例: [https://rss.now.sh/bilibili/live/room/63489](https://rss.now.sh/bilibili/live/room/63489)
+
+路由: `bilibili/live/room/:roomID`
+
+参数: roomID, 房间号 可在直播间 URL 中找到,长短号均可
 
 ## 微博
 
