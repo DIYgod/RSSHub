@@ -187,7 +187,7 @@ s
 
 ### 直播开播
 
-举例: [https://rss.now.sh/bilibili/live/room/63489](https://rss.now.sh/bilibili/live/room/63489)
+举例: [https://rss.now.sh/bilibili/live/room/3](https://rss.now.sh/bilibili/live/room/3)
 
 路由: `bilibili/live/room/:roomID`
 

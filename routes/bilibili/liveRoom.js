@@ -1,6 +1,4 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -45,7 +43,7 @@ module.exports = async (ctx) => {
 
     if (data.live_status === 1) {
         liveItem.push({
-            title: data.title,
+            title: `${data.title} ${data.live_time}`,
             description: `${ data.title}<br>${data.description}`,
             pubDate: new Date(data.live_time.replace(' ', 'T') + "+08:00").toUTCString(),
             guid: `https://live.bilibili.com/${roomID} ${data.live_time}`,
@@ -53,11 +51,11 @@ module.exports = async (ctx) => {
         });
     }
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.state.data = {
         title: `${name} 直播间开播状态`,
         link: `https://live.bilibili.com/${roomID}`,
         description: `${name} 直播间开播状态`,
         lastBuildDate: new Date().toUTCString(),
         item: liveItem,
-    });
+    };
 };
