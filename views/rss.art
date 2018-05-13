@@ -21,7 +21,7 @@
             <title><![CDATA[{{ $value.title }}]]></title>
             <description><![CDATA[{{@ $value.description || $value.title }}]]></description>
             {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
-            <guid>{{ $value.link }}</guid>
+            <guid>{{ $value.guid || $value.link }}</guid>
             <link>{{ $value.link }}</link>
         </item>
         {{ /each }}
