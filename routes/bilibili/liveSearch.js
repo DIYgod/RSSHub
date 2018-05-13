@@ -30,14 +30,15 @@ module.exports = async (ctx) => {
     const data = response.data.result;
 
     ctx.state.data = {
-        title: `Bilibili ${key} 直播 ${orderTitle}`,
+        title: `哔哩哔哩直播-${key} ${orderTitle}`,
         link: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live_user`,
-        description: `Bilibili ${key} 直播 ${orderTitle}`,
+        description: `哔哩哔哩直播-${key} ${orderTitle}`,
         lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
-            title: `${item.uname} ${item.title} `,
-            description: `${item.uname} ${item.title} `,
+            title: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
+            description: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
             pubDate: new Date(item.live_time.replace(' ', 'T') + "+08:00").toUTCString(),
+            guid: `https://live.bilibili.com/${item.roomid} ${item.live_time}`,
             link: `https://live.bilibili.com/${item.roomid}`
         })),
     };

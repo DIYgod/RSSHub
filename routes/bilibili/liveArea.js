@@ -54,14 +54,15 @@ module.exports = async (ctx) => {
     const data = response.data.data.room_list;
 
     ctx.state.data = {
-        title: `Bilibili ${parentTitle}-${areaTitle} 直播 ${orderTitle}`,
+        title: `哔哩哔哩直播-${parentTitle}·${areaTitle}分区-${orderTitle}`,
         link: `https://live.bilibili.com/pages/area/ent-all#${parentID}/${areaID}`,
-        description: `Bilibili ${parentTitle}-${areaTitle} 直播 ${orderTitle}`,
+        description: `哔哩哔哩直播-${parentTitle}·${areaTitle}分区-${orderTitle}`,
         lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
-            title: `${item.uname} ${item.title} (${item.parent_name}-${item.area_v2_name})`,
-            description: `${item.uname} ${item.title} (${item.parent_name}-${item.area_v2_name})`,
+            title: `${item.uname} ${item.title}`,
+            description: `${item.uname} ${item.title}`,
             pubDate: new Date().toUTCString(),
+            guid: `https://live.bilibili.com/${item.roomid} ${item.title}`,
             link: `https://live.bilibili.com/${item.roomid}`
         })),
     };
