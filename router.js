@@ -22,6 +22,8 @@ router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
 router.get('/bilibili/video/reply/:aid', require('./routes/bilibili/reply'));
 router.get('/bilibili/link/news/:product', require('./routes/bilibili/linkNews'));
 router.get('/bilibili/live/room/:roomID', require('./routes/bilibili/liveRoom'));
+router.get('/bilibili/live/search/:key/:order', require('./routes/bilibili/liveSearch'));
+router.get('/bilibili/live/area/:areaID/:order', require('./routes/bilibili/liveArea'));
 
 
 // // 微博
