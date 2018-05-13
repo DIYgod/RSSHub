@@ -56,7 +56,7 @@ module.exports = async (ctx) => {
     ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
         title: `${name} 直播间开播状态`,
         link: `https://live.bilibili.com/${roomID}`,
-        description: `${name} 直播间开播了`,
+        description: `${name} 直播间开播状态`,
         lastBuildDate: new Date().toUTCString(),
         item: liveItem,
     });
