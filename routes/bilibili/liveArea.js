@@ -53,7 +53,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data.room_list;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.state.data = {
         title: `Bilibili ${parentTitle}-${areaTitle} 直播 ${orderTitle}`,
         link: `https://live.bilibili.com/pages/area/ent-all#${parentID}/${areaID}`,
         description: `Bilibili ${parentTitle}-${areaTitle} 直播 ${orderTitle}`,
@@ -64,5 +64,5 @@ module.exports = async (ctx) => {
             pubDate: new Date().toUTCString(),
             link: `https://live.bilibili.com/${item.roomid}`
         })),
-    });
+    };
 };

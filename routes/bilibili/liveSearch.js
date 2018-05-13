@@ -29,7 +29,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.result;
 
-    ctx.body = art(path.resolve(__dirname, '../../views/rss.art'), {
+    ctx.state.data = {
         title: `Bilibili ${key} 直播 ${orderTitle}`,
         link: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live_user`,
         description: `Bilibili ${key} 直播 ${orderTitle}`,
@@ -40,5 +40,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.live_time.replace(' ', 'T') + "+08:00").toUTCString(),
             link: `https://live.bilibili.com/${item.roomid}`
         })),
-    });
+    };
 };
