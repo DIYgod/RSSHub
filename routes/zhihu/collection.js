@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -19,7 +18,7 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(data);
     const list = $('div.zm-item');
 
-    ctx.body = template({
+    ctx.state.data = {
         title: $('title').text(),
         link: `https://www.zhihu.com/collection/${id}`,
         description: `${$('#zh-fav-head-description').text()}`,
@@ -33,5 +32,5 @@ module.exports = async (ctx) => {
                 link: linkUrl
             };
         }).get(),
-    });
+    };
 };

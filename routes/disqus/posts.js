@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -36,7 +35,7 @@ module.exports = async (ctx) => {
 
     const threads = responseThreads.data.response;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${forum} 的评论`,
         link: `https://disqus.com/home/forums/${forum}`,
         description: `${forum} 的 disqus 评论`,
@@ -49,5 +48,5 @@ module.exports = async (ctx) => {
                 link: `${thread.link}/#comment-${item.id}`
             };
         }),
-    });
+    };
 };

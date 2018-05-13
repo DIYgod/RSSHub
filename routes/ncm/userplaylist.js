@@ -1,6 +1,5 @@
 const axios = require('axios');
 const qs = require('querystring');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -27,7 +26,7 @@ module.exports = async (ctx) => {
 
     const { nickname, signature } = creator;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${nickname} 的所有歌单`,
         link: `http://music.163.com/user/home?id=${uid}`,
         description: signature,
@@ -37,5 +36,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(pl.createTime).toUTCString(),
             link: `http://music.163.com/playlist?id=${pl.id}`
         }))
-    });
+    };
 };

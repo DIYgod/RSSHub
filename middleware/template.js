@@ -2,10 +2,11 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../config');
 
-module.exports = function (options) {
-    return art(path.resolve(__dirname, '../views/rss.art'), {
+module.exports = async (ctx, next) => {
+    await next();
+    ctx.body = art(path.resolve(__dirname, '../views/rss.art'), {
         lastBuildDate: new Date().toUTCString(),
         ttl: config.cacheExpire,
-        ...options,
+        ...ctx.state.data,
     });
 };

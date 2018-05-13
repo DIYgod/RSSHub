@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -20,7 +19,7 @@ module.exports = async (ctx) => {
         name = list[0].tname;
     }
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `bilibili ${name}分区`,
         link: 'https://www.bilibili.com',
         description: `bilibili ${name}分区`,
@@ -30,5 +29,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.pubdate * 1000).toUTCString(),
             link: `https://www.bilibili.com/video/av${item.aid}`
         })),
-    });
+    };
 };

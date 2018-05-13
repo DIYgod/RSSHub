@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -26,7 +25,7 @@ module.exports = async (ctx) => {
     const list = $('ul.i.issues>li');
     
 
-    ctx.body = template({
+    ctx.state.data = {
         title: $('title').text(),
         link: url,
         description: $('meta[name="description"]').attr('content') || $('title').text(),
@@ -38,5 +37,5 @@ module.exports = async (ctx) => {
                 link:`${baseUrl}${item.find('a').attr('href')}`
             };
         }).get(),
-    });
+    };
 };

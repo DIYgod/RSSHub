@@ -13,6 +13,18 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 演示域名为 [rss.now.sh](https://rss.now.sh)，缓存时间 5 分钟，可以随意使用
 :::
 
+## 内容过滤
+
+可以使用以下 URL query 过滤出想要的内容，支持正则
+
+- filter: 过滤标题和描述
+
+- filter_title: 过滤标题
+
+- filter_description: 过滤描述
+
+举例: [https://rss.now.sh/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rss.now.sh/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
+
 ## bilibili
 
 ### 番剧
@@ -175,7 +187,7 @@ s
 
 ### 直播开播
 
-举例: [https://rss.now.sh/bilibili/live/room/63489](https://rss.now.sh/bilibili/live/room/63489)
+举例: [https://rss.now.sh/bilibili/live/room/3](https://rss.now.sh/bilibili/live/room/3)
 
 路由: `bilibili/live/room/:roomID`
 
@@ -212,6 +224,32 @@ order ,排序方式 开播时间: live_time,人气:online
 路由: `/weibo/user/:uid`
 
 参数: uid，用户 id，博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
+
+### 关键词
+
+举例: [https://rss.now.sh/weibo/keyword/DIYgod](https://rss.now.sh/weibo/keyword/DIYgod)
+
+路由: `/weibo/keyword/:keyword`
+
+参数: keyword，你想订阅的微博关键词
+
+## 即刻
+
+### 主题
+
+举例: [https://rss.now.sh/jike/topic/54dffb40e4b0f57466e675f0](https://rss.now.sh/jike/topic/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/:id`
+
+参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+### 用户动态
+
+举例: [https://rss.now.sh/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rss.now.sh/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
+
+路由: `/jike/user/:id`
+
+参数: id，用户 id，可在即刻 web 端用户页 URL 中找到
 
 ## 网易云音乐
 
@@ -311,6 +349,14 @@ order ,排序方式 开播时间: live_time,人气:online
 举例: [https://rss.now.sh/zhihu/people/activities/diygod](https://rss.now.sh/zhihu/people/activities/diygod)
 
 路由: `/zhihu/people/activities/:id`
+
+参数: id，用户 id，可在用户主页 URL 中找到
+
+### 用户回答
+
+举例: [https://rss.now.sh/zhihu/people/answers/diygod](https://rss.now.sh/zhihu/people/answers/diygod)
+
+路由: `/zhihu/people/answers/:id`
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
@@ -572,3 +618,41 @@ key: 产品密钥
 路由: `/disqus/posts/:forum`
 
 参数: forum，网站的 disqus name
+
+## Twitter
+
+### 用户
+
+举例: [https://rss.now.sh/twitter/user/DIYgod](https://rss.now.sh/twitter/user/DIYgod)
+
+路由: `/twitter/user/:id`
+
+参数: id，用户 id
+
+## Instagram
+
+### 用户
+
+举例: [https://rss.now.sh/instagram/user/diygod](https://rss.now.sh/instagram/user/diygod)
+
+路由: `/instagram/user/:id`
+
+参数: id，用户 id
+
+## Youtube
+
+### 用户
+
+举例: [https://rss.now.sh/youtube/user/JFlaMusic](https://rss.now.sh/youtube/user/JFlaMusic)
+
+路由: `/youtube/user/:username`
+
+参数: username，用户名
+
+### 频道
+
+举例: [https://rss.now.sh/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ](https://rss.now.sh/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ)
+
+路由: `/youtube/channel/:id`
+
+参数: id，频道 id

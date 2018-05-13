@@ -31,6 +31,7 @@
     "crypto": "1.0.1",
     "eslint": "4.19.1",
     "form-data": "^2.3.2",
+    "googleapis": "30.0.0",
     "json-bigint": "0.2.3",
     "koa": "2.5.0",
     "koa-redis-cache": "3.0.0",
@@ -38,6 +39,7 @@
     "lru-cache": "4.1.2",
     "path-to-regexp": "2.2.0",
     "readall": "1.0.0",
+    "twit": "2.2.9",
     "winston": "3.0.0-rc3"
   }
 }

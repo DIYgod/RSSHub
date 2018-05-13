@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 const cheerio = require('cheerio');
 const iconv = require('iconv-lite');
@@ -31,7 +30,7 @@ module.exports = async (ctx) => {
 
     const data = response.data.data.replies;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${name} 的 评论`,
         link: `https://www.bilibili.com/video/av${aid}`,
         description: `${name} 的评论`,
@@ -41,5 +40,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.ctime * 1000).toUTCString(),
             link: `https://www.bilibili.com/video/av${aid}/#reply${item.rpid}`
         })),
-    });
+    };
 };
