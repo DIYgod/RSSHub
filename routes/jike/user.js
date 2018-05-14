@@ -29,7 +29,8 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const typeMap = {
                 'ORIGINAL_POST': '发布',
-                'REPOST': '转发'
+                'REPOST': '转发',
+                'ANSWER': '回答'
             };
 
             let linkTemplate = '';
@@ -42,7 +43,7 @@ module.exports = async (ctx) => {
                 imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
             });
 
-            let content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content;
+            let content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content || item.question && item.question.title;
             const shortenTitle = content.length > 75 ? `${content.substr(0, 75)}...` : content;
 
             if (item.type === 'REPOST') {
