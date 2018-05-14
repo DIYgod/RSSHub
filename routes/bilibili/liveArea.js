@@ -1,6 +1,4 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -17,7 +15,6 @@ module.exports = async (ctx) => {
             break;
     }
 
-
     const nameResponse = await axios({
         method: 'get',
         url: `https://api.live.bilibili.com/room/v1/Area/getList`,
@@ -30,6 +27,7 @@ module.exports = async (ctx) => {
     let parentTitle = "";
     let parentID = "";
     let areaTitle = "";
+    let areaLink = "";
 
 
     for (parentArea of nameResponse.data.data) {
@@ -39,23 +37,35 @@ module.exports = async (ctx) => {
                 parentID = parentArea.id;
                 areaTitle = area.name;
                 cateID = area.cate_id;
+                switch (parentID) {
+                    case 1:
+                        areaLink = `https://live.bilibili.com/pages/area/ent-all#${area.cate_id}/${areaID}`;
+                        break;
+                    case 2:
+                    case 3:
+                        areaLink = `https://live.bilibili.com/p/eden/area-tags#/${parentID}/${areaID}`;
+                        break;
+                    case 4:
+                        areaLink = "https://live.bilibili.com/pages/area/draw";
+                        break;
+                }
             }
         }
     }
 
     const response = await axios({
         method: 'get',
-        url: `https://api.live.bilibili.com/room/v1/AmuseArea/getThirdPageData?area_id=${areaID}&sort_type=${order}&page_size=30&scrollTid=0&page_no=1`,
+        url: `https://api.live.bilibili.com/room/v1/area/getRoomList?area_id=${areaID}&sort_type=${order}&page_size=30&page_no=1`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://live.bilibili.com/pages/area/ent-all`
+            'Referer': `https://live.bilibili.com/p/eden/area-tags`
         }
     });
-    const data = response.data.data.room_list;
+    const data = response.data.data;
 
     ctx.state.data = {
         title: `哔哩哔哩直播-${parentTitle}·${areaTitle}分区-${orderTitle}`,
-        link: `https://live.bilibili.com/pages/area/ent-all#${parentID}/${areaID}`,
+        link: `${areaLink}`,
         description: `哔哩哔哩直播-${parentTitle}·${areaTitle}分区-${orderTitle}`,
         lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
