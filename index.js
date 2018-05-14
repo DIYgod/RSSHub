@@ -10,6 +10,7 @@ const memoryCache = require('./middleware/cache.js');
 const redisCache = require('koa-redis-cache');
 const filter = require('./middleware/filter.js');
 const template = require('./middleware/template.js');
+const favicon = require('koa-favicon');
 
 const router = require('./router');
 
@@ -20,6 +21,9 @@ process.on('uncaughtException', (e) => {
 logger.info('🍻 RSSHub start! Cheers!');
 
 const app = new Koa();
+
+// favicon
+app.use(favicon(__dirname + '/favicon.png'));
 
 // global error handing
 app.use(onerror);
