@@ -43,10 +43,10 @@ module.exports = async (ctx) => {
                 imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
             });
 
-            let content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content || item.question && item.question.title;
+            let content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content || item.question && item.question.title || '';
 
             let shortenTitle = '一条动态';
-            if(content) {
+            if (content) {
                 shortenTitle = content.length > 75 ? `${content.substr(0, 75)}...` : content;
             }
 
