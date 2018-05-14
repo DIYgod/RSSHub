@@ -44,7 +44,11 @@ module.exports = async (ctx) => {
             });
 
             let content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content || item.question && item.question.title;
-            const shortenTitle = content.length > 75 ? `${content.substr(0, 75)}...` : content;
+
+            let shortenTitle = '一条动态';
+            if(content) {
+                shortenTitle = content.length > 75 ? `${content.substr(0, 75)}...` : content;
+            }
 
             if (item.type === 'REPOST') {
                 const targetLinkMap = {
