@@ -232,7 +232,7 @@ order: 排序方式，live_time 开播时间，online 人气
 参数: uid，用户 id，博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
 
 ::: warning 注意
-**个别**博主会有明显的数据缺失，原因未知，所以这里提供另外一种方式，但这种方式的缺点是描述不如第一种完善。出现缺失的情况较少，建议优先选择第一种方案
+上述方案获取 V+ 付费博主会有数据缺失，所以这里提供另外一种方式，这种方式的缺点是描述不如上面的完善，建议优先选择第一种方案
 :::
 
 举例: [https://rss.now.sh/weibo/user2/3306934123](https://rss.now.sh/weibo/user2/3306934123)
