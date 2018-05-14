@@ -1,12 +1,3 @@
-const config = require('../../config');
-
-const pixivConfig = config.pixiv;
-
-if (!pixivConfig) {
-    module.exports = () => {};
-    return;
-}
-
 const getToken = require('./token');
 const getBookmarks = require('./api/getBookmarks');
 const getUserDetail = require('./api/getUserDetail');
@@ -14,7 +5,7 @@ const getUserDetail = require('./api/getUserDetail');
 module.exports = async (ctx) => {
     const id = ctx.params.id;
 
-    if (typeof getToken() === 'null') {
+    if (!getToken()) {
         ctx.throw(500);
         return;
     }
@@ -25,19 +16,19 @@ module.exports = async (ctx) => {
     ]);
 
     const illusts = bookmarksResponse.data.illusts;
-    const username = userDetailResponse.data.user.name
+    const username = userDetailResponse.data.user.name;
 
     ctx.state.data = {
         title: `${username} 的收藏`,
         link: `https://www.pixiv.net/bookmark.php?id=${id}`,
         description: `${username} 的 pixiv 最新收藏`,
-        item: illusts.map((illust, index) => {
+        item: illusts.map((illust) => {
             const images = [];
             if (illust.page_count === 1) {
                 images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}.jpg"/></p>`);
             } else {
                 for (let i = 0; i < illust.page_count; i++) {
-                    images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}-${i+1}.jpg"/></p>`);
+                    images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}-${i + 1}.jpg"/></p>`);
                 }
             }
             return {
