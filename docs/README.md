@@ -10,7 +10,7 @@ sidebar: auto
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
 ::: tip 提示
-演示域名为 [rss.now.sh](https://rss.now.sh)，缓存时间 5 分钟，可以随意使用
+演示域名为 [rsshub.app](https://rsshub.app)，缓存时间 5 分钟，可以随意使用
 :::
 
 ## 内容过滤
@@ -23,13 +23,13 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 - filter_description: 过滤描述
 
-举例: [https://rss.now.sh/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rss.now.sh/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
+举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
 
 ## bilibili
 
 ### 番剧
 
-举例: [https://rss.now.sh/bilibili/bangumi/21680](https://rss.now.sh/bilibili/bangumi/21680)
+举例: [https://rsshub.app/bilibili/bangumi/21680](https://rsshub.app/bilibili/bangumi/21680)
 
 路由: `/bilibili/bangumi/:seasonid`
 
@@ -37,7 +37,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主投稿
 
-举例: [https://rss.now.sh/bilibili/user/video/2267573](https://rss.now.sh/bilibili/user/video/2267573)
+举例: [https://rsshub.app/bilibili/user/video/2267573](https://rsshub.app/bilibili/user/video/2267573)
 
 路由: `/bilibili/user/video/:uid`
 
@@ -45,7 +45,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主动态
 
-举例: [https://rss.now.sh/bilibili/user/dynamic/2267573](https://rss.now.sh/bilibili/user/dynamic/2267573)
+举例: [https://rsshub.app/bilibili/user/dynamic/2267573](https://rsshub.app/bilibili/user/dynamic/2267573)
 
 路由: `/bilibili/user/dynamic/:uid`
 
@@ -53,7 +53,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主收藏夹
 
-举例: [https://rss.now.sh/bilibili/user/fav/2267573](https://rss.now.sh/bilibili/user/fav/2267573)
+举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
 
 路由: `/bilibili/user/fav/:uid`
 
@@ -61,7 +61,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主投币视频
 
-举例: [https://rss.now.sh/bilibili/user/coin/2267573](https://rss.now.sh/bilibili/user/coin/2267573)
+举例: [https://rsshub.app/bilibili/user/coin/2267573](https://rsshub.app/bilibili/user/coin/2267573)
 
 路由: `/bilibili/user/coin/:uid`
 
@@ -69,7 +69,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主粉丝
 
-举例: [https://rss.now.sh/bilibili/user/followers/2267573](https://rss.now.sh/bilibili/user/followers/2267573)
+举例: [https://rsshub.app/bilibili/user/followers/2267573](https://rsshub.app/bilibili/user/followers/2267573)
 
 路由: `/bilibili/user/followers/:uid`
 
@@ -77,7 +77,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### UP 主关注用户
 
-举例: [https://rss.now.sh/bilibili/user/followings/2267573](https://rss.now.sh/bilibili/user/followings/2267573)
+举例: [https://rsshub.app/bilibili/user/followings/2267573](https://rsshub.app/bilibili/user/followings/2267573)
 
 路由: `/bilibili/user/followings/:uid`
 
@@ -85,7 +85,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### 分区视频
 
-举例: [https://rss.now.sh/bilibili/partion/33](https://rss.now.sh/bilibili/partion/33)
+举例: [https://rsshub.app/bilibili/partion/33](https://rsshub.app/bilibili/partion/33)
 
 路由: `/bilibili/partion/:tid`
 
@@ -171,7 +171,7 @@ s
 
 ### 视频评论
 
-举例: [https://rss.now.sh/bilibili/video/reply/21669336](https://rss.now.sh/bilibili/video/reply/21669336)
+举例: [https://rsshub.app/bilibili/video/reply/21669336](https://rsshub.app/bilibili/video/reply/21669336)
 
 路由: `/bilibili/video/reply/:aid`
 
@@ -179,7 +179,7 @@ s
 
 ### link 公告
 
-举例: [https://rss.now.sh/bilibili/link/news/live](https://rss.now.sh/bilibili/link/news/live)
+举例: [https://rsshub.app/bilibili/link/news/live](https://rsshub.app/bilibili/link/news/live)
 
 路由: `/bilibili/link/news/:product`
 
@@ -187,7 +187,7 @@ s
 
 ### 直播开播
 
-举例: [https://rss.now.sh/bilibili/live/room/3](https://rss.now.sh/bilibili/live/room/3)
+举例: [https://rsshub.app/bilibili/live/room/3](https://rsshub.app/bilibili/live/room/3)
 
 路由: `bilibili/live/room/:roomID`
 
@@ -195,7 +195,7 @@ s
 
 ### 直播搜索
 
-举例: [https://rss.now.sh/bilibili/live/search/编程/online](https://rss.now.sh/bilibili/live/search/编程/online)
+举例: [https://rsshub.app/bilibili/live/search/编程/online](https://rsshub.app/bilibili/live/search/编程/online)
 
 路由: `bilibili/live/search/:key/:order`
 
@@ -211,7 +211,7 @@ order: 排序方式，live_time 开播时间，online 人气
 由于接口未提供开播时间,如果直播间未更换标题与分区,将只会出现一次.如果直播间更换分区与标题,将再出现一次
 :::
 
-举例: [https://rss.now.sh/bilibili/live/area/143/online](https://rss.now.sh/bilibili/live/area/143/online)
+举例: [https://rsshub.app/bilibili/live/area/143/online](https://rsshub.app/bilibili/live/area/143/online)
 
 路由: `bilibili/live/area/:areaID/:order`
 
@@ -225,7 +225,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 博主
 
-举例: [https://rss.now.sh/weibo/user/3306934123](https://rss.now.sh/weibo/user/3306934123)
+举例: [https://rsshub.app/weibo/user/3306934123](https://rsshub.app/weibo/user/3306934123)
 
 路由: `/weibo/user/:uid`
 
@@ -235,13 +235,13 @@ order: 排序方式，live_time 开播时间，online 人气
 上述方案获取 V+ 付费博主会有数据缺失，所以这里提供另外一种方式，这种方式的缺点是描述不如上面的完善，建议优先选择第一种方案
 :::
 
-举例: [https://rss.now.sh/weibo/user2/3306934123](https://rss.now.sh/weibo/user2/3306934123)
+举例: [https://rsshub.app/weibo/user2/3306934123](https://rsshub.app/weibo/user2/3306934123)
 
 路由: `/weibo/user2/:uid`
 
 ### 关键词
 
-举例: [https://rss.now.sh/weibo/keyword/DIYgod](https://rss.now.sh/weibo/keyword/DIYgod)
+举例: [https://rsshub.app/weibo/keyword/DIYgod](https://rsshub.app/weibo/keyword/DIYgod)
 
 路由: `/weibo/keyword/:keyword`
 
@@ -251,7 +251,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 主题
 
-举例: [https://rss.now.sh/jike/topic/54dffb40e4b0f57466e675f0](https://rss.now.sh/jike/topic/54dffb40e4b0f57466e675f0)
+举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
 
 路由: `/jike/topic/:id`
 
@@ -259,7 +259,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 用户动态
 
-举例: [https://rss.now.sh/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rss.now.sh/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
+举例: [https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
 
 路由: `/jike/user/:id`
 
@@ -269,7 +269,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 歌单歌曲
 
-举例: [https://rss.now.sh/ncm/playlist/35798529](https://rss.now.sh/ncm/playlist/35798529)
+举例: [https://rsshub.app/ncm/playlist/35798529](https://rsshub.app/ncm/playlist/35798529)
 
 路由: `/ncm/playlist/:id`
 
@@ -277,7 +277,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 用户歌单
 
-举例: [https://rss.now.sh/ncm/user/playlist/45441555](https://rss.now.sh/ncm/user/playlist/45441555)
+举例: [https://rsshub.app/ncm/user/playlist/45441555](https://rsshub.app/ncm/user/playlist/45441555)
 
 路由: `/ncm/user/playlist/:uid`
 
@@ -285,7 +285,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 歌手专辑
 
-举例: [https://rss.now.sh/ncm/artist/2116](https://rss.now.sh/ncm/artist/2116)
+举例: [https://rsshub.app/ncm/artist/2116](https://rsshub.app/ncm/artist/2116)
 
 路由: `/ncm/artist/:id`
 
@@ -295,7 +295,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 分类
 
-举例: [https://rss.now.sh/juejin/category/frontend](https://rss.now.sh/juejin/category/frontend)
+举例: [https://rsshub.app/juejin/category/frontend](https://rsshub.app/juejin/category/frontend)
 
 路由: `/juejin/category/:category`
 
@@ -309,7 +309,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 首页
 
-举例: [https://rss.now.sh/jianshu/home](https://rss.now.sh/jianshu/home)
+举例: [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
 
 路由: `/jianshu/home`
 
@@ -317,7 +317,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 7 日热门
 
-举例: [https://rss.now.sh/jianshu/trending/weekly](https://rss.now.sh/jianshu/trending/weekly)
+举例: [https://rsshub.app/jianshu/trending/weekly](https://rsshub.app/jianshu/trending/weekly)
 
 路由: `/jianshu/trending/weekly`
 
@@ -325,7 +325,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 30 日热门
 
-举例: [https://rss.now.sh/jianshu/trending/monthly](https://rss.now.sh/jianshu/trending/monthly)
+举例: [https://rsshub.app/jianshu/trending/monthly](https://rsshub.app/jianshu/trending/monthly)
 
 路由: `/jianshu/trending/monthly`
 
@@ -333,7 +333,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 专题
 
-举例: [https://rss.now.sh/jianshu/collection/xYuZYD](https://rss.now.sh/jianshu/collection/xYuZYD)
+举例: [https://rsshub.app/jianshu/collection/xYuZYD](https://rsshub.app/jianshu/collection/xYuZYD)
 
 路由: `/jianshu/collection/:id`
 
@@ -341,7 +341,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 作者
 
-举例: [https://rss.now.sh/jianshu/user/yZq3ZV](https://rss.now.sh/jianshu/user/yZq3ZV)
+举例: [https://rsshub.app/jianshu/user/yZq3ZV](https://rsshub.app/jianshu/user/yZq3ZV)
 
 路由: `/jianshu/user/:id`
 
@@ -352,7 +352,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 收藏夹
 
-举例: [https://rss.now.sh/zhihu/collection/26444956](https://rss.now.sh/zhihu/collection/26444956)
+举例: [https://rsshub.app/zhihu/collection/26444956](https://rsshub.app/zhihu/collection/26444956)
 
 路由: `/zhihu/collection/:id`
 
@@ -360,7 +360,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 用户动态
 
-举例: [https://rss.now.sh/zhihu/people/activities/diygod](https://rss.now.sh/zhihu/people/activities/diygod)
+举例: [https://rsshub.app/zhihu/people/activities/diygod](https://rsshub.app/zhihu/people/activities/diygod)
 
 路由: `/zhihu/people/activities/:id`
 
@@ -368,7 +368,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 用户回答
 
-举例: [https://rss.now.sh/zhihu/people/answers/diygod](https://rss.now.sh/zhihu/people/answers/diygod)
+举例: [https://rsshub.app/zhihu/people/answers/diygod](https://rsshub.app/zhihu/people/answers/diygod)
 
 路由: `/zhihu/people/answers/:id`
 
@@ -376,7 +376,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 专栏
 
-举例: [https://rss.now.sh/zhihu/zhuanlan/googledevelopers](https://rss.now.sh/zhihu/zhuanlan/googledevelopers)
+举例: [https://rsshub.app/zhihu/zhuanlan/googledevelopers](https://rsshub.app/zhihu/zhuanlan/googledevelopers)
 
 路由: `/zhihu/zhuanlan/:id`
 
@@ -386,7 +386,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 房源
 
-举例: [https://rss.now.sh/ziroom/room/sh/1/2/五角场](https://rss.now.sh/ziroom/room/sh/1/2/五角场)
+举例: [https://rsshub.app/ziroom/room/sh/1/2/五角场](https://rsshub.app/ziroom/room/sh/1/2/五角场)
 
 路由: `/ziroom/room/:city/:iswhole/:room/:keyword`
 
@@ -406,7 +406,7 @@ keyword: 关键词
 快递送达后请及时取消订阅，以免不必要地浪费服务器资源
 :::
 
-举例: [https://rss.now.sh/express/youzhengguoji/CV054432809US](https://rss.now.sh/express/youzhengguoji/CV054432809US)
+举例: [https://rsshub.app/express/youzhengguoji/CV054432809US](https://rsshub.app/express/youzhengguoji/CV054432809US)
 
 路由: `/express/:company/:number`
 
@@ -420,7 +420,7 @@ number: 快递单号
 
 ### 帖子列表
 
-举例: [https://rss.now.sh/tieba/forum/女图](https://rss.now.sh/tieba/forum/女图)
+举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
 
 路由: `/tieba/forum/:kw`
 
@@ -434,13 +434,13 @@ number: 快递单号
 
 ### 首页（最新）
 
-举例: [https://rss.now.sh/mzitu](https://rss.now.sh/mzitu)
+举例: [https://rsshub.app/mzitu](https://rsshub.app/mzitu)
 
 路由: `/mzitu/`
 
 ### 分类
 
-举例: [https://rss.now.sh/mzitu/category/hot](https://rss.now.sh/mzitu/category/hot)
+举例: [https://rsshub.app/mzitu/category/hot](https://rsshub.app/mzitu/category/hot)
 
 路由: `/mzitu/category/:category`
 
@@ -453,13 +453,13 @@ number: 快递单号
 
 ### 所有专题
 
-举例: [https://rss.now.sh/mzitu/tags](https://rss.now.sh/mzitu/tags)
+举例: [https://rsshub.app/mzitu/tags](https://rsshub.app/mzitu/tags)
 
 路由: `/mzitu/tags`
 
 ### 专题详情
 
-举例: [https://rss.now.sh/mzitu/tag/shishen](https://rss.now.sh/mzitu/tag/shishen)
+举例: [https://rsshub.app/mzitu/tag/shishen](https://rsshub.app/mzitu/tag/shishen)
 
 路由: `/mzitu/tag/:tag`
 
@@ -467,7 +467,7 @@ number: 快递单号
 
 ### 详情
 
-举例: [https://rss.now.sh/mzitu/post/129452](https://rss.now.sh/mzitu/post/129452)
+举例: [https://rsshub.app/mzitu/post/129452](https://rsshub.app/mzitu/post/129452)
 
 路由: `/mzitu/post/:id`
 
@@ -477,7 +477,7 @@ number: 快递单号
 
 ### 用户收藏
 
-举例: [https://rss.now.sh/pixiv/user/bookmarks/15288095](https://rss.now.sh/pixiv/user/bookmarks/15288095)
+举例: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
 
 路由: `/pixiv/user/bookmarks/:id`
 
@@ -485,7 +485,7 @@ number: 快递单号
 
 ### 用户动态
 
-举例: [https://rss.now.sh/pixiv/user/11](https://rss.now.sh/pixiv/user/11)
+举例: [https://rsshub.app/pixiv/user/11](https://rsshub.app/pixiv/user/11)
 
 路由: `/pixiv/user/:id`
 
@@ -493,7 +493,7 @@ number: 快递单号
 
 ### 排行榜
 
-举例: [https://rss.now.sh/pixiv/ranking/week](https://rss.now.sh/pixiv/ranking/week)
+举例: [https://rsshub.app/pixiv/ranking/week](https://rsshub.app/pixiv/ranking/week)
 
 路由: `/pixiv/ranking/:mode/:date?`
 
@@ -515,7 +515,7 @@ date: 日期，取值形如 `2018-4-25`
 
 ### 正在上映的电影
 
-举例: [https://rss.now.sh/douban/movie/playing](https://rss.now.sh/douban/movie/playing)
+举例: [https://rsshub.app/douban/movie/playing](https://rsshub.app/douban/movie/playing)
 
 路由: `/douban/movie/playing`
 
@@ -523,7 +523,7 @@ date: 日期，取值形如 `2018-4-25`
 
 ### 正在上映的高分电影
 
-举例: [https://rss.now.sh/douban/movie/playing/7.5](https://rss.now.sh/douban/movie/playing/7.5)
+举例: [https://rsshub.app/douban/movie/playing/7.5](https://rsshub.app/douban/movie/playing/7.5)
 
 路由
 
@@ -539,7 +539,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 即将上映的电影
 
-举例: [https://rss.now.sh/douban/movie/later](https://rss.now.sh/douban/movie/later)
+举例: [https://rsshub.app/douban/movie/later](https://rsshub.app/douban/movie/later)
 
 路由: `/douban/movie/later`
 
@@ -547,7 +547,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 北美票房榜
 
-举例: [https://rss.now.sh/douban/movie/ustop](https://rss.now.sh/douban/movie/ustop)
+举例: [https://rsshub.app/douban/movie/ustop](https://rsshub.app/douban/movie/ustop)
 
 路由: `/douban/movie/ustop`
 
@@ -557,7 +557,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 无聊图
 
-举例: [https://rss.now.sh/jandan/pic](https://rss.now.sh/jandan/pic)
+举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
 
 路由: `/jandan/pic`
 
@@ -567,7 +567,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 图卦
 
-举例: [https://rss.now.sh/dapenti/tugua](https://rss.now.sh/dapenti/tugua)
+举例: [https://rsshub.app/dapenti/tugua](https://rsshub.app/dapenti/tugua)
 
 路由: `/dapenti/tugua`
 
@@ -577,7 +577,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 周报
 
-举例: [https://rss.now.sh/dockone/weekly](https://rss.now.sh/dockone/weekly)
+举例: [https://rsshub.app/dockone/weekly](https://rsshub.app/dockone/weekly)
 
 路由: `/dockone/weekly`
 
@@ -587,7 +587,7 @@ city: 城市的中文名，可选，默认北京
 
 ### 吐槽新帖
 
-举例: [https://rss.now.sh/tucaoqq/post/28564/CdRI0728](https://rss.now.sh/tucaoqq/post/28564/CdRI0728)
+举例: [https://rsshub.app/tucaoqq/post/28564/CdRI0728](https://rsshub.app/tucaoqq/post/28564/CdRI0728)
 
 路由: `/tucaoqq/post/:project/:key`
 
@@ -601,7 +601,7 @@ key: 产品密钥
 
 ### 小说章节
 
-举例: [https://rss.now.sh/biquge/novel/latestchapter/52_52542](https://rss.now.sh/biquge/novel/latestchapter/52_52542)
+举例: [https://rsshub.app/biquge/novel/latestchapter/52_52542](https://rsshub.app/biquge/novel/latestchapter/52_52542)
 
 路由: `/biquge/novel/latestchapter/:id`
 
@@ -611,13 +611,13 @@ key: 产品密钥
 
 ### 今天头条
 
-举例: [https://rss.now.sh/toutiao/today](https://rss.now.sh/toutiao/today)
+举例: [https://rsshub.app/toutiao/today](https://rsshub.app/toutiao/today)
 
 路由: `/toutiao/today`
 
 ### 独家号
 
-举例: [https://rss.now.sh/toutiao/user/140544](https://rss.now.sh/toutiao/user/140544)
+举例: [https://rsshub.app/toutiao/user/140544](https://rsshub.app/toutiao/user/140544)
 
 路由: `/toutiao/user/:id`
 
@@ -627,7 +627,7 @@ key: 产品密钥
 
 ### 评论
 
-举例: [https://rss.now.sh/disqus/posts/diygod-me](https://rss.now.sh/disqus/posts/diygod-me)
+举例: [https://rsshub.app/disqus/posts/diygod-me](https://rsshub.app/disqus/posts/diygod-me)
 
 路由: `/disqus/posts/:forum`
 
@@ -637,7 +637,7 @@ key: 产品密钥
 
 ### 用户
 
-举例: [https://rss.now.sh/twitter/user/DIYgod](https://rss.now.sh/twitter/user/DIYgod)
+举例: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIYgod)
 
 路由: `/twitter/user/:id`
 
@@ -647,7 +647,7 @@ key: 产品密钥
 
 ### 用户
 
-举例: [https://rss.now.sh/instagram/user/diygod](https://rss.now.sh/instagram/user/diygod)
+举例: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user/diygod)
 
 路由: `/instagram/user/:id`
 
@@ -657,7 +657,7 @@ key: 产品密钥
 
 ### 用户
 
-举例: [https://rss.now.sh/youtube/user/JFlaMusic](https://rss.now.sh/youtube/user/JFlaMusic)
+举例: [https://rsshub.app/youtube/user/JFlaMusic](https://rsshub.app/youtube/user/JFlaMusic)
 
 路由: `/youtube/user/:username`
 
@@ -665,7 +665,7 @@ key: 产品密钥
 
 ### 频道
 
-举例: [https://rss.now.sh/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ](https://rss.now.sh/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ)
+举例: [https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ](https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ)
 
 路由: `/youtube/channel/:id`
 
