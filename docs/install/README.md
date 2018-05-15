@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # 部署
 
 部署 RSSHub 非常简单，如果你在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给你答复。

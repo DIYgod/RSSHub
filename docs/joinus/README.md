@@ -1,3 +1,7 @@
+---
+sidebar: auto
+---
+
 # 参与我们
 
 如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
