@@ -41,19 +41,20 @@ module.exports = async (ctx) => {
 
             let linkTemplate = '';
             if (item.linkInfo && item.linkInfo.linkUrl) {
-                linkTemplate = `<br><a href="${item.linkInfo.linkUrl}">${item.linkInfo.title}</a>`;
+                linkTemplate = `<a href="${item.linkInfo.linkUrl}">${item.linkInfo.title}</a><br>`;
             }
 
             let imgTemplate = '';
             item.pictures && item.pictures.forEach((item) => {
-                imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
+                imgTemplate += `<img referrerpolicy="no-referrer" src="${item.picUrl}"><br>`;
             });
 
-            let content = item.content || item.linkInfo && item.linkInfo.title || item.target && item.target.content || item.question && item.question.title || '';
+            let content = item.content || item.linkInfo && item.linkInfo.title || item.question && item.question.title || '';
 
             let shortenTitle = '一条动态';
             if (content) {
                 shortenTitle = content.length > 75 ? `${content.substr(0, 75)}...` : content;
+                content = `${content}<br><br>`;
             }
 
             if (item.type === 'REPOST') {
@@ -64,7 +65,7 @@ module.exports = async (ctx) => {
                     repostImgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.thumbnailUrl}">`;
                 });
 
-                let repostContent = `<br><br>转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}`;
+                let repostContent = `转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}`;
                 content = `${content}${repostContent}`.replace(/\n|\r/g, '<br>');
             }
 
