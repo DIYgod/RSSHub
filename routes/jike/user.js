@@ -36,7 +36,8 @@ module.exports = async (ctx) => {
             const linkMap = {
                 'OFFICIAL_MESSAGE': `https://web.okjike.com/message-detail/${item.id}/officialMessage`,
                 'ORIGINAL_POST': `https://web.okjike.com/post-detail/${item.id}/originalPost`,
-                'REPOST': `https://web.okjike.com/post-detail/${item.id}/repost`
+                'REPOST': `https://web.okjike.com/post-detail/${item.id}/repost`,
+                'ANSWER': `https://m.okjike.com/answers/${item.id}`
             };
 
             let linkTemplate = '';
@@ -58,15 +59,39 @@ module.exports = async (ctx) => {
             }
 
             if (item.type === 'REPOST') {
-                const screenNameTemplate = item.target.user ? `<a href="https://web.okjike.com/user/${item.target.user.username}/post" target="_blank">@${item.target.user.screenName}</a>`: '';
+                const screenNameTemplate = item.target.user ? `<a href="https://web.okjike.com/user/${item.target.user.username}/post" target="_blank">@${item.target.user.screenName}</a>` : '';
 
                 let repostImgTemplate = '';
                 item.target.pictures && item.target.pictures.forEach((item) => {
                     repostImgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.thumbnailUrl}">`;
                 });
 
-                let repostContent = `转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}`;
+                const repostContent = `转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}`;
                 content = `${content}${repostContent}`.replace(/\n|\r/g, '<br>');
+            }
+
+            if (item.type === 'ANSWER') {
+                let answerTextTemplate = '';
+                let answerImgTemplate = '';
+                let answerImgKeys = [];
+                item.richtextContent.blocks && item.richtextContent.blocks.forEach((item) => {
+                    if (item.entityRanges.length && item.text === '[图片]') {
+                        answerImgKeys = [...answerImgKeys, ...Object.keys(item.entityRanges)];
+                    } else {
+                        answerTextTemplate += item.text;
+                    }
+                });
+
+                if (answerImgKeys.length) {
+                    answerImgKeys.forEach((key) => {
+                        const entity = item.richtextContent.entityMap[key];
+                        if (entity.type.toUpperCase() === 'IMAGE') {
+                            answerImgTemplate += `<br><img referrerpolicy="no-referrer" src="${entity.data.pictureUrl.middlePicUrl}">`;
+                        }
+                    });
+                }
+                const answerContent = `回答: ${answerTextTemplate}${answerImgTemplate}`;
+                content = `${content}${answerContent}`.replace(/\n|\r/g, '<br>');
             }
 
             return {
