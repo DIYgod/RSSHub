@@ -67,4 +67,4 @@ if (config.cacheType === 'memory') {
 // router
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(config.port);
+app.listen(config.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');

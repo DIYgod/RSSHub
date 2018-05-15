@@ -136,9 +136,15 @@ $ docker stop rsshub
 
 `PORT`: 监听端口，默认为 `1200`
 
-`CACHE_TYPE`: 缓存类型，可为 `memory` 和 `redis`，默认为 `memory`
+`CACHE_TYPE`: 缓存类型，可为 `memory` 和 `redis`，设为空可以禁止缓存，默认为 `memory`
 
-`CACHE_EXPIRE`: 缓存过期时间，单位为秒，默认 300 秒。
+`CACHE_EXPIRE`: 缓存过期时间，单位为秒，默认 300
+
+`LISTEN_INADDR_ANY`: 是否允许公网连接，默认 1
+
+`REDIS_URL`: Redis 连接地址（memory 缓存类型时无效）
+
+`REDIS_PASSWORD`: Redis 连接密码（memory 缓存类型时无效）
 
 ### 部分 RSS 模块配置
 
