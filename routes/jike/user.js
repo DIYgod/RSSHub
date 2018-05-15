@@ -33,6 +33,12 @@ module.exports = async (ctx) => {
                 'ANSWER': '回答'
             };
 
+            const linkMap = {
+                'OFFICIAL_MESSAGE': `https://web.okjike.com/message-detail/${item.id}/officialMessage`,
+                'ORIGINAL_POST': `https://web.okjike.com/post-detail/${item.id}/originalPost`,
+                'REPOST': `https://web.okjike.com/post-detail/${item.id}/repost`
+            };
+
             let linkTemplate = '';
             if (item.linkInfo && item.linkInfo.linkUrl) {
                 linkTemplate = `<br><a href="${item.linkInfo.linkUrl}">${item.linkInfo.title}</a>`;
@@ -51,28 +57,22 @@ module.exports = async (ctx) => {
             }
 
             if (item.type === 'REPOST') {
-                const targetLinkMap = {
-                    'OFFICIAL_MESSAGE': `https://web.okjike.com/message-detail/${item.target.id}/officialMessage`,
-                    'ORIGINAL_POST': `https://web.okjike.com/post-detail/${item.target.id}/originalPost`,
-                    'REPOST': `https://web.okjike.com/post-detail/${item.target.id}/repost`
-                };
-
-                const screenNameTemplate = item.target.user ? `<p>@${item.target.user.screenName}</p>` : '';
+                const screenNameTemplate = item.target.user ? `<a href="https://web.okjike.com/user/${item.target.user.username}/post" target="_blank">@${item.target.user.screenName}</a>`: '';
 
                 let repostImgTemplate = '';
                 item.target.pictures && item.target.pictures.forEach((item) => {
-                    repostImgTemplate += `<p><img style="box-shadow: 0 0 1px rgba(0,0,0,.2);" referrerpolicy="no-referrer" src="${item.thumbnailUrl}"></p>`;
+                    repostImgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.thumbnailUrl}">`;
                 });
 
-                let repostContent = `<a style="padding:15px;margin-top:10px;display:block;border-radius:4px;background-color:#fff;border:1px solid rgba(0,0,0,.08);text-decoration:none;" href="${targetLinkMap[item.target.type]}" target="_blank">${screenNameTemplate}${item.target.content}${repostImgTemplate}</a>`;
-                content = `${content}${repostContent}`;
+                let repostContent = `<br><br>转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}`;
+                content = `${content}${repostContent}`.replace(/\n|\r/g, '<br>');
             }
 
             return {
                 title: `${typeMap[item.type]}了: ${shortenTitle}`,
                 description: `${content}${linkTemplate}${imgTemplate}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
-                link: `https://web.okjike.com/post-detail/${item.id}/originalPost`
+                link: `${linkMap[item.type]}`
             }
         }),
     };
