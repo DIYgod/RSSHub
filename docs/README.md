@@ -10,7 +10,7 @@ sidebar: auto
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
 ::: tip 提示
-演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 5 分钟，可以随意使用
+演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用
 :::
 
 ## 内容过滤
