@@ -6,8 +6,8 @@ const config = require('./config');
 const onerror = require('./middleware/onerror');
 const header = require('./middleware/header.js');
 const utf8 = require('./middleware/utf8');
-const memoryCache = require('./middleware/cache.js');
-const redisCache = require('koa-redis-cache');
+const memoryCache = require('./middleware/lru-cache.js');
+const redisCache = require('./middleware/redis-cache.js');
 const filter = require('./middleware/filter.js');
 const template = require('./middleware/template.js');
 const favicon = require('koa-favicon');
@@ -52,8 +52,12 @@ if (config.cacheType === 'memory') {
     app.use(
         redisCache({
             expire: config.cacheExpire,
+            ignoreQuery: true,
             onerror: (e) => {
-                logger.error('cache error', e);
+                logger.error('Redis error: ', e);
+            },
+            onconnect: () => {
+                logger.info('Redis connect.');
             }
         })
     );

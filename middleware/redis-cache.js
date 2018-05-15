@@ -1,24 +1,47 @@
-// transform from https://github.com/coderhaoxin/koa-redis-cache
+// baed on https://github.com/coderhaoxin/koa-redis-cache
 
 const pathToRegExp = require('path-to-regexp');
+const wrapper = require('co-redis');
 const readall = require('readall');
 const crypto = require('crypto');
-const lru = require('lru-cache');
+const Redis = require('redis');
 
 module.exports = function (options = {}) {
+    let redisAvailable = false;
+
     const {
-        prefix = 'koa-cache:',
+        prefix = 'koa-redis-cache:',
         expire = 30 * 60, // 30 min
         routes = ['(.*)'],
         exclude = [],
         passParam = '',
         maxLength = Infinity,
         ignoreQuery = false,
+        onerror = function () { },
+        onconnect = function () {},
     } = options;
 
-    const memoryCache = lru({
-        maxAge: expire * 1000,
-        max: maxLength
+    const {
+        host:redisHost = 'localhost',
+        port:redisPort = 6379,
+        url:redisUrl = `redis://${redisHost}:${redisPort}/`,
+        options:redisOptions = {}
+    } = options.redis || {};
+
+    /**
+   * redisClient
+   */
+    const redisClient = wrapper(Redis.createClient(redisUrl, redisOptions));
+    redisClient.on('error', (error) => {
+        redisAvailable = false;
+        onerror(error);
+    });
+    redisClient.on('end', () => {
+        redisAvailable = false;
+    });
+    redisClient.on('connect', () => {
+        redisAvailable = true;
+        onconnect();
     });
 
     return async function cache (ctx, next) {
@@ -50,7 +73,7 @@ module.exports = function (options = {}) {
             }
         }
 
-        if (!match || passParam && ctx.request.query[passParam]) {
+        if (!redisAvailable || !match || passParam && ctx.request.query[passParam]) {
             return await next();
         }
 
@@ -74,19 +97,19 @@ module.exports = function (options = {}) {
     };
 
     /**
-     * getCache
-     */
+   * getCache
+   */
     async function getCache (ctx, key, tkey) {
-        const value = memoryCache.get(key);
+        const value = await redisClient.get(key);
         let type;
         let ok = false;
 
         if (value) {
             ctx.response.status = 200;
-            type = memoryCache.get(tkey) || 'text/html';
+            type = await redisClient.get(tkey) || 'text/html';
             // can happen if user specified return_buffers: true in redis options
             if (Buffer.isBuffer(type)) {type = type.toString();}
-            ctx.response.set('X-Koa-Memory-Cache', 'true');
+            ctx.response.set('X-Koa-Redis-Cache', 'true');
             ctx.response.type = type;
             try {
                 ctx.state.data = JSON.parse(value);
@@ -100,9 +123,9 @@ module.exports = function (options = {}) {
     }
 
     /**
-     * setCache
-     */
-    async function setCache (ctx, key, tkey) {
+   * setCache
+   */
+    async function setCache (ctx, key, tkey, expire) {
         ctx.state.data.lastBuildDate = new Date().toUTCString();
         const body = JSON.stringify(ctx.state.data);
 
@@ -112,18 +135,18 @@ module.exports = function (options = {}) {
         if (Buffer.byteLength(body) > maxLength) {
             return;
         }
-        memoryCache.set(key, body);
+        await redisClient.setex(key, expire, body);
 
-        await cacheType(ctx, tkey);
+        await cacheType(ctx, tkey, expire);
     }
 
     /**
-     * cacheType
-     */
-    async function cacheType (ctx, tkey) {
+   * cacheType
+   */
+    async function cacheType (ctx, tkey, expire) {
         const type = ctx.response.type;
         if (type) {
-            memoryCache.set(tkey, type);
+            await redisClient.setex(tkey, expire, type);
         }
     }
 };
