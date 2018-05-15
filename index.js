@@ -53,6 +53,7 @@ if (config.cacheType === 'memory') {
         redisCache({
             expire: config.cacheExpire,
             ignoreQuery: true,
+            redis: config.redis,
             onerror: (e) => {
                 logger.error('Redis error: ', e);
             },
