@@ -34,12 +34,12 @@ const jandan_magic = async (url) => {
 
 // jandan_decode is borrowed from jandan.net, which is used in function jandan_load_img.
 const jandan_decode = (m, r) => {
-    let q = 4;
+    const q = 4;
     r = md5(r);
-    let o = md5(r.substr(0, 16));
-    let n = md5(r.substr(16, 16));
-    let l = m.substr(0, q);
-    let c = o + md5(o + l);
+    const o = md5(r.substr(0, 16));
+    const n = md5(r.substr(16, 16));
+    const l = m.substr(0, q);
+    const c = o + md5(o + l);
     let k;
     m = m.substr(q);
     k = base64_decode(m);
@@ -88,7 +88,7 @@ module.exports = async (ctx) => {
 
     let script_url = '';
     $('script').each((index, item) => {
-        let s = $(item).attr('src');
+        const s = $(item).attr('src');
         if (s && s.startsWith('//cdn.jandan.net/static/min/')) {
             script_url = s;
         }

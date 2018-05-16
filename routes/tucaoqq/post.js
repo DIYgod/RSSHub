@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
         link: `https://support.qq.com/product/${projectID}`,
         description: `${projectID} 的 吐个槽新帖`,
         item: data.map((item) => {
-            let pubdate = new Date(
+            const pubdate = new Date(
                 item.created_at.replace(' ', 'T') + '+08:00'
             );
             let imgHTML = '';

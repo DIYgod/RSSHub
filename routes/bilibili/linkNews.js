@@ -4,17 +4,17 @@ const config = require('../../config');
 module.exports = async (ctx) => {
     const product = ctx.params.product;
 
-    let productTitle = ``;
+    let productTitle = '';
 
     switch (product) {
         case 'live':
-            productTitle = `直播`;
+            productTitle = '直播';
             break;
         case 'vc':
-            productTitle = `小视频`;
+            productTitle = '小视频';
             break;
         case 'wh':
-            productTitle = `相簿`;
+            productTitle = '相簿';
             break;
     }
 
@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
         url: `https://api.vc.bilibili.com/news/v1/notice/list?platform=pc&product=${product}&category=all&page_no=1&page_size=20`,
         headers: {
             'User-Agent': config.ua,
-            Referer: `https://link.bilibili.com/p/eden/news`,
+            Referer: 'https://link.bilibili.com/p/eden/news',
         },
     });
     const data = response.data.data.items;

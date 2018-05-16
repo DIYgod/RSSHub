@@ -25,8 +25,8 @@ module.exports = async (ctx) => {
             step: 0,
         }),
     });
-    let data = response.data.data; //当查询的结果不存在时,该 data 是个对象 { info: '数据加载完毕' }
-    //判断数据的类型,如果有数据就是数组类型的,没有数据的话，就赋值为空数组
+    let data = response.data.data; // 当查询的结果不存在时,该 data 是个对象 { info: '数据加载完毕' }
+    // 判断数据的类型,如果有数据就是数组类型的,没有数据的话，就赋值为空数组
     data =
         data instanceof Array
             ? data

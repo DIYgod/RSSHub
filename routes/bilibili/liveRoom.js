@@ -4,7 +4,7 @@ const config = require('../../config');
 module.exports = async (ctx) => {
     let roomID = ctx.params.roomID;
 
-    //短号查询长号
+    // 短号查询长号
     if (parseInt(roomID, 10) < 10000) {
         const roomIDResponse = await axios({
             method: 'get',
@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data;
 
-    let liveItem = [];
+    const liveItem = [];
 
     if (data.live_status === 1) {
         liveItem.push({

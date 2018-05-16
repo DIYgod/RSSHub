@@ -28,8 +28,9 @@ module.exports = async (ctx) => {
                 .map((index, item) => {
                     item = $(item);
                     let linkUrl = item.find('link').attr('href');
-                    if (linkUrl.startsWith('/'))
+                    if (linkUrl.startsWith('/')) {
                         linkUrl = 'https://www.zhihu.com' + linkUrl;
+                    }
                     return {
                         title: item.find('.zm-item-title a').text(),
                         description: `内容：${item.find('textarea').text()}`,

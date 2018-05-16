@@ -98,7 +98,7 @@ module.exports = function(options = {}) {
         try {
             const trueExpire = routeExpire || expire;
             await setCache(ctx, key, tkey, trueExpire);
-        } catch (e) {}
+        } catch (e) {} // eslint-disable-line no-empty
         routeExpire = false;
     };
 
@@ -168,6 +168,7 @@ function paired(route, path) {
     return pathToRegExp(route, [], options).exec(path);
 }
 
+// eslint-disable-next-line no-unused-vars
 function read(stream) {
     return new Promise((resolve, reject) => {
         readall(stream, (err, data) => {

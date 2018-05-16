@@ -5,22 +5,22 @@ module.exports = async (ctx) => {
     const areaID = ctx.params.areaID;
     const order = ctx.params.order;
 
-    let orderTitle = ``;
+    let orderTitle = '';
     switch (order) {
         case 'live_time':
-            orderTitle = `最新开播`;
+            orderTitle = '最新开播';
             break;
         case 'online':
-            orderTitle = `人气直播`;
+            orderTitle = '人气直播';
             break;
     }
 
     const nameResponse = await axios({
         method: 'get',
-        url: `https://api.live.bilibili.com/room/v1/Area/getList`,
+        url: 'https://api.live.bilibili.com/room/v1/Area/getList',
         headers: {
             'User-Agent': config.ua,
-            Referer: `https://link.bilibili.com/p/center/index`,
+            Referer: 'https://link.bilibili.com/p/center/index',
         },
     });
 
@@ -59,7 +59,7 @@ module.exports = async (ctx) => {
         url: `https://api.live.bilibili.com/room/v1/area/getRoomList?area_id=${areaID}&sort_type=${order}&page_size=30&page_no=1`,
         headers: {
             'User-Agent': config.ua,
-            Referer: `https://live.bilibili.com/p/eden/area-tags`,
+            Referer: 'https://live.bilibili.com/p/eden/area-tags',
         },
     });
     const data = response.data.data;

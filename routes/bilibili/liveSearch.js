@@ -8,14 +8,14 @@ module.exports = async (ctx) => {
     const order = ctx.params.order;
 
     const urlEncodedKey = encodeURIComponent(key);
-    let orderTitle = ``;
+    let orderTitle = '';
 
     switch (order) {
         case 'live_time':
-            orderTitle = `最新开播`;
+            orderTitle = '最新开播';
             break;
         case 'online':
-            orderTitle = `人气直播`;
+            orderTitle = '人气直播';
             break;
     }
 

@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    let id = ctx.params.id;
+    const id = ctx.params.id;
 
     const url = `http://www.mzitu.com/${id}`;
 

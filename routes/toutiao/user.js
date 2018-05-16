@@ -5,7 +5,7 @@ const config = require('../../config');
 const baseUrl = 'https://toutiao.io';
 module.exports = async (ctx) => {
     const id = ctx.params.id;
-    let requestUrl = `${baseUrl}/subjects/${id}?f=new`;
+    const requestUrl = `${baseUrl}/subjects/${id}?f=new`;
     const response = await axios({
         method: 'get',
         url: requestUrl,
