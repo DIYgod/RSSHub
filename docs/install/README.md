@@ -31,8 +31,8 @@ usage: git [--version] [--help] [-C <path>] [-c name=value]
 :::
 
 * Windows：从Git官网直接[下载安装程序](https://git-scm.com/downloads)。
-* MacOS：使用 [Homebrew](https://brew.sh/) `brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
-* Linux：使用您的包管理器安装例如 `sudo apt-get install git`。
+* MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
+* Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
 
 ### 安装 Node.JS
 
@@ -105,6 +105,58 @@ macOS & Linux 运行 `$ PORT=1000`
 
 更多配置项请看 [应用配置](#应用配置)
 
+### 使用 Redis 数据库缓存
+
+RSSHub 默认会有 5 分钟的缓存，默认这个缓存是存放在内存中的。RSSHub 还支持 Redis 数据库缓存。
+
+::: tip 提示
+除非流量特别大或者您需要建立分布式集群，否则不需要 Redis 缓存。
+:::
+
+#### 安装 Redis
+
+**Windows**
+
+安装 Redis on Windows 直接[下载安装程序](https://github.com/MicrosoftArchive/redis/releases)。
+
+在安装目录中运行下面的命令启动 Redis。
+
+``` bash
+$ redis-server  redis.windows.conf
+```
+
+**MacOS**
+
+使用 [Homebrew](https://brew.sh/) 安装 Redis。
+
+``` bash
+$ brew install redis
+```
+
+再运行下面的命令启动 Redis。
+
+``` bash
+$ brew services start redis
+```
+
+**Linux**
+
+使用您的包管理器安装 Redis。
+
+``` bash
+# apt
+$ sudo apt install redis-server
+
+# yum
+$ sudo yum install redis
+```
+
+然后运行 `$ redis-server` 启动 Redis。
+
+#### 启用 Redis 数据库缓存
+
+修改配置项 `CACHE_TYPE` 为 `redis`，RSSHub 将使用默认地址 `redis://localhost:6379/` 连接 Redis，如果需要修改地址请看 [应用配置](#应用配置)。
+
 ## 部署到 Docker
 
 Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前最流行的 Linux 容器解决方案。
@@ -147,7 +199,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 PORT=1000 diygod
 
 更多配置项请看 [应用配置](#应用配置)
 
-## 使用 docker-compose 部署
+### 使用 docker-compose 部署
 
 [docker-compose](https://docs.docker.com/compose/overview/) 是用来运行多容器 Docker 应用的小工具，可以简化配置部署过程：
 
@@ -194,7 +246,7 @@ $ docker-compose up
 
 `LISTEN_INADDR_ANY`: 是否允许公网连接，默认 1
 
-`REDIS_URL`: Redis 连接地址（memory 缓存类型时无效）
+`REDIS_URL`: Redis 连接地址（memory 缓存类型时无效），默认为 `redis://localhost:6379/`
 
 `REDIS_PASSWORD`: Redis 连接密码（memory 缓存类型时无效）
 
