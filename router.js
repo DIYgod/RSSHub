@@ -82,7 +82,7 @@ router.get(
 );
 router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
-router.get('/zhihu/daily', require('./routes/zhihu/daily'))
+router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 
 // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
