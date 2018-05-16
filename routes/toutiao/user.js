@@ -20,7 +20,6 @@ module.exports = async (ctx) => {
         .find('.text-center>.subject-cover>img')
         .eq(0)
         .attr('src');
-    const link = requestUrl;
     const title = $('#main')
         .find('.text-center>h3')
         .eq(0)
