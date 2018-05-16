@@ -134,4 +134,7 @@ if (config.youtube && config.youtube.key) {
 router.get('/jike/topic/:id', require('./routes/jike/topic'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
 
+// 极客时间
+router.get('/geektime/column/:cid', require('./routes/geektime/column'));
+
 module.exports = router;
