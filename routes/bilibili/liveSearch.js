@@ -1,6 +1,4 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
 const config = require('../../config');
 
 module.exports = async (ctx) => {

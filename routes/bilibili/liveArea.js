@@ -29,13 +29,13 @@ module.exports = async (ctx) => {
     let areaTitle = '';
     let areaLink = '';
 
-    for (parentArea of nameResponse.data.data) {
-        for (area of parentArea.list) {
+    for (const parentArea of nameResponse.data.data) {
+        for (const area of parentArea.list) {
             if (area.id === areaID) {
                 parentTitle = parentArea.name;
                 parentID = parentArea.id;
                 areaTitle = area.name;
-                cateID = area.cate_id;
+                // cateID = area.cate_id;
                 switch (parentID) {
                     case 1:
                         areaLink = `https://live.bilibili.com/pages/area/ent-all#${
