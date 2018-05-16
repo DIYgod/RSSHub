@@ -87,7 +87,7 @@ async function tokenLoop() {
         } catch (err) {
             expires_in = 30;
             logger.err(
-                'Pixiv refresh token failed, retry in ${expires_in} seconds.',
+                `Pixiv refresh token failed, retry in ${expires_in} seconds.`,
                 err
             );
         }
