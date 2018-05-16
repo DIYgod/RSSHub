@@ -4,22 +4,22 @@ sidebar: auto
 
 # 部署
 
-部署 RSSHub 非常简单，如果你在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给你答复。
+部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
 
 [[toc]]
 
 ## 手动部署
 
-部署 `RSSHub` 最直接的方式，你可以按照以下步骤将 `RSSHub` 部署在您的电脑、服务器或者其他任何地方。
+部署 `RSSHub` 最直接的方式，您可以按照以下步骤将 `RSSHub` 部署在您的电脑、服务器或者其他任何地方。
 
 ### 在安装之前
 
-在安装 RSSHub 之前，请确保你到电脑中已经安装了 [Node.js >= 10.0](https://nodejs.org/) 和 [Git](https://git-scm.com/)。
+在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 10.0](https://nodejs.org/)。
 
 ### 安装 Git
 
 ::: tip 提示
-首先你应该输入 `git`，看看系统有没有安装 Git：
+首先您应该输入 `git`，看看系统有没有安装 Git：
 
 windows 打开 `cmd`， macOS 打开`终端(terminal)`。
 
@@ -30,9 +30,9 @@ usage: git [--version] [--help] [-C <path>] [-c name=value]
 ```
 :::
 
-- Windows：从Git官网直接[下载安装程序](https://git-scm.com/downloads)。
-- MacOS：使用 [Homebrew](https://brew.sh/) `brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
-- Linux：使用你的包管理器安装例如 `sudo apt-get install git`。
+* Windows：从Git官网直接[下载安装程序](https://git-scm.com/downloads)。
+* MacOS：使用 [Homebrew](https://brew.sh/) `brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
+* Linux：使用您的包管理器安装例如 `sudo apt-get install git`。
 
 ### 安装 Node.JS
 
@@ -89,9 +89,15 @@ $ npm start
 
 在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
 
-## 部署到 docker
+## 部署到 Docker
 
 Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前最流行的 Linux 容器解决方案。
+
+### 安装 Docker
+
+官方网站上有各种环境下的 [安装指南](https://docs.docker.com/engine/installation/)
+
+### 部署
 
 运行下面的命令下载 RSSHub 镜像。
 
