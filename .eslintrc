@@ -3,7 +3,10 @@
     "plugins": ["prettier"],
     "parserOptions": {
         "ecmaVersion": 2017,
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
     },
     "env": {
         "node": true,
@@ -11,7 +14,6 @@
     },
     "rules": {
         "no-console": 0,
-        "no-extra-parens": 1,
         "block-scoped-var": 1,
         "curly": 1,
         "eqeqeq": 1,
