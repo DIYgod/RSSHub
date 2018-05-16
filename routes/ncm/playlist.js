@@ -1,6 +1,5 @@
 const axios = require('axios');
 const qs = require('querystring');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -21,7 +20,7 @@ module.exports = async (ctx) => {
 
     const data = response.data.playlist;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: data.name,
         link: `https://music.163.com/#/playlist?id=${id}`,
         description: `网易云音乐歌单 - ${data.name}`,
@@ -33,5 +32,5 @@ module.exports = async (ctx) => {
                 link: `https://music.163.com/#/song?id=${item.id}`
             };
         }),
-    });
+    };
 };

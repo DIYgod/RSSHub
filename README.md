@@ -1,4 +1,7 @@
-# RSSHub
+<p align="center">
+<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+</p>
+<h1 align="center">RSSHub</h1>
 
 > 🍭 使用 RSS 连接全世界
 
@@ -20,8 +23,16 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
   - UP 主关注用户
   - 分区视频
   - 视频评论
+  - link 公告
+  - 直播开播
+  - 直播搜索
+  - 直播分区
 - 微博
   - 博主
+  - 关键词
+- 即刻
+  - 主题
+  - 用户动态
 - 网易云音乐
   - 歌单歌曲
   - 用户歌单
@@ -37,7 +48,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 - 知乎
   - 收藏夹
   - 用户动态
+  - 用户回答
   - 专栏
+  - 知乎日报
 - 自如
   - 房源
 - 快递
@@ -68,6 +81,18 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
   - 吐槽新帖
 - 笔趣阁
   - 小说章节
+- 开发者头条
+  - 今天头条
+  - 独家号
+- Disqus
+  - 评论
+- Twitter
+  - 用户
+- Instagram
+  - 用户
+- Youtube
+  - 用户
+  - 频道
 
 ## 参与我们
 
@@ -85,21 +110,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 1. [Telegram 群](https://t.me/rsshub)
 
-## 搭建
+## 部署
 
-环境：需要 Node.js v7.6.0 或更高版本，若启用 Redis 缓存需要先启动 Redis
-
-安装依赖：`yarn`
-
-修改配置：配置文件为 `config.js`
-
-启动程序：`node index.js`
-
-## Contributors
-
-This project exists thanks to all the people who contribute.
-
-<a href="https://github.com/DIYgod/RSSHub/graphs/contributors"><img src="https://opencollective.com/RSSHub/contributors.svg?width=890&button=false" /></a>
+见[文档](https://rsshub.js.org/install/)
 
 ## 赞助 RSSHub 的研发
 
@@ -121,7 +134,18 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 周期性赞助可以获得额外的回报，比如你的名字 会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
 
 - 通过 [OpenCollective](https://opencollective.com/RSSHub) 赞助成为 backer 或 sponsor
+- 通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer
 - 给我们发邮件联系赞助事宜: i#html.love
+
+## 鸣谢
+
+### Sponsors
+
+- [Sayori Studio](https://t.me/SayoriStudio)
+
+### Contributors
+
+[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
 ## Author
 

@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -25,7 +24,7 @@ module.exports = async (ctx) => {
     const list = listRes.data;
     const info = infoRes.data;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `知乎专栏-${info.name}`,
         link: `https://zhuanlan.zhihu.com/${id}`,
         description: info.description,
@@ -35,5 +34,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.publishedTime).toUTCString(),
             link: `https://zhuanlan.zhihu.com${item.url}`
         })),
-    });
+    };
 };

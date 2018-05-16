@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -18,7 +17,7 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(data);
     const list = $('.note-list li');
 
-    ctx.body = template({
+    ctx.state.data = {
         title: '简书 30 日热门',
         link: 'https://www.jianshu.com/trending/monthly',
         description: '简书 30 日热门',
@@ -31,5 +30,5 @@ module.exports = async (ctx) => {
                 link: `https://www.jianshu.com${item.find('.title').attr('href')}`
             };
         }).get(),
-    });
+    };
 };
