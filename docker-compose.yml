@@ -7,5 +7,17 @@ services:
     build: .
     environment:
       NODE_ENV: production
+      CACHE_TYPE: redis
+      REDIS_URL: 'redis://redis:6379/'
     ports:
       - 1200:1200
+    links:
+      - redis
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
