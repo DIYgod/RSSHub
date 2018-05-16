@@ -17,7 +17,7 @@ module.exports = {
                 link: '/joinus/'
             },
             {
-                text: '搭建',
+                text: '部署',
                 link: '/install/'
             },
             {

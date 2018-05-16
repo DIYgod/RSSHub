@@ -1,6 +1,5 @@
 const axios = require('axios');
 const qs = require('querystring');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -40,7 +39,7 @@ module.exports = async (ctx) => {
     });
     const data = response.data.data.list;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `${name} 的 bilibili 粉丝`,
         link: `https://space.bilibili.com/${uid}/#/fans/fans`,
         description: `${name} 的 bilibili 粉丝`,
@@ -50,5 +49,5 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.mtime * 1000).toUTCString(),
             link: `https://space.bilibili.com/${item.mid}`
         })),
-    });
+    };
 };

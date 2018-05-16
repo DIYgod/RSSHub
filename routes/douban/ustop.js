@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 
 module.exports = async (ctx) => {
     const response = await axios({
@@ -8,7 +7,7 @@ module.exports = async (ctx) => {
     });
     const movieList = response.data.subjects;
 
-    ctx.body = template({
+    ctx.state.data = {
         title: '豆瓣电影北美票房榜',
         link: 'https://movie.douban.com/chart',
         item: movieList.map((item) => {
@@ -19,5 +18,5 @@ module.exports = async (ctx) => {
                 link: item.alt
             };
         }),
-    });
+    };
 };

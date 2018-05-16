@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 const iconv = require('iconv-lite');
@@ -46,10 +45,10 @@ module.exports = async (ctx) => {
         result_item.push(item)
     }
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `喷嚏图卦`,
         link: `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70`,
         description: `喷嚏图卦`,
         item: result_item,
-    });
+    };
 };

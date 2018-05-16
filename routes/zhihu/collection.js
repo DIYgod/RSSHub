@@ -1,5 +1,4 @@
 const axios = require('axios');
-const template = require('../../utils/template');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
@@ -19,13 +18,13 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(data);
     const list = $('div.zm-item');
 
-    ctx.body = template({
+    ctx.state.data = {
         title: $('title').text(),
         link: `https://www.zhihu.com/collection/${id}`,
         description: `${$('#zh-fav-head-description').text()}`,
         item: list && list.map((index, item) => {
             item = $(item);
-            let linkUrl = item.find('.zm-item-title a').attr('href');
+            let linkUrl = item.find('link').attr('href');
             if (linkUrl.startsWith('/')) linkUrl = 'https://www.zhihu.com' + linkUrl;
             return {
                 title: item.find('.zm-item-title a').text(),
@@ -33,5 +32,5 @@ module.exports = async (ctx) => {
                 link: linkUrl
             };
         }).get(),
-    });
+    };
 };

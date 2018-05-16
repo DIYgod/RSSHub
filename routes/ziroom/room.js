@@ -1,6 +1,5 @@
 const axios = require('axios');
 const qs = require('querystring');
-const template = require('../../utils/template');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -30,7 +29,7 @@ module.exports = async (ctx) => {
     //判断数据的类型,如果有数据就是数组类型的,没有数据的话，就赋值为空数组
     data = (data instanceof Array) ? data : [{title:"我们找不到任何与您的搜索条件匹配的结果，但是调整您的搜索条件可能会有所帮助",room_name:"",list_img:"",city:"",id:""}];
 
-    ctx.body = template({
+    ctx.state.data = {
         title: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
         link: `http://${domain}`,
         description: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
@@ -39,5 +38,5 @@ module.exports = async (ctx) => {
             description: `${item.room_name}<img referrerpolicy="no-referrer" src="${item.list_img}">`,
             link: `http://${domain}/${city.toUpperCase()}/room/${item.id}.html`
         })),
-    });
+    };
 };
