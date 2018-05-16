@@ -63,12 +63,17 @@ module.exports = async (ctx) => {
             case 'column':
                 title = detail.title;
                 description = `<p>${detail.intro}</p><p><img referrerpolicy="no-referrer" src="${detail.image_url}"/></p>`;
-                url = `${detail.url}`;
+                url = detail.url;
                 break;
             case 'topic':
                 title = detail.name;
                 description = `<p>${detail.introduction}</p><p>话题关注者人数：${detail.followers_count}</p>`;
-                url = `${detail.url}`;
+                url = detail.url;
+                break;
+            case 'live':
+                title = detail.subject;
+                description = detail.description.replace(/\n|\r/g, '<br>');
+                url = `https://www.zhihu.com/lives/${detail.id}`;
                 break;
             }
 
