@@ -66,8 +66,8 @@ const jandan_decode = (m, r) => {
         t += chr(ord(k[g]) ^ h[(h[p] + h[f]) % 256]);
     }
     if (
-        (t.substr(0, 10) == 0 || t.substr(0, 10) - time() > 0) &&
-        t.substr(10, 16) == md5(t.substr(26) + n).substr(0, 16)
+        (t.substr(0, 10) === '0' || t.substr(0, 10) - time() > 0) &&
+        t.substr(10, 16) === md5(t.substr(26) + n).substr(0, 16)
     ) {
         t = t.substr(26);
     }
