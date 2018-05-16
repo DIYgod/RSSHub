@@ -106,7 +106,6 @@ module.exports = function(options = {}) {
      * setCache
      */
     async function setCache(ctx, key, tkey) {
-        ctx.state.data.lastBuildDate = new Date().toUTCString();
         const body = JSON.stringify(ctx.state.data);
 
         if (ctx.request.method !== 'GET' || !body) {
@@ -115,6 +114,7 @@ module.exports = function(options = {}) {
         if (Buffer.byteLength(body) > maxLength) {
             return;
         }
+        ctx.state.data.lastBuildDate = new Date().toUTCString();
         memoryCacheWorker.set(key, body);
 
         await cacheType(ctx, tkey);
