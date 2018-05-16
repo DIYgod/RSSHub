@@ -392,6 +392,12 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: id，专栏 id，可在专栏主页 URL 中找到
 
+### 知乎日报
+
+举例：[https://rsshub.app/zhihu/daily](https://rsshub.app/zhihu/daily)
+
+路由：`/zhihu/daily`
+
 ## 自如
 
 ### 房源
