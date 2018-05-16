@@ -11,10 +11,10 @@ module.exports = async (ctx) => {
     let orderTitle = ``;
 
     switch (order) {
-        case "live_time":
+        case 'live_time':
             orderTitle = `最新开播`;
             break;
-        case "online":
+        case 'online':
             orderTitle = `人气直播`;
             break;
     }
@@ -24,8 +24,8 @@ module.exports = async (ctx) => {
         url: `https://search.bilibili.com/api/search?search_type=live_room&keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`
-        }
+            Referer: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`,
+        },
     });
     const data = response.data.result;
 
@@ -35,11 +35,17 @@ module.exports = async (ctx) => {
         description: `哔哩哔哩直播-${key}-${orderTitle}`,
         lastBuildDate: new Date().toUTCString(),
         item: data.map((item) => ({
-            title: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
-            description: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
-            pubDate: new Date(item.live_time.replace(' ', 'T') + "+08:00").toUTCString(),
+            title: `${item.uname} ${item.title} (${item.cate_name}-${
+                item.live_time
+            })`,
+            description: `${item.uname} ${item.title} (${item.cate_name}-${
+                item.live_time
+            })`,
+            pubDate: new Date(
+                item.live_time.replace(' ', 'T') + '+08:00'
+            ).toUTCString(),
             guid: `https://live.bilibili.com/${item.roomid} ${item.live_time}`,
-            link: `https://live.bilibili.com/${item.roomid}`
+            link: `https://live.bilibili.com/${item.roomid}`,
         })),
     };
 };

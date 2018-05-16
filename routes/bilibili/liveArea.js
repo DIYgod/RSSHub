@@ -7,10 +7,10 @@ module.exports = async (ctx) => {
 
     let orderTitle = ``;
     switch (order) {
-        case "live_time":
+        case 'live_time':
             orderTitle = `最新开播`;
             break;
-        case "online":
+        case 'online':
             orderTitle = `人气直播`;
             break;
     }
@@ -20,15 +20,14 @@ module.exports = async (ctx) => {
         url: `https://api.live.bilibili.com/room/v1/Area/getList`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://link.bilibili.com/p/center/index`
-        }
+            Referer: `https://link.bilibili.com/p/center/index`,
+        },
     });
 
-    let parentTitle = "";
-    let parentID = "";
-    let areaTitle = "";
-    let areaLink = "";
-
+    let parentTitle = '';
+    let parentID = '';
+    let areaTitle = '';
+    let areaLink = '';
 
     for (parentArea of nameResponse.data.data) {
         for (area of parentArea.list) {
@@ -39,14 +38,16 @@ module.exports = async (ctx) => {
                 cateID = area.cate_id;
                 switch (parentID) {
                     case 1:
-                        areaLink = `https://live.bilibili.com/pages/area/ent-all#${area.cate_id}/${areaID}`;
+                        areaLink = `https://live.bilibili.com/pages/area/ent-all#${
+                            area.cate_id
+                        }/${areaID}`;
                         break;
                     case 2:
                     case 3:
                         areaLink = `https://live.bilibili.com/p/eden/area-tags#/${parentID}/${areaID}`;
                         break;
                     case 4:
-                        areaLink = "https://live.bilibili.com/pages/area/draw";
+                        areaLink = 'https://live.bilibili.com/pages/area/draw';
                         break;
                 }
             }
@@ -58,8 +59,8 @@ module.exports = async (ctx) => {
         url: `https://api.live.bilibili.com/room/v1/area/getRoomList?area_id=${areaID}&sort_type=${order}&page_size=30&page_no=1`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://live.bilibili.com/p/eden/area-tags`
-        }
+            Referer: `https://live.bilibili.com/p/eden/area-tags`,
+        },
     });
     const data = response.data.data;
 
@@ -73,7 +74,7 @@ module.exports = async (ctx) => {
             description: `${item.uname} ${item.title}`,
             pubDate: new Date().toUTCString(),
             guid: `https://live.bilibili.com/${item.roomid} ${item.title}`,
-            link: `https://live.bilibili.com/${item.roomid}`
+            link: `https://live.bilibili.com/${item.roomid}`,
         })),
     };
 };

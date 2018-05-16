@@ -6,7 +6,7 @@ const readall = require('readall');
 const crypto = require('crypto');
 const Redis = require('redis');
 
-module.exports = function (options = {}) {
+module.exports = function(options = {}) {
     let redisAvailable = false;
 
     const {
@@ -17,20 +17,21 @@ module.exports = function (options = {}) {
         passParam = '',
         maxLength = Infinity,
         ignoreQuery = false,
-        onerror = function () { },
-        onconnect = function () {},
+        onerror = function() {},
+        onconnect = function() {},
     } = options;
 
     const {
-        host:redisHost = 'localhost',
-        port:redisPort = 6379,
-        url:redisUrl = `redis://${redisHost}:${redisPort}/`,
-        options:redisOptions = {}
-    } = options.redis || {};
+        host: redisHost = 'localhost',
+        port: redisPort = 6379,
+        url: redisUrl = `redis://${redisHost}:${redisPort}/`,
+        options: redisOptions = {},
+    } =
+        options.redis || {};
 
     /**
-   * redisClient
-   */
+     * redisClient
+     */
     const redisClient = wrapper(Redis.createClient(redisUrl, redisOptions));
     redisClient.on('error', (error) => {
         redisAvailable = false;
@@ -44,9 +45,10 @@ module.exports = function (options = {}) {
         onconnect();
     });
 
-    return async function cache (ctx, next) {
+    return async function cache(ctx, next) {
         const { url, path } = ctx.request;
-        const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
+        const resolvedPrefix =
+            typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
         const key = resolvedPrefix + md5(ignoreQuery ? path : url);
         const tkey = key + ':type';
         let match = false;
@@ -73,7 +75,11 @@ module.exports = function (options = {}) {
             }
         }
 
-        if (!redisAvailable || !match || passParam && ctx.request.query[passParam]) {
+        if (
+            !redisAvailable ||
+            !match ||
+            (passParam && ctx.request.query[passParam])
+        ) {
             return await next();
         }
 
@@ -92,23 +98,25 @@ module.exports = function (options = {}) {
         try {
             const trueExpire = routeExpire || expire;
             await setCache(ctx, key, tkey, trueExpire);
-        } catch (e) { }
+        } catch (e) {}
         routeExpire = false;
     };
 
     /**
-   * getCache
-   */
-    async function getCache (ctx, key, tkey) {
+     * getCache
+     */
+    async function getCache(ctx, key, tkey) {
         const value = await redisClient.get(key);
         let type;
         let ok = false;
 
         if (value) {
             ctx.response.status = 200;
-            type = await redisClient.get(tkey) || 'text/html';
+            type = (await redisClient.get(tkey)) || 'text/html';
             // can happen if user specified return_buffers: true in redis options
-            if (Buffer.isBuffer(type)) {type = type.toString();}
+            if (Buffer.isBuffer(type)) {
+                type = type.toString();
+            }
             ctx.response.set('X-Koa-Redis-Cache', 'true');
             ctx.response.type = type;
             try {
@@ -123,9 +131,9 @@ module.exports = function (options = {}) {
     }
 
     /**
-   * setCache
-   */
-    async function setCache (ctx, key, tkey, expire) {
+     * setCache
+     */
+    async function setCache(ctx, key, tkey, expire) {
         ctx.state.data.lastBuildDate = new Date().toUTCString();
         const body = JSON.stringify(ctx.state.data);
 
@@ -141,9 +149,9 @@ module.exports = function (options = {}) {
     }
 
     /**
-   * cacheType
-   */
-    async function cacheType (ctx, tkey, expire) {
+     * cacheType
+     */
+    async function cacheType(ctx, tkey, expire) {
         const type = ctx.response.type;
         if (type) {
             await redisClient.setex(tkey, expire, type);
@@ -151,7 +159,7 @@ module.exports = function (options = {}) {
     }
 };
 
-function paired (route, path) {
+function paired(route, path) {
     const options = {
         sensitive: true,
         strict: true,
@@ -160,7 +168,7 @@ function paired (route, path) {
     return pathToRegExp(route, [], options).exec(path);
 }
 
-function read (stream) {
+function read(stream) {
     return new Promise((resolve, reject) => {
         readall(stream, (err, data) => {
             if (err) {
@@ -172,6 +180,9 @@ function read (stream) {
     });
 }
 
-function md5 (str) {
-    return crypto.createHash('md5').update(str).digest('hex');
+function md5(str) {
+    return crypto
+        .createHash('md5')
+        .update(str)
+        .digest('hex');
 }

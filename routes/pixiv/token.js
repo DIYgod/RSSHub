@@ -10,10 +10,10 @@ const pixivConfig = config.pixiv;
 let token = null;
 
 const authorizationInfo = {
-  client_id: pixivConfig.client_id,
-  client_secret: pixivConfig.client_secret,
-  username: pixivConfig.username,
-  password: pixivConfig.password
+    client_id: pixivConfig.client_id,
+    client_secret: pixivConfig.client_secret,
+    username: pixivConfig.username,
+    password: pixivConfig.password,
 };
 
 async function getToken() {
@@ -21,20 +21,24 @@ async function getToken() {
     const jsonData = {
         ...authorizationInfo,
         get_secure_url: 1,
-        grant_type: 'password'
+        grant_type: 'password',
     };
     for (const key in jsonData) {
         if (jsonData.hasOwnProperty(key)) {
             const element = jsonData[key];
-            data.append(key,element);
+            data.append(key, element);
         }
     }
-    const response = await axios.post('https://oauth.secure.pixiv.net/auth/token', data, {
-        headers: {
-            ...maskHeader,
-            ...data.getHeaders()
+    const response = await axios.post(
+        'https://oauth.secure.pixiv.net/auth/token',
+        data,
+        {
+            headers: {
+                ...maskHeader,
+                ...data.getHeaders(),
+            },
         }
-    });
+    );
     return response.data.response;
 }
 
@@ -44,20 +48,24 @@ async function refreshToken(refresh_token) {
         ...authorizationInfo,
         get_secure_url: 1,
         grant_type: 'refresh_token',
-        refresh_token: refresh_token
+        refresh_token: refresh_token,
     };
     for (const key in jsonData) {
         if (jsonData.hasOwnProperty(key)) {
             const element = jsonData[key];
-            data.append(key,element);
+            data.append(key, element);
         }
     }
-    const response = await axios.post('https://oauth.secure.pixiv.net/auth/token', data, {
-        headers: {
-            ...maskHeader,
-            ...data.getHeaders()
+    const response = await axios.post(
+        'https://oauth.secure.pixiv.net/auth/token',
+        data,
+        {
+            headers: {
+                ...maskHeader,
+                ...data.getHeaders(),
+            },
         }
-    });
+    );
     return response.data.response;
 }
 
@@ -77,7 +85,10 @@ async function tokenLoop() {
             expires_in = refresh_res.expires_in * 0.9;
         } catch (err) {
             expires_in = 30;
-            logger.err('Pixiv refresh token failed, retry in ${expires_in} seconds.', err);
+            logger.err(
+                'Pixiv refresh token failed, retry in ${expires_in} seconds.',
+                err
+            );
         }
     }
 }
@@ -85,5 +96,5 @@ async function tokenLoop() {
 tokenLoop();
 
 module.exports = function getToken() {
-  return token;  
+    return token;
 };

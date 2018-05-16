@@ -10,11 +10,11 @@ module.exports = async (ctx) => {
         url: 'https://space.bilibili.com/ajax/member/GetInfo',
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://space.bilibili.com/${uid}/`,
+            Referer: `https://space.bilibili.com/${uid}/`,
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         data: qs.stringify({
-            mid: uid
+            mid: uid,
         }),
     });
     const name = nameResponse.data.data.name;
@@ -24,8 +24,8 @@ module.exports = async (ctx) => {
         url: `https://api.bilibili.com/x/relation/stat?vmid=${uid}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://space.bilibili.com/${uid}/`,
-        }
+            Referer: `https://space.bilibili.com/${uid}/`,
+        },
     });
     const count = countResponse.data.data.follower;
 
@@ -34,8 +34,8 @@ module.exports = async (ctx) => {
         url: `https://api.bilibili.com/x/relation/followers?vmid=${uid}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://space.bilibili.com/${uid}/`,
-        }
+            Referer: `https://space.bilibili.com/${uid}/`,
+        },
     });
     const data = response.data.data.list;
 
@@ -47,7 +47,7 @@ module.exports = async (ctx) => {
             title: `${name} 新粉丝 ${item.uname}`,
             description: `${item.uname}<br>${item.sign}<br>总计${count}`,
             pubDate: new Date(item.mtime * 1000).toUTCString(),
-            link: `https://space.bilibili.com/${item.mid}`
+            link: `https://space.bilibili.com/${item.mid}`,
         })),
     };
 };

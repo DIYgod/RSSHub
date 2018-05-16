@@ -3,7 +3,12 @@ const cheerio = require('cheerio');
 const crypto = require('crypto');
 const config = require('../../config');
 
-const md5 = (i) => crypto.createHash('md5').update(i).digest().toString('hex');
+const md5 = (i) =>
+    crypto
+        .createHash('md5')
+        .update(i)
+        .digest()
+        .toString('hex');
 
 const base64_decode = (i) => new Buffer(i, 'base64').toString('binary');
 
@@ -20,8 +25,8 @@ const jandan_magic = async (url) => {
         url: 'http:' + url,
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'http://jandan.net'
-        }
+            Referer: 'http://jandan.net',
+        },
     });
     const regex = /e,"([a-zA-Z0-9]{32})"/;
     return script.data.match(regex)[1];
@@ -60,12 +65,14 @@ const jandan_decode = (m, r) => {
         [h[p], h[f]] = [h[f], h[p]];
         t += chr(ord(k[g]) ^ h[(h[p] + h[f]) % 256]);
     }
-    if ((t.substr(0, 10) == 0 || t.substr(0, 10) - time() > 0) && t.substr(10, 16) == md5(t.substr(26) + n).substr(0, 16)) {
+    if (
+        (t.substr(0, 10) == 0 || t.substr(0, 10) - time() > 0) &&
+        t.substr(10, 16) == md5(t.substr(26) + n).substr(0, 16)
+    ) {
         t = t.substr(26);
     }
     return t;
 };
-
 
 module.exports = async (ctx) => {
     const response = await axios({
@@ -73,8 +80,8 @@ module.exports = async (ctx) => {
         url: 'http://jandan.net/pic',
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'http://jandan.net'
-        }
+            Referer: 'http://jandan.net',
+        },
     });
 
     const $ = cheerio.load(response.data);
@@ -97,26 +104,35 @@ module.exports = async (ctx) => {
         }
 
         // Get current comment's link.
-        const link = $(item).find('.righttext').find('a').attr('href');
+        const link = $(item)
+            .find('.righttext')
+            .find('a')
+            .attr('href');
         if (link === undefined) {
             return;
         }
 
         // Get current comment's images.
         // TODO: should support multiple images.
-        let img_url = $(item).find('.text').find('.img-hash').html();
+        let img_url = $(item)
+            .find('.text')
+            .find('.img-hash')
+            .html();
         if (img_url === null) {
             return;
         }
         img_url = jandan_decode(img_url, magic_string);
-        img_url = img_url.replace(/(\/\/\w+\.sinaimg\.cn\/)(\w+)(\/.+\.(gif|jpg|jpeg))/, '$1large$3');
+        img_url = img_url.replace(
+            /(\/\/\w+\.sinaimg\.cn\/)(\w+)(\/.+\.(gif|jpg|jpeg))/,
+            '$1large$3'
+        );
 
         // TODO: should load user's comments.
 
         items.push({
             title: comment_id,
             description: `<img referrerpolicy="no-referrer"  src="http:${img_url}">`,
-            link: `http:${link}`
+            link: `http:${link}`,
         });
     });
 
@@ -124,6 +140,6 @@ module.exports = async (ctx) => {
         title: '煎蛋无聊图',
         link: 'http://jandan.net/pic',
         description: '煎蛋官方无聊图，无限活力的热门图区。',
-        item: items
+        item: items,
     };
 };

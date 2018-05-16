@@ -13,25 +13,33 @@ module.exports = async (ctx) => {
         url: `${baseUrl}${id}/`,
         headers: {
             'User-Agent': config.ua,
-            'Host':'www.biquge5200.com',
-            'Referer': `${baseUrl}${id}/`
+            Host: 'www.biquge5200.com',
+            Referer: `${baseUrl}${id}/`,
         },
         // responseEncoding: 'gbk', //该配置项在 0.18版本中没有打包进去
-        responseType: 'arraybuffer'
+        responseType: 'arraybuffer',
     });
     const responseHtml = iconv.decode(response.data, 'GBK');
     // console.log('responseHtml',responseHtml);
     const $ = cheerio.load(responseHtml);
-    const title = $('#list>dl>dt>b').eq(0).text();
-    const description = $('#intro>p').eq(0).text();
-    const cover_url = $('#fmimg>img').eq(0).attr('src');
+    const title = $('#list>dl>dt>b')
+        .eq(0)
+        .text();
+    const description = $('#intro>p')
+        .eq(0)
+        .text();
+    const cover_url = $('#fmimg>img')
+        .eq(0)
+        .attr('src');
     const list = $('dd', '#list>dl').slice(0, 9);
     const chapter_item = [];
     for (let i = 0; i < list.length; i++) {
-        const el = $(list[i]).find('a').eq(0);
+        const el = $(list[i])
+            .find('a')
+            .eq(0);
         const item = {
             title: el.text(),
-            link: el.attr('href')
+            link: el.attr('href'),
         };
         chapter_item.push(item);
     }

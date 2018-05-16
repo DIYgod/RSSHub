@@ -12,8 +12,14 @@ module.exports = async (ctx) => {
         link: 'https://movie.douban.com/cinema/later/',
         item: movieList.map((item) => ({
             title: item.title,
-            description: `标题：${item.title}<br> 影片类型：${item.genres.join(' | ')}  <br>评分：${item.rating.stars === '00' ? '无' : item.rating.average} <br/> <img referrerpolicy="no-referrer" src="${item.images.large}">`,
-            link: item.alt
+            description: `标题：${item.title}<br> 影片类型：${item.genres.join(
+                ' | '
+            )}  <br>评分：${
+                item.rating.stars === '00' ? '无' : item.rating.average
+            } <br/> <img referrerpolicy="no-referrer" src="${
+                item.images.large
+            }">`,
+            link: item.alt,
         })),
     };
 };

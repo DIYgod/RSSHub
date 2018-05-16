@@ -7,7 +7,7 @@ module.exports = async (ctx) => {
     const id = ctx.params.id;
 
     const result = await T.get('statuses/user_timeline', {
-        screen_name: id
+        screen_name: id,
     });
 
     const data = result.data;
@@ -17,10 +17,16 @@ module.exports = async (ctx) => {
         link: `https://twitter.com/${id}/`,
         description: data[0].user.description,
         item: data.map((item) => ({
-            title: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.text.length > 30 ? item.text.slice(0, 30) + '...' : item.text}`,
-            description: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.text}`,
+            title: `${item.in_reply_to_screen_name ? 'Re ' : ''}${
+                item.text.length > 30
+                    ? item.text.slice(0, 30) + '...'
+                    : item.text
+            }`,
+            description: `${item.in_reply_to_screen_name ? 'Re ' : ''}${
+                item.text
+            }`,
             pubDate: new Date(item.createdTime).toUTCString(),
-            link: `https://twitter.com/${id}/status/${item.id_str}`
+            link: `https://twitter.com/${id}/status/${item.id_str}`,
         })),
     };
 };
