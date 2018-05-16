@@ -1,8 +1,15 @@
-FROM keymetrics/pm2:8-alpine
+FROM node:10-alpine
+
 ENV NODE_ENV production
+
 WORKDIR /usr/src/app
+
 COPY ["package.json", "./"]
+
 RUN yarn --ignore-engines --prod -s && mv node_modules ../
-COPY . .
+
+COPY . /usr/src/app
+
 EXPOSE 1200
-CMD pm2-runtime start process.json
+
+CMD ["npm", "start"] 
