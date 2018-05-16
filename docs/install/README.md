@@ -89,6 +89,22 @@ $ npm start
 
 在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
 
+### 添加配置
+
+可以通过修改 `config.js` 或者设置环境变量来配置 RSSHub。
+
+**如何设置环境变量**
+
+Windows 系统在 cmd.exe 中运行 `$ set PORT=1000`
+
+macOS & Linux 运行 `$ PORT=1000`
+
+再运行 `$ npm start` 启动 RSSHub 即可将监听端口设置为 `1000`。
+
+此处设置的环境变量在关闭终端后就会被清除，如果您想保存这些配置可以编写一个简单的 [批处理文件](https://en.wikipedia.org/wiki/Batch_file) 或 [shell](https://en.wikipedia.org/wiki/Shell_script)。
+
+更多配置项请看 [应用配置](#应用配置)
+
 ## 部署到 Docker
 
 Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前最流行的 Linux 容器解决方案。
@@ -165,6 +181,10 @@ $ docker-compose up
 ### 应用配置
 
 可以通过修改 `config.js` 或者设置环境变量来配置 RSSHub。
+
+::: tip 提示
+建议通过设置环境变量来配置 RSSHub。避免版本更新时的冲突。
+:::
 
 `PORT`: 监听端口，默认为 `1200`
 
