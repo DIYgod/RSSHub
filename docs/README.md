@@ -9,7 +9,10 @@ sidebar: auto
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
-::: tip 提示演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用
+::: tip 提示
+
+演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用
+
 :::
 
 ## 内容过滤
@@ -206,7 +209,10 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 直播分区
 
-::: warning 注意由于接口未提供开播时间,如果直播间未更换标题与分区,将只会出现一次.如果直播间更换分区与标题,将再出现一次
+::: warning 注意
+
+由于接口未提供开播时间,如果直播间未更换标题与分区,将只会出现一次.如果直播间更换分区与标题,将再出现一次
+
 :::
 
 举例: [https://rsshub.app/bilibili/live/area/143/online](https://rsshub.app/bilibili/live/area/143/online)
@@ -229,7 +235,10 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: uid，用户 id，博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
 
-::: warning 注意上述方案获取 V+ 付费博主会有数据缺失，所以这里提供另外一种方式，这种方式的缺点是描述不如上面的完善，建议优先选择第一种方案
+::: warning 注意
+
+上述方案获取 V+ 付费博主会有数据缺失，所以这里提供另外一种方式，这种方式的缺点是描述不如上面的完善，建议优先选择第一种方案
+
 :::
 
 举例: [https://rsshub.app/weibo/user2/3306934123](https://rsshub.app/weibo/user2/3306934123)
@@ -266,7 +275,10 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ### 公众号
 
-::: tip 提示公众号抓取困难，目前可提供的方案是通过即刻的公众号主题订阅
+::: tip 提示
+
+公众号抓取困难，目前可提供的方案是通过即刻的公众号主题订阅
+
 :::
 
 举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
@@ -413,7 +425,10 @@ keyword: 关键词
 
 ## 快递
 
-::: warning 注意快递送达后请及时取消订阅，以免不必要地浪费服务器资源
+::: warning 注意
+
+快递送达后请及时取消订阅，以免不必要地浪费服务器资源
+
 :::
 
 举例: [https://rsshub.app/express/youzhengguoji/CV054432809US](https://rsshub.app/express/youzhengguoji/CV054432809US)
@@ -438,7 +453,10 @@ number: 快递单号
 
 ## 妹子图
 
-::: warning 注意该网站在国外无法访问，故以下演示无效
+::: warning 注意
+
+该网站在国外无法访问，故以下演示无效
+
 :::
 
 ### 首页（最新）

@@ -18,7 +18,9 @@ sidebar: auto
 
 ### 安装 Git
 
-::: tip 提示首先你应该输入 `git`，看看系统有没有安装 Git：
+::: tip 提示
+
+首先你应该输入 `git`，看看系统有没有安装 Git：
 
 windows 打开 `cmd`， macOS 打开`终端(terminal)`。
 
@@ -71,7 +73,9 @@ $ cd RSSHub
 $ npm install
 ```
 
-::: tip 提示推荐使用 [Yarn](https://yarn.bootcss.com/) ，`Yarn` 比 `npm` 更快更稳定。
+::: tip 提示
+
+推荐使用 [Yarn](https://yarn.bootcss.com/) ，`Yarn` 比 `npm` 更快更稳定。
 
 使用 `Yarn` 安装依赖时只需要键入
 
@@ -80,6 +84,7 @@ $ yarn
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)。
+
 :::
 
 ### 启动 RSSHub
