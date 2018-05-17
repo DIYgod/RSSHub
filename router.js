@@ -9,7 +9,7 @@ let gitHash;
 try {
     gitHash = require('git-rev-sync').short();
 } catch (e) {
-    gitHash = process.env.HEROKU_SLUG_COMMIT.slice(0, 7) || 'unknown';
+    gitHash = (process.env.HEROKU_SLUG_COMMIT && process.env.HEROKU_SLUG_COMMIT.slice(0, 7)) || 'unknown';
 }
 const startTime = +new Date();
 router.get('/', async (ctx) => {
