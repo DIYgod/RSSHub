@@ -23,8 +23,7 @@ module.exports = function(options = {}) {
 
     return async function cache(ctx, next) {
         const { url, path } = ctx.request;
-        const resolvedPrefix =
-            typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
+        const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
         const key = resolvedPrefix + md5(ignoreQuery ? path : url);
         const tkey = key + ':type';
         let match = false;

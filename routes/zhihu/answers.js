@@ -27,9 +27,7 @@ module.exports = async (ctx) => {
                 title: item.question.title,
                 description: item.content,
                 pubDate: new Date(item.created_time * 1000).toUTCString(),
-                link: `https://www.zhihu.com/question/${
-                    item.question.id
-                }/answer/${item.id}`,
+                link: `https://www.zhihu.com/question/${item.question.id}/answer/${item.id}`,
             })),
     };
 };

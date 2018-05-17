@@ -17,9 +17,7 @@ module.exports = async (ctx) => {
         },
     });
 
-    const cat = idResponse.data.d.categoryList.filter(
-        (item) => item.title === category
-    )[0];
+    const cat = idResponse.data.d.categoryList.filter((item) => item.title === category)[0];
     const id = cat.id;
 
     const response = await axios({
@@ -42,11 +40,7 @@ module.exports = async (ctx) => {
             data.d.entrylist &&
             data.d.entrylist.map((item) => ({
                 title: item.title,
-                description: `${(
-                    item.content ||
-                    item.summaryInfo ||
-                    '无描述'
-                ).replace(/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/g, '')}`,
+                description: `${(item.content || item.summaryInfo || '无描述').replace(/[\x00-\x08\x0b-\x0c\x0e-\x1f\x7f]/g, '')}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
                 link: item.originalUrl,
             })),

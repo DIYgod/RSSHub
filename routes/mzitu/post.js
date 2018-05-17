@@ -67,13 +67,7 @@ module.exports = async (ctx) => {
 
                 return {
                     title: `${title}（${item.page}）`,
-                    description: `分类：${$(
-                        '.main-meta > span:nth-child(1) > a'
-                    ).text()}<br>描述：${title}（${
-                        item.page
-                    }）<br><img referrerpolicy="no-referrer" src="${
-                        item.imgUrl
-                    }">`,
+                    description: `分类：${$('.main-meta > span:nth-child(1) > a').text()}<br>描述：${title}（${item.page}）<br><img referrerpolicy="no-referrer" src="${item.imgUrl}">`,
                     pubDate: date.toUTCString(),
                     link: item.url,
                 };

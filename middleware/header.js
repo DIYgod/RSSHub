@@ -5,8 +5,7 @@ module.exports = async (ctx, next) => {
 
     const headers = {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers':
-            'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
+        'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
         'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS',
         'Content-Type': 'application/xml; charset=utf-8',
     };

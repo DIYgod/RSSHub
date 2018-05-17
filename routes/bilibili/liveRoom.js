@@ -44,9 +44,7 @@ module.exports = async (ctx) => {
         liveItem.push({
             title: `${data.title} ${data.live_time}`,
             description: `${data.title}<br>${data.description}`,
-            pubDate: new Date(
-                data.live_time.replace(' ', 'T') + '+08:00'
-            ).toUTCString(),
+            pubDate: new Date(data.live_time.replace(' ', 'T') + '+08:00').toUTCString(),
             guid: `https://live.bilibili.com/${roomID} ${data.live_time}`,
             link: `https://live.bilibili.com/${roomID}`,
         });

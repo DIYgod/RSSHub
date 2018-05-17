@@ -9,8 +9,7 @@ module.exports = async (ctx) => {
         url: 'https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70',
         headers: {
             'User-Agent': config.ua,
-            Referer:
-                'https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70',
+            Referer: 'https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70',
         },
         // 喷嚏网编码为GBK，需要转码
         // 转码需要设定返回数据的格式，其可选项是arraybuffer,blob,document,json,text,stream

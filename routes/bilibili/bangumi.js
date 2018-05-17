@@ -13,9 +13,7 @@ module.exports = async (ctx) => {
         },
     });
 
-    const data =
-        JSON.parse(response.data.match(/^seasonListCallback\((.*)\);$/)[1])
-            .result || {};
+    const data = JSON.parse(response.data.match(/^seasonListCallback\((.*)\);$/)[1]).result || {};
 
     ctx.state.data = {
         title: data.title,
@@ -25,9 +23,7 @@ module.exports = async (ctx) => {
             data.episodes &&
             data.episodes.map((item) => ({
                 title: `第${item.index}话 ${item.index_title}`,
-                description: `更新时间：${
-                    item.update_time
-                }<img referrerpolicy="no-referrer" src="${item.cover}">`,
+                description: `更新时间：${item.update_time}<img referrerpolicy="no-referrer" src="${item.cover}">`,
                 pubDate: new Date(item.update_time).toUTCString(),
                 link: item.webplay_url,
             })),

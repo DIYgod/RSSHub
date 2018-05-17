@@ -38,9 +38,7 @@ module.exports = async (ctx) => {
             data.data.list &&
             data.data.list.map((item) => ({
                 title: item.title,
-                description: `${
-                    item.title
-                }<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+                description: `${item.title}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
                 link: `https://www.bilibili.com/video/av${item.stat.aid}`,
             })),
     };

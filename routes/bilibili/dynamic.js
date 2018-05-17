@@ -27,15 +27,11 @@ module.exports = async (ctx) => {
             let imgHTML = '';
             if (data.pictures) {
                 for (let i = 0; i < data.pictures.length; i++) {
-                    imgHTML += `<img referrerpolicy="no-referrer" src="${
-                        data.pictures[i].img_src
-                    }">`;
+                    imgHTML += `<img referrerpolicy="no-referrer" src="${data.pictures[i].img_src}">`;
                 }
             }
             if (data.pic) {
-                imgHTML += `<img referrerpolicy="no-referrer" src="${
-                    data.pic
-                }">`;
+                imgHTML += `<img referrerpolicy="no-referrer" src="${data.pic}">`;
             }
 
             // link
@@ -50,12 +46,8 @@ module.exports = async (ctx) => {
 
             return {
                 title: data.title || data.description || data.content,
-                description: `${data.desc ||
-                    data.description ||
-                    data.content}${imgHTML}`,
-                pubDate: new Date(
-                    (data.pubdate || data.upload_time || data.timestamp) * 1000
-                ).toUTCString(),
+                description: `${data.desc || data.description || data.content}${imgHTML}`,
+                pubDate: new Date((data.pubdate || data.upload_time || data.timestamp) * 1000).toUTCString(),
                 link: link,
             };
         }),

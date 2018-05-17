@@ -20,21 +20,10 @@ module.exports = async (ctx) => {
         link: `https://music.163.com/#/artist/album?id=${id}`,
         description: `网易云音乐歌手专辑 - ${data.artist.name}`,
         item: data.hotAlbums.map((item) => {
-            const singer =
-                item.artists.length === 1
-                    ? item.artists[0].name
-                    : item.artists.reduce(
-                          (prev, cur) => (prev.name || prev) + '/' + cur.name
-                      );
+            const singer = item.artists.length === 1 ? item.artists[0].name : item.artists.reduce((prev, cur) => (prev.name || prev) + '/' + cur.name);
             return {
                 title: `${item.name} - ${singer}`,
-                description: `歌手：${singer}<br>专辑：${
-                    item.name
-                }<br>日期：${new Date(
-                    item.publishTime
-                ).toLocaleDateString()}<br><img referrerpolicy="no-referrer" src="${
-                    item.picUrl
-                }">`,
+                description: `歌手：${singer}<br>专辑：${item.name}<br>日期：${new Date(item.publishTime).toLocaleDateString()}<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`,
                 link: `https://music.163.com/#/album?id=${item.id}`,
             };
         }),

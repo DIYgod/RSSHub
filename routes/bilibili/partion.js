@@ -27,9 +27,7 @@ module.exports = async (ctx) => {
             list &&
             list.map((item) => ({
                 title: `${item.title} - ${item.owner.name}`,
-                description: `${
-                    item.desc
-                }<img referrerpolicy="no-referrer" src="${item.pic}">`,
+                description: `${item.desc}<img referrerpolicy="no-referrer" src="${item.pic}">`,
                 pubDate: new Date(item.pubdate * 1000).toUTCString(),
                 link: `https://www.bilibili.com/video/av${item.aid}`,
             })),

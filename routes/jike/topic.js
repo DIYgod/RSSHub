@@ -24,49 +24,35 @@ module.exports = async (ctx) => {
         item: data.messages.map((item) => {
             let contentTemplate = item.content;
             if (item.linkUrl) {
-                contentTemplate = `<a href="${item.linkUrl}">${
-                    item.content
-                }</a>`;
+                contentTemplate = `<a href="${item.linkUrl}">${item.content}</a>`;
             }
             if (item.personalUpdate && item.personalUpdate.linkUrl) {
-                contentTemplate = `<a href="${item.personalUpdate.linkUrl}">${
-                    item.content
-                }</a>`;
+                contentTemplate = `<a href="${item.personalUpdate.linkUrl}">${item.content}</a>`;
             }
 
             let imgTemplate = '';
             item.pictureUrls &&
                 item.pictureUrls.forEach((item) => {
-                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${
-                        item.picUrl
-                    }">`;
+                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
                 });
             item.personalUpdate &&
                 item.personalUpdate.pictureUrls &&
                 item.personalUpdate.pictureUrls.forEach((item) => {
-                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${
-                        item.picUrl
-                    }">`;
+                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
                 });
 
             let videoTemplate = '';
             if (item.video) {
-                videoTemplate = `<br>视频: <img referrerpolicy="no-referrer" src="${
-                    item.video.image.picUrl
-                }">`;
+                videoTemplate = `<br>视频: <img referrerpolicy="no-referrer" src="${item.video.image.picUrl}">`;
             }
             if (item.personalUpdate && item.personalUpdate.video) {
-                videoTemplate = `<br>视频: <img referrerpolicy="no-referrer" src="${
-                    item.personalUpdate.video.image.picUrl
-                }">`;
+                videoTemplate = `<br>视频: <img referrerpolicy="no-referrer" src="${item.personalUpdate.video.image.picUrl}">`;
             }
             return {
                 title: item.content,
                 description: `${contentTemplate}${imgTemplate}${videoTemplate}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
-                link: `https://web.okjike.com/message-detail/${
-                    item.id
-                }/officialMessage`,
+                link: `https://web.okjike.com/message-detail/${item.id}/officialMessage`,
             };
         }),
     };

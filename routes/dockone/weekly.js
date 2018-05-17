@@ -27,17 +27,14 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: $('title').text(),
         link: url,
-        description:
-            $('meta[name="description"]').attr('content') || $('title').text(),
+        description: $('meta[name="description"]').attr('content') || $('title').text(),
         item:
             list &&
             list
                 .map((item, index) => {
                     item = $(index);
                     return {
-                        title: `${replaceEmpty(
-                            item.find('a>h3>time').text()
-                        )}[${replaceEmpty(item.find('a>h3>strong').text())}]`,
+                        title: `${replaceEmpty(item.find('a>h3>time').text())}[${replaceEmpty(item.find('a>h3>strong').text())}]`,
                         description: item.find('a>ul>li').text(),
                         link: `${baseUrl}${item.find('a').attr('href')}`,
                     };

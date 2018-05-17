@@ -36,9 +36,7 @@ module.exports = async (ctx) => {
                     case 'answer':
                         title = detail.question.title;
                         description = detail.content;
-                        url = `https://www.zhihu.com/question/${
-                            detail.question.id
-                        }/answer/${detail.id}`;
+                        url = `https://www.zhihu.com/question/${detail.question.id}/answer/${detail.id}`;
                         break;
                     case 'article':
                         title = detail.title;
@@ -46,26 +44,14 @@ module.exports = async (ctx) => {
                         url = `https://zhuanlan.zhihu.com/p/${detail.id}`;
                         break;
                     case 'pin':
-                        title =
-                            detail.excerpt_title.length > 17
-                                ? detail.excerpt_title.slice(0, 17) + '...'
-                                : detail.excerpt_title;
+                        title = detail.excerpt_title.length > 17 ? detail.excerpt_title.slice(0, 17) + '...' : detail.excerpt_title;
                         detail.content.forEach((contentItem) => {
                             if (contentItem.type === 'text') {
                                 text = `<p>${contentItem.own_text}</p>`;
                             } else if (contentItem.type === 'image') {
-                                images.push(
-                                    `<p><img referrerpolicy="no-referrer" src="${contentItem.url.replace(
-                                        'xl',
-                                        'r'
-                                    )}"/></p>`
-                                );
+                                images.push(`<p><img referrerpolicy="no-referrer" src="${contentItem.url.replace('xl', 'r')}"/></p>`);
                             } else if (contentItem.type === 'link') {
-                                link = `<p><a href="${
-                                    contentItem.url
-                                }" target="_blank">${
-                                    contentItem.title
-                                }</a></p>`;
+                                link = `<p><a href="${contentItem.url}" target="_blank">${contentItem.title}</a></p>`;
                             }
                         });
                         description = `${text}${link}${images.join('')}`;
@@ -78,26 +64,17 @@ module.exports = async (ctx) => {
                         break;
                     case 'column':
                         title = detail.title;
-                        description = `<p>${
-                            detail.intro
-                        }</p><p><img referrerpolicy="no-referrer" src="${
-                            detail.image_url
-                        }"/></p>`;
+                        description = `<p>${detail.intro}</p><p><img referrerpolicy="no-referrer" src="${detail.image_url}"/></p>`;
                         url = detail.url;
                         break;
                     case 'topic':
                         title = detail.name;
-                        description = `<p>${
-                            detail.introduction
-                        }</p><p>话题关注者人数：${detail.followers_count}</p>`;
+                        description = `<p>${detail.introduction}</p><p>话题关注者人数：${detail.followers_count}</p>`;
                         url = detail.url;
                         break;
                     case 'live':
                         title = detail.subject;
-                        description = detail.description.replace(
-                            /\n|\r/g,
-                            '<br>'
-                        );
+                        description = detail.description.replace(/\n|\r/g, '<br>');
                         url = `https://www.zhihu.com/lives/${detail.id}`;
                         break;
                 }

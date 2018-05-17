@@ -65,10 +65,7 @@ const jandan_decode = (m, r) => {
         [h[p], h[f]] = [h[f], h[p]];
         t += chr(ord(k[g]) ^ h[(h[p] + h[f]) % 256]);
     }
-    if (
-        (t.substr(0, 10) === '0' || t.substr(0, 10) - time() > 0) &&
-        t.substr(10, 16) === md5(t.substr(26) + n).substr(0, 16)
-    ) {
+    if ((t.substr(0, 10) === '0' || t.substr(0, 10) - time() > 0) && t.substr(10, 16) === md5(t.substr(26) + n).substr(0, 16)) {
         t = t.substr(26);
     }
     return t;
@@ -122,10 +119,7 @@ module.exports = async (ctx) => {
             return;
         }
         img_url = jandan_decode(img_url, magic_string);
-        img_url = img_url.replace(
-            /(\/\/\w+\.sinaimg\.cn\/)(\w+)(\/.+\.(gif|jpg|jpeg))/,
-            '$1large$3'
-        );
+        img_url = img_url.replace(/(\/\/\w+\.sinaimg\.cn\/)(\w+)(\/.+\.(gif|jpg|jpeg))/, '$1large$3');
 
         // TODO: should load user's comments.
 

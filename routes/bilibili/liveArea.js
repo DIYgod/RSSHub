@@ -38,9 +38,7 @@ module.exports = async (ctx) => {
                 // cateID = area.cate_id;
                 switch (parentID) {
                     case 1:
-                        areaLink = `https://live.bilibili.com/pages/area/ent-all#${
-                            area.cate_id
-                        }/${areaID}`;
+                        areaLink = `https://live.bilibili.com/pages/area/ent-all#${area.cate_id}/${areaID}`;
                         break;
                     case 2:
                     case 3:

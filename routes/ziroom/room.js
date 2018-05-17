@@ -32,8 +32,7 @@ module.exports = async (ctx) => {
             ? data
             : [
                   {
-                      title:
-                          '我们找不到任何与您的搜索条件匹配的结果，但是调整您的搜索条件可能会有所帮助',
+                      title: '我们找不到任何与您的搜索条件匹配的结果，但是调整您的搜索条件可能会有所帮助',
                       room_name: '',
                       list_img: '',
                       city: '',
@@ -44,14 +43,10 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
         link: `http://${domain}`,
-        description: `自如的${keyword}${
-            iswhole ? '整租' : '合租'
-        }${room}室房源`,
+        description: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
         item: data.map((item) => ({
             title: item.title,
-            description: `${
-                item.room_name
-            }<img referrerpolicy="no-referrer" src="${item.list_img}">`,
+            description: `${item.room_name}<img referrerpolicy="no-referrer" src="${item.list_img}">`,
             link: `http://${domain}/${city.toUpperCase()}/room/${item.id}.html`,
         })),
     };

@@ -36,9 +36,7 @@ module.exports = async (ctx) => {
         description: `${name} 的评论`,
         item: data.map((item) => ({
             title: `${item.member.uname} : ${item.content.message}`,
-            description: `#${item.floor}<br> ${item.member.uname} : ${
-                item.content.message
-            }`,
+            description: `#${item.floor}<br> ${item.member.uname} : ${item.content.message}`,
             pubDate: new Date(item.ctime * 1000).toUTCString(),
             link: `https://www.bilibili.com/video/av${aid}/#reply${item.rpid}`,
         })),

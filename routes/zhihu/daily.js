@@ -12,9 +12,7 @@ module.exports = async (ctx) => {
     });
     const d = new Date();
     // todayfmt: YYYYMMDD
-    const todayfmt = `${d.getFullYear()}${
-        d.getMonth() > 8 ? d.getMonth() + 1 : '0' + (d.getMonth() + 1)
-    }${d.getDate()}`;
+    const todayfmt = `${d.getFullYear()}${d.getMonth() > 8 ? d.getMonth() + 1 : '0' + (d.getMonth() + 1)}${d.getDate()}`;
 
     const yesterday = await axios({
         method: 'get',
@@ -33,9 +31,7 @@ module.exports = async (ctx) => {
         description: '每天3次，每次7分钟',
         item: items.map((item) => ({
             title: item.title,
-            description: `<img referrerpolicy="no-referrer" src='${
-                item.image
-            }'/>`, // 暂时没有找到包含正文的api，所以就放一张图吧
+            description: `<img referrerpolicy="no-referrer" src='${item.image}'/>`, // 暂时没有找到包含正文的api，所以就放一张图吧
             link: item.share_url,
         })),
     };

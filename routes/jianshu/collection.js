@@ -22,8 +22,7 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: $('title').text(),
         link: `https://www.jianshu.com/c/${id}`,
-        description:
-            $('meta[name="description"]').attr('content') || $('title').text(),
+        description: $('meta[name="description"]').attr('content') || $('title').text(),
         item:
             list &&
             list
@@ -31,19 +30,9 @@ module.exports = async (ctx) => {
                     item = $(item);
                     return {
                         title: item.find('.title').text(),
-                        description: `作者：${item
-                            .find('.nickname')
-                            .text()}<br>描述：${item
-                            .find('.abstract')
-                            .text()}<br><img referrerpolicy="no-referrer" src="https:${item
-                            .find('.img-blur')
-                            .data('echo')}">`,
-                        pubDate: new Date(
-                            item.find('.time').data('shared-at')
-                        ).toUTCString(),
-                        link: `https://www.jianshu.com${item
-                            .find('.title')
-                            .attr('href')}`,
+                        description: `作者：${item.find('.nickname').text()}<br>描述：${item.find('.abstract').text()}<br><img referrerpolicy="no-referrer" src="https:${item.find('.img-blur').data('echo')}">`,
+                        pubDate: new Date(item.find('.time').data('shared-at')).toUTCString(),
+                        link: `https://www.jianshu.com${item.find('.title').attr('href')}`,
                     };
                 })
                 .get(),

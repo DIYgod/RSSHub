@@ -29,16 +29,12 @@ async function getToken() {
             data.append(key, element);
         }
     }
-    const response = await axios.post(
-        'https://oauth.secure.pixiv.net/auth/token',
-        data,
-        {
-            headers: {
-                ...maskHeader,
-                ...data.getHeaders(),
-            },
-        }
-    );
+    const response = await axios.post('https://oauth.secure.pixiv.net/auth/token', data, {
+        headers: {
+            ...maskHeader,
+            ...data.getHeaders(),
+        },
+    });
     return response.data.response;
 }
 
@@ -56,16 +52,12 @@ async function refreshToken(refresh_token) {
             data.append(key, element);
         }
     }
-    const response = await axios.post(
-        'https://oauth.secure.pixiv.net/auth/token',
-        data,
-        {
-            headers: {
-                ...maskHeader,
-                ...data.getHeaders(),
-            },
-        }
-    );
+    const response = await axios.post('https://oauth.secure.pixiv.net/auth/token', data, {
+        headers: {
+            ...maskHeader,
+            ...data.getHeaders(),
+        },
+    });
     return response.data.response;
 }
 
@@ -86,10 +78,7 @@ async function tokenLoop() {
             expires_in = refresh_res.expires_in * 0.9;
         } catch (err) {
             expires_in = 30;
-            logger.err(
-                `Pixiv refresh token failed, retry in ${expires_in} seconds.`,
-                err
-            );
+            logger.err(`Pixiv refresh token failed, retry in ${expires_in} seconds.`, err);
         }
     }
 }

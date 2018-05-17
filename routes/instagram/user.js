@@ -14,15 +14,8 @@ module.exports = async (ctx) => {
         },
     });
 
-    const data =
-        JSON.parse(
-            response.data.match(
-                /<script type="text\/javascript">window._sharedData = (.*);<\/script>/
-            )[1]
-        ) || {};
-    const list =
-        data.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media
-            .edges;
+    const data = JSON.parse(response.data.match(/<script type="text\/javascript">window._sharedData = (.*);<\/script>/)[1]) || {};
+    const list = data.entry_data.ProfilePage[0].graphql.user.edge_owner_to_timeline_media.edges;
     const name = data.entry_data.ProfilePage[0].graphql.user.full_name;
 
     const $ = cheerio.load(response.data);
@@ -46,13 +39,8 @@ module.exports = async (ctx) => {
                     break;
             }
             return {
-                title: `${type}${(item.edge_media_to_caption.edges &&
-                    item.edge_media_to_caption.edges[0] &&
-                    item.edge_media_to_caption.edges[0].node.text) ||
-                    '无题'}`,
-                description: `${tip}<img referrerpolicy="no-referrer" src="${
-                    item.thumbnail_src
-                }">`,
+                title: `${type}${(item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题'}`,
+                description: `${tip}<img referrerpolicy="no-referrer" src="${item.thumbnail_src}">`,
                 pubDate: new Date(item.taken_at_timestamp * 1000).toUTCString(),
                 link: `https://www.instagram.com/p/${item.shortcode}/`,
             };

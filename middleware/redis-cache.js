@@ -21,13 +21,7 @@ module.exports = function(options = {}) {
         onconnect = function() {},
     } = options;
 
-    const {
-        host: redisHost = 'localhost',
-        port: redisPort = 6379,
-        url: redisUrl = `redis://${redisHost}:${redisPort}/`,
-        options: redisOptions = {},
-    } =
-        options.redis || {};
+    const { host: redisHost = 'localhost', port: redisPort = 6379, url: redisUrl = `redis://${redisHost}:${redisPort}/`, options: redisOptions = {} } = options.redis || {};
 
     /**
      * redisClient
@@ -47,8 +41,7 @@ module.exports = function(options = {}) {
 
     return async function cache(ctx, next) {
         const { url, path } = ctx.request;
-        const resolvedPrefix =
-            typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
+        const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
         const key = resolvedPrefix + md5(ignoreQuery ? path : url);
         const tkey = key + ':type';
         let match = false;
@@ -75,11 +68,7 @@ module.exports = function(options = {}) {
             }
         }
 
-        if (
-            !redisAvailable ||
-            !match ||
-            (passParam && ctx.request.query[passParam])
-        ) {
+        if (!redisAvailable || !match || (passParam && ctx.request.query[passParam])) {
             return await next();
         }
 

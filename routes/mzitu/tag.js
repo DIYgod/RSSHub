@@ -24,8 +24,7 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: $('title').text(),
         link: url,
-        description:
-            $('meta[name="description"]').attr('content') || $('title').text(),
+        description: $('meta[name="description"]').attr('content') || $('title').text(),
         item:
             list &&
             list
@@ -35,14 +34,8 @@ module.exports = async (ctx) => {
                     const previewImg = linkA.find('img');
                     return {
                         title: previewImg.attr('alt'),
-                        description: `描述：${previewImg.attr(
-                            'alt'
-                        )}<br><img referrerpolicy="no-referrer" src="${previewImg.data(
-                            'original'
-                        )}">`,
-                        pubDate: new Date(
-                            item.find('.time').text()
-                        ).toUTCString(),
+                        description: `描述：${previewImg.attr('alt')}<br><img referrerpolicy="no-referrer" src="${previewImg.data('original')}">`,
+                        pubDate: new Date(item.find('.time').text()).toUTCString(),
                         link: linkA.attr('href'),
                     };
                 })

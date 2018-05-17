@@ -2,20 +2,7 @@ const axios = require('axios');
 const maskHeader = require('../constants').maskHeader;
 const assert = require('assert');
 
-const allowMode = [
-    'day',
-    'week',
-    'month',
-    'day_male',
-    'day_female',
-    'week_original',
-    'week_rookie',
-    'day_r18',
-    'day_male_r18',
-    'day_female_r18',
-    'week_r18',
-    'week_r18g',
-];
+const allowMode = ['day', 'week', 'month', 'day_male', 'day_female', 'week_original', 'week_rookie', 'day_r18', 'day_male_r18', 'day_female_r18', 'week_r18', 'week_r18g'];
 
 /**
  * 获取某天的排行榜
@@ -37,8 +24,7 @@ module.exports = async function getRanking(mode, date, token) {
             mode: mode,
             filter: 'for_ios',
             ...(date && {
-                date: `${date.getFullYear()}-${date.getMonth() +
-                    1}-${date.getDate()}`,
+                date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
             }),
         },
     });

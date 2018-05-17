@@ -37,19 +37,9 @@ module.exports = async (ctx) => {
             data &&
             data.map((item) => ({
                 title: item.title,
-                description: `${
-                    item.mark
-                }<br><img referrerpolicy="no-referrer" src="${
-                    item.cover_url
-                }">`,
-                pubDate: new Date(
-                    item.ctime.replace(' ', 'T') + '+08:00'
-                ).toUTCString(),
-                link: item.announce_link
-                    ? item.announce_link
-                    : `https://link.bilibili.com/p/eden/news#/newsdetail?id=${
-                          item.id
-                      }`,
+                description: `${item.mark}<br><img referrerpolicy="no-referrer" src="${item.cover_url}">`,
+                pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
+                link: item.announce_link ? item.announce_link : `https://link.bilibili.com/p/eden/news#/newsdetail?id=${item.id}`,
             })),
     };
 };

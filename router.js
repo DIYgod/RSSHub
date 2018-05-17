@@ -17,33 +17,15 @@ router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
 router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/fav'));
 router.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
 router.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
-router.get(
-    '/bilibili/user/followers/:uid',
-    require('./routes/bilibili/followers')
-);
-router.get(
-    '/bilibili/user/followings/:uid',
-    require('./routes/bilibili/followings')
-);
+router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers'));
+router.get('/bilibili/user/followings/:uid', require('./routes/bilibili/followings'));
 router.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
 router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
 router.get('/bilibili/video/reply/:aid', require('./routes/bilibili/reply'));
-router.get(
-    '/bilibili/link/news/:product',
-    require('./routes/bilibili/linkNews')
-);
-router.get(
-    '/bilibili/live/room/:roomID',
-    require('./routes/bilibili/liveRoom')
-);
-router.get(
-    '/bilibili/live/search/:key/:order',
-    require('./routes/bilibili/liveSearch')
-);
-router.get(
-    '/bilibili/live/area/:areaID/:order',
-    require('./routes/bilibili/liveArea')
-);
+router.get('/bilibili/link/news/:product', require('./routes/bilibili/linkNews'));
+router.get('/bilibili/live/room/:roomID', require('./routes/bilibili/liveRoom'));
+router.get('/bilibili/live/search/:key/:order', require('./routes/bilibili/liveSearch'));
+router.get('/bilibili/live/area/:areaID/:order', require('./routes/bilibili/liveArea'));
 
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
@@ -59,10 +41,7 @@ router.get('/ncm/artist/:id', require('./routes/ncm/artist'));
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
 
 // 自如
-router.get(
-    '/ziroom/room/:city/:iswhole/:room/:keyword',
-    require('./routes/ziroom/room')
-);
+router.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
 
 // 快递
 router.get('/express/:company/:number', require('./routes/express/express'));
@@ -76,10 +55,7 @@ router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 
 // 知乎
 router.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
-router.get(
-    '/zhihu/people/activities/:id',
-    require('./routes/zhihu/activities')
-);
+router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'));
 router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
@@ -95,22 +71,10 @@ router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
 router.get('/mzitu/tag/:tag', require('./routes/mzitu/tag'));
 
 // pixiv
-if (
-    config.pixiv &&
-    config.pixiv.client_id &&
-    config.pixiv.client_secret &&
-    config.pixiv.username &&
-    config.pixiv.password
-) {
-    router.get(
-        '/pixiv/user/bookmarks/:id',
-        require('./routes/pixiv/bookmarks')
-    );
+if (config.pixiv && config.pixiv.client_id && config.pixiv.client_secret && config.pixiv.username && config.pixiv.password) {
+    router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
     router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
-    router.get(
-        '/pixiv/ranking/:mode/:date?',
-        require('./routes/pixiv/ranking')
-    );
+    router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
 } else {
     logger.warn('pixiv RSS is disabled for lacking config.');
 }
@@ -118,10 +82,7 @@ if (
 // 豆瓣
 router.get('/douban/movie/playing', require('./routes/douban/playing'));
 router.get('/douban/movie/playing/:score', require('./routes/douban/playing'));
-router.get(
-    '/douban/movie/playing/:score/:city',
-    require('./routes/douban/playing')
-);
+router.get('/douban/movie/playing/:score/:city', require('./routes/douban/playing'));
 router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 
@@ -138,10 +99,7 @@ router.get('/dockone/weekly', require('./routes/dockone/weekly'));
 router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 
 // 笔趣阁
-router.get(
-    '/biquge/novel/latestchapter/:id',
-    require('./routes/biquge/chapter')
-);
+router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter'));
 
 // 开发者头条
 router.get('/toutiao/today', require('./routes/toutiao/today'));
@@ -155,13 +113,7 @@ if (config.disqus && config.disqus.api_key) {
 }
 
 // Twitter
-if (
-    config.twitter &&
-    config.twitter.consumer_key &&
-    config.twitter.consumer_secret &&
-    config.twitter.access_token &&
-    config.twitter.access_token_secret
-) {
+if (config.twitter && config.twitter.consumer_key && config.twitter.consumer_secret && config.twitter.access_token && config.twitter.access_token_secret) {
     router.get('/twitter/user/:id', require('./routes/twitter/user'));
 } else {
     logger.warn('Twitter RSS is disabled for lacking config.');

@@ -22,15 +22,11 @@ module.exports = async (ctx) => {
         link: `https://support.qq.com/product/${projectID}`,
         description: `${projectID} 的 吐个槽新帖`,
         item: data.map((item) => {
-            const pubdate = new Date(
-                item.created_at.replace(' ', 'T') + '+08:00'
-            );
+            const pubdate = new Date(item.created_at.replace(' ', 'T') + '+08:00');
             let imgHTML = '';
             if (data.images) {
                 for (let i = 0; i < data.images.length; i++) {
-                    imgHTML += `<img referrerpolicy="no-referrer" src="${
-                        data.images[i]
-                    }">`;
+                    imgHTML += `<img referrerpolicy="no-referrer" src="${data.images[i]}">`;
                 }
             }
             return {

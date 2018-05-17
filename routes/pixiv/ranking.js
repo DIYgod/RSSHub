@@ -40,16 +40,11 @@ module.exports = async (ctx) => {
         return;
     }
 
-    const response = await getRanking(
-        mode,
-        ctx.params.date && date,
-        getToken()
-    );
+    const response = await getRanking(mode, ctx.params.date && date, getToken());
 
     const illusts = response.data.illusts;
 
-    const dateStr = `${date.getFullYear()}年${date.getMonth() +
-        1}月${date.getDate()}日 `;
+    const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 `;
 
     ctx.state.data = {
         title: (ctx.params.date ? dateStr : '') + titles[mode],
@@ -58,32 +53,16 @@ module.exports = async (ctx) => {
         item: illusts.map((illust, index) => {
             const images = [];
             if (illust.page_count === 1) {
-                images.push(
-                    `<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${
-                        illust.id
-                    }.jpg"/></p>`
-                );
+                images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}.jpg"/></p>`);
             } else {
                 for (let i = 0; i < illust.page_count; i++) {
-                    images.push(
-                        `<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${
-                            illust.id
-                        }-${i + 1}.jpg"/></p>`
-                    );
+                    images.push(`<p><img referrerpolicy="no-referrer" src="https://pixiv.cat/${illust.id}-${i + 1}.jpg"/></p>`);
                 }
             }
             return {
                 title: `#${index + 1} ${illust.title}`,
-                description: `<p>画师：${illust.user.name} - 上传于：${new Date(
-                    illust.create_date
-                ).toLocaleString('zh-cn')} - 阅览数：${
-                    illust.total_view
-                } - 收藏数：${illust.total_bookmarks}</p><br>${images.join(
-                    ''
-                )}`,
-                link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${
-                    illust.id
-                }`,
+                description: `<p>画师：${illust.user.name} - 上传于：${new Date(illust.create_date).toLocaleString('zh-cn')} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p><br>${images.join('')}`,
+                link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`,
             };
         }),
     };

@@ -6,9 +6,7 @@ module.exports = async (ctx) => {
 
     const response = await axios({
         method: 'get',
-        url: `https://disqus.com/api/3.0/forums/listPosts.json?api_key=${
-            config.disqus.api_key
-        }&forum=${forum}`,
+        url: `https://disqus.com/api/3.0/forums/listPosts.json?api_key=${config.disqus.api_key}&forum=${forum}`,
         headers: {
             'User-Agent': config.ua,
             Referer: 'https://disqus.com/',
@@ -28,9 +26,7 @@ module.exports = async (ctx) => {
 
     const responseThreads = await axios({
         method: 'get',
-        url: `https://disqus.com/api/3.0/forums/listThreads.json?api_key=${
-            config.disqus.api_key
-        }&forum=${forum}${threadsQuery}`,
+        url: `https://disqus.com/api/3.0/forums/listThreads.json?api_key=${config.disqus.api_key}&forum=${forum}${threadsQuery}`,
         headers: {
             'User-Agent': config.ua,
             Referer: 'https://disqus.com/',
@@ -46,14 +42,8 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const thread = threads.filter((i) => i.id === item.thread)[0];
             return {
-                title: `${item.author.name}: ${
-                    item.raw_message > 24
-                        ? item.raw_message.slice(0, 24) + '...'
-                        : item.raw_message
-                }`,
-                description: `${item.author.name} 在《${
-                    thread.clean_title
-                }》中发表评论: ${item.message}`,
+                title: `${item.author.name}: ${item.raw_message > 24 ? item.raw_message.slice(0, 24) + '...' : item.raw_message}`,
+                description: `${item.author.name} 在《${thread.clean_title}》中发表评论: ${item.message}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
                 link: `${thread.link}/#comment-${item.id}`,
             };
