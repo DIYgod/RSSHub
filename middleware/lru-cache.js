@@ -21,6 +21,11 @@ module.exports = function(options = {}) {
         max: maxLength,
     });
 
+    options.app.context.cache = {
+        get: (key) => memoryCache.get(key),
+        set: (key, value, maxAge) => memoryCache.set(key, value, maxAge),
+    };
+
     return async function cache(ctx, next) {
         const { url, path } = ctx.request;
         const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
