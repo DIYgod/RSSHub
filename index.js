@@ -22,6 +22,7 @@ process.on('uncaughtException', (e) => {
 logger.info('🍻 RSSHub start! Cheers!');
 
 const app = new Koa();
+app.proxy = true;
 
 // favicon
 app.use(favicon(__dirname + '/favicon.png'));
