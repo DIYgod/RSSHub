@@ -4,13 +4,13 @@ sidebar: auto
 
 # 部署
 
-部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
+部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
 
 [[toc]]
 
 ## 手动部署
 
-部署 `RSSHub` 最直接的方式，您可以按照以下步骤将 `RSSHub` 部署在您的电脑、服务器或者其他任何地方。
+部署 `RSSHub` 最直接的方式， 您可以按照以下步骤将 `RSSHub` 部署在您的  电脑、服务器或者其他任何地方。
 
 ### 在安装之前
 
@@ -19,37 +19,42 @@ sidebar: auto
 ### 安装 Git
 
 ::: tip 提示
+
 首先您应该输入 `git`，看看系统有没有安装 Git：
 
 windows 打开 `cmd`， macOS 打开`终端(terminal)`。
 
-``` bash
+```bash
 $ git
 usage: git [--version] [--help] [-C <path>] [-c name=value]
 ...
 ```
+
 :::
 
-* Windows：从Git官网直接[下载安装程序](https://git-scm.com/downloads)。
-* MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
-* Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
+*   Windows：从 Git 官网直接[下载安装程序](https://git-scm.com/downloads)。
+*   MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
+*   Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
 
 ### 安装 Node.JS
 
 #### Windows
+
 Windows 用户请 [下载安装程序](https://nodejs.org/zh-cn/)。安装时，请勾选`Add to PATH`选项。
 
 #### MacOS & Linux
+
 安装 NodeJS 的最佳方式是使用 [nvm](https://github.com/creationix/nvm)。
 
 安装 `nvm`
-``` bash
+
+```bash
 $ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 ```
 
 安装完成后，重启终端并执行下列命令即可安装 `Node.js`。
 
-``` bash
+```bash
 $ nvm install node
 ```
 
@@ -57,33 +62,36 @@ $ nvm install node
 
 首先是下载 `RSSHub` 的源码，请执行下列命令。
 
-``` bash
+```bash
 $ git clone https://github.com/DIYgod/RSSHub.git
 $ cd RSSHub
 ```
 
 下载完成后，需要安装依赖。
 
-``` bash
+```bash
 $ npm install
 ```
 
 ::: tip 提示
+
 推荐使用 [Yarn](https://yarn.bootcss.com/) ，`Yarn` 比 `npm` 更快更稳定。
 
 使用 `Yarn` 安装依赖时只需要键入
-``` bash
+
+```bash
 $ yarn
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)。
+
 :::
 
 ### 启动 RSSHub
 
 在 `RSSHub` 文件夹中运行下面的命令就可以启动。
 
-``` bash
+```bash
 $ npm start
 ```
 
@@ -110,7 +118,9 @@ macOS & Linux 运行 `$ PORT=1000`
 RSSHub 默认会有 5 分钟的缓存，默认这个缓存是存放在内存中的。RSSHub 还支持 Redis 数据库缓存。
 
 ::: tip 提示
+
 除非流量特别大或者您需要建立分布式集群，否则不需要 Redis 缓存。
+
 :::
 
 #### 安装 Redis
@@ -121,7 +131,7 @@ RSSHub 默认会有 5 分钟的缓存，默认这个缓存是存放在内存中�
 
 在安装目录中运行下面的命令启动 Redis。
 
-``` bash
+```bash
 $ redis-server  redis.windows.conf
 ```
 
@@ -129,13 +139,13 @@ $ redis-server  redis.windows.conf
 
 使用 [Homebrew](https://brew.sh/) 安装 Redis。
 
-``` bash
+```bash
 $ brew install redis
 ```
 
 再运行下面的命令启动 Redis。
 
-``` bash
+```bash
 $ brew services start redis
 ```
 
@@ -143,7 +153,7 @@ $ brew services start redis
 
 使用您的包管理器安装 Redis。
 
-``` bash
+```bash
 # apt
 $ sudo apt install redis-server
 
@@ -169,13 +179,13 @@ Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接
 
 运行下面的命令下载 RSSHub 镜像。
 
-``` bash
+```bash
 $ docker pull diygod/rsshub
 ```
 
 然后运行 RSSHub 即可
 
-``` bash
+```bash
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
@@ -183,7 +193,7 @@ $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 
 您可以使用下面的命令来关闭 RSSHub。
 
-``` bash
+```bash
 $ docker stop rsshub
 ```
 
@@ -191,9 +201,9 @@ $ docker stop rsshub
 
 配置运行在 docker 中的 RSSHub，最便利的方法是使用环境变量。
 
-以设置缓存时间为1小时举例，只需要在运行时增加参数：`-e CACHE_EXPIRE=3600`
+以设置缓存时间为 1 小时举例，只需要在运行时增加参数：`-e CACHE_EXPIRE=3600`
 
-``` bash
+```bash
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 PORT=1000 diygod/rsshub
 ```
 
@@ -203,23 +213,23 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 PORT=1000 diygod
 
 [docker-compose](https://docs.docker.com/compose/overview/) 是用来运行多容器 Docker 应用的小工具，可以简化配置部署过程：
 
-1. 创建 volume 持久化 Redis 缓存
+1.  创建 volume 持久化 Redis 缓存
 
-``` bash
+```bash
 $ docker volume create redis-data
 ```
 
-2. 修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
+2.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
 
-3. 部署
+3.  部署
 
-``` bash
+```bash
 $ docker-compose up
 ```
 
-4. 更新
+4.  更新
 
-``` bash
+```bash
 $ docker-compose build
 $ docker-compose up
 ```
@@ -235,7 +245,9 @@ $ docker-compose up
 可以通过修改 `config.js` 或者设置环境变量来配置 RSSHub。
 
 ::: tip 提示
+
 建议通过设置环境变量来配置 RSSHub。避免版本更新时的冲突。
+
 :::
 
 `PORT`: 监听端口，默认为 `1200`

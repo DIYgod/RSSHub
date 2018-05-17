@@ -10,13 +10,13 @@ module.exports = async (ctx) => {
         url: 'http://music.163.com/api/user/playlist',
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://music.163.com/',
+            Referer: 'https://music.163.com/',
             'Content-Type': 'application/x-www-form-urlencoded',
         },
         data: qs.stringify({
             uid: uid,
             limit: 1000,
-            offset: 0
+            offset: 0,
         }),
     });
 
@@ -34,7 +34,7 @@ module.exports = async (ctx) => {
             title: pl.name,
             description: pl.description,
             pubDate: new Date(pl.createTime).toUTCString(),
-            link: `http://music.163.com/playlist?id=${pl.id}`
-        }))
+            link: `http://music.163.com/playlist?id=${pl.id}`,
+        })),
     };
 };

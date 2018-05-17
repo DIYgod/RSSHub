@@ -9,8 +9,8 @@ module.exports = async (ctx) => {
         url: `https://bangumi.bilibili.com/jsonp/seasoninfo/${seasonid}.ver?callback=seasonListCallback&jsonp=jsonp&_=${+new Date()}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://bangumi.bilibili.com/anime/${seasonid}/`
-        }
+            Referer: `https://bangumi.bilibili.com/anime/${seasonid}/`,
+        },
     });
 
     const data = JSON.parse(response.data.match(/^seasonListCallback\((.*)\);$/)[1]).result || {};
@@ -19,11 +19,13 @@ module.exports = async (ctx) => {
         title: data.title,
         link: `https://bangumi.bilibili.com/anime/${seasonid}/`,
         description: data.evaluate,
-        item: data.episodes && data.episodes.map((item) => ({
-            title: `第${item.index}话 ${item.index_title}`,
-            description: `更新时间：${item.update_time}<img referrerpolicy="no-referrer" src="${item.cover}">`,
-            pubDate: new Date(item.update_time).toUTCString(),
-            link: item.webplay_url
-        })),
+        item:
+            data.episodes &&
+            data.episodes.map((item) => ({
+                title: `第${item.index}话 ${item.index_title}`,
+                description: `更新时间：${item.update_time}<img referrerpolicy="no-referrer" src="${item.cover}">`,
+                pubDate: new Date(item.update_time).toUTCString(),
+                link: item.webplay_url,
+            })),
     };
 };

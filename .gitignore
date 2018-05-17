@@ -3,6 +3,3 @@ npm-debug.log
 error.log
 combined.log
 .vscode
-.prettierrc
-.prettierignore
-.editorconfig

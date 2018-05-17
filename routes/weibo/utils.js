@@ -12,7 +12,7 @@ const weiboUtils = {
         temp += '<br><br>';
 
         // 处理外部链接
-        temp = temp.replace(/https:\/\/weibo\.cn\/sinaurl\/.*?&u=(http.*?")/g, function (match, p1) {
+        temp = temp.replace(/https:\/\/weibo\.cn\/sinaurl\/.*?&u=(http.*?")/g, function(match, p1) {
             return decodeURIComponent(p1);
         });
 
@@ -28,7 +28,7 @@ const weiboUtils = {
 
         // 添加微博配图
         if (status.pics) {
-            status.pics.forEach(function (item) {
+            status.pics.forEach(function(item) {
                 temp += '<img referrerpolicy="no-referrer" src="' + item.large.url + '"><br><br>';
             });
         }
@@ -68,7 +68,7 @@ const weiboUtils = {
             return date.toUTCString();
         }
         return html;
-    }
+    },
 };
 
 module.exports = weiboUtils;

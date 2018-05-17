@@ -12,20 +12,20 @@ module.exports = async (ctx) => {
         headers: {
             'User-Agent': config.ua,
         },
-        responseType: 'arraybuffer'
+        responseType: 'arraybuffer',
     });
     const responseHtml = iconv.decode(nameResponse.data, 'UTF-8');
     const $ = cheerio.load(responseHtml);
-    let name = $("title").text();
-    name = name.substr(0, name.indexOf("_哔哩哔哩"));
+    let name = $('title').text();
+    name = name.substr(0, name.indexOf('_哔哩哔哩'));
 
     const response = await axios({
         method: 'get',
         url: `https://api.bilibili.com/x/v2/reply?type=1&oid=${aid}&sort=0`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://www.bilibili.com/video/av${aid}`,
-        }
+            Referer: `https://www.bilibili.com/video/av${aid}`,
+        },
     });
 
     const data = response.data.data.replies;
@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
             title: `${item.member.uname} : ${item.content.message}`,
             description: `#${item.floor}<br> ${item.member.uname} : ${item.content.message}`,
             pubDate: new Date(item.ctime * 1000).toUTCString(),
-            link: `https://www.bilibili.com/video/av${aid}/#reply${item.rpid}`
+            link: `https://www.bilibili.com/video/av${aid}/#reply${item.rpid}`,
         })),
     };
 };

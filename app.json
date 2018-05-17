@@ -1,39 +1,38 @@
 {
-  "name": "RSSHub",
-  "description": "Connect the world with RSS",
-  "repository": "https://github.com/DIYgod/RSSHub",
-  "website": "https://rsshub.js.org/",
-  "logo": "https://i.imgur.com/NZpRScX.png",
-  "keywords": ["RSS"],
-  "env": {
-      "PORT": {
-          "value": "80",
-          "required": false
-      },
-      "PIXIV_USERNAME": {
-          "required": false
-      },
-      "PIXIV_PASSWORD": {
-          "required": false
-      },
-      "DISQUS_API_KEY": {
-          "required": false
-      },
-      "TWITTER_CONSUMER_KEY": {
-          "required": false
-      },
-      "TWITTER_CONSUMER_SECRET": {
-          "required": false
-      },
-      "TWITTER_ACCESS_TOKEN": {
-          "required": false
-      },
-      "TWITTER_ACCESS_TOKEN_SECRET": {
-          "required": false
-      },
-      "YOUTUBE_KEY": {
-          "required": false
-      }
-  }
+    "name": "RSSHub",
+    "description": "Connect the world with RSS",
+    "repository": "https://github.com/DIYgod/RSSHub",
+    "website": "https://rsshub.js.org/",
+    "logo": "https://i.imgur.com/NZpRScX.png",
+    "keywords": ["RSS"],
+    "env": {
+        "PORT": {
+            "value": "80",
+            "required": false
+        },
+        "PIXIV_USERNAME": {
+            "required": false
+        },
+        "PIXIV_PASSWORD": {
+            "required": false
+        },
+        "DISQUS_API_KEY": {
+            "required": false
+        },
+        "TWITTER_CONSUMER_KEY": {
+            "required": false
+        },
+        "TWITTER_CONSUMER_SECRET": {
+            "required": false
+        },
+        "TWITTER_ACCESS_TOKEN": {
+            "required": false
+        },
+        "TWITTER_ACCESS_TOKEN_SECRET": {
+            "required": false
+        },
+        "YOUTUBE_KEY": {
+            "required": false
+        }
+    }
 }
-

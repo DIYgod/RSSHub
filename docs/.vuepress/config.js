@@ -8,22 +8,23 @@ module.exports = {
         editLinks: true,
         editLinkText: '帮助我们改善此页面！',
         docsDir: 'docs',
-        nav: [{
+        nav: [
+            {
                 text: '使用',
-                link: '/'
+                link: '/',
             },
             {
                 text: '参与我们',
-                link: '/joinus/'
+                link: '/joinus/',
             },
             {
                 text: '部署',
-                link: '/install/'
+                link: '/install/',
             },
             {
                 text: '支持 RSSHub',
-                link: '/support/'
+                link: '/support/',
             },
-        ]
-    }
-}
+        ],
+    },
+};

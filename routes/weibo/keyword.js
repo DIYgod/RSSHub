@@ -10,8 +10,8 @@ module.exports = async (ctx) => {
         url: `https://m.weibo.cn/api/container/getIndex?containerid=100103type%3D61%26q%3D${encodeURIComponent(keyword)}%26t%3D0`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://m.weibo.cn/p/searchall?containerid=100103type%3D1%26q%3D${encodeURIComponent(keyword)}`
-        }
+            Referer: `https://m.weibo.cn/p/searchall?containerid=100103type%3D1%26q%3D${encodeURIComponent(keyword)}`,
+        },
     });
     const data = response.data.data.cards[0].card_group;
 
@@ -25,7 +25,7 @@ module.exports = async (ctx) => {
                 title: `${item.mblog.user.screen_name}: ${title.length > 24 ? title.slice(0, 24) + '...' : title}`,
                 description: `${item.mblog.user.screen_name}: ${weiboUtils.format(item.mblog)}`,
                 pubDate: weiboUtils.getTime(item.mblog.created_at),
-                link: `https://weibo.com/${item.mblog.user.id}/${item.mblog.bid}`
+                link: `https://weibo.com/${item.mblog.user.id}/${item.mblog.bid}`,
             };
         }),
     };

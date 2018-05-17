@@ -10,8 +10,8 @@ module.exports = async (ctx) => {
         url: `https://www.instagram.com/${id}/`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://www.instagram.com/${id}/`
-        }
+            Referer: `https://www.instagram.com/${id}/`,
+        },
     });
 
     const data = JSON.parse(response.data.match(/<script type="text\/javascript">window._sharedData = (.*);<\/script>/)[1]) || {};
@@ -29,20 +29,20 @@ module.exports = async (ctx) => {
             let type = '';
             let tip = '';
             switch (item.__typename) {
-            case 'GraphVideo':
-                type = '[视频] ';
-                tip = '打开原文播放视频: ';
-                break;
-            case 'GraphSidecar':
-                type = '[组图] ';
-                tip = '打开原文查看组图: ';
-                break;
+                case 'GraphVideo':
+                    type = '[视频] ';
+                    tip = '打开原文播放视频: ';
+                    break;
+                case 'GraphSidecar':
+                    type = '[组图] ';
+                    tip = '打开原文查看组图: ';
+                    break;
             }
             return {
-                title: `${type}${item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text || '无题'}`,
+                title: `${type}${(item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题'}`,
                 description: `${tip}<img referrerpolicy="no-referrer" src="${item.thumbnail_src}">`,
                 pubDate: new Date(item.taken_at_timestamp * 1000).toUTCString(),
-                link: `https://www.instagram.com/p/${item.shortcode}/`
+                link: `https://www.instagram.com/p/${item.shortcode}/`,
             };
         }),
     };

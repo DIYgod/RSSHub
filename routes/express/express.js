@@ -10,8 +10,8 @@ module.exports = async (ctx) => {
         url: `https://www.kuaidi100.com/query?type=${company}&postid=${number}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://www.kuaidi100.com'
-        }
+            Referer: 'https://www.kuaidi100.com',
+        },
     });
 
     const data = response.data.data;
@@ -24,7 +24,7 @@ module.exports = async (ctx) => {
             title: item.context,
             description: item.context,
             pubDate: new Date(item.time || item.ftime).toUTCString(),
-            link: item.context
+            link: item.context,
         })),
     };
 };

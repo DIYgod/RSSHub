@@ -9,8 +9,8 @@ module.exports = async (ctx) => {
         url: `https://api.bilibili.com/x/web-interface/newlist?ps=15&rid=${tid}&_=${+new Date()}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://www.bilibili.com/'
-        }
+            Referer: 'https://www.bilibili.com/',
+        },
     });
 
     const list = response.data.data.archives;
@@ -23,11 +23,13 @@ module.exports = async (ctx) => {
         title: `bilibili ${name}分区`,
         link: 'https://www.bilibili.com',
         description: `bilibili ${name}分区`,
-        item: list && list.map((item) => ({
-            title: `${item.title} - ${item.owner.name}`,
-            description: `${item.desc}<img referrerpolicy="no-referrer" src="${item.pic}">`,
-            pubDate: new Date(item.pubdate * 1000).toUTCString(),
-            link: `https://www.bilibili.com/video/av${item.aid}`
-        })),
+        item:
+            list &&
+            list.map((item) => ({
+                title: `${item.title} - ${item.owner.name}`,
+                description: `${item.desc}<img referrerpolicy="no-referrer" src="${item.pic}">`,
+                pubDate: new Date(item.pubdate * 1000).toUTCString(),
+                link: `https://www.bilibili.com/video/av${item.aid}`,
+            })),
     };
 };

@@ -9,8 +9,8 @@ module.exports = async (ctx) => {
         url: `https://disqus.com/api/3.0/forums/listPosts.json?api_key=${config.disqus.api_key}&forum=${forum}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://disqus.com/'
-        }
+            Referer: 'https://disqus.com/',
+        },
     });
 
     const data = response.data.response;
@@ -29,8 +29,8 @@ module.exports = async (ctx) => {
         url: `https://disqus.com/api/3.0/forums/listThreads.json?api_key=${config.disqus.api_key}&forum=${forum}${threadsQuery}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://disqus.com/'
-        }
+            Referer: 'https://disqus.com/',
+        },
     });
 
     const threads = responseThreads.data.response;
@@ -45,7 +45,7 @@ module.exports = async (ctx) => {
                 title: `${item.author.name}: ${item.raw_message > 24 ? item.raw_message.slice(0, 24) + '...' : item.raw_message}`,
                 description: `${item.author.name} 在《${thread.clean_title}》中发表评论: ${item.message}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
-                link: `${thread.link}/#comment-${item.id}`
+                link: `${thread.link}/#comment-${item.id}`,
             };
         }),
     };

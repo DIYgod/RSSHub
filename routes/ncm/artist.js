@@ -9,8 +9,8 @@ module.exports = async (ctx) => {
         url: `https://music.163.com/api/artist/albums/${id}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://music.163.com/'
-        }
+            Referer: 'https://music.163.com/',
+        },
     });
 
     const data = response.data;
@@ -24,7 +24,7 @@ module.exports = async (ctx) => {
             return {
                 title: `${item.name} - ${singer}`,
                 description: `歌手：${singer}<br>专辑：${item.name}<br>日期：${new Date(item.publishTime).toLocaleDateString()}<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`,
-                link: `https://music.163.com/#/album?id=${item.id}`
+                link: `https://music.163.com/#/album?id=${item.id}`,
             };
         }),
     };

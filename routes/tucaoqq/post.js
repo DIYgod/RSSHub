@@ -2,7 +2,6 @@ const axios = require('axios');
 const config = require('../../config');
 const md5 = require('../../utils/md5');
 
-
 module.exports = async (ctx) => {
     const projectID = ctx.params.project;
     const key = ctx.params.key;
@@ -12,9 +11,9 @@ module.exports = async (ctx) => {
         url: `https://support.qq.com/api/v1/${projectID}/posts`,
         headers: {
             'User-Agent': config.ua,
-            'Timestamp': Math.round(+new Date() / 1000).toString(),
-            'Signature': md5(Math.round(+new Date() / 1000).toString() + key)
-        }
+            Timestamp: Math.round(+new Date() / 1000).toString(),
+            Signature: md5(Math.round(+new Date() / 1000).toString() + key),
+        },
     });
     const data = response.data.data;
 
@@ -23,7 +22,7 @@ module.exports = async (ctx) => {
         link: `https://support.qq.com/product/${projectID}`,
         description: `${projectID} 的 吐个槽新帖`,
         item: data.map((item) => {
-            let pubdate = new Date(item.created_at.replace(' ', 'T') + "+08:00");
+            const pubdate = new Date(item.created_at.replace(' ', 'T') + '+08:00');
             let imgHTML = '';
             if (data.images) {
                 for (let i = 0; i < data.images.length; i++) {
@@ -35,7 +34,7 @@ module.exports = async (ctx) => {
                 description: `${item.content}${imgHTML}`,
                 pubDate: pubdate.toUTCString(),
                 link: `https://support.qq.com/products/${projectID}`,
-                guid: `https://support.qq.com/products/${projectID} ${item.id}`
+                guid: `https://support.qq.com/products/${projectID} ${item.id}`,
             };
         }),
     };

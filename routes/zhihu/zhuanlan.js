@@ -9,16 +9,16 @@ module.exports = async (ctx) => {
         url: `https://zhuanlan.zhihu.com/api/columns/${id}/posts?limit=20`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://zhuanlan.zhihu.com/${id}`,
-        }
+            Referer: `https://zhuanlan.zhihu.com/${id}`,
+        },
     });
     const infoRes = await axios({
         method: 'get',
         url: `https://zhuanlan.zhihu.com/api/columns/${id}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://zhuanlan.zhihu.com/${id}`,
-        }
+            Referer: `https://zhuanlan.zhihu.com/${id}`,
+        },
     });
 
     const list = listRes.data;
@@ -32,7 +32,7 @@ module.exports = async (ctx) => {
             title: item.title,
             description: item.content.replace(/<img src="/g, '<img referrerpolicy="no-referrer" src="https://pic4.zhimg.com/'),
             pubDate: new Date(item.publishedTime).toUTCString(),
-            link: `https://zhuanlan.zhihu.com${item.url}`
+            link: `https://zhuanlan.zhihu.com${item.url}`,
         })),
     };
 };

@@ -10,8 +10,8 @@ module.exports = async (ctx) => {
         url: `https://m.weibo.cn/api/container/getIndex?type=uid&value=${uid}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://m.weibo.cn/'
-        }
+            Referer: 'https://m.weibo.cn/',
+        },
     });
     const name = containerResponse.data.data.userInfo.screen_name;
     const containerid = containerResponse.data.data.tabsInfo.tabs[1].containerid;
@@ -21,8 +21,8 @@ module.exports = async (ctx) => {
         url: `https://m.weibo.cn/api/container/getIndex?type=uid&value=${uid}&containerid=${containerid}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://m.weibo.cn/u/${uid}`
-        }
+            Referer: `https://m.weibo.cn/u/${uid}`,
+        },
     });
 
     ctx.state.data = {
@@ -35,7 +35,7 @@ module.exports = async (ctx) => {
                 title: title.length > 24 ? title.slice(0, 24) + '...' : title,
                 description: weiboUtils.format(item.mblog),
                 pubDate: weiboUtils.getTime(item.mblog.created_at),
-                link: `https://weibo.com/${uid}/${item.mblog.bid}`
+                link: `https://weibo.com/${uid}/${item.mblog.bid}`,
             };
         }),
     };

@@ -3,7 +3,7 @@ const config = require('../../config');
 
 const youtube = google.youtube({
     version: 'v3',
-    auth: config.youtube.key
+    auth: config.youtube.key,
 });
 
 module.exports = async (ctx) => {
@@ -17,7 +17,7 @@ module.exports = async (ctx) => {
 
     const responst = await youtube.playlistItems.list({
         part: 'snippet,contentDetails,status',
-        playlistId: playlistId
+        playlistId: playlistId,
     });
     const data = responst.data.items;
 
@@ -32,7 +32,7 @@ module.exports = async (ctx) => {
                 title: snippet.title,
                 description: `${snippet.description}<img referrerpolicy="no-referrer" src="${img.url}">`,
                 pubDate: new Date(snippet.publishedAt).toUTCString(),
-                link: `https://www.youtube.com/watch?v=${snippet.resourceId.videoId}`
+                link: `https://www.youtube.com/watch?v=${snippet.resourceId.videoId}`,
             };
         }),
     };
