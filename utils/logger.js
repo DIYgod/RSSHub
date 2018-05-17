@@ -1,4 +1,5 @@
 const winston = require('winston');
+const cluster = require('cluster');
 
 const logger = winston.createLogger({
     level: 'info',
@@ -20,9 +21,14 @@ const logger = winston.createLogger({
 // If we're not in production then log to the `console` with the format:
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
+
 logger.add(
     new winston.transports.Console({
-        format: winston.format.simple(),
+        format: winston.format.combine(
+            winston.format.label({ label: cluster.isWorker ? `#worker${cluster.worker.id}` : '#master' }),
+            winston.format.colorize(),
+            winston.format.printf((info) => `${info.label} ${info.level}: ${info.message}`)
+        ),
     })
 );
 

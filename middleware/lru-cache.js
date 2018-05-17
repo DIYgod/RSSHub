@@ -3,7 +3,8 @@
 const pathToRegExp = require('path-to-regexp');
 const readall = require('readall');
 const crypto = require('crypto');
-const lru = require('lru-cache');
+const memoryCacheWorker = require('../utils/memorycache');
+const logger = require('../utils/logger');
 
 module.exports = function(options = {}) {
     const {
@@ -15,11 +16,6 @@ module.exports = function(options = {}) {
         maxLength = Infinity,
         ignoreQuery = false,
     } = options;
-
-    const memoryCache = lru({
-        maxAge: expire * 1000,
-        max: maxLength,
-    });
 
     return async function cache(ctx, next) {
         const { url, path } = ctx.request;
@@ -58,8 +54,10 @@ module.exports = function(options = {}) {
         try {
             ok = await getCache(ctx, key, tkey);
         } catch (e) {
+            logger.error('Get cache error:' + (e instanceof Error ? e.stack : e));
             ok = false;
         }
+
         if (ok) {
             return;
         }
@@ -69,7 +67,9 @@ module.exports = function(options = {}) {
         try {
             const trueExpire = routeExpire || expire;
             await setCache(ctx, key, tkey, trueExpire);
-        } catch (e) {} // eslint-disable-line no-empty
+        } catch (e) {
+            logger.error('Set cache error:' + (e instanceof Error ? e.stack : e));
+        }
         routeExpire = false;
     };
 
@@ -77,13 +77,13 @@ module.exports = function(options = {}) {
      * getCache
      */
     async function getCache(ctx, key, tkey) {
-        const value = memoryCache.get(key);
+        const value = await memoryCacheWorker.get(key);
         let type;
         let ok = false;
 
         if (value) {
             ctx.response.status = 200;
-            type = memoryCache.get(tkey) || 'text/html';
+            type = (await memoryCacheWorker.get(tkey)) || 'text/html';
             // can happen if user specified return_buffers: true in redis options
             if (Buffer.isBuffer(type)) {
                 type = type.toString();
@@ -105,7 +105,6 @@ module.exports = function(options = {}) {
      * setCache
      */
     async function setCache(ctx, key, tkey) {
-        ctx.state.data.lastBuildDate = new Date().toUTCString();
         const body = JSON.stringify(ctx.state.data);
 
         if (ctx.request.method !== 'GET' || !body) {
@@ -114,7 +113,8 @@ module.exports = function(options = {}) {
         if (Buffer.byteLength(body) > maxLength) {
             return;
         }
-        memoryCache.set(key, body);
+        ctx.state.data.lastBuildDate = new Date().toUTCString();
+        memoryCacheWorker.set(key, body);
 
         await cacheType(ctx, tkey);
     }
@@ -125,7 +125,7 @@ module.exports = function(options = {}) {
     async function cacheType(ctx, tkey) {
         const type = ctx.response.type;
         if (type) {
-            memoryCache.set(tkey, type);
+            memoryCacheWorker.set(tkey, type);
         }
     }
 };
