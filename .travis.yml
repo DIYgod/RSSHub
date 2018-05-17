@@ -7,6 +7,9 @@ before_install:
 install:
   - yarn
 
+before_script:
+  - npm run lint:fix
+
 script:
   - npm run docs:build
   - cd docs/.vuepress/dist
