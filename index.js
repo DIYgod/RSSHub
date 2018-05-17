@@ -55,6 +55,7 @@ app.use(filter);
 if (config.cacheType === 'memory') {
     app.use(
         memoryCache({
+            app: app,
             expire: config.cacheExpire,
             ignoreQuery: true,
         })
@@ -62,6 +63,7 @@ if (config.cacheType === 'memory') {
 } else if (config.cacheType === 'redis') {
     app.use(
         redisCache({
+            app: app,
             expire: config.cacheExpire,
             ignoreQuery: true,
             redis: config.redis,
