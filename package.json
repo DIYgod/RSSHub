@@ -51,6 +51,7 @@
     "co-redis": "2.1.1",
     "crypto": "1.0.1",
     "form-data": "^2.3.2",
+    "git-rev-sync": "1.12.0",
     "googleapis": "30.0.0",
     "iconv-lite": "0.4.23",
     "json-bigint": "0.2.3",

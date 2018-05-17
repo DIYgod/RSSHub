@@ -1,43 +1,82 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Welcome to RSSHub!</title>
-<style>
-    body {
-        width: 35em;
-        margin: 0 auto;
-        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        font-size: 16px;
-        color: #2c3e50;
-    }
+    <title>Welcome to RSSHub!</title>
+    <style>
+        body {
+            width: 35em;
+            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            color: #2c3e50;
+        }
 
-    .content {
-        position: absolute;
-        top: 40%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        min-width: 400px;
-        text-align: center;
-    }
-</style>
+        .content {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 400px;
+            text-align: center;
+        }
+
+        details {
+            text-align: left;
+        }
+
+        summary {
+            margin-bottom: 20px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .debug-key {
+            width: 100px;
+            text-align: right;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .debug-item {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+    </style>
 </head>
+
 <body>
-<div class="content">
-    <p><img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100"></p>
+    <div class="content">
+        <p>
+            <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+        </p>
 
-    <h1>Welcome to <span style="color: #F5712C;">RSSHub</span>!</h1>
+        <h1>Welcome to
+            <span style="color: #F5712C;">RSSHub</span>!</h1>
 
-    <p>If you see this page, the RSSHub{{ if hash }} ({{ hash }}){{ /if }} is successfully installed and working.</p>
+        <p>If you see this page, the RSSHub{{ if hash }} ({{ hash }}){{ /if }} is successfully installed and working.</p>
 
-    <p>For online documentation and support please refer to
-        <a href="https://rsshub.js.org" target="_blank">rsshub.js.org</a>.</p>
+        <p>For online documentation and support please refer to
+            <a href="https://rsshub.js.org" target="_blank">rsshub.js.org</a>.</p>
 
-    <p>-- Made with
-        <i style="color:#d43f57">♥</i> by
-        <a href="https://diygod.me" target="_blank">DIYgod</a>
-    </p>
-</div>
+        <p>-- Made with
+            <i style="color:#d43f57">♥</i> by
+            <a href="https://diygod.me" target="_blank">DIYgod</a>
+        </p>
+
+        <details>
+            <summary>debug</summary>
+            {{ each debug }}
+            <div class="debug-item">
+                <span class="debug-key">{{ $value.name }}: </span>
+                <span class="debug-value">{{ $value.value }}</span>
+            </div>
+            {{ /each }}
+        </details>
+    </div>
 </body>
+
 </html>

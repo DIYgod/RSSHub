@@ -5,11 +5,46 @@ const path = require('path');
 const config = require('./config');
 const logger = require('./utils/logger');
 
+let gitHash;
+try {
+    gitHash = require('git-rev-sync').short();
+} catch (e) {
+    gitHash = process.env.HEROKU_SLUG_COMMIT.slice(0, 7) || 'unknown';
+}
+const startTime = +new Date();
 router.get('/', async (ctx) => {
     ctx.set({
         'Content-Type': 'text/html; charset=UTF-8',
     });
-    ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {});
+    const time = (+new Date() - startTime) / 1000;
+    ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
+        debug: [
+            {
+                name: 'git hash',
+                value: gitHash,
+            },
+            {
+                name: '请求数',
+                value: ctx.debug.request,
+            },
+            {
+                name: '请求频率',
+                value: (ctx.debug.request / time * 60).toFixed(3) + ' 次/分钟',
+            },
+            {
+                name: '缓存命中率',
+                value: ctx.debug.request ? (ctx.debug.hitCache / ctx.debug.request).toFixed(3) : 0,
+            },
+            {
+                name: '内存占用',
+                value: process.memoryUsage().rss + ' Byte',
+            },
+            {
+                name: '运行时间',
+                value: time + ' 秒',
+            },
+        ],
+    });
 });
 
 // bilibili

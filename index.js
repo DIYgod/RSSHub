@@ -11,6 +11,7 @@ const redisCache = require('./middleware/redis-cache.js');
 const filter = require('./middleware/filter.js');
 const template = require('./middleware/template.js');
 const favicon = require('koa-favicon');
+const debug = require('./middleware/debug.js');
 
 const router = require('./router');
 
@@ -28,19 +29,26 @@ app.use(favicon(__dirname + '/favicon.png'));
 // global error handing
 app.use(onerror);
 
-// set header
+// 1 set header
 app.use(header);
 
-// fix incorrect `utf-8` characters
+// 6 debug
+app.context.debug = {
+    hitCache: 0,
+    request: 0,
+};
+app.use(debug);
+
+// 5 fix incorrect `utf-8` characters
 app.use(utf8);
 
-// generate body
+// 4 generate body
 app.use(template);
 
-// filter content
+// 3 filter content
 app.use(filter);
 
-// cache
+// 2 cache
 if (config.cacheType === 'memory') {
     app.use(
         memoryCache({
