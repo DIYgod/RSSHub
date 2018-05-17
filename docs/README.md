@@ -651,6 +651,20 @@ key: 产品密钥
 
 参数: cid，专栏 id，可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页，在 URL 中找到
 
+## 央视新闻
+
+### 专题
+
+举例: [https://rsshub.app/cctv/world](https://rsshub.app/cctv/world)
+
+路由: `/cctv/:category`
+
+参数：category，分类名
+
+| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
+| ----- | ----- | ----- | ---- | ------- | ---- | ---- |
+| china | world | video | tech | society | law  | ent  |
+
 ## Disqus
 
 ### 评论
