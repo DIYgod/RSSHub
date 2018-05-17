@@ -28,7 +28,7 @@
         }
 
         summary {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             outline: none;
             cursor: pointer;
         }
@@ -41,8 +41,14 @@
         }
 
         .debug-item {
-            margin: 10px 0;
-            font-size: 14px;
+            margin: 5px 0;
+            font-size: 12px;
+            line-height: 24px;
+        }
+
+        .debug-value {
+            display: inline-block;
+            vertical-align: top;
         }
 
     </style>
@@ -72,7 +78,7 @@
             {{ each debug }}
             <div class="debug-item">
                 <span class="debug-key">{{ $value.name }}: </span>
-                <span class="debug-value">{{ $value.value }}</span>
+                <span class="debug-value">{{@ $value.value }}</span>
             </div>
             {{ /each }}
         </details>

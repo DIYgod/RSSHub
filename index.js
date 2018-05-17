@@ -36,6 +36,7 @@ app.use(header);
 app.context.debug = {
     hitCache: 0,
     request: 0,
+    routes: [],
 };
 app.use(debug);
 
