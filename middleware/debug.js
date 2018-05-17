@@ -4,6 +4,12 @@ module.exports = async (ctx, next) => {
     }
     ctx.debug.routes[ctx.request.path]++;
 
+    const ip = ctx.ips[0] || ctx.ip;
+    if (!ctx.debug.ips[ip]) {
+        ctx.debug.ips[ip] = 0;
+    }
+    ctx.debug.ips[ip]++;
+
     if (ctx.request.path !== '/') {
         ctx.debug.request++;
     }

@@ -25,6 +25,21 @@
 
         details {
             text-align: left;
+            max-height: 400px;
+            overflow: scroll;
+        }
+
+        details::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        details::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background-color: #eee;
+        }
+
+        details::-webkit-scrollbar-thumb:hover {
+            background-color: #ccc;
         }
 
         summary {

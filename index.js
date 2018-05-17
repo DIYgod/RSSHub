@@ -38,6 +38,7 @@ app.context.debug = {
     hitCache: 0,
     request: 0,
     routes: [],
+    ips: [],
 };
 app.use(debug);
 

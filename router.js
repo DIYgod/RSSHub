@@ -18,11 +18,19 @@ router.get('/', async (ctx) => {
     });
 
     const time = (+new Date() - startTime) / 1000;
+
     const routes = Object.keys(ctx.debug.routes).sort((a, b) => ctx.debug.routes[b] - ctx.debug.routes[a]);
     const hotRoutes = routes.slice(0, 10);
     let hotRoutesValue = '';
     hotRoutes.forEach((item) => {
         hotRoutesValue += `${ctx.debug.routes[item]}&nbsp;&nbsp;${item}<br>`;
+    });
+
+    const ips = Object.keys(ctx.debug.ips).sort((a, b) => ctx.debug.ips[b] - ctx.debug.ips[a]);
+    const hotIPs = ips.slice(0, 10);
+    let hotIPsValue = '';
+    hotIPs.forEach((item) => {
+        hotIPsValue += `${ctx.debug.ips[item]}&nbsp;&nbsp;${item}<br>`;
     });
 
     ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
@@ -54,6 +62,10 @@ router.get('/', async (ctx) => {
             {
                 name: '热门路由',
                 value: hotRoutesValue,
+            },
+            {
+                name: '热门IP',
+                value: hotIPsValue,
             },
         ],
     });
