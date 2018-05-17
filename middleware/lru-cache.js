@@ -3,7 +3,6 @@
 const pathToRegExp = require('path-to-regexp');
 const readall = require('readall');
 const crypto = require('crypto');
-const lru = require('lru-cache');
 const memoryCacheWorker = require('../utils/memorycache');
 const logger = require('../utils/logger');
 
@@ -55,7 +54,7 @@ module.exports = function(options = {}) {
         try {
             ok = await getCache(ctx, key, tkey);
         } catch (e) {
-            logger.error('Get cache error:' + (e instanceof Error ? e.stack : e))
+            logger.error('Get cache error:' + (e instanceof Error ? e.stack : e));
             ok = false;
         }
 
@@ -68,7 +67,7 @@ module.exports = function(options = {}) {
         try {
             const trueExpire = routeExpire || expire;
             await setCache(ctx, key, tkey, trueExpire);
-        } catch (e) { 
+        } catch (e) {
             logger.error('Set cache error:' + (e instanceof Error ? e.stack : e));
         }
         routeExpire = false;
@@ -84,7 +83,7 @@ module.exports = function(options = {}) {
 
         if (value) {
             ctx.response.status = 200;
-            type = await memoryCacheWorker.get(tkey) || 'text/html';
+            type = (await memoryCacheWorker.get(tkey)) || 'text/html';
             // can happen if user specified return_buffers: true in redis options
             if (Buffer.isBuffer(type)) {
                 type = type.toString();

@@ -22,12 +22,14 @@ const logger = winston.createLogger({
 // `${info.level}: ${info.message} JSON.stringify({ ...rest }) `
 //
 
-logger.add(new winston.transports.Console({
-    format: winston.format.combine(
-        winston.format.label({ label: (cluster.isWorker ? `#worker${cluster.worker.id}` : '#master') }),
-        winston.format.colorize(),
-        winston.format.printf(info => `${info.label} ${info.level}: ${info.message}`)
-    )
-}));
+logger.add(
+    new winston.transports.Console({
+        format: winston.format.combine(
+            winston.format.label({ label: cluster.isWorker ? `#worker${cluster.worker.id}` : '#master' }),
+            winston.format.colorize(),
+            winston.format.printf((info) => `${info.label} ${info.level}: ${info.message}`)
+        ),
+    })
+);
 
 module.exports = logger;
