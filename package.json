@@ -7,20 +7,8 @@
     "start": "node index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "format": "prettier \"**/*.{js,json,md}\" --write"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{js,json,md}": [
-      "prettier --write",
-      "git add"
-    ]
+    "format": "prettier \"**/*.{js,json,md}\" --write",
+    "lint": "eslint \"**/*.js\""
   },
   "repository": {
     "type": "git",
