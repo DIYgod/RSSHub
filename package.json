@@ -52,6 +52,7 @@
     "crypto": "1.0.1",
     "form-data": "^2.3.2",
     "googleapis": "30.0.0",
+    "iconv-lite": "0.4.23",
     "json-bigint": "0.2.3",
     "koa": "2.5.1",
     "koa-favicon": "2.0.1",
