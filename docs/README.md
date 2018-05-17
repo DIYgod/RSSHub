@@ -649,6 +649,18 @@ key: 产品密钥
 
 参数: id，独家号 id，可在对应独家号页 URL 中找到
 
+## 极客时间
+
+### 专栏文章
+
+> 极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容。
+
+举例: [https://rsshub.app/geektime/column/48](https://rsshub.app/geektime/column/48)
+
+路由: `/geektime/column/:cid`
+
+参数: cid，专栏 id，可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页，在 URL 中找到
+
 ## Disqus
 
 ### 评论
