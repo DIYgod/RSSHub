@@ -13,6 +13,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 当前支持列表：
 
+*   RSSHub
+    *   支持的 RSS
 *   bilibili
     *   番剧
     *   UP 主投稿

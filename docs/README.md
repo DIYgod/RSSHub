@@ -27,6 +27,16 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
 
+## RSSHub
+
+### 支持的 RSS
+
+举例: [https://rsshub.app/rsshub/rss](https://rsshub.app/rsshub/rss)
+
+路由: `/rsshub/rss`
+
+参数: 无
+
 ## bilibili
 
 ### 番剧
