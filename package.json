@@ -1,12 +1,26 @@
 {
-  "name": "RSSHub",
+  "name": "rsshub",
   "version": "0.0.1",
   "description": "Make RSS Great Again!",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "format": "prettier \"**/*.{js,json,md}\" --write"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -22,7 +36,13 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "vuepress": "0.8.4"
+    "eslint": "4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "lint-staged": "^7.1.0",
+    "prettier": "^1.12.1",
+    "vuepress": "0.8.4",
+    "yorkie": "^1.0.3"
   },
   "dependencies": {
     "art-template": "4.12.2",
@@ -30,7 +50,6 @@
     "cheerio": "1.0.0-rc.2",
     "co-redis": "2.1.1",
     "crypto": "1.0.1",
-    "eslint": "4.19.1",
     "form-data": "^2.3.2",
     "googleapis": "30.0.0",
     "json-bigint": "0.2.3",

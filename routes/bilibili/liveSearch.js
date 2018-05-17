@@ -1,6 +1,4 @@
 const axios = require('axios');
-const art = require('art-template');
-const path = require('path');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -8,14 +6,14 @@ module.exports = async (ctx) => {
     const order = ctx.params.order;
 
     const urlEncodedKey = encodeURIComponent(key);
-    let orderTitle = ``;
+    let orderTitle = '';
 
     switch (order) {
-        case "live_time":
-            orderTitle = `最新开播`;
+        case 'live_time':
+            orderTitle = '最新开播';
             break;
-        case "online":
-            orderTitle = `人气直播`;
+        case 'online':
+            orderTitle = '人气直播';
             break;
     }
 
@@ -24,8 +22,8 @@ module.exports = async (ctx) => {
         url: `https://search.bilibili.com/api/search?search_type=live_room&keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`
-        }
+            Referer: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`,
+        },
     });
     const data = response.data.result;
 
@@ -37,9 +35,9 @@ module.exports = async (ctx) => {
         item: data.map((item) => ({
             title: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
             description: `${item.uname} ${item.title} (${item.cate_name}-${item.live_time})`,
-            pubDate: new Date(item.live_time.replace(' ', 'T') + "+08:00").toUTCString(),
+            pubDate: new Date(item.live_time.replace(' ', 'T') + '+08:00').toUTCString(),
             guid: `https://live.bilibili.com/${item.roomid} ${item.live_time}`,
-            link: `https://live.bilibili.com/${item.roomid}`
+            link: `https://live.bilibili.com/${item.roomid}`,
         })),
     };
 };

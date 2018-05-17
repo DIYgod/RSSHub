@@ -11,19 +11,19 @@ module.exports = async (ctx) => {
         url: `http://service.weibo.com/widget/widget_blog.php?uid=${uid}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `http://service.weibo.com/widget/widget_blog.php?uid=${uid}`
-        }
+            Referer: `http://service.weibo.com/widget/widget_blog.php?uid=${uid}`,
+        },
     });
 
     const data = response.data;
 
     const $ = cheerio.load(data, {
-        decodeEntities: false
+        decodeEntities: false,
     });
     const wbs = [];
     const items = $('.wgtCell');
     let wb, item, titleEle;
-    items.map((index, ele) => {
+    items.forEach((index, ele) => {
         wb = {};
         item = $(ele);
         titleEle = item.find('.wgtCell_txt');
@@ -31,7 +31,10 @@ module.exports = async (ctx) => {
         if (wb.title.length > 24) {
             wb.title = wb.title.slice(0, 24) + '...';
         }
-        wb.description = titleEle.html().replace(/^\s+|\s+$/g, '').replace(/thumbnail/, 'large');
+        wb.description = titleEle
+            .html()
+            .replace(/^\s+|\s+$/g, '')
+            .replace(/thumbnail/, 'large');
         wb.pubDate = weiboUtils.getTime(item.find('.link_d').html());
         wb.link = item.find('.wgtCell_tm a').attr('href');
         wbs.push(wb);

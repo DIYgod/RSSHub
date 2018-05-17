@@ -2,19 +2,19 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
-function isNormalTime (time) {
+function isNormalTime(time) {
     return /^(\d{2}):(\d{2})$/.test(time);
 }
 
-function isNormalDate (time) {
+function isNormalDate(time) {
     return /^(\d{1,2})-(\d{1,2})$/.test(time);
 }
 
-function isDate (time) {
+function isDate(time) {
     return /^(\d{4})-(\d{1,2})-(\d{1,2})$/.test(time);
 }
 
-function getPubDate (time) {
+function getPubDate(time) {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
@@ -45,10 +45,10 @@ module.exports = async (ctx) => {
         },
     });
 
-    const threadListHTML = cheerio.
-        load(data)('code[id="pagelet_html_frs-list/pagelet/thread_list"]').
-        html().
-        replace(/<!--|-->/g, '');
+    const threadListHTML = cheerio
+        .load(data)('code[id="pagelet_html_frs-list/pagelet/thread_list"]')
+        .html()
+        .replace(/<!--|-->/g, '');
 
     const $ = cheerio.load(threadListHTML);
     const list = $('#thread_list > .j_thread_list[data-field]');
@@ -58,21 +58,21 @@ module.exports = async (ctx) => {
         link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
         item:
             list &&
-            list.
-                map((index, element) => {
+            list
+                .map((index, element) => {
                     const item = $(element);
                     const { id, author_name } = item.data('field');
                     const time = item.find('.threadlist_reply_date').text().trim(); // prettier-ignore
                     const title = item.find('a.j_th_tit').text().trim(); // prettier-ignore
                     const details = item.find('.threadlist_abs').text().trim(); // prettier-ignore
-                    const medias = item.
-                        find('.threadlist_media img').
-                        map((index, element) => {
+                    const medias = item
+                        .find('.threadlist_media img')
+                        .map((index, element) => {
                             const item = $(element);
                             return `<img referrerpolicy="no-referrer" src="${item.attr('bpic')}">`; // prettier-ignore
-                        }).
-                        get().
-                        join('');
+                        })
+                        .get()
+                        .join('');
 
                     return {
                         title,
@@ -80,7 +80,7 @@ module.exports = async (ctx) => {
                         pubDate: getPubDate(time).toUTCString(),
                         link: `https://tieba.baidu.com/p/${id}`,
                     };
-                }).
-                get(),
+                })
+                .get(),
     };
 };

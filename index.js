@@ -59,7 +59,7 @@ if (config.cacheType === 'memory') {
             },
             onconnect: () => {
                 logger.info('Redis connect.');
-            }
+            },
         })
     );
 }

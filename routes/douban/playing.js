@@ -6,7 +6,7 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: 'https://api.douban.com/v2/movie/in_theaters',
-        params: { city }
+        params: { city },
     });
     const movieList = score ? response.data.subjects.filter((item) => item.rating.average >= score) : response.data.subjects;
 
@@ -16,7 +16,7 @@ module.exports = async (ctx) => {
         item: movieList.map((item) => ({
             title: item.title,
             description: `标题：${item.title}<br> 影片类型：${item.genres.join(' | ')}  <br>评分：${item.rating.average} <br/> <img referrerpolicy="no-referrer" src="${item.images.large}">`,
-            link: item.alt
+            link: item.alt,
         })),
     };
 };

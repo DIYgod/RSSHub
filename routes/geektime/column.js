@@ -10,12 +10,12 @@ module.exports = async (ctx) => {
         url: 'https://time.geekbang.org/serv/v1/column/intro',
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://time.geekbang.org/',
-            'Content-Type': 'application/json'
+            Referer: 'https://time.geekbang.org/',
+            'Content-Type': 'application/json',
         },
         data: {
-            cid: column_id
-        }
+            cid: column_id,
+        },
     });
 
     const intro_data = intro_response.data.data;
@@ -26,12 +26,12 @@ module.exports = async (ctx) => {
         url: 'https://time.geekbang.org/serv/v1/column/articles/latest',
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://time.geekbang.org/',
-            'Content-Type': 'application/json'
+            Referer: 'https://time.geekbang.org/',
+            'Content-Type': 'application/json',
         },
         data: {
-            cid: column_id
-        }
+            cid: column_id,
+        },
     });
 
     const articles = latest_response.data.data.list;
@@ -44,7 +44,7 @@ module.exports = async (ctx) => {
             title: item.article_title,
             description: item.article_summary,
             pubDate: new Date(item.article_ctime * 1000).toUTCString(),
-            link: `https://time.geekbang.org/column/article/${item.id}`
+            link: `https://time.geekbang.org/column/article/${item.id}`,
         })),
     };
 };

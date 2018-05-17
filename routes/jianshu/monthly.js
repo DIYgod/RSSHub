@@ -8,8 +8,8 @@ module.exports = async (ctx) => {
         url: 'https://www.jianshu.com/trending/monthly',
         headers: {
             'User-Agent': config.ua,
-            'Referer': 'https://www.jianshu.com/trending/monthly'
-        }
+            Referer: 'https://www.jianshu.com/trending/monthly',
+        },
     });
 
     const data = response.data;
@@ -21,14 +21,18 @@ module.exports = async (ctx) => {
         title: '简书 30 日热门',
         link: 'https://www.jianshu.com/trending/monthly',
         description: '简书 30 日热门',
-        item: list && list.map((index, item) => {
-            item = $(item);
-            return {
-                title: item.find('.title').text(),
-                description: `作者：${item.find('.nickname').text()}<br>描述：${item.find('.abstract').text()}<br><img referrerpolicy="no-referrer" src="https:${item.find('.img-blur').data('echo')}">`,
-                pubDate: new Date(item.find('.time').data('shared-at')).toUTCString(),
-                link: `https://www.jianshu.com${item.find('.title').attr('href')}`
-            };
-        }).get(),
+        item:
+            list &&
+            list
+                .map((index, item) => {
+                    item = $(item);
+                    return {
+                        title: item.find('.title').text(),
+                        description: `作者：${item.find('.nickname').text()}<br>描述：${item.find('.abstract').text()}<br><img referrerpolicy="no-referrer" src="https:${item.find('.img-blur').data('echo')}">`,
+                        pubDate: new Date(item.find('.time').data('shared-at')).toUTCString(),
+                        link: `https://www.jianshu.com${item.find('.title').attr('href')}`,
+                    };
+                })
+                .get(),
     };
 };

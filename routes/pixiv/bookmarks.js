@@ -10,10 +10,7 @@ module.exports = async (ctx) => {
         return;
     }
 
-    const [bookmarksResponse, userDetailResponse] = await Promise.all([
-        getBookmarks(id, getToken()),
-        getUserDetail(id, getToken())
-    ]);
+    const [bookmarksResponse, userDetailResponse] = await Promise.all([getBookmarks(id, getToken()), getUserDetail(id, getToken())]);
 
     const illusts = bookmarksResponse.data.illusts;
     const username = userDetailResponse.data.user.name;
@@ -34,8 +31,8 @@ module.exports = async (ctx) => {
             return {
                 title: `${illust.title}`,
                 description: `<p>画师：${illust.user.name} - 上传于：${new Date(illust.create_date).toLocaleString('zh-cn')} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p>${images.join('')}`,
-                link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`
+                link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`,
             };
-        })
+        }),
     };
 };

@@ -10,8 +10,8 @@ module.exports = async (ctx) => {
         url: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid=${uid}`,
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://space.bilibili.com/${uid}/`
-        }
+            Referer: `https://space.bilibili.com/${uid}/`,
+        },
     });
     const data = response.data.data.cards;
 
@@ -38,11 +38,9 @@ module.exports = async (ctx) => {
             let link = '';
             if (data.dynamic_id) {
                 link = `https://t.bilibili.com/${data.dynamic_id}`;
-            }
-            else if (data.aid) {
+            } else if (data.aid) {
                 link = `https://www.bilibili.com/video/av${data.aid}`;
-            }
-            else if (data.id) {
+            } else if (data.id) {
                 link = `https://h.bilibili.com/${data.id}`;
             }
 
@@ -50,7 +48,7 @@ module.exports = async (ctx) => {
                 title: data.title || data.description || data.content,
                 description: `${data.desc || data.description || data.content}${imgHTML}`,
                 pubDate: new Date((data.pubdate || data.upload_time || data.timestamp) * 1000).toUTCString(),
-                link: link
+                link: link,
             };
         }),
     };

@@ -9,14 +9,14 @@ module.exports = async (ctx) => {
         url: 'https://app.jike.ruguoapp.com/1.0/personalUpdate/single',
         headers: {
             'User-Agent': config.ua,
-            'Referer': `https://web.okjike.com/user/${id}/post`,
+            Referer: `https://web.okjike.com/user/${id}/post`,
             'App-Version': '4.1.0',
-            'platform': 'web'
+            platform: 'web',
         },
         data: {
             limit: 20,
             loadMoreKey: null,
-            username: id
+            username: id,
         },
     });
 
@@ -28,16 +28,16 @@ module.exports = async (ctx) => {
         image: data[0].user.avatarImage.picUrl,
         item: data.map((item) => {
             const typeMap = {
-                'ORIGINAL_POST': '发布',
-                'REPOST': '转发',
-                'ANSWER': '回答'
+                ORIGINAL_POST: '发布',
+                REPOST: '转发',
+                ANSWER: '回答',
             };
 
             const linkMap = {
-                'OFFICIAL_MESSAGE': `https://web.okjike.com/message-detail/${item.id}/officialMessage`,
-                'ORIGINAL_POST': `https://web.okjike.com/post-detail/${item.id}/originalPost`,
-                'REPOST': `https://web.okjike.com/post-detail/${item.id}/repost`,
-                'ANSWER': `https://m.okjike.com/answers/${item.id}`
+                OFFICIAL_MESSAGE: `https://web.okjike.com/message-detail/${item.id}/officialMessage`,
+                ORIGINAL_POST: `https://web.okjike.com/post-detail/${item.id}/originalPost`,
+                REPOST: `https://web.okjike.com/post-detail/${item.id}/repost`,
+                ANSWER: `https://m.okjike.com/answers/${item.id}`,
             };
 
             let linkTemplate = '';
@@ -46,11 +46,12 @@ module.exports = async (ctx) => {
             }
 
             let imgTemplate = '';
-            item.pictures && item.pictures.forEach((item) => {
-                imgTemplate += `<img referrerpolicy="no-referrer" src="${item.picUrl}"><br>`;
-            });
+            item.pictures &&
+                item.pictures.forEach((item) => {
+                    imgTemplate += `<img referrerpolicy="no-referrer" src="${item.picUrl}"><br>`;
+                });
 
-            let content = item.content || item.linkInfo && item.linkInfo.title || item.question && item.question.title || '';
+            let content = item.content || (item.linkInfo && item.linkInfo.title) || (item.question && item.question.title) || '';
 
             let shortenTitle = '一条动态';
             if (content) {
@@ -62,9 +63,10 @@ module.exports = async (ctx) => {
                 const screenNameTemplate = item.target.user ? `<a href="https://web.okjike.com/user/${item.target.user.username}/post" target="_blank">@${item.target.user.screenName}</a>` : '';
 
                 let repostImgTemplate = '';
-                item.target.pictures && item.target.pictures.forEach((item) => {
-                    repostImgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.thumbnailUrl}">`;
-                });
+                item.target.pictures &&
+                    item.target.pictures.forEach((item) => {
+                        repostImgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.thumbnailUrl}">`;
+                    });
 
                 const repostContent = `转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}`;
                 content = `${content}${repostContent}`.replace(/\n|\r/g, '<br>');
@@ -74,13 +76,14 @@ module.exports = async (ctx) => {
                 let answerTextTemplate = '';
                 let answerImgTemplate = '';
                 let answerImgKeys = [];
-                item.richtextContent.blocks && item.richtextContent.blocks.forEach((item) => {
-                    if (item.entityRanges.length && item.text === '[图片]') {
-                        answerImgKeys = [...answerImgKeys, ...Object.keys(item.entityRanges)];
-                    } else {
-                        answerTextTemplate += item.text;
-                    }
-                });
+                item.richtextContent.blocks &&
+                    item.richtextContent.blocks.forEach((item) => {
+                        if (item.entityRanges.length && item.text === '[图片]') {
+                            answerImgKeys = [...answerImgKeys, ...Object.keys(item.entityRanges)];
+                        } else {
+                            answerTextTemplate += item.text;
+                        }
+                    });
 
                 if (answerImgKeys.length) {
                     answerImgKeys.forEach((key) => {
@@ -98,8 +101,8 @@ module.exports = async (ctx) => {
                 title: `${typeMap[item.type]}了: ${shortenTitle}`,
                 description: `${content}${linkTemplate}${imgTemplate}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
-                link: `${linkMap[item.type]}`
-            }
+                link: `${linkMap[item.type]}`,
+            };
         }),
     };
 };
