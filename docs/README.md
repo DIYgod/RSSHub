@@ -732,3 +732,13 @@ key: 产品密钥
 路由: `/youtube/channel/:id`
 
 参数: id，频道 id
+
+## 爱奇艺
+
+### 动漫
+
+举例: [https://rsshub.app/iqiyi/dongman/a_19rrh1sifx](https://rsshub.app/iqiyi/dongman/a_19rrh1sifx)
+
+路由: `/iqiyi/dongman/:id`
+
+参数: id，动漫 id，可在该动漫主页 URL 中找到(不包括`.html`)
