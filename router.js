@@ -37,7 +37,7 @@ router.get('/', async (ctx) => {
             },
             {
                 name: '内存占用',
-                value: process.memoryUsage().rss + ' Byte',
+                value: process.memoryUsage().rss / 1000000 + ' MB',
             },
             {
                 name: '运行时间',
