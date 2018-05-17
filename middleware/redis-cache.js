@@ -39,6 +39,11 @@ module.exports = function(options = {}) {
         onconnect();
     });
 
+    options.app.context.cache = {
+        get: async (key) => await redisClient.get(key),
+        set: async (key, value, maxAge) => await redisClient.setex(key, maxAge, value),
+    };
+
     return async function cache(ctx, next) {
         const { url, path } = ctx.request;
         const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;

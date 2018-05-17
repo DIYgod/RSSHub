@@ -199,4 +199,7 @@ router.get('/jike/user/:id', require('./routes/jike/user'));
 // 极客时间
 router.get('/geektime/column/:cid', require('./routes/geektime/column'));
 
+// 爱奇艺
+router.get('/iqiyi/dongman/:id', require('./routes/iqiyi/dongman'));
+
 module.exports = router;

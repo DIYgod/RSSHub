@@ -87,7 +87,7 @@ $ yarn
 
 :::
 
-### 启动 RSSHub
+### 启动
 
 在 `RSSHub` 文件夹中运行下面的命令就可以启动。
 
@@ -96,6 +96,14 @@ $ npm start
 ```
 
 在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+
+### 更新
+
+在 `RSSHub` 文件夹中运行下面的命令就从 github 仓库拉取最新版本。
+
+```bash
+$ git pull
+```
 
 ### 添加配置
 
@@ -195,6 +203,21 @@ $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 
 ```bash
 $ docker stop rsshub
+```
+
+### 更新
+
+您可以使用下面的命令来更新镜像。
+
+```bash
+# 先关闭 rsshub
+$ docker stop rsshub
+
+# 删除现有的容器
+$ docker rm rsshub
+
+# 下载最新版的 rsshub 镜像
+$ docker pull diygod/rsshub
 ```
 
 ### 添加配置
