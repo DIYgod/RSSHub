@@ -42,7 +42,7 @@ ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存
 const value = await ctx.cache.get(key: string);
 ```
 
-可以直接看这个典型的例子：[/routes/zhihu/zhuanlan.js](https://github.com/DIYgod/RSSHub/blob/master/routes/zhihu/zhuanlan.js)，这个例子中需要获取每篇文章的详细内容，每篇文章都需要单独请求一次，请求很多而且每个请求只需要一次，这时候可以把结果缓存一天。
+可以直接看这个典型的例子：[/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/routes/zhihu/daily.js)，这个例子中需要获取每篇文章的详细内容，每篇文章都需要单独请求一次，请求很多而且每个请求只需要一次，这时候可以把结果缓存一天。
 
 ### 数据
 
