@@ -33,8 +33,8 @@ module.exports = async (ctx) => {
             list &&
             list
                 .map((index, item) => ({
-                    title: `第${index + 1}话 ${$(item)
-                        .find('p.fs12 a')
+                    title: `${$(item)
+                        .find('p.site-piclist_info_title a')
                         .text()}`,
                     description: `<img referrerpolicy="no-referrer" src="${$(item)
                         .find('img')

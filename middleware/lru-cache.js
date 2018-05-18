@@ -23,7 +23,7 @@ module.exports = function(options = {}) {
 
     options.app.context.cache = {
         get: (key) => memoryCache.get(key),
-        set: (key, value, maxAge) => memoryCache.set(key, value, maxAge),
+        set: (key, value, maxAge) => memoryCache.set(key, value, maxAge * 1000),
     };
 
     return async function cache(ctx, next) {
