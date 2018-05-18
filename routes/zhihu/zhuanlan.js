@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('../../utils/axios');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
@@ -30,7 +30,7 @@ module.exports = async (ctx) => {
         description: info.description,
         item: list.map((item) => ({
             title: item.title,
-            description: item.content.replace(/<img src="/g, '<img referrerpolicy="no-referrer" src="https://pic4.zhimg.com/'),
+            description: item.content.replace(/ src="/g, ' referrerpolicy="no-referrer" src="https://pic4.zhimg.com/'),
             pubDate: new Date(item.publishedTime).toUTCString(),
             link: `https://zhuanlan.zhihu.com${item.url}`,
         })),
