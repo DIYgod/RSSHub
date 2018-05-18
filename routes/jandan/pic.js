@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const crypto = require('crypto');
 const config = require('../../config');

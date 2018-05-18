@@ -504,6 +504,12 @@ aws4@^1.6.0:
   version "1.7.0"
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.7.0.tgz#d4d0e9b9dbfca77bf08eeb0a8a471550fe39e289"
 
+axios-retry@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/axios-retry/-/axios-retry-3.1.0.tgz#00d911e989a8c082a0acf8b90668cfa12733d736"
+  dependencies:
+    is-retry-allowed "^1.1.0"
+
 axios@0.18.0, axios@^0.18.0:
   version "0.18.0"
   resolved "https://registry.npmjs.org/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
@@ -3157,7 +3163,7 @@ is-resolvable@^1.0.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/is-resolvable/-/is-resolvable-1.1.0.tgz#fb18f87ce1feb925169c9a407c19318a3206ed88"
 
-is-retry-allowed@^1.0.0:
+is-retry-allowed@^1.0.0, is-retry-allowed@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/is-retry-allowed/-/is-retry-allowed-1.1.0.tgz#11a060568b67339444033d0125a61a20d564fb34"
 
