@@ -3,3 +3,11 @@ npm-debug.log
 error.log
 combined.log
 .vscode
+.idea/codeStyles/codeStyleConfig.xml
+.idea/codeStyles/Project.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/RSSHub.iml
+.idea/vcs.xml
+.idea/watcherTasks.xml
+.idea/workspace.xml
