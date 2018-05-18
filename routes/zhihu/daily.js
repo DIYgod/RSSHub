@@ -24,10 +24,10 @@ module.exports = async (ctx) => {
             link: url,
         };
         const key = 'daily' + storyList[i].id;
-        const value = ctx.cache.get(key);
+        const value = await ctx.cache.get(key);
 
         if (value) {
-            item.description = JSON.parse(value);
+            item.description = value;
         } else {
             const storyDetail = await axios({
                 method: 'get',
@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
                 },
             });
             item.description = storyDetail.data.body;
-            ctx.cache.set(key, JSON.stringify(storyDetail.data.body), 24 * 60 * 60 * 1000);
+            ctx.cache.set(key, storyDetail.data.body, 24 * 60 * 60);
         }
 
         resultItem.push(item);
