@@ -7,20 +7,8 @@
     "start": "node index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "format": "prettier \"**/*.{js,json,md}\" --write"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{js,json,md}": [
-      "prettier --write",
-      "git add"
-    ]
+    "format": "prettier \"**/*.{js,json,md}\" --write",
+    "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\""
   },
   "repository": {
     "type": "git",
@@ -29,6 +17,9 @@
   "keywords": [
     "RSS"
   ],
+  "gitHooks": {
+    "pre-commit": "npm run lint"
+  },
   "author": "DIYgod",
   "license": "MIT",
   "bugs": {
@@ -41,6 +32,7 @@
     "eslint-plugin-prettier": "^2.6.0",
     "lint-staged": "^7.1.0",
     "prettier": "^1.12.1",
+    "prettier-check": "^2.0.0",
     "vuepress": "0.8.4",
     "yorkie": "^1.0.3"
   },
