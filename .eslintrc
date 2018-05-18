@@ -33,7 +33,6 @@
         "no-var": 1,
         "prefer-const": 1,
         "no-unsafe-negation": 1,
-        "array-callback-return": 1,
         "dot-notation": 1,
         "no-eval": 1,
         "no-extend-native": 1,
