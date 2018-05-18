@@ -71,7 +71,7 @@ if (config.cacheType === 'memory') {
                 logger.error('Redis error: ', e);
             },
             onconnect: () => {
-                logger.info('Redis connect.');
+                logger.info('Redis connected.');
             },
         })
     );
