@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => ({
             title: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.text.length > 30 ? item.text.slice(0, 30) + '...' : item.text}`,
             description: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.text}`,
-            pubDate: new Date(item.createdTime).toUTCString(),
+            pubDate: new Date(item.created_at).toUTCString(),
             link: `https://twitter.com/${id}/status/${item.id_str}`,
         })),
     };
