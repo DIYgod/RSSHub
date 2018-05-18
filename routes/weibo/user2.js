@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
     const wbs = [];
     const items = $('.wgtCell');
     let wb, item, titleEle;
-    items.map((index, ele) => {
+    items.each((index, ele) => {
         wb = {};
         item = $(ele);
         titleEle = item.find('.wgtCell_txt');
