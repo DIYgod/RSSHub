@@ -6,8 +6,6 @@ sidebar: auto
 
 部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
 
-[[toc]]
-
 ## 手动部署
 
 部署 `RSSHub` 最直接的方式， 您可以按照以下步骤将 `RSSHub` 部署在您的  电脑、服务器或者其他任何地方。
