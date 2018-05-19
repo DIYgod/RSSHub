@@ -40,6 +40,8 @@ module.exports = async (ctx) => {
                 link = `https://t.bilibili.com/${data.dynamic_id}`;
             } else if (data.aid) {
                 link = `https://www.bilibili.com/video/av${data.aid}`;
+            } else if (data.video_playurl) {
+                link = `https://vc.bilibili.com/video/${data.id}`;
             } else if (data.id) {
                 link = `https://h.bilibili.com/${data.id}`;
             }
