@@ -11,16 +11,20 @@ module.exports = async (ctx) => {
             'User-Agent': config.ua,
         },
     });
-    const data = response.data.data;
+    let data = response.data.data;
+    data = data.filter(function(item) {
+        return !item.cell_type;
+    });
 
     ctx.state.data = {
-        title: `${keyword}`,
+        title: `今日头条: ${keyword}`,
         link: `https://www.toutiao.com/search/?keyword=${keyword}`,
         description: `${keyword}`,
         item: data.map((item) => ({
-                title: `${item.media_name}: ${item.title}`,
-                description: `${item.abstract}`,
-                link: `${item.article_url}`,
-            })),
+            title: `${item.media_name}: ${item.title}`,
+            description: `${item.abstract}`,
+            pubDate: `${new Date(parseInt(item.create_time) * 1000)}`,
+            link: `${item.article_url}`,
+        })),
     };
 };
