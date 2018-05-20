@@ -33,7 +33,10 @@ module.exports = async (ctx) => {
         link: `https://www.douban.com/group/${groupid}/`,
         item: topics.map((topic) => ({
             title: `${topic.title} from ${topic.author.name}`,
-            description: `${topic.content}`,
+            description: `<img src='${topic.author.avatar}'/>
+            作者：${topic.author.name}
+            发表时间: ${topic.updated}
+            ${topic.content}`,
             link: topic.link,
         })),
     };
