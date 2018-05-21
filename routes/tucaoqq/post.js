@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('../../utils/axios');
 const config = require('../../config');
 const md5 = require('../../utils/md5');
 

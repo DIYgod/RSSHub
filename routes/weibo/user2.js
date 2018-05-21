@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
 const weiboUtils = require('./utils');
@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
     const wbs = [];
     const items = $('.wgtCell');
     let wb, item, titleEle;
-    items.forEach((index, ele) => {
+    items.each((index, ele) => {
         wb = {};
         item = $(ele);
         titleEle = item.find('.wgtCell_txt');

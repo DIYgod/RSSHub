@@ -6,8 +6,6 @@ sidebar: auto
 
 部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
 
-[[toc]]
-
 ## 手动部署
 
 部署 `RSSHub` 最直接的方式， 您可以按照以下步骤将 `RSSHub` 部署在您的  电脑、服务器或者其他任何地方。
@@ -287,10 +285,26 @@ $ docker-compose up
 
 ### 部分 RSS 模块配置
 
-`pixiv`: [注册地址](https://accounts.pixiv.net/signup)
+*   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
 
-`disqus`: [申请地址](https://disqus.com/api/applications/)
+    *   `PIXIV_USERNAME`: Pixiv 用户名
 
-`twitter`: [申请地址](https://apps.twitter.com)
+    *   `PIXIV_PASSWORD`: Pixiv 密码
 
-`youtube`: [申请地址](https://console.developers.google.com/)
+*   `disqus`: [申请地址](https://disqus.com/api/applications/)
+
+    *   `DISQUS_API_KEY`: Disqus API
+
+*   `twitter`: [申请地址](https://apps.twitter.com)
+
+    *   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
+
+    *   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
+
+    *   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
+
+    *   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
+
+*   `youtube`: [申请地址](https://console.developers.google.com/)
+
+    *   `YOUTUBE_KEY`: YouTube API Key

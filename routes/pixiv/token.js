@@ -2,7 +2,7 @@ const config = require('../../config');
 const logger = require('../../utils/logger');
 const wait = require('../../utils/wait');
 const FormData = require('form-data');
-const axios = require('axios');
+const axios = require('../../utils/axios');
 const maskHeader = require('./constants').maskHeader;
 
 const pixivConfig = config.pixiv;
@@ -29,13 +29,18 @@ async function getToken() {
             data.append(key, element);
         }
     }
-    const response = await axios.post('https://oauth.secure.pixiv.net/auth/token', data, {
+    const response = await axios({
+        method: 'post',
+        url: 'https://oauth.secure.pixiv.net/auth/token',
+        data: data,
         headers: {
             ...maskHeader,
             ...data.getHeaders(),
         },
+    }).catch(function() {
+        logger.error('Pixiv login fail.');
     });
-    return response.data.response;
+    return response && response.data && response.data.response;
 }
 
 async function refreshToken(refresh_token) {
@@ -63,22 +68,24 @@ async function refreshToken(refresh_token) {
 
 async function tokenLoop() {
     const res = await getToken();
-    logger.info('Pixiv login success.');
-    token = res.access_token;
-    let refresh_token = res.refresh_token;
-    let expires_in = res.expires_in * 0.9;
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-        await wait(expires_in * 1000);
-        try {
-            const refresh_res = await refreshToken(refresh_token);
-            logger.debug('Pixiv refresh token success.');
-            token = refresh_res.access_token;
-            refresh_token = refresh_res.refresh_token;
-            expires_in = refresh_res.expires_in * 0.9;
-        } catch (err) {
-            expires_in = 30;
-            logger.err(`Pixiv refresh token failed, retry in ${expires_in} seconds.`, err);
+    if (res) {
+        logger.info('Pixiv login success.');
+        token = res.access_token;
+        let refresh_token = res.refresh_token;
+        let expires_in = res.expires_in * 0.9;
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+            await wait(expires_in * 1000);
+            try {
+                const refresh_res = await refreshToken(refresh_token);
+                logger.debug('Pixiv refresh token success.');
+                token = refresh_res.access_token;
+                refresh_token = refresh_res.refresh_token;
+                expires_in = refresh_res.expires_in * 0.9;
+            } catch (err) {
+                expires_in = 30;
+                logger.err(`Pixiv refresh token failed, retry in ${expires_in} seconds.`, err);
+            }
         }
     }
 }

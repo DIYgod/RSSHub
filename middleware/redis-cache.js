@@ -26,6 +26,9 @@ module.exports = function(options = {}) {
     /**
      * redisClient
      */
+    if (!redisOptions.password) {
+        delete redisOptions.password;
+    }
     const redisClient = wrapper(Redis.createClient(redisUrl, redisOptions));
     redisClient.on('error', (error) => {
         redisAvailable = false;
