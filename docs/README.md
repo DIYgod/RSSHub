@@ -680,6 +680,14 @@ key: 产品密钥
 
 参数: id，独家号 id，可在对应独家号页 URL 中找到
 
+## 今日头条
+
+举例: [https://rsshub.app/jinritoutiao/keyword/ai](https://rsshub.app/jinritoutiao/keyword/ai)
+
+路由: `/jinritoutiao/keyword/:keyword`
+
+参数: keyword，关键词
+
 ## 极客时间
 
 ### 专栏文章
