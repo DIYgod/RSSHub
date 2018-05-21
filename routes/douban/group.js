@@ -12,7 +12,9 @@ module.exports = async (ctx) => {
 
     // 替换图片到内容中
     topics.map((topic) => {
-        const { content, photos } = topic;
+        let { content, photos } = topic;
+
+        content = content.replace(/ /g, '<br>');
         topic.content = content.replace(/<图片(\d*)>/g, function() {
             try {
                 const photo = photos.filter((p) => (p.seq_id = arguments[1]))[0];
