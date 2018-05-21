@@ -246,6 +246,22 @@ areaID: 分区 ID 分区增删较多，可通过 [分区列表](https://api.live
 
 order: 排序方式，live_time 开播时间，online 人气
 
+## bangumi
+
+### 放送列表
+
+举例: [https://rsshub.app/bangumi/calendar/today](https://rsshub.app/bangumi/calendar/today)
+
+路由: `/bangumi/calendar/today`
+
+参数: 无
+
+::: tip 提示
+
+可以配合[内容过滤](#内容过滤)使用
+
+:::
+
 ## 微博
 
 ### 博主

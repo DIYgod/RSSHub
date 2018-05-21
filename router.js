@@ -89,6 +89,9 @@ router.get('/bilibili/live/room/:roomID', require('./routes/bilibili/liveRoom'))
 router.get('/bilibili/live/search/:key/:order', require('./routes/bilibili/liveSearch'));
 router.get('/bilibili/live/area/:areaID/:order', require('./routes/bilibili/liveArea'));
 
+// bangumi
+router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
+
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
 router.get('/weibo/user2/:uid', require('./routes/weibo/user2'));
