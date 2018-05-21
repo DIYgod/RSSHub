@@ -202,4 +202,7 @@ router.get('/geektime/column/:cid', require('./routes/geektime/column'));
 // 爱奇艺
 router.get('/iqiyi/dongman/:id', require('./routes/iqiyi/dongman'));
 
+// infzm
+router.get('/infzm/:id', require('./routes/infzm/news'));
+
 module.exports = router;
