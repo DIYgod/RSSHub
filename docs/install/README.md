@@ -283,6 +283,22 @@ $ docker-compose up
 
 `REDIS_PASSWORD`: Redis 连接密码（memory 缓存类型时无效）
 
+`PIXIV_USERNAME`: 添加 Pixiv 用户名
+
+`PIXIV_PASSWORD`: 添加 Pixiv 密码
+
+`DISQUS_API_KEY`: 添加 Disqus API
+
+`TWITTER_CONSUMER_KEY`: 添加 Twitter Consumer Key
+
+`TWITTER_CONSUMER_SECRET`: 添加 Twitter Consumer Secret
+
+`TWITTER_ACCESS_TOKEN`: 添加 Twitter Access Token
+
+`TWITTER_ACCESS_TOKEN_SECRET`: 添加 Twitter Access Token Secret
+
+`YOUTUBE_KEY`: 添加 YouTube API
+
 ### 部分 RSS 模块配置
 
 `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
