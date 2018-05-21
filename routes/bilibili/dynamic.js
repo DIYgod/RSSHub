@@ -12,7 +12,7 @@ module.exports = async (ctx) => {
             'User-Agent': config.ua,
             Referer: `https://space.bilibili.com/${uid}/`,
         },
-        transformResponse: [data => data],
+        transformResponse: [(data) => data],
     });
     const data = JSONbig.parse(response.data).data.cards;
 
