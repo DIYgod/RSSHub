@@ -285,10 +285,26 @@ $ docker-compose up
 
 ### 部分 RSS 模块配置
 
-`pixiv`: [注册地址](https://accounts.pixiv.net/signup)
+*   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
 
-`disqus`: [申请地址](https://disqus.com/api/applications/)
+    *   `PIXIV_USERNAME`: Pixiv 用户名
 
-`twitter`: [申请地址](https://apps.twitter.com)
+    *   `PIXIV_PASSWORD`: Pixiv 密码
 
-`youtube`: [申请地址](https://console.developers.google.com/)
+*   `disqus`: [申请地址](https://disqus.com/api/applications/)
+
+    *   `DISQUS_API_KEY`: Disqus API
+
+*   `twitter`: [申请地址](https://apps.twitter.com)
+
+    *   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
+
+    *   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
+
+    *   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
+
+    *   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
+
+*   `youtube`: [申请地址](https://console.developers.google.com/)
+
+    *   `YOUTUBE_KEY`: YouTube API Key
