@@ -682,6 +682,8 @@ key: 产品密钥
 
 ## 今日头条
 
+### 关键词
+
 举例: [https://rsshub.app/jinritoutiao/keyword/ai](https://rsshub.app/jinritoutiao/keyword/ai)
 
 路由: `/jinritoutiao/keyword/:keyword`
