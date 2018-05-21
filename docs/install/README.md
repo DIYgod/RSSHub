@@ -283,6 +283,7 @@ $ docker-compose up
 
 `REDIS_PASSWORD`: Redis 连接密码（memory 缓存类型时无效）
 
+
 ### 部分 RSS 模块配置
 
 `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
@@ -292,3 +293,23 @@ $ docker-compose up
 `twitter`: [申请地址](https://apps.twitter.com)
 
 `youtube`: [申请地址](https://console.developers.google.com/)
+
+
+可以通过修改 `config.js` 或者设置环境变量来配置 RSS 模块。
+以设置 YouTube 为例，只需要在运行时增加参数：`-e YOUTUBE_KEY=AIzaSEEEE_eee1eeEEEE111JHDFPuE`
+
+`PIXIV_USERNAME`: 添加 Pixiv 用户名
+
+`PIXIV_PASSWORD`: 添加 Pixiv 密码
+
+`DISQUS_API_KEY`: 添加 Disqus API
+
+`TWITTER_CONSUMER_KEY`: 添加 Twitter Consumer Key
+
+`TWITTER_CONSUMER_SECRET`: 添加 Twitter Consumer Secret
+
+`TWITTER_ACCESS_TOKEN`: 添加 Twitter Access Token
+
+`TWITTER_ACCESS_TOKEN_SECRET`: 添加 Twitter Access Token Secret
+
+`YOUTUBE_KEY`: 添加 YouTube API
