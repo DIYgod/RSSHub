@@ -9,7 +9,7 @@
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
-[使用文档](https://rsshub.js.org)
+[使用文档](https://docs.rsshub.app/)
 
 当前支持列表：
 
@@ -122,7 +122,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ## 部署
 
-见[文档](https://rsshub.js.org/install/)
+见[文档](https://docs.rsshub.app/)
 
 ## 赞助 RSSHub 的研发
 

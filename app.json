@@ -2,7 +2,7 @@
     "name": "RSSHub",
     "description": "Connect the world with RSS",
     "repository": "https://github.com/DIYgod/RSSHub",
-    "website": "https://rsshub.js.org/",
+    "website": "https://docs.rsshub.app/",
     "logo": "https://i.imgur.com/NZpRScX.png",
     "keywords": ["RSS"],
     "env": {

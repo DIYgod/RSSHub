@@ -170,6 +170,9 @@ router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter')
 router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 
+// 今日头条
+router.get('/jinritoutiao/keyword/:keyword', require('./routes/jinritoutiao/keyword'));
+
 // Disqus
 if (config.disqus && config.disqus.api_key) {
     router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
