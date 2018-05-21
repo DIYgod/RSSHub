@@ -10,7 +10,7 @@ module.exports = async (ctx) => {
     const cache = await Promise.all(url.map(ctx.cache.get));
     const result = await Promise.all(
         cache.map(async (c, i) => {
-            if (c !== undefined) {
+            if (c) {
                 return Promise.resolve(JSON.parse(c));
             } else {
                 const response = await axios({
