@@ -65,7 +65,6 @@
             display: inline-block;
             vertical-align: top;
         }
-
     </style>
 </head>
 
@@ -81,7 +80,7 @@
         <p>If you see this page, the RSSHub{{ if hash }} ({{ hash }}){{ /if }} is successfully installed and working.</p>
 
         <p>For online documentation and support please refer to
-            <a href="https://rsshub.js.org" target="_blank">rsshub.js.org</a>.</p>
+            <a href="https://docs.rsshub.app/" target="_blank">docs.rsshub.app</a>.</p>
 
         <p>-- Made with
             <i style="color:#d43f57">♥</i> by
