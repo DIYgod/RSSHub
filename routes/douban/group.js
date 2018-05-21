@@ -23,7 +23,8 @@ module.exports = async (ctx) => {
                     const src = photo[0].alt;
                     return `<img referrerpolicy="no-referrer" src='${src}'/><br>`;
                 } else {
-                    return '';
+                    const srcHodler = `https://img3.doubanio.com/view/group_topic/large/public/p${arguments[1]}.jpg`;
+                    return `<img referrerpolicy="no-referrer" src='${srcHodler}'/><br>`;
                 }
             } catch (ex) {
                 console.log(arguments);
