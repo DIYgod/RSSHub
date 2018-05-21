@@ -17,9 +17,14 @@ module.exports = async (ctx) => {
         content = content.replace(/ /g, '<br>');
         topic.content = content.replace(/<图片(\d*)>/g, function() {
             try {
-                const photo = photos.filter((p) => (p.seq_id = arguments[1]))[0];
-                const src = photo.alt;
-                return `<img referrerpolicy="no-referrer" src='${src}'/><br>`;
+                const photo = photos.filter((p) => p.seq_id === arguments[1]);
+
+                if (typeof photo === 'object') {
+                    const src = photo[0].alt;
+                    return `<img referrerpolicy="no-referrer" src='${src}'/><br>`;
+                } else {
+                    return '';
+                }
             } catch (ex) {
                 console.log(arguments);
                 console.log(photos);
