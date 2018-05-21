@@ -27,6 +27,17 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
 
+## RSS2.0 & ATOM
+
+RSSHub 同时支持 RSS2.0 和 ATOM 输出格式，在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式，缺省为 RSS2.0
+
+举例:
+
+*   缺省 RSS2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
+*   RSS2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
+*   ATOM - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
+*   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
+
 ## RSSHub
 
 ### 支持的 RSS
@@ -234,6 +245,22 @@ order: 排序方式，live_time 开播时间，online 人气
 areaID: 分区 ID 分区增删较多，可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询
 
 order: 排序方式，live_time 开播时间，online 人气
+
+## bangumi
+
+### 放送列表
+
+举例: [https://rsshub.app/bangumi/calendar/today](https://rsshub.app/bangumi/calendar/today)
+
+路由: `/bangumi/calendar/today`
+
+参数: 无
+
+::: tip 提示
+
+可以配合[内容过滤](#内容过滤)使用
+
+:::
 
 ## 微博
 
@@ -742,3 +769,17 @@ key: 产品密钥
 路由: `/iqiyi/dongman/:id`
 
 参数: id，动漫 id，可在该动漫主页 URL 中找到(不包括`.html`)
+
+##南方周末
+
+### 新闻分类
+
+举例：[https://rsshub.app/infzm/5](https://rsshub.app/infzm/5)
+
+路由: `/infzm/:id`
+
+参数: id，南方周末内容分区 id，可在该内容分区的 URL 中找到(即http://www.infzm.com/contents/:id)，注意 contents 为内容分区，content 为文章页，添加前请留意。下面给出部分参考：
+
+| 全站 | 新闻 | 经济 | 文化 | 评论 | 图片 | 生活 | 时政 | 社会 | 科技 | 绿色 | 头条 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 1374 | 2553 |
