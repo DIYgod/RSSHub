@@ -9,6 +9,7 @@ module.exports = async (ctx) => {
         url: `https://www.toutiao.com/search_content/?offset=0&format=json&keyword=${encodeURIComponent(keyword)}&autoload=true&count=20&cur_tab=1&from=search_tab`,
         headers: {
             'User-Agent': config.ua,
+            Referer: `https://www.toutiao.com/search/?keyword=${keyword}`,
         },
     });
     let data = response.data.data;
