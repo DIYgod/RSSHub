@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
     });
 
     ctx.state.data = {
-        title: '今日 bangumi',
+        title: 'bangumi 每日放送',
         link: 'https://bgm.tv/calendar',
         item: todayBgm.map((bgm) => {
             const updated = new Date(Date.now());
@@ -59,7 +59,7 @@ module.exports = async (ctx) => {
                 ].join('｜'),
                 updated: updated.toISOString(),
                 pubDate: updated.toUTCString(),
-                link: bgm.officialSite,
+                link: `http://bangumi.tv/subject/${bgm.bgm_id}`,
                 description: content,
                 content,
             };
