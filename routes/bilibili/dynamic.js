@@ -12,8 +12,9 @@ module.exports = async (ctx) => {
             'User-Agent': config.ua,
             Referer: `https://space.bilibili.com/${uid}/`,
         },
+        transformResponse: [data => data],
     });
-    const data = response.data.data.cards;
+    const data = JSONbig.parse(response.data).data.cards;
 
     ctx.state.data = {
         title: `${data[0].desc.user_profile.info.uname} 的 bilibili 动态`,
@@ -40,14 +41,18 @@ module.exports = async (ctx) => {
                 link = `https://t.bilibili.com/${data.dynamic_id}`;
             } else if (data.aid) {
                 link = `https://www.bilibili.com/video/av${data.aid}`;
+            } else if (data.video_playurl) {
+                link = `https://vc.bilibili.com/video/${data.id}`;
             } else if (data.id) {
                 link = `https://h.bilibili.com/${data.id}`;
+            } else if (data.sketch.sketch_id) {
+                link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
             }
 
             return {
-                title: data.title || data.description || data.content,
-                description: `${data.desc || data.description || data.content}${imgHTML}`,
-                pubDate: new Date((data.pubdate || data.upload_time || data.timestamp) * 1000).toUTCString(),
+                title: data.title || data.description || data.content || data.vest.content,
+                description: `${data.desc || data.description || data.content || data.vest.content + data.sketch.title}${imgHTML} `,
+                pubDate: new Date(item.desc.timestamp * 1000).toUTCString(),
                 link: link,
             };
         }),
