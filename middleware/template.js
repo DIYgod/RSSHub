@@ -3,36 +3,24 @@ const path = require('path');
 const config = require('../config');
 
 module.exports = async (ctx, next) => {
-    const pathname = ctx.request.path;
+    const type = ctx.request.path.match(/\.([a-z]+)$/) || ['', ''];
 
-    const paterns = [
-        () => {
-            const patern = '.atom';
-            if (pathname.endsWith(patern)) {
-                ctx.request.path = pathname.slice(0, -patern.length);
-                ctx.state.template = path.resolve(__dirname, '../views/atom.art');
+    switch (type[1]) {
+        case 'atom':
+            ctx.request.path = ctx.request.path.slice(0, -5);
+            ctx.state.template = path.resolve(__dirname, '../views/atom.art');
 
-                return true;
-            }
-        },
-        () => {
-            const patern = '.rss';
-            if (pathname.endsWith(patern)) {
-                ctx.request.path = pathname.slice(0, -patern.length);
-                ctx.state.template = path.resolve(__dirname, '../views/rss.art');
-
-                return true;
-            }
-        },
-        () => {
-            // default
+            break;
+        case 'rss':
+            ctx.request.path = ctx.request.path.slice(0, -4);
             ctx.state.template = path.resolve(__dirname, '../views/rss.art');
 
-            return true;
-        },
-    ];
+            break;
+        default:
+            ctx.state.template = path.resolve(__dirname, '../views/rss.art');
 
-    paterns.find((p) => p());
+            break;
+    }
 
     await next();
     if (!ctx.body) {
