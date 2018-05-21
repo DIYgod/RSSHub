@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
         }),
     });
 
-    const playlist = response.data.playlist;
+    const playlist = response.data.playlist || [];
 
     const creator = (playlist[0] || {}).creator;
 
@@ -30,6 +30,7 @@ module.exports = async (ctx) => {
         title: `${nickname} 的所有歌单`,
         link: `http://music.163.com/user/home?id=${uid}`,
         subtitle: signature,
+        description: signature,
         author: nickname,
         updated: response.headers.date,
         icon: avatarUrl,
