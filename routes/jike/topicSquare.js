@@ -4,15 +4,6 @@ const config = require('../../config');
 module.exports = async (ctx) => {
     const id = ctx.params.id;
 
-    const topicData = await axios({
-        method: 'get',
-        url: `https://app.jike.ruguoapp.com/1.0/topics/get?id=${id}`,
-        headers: {
-            'User-Agent': config.ua,
-        },
-    });
-    const topicInfo = topicData.data.data;
-
     const itemData = await axios({
         method: 'post',
         url: `https://app.jike.ruguoapp.com/1.0/squarePosts/list`,
@@ -30,10 +21,10 @@ module.exports = async (ctx) => {
     const itemInfo = itemData.data.data;
 
     ctx.state.data = {
-        title: `${topicInfo.content} - 即刻主题广场`,
+        title: `${itemInfo[0].topic.content} - 即刻主题广场`,
         link: `https://web.okjike.com/topic/${id}/user`,
-        description: topicInfo.briefIntro,
-        image: topicInfo.thumbnailUrl,
+        description: itemInfo[0].topic.content,
+        image: itemInfo[0].topic.squarePicture.thumbnailUrl,
         item: itemInfo.map((item) => {
             const user = '用户：' + item.user.screenName;
             let contentTemplate = `<br> ${item.content}`;
