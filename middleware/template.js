@@ -20,6 +20,10 @@ module.exports = async (ctx, next) => {
                 template = path.resolve(__dirname, '../views/rss.art');
                 break;
             case 'json':
+                template = path.resolve(__dirname, '../views/json.art');
+                ctx.set({
+                    'Content-Type': 'application/json; charset=UTF-8',
+                });
                 break;
             default:
                 template = path.resolve(__dirname, '../views/rss.art');
@@ -34,11 +38,6 @@ module.exports = async (ctx, next) => {
         };
         if (template) {
             ctx.body = art(template, data);
-        } else {
-            ctx.set({
-                'Content-Type': 'application/json; charset=UTF-8',
-            });
-            ctx.body = JSON.stringify(data);
         }
     }
 };
