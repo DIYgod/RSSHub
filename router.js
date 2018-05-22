@@ -200,7 +200,7 @@ if (config.youtube && config.youtube.key) {
 
 // 即刻
 router.get('/jike/topic/:id', require('./routes/jike/topic'));
-router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare')); //广场
+router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
 
 // 极客时间
