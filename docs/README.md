@@ -289,11 +289,19 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ## 即刻
 
-### 主题
+### 主题-精选
 
 举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
 
 路由: `/jike/topic/:id`
+
+参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+### 主题-广场
+
+举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/square/:id`
 
 参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
 

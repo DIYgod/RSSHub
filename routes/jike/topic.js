@@ -17,7 +17,7 @@ module.exports = async (ctx) => {
     const data = response.data;
 
     ctx.state.data = {
-        title: data.topic.content,
+        title: `${data.topic.content} - 即刻主题精选`,
         link: `https://web.okjike.com/topic/${id}/official`,
         description: data.topic.briefIntro,
         image: data.topic.pictureUrl,
