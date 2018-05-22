@@ -6,11 +6,11 @@ module.exports = async (ctx) => {
 
     const itemData = await axios({
         method: 'post',
-        url: `https://app.jike.ruguoapp.com/1.0/squarePosts/list`,
+        url: 'https://app.jike.ruguoapp.com/1.0/squarePosts/list',
         headers: {
             'User-Agent': config.ua,
             Referer: `https://m.okjike.com/topics/${id}`,
-            'App-Version': '3.5.0',
+            'App-Version': '4.1.0',
         },
         data: {
             loadMoreKey: null,
@@ -27,14 +27,14 @@ module.exports = async (ctx) => {
         image: itemInfo[0].topic.squarePicture.thumbnailUrl,
         item: itemInfo.map((item) => {
             const user = '用户：' + item.user.screenName;
-            let contentTemplate = `<br> ${item.content}`;
+            const contentTemplate = `<br> ${item.content}`;
             let imgTemplate = '';
             item.pictures.length > 0 &&
                 item.pictures.forEach((item) => {
                     imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.middlePicUrl}">`;
                 });
 
-            let videoTemplate = '';
+            const videoTemplate = '';
             // 暂时没找到有视频的信息，后续遇到再补充
             // if (item.video) {
             //     videoTemplate = `<br>视频: <img referrerpolicy="no-referrer" src="${item.video.image.picUrl}">`;
