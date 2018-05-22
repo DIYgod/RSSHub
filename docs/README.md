@@ -15,7 +15,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 :::
 
-## 内容过滤
+## 通用参数
+
+### 内容过滤
 
 可以使用以下 URL query 过滤出想要的内容，支持正则
 
@@ -27,15 +29,16 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
 
-## RSS2.0 & ATOM
+### 输出格式
 
-RSSHub 同时支持 RSS2.0 和 ATOM 输出格式，在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式，缺省为 RSS2.0
+RSSHub 同时支持 RSS 2.0、Atom 和 json 输出格式，在路由末尾添加 `.rss` `.atom` 或 `.json` 即可请求对应输出格式，缺省为 RSS 2.0
 
 举例:
 
-*   缺省 RSS2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
-*   RSS2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
-*   ATOM - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
+*   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
+*   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
+*   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
+*   json - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
 *   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
 ## RSSHub
