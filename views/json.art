@@ -22,7 +22,7 @@
             "date_modified": "",
             "tags": [],
             "attachments": []
-        },
+        }{{ if $index !== item.length - 1}},{{ /if}}
         {{ /each }}
     ]
 }
