@@ -18,6 +18,8 @@ module.exports = async (ctx) => {
         url: `https://app.jike.ruguoapp.com/1.0/squarePosts/list`,
         headers: {
             'User-Agent': config.ua,
+            Referer: `https://m.okjike.com/topics/${id}`,
+            'App-Version': '3.5.0',
         },
         data: {
             loadMoreKey: null,
@@ -28,7 +30,7 @@ module.exports = async (ctx) => {
     const itemInfo = itemData.data.data;
 
     ctx.state.data = {
-        title: topicInfo.content,
+        title: `${topicInfo.content} - 即刻主题广场`,
         link: `https://web.okjike.com/topic/${id}/user`,
         description: topicInfo.briefIntro,
         image: topicInfo.thumbnailUrl,
