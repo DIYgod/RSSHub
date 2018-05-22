@@ -6,11 +6,11 @@ module.exports = async (ctx) => {
 
     const response = await axios({
         method: 'get',
-        url: `https://app.jike.ruguoapp.com/1.0/messages/showDetail?topicId=${id}`,
+        url: `https://app.jike.ruguoapp.com/1.0/topics/get?id=${id}`,
         headers: {
             'User-Agent': config.ua,
             Referer: `https://m.okjike.com/topics/${id}`,
-            'App-Version': '3.5.0',
+            'App-Version': '4.1.0',
         },
     });
 
