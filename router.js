@@ -208,7 +208,12 @@ router.get('/geektime/column/:cid', require('./routes/geektime/column'));
 // 爱奇艺
 router.get('/iqiyi/dongman/:id', require('./routes/iqiyi/dongman'));
 
-// infzm
+// 南方周末
 router.get('/infzm/:id', require('./routes/infzm/news'));
+
+// Dribbble
+router.get('/dribbble/popular/:timeframe?', require('./routes/dribbble/popular'));
+router.get('/dribbble/user/:name', require('./routes/dribbble/user'));
+router.get('/dribbble/keyword/:keyword', require('./routes/dribbble/keyword'));
 
 module.exports = router;

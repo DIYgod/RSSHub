@@ -787,3 +787,33 @@ key: 产品密钥
 | 全站 | 新闻 | 经济 | 文化 | 评论 | 图片 | 生活 | 时政 | 社会 | 科技 | 绿色 | 头条 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 0    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 1374 | 2553 |
+
+## Dribbble
+
+### 流行
+
+举例:
+
+[https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
+
+[https://rsshub.app/dribbble/popular/week](https://rsshub.app/dribbble/popular/week)
+
+路由: `/dribbble/popular/:timeframe?`
+
+参数: timeframe，可选，时间维度，支持 week month year ever
+
+### 用户（团队）
+
+举例: [https://rsshub.app/dribbble/user/google](https://rsshub.app/dribbble/user/google)
+
+路由: `/dribbble/user/:name`
+
+参数: name，用户名，可在该用户主页 URL 中找到
+
+### 关键词
+
+举例: [https://rsshub.app/dribbble/keyword/player](https://rsshub.app/dribbble/keyword/player)
+
+路由: `/dribbble/keyword/:keyword`
+
+参数: keyword，想要订阅的关键词
