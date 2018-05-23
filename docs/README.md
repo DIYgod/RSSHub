@@ -43,7 +43,7 @@ filterout 去掉不要的内容
 
 ::: tip 提示
 
-filter与filterout共6个query参数可以组合使用。当filter、filter_title、filter_description中多个参数存在时，取其交集进行过滤，filterout三项同理。
+filter 与 filterout 共 6 个 query 参数可以组合使用。当 filter、filter_title、filter_description 中多个参数存在时，取其交集进行过滤，filterout 三项同理。
 
 :::
 
