@@ -4,11 +4,11 @@ sidebar: auto
 
 # 部署
 
-部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
+部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
 
 ## 手动部署
 
-部署 `RSSHub` 最直接的方式， 您可以按照以下步骤将 `RSSHub` 部署在您的  电脑、服务器或者其他任何地方。
+部署 `RSSHub` 最直接的方式，您可以按照以下步骤将 `RSSHub` 部署在您的 电脑、服务器或者其他任何地方。
 
 ### 在安装之前
 
@@ -258,6 +258,62 @@ $ docker-compose up
 ## 部署到 Heroku
 
 [![Deploy](https://i.imgur.com/e6ZcmUY.png)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+## 部署到 Google App Engine
+
+### 部署之前
+
+[Before you begin](https://cloud.google.com/appengine/docs/flexible/nodejs/quickstart)
+
+按照这里的引导完成 GCP 账号设置，创建 GCP 项目，创建 App Engine 项目，开通付费功能（必须），安装 git 与 gcloud 工具。并完成 gcloud 工具的初始化，初始化具体方式[请查看这个链接](https://cloud.google.com/sdk/gcloud/?hl=zh-CN)。如果你不打算在本地调试本项目，可以不安装 Node.js 环境。
+
+请注意，GAE 免费用量不支持 Flexible Environment ，部署前请确认收费标准。
+
+### 拉取
+
+运行 git clone https://github.com/DIYgod/RSSHub.git 拉取本项目的最新版本。
+
+### app.yaml 配置
+
+在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
+
+```yaml
+# [START app_yaml]
+runtime: custom
+env: flex
+
+# This sample incurs costs to run on the App Engine flexible environment.
+# The settings below are to reduce costs during testing and are not appropriate
+# for production use. For more information, see:
+# https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
+manual_scaling:
+  instances: 1
+# 以下是 app engine 资源配置，可以自行修改，硬盘最低为 10G
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+network:
+  forwarded_ports:
+    - 80:1200
+    - 443:1200
+# 以下是环境配置示例，具体可配置项见本文档配置章节
+env_variables:
+  CACHE_EXPIRE: "300"
+# [END app_yaml]
+```
+
+### 开始部署
+
+在 RSSHub 项目根目录下运行
+
+```bash
+gcloud app deploy
+```
+
+进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考[这个链接](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app)的"Deploying a service" 部分。
+
+部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
 ## 配置
 
