@@ -200,7 +200,7 @@ if (config.youtube && config.youtube.key) {
 
 // 即刻
 router.get('/jike/topic/:id', require('./routes/jike/topic'));
-router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare')); //广场
+router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
 
 // 极客时间
@@ -216,5 +216,11 @@ router.get('/infzm/:id', require('./routes/infzm/news'));
 router.get('/dribbble/popular/:timeframe?', require('./routes/dribbble/popular'));
 router.get('/dribbble/user/:name', require('./routes/dribbble/user'));
 router.get('/dribbble/keyword/:keyword', require('./routes/dribbble/keyword'));
+
+// 斗鱼
+router.get('/douyu/room/:id', require('./routes/douyu/room'));
+
+// 熊猫直播
+router.get('/panda/room/:id', require('./routes/panda/room'));
 
 module.exports = router;
