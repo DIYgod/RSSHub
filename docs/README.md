@@ -846,3 +846,13 @@ key: 产品密钥
 路由: `/dribbble/keyword/:keyword`
 
 参数: keyword，想要订阅的关键词
+
+## 斗鱼
+
+### 房间开播
+
+举例: [https://rsshub.app/douyu/room/24422](https://rsshub.app/douyu/room/24422)
+
+路由: `/douyu/room/:id`
+
+参数: id，房间 id，可在主播房间页 URL 中找到

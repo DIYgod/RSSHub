@@ -217,4 +217,7 @@ router.get('/dribbble/popular/:timeframe?', require('./routes/dribbble/popular')
 router.get('/dribbble/user/:name', require('./routes/dribbble/user'));
 router.get('/dribbble/keyword/:keyword', require('./routes/dribbble/keyword'));
 
+// 斗鱼
+router.get('/douyu/room/:id', require('./routes/douyu/room'));
+
 module.exports = router;
