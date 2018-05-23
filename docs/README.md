@@ -19,7 +19,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### 内容过滤
 
-可以使用以下 URL query 过滤出想要的内容，支持正则
+可以使用以下 URL query 过滤内容，支持正则
+
+filter 选出想要的内容
 
 *   filter: 过滤标题和描述
 
@@ -28,6 +30,22 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 *   filter_description: 过滤描述
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
+
+filterout 去掉不要的内容
+
+*   filterout: 过滤标题和描述
+
+*   filterout_title: 过滤标题
+
+*   filterout_description: 过滤描述
+
+举例: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
+
+::: tip 提示
+
+filter 与 filterout 共 6 个 query 参数可以组合使用。当 filter、filter_title、filter_description 中多个参数存在时，取其交集进行过滤，filterout 三项同理。
+
+:::
 
 ### 输出格式
 
