@@ -849,10 +849,20 @@ key: 产品密钥
 
 ## 斗鱼
 
-### 房间开播
+### 直播间开播
 
 举例: [https://rsshub.app/douyu/room/24422](https://rsshub.app/douyu/room/24422)
 
 路由: `/douyu/room/:id`
 
-参数: id，房间 id，可在主播房间页 URL 中找到
+参数: id，直播间 id，可在主播直播间页 URL 中找到
+
+## 熊猫直播
+
+### 直播间开播下播
+
+举例: [https://rsshub.app/panda/room/10300](https://rsshub.app/panda/room/10300)
+
+路由: `/panda/room/:id`
+
+参数: id，直播间 id，可在主播直播间页 URL 中找到

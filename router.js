@@ -220,4 +220,7 @@ router.get('/dribbble/keyword/:keyword', require('./routes/dribbble/keyword'));
 // 斗鱼
 router.get('/douyu/room/:id', require('./routes/douyu/room'));
 
+// 熊猫直播
+router.get('/panda/room/:id', require('./routes/panda/room'));
+
 module.exports = router;
