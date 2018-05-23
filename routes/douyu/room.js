@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
         link: `https://www.douyu.com/${id}`,
         item: [
             {
-                title: data.room_name,
+                title: `开播: ${data.room_name}`,
                 pubDate: new Date(data.start_time).toUTCString(),
                 guid: data.start_time,
                 link: `https://www.douyu.com/${id}`,
