@@ -19,7 +19,7 @@ process.on('uncaughtException', (e) => {
     logger.error('uncaughtException: ' + e);
 });
 
-logger.info('🍻 RSSHub start! Cheers!');
+logger.info('🎉 RSSHub start! Cheers!');
 
 const app = new Koa();
 app.proxy = true;
