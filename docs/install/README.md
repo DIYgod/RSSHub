@@ -261,7 +261,6 @@ $ docker-compose up
 
 ## 部署到 Google App Engine
 
-
 ### 部署之前
 
 [Before you begin](https://cloud.google.com/appengine/docs/flexible/nodejs/quickstart)
@@ -275,8 +274,10 @@ $ docker-compose up
 运行 git clone https://github.com/DIYgod/RSSHub.git 拉取本项目的最新版本。
 
 ### app.yaml 配置
+
 在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
-``` yaml
+
+```yaml
 # [START app_yaml]
 runtime: custom
 env: flex
@@ -301,17 +302,18 @@ env_variables:
   CACHE_EXPIRE: "300"
 # [END app_yaml]
 ```
+
 ### 开始部署
 
-在 RSSHub 项目根目录下运行 
-``` bash
+在 RSSHub 项目根目录下运行
+
+```bash
 gcloud app deploy
 ```
 
 进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考[这个链接](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app)的"Deploying a service" 部分。
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况。
- 
 
 ## 配置
 
