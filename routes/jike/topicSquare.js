@@ -4,7 +4,7 @@ const config = require('../../config');
 module.exports = async (ctx) => {
     const id = ctx.params.id;
 
-    const itemData = await axios({
+    const response = await axios({
         method: 'post',
         url: 'https://app.jike.ruguoapp.com/1.0/squarePosts/list',
         headers: {
@@ -18,33 +18,30 @@ module.exports = async (ctx) => {
             limit: 20,
         },
     });
-    const itemInfo = itemData.data.data;
+
+    const data = response.data.data;
+    const topic = data[0].topic;
 
     ctx.state.data = {
-        title: `${itemInfo[0].topic.content} - 即刻主题广场`,
+        title: `${topic.content} - 即刻主题广场`,
         link: `https://web.okjike.com/topic/${id}/user`,
-        description: itemInfo[0].topic.content,
-        image: itemInfo[0].topic.squarePicture.thumbnailUrl,
-        item: itemInfo.map((item) => {
-            const user = '用户：' + item.user.screenName;
-            const contentTemplate = `<br> ${item.content}`;
+        description: topic.content,
+        image: topic.squarePicture.picUrl || topic.squarePicture.middlePicUrl || topic.squarePicture.thumbnailUrl,
+        item: data.map((item) => {
+            let contentTemplate = item.content;
+            if (item.linkInfo && (item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl)) {
+                contentTemplate = `<a href="${item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl}">${item.content}</a>`;
+            }
+
             let imgTemplate = '';
-            item.pictures.length > 0 &&
+            item.pictures &&
                 item.pictures.forEach((item) => {
-                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.middlePicUrl}">`;
+                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
                 });
 
-            const videoTemplate = '';
-            // 暂时没找到有视频的信息，后续遇到再补充
-            // if (item.video) {
-            //     videoTemplate = `<br>视频: <img referrerpolicy="no-referrer" src="${item.video.image.picUrl}">`;
-            // }
-            // if (item.personalUpdate && item.personalUpdate.video) {
-            //     videoTemplate = `<br>视频: <img referrerpolicy="no-referrer" src="${item.personalUpdate.video.image.picUrl}">`;
-            // }
             return {
                 title: item.content,
-                description: `${user}${contentTemplate}${imgTemplate}${videoTemplate}`,
+                description: `${item.user.screenName}: ${contentTemplate}${imgTemplate}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
                 link: `https://web.okjike.com/post-detail/${item.id}/originalPost`,
             };
