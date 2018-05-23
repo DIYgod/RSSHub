@@ -40,7 +40,7 @@ module.exports = async (ctx) => {
             }
             return {
                 title: `${type}${(item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题'}`,
-                description: `${tip}<img referrerpolicy="no-referrer" src="${item.thumbnail_src}">`,
+                description: `${tip}<img referrerpolicy="no-referrer" src="${item.display_url}">`,
                 pubDate: new Date(item.taken_at_timestamp * 1000).toUTCString(),
                 link: `https://www.instagram.com/p/${item.shortcode}/`,
             };
