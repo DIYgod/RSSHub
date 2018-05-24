@@ -866,3 +866,11 @@ key: 产品密钥
 路由: `/panda/room/:id`
 
 参数: id，直播间 id，可在主播直播间页 URL 中找到
+
+## HackerNews
+
+### HackerNews 首页
+
+举例: [https://rsshub.app/hackernews/home](https://rsshub.app//hackernews/home)
+
+路由: `/hackernews/home`

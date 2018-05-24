@@ -223,4 +223,7 @@ router.get('/douyu/room/:id', require('./routes/douyu/room'));
 // 熊猫直播
 router.get('/panda/room/:id', require('./routes/panda/room'));
 
+// HN
+router.get('/hackernews/home', require('./routes/HN/hackernews'));
+
 module.exports = router;
