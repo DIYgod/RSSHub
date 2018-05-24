@@ -869,7 +869,7 @@ key: 产品密钥
 
 ## HackerNews
 
-### HackerNews首页
+### HackerNews 首页
 
 举例: [https://rsshub.app/hackernews/home](https://rsshub.app//hackernews/home)
 

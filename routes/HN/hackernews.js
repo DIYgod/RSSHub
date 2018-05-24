@@ -22,21 +22,21 @@ module.exports = async (ctx) => {
         link: 'https://news.ycombinator.com',
         description: 'HN',
         item:
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                const title = item.text();
-                const dateObj = dates[index].children.find((v) => v.type === 'text').data || {};
-                const date = dateObj.data;
-                const link = item.attr('href');
-                return {
-                    title,
-                    description: title,
-                    pubDate: date,
-                    link,
-                };
-            })
-            .get(),
+            list &&
+            list
+                .map((index, item) => {
+                    item = $(item);
+                    const title = item.text();
+                    const dateObj = dates[index].children.find((v) => v.type === 'text').data || {};
+                    const date = dateObj.data;
+                    const link = item.attr('href');
+                    return {
+                        title,
+                        description: title,
+                        pubDate: date,
+                        link,
+                    };
+                })
+                .get(),
     };
 };
