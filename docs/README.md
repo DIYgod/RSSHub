@@ -9,6 +9,20 @@ sidebar: auto
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
+## 鸣谢
+
+### Sponsors
+
+*   [rixCloud](https://rixcloud.us)
+
+*   [Sayori Studio](https://t.me/SayoriStudio)
+
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+
+### Contributors
+
+[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+
 ::: tip 提示
 
 演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用，但请不要抓取过于频繁
