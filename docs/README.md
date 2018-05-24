@@ -866,3 +866,13 @@ key: 产品密钥
 路由: `/panda/room/:id`
 
 参数: id，直播间 id，可在主播直播间页 URL 中找到
+
+## V2EX
+
+### 最热主题/最新主题
+
+举例: [https://rsshub.app/v2ex/topics/latest](https://rsshub.app/v2ex/topics/latest)
+
+路由: `/v2ex/topics/:type`
+
+参数: type，hot 或 latest 二者之一
