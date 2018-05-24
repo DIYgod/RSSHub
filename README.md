@@ -113,7 +113,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     *   直播间开播
 *   熊猫直播
     *   直播间开播下播
-
+*   HackerNews
+    *   HackerNews首页
+    
 ## 参与我们
 
 如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
