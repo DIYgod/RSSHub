@@ -226,4 +226,11 @@ router.get('/panda/room/:id', require('./routes/panda/room'));
 // v2ex
 router.get('/v2ex/topics/:type', require('./routes/v2ex/topics'));
 
+// Telegram
+if (config.telegram && config.telegram.token) {
+    router.get('/telegram/channel/:username', require('./routes/telegram/channel'));
+} else {
+    logger.warn('Telegram RSS is disabled for lacking config.');
+}
+
 module.exports = router;

@@ -883,10 +883,26 @@ key: 产品密钥
 
 ## V2EX
 
-### 最热主题/最新主题
+### 最热/最新主题
 
 举例: [https://rsshub.app/v2ex/topics/latest](https://rsshub.app/v2ex/topics/latest)
 
 路由: `/v2ex/topics/:type`
 
-参数: type，hot 或 latest 二者之一
+参数: type: hot 或 latest
+
+## Telegram
+
+### 频道
+
+::: tip 提示
+
+订阅要求：将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员，然后发一条消息后才可正常获取数据
+
+:::
+
+举例: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/telegram/channel/awesomeDIYgod)
+
+路由: `/telegram/channel/:username`
+
+参数: username，频道 username
