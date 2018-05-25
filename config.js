@@ -30,4 +30,7 @@ module.exports = {
     youtube: {
         key: process.env.YOUTUBE_KEY,
     },
+    telegram: {
+        token: process.env.TELEGRAM_TOKEN,
+    },
 };

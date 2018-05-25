@@ -25,16 +25,14 @@ module.exports = async (ctx) => {
         title: `V2EX-${title}`,
         link: 'https://www.v2ex.com/',
         description: `V2EX-${title}`,
-        item: data.map((item) => {
-            return {
-                title: item.title,
-                description: item.content,
-                content: item.content,
-                content_rendered: item.content_rendered,
-                pubDate: new Date(item.created * 1000).toUTCString(),
-                guid: item.id,
-                link: item.url,
-            };
-        }),
+        item: data.map((item) => ({
+            title: item.title,
+            description: item.content,
+            content: item.content,
+            content_rendered: item.content_rendered,
+            pubDate: new Date(item.created * 1000).toUTCString(),
+            guid: item.id,
+            link: item.url,
+        })),
     };
 };
