@@ -9,18 +9,6 @@ sidebar: auto
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
-<p>
-    <script>
-        if(window.navigator.serviceWorker) {
-            window.navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                registrations.forEach(function (registration) {
-                    registration.unregister();
-                });
-            });
-        }
-    </script>
-</p>
-
 ## 鸣谢
 
 ### Sponsors
