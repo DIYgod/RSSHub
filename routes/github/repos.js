@@ -14,15 +14,6 @@ module.exports = async (ctx) => {
         },
     });
     const data = response.data;
-    // define variables
-    let repoTitle = '';
-    let repoId = '';
-    let repoDescription = '';
-    let repoStargazersCount = '';
-    let repoForksCount = '';
-    let repoWatchersCount = '';
-    let repoUrl = '';
-
     ctx.state.data = {
         title: `GitHub Repos By ${user}`,
         link: uri,
@@ -30,21 +21,15 @@ module.exports = async (ctx) => {
         item:
             data &&
             data.map((item) => {
-                repoTitle = item.name;
-                repoId = item.id;
-                repoDescription = item.description;
-                repoStargazersCount = item.stargazers_count;
-                repoForksCount = item.forks_count;
-                repoWatchersCount = item.watchers_count;
-                repoUrl = item.url;
+                let repoDescription = item.description;
                 if (repoDescription === null) {
                     repoDescription = 'No description added';
                 }
                 return {
-                    title: `${repoTitle}`,
-                    guid: `${repoId}`,
-                    description: `${repoDescription}` + ` [star: ${repoStargazersCount}` + ` fork: ${repoForksCount}` + ` watch: ${repoWatchersCount}]`,
-                    link: `${repoUrl}`,
+                    title: `${item.name}`,
+                    guid: `${item.id}`,
+                    description: `${repoDescription}` + ` [star: ${item.stargazers_count}` + ` fork: ${item.forks_count}` + ` watch: ${item.watchers_count}]`,
+                    link: `${item.url}`,
                 };
             }),
     };
