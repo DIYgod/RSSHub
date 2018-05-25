@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
         },
     });
 
-    const list = listRes.data;
+    const list = listRes.data || [];
     const info = infoRes.data;
 
     ctx.state.data = {
