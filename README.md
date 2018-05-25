@@ -113,6 +113,24 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     *   直播间开播
 *   熊猫直播
     *   直播间开播下播
+*   V2EX
+    *   最热/最新主题
+*   Telegram
+    *   频道
+
+## 鸣谢
+
+### Sponsors
+
+*   [rixCloud](https://rixcloud.us)
+
+*   [Sayori Studio](https://t.me/SayoriStudio)
+
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+
+### Contributors
+
+[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
 ## 参与我们
 
