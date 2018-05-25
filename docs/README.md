@@ -9,6 +9,18 @@ sidebar: auto
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
+<p>
+    <script>
+        if(window.navigator.serviceWorker) {
+            window.navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                registrations.forEach(function (registration) {
+                    registration.unregister();
+                });
+            });
+        }
+    </script>
+</p>
+
 ## 鸣谢
 
 ### Sponsors
@@ -17,11 +29,19 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 *   [Sayori Studio](https://t.me/SayoriStudio)
 
-[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+<p>
+    <a href="https://docs.rsshub.app/support/">
+        <img src="https://opencollective.com/static/images/become_sponsor.svg">
+    </a>
+</p>
 
 ### Contributors
 
-[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+<p>
+    <a href="https://github.com/DIYgod/RSSHub/graphs/contributors">
+        <img src="https://opencollective.com/RSSHub/contributors.svg?width=890">
+    </a>
+</p>
 
 ::: tip 提示
 
