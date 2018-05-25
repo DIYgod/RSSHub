@@ -57,7 +57,6 @@ module.exports = async (ctx) => {
                 });
                 enter.sort((a, b) => a[0] - b[0]);
                 if (enter.length) {
-                    text.slice(0, enter[0][0]) + enter[0][1] + text.slice(enter[0][0], enter[1][0]) + enter[1][1] + text.slice(enter[1][0], enter[2][0]) + enter[2][1] + text.slice(enter[2][0]);
                     html = text.slice(0, enter[0][0]);
                     enter.forEach((en, index) => {
                         if (index !== enter.length - 1) {
