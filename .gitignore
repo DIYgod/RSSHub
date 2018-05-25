@@ -3,3 +3,4 @@ npm-debug.log
 error.log
 combined.log
 .vscode
+docs/.vuepress/dist
