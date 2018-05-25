@@ -3,3 +3,6 @@ npm-debug.log
 error.log
 combined.log
 .vscode
+.idea/
+yarn-error.log
+package-lock.json

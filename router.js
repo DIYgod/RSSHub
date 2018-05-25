@@ -233,4 +233,7 @@ if (config.telegram && config.telegram.token) {
     logger.warn('Telegram RSS is disabled for lacking config.');
 }
 
+// GitHub
+router.get('/github/repos/:user', require('./routes/github/repos'));
+
 module.exports = router;
