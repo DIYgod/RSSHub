@@ -234,6 +234,6 @@ if (config.telegram && config.telegram.token) {
 }
 
 // readhub
-router.get('/readhub/:category', require('./routes/readhub/category'));
+router.get('/readhub/category/:category', require('./routes/readhub/category'));
 
 module.exports = router;

@@ -909,10 +909,14 @@ key: 产品密钥
 
 ## Readhub
 
-### 热门话题/科技动态/开发者资讯/区块链快讯
+### 分类
 
-举例: [https://rsshub.app/readhub/topic](https://rsshub.app/readhub/topic)
+举例: [https://rsshub.app/readhub/category/topic](https://rsshub.app/readhub/category/topic)
 
-路由: `/readhub/:category`
+路由: `/readhub/category/:category`
 
-参数: category, 取值: topic(热门话题), news(科技动态), technews(开发者资讯), blockchain(区块链快讯)
+参数: category，分类名
+
+| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
+| -------- | -------- | ---------- | ---------- |
+| topic    | news     | technews   | blockchain |
