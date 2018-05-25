@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
     });
 
     const list = listRes.data || [];
-    const info = infoRes.data;
+    const info = infoRes.data || {};
 
     ctx.state.data = {
         title: `知乎专栏-${info.name}`,
