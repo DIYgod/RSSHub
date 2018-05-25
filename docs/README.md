@@ -906,3 +906,17 @@ key: 产品密钥
 路由: `/telegram/channel/:username`
 
 参数: username，频道 username
+
+## Readhub
+
+### 分类
+
+举例: [https://rsshub.app/readhub/category/topic](https://rsshub.app/readhub/category/topic)
+
+路由: `/readhub/category/:category`
+
+参数: category，分类名
+
+| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
+| -------- | -------- | ---------- | ---------- |
+| topic    | news     | technews   | blockchain |
