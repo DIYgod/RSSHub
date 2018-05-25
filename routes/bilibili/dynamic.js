@@ -50,8 +50,8 @@ module.exports = async (ctx) => {
             }
 
             return {
-                title: data.title || data.description || data.content || data.vest.content,
-                description: `${data.desc || data.description || data.content || data.vest.content + data.sketch.title}${imgHTML} `,
+                title: data.title || data.description || data.content || (data.vest && data.vest.content),
+                description: `${data.desc || data.description || data.content || data.summary || (data.vest && data.vest.content) + (data.sketch && data.sketch.title)}${imgHTML} `,
                 pubDate: new Date(item.desc.timestamp * 1000).toUTCString(),
                 link: link,
             };
