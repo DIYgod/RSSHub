@@ -236,4 +236,8 @@ if (config.telegram && config.telegram.token) {
 // readhub
 router.get('/readhub/category/:category', require('./routes/readhub/category'));
 
+// konachan
+router.get('/konachan/post', require('./routes/konachan/post'));
+router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+
 module.exports = router;

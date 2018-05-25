@@ -928,3 +928,35 @@ key: 产品密钥
 | 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
 | -------- | -------- | ---------- | ---------- |
 | topic    | news     | technews   | blockchain |
+
+## Konachan.com Anime Wallpapers
+
+### Posts
+
+路由: `/konachan/post`
+
+URL query:
+
+*   limit 每页数量, 最多 100, 默认 100
+*   page 分页
+*   tags 标签
+
+举例:
+
+*   [https://rsshub.app/konachan/post?tags=touhou](https://rsshub.app/konachan/post?tags=touhou)
+*   [https://rsshub.app/konachan/post?tags=panties+rating%3Asafe](https://rsshub.app/konachan/post?tags=panties+rating%3Asafe)
+
+### Popular Recent Posts
+
+路由: `/konachan/post/popular_recent`
+
+URL query:
+
+*   period 时间段, 可取值 : 1d, 1w, 1m, 1y
+
+举例:
+
+*   过去 24 小时:[https://rsshub.app/konachan/post/popular_recent?period=1d](https://rsshub.app/konachan/post/popular_recent?period=1d)
+*   过去一周:[https://rsshub.app/konachan/post/popular_recent?period=1w](https://rsshub.app/konachan/post/popular_recent?period=1w)
+*   过去一月:[https://rsshub.app/konachan/post/popular_recent?period=1m](https://rsshub.app/konachan/post/popular_recent?period=1m)
+*   过去一年:[https://rsshub.app/konachan/post/popular_recent?period=1y](https://rsshub.app/konachan/post/popular_recent?period=1y)
