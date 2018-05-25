@@ -24,13 +24,3 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 *   通过 [OpenCollective](https://opencollective.com/RSSHub) 赞助成为 backer 或 sponsor
 *   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer
 *   给我们发邮件联系赞助事宜: i#html.love
-
-## 鸣谢
-
-### Sponsors
-
-*   [Sayori Studio](https://t.me/SayoriStudio)
-
-### Contributors
-
-[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
