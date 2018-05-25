@@ -2,16 +2,6 @@
 sidebar: auto
 ---
 
-<script>
-if(navigator.serviceWorker) {
-    navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        registrations.forEach((registration) => {
-            registration.unregister();
-        });
-    });
-}
-</script>
-
 <p align="center">
 <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
 </p>
