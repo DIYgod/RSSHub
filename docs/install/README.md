@@ -364,3 +364,7 @@ gcloud app deploy
 *   `youtube`: [申请地址](https://console.developers.google.com/)
 
     *   `YOUTUBE_KEY`: YouTube API Key
+
+*   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+
+    *   `TELEGRAM_TOKEN`: Telegram 机器人 token
