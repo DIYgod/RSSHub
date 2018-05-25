@@ -17,15 +17,30 @@ axios({
 module.exports = async (ctx) => {
     const username = ctx.params.username;
 
-    const response = await axios({
+    let response = await axios({
         method: 'get',
         url: `https://api.telegram.org/bot${config.telegram.token}/getUpdates?allowed_updates=[%22channel_post%22]`,
     });
 
+    if (response.data.result.length === 100) {
+        response = await axios({
+            method: 'get',
+            url: `https://api.telegram.org/bot${config.telegram.token}/getUpdates?allowed_updates=[%22channel_post%22]&offset=${response.data.result[50].update_id}`,
+        });
+    }
+
     const data = response.data.result.filter((item) => item.channel_post && item.channel_post.chat && item.channel_post.chat.username === username).reverse();
 
+    let title;
+    if (data[0]) {
+        title = `${data[0].channel_post.chat.title} - Telegram 频道`;
+        ctx.cache.set(`RSSHubTelegramChannelName${username}`, data[0].channel_post.chat.title, 30 * 24 * 60 * 60);
+    } else {
+        title = `${await ctx.cache.get(`RSSHubTelegramChannelName${username}`)} - Telegram 频道` || `未获取到信息: 请将 Telegram 机器人 @${botName} 设为频道管理员后发一条或以上有效消息完成配置`;
+    }
+
     ctx.state.data = {
-        title: data[0] ? `${data[0].channel_post.chat.title} - Telegram 频道` : `未获取到信息: 请将 Telegram 机器人 @${botName} 设为频道管理员后发一条或以上有效消息完成配置`,
+        title: title,
         link: `https://t.me/${username}`,
         item: data.map((item) => {
             item = item.channel_post;
@@ -57,7 +72,6 @@ module.exports = async (ctx) => {
                 });
                 enter.sort((a, b) => a[0] - b[0]);
                 if (enter.length) {
-                    text.slice(0, enter[0][0]) + enter[0][1] + text.slice(enter[0][0], enter[1][0]) + enter[1][1] + text.slice(enter[1][0], enter[2][0]) + enter[2][1] + text.slice(enter[2][0]);
                     html = text.slice(0, enter[0][0]);
                     enter.forEach((en, index) => {
                         if (index !== enter.length - 1) {

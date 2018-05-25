@@ -17,11 +17,19 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 *   [Sayori Studio](https://t.me/SayoriStudio)
 
-[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+<p>
+    <a href="https://docs.rsshub.app/support/">
+        <img src="https://opencollective.com/static/images/become_sponsor.svg">
+    </a>
+</p>
 
 ### Contributors
 
-[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+<p>
+    <a href="https://github.com/DIYgod/RSSHub/graphs/contributors">
+        <img src="https://opencollective.com/RSSHub/contributors.svg?width=890">
+    </a>
+</p>
 
 ::: tip 提示
 
@@ -906,3 +914,17 @@ key: 产品密钥
 路由: `/telegram/channel/:username`
 
 参数: username，频道 username
+
+## Readhub
+
+### 分类
+
+举例: [https://rsshub.app/readhub/category/topic](https://rsshub.app/readhub/category/topic)
+
+路由: `/readhub/category/:category`
+
+参数: category，分类名
+
+| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
+| -------- | -------- | ---------- | ---------- |
+| topic    | news     | technews   | blockchain |
