@@ -226,4 +226,7 @@ router.get('/panda/room/:id', require('./routes/panda/room'));
 // v2ex
 router.get('/v2ex/topics/:type', require('./routes/v2ex/topics'));
 
+// GitHub
+router.get('/github/repos/:user', require('./routes/github/repos'));
+
 module.exports = router;
