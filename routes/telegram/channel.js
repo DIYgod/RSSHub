@@ -17,10 +17,17 @@ axios({
 module.exports = async (ctx) => {
     const username = ctx.params.username;
 
-    const response = await axios({
+    let response = await axios({
         method: 'get',
         url: `https://api.telegram.org/bot${config.telegram.token}/getUpdates?allowed_updates=[%22channel_post%22]`,
     });
+
+    if (response.data.result.length === 100) {
+        response = await axios({
+            method: 'get',
+            url: `https://api.telegram.org/bot${config.telegram.token}/getUpdates?allowed_updates=[%22channel_post%22]&offset=${response.data.result[50].update_id}`,
+        });
+    }
 
     const data = response.data.result.filter((item) => item.channel_post && item.channel_post.chat && item.channel_post.chat.username === username).reverse();
 
