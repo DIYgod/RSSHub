@@ -2,9 +2,8 @@ const axios = require('../../utils/axios');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    const token = 'ac97f3af103c6e26ed8d8ac1606af5f46398fee4';
     const user = ctx.params.user;
-    const uri = `https://api.github.com/users/${user}/repos` + `?access_token=${token}`;
+    const uri = `https://api.github.com/users/${user}/repos` + `?access_token=${config.github.access_token}`;
 
     const response = await axios({
         method: 'get',
