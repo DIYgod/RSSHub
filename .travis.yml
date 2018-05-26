@@ -8,19 +8,6 @@ install:
 script:
   - npm run lint
 
-before_deploy:
-  - npm run docs:build
-  - cd docs/.vuepress/dist
-  - echo 'rsshub.js.org' > CNAME
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GH_TOKEN
-  local-dir: docs/.vuepress/dist
-  on:
-    branch: master
-
 cache:
   yarn: true
   directories:
