@@ -1,3 +1,5 @@
+// 根 据 package.json 中的 engines 字段 在启动的时候强制限制 node 版本
+require('please-upgrade-node')(require('./package.json'));
 const Koa = require('koa');
 
 const logger = require('./utils/logger');
