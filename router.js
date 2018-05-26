@@ -236,4 +236,7 @@ if (config.telegram && config.telegram.token) {
 // readhub
 router.get('/readhub/category/:category', require('./routes/readhub/category'));
 
+// GitHub
+router.get('/github/repos/:user', require('./routes/github/repos'));
+
 module.exports = router;
