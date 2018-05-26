@@ -56,7 +56,7 @@
     "readall": "1.0.0",
     "redis": "2.8.0",
     "twit": "2.2.9",
-    "winston": "3.0.0-rc3"
+    "winston": "3.0.0-rc5"
   },
   "engines": {
     "node": ">=10.0.0"
