@@ -237,6 +237,10 @@ if (config.telegram && config.telegram.token) {
 router.get('/readhub/category/:category', require('./routes/readhub/category'));
 
 // GitHub
-router.get('/github/repos/:user', require('./routes/github/repos'));
+if (config.github && config.github.access_token) {
+    router.get('/github/repos/:user', require('./routes/github/repos'));
+} else {
+    logger.warn('GitHub RSS is disabled for lacking config.');
+}
 
 module.exports = router;
