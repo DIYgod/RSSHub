@@ -31,6 +31,7 @@ module.exports = async (ctx) => {
                 ORIGINAL_POST: '发布',
                 REPOST: '转发',
                 ANSWER: '回答',
+                QUESTION: '提问',
             };
 
             const linkMap = {
@@ -38,6 +39,7 @@ module.exports = async (ctx) => {
                 ORIGINAL_POST: `https://web.okjike.com/post-detail/${item.id}/originalPost`,
                 REPOST: `https://web.okjike.com/post-detail/${item.id}/repost`,
                 ANSWER: `https://m.okjike.com/answers/${item.id}`,
+                QUESTION: `https://m.okjike.com/questions/${item.id}`,
             };
 
             let linkTemplate = '';
@@ -51,7 +53,7 @@ module.exports = async (ctx) => {
                     imgTemplate += `<img referrerpolicy="no-referrer" src="${item.picUrl}"><br>`;
                 });
 
-            let content = item.content || (item.linkInfo && item.linkInfo.title) || (item.question && item.question.title) || '';
+            let content = item.content || (item.linkInfo && item.linkInfo.title) || (item.question && item.question.title) || item.title || '';
 
             let shortenTitle = '一条动态';
             if (content) {
@@ -70,9 +72,7 @@ module.exports = async (ctx) => {
 
                 const repostContent = `转发 ${screenNameTemplate}: ${item.target.content}${repostImgTemplate}`;
                 content = `${content}${repostContent}`.replace(/\n|\r/g, '<br>');
-            }
-
-            if (item.type === 'ANSWER') {
+            } else if (item.type === 'ANSWER') {
                 let answerTextTemplate = '';
                 let answerImgTemplate = '';
                 let answerImgKeys = [];
@@ -95,6 +95,8 @@ module.exports = async (ctx) => {
                 }
                 const answerContent = `回答: ${answerTextTemplate}${answerImgTemplate}`;
                 content = `${content}${answerContent}`.replace(/\n|\r/g, '<br>');
+            } else if (item.type === 'QUESTION') {
+                content = `在主题 <a href="https://web.okjike.com/topic/${item.topic.id}/official" target="_blank">${item.topic.content}</a> 提出了一个问题：<br><br>${content}`;
             }
 
             return {
