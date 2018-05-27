@@ -368,3 +368,7 @@ gcloud app deploy
 *   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
     *   `TELEGRAM_TOKEN`: Telegram 机器人 token
+
+*   `github`: [申请地址](https://github.com/settings/tokens)
+
+    *   `GITHUB_ACCESS_TOKEN`: GitHub Access Token

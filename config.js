@@ -33,4 +33,7 @@ module.exports = {
     telegram: {
         token: process.env.TELEGRAM_TOKEN,
     },
+    github: {
+        access_token: process.env.GITHUB_ACCESS_TOKEN,
+    },
 };

@@ -17,19 +17,11 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 *   [Sayori Studio](https://t.me/SayoriStudio)
 
-<p>
-    <a href="https://docs.rsshub.app/support/">
-        <img src="https://opencollective.com/static/images/become_sponsor.svg">
-    </a>
-</p>
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
 ### Contributors
 
-<p>
-    <a href="https://github.com/DIYgod/RSSHub/graphs/contributors">
-        <img src="https://opencollective.com/RSSHub/contributors.svg?width=890">
-    </a>
-</p>
+[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
 ::: tip 提示
 
@@ -928,3 +920,62 @@ key: 产品密钥
 | 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
 | -------- | -------- | ---------- | ---------- |
 | topic    | news     | technews   | blockchain |
+
+## Konachan.com Anime Wallpapers
+
+### Posts
+
+路由:
+
+*   `/konachan/post`
+*   `/konachan/post/:tags`
+
+举例:
+
+*   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
+*   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
+*   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
+
+### Popular Recent Posts
+
+路由:
+
+*   `/konachan/post/popular_recent` 默认过去 24 小时
+*   `/konachan/post/popular_recent/:period`
+
+举例:
+
+*   过去 24 小时:[https://rsshub.app/konachan/post/popular_recent/1d](https://rsshub.app/konachan/post/popular_recent/1d)
+*   过去一周:[https://rsshub.app/konachan/post/popular_recent/1w](https://rsshub.app/konachan/post/popular_recent/1w)
+*   过去一月:[https://rsshub.app/konachan/post/popular_recent/1m](https://rsshub.app/konachan/post/popular_recent/1m)
+*   过去一年:[https://rsshub.app/konachan/post/popular_recent/1y](https://rsshub.app/konachan/post/popular_recent?period=1y)
+
+## yande.re
+
+### Posts
+
+路由:
+
+*   `/yande.re/post`
+*   `/yande.re/post/:tags`
+
+举例:
+
+*   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
+*   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
+*   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
+*   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
+
+### Popular Recent Posts
+
+路由:
+
+*   `/yande.re/post/popular_recent` 默认过去 24 小时
+*   `/yande.re/post/popular_recent/:period`
+
+举例:
+
+*   过去 24 小时:[https://rsshub.app/yande.re/post/popular_recent/1d](https://rsshub.app/yande.re/post/popular_recent/1d)
+*   过去一周:[https://rsshub.app/yande.re/post/popular_recent/1w](https://rsshub.app/yande.re/post/popular_recent/1w)
+*   过去一月:[https://rsshub.app/yande.re/post/popular_recent/1m](https://rsshub.app/yande.re/post/popular_recent/1m)
+*   过去一年:[https://rsshub.app/yande.re/post/popular_recent/1y](https://rsshub.app/yande.re/post/popular_recent?period=1y)
