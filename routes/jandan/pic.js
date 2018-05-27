@@ -34,41 +34,7 @@ const jandan_magic = async (url) => {
 
 // jandan_decode is borrowed from jandan.net, which is used in function jandan_load_img.
 const jandan_decode = (m, r) => {
-    const q = 4;
-    r = md5(r);
-    const o = md5(r.substr(0, 16));
-    const n = md5(r.substr(16, 16));
-    const l = m.substr(0, q);
-    const c = o + md5(o + l);
-    let k;
-    m = m.substr(q);
-    k = base64_decode(m);
-
-    const h = new Array(256);
-    for (let g = 0; g < 256; g++) {
-        h[g] = g;
-    }
-    const b = new Array(256);
-    for (let g = 0; g < 256; g++) {
-        b[g] = c.charCodeAt(g % c.length);
-    }
-    for (let f = 0, g = 0; g < 256; g++) {
-        f = (f + h[g] + b[g]) % 256;
-        [h[g], h[f]] = [h[f], h[g]];
-    }
-
-    let t = '';
-    k = k.split('');
-    for (let p = 0, f = 0, g = 0; g < k.length; g++) {
-        p = (p + 1) % 256;
-        f = (f + h[p]) % 256;
-        [h[p], h[f]] = [h[f], h[p]];
-        t += chr(ord(k[g]) ^ h[(h[p] + h[f]) % 256]);
-    }
-    if ((t.substr(0, 10) === '0' || t.substr(0, 10) - time() > 0) && t.substr(10, 16) === md5(t.substr(26) + n).substr(0, 16)) {
-        t = t.substr(26);
-    }
-    return t;
+    return base64_decode(m);
 };
 
 module.exports = async (ctx) => {
