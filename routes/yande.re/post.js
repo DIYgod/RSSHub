@@ -24,7 +24,7 @@ module.exports = async (ctx) => {
         link: 'https://yande.re/post',
         item: posts.map((post) => {
             const content = (url) => {
-                let result = `<img src="${url}" />`;
+                let result = `<img referrerpolicy="no-referrer" src="${url}" />`;
                 if (post.source) {
                     result += `<a href="${post.source}">source</a>`;
                 }
