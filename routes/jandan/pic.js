@@ -2,12 +2,10 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
-const base64_decode = (i) => new Buffer(i, 'base64').toString('binary');
+const base64_decode = (i) => Buffer.from(i, 'base64').toString('binary');
 
 // jandan_decode is borrowed from jandan.net, which is used in function jandan_load_img.
-const jandan_decode = (m) => {
-    return base64_decode(m);
-};
+const jandan_decode = (m) => base64_decode(m);
 
 module.exports = async (ctx) => {
     const response = await axios({
