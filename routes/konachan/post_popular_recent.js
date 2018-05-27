@@ -2,7 +2,7 @@ const axios = require('../../utils/axios');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    const { period = '1d' } = ctx.query;
+    const { period = '1d' } = ctx.params;
 
     const response = await axios({
         method: 'get',
@@ -45,8 +45,8 @@ module.exports = async (ctx) => {
 
             return {
                 title: post.tags,
-                id: `${ctx.url}#${post.id}`,
-                guid: `${ctx.url}#${post.id}`,
+                id: `${ctx.path}#${post.id}`,
+                guid: `${ctx.path}#${post.id}`,
                 link: `https://konachan.com/post/show/${post.id}`,
                 author: post.author,
                 published: new Date(created_at).toISOString(),

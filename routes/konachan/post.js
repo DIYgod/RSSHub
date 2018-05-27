@@ -2,25 +2,25 @@ const axios = require('../../utils/axios');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    const { limit = 100, page, tags } = ctx.query;
+    const { tags = '' } = ctx.params;
 
     const response = await axios({
         method: 'get',
-        url: 'https://konachan.com/post.json',
+        url: `https://konachan.com/post.json?tags=${tags}`,
         headers: {
             'User-Agent': config.ua,
-        },
-        params: {
-            limit,
-            page,
-            tags,
         },
     });
 
     const posts = response.data;
 
+    let title = 'Konachan.com Anime Wallpapers';
+    if (tags) {
+        title = decodeURIComponent(tags) + ' - ' + title;
+    }
+
     ctx.state.data = {
-        title: 'Konachan.com Anime Wallpapers',
+        title,
         link: 'https://konachan.com/post',
         item: posts.map((post) => {
             const content = (url) => {
@@ -38,8 +38,8 @@ module.exports = async (ctx) => {
 
             return {
                 title: post.tags,
-                id: `${ctx.url}#${post.id}`,
-                guid: `${ctx.url}#${post.id}`,
+                id: `${ctx.path}#${post.id}`,
+                guid: `${ctx.path}#${post.id}`,
                 link: `https://konachan.com/post/show/${post.id}`,
                 author: post.author,
                 published: new Date(created_at).toISOString(),
