@@ -243,4 +243,10 @@ if (config.github && config.github.access_token) {
     logger.warn('GitHub RSS is disabled for lacking config.');
 }
 
+// konachan
+router.get('/konachan/post', require('./routes/konachan/post'));
+router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan/post/:tags', require('./routes/konachan/post'));
+router.get('/konachan/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
+
 module.exports = router;
