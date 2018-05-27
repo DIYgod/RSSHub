@@ -1,39 +1,11 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const crypto = require('crypto');
 const config = require('../../config');
-
-const md5 = (i) =>
-    crypto
-        .createHash('md5')
-        .update(i)
-        .digest()
-        .toString('hex');
 
 const base64_decode = (i) => new Buffer(i, 'base64').toString('binary');
 
-const chr = (i) => String.fromCharCode(i);
-
-const ord = (i) => i.charCodeAt();
-
-const time = () => parseInt(new Date().getTime() / 1000);
-
-// jandan_magic will load a magic string from jandan's script, which will be used in jandan_decode.
-const jandan_magic = async (url) => {
-    const script = await axios({
-        method: 'get',
-        url: 'http:' + url,
-        headers: {
-            'User-Agent': config.ua,
-            Referer: 'http://jandan.net',
-        },
-    });
-    const regex = /e,"([a-zA-Z0-9]{32})"/;
-    return script.data.match(regex)[1];
-};
-
 // jandan_decode is borrowed from jandan.net, which is used in function jandan_load_img.
-const jandan_decode = (m, r) => {
+const jandan_decode = (m) => {
     return base64_decode(m);
 };
 
@@ -48,15 +20,6 @@ module.exports = async (ctx) => {
     });
 
     const $ = cheerio.load(response.data);
-
-    let script_url = '';
-    $('script').each((index, item) => {
-        const s = $(item).attr('src');
-        if (s && s.startsWith('//cdn.jandan.net/static/min/')) {
-            script_url = s;
-        }
-    });
-    const magic_string = await jandan_magic(script_url);
 
     const items = Array();
     $('.commentlist > li').each((_, item) => {
@@ -84,7 +47,7 @@ module.exports = async (ctx) => {
         if (img_url === null) {
             return;
         }
-        img_url = jandan_decode(img_url, magic_string);
+        img_url = jandan_decode(img_url);
         img_url = img_url.replace(/(\/\/\w+\.sinaimg\.cn\/)(\w+)(\/.+\.(gif|jpg|jpeg))/, '$1large$3');
 
         // TODO: should load user's comments.
