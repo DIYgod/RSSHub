@@ -249,4 +249,10 @@ router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popu
 router.get('/konachan/post/:tags', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 
+// yande.re
+router.get('/yande.re/post', require('./routes/yande.re/post'));
+router.get('/yande.re/post/popular_recent', require('./routes/yande.re/post_popular_recent'));
+router.get('/yande.re/post/:tags', require('./routes/yande.re/post'));
+router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/post_popular_recent'));
+
 module.exports = router;
