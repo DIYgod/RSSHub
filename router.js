@@ -236,6 +236,13 @@ if (config.telegram && config.telegram.token) {
 // readhub
 router.get('/readhub/category/:category', require('./routes/readhub/category'));
 
+// GitHub
+if (config.github && config.github.access_token) {
+    router.get('/github/repos/:user', require('./routes/github/repos'));
+} else {
+    logger.warn('GitHub RSS is disabled for lacking config.');
+}
+
 // konachan
 router.get('/konachan/post', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));

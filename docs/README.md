@@ -17,19 +17,11 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 *   [Sayori Studio](https://t.me/SayoriStudio)
 
-<p>
-    <a href="https://docs.rsshub.app/support/">
-        <img src="https://opencollective.com/static/images/become_sponsor.svg">
-    </a>
-</p>
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
 ### Contributors
 
-<p>
-    <a href="https://github.com/DIYgod/RSSHub/graphs/contributors">
-        <img src="https://opencollective.com/RSSHub/contributors.svg?width=890">
-    </a>
-</p>
+[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
 ::: tip 提示
 

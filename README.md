@@ -119,6 +119,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     *   频道
 *   Readhub
     *   分类
+*   GitHub
+    *   用户仓库
 *   Konachan.com Anime Wallpapers
     *   posts
     *   Popular Recent Posts
