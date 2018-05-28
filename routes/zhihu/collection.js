@@ -1,6 +1,6 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
+const utils = require('./utils');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -9,9 +9,8 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://www.zhihu.com/collection/${id}`,
         headers: {
-            'User-Agent': config.ua,
+            ...utils.header,
             Referer: `https://www.zhihu.com/collection/${id}`,
-            cookie: config.zhihu.cookie,
         },
     });
 
