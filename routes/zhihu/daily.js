@@ -17,7 +17,7 @@ module.exports = async (ctx) => {
     const storyList = listRes.data.stories.filter((el) => el.type === 0);
     const resultItem = [];
     for (let i = 0; i < storyList.length; i++) {
-        const url = 'https://news-at.zhihu.com/api/4/news/' + storyList[i].id;
+        const url = 'https://news-at.zhihu.com/story/' + storyList[i].id;
         const item = {
             title: storyList[i].title,
             description: '',
