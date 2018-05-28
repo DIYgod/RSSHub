@@ -1,5 +1,5 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
+const utils = require('./utils');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,11 +8,8 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://www.zhihu.com/api/v4/members/${id}/activities?limit=7`,
         headers: {
-            'User-Agent': config.ua,
+            ...utils.header,
             Referer: `https://www.zhihu.com/people/${id}/activities`,
-            authorization: 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
-            'X-API-VERSION': '3.0.40',
-            cookie: config.zhihu.cookie,
         },
     });
 
