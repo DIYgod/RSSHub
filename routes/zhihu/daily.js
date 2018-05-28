@@ -11,6 +11,7 @@ module.exports = async (ctx) => {
         headers: {
             'User-Agent': config.ua,
             Referer: 'https://news-at.zhihu.com/api/4/news/latest',
+            cookie: config.zhihu.cookie,
         },
     });
     // 根据api的说明，过滤掉极个别站外链接

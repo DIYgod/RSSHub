@@ -11,6 +11,7 @@ module.exports = async (ctx) => {
         headers: {
             'User-Agent': config.ua,
             Referer: `https://www.zhihu.com/collection/${id}`,
+            cookie: config.zhihu.cookie,
         },
     });
 
