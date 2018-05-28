@@ -21,11 +21,11 @@ module.exports = async (ctx) => {
         },
     });
 
-    if (listRes.status >= 400) {
+    if (listRes.status === 403) {
         throw 'list resource api returned status code ' + listRes.status;
     }
 
-    if (infoRes.status >= 400) {
+    if (infoRes.status === 403) {
         throw 'info resource api returned status code ' + infoRes.status;
     }
 
