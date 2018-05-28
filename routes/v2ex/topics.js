@@ -33,6 +33,7 @@ module.exports = async (ctx) => {
             pubDate: new Date(item.created * 1000).toUTCString(),
             guid: item.id,
             link: item.url,
+            author: item.member.username,
         })),
     };
 };
