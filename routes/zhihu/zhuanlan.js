@@ -10,6 +10,7 @@ module.exports = async (ctx) => {
         headers: {
             'User-Agent': config.ua,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
+            cookie: config.zhihu.cookie,
         },
     });
     const infoRes = await axios({

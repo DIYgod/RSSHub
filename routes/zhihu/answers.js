@@ -12,6 +12,7 @@ module.exports = async (ctx) => {
             Referer: `https://www.zhihu.com/people/${id}/answers`,
             authorization: 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20',
             'X-API-VERSION': '3.0.40',
+            cookie: config.zhihu.cookie,
         },
     });
 

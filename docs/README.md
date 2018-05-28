@@ -441,6 +441,12 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ## 知乎
 
+::: warning 注意
+
+知乎反爬虫策略非常严格，以下演示经常失效，建议自搭
+
+:::
+
 ### 收藏夹
 
 举例: [https://rsshub.app/zhihu/collection/26444956](https://rsshub.app/zhihu/collection/26444956)

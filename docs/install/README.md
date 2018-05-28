@@ -225,7 +225,7 @@ $ docker pull diygod/rsshub
 以设置缓存时间为 1 小时举例，只需要在运行时增加参数：`-e CACHE_EXPIRE=3600`
 
 ```bash
-$ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 PORT=1000 diygod/rsshub
+$ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
 更多配置项请看 [应用配置](#应用配置)
