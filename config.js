@@ -36,7 +36,4 @@ module.exports = {
     github: {
         access_token: process.env.GITHUB_ACCESS_TOKEN,
     },
-    zhihu: {
-        cookie: process.env.ZHIHU_COOKIE,
-    },
 };
