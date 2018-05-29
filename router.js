@@ -45,7 +45,7 @@ router.get('/', async (ctx) => {
             },
             {
                 name: '请求频率',
-                value: (ctx.debug.request / time * 60).toFixed(3) + ' 次/分钟',
+                value: ((ctx.debug.request / time) * 60).toFixed(3) + ' 次/分钟',
             },
             {
                 name: '缓存命中率',

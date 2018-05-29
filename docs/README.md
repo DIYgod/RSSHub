@@ -13,9 +13,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### Sponsors
 
-*   [rixCloud](https://rixcloud.us)
+-   [rixCloud](https://rixcloud.us)
 
-*   [Sayori Studio](https://t.me/SayoriStudio)
+-   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -37,21 +37,21 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 filter 选出想要的内容
 
-*   filter: 过滤标题和描述
+-   filter: 过滤标题和描述
 
-*   filter_title: 过滤标题
+-   filter_title: 过滤标题
 
-*   filter_description: 过滤描述
+-   filter_description: 过滤描述
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
 
 filterout 去掉不要的内容
 
-*   filterout: 过滤标题和描述
+-   filterout: 过滤标题和描述
 
-*   filterout_title: 过滤标题
+-   filterout_title: 过滤标题
 
-*   filterout_description: 过滤描述
+-   filterout_description: 过滤描述
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
 
@@ -67,11 +67,11 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 举例:
 
-*   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
-*   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
-*   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
-*   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
-*   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
+-   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
+-   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
+-   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
+-   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
+-   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
 ## RSSHub
 
@@ -931,8 +931,8 @@ key: 产品密钥
 
 ::: tip 提示
 
-*   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
-*   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
+-   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
 
 :::
 
@@ -940,28 +940,28 @@ key: 产品密钥
 
 路由:
 
-*   `/konachan/post`
-*   `/konachan/post/:tags`
+-   `/konachan/post`
+-   `/konachan/post/:tags`
 
 举例:
 
-*   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
-*   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
-*   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
+-   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
+-   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
+-   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
 
 ### Popular Recent Posts
 
 路由:
 
-*   `/konachan/post/popular_recent` 默认过去 24 小时
-*   `/konachan/post/popular_recent/:period`
+-   `/konachan/post/popular_recent` 默认过去 24 小时
+-   `/konachan/post/popular_recent/:period`
 
 举例:
 
-*   过去 24 小时:[https://rsshub.app/konachan/post/popular_recent/1d](https://rsshub.app/konachan/post/popular_recent/1d)
-*   过去一周:[https://rsshub.app/konachan/post/popular_recent/1w](https://rsshub.app/konachan/post/popular_recent/1w)
-*   过去一月:[https://rsshub.app/konachan/post/popular_recent/1m](https://rsshub.app/konachan/post/popular_recent/1m)
-*   过去一年:[https://rsshub.app/konachan/post/popular_recent/1y](https://rsshub.app/konachan/post/popular_recent?period=1y)
+-   过去 24 小时:[https://rsshub.app/konachan/post/popular_recent/1d](https://rsshub.app/konachan/post/popular_recent/1d)
+-   过去一周:[https://rsshub.app/konachan/post/popular_recent/1w](https://rsshub.app/konachan/post/popular_recent/1w)
+-   过去一月:[https://rsshub.app/konachan/post/popular_recent/1m](https://rsshub.app/konachan/post/popular_recent/1m)
+-   过去一年:[https://rsshub.app/konachan/post/popular_recent/1y](https://rsshub.app/konachan/post/popular_recent?period=1y)
 
 ## yande.re
 
@@ -969,26 +969,26 @@ key: 产品密钥
 
 路由:
 
-*   `/yande.re/post`
-*   `/yande.re/post/:tags`
+-   `/yande.re/post`
+-   `/yande.re/post/:tags`
 
 举例:
 
-*   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
-*   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
-*   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
-*   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
+-   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
+-   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
+-   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
+-   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
 
 ### Popular Recent Posts
 
 路由:
 
-*   `/yande.re/post/popular_recent` 默认过去 24 小时
-*   `/yande.re/post/popular_recent/:period`
+-   `/yande.re/post/popular_recent` 默认过去 24 小时
+-   `/yande.re/post/popular_recent/:period`
 
 举例:
 
-*   过去 24 小时:[https://rsshub.app/yande.re/post/popular_recent/1d](https://rsshub.app/yande.re/post/popular_recent/1d)
-*   过去一周:[https://rsshub.app/yande.re/post/popular_recent/1w](https://rsshub.app/yande.re/post/popular_recent/1w)
-*   过去一月:[https://rsshub.app/yande.re/post/popular_recent/1m](https://rsshub.app/yande.re/post/popular_recent/1m)
-*   过去一年:[https://rsshub.app/yande.re/post/popular_recent/1y](https://rsshub.app/yande.re/post/popular_recent?period=1y)
+-   过去 24 小时:[https://rsshub.app/yande.re/post/popular_recent/1d](https://rsshub.app/yande.re/post/popular_recent/1d)
+-   过去一周:[https://rsshub.app/yande.re/post/popular_recent/1w](https://rsshub.app/yande.re/post/popular_recent/1w)
+-   过去一月:[https://rsshub.app/yande.re/post/popular_recent/1m](https://rsshub.app/yande.re/post/popular_recent/1m)
+-   过去一年:[https://rsshub.app/yande.re/post/popular_recent/1y](https://rsshub.app/yande.re/post/popular_recent?period=1y)
