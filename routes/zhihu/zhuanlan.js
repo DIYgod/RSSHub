@@ -1,5 +1,5 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
+const utils = require('./utils');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,7 +8,7 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://zhuanlan.zhihu.com/api/columns/${id}/posts?limit=20`,
         headers: {
-            'User-Agent': config.ua,
+            ...utils.header,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
         },
     });
@@ -16,7 +16,7 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://zhuanlan.zhihu.com/api/columns/${id}`,
         headers: {
-            'User-Agent': config.ua,
+            ...utils.header,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
         },
     });
