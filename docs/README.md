@@ -994,3 +994,39 @@ key: 产品密钥
 -   过去一周:[https://rsshub.app/yande.re/post/popular_recent/1w](https://rsshub.app/yande.re/post/popular_recent/1w)
 -   过去一月:[https://rsshub.app/yande.re/post/popular_recent/1m](https://rsshub.app/yande.re/post/popular_recent/1m)
 -   过去一年:[https://rsshub.app/yande.re/post/popular_recent/1y](https://rsshub.app/yande.re/post/popular_recent?period=1y)
+
+## GitHub
+
+::: tip 提示
+
+GitHub 官方也提供了一些 RSS:
+
+-   仓库 releases: https://github.com/:owner/:repo/releases.atom
+-   仓库 commits: https://github.com/:owner/:repo/commits.atom
+-   用户动态: https://github.com/:user.atom
+
+:::
+
+### 用户仓库
+
+举例: [https://rsshub.app/github/repos/DIYgod](https://rsshub.app/github/repos/DIYgod)
+
+路由: `/github/repos/:user`
+
+参数: user，用户名
+
+### Trending
+
+举例:
+
+[https://rsshub.app/github/trending/daily](https://rsshub.app/github/trending/daily)
+
+[https://rsshub.app/github/trending/daily/javascript](https://rsshub.app/github/trending/daily/javascript)
+
+路由: `/github/trending/:since/:language?`
+
+参数:
+
+since，时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到，可选 daily weekly monthly
+
+language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到

@@ -240,8 +240,9 @@ router.get('/readhub/category/:category', require('./routes/readhub/category'));
 if (config.github && config.github.access_token) {
     router.get('/github/repos/:user', require('./routes/github/repos'));
 } else {
-    logger.warn('GitHub RSS is disabled for lacking config.');
+    logger.warn('GitHub Repos RSS is disabled for lacking config.');
 }
+router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
 
 // konachan
 router.get('/konachan/post', require('./routes/konachan/post'));
