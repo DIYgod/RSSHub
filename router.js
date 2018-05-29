@@ -245,9 +245,17 @@ if (config.github && config.github.access_token) {
 
 // konachan
 router.get('/konachan/post', require('./routes/konachan/post'));
+router.get('/konachan.com/post', require('./routes/konachan/post'));
+router.get('/konachan.net/post', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.com/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.net/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan/post/:tags', require('./routes/konachan/post'));
+router.get('/konachan.com/post/:tags', require('./routes/konachan/post'));
+router.get('/konachan.net/post/:tags', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.com/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.net/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 
 // yande.re
 router.get('/yande.re/post', require('./routes/yande.re/post'));

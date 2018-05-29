@@ -4,9 +4,12 @@ const config = require('../../config');
 module.exports = async (ctx) => {
     const { period = '1d' } = ctx.params;
 
+    const baseURL = ctx.path.startsWith('/konachan.net') ? 'https://konachan.net' : 'https://konachan.com';
+
     const response = await axios({
         method: 'get',
-        url: 'https://konachan.com/post/popular_recent.json',
+        baseURL,
+        url: '/post/popular_recent.json',
         headers: {
             'User-Agent': config.ua,
         },
@@ -27,16 +30,19 @@ module.exports = async (ctx) => {
     const title = titles[period] || titles['1d'];
 
     ctx.state.data = {
-        title: `${title} - Konachan.com Anime Wallpapers`,
-        link: 'https://konachan.com/post/popular_recent',
+        title: `${title} - Konachan Anime Wallpapers`,
+        link: `${baseURL}/post/popular_recent`,
         item: posts.map((post) => {
             const content = (url) => {
-                let result = `<img src="${url}" />`;
+                if (url.startsWith('//')) {
+                    url = 'https:' + url;
+                }
+                let result = `<img referrerpolicy="no-referrer" src="${url}" />`;
                 if (post.source) {
                     result += `<a href="${post.source}">source</a>`;
                 }
                 if (post.parent_id) {
-                    result += `<a href="https://konachan.com/post/show/${post.parent_id}">parent</a>`;
+                    result += `<a href="${baseURL}/post/show/${post.parent_id}">parent</a>`;
                 }
                 return result;
             };
@@ -47,7 +53,7 @@ module.exports = async (ctx) => {
                 title: post.tags,
                 id: `${ctx.path}#${post.id}`,
                 guid: `${ctx.path}#${post.id}`,
-                link: `https://konachan.com/post/show/${post.id}`,
+                link: `${baseURL}/post/show/${post.id}`,
                 author: post.author,
                 published: new Date(created_at).toISOString(),
                 pubDate: new Date(created_at).toUTCString(),
