@@ -27,7 +27,7 @@ module.exports = async (ctx) => {
         description: `V2EX-${title}`,
         item: data.map((item) => ({
             title: item.title,
-            description: item.content,
+            description: `${item.member.username}: ${item.title}`,
             content: item.content,
             content_rendered: item.content_rendered,
             pubDate: new Date(item.created * 1000).toUTCString(),
