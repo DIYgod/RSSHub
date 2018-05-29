@@ -927,7 +927,14 @@ key: 产品密钥
 | -------- | -------- | ---------- | ---------- |
 | topic    | news     | technews   | blockchain |
 
-## Konachan.com Anime Wallpapers
+## Konachan Anime Wallpapers
+
+::: tip 提示
+
+*   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
+*   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
+
+:::
 
 ### Posts
 
