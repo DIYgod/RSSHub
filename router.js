@@ -45,7 +45,7 @@ router.get('/', async (ctx) => {
             },
             {
                 name: '请求频率',
-                value: (ctx.debug.request / time * 60).toFixed(3) + ' 次/分钟',
+                value: ((ctx.debug.request / time) * 60).toFixed(3) + ' 次/分钟',
             },
             {
                 name: '缓存命中率',
@@ -240,14 +240,23 @@ router.get('/readhub/category/:category', require('./routes/readhub/category'));
 if (config.github && config.github.access_token) {
     router.get('/github/repos/:user', require('./routes/github/repos'));
 } else {
-    logger.warn('GitHub RSS is disabled for lacking config.');
+    logger.warn('GitHub Repos RSS is disabled for lacking config.');
 }
+router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
 
 // konachan
 router.get('/konachan/post', require('./routes/konachan/post'));
+router.get('/konachan.com/post', require('./routes/konachan/post'));
+router.get('/konachan.net/post', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.com/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.net/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan/post/:tags', require('./routes/konachan/post'));
+router.get('/konachan.com/post/:tags', require('./routes/konachan/post'));
+router.get('/konachan.net/post/:tags', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.com/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.net/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 
 // yande.re
 router.get('/yande.re/post', require('./routes/yande.re/post'));
