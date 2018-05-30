@@ -3,34 +3,29 @@ const config = require('../../config');
 
 module.exports = async (ctx) => {
     const user = ctx.params.user;
-    const uri = `https://api.github.com/users/${user}/repos` + `?access_token=${config.github.access_token}`;
 
     const response = await axios({
         method: 'get',
-        url: uri,
+        url: `https://api.github.com/users/${user}/repos`,
         headers: {
             'User-Agent': config.ua,
-            Referer: uri,
+        },
+        params: {
+            sort: 'created',
+            access_token: config.github.access_token,
         },
     });
     const data = response.data;
     ctx.state.data = {
-        title: `GitHub Repos By ${user}`,
-        link: uri,
-        description: `GitHub Repos By ${user}`,
+        title: `${user}'s GitHub repositories`,
+        link: `https://github.com/${user}`,
         item:
             data &&
-            data.map((item) => {
-                let repoDescription = item.description;
-                if (repoDescription === null) {
-                    repoDescription = 'No description added';
-                }
-                return {
-                    title: `${item.name}`,
-                    guid: `${item.id}`,
-                    description: `${repoDescription}`,
-                    link: `${item.url}`,
-                };
-            }),
+            data.map((item) => ({
+                title: item.name,
+                description: item.description || 'No description',
+                pubDate: new Date(item.created_at).toUTCString(),
+                link: item.html_url,
+            })),
     };
 };

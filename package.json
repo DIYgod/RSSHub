@@ -31,7 +31,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.0",
     "lint-staged": "^7.1.2",
-    "prettier": "^1.12.1",
+    "prettier": "^1.13.0",
     "prettier-check": "^2.0.0",
     "vuepress": "0.10.0",
     "yorkie": "^1.0.3"

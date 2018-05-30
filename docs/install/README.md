@@ -30,9 +30,9 @@ usage: git [--version] [--help] [-C <path>] [-c name=value]
 
 :::
 
-*   Windows：从 Git 官网直接[下载安装程序](https://git-scm.com/downloads)。
-*   MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
-*   Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
+-   Windows：从 Git 官网直接[下载安装程序](https://git-scm.com/downloads)。
+-   MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
+-   Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
 
 ### 安装 Node.JS
 
@@ -341,34 +341,34 @@ gcloud app deploy
 
 ### 部分 RSS 模块配置
 
-*   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
+-   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
 
-    *   `PIXIV_USERNAME`: Pixiv 用户名
+    -   `PIXIV_USERNAME`: Pixiv 用户名
 
-    *   `PIXIV_PASSWORD`: Pixiv 密码
+    -   `PIXIV_PASSWORD`: Pixiv 密码
 
-*   `disqus`: [申请地址](https://disqus.com/api/applications/)
+-   `disqus`: [申请地址](https://disqus.com/api/applications/)
 
-    *   `DISQUS_API_KEY`: Disqus API
+    -   `DISQUS_API_KEY`: Disqus API
 
-*   `twitter`: [申请地址](https://apps.twitter.com)
+-   `twitter`: [申请地址](https://apps.twitter.com)
 
-    *   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
+    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
 
-    *   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
+    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
 
-    *   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
+    -   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
 
-    *   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
+    -   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
 
-*   `youtube`: [申请地址](https://console.developers.google.com/)
+-   `youtube`: [申请地址](https://console.developers.google.com/)
 
-    *   `YOUTUBE_KEY`: YouTube API Key
+    -   `YOUTUBE_KEY`: YouTube API Key
 
-*   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+-   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
-    *   `TELEGRAM_TOKEN`: Telegram 机器人 token
+    -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
-*   `github`: [申请地址](https://github.com/settings/tokens)
+-   `github`: [申请地址](https://github.com/settings/tokens)
 
-    *   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+    -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
