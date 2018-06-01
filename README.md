@@ -127,6 +127,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 -   yande.re
     -   posts
     -   Popular Recent Posts
+-   纽约时报
+    -   新闻早报
 
 ## 鸣谢
 
