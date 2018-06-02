@@ -9,6 +9,6 @@ module.exports = async (ctx, next) => {
             'Content-Type': 'text/html; charset=UTF-8',
         });
         ctx.body = `RSSHub 发生了一些意外: <pre>${err instanceof Error ? err.stack : err}</pre>`;
-        ctx.status = 500;
+        ctx.status = 404;
     }
 };

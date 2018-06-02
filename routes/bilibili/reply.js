@@ -1,23 +1,10 @@
 const axios = require('../../utils/axios');
 const config = require('../../config');
-const cheerio = require('cheerio');
-const iconv = require('iconv-lite');
+const cache = require('./cache');
 
 module.exports = async (ctx) => {
     const aid = ctx.params.aid;
-
-    const nameResponse = await axios({
-        method: 'get',
-        url: `https://www.bilibili.com/video/av${aid}`,
-        headers: {
-            'User-Agent': config.ua,
-        },
-        responseType: 'arraybuffer',
-    });
-    const responseHtml = iconv.decode(nameResponse.data, 'UTF-8');
-    const $ = cheerio.load(responseHtml);
-    let name = $('title').text();
-    name = name.substr(0, name.indexOf('_哔哩哔哩'));
+    const name = await cache.getVideoNameFromAid(ctx, aid);
 
     const response = await axios({
         method: 'get',

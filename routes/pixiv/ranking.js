@@ -36,8 +36,7 @@ module.exports = async (ctx) => {
     const date = ctx.params.date ? new Date(ctx.params.date) : new Date();
 
     if (!getToken()) {
-        ctx.throw(500);
-        return;
+        throw 'pixiv not login';
     }
 
     const response = await getRanking(mode, ctx.params.date && date, getToken());
