@@ -40,6 +40,9 @@ router.get('/', async (ctx) => {
         showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
     }
 
+    ctx.set({
+        'Cache-Control': 'no-cache',
+    });
     ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
         showDebug,
         debug: [
