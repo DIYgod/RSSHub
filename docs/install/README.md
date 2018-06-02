@@ -12,7 +12,7 @@ sidebar: auto
 
 ### 在安装之前
 
-在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 10.0](https://nodejs.org/)。
+在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 8.0.0](https://nodejs.org/)。
 
 ### 安装 Git
 
