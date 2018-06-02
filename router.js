@@ -272,4 +272,7 @@ router.get('/yande.re/post/popular_recent', require('./routes/yande.re/post_popu
 router.get('/yande.re/post/:tags', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/post_popular_recent'));
 
+// nytimes
+router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
+
 module.exports = router;

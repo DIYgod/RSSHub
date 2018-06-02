@@ -1030,3 +1030,19 @@ GitHub 官方也提供了一些 RSS:
 since，时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到，可选 daily weekly monthly
 
 language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
+
+## 纽约时报
+
+::: tip 提示
+
+纽约时报 RSS: https://cn.nytimes.com/rss/
+
+:::
+
+### 新闻早报
+
+举例: [https://rsshub.app/nytimes/morning_post](https://rsshub.app/nytimes/morning_post)
+
+路由: `/nytimes/morning_post`
+
+参数: 无
