@@ -27,7 +27,7 @@ module.exports = async (ctx) => {
         const el = $(list[i]);
         const item = {
             title: el.text(),
-            link: el.attr('href'),
+            link: `https://www.uukanshu.com${el.attr('href')}`,
         };
         chapter_item.push(item);
     }
@@ -36,6 +36,6 @@ module.exports = async (ctx) => {
         link: `https://www.uukanshu.com/b/${uid}`,
         description: $('.jieshao_content h3').text(),
         image: cover_url,
-        item: `https://www.uukanshu.com/b/${uid}/${chapter_item}`,
+        item: chapter_item,
     };
 };
