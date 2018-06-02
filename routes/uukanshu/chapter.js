@@ -22,15 +22,20 @@ module.exports = async (ctx) => {
     const name = $('.jieshao_content>h1>a').text();
     const list = $('#chapterList li a');
     const cover_url = $('.bookImg>img').attr('src');
-
+    const chapter_item = [];
+    for (let i = 0; i < list.length; i++) {
+        const el = $(list[i]);
+        const item = {
+            title: el.text(),
+            link: el.attr('href'),
+        };
+        chapter_item.push(item);
+    }
     ctx.state.data = {
         title: `UU看书 ${name}`,
         link: `https://www.uukanshu.com/b/${uid}`,
         description: $('.jieshao_content h3').text(),
         image: cover_url,
-        item: list.map((i, e) => ({
-            title: $(e).attr('title'),
-            link: `https://www.uukanshu.com${$(e).attr('href')}`,
-        })),
+        item: `https://www.uukanshu.com/b/${uid}/${chapter_item}`,
     };
 };
