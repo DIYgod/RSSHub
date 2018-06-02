@@ -33,7 +33,15 @@ router.get('/', async (ctx) => {
         hotIPsValue += `${ctx.debug.ips[item]}&nbsp;&nbsp;${item}<br>`;
     });
 
+    let showDebug;
+    if (!config.debugInfo || config.debugInfo === 'false') {
+        showDebug = false;
+    } else {
+        showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
+    }
+
     ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
+        showDebug,
         debug: [
             {
                 name: 'git hash',

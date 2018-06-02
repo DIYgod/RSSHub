@@ -87,6 +87,7 @@
             <a href="https://diygod.me" target="_blank">DIYgod</a>
         </p>
 
+        {{ if showDebug }}
         <details>
             <summary>debug</summary>
             {{ each debug }}
@@ -96,6 +97,7 @@
             </div>
             {{ /each }}
         </details>
+        {{ /if }}
     </div>
 </body>
 
