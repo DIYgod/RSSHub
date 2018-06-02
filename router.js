@@ -278,4 +278,7 @@ router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/p
 // nytimes
 router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
+// uukanshu
+router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
+
 module.exports = router;

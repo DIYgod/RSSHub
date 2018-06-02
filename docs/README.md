@@ -1046,3 +1046,13 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 路由: `/nytimes/morning_post`
 
 参数: 无
+
+## UU 看书
+
+### 小说章节
+
+举例: [https://rsshub.app/uukanshu/chapter/49621](https://rsshub.app/uukanshu/chapter/49621)
+
+路由: `/uukanshu/chapter/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
