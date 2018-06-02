@@ -11,7 +11,7 @@ module.exports = async (ctx) => {
         url: `https://www.uukanshu.com/b/${uid}`,
         headers: {
             'User-Agent': config.ua,
-            Referer: 'https://github.com/DIYgod/RSSHub',
+            Referer: 'https://www.uukanshu.com/b/${uid}',
         },
         responseType: 'arraybuffer',
     });
