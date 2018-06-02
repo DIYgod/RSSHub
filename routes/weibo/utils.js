@@ -1,7 +1,7 @@
 const weiboUtils = {
     format: (status) => {
         // 长文章的处理
-        let temp = status.longText ? status.longText.longTextContent.replace(/\n/g, '<br>') : status.text;
+        let temp = (status.longText && status.longText.longTextContent.replace(/\n/g, '<br>')) || status.text || '';
         // 表情图标转换为文字
         temp = temp.replace(/<span class="url-icon"><img src=".*?" style="width:1em;height:1em;" alt="(.*?)"><\/span>/g, '$1');
         // 去掉外部链接的图标
