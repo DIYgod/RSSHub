@@ -1,10 +1,9 @@
 const art = require('art-template');
 const path = require('path');
+const blacklist = (process.env.BLACKLIST && process.env.BLACKLIST.split(',')) || [];
+const whitelist = process.env.WHITELIST && process.env.WHITELIST.split(',');
 
 module.exports = async (ctx, next) => {
-    const blacklist = (process.env.BLACKLIST && process.env.BLACKLIST.split(',')) || [];
-    const whitelist = process.env.WHITELIST && process.env.WHITELIST.split(',');
-
     const ip = ctx.ips[0] || ctx.ip;
     const requestPath = ctx.request.path;
 
