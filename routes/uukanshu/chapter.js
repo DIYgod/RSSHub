@@ -31,7 +31,6 @@ module.exports = async (ctx) => {
         item: list.map((i, e) => ({
             title: $(e).attr('title'),
             link: `https://www.uukanshu.com${$(e).attr('href')}`,
-            })
-        ),
+        })),
     };
 };
