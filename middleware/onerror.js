@@ -8,7 +8,7 @@ module.exports = async (ctx, next) => {
         ctx.set({
             'Content-Type': 'text/html; charset=UTF-8',
         });
-        ctx.body = 'RSSHub 发生了一些意外: ' + err;
+        ctx.body = `RSSHub 发生了一些意外: <pre>${err instanceof Error ? err.stack : err}</pre>`;
         ctx.status = 500;
     }
 };
