@@ -10,7 +10,7 @@ module.exports = async (ctx) => {
         headers: {
             ...utils.header,
             Referer: `https://www.zhihu.com/people/${id}/answers`,
-            Authorization: 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20', //hard-coded in js
+            Authorization: 'oauth c3cef7c66a1843f8b3a9e6a1e3160e20', // hard-coded in js
         },
     });
 
