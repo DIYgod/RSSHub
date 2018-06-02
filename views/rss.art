@@ -20,10 +20,10 @@
         <item>
             <title><![CDATA[{{@ $value.title }}]]></title>
             <description><![CDATA[{{@ $value.description || $value.title }}]]></description>
-            {{ if $value.pubDate }}
-            <pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
+            {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
             <guid>{{ $value.guid || $value.link }}</guid>
             <link>{{ $value.link }}</link>
+            {{ if $value.author }}<author><![CDATA[{{ $value.author }}]]></author>{{ /if }}
         </item>
         {{ /each }}
     </channel>
