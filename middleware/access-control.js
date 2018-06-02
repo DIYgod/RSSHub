@@ -20,11 +20,11 @@ module.exports = async (ctx, next) => {
             updated: new Date().toISOString(),
             ttl: 24 * 60 * 60,
             title: `没有访问权限: ${!pathAllowed ? '该路由' : '你的 IP '}已被列为黑名单`,
-            link: 'https://docs.rsshub.app/install/#%E9%BB%91%E5%90%8D%E5%8D%95',
+            link: 'https://docs.rsshub.app/install/#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6',
             item: [
                 {
                     title: `没有访问权限: ${!pathAllowed ? '该路由' : '你的 IP '}已被列为黑名单`,
-                    link: 'https://docs.rsshub.app/install/#%E9%BB%91%E5%90%8D%E5%8D%95',
+                    link: 'https://docs.rsshub.app/install/#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6',
                 },
             ],
         });
