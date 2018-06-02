@@ -33,7 +33,15 @@ router.get('/', async (ctx) => {
         hotIPsValue += `${ctx.debug.ips[item]}&nbsp;&nbsp;${item}<br>`;
     });
 
+    let showDebug;
+    if (!config.debugInfo || config.debugInfo === 'false') {
+        showDebug = false;
+    } else {
+        showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
+    }
+
     ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
+        showDebug,
         debug: [
             {
                 name: 'git hash',
@@ -263,5 +271,8 @@ router.get('/yande.re/post', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent', require('./routes/yande.re/post_popular_recent'));
 router.get('/yande.re/post/:tags', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/post_popular_recent'));
+
+// nytimes
+router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
 module.exports = router;
