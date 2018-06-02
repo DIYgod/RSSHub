@@ -9,7 +9,7 @@ module.exports = async (ctx, next) => {
         'Access-Control-Allow-Headers': 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild',
         'Access-Control-Allow-Methods': 'PUT, POST, GET, DELETE, OPTIONS',
         'Content-Type': 'application/xml; charset=utf-8',
-        'Cache-Control': `max-age=${config.cacheExpire}`,
+        'Cache-Control': `max-age=${config.cacheExpire / 2}`,
     };
     ctx.set(headers);
     await next();
