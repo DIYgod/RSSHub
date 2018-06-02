@@ -1,23 +1,10 @@
 const axios = require('../../utils/axios');
-const qs = require('querystring');
 const config = require('../../config');
+const cache = require('./cache');
 
 module.exports = async (ctx) => {
     const uid = ctx.params.uid;
-
-    const nameResponse = await axios({
-        method: 'post',
-        url: 'https://space.bilibili.com/ajax/member/GetInfo',
-        headers: {
-            'User-Agent': config.ua,
-            Referer: `https://space.bilibili.com/${uid}/`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        data: qs.stringify({
-            mid: uid,
-        }),
-    });
-    const name = nameResponse.data.data.name;
+    const name = await cache.getUsernameFromUID(ctx, uid);
 
     const response = await axios({
         method: 'get',
