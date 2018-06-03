@@ -87,7 +87,7 @@ router.get('/rsshub/rss', require('./routes/rsshub/rss'));
 
 // bilibili
 router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
-router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/fav'));
+router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/userFav'));
 router.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
 router.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
 router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers'));
@@ -99,6 +99,8 @@ router.get('/bilibili/link/news/:product', require('./routes/bilibili/linkNews')
 router.get('/bilibili/live/room/:roomID', require('./routes/bilibili/liveRoom'));
 router.get('/bilibili/live/search/:key/:order', require('./routes/bilibili/liveSearch'));
 router.get('/bilibili/live/area/:areaID/:order', require('./routes/bilibili/liveArea'));
+router.get('/bilibili/fav/:uid/:fid', require('./routes/bilibili/fav'));
+router.get('/bilibili/blackboard', require('./routes/bilibili/blackboard'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
