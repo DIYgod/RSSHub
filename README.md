@@ -129,6 +129,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   Popular Recent Posts
 -   纽约时报
     -   新闻早报
+-   UU 看书
+    -   小说章节
 
 ## 鸣谢
 

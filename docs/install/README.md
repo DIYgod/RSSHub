@@ -12,7 +12,7 @@ sidebar: auto
 
 ### 在安装之前
 
-在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 10.0](https://nodejs.org/)。
+在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 8.0.0](https://nodejs.org/)。
 
 ### 安装 Git
 
@@ -372,3 +372,13 @@ gcloud app deploy
 -   `github`: [申请地址](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+
+### 访问控制
+
+可以通过修改 `middleware/access-control.js` 或者设置环境变量来配置黑名单和白名单。
+
+支持 IP 和路由，设置多项时用英文逗号 `,` 隔开。同时设置黑名单和白名单时仅白名单有效。
+
+-   `BLACKLIST`: 黑名单
+
+-   `WHITELIST`: 白名单，设置白名单后黑名单无效
