@@ -1,32 +1,15 @@
 const axios = require('../../utils/axios');
 const config = require('../../config');
+const cache = require('./cache');
 
 module.exports = async (ctx) => {
     let roomID = ctx.params.roomID;
 
     // 短号查询长号
     if (parseInt(roomID, 10) < 10000) {
-        const roomIDResponse = await axios({
-            method: 'get',
-            url: `https://api.live.bilibili.com/room/v1/Room/room_init?id=${roomID}`,
-            headers: {
-                'User-Agent': config.ua,
-                Referer: `https://live.bilibili.com/${roomID}`,
-            },
-        });
-        roomID = roomIDResponse.data.data.room_id;
+        roomID = await cache.getLiveIDFromShortID(ctx, roomID);
     }
-
-    const nameResponse = await axios({
-        method: 'get',
-        url: `https://api.live.bilibili.com/live_user/v1/UserInfo/get_anchor_in_room?roomid=${roomID}`,
-        headers: {
-            'User-Agent': config.ua,
-            Referer: `https://live.bilibili.com/${roomID}`,
-        },
-    });
-
-    const name = nameResponse.data.data.info.uname;
+    const name = await cache.getUsernameFromLiveID(ctx, roomID);
 
     const response = await axios({
         method: 'get',

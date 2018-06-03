@@ -12,6 +12,7 @@ const filter = require('./middleware/filter.js');
 const template = require('./middleware/template.js');
 const favicon = require('koa-favicon');
 const debug = require('./middleware/debug.js');
+const accessControl = require('./middleware/access-control.js');
 
 const router = require('./router');
 
@@ -32,6 +33,8 @@ app.use(onerror);
 
 // 1 set header
 app.use(header);
+
+app.use(accessControl);
 
 // 6 debug
 app.context.debug = {
