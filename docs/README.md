@@ -1072,3 +1072,21 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 路由: `/uukanshu/chapter/:id`
 
 参数: id，小说 id，可在对应小说页 URL 中找到
+
+## EZTV
+
+### Recent Torrents
+
+举例: [https://rsshub.app/eztv/torrents/recent](https://rsshub.app/eztv/torrent/recent)
+
+路由: `/eztv/torrents/recent`
+
+参数: 无
+
+### Lookup Torrents by IMDB ID
+
+举例: [https://rsshub.app/eztv/torrents/6048596](https://rsshub.app/eztv/torrent/6048596)
+
+路由: `/eztv/torrents/:imdb_id`
+
+参数: imdb_id，想搜寻的 show 的种子所对应的 IMDB ID，可在 [IMDB](https://www.imdb.com) 官网找到

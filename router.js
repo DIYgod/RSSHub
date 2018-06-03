@@ -283,4 +283,8 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 // uukanshu
 router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
+// EZTV
+router.get('/eztv/torrents/recent', require('./routes/eztv/recent'));
+router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
+
 module.exports = router;
