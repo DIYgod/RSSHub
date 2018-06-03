@@ -82,4 +82,32 @@ module.exports = {
         }
         return name;
     },
+    getFavNameFromFid: async (ctx, fid, uid) => {
+        const key = `bili-favName-from-fid-${fid}`;
+        let name = await ctx.cache.get(key);
+
+        if (!name) {
+            const nameResponse = await axios({
+                method: 'get',
+                url: `https://api.bilibili.com/x/space/fav/nav?mid=${uid}`,
+                headers: {
+                    'User-Agent': config.ua,
+                    Referer: `https://space.bilibili.com/${uid}/#/favlist`,
+                },
+            });
+            if (nameResponse && nameResponse.data && nameResponse.data.data && nameResponse.data.data.archive) {
+                nameResponse.data.data.archive.forEach((item) => {
+                    // noinspection EqualityComparisonWithCoercionJS
+                    if (fid == item.fid) {
+                        name = item.name;
+                    }
+                });
+            }
+            ctx.cache.set(key, name, 24 * 60 * 60);
+        }
+        if (!name) {
+            name = 'Unknown';
+        }
+        return name;
+    },
 };

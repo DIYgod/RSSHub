@@ -1,0 +1,32 @@
+const axios = require('../../utils/axios');
+const config = require('../../config');
+
+module.exports = async (ctx) => {
+    const response = await axios({
+        method: 'get',
+        url: `https://www.bilibili.com/activity/page/list?plat=1,2,3`,
+        headers: {
+            'User-Agent': config.ua,
+            Referer: `https://www.bilibili.com/blackboard/topic_list.html`,
+        },
+    });
+
+    const data = response.data.data.list;
+
+    ctx.state.data = {
+        title: `bilibili 话题列表`,
+        link: `https://www.bilibili.com/blackboard/topic_list.html#/`,
+        description: `bilibili 话题列表`,
+        item: data
+            .filter(function(item, index, array) {
+                //由于某些话题在不同平台上是同时分开发布的,会产生重复,在这里去除
+                return !index || item.name !== array[index - 1].name;
+            })
+            .map((item) => ({
+                title: `${item.name}`,
+                description: `${item.name}<br> ${item.desc}`,
+                pubDate: new Date(item.ctime.replace(' ', 'T') + '+08:00').toUTCString(),
+                link: `${item.pc_url}`,
+            })),
+    };
+};
