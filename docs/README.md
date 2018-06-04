@@ -111,13 +111,23 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主收藏夹
+### UP 主默认收藏夹
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
 
 路由: `/bilibili/user/fav/:uid`
 
 参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主非默认收藏夹
+
+举例: [https://rsshub.app/bilibili/fav/756508/50948568](https://rsshub.app/bilibili/fav/756508/50948568)
+
+路由: `/bilibili/fav/:uid/:fid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+fid,收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
 
 ### UP 主投币视频
 
@@ -282,6 +292,12 @@ order: 排序方式，live_time 开播时间，online 人气
 areaID: 分区 ID 分区增删较多，可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询
 
 order: 排序方式，live_time 开播时间，online 人气
+
+### 主站话题列表
+
+举例: [https://rsshub.app/bilibili/blackboard](https://rsshub.app/bilibili/blackboard)
+
+路由: `bilibili/blackboard`
 
 ## bangumi
 
