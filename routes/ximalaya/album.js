@@ -14,7 +14,7 @@ module.exports = async (ctx) => {
             'User-Agent': config.ua,
             Host: 'www.ximalaya.com',
             Referer: `${baseUrl}/${classify}/${id}`,
-        }
+        },
     });
     const responseDom = await axios({
         method: 'get',
@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
             'User-Agent': config.ua,
             Host: 'www.ximalaya.com',
             Referer: `${baseUrl}/${classify}/${id}`,
-        }
+        },
     });
     const $ = cheerio.load(responseDom.data);
     const title = $('div.info > h1')
@@ -37,15 +37,15 @@ module.exports = async (ctx) => {
     for (let i = 0; i < trackList.length; i++) {
         const track = trackList[i];
         const item = {
-            title: track.title + '  (' + track.createDateFormat +  ')',
+            title: track.title + '  (' + track.createDateFormat + ')',
             link: baseUrl + track.url,
         };
         items.push(item);
-    };
+    }
     ctx.state.data = {
         title: `喜马拉雅专辑 - ${title}`,
         link: `${baseUrl}/${classify}/${id}`,
         image: cover_url,
-        item: items
+        item: items,
     };
 };

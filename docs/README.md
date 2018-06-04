@@ -1069,4 +1069,4 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 classify, 专辑分类, 可在对应专辑页面的 URL 中找到
 
-id, 专辑id, 可在对应专辑页面的 URL 中找到
+id, 专辑 id, 可在对应专辑页面的 URL 中找到
