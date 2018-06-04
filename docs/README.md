@@ -547,7 +547,19 @@ number: 快递单号
 
 路由: `/tieba/forum/:kw`
 
-参数: kw，吧名
+参数: `kw`，吧名
+
+### 精品帖子
+
+举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+
+路由: `/tieba/forum/good/:kw/:cid?`
+
+参数：
+
+`kw`: 吧名
+
+`cid`: 精品分类，如果不传 `cid` 则获取全部分类
 
 ## 妹子图
 
