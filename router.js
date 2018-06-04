@@ -140,6 +140,7 @@ router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 
 // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
+router.get('/tieba/forum/good/:kw/:cid?', require('./routes/tieba/forum'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));

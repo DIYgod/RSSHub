@@ -98,7 +98,7 @@ module.exports = {
             if (nameResponse && nameResponse.data && nameResponse.data.data && nameResponse.data.data.archive) {
                 nameResponse.data.data.archive.forEach((item) => {
                     // noinspection EqualityComparisonWithCoercionJS
-                    if (fid == item.fid) {
+                    if (fid === item.fid.toString()) {
                         name = item.name;
                     }
                 });
