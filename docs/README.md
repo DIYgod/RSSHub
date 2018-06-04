@@ -337,6 +337,28 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: keyword，你想订阅的微博关键词
 
+## 贴吧
+
+### 帖子列表
+
+举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
+
+路由: `/tieba/forum/:kw`
+
+参数: `kw`，吧名
+
+### 精品帖子
+
+举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+
+路由: `/tieba/forum/good/:kw/:cid?`
+
+参数：
+
+`kw`: 吧名
+
+`cid`: 精品分类，如果不传 `cid` 则获取全部分类
+
 ## 即刻
 
 ### 主题-精选
@@ -538,16 +560,6 @@ keyword: 关键词
 company: 快递公司代码，参考 [API URL 所支持的快递公司及参数说明](https://www.kuaidi100.com/download/api_kuaidi100_com%2820140729%29.doc)
 
 number: 快递单号
-
-## 贴吧
-
-### 帖子列表
-
-举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
-
-路由: `/tieba/forum/:kw`
-
-参数: kw，吧名
 
 ## 妹子图
 
