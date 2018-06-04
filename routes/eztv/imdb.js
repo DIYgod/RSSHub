@@ -17,8 +17,8 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: `EZTV's Torrents of IMBD ID: ${imdb_id}`,
-        link: `https://eztv.ag/api/get-torrents?imdb_id=${imdb_id}`,
-        description: `EZTV's Recent Torrents`,
+        link: `https://eztv.ag`,
+        description: `EZTV's Torrents of IMBD ID: ${imdb_id}`,
         item: torrents.map((item) => ({
             title: item.title,
             description: item.magnet_url,

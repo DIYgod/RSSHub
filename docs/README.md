@@ -1077,11 +1077,7 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 ### Recent Torrents
 
-举例: [https://rsshub.app/eztv/torrents/recent](https://rsshub.app/eztv/torrent/recent)
-
-路由: `/eztv/torrents/recent`
-
-参数: 无
+官方已经提供了：https://eztv.ag/ezrss.xml
 
 ### Lookup Torrents by IMDB ID
 
