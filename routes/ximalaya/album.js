@@ -37,8 +37,9 @@ module.exports = async (ctx) => {
     for (let i = 0; i < trackList.length; i++) {
         const track = trackList[i];
         const item = {
-            title: track.title + '  (' + track.createDateFormat + ')',
+            title: track.title,
             link: baseUrl + track.url,
+            pubDate: track.createDateFormat,
         };
         items.push(item);
     }
