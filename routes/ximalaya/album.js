@@ -1,6 +1,7 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
+const formatPubDate = require('../../utils/pubDate.js');
 
 const baseUrl = 'http://www.ximalaya.com';
 module.exports = async (ctx) => {
@@ -39,7 +40,7 @@ module.exports = async (ctx) => {
         const item = {
             title: track.title,
             link: baseUrl + track.url,
-            pubDate: track.createDateFormat,
+            pubDate: formatPubDate(track.createDateFormat),
         };
         items.push(item);
     }
