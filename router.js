@@ -281,4 +281,7 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 // uukanshu
 router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
+// 3dm
+router.get('/3dm/:name/:type', require('./routes/3dm/news'));
+
 module.exports = router;
