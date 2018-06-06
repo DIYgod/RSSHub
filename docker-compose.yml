@@ -1,23 +1,35 @@
 version: '2.1'
 
 services:
+
   rsshub:
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+      args:
+        # 是否在构建过程中使用淘宝NPM源进行加速
+        USE_CHINA_NPM_REGISTRY: 0
+    restart: always
     image: rsshub
-    container_name: rsshub
-    build: .
+    ports:
+      - 1200:1200
     environment:
       NODE_ENV: production
       CACHE_TYPE: redis
       REDIS_URL: 'redis://redis:6379/'
-    ports:
-      - 1200:1200
+    command: node index.js
     links:
+      - redis
+    volumes:
+      - ./config/app.json:/usr/src/app/app.json
+      - ./config/config.js:/usr/src/app/config.json
+    depends_on:
       - redis
 
   redis:
-    image: redis:alpine
+    image: redis:4.0.9-alpine
     volumes:
-      - redis-data:/data
+        - redis-data:/data
 
 volumes:
   redis-data:
