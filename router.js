@@ -284,4 +284,7 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 // uukanshu
 router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
+// 喜马拉雅
+router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
+
 module.exports = router;
