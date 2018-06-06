@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">RSSHub</h1>
 
-> 🍭 万物皆可 RSS
+> 🍰 万物皆可 RSS
 
 ## 介绍
 
