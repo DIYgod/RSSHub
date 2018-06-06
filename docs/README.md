@@ -1085,11 +1085,27 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: id，小说 id，可在对应小说页 URL 中找到
 
+## 喜马拉雅
+
+### 专辑
+
+举例: [https://rsshub.app/ximalaya/album/shangye/299146/](https://rsshub.app/ximalaya/album/shangye/299146/)
+
+路由: `/ximalaya/album/:classify/:id`
+
+参数:
+
+classify, 专辑分类, 可在对应专辑页面的 URL 中找到
+
+id, 专辑 id, 可在对应专辑页面的 URL 中找到
+
 ## EZTV
 
-### Recent Torrents
+::: tip 提示
 
-官方已经提供了：https://eztv.ag/ezrss.xml
+网站提供了全部种子的 RSS：https://eztv.ag/ezrss.xml
+
+:::
 
 ### Lookup Torrents by IMDB ID
 
