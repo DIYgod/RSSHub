@@ -12,7 +12,7 @@ sidebar: auto
 
 ### 在安装之前
 
-在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 10.0](https://nodejs.org/)。
+在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 8.0.0](https://nodejs.org/)。
 
 ### 安装 Git
 
@@ -30,9 +30,9 @@ usage: git [--version] [--help] [-C <path>] [-c name=value]
 
 :::
 
-*   Windows：从 Git 官网直接[下载安装程序](https://git-scm.com/downloads)。
-*   MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
-*   Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
+-   Windows：从 Git 官网直接[下载安装程序](https://git-scm.com/downloads)。
+-   MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
+-   Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
 
 ### 安装 Node.JS
 
@@ -225,7 +225,7 @@ $ docker pull diygod/rsshub
 以设置缓存时间为 1 小时举例，只需要在运行时增加参数：`-e CACHE_EXPIRE=3600`
 
 ```bash
-$ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 PORT=1000 diygod/rsshub
+$ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
 更多配置项请看 [应用配置](#应用配置)
@@ -341,30 +341,44 @@ gcloud app deploy
 
 ### 部分 RSS 模块配置
 
-*   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
+-   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
 
-    *   `PIXIV_USERNAME`: Pixiv 用户名
+    -   `PIXIV_USERNAME`: Pixiv 用户名
 
-    *   `PIXIV_PASSWORD`: Pixiv 密码
+    -   `PIXIV_PASSWORD`: Pixiv 密码
 
-*   `disqus`: [申请地址](https://disqus.com/api/applications/)
+-   `disqus`: [申请地址](https://disqus.com/api/applications/)
 
-    *   `DISQUS_API_KEY`: Disqus API
+    -   `DISQUS_API_KEY`: Disqus API
 
-*   `twitter`: [申请地址](https://apps.twitter.com)
+-   `twitter`: [申请地址](https://apps.twitter.com)
 
-    *   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
+    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
 
-    *   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
+    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
 
-    *   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
+    -   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
 
-    *   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
+    -   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
 
-*   `youtube`: [申请地址](https://console.developers.google.com/)
+-   `youtube`: [申请地址](https://console.developers.google.com/)
 
-    *   `YOUTUBE_KEY`: YouTube API Key
+    -   `YOUTUBE_KEY`: YouTube API Key
 
-*   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+-   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
-    *   `TELEGRAM_TOKEN`: Telegram 机器人 token
+    -   `TELEGRAM_TOKEN`: Telegram 机器人 token
+
+-   `github`: [申请地址](https://github.com/settings/tokens)
+
+    -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+
+### 访问控制
+
+可以通过修改 `middleware/access-control.js` 或者设置环境变量来配置黑名单和白名单。
+
+支持 IP 和路由，设置多项时用英文逗号 `,` 隔开。同时设置黑名单和白名单时仅白名单有效。
+
+-   `BLACKLIST`: 黑名单
+
+-   `WHITELIST`: 白名单，设置白名单后黑名单无效

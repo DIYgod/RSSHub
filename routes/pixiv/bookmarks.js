@@ -6,8 +6,7 @@ module.exports = async (ctx) => {
     const id = ctx.params.id;
 
     if (!getToken()) {
-        ctx.throw(500);
-        return;
+        throw 'pixiv not login';
     }
 
     const [bookmarksResponse, userDetailResponse] = await Promise.all([getBookmarks(id, getToken()), getUserDetail(id, getToken())]);

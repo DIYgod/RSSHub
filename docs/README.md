@@ -13,9 +13,11 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### Sponsors
 
-*   [rixCloud](https://rixcloud.us)
+-   [rixCloud](https://rixcloud.us)
 
-*   [Sayori Studio](https://t.me/SayoriStudio)
+-   [Liuyang](https://github.com/lingllting)
+
+-   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -37,21 +39,21 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 filter 选出想要的内容
 
-*   filter: 过滤标题和描述
+-   filter: 过滤标题和描述
 
-*   filter_title: 过滤标题
+-   filter_title: 过滤标题
 
-*   filter_description: 过滤描述
+-   filter_description: 过滤描述
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
 
 filterout 去掉不要的内容
 
-*   filterout: 过滤标题和描述
+-   filterout: 过滤标题和描述
 
-*   filterout_title: 过滤标题
+-   filterout_title: 过滤标题
 
-*   filterout_description: 过滤描述
+-   filterout_description: 过滤描述
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
 
@@ -67,11 +69,11 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 举例:
 
-*   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
-*   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
-*   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
-*   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
-*   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
+-   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
+-   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
+-   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
+-   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
+-   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
 ## RSSHub
 
@@ -109,13 +111,23 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主收藏夹
+### UP 主默认收藏夹
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
 
 路由: `/bilibili/user/fav/:uid`
 
 参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主非默认收藏夹
+
+举例: [https://rsshub.app/bilibili/fav/756508/50948568](https://rsshub.app/bilibili/fav/756508/50948568)
+
+路由: `/bilibili/fav/:uid/:fid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+fid,收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
 
 ### UP 主投币视频
 
@@ -281,6 +293,12 @@ areaID: 分区 ID 分区增删较多，可通过 [分区列表](https://api.live
 
 order: 排序方式，live_time 开播时间，online 人气
 
+### 主站话题列表
+
+举例: [https://rsshub.app/bilibili/blackboard](https://rsshub.app/bilibili/blackboard)
+
+路由: `bilibili/blackboard`
+
 ## bangumi
 
 ### 放送列表
@@ -318,6 +336,28 @@ order: 排序方式，live_time 开播时间，online 人气
 路由: `/weibo/keyword/:keyword`
 
 参数: keyword，你想订阅的微博关键词
+
+## 贴吧
+
+### 帖子列表
+
+举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
+
+路由: `/tieba/forum/:kw`
+
+参数: `kw`，吧名
+
+### 精品帖子
+
+举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+
+路由: `/tieba/forum/good/:kw/:cid?`
+
+参数：
+
+`kw`: 吧名
+
+`cid`: 精品分类，如果不传 `cid` 则获取全部分类
 
 ## 即刻
 
@@ -441,6 +481,12 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ## 知乎
 
+::: warning 注意
+
+知乎反爬虫策略非常严格，以下演示经常失效，建议自搭
+
+:::
+
 ### 收藏夹
 
 举例: [https://rsshub.app/zhihu/collection/26444956](https://rsshub.app/zhihu/collection/26444956)
@@ -514,16 +560,6 @@ keyword: 关键词
 company: 快递公司代码，参考 [API URL 所支持的快递公司及参数说明](https://www.kuaidi100.com/download/api_kuaidi100_com%2820140729%29.doc)
 
 number: 快递单号
-
-## 贴吧
-
-### 帖子列表
-
-举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
-
-路由: `/tieba/forum/:kw`
-
-参数: kw，吧名
 
 ## 妹子图
 
@@ -920,3 +956,145 @@ key: 产品密钥
 | 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
 | -------- | -------- | ---------- | ---------- |
 | topic    | news     | technews   | blockchain |
+
+## Konachan Anime Wallpapers
+
+::: tip 提示
+
+-   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
+
+:::
+
+### Posts
+
+路由:
+
+-   `/konachan/post`
+-   `/konachan/post/:tags`
+
+举例:
+
+-   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
+-   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
+-   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
+
+### Popular Recent Posts
+
+路由:
+
+-   `/konachan/post/popular_recent` 默认过去 24 小时
+-   `/konachan/post/popular_recent/:period`
+
+举例:
+
+-   过去 24 小时:[https://rsshub.app/konachan/post/popular_recent/1d](https://rsshub.app/konachan/post/popular_recent/1d)
+-   过去一周:[https://rsshub.app/konachan/post/popular_recent/1w](https://rsshub.app/konachan/post/popular_recent/1w)
+-   过去一月:[https://rsshub.app/konachan/post/popular_recent/1m](https://rsshub.app/konachan/post/popular_recent/1m)
+-   过去一年:[https://rsshub.app/konachan/post/popular_recent/1y](https://rsshub.app/konachan/post/popular_recent?period=1y)
+
+## yande.re
+
+### Posts
+
+路由:
+
+-   `/yande.re/post`
+-   `/yande.re/post/:tags`
+
+举例:
+
+-   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
+-   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
+-   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
+-   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
+
+### Popular Recent Posts
+
+路由:
+
+-   `/yande.re/post/popular_recent` 默认过去 24 小时
+-   `/yande.re/post/popular_recent/:period`
+
+举例:
+
+-   过去 24 小时:[https://rsshub.app/yande.re/post/popular_recent/1d](https://rsshub.app/yande.re/post/popular_recent/1d)
+-   过去一周:[https://rsshub.app/yande.re/post/popular_recent/1w](https://rsshub.app/yande.re/post/popular_recent/1w)
+-   过去一月:[https://rsshub.app/yande.re/post/popular_recent/1m](https://rsshub.app/yande.re/post/popular_recent/1m)
+-   过去一年:[https://rsshub.app/yande.re/post/popular_recent/1y](https://rsshub.app/yande.re/post/popular_recent?period=1y)
+
+## GitHub
+
+::: tip 提示
+
+GitHub 官方也提供了一些 RSS:
+
+-   仓库 releases: https://github.com/:owner/:repo/releases.atom
+-   仓库 commits: https://github.com/:owner/:repo/commits.atom
+-   用户动态: https://github.com/:user.atom
+
+:::
+
+### 用户仓库
+
+举例: [https://rsshub.app/github/repos/DIYgod](https://rsshub.app/github/repos/DIYgod)
+
+路由: `/github/repos/:user`
+
+参数: user，用户名
+
+### Trending
+
+举例:
+
+[https://rsshub.app/github/trending/daily](https://rsshub.app/github/trending/daily)
+
+[https://rsshub.app/github/trending/daily/javascript](https://rsshub.app/github/trending/daily/javascript)
+
+路由: `/github/trending/:since/:language?`
+
+参数:
+
+since，时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到，可选 daily weekly monthly
+
+language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
+
+## 纽约时报
+
+::: tip 提示
+
+纽约时报 RSS: https://cn.nytimes.com/rss/
+
+:::
+
+### 新闻早报
+
+举例: [https://rsshub.app/nytimes/morning_post](https://rsshub.app/nytimes/morning_post)
+
+路由: `/nytimes/morning_post`
+
+参数: 无
+
+## UU 看书
+
+### 小说章节
+
+举例: [https://rsshub.app/uukanshu/chapter/49621](https://rsshub.app/uukanshu/chapter/49621)
+
+路由: `/uukanshu/chapter/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+## 喜马拉雅
+
+### 专辑
+
+举例: [https://rsshub.app/ximalaya/album/shangye/299146/](https://rsshub.app/ximalaya/album/shangye/299146/)
+
+路由: `/ximalaya/album/:classify/:id`
+
+参数:
+
+classify, 专辑分类, 可在对应专辑页面的 URL 中找到
+
+id, 专辑 id, 可在对应专辑页面的 URL 中找到

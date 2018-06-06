@@ -1,5 +1,5 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
+const utils = require('./utils');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,7 +8,7 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://zhuanlan.zhihu.com/api/columns/${id}/posts?limit=20`,
         headers: {
-            'User-Agent': config.ua,
+            ...utils.header,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
         },
     });
@@ -16,13 +16,25 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://zhuanlan.zhihu.com/api/columns/${id}`,
         headers: {
-            'User-Agent': config.ua,
+            ...utils.header,
             Referer: `https://zhuanlan.zhihu.com/${id}`,
         },
     });
 
+    if (listRes.status === 403) {
+        throw 'list resource api returned status code ' + listRes.status;
+    }
+
+    if (infoRes.status === 403) {
+        throw 'info resource api returned status code ' + infoRes.status;
+    }
+
     const list = listRes.data;
     const info = infoRes.data;
+
+    if (!Array.isArray(list)) {
+        throw JSON.stringify(list);
+    }
 
     ctx.state.data = {
         title: `知乎专栏-${info.name}`,

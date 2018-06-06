@@ -5,8 +5,7 @@ module.exports = async (ctx) => {
     const id = ctx.params.id;
 
     if (!getToken()) {
-        ctx.throw(500);
-        return;
+        throw 'pixiv not login';
     }
 
     const response = await getIllusts(id, getToken());

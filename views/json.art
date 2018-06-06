@@ -11,6 +11,9 @@
         {
             "id": "{{ $value.guid || $value.link }}",
             "url": "{{ $value.link }}",
+            "author": {
+                "name": "{{ $value.author }}",
+            },
             "external_url": "",
             "title": "{{ $value.title }}",
             "content_html": "{{ $value.content_rendered }}",
