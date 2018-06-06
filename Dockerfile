@@ -1,8 +1,14 @@
-FROM keymetrics/pm2:8-alpine
+FROM node:10.3.0-slim
+
+MAINTAINER soulteary<soulteary@gmail.com>
+
 ENV NODE_ENV production
+
 WORKDIR /usr/src/app
-COPY ["package.json", "./"]
-RUN yarn --ignore-engines --prod -s && mv node_modules ../
-COPY . .
-EXPOSE 1200
-CMD pm2-runtime start process.json
+
+ADD ./package.json  .
+
+ARG USE_CHINA_NPM_REGISTRY=0
+RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then echo 'use npm mirror'; npm install --production --vb --registry=https://registry.npm.taobao.org; else npm install --production; fi;
+
+ADD . .
