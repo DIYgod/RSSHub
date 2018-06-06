@@ -33,8 +33,8 @@ module.exports = async (ctx) => {
             .replace(/\u200B/g, '');
         if (wb.title.length > 24) {
             wb.title = wb.title.slice(0, 24) + '...';
-        } else if (wb.title == '') {
-            wb.title = `[图片]`;
+        } else if (wb.title === '') {
+            wb.title = '[图片]';
         }
         wb.description = titleEle
             .html()
