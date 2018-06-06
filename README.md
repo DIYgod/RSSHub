@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">RSSHub</h1>
 
-> 🍭 使用 RSS 连接全世界
+> 🍭 万物皆可 RSS
 
 ## 介绍
 
