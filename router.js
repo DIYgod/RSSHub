@@ -278,10 +278,10 @@ router.get('/yande.re/post/popular_recent', require('./routes/yande.re/post_popu
 router.get('/yande.re/post/:tags', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/post_popular_recent'));
 
-// nytimes
+// 纽约时报
 router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
-// uukanshu
+// UU看书
 router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
 // 喜马拉雅
@@ -289,5 +289,8 @@ router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
 
 // EZTV
 router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
+
+// 什么值得买
+router.get('/smzdm/keyword/:keyword', require('./routes/smzdm/keyword'));
 
 module.exports = router;

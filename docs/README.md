@@ -1114,3 +1114,19 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/eztv/torrents/:imdb_id`
 
 参数: imdb_id，想搜寻的 show 的种子所对应的 IMDB ID，可在 [IMDB](https://www.imdb.com) 官网找到
+
+## 什么值得买
+
+::: tip 提示
+
+网站也提供了部分 RSS：https://www.smzdm.com/dingyue
+
+:::
+
+### 关键词
+
+举例: [https://rsshub.app/smzdm/keyword/女装](https://rsshub.app/smzdm/keyword/女装)
+
+路由: `/smzdm/keyword/:keyword`
+
+参数: keyword，你想订阅的关键词
