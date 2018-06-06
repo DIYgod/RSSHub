@@ -1098,3 +1098,19 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 classify, 专辑分类, 可在对应专辑页面的 URL 中找到
 
 id, 专辑 id, 可在对应专辑页面的 URL 中找到
+
+## EZTV
+
+::: tip 提示
+
+网站提供了全部种子的 RSS：https://eztv.ag/ezrss.xml
+
+:::
+
+### Lookup Torrents by IMDB ID
+
+举例: [https://rsshub.app/eztv/torrents/6048596](https://rsshub.app/eztv/torrent/6048596)
+
+路由: `/eztv/torrents/:imdb_id`
+
+参数: imdb_id，想搜寻的 show 的种子所对应的 IMDB ID，可在 [IMDB](https://www.imdb.com) 官网找到

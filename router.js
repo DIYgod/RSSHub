@@ -287,4 +287,7 @@ router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
 
+// EZTV
+router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
+
 module.exports = router;
