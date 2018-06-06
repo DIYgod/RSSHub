@@ -19,7 +19,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     *   番剧
     *   UP 主投稿
     *   UP 主动态
-    *   UP 主收藏夹
+    *   UP 主默认收藏夹
+    *   UP 主非默认收藏夹
     *   UP 主投币视频
     *   UP 主粉丝
     *   UP 主关注用户
@@ -29,9 +30,13 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     *   直播开播
     *   直播搜索
     *   直播分区
+    *   主站话题列表
 *   微博
     *   博主
     *   关键词
+*   贴吧
+    *   帖子列表
+    *   精品帖子
 *   即刻
     *   主题
     *   用户动态
@@ -56,8 +61,6 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 *   自如
     *   房源
 *   快递
-*   贴吧
-    *   帖子列表
 *   妹子图
     *   首页（最新）
     *   分类
@@ -127,12 +130,20 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 *   yande.re
     *   posts
     *   Popular Recent Posts
+*   纽约时报
+    *   新闻早报
+*   UU 看书
+    *   小说章节
+*   喜马拉雅
+    *   专辑
 
 ## 鸣谢
 
 ### Sponsors
 
 *   [rixCloud](https://rixcloud.us)
+
+*   [Liuyang](https://github.com/lingllting)
 
 *   [Sayori Studio](https://t.me/SayoriStudio)
 

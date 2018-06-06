@@ -45,7 +45,9 @@ module.exports = async (ctx) => {
                 link = `https://vc.bilibili.com/video/${data.id}`;
             } else if (data.id) {
                 link = `https://h.bilibili.com/${data.id}`;
-            } else if (data.sketch.sketch_id) {
+            } else if (data.rp_id && item.desc && item.desc.dynamic_id) {
+                link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
+            } else if (data.sketch && data.sketch.sketch_id && item.desc && item.desc.dynamic_id) {
                 link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
             }
 

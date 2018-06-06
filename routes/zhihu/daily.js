@@ -1,5 +1,6 @@
 const axios = require('../../utils/axios');
 const config = require('../../config');
+const utils = require('./utils');
 
 // 参考：https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90
 // 文章给出了v4版 api的信息，包含全文api
@@ -9,7 +10,7 @@ module.exports = async (ctx) => {
         method: 'get',
         url: 'https://news-at.zhihu.com/api/4/news/latest',
         headers: {
-            'User-Agent': config.ua,
+            ...utils.header,
             Referer: 'https://news-at.zhihu.com/api/4/news/latest',
         },
     });
@@ -17,11 +18,11 @@ module.exports = async (ctx) => {
     const storyList = listRes.data.stories.filter((el) => el.type === 0);
     const resultItem = [];
     for (let i = 0; i < storyList.length; i++) {
-        const url = 'https://news-at.zhihu.com/story/' + storyList[i].id;
+        const url = 'https://news-at.zhihu.com/api/4/news/' + storyList[i].id;
         const item = {
             title: storyList[i].title,
             description: '',
-            link: url,
+            link: 'https://news-at.zhihu.com/story/' + storyList[i].id,
         };
         const key = 'daily' + storyList[i].id;
         const value = await ctx.cache.get(key);

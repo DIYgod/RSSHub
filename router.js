@@ -33,7 +33,18 @@ router.get('/', async (ctx) => {
         hotIPsValue += `${ctx.debug.ips[item]}&nbsp;&nbsp;${item}<br>`;
     });
 
+    let showDebug;
+    if (!config.debugInfo || config.debugInfo === 'false') {
+        showDebug = false;
+    } else {
+        showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
+    }
+
+    ctx.set({
+        'Cache-Control': 'no-cache',
+    });
     ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
+        showDebug,
         debug: [
             {
                 name: 'git hash',
@@ -76,7 +87,7 @@ router.get('/rsshub/rss', require('./routes/rsshub/rss'));
 
 // bilibili
 router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
-router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/fav'));
+router.get('/bilibili/user/fav/:uid', require('./routes/bilibili/userFav'));
 router.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
 router.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
 router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers'));
@@ -88,6 +99,8 @@ router.get('/bilibili/link/news/:product', require('./routes/bilibili/linkNews')
 router.get('/bilibili/live/room/:roomID', require('./routes/bilibili/liveRoom'));
 router.get('/bilibili/live/search/:key/:order', require('./routes/bilibili/liveSearch'));
 router.get('/bilibili/live/area/:areaID/:order', require('./routes/bilibili/liveArea'));
+router.get('/bilibili/fav/:uid/:fid', require('./routes/bilibili/fav'));
+router.get('/bilibili/blackboard', require('./routes/bilibili/blackboard'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
@@ -127,6 +140,7 @@ router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 
 // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
+router.get('/tieba/forum/good/:kw/:cid?', require('./routes/tieba/forum'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
@@ -240,19 +254,37 @@ router.get('/readhub/category/:category', require('./routes/readhub/category'));
 if (config.github && config.github.access_token) {
     router.get('/github/repos/:user', require('./routes/github/repos'));
 } else {
-    logger.warn('GitHub RSS is disabled for lacking config.');
+    logger.warn('GitHub Repos RSS is disabled for lacking config.');
 }
+router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
 
 // konachan
 router.get('/konachan/post', require('./routes/konachan/post'));
+router.get('/konachan.com/post', require('./routes/konachan/post'));
+router.get('/konachan.net/post', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.com/post/popular_recent', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.net/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan/post/:tags', require('./routes/konachan/post'));
+router.get('/konachan.com/post/:tags', require('./routes/konachan/post'));
+router.get('/konachan.net/post/:tags', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.com/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
+router.get('/konachan.net/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 
 // yande.re
 router.get('/yande.re/post', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent', require('./routes/yande.re/post_popular_recent'));
 router.get('/yande.re/post/:tags', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/post_popular_recent'));
+
+// nytimes
+router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
+
+// uukanshu
+router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
+
+// 喜马拉雅
+router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
 
 module.exports = router;
