@@ -140,6 +140,7 @@ router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 
 // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
+router.get('/tieba/forum/good/:kw/:cid?', require('./routes/tieba/forum'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
@@ -282,5 +283,8 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
 // uukanshu
 router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
+
+// 喜马拉雅
+router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
 
 module.exports = router;
