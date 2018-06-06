@@ -27,9 +27,14 @@ module.exports = async (ctx) => {
         wb = {};
         item = $(ele);
         titleEle = item.find('.wgtCell_txt');
-        wb.title = titleEle.text().replace(/^\s+|\s+$/g, '');
+        wb.title = titleEle
+            .text()
+            .replace(/^\s+|\s+$/g, '')
+            .replace(/\u200B/g, '');
         if (wb.title.length > 24) {
             wb.title = wb.title.slice(0, 24) + '...';
+        } else if (wb.title === '') {
+            wb.title = '[图片]';
         }
         wb.description = titleEle
             .html()

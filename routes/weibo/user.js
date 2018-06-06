@@ -30,7 +30,7 @@ module.exports = async (ctx) => {
         link: `http://weibo.com/${uid}/`,
         description: `${name}的微博`,
         item: response.data.data.cards.filter((item) => item.mblog && !item.mblog.isTop).map((item) => {
-            const title = item.mblog.text.replace(/<.*?>/g, '');
+            const title = item.mblog.text.replace(/<img.*?>/g, '[图片]').replace(/<.*?>/g, '');
             return {
                 title: title.length > 24 ? title.slice(0, 24) + '...' : title,
                 description: weiboUtils.format(item.mblog),
