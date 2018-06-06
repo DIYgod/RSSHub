@@ -111,13 +111,23 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主收藏夹
+### UP 主默认收藏夹
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
 
 路由: `/bilibili/user/fav/:uid`
 
 参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主非默认收藏夹
+
+举例: [https://rsshub.app/bilibili/fav/756508/50948568](https://rsshub.app/bilibili/fav/756508/50948568)
+
+路由: `/bilibili/fav/:uid/:fid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+fid,收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
 
 ### UP 主投币视频
 
@@ -283,6 +293,12 @@ areaID: 分区 ID 分区增删较多，可通过 [分区列表](https://api.live
 
 order: 排序方式，live_time 开播时间，online 人气
 
+### 主站话题列表
+
+举例: [https://rsshub.app/bilibili/blackboard](https://rsshub.app/bilibili/blackboard)
+
+路由: `bilibili/blackboard`
+
 ## bangumi
 
 ### 放送列表
@@ -320,6 +336,28 @@ order: 排序方式，live_time 开播时间，online 人气
 路由: `/weibo/keyword/:keyword`
 
 参数: keyword，你想订阅的微博关键词
+
+## 贴吧
+
+### 帖子列表
+
+举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
+
+路由: `/tieba/forum/:kw`
+
+参数: `kw`，吧名
+
+### 精品帖子
+
+举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+
+路由: `/tieba/forum/good/:kw/:cid?`
+
+参数：
+
+`kw`: 吧名
+
+`cid`: 精品分类，如果不传 `cid` 则获取全部分类
 
 ## 即刻
 
@@ -522,16 +560,6 @@ keyword: 关键词
 company: 快递公司代码，参考 [API URL 所支持的快递公司及参数说明](https://www.kuaidi100.com/download/api_kuaidi100_com%2820140729%29.doc)
 
 number: 快递单号
-
-## 贴吧
-
-### 帖子列表
-
-举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
-
-路由: `/tieba/forum/:kw`
-
-参数: kw，吧名
 
 ## 妹子图
 
