@@ -5,8 +5,8 @@ const config = require('../../config');
 module.exports = async (ctx) => {
     const city = ctx.params.city || 'sh';
     const keyword = ctx.params.keyword || '';
-    const iswhole = ctx.params.iswhole || 0;
-    const room = ctx.params.room || 1;
+    const iswhole = ctx.params.iswhole || '0';
+    const room = ctx.params.room || '1';
     const domain = `${city === 'bj' ? '' : city + '.'}m.ziroom.com`;
 
     const response = await axios({
@@ -41,9 +41,9 @@ module.exports = async (ctx) => {
               ];
 
     ctx.state.data = {
-        title: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
+        title: `自如的${keyword}${iswhole !== '0' ? '整租' : '合租'}${room}室房源`,
         link: `http://${domain}`,
-        description: `自如的${keyword}${iswhole ? '整租' : '合租'}${room}室房源`,
+        description: `自如的${keyword}${iswhole !== '0' ? '整租' : '合租'}${room}室房源`,
         item: data.map((item) => ({
             title: item.title,
             description: `${item.room_name}<img referrerpolicy="no-referrer" src="${item.list_img}">`,

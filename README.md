@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">RSSHub</h1>
 
-> 🍭 使用 RSS 连接全世界
+> 🍭 万物皆可 RSS
 
 ## 介绍
 
@@ -134,6 +134,10 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   新闻早报
 -   UU 看书
     -   小说章节
+-   喜马拉雅
+    -   专辑
+-   EZTV
+    -   Lookup Torrents by IMDB ID（根据 IMDB ID 查找种子）
 
 ## 鸣谢
 
