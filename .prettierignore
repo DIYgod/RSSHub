@@ -1,2 +1,3 @@
 package.json
 docs/.vuepress/dist
+package-lock.json
