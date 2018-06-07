@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">RSSHub</h1>
 
-> 🍭 万物皆可 RSS
+> 🍰 万物皆可 RSS
 
 ## 介绍
 
@@ -138,6 +138,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   专辑
 -   EZTV
     -   Lookup Torrents by IMDB ID（根据 IMDB ID 查找种子）
+-   什么值得买
+    -   关键词
 
 ## 鸣谢
 
@@ -147,7 +149,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 -   [Liuyang](https://github.com/lingllting)
 
--   [Sayori Studio](https://t.me/SayoriStudio)
+-   [Zuyang](https://zuyang.farbox.com)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 

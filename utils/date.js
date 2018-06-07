@@ -30,6 +30,14 @@ module.exports = (html) => {
         math = /昨天 (\d+):(\d+)/.exec(html);
         date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1, math[1], math[2]);
         return date.toUTCString();
+    } else if (/(\d+)-(\d+) (\d+):(\d+)/.exec(html)) {
+        math = /(\d+)-(\d+) (\d+):(\d+)/.exec(html);
+        date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2], math[3], math[4]);
+        return date.toUTCString();
+    } else if (/(\d+):(\d+)/.exec(html)) {
+        math = /(\d+):(\d+)/.exec(html);
+        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), math[1], math[2]);
+        return date.toUTCString();
     } else if (/(\d+)月(\d+)日 (\d+):(\d+)/.exec(html)) {
         math = /(\d+)月(\d+)日 (\d+):(\d+)/.exec(html);
         date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2], math[3], math[4]);

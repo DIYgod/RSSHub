@@ -1,7 +1,7 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
-const formatPubDate = require('../../utils/pubDate.js');
+const formatPubDate = require('../../utils/date.js');
 
 const baseUrl = 'http://www.ximalaya.com';
 module.exports = async (ctx) => {
