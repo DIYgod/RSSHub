@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: 'RSSHub 有新的 RSS 支持',
         link: 'https://github.com/DIYgod/RSSHub',
-        description: '使用 RSS 连接全世界',
+        description: '万物皆可 RSS',
         item:
             list &&
             list

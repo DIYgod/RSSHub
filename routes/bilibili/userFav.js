@@ -3,30 +3,28 @@ const config = require('../../config');
 const cache = require('./cache');
 
 module.exports = async (ctx) => {
-    const fid = ctx.params.fid;
     const uid = ctx.params.uid;
+    const name = await cache.getUsernameFromUID(ctx, uid);
 
     const response = await axios({
         method: 'get',
-        url: `https://api.bilibili.com/x/v2/fav/video?vmid=${uid}&fid=${fid}`,
+        url: `https://api.bilibili.com/x/v2/fav/video?vmid=${uid}&ps=30&tid=0&keyword=&pn=1&order=fav_time`,
         headers: {
             'User-Agent': config.ua,
-            Referer: `https://space.bilibili.com/${uid}/`,
+            Referer: `https://space.bilibili.com/${uid}/#/favlist`,
         },
     });
-    const data = response.data.data;
-    const userName = await cache.getUsernameFromUID(ctx, uid);
-    const favName = await cache.getFavNameFromFid(ctx, fid, uid);
+    const data = response.data;
 
     ctx.state.data = {
-        title: `${userName} 的 bilibili 收藏夹 ${favName}`,
-        link: `https://space.bilibili.com/${uid}/#/favlist?fid=${fid}`,
-        description: `${userName} 的 bilibili 收藏夹 ${favName}`,
+        title: `${name} 的 bilibili 收藏夹`,
+        link: `https://space.bilibili.com/${uid}/#/favlist`,
+        description: `${name} 的 bilibili 收藏夹`,
 
         item:
-            data &&
-            data.archives &&
-            data.archives.map((item) => ({
+            data.data &&
+            data.data.archives &&
+            data.data.archives.map((item) => ({
                 title: item.title,
                 description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
                 pubDate: new Date(item.fav_at * 1000).toUTCString(),
