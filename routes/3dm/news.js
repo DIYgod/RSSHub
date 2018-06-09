@@ -19,24 +19,84 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(data);
     const list = $('.dowlnewslist a');
+    const items = [];
+
+    for (let i = 0; i < list.length; i++) {
+        let item = $(list[i]);
+        const url = item.attr("href");
+
+        let content = '';
+        let urlBase = url.replace(/.html/, '');
+        let total = 1;
+
+        const value = await ctx.cache.get(url);
+        if (value) {
+            item = value
+        } else {
+            // 抓取分页
+            for (let j = 1; true; j++) {
+                let response;
+                let u;
+
+                u = (j == 1) ? url : urlBase + '_' + j + '.html';
+
+                try {
+                    response = await axios({
+                        method: 'get',
+                        url: u,
+                        headers: {
+                            'User-Agent': config.ua,
+                        },
+                    });
+                } catch {
+                    break;
+                }
+
+                const page = cheerio.load(response.data, {
+                    decodeEntities: false,
+                });
+
+                // 提取页数
+                if (j == 1) {
+                    if (page('.pagelistbox').length == 0) {
+                        total = 1;
+                    } else {
+                        total = parseInt(page('.pagelistbox').find('span').html().match(/共 (\S*) 页/)[1]);
+                    }
+                }
+
+                // 去除不需要的元素
+                page('.page_fenye').remove(); // 翻页
+                page('.con p').last().remove(); // 专题跳转
+                if (total > 1) {
+                    page('.con p').last().remove(); // 快速翻页提示
+                }
+
+                content += page('.con div').next().html();
+
+                if (j >= total) {
+                    break;
+                }
+            }
+
+            item = {
+                title: item.find('p').text(),
+                description: content,
+                pubDate: item.find('span').text(),
+                link: url,
+                guid: url,
+            }
+
+            ctx.cache.set(url, item, 24 * 60 * 60);
+        }
+
+        items.push(item);
+    }
 
     ctx.state.data = {
-        title: $("title").text(),
+        title: $("title").text().split('_')[0],
         link: url,
         description: $('.game-pc>p').text(),
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('p').text(),
-                        description: ``,
-                        pubDate: item.find('span').text(),
-                        link: item.attr("href"),
-                        guid: item.attr("href"),
-                    };
-                })
-                .get(),
+        item: items,
     };
 };
