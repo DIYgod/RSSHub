@@ -329,6 +329,8 @@ gcloud app deploy
 
 `PORT`: 监听端口，默认为 `1200`
 
+`SOCKET`: 监听 Unix Socket，默认为 `null`
+
 `CACHE_TYPE`: 缓存类型，可为 `memory` 和 `redis`，设为空可以禁止缓存，默认为 `memory`
 
 `CACHE_EXPIRE`: 缓存过期时间，单位为秒，默认 300

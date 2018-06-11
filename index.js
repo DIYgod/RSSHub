@@ -1,5 +1,5 @@
 const Koa = require('koa');
-
+const fs = require('fs');
 const logger = require('./utils/logger');
 const config = require('./config');
 
@@ -83,4 +83,19 @@ if (config.cacheType === 'memory') {
 // router
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(config.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+// connect
+if (config.connect.port) {
+    app.listen(config.connect.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+    logger.info('Listening Port ' + config.connect.port);
+}
+if (config.connect.socket) {
+    if (fs.existsSync(config.connect.socket)) {
+        fs.unlinkSync(config.connect.socket);
+    }
+    app.listen(config.connect.socket, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+    logger.info('Listening Unix Socket ' + config.connect.socket);
+    process.on('SIGINT', () => {
+        fs.unlinkSync(config.connect.socket);
+        process.exit();
+    });
+}
