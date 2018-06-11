@@ -55,34 +55,38 @@ module.exports = async (ctx) => {
                     decodeEntities: false,
                 });
 
-                // 提取页数
-                if (j === 1) {
-                    if (page('.pagelistbox').length === 0) {
-                        total = 1;
-                    } else {
-                        total = parseInt(
-                            page('.pagelistbox')
-                                .find('span')
-                                .html()
-                                .match(/共 (\S*) 页/)[1]
-                        );
+                if (type === 'download') {
+                    content = page('.jieshao').html();
+                } else {
+                    // 提取页数
+                    if (j === 1) {
+                        if (page('.pagelistbox').length === 0) {
+                            total = 1;
+                        } else {
+                            total = parseInt(
+                                page('.pagelistbox')
+                                    .find('span')
+                                    .html()
+                                    .match(/共 (\S*) 页/)[1]
+                            );
+                        }
                     }
-                }
 
-                // 去除不需要的元素
-                page('.page_fenye').remove(); // 翻页
-                page('.con p')
-                    .last()
-                    .remove(); // 专题跳转
-                if (total > 1) {
+                    // 去除不需要的元素
+                    page('.page_fenye').remove(); // 翻页
                     page('.con p')
                         .last()
-                        .remove(); // 快速翻页提示
-                }
+                        .remove(); // 专题跳转
+                    if (total > 1) {
+                        page('.con p')
+                            .last()
+                            .remove(); // 快速翻页提示
+                    }
 
-                content += page('.con div')
-                    .next()
-                    .html();
+                    content += page('.con div')
+                        .next()
+                        .html();
+                }
 
                 if (j >= total) {
                     break;
