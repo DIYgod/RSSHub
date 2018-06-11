@@ -6,10 +6,10 @@ module.exports = async (ctx) => {
     const host = 'http://jwc.shmtu.edu.cn/Information/';
     let type = ctx.params.type;
     let info = '教务新闻';
-    if (type === 2) {
+    if (type === '2') {
         info = '教务公告';
     } else {
-        type = 1;
+        type = '1';
     }
 
     const response = await axios({

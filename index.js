@@ -92,7 +92,7 @@ if (config.connect.socket) {
     if (fs.existsSync(config.connect.socket)) {
         fs.unlinkSync(config.connect.socket);
     }
-    app.listen(config.connect.socket);
+    app.listen(config.connect.socket, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
     logger.info('Listening Unix Socket ' + config.connect.socket);
     process.on('SIGINT', () => {
         fs.unlinkSync(config.connect.socket);
