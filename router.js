@@ -284,6 +284,9 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 // UU看书
 router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
+// 3dm
+router.get('/3dm/:name/:type', require('./routes/3dm/news'));
+
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
 
