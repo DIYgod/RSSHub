@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
     const list = $('.dowlnewslist a');
     const items = [];
 
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < Math.min(list.length, 10); i++) {
         let item = $(list[i]);
         const url = item.attr('href');
 
@@ -29,7 +29,7 @@ module.exports = async (ctx) => {
         const urlBase = url.replace(/.html/, '');
         let total = 1;
 
-        const value = await ctx.cache.get(url);
+        const value = JSON.parse(await ctx.cache.get(url));
         if (value) {
             item = value;
         } else {
@@ -101,7 +101,7 @@ module.exports = async (ctx) => {
                 guid: url,
             };
 
-            ctx.cache.set(url, item, 24 * 60 * 60);
+            ctx.cache.set(url, JSON.stringify(item), 24 * 60 * 60);
         }
 
         items.push(item);
