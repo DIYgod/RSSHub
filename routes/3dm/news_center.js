@@ -2,6 +2,7 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
 
+const sourceTimezoneOffset = -8;
 module.exports = async (ctx) => {
     const url = 'http://www.3dmgame.com/news/';
     const res = await axios({
@@ -17,6 +18,7 @@ module.exports = async (ctx) => {
     const out = [];
 
     for (let i = 0; i < (list.length <= 20 ? list.length : 20); i++) {
+        let $ = cheerio.load(data);
         const item = list[i];
         const itemUrl = $(item)
             .find('a:nth-child(2)')
@@ -28,9 +30,6 @@ module.exports = async (ctx) => {
         }
         const title = $(item)
             .find('a:nth-child(2)')
-            .text();
-        const time = $(item)
-            .find('span')
             .text();
         let itemRes;
         try {
@@ -44,21 +43,24 @@ module.exports = async (ctx) => {
         } catch (e) {
             continue;
         }
-        {
-            const itemPage = itemRes.data;
-            const $ = cheerio.load(itemPage);
-            const content = $('.con div:nth-child(2)').html();
-            const single = {
-                title: title,
-                description: content,
-                pubDate: time,
-                link: itemUrl,
-                guid: itemUrl,
-            };
-            out.push(single);
+        const itemPage = itemRes.data;
+        $ = cheerio.load(itemPage);
+        const content = $('.con div:nth-child(2)').html();
+        const pageInfo = $('.arctitle>span').text();
+        const regex = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/;
+        const regRes = regex.exec(pageInfo);
+        const time = regRes === null ? new Date() : new Date(regRes[0]);
+        time.setTime(time.getTime() + (sourceTimezoneOffset - time.getTimezoneOffset() / 60) * 60 * 60 * 1000);
+        const single = {
+            title: title,
+            description: content,
+            pubDate: time.toUTCString(),
+            link: itemUrl,
+            guid: itemUrl,
+        };
+        out.push(single);
 
-            ctx.cache.set(itemUrl, single, 24 * 60 * 60);
-        }
+        ctx.cache.set(itemUrl, single, 24 * 60 * 60);
     }
     ctx.state.data = {
         title: $('title')
