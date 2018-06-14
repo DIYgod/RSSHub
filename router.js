@@ -286,6 +286,7 @@ router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
 // 3dm
 router.get('/3dm/:name/:type', require('./routes/3dm/news'));
+router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
