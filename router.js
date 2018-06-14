@@ -302,4 +302,7 @@ router.get('/shmtu/events', require('./routes/shmtu/events'));
 router.get('/shmtu/notes', require('./routes/shmtu/notes'));
 router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
 
+// 新京报
+router.get('/bjnews/:cat', require('./routes/bjnews/news'));
+
 module.exports = router;

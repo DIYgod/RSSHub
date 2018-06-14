@@ -1087,6 +1087,14 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 ## 3dm
 
+### 新闻中心
+
+举例: [https://rsshub.app/3dm/news](https://rsshub.app/3dm/news)
+
+路由: `/3dm/news`
+
+参数: 无
+
 ### 新闻
 
 举例: [https://rsshub.app/3dm/detroitbecomehuman/news](https://rsshub.app/3dm/detroitbecomehuman/news)
@@ -1182,3 +1190,11 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/shmtu/jwc/:type`
 
 参数: type，1 为教务新闻,2 为教务公告
+
+## 新京报
+
+举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
+
+路由： `/bjnews/:category`
+
+参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
