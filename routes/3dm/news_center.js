@@ -17,13 +17,13 @@ module.exports = async (ctx) => {
     const list = $('.QZlisttxt ul li p');
     const out = [];
 
-    for (let i = 0; i < (list.length <= 20 ? list.length : 20); i++) {
+    for (let i = 0; i < Math.min(list.length, 10); i++) {
         let $ = cheerio.load(data);
         const item = list[i];
         const itemUrl = $(item)
             .find('a:nth-child(2)')
             .attr('href');
-        const cache = await ctx.cache.get(itemUrl);
+        const cache = JSON.parse(await ctx.cache.get(itemUrl));
         if (cache) {
             out.push(cache);
             continue;
@@ -60,7 +60,7 @@ module.exports = async (ctx) => {
         };
         out.push(single);
 
-        ctx.cache.set(itemUrl, single, 24 * 60 * 60);
+        ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
     }
     ctx.state.data = {
         title: $('title')

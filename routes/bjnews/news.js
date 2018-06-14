@@ -16,12 +16,12 @@ module.exports = async (ctx) => {
     const out = [];
     const proList = [];
     let time, title, itemUrl;
-    for (let i = 0; i < (list.length <= 20 ? list.length : 20); i++) {
+    for (let i = 0; i < Math.min(list.length, 10); i++) {
         const $ = cheerio.load(list[i]);
         time = $('p').text();
         title = $('a').text();
         itemUrl = $('a').attr('href');
-        const cache = await ctx.cache.get(itemUrl);
+        const cache = JSON.parse(await ctx.cache.get(itemUrl));
         if (cache) {
             out.push(cache);
             continue;
@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
             guid: itemUrl,
         };
         out.push(single);
-        ctx.cache.set(itemUrl, single, 24 * 60 * 60);
+        ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
         proList.push(axios_ins.get(itemUrl));
     }
     const responses = await axios.all(proList);
