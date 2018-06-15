@@ -1085,7 +1085,7 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: id，小说 id，可在对应小说页 URL 中找到
 
-## 3dm
+## 3DMGame
 
 ### 新闻中心
 
@@ -1192,6 +1192,8 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 参数: type，1 为教务新闻,2 为教务公告
 
 ## 新京报
+
+### 栏目
 
 举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
 
