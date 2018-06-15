@@ -16,7 +16,7 @@ module.exports = async (ctx) => {
     const out = [];
     const proList = [];
     let time, title, itemUrl;
-    for (let i = 0; i < Math.min(list.length, 1); i++) {
+    for (let i = 0; i < Math.min(list.length, 10); i++) {
         const $ = cheerio.load(list[i]);
         time = $('p').text();
         title = $('a').text();
