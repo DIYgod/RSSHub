@@ -29,9 +29,9 @@ module.exports = async (ctx) => {
         const urlBase = url.replace(/.html/, '');
         let total = 1;
 
-        const value = JSON.parse(await ctx.cache.get(url));
+        const value = await ctx.cache.get(url);
         if (value) {
-            item = value;
+            item = JSON.parse(value);
         } else {
             // 抓取分页
             for (let j = 1; ; j++) {
