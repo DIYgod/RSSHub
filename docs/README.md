@@ -1200,3 +1200,9 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/bjnews/:category`
 
 参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
+
+| 快讯     | 评论    | iOS  | 动新闻 | 我们视频 | 深度   | 国内 | 国际  | 财经    | 娱乐 | 体育  | 书评 | 创客   | 滚动 | 综合    | 房产  | 汽车 | 旅游   | 教育 | 健康   | 新食品 | 时尚 | 家居 | 文化 |
+| -------- | ------- | ---- | ------ | -------- | ------ | ---- | ----- | ------- | ---- | ----- | ---- | ------ | ---- | ------- | ----- | ---- | ------ | ---- | ------ | ---- | ------ | ---- | ------ |
+| realtime | opinion | ios  | video  | wevideo  | inside | news | world | finance | ent  | sport | book | invest | roll | feature | house | auto | travel | edu  | health | food | fashion | home | culture |
+
+
