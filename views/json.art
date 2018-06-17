@@ -12,7 +12,7 @@
             "id": "{{ $value.guid || $value.link }}",
             "url": "{{ $value.link }}",
             "author": {
-                "name": "{{ $value.author }}",
+                "name": "{{ $value.author }}"
             },
             "external_url": "",
             "title": "{{ $value.title }}",

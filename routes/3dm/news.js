@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
     const list = $('.dowlnewslist a');
     const items = [];
 
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < Math.min(list.length, 10); i++) {
         let item = $(list[i]);
         const url = item.attr('href');
 
@@ -31,7 +31,7 @@ module.exports = async (ctx) => {
 
         const value = await ctx.cache.get(url);
         if (value) {
-            item = value;
+            item = JSON.parse(value);
         } else {
             // 抓取分页
             for (let j = 1; ; j++) {
@@ -101,7 +101,7 @@ module.exports = async (ctx) => {
                 guid: url,
             };
 
-            ctx.cache.set(url, item, 24 * 60 * 60);
+            ctx.cache.set(url, JSON.stringify(item), 24 * 60 * 60);
         }
 
         items.push(item);

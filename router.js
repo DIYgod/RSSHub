@@ -286,6 +286,7 @@ router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
 // 3dm
 router.get('/3dm/:name/:type', require('./routes/3dm/news'));
+router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
@@ -295,5 +296,13 @@ router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 
 // 什么值得买
 router.get('/smzdm/keyword/:keyword', require('./routes/smzdm/keyword'));
+
+// SHMTU
+router.get('/shmtu/events', require('./routes/shmtu/events'));
+router.get('/shmtu/notes', require('./routes/shmtu/notes'));
+router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
+
+// 新京报
+router.get('/bjnews/:cat', require('./routes/bjnews/news'));
 
 module.exports = router;
