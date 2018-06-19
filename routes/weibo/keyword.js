@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
         link: `http://s.weibo.com/weibo/${encodeURIComponent(keyword)}&b=1&nodup=1`,
         description: `又有人在微博提到${keyword}了`,
         item: data.map((item) => {
-            const title = item.mblog.text.replace(/<.*?>/g, '');
+            const title = item.mblog.text.replace(/<img.*?>/g, '[图片]').replace(/<.*?>/g, '');
             return {
                 title: `${item.mblog.user.screen_name}: ${title.length > 24 ? title.slice(0, 24) + '...' : title}`,
                 description: `${item.mblog.user.screen_name}: ${weiboUtils.format(item.mblog)}`,

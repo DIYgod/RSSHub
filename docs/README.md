@@ -9,23 +9,71 @@ sidebar: auto
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
+## 鸣谢
+
+### Sponsors
+
+-   [rixCloud](https://rixcloud.us)
+
+-   [Liuyang](https://github.com/lingllting)
+
+-   [Zuyang](https://zuyang.farbox.com)
+
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+
+### Contributors
+
+[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+
 ::: tip 提示
 
-演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用
+演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用，但请不要抓取过于频繁
 
 :::
 
-## 内容过滤
+## 通用参数
 
-可以使用以下 URL query 过滤出想要的内容，支持正则
+### 内容过滤
 
-*   filter: 过滤标题和描述
+可以使用以下 URL query 过滤内容，支持正则
 
-*   filter_title: 过滤标题
+filter 选出想要的内容
 
-*   filter_description: 过滤描述
+-   filter: 过滤标题和描述
+
+-   filter_title: 过滤标题
+
+-   filter_description: 过滤描述
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
+
+filterout 去掉不要的内容
+
+-   filterout: 过滤标题和描述
+
+-   filterout_title: 过滤标题
+
+-   filterout_description: 过滤描述
+
+举例: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
+
+::: tip 提示
+
+filter 与 filterout 共 6 个 query 参数可以组合使用。当 filter、filter_title、filter_description 中多个参数存在时，取其交集进行过滤，filterout 三项同理。
+
+:::
+
+### 输出格式
+
+RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出格式，在路由末尾添加 `.rss` `.atom` 或 `.json` 即可请求对应输出格式，缺省为 RSS 2.0
+
+举例:
+
+-   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
+-   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
+-   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
+-   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
+-   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
 ## RSSHub
 
@@ -63,13 +111,23 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主收藏夹
+### UP 主默认收藏夹
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
 
 路由: `/bilibili/user/fav/:uid`
 
 参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主非默认收藏夹
+
+举例: [https://rsshub.app/bilibili/fav/756508/50948568](https://rsshub.app/bilibili/fav/756508/50948568)
+
+路由: `/bilibili/fav/:uid/:fid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+fid,收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
 
 ### UP 主投币视频
 
@@ -221,7 +279,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ::: warning 注意
 
-由于接口未提供开播时间,如果直播间未更换标题与分区,将只会出现一次.如果直播间更换分区与标题,将再出现一次
+由于接口未提供开播时间，如果直播间未更换标题与分区，将视为一次。如果直播间更换分区与标题，将视为另一项
 
 :::
 
@@ -234,6 +292,22 @@ order: 排序方式，live_time 开播时间，online 人气
 areaID: 分区 ID 分区增删较多，可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询
 
 order: 排序方式，live_time 开播时间，online 人气
+
+### 主站话题列表
+
+举例: [https://rsshub.app/bilibili/blackboard](https://rsshub.app/bilibili/blackboard)
+
+路由: `bilibili/blackboard`
+
+## bangumi
+
+### 放送列表
+
+举例: [https://rsshub.app/bangumi/calendar/today](https://rsshub.app/bangumi/calendar/today)
+
+路由: `/bangumi/calendar/today`
+
+参数: 无
 
 ## 微博
 
@@ -263,13 +337,43 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: keyword，你想订阅的微博关键词
 
+## 贴吧
+
+### 帖子列表
+
+举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
+
+路由: `/tieba/forum/:kw`
+
+参数: `kw`，吧名
+
+### 精品帖子
+
+举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+
+路由: `/tieba/forum/good/:kw/:cid?`
+
+参数：
+
+`kw`: 吧名
+
+`cid`: 精品分类，如果不传 `cid` 则获取全部分类
+
 ## 即刻
 
-### 主题
+### 主题-精选
 
 举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
 
 路由: `/jike/topic/:id`
+
+参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+### 主题-广场
+
+举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/square/:id`
 
 参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
 
@@ -377,6 +481,12 @@ order: 排序方式，live_time 开播时间，online 人气
 
 ## 知乎
 
+::: warning 注意
+
+知乎反爬虫策略非常严格，以下演示经常失效，建议自搭
+
+:::
+
 ### 收藏夹
 
 举例: [https://rsshub.app/zhihu/collection/26444956](https://rsshub.app/zhihu/collection/26444956)
@@ -437,7 +547,7 @@ keyword: 关键词
 
 ::: warning 注意
 
-快递送达后请及时取消订阅，以免不必要地浪费服务器资源
+快递送达后请及时取消订阅，以免浪费服务器资源
 
 :::
 
@@ -450,16 +560,6 @@ keyword: 关键词
 company: 快递公司代码，参考 [API URL 所支持的快递公司及参数说明](https://www.kuaidi100.com/download/api_kuaidi100_com%2820140729%29.doc)
 
 number: 快递单号
-
-## 贴吧
-
-### 帖子列表
-
-举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
-
-路由: `/tieba/forum/:kw`
-
-参数: kw，吧名
 
 ## 妹子图
 
@@ -659,6 +759,16 @@ key: 产品密钥
 
 参数: id，独家号 id，可在对应独家号页 URL 中找到
 
+## 今日头条
+
+### 关键词
+
+举例: [https://rsshub.app/jinritoutiao/keyword/ai](https://rsshub.app/jinritoutiao/keyword/ai)
+
+路由: `/jinritoutiao/keyword/:keyword`
+
+参数: keyword，关键词
+
 ## 极客时间
 
 ### 专栏文章
@@ -742,3 +852,351 @@ key: 产品密钥
 路由: `/iqiyi/dongman/:id`
 
 参数: id，动漫 id，可在该动漫主页 URL 中找到(不包括`.html`)
+
+## 南方周末
+
+### 新闻分类
+
+举例：[https://rsshub.app/infzm/5](https://rsshub.app/infzm/5)
+
+路由: `/infzm/:id`
+
+参数: id，南方周末内容分区 id，可在该内容分区的 URL 中找到(即http://www.infzm.com/contents/:id)，注意 contents 为内容分区，content 为文章页，添加前请留意。下面给出部分参考：
+
+| 全站 | 新闻 | 经济 | 文化 | 评论 | 图片 | 生活 | 时政 | 社会 | 科技 | 绿色 | 头条 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 1374 | 2553 |
+
+## Dribbble
+
+### 流行
+
+举例:
+
+[https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
+
+[https://rsshub.app/dribbble/popular/week](https://rsshub.app/dribbble/popular/week)
+
+路由: `/dribbble/popular/:timeframe?`
+
+参数: timeframe，可选，时间维度，支持 week month year ever
+
+### 用户（团队）
+
+举例: [https://rsshub.app/dribbble/user/google](https://rsshub.app/dribbble/user/google)
+
+路由: `/dribbble/user/:name`
+
+参数: name，用户名，可在该用户主页 URL 中找到
+
+### 关键词
+
+举例: [https://rsshub.app/dribbble/keyword/player](https://rsshub.app/dribbble/keyword/player)
+
+路由: `/dribbble/keyword/:keyword`
+
+参数: keyword，想要订阅的关键词
+
+## 斗鱼
+
+### 直播间开播
+
+举例: [https://rsshub.app/douyu/room/24422](https://rsshub.app/douyu/room/24422)
+
+路由: `/douyu/room/:id`
+
+参数: id，直播间 id，可在主播直播间页 URL 中找到
+
+## 熊猫直播
+
+### 直播间开播下播
+
+举例: [https://rsshub.app/panda/room/10300](https://rsshub.app/panda/room/10300)
+
+路由: `/panda/room/:id`
+
+参数: id，直播间 id，可在主播直播间页 URL 中找到
+
+## V2EX
+
+### 最热/最新主题
+
+举例: [https://rsshub.app/v2ex/topics/latest](https://rsshub.app/v2ex/topics/latest)
+
+路由: `/v2ex/topics/:type`
+
+参数: type: hot 或 latest
+
+## Telegram
+
+### 频道
+
+::: tip 提示
+
+订阅要求：将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员，然后发一条消息后才可正常获取数据
+
+:::
+
+举例: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/telegram/channel/awesomeDIYgod)
+
+路由: `/telegram/channel/:username`
+
+参数: username，频道 username
+
+## Readhub
+
+### 分类
+
+举例: [https://rsshub.app/readhub/category/topic](https://rsshub.app/readhub/category/topic)
+
+路由: `/readhub/category/:category`
+
+参数: category，分类名
+
+| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
+| -------- | -------- | ---------- | ---------- |
+| topic    | news     | technews   | blockchain |
+
+## Konachan Anime Wallpapers
+
+::: tip 提示
+
+-   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
+
+:::
+
+### Posts
+
+路由:
+
+-   `/konachan/post`
+-   `/konachan/post/:tags`
+
+举例:
+
+-   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
+-   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
+-   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
+
+### Popular Recent Posts
+
+路由:
+
+-   `/konachan/post/popular_recent` 默认过去 24 小时
+-   `/konachan/post/popular_recent/:period`
+
+举例:
+
+-   过去 24 小时:[https://rsshub.app/konachan/post/popular_recent/1d](https://rsshub.app/konachan/post/popular_recent/1d)
+-   过去一周:[https://rsshub.app/konachan/post/popular_recent/1w](https://rsshub.app/konachan/post/popular_recent/1w)
+-   过去一月:[https://rsshub.app/konachan/post/popular_recent/1m](https://rsshub.app/konachan/post/popular_recent/1m)
+-   过去一年:[https://rsshub.app/konachan/post/popular_recent/1y](https://rsshub.app/konachan/post/popular_recent?period=1y)
+
+## yande.re
+
+### Posts
+
+路由:
+
+-   `/yande.re/post`
+-   `/yande.re/post/:tags`
+
+举例:
+
+-   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
+-   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
+-   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
+-   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
+
+### Popular Recent Posts
+
+路由:
+
+-   `/yande.re/post/popular_recent` 默认过去 24 小时
+-   `/yande.re/post/popular_recent/:period`
+
+举例:
+
+-   过去 24 小时:[https://rsshub.app/yande.re/post/popular_recent/1d](https://rsshub.app/yande.re/post/popular_recent/1d)
+-   过去一周:[https://rsshub.app/yande.re/post/popular_recent/1w](https://rsshub.app/yande.re/post/popular_recent/1w)
+-   过去一月:[https://rsshub.app/yande.re/post/popular_recent/1m](https://rsshub.app/yande.re/post/popular_recent/1m)
+-   过去一年:[https://rsshub.app/yande.re/post/popular_recent/1y](https://rsshub.app/yande.re/post/popular_recent?period=1y)
+
+## GitHub
+
+::: tip 提示
+
+GitHub 官方也提供了一些 RSS:
+
+-   仓库 releases: https://github.com/:owner/:repo/releases.atom
+-   仓库 commits: https://github.com/:owner/:repo/commits.atom
+-   用户动态: https://github.com/:user.atom
+
+:::
+
+### 用户仓库
+
+举例: [https://rsshub.app/github/repos/DIYgod](https://rsshub.app/github/repos/DIYgod)
+
+路由: `/github/repos/:user`
+
+参数: user，用户名
+
+### Trending
+
+举例:
+
+[https://rsshub.app/github/trending/daily](https://rsshub.app/github/trending/daily)
+
+[https://rsshub.app/github/trending/daily/javascript](https://rsshub.app/github/trending/daily/javascript)
+
+路由: `/github/trending/:since/:language?`
+
+参数:
+
+since，时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到，可选 daily weekly monthly
+
+language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
+
+## 纽约时报
+
+::: tip 提示
+
+纽约时报 RSS: https://cn.nytimes.com/rss/
+
+:::
+
+### 新闻早报
+
+举例: [https://rsshub.app/nytimes/morning_post](https://rsshub.app/nytimes/morning_post)
+
+路由: `/nytimes/morning_post`
+
+参数: 无
+
+## UU 看书
+
+### 小说章节
+
+举例: [https://rsshub.app/uukanshu/chapter/49621](https://rsshub.app/uukanshu/chapter/49621)
+
+路由: `/uukanshu/chapter/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+## 3DMGame
+
+### 新闻中心
+
+举例: [https://rsshub.app/3dm/news](https://rsshub.app/3dm/news)
+
+路由: `/3dm/news`
+
+参数: 无
+
+### 新闻
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/news](https://rsshub.app/3dm/detroitbecomehuman/news)
+
+路由: `/3dm/:name/news`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
+### 攻略
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/gl](https://rsshub.app/3dm/detroitbecomehuman/gl)
+
+路由: `/3dm/:name/gl`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
+### 下载
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/download](https://rsshub.app/3dm/detroitbecomehuman/download)
+
+路由: `/3dm/:name/download`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
+## 喜马拉雅
+
+### 专辑
+
+举例: [https://rsshub.app/ximalaya/album/shangye/299146/](https://rsshub.app/ximalaya/album/shangye/299146/)
+
+路由: `/ximalaya/album/:classify/:id`
+
+参数:
+
+classify, 专辑分类, 可在对应专辑页面的 URL 中找到
+
+id, 专辑 id, 可在对应专辑页面的 URL 中找到
+
+## EZTV
+
+::: tip 提示
+
+网站提供了全部种子的 RSS：https://eztv.ag/ezrss.xml
+
+:::
+
+### Lookup Torrents by IMDB ID
+
+举例: [https://rsshub.app/eztv/torrents/6048596](https://rsshub.app/eztv/torrent/6048596)
+
+路由: `/eztv/torrents/:imdb_id`
+
+参数: imdb_id，想搜寻的 show 的种子所对应的 IMDB ID，可在 [IMDB](https://www.imdb.com) 官网找到
+
+## 什么值得买
+
+::: tip 提示
+
+网站也提供了部分 RSS：https://www.smzdm.com/dingyue
+
+:::
+
+### 关键词
+
+举例: [https://rsshub.app/smzdm/keyword/女装](https://rsshub.app/smzdm/keyword/女装)
+
+路由: `/smzdm/keyword/:keyword`
+
+参数: keyword，你想订阅的关键词
+
+## 上海海事大学
+
+### 学术讲座
+
+举例: [https://rsshub.app/shmtu/events](https://rsshub.app/shmtu/events)
+
+路由: `/shmtu/events`
+
+参数: 无
+
+### 通知公告
+
+举例: [https://rsshub.app/shmtu/notes](https://rsshub.app/shmtu/notes)
+
+路由: `/shmtu/notes`
+
+参数: 无
+
+### 教务信息
+
+举例: [https://rsshub.app/shmtu/jwc/1](https://rsshub.app/shmtu/jwc/1)
+
+路由: `/shmtu/jwc/:type`
+
+参数: type，1 为教务新闻,2 为教务公告
+
+## 新京报
+
+### 栏目
+
+举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
+
+路由： `/bjnews/:category`
+
+参数: category，新京报的栏目名，点击对应栏目后在地址栏找到

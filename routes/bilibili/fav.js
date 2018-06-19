@@ -1,43 +1,32 @@
 const axios = require('../../utils/axios');
-const qs = require('querystring');
 const config = require('../../config');
+const cache = require('./cache');
 
 module.exports = async (ctx) => {
+    const fid = ctx.params.fid;
     const uid = ctx.params.uid;
-
-    const nameResponse = await axios({
-        method: 'post',
-        url: 'https://space.bilibili.com/ajax/member/GetInfo',
-        headers: {
-            'User-Agent': config.ua,
-            Referer: `https://space.bilibili.com/${uid}/`,
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        data: qs.stringify({
-            mid: uid,
-        }),
-    });
-    const name = nameResponse.data.data.name;
 
     const response = await axios({
         method: 'get',
-        url: `https://api.bilibili.com/x/v2/fav/video?vmid=${uid}&ps=30&tid=0&keyword=&pn=1&order=fav_time`,
+        url: `https://api.bilibili.com/x/v2/fav/video?vmid=${uid}&fid=${fid}`,
         headers: {
             'User-Agent': config.ua,
-            Referer: `https://space.bilibili.com/${uid}/#/favlist`,
+            Referer: `https://space.bilibili.com/${uid}/`,
         },
     });
-    const data = response.data;
+    const data = response.data.data;
+    const userName = await cache.getUsernameFromUID(ctx, uid);
+    const favName = await cache.getFavNameFromFid(ctx, fid, uid);
 
     ctx.state.data = {
-        title: `${name} 的 bilibili 收藏夹`,
-        link: `https://space.bilibili.com/${uid}/#/favlist`,
-        description: `${name} 的 bilibili 收藏夹`,
+        title: `${userName} 的 bilibili 收藏夹 ${favName}`,
+        link: `https://space.bilibili.com/${uid}/#/favlist?fid=${fid}`,
+        description: `${userName} 的 bilibili 收藏夹 ${favName}`,
 
         item:
-            data.data &&
-            data.data.archives &&
-            data.data.archives.map((item) => ({
+            data &&
+            data.archives &&
+            data.archives.map((item) => ({
                 title: item.title,
                 description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
                 pubDate: new Date(item.fav_at * 1000).toUTCString(),

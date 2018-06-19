@@ -1,5 +1,5 @@
 const Koa = require('koa');
-
+const fs = require('fs');
 const logger = require('./utils/logger');
 const config = require('./config');
 
@@ -12,6 +12,7 @@ const filter = require('./middleware/filter.js');
 const template = require('./middleware/template.js');
 const favicon = require('koa-favicon');
 const debug = require('./middleware/debug.js');
+const accessControl = require('./middleware/access-control.js');
 
 const router = require('./router');
 
@@ -19,7 +20,7 @@ process.on('uncaughtException', (e) => {
     logger.error('uncaughtException: ' + e);
 });
 
-logger.info('🍻 RSSHub start! Cheers!');
+logger.info('🎉 RSSHub start! Cheers!');
 
 const app = new Koa();
 app.proxy = true;
@@ -32,6 +33,8 @@ app.use(onerror);
 
 // 1 set header
 app.use(header);
+
+app.use(accessControl);
 
 // 6 debug
 app.context.debug = {
@@ -80,4 +83,19 @@ if (config.cacheType === 'memory') {
 // router
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(config.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+// connect
+if (config.connect.port) {
+    app.listen(config.connect.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+    logger.info('Listening Port ' + config.connect.port);
+}
+if (config.connect.socket) {
+    if (fs.existsSync(config.connect.socket)) {
+        fs.unlinkSync(config.connect.socket);
+    }
+    app.listen(config.connect.socket, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+    logger.info('Listening Unix Socket ' + config.connect.socket);
+    process.on('SIGINT', () => {
+        fs.unlinkSync(config.connect.socket);
+        process.exit();
+    });
+}

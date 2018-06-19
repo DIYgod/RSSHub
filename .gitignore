@@ -3,3 +3,7 @@ npm-debug.log
 error.log
 combined.log
 .vscode
+docs/.vuepress/dist
+
+config/app.json
+config/config.js
