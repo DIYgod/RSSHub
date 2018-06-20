@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
             try {
                 const photo = photos.filter((p) => p.seq_id === arguments[1]);
 
-                if (typeof photo.length > 0) {
+                if (photo.length > 0) {
                     const src = photo[0].alt;
                     return `<img referrerpolicy="no-referrer" src='${src}'/><br>`;
                 } else {
