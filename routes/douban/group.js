@@ -5,7 +5,7 @@ module.exports = async (ctx) => {
 
     const response = await axios({
         method: 'get',
-        url: `https://api.douban.com/v2/group/${groupid}/topics?start=0&count=100`,
+        url: `https://api.douban.com/v2/group/${groupid}/topics?start=0&count=10`,
     });
 
     const topics = response.data.topics;
