@@ -689,6 +689,15 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
+### 豆瓣小组
+
+举例: [https://rsshub.app/douban/group/camera](https://rsshub.app/douban/group/camera)
+
+路由: `/douban/group/:groupid`
+
+参数:
+groupid: 豆瓣小组的 id
+
 ## 煎蛋
 
 ### 无聊图
@@ -1085,6 +1094,40 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: id，小说 id，可在对应小说页 URL 中找到
 
+## 3DMGame
+
+### 新闻中心
+
+举例: [https://rsshub.app/3dm/news](https://rsshub.app/3dm/news)
+
+路由: `/3dm/news`
+
+参数: 无
+
+### 新闻
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/news](https://rsshub.app/3dm/detroitbecomehuman/news)
+
+路由: `/3dm/:name/news`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
+### 攻略
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/gl](https://rsshub.app/3dm/detroitbecomehuman/gl)
+
+路由: `/3dm/:name/gl`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
+### 下载
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/download](https://rsshub.app/3dm/detroitbecomehuman/download)
+
+路由: `/3dm/:name/download`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
 ## 喜马拉雅
 
 ### 专辑
@@ -1130,3 +1173,39 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/smzdm/keyword/:keyword`
 
 参数: keyword，你想订阅的关键词
+
+## 上海海事大学
+
+### 学术讲座
+
+举例: [https://rsshub.app/shmtu/events](https://rsshub.app/shmtu/events)
+
+路由: `/shmtu/events`
+
+参数: 无
+
+### 通知公告
+
+举例: [https://rsshub.app/shmtu/notes](https://rsshub.app/shmtu/notes)
+
+路由: `/shmtu/notes`
+
+参数: 无
+
+### 教务信息
+
+举例: [https://rsshub.app/shmtu/jwc/1](https://rsshub.app/shmtu/jwc/1)
+
+路由: `/shmtu/jwc/:type`
+
+参数: type，1 为教务新闻,2 为教务公告
+
+## 新京报
+
+### 栏目
+
+举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
+
+路由： `/bjnews/:category`
+
+参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
