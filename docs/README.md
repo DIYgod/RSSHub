@@ -696,7 +696,7 @@ city: 城市的中文名，可选，默认北京
 路由: `/douban/group/:groupid`
 
 参数:
-groupid: 豆瓣小组的id
+groupid: 豆瓣小组的 id
 
 ## 煎蛋
 

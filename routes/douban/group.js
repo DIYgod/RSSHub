@@ -12,19 +12,19 @@ module.exports = async (ctx) => {
 
     // 替换图片到内容中
     topics.map((topic) => {
-        let { content, photos } = topic;
+        const { photos = [] } = topic;
+        let { content } = topic;
 
         content = content.replace(/ /g, '<br>');
         topic.content = content.replace(/<图片(\d*)>/g, function() {
             try {
                 const photo = photos.filter((p) => p.seq_id === arguments[1]);
 
-                if (typeof photo === 'object') {
+                if (typeof photo.length > 0) {
                     const src = photo[0].alt;
                     return `<img referrerpolicy="no-referrer" src='${src}'/><br>`;
                 } else {
-                    const srcHodler = `https://img3.doubanio.com/view/group_topic/large/public/p${arguments[1]}.jpg`;
-                    return `<img referrerpolicy="no-referrer" src='${srcHodler}'/><br>`;
+                    return '';
                 }
             } catch (ex) {
                 console.log(arguments);
