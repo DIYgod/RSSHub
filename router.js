@@ -164,6 +164,7 @@ router.get('/douban/movie/playing/:score', require('./routes/douban/playing'));
 router.get('/douban/movie/playing/:score/:city', require('./routes/douban/playing'));
 router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
+router.get('/douban/group/:groupid', require('./routes/douban/group'));
 
 // 煎蛋
 router.get('/jandan/pic', require('./routes/jandan/pic'));
