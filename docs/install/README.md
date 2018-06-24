@@ -267,13 +267,17 @@ $ docker-compose up
 
 按照这里的引导完成 GCP 账号设置，创建 GCP 项目，创建 App Engine 项目，开通付费功能（必须），安装 git 与 gcloud 工具。并完成 gcloud 工具的初始化，初始化具体方式[请查看这个链接](https://cloud.google.com/sdk/gcloud/?hl=zh-CN)。如果你不打算在本地调试本项目，可以不安装 Node.js 环境。
 
-请注意，GAE 免费用量不支持 Flexible Environment ，部署前请确认收费标准。
+请注意，GAE 免费用量不支持 Flexible Environment ，部署至 Flexible Environment 前请确认收费标准。
+
+Node.JS 的 standard environment 仍在测试中，您可能会在部署或使用中遇到某些不可预期的问题。
 
 ### 拉取
 
-运行 git clone https://github.com/DIYgod/RSSHub.git 拉取本项目的最新版本。
+运行 `git clone https://github.com/DIYgod/RSSHub.git` 拉取本项目的最新版本。
 
 ### app.yaml 配置
+
+#### 部署至 Flexible Environment
 
 在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
 
@@ -293,6 +297,26 @@ resources:
   cpu: 1
   memory_gb: 0.5
   disk_size_gb: 10
+network:
+  forwarded_ports:
+    - 80:1200
+    - 443:1200
+# 以下是环境配置示例，具体可配置项见本文档配置章节
+env_variables:
+  CACHE_EXPIRE: "300"
+# [END app_yaml]
+```
+
+#### 部署至 standard environment
+
+编辑项目的 package.json，将 `engines` 配置修改为 `"node": "8.x.x"` 。
+
+在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
+
+```yaml
+# [START app_yaml]
+runtime: nodejs8
+
 network:
   forwarded_ports:
     - 80:1200
