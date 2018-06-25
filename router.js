@@ -297,6 +297,7 @@ router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 
 // 什么值得买
 router.get('/smzdm/keyword/:keyword', require('./routes/smzdm/keyword'));
+router.get('/smzdm/ranking/:rank_type/:rank_id/:hour', require('./routes/smzdm/ranking'));
 
 // SHMTU
 router.get('/shmtu/events', require('./routes/shmtu/events'));
