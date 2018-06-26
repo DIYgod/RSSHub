@@ -1212,10 +1212,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ## 停水通知
 
-配合 [IFTTT](https://ifttt.com/) 使用实现自动通知效果
-
--   [邮件通知]()
--   [IFTTT 通知]()
+配合 [IFTTT](https://ifttt.com/) Applets [邮件通知](https://ifttt.com /applets/SEvmDVKY-) 使用实现自动通知效果
 
 ### 杭州市
 
