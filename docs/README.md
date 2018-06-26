@@ -299,6 +299,20 @@ order: 排序方式，live_time 开播时间，online 人气
 
 路由: `bilibili/blackboard`
 
+### 会员购新品上架
+
+举例: [https://rsshub.app/bilibili/mall/new](https://rsshub.app/bilibili/mall/new)
+
+路由: `bilibili/mall/new`
+
+### 会员购作品
+
+举例: [https://rsshub.app/bilibili/mall/ip/1_4494](https://rsshub.app/bilibili/mall/ip/1_4494)
+
+路由: `/bilibili/mall/ip/:id`
+
+参数: id, 作品 id, 可在作品列表页 URL 中找到
+
 ## bangumi
 
 ### 放送列表
