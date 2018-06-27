@@ -299,6 +299,20 @@ order: 排序方式，live_time 开播时间，online 人气
 
 路由: `bilibili/blackboard`
 
+### 会员购新品上架
+
+举例: [https://rsshub.app/bilibili/mall/new](https://rsshub.app/bilibili/mall/new)
+
+路由: `bilibili/mall/new`
+
+### 会员购作品
+
+举例: [https://rsshub.app/bilibili/mall/ip/1_4494](https://rsshub.app/bilibili/mall/ip/1_4494)
+
+路由: `/bilibili/mall/ip/:id`
+
+参数: id, 作品 id, 可在作品列表页 URL 中找到
+
 ## bangumi
 
 ### 放送列表
@@ -688,6 +702,15 @@ city: 城市的中文名，可选，默认北京
 路由: `/douban/movie/ustop`
 
 参数: 无
+
+### 豆瓣小组
+
+举例: [https://rsshub.app/douban/group/camera](https://rsshub.app/douban/group/camera)
+
+路由: `/douban/group/:groupid`
+
+参数:
+groupid: 豆瓣小组的 id
 
 ## 煎蛋
 
@@ -1085,6 +1108,40 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: id，小说 id，可在对应小说页 URL 中找到
 
+## 3DMGame
+
+### 新闻中心
+
+举例: [https://rsshub.app/3dm/news](https://rsshub.app/3dm/news)
+
+路由: `/3dm/news`
+
+参数: 无
+
+### 新闻
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/news](https://rsshub.app/3dm/detroitbecomehuman/news)
+
+路由: `/3dm/:name/news`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
+### 攻略
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/gl](https://rsshub.app/3dm/detroitbecomehuman/gl)
+
+路由: `/3dm/:name/gl`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
+### 下载
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/download](https://rsshub.app/3dm/detroitbecomehuman/download)
+
+路由: `/3dm/:name/download`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
 ## 喜马拉雅
 
 ### 专辑
@@ -1130,3 +1187,87 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/smzdm/keyword/:keyword`
 
 参数: keyword，你想订阅的关键词
+
+### 排行榜
+
+举例: [https://rsshub.app/smzdm/ranking/pinlei/11/3](https://rsshub.app/smzdm/ranking/pinlei/11/3)
+
+路由: `/smzdm/ranking/:rank_type/:rank_id/:hour`
+
+参数
+
+**rank_type**
+
+| 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
+| ---------- | ---------- | ----------- | ---------- | ---------- |
+| pinlei     | dianshang  | haitao      | haowen     | haowu      |
+
+**rank_id**
+
+好价品类榜
+
+| 全部 | 时尚运动 | 3C 家电 | 食品家居 | 日百母婴 | 出行游玩 | 白菜 | 凑单品 |
+| ---- | -------- | ------- | -------- | -------- | -------- | ---- | ------ |
+| 11   | 12       | 13      | 14       | 15       | 16       | 17   | 22     |
+
+好价电商榜
+
+| 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |
+| ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |
+| 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |
+
+海淘 TOP 榜
+
+| 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |
+| ---- | -------- | ------ | ------ | ------ | ------ | ------ |
+| 39   | 34       | 35     | 36     | 37     | 38     | hsw    |
+
+好文排行榜
+
+| 原创 | 资讯 |
+| ---- | ---- |
+| yc   | zx   |
+
+好物排行榜
+
+| 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |
+| ------ | -------- | -------- | -------- |
+| hwall  | zc       | nb       | hw       |
+
+**hour**: 时间跨度
+
+## 上海海事大学
+
+### 学术讲座
+
+举例: [https://rsshub.app/shmtu/events](https://rsshub.app/shmtu/events)
+
+路由: `/shmtu/events`
+
+参数: 无
+
+### 通知公告
+
+举例: [https://rsshub.app/shmtu/notes](https://rsshub.app/shmtu/notes)
+
+路由: `/shmtu/notes`
+
+参数: 无
+
+### 教务信息
+
+举例: [https://rsshub.app/shmtu/jwc/1](https://rsshub.app/shmtu/jwc/1)
+
+路由: `/shmtu/jwc/:type`
+
+参数: type，1 为教务新闻,2 为教务公告
+
+## 新京报
+
+### 栏目
+
+举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
+
+路由： `/bjnews/:category`
+
+参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
