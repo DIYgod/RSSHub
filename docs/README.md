@@ -1271,3 +1271,31 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/bjnews/:category`
 
 参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
+
+## 停水通知
+
+配合 [IFTTT](https://ifttt.com/) Applets [邮件通知](https://ifttt.com/applets/SEvmDVKY-) 使用实现自动通知效果
+
+### 杭州市
+
+举例: [https://rsshub.app/tingshuitz/hangzhou](https://rsshub.app/tingshuitz/hangzhou)
+
+路由: `/tingshuitz/hangzhou`
+
+参数: 无
+
+### 萧山区
+
+举例: [https://rsshub.app/tingshuitz/xiaoshan](https://rsshub.app/tingshuitz/xiaoshan)
+
+路由: `/tingshuitz/xiaoshan`
+
+参数: 无
+
+### 大连市
+
+举例: [https://rsshub.app/tingshuitz/dalian](https://rsshub.app/tingshuitz/dalian)
+
+路由: `/tingshuitz/dalian`
+
+参数: 无
