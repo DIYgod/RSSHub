@@ -3,8 +3,8 @@ const cheerio = require('cheerio');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    //const area = ctx.params.area;
-    const url = `http://www.swj.dl.gov.cn/html/tstz/`;
+    // const area = ctx.params.area;
+    const url = 'http://www.swj.dl.gov.cn/html/tstz/';
     const response = await axios({
         method: 'get',
         url: url,
@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: $('title').text() || '停水通知 - 大连市水务局',
-        link: `http://www.swj.dl.gov.cn/html/tstz/`,
+        link: 'http://www.swj.dl.gov.cn/html/tstz/',
         description: $('meta[name="description"]').attr('content') || $('title').text() || '停水通知 - 大连市水务局',
         item:
             list &&

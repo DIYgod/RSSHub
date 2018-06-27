@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    //const area = ctx.params.area;
+    // const area = ctx.params.area;
     const url = 'http://www.xswater.com/gongshui/channels/227.html';
     const response = await axios({
         method: 'get',
@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: $('title').text(),
-        link: `http://www.xswater.com/gongshui/channels/227.html`,
+        link: 'http://www.xswater.com/gongshui/channels/227.html',
         description: $('meta[name="description"]').attr('content') || $('title').text(),
         item:
             list &&
