@@ -16,6 +16,8 @@ axios({
 
 module.exports = async (ctx) => {
     const username = ctx.params.username;
+    const cacheDays = 30;
+    const cacheLength = 5;
 
     let response = await axios({
         method: 'get',
@@ -32,17 +34,14 @@ module.exports = async (ctx) => {
     const data = response.data.result.filter((item) => item.channel_post && item.channel_post.chat && item.channel_post.chat.username === username).reverse();
 
     let title;
+    let post;
     if (data[0]) {
+        // cache title
         title = `${data[0].channel_post.chat.title} - Telegram 频道`;
-        ctx.cache.set(`RSSHubTelegramChannelName${username}`, data[0].channel_post.chat.title, 30 * 24 * 60 * 60);
-    } else {
-        title = `${await ctx.cache.get(`RSSHubTelegramChannelName${username}`)} - Telegram 频道` || `未获取到信息: 请将 Telegram 机器人 @${botName} 设为频道管理员后发一条或以上有效消息完成配置`;
-    }
+        ctx.cache.set(`RSSHubTelegramChannelName${username}`, data[0].channel_post.chat.title, cacheDays * 24 * 60 * 60);
 
-    ctx.state.data = {
-        title: title,
-        link: `https://t.me/${username}`,
-        item: data.map((item) => {
+        // cache post
+        post = data.map((item) => {
             item = item.channel_post;
             let text = item.text || item.caption || '';
             const media = ['photo', 'audio', 'document', 'game', 'sticker', 'video', 'voice', 'contact', 'location', 'venue'];
@@ -89,6 +88,31 @@ module.exports = async (ctx) => {
                 pubDate: new Date(item.date * 1000).toUTCString(),
                 link: `https://t.me/${username}/${item.message_id}`,
             };
-        }),
+        });
+        if (post.length >= cacheLength) {
+            ctx.cache.set(`RSSHubTelegramChannelPost${username}`, post.slice(0, cacheLength), cacheDays * 24 * 60 * 60);
+        } else {
+            let old;
+            try {
+                old = JSON.parse(await ctx.cache.get(`RSSHubTelegramChannelPost${username}`)) || [];
+            } catch (e) {
+                old = [];
+            }
+            old = old.slice(-1 * (cacheLength - post.length));
+            ctx.cache.set(`RSSHubTelegramChannelPost${username}`, old.concat(post), cacheDays * 24 * 60 * 60);
+        }
+    } else {
+        title = `${await ctx.cache.get(`RSSHubTelegramChannelName${username}`)} - Telegram 频道` || `未获取到信息: 请将 Telegram 机器人 @${botName} 设为频道管理员后发一条或以上有效消息完成配置`;
+        try {
+            post = JSON.parse(await ctx.cache.get(`RSSHubTelegramChannelPost${username}`)) || [];
+        } catch (e) {
+            post = [];
+        }
+    }
+
+    ctx.state.data = {
+        title: title,
+        link: `https://t.me/${username}`,
+        item: post,
     };
 };
