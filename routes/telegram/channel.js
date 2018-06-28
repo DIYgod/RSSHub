@@ -98,8 +98,20 @@ module.exports = async (ctx) => {
             } catch (e) {
                 old = [];
             }
-            old = old.slice(-1 * (cacheLength - post.length));
-            ctx.cache.set(`RSSHubTelegramChannelPost${username}`, old.concat(post), cacheDays * 24 * 60 * 60);
+            post = old.concat(post);
+
+            // 去重
+            const links = {};
+            post = post.filter((item) => {
+                if (links[item.link] !== undefined) {
+                    return false;
+                } else {
+                    links[item.link] = 1;
+                    return true;
+                }
+            });
+            post = post.slice(-1 * cacheLength);
+            ctx.cache.set(`RSSHubTelegramChannelPost${username}`, JSON.stringify(post), cacheDays * 24 * 60 * 60);
         }
     } else {
         title = `${await ctx.cache.get(`RSSHubTelegramChannelName${username}`)} - Telegram 频道` || `未获取到信息: 请将 Telegram 机器人 @${botName} 设为频道管理员后发一条或以上有效消息完成配置`;
