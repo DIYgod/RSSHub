@@ -314,4 +314,7 @@ router.get('/tingshuitz/hangzhou', require('./routes/tingshuitz/hangzhou'));
 router.get('/tingshuitz/xiaoshan', require('./routes/tingshuitz/xiaoshan'));
 router.get('/tingshuitz/dalian', require('./routes/tingshuitz/dalian'));
 
+// MIUI 更新
+router.get('/miui/:device/:type?', require('./routes/miui/index'));
+
 module.exports = router;

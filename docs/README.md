@@ -1317,3 +1317,23 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/tingshuitz/dalian`
 
 参数: 无
+
+### MIUI 更新
+
+举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
+
+路由: `/miui/:device/:type?`
+
+参数
+
+**device**
+
+你的设备的 `codename` 例如 小米 2s 为 `aries`
+
+**type**
+
+可选参数
+
+| 稳定版  | 开发版 |
+| ------- | ------ |
+| release | dev    |
