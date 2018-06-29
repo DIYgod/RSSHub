@@ -317,4 +317,7 @@ router.get('/tingshuitz/dalian', require('./routes/tingshuitz/dalian'));
 // MIUI 更新
 router.get('/miui/:device/:type?', require('./routes/miui/index'));
 
+// 灵梦御所
+router.get('/reimu/home', require('./routes/reimu/home'));
+
 module.exports = router;
