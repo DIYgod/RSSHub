@@ -317,4 +317,8 @@ router.get('/tingshuitz/dalian', require('./routes/tingshuitz/dalian'));
 // MIUI 更新
 router.get('/miui/:device/:type?', require('./routes/miui/index'));
 
+// 米哈游
+router.get('/mihoyo/bh3/:type', require('./routes/mihoyo/bh3'));
+router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
+
 module.exports = router;
