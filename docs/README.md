@@ -1318,7 +1318,9 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数: 无
 
-## MIUI 更新
+## MIUI
+
+### 更新
 
 举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
 
@@ -1342,7 +1344,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ### 崩坏 2-游戏公告
 
-举例: [https://rsshub.app//mihoyo/bh2/gach](https://rsshub.app//mihoyo/bh2/gach)
+举例: [https://rsshub.app/mihoyo/bh2/gach](https://rsshub.app//mihoyo/bh2/gach)
 
 路由: `/mihoyo/bh2/:type`
 
@@ -1354,7 +1356,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ### 崩坏 3-游戏公告
 
-举例: [https://rsshub.app//mihoyo/bh3/strategy](https://rsshub.app//mihoyo/bh3/strategy)
+举例: [https://rsshub.app/mihoyo/bh3/strategy](https://rsshub.app//mihoyo/bh3/strategy)
 
 路由: `/mihoyo/bh3/:type`
 
