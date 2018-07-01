@@ -1363,3 +1363,25 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 最新   | 公告   | 新闻 | 活动     | 攻略     |
 | ------ | ------ | ---- | -------- | -------- |
 | latest | notice | news | activity | strategy |
+
+## 灵梦御所
+
+### 分类
+
+举例: [https://rsshub.app/reimu/category/music](https://rsshub.app/reimu/category/music)
+
+路由: `/reimu/category/:category`
+
+参数：category，分类名
+
+| 3d  | 动画  | 合集       | 图包    | 壁纸      | 御所汉化 | 游戏 | 漫画  | 独立  | 表番推荐  | 音声  |
+| --- | ----- | ---------- | ------- | --------- | -------- | ---- | ----- | ----- | --------- | ----- |
+| 3d  | anime | collection | picture | wallpaper | chinese  | game | comic | indie | recommend | music |
+
+### 标签
+
+举例: [https://rsshub.app/reimu/tag/ntr](https://rsshub.app/reimu/tag/ntr)
+
+路由: `/reimu/tag/:tag`
+
+参数：tag，标签名，例如: **ntr**, **rbq**, **凌辱**

@@ -321,4 +321,8 @@ router.get('/miui/:device/:type?', require('./routes/miui/index'));
 router.get('/mihoyo/bh3/:type', require('./routes/mihoyo/bh3'));
 router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
 
+// 灵梦御所
+router.get('/reimu/category/:category', require('./routes/reimu/category'));
+router.get('/reimu/tag/:tag', require('./routes/reimu/tag'));
+
 module.exports = router;
