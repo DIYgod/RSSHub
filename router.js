@@ -317,4 +317,7 @@ router.get('/tingshuitz/dalian', require('./routes/tingshuitz/dalian'));
 // MIUI 更新
 router.get('/miui/:device/:type?', require('./routes/miui/index'));
 
+// 央视新闻
+router.get('/cctv/:category', require('./routes/cctv/category'));
+
 module.exports = router;
