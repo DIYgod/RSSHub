@@ -27,7 +27,7 @@ module.exports = async (ctx) => {
             list
                 .map((index, item) => {
                     item = $(item);
-                    let linkUrl = item.find('link').attr('href');
+                    let linkUrl = item.find('link').attr('href') || '';
                     if (linkUrl.startsWith('/')) {
                         linkUrl = 'https://www.zhihu.com' + linkUrl;
                     }

@@ -239,6 +239,24 @@ fid,收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP
 | -------- | -------- | ---- | --------- | ---- |
 | 182      | 183      | 85   | 184       | 86   |
 
+纪录片
+
+| 全部 | 人文·历史 | 科学·探索·自然 | 军事 | 社会·美食·旅行 |
+| ---- | --------- | -------------- | ---- | -------------- |
+| 177  | 37        | 178            | 179  | 180            |
+
+电影
+
+| 全部 | 华语电影 | 欧美电影 | 日本电影 | 其他国家 |
+| ---- | -------- | -------- | -------- | -------- |
+| 23   | 147      | 145      | 146      | 83       |
+
+电视剧
+
+| 全部 | 国产剧 | 海外剧 |
+| ---- | ------ | ------ |
+| 11   | 185    | 187    |
+
 ### 视频评论
 
 举例: [https://rsshub.app/bilibili/video/reply/21669336](https://rsshub.app/bilibili/video/reply/21669336)
@@ -1271,3 +1289,51 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/bjnews/:category`
 
 参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
+
+## 停水通知
+
+配合 [IFTTT](https://ifttt.com/) Applets [邮件通知](https://ifttt.com/applets/SEvmDVKY-) 使用实现自动通知效果
+
+### 杭州市
+
+举例: [https://rsshub.app/tingshuitz/hangzhou](https://rsshub.app/tingshuitz/hangzhou)
+
+路由: `/tingshuitz/hangzhou`
+
+参数: 无
+
+### 萧山区
+
+举例: [https://rsshub.app/tingshuitz/xiaoshan](https://rsshub.app/tingshuitz/xiaoshan)
+
+路由: `/tingshuitz/xiaoshan`
+
+参数: 无
+
+### 大连市
+
+举例: [https://rsshub.app/tingshuitz/dalian](https://rsshub.app/tingshuitz/dalian)
+
+路由: `/tingshuitz/dalian`
+
+参数: 无
+
+### MIUI 更新
+
+举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
+
+路由: `/miui/:device/:type?`
+
+参数
+
+**device**
+
+你的设备的 `codename` 例如 小米 2s 为 `aries`
+
+**type**
+
+可选参数
+
+| 稳定版  | 开发版 |
+| ------- | ------ |
+| release | dev    |
