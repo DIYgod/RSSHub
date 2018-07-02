@@ -34,6 +34,10 @@ module.exports = async (ctx) => {
         /** no need handle here: parseError */
     }
 
+    if (oldPosts === null) {
+        oldPosts = [];
+    }
+
     let item = oldPosts;
 
     if (oldPosts.length === 0 || oldPosts[0].description !== responseData.LatestFullRom.filename) {
