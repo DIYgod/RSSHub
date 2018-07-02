@@ -1,6 +1,8 @@
 const util = {
     getArticleData(articles, $) {
-        if (!articles) return [];
+        if (!articles) {
+            return [];
+        }
 
         return articles
             .map((index, article) => {

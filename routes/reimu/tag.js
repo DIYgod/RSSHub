@@ -4,7 +4,7 @@ const config = require('../../config');
 const util = require('./util');
 
 module.exports = async (ctx) => {
-    let tag = ctx.params.tag || 'ntr';
+    const tag = ctx.params.tag || 'ntr';
 
     const url = `https://blog.reimu.net/archives/tag/${tag}`;
 
