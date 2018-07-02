@@ -28,8 +28,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => ({
             title: item.title,
             description: `${item.member.username}: ${item.content_rendered}`,
-            content: item.content,
-            content_rendered: item.content_rendered,
+            content: { text: item.content, html: item.content_rendered },
             pubDate: new Date(item.created * 1000).toUTCString(),
             guid: item.id,
             link: item.url,

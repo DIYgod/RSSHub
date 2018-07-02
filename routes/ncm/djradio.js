@@ -44,7 +44,7 @@ module.exports = async (ctx) => {
 
             const duration = ~~(pg.duration / 1000);
 
-            const content = image + description + `<div><p>时长: ${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}</p><p><a href="${src}">查看节目</a></p></div>`;
+            const html = image + description + `<div><p>时长: ${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}</p><p><a href="${src}">查看节目</a></p></div>`;
 
             return {
                 title: pg.mainSong.name,
@@ -52,8 +52,8 @@ module.exports = async (ctx) => {
                 pubDate: new Date(pg.createTime).toUTCString(),
                 published: new Date(pg.createTime).toISOString(),
                 author: pg.dj.nickname,
-                description: content,
-                content: { src, value: content },
+                description: html,
+                content: { html },
             };
         }),
     };

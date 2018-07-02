@@ -53,7 +53,7 @@ module.exports = async (ctx) => {
                 pubDate: new Date(created_at).toUTCString(),
                 description: content(post.sample_url),
                 summary: content(post.sample_url),
-                content: content(post.file_url),
+                content: { html: content(post.file_url) },
                 image: post.file_url,
                 category: post.tags.split(/\s+/),
             };
