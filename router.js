@@ -116,6 +116,7 @@ router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
 router.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
 router.get('/ncm/user/playlist/:uid', require('./routes/ncm/userplaylist'));
 router.get('/ncm/artist/:id', require('./routes/ncm/artist'));
+router.get('/ncm/djradio/:id', require('./routes/ncm/djradio'));
 
 // 掘金
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
