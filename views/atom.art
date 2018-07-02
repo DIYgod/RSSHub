@@ -49,11 +49,11 @@
         <link href="{{ $e.link }}" />
 
         {{ if $e.summary }}
-        <summary type="{{ $e.summary.type || 'html' }}"><![CDATA[{{@ $e.summary.value || $e.summary }}]]></summary>
+        <summary type="html"><![CDATA[{{@ $e.summary }}]]></summary>
         {{ /if }}
 
         {{ if $e.content }}
-        <content type="{{ $e.content.type || 'html' }}" src="{{ $e.content.src || $e.link }}"><![CDATA[{{@ $e.content.value || $e.content }}]]></content>
+        <content type="html" src="{{ $e.link }}"><![CDATA[{{@ $e.content.html || $e.content.text }}]]></content>
         {{ else if $e.description }}
         <content type="html" src="{{ $e.link }}"><![CDATA[{{@ $e.description }}]]></content>
         {{ /if }}
