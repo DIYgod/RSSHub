@@ -455,6 +455,14 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: id，歌手 id，可在歌手详情页 URL 中找到
 
+### 电台节目
+
+举例: [https://rsshub.app/ncm/djradio/347317067](https://rsshub.app/ncm/djradio/347317067)
+
+路由: `/ncm/djradio/:id`
+
+参数: id, 节目 id, 可在电台节目页 URL 中找到
+
 ## 掘金
 
 ### 分类
