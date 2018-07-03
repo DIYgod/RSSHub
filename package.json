@@ -29,7 +29,7 @@
   "devDependencies": {
     "eslint": "4.19.1",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "lint-staged": "^7.2.0",
     "prettier": "^1.13.5",
     "prettier-check": "^2.0.0",
