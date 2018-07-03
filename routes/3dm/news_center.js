@@ -23,9 +23,9 @@ module.exports = async (ctx) => {
         const itemUrl = $(item)
             .find('a:nth-child(2)')
             .attr('href');
-        const cache = JSON.parse(await ctx.cache.get(itemUrl));
+        const cache = await ctx.cache.get(itemUrl);
         if (cache) {
-            out.push(cache);
+            out.push(JSON.parse(cache));
             continue;
         }
         const title = $(item)
