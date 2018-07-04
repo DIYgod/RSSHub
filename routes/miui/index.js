@@ -31,7 +31,11 @@ module.exports = async (ctx) => {
     try {
         oldPosts = JSON.parse(await ctx.cache.get(cacheName));
     } catch (_e) {
-        /** no need handle here: parseError */
+        // no need handle here: parseError
+    }
+
+    if (oldPosts === null) {
+        oldPosts = [];
     }
 
     let item = oldPosts;

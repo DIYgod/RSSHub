@@ -455,6 +455,14 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: id，歌手 id，可在歌手详情页 URL 中找到
 
+### 电台节目
+
+举例: [https://rsshub.app/ncm/djradio/347317067](https://rsshub.app/ncm/djradio/347317067)
+
+路由: `/ncm/djradio/:id`
+
+参数: id, 节目 id, 可在电台节目页 URL 中找到
+
 ## 掘金
 
 ### 分类
@@ -1318,7 +1326,9 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数: 无
 
-### MIUI 更新
+## MIUI
+
+### 更新
 
 举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
 
@@ -1337,3 +1347,73 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 稳定版  | 开发版 |
 | ------- | ------ |
 | release | dev    |
+
+## 米哈游
+
+### 崩坏 2-游戏公告
+
+举例: [https://rsshub.app/mihoyo/bh2/gach](https://rsshub.app/mihoyo/bh2/gach)
+
+路由: `/mihoyo/bh2/:type`
+
+参数：type，公告种类
+
+| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
+| -------- | -------- | -------- | -------- |
+| new      | version  | gach     | event    |
+
+### 崩坏 3-游戏公告
+
+举例: [https://rsshub.app/mihoyo/bh3/strategy](https://rsshub.app/mihoyo/bh3/strategy)
+
+路由: `/mihoyo/bh3/:type`
+
+参数：type，公告种类
+
+| 最新   | 公告   | 新闻 | 活动     | 攻略     |
+| ------ | ------ | ---- | -------- | -------- |
+| latest | notice | news | activity | strategy |
+
+## 灵梦御所
+
+### 分类
+
+举例: [https://rsshub.app/reimu/category/music](https://rsshub.app/reimu/category/music)
+
+路由: `/reimu/category/:category`
+
+参数：category，分类名
+
+| 3d  | 动画  | 合集       | 图包    | 壁纸      | 御所汉化 | 游戏 | 漫画  | 独立  | 表番推荐  | 音声  |
+| --- | ----- | ---------- | ------- | --------- | -------- | ---- | ----- | ----- | --------- | ----- |
+| 3d  | anime | collection | picture | wallpaper | chinese  | game | comic | indie | recommend | music |
+
+### 标签
+
+举例: [https://rsshub.app/reimu/tag/ntr](https://rsshub.app/reimu/tag/ntr)
+
+路由: `/reimu/tag/:tag`
+
+参数：tag，标签名，例如: **ntr**, **rbq**, **凌辱**
+
+## 草榴社区
+
+### 分区帖子
+
+举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
+
+路由: `/t66y/:id`
+
+参数: id，分区 id，可在分区页 URL 中找到
+
+| 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
+| -------------- | -------------- | ---------- | ---------- | ---------- |
+| 2              | 15             | 4          | 5          | 25         |
+
+| 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |
+| ---------- | ---------- | ----------- | ---------- |
+| 26         | 27         | 21          | 22         |
+
+| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
+| ---------- | ------------ | ------------ |
+| 7          | 8            | 16           |

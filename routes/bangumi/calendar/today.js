@@ -34,7 +34,7 @@ module.exports = async (ctx) => {
             updated.setSeconds(begin.getSeconds());
 
             const image = `<img src=${bgm.image} />`;
-            const content =
+            const html =
                 image +
                 '<ul>' +
                 bgm.sites
@@ -60,8 +60,8 @@ module.exports = async (ctx) => {
                 updated: updated.toISOString(),
                 pubDate: updated.toUTCString(),
                 link: `http://bangumi.tv/subject/${bgm.bgm_id}`,
-                description: content,
-                content,
+                description: html,
+                content: { html },
             };
         }),
     };

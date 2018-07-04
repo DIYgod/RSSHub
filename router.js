@@ -116,6 +116,7 @@ router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
 router.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
 router.get('/ncm/user/playlist/:uid', require('./routes/ncm/userplaylist'));
 router.get('/ncm/artist/:id', require('./routes/ncm/artist'));
+router.get('/ncm/djradio/:id', require('./routes/ncm/djradio'));
 
 // 掘金
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
@@ -316,5 +317,18 @@ router.get('/tingshuitz/dalian', require('./routes/tingshuitz/dalian'));
 
 // MIUI 更新
 router.get('/miui/:device/:type?', require('./routes/miui/index'));
+
+// 米哈游
+router.get('/mihoyo/bh3/:type', require('./routes/mihoyo/bh3'));
+router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
+
+// 灵梦御所
+router.get('/reimu/category/:category', require('./routes/reimu/category'));
+router.get('/reimu/tag/:tag', require('./routes/reimu/tag'));
+// 央视新闻
+router.get('/cctv/:category', require('./routes/cctv/category'));
+
+// 草榴社区
+router.get('/t66y/:id', require('./routes/t66y/index'));
 
 module.exports = router;
