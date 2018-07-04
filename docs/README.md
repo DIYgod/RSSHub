@@ -1395,3 +1395,9 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/reimu/tag/:tag`
 
 参数：tag，标签名，例如: **ntr**, **rbq**, **凌辱**
+
+## 草榴社区 - 達蓋爾的旗幟
+
+举例: [https://rsshub.app/t66y/flag](https://rsshub.app/t66y/flag)
+
+路由： `/t66y/flag`
