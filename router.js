@@ -306,6 +306,6 @@ router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
 
 // 字幕组
-router.get('/zimuzu/:id/:session', require('./routes/zimuzu/feed'));
+router.get('/zimuzu/:id', require('./routes/zimuzu/feed'));
 
 module.exports = router;
