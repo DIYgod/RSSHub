@@ -6112,9 +6112,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rss-parser@3.4.1:
-  version "3.4.1"
-  resolved "https://registry.npmjs.org/rss-parser/-/rss-parser-3.4.1.tgz#a4fc4aa5bd26b286e75e0a7eabb1fdceb01a95b1"
+rss-parser@3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-3.4.2.tgz#a7d88b5676864845e6b9c3a84e09a00478c75306"
   dependencies:
     entities "^1.1.1"
     xml2js "^0.4.17"

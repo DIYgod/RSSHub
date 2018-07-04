@@ -55,7 +55,7 @@
     "path-to-regexp": "2.2.1",
     "readall": "1.0.0",
     "redis": "2.8.0",
-    "rss-parser": "3.4.1",
+    "rss-parser": "3.4.2",
     "twit": "2.2.10",
     "winston": "3.0.0"
   },
