@@ -28,7 +28,7 @@ module.exports = async (ctx) => {
     const out = [];
     const indexList = []; // New item index
 
-    for (let i = 0; i < Math.min(list.length, 60); i++) {
+    for (let i = 0; i < Math.min(list.length, 1); i++) {
         const $ = cheerio.load(list[i]);
         let title = $('.tal h3 a');
         const path = title.attr('href');
@@ -118,7 +118,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: $('title').text(),
-        link: url.resolve(base, section),
+        link: url.resolve(base, `${section}${ctx.params.id}`),
         item: out,
     };
 };
