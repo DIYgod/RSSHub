@@ -30,12 +30,16 @@ module.exports = async (ctx) => {
                     item = $(item);
                     const title = item.find('title').text();
                     const magnet = item.find('magnet').text();
-                    return {
-                        title: title,
-                        pubDate: item.find('pubDate').text(),
-                        guid: item.find('guid').text(),
-                        link: magnet,
-                    };
+                    if (magnet) {
+                        return {
+                            title: title,
+                            pubDate: item.find('pubDate').text(),
+                            guid: item.find('guid').text(),
+                            link: magnet,
+                        };
+                    }
+
+                    return null;
                 })
                 .get(),
     };
