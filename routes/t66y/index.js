@@ -96,7 +96,7 @@ module.exports = async (ctx) => {
             const videoScript = video.attr('onclick');
             const regVideo = /https?:\/\/.*'/;
             const videoRes = regVideo.exec(videoScript);
-            if (videoRes.length !== 0) {
+            if (videoRes && videoRes.length !== 0) {
                 let link = videoRes[0];
                 link = link.slice(0, link.length - 1);
                 $('iframe').attr('src', link);
