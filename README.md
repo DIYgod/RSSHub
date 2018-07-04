@@ -183,6 +183,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 -   [Zuyang](https://zuyang.farbox.com)
 
+-   [Sayori Studio](https://t.me/SayoriStudio)
+
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
 ### Contributors
