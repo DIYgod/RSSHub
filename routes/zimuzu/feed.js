@@ -1,17 +1,6 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
-const mguri = require('magnet-uri');
-
-const parseInfoHash = function(uri) {
-    if (uri) {
-        const uriObj = mguri.decode(uri);
-        const hash = uriObj.infoHash || uri;
-        if (/^[A-Za-z0-9]{40}$/.test(hash)) {
-            return hash.toUpperCase();
-        }
-    }
-};
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -42,13 +31,12 @@ module.exports = async (ctx) => {
                     item = $(item);
                     const title = item.find('title').text();
                     const magnet = item.find('magnet').text();
-                    const hash = parseInfoHash(magnet);
-                    if (title.indexOf(session) !== -1 && !!hash) {
+                    if (title.indexOf(session) !== -1) {
                         return {
                             title: title,
                             pubDate: item.find('pubDate').text(),
                             guid: item.find('guid').text(),
-                            link: `http://itorrents.org/torrent/${hash}.torrent`,
+                            link: magnet,
                         };
                     }
 
