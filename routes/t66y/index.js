@@ -96,9 +96,13 @@ module.exports = async (ctx) => {
             const videoScript = video.attr('onclick');
             const regVideo = /https?:\/\/.*'/;
             const videoRes = regVideo.exec(videoScript);
-            let link = videoRes[0];
-            link = link.slice(0, link.length - 1);
-            $('iframe').attr('src', link);
+            try {
+                let link = videoRes[0];
+                link = link.slice(0, link.length - 1);
+                $('iframe').attr('src', link);
+            } catch (error) {
+                console.log(error);
+            }
         }
 
         // Handle img tag
