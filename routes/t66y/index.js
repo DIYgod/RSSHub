@@ -89,12 +89,24 @@ module.exports = async (ctx) => {
             console.log(error);
             continue;
         }
+
+        // Handle video
+        const video = $('a:nth-of-type(2)');
+        if (video) {
+            const videoScript = video.attr('onclick');
+            const regVideo = /https?:\/\/.*'/;
+            const videoRes = regVideo.exec(videoScript);
+            let link = videoRes[0];
+            link = link.slice(0, link.length - 1);
+            $('iframe').attr('src', link);
+        }
+
         // Handle img tag
         let images = $('img');
         for (let k = 0; k < images.length; k++) {
             $(images[k]).replaceWith(`<img src="${$(images[k]).attr('data-src')}">`);
         }
-        // Hanfle input tag
+        // Handle input tag
         images = $('input');
         for (let k = 0; k < images.length; k++) {
             $(images[k]).replaceWith(`<img src="${$(images[k]).attr('data-src')}">`);
