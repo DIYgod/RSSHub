@@ -329,6 +329,6 @@ router.get('/reimu/tag/:tag', require('./routes/reimu/tag'));
 router.get('/cctv/:category', require('./routes/cctv/category'));
 
 // 草榴社区
-router.get('/t66y/flag', require('./routes/t66y/flag'));
+router.get('/t66y/:id', require('./routes/t66y/index'));
 
 module.exports = router;
