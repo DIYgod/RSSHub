@@ -331,4 +331,8 @@ router.get('/cctv/:category', require('./routes/cctv/category'));
 // 草榴社区
 router.get('/t66y/:id', require('./routes/t66y/index'));
 
+// the Wall Street Journal
+router.get('/wsj/:cat', require('./routes/wsj/index'));
+router.get('/wsj', require('./routes/wsj/index'));
+
 module.exports = router;

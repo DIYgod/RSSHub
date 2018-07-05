@@ -29,7 +29,7 @@ module.exports = async (ctx) => {
     const out = [];
     const indexList = []; // New item index
 
-    for (let i = 0; i < Math.min(list.length, 20); i++) {
+    for (let i = 0; i < Math.min(list.length, 60); i++) {
         const $ = cheerio.load(list[i]);
         let title = $('.tal h3 a');
         const path = title.attr('href');
