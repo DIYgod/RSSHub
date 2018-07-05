@@ -19,6 +19,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 -   [Zuyang](https://zuyang.farbox.com)
 
+-   [Sayori Studio](https://t.me/SayoriStudio)
+
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
 ### Contributors
@@ -1398,11 +1400,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ## 草榴社区
 
+### 分区帖子
+
 举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
 
-路由： `/t66y/:id`
+路由: `/t66y/:id`
 
-参数： id，板块 id
+参数: id，分区 id，可在分区页 URL 中找到
 
 | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
 | -------------- | -------------- | ---------- | ---------- | ---------- |
