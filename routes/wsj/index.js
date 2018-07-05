@@ -9,7 +9,9 @@ module.exports = async (ctx) => {
     }
     const res = await axios.get(site);
     const $ = cheerio.load(res.data);
-    const news = $('a', 'h3').add('a', 'h4');
+    const news = $('a', 'h3')
+        .add('a', 'h4')
+        .add('a', 'li');
 
     const reqList = [];
     const out = [];
