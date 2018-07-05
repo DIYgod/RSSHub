@@ -11,7 +11,8 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(res.data);
     const news = $('a', 'h3')
         .add('a', 'h4')
-        .add('a', 'li');
+        .add('a', 'li')
+        .not('a[role=button]');
 
     const reqList = [];
     const out = [];
