@@ -28,6 +28,7 @@ module.exports = async (ctx) => {
     const reqList = [];
     const out = [];
     const indexList = []; // New item index
+    let skip = 0;
 
     for (let i = 0; i < Math.min(list.length, 60); i++) {
         const $ = cheerio.load(list[i]);
@@ -36,6 +37,7 @@ module.exports = async (ctx) => {
 
         // Filter duplicated entries
         if (path.match(filterReg) !== null) {
+            skip++;
             continue;
         }
         const link = url.resolve(base, path);
@@ -66,7 +68,7 @@ module.exports = async (ctx) => {
         };
         const promise = axios_ins.get(url.resolve(base, path));
         reqList.push(promise);
-        indexList.push(i);
+        indexList.push(i - skip);
         out.push(single);
     }
     let resList;
