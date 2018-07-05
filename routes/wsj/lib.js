@@ -1,20 +1,21 @@
 const cheerio = require('cheerio');
 const axios = require('../../utils/axios');
 
-module.exports = async (ctx, site) => {
+module.exports = async (ctx, site, index) => {
     const res = await axios.get(site);
     const $ = cheerio.load(res.data);
     const news = $('a', 'h3')
-        .add('a', 'h4')
         .add('a', 'li')
         .not('a[role=button]');
+    if (index) {
+        news.add('a', 'h4');
+    }
 
     const reqList = [];
     const out = [];
     const indexList = [];
 
-    // for (let i = 0; i < news.length; i++) {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < news.length; i++) {
         const single = cheerio(news[i]);
         const link = single.attr('href');
         const title = single.text();
