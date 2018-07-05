@@ -13,8 +13,7 @@ module.exports = async (ctx, site) => {
     const out = [];
     const indexList = [];
 
-    // for (let i = 0; i < news.length; i++) {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < news.length; i++) {
         const single = cheerio(news[i]);
         const link = single.attr('href');
         const title = single.text();
