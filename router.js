@@ -332,7 +332,7 @@ router.get('/cctv/:category', require('./routes/cctv/category'));
 router.get('/t66y/:id', require('./routes/t66y/index'));
 
 // the Wall Street Journal
-router.get('/wsj/:cat', require('./routes/wsj/index'));
+router.get('/wsj/:cat', require('./routes/wsj/sectors'));
 router.get('/wsj', require('./routes/wsj/index'));
 
 module.exports = router;
