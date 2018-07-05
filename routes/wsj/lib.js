@@ -4,9 +4,10 @@ const axios = require('../../utils/axios');
 module.exports = async (ctx, site, index) => {
     const res = await axios.get(site);
     const $ = cheerio.load(res.data);
-    const news = $('a', 'h3');
+    let news = $('a', 'h3');
     if (index) {
-        news.add('a', 'h4')
+        news = $('a', 'h3')
+            .add('a', 'h4')
             .add('a', 'li')
             .not('a[role=button]');
     }
