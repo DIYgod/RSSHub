@@ -15,6 +15,7 @@ const axios_ins = axios.create({
 });
 
 const sourceTimezoneOffset = -8;
+const filterReg = /read\.php/;
 module.exports = async (ctx) => {
     const res = await axios_ins.get(url.resolve(base, `${section}${ctx.params.id}`));
     const data = iconv.decode(res.data, 'gbk');
@@ -32,6 +33,11 @@ module.exports = async (ctx) => {
         const $ = cheerio.load(list[i]);
         let title = $('.tal h3 a');
         const path = title.attr('href');
+
+        // Filter duplicated entries
+        if (path.match(filterReg) !== null) {
+            continue;
+        }
         const link = url.resolve(base, path);
 
         // Check cache
