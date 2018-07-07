@@ -1419,3 +1419,11 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
 | ---------- | ------------ | ------------ |
 | 7          | 8            | 16           |
+
+## 科技星球
+
+### 首页
+
+举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
+
+路由: `/kejixingqiu/home`
