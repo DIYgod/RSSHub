@@ -325,6 +325,7 @@ router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
 // 灵梦御所
 router.get('/reimu/category/:category', require('./routes/reimu/category'));
 router.get('/reimu/tag/:tag', require('./routes/reimu/tag'));
+
 // 央视新闻
 router.get('/cctv/:category', require('./routes/cctv/category'));
 
@@ -333,5 +334,8 @@ router.get('/t66y/:id', require('./routes/t66y/index'));
 
 // 科技星球
 router.get('/kejixingqiu/home', require('./routes/kejixingqiu/home'));
+
+// PKUEECS
+router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
 
 module.exports = router;
