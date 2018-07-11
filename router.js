@@ -170,7 +170,7 @@ router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
 
 // 煎蛋
-router.get('/jandan/pic', require('./routes/jandan/pic'));
+router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
 
 // 喷嚏
 router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));

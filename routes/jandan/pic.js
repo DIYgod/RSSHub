@@ -6,11 +6,14 @@ const base64_decode = (i) => Buffer.from(i, 'base64').toString('binary');
 
 // jandan_decode is borrowed from jandan.net, which is used in function jandan_load_img.
 const jandan_decode = (m) => base64_decode(m);
+const baseUrl = 'http://jandan.net/';
 
 module.exports = async (ctx) => {
+    const sub_model = ctx.params.sub_model;
+
     const response = await axios({
         method: 'get',
-        url: 'http://jandan.net/pic',
+        url: `${baseUrl}${sub_model}/`,
         headers: {
             'User-Agent': config.ua,
             Referer: 'http://jandan.net',
@@ -57,10 +60,20 @@ module.exports = async (ctx) => {
         });
     });
 
+    let rss_title;
+    let description;
+    if (sub_model === 'pic') {
+        rss_title = '煎蛋无聊图';
+        description = '煎蛋官方无聊图，无限活力的热门图区。';
+    } else if (sub_model === 'ooxx') {
+        rss_title = '煎蛋妹子图';
+        description = '这儿才是正版妹子图。';
+    }
+
     ctx.state.data = {
-        title: '煎蛋无聊图',
-        link: 'http://jandan.net/pic',
-        description: '煎蛋官方无聊图，无限活力的热门图区。',
+        title: `${rss_title}`,
+        link: `${baseUrl}${sub_model}/`,
+        description: `${description}`,
         item: items,
     };
 };
