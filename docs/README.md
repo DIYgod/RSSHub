@@ -1433,3 +1433,17 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
 
 路由: `/kejixingqiu/home`
+
+## 机核网
+
+### 分类
+
+举例: [https://rsshub.app/gcores/category/1](https://rsshub.app/gcores/category/1)
+
+路由: `/gcores/category/:category`
+
+参数: category，分类名
+
+| 文章 | 新闻 | 电台 |
+| ---- | ---- | ---- |
+| 1    | 2    | 9    |

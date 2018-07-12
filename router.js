@@ -334,4 +334,7 @@ router.get('/t66y/:id', require('./routes/t66y/index'));
 // 科技星球
 router.get('/kejixingqiu/home', require('./routes/kejixingqiu/home'));
 
+// 机核
+router.get('/gcores/category/:category', require('./routes/gcores/category'));
+
 module.exports = router;
