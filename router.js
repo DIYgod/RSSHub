@@ -338,4 +338,7 @@ router.get('/kejixingqiu/home', require('./routes/kejixingqiu/home'));
 // PKUEECS
 router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
 
+// 机核
+router.get('/gcores/category/:category', require('./routes/gcores/category'));
+
 module.exports = router;
