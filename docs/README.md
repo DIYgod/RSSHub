@@ -1433,3 +1433,17 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
 
 路由: `/kejixingqiu/home`
+
+## 北大信科
+
+### 公告通知
+
+举例: [https://rsshub.app/pku/eecs/0](https://rsshub.app/pku/eecs/0)
+
+路由: `/eecs/:type`
+
+可选参数: type，分区 type，可在网页 URL 中找到
+
+| 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 科研通知 | 财务通知 | 工会通知 | 院友通知 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0    | 1        | 2        | 6        | 8        | 7        | 5        | 3        | 4        |
