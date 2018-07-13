@@ -11,7 +11,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 [使用文档](https://docs.rsshub.app/)
 
-当前支持列表：
+<details><summary>当前支持列表</summary><br>
 
 -   RSSHub
     -   支持的 RSS
@@ -179,6 +179,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   公告通知
 -   机核网
     -   分类
+
+</details>
 
 ## 鸣谢
 
