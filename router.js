@@ -103,6 +103,7 @@ router.get('/bilibili/fav/:uid/:fid', require('./routes/bilibili/fav'));
 router.get('/bilibili/blackboard', require('./routes/bilibili/blackboard'));
 router.get('/bilibili/mall/new', require('./routes/bilibili/mallNew'));
 router.get('/bilibili/mall/ip/:id', require('./routes/bilibili/mallIP'));
+router.get('/bilibili/ranking/:rid?/:day?', require('./routes/bilibili/ranking'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
