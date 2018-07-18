@@ -333,6 +333,22 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: id, 作品 id, 可在作品列表页 URL 中找到
 
+### 排行榜
+
+举例: [https://rsshub.app/bilibili/ranking/0/3](https://rsshub.app/bilibili/ranking/0/3)
+
+路由: `/bilibili/ranking/:rid?/:day?`
+
+参数:
+
+day: 时间跨度，可为 1 3 7 30
+
+rid: 排行榜分区 id，默认 0
+
+| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
+| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
+
 ## bangumi
 
 ### 放送列表
@@ -746,7 +762,13 @@ groupid: 豆瓣小组的 id
 
 举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
 
-路由: `/jandan/pic`
+路由: `/jandan/:sub_model`
+
+### 妹子图
+
+举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
+
+路由: `/jandan/:sub_model`
 
 参数: 无
 
@@ -1419,3 +1441,39 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
 | ---------- | ------------ | ------------ |
 | 7          | 8            | 16           |
+
+## 科技星球
+
+### 首页
+
+举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
+
+路由: `/kejixingqiu/home`
+
+## 北大信科
+
+### 公告通知
+
+举例: [https://rsshub.app/pku/eecs/0](https://rsshub.app/pku/eecs/0)
+
+路由: `/eecs/:type`
+
+可选参数: type，分区 type，可在网页 URL 中找到
+
+| 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 科研通知 | 财务通知 | 工会通知 | 院友通知 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0    | 1        | 2        | 6        | 8        | 7        | 5        | 3        | 4        |
+
+## 机核网
+
+### 分类
+
+举例: [https://rsshub.app/gcores/category/1](https://rsshub.app/gcores/category/1)
+
+路由: `/gcores/category/:category`
+
+参数: category，分类名
+
+| 文章 | 新闻 | 电台 |
+| ---- | ---- | ---- |
+| 1    | 2    | 9    |

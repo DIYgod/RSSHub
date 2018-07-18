@@ -103,6 +103,7 @@ router.get('/bilibili/fav/:uid/:fid', require('./routes/bilibili/fav'));
 router.get('/bilibili/blackboard', require('./routes/bilibili/blackboard'));
 router.get('/bilibili/mall/new', require('./routes/bilibili/mallNew'));
 router.get('/bilibili/mall/ip/:id', require('./routes/bilibili/mallIP'));
+router.get('/bilibili/ranking/:rid?/:day?', require('./routes/bilibili/ranking'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
@@ -170,7 +171,7 @@ router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
 
 // 煎蛋
-router.get('/jandan/pic', require('./routes/jandan/pic'));
+router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
 
 // 喷嚏
 router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));
@@ -325,10 +326,20 @@ router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
 // 灵梦御所
 router.get('/reimu/category/:category', require('./routes/reimu/category'));
 router.get('/reimu/tag/:tag', require('./routes/reimu/tag'));
+
 // 央视新闻
 router.get('/cctv/:category', require('./routes/cctv/category'));
 
 // 草榴社区
 router.get('/t66y/:id', require('./routes/t66y/index'));
+
+// 科技星球
+router.get('/kejixingqiu/home', require('./routes/kejixingqiu/home'));
+
+// PKUEECS
+router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
+
+// 机核
+router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
 module.exports = router;
