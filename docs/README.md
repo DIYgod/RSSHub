@@ -11,9 +11,15 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ## 鸣谢
 
-### Sponsors
+### Special Sponsor
 
--   [rixCloud](https://rixcloud.us)
+<p>
+<a href="https://rixcloud.app/rsshub" target="_blank">
+    <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
+</a>
+</p>
+
+### Sponsors
 
 -   [Liuyang](https://github.com/lingllting)
 
