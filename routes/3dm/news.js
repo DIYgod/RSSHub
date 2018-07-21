@@ -25,7 +25,7 @@ module.exports = async (ctx) => {
         let item = $(list[i]);
         const url = item.attr('href');
 
-        const value = await ctx.cache.get(url);
+        const value = await (ctx.cache && ctx.cache.get(url));
         if (value) {
             item = JSON.parse(value);
         } else {
@@ -36,7 +36,9 @@ module.exports = async (ctx) => {
                 guid: url,
             };
 
-            ctx.cache.set(url, JSON.stringify(item), 24 * 60 * 60);
+            if (ctx.cache) {
+                ctx.cache.set(url, JSON.stringify(item), 24 * 60 * 60);
+            }
         }
 
         items.push(item);

@@ -43,7 +43,7 @@ module.exports = async (ctx) => {
         const link = url.resolve(base, path);
 
         // Check cache
-        const cache = await ctx.cache.get(link);
+        const cache = await (ctx.cache && ctx.cache.get(link));
         if (cache) {
             out.push(JSON.parse(cache));
             continue;
@@ -123,7 +123,9 @@ module.exports = async (ctx) => {
         }
         out[indexList[i]].description = $.html();
         out[indexList[i]].pubDate = time.toUTCString();
-        ctx.cache.set(out[indexList[i]].link, JSON.stringify(out[indexList[i]]), 3 * 60 * 60);
+        if (ctx.cache) {
+            ctx.cache.set(out[indexList[i]].link, JSON.stringify(out[indexList[i]]), 3 * 60 * 60);
+        }
     }
 
     ctx.state.data = {

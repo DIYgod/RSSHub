@@ -7,10 +7,10 @@ module.exports = async (ctx) => {
 
     const url = [bgmCalendarUrl, bgmDataUrl];
 
-    const cache = await Promise.all(url.map(ctx.cache.get));
+    const cache = await Promise.all(ctx.cache ? url.map(ctx.cache.get) : url);
     const result = await Promise.all(
         cache.map(async (c, i) => {
-            if (c) {
+            if (ctx.cache && c) {
                 return Promise.resolve(JSON.parse(c));
             } else {
                 const response = await axios({
@@ -21,7 +21,6 @@ module.exports = async (ctx) => {
                     },
                 });
                 const data = response.data;
-
                 if (i === 1) {
                     // 只保留有 bangumi id 的番剧
                     const length = data.items.length;
@@ -36,8 +35,9 @@ module.exports = async (ctx) => {
                     }
                     data.items = items;
                 }
-
-                ctx.cache.set(url[i], JSON.stringify(data), 86400);
+                if (ctx.cache) {
+                    ctx.cache.set(url[i], JSON.stringify(data), 86400);
+                }
                 return Promise.resolve(data);
             }
         })

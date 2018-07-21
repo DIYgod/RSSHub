@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
         time = $('p').text();
         title = $('a').text();
         itemUrl = $('a').attr('href');
-        const cache = await ctx.cache.get(itemUrl);
+        const cache = await (ctx.cache && ctx.cache.get(itemUrl));
         if (cache) {
             out.push(JSON.parse(cache));
             continue;
@@ -41,7 +41,9 @@ module.exports = async (ctx) => {
         const data = res.data;
         const $ = cheerio.load(data);
         out[i].description = $('#main .content').html();
-        ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
+        if (ctx.cache) {
+            ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
+        }
     }
     ctx.state.data = {
         title: $('title').text(),
