@@ -30,7 +30,7 @@ module.exports = async (ctx) => {
             const itemUrl = $(item)
                 .find('h4 a')
                 .attr('href');
-            const cache = await ctx.cache.get(itemUrl);
+            const cache = await (ctx.cache && ctx.cache.get(itemUrl));
             if (cache) {
                 return Promise.resolve(JSON.parse(cache));
             }
@@ -68,7 +68,9 @@ module.exports = async (ctx) => {
                 link: itemUrl,
                 guid: itemUrl,
             };
-            ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
+            if (ctx.cache) {
+                ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
+            }
             return Promise.resolve(single);
         })
     );

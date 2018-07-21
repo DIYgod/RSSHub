@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
         const itemUrl = $(item)
             .find('a:nth-child(2)')
             .attr('href');
-        const cache = await ctx.cache.get(itemUrl);
+        const cache = await (ctx.cache && ctx.cache.get(itemUrl));
         if (cache) {
             out.push(JSON.parse(cache));
             continue;
@@ -60,7 +60,9 @@ module.exports = async (ctx) => {
         };
         out.push(single);
 
-        ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
+        if (ctx.cache) {
+            ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
+        }
     }
     ctx.state.data = {
         title: $('title')
