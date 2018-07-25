@@ -15,6 +15,7 @@ module.exports = async (ctx) => {
     const list = $('#news_ul li');
     const out = [];
     const proList = [];
+    const indexList = [];
     let time, title, itemUrl;
     for (let i = 0; i < Math.min(list.length, 10); i++) {
         const $ = cheerio.load(list[i]);
@@ -34,14 +35,15 @@ module.exports = async (ctx) => {
         };
         out.push(single);
         proList.push(axios_ins.get(itemUrl));
+        indexList.push(i);
     }
     const responses = await axios.all(proList);
     for (let i = 0; i < responses.length; i++) {
         const res = responses[i];
         const data = res.data;
         const $ = cheerio.load(data);
-        out[i].description = $('#main .content').html();
-        ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
+        out[indexList[i]].description = $('#main .content').html();
+        ctx.cache.set(out[indexList[i]].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }
     ctx.state.data = {
         title: $('title').text(),
