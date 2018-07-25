@@ -32,17 +32,13 @@ module.exports = async (ctx) => {
         .eq(0)
         .attr('src');
     const list = $('dd', '#list>dl').slice(0, 9);
-    const chapter_item = [];
-    for (let i = 0; i < list.length; i++) {
-        const el = $(list[i])
-            .find('a')
-            .eq(0);
-        const item = {
-            title: el.text(),
-            link: el.attr('href'),
-        };
-        chapter_item.push(item);
-    }
+    const chapter_item = list
+        .find('a')
+        .map((_, e) => ({
+            title: e.children[0].data,
+            link: e.attribs.href,
+        }))
+        .get();
     // console.log('chapter_item',chapter_item)
     ctx.state.data = {
         title: `笔趣阁 ${title}`,
