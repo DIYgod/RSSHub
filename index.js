@@ -78,6 +78,11 @@ if (config.cacheType === 'memory') {
             },
         })
     );
+} else {
+    app.context.cache = {
+        get: () => null,
+        set: () => null,
+    };
 }
 
 // router
