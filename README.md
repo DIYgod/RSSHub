@@ -11,7 +11,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 [使用文档](https://docs.rsshub.app/)
 
-当前支持列表：
+<details><summary>当前支持列表</summary><br>
 
 -   RSSHub
     -   支持的 RSS
@@ -33,6 +33,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   主站话题列表
     -   会员购新品上架
     -   会员购作品
+    -   排行榜
 -   微博
     -   博主
     -   关键词
@@ -84,6 +85,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   小组
 -   煎蛋
     -   无聊图
+    -   妹子图
 -   喷嚏
     -   图卦
 -   Dockone
@@ -172,12 +174,26 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   标签
 -   草榴
     -   分区帖子
+-   科技星球
+    -   首页
+-   北大信科
+    -   公告通知
+-   机核网
+    -   分类
+
+</details>
 
 ## 鸣谢
 
-### Sponsors
+### Special Sponsor
 
--   [rixCloud](https://rixcloud.us)
+<p>
+<a href="https://rixcloud.app/rsshub" target="_blank">
+    <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
+</a>
+</p>
+
+### Sponsors
 
 -   [Liuyang](https://github.com/lingllting)
 
@@ -228,10 +244,9 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 ### 周期性赞助
 
-周期性赞助可以获得额外的回报，比如你的名字 会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
+周期性赞助可以获得额外的回报，比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
 
--   通过 [OpenCollective](https://opencollective.com/RSSHub) 赞助成为 backer 或 sponsor
--   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer
+-   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer 或 sponsor
 -   给我们发邮件联系赞助事宜: i#html.love
 
 ## Author
