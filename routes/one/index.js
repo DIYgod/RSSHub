@@ -13,20 +13,23 @@ module.exports = async (ctx) => {
     });
 
     const data = response.data;
-
     const $ = cheerio.load(data);
-    const list = $('.col-md-12').find('li');
+
+    const image = $('.item.active');
+    const today = $('.corriente');
+    const list = [image, today[0], today[1]];
 
     const out = [];
 
     for (let i = 0; i < list.length; i++) {
-        const url = $(list[0])
+        const url = $(list[i])
             .find('a')
             .attr('href');
         const item = {
             title: $(list[i])
                 .find('a')
                 .text()
+                .replace(/\s+/g, ' ')
                 .trim(),
             link: url,
             description: '',
@@ -47,7 +50,7 @@ module.exports = async (ctx) => {
             });
             const data = detail.data;
             const $ = cheerio.load(data);
-            item.description = $('.one-articulo').html();
+            item.description = $('.tab-content').html();
             ctx.cache.set(key, item.description, 24 * 60 * 60);
         }
 
