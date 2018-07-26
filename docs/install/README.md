@@ -109,7 +109,7 @@ $ git pull
 
 **如何设置环境变量**
 
-Windows 系统在 cmd.exe 中运行 `$ set PORT=1000`
+Windows 系统在 cmd.exe 中运行 `$ set PORT=1000` 或者在 powershell.exe or pwsh.exe 中运行 `$ $env:PORT=1000`
 
 macOS & Linux 运行 `$ PORT=1000`
 
