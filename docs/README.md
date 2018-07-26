@@ -1489,3 +1489,11 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 文章 | 新闻 | 电台 |
 | ---- | ---- | ---- |
 | 1    | 2    | 9    |
+
+## ONE · 一个
+
+举例： [https://rsshub.app/one](https://rsshub.app/one)
+
+路由: `/one`
+
+参数: 无
