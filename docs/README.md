@@ -1489,3 +1489,37 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 文章 | 新闻 | 电台 |
 | ---- | ---- | ---- |
 | 1    | 2    | 9    |
+
+## ExHentai
+
+<b> Links won't go directly to the gallery unless you've logged-in </b>
+
+### Search Page
+
+Example: `/exhentai/[]/shota`
+`/exhentai/["non-h"]`
+`/exhentai/["non-h"]/character:"chino kafuu"`
+Routes: `/exhentai/:only/:input?`
+
+-   `input` Search data
+-   `only` An array, including several strings.If set, Results only show items of those kind.
+
+#### Valid `input` values
+
+Example: `language:chinese misc:"full color"`
+Another Example: `chinese misc:"full color"`
+Another Example: `"chinese" "full color"`
+Another Example: `chinese`
+
+A value can be devided into several elements using the space ``,while each element can also be separated into two parts by the character `:`.
+
+it can be described as `TagName:Tag`
+To know what's more, [GO TO EXHENTAI](https://exhentai.org)
+
+#### Valid `only` values
+
+Example: `["doujinshi","manga","artistcg","gamecg","western","non-h","imageset","cosplay","asian****","misc"]`
+
+Valid values is the example's subset, such as `["imageset","doujinshi"]` and `["non-h"]`
+
+<b> Notice: the value should always be in a vaild type,which means it should be string and it should be able to be successfully parsed by the function JSON.parse() </b>

@@ -342,4 +342,11 @@ router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
+// Exhentai
+if (config.exhentai && config.exhentai.cookie) {
+    router.get('/exhentai/:only/:input?', require('./routes/exhentai/tag'));
+} else {
+    logger.warn('Exhentai RSS is disabled for lacking config.');
+}
+
 module.exports = router;

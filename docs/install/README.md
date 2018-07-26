@@ -397,6 +397,10 @@ gcloud app deploy
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
+-   `exhentai`: [访问地址](https://exhentai.org)
+
+    -   `EXHENTAI_COOKIE`: 站点 Cookie，包括`ipb_member_id`,`ipb_pass_hash`,例如：`ipb_member_id=1111111; ipb_pass_hash=0123456789abcdeffedcba9876543210`
+
 ### 访问控制
 
 可以通过修改 `middleware/access-control.js` 或者设置环境变量来配置黑名单和白名单。

@@ -41,4 +41,7 @@ module.exports = {
     github: {
         access_token: process.env.GITHUB_ACCESS_TOKEN,
     },
+    exhentai: {
+        cookie: process.env.EXHENTAI_COOKIE,
+    },
 };
