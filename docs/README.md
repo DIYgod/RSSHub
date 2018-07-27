@@ -1497,3 +1497,17 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/one`
 
 参数: 无
+
+## Mozilla
+
+### Firefox Release Note
+
+举例: [https://rsshub.app/mozilla/firefox/desktop](https://rsshub.app/mozilla/firefox/desktop)
+
+路由: `/mozilla/firefox/:platform`
+
+参数: platform
+
+| 桌面    | Android | Beta | Nightly | Android Beta |
+| ------- | ------- | ---- | ------- | ------------ |
+| dekstop | android | beta | nightly | android-beta |
