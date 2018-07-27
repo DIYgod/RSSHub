@@ -15,9 +15,7 @@ module.exports = async (ctx) => {
     const data = response.data;
     const $ = cheerio.load(data);
 
-    const image = $('.item.active');
-    const today = $('.corriente');
-    const list = [image, today[0], today[1]];
+    const list = [$('.item.active'), $('.corriente')[0], $('.corriente')[1]];
 
     const out = [];
 
@@ -34,26 +32,19 @@ module.exports = async (ctx) => {
             link: url,
             description: '',
         };
-        const key = url.match(/\d+/g)[0];
-        const value = await ctx.cache.get(key);
-
-        if (value) {
-            item.description = value;
-        } else {
-            const detail = await axios({
-                method: 'get',
-                url: url,
-                headers: {
-                    'User-Agent': config.ua,
-                    Referer: 'http://wufazhuce.com/',
-                },
-            });
+        const detail = await axios({
+            method: 'get',
+            url: url,
+            headers: {
+                'User-Agent': config.ua,
+                Referer: 'http://wufazhuce.com/',
+            },
+        });
+        {
             const data = detail.data;
             const $ = cheerio.load(data);
             item.description = $('.tab-content').html();
-            ctx.cache.set(key, item.description, 24 * 60 * 60);
         }
-
         out.push(item);
     }
     ctx.state.data = {
