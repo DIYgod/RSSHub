@@ -1489,3 +1489,20 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 文章 | 新闻 | 电台 |
 | ---- | ---- | ---- |
 | 1    | 2    | 9    |
+
+## 国家地理 National Geographic
+
+### 分类
+
+举例:
+
+[https://rsshub.app/natgeo/category/travel](https://rsshub.app/natgeo/category/travel)
+[https://rsshub.app/natgeo/category/travel/full](https://rsshub.app/natgeo/category/travel/full)
+
+路由： `/natgeo/:cat/:type/:option?`
+
+参数： cat, 分类; type, 类型
+
+可在 url 中获取，例如`https://www.natgeomedia.com/category/news/ngnews`对应 cat, type 分别为 news, ngnews
+
+可选参数: option `full` 全文输出
