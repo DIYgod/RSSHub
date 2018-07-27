@@ -15,7 +15,6 @@ module.exports = async (ctx) => {
     if (ctx.params.platform === 'android-beta') {
         ctx.params.platform = 'android/beta';
     }
-    console.log(`https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`);
     const response = await axios_ins.get(`https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`);
     const data = response.data;
     const $ = cheerio.load(data);
@@ -25,7 +24,9 @@ module.exports = async (ctx) => {
         link: `https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`,
         item: [
             {
-                title: `Firefox ${ctx.params.platform} release note`,
+                title: `Firefox ${ctx.params.platform} ${$('.version')
+                    .find('h2')
+                    .text()} release note`,
                 link: `https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`,
                 description: $('.notes-section').html(),
             },
