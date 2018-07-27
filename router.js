@@ -342,4 +342,7 @@ router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
+// Firefox Release Note
+router.get('/mozilla/firefox/:platform', require('./routes/mozilla/firefox'));
+
 module.exports = router;
