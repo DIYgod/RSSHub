@@ -1497,6 +1497,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 举例:
 
 [https://rsshub.app/natgeo/category/travel](https://rsshub.app/natgeo/category/travel)
+
 [https://rsshub.app/natgeo/category/travel/full](https://rsshub.app/natgeo/category/travel/full)
 
 路由： `/natgeo/:cat/:type/:option?`
