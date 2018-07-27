@@ -1200,3 +1200,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/bjnews/:category`
 
 参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
+
+## Zimuzu
+
+### 剧集
+
+举例: [https://rsshub.app/zimuzu/33190](https://rsshub.app/zimuzu/33190)
+
+路由： `/zimuzu/:id`
+
+参数: id，剧集 ID，剧集页面 url 的最后一段数字
