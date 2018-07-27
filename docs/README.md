@@ -1502,7 +1502,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ### Release note
 
-举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/mozilla/firefox/release/desktop)
+举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
 
 路由: `/firefox/release/:platform`
 
