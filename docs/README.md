@@ -1498,13 +1498,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数: 无
 
-## Mozilla
+## Firefox
 
-### Firefox Release Note
+### Release note
 
-举例: [https://rsshub.app/mozilla/firefox/desktop](https://rsshub.app/mozilla/firefox/desktop)
+举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/mozilla/firefox/release/desktop)
 
-路由: `/mozilla/firefox/:platform`
+路由: `/firefox/release/:platform`
 
 参数: platform
 

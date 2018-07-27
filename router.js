@@ -345,7 +345,7 @@ router.get('/gcores/category/:category', require('./routes/gcores/category'));
 // 一个
 router.get('/one', require('./routes/one/index'));
 
-// Firefox Release Note
-router.get('/mozilla/firefox/:platform', require('./routes/mozilla/firefox'));
+// Firefox
+router.get('/firefox/release/:platform', require('./routes/firefox/release'));
 
 module.exports = router;
