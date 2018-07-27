@@ -345,4 +345,10 @@ router.get('/gcores/category/:category', require('./routes/gcores/category'));
 // 国家地理 National Geographic
 router.get('/natgeo/:cat/:type/:option?', require('./routes/natgeo/natgeo'));
 
+// 一个
+router.get('/one', require('./routes/one/index'));
+
+// Firefox Release Note
+router.get('/mozilla/firefox/:platform', require('./routes/mozilla/firefox'));
+
 module.exports = router;

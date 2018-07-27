@@ -1505,4 +1505,26 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 可在 url 中获取，例如`https://www.natgeomedia.com/category/news/ngnews`对应 cat, type 分别为 news, ngnews
 
-可选参数: option `full` 全文输出
+# 可选参数: option `full` 全文输出
+
+## ONE · 一个
+
+举例： [https://rsshub.app/one](https://rsshub.app/one)
+
+路由: `/one`
+
+参数: 无
+
+## Mozilla
+
+### Firefox Release Note
+
+举例: [https://rsshub.app/mozilla/firefox/desktop](https://rsshub.app/mozilla/firefox/desktop)
+
+路由: `/mozilla/firefox/:platform`
+
+参数: platform
+
+| 桌面    | Android | Beta | Nightly | Android Beta |
+| ------- | ------- | ---- | ------- | ------------ |
+| dekstop | android | beta | nightly | android-beta |
