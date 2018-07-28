@@ -135,7 +135,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-fid, 收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
+fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
 
 ### UP 主投币视频
 
