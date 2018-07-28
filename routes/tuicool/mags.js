@@ -3,8 +3,24 @@ const cheerio = require('cheerio');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    const id = ctx.params.id;
-    const url = `https://www.tuicool.com/mags/${id}`;
+    const type = ctx.params.type;
+    let url = `https://www.tuicool.com/mags/${type}`;
+    if (type === 'prog') {
+        url = 'https://www.tuicool.com/mags';
+    }
+    const res = await axios({
+        method: 'get',
+        url: url,
+        headers: {
+            'User-Agent': config.ua,
+        },
+    });
+    url =
+        'https://www.tuicool.com' +
+        cheerio
+            .load(res.data)('.mag-period-item a')
+            .attr('href');
+
     const response = await axios({
         method: 'get',
         url: url,
@@ -13,8 +29,7 @@ module.exports = async (ctx) => {
         },
     });
 
-    const data = response.data;
-    const $ = cheerio.load(data);
+    const $ = cheerio.load(response.data);
     const list = $('.article-title');
 
     ctx.state.data = {
