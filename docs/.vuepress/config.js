@@ -2,11 +2,18 @@ module.exports = {
     title: 'RSSHub',
     description: '🍰 万物皆可 RSS',
     ga: 'UA-48084758-10',
-    serviceWorker: false,
+    serviceWorker: true,
     themeConfig: {
         repo: 'DIYgod/RSSHub',
         editLinks: true,
-        editLinkText: '帮助我们改善此页面！',
+        editLinkText: '在 GitHub 上编辑此页',
+        lastUpdated: '上次更新',
+        serviceWorker: {
+            updatePopup: {
+                message: '发现新内容可用',
+                buttonText: '刷新',
+            },
+        },
         docsDir: 'docs',
         nav: [
             {
