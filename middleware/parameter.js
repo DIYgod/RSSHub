@@ -1,6 +1,7 @@
 module.exports = async (ctx, next) => {
     await next();
 
+    // filter
     if (ctx.state.data && ctx.query && (ctx.query.filter || ctx.query.filter_title || ctx.query.filter_description)) {
         ctx.state.data.item = ctx.state.data.item.filter((item) => {
             const title = item.title;
@@ -22,5 +23,10 @@ module.exports = async (ctx, next) => {
                 (ctx.query.filterout_description && !description.match(ctx.query.filterout_description))
             );
         });
+    }
+
+    // limit
+    if (ctx.state.data && ctx.query && ctx.query.limit) {
+        ctx.state.data.item = ctx.state.data.item.slice(0, parseInt(ctx.query.limit));
     }
 };
