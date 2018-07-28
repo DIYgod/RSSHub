@@ -16,6 +16,7 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(data);
 
     const list = [$('.item.active'), $('.corriente')[0], $('.corriente')[1]];
+    const itemMap = ['「图片」', '「文字」', '「问答」'];
 
     const out = [];
 
@@ -24,11 +25,13 @@ module.exports = async (ctx) => {
             .find('a')
             .attr('href');
         const item = {
-            title: $(list[i])
-                .find('a')
-                .text()
-                .replace(/\s+/g, ' ')
-                .trim(),
+            title:
+                itemMap[i] +
+                $(list[i])
+                    .find('a')
+                    .text()
+                    .replace(/\s+/g, ' ')
+                    .trim(),
             link: url,
             description: '',
         };
