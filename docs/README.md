@@ -1490,7 +1490,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | ---- | ---- | ---- |
 | 1    | 2    | 9    |
 
-## 国家地理 National Geographic
+## 国家地理
 
 ### 分类
 
@@ -1500,7 +1500,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 [https://rsshub.app/natgeo/news/ngnews](https://rsshub.app/natgeo/news/ngnews)
 
-路由： `/natgeo/:cat/:type?/:option?`
+路由： `/natgeo/:cat/:type?`
 
 参数： cat, 分类; type, 类型
 

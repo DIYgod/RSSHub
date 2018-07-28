@@ -342,7 +342,7 @@ router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
-// 国家地理 National Geographic
+// 国家地理
 router.get('/natgeo/:cat/:type?', require('./routes/natgeo/natgeo'));
 
 // 一个

@@ -180,11 +180,13 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   公告通知
 -   机核网
     -   分类
--   国家地理 National Geographic
+-   国家地理
     -   分类
 -   ONE · 一个
--   Firefox - Release note
-    </details>
+-   Firefox
+    -   Release note
+
+</details>
 
 ## 鸣谢
 
