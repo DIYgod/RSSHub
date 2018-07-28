@@ -1527,3 +1527,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 桌面    | Android | Beta | Nightly | Android Beta |
 | ------- | ------- | ---- | ------- | ------------ |
 | dekstop | android | beta | nightly | android-beta |
+
+## 推酷
+
+### 周刊
+
+举例: [https://rsshub.app/tuicool/mags/5b59836da8d90d4ac815ca90](https://rsshub.app/tuicool/mags/5b59836da8d90d4ac815ca90)
+
+路由: `/tuicool/mags/:id`
+
+参数: 无

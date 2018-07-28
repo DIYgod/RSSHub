@@ -351,4 +351,7 @@ router.get('/one', require('./routes/one/index'));
 // Firefox
 router.get('/firefox/release/:platform', require('./routes/firefox/release'));
 
+// tuicool
+router.get('/tuicool/mags/:id', require('./routes/tuicool/mags'));
+
 module.exports = router;
