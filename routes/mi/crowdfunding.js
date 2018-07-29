@@ -35,7 +35,7 @@ module.exports = async (ctx) => {
                 const data = JSON.parse(response.data.match(/^Zepto1532846359142\((.*)\);$/)[1]).data || {};
                 result = {
                     title: data.goods.name,
-                    description: `${data.goods.summary}<br>${data.goods.market_price / 100}元<br><img referrerpolicy="no-referrer" src="${item.img}">`,
+                    description: `${data.goods.summary}<br>${data.goods.price_min / 100}元<br><img referrerpolicy="no-referrer" src="${item.img}">`,
                     pubDate: new Date(data.crowdfunding.start * 1000).toUTCString(),
                     link: `https://youpin.mi.com/detail?gid=${item.gid}`,
                 };
