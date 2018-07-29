@@ -47,8 +47,9 @@ module.exports = async (ctx) => {
         })
     );
     ctx.state.data = {
-        title: $('title').text(),
+        title: $('.site-title').text(),
         link: url,
+        description: $('[name=description]').attr('content'),
         item: out,
     };
 };
