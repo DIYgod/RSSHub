@@ -1556,6 +1556,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 路由： `/hexo/next/:url/:number?`
 
-参数： url 博客Url 不带协议头
+参数： url 博客 Url 不带协议头
 
-可选参数： number 抓取的条数 默认10 并发太多（3个或以上）GitPage 可能会封
+可选参数： number 抓取的条数 默认 10 并发太多（3 个或以上）GitPage 可能会封
