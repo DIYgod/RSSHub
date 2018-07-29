@@ -29,7 +29,7 @@ module.exports = async (ctx) => {
                 link: encodeURI(`${url}${storyLink}`),
             };
             const key = item.link;
-            const value = ctx.cache.get(key);
+            const value = await ctx.cache.get(key);
 
             if (value) {
                 item.description = value;
@@ -39,7 +39,7 @@ module.exports = async (ctx) => {
                 const $ = cheerio.load(data);
                 item.pubDate = $('time').attr('datetime');
                 item.description = $('.post-body').html();
-                ctx.cache.set(key, item.descriptio, 6 * 60 * 60);
+                ctx.cache.set(key, item.description, 6 * 60 * 60);
             }
             return Promise.resolve(item);
         })
