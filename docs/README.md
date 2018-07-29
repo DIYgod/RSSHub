@@ -1548,6 +1548,16 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | -------- | -------- | -------- | -------- |
 | prog     | design   | startup  | tech     |
 
+## Hexo
+
+### Next 主题
+
+举例：[http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
+
+路由： `/hexo/next/:url`
+
+参数： url 博客 Url 不带协议头
+
 ## 小米
 
 ### 众筹

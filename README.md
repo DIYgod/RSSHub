@@ -187,6 +187,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   Release note
 -   推酷
     -   周刊
+-   Hexo
+    -   Next 主题
 -   小米
     -   众筹
 
