@@ -1557,3 +1557,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/hexo/next/:url`
 
 参数： url 博客 Url 不带协议头
+
+## 小米
+
+### 众筹
+
+举例： [https://rsshub.app/mi/crowdfunding](https://rsshub.app/mi/crowdfunding)
+
+路由: `/mi/crowdfunding`
+
+参数: 无

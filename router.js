@@ -357,4 +357,7 @@ router.get('/tuicool/mags/:type', require('./routes/tuicool/mags'));
 // Hexo
 router.get('/hexo/next/:url', require('./routes/hexo/next'));
 
+// 小米
+router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
+
 module.exports = router;
