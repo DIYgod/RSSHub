@@ -342,4 +342,22 @@ router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
+// 国家地理
+router.get('/natgeo/:cat/:type?', require('./routes/natgeo/natgeo'));
+
+// 一个
+router.get('/one', require('./routes/one/index'));
+
+// Firefox
+router.get('/firefox/release/:platform', require('./routes/firefox/release'));
+
+// tuicool
+router.get('/tuicool/mags/:type', require('./routes/tuicool/mags'));
+
+// Hexo
+router.get('/hexo/next/:url', require('./routes/hexo/next'));
+
+// 小米
+router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
+
 module.exports = router;

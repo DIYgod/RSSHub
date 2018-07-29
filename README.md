@@ -180,6 +180,17 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   公告通知
 -   机核网
     -   分类
+-   国家地理
+    -   分类
+-   ONE · 一个
+-   Firefox
+    -   Release note
+-   推酷
+    -   周刊
+-   Hexo
+    -   Next 主题
+-   小米
+    -   众筹
 
 </details>
 

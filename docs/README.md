@@ -35,11 +35,17 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ::: tip 提示
 
-演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用，但请不要抓取过于频繁
+演示地址为 [rsshub.app](https://rsshub.app)，缓存时间 10 分钟，可以随意使用
 
 :::
 
 ## 通用参数
+
+::: tip 提示
+
+所有通用参数可以组合使用，效果叠加
+
+:::
 
 ### 内容过滤
 
@@ -65,11 +71,11 @@ filterout 去掉不要的内容
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
 
-::: tip 提示
+### 条数限制
 
-filter 与 filterout 共 6 个 query 参数可以组合使用。当 filter、filter_title、filter_description 中多个参数存在时，取其交集进行过滤，filterout 三项同理。
+可以使用 limit 参数限制最大条数，主要用于排行榜类 RSS
 
-:::
+举例：bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
 
 ### 输出格式
 
@@ -101,7 +107,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 路由: `/bilibili/bangumi/:seasonid`
 
-参数: seasonid，番剧 id，可在番剧主页 URL 中找到
+参数: seasonid，番剧 id，番剧主页打开控制台执行 `window.INITIAL_STATE.mediaInfo.param.season_id` 获取
 
 ### UP 主投稿
 
@@ -135,7 +141,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-fid,收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
+fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
 
 ### UP 主投币视频
 
@@ -822,6 +828,12 @@ key: 产品密钥
 
 参数: id，小说 id，可在对应小说页 URL 中找到
 
+::: tip 提示
+
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id。
+
+:::
+
 ## 开发者头条
 
 ### 今天头条
@@ -1483,3 +1495,75 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 文章 | 新闻 | 电台 |
 | ---- | ---- | ---- |
 | 1    | 2    | 9    |
+
+## 国家地理
+
+### 分类
+
+举例:
+
+[https://rsshub.app/natgeo/travel](https://rsshub.app/natgeo/travel)
+
+[https://rsshub.app/natgeo/news/ngnews](https://rsshub.app/natgeo/news/ngnews)
+
+路由： `/natgeo/:cat/:type?`
+
+参数： cat, 分类; type, 类型
+
+可在 url 中获取，例如`https://www.natgeomedia.com/category/news/ngnews`对应 cat, type 分别为 news, ngnews
+
+## ONE · 一个
+
+举例： [https://rsshub.app/one](https://rsshub.app/one)
+
+路由: `/one`
+
+参数: 无
+
+## Firefox
+
+### Release note
+
+举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
+
+路由: `/firefox/release/:platform`
+
+参数: platform
+
+| 桌面    | Android | Beta | Nightly | Android Beta |
+| ------- | ------- | ---- | ------- | ------------ |
+| dekstop | android | beta | nightly | android-beta |
+
+## 推酷
+
+### 周刊
+
+举例: [https://rsshub.app/tuicool/mags/tech](https://rsshub.app/tuicool/mags/tech)
+
+路由: `/tuicool/mags/:type`
+
+参数: type
+
+| 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
+| -------- | -------- | -------- | -------- |
+| prog     | design   | startup  | tech     |
+
+## Hexo
+
+### Next 主题
+
+举例：[http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
+
+路由： `/hexo/next/:url`
+
+参数： url 博客 Url 不带协议头
+
+## 小米
+
+### 众筹
+
+举例： [https://rsshub.app/mi/crowdfunding](https://rsshub.app/mi/crowdfunding)
+
+路由: `/mi/crowdfunding`
+
+参数: 无
