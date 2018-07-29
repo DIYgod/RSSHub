@@ -354,4 +354,7 @@ router.get('/firefox/release/:platform', require('./routes/firefox/release'));
 // tuicool
 router.get('/tuicool/mags/:type', require('./routes/tuicool/mags'));
 
+// Hexo
+router.get('/hexo/next/:url/:number?', require('./routes/hexo/next'));
+
 module.exports = router;

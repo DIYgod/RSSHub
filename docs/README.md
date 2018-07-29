@@ -1547,3 +1547,15 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
 | -------- | -------- | -------- | -------- |
 | prog     | design   | startup  | tech     |
+
+## Hexo
+
+### Next 主题
+
+举例：[http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
+
+路由： `/hexo/next/:url/:number?`
+
+参数： url 博客Url 不带协议头
+
+可选参数： number 抓取的条数 默认10 并发太多（3个或以上）GitPage 可能会封
