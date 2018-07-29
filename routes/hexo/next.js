@@ -10,7 +10,6 @@ const axios_ins = axios.create({
 
 module.exports = async (ctx) => {
     const url = `http://${ctx.params.url}`;
-    const num = parseInt(`${ctx.params.number ? ctx.params.number : 10}`);
     const res = await axios_ins.get(`${url}/archives`);
     const data = res.data;
     const $ = cheerio.load(data);
@@ -18,8 +17,7 @@ module.exports = async (ctx) => {
     const list = $('.post-header');
 
     const count = [];
-    // 太多并发 GitPage 会封
-    for (let i = 0; i < Math.min(list.length, num); i++) {
+    for (let i = 0; i < Math.min(list.length, 5); i++) {
         count.push(i);
     }
     const out = await Promise.all(

@@ -1554,8 +1554,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 举例：[http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
 
-路由： `/hexo/next/:url/:number?`
+路由： `/hexo/next/:url`
 
 参数： url 博客 Url 不带协议头
-
-可选参数： number 抓取的条数 默认 10 并发太多（3 个或以上）GitPage 可能会封
