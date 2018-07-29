@@ -354,4 +354,7 @@ router.get('/firefox/release/:platform', require('./routes/firefox/release'));
 // tuicool
 router.get('/tuicool/mags/:type', require('./routes/tuicool/mags'));
 
+// 小米
+router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
+
 module.exports = router;
