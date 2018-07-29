@@ -8,7 +8,7 @@ const header = require('./middleware/header.js');
 const utf8 = require('./middleware/utf8');
 const memoryCache = require('./middleware/lru-cache.js');
 const redisCache = require('./middleware/redis-cache.js');
-const filter = require('./middleware/filter.js');
+const parameter = require('./middleware/parameter.js');
 const template = require('./middleware/template.js');
 const favicon = require('koa-favicon');
 const debug = require('./middleware/debug.js');
@@ -52,7 +52,7 @@ app.use(utf8);
 app.use(template);
 
 // 3 filter content
-app.use(filter);
+app.use(parameter);
 
 // 2 cache
 if (config.cacheType === 'memory') {
