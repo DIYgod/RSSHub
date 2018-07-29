@@ -1533,3 +1533,17 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | 桌面    | Android | Beta | Nightly | Android Beta |
 | ------- | ------- | ---- | ------- | ------------ |
 | dekstop | android | beta | nightly | android-beta |
+
+## 推酷
+
+### 周刊
+
+举例: [https://rsshub.app/tuicool/mags/tech](https://rsshub.app/tuicool/mags/tech)
+
+路由: `/tuicool/mags/:type`
+
+参数: type
+
+| 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
+| -------- | -------- | -------- | -------- |
+| prog     | design   | startup  | tech     |
