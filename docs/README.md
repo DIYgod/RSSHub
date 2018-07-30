@@ -451,13 +451,19 @@ rid: 排行榜分区 id，默认 0
 
 ### 公众号
 
+举例: [https://rsshub.app/wechat/account/zhczyj](https://rsshub.app/wechat/account/zhczyj)
+
+路由: `/wechat/account/:id/:arg?`
+
+参数: id 即 微信号；arg 可选
+
 ::: tip 提示
 
-公众号抓取困难，目前可提供的方案是通过即刻的公众号主题订阅
+公众号抓取使用的是搜狗提供的接口，仅显示最近 10 条群发
+
+arg 若为 first，则仅输出第一条信息，可过滤某些公众号的推广，建议不使用
 
 :::
-
-举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
 
 ## 网易云音乐
 

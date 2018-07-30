@@ -360,4 +360,7 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
 
+// 微信
+router.get('/wechat/account/:id/:arg?', require('./routes/wechat/account'));
+
 module.exports = router;
