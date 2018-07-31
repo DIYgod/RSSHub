@@ -1572,7 +1572,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ### 教务处通知
 
-举例： [https://rsshub.app/scnu/jw](https://rsshub.app/scnu/jwy)
+举例： [https://rsshub.app/scnu/jw](https://rsshub.app/scnu/jw)
 
 路由： `/scnu/jw`
 
