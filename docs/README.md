@@ -1567,3 +1567,29 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/mi/crowdfunding`
 
 参数: 无
+
+## 华南师范大学
+
+### 教务处通知
+
+举例： [https://rsshub.app/scnu/jw](https://rsshub.app/scnu/jwy)
+
+路由： `/scnu/jw`
+
+参数：无
+
+### 图书馆通知
+
+举例： [https://rsshub.app/scnu/library](https://rsshub.app/scnu/library)
+
+路由： `/scnu/library`
+
+参数：无
+
+### 计算机学院竞赛通知
+
+举例： [https://rsshub.app/scnu/library](https://rsshub.app/scnu/library)
+
+路由： `/scnu/cs/match`
+
+参数：无
