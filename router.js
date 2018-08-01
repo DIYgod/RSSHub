@@ -360,4 +360,9 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
 
+// SCNU
+router.get('/scnu/jw', require('./routes/scnu/jw'));
+router.get('/scnu/library', require('./routes/scnu/library'));
+router.get('/scnu/cs/match', require('./routes/scnu/cs/match'));
+
 module.exports = router;
