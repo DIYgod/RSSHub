@@ -6,12 +6,18 @@ const keep_project_and_duration = (text) => {
     const project = text
         .split(', ', 1)
         .toString()
-        .slice(2);
+        .trim()
+        .slice(2)
+        .trim();
     const duration = text
         .split(', ')
         .splice(1)
         .join(', ');
-    return `项目：${project}<br>时长：${duration}<br>`;
+    if (duration) {
+        return `项目：${project}<br>时长：${duration}<br>`;
+    } else {
+        return `项目：${project}<br>`;
+    }
 };
 
 const keep_item_description = (item) => {
