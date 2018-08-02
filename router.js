@@ -172,4 +172,7 @@ router.get('/jike/user/:id', require('./routes/jike/user'));
 // 极客时间
 router.get('/geektime/column/:cid', require('./routes/geektime/column'));
 
+// Keep
+router.get('/keep/user/:id', require('./routes/keep/user'));
+
 module.exports = router;

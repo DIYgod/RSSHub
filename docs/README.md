@@ -722,3 +722,13 @@ key: 产品密钥
 路由: `/youtube/channel/:id`
 
 参数: id，频道 id
+
+## Keep
+
+### 运动日记
+
+举例：[https://rsshub.app/keep/user/556b02c1ab59390afea671ea](https://rsshub.app/keep/user/556b02c1ab59390afea671ea)
+
+路由: `/keep/user/:id`
+
+参数: id，Keep 用户 id
