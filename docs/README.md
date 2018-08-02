@@ -1598,3 +1598,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/scnu/cs/match`
 
 参数：无
+
+## Keep
+
+### 运动日记
+
+举例：[https://rsshub.app/keep/user/556b02c1ab59390afea671ea](https://rsshub.app/keep/user/556b02c1ab59390afea671ea)
+
+路由: `/keep/user/:id`
+
+参数: id，Keep 用户 id

@@ -365,4 +365,7 @@ router.get('/scnu/jw', require('./routes/scnu/jw'));
 router.get('/scnu/library', require('./routes/scnu/library'));
 router.get('/scnu/cs/match', require('./routes/scnu/cs/match'));
 
+// Keep
+router.get('/keep/user/:id', require('./routes/keep/user'));
+
 module.exports = router;
