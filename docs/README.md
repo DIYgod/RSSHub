@@ -20,7 +20,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 </p>
 <p>
 <a href="https://werss.app?utm_source=rsshub" target="_blank">
-    <img width="200px" src="https://cdn.weapp.design/werss/werss-logo.png">
+    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
 </a>
 </p>
 
