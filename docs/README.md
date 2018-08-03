@@ -112,7 +112,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 路由: `/bilibili/bangumi/:seasonid`
 
-参数: seasonid，番剧 id，番剧主页打开控制台执行 `window.INITIAL_STATE.mediaInfo.param.season_id` 获取
+参数: seasonid，番剧 id，番剧主页打开控制台执行 `window.__INITIAL_STATE__.ssId` 或 `window.__INITIAL_STATE__.mediaInfo.param.season_id` 获取
 
 ### UP 主投稿
 
