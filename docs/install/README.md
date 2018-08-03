@@ -309,8 +309,6 @@ env_variables:
 
 #### 部署至 standard environment
 
-编辑项目的 package.json，将 `engines` 配置修改为 `"node": "8.x.x"` 。
-
 在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
 
 ```yaml

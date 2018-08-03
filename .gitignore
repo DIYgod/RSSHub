@@ -2,7 +2,9 @@ node_modules
 npm-debug.log
 error.log
 combined.log
+package-lock.json
 .vscode
+.idea
 docs/.vuepress/dist
 
 config/app.json

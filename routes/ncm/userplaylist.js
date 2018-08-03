@@ -44,7 +44,7 @@ module.exports = async (ctx) => {
 
             const src = `http://music.163.com/playlist/${pl.id}`;
 
-            const content = image + description + `<div><a href="${src}">查看歌单</a></div>`;
+            const html = image + description + `<div><a href="${src}">查看歌单</a></div>`;
 
             return {
                 title: pl.name,
@@ -53,8 +53,8 @@ module.exports = async (ctx) => {
                 published: new Date(pl.createTime).toISOString(),
                 updated: new Date(pl.updateTime).toISOString(),
                 author: pl.creator.nickname,
-                description: content,
-                content: { src, value: content },
+                description: html,
+                content: { html },
                 category: pl.tags,
             };
         }),

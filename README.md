@@ -11,7 +11,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 [使用文档](https://docs.rsshub.app/)
 
-当前支持列表：
+<details><summary>当前支持列表</summary><br>
 
 -   RSSHub
     -   支持的 RSS
@@ -33,6 +33,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   主站话题列表
     -   会员购新品上架
     -   会员购作品
+    -   排行榜
 -   微博
     -   博主
     -   关键词
@@ -48,6 +49,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   歌单歌曲
     -   用户歌单
     -   歌手专辑
+    -   电台节目
 -   掘金
     -   分类
 -   简书
@@ -83,6 +85,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   小组
 -   煎蛋
     -   无聊图
+    -   妹子图
 -   喷嚏
     -   图卦
 -   Dockone
@@ -157,16 +160,68 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   教务信息
 -   新京报
     -   快讯
+-   停水通知
+    -   杭州市
+    -   萧山区
+    -   大连市
+-   MIUI
+    -   更新
+-   米哈游
+    -   崩坏 2-游戏公告
+    -   崩坏 3-游戏公告
+-   灵梦御所
+    -   分类
+    -   标签
+-   草榴
+    -   分区帖子
+-   科技星球
+    -   首页
+-   北大信科
+    -   公告通知
+-   机核网
+    -   分类
+-   国家地理
+    -   分类
+-   ONE · 一个
+-   Firefox
+    -   Release note
+-   推酷
+    -   周刊
+-   Hexo
+    -   Next 主题
+-   小米
+    -   众筹
+-   华南师范大学
+    -   教务处通知
+    -   图书馆通知
+    -   计算机学院竞赛通知
+-   Keep
+    -   运动日记
+
+</details>
 
 ## 鸣谢
 
-### Sponsors
+### Special Sponsors
 
--   [rixCloud](https://rixcloud.us)
+<p>
+<a href="https://rixcloud.app/rsshub" target="_blank">
+    <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
+</a>
+</p>
+<p>
+<a href="https://werss.app?utm_source=rsshub" target="_blank">
+    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
+</a>
+</p>
+
+### Sponsors
 
 -   [Liuyang](https://github.com/lingllting)
 
 -   [Zuyang](https://zuyang.farbox.com)
+
+-   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -211,10 +266,9 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 ### 周期性赞助
 
-周期性赞助可以获得额外的回报，比如你的名字 会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
+周期性赞助可以获得额外的回报，比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
 
--   通过 [OpenCollective](https://opencollective.com/RSSHub) 赞助成为 backer 或 sponsor
--   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer
+-   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer 或 sponsor
 -   给我们发邮件联系赞助事宜: i#html.love
 
 ## Author
