@@ -1608,3 +1608,21 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/keep/user/:id`
 
 参数: id，Keep 用户 id
+
+## 起点
+
+### 章节
+
+举例： [https://rsshub.app/qidian/chapter/1010400217](https://rsshub.app/qidian/chapter/1010400217)
+
+路由： `/qidian/chapter/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+### 讨论区
+
+举例： [https://rsshub.app/qidian/forum/1010400217](https://rsshub.app/qidian/forum/1010400217)
+
+路由： `/qidian/forum/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到

@@ -368,4 +368,8 @@ router.get('/scnu/cs/match', require('./routes/scnu/cs/match'));
 // Keep
 router.get('/keep/user/:id', require('./routes/keep/user'));
 
+// 起点
+router.get('/qidian/chapter/:id', require('./routes/qidian/chapter'));
+router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
+
 module.exports = router;
