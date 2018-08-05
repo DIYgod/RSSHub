@@ -26,7 +26,7 @@ module.exports = async (ctx) => {
         const item = {
             title: el.text(),
             link: `https:${el.attr('href')}`,
-            pubDate: new Date(el.attr('title').substring(5, 25)),
+            pubDate: new Date(el.attr('title').substring(5, 25)).toUTCString(),
             description: el.attr('title'),
         };
         chapter_item.push(item);

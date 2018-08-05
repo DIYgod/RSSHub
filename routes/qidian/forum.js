@@ -1,6 +1,7 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const config = require('../../config');
+const parseDate = require('../../utils/date');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -32,6 +33,11 @@ module.exports = async (ctx) => {
             title: title.text(),
             link: `https:${title.attr('href')}`,
             description: $(el).text(),
+            pubDate: parseDate(
+                $(el)
+                    .find('.post-info>span')
+                    .text()
+            ),
         });
     }
 
