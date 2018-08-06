@@ -372,4 +372,7 @@ router.get('/keep/user/:id', require('./routes/keep/user'));
 router.get('/qidian/chapter/:id', require('./routes/qidian/chapter'));
 router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
 
+// 懂球帝
+router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
+
 module.exports = router;
