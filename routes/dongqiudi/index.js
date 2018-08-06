@@ -50,7 +50,7 @@ module.exports = async (ctx) => {
 
         out[i].description = full.find('div:nth-of-type(1)').html();
         out[i].author = full.find('span.name').text();
-        out[i].pubDate = full.find('span.time').text();
+        out[i].pubDate = new Date(full.find('span.time').text()).toUTCString();
         ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }
     ctx.state.data = {
