@@ -1636,3 +1636,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/dongqiudi/daily`
 
 参数：无
+
+## 维基百科
+
+### 中国大陆新闻动态
+
+举例： [https://rsshub.app/wikipedia/mainland](https://rsshub.app/wikipedia/mainland)
+
+路由： `wikipedia/mainland`
+
+参数：无
