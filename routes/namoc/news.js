@@ -68,7 +68,7 @@ module.exports = async (ctx) => {
     }
     ctx.state.data = {
         title: '中国美术馆 -- 新闻',
-        link: 'http://www.namoc.org/xwzx/xw/xinwen/',
+        link: host,
         item: out,
     };
 };

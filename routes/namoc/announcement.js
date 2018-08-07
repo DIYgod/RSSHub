@@ -65,7 +65,7 @@ module.exports = async (ctx) => {
     }
     ctx.state.data = {
         title: '中国美术馆 -- 通知公告',
-        link: 'http://www.namoc.org/xwzx/tzgg/2017gonggao/',
+        link: host,
         item: out,
     };
 };
