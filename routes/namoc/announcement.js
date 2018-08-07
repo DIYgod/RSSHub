@@ -49,13 +49,17 @@ module.exports = async (ctx) => {
         const $ = cheerio.load(responses[i].data);
         const full = $('#content');
 
-        out[i].description = full.find('div.Custom_UnionStyle').html();
+        const link = out[i].link.split('/');
+        link.pop();
+        const absLink = link.join('/');
+
+        out[i].description = full.find('div.TRS_Editor').html().replace(/src="./g, `src="${absLink}`);
         out[i].author = '中国美术馆';
         out[i].pubDate = new Date(
             full
-                .find('.news-info span:last-of-type')
-                .text()
-                .replace('时间：', '')
+            .find('.news-info span:last-of-type')
+            .text()
+            .replace('时间：', '')
         ).toUTCString();
         ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }
