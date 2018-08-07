@@ -375,6 +375,7 @@ router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
 // 中国美术馆
 router.get('/namoc/announcement', require('./routes/namoc/announcement'));
 router.get('/namoc/news', require('./routes/namoc/news'));
+router.get('/namoc/media', require('./routes/namoc/media'));
 
 // 懂球帝
 router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
