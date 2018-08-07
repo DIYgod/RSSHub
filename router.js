@@ -378,4 +378,7 @@ router.get('/namoc/announcement', require('./routes/namoc/announcement'));
 // 懂球帝
 router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
 
+// 维基百科
+router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
+
 module.exports = router;
