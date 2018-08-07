@@ -7,7 +7,7 @@
     "start": "node index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "format": "prettier \"**/*.{js,json,md}\" --write",
+    "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
     "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\""
   },
   "repository": {
