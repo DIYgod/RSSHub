@@ -376,6 +376,7 @@ router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
 router.get('/namoc/announcement', require('./routes/namoc/announcement'));
 router.get('/namoc/news', require('./routes/namoc/news'));
 router.get('/namoc/media', require('./routes/namoc/media'));
+router.get('/namoc/exhibition', require('./routes/namoc/exhibition'));
 
 // 懂球帝
 router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
