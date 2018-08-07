@@ -1672,3 +1672,11 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/namoc/media`
 
 参数：无
+
+### 展览预告
+
+举例： [https://rsshub.app/namoc/exhibition](https://rsshub.app/namoc/exhibition)
+
+路由： `/namoc/exhibition`
+
+参数：无
