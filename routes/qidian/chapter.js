@@ -10,27 +10,36 @@ module.exports = async (ctx) => {
         url: `https://book.qidian.com/info/${id}#Catalog`,
         headers: {
             'User-Agent': config.ua,
-            Referer: `https://book.qidian.com/info/${id}`,
         },
     });
-
     const $ = cheerio.load(response.data);
 
     const name = $('.book-info>h1>em').text();
-    const list = $('#j-catalogWrap li a');
-    const cover_url = $('.bookImg>img').attr('src');
+    const cover_url = 'https:' + $('#bookImg>img').attr('src');
+
+    const csrfToken = response.headers['set-cookie'].find((s) => s.startsWith('_csrfToken=')).split(';')[0];
+
+    const chapters_response = await axios({
+        method: 'get',
+        url: `https://book.qidian.com/ajax/book/category?${csrfToken}&bookId=${id}`,
+        headers: {
+            'User-Agent': config.ua,
+        },
+    });
     const chapter_item = [];
 
-    for (let i = list.length - 1; i >= 0; i--) {
-        const el = $(list[i]);
-        const item = {
-            title: el.text(),
-            link: `https:${el.attr('href')}`,
-            pubDate: new Date(el.attr('title').substring(5, 25)).toUTCString(),
-            description: el.attr('title'),
-        };
-        chapter_item.push(item);
+    for (let i = 0; i < chapters_response.data.data.vs.length; i++) {
+        const chapters = chapters_response.data.data.vs[i].cs;
+        for (let j = 0; j < chapters.length; j++) {
+            const chapter = chapters[j];
+            chapter_item.push({
+                title: chapter.cN,
+                pubDate: new Date(chapter.uT).toUTCString(),
+                link: `https://vipreader.qidian.com/chapter/${id}/${chapter.id}`,
+            });
+        }
     }
+
     ctx.state.data = {
         title: `起点 ${name}`,
         link: `https://book.qidian.com/info/${id}`,
