@@ -52,11 +52,23 @@ module.exports = async (ctx) => {
         let info = full.find('ul.info');
         info = $(info).remove('.fav_btn');
 
-        const from = $(info).find('script:first-of-type').html().replace('getExhDate("', '').replace('");', '');
-        const to = $(info).find('script:last-of-type').html().replace('getExhDate("', '').replace('");', '');
+        const from = $(info)
+            .find('script:first-of-type')
+            .html()
+            .replace('getExhDate("', '')
+            .replace('");', '');
+        const to = $(info)
+            .find('script:last-of-type')
+            .html()
+            .replace('getExhDate("', '')
+            .replace('");', '');
 
-        $(info).find('script:first-of-type').replaceWith(from);
-        $(info).find('script:last-of-type').replaceWith(to);
+        $(info)
+            .find('script:first-of-type')
+            .replaceWith(from);
+        $(info)
+            .find('script:last-of-type')
+            .replaceWith(to);
 
         const intro = full.find('div.Custom_UnionStyle').html();
         const cover = full.find('p.image-list').html();
@@ -67,9 +79,9 @@ module.exports = async (ctx) => {
             .replace('来源：', '');
         out[i].pubDate = new Date(
             full
-            .find('.news-info span:last-of-type')
-            .text()
-            .replace('时间：', '')
+                .find('.news-info span:last-of-type')
+                .text()
+                .replace('时间：', '')
         ).toUTCString();
         ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }

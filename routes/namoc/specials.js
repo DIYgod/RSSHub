@@ -28,14 +28,16 @@ module.exports = async (ctx) => {
             continue;
         }
 
-        const cover = $('p.image a').html().replace(/src="./g, `src="${host}`);
+        const cover = $('p.image a')
+            .html()
+            .replace(/src="./g, `src="${host}`);
 
         const single = {
             title,
             link: itemUrl,
             guid: itemUrl,
             description: cover + $('div.text div').html(),
-            pubDate: new Date($('span.date').text()).toUTCString()
+            pubDate: new Date($('span.date').text()).toUTCString(),
         };
         out.push(single);
         ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
