@@ -1680,3 +1680,11 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/namoc/exhibition`
 
 参数：无
+
+### 焦点专题
+
+举例： [https://rsshub.app/namoc/specials](https://rsshub.app/namoc/specials)
+
+路由： `/namoc/specials`
+
+参数：无
