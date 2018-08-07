@@ -1626,3 +1626,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/qidian/forum/:id`
 
 参数: id，小说 id，可在对应小说页 URL 中找到
+
+## 懂球帝
+
+### 早报
+
+举例： [https://rsshub.app/dongqiudi/daily](https://rsshub.app/dongqiudi/daily)
+
+路由： `/dongqiudi/daily`
+
+参数：无
