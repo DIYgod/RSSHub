@@ -1646,3 +1646,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/wikipedia/mainland`
 
 参数：无
+
+## 中国美术馆
+
+### 通知公告
+
+举例： [https://rsshub.app/namoc/announcement](https://rsshub.app/namoc/announcement)
+
+路由： `/namoc/announcement`
+
+参数：无
