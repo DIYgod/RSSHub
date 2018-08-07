@@ -1643,6 +1643,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 举例： [https://rsshub.app/wikipedia/mainland](https://rsshub.app/wikipedia/mainland)
 
-路由： `wikipedia/mainland`
+路由： `/wikipedia/mainland`
 
 参数：无
