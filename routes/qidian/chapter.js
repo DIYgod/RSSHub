@@ -8,7 +8,7 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: `https://book.qidian.com/info/${id}#Catalog`,
-        headerss: {
+        headers: {
             'User-Agent': config.ua,
         },
     });
@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
     const chapters_response = await axios({
         method: 'get',
         url: `https://book.qidian.com/ajax/book/category?${csrfToken}&bookId=${id}`,
-        headerss: {
+        headers: {
             'User-Agent': config.ua,
         },
     });
