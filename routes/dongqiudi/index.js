@@ -35,7 +35,7 @@ module.exports = async (ctx) => {
         };
 
         try {
-            const es = await _axios_client.get(itemUrl);
+            const es = _axios_client.get(itemUrl);
             proList.push(es);
             out.push(single);
         } catch (err) {
