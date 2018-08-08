@@ -6,7 +6,7 @@ module.exports = async (ctx) => {
     const res = await axios({
         method: 'get',
         url: 'https://lib.scnu.edu.cn/news/zuixingonggao',
-        header: {
+        headers: {
             'User-Agent': config.ua,
             Referer: 'https://lib.scnu.edu.cn',
         },
