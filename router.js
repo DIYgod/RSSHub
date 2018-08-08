@@ -368,4 +368,20 @@ router.get('/scnu/cs/match', require('./routes/scnu/cs/match'));
 // Keep
 router.get('/keep/user/:id', require('./routes/keep/user'));
 
+// 起点
+router.get('/qidian/chapter/:id', require('./routes/qidian/chapter'));
+router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
+
+// 中国美术馆
+router.get('/namoc/announcement', require('./routes/namoc/announcement'));
+
+// 懂球帝
+router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
+
+// 维基百科
+router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
+
+// Greasy Fork
+router.get('/greasyfork/:language/:domain?', require('./routes/greasyfork/scripts'));
+
 module.exports = router;

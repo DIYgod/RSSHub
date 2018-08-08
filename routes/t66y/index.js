@@ -14,6 +14,24 @@ const axios_ins = axios.create({
     responseType: 'arraybuffer',
 });
 
+function killViidii(orginUrl) {
+    const decodeStr = /.*\?http/g;
+    const decodeSig = /______/g;
+    const jsSuffix = '&amp;z';
+    const htmlSuffix = '&z';
+    const returnSuffix = 'return false';
+    if (orginUrl.indexOf('viidii') !== -1) {
+        return orginUrl
+            .replace(decodeStr, 'http')
+            .replace(decodeSig, '.')
+            .replace(jsSuffix, '')
+            .replace(htmlSuffix, '')
+            .replace(returnSuffix, '');
+    } else {
+        return orginUrl;
+    }
+}
+
 const sourceTimezoneOffset = -8;
 const filterReg = /read\.php/;
 module.exports = async (ctx) => {
@@ -110,7 +128,6 @@ module.exports = async (ctx) => {
                 $('iframe').attr('src', link);
             }
         }
-
         // Handle img tag
         let images = $('img');
         for (let k = 0; k < images.length; k++) {
@@ -121,6 +138,13 @@ module.exports = async (ctx) => {
         for (let k = 0; k < images.length; k++) {
             $(images[k]).replaceWith(`<img src="${$(images[k]).attr('data-src')}">`);
         }
+
+        // Handle links
+        const links = $('a[href*="viidii"]');
+        for (let k = 0; k < links.length; k++) {
+            $(links[k]).attr('href', killViidii($(links[k]).attr('href')));
+        }
+
         out[indexList[i]].description = $.html();
         out[indexList[i]].pubDate = time.toUTCString();
         ctx.cache.set(out[indexList[i]].link, JSON.stringify(out[indexList[i]]), 3 * 60 * 60);
