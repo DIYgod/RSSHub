@@ -130,6 +130,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
+### UP 主频道
+
+举例: [https://rsshub.app/bilibili/channel/142821407/23390](https://rsshub.app/bilibili/channel/142821407/23390)
+
+路由: `/bilibili/channel/:uid/:cid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+cid，频道 ID,可在频道的 URL 中找到
+
 ### UP 主默认收藏夹
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
@@ -1647,6 +1657,34 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数：无
 
+## 雪球
+
+### 用户动态
+
+举例: [https://rsshub.app/xueqiu/user/8152922548](https://rsshub.app/xueqiu/user/8152922548)
+
+路由: `/xueqiu/user/:id/:type?`
+
+参数:
+
+id，用户 id，可在用户主页 URL 中找到
+
+type，可选，动态的类型，不填则默认全部
+
+| 原发布 | 长文 | 问答 | 热门 | 交易 |
+| ------ | ---- | ---- | ---- | ---- |
+| 0      | 2    | 4    | 9    | 11   |
+
+### 用户收藏动态
+
+举例: [https://rsshub.app/xueqiu/favorite/8152922548](https://rsshub.app/xueqiu/favorite/8152922548)
+
+路由: `/xueqiu/favorite/:id`
+
+参数:
+
+id，用户 id，可在用户主页 URL 中找到
+
 ## 中国美术馆
 
 ### 通知公告
@@ -1656,3 +1694,17 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/namoc/announcement`
 
 参数：无
+
+## Greasy Fork
+
+### 脚本更新
+
+举例: [https://rsshub.app/greasyfork/zh-CN/bilibili.com](https://rsshub.app/greasyfork/zh-CN/bilibili.com)
+
+路由: `/greasyfork/:language/:domain?`
+
+参数:
+
+language，语言，可在网站右上角找到， `all` 为所有语言
+
+domain，按脚本生效域名过滤，可选
