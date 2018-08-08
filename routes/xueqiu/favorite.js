@@ -22,6 +22,7 @@ module.exports = async (ctx) => {
         headers: {
             'User-Agent': config.ua,
             Cookie: token,
+            Referer: `https://xueqiu.com/u/${id}`,
         },
     });
     const data = res2.data.list;

@@ -34,6 +34,7 @@ module.exports = async (ctx) => {
         headers: {
             'User-Agent': config.ua,
             Cookie: token,
+            Referer: `https://xueqiu.com/u/${id}`,
         },
     });
     const data = res2.data.statuses.filter((s) => s.mark !== 1); // 去除置顶动态
