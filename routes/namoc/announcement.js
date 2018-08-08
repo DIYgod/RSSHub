@@ -60,9 +60,9 @@ module.exports = async (ctx) => {
         out[i].author = '中国美术馆';
         out[i].pubDate = new Date(
             full
-            .find('.news-info span:last-of-type')
-            .text()
-            .replace('时间：', '')
+                .find('.news-info span:last-of-type')
+                .text()
+                .replace('时间：', '')
         ).toUTCString();
         ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }
