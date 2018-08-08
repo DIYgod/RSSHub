@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
             filter_locale: filter_locale,
             sort: 'updated',
         },
-        header: {
+        headers: {
             'User-Agent': config.ua,
         },
     });

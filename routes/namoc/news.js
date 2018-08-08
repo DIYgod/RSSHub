@@ -9,7 +9,7 @@ const _axios_client = axios.create({
     },
 });
 
-const host = 'http://www.namoc.org/xwzx/tzgg/2017gonggao/';
+const host = 'http://www.namoc.org/xwzx/xw/xinwen/';
 
 module.exports = async (ctx) => {
     const response = await _axios_client.get(host);
@@ -57,7 +57,10 @@ module.exports = async (ctx) => {
             .find('div.TRS_Editor')
             .html()
             .replace(/src="./g, `src="${absLink}`);
-        out[i].author = '中国美术馆';
+        out[i].author = full
+            .find('.news-info span:first-of-type')
+            .text()
+            .replace('来源：', '');
         out[i].pubDate = new Date(
             full
                 .find('.news-info span:last-of-type')
@@ -67,7 +70,7 @@ module.exports = async (ctx) => {
         ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }
     ctx.state.data = {
-        title: '中国美术馆 -- 通知公告',
+        title: '中国美术馆 -- 新闻',
         link: host,
         item: out,
     };
