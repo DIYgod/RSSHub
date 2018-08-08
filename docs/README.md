@@ -1657,6 +1657,34 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数：无
 
+## 雪球
+
+### 用户动态
+
+举例: [https://rsshub.app/xueqiu/user/8152922548](https://rsshub.app/xueqiu/user/8152922548)
+
+路由: `/xueqiu/user/:id/:type?`
+
+参数:
+
+id，用户 id，可在用户主页 URL 中找到
+
+type，可选，动态的类型，不填则默认全部
+
+| 原发布 | 长文 | 问答 | 热门 | 交易 |
+| ------ | ---- | ---- | ---- | ---- |
+| 0      | 2    | 4    | 9    | 11   |
+
+### 用户收藏动态
+
+举例: [https://rsshub.app/xueqiu/favorite/8152922548](https://rsshub.app/xueqiu/favorite/8152922548)
+
+路由: `/xueqiu/favorite/:id`
+
+参数:
+
+id，用户 id，可在用户主页 URL 中找到
+
 ## 中国美术馆
 
 ### 通知公告
