@@ -104,6 +104,7 @@ router.get('/bilibili/blackboard', require('./routes/bilibili/blackboard'));
 router.get('/bilibili/mall/new', require('./routes/bilibili/mallNew'));
 router.get('/bilibili/mall/ip/:id', require('./routes/bilibili/mallIP'));
 router.get('/bilibili/ranking/:rid?/:day?', require('./routes/bilibili/ranking'));
+router.get('/bilibili/channel/:uid/:cid', require('./routes/bilibili/userChannel'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
@@ -384,5 +385,8 @@ router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
 
 // 维基百科
 router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
+
+// Greasy Fork
+router.get('/greasyfork/:language/:domain?', require('./routes/greasyfork/scripts'));
 
 module.exports = router;

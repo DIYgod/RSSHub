@@ -130,6 +130,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
+### UP 主频道
+
+举例: [https://rsshub.app/bilibili/channel/142821407/23390](https://rsshub.app/bilibili/channel/142821407/23390)
+
+路由: `/bilibili/channel/:uid/:cid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+cid，频道 ID,可在频道的 URL 中找到
+
 ### UP 主默认收藏夹
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
@@ -1688,3 +1698,17 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由： `/namoc/specials`
 
 参数：无
+
+## Greasy Fork
+
+### 脚本更新
+
+举例: [https://rsshub.app/greasyfork/zh-CN/bilibili.com](https://rsshub.app/greasyfork/zh-CN/bilibili.com)
+
+路由: `/greasyfork/:language/:domain?`
+
+参数:
+
+language，语言，可在网站右上角找到， `all` 为所有语言
+
+domain，按脚本生效域名过滤，可选
