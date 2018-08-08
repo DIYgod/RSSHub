@@ -1695,6 +1695,38 @@ id，用户 id，可在用户主页 URL 中找到
 
 参数：无
 
+### 新闻
+
+举例： [https://rsshub.app/namoc/news](https://rsshub.app/namoc/news)
+
+路由： `/namoc/news`
+
+参数：无
+
+### 媒体联报
+
+举例： [https://rsshub.app/namoc/media](https://rsshub.app/namoc/media)
+
+路由： `/namoc/media`
+
+参数：无
+
+### 展览预告
+
+举例： [https://rsshub.app/namoc/exhibition](https://rsshub.app/namoc/exhibition)
+
+路由： `/namoc/exhibition`
+
+参数：无
+
+### 焦点专题
+
+举例： [https://rsshub.app/namoc/specials](https://rsshub.app/namoc/specials)
+
+路由： `/namoc/specials`
+
+参数：无
+
 ## Greasy Fork
 
 ### 脚本更新
