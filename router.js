@@ -104,6 +104,7 @@ router.get('/bilibili/blackboard', require('./routes/bilibili/blackboard'));
 router.get('/bilibili/mall/new', require('./routes/bilibili/mallNew'));
 router.get('/bilibili/mall/ip/:id', require('./routes/bilibili/mallIP'));
 router.get('/bilibili/ranking/:rid?/:day?', require('./routes/bilibili/ranking'));
+router.get('/bilibili/channel/:uid/:cid', require('./routes/bilibili/userChannel'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
@@ -372,6 +373,9 @@ router.get('/keep/user/:id', require('./routes/keep/user'));
 router.get('/qidian/chapter/:id', require('./routes/qidian/chapter'));
 router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
 
+// 中国美术馆
+router.get('/namoc/announcement', require('./routes/namoc/announcement'));
+
 // 懂球帝
 router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
 
@@ -381,5 +385,8 @@ router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
 // 雪球
 router.get('/xueqiu/user/:id/:type?', require('./routes/xueqiu/user'));
 router.get('/xueqiu/favorite/:id', require('./routes/xueqiu/favorite'));
+
+// Greasy Fork
+router.get('/greasyfork/:language/:domain?', require('./routes/greasyfork/scripts'));
 
 module.exports = router;
