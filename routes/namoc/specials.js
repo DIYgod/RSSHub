@@ -18,7 +18,7 @@ module.exports = async (ctx) => {
     const list = $('div.inner div.list li');
     const out = [];
 
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < Math.min(list.length, 5); i++) {
         const $ = cheerio.load(list[i]);
         const title = $('div.text a').text();
         const itemUrl = $('div.text a').attr('href');

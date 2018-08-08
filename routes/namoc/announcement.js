@@ -16,11 +16,11 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(response.data);
 
-    const list = $('.news-list li:not(.clearfix)').slice(0, 10);
+    const list = $('.news-list li:not(.clearfix)');
     const out = [];
     const proList = [];
 
-    for (let i = 0; i < list.length; i++) {
+    for (let i = 0; i < Math.min(list.length, 5); i++) {
         const $ = cheerio.load(list[i]);
         const title = $('a').text();
         const itemUrl = url.resolve(host, $('a').attr('href'));
@@ -60,9 +60,9 @@ module.exports = async (ctx) => {
         out[i].author = '中国美术馆';
         out[i].pubDate = new Date(
             full
-                .find('.news-info span:last-of-type')
-                .text()
-                .replace('时间：', '')
+            .find('.news-info span:last-of-type')
+            .text()
+            .replace('时间：', '')
         ).toUTCString();
         ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }
