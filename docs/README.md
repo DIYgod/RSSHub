@@ -130,6 +130,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
+### UP 主频道
+
+举例: [https://rsshub.app/bilibili/channel/142821407/23390](https://rsshub.app/bilibili/channel/142821407/23390)
+
+路由: `/bilibili/channel/:uid/:cid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+cid，频道 ID,可在频道的 URL 中找到
+
 ### UP 主默认收藏夹
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
