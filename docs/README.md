@@ -1695,6 +1695,38 @@ id，用户 id，可在用户主页 URL 中找到
 
 参数：无
 
+### 新闻
+
+举例： [https://rsshub.app/namoc/news](https://rsshub.app/namoc/news)
+
+路由： `/namoc/news`
+
+参数：无
+
+### 媒体联报
+
+举例： [https://rsshub.app/namoc/media](https://rsshub.app/namoc/media)
+
+路由： `/namoc/media`
+
+参数：无
+
+### 展览预告
+
+举例： [https://rsshub.app/namoc/exhibition](https://rsshub.app/namoc/exhibition)
+
+路由： `/namoc/exhibition`
+
+参数：无
+
+### 焦点专题
+
+举例： [https://rsshub.app/namoc/specials](https://rsshub.app/namoc/specials)
+
+路由： `/namoc/specials`
+
+参数：无
+
 ## Greasy Fork
 
 ### 脚本更新
@@ -1708,3 +1740,27 @@ id，用户 id，可在用户主页 URL 中找到
 language，语言，可在网站右上角找到， `all` 为所有语言
 
 domain，按脚本生效域名过滤，可选
+
+## LinkedKeeper
+
+### 博文
+
+举例: [https://rsshub.app/linkedkeeper/sub/1](https://rsshub.app/linkedkeeper/sub/1)
+
+路由: `/linkedkeeper/:type/:id?`
+
+参数:
+
+type，博文分类，为 URL 中 `.action` 的文件名
+
+id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
+
+## 开源中国
+
+### 资讯
+
+举例: [https://rsshub.app/oschina/news](https://rsshub.app/oschina/news)
+
+路由: `/oschina/news`
+
+参数：无

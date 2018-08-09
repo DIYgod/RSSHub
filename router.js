@@ -375,6 +375,10 @@ router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
 
 // 中国美术馆
 router.get('/namoc/announcement', require('./routes/namoc/announcement'));
+router.get('/namoc/news', require('./routes/namoc/news'));
+router.get('/namoc/media', require('./routes/namoc/media'));
+router.get('/namoc/exhibition', require('./routes/namoc/exhibition'));
+router.get('/namoc/specials', require('./routes/namoc/specials'));
 
 // 懂球帝
 router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
@@ -388,5 +392,11 @@ router.get('/xueqiu/favorite/:id', require('./routes/xueqiu/favorite'));
 
 // Greasy Fork
 router.get('/greasyfork/:language/:domain?', require('./routes/greasyfork/scripts'));
+
+// LinkedKeeper
+router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
+
+// 开源中国
+router.get('/oschina/news', require('./routes/oschina/news'));
 
 module.exports = router;
