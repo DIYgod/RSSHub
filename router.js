@@ -393,4 +393,7 @@ router.get('/xueqiu/favorite/:id', require('./routes/xueqiu/favorite'));
 // Greasy Fork
 router.get('/greasyfork/:language/:domain?', require('./routes/greasyfork/scripts'));
 
+// LinkedKeeper
+router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
+
 module.exports = router;
