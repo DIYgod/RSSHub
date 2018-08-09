@@ -51,7 +51,7 @@ module.exports = async (ctx) => {
         const full = $('div.js-discussion');
 
         out[i].description = full.find('td.comment-body:first-of-type').html();
-        out[i].author = full.find('div.TableObject-item--primary.author').text();
+        out[i].author = $('div.TableObject-item--primary a.author').text();
 
         const date = $('div.TableObject-item--primary relative-time');
         out[i].pubDate = new Date($(date).attr('datetime'));
