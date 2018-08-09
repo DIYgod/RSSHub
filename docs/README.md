@@ -1754,3 +1754,13 @@ domain，按脚本生效域名过滤，可选
 type，博文分类，为 URL 中 `.action` 的文件名
 
 id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
+
+## 开源中国
+
+### 资讯
+
+举例: [https://rsshub.app/oschina/news](https://rsshub.app/oschina/news)
+
+路由: `/oschina/news`
+
+参数：无
