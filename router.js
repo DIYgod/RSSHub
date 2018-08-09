@@ -396,4 +396,7 @@ router.get('/greasyfork/:language/:domain?', require('./routes/greasyfork/script
 // LinkedKeeper
 router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
 
+// 开源中国
+router.get('/oschina/news', require('./routes/oschina/news'));
+
 module.exports = router;
