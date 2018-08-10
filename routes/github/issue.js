@@ -22,7 +22,8 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: `${user}/${repo} Issues`,
         link: host,
-        item: data &&
+        item:
+            data &&
             data.map((item) => ({
                 title: item.title,
                 description: item.body || 'No description',
