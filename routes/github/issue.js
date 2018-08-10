@@ -16,6 +16,7 @@ module.exports = async (ctx) => {
         },
         params: {
             sort: 'created',
+            access_token: config.github.access_token,
         },
     });
     const data = response.data;
