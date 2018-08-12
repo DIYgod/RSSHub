@@ -1784,6 +1784,18 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 
 参数：无
 
+## Bugly
+
+### Bugly SDK 更新日志
+
+举例: [https://rsshub.app/bugly/changelog/1](https://rsshub.app/bugly/changelog/1)
+
+路由: `/bugly/changelog/:platform`
+
+参数：
+
+platform, 平台类型，必选，1 为 Android，2 为 iOS
+
 ## All the Flight Deals
 
 ### 特价机票 Flight Deals

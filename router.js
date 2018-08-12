@@ -403,6 +403,9 @@ router.get('/oschina/news', require('./routes/oschina/news'));
 // 腾讯视频 SDK
 router.get('/qcloud/mlvb/changelog', require('./routes/qcloud/mlvb/changelog'));
 
+// Bugly SDK
+router.get('/bugly/changelog/:platform', require('./routes/bugly/changelog'));
+
 // All the Flight Deals
 router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
 
