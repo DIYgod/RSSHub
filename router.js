@@ -263,6 +263,7 @@ if (config.github && config.github.access_token) {
     logger.warn('GitHub Repos RSS is disabled for lacking config.');
 }
 router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
+router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
 
 // konachan
 router.get('/konachan/post', require('./routes/konachan/post'));
