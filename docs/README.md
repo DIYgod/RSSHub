@@ -1764,3 +1764,13 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 路由: `/oschina/news`
 
 参数：无
+
+## 腾讯云
+
+### 移动直播 SDK 更新日志
+
+举例: [https://rsshub.app/qcloud/mlvb/changelog](https://rsshub.app/qcloud/mlvb/changelog)
+
+路由: `/qcloud/mlvb/changelog`
+
+参数：无
