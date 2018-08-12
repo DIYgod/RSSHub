@@ -1774,3 +1774,22 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 路由: `/qcloud/mlvb/changelog`
 
 参数：无
+
+## All the Flight Deals
+
+### 特价机票 Flight Deals
+
+举例: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new york,gb+london/1)
+
+路由: `/atfd/:locations/:nearby?`
+
+参数:
+
+locations:
+
+    1. 始发地 ISO 3166-1 国家代码+城市名称，例如 `us+new york`，https://rsshub.app/atfd/us+new york
+    2. 支持逗号区分多个始发地，例如 `us+new york,gb+london`，https://rsshub.app/atfd/us+new york,gb+london/
+
+    ISO 3166-1 国家代码列表请参见 https://en.wikipedia.org/wiki/ISO_3166-1
+
+nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场

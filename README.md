@@ -222,6 +222,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   资讯
 -   腾讯云
     -   移动直播 SDK 更新日志
+-   All the Flight Deals
+    -   特价机票 Flight deals
 
 </details>
 
