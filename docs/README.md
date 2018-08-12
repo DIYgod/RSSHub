@@ -1816,6 +1816,16 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 
 参数:
 
+## All the Flight Deals
+
+### 特价机票 Flight Deals
+
+举例: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new york,gb+london/1)
+
+路由: `/atfd/:locations/:nearby?`
+
+参数:
+
 locations:
 
     1. 始发地 ISO 3166-1 国家代码+城市名称，例如 `us+new york`，https://rsshub.app/atfd/us+new york
