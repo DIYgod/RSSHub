@@ -94,15 +94,59 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
 -   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
-## RSSHub
+## 程序更新
 
-### 支持的 RSS
+### RSSHub
 
 举例: [https://rsshub.app/rsshub/rss](https://rsshub.app/rsshub/rss)
 
 路由: `/rsshub/rss`
 
 参数: 无
+
+### MIUI
+
+举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
+
+路由: `/miui/:device/:type?`
+
+参数
+
+device: 设备的 `codename` 例如 小米 2s 为 `aries`
+
+type: 类型，可选参数
+
+| 稳定版  | 开发版 |
+| ------- | ------ |
+| release | dev    |
+
+### Firefox
+
+举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
+
+路由: `/firefox/release/:platform`
+
+参数: platform
+
+| 桌面    | Android | Beta | Nightly | Android Beta |
+| ------- | ------- | ---- | ------- | ------------ |
+| dekstop | android | beta | nightly | android-beta |
+
+### 腾讯云移动直播 SDK
+
+举例: [https://rsshub.app/qcloud/mlvb/changelog](https://rsshub.app/qcloud/mlvb/changelog)
+
+路由: `/qcloud/mlvb/changelog`
+
+参数：无
+
+### Bugly SDK
+
+举例: [https://rsshub.app/bugly/changelog/1](https://rsshub.app/bugly/changelog/1)
+
+路由: `/bugly/changelog/:platform`
+
+参数：platform, 平台类型，必选，1 为 Android，2 为 iOS
 
 ## bilibili
 
@@ -1392,28 +1436,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数: 无
 
-## MIUI
-
-### 更新
-
-举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
-
-路由: `/miui/:device/:type?`
-
-参数
-
-**device**
-
-你的设备的 `codename` 例如 小米 2s 为 `aries`
-
-**type**
-
-可选参数
-
-| 稳定版  | 开发版 |
-| ------- | ------ |
-| release | dev    |
-
 ## 米哈游
 
 ### 崩坏 2-游戏公告
@@ -1543,20 +1565,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/one`
 
 参数: 无
-
-## Firefox
-
-### Release note
-
-举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
-
-路由: `/firefox/release/:platform`
-
-参数: platform
-
-| 桌面    | Android | Beta | Nightly | Android Beta |
-| ------- | ------- | ---- | ------- | ------------ |
-| dekstop | android | beta | nightly | android-beta |
 
 ## 推酷
 
@@ -1773,28 +1781,6 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 路由: `/oschina/news`
 
 参数：无
-
-## 腾讯云
-
-### 移动直播 SDK 更新日志
-
-举例: [https://rsshub.app/qcloud/mlvb/changelog](https://rsshub.app/qcloud/mlvb/changelog)
-
-路由: `/qcloud/mlvb/changelog`
-
-参数：无
-
-## Bugly
-
-### Bugly SDK 更新日志
-
-举例: [https://rsshub.app/bugly/changelog/1](https://rsshub.app/bugly/changelog/1)
-
-路由: `/bugly/changelog/:platform`
-
-参数：
-
-platform, 平台类型，必选，1 为 Android，2 为 iOS
 
 ## All the Flight Deals
 
