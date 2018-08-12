@@ -16,17 +16,15 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(data);
 
     const resultItem = [];
-    $('#docArticleContent')
-        .find('h3')
-        .each(function() {
-            const item = {};
-            item.title = $(this).text();
-            item.description = $(this)
-                .nextUntil('h3')
-                .text();
-            item.link = url;
-            resultItem.push(item);
-        });
+    $('#docArticleContent h3').each(function() {
+        const item = {};
+        item.title = $(this).text();
+        item.description = $(this)
+            .nextUntil('h3')
+            .text();
+        item.link = url;
+        resultItem.push(item);
+    });
 
     ctx.state.data = {
         title: '腾讯移动直播 SDK 更新日志',
