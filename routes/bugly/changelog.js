@@ -24,6 +24,7 @@ module.exports = async (ctx) => {
         url: APIUrl,
         headers: {
             'User-Agent': config.ua,
+            Referer: webUrl,
         },
     });
 
