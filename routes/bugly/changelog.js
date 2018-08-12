@@ -27,20 +27,18 @@ module.exports = async (ctx) => {
         },
     });
 
-    const resultItem = await Promise.all(
-        res.data.ret.versionList.map(async (changelog) => {
-            const item = {};
-            item.title = changelog.version + ' ' + changelog.createTime;
+    const resultItem = res.data.ret.versionList.map(function(changelog) {
+        const item = {};
+        item.title = changelog.version + ' ' + changelog.createTime;
 
-            let itemDesc = '';
-            changelog.description.desc.forEach(function(desc) {
-                itemDesc += desc;
-                itemDesc += '\n';
-            });
-            item.description = itemDesc;
-            return Promise.resolve(item);
-        })
-    );
+        let itemDesc = '';
+        changelog.description.desc.forEach(function(desc) {
+            itemDesc += desc;
+            itemDesc += '\n';
+        });
+        item.description = itemDesc;
+        return item;
+    });
 
     ctx.state.data = {
         title: title,
