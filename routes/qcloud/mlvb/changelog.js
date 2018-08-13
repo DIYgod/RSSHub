@@ -23,6 +23,7 @@ module.exports = async (ctx) => {
             .nextUntil('h3')
             .text();
         item.link = url;
+        item.guid = $(this).text();
         resultItem.push(item);
     });
 
