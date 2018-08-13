@@ -38,6 +38,7 @@ module.exports = async (ctx) => {
             itemDesc += '\n';
         });
         item.description = itemDesc;
+        item.guid = changelog.version + changelog.createTime;
         return item;
     });
 
