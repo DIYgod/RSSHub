@@ -28,7 +28,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 -   [Liuyang](https://github.com/lingllting)
 
--   [Zuyang](https://zuyang.farbox.com)
+-   Zuyang
 
 -   [Sayori Studio](https://t.me/SayoriStudio)
 
@@ -130,7 +130,7 @@ type: 类型，可选参数
 
 | 桌面    | Android | Beta | Nightly | Android Beta |
 | ------- | ------- | ---- | ------- | ------------ |
-| dekstop | android | beta | nightly | android-beta |
+| desktop | android | beta | nightly | android-beta |
 
 ### 腾讯云移动直播 SDK
 
@@ -147,6 +147,14 @@ type: 类型，可选参数
 路由: `/bugly/changelog/:platform`
 
 参数：platform, 平台类型，必选，1 为 Android，2 为 iOS
+
+### fir.im 应用
+
+举例: [https://rsshub.app/fir/update/xcz](https://rsshub.app/fir/update/xcz)
+
+路由: `/fir/update/:id`
+
+参数：id, fir app id，必选，如 fir 生成的链接地址为 https://fir.im/xcz，则 id 为 xcz
 
 ## bilibili
 
@@ -944,6 +952,22 @@ key: 产品密钥
 | 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
 | ----- | ----- | ----- | ---- | ------- | ---- | ---- |
 | china | world | video | tech | society | law  | ent  |
+
+## 财新网
+
+> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。
+
+### 财新周刊
+
+举例: [https://rsshub.app/caixin/weekly/coverstory](https://rsshub.app/caixin/weekly/coverstory)
+
+路由: `/caixin/weekly/:category`
+
+参数：category，分类名
+
+| 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
+| ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
+| coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
 
 ## Disqus
 

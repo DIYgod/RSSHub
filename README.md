@@ -19,6 +19,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   Firefox
     -   腾讯云移动直播 SDK
     -   Bugly SDK
+    -   fir.im 应用
 -   bilibili
     -   番剧
     -   UP 主投稿
@@ -108,6 +109,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   专栏文章
 -   央视新闻
     -   专题
+-   财新网
+    -   财新周刊
 -   Disqus
     -   评论
 -   Twitter
@@ -246,7 +249,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 -   [Liuyang](https://github.com/lingllting)
 
--   [Zuyang](https://zuyang.farbox.com)
+-   Zuyang
 
 -   [Sayori Studio](https://t.me/SayoriStudio)
 
