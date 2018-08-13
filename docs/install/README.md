@@ -291,19 +291,19 @@ env: flex
 # for production use. For more information, see:
 # https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
 manual_scaling:
-  instances: 1
+    instances: 1
 # 以下是 app engine 资源配置，可以自行修改，硬盘最低为 10G
 resources:
-  cpu: 1
-  memory_gb: 0.5
-  disk_size_gb: 10
+    cpu: 1
+    memory_gb: 0.5
+    disk_size_gb: 10
 network:
-  forwarded_ports:
-    - 80:1200
-    - 443:1200
+    forwarded_ports:
+        - 80:1200
+        - 443:1200
 # 以下是环境配置示例，具体可配置项见本文档配置章节
 env_variables:
-  CACHE_EXPIRE: "300"
+    CACHE_EXPIRE: '300'
 # [END app_yaml]
 ```
 
@@ -316,12 +316,12 @@ env_variables:
 runtime: nodejs8
 
 network:
-  forwarded_ports:
-    - 80:1200
-    - 443:1200
+    forwarded_ports:
+        - 80:1200
+        - 443:1200
 # 以下是环境配置示例，具体可配置项见本文档配置章节
 env_variables:
-  CACHE_EXPIRE: "300"
+    CACHE_EXPIRE: '300'
 # [END app_yaml]
 ```
 
