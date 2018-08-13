@@ -945,6 +945,22 @@ key: 产品密钥
 | ----- | ----- | ----- | ---- | ------- | ---- | ---- |
 | china | world | video | tech | society | law  | ent  |
 
+## 财新网
+
+> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。
+
+### 财新周刊
+
+举例: [https://rsshub.app/caixin/weekly/coverstory](https://rsshub.app/caixin/weekly/coverstory)
+
+路由: `/caixin/weekly/:category`
+
+参数：category，分类名
+
+| 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
+| ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
+| coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
+
 ## Disqus
 
 ### 评论

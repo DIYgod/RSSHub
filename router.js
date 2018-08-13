@@ -332,6 +332,9 @@ router.get('/reimu/tag/:tag', require('./routes/reimu/tag'));
 // 央视新闻
 router.get('/cctv/:category', require('./routes/cctv/category'));
 
+// 财新
+router.get('/caixin/weekly/:category', require('./routes/caixin/weekly'));
+
 // 草榴社区
 router.get('/t66y/:id', require('./routes/t66y/index'));
 
