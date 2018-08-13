@@ -227,6 +227,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   资讯
 -   All the Flight Deals
     -   特价机票 Flight deals
+-   Google
+    -   谷歌学术关键词更新
 
 </details>
 
