@@ -82,7 +82,7 @@ For example: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|
 
 Set `limit` to limit the number of articles in the feed,
 
-举例：bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
+举例: bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
 
 ### Output Formats
 
@@ -256,7 +256,7 @@ Parameters: keyword, the desired keyword
 
 ::: tip
 
-Bot initialization required：Add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_bot) as an admin to the channel and send at least one message in the channel for the bot to obtain the chat_id.
+Bot initialization required: Add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_bot) as an admin to the channel and send at least one message in the channel for the bot to obtain the chat_id.
 
 :::
 
@@ -315,7 +315,7 @@ Parameters: repo, repo name
 
 ::: tip
 
-EZTV provides an official RSS feed of all torrents：https://eztv.ag/ezrss.xml
+EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 :::
 
@@ -331,9 +331,9 @@ Parameters: imdb_id, search for the IMDB ID of the desired show, available at [I
 
 ### Blog using Next theme
 
-举例：[http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
+举例: [http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
 
-路由： `/hexo/next/:url`
+路由: `/hexo/next/:url`
 
 Parameters: url, the blog URL without the protocol (http:// and https://)
 
@@ -361,7 +361,7 @@ Route: `/atfd/:locations/:nearby?`
 
 Parameters:
 
-locations: the departing city, consists of an [ISO 3166-1 country code] and a [city name]:
+locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
 
 1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, https://rsshub.app/atfd/us+new%20york
 2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, https://rsshub.app/atfd/us+new%20york,gb+london/
@@ -369,3 +369,16 @@ locations: the departing city, consists of an [ISO 3166-1 country code] and a [c
 For ISO 3166-1 country codes please refer to https://en.wikipedia.org/wiki/ISO_3166-1
 
 nearby: whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)
+
+## Google
+
+### Google Scholar Keywords Monitoring <Author uid="HenryQW"/>
+
+Eg: [https://rsshub.app/google/scholar/data+visualizaton」](https://rsshub.app/google/scholar/data+visualizaton)
+
+Route: `/google/scholar/:query`
+
+Parameters: query, query statement which supports「Basic」and「Advanced」modes:
+
+1. Basic mode, sample query is the keywords desired, eg.「data visualizaton」, [https://rsshub.app/google/scholar/data+visualizaton](https://rsshub.app/google/scholar/data+visualizaton).
+2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete route for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
