@@ -2,25 +2,25 @@
 sidebar: auto
 ---
 
-# 部署
+# Deployment
 
-部署 RSSHub 非常简单，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new)，我们会尽快给您答复。
+RSSHub provides painless deployment, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
 
-## 手动部署
+## Manual Deployment
 
-部署 `RSSHub` 最直接的方式，您可以按照以下步骤将 `RSSHub` 部署在您的 电脑、服务器或者其他任何地方。
+Manually deploy a new `RSSHub` instance to a location of your choice.
 
-### 在安装之前
+## System requirement
 
-在安装 RSSHub 之前，请确保您的电脑中已经安装了 [Git](https://git-scm.com/) 和 [Node.js >= 8.0.0](https://nodejs.org/)。
+Please ensure you have installed both [Git](https://git-scm.com/) and [Node.js >= 8.0.0](https://nodejs.org/).
 
-### 安装 Git
+### Install Git
 
-::: tip 提示
+::: tip
 
-首先您应该输入 `git`，看看系统有没有安装 Git：
+Entering `git` to check whether Git is already installed：
 
-windows 打开 `cmd`， macOS 打开`终端(terminal)`。
+Use `cmd` for windows, use `terminal` for UNIX-based OS including macOS.
 
 ```bash
 $ git
@@ -30,112 +30,110 @@ usage: git [--version] [--help] [-C <path>] [-c name=value]
 
 :::
 
--   Windows：从 Git 官网直接[下载安装程序](https://git-scm.com/downloads)。
--   MacOS：使用 [Homebrew](https://brew.sh/) `$ brew install git` 或者[下载安装程序](https://git-scm.com/download/mac)。
--   Linux：使用您的包管理器安装例如 `$ sudo apt-get install git`。
+-   Windows：Download Git [from git's official website](https://git-scm.com/downloads).
+-   macOS：Use [Homebrew](https://brew.sh/) `$ brew install git` or [download from git's official website](https://git-scm.com/download/mac).
+-   UNIX: your package manager `$ sudo apt-get install git`.
 
-### 安装 Node.JS
+### Install Node.JS
 
 #### Windows
 
-Windows 用户请 [下载安装程序](https://nodejs.org/zh-cn/)。安装时，请勾选`Add to PATH`选项。
+Windows please download [from node's official website](https://nodejs.org/zh-cn/). During the installation, please check `Add to PATH` option.
 
-#### MacOS & Linux
+#### UNIX-based
 
-安装 NodeJS 的最佳方式是使用 [nvm](https://github.com/creationix/nvm)。
+The easiest way to install NodeJS is using [nvm](https://github.com/creationix/nvm).
 
-安装 `nvm`
+Install `nvm`
 
 ```bash
 $ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
 ```
 
-安装完成后，重启终端并执行下列命令即可安装 `Node.js`。
+Upon completion please restart your terminal to install `Node.js`.
 
 ```bash
 $ nvm install node
 ```
 
-### 安装 RSSHub
+### Download RSSHub
 
-首先是下载 `RSSHub` 的源码，请执行下列命令。
+Execute the following commands to download the source code
 
 ```bash
 $ git clone https://github.com/DIYgod/RSSHub.git
 $ cd RSSHub
 ```
 
-下载完成后，需要安装依赖。
+Execute the following commands to the dependencies
 
 ```bash
 $ npm install
 ```
 
-::: tip 提示
+::: tip
 
-推荐使用 [Yarn](https://yarn.bootcss.com/) ，`Yarn` 比 `npm` 更快更稳定。
+[Yarn](https://yarn.bootcss.com/) is recommended over `npm` for its performance and stability
 
-使用 `Yarn` 安装依赖时只需要键入
+Use `Yarn` simplifies the dependency installation process
 
 ```bash
 $ yarn
 ```
 
-由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)。
-
 :::
 
-### 启动
+### Launch
 
-在 `RSSHub` 文件夹中运行下面的命令就可以启动。
+Under `RSSHub`'s root directory, execute the following commands to launch
 
 ```bash
 $ npm start
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
 
-### 更新
+### Update
 
-在 `RSSHub` 文件夹中运行下面的命令就从 github 仓库拉取最新版本。
+Under `RSSHub`'s directory, execute the following commands to pull the latest source code for `RSSHub`
 
 ```bash
 $ git pull
 ```
 
-### 添加配置
+### Configuration
 
-可以通过修改 `config.js` 或者设置环境变量来配置 RSSHub。
+`RSSHub` reads its configurations from `config.js` or system environment variables.
 
-**如何设置环境变量**
+**How to set system environment variables**
 
-Windows 系统在 cmd.exe 中运行 `$ set PORT=1000`
+Under Windows, enter `$ set PORT=1000` in cmd
 
-macOS & Linux 运行 `$ PORT=1000`
+Under UNIX-based OS, enter `$ PORT=1000` in terminal
 
-再运行 `$ npm start` 启动 RSSHub 即可将监听端口设置为 `1000`。
+Enter `$ npm start` to start a `RSSHub` install with port `1000`.
 
-此处设置的环境变量在关闭终端后就会被清除，如果您想保存这些配置可以编写一个简单的 [批处理文件](https://en.wikipedia.org/wiki/Batch_file) 或 [shell](https://en.wikipedia.org/wiki/Shell_script)。
+System environment variables set here will be purged after closing cmd/terminal, if you want persist the variables, you can create a simple [batch script](https://en.wikipedia.org/wiki/Batch_file) or [shell script](https://en.wikipedia.org/wiki/Shell_script).
 
-更多配置项请看 [应用配置](#应用配置)
+To configure more options please refer to [Settings](#Settings).
 
-### 使用 Redis 数据库缓存
+### Use Redis for caching
 
-RSSHub 默认会有 5 分钟的缓存，默认这个缓存是存放在内存中的。RSSHub 还支持 Redis 数据库缓存。
+By default, `RSSHub` caches everything for 5 minutes in RAM. Redis support is built-in.
 
-::: tip 提示
+::: tip
 
-除非流量特别大或者您需要建立分布式集群，否则不需要 Redis 缓存。
+Unless you are expecting high traffic or deploying in cluster-mode, Redis is not necessary.
 
 :::
 
-#### 安装 Redis
+#### Install Redis
 
 **Windows**
 
-安装 Redis on Windows 直接[下载安装程序](https://github.com/MicrosoftArchive/redis/releases)。
+Please download Redis for Windows from [Redis' github](https://github.com/MicrosoftArchive/redis/releases).
 
-在安装目录中运行下面的命令启动 Redis。
+Under your installation directory, execute the following commands to start Redis.
 
 ```bash
 $ redis-server  redis.windows.conf
@@ -143,21 +141,21 @@ $ redis-server  redis.windows.conf
 
 **MacOS**
 
-使用 [Homebrew](https://brew.sh/) 安装 Redis。
+Use [Homebrew](https://brew.sh/) to install Redis.
 
 ```bash
 $ brew install redis
 ```
 
-再运行下面的命令启动 Redis。
+Execute the following commands to start Redis.
 
 ```bash
 $ brew services start redis
 ```
 
-**Linux**
+**UNIX-based**
 
-使用您的包管理器安装 Redis。
+Use your package manager to install Redis.
 
 ```bash
 # apt
@@ -167,119 +165,117 @@ $ sudo apt install redis-server
 $ sudo yum install redis
 ```
 
-然后运行 `$ redis-server` 启动 Redis。
+Execute `$ redis-server` to start Redis.
 
-#### 启用 Redis 数据库缓存
+#### Enable RSSHub to Redis as the caching backend
 
-修改配置项 `CACHE_TYPE` 为 `redis`，RSSHub 将使用默认地址 `redis://localhost:6379/` 连接 Redis，如果需要修改地址请看 [应用配置](#应用配置)。
+Change `CACHE_TYPE` to `redis`, RSSHub will try to connect to `redis://localhost:6379/`. For changing the target address, please refer to [Settings](#Settings).
 
-## 部署到 Docker
+## Docker Deployment
 
-Docker 属于 Linux 容器的一种封装，提供简单易用的容器使用接口。它是目前最流行的 Linux 容器解决方案。
+Docker is the most popular containerization technology, it simplifies the deployment process down to one line of code.
 
-### 安装 Docker
+### Install Docker
 
-官方网站上有各种环境下的 [安装指南](https://docs.docker.com/engine/installation/)
+Please refer to [Docker's official guide](https://docs.docker.com/engine/installation/)
 
-### 部署
+### Deployment
 
-运行下面的命令下载 RSSHub 镜像。
+Execute the following command to pull RSSHub's docker image.
 
 ```bash
 $ docker pull diygod/rsshub
 ```
 
-然后运行 RSSHub 即可
+Start a RSSHub container
 
 ```bash
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
 
-您可以使用下面的命令来关闭 RSSHub。
+Execute the following command to stop `RSSHub`.
 
 ```bash
 $ docker stop rsshub
 ```
 
-### 更新
+### Update
 
-您可以使用下面的命令来更新镜像。
+Execute the following command to pull the latest `RSSHub` docker image.
 
 ```bash
-# 先关闭 rsshub
+# stop the current rsshub container
 $ docker stop rsshub
 
-# 删除现有的容器
+# delete the existing rsshub container
 $ docker rm rsshub
 
-# 下载最新版的 rsshub 镜像
+# pull the latest rsshub image
 $ docker pull diygod/rsshub
 ```
 
-### 添加配置
+### Configuration
 
-配置运行在 docker 中的 RSSHub，最便利的方法是使用环境变量。
+The simplest way to configure RSSHub container is via system environment variables.
 
-以设置缓存时间为 1 小时举例，只需要在运行时增加参数：`-e CACHE_EXPIRE=3600`
+For example, adding `-e CACHE_EXPIRE=3600` will set the cache time to 1 hour.
 
 ```bash
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
-更多配置项请看 [应用配置](#应用配置)
+To configure more options please refer to [Settings](#Settings).
 
-### 使用 docker-compose 部署
+### Docker-compose Deployment
 
-[docker-compose](https://docs.docker.com/compose/overview/) 是用来运行多容器 Docker 应用的小工具，可以简化配置部署过程：
+[docker-compose](https://docs.docker.com/compose/overview/) simplifies multi-container deployment process：
 
-1.  创建 volume 持久化 Redis 缓存
+1.  Create a docker volume to persist Redis caches
 
 ```bash
 $ docker volume create redis-data
 ```
 
-2.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
+2.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
 
-3.  部署
+3.  Deploy
 
 ```bash
 $ docker-compose up
 ```
 
-4.  更新
+4.  Update
 
 ```bash
 $ docker-compose build
 $ docker-compose up
 ```
 
-## 部署到 Heroku
+## Heroku Deployment
 
 [![Deploy](https://i.imgur.com/e6ZcmUY.png)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
-## 部署到 Google App Engine
+## Google App Engine(GAE) Deployment
 
-### 部署之前
+### Before You Begin
 
-[Before you begin](https://cloud.google.com/appengine/docs/flexible/nodejs/quickstart)
+Follow the [official guide](https://cloud.google.com/appengine/docs/flexible/nodejs/quickstart) for completing your GCP account settings, creating a new Node project, adding billing information (required), installing git and initializing gcloud([link](https://cloud.google.com/sdk/gcloud/)). Node.js is not required if you don't plan to debug RSSHub locally.
 
-按照这里的引导完成 GCP 账号设置，创建 GCP 项目，创建 App Engine 项目，开通付费功能（必须），安装 git 与 gcloud 工具。并完成 gcloud 工具的初始化，初始化具体方式[请查看这个链接](https://cloud.google.com/sdk/gcloud/?hl=zh-CN)。如果你不打算在本地调试本项目，可以不安装 Node.js 环境。
+Please note, GAE free tier doesn't support Flexible Environment , please check the pricing plan prior to deployment.
 
-请注意，GAE 免费用量不支持 Flexible Environment ，部署至 Flexible Environment 前请确认收费标准。
+Node.js standard environment is still under beta, unknown or unexpected errors might be encountered during the deployment.
 
-Node.JS 的 standard environment 仍在测试中，您可能会在部署或使用中遇到某些不可预期的问题。
+### Pull
 
-### 拉取
+Execute `git clone https://github.com/DIYgod/RSSHub.git` to pull the latest code
 
-运行 `git clone https://github.com/DIYgod/RSSHub.git` 拉取本项目的最新版本。
+### app.yaml Settings
 
-### app.yaml 配置
+#### Deploy to Flexible Environment
 
-#### 部署至 Flexible Environment
-
-在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
+Under RSSHub's root directory, create a file `app.yaml` with the following content：
 
 ```yaml
 # [START app_yaml]
@@ -291,91 +287,91 @@ env: flex
 # for production use. For more information, see:
 # https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
 manual_scaling:
-  instances: 1
-# 以下是 app engine 资源配置，可以自行修改，硬盘最低为 10G
+    instances: 1
+# app engine resources, adjust to suit your needs, the required disk space is 10 GB
 resources:
-  cpu: 1
-  memory_gb: 0.5
-  disk_size_gb: 10
+    cpu: 1
+    memory_gb: 0.5
+    disk_size_gb: 10
 network:
-  forwarded_ports:
-    - 80:1200
-    - 443:1200
-# 以下是环境配置示例，具体可配置项见本文档配置章节
+    forwarded_ports:
+        - 80:1200
+        - 443:1200
+# environment variables section, refer to Settings
 env_variables:
-  CACHE_EXPIRE: "300"
+    CACHE_EXPIRE: '300'
 # [END app_yaml]
 ```
 
-#### 部署至 standard environment
+#### Deploy to standard environment
 
-在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
+Under RSSHub's root directory, create a file `app.yaml` with the following content：
 
 ```yaml
 # [START app_yaml]
 runtime: nodejs8
 
 network:
-  forwarded_ports:
-    - 80:1200
-    - 443:1200
-# 以下是环境配置示例，具体可配置项见本文档配置章节
+    forwarded_ports:
+        - 80:1200
+        - 443:1200
+# environment variables section, refer to Settings
 env_variables:
-  CACHE_EXPIRE: "300"
+    CACHE_EXPIRE: '300'
 # [END app_yaml]
 ```
 
-### 开始部署
+### Launch
 
-在 RSSHub 项目根目录下运行
+Under RSSHub's root directory, execute the following commands to launch RSSHub
 
 ```bash
 gcloud app deploy
 ```
 
-进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考[这个链接](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app)的"Deploying a service" 部分。
+For changing the deployment project id or version id, please refer to `Deploying a service` section [here](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app).
 
-部署完成后可访问您的 Google App Engine URL 查看部署情况。
+You can access your `Google App Engine URL` to check the deployment status
 
-## 配置
+## Setting
 
-### 应用配置
+### Application Settings
 
-可以通过修改 `config.js` 或者设置环境变量来配置 RSSHub。
+`RSSHub` reads its configurations from `config.js` or environment variables.
 
 ::: tip 提示
 
-建议通过设置环境变量来配置 RSSHub。避免版本更新时的冲突。
+Use environment variables is recommended to avoid conflicts during upgrade.
 
 :::
 
-`PORT`: 监听端口，默认为 `1200`
+`PORT`: listening port, default to `1200`
 
-`SOCKET`: 监听 Unix Socket，默认为 `null`
+`SOCKET`: listening Unix Socket, default to `null`
 
-`CACHE_TYPE`: 缓存类型，可为 `memory` 和 `redis`，设为空可以禁止缓存，默认为 `memory`
+`CACHE_TYPE`: cache type, `memory` or `redis`, empty this value will disable caching, default to `memory`
 
-`CACHE_EXPIRE`: 缓存过期时间，单位为秒，默认 300
+`CACHE_EXPIRE`: cache expiry time in seconds, default to `300`
 
-`LISTEN_INADDR_ANY`: 是否允许公网连接，默认 1
+`LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
-`REDIS_URL`: Redis 连接地址（memory 缓存类型时无效），默认为 `redis://localhost:6379/`
+`REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
 
-`REDIS_PASSWORD`: Redis 连接密码（memory 缓存类型时无效）
+`REDIS_PASSWORD`: Redis password（invalid when `CACHE_TYPE` is set to memory)
 
 ### 部分 RSS 模块配置
 
--   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
+-   `pixiv`: [registration](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv 用户名
+    -   `PIXIV_USERNAME`: Pixiv username
 
-    -   `PIXIV_PASSWORD`: Pixiv 密码
+    -   `PIXIV_PASSWORD`: Pixiv password
 
--   `disqus`: [申请地址](https://disqus.com/api/applications/)
+-   `disqus`: [API Key application](https://disqus.com/api/applications/)
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   `twitter`: [申请地址](https://apps.twitter.com)
+-   `twitter`: [application creation](https://apps.twitter.com)
 
     -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
 
@@ -385,24 +381,24 @@ gcloud app deploy
 
     -   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
 
--   `youtube`: [申请地址](https://console.developers.google.com/)
+-   `youtube`: [API Key application](https://console.developers.google.com/)
 
     -   `YOUTUBE_KEY`: YouTube API Key
 
--   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+-   `telegram`: [Bot application](https://telegram.org/blog/bot-revolution)
 
-    -   `TELEGRAM_TOKEN`: Telegram 机器人 token
+    -   `TELEGRAM_TOKEN`: Telegram bot token
 
--   `github`: [申请地址](https://github.com/settings/tokens)
+-   `github`: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
-### 访问控制
+### Access Control
 
-可以通过修改 `middleware/access-control.js` 或者设置环境变量来配置黑名单和白名单。
+Access control includes a whitelist and a blacklist, which is configured via `middleware/access-control.js` or environment variables.
 
-支持 IP 和路由，设置多项时用英文逗号 `,` 隔开。同时设置黑名单和白名单时仅白名单有效。
+Support `IP` and `Route`, use `,` as the delimiter to separate multiple values. When both are defined, values in `BLACKLIST` will be disregarded.
 
--   `BLACKLIST`: 黑名单
+-   `BLACKLIST`: the blacklist
 
--   `WHITELIST`: 白名单，设置白名单后黑名单无效
+-   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded.

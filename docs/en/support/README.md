@@ -2,24 +2,24 @@
 sidebar: auto
 ---
 
-# 支持 RSSHub
+# Support RSSHub
 
-RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着项目规模的增长，也需要有相应的资金支持才能持续项目的维护与开发。
+RSSHub is open source and completely free under the MIT license. However, just like any other open source project, as the project grows, the hosting, development and maintenance requires funding support.
 
-你可以通过下列的方法来赞助 RSSHub 的开发。
+You can support RSSHub via donations.
 
-## 一次性赞助
+## One-time Donation
 
-我们通过以下方式接受赞助：
+We accept donations via the following ways:
 
--   [微信支付](https://i.imgur.com/aq6PtWa.png)
--   [支付宝](https://i.imgur.com/wv1Pj2k.png)
+-   [WeChat Pay](https://i.imgur.com/aq6PtWa.png)
+-   [Alipay](https://i.imgur.com/wv1Pj2k.png)
 -   [Paypal](https://www.paypal.me/DIYgod)
--   比特币: 13CwQLHzPYm2tewNMSJBeArbbRM5NSmCD1
+-   Bitcoin: 13CwQLHzPYm2tewNMSJBeArbbRM5NSmCD1
 
-## 周期性赞助
+## Recurring Donation
 
-周期性赞助可以获得额外的回报，比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
+Recurring donors will be rewarded via express issue response, or even have your name displayed on our GitHub page and website.
 
--   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer 或 sponsor
--   给我们发邮件联系赞助事宜: i#html.love
+-   Become a Backer or a Sponser on [Patreon](https://www.patreon.com/DIYgod)
+-   Contact us directly: i#html.love
