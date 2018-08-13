@@ -7,6 +7,8 @@ sidebar: auto
 </p>
 <h1 align="center" class="logo">RSSHub</h1>
 
+> 🍰 Nothing is imrssible
+
 RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generate feeds from pretty much everything.
 
 ## Special Thanks
