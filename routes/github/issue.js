@@ -21,10 +21,11 @@ module.exports = async (ctx) => {
         },
     });
     const data = response.data;
+
     ctx.state.data = {
         title: `${user}/${repo} Issues`,
         link: host,
-        item: data.map((item) => ({
+        item: data.filter((item) => item.pull_request === undefined).map((item) => ({
             title: item.title,
             description: md.render(item.body) || 'No description',
             pubDate: new Date(item.created_at),
