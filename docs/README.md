@@ -130,7 +130,7 @@ type: 类型，可选参数
 
 | 桌面    | Android | Beta | Nightly | Android Beta |
 | ------- | ------- | ---- | ------- | ------------ |
-| dekstop | android | beta | nightly | android-beta |
+| desktop | android | beta | nightly | android-beta |
 
 ### 腾讯云移动直播 SDK
 
