@@ -148,7 +148,7 @@ type: 类型，可选参数
 
 参数：platform, 平台类型，必选，1 为 Android，2 为 iOS
 
-### Fir.im 更新
+### fir.im 应用
 
 举例: [https://rsshub.app/fir/update/xcz](https://rsshub.app/fir/update/xcz)
 
