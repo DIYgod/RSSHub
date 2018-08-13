@@ -397,7 +397,7 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 Access control includes a whitelist and a blacklist, which is configured via `middleware/access-control.js` or environment variables.
 
-Support `IP` and `CIDR`, use `,` as the delimiter to separate multiple values. When both are defined, values in `BLACKLIST` will be disregarded.
+Support `IP` and `Route`, use `,` as the delimiter to separate multiple values. When both are defined, values in `BLACKLIST` will be disregarded.
 
 -   `BLACKLIST`: the blacklist
 
