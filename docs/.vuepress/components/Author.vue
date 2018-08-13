@@ -1,6 +1,6 @@
 <template>
   <span class="badge">
-    By <a :href="`https://github.com/${uid}`">@{{ uid }}</a>
+    By <a :href="`https://github.com/${uid}`" target="_blank">@{{ uid }}</a>
   </span>
 </template>
 
