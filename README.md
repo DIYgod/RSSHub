@@ -13,8 +13,12 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 <details><summary>当前支持列表</summary><br>
 
--   RSSHub
-    -   支持的 RSS
+-   程序更新
+    -   RSSHub
+    -   MIUI
+    -   Firefox
+    -   腾讯云移动直播 SDK
+    -   Bugly SDK
 -   bilibili
     -   番剧
     -   UP 主投稿
@@ -133,6 +137,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   分类
 -   GitHub
     -   用户仓库
+    -   Trending
+    -   Issue
 -   Konachan.com Anime Wallpapers
     -   posts
     -   Popular Recent Posts
@@ -165,8 +171,6 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   杭州市
     -   萧山区
     -   大连市
--   MIUI
-    -   更新
 -   米哈游
     -   崩坏 2-游戏公告
     -   崩坏 3-游戏公告
@@ -184,8 +188,6 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 -   国家地理
     -   分类
 -   ONE · 一个
--   Firefox
-    -   Release note
 -   推酷
     -   周刊
 -   Hexo
@@ -220,6 +222,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   博文
 -   开源中国
     -   资讯
+-   All the Flight Deals
+    -   特价机票 Flight deals
 
 </details>
 

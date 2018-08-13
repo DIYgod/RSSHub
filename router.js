@@ -263,6 +263,7 @@ if (config.github && config.github.access_token) {
     logger.warn('GitHub Repos RSS is disabled for lacking config.');
 }
 router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
+router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
 
 // konachan
 router.get('/konachan/post', require('./routes/konachan/post'));
@@ -398,5 +399,14 @@ router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
 
 // 开源中国
 router.get('/oschina/news', require('./routes/oschina/news'));
+
+// 腾讯视频 SDK
+router.get('/qcloud/mlvb/changelog', require('./routes/qcloud/mlvb/changelog'));
+
+// Bugly SDK
+router.get('/bugly/changelog/:platform', require('./routes/bugly/changelog'));
+
+// All the Flight Deals
+router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
 
 module.exports = router;

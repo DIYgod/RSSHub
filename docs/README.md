@@ -94,15 +94,59 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
 -   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
-## RSSHub
+## 程序更新
 
-### 支持的 RSS
+### RSSHub
 
 举例: [https://rsshub.app/rsshub/rss](https://rsshub.app/rsshub/rss)
 
 路由: `/rsshub/rss`
 
 参数: 无
+
+### MIUI
+
+举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
+
+路由: `/miui/:device/:type?`
+
+参数
+
+device: 设备的 `codename` 例如 小米 2s 为 `aries`
+
+type: 类型，可选参数
+
+| 稳定版  | 开发版 |
+| ------- | ------ |
+| release | dev    |
+
+### Firefox
+
+举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
+
+路由: `/firefox/release/:platform`
+
+参数: platform
+
+| 桌面    | Android | Beta | Nightly | Android Beta |
+| ------- | ------- | ---- | ------- | ------------ |
+| dekstop | android | beta | nightly | android-beta |
+
+### 腾讯云移动直播 SDK
+
+举例: [https://rsshub.app/qcloud/mlvb/changelog](https://rsshub.app/qcloud/mlvb/changelog)
+
+路由: `/qcloud/mlvb/changelog`
+
+参数：无
+
+### Bugly SDK
+
+举例: [https://rsshub.app/bugly/changelog/1](https://rsshub.app/bugly/changelog/1)
+
+路由: `/bugly/changelog/:platform`
+
+参数：platform, 平台类型，必选，1 为 Android，2 为 iOS
 
 ## bilibili
 
@@ -1165,6 +1209,15 @@ since，时间跨度，可在 [Trending 页](https://github.com/trending/javascr
 
 language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
 
+### Issue
+
+举例: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
+
+路由: `/github/issue/:user/:repo`
+
+参数: user，用户名
+参数: repo，仓库名
+
 ## 纽约时报
 
 ::: tip 提示
@@ -1383,28 +1436,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数: 无
 
-## MIUI
-
-### 更新
-
-举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
-
-路由: `/miui/:device/:type?`
-
-参数
-
-**device**
-
-你的设备的 `codename` 例如 小米 2s 为 `aries`
-
-**type**
-
-可选参数
-
-| 稳定版  | 开发版 |
-| ------- | ------ |
-| release | dev    |
-
 ## 米哈游
 
 ### 崩坏 2-游戏公告
@@ -1534,20 +1565,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 路由: `/one`
 
 参数: 无
-
-## Firefox
-
-### Release note
-
-举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
-
-路由: `/firefox/release/:platform`
-
-参数: platform
-
-| 桌面    | Android | Beta | Nightly | Android Beta |
-| ------- | ------- | ---- | ------- | ------------ |
-| dekstop | android | beta | nightly | android-beta |
 
 ## 推酷
 
@@ -1764,3 +1781,22 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 路由: `/oschina/news`
 
 参数：无
+
+## All the Flight Deals
+
+### 特价机票 Flight Deals
+
+举例: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new york,gb+london/1)
+
+路由: `/atfd/:locations/:nearby?`
+
+参数:
+
+locations:
+
+    1. 始发地 ISO 3166-1 国家代码+城市名称，例如 `us+new york`，https://rsshub.app/atfd/us+new york
+    2. 支持逗号区分多个始发地，例如 `us+new york,gb+london`，https://rsshub.app/atfd/us+new york,gb+london/
+
+    ISO 3166-1 国家代码列表请参见 https://en.wikipedia.org/wiki/ISO_3166-1
+
+nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场
