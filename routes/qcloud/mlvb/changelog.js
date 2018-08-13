@@ -16,7 +16,7 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(data);
 
     const resultItem = [];
-    $('#docArticleContent h3').each(function() {
+    $('.J-mainDetail #docArticleContent h3').each(function() {
         const item = {};
         item.title = $(this).text();
         item.description = $(this)
