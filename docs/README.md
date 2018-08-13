@@ -148,6 +148,14 @@ type: 类型，可选参数
 
 参数：platform, 平台类型，必选，1 为 Android，2 为 iOS
 
+### Fir.im 更新
+
+举例: [https://rsshub.app/fir/update/xcz](https://rsshub.app/fir/update/xcz)
+
+路由: `/fir/update/:id`
+
+参数：id, fir app id，必选，如 fir 生成的链接地址为 https://fir.im/xcz，则 id 为 xcz
+
 ## bilibili
 
 ### 番剧
