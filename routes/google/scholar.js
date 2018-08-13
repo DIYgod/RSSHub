@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
         params = 'q=' + params;
     }
 
-    const url = `https://scholar.google.co.uk/scholar?${params}`;
+    const url = `https://scholar.google.com/scholar?${params}`;
 
     const response = await axios({
         method: 'get',
