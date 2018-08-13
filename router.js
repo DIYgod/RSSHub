@@ -412,4 +412,7 @@ router.get('/bugly/changelog/:platform', require('./routes/bugly/changelog'));
 // All the Flight Deals
 router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
 
+// Fir
+router.get('/fir/update/:id', require('./routes/fir/update'));
+
 module.exports = router;
