@@ -30,7 +30,7 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 -   [Liuyang](https://github.com/lingllting)
 
--   [Zuyang](https://zuyang.farbox.com)
+-   Zuyang
 
 -   [Sayori Studio](https://t.me/SayoriStudio)
 
