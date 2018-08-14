@@ -2,7 +2,7 @@
     "version": "https://jsonfeed.org/version/1",
     "title": "{{ title || 'RSSHub' }}",
     "home_page_url": "{{ link || 'https://github.com/DIYgod/RSSHub' }}",
-    "description": "{{ description || title }} - 使用 RSSHub(https://github.com/DIYgod/RSSHub) 构建",
+    "description": "{{ description || title }} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)",
     "author": {
         "name": "{{@ author || 'RSSHub' }}"
     },
