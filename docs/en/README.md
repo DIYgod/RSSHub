@@ -66,7 +66,7 @@ Set `filter` to include the content
 
 -   filter_description: filter description only
 
-For example: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
+For example: [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
 
 Set `filterout` to exclude unwanted content
 
@@ -76,13 +76,13 @@ Set `filterout` to exclude unwanted content
 
 -   filterout_description: filter description only
 
-For example: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
+For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
 ### Limit Entries
 
 Set `limit` to limit the number of articles in the feed,
 
-Eg: bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
+Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https://rsshub.app/dribbble/popular?limit=10)
 
 ### Output Formats
 
@@ -90,11 +90,11 @@ RSSHub supports RSS 2.0、Atom and [JSON Feed](https://jsonfeed.org/) as the out
 
 For exmaple:
 
--   Default (RSS 2.0) - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
--   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
--   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
--   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
--   Apply filters or URL query [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
+-   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
+-   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
+-   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
+-   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
+-   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
 ## Application Updates
 
@@ -363,8 +363,8 @@ Parameters:
 
 locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
 
-1.  Origin's ISO 3166-1 country code + city name, eg. `us+new york`, https://rsshub.app/atfd/us+new%20york
-2.  Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, https://rsshub.app/atfd/us+new%20york,gb+london/
+1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, https://rsshub.app/atfd/us+new%20york
+2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, https://rsshub.app/atfd/us+new%20york,gb+london/
 
 For ISO 3166-1 country codes please refer to https://en.wikipedia.org/wiki/ISO_3166-1
 
