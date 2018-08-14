@@ -38,7 +38,7 @@ usage: git [--version] [--help] [-C <path>] [-c name=value]
 
 #### Windows
 
-Windows please download [from node's official website](https://nodejs.org/zh-cn/). During the installation, please check `Add to PATH` option.
+Windows users please download [from node's official website](https://nodejs.org/zh-cn/). During the installation, please check `Add to PATH` option.
 
 #### UNIX-based
 

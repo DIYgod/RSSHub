@@ -7,6 +7,8 @@ sidebar: auto
 </p>
 <h1 align="center" class="logo">RSSHub</h1>
 
+> 🍰 万物皆可 RSS
+
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
 ## 鸣谢
@@ -1233,7 +1235,7 @@ since，时间跨度，可在 [Trending 页](https://github.com/trending/javascr
 
 language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
 
-### Issue <Author uid="HenryQWi"/>
+### Issue <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
 
@@ -1812,17 +1814,30 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 
 ### 特价机票 Flight Deals <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new york,gb+london/1)
+举例: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
 路由: `/atfd/:locations/:nearby?`
 
 参数:
 
-locations:
+locations: 始发地，由「国家，参见 ISO 3166-1 国家代码」和「城市」两部分组成：
 
-    1. 始发地 ISO 3166-1 国家代码+城市名称，例如 `us+new york`，https://rsshub.app/atfd/us+new york
-    2. 支持逗号区分多个始发地，例如 `us+new york,gb+london`，https://rsshub.app/atfd/us+new york,gb+london/
+1. 单个始发地，例如 「us+new york」，[https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
+2. 逗号分隔多个始发地，例如 「us+new york,gb+london」，[https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
-    ISO 3166-1 国家代码列表请参见 https://en.wikipedia.org/wiki/ISO_3166-1
+ISO 3166-1 国家代码列表请参见 [https://en.wikipedia.org/wiki/ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
 nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场
+
+## Google
+
+### 谷歌学术关键词更新 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/google/scholar/data+visualizaton」](https://rsshub.app/google/scholar/data+visualizaton)
+
+路由: `/google/scholar/:query`
+
+参数：query: 查询语句，支持「简单」和「高级」两种模式：
+
+1. 简单模式，例如「data visualizaton」，[https://rsshub.app/google/scholar/data+visualizaton](https://rsshub.app/google/scholar/data+visualizaton)。
+2. 高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5)，点击左上角，选择高级搜索并提交查询。此时 URL 应为：[https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)，复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为[https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)。

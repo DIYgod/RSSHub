@@ -415,4 +415,7 @@ router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
 // Fir
 router.get('/fir/update/:id', require('./routes/fir/update'));
 
+// Google
+router.get('/google/scholar/:query', require('./routes/google/scholar'));
+
 module.exports = router;
