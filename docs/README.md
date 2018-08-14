@@ -1826,3 +1826,16 @@ locations: 始发地，由「国家，参见 ISO 3166-1 国家代码」和「城
 ISO 3166-1 国家代码列表请参见 [https://en.wikipedia.org/wiki/ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
 nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场
+
+## Google
+
+### 谷歌学术关键词更新 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/google/scholar/data+visualizaton」](https://rsshub.app/google/scholar/data+visualizaton)
+
+路由: `/google/scholar/:query`
+
+参数：query: 查询语句，支持「简单」和「高级」两种模式：
+
+1. 简单模式，例如「data visualizaton」，[https://rsshub.app/google/scholar/data+visualizaton](https://rsshub.app/google/scholar/data+visualizaton)。
+2. 高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5)，点击左上角，选择高级搜索并提交查询。此时 URL 应为：[https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)，复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为[https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)。
