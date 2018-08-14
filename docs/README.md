@@ -1833,6 +1833,10 @@ nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场
 
 ### 谷歌学术关键词更新 <Author uid="HenryQW"/>
 
+::: warning 注意
+
+谷歌学术反爬虫机制非常严格，以下 demo 无法确保可用性。私人部署可能会提高稳定性。
+
 举例: [https://rsshub.app/google/scholar/data+visualizaton」](https://rsshub.app/google/scholar/data+visualizaton)
 
 路由: `/google/scholar/:query`

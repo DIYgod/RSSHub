@@ -10,7 +10,7 @@ module.exports = {
         '/en/': {
             lang: 'en-US',
             title: 'RSSHub',
-            description: '🍰 万物皆可 RSS',
+            description: '🍰 Everthing can be RSS',
         },
     },
     themeConfig: {
@@ -63,7 +63,7 @@ module.exports = {
                 },
                 nav: [
                     {
-                        text: 'Use',
+                        text: 'Usage',
                         link: '/en/',
                     },
                     {

@@ -66,7 +66,7 @@ Set `filter` to include the content
 
 -   filter_description: filter description only
 
-For example: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
+For example: [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
 
 Set `filterout` to exclude unwanted content
 
@@ -76,13 +76,13 @@ Set `filterout` to exclude unwanted content
 
 -   filterout_description: filter description only
 
-For example: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
+For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
 ### Limit Entries
 
 Set `limit` to limit the number of articles in the feed,
 
-举例: bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
+Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https://rsshub.app/dribbble/popular?limit=10)
 
 ### Output Formats
 
@@ -90,11 +90,11 @@ RSSHub supports RSS 2.0、Atom and [JSON Feed](https://jsonfeed.org/) as the out
 
 For exmaple:
 
--   Default (RSS 2.0) - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
--   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
--   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
--   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
--   Apply filters or URL query [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
+-   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
+-   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
+-   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
+-   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
+-   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
 ## Application Updates
 
@@ -106,13 +106,13 @@ Route: `/rsshub/rss`
 
 Parameters: N/A
 
-### MIUI
+### MIUI <Author uid="Indexyz"/>
 
 Eg: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
 
 Route: `/miui/:device/:type?`
 
-Parameters
+Parameters:
 
 device: the device `codename` eg. `aries` for Mi 2S
 
@@ -122,7 +122,7 @@ type: type, optional
 | ------- | ----------- |
 | release | dev         |
 
-### Firefox
+### Firefox New Release <Author uid="fengkx"/>
 
 Eg: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
 
@@ -136,7 +136,7 @@ Parameters: platform
 
 ## pixiv
 
-### User Bookmark
+### User Bookmark <Author uid="EYHN"/>
 
 Eg: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
 
@@ -144,7 +144,7 @@ Route: `/pixiv/user/bookmarks/:id`
 
 Parameters: id, user id, available in user's homepage URL
 
-### User Activity
+### User Activity <Author uid="EYHN"/>
 
 Eg: [https://rsshub.app/pixiv/user/11](https://rsshub.app/pixiv/user/11)
 
@@ -152,7 +152,7 @@ Route: `/pixiv/user/:id`
 
 Parameters: id, user id, available in user's homepage URL
 
-### Rankings
+### Rankings <Author uid="EYHN"/>
 
 Eg: [https://rsshub.app/pixiv/ranking/week](https://rsshub.app/pixiv/ranking/week)
 
@@ -278,7 +278,7 @@ GitHub provides some official RSS feeds:
 
 :::
 
-### User Repo
+### User Repo <Author uid="dragon-yuan"/>
 
 Eg: [https://rsshub.app/github/repos/DIYgod](https://rsshub.app/github/repos/DIYgod)
 
@@ -302,7 +302,7 @@ since, time frame, available in [Trending page](https://github.com/trending/java
 
 language, the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL
 
-### Issue
+### Issue <Author uid="HenryQW"/>
 
 Eg: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
 
@@ -319,7 +319,7 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 :::
 
-### Lookup Torrents by IMDB ID
+### Torrent Lookup by IMDB ID <Author uid="Songkeys"/>
 
 Eg: [https://rsshub.app/eztv/torrents/6048596](https://rsshub.app/eztv/torrent/6048596)
 
@@ -329,9 +329,9 @@ Parameters: imdb_id, search for the IMDB ID of the desired show, available at [I
 
 ## Hexo Blog
 
-### Blog using Next theme
+### Blog using Next theme <Author uid="fengkx"/>
 
-举例: [http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
+Eg: [http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
 
 路由: `/hexo/next/:url`
 
@@ -339,7 +339,7 @@ Parameters: url, the blog URL without the protocol (http:// and https://)
 
 ## Greasy Fork
 
-### Script Update
+### Script Update <Author uid="imlonghao"/>
 
 Eg: [https://rsshub.app/greasyfork/en/google.com](https://rsshub.app/greasyfork/en/google.com)
 
@@ -353,7 +353,7 @@ domain, the script's target domain, optional
 
 ## All the Flight Deals
 
-### Flight Deals
+### Flight Deals <Author uid="HenryQW"/>
 
 Eg: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
@@ -374,11 +374,15 @@ nearby: whether includes nearby airports, optional value of 0 or 1, default to 0
 
 ### Google Scholar Keywords Monitoring <Author uid="HenryQW"/>
 
-Eg: [https://rsshub.app/google/scholar/data+visualizaton」](https://rsshub.app/google/scholar/data+visualizaton)
+::: warning
+
+Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
+
+Eg: [https://rsshub.app/google/scholar/data+visualization」](https://rsshub.app/google/scholar/data+visualization)
 
 Route: `/google/scholar/:query`
 
 Parameters: query, query statement which supports「Basic」and「Advanced」modes:
 
-1. Basic mode, sample query is the keywords desired, eg.「data visualizaton」, [https://rsshub.app/google/scholar/data+visualizaton](https://rsshub.app/google/scholar/data+visualizaton).
-2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete route for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
+2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete route for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
