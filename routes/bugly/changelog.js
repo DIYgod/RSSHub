@@ -39,6 +39,7 @@ module.exports = async (ctx) => {
         });
         item.description = itemDesc;
         item.guid = changelog.version + changelog.createTime;
+        item.link = webUrl;
         return item;
     });
 
