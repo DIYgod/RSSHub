@@ -82,7 +82,7 @@ For example: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|
 
 Set `limit` to limit the number of articles in the feed,
 
-举例: bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
+Eg: bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
 
 ### Output Formats
 
@@ -106,13 +106,13 @@ Route: `/rsshub/rss`
 
 Parameters: N/A
 
-### MIUI
+### MIUI <Author uid="Indexyz"/>
 
 Eg: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
 
 Route: `/miui/:device/:type?`
 
-Parameters
+Parameters:
 
 device: the device `codename` eg. `aries` for Mi 2S
 
@@ -122,7 +122,7 @@ type: type, optional
 | ------- | ----------- |
 | release | dev         |
 
-### Firefox
+### Firefox New Release <Author uid="fengkx"/>
 
 Eg: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
 
@@ -136,7 +136,7 @@ Parameters: platform
 
 ## pixiv
 
-### User Bookmark
+### User Bookmark <Author uid="EYHN"/>
 
 Eg: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
 
@@ -144,7 +144,7 @@ Route: `/pixiv/user/bookmarks/:id`
 
 Parameters: id, user id, available in user's homepage URL
 
-### User Activity
+### User Activity <Author uid="EYHN"/>
 
 Eg: [https://rsshub.app/pixiv/user/11](https://rsshub.app/pixiv/user/11)
 
@@ -152,7 +152,7 @@ Route: `/pixiv/user/:id`
 
 Parameters: id, user id, available in user's homepage URL
 
-### Rankings
+### Rankings <Author uid="EYHN"/>
 
 Eg: [https://rsshub.app/pixiv/ranking/week](https://rsshub.app/pixiv/ranking/week)
 
@@ -278,7 +278,7 @@ GitHub provides some official RSS feeds:
 
 :::
 
-### User Repo
+### User Repo <Author uid="dragon-yuan"/>
 
 Eg: [https://rsshub.app/github/repos/DIYgod](https://rsshub.app/github/repos/DIYgod)
 
@@ -302,7 +302,7 @@ since, time frame, available in [Trending page](https://github.com/trending/java
 
 language, the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL
 
-### Issue
+### Issue <Author uid="HenryQW"/>
 
 Eg: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
 
@@ -319,7 +319,7 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 :::
 
-### Lookup Torrents by IMDB ID
+### Torrent Lookup by IMDB ID <Author uid="Songkeys"/>
 
 Eg: [https://rsshub.app/eztv/torrents/6048596](https://rsshub.app/eztv/torrent/6048596)
 
@@ -329,9 +329,9 @@ Parameters: imdb_id, search for the IMDB ID of the desired show, available at [I
 
 ## Hexo Blog
 
-### Blog using Next theme
+### Blog using Next theme <Author uid="fengkx"/>
 
-举例: [http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
+Eg: [http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
 
 路由: `/hexo/next/:url`
 
@@ -339,7 +339,7 @@ Parameters: url, the blog URL without the protocol (http:// and https://)
 
 ## Greasy Fork
 
-### Script Update
+### Script Update <Author uid="imlonghao"/>
 
 Eg: [https://rsshub.app/greasyfork/en/google.com](https://rsshub.app/greasyfork/en/google.com)
 
@@ -353,7 +353,7 @@ domain, the script's target domain, optional
 
 ## All the Flight Deals
 
-### Flight Deals
+### Flight Deals <Author uid="HenryQW"/>
 
 Eg: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
@@ -363,8 +363,8 @@ Parameters:
 
 locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
 
-1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, https://rsshub.app/atfd/us+new%20york
-2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, https://rsshub.app/atfd/us+new%20york,gb+london/
+1.  Origin's ISO 3166-1 country code + city name, eg. `us+new york`, https://rsshub.app/atfd/us+new%20york
+2.  Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, https://rsshub.app/atfd/us+new%20york,gb+london/
 
 For ISO 3166-1 country codes please refer to https://en.wikipedia.org/wiki/ISO_3166-1
 
