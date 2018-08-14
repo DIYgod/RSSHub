@@ -1233,7 +1233,7 @@ since，时间跨度，可在 [Trending 页](https://github.com/trending/javascr
 
 language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
 
-### Issue <Author uid="HenryQWi"/>
+### Issue <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
 
