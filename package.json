@@ -27,14 +27,14 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "eslint": "5.2.0",
+    "eslint": "5.3.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.6.2",
-    "lint-staged": "^7.2.0",
-    "prettier": "^1.13.7",
+    "lint-staged": "^7.2.2",
+    "prettier": "^1.14.2",
     "prettier-check": "^2.0.0",
-    "vuepress": "0.13.0",
-    "yorkie": "^1.0.3"
+    "vuepress": "0.14.1",
+    "yorkie": "^2.0.0"
   },
   "dependencies": {
     "art-template": "4.12.2",

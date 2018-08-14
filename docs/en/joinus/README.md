@@ -4,7 +4,7 @@ sidebar: auto
 
 # Join Us
 
-We welcome all pull requests. Suggestions or feedbacks are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
+We welcome all pull requests. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
 
 ## Submit new RSS source
 
