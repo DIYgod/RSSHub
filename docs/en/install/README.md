@@ -47,7 +47,7 @@ The easiest way to install NodeJS is using [nvm](https://github.com/creationix/n
 Install `nvm`
 
 ```bash
-$ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+$ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
 ```
 
 Upon completion please restart your terminal to install `Node.js`.

@@ -347,7 +347,7 @@ Route: `/greasyfork/:language/:domain?`
 
 Parameters:
 
-language, language, located on the top right corner of greasyfork's search page, set to `all` for including all languages
+language, language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages
 
 domain, the script's target domain, optional
 
@@ -363,10 +363,10 @@ Parameters:
 
 locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
 
-1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, https://rsshub.app/atfd/us+new%20york
-2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, https://rsshub.app/atfd/us+new%20york,gb+london/
+1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
+2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
-For ISO 3166-1 country codes please refer to https://en.wikipedia.org/wiki/ISO_3166-1
+For ISO 3166-1 country codes please refer to [wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
 nearby: whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)
 
@@ -378,11 +378,14 @@ nearby: whether includes nearby airports, optional value of 0 or 1, default to 0
 
 Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
 
-Eg: [https://rsshub.app/google/scholar/data+visualization」](https://rsshub.app/google/scholar/data+visualization)
+:::
+
+Eg: [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization)
 
 Route: `/google/scholar/:query`
 
 Parameters: query, query statement which supports「Basic」and「Advanced」modes:
 
 1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
-2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete route for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+
+2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
