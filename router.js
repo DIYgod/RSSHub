@@ -414,4 +414,7 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
+// Hopper
+router.get('/hopper/:from/:to?', require('./routes/hopper/index'));
+
 module.exports = router;
