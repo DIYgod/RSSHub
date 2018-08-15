@@ -414,4 +414,7 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
+// Awesome Pigtals
+router.get('/pigtails', require('./routes/pigtails'));
+
 module.exports = router;
