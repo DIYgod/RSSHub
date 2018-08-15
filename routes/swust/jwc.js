@@ -3,11 +3,23 @@ const cheerio = require('cheerio');
 const config = require('../../config');
 
 module.exports = async (ctx) => {
-    const notices = 'http://www.dean.swust.edu.cn/xml/notices/index.xml';
     const host = 'http://www.dean.swust.edu.cn';
+    let type = ctx.params.type;
+
+    let info = '通知公告';
+    let word = 'notices/';
+
+    if (type === '2') {
+        info = '站点新闻';
+        word = 'news/';
+    } else {
+        type = '1';
+    }
+
+    const web = 'http://www.dean.swust.edu.cn/xml/' + word + 'index.xml';
     const response = await axios({
         method: 'get',
-        url: notices,
+        url: web,
         headers: {
             'User-Agent': config.ua,
             Referer: host,
@@ -22,10 +34,8 @@ module.exports = async (ctx) => {
     const list = $('entrity');
 
     ctx.state.data = {
-        title: $('title')
-            .first()
-            .text(),
-        link: notices,
+        title: '西南科技大学 教务处 ' + info,
+        link: web,
         description: $('title')
             .first()
             .text(),
@@ -37,8 +47,17 @@ module.exports = async (ctx) => {
                     return {
                         title: item.find('title').text(),
                         description: item.find('summary').text(),
-                        pubDate: item.find('date').text(),
-                        link: host + '/xml/notices/' + item.attr('id') + '.xml',
+                        pubDate: new Date(
+                            Date.parse(
+                                item
+                                    .find('date')
+                                    .text()
+                                    .replace('年', '-')
+                                    .replace('月', '-')
+                                    .replace('日', '')
+                            )
+                        ),
+                        link: host + '/xml/' + word + item.attr('id') + '.xml',
                     };
                 })
                 .get(),

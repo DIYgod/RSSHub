@@ -1426,21 +1426,21 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ## 西南科技大学
 
-### 教务处 - 通知公告 <Author uid="lengthmin"/>
+### 教务处通知 <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/swust/notices](https://rsshub.app/swust/notices)
+举例: [https://rsshub.app/swust/jwc/1](https://rsshub.app/swust/jwc/1)
 
-路由: `swust/notices`
+路由: `/swust/jwc/:type`
 
-参数: 无
+参数: type, 1 为通知公告, 2 为站点新闻
 
-### 教务处 - 站点新闻 <Author uid="lengthmin"/>
+### 计科学院通知 <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/swust/news](https://rsshub.app/swust/news)
+举例: [https://rsshub.app/swust/cs/1](https://rsshub.app/swust/cs/1)
 
-路由: `swust/news`
+路由: `swust/cs/:type`
 
-参数: 无
+参数: type, 1 为新闻动态, 2 为学术动态, 3 为通知公告, 4 为教研动态
 
 ## 新京报
 

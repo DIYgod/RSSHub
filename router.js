@@ -311,8 +311,8 @@ router.get('/shmtu/notes', require('./routes/shmtu/notes'));
 router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
 
 // SWUST
-router.get('/swust/news', require('./routes/swust/news'));
-router.get('/swust/notices', require('./routes/swust/notices'));
+router.get('/swust/jwc/:type', require('./routes/swust/jwc'));
+router.get('/swust/cs/:type', require('./routes/swust/cs'));
 
 // 新京报
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
