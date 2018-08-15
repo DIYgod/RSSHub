@@ -308,8 +308,11 @@ Eg: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/is
 
 Route: `/github/issue/:user/:repo`
 
-Parameters: user, username
-Parameters: repo, repo name
+Parameters:
+
+user, username
+
+repo, repo name
 
 ## EZTV
 
