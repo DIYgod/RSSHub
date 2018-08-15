@@ -1205,9 +1205,9 @@ key: 产品密钥
 
 GitHub 官方也提供了一些 RSS:
 
--   仓库 releases: https://github.com/:owner/:repo/releases.atom
--   仓库 commits: https://github.com/:owner/:repo/commits.atom
--   用户动态: https://github.com/:user.atom
+-   仓库 releases: [https://github.com/:owner/:repo/releases.atom](https://github.com/:owner/:repo/releases.atom)
+-   仓库 commits: [https://github.com/:owner/:repo/commits.atom](https://github.com/:owner/:repo/commits.atom)
+-   用户动态: [https://github.com/:user.atom](https://github.com/:user.atom)
 
 :::
 
