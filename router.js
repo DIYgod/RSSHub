@@ -105,6 +105,7 @@ router.get('/bilibili/mall/new', require('./routes/bilibili/mallNew'));
 router.get('/bilibili/mall/ip/:id', require('./routes/bilibili/mallIP'));
 router.get('/bilibili/ranking/:rid?/:day?', require('./routes/bilibili/ranking'));
 router.get('/bilibili/channel/:uid/:cid', require('./routes/bilibili/userChannel'));
+router.get('/bilibili/topic/:topic', require('./routes/bilibili/topic'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
@@ -310,6 +311,10 @@ router.get('/shmtu/events', require('./routes/shmtu/events'));
 router.get('/shmtu/notes', require('./routes/shmtu/notes'));
 router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
 
+// SWUST
+router.get('/swust/jwc/:type', require('./routes/swust/jwc'));
+router.get('/swust/cs/:type', require('./routes/swust/cs'));
+
 // 新京报
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
 
@@ -413,5 +418,17 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
+
+// Awesome Pigtals
+router.get('/pigtails', require('./routes/pigtails'));
+
+// 每日环球展览 iMuseum
+router.get('/imuseum/:city/:type', require('./routes/imuseum'));
+
+// AppStore
+router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
+
+// Hopper
+router.get('/hopper/:from/:to?', require('./routes/hopper/index'));
 
 module.exports = router;
