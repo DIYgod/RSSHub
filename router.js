@@ -419,6 +419,9 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
+// 每日环球展览 iMuseum
+router.get('/imuseum/:city/:type', require('./routes/imuseum'));
+
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 
