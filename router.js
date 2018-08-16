@@ -310,6 +310,10 @@ router.get('/shmtu/events', require('./routes/shmtu/events'));
 router.get('/shmtu/notes', require('./routes/shmtu/notes'));
 router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
 
+// SWUST
+router.get('/swust/jwc/:type', require('./routes/swust/jwc'));
+router.get('/swust/cs/:type', require('./routes/swust/cs'));
+
 // 新京报
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
 
@@ -416,5 +420,8 @@ router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
+
+// Hopper
+router.get('/hopper/:from/:to?', require('./routes/hopper/index'));
 
 module.exports = router;
