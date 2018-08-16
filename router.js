@@ -414,4 +414,7 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
+// 每日环球展览 iMuseum
+router.get('/imuseum/:city/:type', require('./routes/imuseum'));
+
 module.exports = router;
