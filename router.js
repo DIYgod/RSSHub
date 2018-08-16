@@ -419,6 +419,9 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
+// Awesome Pigtals
+router.get('/pigtails', require('./routes/pigtails'));
+
 // 每日环球展览 iMuseum
 router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 
