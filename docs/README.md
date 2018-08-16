@@ -430,6 +430,14 @@ rid: 排行榜分区 id，默认 0
 | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
 
+### 话题(频道/标签)
+
+举例: [https://rsshub.app/bilibili/topic/2233](https://rsshub.app/bilibili/topic/2233)
+
+路由: `/bilibili/topic/:topic`
+
+参数: topic 话题名(又称频道名或标签) 例如 2233 或 COSPLAY
+
 ## bangumi
 
 ### 放送列表 <Author uid="hufan-akari"/>
