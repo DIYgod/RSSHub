@@ -421,6 +421,6 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 
 // Hopper
-router.get('/hopper/:from/:to?', require('./routes/hopper/index'));
+router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
 
 module.exports = router;

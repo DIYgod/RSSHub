@@ -429,11 +429,15 @@ Parameters:
 
 ### Hopper Flight Deals <Author uid="HenryQW"/>
 
-Eg: London Heathrow Airport &#9992; Beijing Capital International Airport [https://rsshub.app/hopper/LHR/PEK](https://rsshub.app/hopper/LHR/PEK)
+This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 
-Route: `/hopper/:from/:to?`
+Eg: London Heathrow Airport &#9992; Beijing Capital International Airport [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
+
+Route: `/hopper/:lowestOnly/:from/:to?`
 
 Parameters:
+
+-   lowestOnly, set to `1` will return the cheapest deal only, instead of all deals, so you don't get spammed
 
 -   from, origin airport IATA code
 
