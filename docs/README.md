@@ -158,6 +158,18 @@ type: 类型，可选参数
 
 参数：id, fir app id，必选，如 fir 生成的链接地址为 https://fir.im/xcz，则 id 为 xcz
 
+### App Store/Mac App Store 应用更新 <Author uid="cielpy"/>
+
+举例: [https://rsshub.app/appstore/update/cn/id444934666](https://rsshub.app/appstore/update/cn/id444934666)
+
+路由: `/appstore/update/:country/:id`
+
+参数：
+
+country, App Store 国家，必选，如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8，则 country 为 cn
+
+id, App Store app id，必选，如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8，则 id 为 id444934666
+
 ## bilibili
 
 ### 番剧

@@ -418,6 +418,9 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
+// AppStore
+router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
+
 // Hopper
 router.get('/hopper/:from/:to?', require('./routes/hopper/index'));
 

@@ -21,6 +21,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   腾讯云移动直播 SDK
     -   Bugly SDK
     -   fir.im 应用
+    -   App Store/Mac App Store
 -   bilibili
     -   番剧
     -   UP 主投稿
