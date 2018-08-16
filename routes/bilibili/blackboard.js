@@ -4,7 +4,7 @@ const config = require('../../config');
 module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
-        url: 'https://www.bilibili.com/activity/page/list?plat=1,2,3',
+        url: 'https://www.bilibili.com/activity/page/list?plat=1,2,3&mold=1&http=3&page=1&tid=0',
         headers: {
             'User-Agent': config.ua,
             Referer: 'https://www.bilibili.com/blackboard/topic_list.html',
