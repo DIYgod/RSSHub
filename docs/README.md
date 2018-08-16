@@ -1488,28 +1488,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | ------ | ------ | ---- | -------- | -------- |
 | latest | notice | news | activity | strategy |
 
-## 灵梦御所
-
-### 分类 <Author uid="deepred5"/>
-
-举例: [https://rsshub.app/reimu/category/music](https://rsshub.app/reimu/category/music)
-
-路由: `/reimu/category/:category`
-
-参数：category，分类名
-
-| 3d  | 动画  | 合集       | 图包    | 壁纸      | 御所汉化 | 游戏 | 漫画  | 独立  | 表番推荐  | 音声  |
-| --- | ----- | ---------- | ------- | --------- | -------- | ---- | ----- | ----- | --------- | ----- |
-| 3d  | anime | collection | picture | wallpaper | chinese  | game | comic | indie | recommend | music |
-
-### 标签 <Author uid="deepred5"/>
-
-举例: [https://rsshub.app/reimu/tag/ntr](https://rsshub.app/reimu/tag/ntr)
-
-路由: `/reimu/tag/:tag`
-
-参数：tag，标签名，例如: **ntr**, **rbq**, **凌辱**
-
 ## 草榴社区
 
 ### 分区帖子 <Author uid="zhboner"/>
@@ -1812,7 +1790,7 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 
 ## All the Flight Deals
 
-### 特价机票 Flight Deals <Author uid="HenryQW"/>
+### 特价机票 <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/atfd/us+new york,gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
@@ -1825,7 +1803,7 @@ locations: 始发地，由「国家，参见 ISO 3166-1 国家代码」和「城
 1. 单个始发地，例如 「us+new york」，[https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
 2. 逗号分隔多个始发地，例如 「us+new york,gb+london」，[https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
-ISO 3166-1 国家代码列表请参见 [https://en.wikipedia.org/wiki/ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
+ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
 
 nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场
 
@@ -1833,11 +1811,17 @@ nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场
 
 ### 谷歌学术关键词更新 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/google/scholar/data+visualizaton」](https://rsshub.app/google/scholar/data+visualizaton)
+::: warning 注意
+
+谷歌学术反爬虫机制非常严格，以下 demo 无法确保可用性。私人部署可能会提高稳定性。
+
+:::
+
+举例: [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization)
 
 路由: `/google/scholar/:query`
 
 参数：query: 查询语句，支持「简单」和「高级」两种模式：
 
-1. 简单模式，例如「data visualizaton」，[https://rsshub.app/google/scholar/data+visualizaton](https://rsshub.app/google/scholar/data+visualizaton)。
-2. 高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5)，点击左上角，选择高级搜索并提交查询。此时 URL 应为：[https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)，复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为[https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualizaton&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)。
+1. 简单模式，例如「data visualization」，[https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization)。
+2. 高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5)，点击左上角，选择高级搜索并提交查询。此时 URL 应为：[https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)，复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为[https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)。

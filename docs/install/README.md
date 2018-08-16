@@ -47,7 +47,7 @@ Windows 用户请 [下载安装程序](https://nodejs.org/zh-cn/)。安装时，
 安装 `nvm`
 
 ```bash
-$ curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+$ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
 ```
 
 安装完成后，重启终端并执行下列命令即可安装 `Node.js`。
