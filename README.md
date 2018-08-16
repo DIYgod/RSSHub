@@ -21,6 +21,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   腾讯云移动直播 SDK
     -   Bugly SDK
     -   fir.im 应用
+    -   App Store/Mac App Store
 -   bilibili
     -   番剧
     -   UP 主投稿
@@ -41,6 +42,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   会员购新品上架
     -   会员购作品
     -   排行榜
+    -   话题(频道/标签)
 -   微博
     -   博主
     -   关键词
@@ -144,10 +146,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   Trending
     -   Issue
 -   Konachan.com Anime Wallpapers
-    -   posts
     -   Popular Recent Posts
 -   yande.re
-    -   posts
     -   Popular Recent Posts
 -   纽约时报
     -   新闻早报
@@ -230,6 +230,10 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   特价机票 Flight deals
 -   Google
     -   谷歌学术关键词更新
+-   Awesome Pigtails
+    -   最新图片
+-   iMuseum
+    -   展览信息
 
 </details>
 

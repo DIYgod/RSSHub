@@ -158,6 +158,18 @@ type: 类型，可选参数
 
 参数：id, fir app id，必选，如 fir 生成的链接地址为 https://fir.im/xcz，则 id 为 xcz
 
+### App Store/Mac App Store 应用更新 <Author uid="cielpy"/>
+
+举例: [https://rsshub.app/appstore/update/cn/id444934666](https://rsshub.app/appstore/update/cn/id444934666)
+
+路由: `/appstore/update/:country/:id`
+
+参数：
+
+country, App Store 国家，必选，如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8，则 country 为 cn
+
+id, App Store app id，必选，如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8，则 id 为 id444934666
+
 ## bilibili
 
 ### 番剧
@@ -220,7 +232,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主粉丝
+### UP 主粉丝 <Author uid="Qixingchen"/>
 
 举例: [https://rsshub.app/bilibili/user/followers/2267573](https://rsshub.app/bilibili/user/followers/2267573)
 
@@ -228,7 +240,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主关注用户
+### UP 主关注用户 <Author uid="Qixingchen"/>
 
 举例: [https://rsshub.app/bilibili/user/followings/2267573](https://rsshub.app/bilibili/user/followings/2267573)
 
@@ -340,7 +352,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 | ---- | ------ | ------ |
 | 11   | 185    | 187    |
 
-### 视频评论
+### 视频评论 <Author uid="Qixingchen"/>
 
 举例: [https://rsshub.app/bilibili/video/reply/21669336](https://rsshub.app/bilibili/video/reply/21669336)
 
@@ -429,6 +441,14 @@ rid: 排行榜分区 id，默认 0
 | 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
 | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
+
+### 话题(频道/标签) <Author uid="Qixingchen"/>
+
+举例: [https://rsshub.app/bilibili/topic/2233](https://rsshub.app/bilibili/topic/2233)
+
+路由: `/bilibili/topic/:topic`
+
+参数: topic 话题名(又称频道名或标签) 例如 2233 或 COSPLAY
 
 ## bangumi
 
@@ -1139,21 +1159,9 @@ key: 产品密钥
 
 -   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
 -   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅：https://konachan.com/post/piclens?tags=[tags]
 
 :::
-
-### Posts <Author uid="hufan-akari"/>
-
-路由:
-
--   `/konachan/post`
--   `/konachan/post/:tags`
-
-举例:
-
--   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
--   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
--   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
 
 ### Popular Recent Posts <Author uid="hufan-akari"/>
 
@@ -1171,19 +1179,11 @@ key: 产品密钥
 
 ## yande.re
 
-### Posts <Author uid="hufan-akari"/>
+::: tip 提示
 
-路由:
+-   网站提供了 Posts 订阅：https://yande.re/post/piclens?tags=[tags]
 
--   `/yande.re/post`
--   `/yande.re/post/:tags`
-
-举例:
-
--   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
--   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
--   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
--   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
+:::
 
 ### Popular Recent Posts <Author uid="hufan-akari"/>
 
@@ -1843,3 +1843,47 @@ nearby: 可选 0 或 1，默认 0 为不包括，是否包括临近机场
 
 1. 简单模式，例如「data visualization」，[https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization)。
 2. 高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5)，点击左上角，选择高级搜索并提交查询。此时 URL 应为：[https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)，复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为[https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5)。
+
+## Awesome Pigtails
+
+### 最新图片 <author uid="Chingyat" />
+
+举例: [https://rsshub.app/pigtails](https://rsshub.app/pigtails)
+
+路由: `/pigtails`
+
+参数: 无
+
+## iMuseum
+
+### 展览信息 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/imuseum/shanghai/all](https://rsshub.app/imuseum/shanghai/all)
+
+路由: `/imuseum/:city/:type`
+
+参数:
+
+city，必选，如 shanghai、beijing
+
+type，可选，不填则默认为 `all`
+
+| 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
+| ---- | ------ | ---- | -------- | -------- | -------- |
+| all  | latest | hot  | end_soon | coming   | outdated |
+
+## Hopper Flight Deals
+
+### Hopper 特价机票 <Author uid="HenryQW"/>
+
+举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/LHR/PEK](https://rsshub.app/hopper/LHR/PEK)
+
+路由: `/hopper/:from/:to?`
+
+参数:
+
+from: 始发地，IATA 国际航空运输协会机场代码
+
+to: 目的地，IATA 国际航空运输协会机场代码，可选，缺省则目的地为`任意城市`
+
+IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
