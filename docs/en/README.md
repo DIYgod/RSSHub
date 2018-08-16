@@ -308,8 +308,11 @@ Eg: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/is
 
 Route: `/github/issue/:user/:repo`
 
-Parameters: user, username
-Parameters: repo, repo name
+Parameters:
+
+user, username
+
+repo, repo name
 
 ## EZTV
 
@@ -366,7 +369,7 @@ locations: the departing city, consists of an 「ISO 3166-1 country code」 and 
 1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
 2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
-For ISO 3166-1 country codes please refer to [wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
+For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
 nearby: whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)
 
@@ -389,3 +392,19 @@ Parameters: query, query statement which supports「Basic」and「Advanced」mod
 1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
 
 2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+
+## Hopper
+
+### Hopper Flight Deals <Author uid="HenryQW"/>
+
+Eg: London Heathrow Airport &#9992; Beijing Capital International Airport [https://rsshub.app/hopper/LHR/PEK](https://rsshub.app/hopper/LHR/PEK)
+
+Route: `/hopper/:from/:to?`
+
+Parameters:
+
+from, origin airport IATA code
+
+to, destination airport IATA code, optional, if unset the destination will be set to `anywhere`
+
+For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
