@@ -56,7 +56,7 @@ module.exports = async (ctx) => {
                                     .replace('月', '-')
                                     .replace('日', '')
                             )
-                        ),
+                        ).toUTCString(),
                         link: host + '/xml/' + word + item.attr('id') + '.xml',
                     };
                 })
