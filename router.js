@@ -419,6 +419,7 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
+router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
 
 // Hopper
 router.get('/hopper/:from/:to?', require('./routes/hopper/index'));
