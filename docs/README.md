@@ -1159,21 +1159,9 @@ key: 产品密钥
 
 -   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
 -   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅：https://konachan.com/post/piclens?tags=[tags]
 
 :::
-
-### Posts <Author uid="hufan-akari"/>
-
-路由:
-
--   `/konachan/post`
--   `/konachan/post/:tags`
-
-举例:
-
--   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
--   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
--   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
 
 ### Popular Recent Posts <Author uid="hufan-akari"/>
 
@@ -1191,19 +1179,11 @@ key: 产品密钥
 
 ## yande.re
 
-### Posts <Author uid="hufan-akari"/>
+::: tip 提示
 
-路由:
+-   网站提供了 Posts 订阅：https://yande.re/post/piclens?tags=[tags]
 
--   `/yande.re/post`
--   `/yande.re/post/:tags`
-
-举例:
-
--   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
--   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
--   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
--   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
+:::
 
 ### Popular Recent Posts <Author uid="hufan-akari"/>
 
