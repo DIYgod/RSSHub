@@ -1424,6 +1424,24 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数: type，1 为教务新闻,2 为教务公告
 
+## 西南科技大学
+
+### 教务处通知 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/swust/jwc/1](https://rsshub.app/swust/jwc/1)
+
+路由: `/swust/jwc/:type`
+
+参数: type, 1 为通知公告, 2 为站点新闻
+
+### 计科学院通知 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/swust/cs/1](https://rsshub.app/swust/cs/1)
+
+路由: `swust/cs/:type`
+
+参数: type, 1 为新闻动态, 2 为学术动态, 3 为通知公告, 4 为教研动态
+
 ## 新京报
 
 ### 栏目 <Author uid="zhboner"/>
