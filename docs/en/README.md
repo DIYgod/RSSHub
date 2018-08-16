@@ -7,7 +7,7 @@ sidebar: auto
 </p>
 <h1 align="center" class="logo">RSSHub</h1>
 
-> 🍰 Everything can be RSS
+> 🍰 Everything is RSSible
 
 RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generate feeds from pretty much everything.
 
@@ -133,6 +133,18 @@ Parameters: platform
 | Desktop | Android | Beta | Nightly | Android Beta |
 | ------- | ------- | ---- | ------- | ------------ |
 | desktop | android | beta | nightly | android-beta |
+
+### App Store/Mac App Store Updates <Author uid="cielpy"/>
+
+Eg: [https://rsshub.app/appstore/update/us/id697846300](https://rsshub.app/appstore/update/us/id697846300)
+
+Route: `/appstore/update/:country/:id`
+
+Parameters：
+
+country, App Store Country, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`.
+
+id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`.
 
 ## pixiv
 
