@@ -415,6 +415,6 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
 // AppStore
-router.get('/appstore/update/:id', require('./routes/appstore/update'));
+router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 
 module.exports = router;

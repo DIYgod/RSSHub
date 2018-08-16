@@ -4,7 +4,8 @@ const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
-    const url = `https://itunes.apple.com/cn/app/${id}?ls=1&mt=8`;
+    const country = ctx.params.country;
+    const url = `https://itunes.apple.com/${country}/app/${id}?ls=1&mt=8`;
 
     const res = await axios({
         method: 'get',
