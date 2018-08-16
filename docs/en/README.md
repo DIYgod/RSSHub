@@ -272,9 +272,9 @@ Parameters: username, channel name
 
 GitHub provides some official RSS feeds:
 
--   Repo releases: https://github.com/:owner/:repo/releases.atom
--   Repo commits: https://github.com/:owner/:repo/commits.atom
--   User activities: https://github.com/:user.atom
+-   Repo releases: [https://github.com/:owner/:repo/releases.atom](https://github.com/:owner/:repo/releases.atom)
+-   Repo commits: [https://github.com/:owner/:repo/commits.atom](https://github.com/:owner/:repo/releases.atom)
+-   User activities: [https://github.com/:user.atom](https://github.com/:user.atom)
 
 :::
 
