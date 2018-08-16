@@ -170,6 +170,20 @@ country, App Store 国家，必选，如 QQ 的链接为 https://itunes.apple.co
 
 id, App Store app id，必选，如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8，则 id 为 id444934666
 
+### App Store/Mac App Store 价格更新（限免） <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/appstore/price/cn/mac/id115244347](https://rsshub.app/appstore/price/cn/mac/id115244347)
+
+路由: `/appstore/price/:country/:type/:id`
+
+参数：
+
+country, App Store 国家，必选，如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474，则 country 为 cn
+
+type, App 类型，必选, `iOS` 或 `mac`
+
+id, App Store app id，必选，如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474，则 id 为 id115244347
+
 ## bilibili
 
 ### 番剧
