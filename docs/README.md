@@ -232,7 +232,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主粉丝
+### UP 主粉丝 <Author uid="Qixingchen"/>
 
 举例: [https://rsshub.app/bilibili/user/followers/2267573](https://rsshub.app/bilibili/user/followers/2267573)
 
@@ -240,7 +240,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主关注用户
+### UP 主关注用户 <Author uid="Qixingchen"/>
 
 举例: [https://rsshub.app/bilibili/user/followings/2267573](https://rsshub.app/bilibili/user/followings/2267573)
 
@@ -352,7 +352,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 | ---- | ------ | ------ |
 | 11   | 185    | 187    |
 
-### 视频评论
+### 视频评论 <Author uid="Qixingchen"/>
 
 举例: [https://rsshub.app/bilibili/video/reply/21669336](https://rsshub.app/bilibili/video/reply/21669336)
 
@@ -441,6 +441,14 @@ rid: 排行榜分区 id，默认 0
 | 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
 | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
+
+### 话题(频道/标签) <Author uid="Qixingchen"/>
+
+举例: [https://rsshub.app/bilibili/topic/2233](https://rsshub.app/bilibili/topic/2233)
+
+路由: `/bilibili/topic/:topic`
+
+参数: topic 话题名(又称频道名或标签) 例如 2233 或 COSPLAY
 
 ## bangumi
 
