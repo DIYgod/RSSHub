@@ -17,8 +17,11 @@ module.exports = async (ctx) => {
             Referer: `http://www.cheapcharts.info/itunes/${country}/apps/detail-view/${id}`,
         },
     });
-
-    const result = res.data.results.apps;
+    
+    let result = res.data.results.apps;
+    if (type === 'macapps') {
+        result = res.data.results.macapps;
+    }
 
     const item = [];
 
