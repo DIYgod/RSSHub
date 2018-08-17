@@ -172,7 +172,7 @@ id, App Store app id，必选，如 QQ 的链接为 https://itunes.apple.com/cn/
 
 ### App Store/Mac App Store 价格更新（限免） <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/appstore/price/cn/mac/id115244347](https://rsshub.app/appstore/price/cn/mac/id115244347)
+举例: [https://rsshub.app/appstore/price/cn/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
 
 路由: `/appstore/price/:country/:type/:id`
 
