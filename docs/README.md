@@ -1878,7 +1878,7 @@ type，可选，不填则默认为 `all`
 
 本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票，通常包含 6 个结果。出行日期将由 Hopper 算法定义，可能是明天也可能是 10 个月后。
 
-举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/LHR/PEK](https://rsshub.app/hopper/LHR/PEK)
+举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
 
 路由: `/hopper/:lowestOnly/:from/:to?`
 
