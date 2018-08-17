@@ -7,7 +7,7 @@ sidebar: auto
 </p>
 <h1 align="center" class="logo">RSSHub</h1>
 
-> 🍰 Everything can be RSS
+> 🍰 Everything is RSSible
 
 RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generate feeds from pretty much everything.
 
@@ -133,6 +133,32 @@ Parameters: platform
 | Desktop | Android | Beta | Nightly | Android Beta |
 | ------- | ------- | ---- | ------- | ------------ |
 | desktop | android | beta | nightly | android-beta |
+
+### App Store/Mac App Store Updates <Author uid="cielpy"/>
+
+Eg: [https://rsshub.app/appstore/update/us/id697846300](https://rsshub.app/appstore/update/us/id697846300)
+
+Route: `/appstore/update/:country/:id`
+
+Parameters：
+
+country, App Store Country, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`.
+
+id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`.
+
+### App Store/Mac App Store Price Drop Alert <Author uid="HenryQW"/>
+
+eg: [https://rsshub.app/appstore/price/cn/mac/id115244347](https://rsshub.app/appstore/price/cn/mac/id115244347)
+
+Route: `/appstore/price/:country/:type/:id`
+
+Parameters：
+
+-   country, App Store Country, obtain from the app URL https://itunes.apple.com/us/app/id1152443474, in this case, `us`.
+
+-   type, App type，either `iOS` or `mac`
+
+-   id, App Store app id, obtain from the app URL https://itunes.apple.com/cn/app/id1152443474, in this case, `id1152443474`.
 
 ## pixiv
 
