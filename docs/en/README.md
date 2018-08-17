@@ -128,7 +128,9 @@ Eg: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/rele
 
 Route: `/firefox/release/:platform`
 
-Parameters: platform
+Parameters:
+
+-   platform
 
 | Desktop | Android | Beta | Nightly | Android Beta |
 | ------- | ------- | ---- | ------- | ------------ |
@@ -168,7 +170,9 @@ Eg: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/
 
 Route: `/pixiv/user/bookmarks/:id`
 
-Parameters: id, user id, available in user's homepage URL
+Parameters:
+
+-   id, user id, available in user's homepage URL
 
 ### User Activity <Author uid="EYHN"/>
 
@@ -176,7 +180,9 @@ Eg: [https://rsshub.app/pixiv/user/11](https://rsshub.app/pixiv/user/11)
 
 Route: `/pixiv/user/:id`
 
-Parameters: id, user id, available in user's homepage URL
+Parameters:
+
+-   id, user id, available in user's homepage URL
 
 ### Rankings <Author uid="EYHN"/>
 
@@ -186,17 +192,17 @@ Route: `/pixiv/ranking/:mode/:date?`
 
 Parameters
 
-mode: rank type
+-   mode: rank type
 
-| pixiv daily rank | pixiv weekly rank | pixiv monthly rank | pixiv male rank | pixiv female rank | pixiv original rank | pixiv rookie user rank |
-| ---------------- | ----------------- | ------------------ | --------------- | ----------------- | ------------------- | ---------------------- |
-| day              | week              | month              | day_male        | day_female        | week_original       | week_rookie            |
+    | pixiv daily rank | pixiv weekly rank | pixiv monthly rank | pixiv male rank | pixiv female rank | pixiv original rank | pixiv rookie user rank |
+    | ---------------- | ----------------- | ------------------ | --------------- | ----------------- | ------------------- | ---------------------- |
+    | day              | week              | month              | day_male        | day_female        | week_original       | week_rookie            |
 
-| pixiv R-18 daily rank | pixiv R-18 male rank | pixiv R-18 female rank | pixiv R-18 weekly rank | pixiv R-18G rank |
-| --------------------- | -------------------- | ---------------------- | ---------------------- | ---------------- |
-| day_r18               | day_male_r18         | day_female_r18         | week_r18               | week_r18g        |
+    | pixiv R-18 daily rank | pixiv R-18 male rank | pixiv R-18 female rank | pixiv R-18 weekly rank | pixiv R-18G rank |
+    | --------------------- | -------------------- | ---------------------- | ---------------------- | ---------------- |
+    | day_r18               | day_male_r18         | day_female_r18         | week_r18               | week_r18g        |
 
-date: data, format: `2018-4-25`
+-   date: date, format: `2018-4-25`
 
 ## Disqus
 
@@ -206,7 +212,9 @@ Eg: [https://rsshub.app/disqus/posts/diygod-me](https://rsshub.app/disqus/posts/
 
 Route: `/disqus/posts/:forum`
 
-Parameters: forum, disqus name of the target website
+Parameters:
+
+-   forum, disqus name of the target website
 
 ## Twitter
 
@@ -216,7 +224,9 @@ Eg: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIY
 
 Route: `/twitter/user/:id`
 
-Parameters: id, twitter handler
+Parameters:
+
+-   id, twitter handler
 
 ## Instagram
 
@@ -226,7 +236,9 @@ Eg: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user
 
 Route: `/instagram/user/:id`
 
-Parameters: id, Instagram id
+Parameters:
+
+-   id, Instagram id
 
 ## Youtube
 
@@ -236,7 +248,9 @@ Eg: [https://rsshub.app/youtube/user/JFlaMusic](https://rsshub.app/youtube/user/
 
 Route: `/youtube/user/:username`
 
-Parameters: username, Youtuber's username
+Parameters:
+
+-   username, Youtuber's username
 
 ### Channel
 
@@ -244,13 +258,15 @@ Eg: [https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ](https://rsshub
 
 Route: `/youtube/channel/:id`
 
-Parameters: id, channel id
+Parameters:
+
+-   id, channel id
 
 ## Dribbble
 
 ### Popular
 
-举例:
+Eg:
 
 [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
 
@@ -258,15 +274,19 @@ Parameters: id, channel id
 
 Route: `/dribbble/popular/:timeframe?`
 
-Parameters: timeframe, optional, support the following values: week, month, year and ever
+Parameters:
 
-### User（or team）
+-   timeframe, optional, support the following values: week, month, year and ever
+
+### User (or team)
 
 Eg: [https://rsshub.app/dribbble/user/google](https://rsshub.app/dribbble/user/google)
 
 Route: `/dribbble/user/:name`
 
-Parameters: name, username, available in user's homepage URL
+Parameters:
+
+-   name, username, available in user's homepage URL
 
 ### Keyword
 
@@ -274,7 +294,9 @@ Eg: [https://rsshub.app/dribbble/keyword/player](https://rsshub.app/dribbble/key
 
 Route: `/dribbble/keyword/:keyword`
 
-Parameters: keyword, the desired keyword
+Parameters:
+
+-   keyword, the desired keyword
 
 ## Telegram
 
@@ -290,7 +312,9 @@ Eg: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/teleg
 
 Route: `/telegram/channel/:username`
 
-Parameters: username, channel name
+Parameters:
+
+-   username, channel name
 
 ## GitHub
 
@@ -310,7 +334,9 @@ Eg: [https://rsshub.app/github/repos/DIYgod](https://rsshub.app/github/repos/DIY
 
 Route: `/github/repos/:user`
 
-Parameters: user, username
+Parameters:
+
+-   user, username
 
 ### Trending
 
@@ -324,9 +350,9 @@ Route: `/github/trending/:since/:language?`
 
 Parameters:
 
-since, time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: daily, weekly or monthly
+-   since, time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: daily, weekly or monthly
 
-language, the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL
+-   language, the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL
 
 ### Issue <Author uid="HenryQW"/>
 
@@ -336,9 +362,9 @@ Route: `/github/issue/:user/:repo`
 
 Parameters:
 
-user, username
+-   user, username
 
-repo, repo name
+-   repo, repo name
 
 ## EZTV
 
@@ -354,7 +380,9 @@ Eg: [https://rsshub.app/eztv/torrents/6048596](https://rsshub.app/eztv/torrent/6
 
 Route: `/eztv/torrents/:imdb_id`
 
-Parameters: imdb_id, search for the IMDB ID of the desired show, available at [IMDB](https://www.imdb.com)
+Parameters:
+
+-   imdb_id, search for the IMDB ID of the desired show, available at [IMDB](https://www.imdb.com)
 
 ## Hexo Blog
 
@@ -362,9 +390,11 @@ Parameters: imdb_id, search for the IMDB ID of the desired show, available at [I
 
 Eg: [http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
 
-路由: `/hexo/next/:url`
+Route: `/hexo/next/:url`
 
-Parameters: url, the blog URL without the protocol (http:// and https://)
+Parameters:
+
+-   url, the blog URL without the protocol (http:// and https://)
 
 ## Greasy Fork
 
@@ -376,9 +406,9 @@ Route: `/greasyfork/:language/:domain?`
 
 Parameters:
 
-language, language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages
+-   language, language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages
 
-domain, the script's target domain, optional
+-   domain, the script's target domain, optional
 
 ## All the Flight Deals
 
@@ -390,14 +420,14 @@ Route: `/atfd/:locations/:nearby?`
 
 Parameters:
 
-locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
+-   locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
 
-1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
+    1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
+    2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
-nearby: whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)
+-   nearby: whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)
 
 ## Google
 
@@ -413,11 +443,13 @@ Eg: [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/go
 
 Route: `/google/scholar/:query`
 
-Parameters: query, query statement which supports「Basic」and「Advanced」modes:
+Parameters:
 
-1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
+-   query, query statement which supports「Basic」and「Advanced」modes:
 
-2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+    1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
+
+    2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
 
 ## Hopper
 
@@ -429,8 +461,8 @@ Route: `/hopper/:from/:to?`
 
 Parameters:
 
-from, origin airport IATA code
+-   from, origin airport IATA code
 
-to, destination airport IATA code, optional, if unset the destination will be set to `anywhere`
+-   to, destination airport IATA code, optional, if unset the destination will be set to `anywhere`
 
 For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
