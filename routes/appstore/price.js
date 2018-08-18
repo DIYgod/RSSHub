@@ -18,7 +18,10 @@ module.exports = async (ctx) => {
         },
     });
 
-    const result = res.data.results.apps;
+    let result = res.data.results.apps;
+    if (type === 'macapps') {
+        result = res.data.results.macapps;
+    }
 
     const item = [];
 
