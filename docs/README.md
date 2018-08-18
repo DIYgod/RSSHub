@@ -170,6 +170,20 @@ country, App Store 国家，必选，如 QQ 的链接为 https://itunes.apple.co
 
 id, App Store app id，必选，如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8，则 id 为 id444934666
 
+### App Store/Mac App Store 价格更新（限免） <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/appstore/price/cn/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
+
+路由: `/appstore/price/:country/:type/:id`
+
+参数：
+
+country, App Store 国家，必选，如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474，则 country 为 cn
+
+type, App 类型，必选, `iOS` 或 `mac`
+
+id, App Store app id，必选，如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474，则 id 为 id115244347
+
 ## bilibili
 
 ### 番剧
@@ -1159,21 +1173,9 @@ key: 产品密钥
 
 -   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
 -   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅：https://konachan.com/post/piclens?tags=[tags]
 
 :::
-
-### Posts <Author uid="hufan-akari"/>
-
-路由:
-
--   `/konachan/post`
--   `/konachan/post/:tags`
-
-举例:
-
--   [https://rsshub.app/konachan/post](https://rsshub.app/konachan/post)
--   [https://rsshub.app/konachan/post/touhou](https://rsshub.app/konachan/post/touhou)
--   [https://rsshub.app/konachan/post/panties+rating%3Asafe](https://rsshub.app/konachan/post/panties+rating%3Asafe)
 
 ### Popular Recent Posts <Author uid="hufan-akari"/>
 
@@ -1191,19 +1193,11 @@ key: 产品密钥
 
 ## yande.re
 
-### Posts <Author uid="hufan-akari"/>
+::: tip 提示
 
-路由:
+-   网站提供了 Posts 订阅：https://yande.re/post/piclens?tags=[tags]
 
--   `/yande.re/post`
--   `/yande.re/post/:tags`
-
-举例:
-
--   [https://rsshub.app/yande.re/post](https://rsshub.app/yande.re/post)
--   [https://rsshub.app/yande.re/post/the_idolm%40ster](https://rsshub.app/yande.re/post/the_idolm%40ster)
--   [https://rsshub.app/yande.re/post/kantai_collection](https://rsshub.app/yande.re/post/kantai_collection)
--   [https://rsshub.app/yande.re/post/love_live%21](https://rsshub.app/yande.re/post/love_live%21)
+:::
 
 ### Popular Recent Posts <Author uid="hufan-akari"/>
 
@@ -1896,11 +1890,15 @@ type，可选，不填则默认为 `all`
 
 ### Hopper 特价机票 <Author uid="HenryQW"/>
 
-举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/LHR/PEK](https://rsshub.app/hopper/LHR/PEK)
+本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票，通常包含 6 个结果。出行日期将由 Hopper 算法定义，可能是明天也可能是 10 个月后。
 
-路由: `/hopper/:from/:to?`
+举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
+
+路由: `/hopper/:lowestOnly/:from/:to?`
 
 参数:
+
+lowestOnly: 是否只返回最低价机票，`1`：是，其他任意值：否
 
 from: 始发地，IATA 国际航空运输协会机场代码
 

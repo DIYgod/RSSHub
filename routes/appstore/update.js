@@ -19,20 +19,23 @@ module.exports = async (ctx) => {
 
     const titleTags = $('h1').attr('class', 'product-header__title');
     titleTags.find('span').remove();
+    const platform = $('.we-localnav__title__product').text();
+
+    const title = `${titleTags.text()} for ${platform === 'App Store' ? 'iOS' : 'macOS'} ${country === 'cn' ? '更新' : 'Update'} `;
 
     const item = {};
     $('.whats-new').each(function() {
         const version = $('.whats-new__latest__version')
             .text()
             .split(' ')[1];
-        item.title = titleTags.text() + version;
-        item.description = $('.whats-new__content .we-truncate').text();
+        item.title = `${titleTags.text()} ${version}`;
+        item.description = $('.whats-new__content .we-truncate').html();
         item.link = url;
         item.guid = id + version;
     });
 
     ctx.state.data = {
-        title: 'App Store 有 App 更新',
+        title,
         link: url,
         item: [item],
     };

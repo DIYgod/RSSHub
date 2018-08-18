@@ -267,23 +267,15 @@ router.get('/github/trending/:since/:language?', require('./routes/github/trendi
 router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
 
 // konachan
-router.get('/konachan/post', require('./routes/konachan/post'));
-router.get('/konachan.com/post', require('./routes/konachan/post'));
-router.get('/konachan.net/post', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.com/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.net/post/popular_recent', require('./routes/konachan/post_popular_recent'));
-router.get('/konachan/post/:tags', require('./routes/konachan/post'));
-router.get('/konachan.com/post/:tags', require('./routes/konachan/post'));
-router.get('/konachan.net/post/:tags', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.com/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.net/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 
 // yande.re
-router.get('/yande.re/post', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent', require('./routes/yande.re/post_popular_recent'));
-router.get('/yande.re/post/:tags', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/post_popular_recent'));
 
 // 纽约时报
@@ -427,8 +419,9 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
+router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
 
 // Hopper
-router.get('/hopper/:from/:to?', require('./routes/hopper/index'));
+router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
 
 module.exports = router;
