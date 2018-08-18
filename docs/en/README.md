@@ -150,7 +150,7 @@ id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/r
 
 ### App Store/Mac App Store Price Drop Alert <Author uid="HenryQW"/>
 
-eg: [https://rsshub.app/appstore/price/cn/mac/id115244347](https://rsshub.app/appstore/price/cn/mac/id115244347)
+eg: [https://rsshub.app/appstore/price/us/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
 
 Route: `/appstore/price/:country/:type/:id`
 
@@ -455,11 +455,15 @@ Parameters:
 
 ### Hopper Flight Deals <Author uid="HenryQW"/>
 
-Eg: London Heathrow Airport &#9992; Beijing Capital International Airport [https://rsshub.app/hopper/LHR/PEK](https://rsshub.app/hopper/LHR/PEK)
+This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 
-Route: `/hopper/:from/:to?`
+Eg: London Heathrow Airport &#9992; Beijing Capital International Airport [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
+
+Route: `/hopper/:lowestOnly/:from/:to?`
 
 Parameters:
+
+-   lowestOnly, set to `1` will return the cheapest deal only, instead of all deals, so you don't get spammed
 
 -   from, origin airport IATA code
 
