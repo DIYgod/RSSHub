@@ -552,15 +552,27 @@ rid: 排行榜分区 id，默认 0
 
 ## 微信
 
-### 公众号
-
 ::: tip 提示
 
-公众号抓取困难，目前可提供的方案是通过即刻的公众号主题订阅
+公众号直接抓取困难，故目前提供即刻和瓦斯两种间接抓取方案，请自行选择
 
 :::
 
+### 公众号（即刻来源）
+
 举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
+
+路由: `/jike/user/:id`
+
+参数: 参考 [即刻-主题-精选](#主题-精选)
+
+### 公众号（瓦斯来源）
+
+举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
+
+路由: `/wechat/wasi/:id`
+
+参数: id，瓦斯公众号 id，可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号，打开公众号页，在 URL 中找到 id
 
 ## 网易云音乐
 
