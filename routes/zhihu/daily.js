@@ -38,7 +38,8 @@ module.exports = async (ctx) => {
                     Referer: url,
                 },
             });
-            item.description = storyDetail.data.body;
+            // eslint-disable-next-line
+            item.description = decodeURI(encodeURI(storyDetail.data.body).replace(/%3Cdiv%20class=%22meta%22%3E%0A(.*?)%3C\/div%3E/g, '%3Ch3%3E$1%3C/h3%3E'));
             ctx.cache.set(key, storyDetail.data.body, 24 * 60 * 60);
         }
 
