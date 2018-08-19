@@ -568,7 +568,7 @@ rid: 排行榜分区 id，默认 0
 
 ### 公众号（瓦斯来源）
 
-举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
+举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace)
 
 路由: `/wechat/wasi/:id`
 
