@@ -424,4 +424,7 @@ router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/pric
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
 
+// wechat
+router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
+
 module.exports = router;
