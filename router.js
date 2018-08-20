@@ -428,4 +428,7 @@ router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
 // wechat
 router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
 
+// 马蜂窝
+router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
+
 module.exports = router;

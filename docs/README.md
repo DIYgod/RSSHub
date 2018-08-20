@@ -1917,3 +1917,15 @@ from: 始发地，IATA 国际航空运输协会机场代码
 to: 目的地，IATA 国际航空运输协会机场代码，可选，缺省则目的地为`任意城市`
 
 IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
+
+## 马蜂窝
+
+### 游记 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
+
+路由: `/mafengwo/note/:type`
+
+参数:
+
+type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表最新游记
