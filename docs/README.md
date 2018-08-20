@@ -1332,10 +1332,9 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 ## 喜马拉雅
 
-### 专辑专辑(支持泛用型播客订阅) <Author uid="lengthmin"/>
+### 专辑专辑(支持泛用型播客订阅) <Author uid="lengthmin jjeejj"/>
 
-> <Author uid="jjeejj"/>
-> ::: warning 注意
+::: warning 注意
 
 目前[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**不能使用**以下链接来订阅播客:
 
@@ -1351,6 +1350,7 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 参数:
 
 id, 专辑 id, 可在对应专辑页面的 URL 中找到
+
 count, 抓取数量, 缺省为 10, 可填 1-100
 
 ## EZTV
