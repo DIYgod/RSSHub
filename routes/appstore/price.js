@@ -40,7 +40,7 @@ module.exports = async (ctx) => {
     }
     ctx.state.data = {
         title,
-        link: url,
+        link,
         item,
     };
 };
