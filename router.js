@@ -289,8 +289,7 @@ router.get('/3dm/:name/:type', require('./routes/3dm/news'));
 router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
-router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
-router.get('/ximalaya/podcast/:id', require('./routes/ximalaya/podcast'));
+router.get('/ximalaya/album/:id/:count?', require('./routes/ximalaya/album'));
 
 // EZTV
 router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));

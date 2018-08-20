@@ -161,8 +161,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   新闻
     -   攻略
 -   喜马拉雅
-    -   专辑
-    -   泛用型播客订阅
+    -   专辑(支持泛用型播客订阅)
 -   EZTV
     -   Lookup Torrents by IMDB ID（根据 IMDB ID 查找种子）
 -   什么值得买
