@@ -10,6 +10,7 @@
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
 [使用文档](https://docs.rsshub.app/)
+
 [English docs](https://docs.rsshub.app/en)
 
 <details><summary>当前支持列表</summary><br>
@@ -21,6 +22,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   腾讯云移动直播 SDK
     -   Bugly SDK
     -   fir.im 应用
+    -   App Store/Mac App Store 应用更新
+    -   App Store/Mac App Store 价格更新（限免）
 -   bilibili
     -   番剧
     -   UP 主投稿
@@ -41,6 +44,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   会员购新品上架
     -   会员购作品
     -   排行榜
+    -   话题(频道/标签)
 -   微博
     -   博主
     -   关键词
@@ -51,7 +55,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   主题
     -   用户动态
 -   微信
-    -   公众号
+    -   公众号（即刻来源）
+    -   公众号（瓦斯来源）
 -   网易云音乐
     -   歌单歌曲
     -   用户歌单
@@ -144,10 +149,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   Trending
     -   Issue
 -   Konachan.com Anime Wallpapers
-    -   posts
     -   Popular Recent Posts
 -   yande.re
-    -   posts
     -   Popular Recent Posts
 -   纽约时报
     -   新闻早报
@@ -157,7 +160,6 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   新闻中心
     -   新闻
     -   攻略
-    -   下载
 -   喜马拉雅
     -   专辑
 -   EZTV
@@ -199,6 +201,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   教务处通知
     -   图书馆通知
     -   计算机学院竞赛通知
+-   西南科技大学
+    -   教务处通知
+    -   计科学院通知
 -   Keep
     -   运动日记
 -   起点
@@ -227,6 +232,10 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   特价机票 Flight deals
 -   Google
     -   谷歌学术关键词更新
+-   Awesome Pigtails
+    -   最新图片
+-   iMuseum
+    -   展览信息
 
 </details>
 

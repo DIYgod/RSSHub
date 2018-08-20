@@ -105,6 +105,7 @@ router.get('/bilibili/mall/new', require('./routes/bilibili/mallNew'));
 router.get('/bilibili/mall/ip/:id', require('./routes/bilibili/mallIP'));
 router.get('/bilibili/ranking/:rid?/:day?', require('./routes/bilibili/ranking'));
 router.get('/bilibili/channel/:uid/:cid', require('./routes/bilibili/userChannel'));
+router.get('/bilibili/topic/:topic', require('./routes/bilibili/topic'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
@@ -266,23 +267,15 @@ router.get('/github/trending/:since/:language?', require('./routes/github/trendi
 router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
 
 // konachan
-router.get('/konachan/post', require('./routes/konachan/post'));
-router.get('/konachan.com/post', require('./routes/konachan/post'));
-router.get('/konachan.net/post', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.com/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.net/post/popular_recent', require('./routes/konachan/post_popular_recent'));
-router.get('/konachan/post/:tags', require('./routes/konachan/post'));
-router.get('/konachan.com/post/:tags', require('./routes/konachan/post'));
-router.get('/konachan.net/post/:tags', require('./routes/konachan/post'));
 router.get('/konachan/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.com/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.net/post/popular_recent/:period', require('./routes/konachan/post_popular_recent'));
 
 // yande.re
-router.get('/yande.re/post', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent', require('./routes/yande.re/post_popular_recent'));
-router.get('/yande.re/post/:tags', require('./routes/yande.re/post'));
 router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/post_popular_recent'));
 
 // 纽约时报
@@ -309,6 +302,10 @@ router.get('/smzdm/ranking/:rank_type/:rank_id/:hour', require('./routes/smzdm/r
 router.get('/shmtu/events', require('./routes/shmtu/events'));
 router.get('/shmtu/notes', require('./routes/shmtu/notes'));
 router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
+
+// SWUST
+router.get('/swust/jwc/:type', require('./routes/swust/jwc'));
+router.get('/swust/cs/:type', require('./routes/swust/cs'));
 
 // 新京报
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
@@ -413,5 +410,21 @@ router.get('/fir/update/:id', require('./routes/fir/update'));
 
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
+
+// Awesome Pigtals
+router.get('/pigtails', require('./routes/pigtails'));
+
+// 每日环球展览 iMuseum
+router.get('/imuseum/:city/:type', require('./routes/imuseum'));
+
+// AppStore
+router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
+router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
+
+// Hopper
+router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
+
+// wechat
+router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
 
 module.exports = router;
