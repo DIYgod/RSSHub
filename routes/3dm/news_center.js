@@ -31,8 +31,12 @@ module.exports = async (ctx) => {
         const title = $(item)
             .find('.bt')
             .text();
-        const content = $(item).find('p').text();
-        const pageInfo = $(item).find('.time').text();
+        const content = $(item)
+            .find('p')
+            .text();
+        const pageInfo = $(item)
+            .find('.time')
+            .text();
         const regex = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/;
         const regRes = regex.exec(pageInfo);
         const time = regRes === null ? new Date() : new Date(regRes[0]);
