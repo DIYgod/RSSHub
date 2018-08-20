@@ -31,7 +31,7 @@ module.exports = async (ctx) => {
         let lowest = 99999;
         let lowIndex = 0;
 
-        list.forEach((i, e) => {
+        list.each((i, e) => {
             const current = parseInt(
                 $(e)
                     .find('.price')
@@ -47,7 +47,7 @@ module.exports = async (ctx) => {
 
         items.push(formatDesc($(list[lowIndex])));
     } else {
-        list.forEach((i, e) => {
+        list.each((i, e) => {
             items.push(formatDesc($(e)));
         });
     }
