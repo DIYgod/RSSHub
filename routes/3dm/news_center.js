@@ -14,14 +14,14 @@ module.exports = async (ctx) => {
     });
     const data = res.data;
     const $ = cheerio.load(data);
-    const list = $('.QZlisttxt ul li p');
+    const list = $('.news_list .list li');
     const out = [];
 
     for (let i = 0; i < Math.min(list.length, 10); i++) {
-        let $ = cheerio.load(data);
+        const $ = cheerio.load(data);
         const item = list[i];
         const itemUrl = $(item)
-            .find('a:nth-child(2)')
+            .find('.selectarcpost')
             .attr('href');
         const cache = await ctx.cache.get(itemUrl);
         if (cache) {
@@ -29,24 +29,14 @@ module.exports = async (ctx) => {
             continue;
         }
         const title = $(item)
-            .find('a:nth-child(2)')
+            .find('.bt')
             .text();
-        let itemRes;
-        try {
-            itemRes = await axios({
-                method: 'get',
-                url: itemUrl,
-                headers: {
-                    'User-Agent': config.ua,
-                },
-            });
-        } catch (e) {
-            continue;
-        }
-        const itemPage = itemRes.data;
-        $ = cheerio.load(itemPage);
-        const content = $('.con div:nth-child(2)').html();
-        const pageInfo = $('.arctitle>span').text();
+        const content = $(item)
+            .find('p')
+            .text();
+        const pageInfo = $(item)
+            .find('.time')
+            .text();
         const regex = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/;
         const regRes = regex.exec(pageInfo);
         const time = regRes === null ? new Date() : new Date(regRes[0]);

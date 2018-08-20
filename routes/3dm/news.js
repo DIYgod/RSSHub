@@ -18,20 +18,21 @@ module.exports = async (ctx) => {
     const data = response.data;
 
     const $ = cheerio.load(data);
-    const list = $('.dowlnewslist a');
+    const list = $('.ZQ_Left .lis');
     const items = [];
 
     for (let i = 0; i < list.length; i++) {
         let item = $(list[i]);
-        const url = item.attr('href');
+        const url = item.find('.bt').attr('href');
 
         const value = await ctx.cache.get(url);
         if (value) {
             item = JSON.parse(value);
         } else {
             item = {
-                title: item.find('p').text(),
-                pubDate: item.find('span').text(),
+                title: item.find('.bt').text(),
+                pubDate: item.find('.time p').text(),
+                description: item.find('.miaoshu').text(),
                 link: url,
                 guid: url,
             };
@@ -47,7 +48,6 @@ module.exports = async (ctx) => {
             .text()
             .split('_')[0],
         link: url,
-        description: $('.game-pc>p').text(),
         item: items,
     };
 };
