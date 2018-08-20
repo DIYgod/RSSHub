@@ -1336,6 +1336,22 @@ classify, 专辑分类, 可在对应专辑页面的 URL 中找到
 
 id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
+### 泛用型播客订阅 <Author uid="lengthmin"/>
+
+::: warning 注意
+
+目前[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你不能使用以下链接来订阅播客:
+
+-   https://rsshub.app/ximalaya/podcast/299146.atom
+-   https://rsshub.app/ximalaya/podcast/299146.json
+
+:::
+
+举例: [https://rsshub.app/ximalaya/podcast/299146/](https://rsshub.app/ximalaya/podcast/299146/)
+
+路由: `/ximalaya/podcast/:id`
+
+参数: id, 专辑 id, 可在对应专辑页面的 URL 中找到
 ## EZTV
 
 ::: tip 提示
