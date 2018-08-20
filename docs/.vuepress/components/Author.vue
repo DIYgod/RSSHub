@@ -1,6 +1,6 @@
 <template>
   <span class="badge">
-    By <a :href="`https://github.com/${uid}`" target="_blank">@{{ uid }}</a>
+    By<a v-for="uid in uidList" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }}</a>
   </span>
 </template>
 
@@ -11,6 +11,11 @@ export default {
       type: String,
       default: 'DIYgod'
     },
+  },
+  computed: {
+    uidList: function () {
+      return this.uid.split(' ')
+    }
   }
 }
 </script>
