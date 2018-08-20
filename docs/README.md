@@ -1322,6 +1322,14 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: name，游戏的编号可以在专题页的 url 中找到
 
+### 下载 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/download](https://rsshub.app/3dm/detroitbecomehuman/download)
+
+路由: `/3dm/:name/download`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
 ## 喜马拉雅
 
 ### 专辑 <Author uid="jjeejj"/>
