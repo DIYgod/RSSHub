@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const product = ctx.params.product;
@@ -22,7 +21,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.vc.bilibili.com/news/v1/notice/list?platform=pc&product=${product}&category=all&page_no=1&page_size=20`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://link.bilibili.com/p/eden/news',
         },
     });

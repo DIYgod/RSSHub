@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const formatPubDate = require('../../utils/date.js');
 
 const baseUrl = 'http://www.ximalaya.com';
@@ -12,7 +11,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `${apiUrl}`,
         headers: {
-            'User-Agent': config.ua,
             Host: 'www.ximalaya.com',
             Referer: `${baseUrl}/${classify}/${id}`,
         },
@@ -21,7 +19,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `${baseUrl}/${classify}/${id}`,
         headers: {
-            'User-Agent': config.ua,
             Host: 'www.ximalaya.com',
             Referer: `${baseUrl}/${classify}/${id}`,
         },

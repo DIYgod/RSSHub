@@ -1,18 +1,10 @@
 const cheerio = require('cheerio');
-const config = require('../../config');
 const axios = require('../../utils/axios');
-
-const axios_ins = axios.create({
-    headers: {
-        'User-Agent': config.ua,
-        Reference: 'https://www.natgeomedia.com',
-    },
-});
 
 module.exports = async (ctx) => {
     const type = `${ctx.params.type ? ctx.params.type : ''}`;
     const url = `https://www.natgeomedia.com/category/${ctx.params.cat}/${type}`;
-    const res = await axios_ins.get(url);
+    const res = await axios.get(url);
     const data = res.data;
     const $ = cheerio.load(data);
 
@@ -37,7 +29,7 @@ module.exports = async (ctx) => {
             if (value) {
                 item.description = value;
             } else {
-                const storyDetail = await axios_ins.get(item.link);
+                const storyDetail = await axios.get(item.link);
                 const data = storyDetail.data;
                 const $ = cheerio.load(data);
                 item.description = $('.td-post-content').html();

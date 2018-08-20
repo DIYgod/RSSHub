@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const { period = '1d' } = ctx.params;
@@ -10,9 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         baseURL,
         url: '/post/popular_recent.json',
-        headers: {
-            'User-Agent': config.ua,
-        },
         params: {
             period,
         },

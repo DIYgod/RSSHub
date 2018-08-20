@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const formatPubDate = require('../../utils/date.js');
 
 module.exports = async (ctx) => {
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `http://search.smzdm.com/?c=home&s=${encodeURI(keyword)}&order=time&v=b`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `http://search.smzdm.com/?c=home&s=${encodeURI(keyword)}&order=time&v=b`,
         },
     });

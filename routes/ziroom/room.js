@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const qs = require('querystring');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const city = ctx.params.city || 'sh';
@@ -13,7 +12,6 @@ module.exports = async (ctx) => {
         method: 'post',
         url: `http://${domain}/list/ajax-get-data`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `http://${domain}/${city.toUpperCase()}/search.html`,
         },
         data: qs.stringify({

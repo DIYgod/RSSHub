@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const JSONbig = require('json-bigint');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const topic = ctx.params.topic;
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.vc.bilibili.com/topic_svr/v1/topic_svr/topic_new?topic_name=${urlEncodedTopic}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://www.bilibili.com/tag/${urlEncodedTopic}/feed`,
         },
         transformResponse: [(data) => data],

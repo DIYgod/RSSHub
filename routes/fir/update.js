@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -11,7 +10,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: APIUrl,
         headers: {
-            'User-Agent': config.ua,
             Referer: webUrl,
         },
     });

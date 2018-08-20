@@ -1,12 +1,10 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const host = 'http://www.cs.swust.edu.cn/';
 
 module.exports = async (ctx) => {
     const axios_ins = axios.create({
         headers: {
-            'User-Agent': config.ua,
             Referer: host,
         },
         responseType: 'arraybuffer',

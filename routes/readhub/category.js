@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const category = ctx.params.category;
@@ -25,9 +24,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: `https://api.readhub.me/${category}`,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
 
     const data = response.data;
