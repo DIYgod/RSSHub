@@ -57,6 +57,7 @@
     "lru-cache": "4.1.3",
     "markdown-it": "^8.4.2",
     "path-to-regexp": "2.2.1",
+    "raven": "^2.6.3",
     "readall": "1.0.0",
     "redis": "2.8.0",
     "rss-parser": "3.4.3",
