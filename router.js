@@ -109,6 +109,9 @@ router.get('/bilibili/topic/:topic', require('./routes/bilibili/topic'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
+router.get('/bangumi/subject/:id/:type', require('./routes/bangumi/subject'));
+router.get('/bangumi/person/:id', require('./routes/bangumi/person'));
+router.get('/bangumi/topic/:id', require('./routes/bangumi/group/reply.js'));
 
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
@@ -285,12 +288,13 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
 // 3dm
+router.get('/3dm/:name/download', require('./routes/3dm/download'));
 router.get('/3dm/:name/:type', require('./routes/3dm/news'));
 router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
-
+router.get('/ximalaya/album/:id', require('./routes/ximalaya/album'));
 // EZTV
 router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 
@@ -426,5 +430,14 @@ router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
 
 // wechat
 router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
+
+// 马蜂窝
+router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
+
+// 江南大学
+router.get('/ju/jwc/:type?', require('./routes/ju/jwc'));
+
+// 中国地震局震情速递（与地震台网同步更新）
+router.get('/earthquake', require('./routes/earthquake'));
 
 module.exports = router;

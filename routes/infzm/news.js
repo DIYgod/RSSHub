@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 const baseUrl = 'http://www.infzm.com/contents/';
 
@@ -11,7 +10,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: url,
         headers: {
-            'User-Agent': config.ua,
             Referer: url,
         },
     });

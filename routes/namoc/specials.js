@@ -1,17 +1,10 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const cheerio = require('cheerio');
-
-const _axios_client = axios.create({
-    headers: {
-        'User-Agent': config.ua,
-    },
-});
 
 const host = 'http://www.namoc.org/xwzx/jdzt/2018zhuanti/';
 
 module.exports = async (ctx) => {
-    const response = await _axios_client.get(host);
+    const response = await axios.get(host);
 
     const $ = cheerio.load(response.data);
 

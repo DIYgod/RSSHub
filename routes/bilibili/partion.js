@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const tid = ctx.params.tid;
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.bilibili.com/x/web-interface/newlist?ps=15&rid=${tid}&_=${+new Date()}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://www.bilibili.com/',
         },
     });

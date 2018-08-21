@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const qs = require('querystring');
-const config = require('../../config');
 const iconv = require('iconv-lite');
 const cheerio = require('cheerio');
 
@@ -13,7 +12,6 @@ module.exports = {
                 method: 'post',
                 url: 'https://space.bilibili.com/ajax/member/GetInfo',
                 headers: {
-                    'User-Agent': config.ua,
                     Referer: `https://space.bilibili.com/${uid}/`,
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
@@ -34,7 +32,6 @@ module.exports = {
                 method: 'get',
                 url: `https://api.live.bilibili.com/room/v1/Room/room_init?id=${shortID}`,
                 headers: {
-                    'User-Agent': config.ua,
                     Referer: `https://live.bilibili.com/${shortID}`,
                 },
             });
@@ -52,7 +49,6 @@ module.exports = {
                 method: 'get',
                 url: `https://api.live.bilibili.com/live_user/v1/UserInfo/get_anchor_in_room?roomid=${liveID}`,
                 headers: {
-                    'User-Agent': config.ua,
                     Referer: `https://live.bilibili.com/${liveID}`,
                 },
             });
@@ -69,9 +65,6 @@ module.exports = {
             const nameResponse = await axios({
                 method: 'get',
                 url: `https://www.bilibili.com/video/av${aid}`,
-                headers: {
-                    'User-Agent': config.ua,
-                },
                 responseType: 'arraybuffer',
             });
             const responseHtml = iconv.decode(nameResponse.data, 'UTF-8');
@@ -91,7 +84,6 @@ module.exports = {
                 method: 'get',
                 url: `https://api.bilibili.com/x/space/fav/nav?mid=${uid}`,
                 headers: {
-                    'User-Agent': config.ua,
                     Referer: `https://space.bilibili.com/${uid}/#/favlist`,
                 },
             });

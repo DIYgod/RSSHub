@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const weiboUtils = require('./utils');
 
 module.exports = async (ctx) => {
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `http://service.weibo.com/widget/widget_blog.php?uid=${uid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `http://service.weibo.com/widget/widget_blog.php?uid=${uid}`,
         },
     });

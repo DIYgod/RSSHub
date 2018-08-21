@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,9 +7,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: `https://book.qidian.com/info/${id}#Catalog`,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
     const $ = cheerio.load(response.data);
 
@@ -22,9 +18,6 @@ module.exports = async (ctx) => {
     const chapters_response = await axios({
         method: 'get',
         url: `https://book.qidian.com/ajax/book/category?${csrfToken}&bookId=${id}`,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
     const chapter_item = [];
 

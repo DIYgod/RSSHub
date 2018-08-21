@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const md5 = require('../../utils/md5');
 
 module.exports = async (ctx) => {
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://support.qq.com/api/v1/${projectID}/posts`,
         headers: {
-            'User-Agent': config.ua,
             Timestamp: Math.round(+new Date() / 1000).toString(),
             Signature: md5(Math.round(+new Date() / 1000).toString() + key),
         },

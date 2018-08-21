@@ -1,5 +1,4 @@
 const cheerio = require('cheerio');
-const config = require('../../config');
 const axios = require('../../utils/axios');
 const iconv = require('iconv-lite');
 const url = require('url');
@@ -8,7 +7,6 @@ const base = 'http://www.t66y.com';
 const section = 'thread0806.php?fid=';
 const axios_ins = axios.create({
     headers: {
-        'User-Agent': config.ua,
         Referer: base,
     },
     responseType: 'arraybuffer',

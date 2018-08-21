@@ -1,18 +1,14 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
     const country = ctx.params.country;
-    const url = `https://itunes.apple.com/${country}/app/${id}?ls=1&mt=8`;
+    const url = `https://itunes.apple.com/${country}/app/${id}`;
 
     const res = await axios({
         method: 'get',
-        url: url,
-        headers: {
-            'User-Agent': config.ua,
-        },
+        url,
     });
     const data = res.data;
     const $ = cheerio.load(data);

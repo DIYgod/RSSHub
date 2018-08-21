@@ -464,7 +464,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: topic 话题名(又称频道名或标签) 例如 2233 或 COSPLAY
 
-## bangumi
+## Bangumi
 
 ### 放送列表 <Author uid="hufan-akari"/>
 
@@ -473,6 +473,49 @@ rid: 排行榜分区 id，默认 0
 路由: `/bangumi/calendar/today`
 
 参数: 无
+
+### 条目的吐槽箱 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/subject/214265/comments>
+
+路由: `/bangumi/subject/:id/comments`
+
+参数:
+
+-   id：条目 ID。在条目页面的地址栏查看
+-   minLength：以查询字符串（query string）的形式指定。用于过滤掉内容长度小于指定值的吐槽
+
+### 条目的评论 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/subject/214265/blogs>
+
+路由: `/bangumi/subject/:id/blogs`
+
+参数: id - 条目 ID。在条目页面的地址栏查看
+
+### 条目的讨论 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/subject/214265/topics>
+
+路由: `/bangumi/subject/:id/topics`
+
+参数: id - 条目 ID。在条目页面的地址栏查看
+
+### 现实人物的新作品 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/person/32943>
+
+路由: `/bangumi/person/:id`
+
+参数: id - 人物 ID。在人物页面的地址栏查看
+
+### 小组话题的新回复 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/topic/24657>
+
+路由: `/bangumi/topic/:id`
+
+参数: id - 话题 ID。在话题页面地址栏查看
 
 ## 微博
 
@@ -1322,7 +1365,7 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: name，游戏的编号可以在专题页的 url 中找到
 
-### 下载 <Author uid="jacky2001114"/>
+### 下载 <Author uid="sinchang"/>
 
 举例: [https://rsshub.app/3dm/detroitbecomehuman/download](https://rsshub.app/3dm/detroitbecomehuman/download)
 
@@ -1332,17 +1375,31 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 ## 喜马拉雅
 
-### 专辑 <Author uid="jjeejj"/>
+### 专辑(支持泛用型播客订阅) <Author uid="lengthmin jjeejj"/>
 
-举例: [https://rsshub.app/ximalaya/album/shangye/299146/](https://rsshub.app/ximalaya/album/shangye/299146/)
+::: warning 注意
+**付费内容可获取更新但无法收听**
 
-路由: `/ximalaya/album/:classify/:id`
+目前[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**不能使用**以下链接来订阅播客:
+
+-   https://rsshub.app/ximalaya/album/299146.atom
+-   https://rsshub.app/ximalaya/album/299146.json
+
+:::
+
+举例: [https://rsshub.app/ximalaya/album/299146/](https://rsshub.app/ximalaya/album/299146/)
+
+路由: `/ximalaya/album/:id`
 
 参数:
 
-classify, 专辑分类, 可在对应专辑页面的 URL 中找到
+id, 专辑 id, 可在对应**专辑**页面的 URL 中找到
 
-id, 专辑 id, 可在对应专辑页面的 URL 中找到
+::: tip 提示
+
+专辑 id 是跟在分类拼音后的那个 id, 不要输成某集的 id 了
+
+:::
 
 ## EZTV
 
@@ -1917,3 +1974,45 @@ from: 始发地，IATA 国际航空运输协会机场代码
 to: 目的地，IATA 国际航空运输协会机场代码，可选，缺省则目的地为`任意城市`
 
 IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
+
+## 马蜂窝
+
+### 游记 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
+
+路由: `/mafengwo/note/:type`
+
+参数:
+
+type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表最新游记
+
+## 江南大学
+
+### 教务处通知 <Author uid="Chingyat"/>
+
+举例: [https://rsshub.app/ju/jwc/all](https://rsshub.app/ju/jwc/all)
+
+路由: `/ju/jwc/:type?`
+
+参数:
+
+type, 可选, 默认为 `all`
+
+| all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjs     |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部 | 通知公告 | 考试安排 | 违纪公告 | 推免工作 | 等级考试 | 学籍管理 | 毕业设计 | 实验教学 |
+
+| sjcx     | xkjs     | yjszj      | jxgg     | zyjs     | kcjs     | jcjs     | jxcg     | xsbg     |
+| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 实践创新 | 学科竞赛 | 研究生助教 | 教学改革 | 专业建设 | 课程建设 | 教材建设 | 教学成果 | 学术报告 |
+
+## 中国地震局
+
+### 地震速报 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/earthquake>
+
+路由: `/earthquake`
+
+参数: 无

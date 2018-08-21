@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const { imdb_id } = ctx.params;
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://eztv.ag/api/get-torrents?imdb_id=${imdb_id}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://eztv.ag',
         },
     });

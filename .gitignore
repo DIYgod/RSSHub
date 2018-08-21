@@ -11,3 +11,4 @@ docs/.vuepress/dist
 config/app.json
 config/config.js
 
+yarn-error.log
