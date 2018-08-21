@@ -12,11 +12,11 @@ module.exports = async (ctx) => {
             const $el = $(el);
             const url = 'http://www.cea.gov.cn' + $el.find('a').attr('href');
             let html = await ctx.cache.get(url);
-            if(!html) {
+            if (!html) {
                 html = (await axios.get(url)).data;
-                ctx.cache.set(url, html,3 * 24 * 60 * 60);
+                ctx.cache.set(url, html, 3 * 24 * 60 * 60);
             }
-            $1 = cheerio.load(html);
+            const $1 = cheerio.load(html);
             const $content = $1('.detail_main_right_conbg_con > div')
                                 .find('script')
                                 .remove()
@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
                 .appendTo($('<p>'))
                 .parent()
                 .appendTo($container);
-            
+
             return {
                 title: $el.find('a').text(),
                 link: url,
