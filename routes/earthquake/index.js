@@ -6,9 +6,8 @@ module.exports = async (ctx) => {
     const html = (await axios.get(link)).data;
     const $ = cheerio.load(html);
     const $items = $('.list_main_right_conbg_con li');
-    const items = await Promise.all($items
-        .toArray()
-        .map(async (el) => {
+    const items = await Promise.all(
+        $items.toArray().map(async (el) => {
             const $el = $(el);
             const url = 'http://www.cea.gov.cn' + $el.find('a').attr('href');
             let html = await ctx.cache.get(url);
@@ -18,12 +17,13 @@ module.exports = async (ctx) => {
             }
             const $1 = cheerio.load(html);
             const $content = $1('.detail_main_right_conbg_con > div')
-                                .find('script')
-                                .remove()
-                                .end();
+                .find('script')
+                .remove()
+                .end();
             const $container = $('<div>');
             $container.append(`<p>${$content.text().replace('（）', '')}</p>`);
-            $content.find('img')
+            $content
+                .find('img')
                 .each((i, el) => {
                     const $el = $(el);
                     const src = $el.attr('src');
@@ -37,13 +37,14 @@ module.exports = async (ctx) => {
             return {
                 title: $el.find('a').text(),
                 link: url,
-                description: $container.html()
+                description: $container.html(),
             };
-        }));
+        })
+    );
 
     ctx.state.data = {
         title: '中国地震局震情速递',
         link,
-        item: items
+        item: items,
     };
 };
