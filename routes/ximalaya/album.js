@@ -9,9 +9,11 @@ module.exports = async (ctx) => {
 
     const AlbumInfoApi = `http://www.ximalaya.com/revision/album?albumId=${id}`; // 专辑数据的API
     const AlbumInfoResponse = await axios_ins.get(AlbumInfoApi);
+
     const albuminfo = AlbumInfoResponse.data.data.mainInfo; // 专辑数据
     const authorinfo = AlbumInfoResponse.data.data.anchorInfo; // 作者数据
     const trackinfo = AlbumInfoResponse.data.data.tracksInfo; // tracks数据
+
     const classify = albuminfo.crumbs.categoryPinyin; // 专辑分类
     const albumUrl = '/' + classify + '/' + id + '/'; // 某分类的链接
     const ispaid = albuminfo.isPaid;
@@ -24,6 +26,7 @@ module.exports = async (ctx) => {
 
     const PlayInfoApi = `http://mobile.ximalaya.com/mobile/v1/album/track?albumId=${id}&pageSize=${tracks_count}`; // 声音播放数据
     const PlayInfoResponse = await axios_ins.get(PlayInfoApi);
+
     const playList = PlayInfoResponse.data.data.list;
 
     const resultItems = await Promise.all(
