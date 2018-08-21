@@ -1375,17 +1375,31 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 ## 喜马拉雅
 
-### 专辑 <Author uid="jjeejj"/>
+### 专辑(支持泛用型播客订阅) <Author uid="lengthmin jjeejj"/>
 
-举例: [https://rsshub.app/ximalaya/album/shangye/299146/](https://rsshub.app/ximalaya/album/shangye/299146/)
+::: warning 注意
+**付费内容可获取更新但无法收听**
 
-路由: `/ximalaya/album/:classify/:id`
+目前[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**不能使用**以下链接来订阅播客:
+
+-   https://rsshub.app/ximalaya/album/299146.atom
+-   https://rsshub.app/ximalaya/album/299146.json
+
+:::
+
+举例: [https://rsshub.app/ximalaya/album/299146/](https://rsshub.app/ximalaya/album/299146/)
+
+路由: `/ximalaya/album/:id`
 
 参数:
 
-classify, 专辑分类, 可在对应专辑页面的 URL 中找到
+id, 专辑 id, 可在对应**专辑**页面的 URL 中找到
 
-id, 专辑 id, 可在对应专辑页面的 URL 中找到
+::: tip 提示
+
+专辑 id 是跟在分类拼音后的那个 id, 不要输成某集的 id 了
+
+:::
 
 ## EZTV
 

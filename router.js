@@ -294,7 +294,7 @@ router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
-
+router.get('/ximalaya/album/:id', require('./routes/ximalaya/album'));
 // EZTV
 router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 
