@@ -1,8 +1,20 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
+const oldTags = {
+    frontend: '前端',
+    android: 'Android',
+    ios: 'iOS',
+    backend: '后端',
+    design: '设计',
+    product: '产品',
+    freebie: '工具资源',
+    article: '阅读',
+    ai: '人工智能',
+    devops: '运维',
+};
 
 module.exports = async (ctx) => {
-    const tag = ctx.params.category;
+    const tag = oldTags[ctx.params.category] || ctx.params.category;
 
     const idResponse = await axios({
         method: 'get',
