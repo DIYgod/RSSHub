@@ -109,6 +109,9 @@ router.get('/bilibili/topic/:topic', require('./routes/bilibili/topic'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
+router.get('/bangumi/subject/:id/:type', require('./routes/bangumi/subject'));
+router.get('/bangumi/person/:id', require('./routes/bangumi/person'));
+router.get('/bangumi/topic/:id', require('./routes/bangumi/group/reply.js'));
 
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
