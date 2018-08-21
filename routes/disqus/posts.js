@@ -8,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://disqus.com/api/3.0/forums/listPosts.json?api_key=${config.disqus.api_key}&forum=${forum}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://disqus.com/',
         },
     });
@@ -28,7 +27,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://disqus.com/api/3.0/forums/listThreads.json?api_key=${config.disqus.api_key}&forum=${forum}${threadsQuery}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://disqus.com/',
         },
     });

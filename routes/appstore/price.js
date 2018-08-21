@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const currency = require('currency-symbol-map');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const country = ctx.params.country;
@@ -13,7 +12,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: url,
         headers: {
-            'User-Agent': config.ua,
             Referer: `http://www.cheapcharts.info/itunes/${country}/apps/detail-view/${id}`,
         },
     });

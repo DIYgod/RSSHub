@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const name = ctx.params.name;
@@ -10,9 +9,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: url,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
 
     const data = response.data;

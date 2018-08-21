@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 const base64_decode = (i) => Buffer.from(i, 'base64').toString('binary');
 
@@ -15,7 +14,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `${baseUrl}${sub_model}/`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'http://jandan.net',
         },
     });

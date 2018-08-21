@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const rid = ctx.params.rid || '0';
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.bilibili.com/x/web-interface/ranking?jsonp=jsonp&rid=${rid}&day=${day}&type=1&arc_type=0&callback=__jp0`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://www.bilibili.com/ranking/all/${rid}/0/${day}`,
         },
     });

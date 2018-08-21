@@ -1,6 +1,5 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 const keep_project_and_duration = (text) => {
     const project = text
@@ -53,7 +52,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: requestUrl,
         headers: {
-            'User-Agent': config.ua,
             Host: 'show.gotokeep.com',
         },
     });

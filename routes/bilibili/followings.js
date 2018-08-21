@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const cache = require('./cache');
 
 module.exports = async (ctx) => {
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.bilibili.com/x/relation/stat?vmid=${uid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://space.bilibili.com/${uid}/`,
         },
     });
@@ -20,7 +18,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.bilibili.com/x/relation/followings?vmid=${uid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://space.bilibili.com/${uid}/`,
         },
     });

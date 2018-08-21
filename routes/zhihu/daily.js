@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const utils = require('./utils');
 
 // 参考：https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90
@@ -34,7 +33,6 @@ module.exports = async (ctx) => {
                 method: 'get',
                 url: url,
                 headers: {
-                    'User-Agent': config.ua,
                     Referer: url,
                 },
             });

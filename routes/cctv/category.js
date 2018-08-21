@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const category = ctx.params.category;
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: url,
         headers: {
-            'User-Agent': config.ua,
             Referer: url,
         },
     });

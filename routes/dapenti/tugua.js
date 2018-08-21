@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const iconv = require('iconv-lite');
 
 module.exports = async (ctx) => {
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: 'https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70',
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=70',
         },
         // 喷嚏网编码为GBK，需要转码
@@ -30,7 +28,6 @@ module.exports = async (ctx) => {
             method: 'get',
             url: url,
             headers: {
-                'User-Agent': config.ua,
                 Referer: url,
             },
             responseType: 'arraybuffer',

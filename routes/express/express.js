@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const company = ctx.params.company;
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://www.kuaidi100.com/query?type=${company}&postid=${number}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://www.kuaidi100.com',
         },
     });

@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const iconv = require('iconv-lite');
 
 const baseUrl = 'https://www.biquge5200.com/';
@@ -12,7 +11,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `${baseUrl}${id}/`,
         headers: {
-            'User-Agent': config.ua,
             Host: 'www.biquge5200.com',
             Referer: `${baseUrl}${id}/`,
         },

@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -17,9 +16,6 @@ module.exports = async (ctx) => {
     const res1 = await axios({
         method: 'get',
         url: 'https://xueqiu.com/',
-        header: {
-            'User-Agent': config.ua,
-        },
     });
     const token = res1.headers['set-cookie'].find((s) => s.startsWith('xq_a_token=')).split(';')[0];
 
@@ -32,7 +28,6 @@ module.exports = async (ctx) => {
             source: source,
         },
         headers: {
-            'User-Agent': config.ua,
             Cookie: token,
             Referer: `https://xueqiu.com/u/${id}`,
         },

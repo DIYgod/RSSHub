@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 const cacheLength = 5;
 const cacheDays = 30;
@@ -14,9 +13,6 @@ module.exports = async (ctx) => {
         method: 'get',
         baseURL: 'http://update.miui.com',
         url: '/updates/miota-fullrom.php',
-        headers: {
-            'User-Agent': config.ua,
-        },
         params: {
             d: device,
             b: releaseType,

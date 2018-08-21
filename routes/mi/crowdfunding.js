@@ -1,14 +1,10 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const baseUrl = 'https://home.mi.com/app/shop/content?id=s8939d03918810635';
     const response = await axios({
         method: 'get',
         url: baseUrl,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
 
     const data = response.data.match(/,gid:(\d*),src:"(.+?)"/g).map((item) => ({
@@ -28,7 +24,6 @@ module.exports = async (ctx) => {
                     method: 'get',
                     url: `https://home.mi.com/app/shop/jsonp?k=test&m=Product&a=GetDetail&p={%22gid%22:${item.gid}}&_=${+new Date()}&callback=Zepto1532846359142`,
                     headers: {
-                        'User-Agent': config.ua,
                         Referer: baseUrl,
                     },
                 });

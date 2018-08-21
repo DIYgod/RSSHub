@@ -1,90 +1,55 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const baseUrl = 'http://www.ximalaya.com';
+const axios_ins = axios.create({
+    responseType: 'json',
+});
 
 module.exports = async (ctx) => {
     const id = ctx.params.id; // 专辑id
-    let count = ctx.params.count ? ctx.params.count : 10; // 请求数量
-    if (count > 100) {
-        count = 100;
-    } else if (count < 1) {
-        count = 1;
-    }
+    const classify = ctx.params.classify; // 专辑分类
+    const albumUrl = '/' + classify + '/' + id + '/';
 
-    const axios_ins = axios.create({
-        headers: {
-            'User-Agent': config.ua,
-            Host: 'www.ximalaya.com',
-        },
-        responseType: 'json',
-    });
-
-    const PlayInfoApi = `${baseUrl}/revision/play/album?albumId=${id}&pageNum=1&sort=1&pageSize=${count}`; // 声音播放数据
-    const PlayInfoResponse = await axios_ins.get(PlayInfoApi);
-
-    const playList = PlayInfoResponse.data.data.tracksAudioPlay;
-
-    const albumurl = baseUrl + playList[0].albumUrl;
-
-    const AlbumInfoApi = `${baseUrl}/revision/album?albumId=${id}`;
+    const AlbumInfoApi = `http://www.ximalaya.com/revision/album?albumId=${id}`; // 专辑数据的API
     const AlbumInfoResponse = await axios_ins.get(AlbumInfoApi);
+    const albuminfo = AlbumInfoResponse.data.data.mainInfo; // 专辑数据
+    const authorinfo = AlbumInfoResponse.data.data.anchorInfo; // 作者数据
+    const trackinfo = AlbumInfoResponse.data.data.tracksInfo; // tracks数据
 
-    const albuminfo = AlbumInfoResponse.data.data.mainInfo;
-    const albumtitle = albuminfo.albumTitle;
-    const cover_url = albuminfo.cover.split('&')[0];
-    const albumdesc = albuminfo.detailRichIntro;
-    const author = AlbumInfoResponse.data.data.anchorInfo.anchorName;
+    const album_title = albuminfo.albumTitle;
+    const album_url = baseUrl + albumUrl;
+    const album_desc = albuminfo.detailRichIntro;
+    const album_cover_url = albuminfo.cover.split('&')[0];
+    const album_author = authorinfo.anchorName;
+    const tracks_count = trackinfo.trackTotalCount;
+
+    const PlayInfoApi = `http://mobile.ximalaya.com/mobile/v1/album/track?albumId=${id}&pageSize=${tracks_count}`; // 声音播放数据
+
+    const PlayInfoResponse = await axios_ins.get(PlayInfoApi);
+    console.log(PlayInfoResponse.data.data.list);
+    const playList = PlayInfoResponse.data.data.list;
 
     const resultItems = await Promise.all(
         playList.map(async (item) => {
             const resultItem = {
-                title: item.trackName,
-                link: baseUrl + item.trackUrl,
-                description: '',
-                pubDate: '',
-                itunes_item_image: item.trackCoverPath.split('&')[0],
-                enclosure_url: item.src,
+                title: item.title,
+                link: baseUrl + albumUrl + item.trackId,
+                description: '查看原文: ' + baseUrl + albumUrl + item.trackId,
+                pubDate: new Date(item.createdAt).toUTCString(),
+                itunes_item_image: item.coverLarge,
+                enclosure_url: item.playPathAacv224,
                 enclosure_length: item.duration,
                 enclosure_type: 'audio/mpeg',
             };
-
-            const TrackInfoApi = `${baseUrl}/revision/track/trackPageInfo?trackId=${item.trackId}`; // TrackInfo
-
-            const key = 'podcast' + item.trackId;
-
-            const value = await ctx.cache.get(key);
-
-            if (value) {
-                const trackinfo = JSON.parse(value);
-                resultItem.description = trackinfo.desc;
-                resultItem.pubDate = trackinfo.date;
-            } else {
-                const TrackInfoResponse = await axios_ins.get(TrackInfoApi);
-                const trackinfo_data = TrackInfoResponse.data.data.trackInfo;
-
-                const trackinfo = {
-                    desc: trackinfo_data.richIntro,
-                    date: new Date(trackinfo_data.lastUpdate).toUTCString(),
-                };
-
-                const trackinfoStr = JSON.stringify(trackinfo);
-
-                resultItem.description = trackinfo.desc;
-                resultItem.pubDate = trackinfo.date;
-
-                ctx.cache.set(key, trackinfoStr, 24 * 60 * 60);
-            }
-
             return Promise.resolve(resultItem);
         })
     );
 
     ctx.state.data = {
-        title: `${albumtitle}`,
-        link: `${albumurl}`,
-        description: albumdesc,
-        image: cover_url,
-        itunes_author: author,
+        title: `${album_title}`,
+        link: `${album_url}`,
+        description: album_desc,
+        image: album_cover_url,
+        itunes_author: album_author,
         item: resultItems,
     };
 };

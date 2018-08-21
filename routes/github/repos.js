@@ -7,9 +7,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: `https://api.github.com/users/${user}/repos`,
-        headers: {
-            'User-Agent': config.ua,
-        },
         params: {
             sort: 'created',
             access_token: config.github.access_token,

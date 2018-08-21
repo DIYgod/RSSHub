@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 const baseUrl = 'https://toutiao.io';
 module.exports = async (ctx) => {
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: requestUrl,
         headers: {
-            'User-Agent': config.ua,
             Host: 'toutiao.io',
         },
         responseType: 'text',

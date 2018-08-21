@@ -1,15 +1,8 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const cheerio = require('cheerio');
 
-const _axios_client = axios.create({
-    headers: {
-        'User-Agent': config.ua,
-    },
-});
-
 module.exports = async (ctx) => {
-    const response = await _axios_client.get('http://www.dongqiudi.com/special/48');
+    const response = await axios.get('http://www.dongqiudi.com/special/48');
 
     const $ = cheerio.load(response.data);
 
@@ -35,7 +28,7 @@ module.exports = async (ctx) => {
         };
 
         try {
-            const es = _axios_client.get(itemUrl);
+            const es = axios.get(itemUrl);
             proList.push(es);
             out.push(single);
         } catch (err) {
