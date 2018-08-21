@@ -612,7 +612,7 @@ rid: 排行榜分区 id，默认 0
 
 ### 分类
 
-举例(首页推荐标签): [https://rsshub.app/juejin/category/前端](https://rsshub.app/juejin/category/前端)
+举例(首页推荐标签): [https://rsshub.app/juejin/category/前端](https://rsshub.app/juejin/category/前端)  
 举例(其他标签): [https://rsshub.app/juejin/category/算法](https://rsshub.app/juejin/category/算法)
 
 路由: `/juejin/category/:category`
