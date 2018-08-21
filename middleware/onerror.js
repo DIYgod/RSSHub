@@ -18,9 +18,15 @@ module.exports = async (ctx, next) => {
         ctx.status = 404;
 
         if (config.sentry) {
-            Raven.captureException(err, function(err, eventId) {
-                console.log('Reported error ' + eventId);
-            });
+            Raven.captureException(
+                err,
+                {
+                    req: ctx.req,
+                },
+                function(err, eventId) {
+                    console.log('Reported error ' + eventId);
+                }
+            );
         }
     }
 };
