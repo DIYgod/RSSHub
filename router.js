@@ -431,4 +431,7 @@ router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
 // 马蜂窝
 router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
 
+// 江南大学
+router.get('/ju/jwc/:type?', require('./routes/ju/jwc'));
+
 module.exports = router;
