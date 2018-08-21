@@ -2,13 +2,13 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
-    const category = ctx.params.category;
+    const tag = ctx.params.category;
 
     const idResponse = await axios({
         method: 'get',
-        url: 'https://gold-tag-ms.juejin.im/v1/categories',
+        url: 'https://gold-tag-ms.juejin.im/v1/tags',
         headers: {
-            Referer: `https://juejin.im/welcome/${category}`,
+            Referer: `https://juejin.im/tag/${encodeURI(tag)}`,
             'X-Juejin-Client': '',
             'X-Juejin-Src': 'web',
             'X-Juejin-Token': '',
@@ -16,21 +16,20 @@ module.exports = async (ctx) => {
         },
     });
 
-    const cat = idResponse.data.d.categoryList.filter((item) => item.title === category)[0];
+    const cat = idResponse.data.d.tags.filter((item) => item.title === tag)[0];
     const id = cat.id;
 
     const response = await axios({
         method: 'get',
-        url: `https://timeline-merger-ms.juejin.im/v1/get_entry_by_timeline?src=web&limit=20&category=${id}`,
+        url: `https://timeline-merger-ms.juejin.im/v1/get_tag_entry?src=web&tagId=${id}&page=0&pageSize=10&sort=rankIndex`,
         headers: {
-            Referer: `https://juejin.im/welcome/${category}`,
+            Referer: `https://juejin.im/tag/${encodeURI(tag)}`,
         },
     });
 
-    // const data = response.data;
     let originalData = [];
     if (response.data.d && response.data.d.entrylist) {
-        originalData = response.data.d && response.data.d.entrylist.slice(0, 5);
+        originalData = response.data.d && response.data.d.entrylist.slice(0, 10);
     }
     const resultItems = await Promise.all(
         originalData.map(async (item) => {
@@ -67,9 +66,9 @@ module.exports = async (ctx) => {
     );
 
     ctx.state.data = {
-        title: `掘金${cat.name}`,
-        link: `https://juejin.im/welcome/${category}`,
-        description: `掘金${cat.name}`,
+        title: `掘金${cat.title}`,
+        link: `https://juejin.im/tag/${encodeURI(tag)}`,
+        description: `掘金${cat.title}`,
         item: resultItems,
     };
 };
