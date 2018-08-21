@@ -464,7 +464,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: topic 话题名(又称频道名或标签) 例如 2233 或 COSPLAY
 
-## bangumi
+## Bangumi
 
 ### 放送列表 <Author uid="hufan-akari"/>
 
