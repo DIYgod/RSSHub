@@ -109,6 +109,9 @@ router.get('/bilibili/topic/:topic', require('./routes/bilibili/topic'));
 
 // bangumi
 router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today'));
+router.get('/bangumi/subject/:id/:type', require('./routes/bangumi/subject'));
+router.get('/bangumi/person/:id', require('./routes/bangumi/person'));
+router.get('/bangumi/topic/:id', require('./routes/bangumi/group/reply.js'));
 
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
@@ -430,5 +433,8 @@ router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
 
 // 马蜂窝
 router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
+
+// 中国地震局震情速递（与地震台网同步更新）
+router.get('/earthquake', require('./routes/earthquake'));
 
 module.exports = router;
