@@ -474,6 +474,49 @@ rid: 排行榜分区 id，默认 0
 
 参数: 无
 
+### 条目的吐槽箱
+
+举例: <https://rsshub.app/bangumi/subject/214265/comments>
+
+路由: `/bangumi/subject/:id/comments`
+
+参数:
+
+-   id：条目 ID。在条目页面的地址栏查看
+-   minLength：以查询字符串（query string）的形式指定。用于过滤掉内容长度小于指定值的吐槽
+
+### 条目的评论
+
+举例: <https://rsshub.app/bangumi/subject/214265/blogs>
+
+路由: `/bangumi/subject/:id/blogs`
+
+参数: id - 条目 ID。在条目页面的地址栏查看
+
+### 条目的讨论
+
+举例: <https://rsshub.app/bangumi/subject/214265/topics>
+
+路由: `/bangumi/subject/:id/topics`
+
+参数: id - 条目 ID。在条目页面的地址栏查看
+
+### 现实人物的新作品
+
+举例: <https://rsshub.app/bangumi/person/32943>
+
+路由: `/bangumi/person/:id`
+
+参数: id - 人物 ID。在人物页面的地址栏查看
+
+### 小组话题的新回复
+
+举例: <https://rsshub.app/bangumi/topic/24657>
+
+路由: `/bangumi/topic/:id`
+
+参数: id - 话题 ID。在话题页面地址栏查看
+
 ## 微博
 
 ### 博主
@@ -1929,3 +1972,14 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 参数:
 
 type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表最新游记
+
+
+## 中国地震局
+
+### 地震速报
+
+举例: <https://rsshub.app/earthquake>
+
+路由: `/earthquake`
+
+参数: 无
