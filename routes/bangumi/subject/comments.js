@@ -19,14 +19,17 @@ module.exports = async (subjectID, minLength) => {
                 rate = $rateEl.attr('class').match(/sstars(\d)/)[1];
             }
 
-            let dateString = $el.find('small.grey').text().slice(2);
+            const dateString = $el
+                .find('small.grey')
+                .text()
+                .slice(2);
             let date;
-            if(dateString.includes('ago')) {
+            if (dateString.includes('ago')) {
                 // 处理表示相对日期的字符串
                 const list = dateString
-                                .match(/(\dd )?(\d{1,2}h )?(\d{1,2}m )?ago/)
-                                .slice(1)
-                                .map(s => s ? Number(s.slice(0, -2)) : 0);
+                    .match(/(\dd )?(\d{1,2}h )?(\d{1,2}m )?ago/)
+                    .slice(1)
+                    .map((s) => (s ? Number(s.slice(0, -2)) : 0));
 
                 date = DateTime.local().minus({
                     days: list[0],

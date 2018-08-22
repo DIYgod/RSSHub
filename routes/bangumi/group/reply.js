@@ -18,12 +18,14 @@ module.exports = async (ctx) => {
                 author: $el.find('.userInfo .l').text(),
                 content: $el.find('.reply_content .message').html(),
                 date: $el
-                        .children()
-                        .first()
-                        .find('small')
-                        .children()
-                        .remove()
-                        .end().text().slice(3),
+                    .children()
+                    .first()
+                    .find('small')
+                    .children()
+                    .remove()
+                    .end()
+                    .text()
+                    .slice(3),
             };
         })
         .get()

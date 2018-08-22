@@ -34,25 +34,37 @@ module.exports = async (ctx) => {
 
             const $scriptEls = $content.find('script');
             const info = [
-                $($scriptEls[0]).html().match(/,"(.+)"/)[1],
-                $($scriptEls[1]).html().match(/"(.+)"/)[1] + ', ',
-                $($scriptEls[2]).html().match(/"(.+)"/)[1],
-                $($scriptEls[3]).html().match(/"(.+)"/)[1],
+                $($scriptEls[0])
+                    .html()
+                    .match(/,"(.+)"/)[1],
+                $($scriptEls[1])
+                    .html()
+                    .match(/"(.+)"/)[1] + ', ',
+                $($scriptEls[2])
+                    .html()
+                    .match(/"(.+)"/)[1],
+                $($scriptEls[3])
+                    .html()
+                    .match(/"(.+)"/)[1],
             ];
 
             const text = info.reduce(
                 (text, field) => text.replace(/<script>[\s\S]+?<\/script>/, field),
-                $content.children().not('center').parent().html()
+                $content
+                    .children()
+                    .not('center')
+                    .parent()
+                    .html()
             );
             $container.prepend(`<p>${text}</p>`);
 
             const dateString = $1('.detail_main_right_conbg_tit')
-                                .children()
-                                .last()
-                                .text()
-                                .trim()
-                                .substring(5);
-                console.log($container.html());
+                .children()
+                .last()
+                .text()
+                .trim()
+                .substring(5);
+            console.log($container.html());
 
             return {
                 title: $el.find('a').text(),
