@@ -150,6 +150,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   最热/最新主题
 -   Telegram
     -   频道
+    -   贴纸包
 -   Readhub
     -   分类
 -   GitHub

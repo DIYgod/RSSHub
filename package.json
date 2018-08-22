@@ -50,6 +50,7 @@
     "git-rev-sync": "1.12.0",
     "googleapis": "32.0.0",
     "iconv-lite": "0.4.23",
+    "imgur": "^0.2.1",
     "json-bigint": "0.3.0",
     "koa": "2.5.2",
     "koa-favicon": "2.0.1",
@@ -62,6 +63,7 @@
     "readall": "1.0.0",
     "redis": "2.8.0",
     "rss-parser": "3.4.3",
+    "sharp": "^0.20.7",
     "twit": "2.2.11",
     "winston": "3.0.0"
   },

@@ -1350,6 +1350,14 @@ key: 产品密钥
 
 参数: username，频道 username
 
+### 贴纸包
+
+举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
+
+路由: `/telegram/stickerpack/:name`
+
+参数: name，贴纸包 id，可在分享贴纸获得的 URL 中找到
+
 ## Readhub
 
 ### 分类 <Author uid="WhiteWorld"/>

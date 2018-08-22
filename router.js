@@ -254,6 +254,11 @@ router.get('/v2ex/topics/:type', require('./routes/v2ex/topics'));
 // Telegram
 if (config.telegram && config.telegram.token) {
     router.get('/telegram/channel/:username', require('./routes/telegram/channel'));
+    if (config.imgur && config.imgur.clientId) {
+        router.get('/telegram/stickerpack/:name', require('./routes/telegram/stickerpack'));
+    } else {
+        logger.warn('Telegram Sticker Pack RSS is disabled for lacking config.');
+    }
 } else {
     logger.warn('Telegram RSS is disabled for lacking config.');
 }
