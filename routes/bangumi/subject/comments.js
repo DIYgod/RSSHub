@@ -1,5 +1,6 @@
 const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
+const DateTime = require('luxon').DateTime;
 
 module.exports = async (subjectID, minLength) => {
     // bangumi.tv未提供获取“吐槽（comments）”的API，因此仍需要通过抓取网页来获取
@@ -17,10 +18,31 @@ module.exports = async (subjectID, minLength) => {
             if ($rateEl.length > 0) {
                 rate = $rateEl.attr('class').match(/sstars(\d)/)[1];
             }
+
+            let dateString = $el.find('small.grey').text().slice(2);
+            let date;
+            if(dateString.includes('ago')) {
+                // 处理表示相对日期的字符串
+                const list = dateString
+                                .match(/(\dd )?(\d{1,2}h )?(\d{1,2}m )?ago/)
+                                .slice(1)
+                                .map(s => s ? Number(s.slice(0, -2)) : 0);
+
+                date = DateTime.local().minus({
+                    days: list[0],
+                    hours: list[1],
+                    minutes: list[2],
+                });
+            } else {
+                // 表示绝对日期的字符串
+                date = DateTime.fromFormat(dateString, 'yyyy-L-dd HH:mm');
+            }
+
             return {
                 user: $el.find('.l').text(),
-                rate: rate ? rate / 2 : '无',
+                rate: rate || '无',
                 content: $el.find('p').text(),
+                date: date.toRFC2822(),
             };
         })
         .get()
@@ -32,6 +54,7 @@ module.exports = async (subjectID, minLength) => {
             title: `${c.user}的吐槽`,
             description: `【评分：${c.rate}】  ${c.content}`,
             guid: c.user,
+            pubDate: c.date,
             link,
         })),
     };
