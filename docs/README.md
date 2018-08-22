@@ -612,12 +612,23 @@ rid: 排行榜分区 id，默认 0
 
 ### 分类
 
-举例(首页推荐标签): [https://rsshub.app/juejin/category/前端](https://rsshub.app/juejin/category/前端)  
-举例(其他标签): [https://rsshub.app/juejin/category/算法](https://rsshub.app/juejin/category/算法)
+举例: [https://rsshub.app/juejin/category/frontend](https://rsshub.app/juejin/category/frontend)
 
 路由: `/juejin/category/:category`
 
-参数: category，分类(标签)名称，可在标签 URL 中找到
+参数: category，分类名
+
+| 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+| -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+| frontend | android | ios | backend | design | product | freebie  | article | ai       |
+
+### 标签
+
+举例: [https://rsshub.app/juejin/tag/架构](https://juejin.im/tag/架构)
+
+路由: `/juejin/tag/:tag`
+
+参数: tag，标签名，可在标签 URL 中找到
 
 ## 简书
 
