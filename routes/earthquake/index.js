@@ -1,5 +1,6 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
+const Datetime = require('luxon').DateTime;
 
 module.exports = async (ctx) => {
     const link = 'http://www.cea.gov.cn/publish/dizhenj/464/479/index.html';
@@ -16,12 +17,9 @@ module.exports = async (ctx) => {
                 ctx.cache.set(url, html, 3 * 24 * 60 * 60);
             }
             const $1 = cheerio.load(html);
-            const $content = $1('.detail_main_right_conbg_con > div')
-                .find('script')
-                .remove()
-                .end();
+            const $content = $1('.detail_main_right_conbg_con > div');
             const $container = $('<div>');
-            $container.append(`<p>${$content.text().replace('（）', '')}</p>`);
+
             $content
                 .find('img')
                 .each((i, el) => {
@@ -34,9 +32,32 @@ module.exports = async (ctx) => {
                 .parent()
                 .appendTo($container);
 
+            const $scriptEls = $content.find('script');
+            const info = [
+                $($scriptEls[0]).html().match(/,"(.+)"/)[1],
+                $($scriptEls[1]).html().match(/"(.+)"/)[1] + ', ',
+                $($scriptEls[2]).html().match(/"(.+)"/)[1],
+                $($scriptEls[3]).html().match(/"(.+)"/)[1],
+            ];
+
+            const text = info.reduce(
+                (text, field) => text.replace(/<script>[\s\S]+?<\/script>/, field),
+                $content.children().not('center').parent().html()
+            );
+            $container.prepend(`<p>${text}</p>`);
+
+            const dateString = $1('.detail_main_right_conbg_tit')
+                                .children()
+                                .last()
+                                .text()
+                                .trim()
+                                .substring(5);
+                console.log($container.html());
+
             return {
                 title: $el.find('a').text(),
                 link: url,
+                pubDate: Datetime.fromFormat(dateString, 'yyyy-LL-dd HH:mm:ss').toRFC2822(),
                 description: $container.html(),
             };
         })

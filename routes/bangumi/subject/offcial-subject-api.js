@@ -1,4 +1,6 @@
 const axios = require('../../../utils/axios');
+const DateTime = require('luxon').DateTime;
+
 module.exports = (type) => {
     const mapping = {
         blog: {
@@ -22,6 +24,7 @@ module.exports = (type) => {
                 title: `${article.user.nickname}：${article.title}`,
                 description: article.summary || '',
                 link: article.url,
+                pubDate: DateTime.fromMillis(article.timestamp * 1000).toRFC2822(),
             })),
         };
     };

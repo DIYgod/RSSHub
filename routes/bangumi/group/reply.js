@@ -1,5 +1,6 @@
 const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
+const DateTime = require('luxon').DateTime;
 
 module.exports = async (ctx) => {
     // bangumi.tv未提供获取小组话题的API，因此仍需要通过抓取网页来获取
@@ -16,6 +17,13 @@ module.exports = async (ctx) => {
                 id: $el.attr('id'),
                 author: $el.find('.userInfo .l').text(),
                 content: $el.find('.reply_content .message').html(),
+                date: $el
+                        .children()
+                        .first()
+                        .find('small')
+                        .children()
+                        .remove()
+                        .end().text().slice(3),
             };
         })
         .get()
@@ -28,6 +36,7 @@ module.exports = async (ctx) => {
             title: `${c.author}回复了小组话题《${title}》`,
             description: c.content,
             guid: c.id,
+            pubDate: DateTime.fromFormat(c.date, 'yyyy-L-dd HH:mm'),
             link,
         })),
     };
