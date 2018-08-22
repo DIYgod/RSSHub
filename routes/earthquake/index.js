@@ -34,7 +34,7 @@ module.exports = async (ctx) => {
 
             const $scriptEls = $content.find('script');
             const info = [
-                $($scriptEls[0]).html().match(/,"(.+)"/)[1],
+                $($scriptEls[0]).html().match(/origTime\("(.+分)/)[1],
                 $($scriptEls[1]).html().match(/"(.+)"/)[1] + ', ',
                 $($scriptEls[2]).html().match(/"(.+)"/)[1],
                 $($scriptEls[3]).html().match(/"(.+)"/)[1],
@@ -52,7 +52,6 @@ module.exports = async (ctx) => {
                                 .text()
                                 .trim()
                                 .substring(5);
-                console.log($container.html());
 
             return {
                 title: $el.find('a').text(),
