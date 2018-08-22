@@ -1350,7 +1350,7 @@ key: 产品密钥
 
 参数: username，频道 username
 
-### 贴纸包
+### 贴纸包 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
 
