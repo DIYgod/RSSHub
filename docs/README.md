@@ -845,7 +845,7 @@ rid: 排行榜分区 id，默认 0
 
 ### 标签 <Author uid="isheng5"/>
 
-举例: [https://rsshub.app/juejin/tag/架构](https://juejin.im/tag/架构)
+举例: [https://rsshub.app/juejin/tag/架构](https://rsshub.app/juejin/tag/架构)
 
 路由: `/juejin/tag/:tag`
 
