@@ -665,6 +665,14 @@ rid: 排行榜分区 id，默认 0
 | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
 | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
+### 标签
+
+举例: [https://rsshub.app/juejin/tag/架构](https://juejin.im/tag/架构)
+
+路由: `/juejin/tag/:tag`
+
+参数: tag，标签名，可在标签 URL 中找到
+
 ## 简书
 
 ### 首页
