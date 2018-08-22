@@ -36,7 +36,7 @@ module.exports = async (ctx) => {
             const info = [
                 $($scriptEls[0])
                     .html()
-                    .match(/,"(.+)"/)[1],
+                    .match(/origTime\("(.+分)/)[1],
                 $($scriptEls[1])
                     .html()
                     .match(/"(.+)"/)[1] + ', ',
