@@ -310,9 +310,9 @@ type, 可选, 默认为 `all`
 
 > 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。
 
-#### 财新网
+#### 新闻分类 <Author uid="idealclover"/>
 
-举例: [https://rsshub.app/caixin/finance/regulation](https://rsshub.app/caixin/finance/regulation])
+举例: [https://rsshub.app/caixin/finance/regulation](https://rsshub.app/caixin/finance/regulation)
 
 路由: `/caixin/:column/:category`
 
@@ -322,9 +322,9 @@ category，栏目下的子分类名
 
 column 列表：
 
-| 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    |
-| ------- | ------- | ----- | ------- | ------------- | ------- | ------- |
-| economy | finance | china | science | international | opinion | culture |
+| 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
+| ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
+| economy | finance | china | science | international | opinion | culture | weekly |
 
 以金融板块为例的 category 列表：（其余 column 以类似方式寻找）
 
@@ -332,13 +332,7 @@ column 列表：
 | ---------- | ---- | -------- | --------------- | ---------- | ---------- | ------ |
 | regulation | bank | stock    | insurance_trust | investment | innovation | market |
 
-#### 财新周刊 <Author uid="idealclover"/>
-
-举例: [https://rsshub.app/caixin/weekly/coverstory](https://rsshub.app/caixin/weekly/coverstory)
-
-路由: `/caixin/weekly/:category`
-
-参数：category，分类名
+财新周刊 category 列表：
 
 | 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
 | ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
