@@ -42,10 +42,12 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         link: link,
         title: $('title').text(),
-        item: $('.pg-list>ul>li').map((_, elem) => ({
-            link: resolve_url(link, $('a', elem).attr('href')),
-            title: $('a', elem).text(),
-            pubDate: new Date($('span.food-time', elem).text()).toUTCString(),
-        })),
+        item: $('.pg-list>ul>li')
+            .map((_, elem) => ({
+                link: resolve_url(link, $('a', elem).attr('href')),
+                title: $('a', elem).text(),
+                pubDate: new Date($('span.food-time', elem).text()).toUTCString(),
+            }))
+            .get(),
     };
 };
