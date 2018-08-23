@@ -331,7 +331,7 @@ router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
 router.get('/cctv/:category', require('./routes/cctv/category'));
 
 // 财新
-router.get('/caixin/weekly/:category', require('./routes/caixin/weekly'));
+router.get('/caixin/:column/:category', require('./routes/caixin/category'));
 
 // 草榴社区
 router.get('/t66y/:id', require('./routes/t66y/index'));
