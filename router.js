@@ -189,9 +189,6 @@ router.get('/dockone/weekly', require('./routes/dockone/weekly'));
 // 腾讯吐个槽
 router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 
-// 笔趣阁
-router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter'));
-
 // 开发者头条
 router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
@@ -290,9 +287,6 @@ router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/p
 
 // 纽约时报
 router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
-
-// UU看书
-router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
 
 // 3dm
 router.get('/3dm/:name/download', require('./routes/3dm/download'));
@@ -446,5 +440,16 @@ router.get('/ju/jwc/:type?', require('./routes/ju/jwc'));
 
 // 中国地震局震情速递（与地震台网同步更新）
 router.get('/earthquake', require('./routes/earthquake'));
+
+// 笔趣阁
+router.get('/biquge/novel/latestchapter/:id', require('./routes/novel/biquge'));
+
+// UU看书
+router.get('/uukanshu/chapter/:uid', require('./routes/novel/uukanshu'));
+
+// 小说
+router.get('/novel/biquge/:id', require('./routes/novel/biquge'));
+router.get('/novel/uukanshu/:uid', require('./routes/novel/uukanshu'));
+router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
 
 module.exports = router;
