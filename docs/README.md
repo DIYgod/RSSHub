@@ -1468,8 +1468,10 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 路由: `/github/issue/:user/:repo`
 
-参数: user，用户名
-参数: repo，仓库名
+参数: 
+
+user，用户名
+repo，仓库名
 
 ### Follower <Author uid="HenryQW"/>
 
@@ -1478,6 +1480,17 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 路由: `/github/user/follower/:user`
 
 参数: user，用户名
+
+### Star <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/github/star/DIYGod/RSSHub](https://rsshub.app/github/star/DIYGod/RSSHub)
+
+路由: `/github/star/:user/:repo`
+
+参数: 
+
+user，用户名
+repo，仓库名
 
 ## UU 看书
 

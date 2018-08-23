@@ -376,6 +376,18 @@ Parameters:
 
 -   user, username
 
+### Star <Author uid="HenryQW"/>
+
+Eg: [https://rsshub.app/github/star/HenryQW/RSSHub](https://rsshub.app/github/star/HenryQW/RSSHub)
+
+Route: `/github/star/:user/:repo`
+
+Parameters:
+
+-   user, username
+
+-   repo, repo name
+
 ## EZTV
 
 ::: tip
