@@ -1471,6 +1471,14 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 参数: user，用户名
 参数: repo，仓库名
 
+### Follower <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/github/user/follower/HenryQW](https://rsshub.app/github/user/follower/HenryQW)
+
+路由: `/github/user/follower/:user`
+
+参数: user，用户名
+
 ## UU 看书
 
 ### 小说章节 <Author uid="jacky2001114"/>

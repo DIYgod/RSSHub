@@ -366,6 +366,16 @@ Parameters:
 
 -   repo, repo name
 
+### Follower <Author uid="HenryQW"/>
+
+Eg: [https://rsshub.app/github/user/follower/HenryQW](https://rsshub.app/github/user/follower/HenryQW)
+
+Route: `/github/user/follower/:user`
+
+Parameters:
+
+-   user, username
+
 ## EZTV
 
 ::: tip
