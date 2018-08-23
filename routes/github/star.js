@@ -3,9 +3,10 @@ const config = require('../../config');
 
 module.exports = async (ctx) => {
     const user = ctx.params.user;
+    const repo = ctx.params.repo;
 
-    const host = `https://github.com/${user}`;
-    const url = `https://api.github.com/users/${user}/followers`;
+    const host = `https://github.com/${user}/${repo}/stargazers`;
+    const url = `https://api.github.com/repos/${user}/${repo}/stargazers`;
 
     const response = await axios({
         method: 'get',
@@ -20,7 +21,7 @@ module.exports = async (ctx) => {
         title: `${user}'s followers`,
         link: host,
         item: data.map((follower) => ({
-            title: `New follower: ${follower.login}`,
+            title: `New stargazer: ${follower.login}`,
             description: `${follower.html_url} <br> <img src='${follower.avatar_url}'>`,
             link: `https://github.com/${follower.login}`,
         })),
