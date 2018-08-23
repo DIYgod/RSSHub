@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const type = ctx.params.type;
@@ -7,9 +6,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: `https://www.v2ex.com/api/topics/${type}.json`,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
 
     const data = response.data;

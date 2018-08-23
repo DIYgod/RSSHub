@@ -1,6 +1,5 @@
 const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../../config');
 
 module.exports = async (ctx) => {
     const url = 'https://cloud.tencent.com/document/product/454/7878';
@@ -8,9 +7,6 @@ module.exports = async (ctx) => {
     const res = await axios({
         method: 'get',
         url: url,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
     const data = res.data;
     const $ = cheerio.load(data);

@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const locations = ctx.params.locations;
@@ -26,7 +25,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url,
         headers: {
-            'User-Agent': config.ua,
             Referer: host,
         },
     });

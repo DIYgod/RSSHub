@@ -1,16 +1,9 @@
 const cheerio = require('cheerio');
-const config = require('../../config');
 const axios = require('../../utils/axios');
-
-const axios_ins = axios.create({
-    headers: {
-        'User-Agent': config.ua,
-    },
-});
 
 module.exports = async (ctx) => {
     const url = `http://${ctx.params.url}`;
-    const res = await axios_ins.get(`${url}/archives`);
+    const res = await axios.get(`${url}/archives`);
     const data = res.data;
     const $ = cheerio.load(data);
 
@@ -34,7 +27,7 @@ module.exports = async (ctx) => {
             if (value) {
                 item.description = value;
             } else {
-                const storyDeatil = await axios_ins.get(item.link);
+                const storyDeatil = await axios.get(item.link);
                 const data = storyDeatil.data;
                 const $ = cheerio.load(data);
                 item.pubDate = $('time').attr('datetime');

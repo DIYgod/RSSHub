@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://music.163.com/api/artist/albums/${id}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://music.163.com/',
         },
     });

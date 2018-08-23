@@ -1,15 +1,9 @@
 const cheerio = require('cheerio');
-const config = require('../../config');
 const axios = require('../../utils/axios');
 
-const axios_ins = axios.create({
-    headers: {
-        'User-Agent': config.ua,
-    },
-});
 module.exports = async (ctx) => {
     const url = `http://www.bjnews.com.cn/${ctx.params.cat}`;
-    const res = await axios_ins.get(url);
+    const res = await axios.get(url);
     const data = res.data;
     const $ = cheerio.load(data);
     const list = $('#news_ul li');
@@ -34,7 +28,7 @@ module.exports = async (ctx) => {
             guid: itemUrl,
         };
         out.push(single);
-        proList.push(axios_ins.get(itemUrl));
+        proList.push(axios.get(itemUrl));
         indexList.push(i);
     }
     const responses = await axios.all(proList);

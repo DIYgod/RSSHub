@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const url = 'https://www.bh3.com/index.php/news/_more';
@@ -19,7 +18,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: url,
         headers: {
-            'User-Agent': config.ua,
             Referer: url,
             'x-requested-with': 'XMLHttpRequest',
         },

@@ -1,4 +1,3 @@
-const config = require('../../config');
 const cheerio = require('cheerio');
 const axios = require('../../utils/axios');
 
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: base_url,
         headers: {
-            'User-Agent': config.ua,
             Referer: base_url,
         },
     });

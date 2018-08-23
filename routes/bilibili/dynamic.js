@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const JSONbig = require('json-bigint');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const uid = ctx.params.uid;
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?host_uid=${uid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://space.bilibili.com/${uid}/`,
         },
         transformResponse: [(data) => data],

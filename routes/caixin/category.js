@@ -1,21 +1,21 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const category = ctx.params.category;
-    const url = `http://weekly.caixin.com/${category}`;
+    const column = ctx.params.column;
+    const url = `http://${column}.caixin.com/${category}`;
 
     const response = await axios({
         method: 'get',
         url: url,
         headers: {
-            'User-Agent': config.ua,
             Referer: url,
         },
     });
 
     const $ = cheerio.load(response.data);
+    const title = $('#p1').text() + ' - ' + $('#pL').text();
     const list = $('.stitXtuwen_list dl dd');
     const items = [];
 
@@ -45,9 +45,9 @@ module.exports = async (ctx) => {
     }
 
     ctx.state.data = {
-        title: '财新周刊',
+        title: title,
         link: url,
-        description: '财新周刊 - 提供财经新闻及资讯服务',
+        description: '财新网 - 提供财经新闻及资讯服务',
         item: items.map((item) => ({
             title: item.title,
             description: item.desc,
