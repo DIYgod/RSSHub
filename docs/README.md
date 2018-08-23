@@ -1170,22 +1170,6 @@ project: 产品 ID
 
 key: 产品密钥
 
-## 笔趣阁
-
-### 小说章节 <Author uid="jjeejj"/>
-
-举例: [https://rsshub.app/biquge/novel/latestchapter/52_52542](https://rsshub.app/biquge/novel/latestchapter/52_52542)
-
-路由: `/biquge/novel/latestchapter/:id`
-
-参数: id，小说 id，可在对应小说页 URL 中找到
-
-::: tip 提示
-
-由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id。
-
-:::
-
 ## 开发者头条
 
 ### 今天头条 <Author uid="jjeejj"/>
@@ -1470,16 +1454,6 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: user，用户名
 参数: repo，仓库名
-
-## UU 看书
-
-### 小说章节 <Author uid="jacky2001114"/>
-
-举例: [https://rsshub.app/uukanshu/chapter/49621](https://rsshub.app/uukanshu/chapter/49621)
-
-路由: `/uukanshu/chapter/:id`
-
-参数: id，小说 id，可在对应小说页 URL 中找到
 
 ## 3DMGame
 
@@ -2044,3 +2018,40 @@ type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表�
 路由: `/earthquake`
 
 参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
+
+## 网络小说
+
+### 笔趣阁 <Author uid="jjeejj"/>
+
+举例: [https://rsshub.app/novel/biquge/52_52542](https://rsshub.app/novel/biquge/52_52542)
+
+路由: `/novel/biquge/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+举例网址： https://www.biquge5200.cc/52_52542/
+::: tip 提示
+
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id。
+
+:::
+
+### UU 看书 <Author uid="jacky2001114"/>
+
+举例: [https://rsshub.app/novel/uukanshu/49621](https://rsshub.app/novel/uukanshu/49621)
+
+路由: `/novel/uukanshu/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+举例网址：https://www.uukanshu.com/b/49621
+
+### 文学迷 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/novel/wenxuemi/6/6144](https://rsshub.app/novel/wenxuemi/6/6144)
+
+路由: `/novel/wenxuemi/:id1/:id2`
+
+参数: id1/id2，小说网站链接最后的数字，可在对应小说页 URL 中找到
+
+举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
