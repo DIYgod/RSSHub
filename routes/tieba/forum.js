@@ -1,7 +1,6 @@
 const cheerio = require('cheerio');
 const qs = require('querystring');
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 function isNormalTime(time) {
     return /^(\d{2}):(\d{2})$/.test(time);
@@ -44,7 +43,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://tieba.baidu.com/f?${qs.stringify(params)}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://tieba.baidu.com/',
         },
     });

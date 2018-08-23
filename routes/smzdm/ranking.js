@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const { rank_type, rank_id, hour } = ctx.params;
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://www.smzdm.com/top/json_more?rank_type=${rank_type}&rank_id=${rank_id}&hour=${hour}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://www.smzdm.com/top/',
         },
     });

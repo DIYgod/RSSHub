@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const cache = require('./cache');
 
 module.exports = async (ctx) => {
@@ -13,7 +12,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: host,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://space.bilibili.com/${uid}/`,
         },
     });

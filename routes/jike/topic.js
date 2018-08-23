@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'post',
         url: 'https://app.jike.ruguoapp.com/1.0/messages/history',
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://m.okjike.com/topics/${id}`,
             'App-Version': '4.1.0',
         },

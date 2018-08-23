@@ -1,13 +1,11 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const res = await axios({
         method: 'get',
         url: 'https://www.oschina.net/news/',
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://www.oschina.net/news/',
         },
     });
@@ -39,7 +37,6 @@ module.exports = async (ctx) => {
                         method: 'get',
                         url: item.link,
                         headers: {
-                            'User-Agent': config.ua,
                             Referer: item.link,
                         },
                     });

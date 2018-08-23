@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const category = ctx.params.category;
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: 'https://gold-tag-ms.juejin.im/v1/categories',
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://juejin.im/welcome/${category}`,
             'X-Juejin-Client': '',
             'X-Juejin-Src': 'web',
@@ -25,7 +23,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://timeline-merger-ms.juejin.im/v1/get_entry_by_timeline?src=web&limit=20&category=${id}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://juejin.im/welcome/${category}`,
         },
     });
@@ -54,7 +51,6 @@ module.exports = async (ctx) => {
                         method: 'get',
                         url: item.originalUrl,
                         headers: {
-                            'User-Agent': config.ua,
                             Referer: item.originalUrl,
                         },
                     });

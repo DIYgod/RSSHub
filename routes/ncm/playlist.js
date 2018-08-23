@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const qs = require('querystring');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'post',
         url: 'https://music.163.com/api/v3/playlist/detail',
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://music.163.com/',
             'Content-Type': 'application/x-www-form-urlencoded',
         },

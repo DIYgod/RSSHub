@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://mall.bilibili.com/mall-c/search/category?keyword=&filters=&priceFlow=&priceCeil=&sortType=recommend&sortOrder=&pageIndex=1&state=&type=ip&id=${id}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://mall.bilibili.com/list.html?ip=${id}`,
         },
     });

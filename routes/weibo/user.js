@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const weiboUtils = require('./utils');
 
 module.exports = async (ctx) => {
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://m.weibo.cn/api/container/getIndex?type=uid&value=${uid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://m.weibo.cn/',
         },
     });
@@ -20,7 +18,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://m.weibo.cn/api/container/getIndex?type=uid&value=${uid}&containerid=${containerid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://m.weibo.cn/u/${uid}`,
         },
     });

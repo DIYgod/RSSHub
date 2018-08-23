@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const type = ctx.params.type;
@@ -12,9 +11,6 @@ module.exports = async (ctx) => {
         params: {
             sid: id,
             tid: id,
-        },
-        headers: {
-            'User-Agent': config.ua,
         },
     });
     const data = res.data;

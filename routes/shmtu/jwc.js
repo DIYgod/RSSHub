@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const host = 'http://jwc.shmtu.edu.cn/Information/';
@@ -16,7 +15,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: host + `MoreInfo.aspx?type=${type}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: host,
         },
     });

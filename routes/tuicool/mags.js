@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const type = ctx.params.type;
@@ -11,9 +10,6 @@ module.exports = async (ctx) => {
     const res = await axios({
         method: 'get',
         url: url,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
     url =
         'https://www.tuicool.com' +
@@ -24,9 +20,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: url,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
 
     const $ = cheerio.load(response.data);

@@ -13,4 +13,7 @@ axiosRetry(axios, {
     },
 });
 
+axios.defaults.headers.common['User-Agent'] = config.ua;
+axios.defaults.headers.common['X-APP'] = 'RSSHub';
+
 module.exports = axios;

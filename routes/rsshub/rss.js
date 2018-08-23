@@ -1,13 +1,11 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: 'https://github.com/DIYgod/RSSHub/releases.atom',
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://github.com/DIYgod/RSSHub',
         },
     });

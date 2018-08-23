@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const areaID = ctx.params.areaID;
@@ -19,7 +18,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: 'https://api.live.bilibili.com/room/v1/Area/getList',
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://link.bilibili.com/p/center/index',
         },
     });
@@ -56,7 +54,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.live.bilibili.com/room/v1/area/getRoomList?area_id=${areaID}&sort_type=${order}&page_size=30&page_no=1`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://live.bilibili.com/p/eden/area-tags',
         },
     });

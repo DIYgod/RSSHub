@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const language = ctx.params.language === 'all' ? 'zh-CN' : ctx.params.language;
@@ -14,9 +13,6 @@ module.exports = async (ctx) => {
         params: {
             filter_locale: filter_locale,
             sort: 'updated',
-        },
-        headers: {
-            'User-Agent': config.ua,
         },
     });
     const data = res.data;

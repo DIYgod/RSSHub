@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const platform = ctx.params.platform;
@@ -23,7 +22,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: APIUrl,
         headers: {
-            'User-Agent': config.ua,
             Referer: webUrl,
         },
     });
