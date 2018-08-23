@@ -380,6 +380,14 @@ type, 可选, 默认为 `all`
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
+### UP 主专栏 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/bilibili/user/article/334958638](https://rsshub.app/bilibili/user/article/334958638)
+
+路由: `/bilibili/user/article/:uid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
 ### UP 主动态 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/user/dynamic/2267573](https://rsshub.app/bilibili/user/dynamic/2267573)
