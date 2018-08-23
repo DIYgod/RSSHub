@@ -1468,7 +1468,7 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 路由: `/github/issue/:user/:repo`
 
-参数: 
+参数:
 
 user，用户名
 repo，仓库名
@@ -1487,7 +1487,7 @@ repo，仓库名
 
 路由: `/github/star/:user/:repo`
 
-参数: 
+参数:
 
 user，用户名
 repo，仓库名
