@@ -176,6 +176,7 @@ router.get('/douban/movie/playing/:score/:city', require('./routes/douban/playin
 router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
+router.get('/douban/featuredList', require('./routes/douban/featuredList'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -455,5 +456,8 @@ router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
 
 // 中国气象网
 router.get('/weatherAlarm', require('./routes/weatherAlarm'));
+
+// Gitlab
+router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
 module.exports = router;

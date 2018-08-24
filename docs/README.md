@@ -1136,6 +1136,12 @@ city: 城市的中文名，可选，默认北京
 参数:
 groupid: 豆瓣小组的 id
 
+### 今日精选 <Author uid="clarkzsd"/>
+
+举例: [https://rsshub.app/douban/featuredList](https://rsshub.app/douban/featuredList)
+
+路由: `/douban/featuredList`
+
 ## 煎蛋
 
 ### 无聊图 <Author uid="Xuanwo"/>
@@ -2081,3 +2087,19 @@ type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表�
 路由: `/weatherAlarm`
 
 参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
+
+## Gitlab
+
+### Explore <Author uid="imlonghao"/>
+
+举例: [https://rsshub.app/gitlab/explore/trending](https://rsshub.app/gitlab/explore/trending)
+
+路由: `/gitlab/explore/:type`
+
+参数:
+
+type，分类
+
+| Trending | Most stars | All |
+| -------- | ---------- | --- |
+| trending | starred    | all |

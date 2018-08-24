@@ -39,7 +39,7 @@ module.exports = async (ctx) => {
                 const articleHtml = await axios_ins.get(link);
                 const article = iconv.decode(articleHtml.data, 'GBK');
                 const $1 = cheerio.load(article);
-                const res = $1('div#content').text();
+                const res = $1('div#content').html();
 
                 resultItem = {
                     title: $item.text(),
