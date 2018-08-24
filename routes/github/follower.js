@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
         title: `${user}'s followers`,
         link: host,
         item: data.reverse().map((follower) => ({
-            title: `New follower: ${follower.login}`,
+            title: `${follower.login} started following ${user}`,
             description: `${follower.html_url} <br> <img src='${follower.avatar_url}'>`,
             link: `https://github.com/${follower.login}`,
         })),
