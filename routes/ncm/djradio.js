@@ -30,6 +30,8 @@ module.exports = async (ctx) => {
         author: dj.nickname,
         updated: radio.lastProgramCreateTime,
         icon: radio.picUrl,
+        itunes_author: dj.nickname,
+        itunes_category: radio.category,
         item: programs.map((pg) => {
             const image = `<img src=${pg.coverUrl} />`;
 
@@ -41,8 +43,9 @@ module.exports = async (ctx) => {
             const src = `https://music.163.com/program/${pg.id}`;
 
             const duration = ~~(pg.duration / 1000);
+            const itunes_duration = `${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}`;
 
-            const html = image + description + `<div><p>时长: ${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}</p><p><a href="${src}">查看节目</a></p></div>`;
+            const html = image + description + `<div><audio src="//music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3" controls></audio><p>时长: ${itunes_duration}</p><p><a href="${src}">查看节目</a></p></div>`;
 
             return {
                 title: pg.mainSong.name,
@@ -52,6 +55,11 @@ module.exports = async (ctx) => {
                 author: pg.dj.nickname,
                 description: html,
                 content: { html },
+                itunes_item_image: pg.coverUrl,
+                enclosure_url: `//music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3`,
+                enclosure_length: duration,
+                enclosure_type: 'audio/mpeg',
+                itunes_duration: itunes_duration,
             };
         }),
     };
