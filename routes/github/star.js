@@ -18,7 +18,7 @@ module.exports = async (ctx) => {
     const data = response.data;
 
     ctx.state.data = {
-        title: `${user}'s followers`,
+        title: `${user}/${repo}’s stargazers`,
         link: host,
         item: data.map((follower) => ({
             title: `New stargazer: ${follower.login}`,

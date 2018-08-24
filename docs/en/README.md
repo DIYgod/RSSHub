@@ -368,7 +368,7 @@ Parameters:
 
 ### Follower <Author uid="HenryQW"/>
 
-Eg: [https://rsshub.app/github/user/follower/HenryQW](https://rsshub.app/github/user/follower/HenryQW)
+Eg: [https://rsshub.app/github/user/followers/HenryQW](https://rsshub.app/github/user/followers/HenryQW)
 
 Route: `/github/user/follower/:user`
 
@@ -378,9 +378,9 @@ Parameters:
 
 ### Star <Author uid="HenryQW"/>
 
-Eg: [https://rsshub.app/github/star/HenryQW/RSSHub](https://rsshub.app/github/star/HenryQW/RSSHub)
+Eg: [https://rsshub.app/github/stars/DIYGod/RSSHub](https://rsshub.app/github/stars/DIYGod/RSSHub)
 
-Route: `/github/star/:user/:repo`
+Route: `/github/stars/:user/:repo`
 
 Parameters:
 

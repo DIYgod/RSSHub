@@ -157,12 +157,13 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 -   GitHub
     -   用户仓库
     -   Trending
-    -   Issue
-    -   Follower
+    -   仓库 Issues
+    -   用户 Followers
+    -   仓库 Stars
 -   Konachan.com Anime Wallpapers
-    -   Popular Recent Posts
+    -   Recent Popular Posts
 -   yande.re
-    -   Popular Recent Posts
+    -   Recent Popular Posts
 -   纽约时报
     -   新闻早报
 -   UU 看书
