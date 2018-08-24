@@ -119,6 +119,12 @@ router.get('/weibo/user/:uid', require('./routes/weibo/user'));
 router.get('/weibo/user2/:uid', require('./routes/weibo/user2'));
 router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
 
+// 贴吧
+router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
+router.get('/tieba/forum/good/:kw/:cid?', require('./routes/tieba/forum'));
+router.get('/tieba/post/:id', require('./routes/tieba/post'));
+router.get('/tieba/post/lz/:id', require('./routes/tieba/post'));
+
 // 网易云音乐
 router.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
 router.get('/ncm/user/playlist/:uid', require('./routes/ncm/userplaylist'));
@@ -148,10 +154,6 @@ router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'))
 router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
-
-// 贴吧
-router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
-router.get('/tieba/forum/good/:kw/:cid?', require('./routes/tieba/forum'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
