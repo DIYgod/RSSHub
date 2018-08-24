@@ -1136,6 +1136,12 @@ city: 城市的中文名，可选，默认北京
 参数:
 groupid: 豆瓣小组的 id
 
+### 今日精选 <Author uid="clarkzsd"/>
+
+举例: [https://rsshub.app/douban/featuredList](https://rsshub.app/douban/featuredList)
+
+路由: `/douban/featuredList`
+
 ## 煎蛋
 
 ### 无聊图 <Author uid="Xuanwo"/>
