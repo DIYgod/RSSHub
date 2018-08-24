@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `http://www.iqiyi.com/${id}.html`,
         headers: {
-            'User-Agent': config.ua,
             Host: 'www.iqiyi.com',
             Referer: `http://www.iqiyi.com/${id}.html`,
         },

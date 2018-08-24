@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 const iconv = require('iconv-lite');
 
 module.exports = async (ctx) => {
@@ -10,7 +9,6 @@ module.exports = async (ctx) => {
         method: 'post',
         url: `https://www.uukanshu.com/b/${uid}`,
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://www.uukanshu.com/b/${uid}',
         },
         responseType: 'arraybuffer',

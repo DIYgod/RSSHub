@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const column_id = ctx.params.cid;
@@ -9,7 +8,6 @@ module.exports = async (ctx) => {
         method: 'post',
         url: 'https://time.geekbang.org/serv/v1/column/intro',
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://time.geekbang.org/',
             'Content-Type': 'application/json',
         },
@@ -25,7 +23,6 @@ module.exports = async (ctx) => {
         method: 'post',
         url: 'https://time.geekbang.org/serv/v1/column/articles/latest',
         headers: {
-            'User-Agent': config.ua,
             Referer: 'https://time.geekbang.org/',
             'Content-Type': 'application/json',
         },

@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
@@ -20,9 +19,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
 
     const $ = cheerio.load(response.data);

@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../config');
 
 const sourceTimezoneOffset = -8;
 module.exports = async (ctx) => {
@@ -8,9 +7,6 @@ module.exports = async (ctx) => {
     const res = await axios({
         method: 'get',
         url: url,
-        headers: {
-            'User-Agent': config.ua,
-        },
     });
     const data = res.data;
     const $ = cheerio.load(data);

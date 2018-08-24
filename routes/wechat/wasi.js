@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -8,7 +7,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://q.qnmlgb.tech/w/api/articles?_ls=&_fmt=authorSimple&_page=author&_author_id=${id}&_sub_tab=&_tab=author`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://w.qnmlgb.tech/authors/${id}/`,
         },
     });

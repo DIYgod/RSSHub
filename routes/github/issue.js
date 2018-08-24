@@ -12,9 +12,6 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url,
-        headers: {
-            'User-Agent': config.ua,
-        },
         params: {
             sort: 'created',
             access_token: config.github.access_token,

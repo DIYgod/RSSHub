@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 const cache = require('./cache');
 
 module.exports = async (ctx) => {
@@ -15,7 +14,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://api.live.bilibili.com/room/v1/Room/get_info?room_id=${roomID}&from=room`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://live.bilibili.com/${roomID}`,
         },
     });

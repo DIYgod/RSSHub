@@ -66,6 +66,43 @@ ctx.state.data = {
 };
 ```
 
+<details><summary>如果你想制作播客馈送型RSS，点这儿</summary><br>
+
+播客馈送是指向 XML 格式 RSS（丰富站点摘要）的网址（URL）。
+
+这些多的字段能使你的 RSS 被泛用型播客软件订阅：
+
+-   [Podcasts Connect 帮助 创建播客 - Apple](https://help.apple.com/itc/podcasts_connect/#/itca5b22233a)
+-   [Podcasts Connect 帮助 播客最佳做法 - Apple](https://help.apple.com/itc/podcasts_connect/#/itc2b3780e76)
+-   RSS 格式参考：https://codepen.io/jon-walstedt/pen/jsIup
+-   播客验证：https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
+
+```js
+ctx.state.data = {
+    title: '', // 项目的标题
+    link: '', // 指向项目的链接
+    itunes_author: '', // 主播名字，并且开启此项就认为该RSS是播客，会自动添加头部的xmlns
+    itunes_category： '',// 播客分类
+    description: '', // 描述项目
+    item: [
+        // 其中一篇文章或一项内容
+        {
+            title: '', // 文章标题
+            description: '', // 文章内容或描述
+            pubDate: '', // 文章发布时间
+            guid: '', // 文章唯一标示，必须唯一，可选，默认为文章链接
+            link: '', // 指向文章的链接
+            itunes_item_image: '', // 图像
+            enclosure_url: '', // 音频链接
+            enclosure_length: '', // 时间戳（播放长度），一般是秒数
+            enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/m4a']
+            itunes_duration: '', // 由enclosure_length转换为 时:分:秒
+        },
+    ],
+};
+```
+
+</details>
 ## 参与讨论
 
 1.  [Telegram 群](https://t.me/rsshub)

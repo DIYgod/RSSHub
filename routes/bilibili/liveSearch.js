@@ -1,5 +1,4 @@
 const axios = require('../../utils/axios');
-const config = require('../../config');
 
 module.exports = async (ctx) => {
     const key = ctx.params.key;
@@ -21,7 +20,6 @@ module.exports = async (ctx) => {
         method: 'get',
         url: `https://search.bilibili.com/api/search?search_type=live_room&keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1`,
         headers: {
-            'User-Agent': config.ua,
             Referer: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&order=${order}&coverType=user_cover&page=1&search_type=live`,
         },
     });

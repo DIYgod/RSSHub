@@ -1,5 +1,4 @@
 const axios = require('../../../utils/axios');
-const config = require('../../../config');
 
 module.exports = async (ctx) => {
     const bgmCalendarUrl = 'https://api.bgm.tv/calendar';
@@ -16,9 +15,6 @@ module.exports = async (ctx) => {
                 const response = await axios({
                     method: 'get',
                     url: url[i],
-                    headers: {
-                        'User-Agent': config.ua,
-                    },
                 });
                 const data = response.data;
 

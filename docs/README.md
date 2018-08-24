@@ -96,9 +96,9 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
 -   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
-## 程序更新
+## 程序类
 
-### RSSHub
+### RSSHub <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/rsshub/rss](https://rsshub.app/rsshub/rss)
 
@@ -184,9 +184,203 @@ type, App 类型，必选, `iOS` 或 `mac`
 
 id, App Store app id，必选，如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474，则 id 为 id115244347
 
+## 大学类
+
+### 上海海事大学
+
+#### 学术讲座 <Author uid="simonsmh"/>
+
+举例: [https://rsshub.app/shmtu/events](https://rsshub.app/shmtu/events)
+
+路由: `/shmtu/events`
+
+参数: 无
+
+#### 通知公告 <Author uid="simonsmh"/>
+
+举例: [https://rsshub.app/shmtu/notes](https://rsshub.app/shmtu/notes)
+
+路由: `/shmtu/notes`
+
+参数: 无
+
+#### 教务信息 <Author uid="simonsmh"/>
+
+举例: [https://rsshub.app/shmtu/jwc/1](https://rsshub.app/shmtu/jwc/1)
+
+路由: `/shmtu/jwc/:type`
+
+参数: type，1 为教务新闻,2 为教务公告
+
+### 西南科技大学
+
+#### 教务处通知 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/swust/jwc/1](https://rsshub.app/swust/jwc/1)
+
+路由: `/swust/jwc/:type`
+
+参数: type, 1 为通知公告, 2 为站点新闻
+
+#### 计科学院通知 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/swust/cs/1](https://rsshub.app/swust/cs/1)
+
+路由: `swust/cs/:type`
+
+参数: type, 1 为新闻动态, 2 为学术动态, 3 为通知公告, 4 为教研动态
+
+### 北京大学
+
+#### 信科公告通知 <Author uid="Ir1d"/>
+
+举例: [https://rsshub.app/pku/eecs/0](https://rsshub.app/pku/eecs/0)
+
+路由: `/eecs/:type`
+
+可选参数: type，分区 type，可在网页 URL 中找到
+
+| 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 科研通知 | 财务通知 | 工会通知 | 院友通知 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0    | 1        | 2        | 6        | 8        | 7        | 5        | 3        | 4        |
+
+### 华南师范大学
+
+#### 教务处通知 <Author uid="fengkx"/>
+
+举例： [https://rsshub.app/scnu/jw](https://rsshub.app/scnu/jw)
+
+路由： `/scnu/jw`
+
+参数：无
+
+#### 图书馆通知 <Author uid="fengkx"/>
+
+举例： [https://rsshub.app/scnu/library](https://rsshub.app/scnu/library)
+
+路由： `/scnu/library`
+
+参数：无
+
+#### 计算机学院竞赛通知 <Author uid="fengkx"/>
+
+举例： [https://rsshub.app/scnu/cs/match](https://rsshub.app/scnu/cs/match)
+
+路由： `/scnu/cs/match`
+
+参数：无
+
+### 江南大学
+
+#### 教务处通知 <Author uid="Chingyat"/>
+
+举例: [https://rsshub.app/ju/jwc/all](https://rsshub.app/ju/jwc/all)
+
+路由: `/ju/jwc/:type?`
+
+参数:
+
+type, 可选, 默认为 `all`
+
+| all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjs     |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部 | 通知公告 | 考试安排 | 违纪公告 | 推免工作 | 等级考试 | 学籍管理 | 毕业设计 | 实验教学 |
+
+| sjcx     | xkjs     | yjszj      | jxgg     | zyjs     | kcjs     | jcjs     | jxcg     | xsbg     |
+| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 实践创新 | 学科竞赛 | 研究生助教 | 教学改革 | 专业建设 | 课程建设 | 教材建设 | 教学成果 | 学术报告 |
+
+## 媒体类
+
+### 央视新闻
+
+#### 专题 <Author uid="idealclover"/>
+
+举例: [https://rsshub.app/cctv/world](https://rsshub.app/cctv/world)
+
+路由: `/cctv/:category`
+
+参数：category，分类名
+
+| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
+| ----- | ----- | ----- | ---- | ------- | ---- | ---- |
+| china | world | video | tech | society | law  | ent  |
+
+### 财新网
+
+> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。
+
+#### 新闻分类 <Author uid="idealclover"/>
+
+举例: [https://rsshub.app/caixin/finance/regulation](https://rsshub.app/caixin/finance/regulation)
+
+路由: `/caixin/:column/:category`
+
+参数：column，栏目名
+
+category，栏目下的子分类名
+
+column 列表：
+
+| 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
+| ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
+| economy | finance | china | science | international | opinion | culture | weekly |
+
+以金融板块为例的 category 列表：（其余 column 以类似方式寻找）
+
+| 监管       | 银行 | 证券基金 | 信托保险        | 投资       | 创新       | 市场   |
+| ---------- | ---- | -------- | --------------- | ---------- | ---------- | ------ |
+| regulation | bank | stock    | insurance_trust | investment | innovation | market |
+
+财新周刊 category 列表：
+
+| 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
+| ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
+| coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
+
+### 南方周末
+
+#### 新闻分类 <Author uid="ranpox"/>
+
+举例：[https://rsshub.app/infzm/5](https://rsshub.app/infzm/5)
+
+路由: `/infzm/:id`
+
+参数: id，南方周末内容分区 id，可在该内容分区的 URL 中找到(即http://www.infzm.com/contents/:id)，注意 contents 为内容分区，content 为文章页，添加前请留意。下面给出部分参考：
+
+| 全站 | 新闻 | 经济 | 文化 | 评论 | 图片 | 生活 | 时政 | 社会 | 科技 | 绿色 | 头条 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 1374 | 2553 |
+
+### 纽约时报
+
+::: tip 提示
+
+纽约时报 RSS: https://cn.nytimes.com/rss/
+
+:::
+
+#### 新闻早报 <Author uid="yangkghjh"/>
+
+举例: [https://rsshub.app/nytimes/morning_post](https://rsshub.app/nytimes/morning_post)
+
+路由: `/nytimes/morning_post`
+
+参数: 无
+
+### 新京报
+
+#### 栏目 <Author uid="zhboner"/>
+
+举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
+
+路由： `/bjnews/:category`
+
+参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
+
 ## bilibili
 
-### 番剧
+### 番剧 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/bangumi/21680](https://rsshub.app/bilibili/bangumi/21680)
 
@@ -194,7 +388,7 @@ id, App Store app id，必选，如 Squash 的链接为 https://itunes.apple.com
 
 参数: seasonid，番剧 id，番剧主页打开控制台执行 `window.__INITIAL_STATE__.ssId` 或 `window.__INITIAL_STATE__.mediaInfo.param.season_id` 获取
 
-### UP 主投稿
+### UP 主投稿 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/user/video/2267573](https://rsshub.app/bilibili/user/video/2267573)
 
@@ -202,7 +396,15 @@ id, App Store app id，必选，如 Squash 的链接为 https://itunes.apple.com
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### UP 主动态
+### UP 主专栏 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/bilibili/user/article/334958638](https://rsshub.app/bilibili/user/article/334958638)
+
+路由: `/bilibili/user/article/:uid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主动态 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/user/dynamic/2267573](https://rsshub.app/bilibili/user/dynamic/2267573)
 
@@ -220,7 +422,7 @@ id, App Store app id，必选，如 Squash 的链接为 https://itunes.apple.com
 
 cid，频道 ID,可在频道的 URL 中找到
 
-### UP 主默认收藏夹
+### UP 主默认收藏夹 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
 
@@ -238,7 +440,7 @@ cid，频道 ID,可在频道的 URL 中找到
 
 fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 UP 主默认收藏夹功能
 
-### UP 主投币视频
+### UP 主投币视频 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/user/coin/2267573](https://rsshub.app/bilibili/user/coin/2267573)
 
@@ -262,7 +464,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### 分区视频
+### 分区视频 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/partion/33](https://rsshub.app/bilibili/partion/33)
 
@@ -426,13 +628,13 @@ order: 排序方式，live_time 开播时间，online 人气
 
 路由: `bilibili/blackboard`
 
-### 会员购新品上架
+### 会员购新品上架 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/mall/new](https://rsshub.app/bilibili/mall/new)
 
 路由: `bilibili/mall/new`
 
-### 会员购作品
+### 会员购作品 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/mall/ip/1_4494](https://rsshub.app/bilibili/mall/ip/1_4494)
 
@@ -440,7 +642,7 @@ order: 排序方式，live_time 开播时间，online 人气
 
 参数: id, 作品 id, 可在作品列表页 URL 中找到
 
-### 排行榜
+### 排行榜 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/ranking/0/3](https://rsshub.app/bilibili/ranking/0/3)
 
@@ -464,7 +666,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: topic 话题名(又称频道名或标签) 例如 2233 或 COSPLAY
 
-## bangumi
+## Bangumi
 
 ### 放送列表 <Author uid="hufan-akari"/>
 
@@ -474,9 +676,52 @@ rid: 排行榜分区 id，默认 0
 
 参数: 无
 
+### 条目的吐槽箱 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/subject/214265/comments>
+
+路由: `/bangumi/subject/:id/comments`
+
+参数:
+
+-   id：条目 ID。在条目页面的地址栏查看
+-   minLength：以查询字符串（query string）的形式指定。用于过滤掉内容长度小于指定值的吐槽
+
+### 条目的评论 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/subject/214265/blogs>
+
+路由: `/bangumi/subject/:id/blogs`
+
+参数: id - 条目 ID。在条目页面的地址栏查看
+
+### 条目的讨论 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/subject/214265/topics>
+
+路由: `/bangumi/subject/:id/topics`
+
+参数: id - 条目 ID。在条目页面的地址栏查看
+
+### 现实人物的新作品 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/person/32943>
+
+路由: `/bangumi/person/:id`
+
+参数: id - 人物 ID。在人物页面的地址栏查看
+
+### 小组话题的新回复 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/bangumi/topic/24657>
+
+路由: `/bangumi/topic/:id`
+
+参数: id - 话题 ID。在话题页面地址栏查看
+
 ## 微博
 
-### 博主
+### 博主 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/weibo/user/3306934123](https://rsshub.app/weibo/user/3306934123)
 
@@ -494,7 +739,7 @@ rid: 排行榜分区 id，默认 0
 
 路由: `/weibo/user2/:uid`
 
-### 关键词
+### 关键词 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/weibo/keyword/DIYgod](https://rsshub.app/weibo/keyword/DIYgod)
 
@@ -526,7 +771,7 @@ rid: 排行榜分区 id，默认 0
 
 ## 即刻
 
-### 主题-精选
+### 主题-精选 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
 
@@ -534,7 +779,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
 
-### 主题-广场
+### 主题-广场 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
 
@@ -542,7 +787,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: id，主题 id，可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
 
-### 用户动态
+### 用户动态 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
 
@@ -558,7 +803,7 @@ rid: 排行榜分区 id，默认 0
 
 :::
 
-### 公众号（即刻来源）
+### 公众号（即刻来源） <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
 
@@ -566,7 +811,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: 参考 [即刻-主题-精选](#主题-精选)
 
-### 公众号（瓦斯来源）
+### 公众号（瓦斯来源） <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace)
 
@@ -576,7 +821,7 @@ rid: 排行榜分区 id，默认 0
 
 ## 网易云音乐
 
-### 歌单歌曲
+### 歌单歌曲 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/ncm/playlist/35798529](https://rsshub.app/ncm/playlist/35798529)
 
@@ -584,7 +829,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: id，歌单 id，可在歌单页 URL 中找到
 
-### 用户歌单
+### 用户歌单 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/ncm/user/playlist/45441555](https://rsshub.app/ncm/user/playlist/45441555)
 
@@ -610,7 +855,7 @@ rid: 排行榜分区 id，默认 0
 
 ## 掘金
 
-### 分类
+### 分类 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/juejin/category/frontend](https://rsshub.app/juejin/category/frontend)
 
@@ -622,9 +867,17 @@ rid: 排行榜分区 id，默认 0
 | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
 | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
+### 标签 <Author uid="isheng5"/>
+
+举例: [https://rsshub.app/juejin/tag/架构](https://rsshub.app/juejin/tag/架构)
+
+路由: `/juejin/tag/:tag`
+
+参数: tag，标签名，可在标签 URL 中找到
+
 ## 简书
 
-### 首页
+### 首页 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
 
@@ -632,7 +885,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: 无
 
-### 7 日热门
+### 7 日热门 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jianshu/trending/weekly](https://rsshub.app/jianshu/trending/weekly)
 
@@ -640,7 +893,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: 无
 
-### 30 日热门
+### 30 日热门 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jianshu/trending/monthly](https://rsshub.app/jianshu/trending/monthly)
 
@@ -648,7 +901,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: 无
 
-### 专题
+### 专题 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jianshu/collection/xYuZYD](https://rsshub.app/jianshu/collection/xYuZYD)
 
@@ -656,7 +909,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: id，专题 id，可在专题页 URL 中找到
 
-### 作者
+### 作者 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/jianshu/user/yZq3ZV](https://rsshub.app/jianshu/user/yZq3ZV)
 
@@ -680,7 +933,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: id，收藏夹 id，可在收藏夹页面 URL 中找到
 
-### 用户动态
+### 用户动态 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/zhihu/people/activities/diygod](https://rsshub.app/zhihu/people/activities/diygod)
 
@@ -688,7 +941,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
-### 用户回答
+### 用户回答 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/zhihu/people/answers/diygod](https://rsshub.app/zhihu/people/answers/diygod)
 
@@ -696,7 +949,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: id，用户 id，可在用户主页 URL 中找到
 
-### 专栏
+### 专栏 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/zhihu/zhuanlan/googledevelopers](https://rsshub.app/zhihu/zhuanlan/googledevelopers)
 
@@ -712,7 +965,7 @@ rid: 排行榜分区 id，默认 0
 
 ## 自如
 
-### 房源
+### 房源 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/ziroom/room/sh/1/2/五角场](https://rsshub.app/ziroom/room/sh/1/2/五角场)
 
@@ -834,7 +1087,7 @@ date: 日期，取值形如 `2018-4-25`
 
 ## 豆瓣
 
-### 正在上映的电影
+### 正在上映的电影 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/douban/movie/playing](https://rsshub.app/douban/movie/playing)
 
@@ -842,7 +1095,7 @@ date: 日期，取值形如 `2018-4-25`
 
 参数: 无
 
-### 正在上映的高分电影
+### 正在上映的高分电影 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/douban/movie/playing/7.5](https://rsshub.app/douban/movie/playing/7.5)
 
@@ -858,7 +1111,7 @@ score: 返回大于等于这个分数的电影
 
 city: 城市的中文名，可选，默认北京
 
-### 即将上映的电影
+### 即将上映的电影 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/douban/movie/later](https://rsshub.app/douban/movie/later)
 
@@ -866,7 +1119,7 @@ city: 城市的中文名，可选，默认北京
 
 参数: 无
 
-### 北美票房榜
+### 北美票房榜 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/douban/movie/ustop](https://rsshub.app/douban/movie/ustop)
 
@@ -882,6 +1135,12 @@ city: 城市的中文名，可选，默认北京
 
 参数:
 groupid: 豆瓣小组的 id
+
+### 今日精选 <Author uid="clarkzsd"/>
+
+举例: [https://rsshub.app/douban/featuredList](https://rsshub.app/douban/featuredList)
+
+路由: `/douban/featuredList`
 
 ## 煎蛋
 
@@ -933,22 +1192,6 @@ project: 产品 ID
 
 key: 产品密钥
 
-## 笔趣阁
-
-### 小说章节 <Author uid="jjeejj"/>
-
-举例: [https://rsshub.app/biquge/novel/latestchapter/52_52542](https://rsshub.app/biquge/novel/latestchapter/52_52542)
-
-路由: `/biquge/novel/latestchapter/:id`
-
-参数: id，小说 id，可在对应小说页 URL 中找到
-
-::: tip 提示
-
-由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id。
-
-:::
-
 ## 开发者头条
 
 ### 今天头条 <Author uid="jjeejj"/>
@@ -987,39 +1230,9 @@ key: 产品密钥
 
 参数: cid，专栏 id，可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页，在 URL 中找到
 
-## 央视新闻
-
-### 专题 <Author uid="idealclover"/>
-
-举例: [https://rsshub.app/cctv/world](https://rsshub.app/cctv/world)
-
-路由: `/cctv/:category`
-
-参数：category，分类名
-
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- |
-| china | world | video | tech | society | law  | ent  |
-
-## 财新网
-
-> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。
-
-### 财新周刊 <Author uid="idealclover"/>
-
-举例: [https://rsshub.app/caixin/weekly/coverstory](https://rsshub.app/caixin/weekly/coverstory)
-
-路由: `/caixin/weekly/:category`
-
-参数：category，分类名
-
-| 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
-| ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
-| coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
-
 ## Disqus
 
-### 评论
+### 评论 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/disqus/posts/diygod-me](https://rsshub.app/disqus/posts/diygod-me)
 
@@ -1029,7 +1242,7 @@ key: 产品密钥
 
 ## Twitter
 
-### 用户
+### 用户 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIYgod)
 
@@ -1039,7 +1252,7 @@ key: 产品密钥
 
 ## Instagram
 
-### 用户
+### 用户 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user/diygod)
 
@@ -1049,7 +1262,7 @@ key: 产品密钥
 
 ## Youtube
 
-### 用户
+### 用户 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/youtube/user/JFlaMusic](https://rsshub.app/youtube/user/JFlaMusic)
 
@@ -1057,7 +1270,7 @@ key: 产品密钥
 
 参数: username，用户名
 
-### 频道
+### 频道 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ](https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ)
 
@@ -1075,23 +1288,9 @@ key: 产品密钥
 
 参数: id，动漫 id，可在该动漫主页 URL 中找到(不包括`.html`)
 
-## 南方周末
-
-### 新闻分类 <Author uid="ranpox"/>
-
-举例：[https://rsshub.app/infzm/5](https://rsshub.app/infzm/5)
-
-路由: `/infzm/:id`
-
-参数: id，南方周末内容分区 id，可在该内容分区的 URL 中找到(即http://www.infzm.com/contents/:id)，注意 contents 为内容分区，content 为文章页，添加前请留意。下面给出部分参考：
-
-| 全站 | 新闻 | 经济 | 文化 | 评论 | 图片 | 生活 | 时政 | 社会 | 科技 | 绿色 | 头条 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 0    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 1374 | 2553 |
-
 ## Dribbble
 
-### 流行
+### 流行 <Author uid="DIYgod"/>
 
 举例:
 
@@ -1103,7 +1302,7 @@ key: 产品密钥
 
 参数: timeframe，可选，时间维度，支持 week month year ever
 
-### 用户（团队）
+### 用户（团队） <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/dribbble/user/google](https://rsshub.app/dribbble/user/google)
 
@@ -1111,7 +1310,7 @@ key: 产品密钥
 
 参数: name，用户名，可在该用户主页 URL 中找到
 
-### 关键词
+### 关键词 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/dribbble/keyword/player](https://rsshub.app/dribbble/keyword/player)
 
@@ -1121,7 +1320,7 @@ key: 产品密钥
 
 ## 斗鱼
 
-### 直播间开播
+### 直播间开播 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/douyu/room/24422](https://rsshub.app/douyu/room/24422)
 
@@ -1131,7 +1330,7 @@ key: 产品密钥
 
 ## 熊猫直播
 
-### 直播间开播下播
+### 直播间开播下播 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/panda/room/10300](https://rsshub.app/panda/room/10300)
 
@@ -1151,7 +1350,7 @@ key: 产品密钥
 
 ## Telegram
 
-### 频道
+### 频道 <Author uid="DIYgod"/>
 
 ::: tip 提示
 
@@ -1164,6 +1363,14 @@ key: 产品密钥
 路由: `/telegram/channel/:username`
 
 参数: username，频道 username
+
+### 贴纸包 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
+
+路由: `/telegram/stickerpack/:name`
+
+参数: name，贴纸包 id，可在分享贴纸获得的 URL 中找到
 
 ## Readhub
 
@@ -1245,7 +1452,7 @@ GitHub 官方也提供了一些 RSS:
 
 参数: user，用户名
 
-### Trending
+### Trending <Author uid="DIYgod"/>
 
 举例:
 
@@ -1270,32 +1477,6 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 参数: user，用户名
 参数: repo，仓库名
 
-## 纽约时报
-
-::: tip 提示
-
-纽约时报 RSS: https://cn.nytimes.com/rss/
-
-:::
-
-### 新闻早报 <Author uid="yangkghjh"/>
-
-举例: [https://rsshub.app/nytimes/morning_post](https://rsshub.app/nytimes/morning_post)
-
-路由: `/nytimes/morning_post`
-
-参数: 无
-
-## UU 看书
-
-### 小说章节 <Author uid="jacky2001114"/>
-
-举例: [https://rsshub.app/uukanshu/chapter/49621](https://rsshub.app/uukanshu/chapter/49621)
-
-路由: `/uukanshu/chapter/:id`
-
-参数: id，小说 id，可在对应小说页 URL 中找到
-
 ## 3DMGame
 
 ### 新闻中心 <Author uid="zhboner"/>
@@ -1306,7 +1487,7 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: 无
 
-### 新闻 <Author uid="jacky2001114"/>
+### 新闻 <Author uid="sinchang jacky2001114"/>
 
 举例: [https://rsshub.app/3dm/detroitbecomehuman/news](https://rsshub.app/3dm/detroitbecomehuman/news)
 
@@ -1314,7 +1495,7 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: name，游戏的编号可以在专题页的 url 中找到
 
-### 攻略 <Author uid="jacky2001114"/>
+### 攻略 <Author uid="sinchang jacky2001114"/>
 
 举例: [https://rsshub.app/3dm/detroitbecomehuman/gl](https://rsshub.app/3dm/detroitbecomehuman/gl)
 
@@ -1322,19 +1503,41 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 
 参数: name，游戏的编号可以在专题页的 url 中找到
 
+### 下载 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/3dm/detroitbecomehuman/download](https://rsshub.app/3dm/detroitbecomehuman/download)
+
+路由: `/3dm/:name/download`
+
+参数: name，游戏的编号可以在专题页的 url 中找到
+
 ## 喜马拉雅
 
-### 专辑 <Author uid="jjeejj"/>
+### 专辑(支持泛用型播客订阅) <Author uid="lengthmin jjeejj"/>
 
-举例: [https://rsshub.app/ximalaya/album/shangye/299146/](https://rsshub.app/ximalaya/album/shangye/299146/)
+::: warning 注意
+**付费内容可获取更新但无法收听**
 
-路由: `/ximalaya/album/:classify/:id`
+目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**只能使用**以下链接来订阅播客:
+
+-   https://rsshub.app/ximalaya/album/299146/
+-   https://rsshub.app/ximalaya/album/299146.rss
+
+:::
+
+举例: [https://rsshub.app/ximalaya/album/299146/](https://rsshub.app/ximalaya/album/299146/)
+
+路由: `/ximalaya/album/:id`
 
 参数:
 
-classify, 专辑分类, 可在对应专辑页面的 URL 中找到
+id, 专辑 id, 可在对应**专辑**页面的 URL 中找到
 
-id, 专辑 id, 可在对应专辑页面的 URL 中找到
+::: tip 提示
+
+专辑 id 是跟在分类拼音后的那个 id, 不要输成某集的 id 了
+
+:::
 
 ## EZTV
 
@@ -1360,7 +1563,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 :::
 
-### 关键词
+### 关键词 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/smzdm/keyword/女装](https://rsshub.app/smzdm/keyword/女装)
 
@@ -1368,7 +1571,7 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 参数: keyword，你想订阅的关键词
 
-### 排行榜
+### 排行榜 <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/smzdm/ranking/pinlei/11/3](https://rsshub.app/smzdm/ranking/pinlei/11/3)
 
@@ -1415,60 +1618,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 | hwall  | zc       | nb       | hw       |
 
 **hour**: 时间跨度
-
-## 上海海事大学
-
-### 学术讲座 <Author uid="simonsmh"/>
-
-举例: [https://rsshub.app/shmtu/events](https://rsshub.app/shmtu/events)
-
-路由: `/shmtu/events`
-
-参数: 无
-
-### 通知公告 <Author uid="simonsmh"/>
-
-举例: [https://rsshub.app/shmtu/notes](https://rsshub.app/shmtu/notes)
-
-路由: `/shmtu/notes`
-
-参数: 无
-
-### 教务信息 <Author uid="simonsmh"/>
-
-举例: [https://rsshub.app/shmtu/jwc/1](https://rsshub.app/shmtu/jwc/1)
-
-路由: `/shmtu/jwc/:type`
-
-参数: type，1 为教务新闻,2 为教务公告
-
-## 西南科技大学
-
-### 教务处通知 <Author uid="lengthmin"/>
-
-举例: [https://rsshub.app/swust/jwc/1](https://rsshub.app/swust/jwc/1)
-
-路由: `/swust/jwc/:type`
-
-参数: type, 1 为通知公告, 2 为站点新闻
-
-### 计科学院通知 <Author uid="lengthmin"/>
-
-举例: [https://rsshub.app/swust/cs/1](https://rsshub.app/swust/cs/1)
-
-路由: `swust/cs/:type`
-
-参数: type, 1 为新闻动态, 2 为学术动态, 3 为通知公告, 4 为教研动态
-
-## 新京报
-
-### 栏目 <Author uid="zhboner"/>
-
-举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
-
-路由： `/bjnews/:category`
-
-参数: category，新京报的栏目名，点击对应栏目后在地址栏找到
 
 ## 停水通知
 
@@ -1554,20 +1703,6 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 路由: `/kejixingqiu/home`
 
-## 北大信科
-
-### 公告通知 <Author uid="Ir1d"/>
-
-举例: [https://rsshub.app/pku/eecs/0](https://rsshub.app/pku/eecs/0)
-
-路由: `/eecs/:type`
-
-可选参数: type，分区 type，可在网页 URL 中找到
-
-| 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 科研通知 | 财务通知 | 工会通知 | 院友通知 |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 0    | 1        | 2        | 6        | 8        | 7        | 5        | 3        | 4        |
-
 ## 机核网
 
 ### 分类 <Author uid="MoguCloud"/>
@@ -1634,39 +1769,13 @@ id, 专辑 id, 可在对应专辑页面的 URL 中找到
 
 ## 小米
 
-### 众筹
+### 众筹 <Author uid="DIYgod"/>
 
 举例： [https://rsshub.app/mi/crowdfunding](https://rsshub.app/mi/crowdfunding)
 
 路由: `/mi/crowdfunding`
 
 参数: 无
-
-## 华南师范大学
-
-### 教务处通知 <Author uid="fengkx"/>
-
-举例： [https://rsshub.app/scnu/jw](https://rsshub.app/scnu/jw)
-
-路由： `/scnu/jw`
-
-参数：无
-
-### 图书馆通知 <Author uid="fengkx"/>
-
-举例： [https://rsshub.app/scnu/library](https://rsshub.app/scnu/library)
-
-路由： `/scnu/library`
-
-参数：无
-
-### 计算机学院竞赛通知 <Author uid="fengkx"/>
-
-举例： [https://rsshub.app/scnu/cs/match](https://rsshub.app/scnu/cs/match)
-
-路由： `/scnu/cs/match`
-
-参数：无
 
 ## Keep
 
@@ -1909,3 +2018,78 @@ from: 始发地，IATA 国际航空运输协会机场代码
 to: 目的地，IATA 国际航空运输协会机场代码，可选，缺省则目的地为`任意城市`
 
 IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
+
+## 马蜂窝
+
+### 游记 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
+
+路由: `/mafengwo/note/:type`
+
+参数:
+
+type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表最新游记
+
+## 中国地震局
+
+### 地震速报 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/earthquake>
+
+路由: `/earthquake`
+
+参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
+
+## 网络小说
+
+### 笔趣阁 <Author uid="jjeejj"/>
+
+举例: [https://rsshub.app/novel/biquge/52_52542](https://rsshub.app/novel/biquge/52_52542)
+
+路由: `/novel/biquge/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+举例网址： https://www.biquge5200.cc/52_52542/
+::: tip 提示
+
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id。
+
+:::
+
+### UU 看书 <Author uid="jacky2001114"/>
+
+举例: [https://rsshub.app/novel/uukanshu/49621](https://rsshub.app/novel/uukanshu/49621)
+
+路由: `/novel/uukanshu/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+举例网址：https://www.uukanshu.com/b/49621
+
+### 文学迷 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/novel/wenxuemi/6/6144](https://rsshub.app/novel/wenxuemi/6/6144)
+
+路由: `/novel/wenxuemi/:id1/:id2`
+
+参数: id1/id2，小说网站链接最后的数字，可在对应小说页 URL 中找到
+
+举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+
+## Gitlab
+
+### Explore <Author uid="imlonghao"/>
+
+举例: [https://rsshub.app/gitlab/explore/trending](https://rsshub.app/gitlab/explore/trending)
+
+路由: `/gitlab/explore/:type`
+
+参数:
+
+type，分类
+
+| Trending | Most stars | All |
+| -------- | ---------- | --- |
+| trending | starred    | all |
