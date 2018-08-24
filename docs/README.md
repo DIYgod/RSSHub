@@ -450,11 +450,19 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 ### 分区视频 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/partion/33](https://rsshub.app/bilibili/partion/33)
+举例:
 
-路由: `/bilibili/partion/:tid`
+最新视频 ：[https://rsshub.app/bilibili/partion/171/hot/3](https://rsshub.app/bilibili/partion/171/hot/3)
 
-参数: tid，分区 id
+路由: `/bilibili/partion/:tid/:type?/:days?`
+
+参数:
+
+tid，分区 id
+
+type，可选为`空`或`hot`，分别是获取最新视频和最热视频
+
+days，** 仅当 type 为`hot`时可用。** 可选为`空`或`数字x`，分别是默认七天最热视频或过去 x 天内最热视频
 
 动画
 
