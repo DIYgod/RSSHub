@@ -2074,7 +2074,7 @@ type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表�
 
 ## Gitlab
 
-### 探索 <Author uid="imlonghao"/>
+### Explore <Author uid="imlonghao"/>
 
 举例: [https://rsshub.app/gitlab/explore/trending](https://rsshub.app/gitlab/explore/trending)
 

@@ -254,7 +254,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   UU 看书
     -   文学迷
 -   Gitlab
-    -   探索
+    -   Explore
 
 </details>
 
