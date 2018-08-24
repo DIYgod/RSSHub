@@ -454,6 +454,9 @@ router.get('/novel/biquge/:id', require('./routes/novel/biquge'));
 router.get('/novel/uukanshu/:uid', require('./routes/novel/uukanshu'));
 router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
 
+// 中国气象网
+router.get('/weatherAlarm', require('./routes/weatherAlarm'));
+
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
