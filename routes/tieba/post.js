@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: lz ? `【只看楼主】${title}` : title,
-        link: `https://tieba.baidu.com/p/${id}?see_lz=1`,
+        link: `https://tieba.baidu.com/p/${id}?see_lz=${lz}`,
         description: `${title}的最新回复`,
         item:
             list &&
