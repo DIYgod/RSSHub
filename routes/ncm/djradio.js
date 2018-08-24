@@ -48,7 +48,7 @@ module.exports = async (ctx) => {
             const html = image + description + `<div><audio src="//music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3" controls></audio><p>时长: ${itunes_duration}</p><p><a href="${src}">查看节目</a></p></div>`;
 
             return {
-                title: pg.mainSong.name,
+                title: pg.name,
                 link: src,
                 pubDate: new Date(pg.createTime).toUTCString(),
                 published: new Date(pg.createTime).toISOString(),
