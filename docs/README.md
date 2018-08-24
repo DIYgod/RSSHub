@@ -466,9 +466,7 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 ### 分区视频 <Author uid="DIYgod"/>
 
-举例:
-
-最新视频 ：[https://rsshub.app/bilibili/partion/171/hot/3](https://rsshub.app/bilibili/partion/171/hot/3)
+举例: [https://rsshub.app/bilibili/partion/171/hot/3](https://rsshub.app/bilibili/partion/171/hot/3)
 
 路由: `/bilibili/partion/:tid/:type?/:days?`
 
