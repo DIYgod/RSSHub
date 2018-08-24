@@ -769,6 +769,26 @@ rid: 排行榜分区 id，默认 0
 
 `cid`: 精品分类，如果不传 `cid` 则获取全部分类
 
+### 帖子动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/5853240586](https://rsshub.app/tieba/post/5853240586)
+
+路由: `/tieba/post/:id`
+
+参数：
+
+`id`: 帖子 ID
+
+### 楼主动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/lz/5853240586](https://rsshub.app/tieba/post/lz/5853240586)
+
+路由: `/tieba/post/lz/:id`
+
+参数：
+
+`id`: 帖子 ID
+
 ## 即刻
 
 ### 主题-精选 <Author uid="DIYgod"/>
