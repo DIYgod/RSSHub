@@ -2077,3 +2077,19 @@ type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表�
 参数: id1/id2，小说网站链接最后的数字，可在对应小说页 URL 中找到
 
 举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+
+## Gitlab
+
+### Explore <Author uid="imlonghao"/>
+
+举例: [https://rsshub.app/gitlab/explore/trending](https://rsshub.app/gitlab/explore/trending)
+
+路由: `/gitlab/explore/:type`
+
+参数:
+
+type，分类
+
+| Trending | Most stars | All |
+| -------- | ---------- | --- |
+| trending | starred    | all |

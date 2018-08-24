@@ -454,4 +454,7 @@ router.get('/novel/biquge/:id', require('./routes/novel/biquge'));
 router.get('/novel/uukanshu/:uid', require('./routes/novel/uukanshu'));
 router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
 
+// Gitlab
+router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
+
 module.exports = router;
