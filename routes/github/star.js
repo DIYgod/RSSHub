@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
         title: `${user}/${repo}’s stargazers`,
         link: host,
         item: data.map((follower) => ({
-            title: `New stargazer: ${follower.login}`,
+            title: `${follower.login} starred ${user}/${repo}`,
             description: `${follower.html_url} <br> <img src='${follower.avatar_url}'>`,
             link: `https://github.com/${follower.login}`,
         })),
