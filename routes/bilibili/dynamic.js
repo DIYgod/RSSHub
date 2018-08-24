@@ -37,10 +37,6 @@ module.exports = async (ctx) => {
             let link = '';
             if (data.dynamic_id) {
                 link = `https://t.bilibili.com/${data.dynamic_id}`;
-            } else if (data.aid) {
-                link = `https://www.bilibili.com/video/av${data.aid}`;
-            } else if (data.video_playurl) {
-                link = `https://vc.bilibili.com/video/${data.id}`;
             } else if (item.desc && item.desc.dynamic_id) {
                 link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
             }
