@@ -1512,10 +1512,10 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 ::: warning 注意
 **付费内容可获取更新但无法收听**
 
-目前[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**不能使用**以下链接来订阅播客:
+目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**只能使用**以下链接来订阅播客:
 
--   https://rsshub.app/ximalaya/album/299146.atom
--   https://rsshub.app/ximalaya/album/299146.json
+-   https://rsshub.app/ximalaya/album/299146/
+-   https://rsshub.app/ximalaya/album/299146.rss
 
 :::
 
