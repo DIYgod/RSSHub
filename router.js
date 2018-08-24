@@ -176,6 +176,7 @@ router.get('/douban/movie/playing/:score/:city', require('./routes/douban/playin
 router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
+router.get('/douban/featuredList', require('./routes/douban/featuredList'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -188,9 +189,6 @@ router.get('/dockone/weekly', require('./routes/dockone/weekly'));
 
 // 腾讯吐个槽
 router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
-
-// 笔趣阁
-router.get('/biquge/novel/latestchapter/:id', require('./routes/biquge/chapter'));
 
 // 开发者头条
 router.get('/toutiao/today', require('./routes/toutiao/today'));
@@ -291,9 +289,6 @@ router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/p
 // 纽约时报
 router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
-// UU看书
-router.get('/uukanshu/chapter/:uid', require('./routes/uukanshu/chapter'));
-
 // 3dm
 router.get('/3dm/:name/download', require('./routes/3dm/download'));
 router.get('/3dm/:name/:type', require('./routes/3dm/news'));
@@ -302,6 +297,7 @@ router.get('/3dm/news', require('./routes/3dm/news_center'));
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
 router.get('/ximalaya/album/:id', require('./routes/ximalaya/album'));
+
 // EZTV
 router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 
@@ -337,7 +333,7 @@ router.get('/mihoyo/bh2/:type', require('./routes/mihoyo/bh2'));
 router.get('/cctv/:category', require('./routes/cctv/category'));
 
 // 财新
-router.get('/caixin/weekly/:category', require('./routes/caixin/weekly'));
+router.get('/caixin/:column/:category', require('./routes/caixin/category'));
 
 // 草榴社区
 router.get('/t66y/:id', require('./routes/t66y/index'));
@@ -446,5 +442,19 @@ router.get('/ju/jwc/:type?', require('./routes/ju/jwc'));
 
 // 中国地震局震情速递（与地震台网同步更新）
 router.get('/earthquake', require('./routes/earthquake'));
+
+// 笔趣阁
+router.get('/biquge/novel/latestchapter/:id', require('./routes/novel/biquge'));
+
+// UU看书
+router.get('/uukanshu/chapter/:uid', require('./routes/novel/uukanshu'));
+
+// 小说
+router.get('/novel/biquge/:id', require('./routes/novel/biquge'));
+router.get('/novel/uukanshu/:uid', require('./routes/novel/uukanshu'));
+router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
+
+// Gitlab
+router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
 module.exports = router;
