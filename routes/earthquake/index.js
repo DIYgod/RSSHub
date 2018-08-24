@@ -64,7 +64,6 @@ module.exports = async (ctx) => {
                 .text()
                 .trim()
                 .substring(5);
-            console.log($container.html());
 
             return {
                 title: $el.find('a').text(),
