@@ -85,6 +85,9 @@ router.get('/', async (ctx) => {
 // RSSHub
 router.get('/rsshub/rss', require('./routes/rsshub/rss'));
 
+// concatenate multiple rss
+router.get('/concat', require('./routes/function/concat'));
+
 // bilibili
 router.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
 router.get('/bilibili/user/article/:uid', require('./routes/bilibili/article'));
