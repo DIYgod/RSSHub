@@ -13,7 +13,7 @@ module.exports = async (ctx) => {
     const list = $('.item');
 
     ctx.state.data = {
-        title: '豆瓣今日精选',
+        title: '豆瓣-浏览发现',
         link: 'https://www.douban.com/explore',
         item:
             list &&
@@ -28,8 +28,7 @@ module.exports = async (ctx) => {
                         description: `作者：${item
                             .find('.usr-pic a')
                             .last()
-                            .text()}<br>描述：${item.find('.content p').text()}<br><img referrerpolicy="no-referrer" src="${item
-                            .find('.cover')
+                            .text()}<br>描述：${item.find('.content p').text()}<br><img referrerpolicy="no-referrer" src="${$('a.cover')
                             .css('background-image')
                             .replace('url(', '')
                             .replace(')', '')}">`,
