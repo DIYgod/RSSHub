@@ -30,6 +30,7 @@ module.exports = async (ctx) => {
         author: dj.nickname,
         updated: radio.lastProgramCreateTime,
         icon: radio.picUrl,
+        image: radio.picUrl,
         itunes_author: dj.nickname,
         itunes_category: radio.category,
         item: programs.map((pg) => {
