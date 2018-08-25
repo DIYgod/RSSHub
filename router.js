@@ -178,7 +178,7 @@ router.get('/douban/movie/playing/:score/:city', require('./routes/douban/playin
 router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
-router.get('/douban/featuredList', require('./routes/douban/featuredList'));
+router.get('/douban/explore', require('./routes/douban/explore'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
