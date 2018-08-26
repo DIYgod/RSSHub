@@ -42,4 +42,7 @@ module.exports = {
     github: {
         access_token: process.env.GITHUB_ACCESS_TOKEN,
     },
+    imgur: {
+        clientId: process.env.IMGUR_CLIRNT_ID,
+    },
 };

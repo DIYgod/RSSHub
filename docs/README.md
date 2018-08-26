@@ -310,13 +310,29 @@ type, 可选, 默认为 `all`
 
 > 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。
 
-#### 财新周刊 <Author uid="idealclover"/>
+#### 新闻分类 <Author uid="idealclover"/>
 
-举例: [https://rsshub.app/caixin/weekly/coverstory](https://rsshub.app/caixin/weekly/coverstory)
+举例: [https://rsshub.app/caixin/finance/regulation](https://rsshub.app/caixin/finance/regulation)
 
-路由: `/caixin/weekly/:category`
+路由: `/caixin/:column/:category`
 
-参数：category，分类名
+参数：column，栏目名
+
+category，栏目下的子分类名
+
+column 列表：
+
+| 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
+| ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
+| economy | finance | china | science | international | opinion | culture | weekly |
+
+以金融板块为例的 category 列表：（其余 column 以类似方式寻找）
+
+| 监管       | 银行 | 证券基金 | 信托保险        | 投资       | 创新       | 市场   |
+| ---------- | ---- | -------- | --------------- | ---------- | ---------- | ------ |
+| regulation | bank | stock    | insurance_trust | investment | innovation | market |
+
+财新周刊 category 列表：
 
 | 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
 | ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
@@ -377,6 +393,14 @@ type, 可选, 默认为 `all`
 举例: [https://rsshub.app/bilibili/user/video/2267573](https://rsshub.app/bilibili/user/video/2267573)
 
 路由: `/bilibili/user/video/:uid`
+
+参数: uid，用户 id，可在 UP 主主页中找到
+
+### UP 主专栏 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/bilibili/user/article/334958638](https://rsshub.app/bilibili/user/article/334958638)
+
+路由: `/bilibili/user/article/:uid`
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
@@ -745,6 +769,26 @@ rid: 排行榜分区 id，默认 0
 
 `cid`: 精品分类，如果不传 `cid` 则获取全部分类
 
+### 帖子动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/5853240586](https://rsshub.app/tieba/post/5853240586)
+
+路由: `/tieba/post/:id`
+
+参数：
+
+`id`: 帖子 ID
+
+### 楼主动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/lz/5853240586](https://rsshub.app/tieba/post/lz/5853240586)
+
+路由: `/tieba/post/lz/:id`
+
+参数：
+
+`id`: 帖子 ID
+
 ## 即刻
 
 ### 主题-精选 <Author uid="DIYgod"/>
@@ -845,7 +889,7 @@ rid: 排行榜分区 id，默认 0
 
 ### 标签 <Author uid="isheng5"/>
 
-举例: [https://rsshub.app/juejin/tag/架构](https://juejin.im/tag/架构)
+举例: [https://rsshub.app/juejin/tag/架构](https://rsshub.app/juejin/tag/架构)
 
 路由: `/juejin/tag/:tag`
 
@@ -1112,6 +1156,12 @@ city: 城市的中文名，可选，默认北京
 参数:
 groupid: 豆瓣小组的 id
 
+### 今日精选 <Author uid="clarkzsd"/>
+
+举例: [https://rsshub.app/douban/featuredList](https://rsshub.app/douban/featuredList)
+
+路由: `/douban/featuredList`
+
 ## 煎蛋
 
 ### 无聊图 <Author uid="Xuanwo"/>
@@ -1161,22 +1211,6 @@ groupid: 豆瓣小组的 id
 project: 产品 ID
 
 key: 产品密钥
-
-## 笔趣阁
-
-### 小说章节 <Author uid="jjeejj"/>
-
-举例: [https://rsshub.app/biquge/novel/latestchapter/52_52542](https://rsshub.app/biquge/novel/latestchapter/52_52542)
-
-路由: `/biquge/novel/latestchapter/:id`
-
-参数: id，小说 id，可在对应小说页 URL 中找到
-
-::: tip 提示
-
-由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id。
-
-:::
 
 ## 开发者头条
 
@@ -1350,6 +1384,14 @@ key: 产品密钥
 
 参数: username，频道 username
 
+### 贴纸包 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
+
+路由: `/telegram/stickerpack/:name`
+
+参数: name，贴纸包 id，可在分享贴纸获得的 URL 中找到
+
 ## Readhub
 
 ### 分类 <Author uid="WhiteWorld"/>
@@ -1455,16 +1497,6 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 参数: user，用户名
 参数: repo，仓库名
 
-## UU 看书
-
-### 小说章节 <Author uid="jacky2001114"/>
-
-举例: [https://rsshub.app/uukanshu/chapter/49621](https://rsshub.app/uukanshu/chapter/49621)
-
-路由: `/uukanshu/chapter/:id`
-
-参数: id，小说 id，可在对应小说页 URL 中找到
-
 ## 3DMGame
 
 ### 新闻中心 <Author uid="zhboner"/>
@@ -1506,10 +1538,10 @@ language，语言，可在 [Trending 页](https://github.com/trending/javascript
 ::: warning 注意
 **付费内容可获取更新但无法收听**
 
-目前[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**不能使用**以下链接来订阅播客:
+目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**只能使用**以下链接来订阅播客:
 
--   https://rsshub.app/ximalaya/album/299146.atom
--   https://rsshub.app/ximalaya/album/299146.json
+-   https://rsshub.app/ximalaya/album/299146/
+-   https://rsshub.app/ximalaya/album/299146.rss
 
 :::
 
@@ -2028,3 +2060,67 @@ type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表�
 路由: `/earthquake`
 
 参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
+
+## 网络小说
+
+### 笔趣阁 <Author uid="jjeejj"/>
+
+举例: [https://rsshub.app/novel/biquge/52_52542](https://rsshub.app/novel/biquge/52_52542)
+
+路由: `/novel/biquge/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+举例网址： https://www.biquge5200.cc/52_52542/
+::: tip 提示
+
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id。
+
+:::
+
+### UU 看书 <Author uid="jacky2001114"/>
+
+举例: [https://rsshub.app/novel/uukanshu/49621](https://rsshub.app/novel/uukanshu/49621)
+
+路由: `/novel/uukanshu/:id`
+
+参数: id，小说 id，可在对应小说页 URL 中找到
+
+举例网址：https://www.uukanshu.com/b/49621
+
+### 文学迷 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/novel/wenxuemi/6/6144](https://rsshub.app/novel/wenxuemi/6/6144)
+
+路由: `/novel/wenxuemi/:id1/:id2`
+
+参数: id1/id2，小说网站链接最后的数字，可在对应小说页 URL 中找到
+
+举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+
+### 中国气象网 <Author uid="ylc395"/>
+
+#### 全国气象预警
+
+举例: <(https://rsshub.app/weatherAlarm>
+
+路由: `/weatherAlarm`
+
+参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
+
+## Gitlab
+
+### Explore <Author uid="imlonghao"/>
+
+举例: [https://rsshub.app/gitlab/explore/trending](https://rsshub.app/gitlab/explore/trending)
+
+路由: `/gitlab/explore/:type`
+
+参数:
+
+type，分类
+
+| Trending | Most stars | All |
+| -------- | ---------- | --- |
+| trending | starred    | all |
+
