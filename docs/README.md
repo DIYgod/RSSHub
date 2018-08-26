@@ -895,6 +895,30 @@ rid: 排行榜分区 id，默认 0
 
 参数: tag，标签名，可在标签 URL 中找到
 
+### 本周最热 <Author uid="moaix"/>
+
+举例: [https://rsshub.app/juejin/trending/weekly](https://rsshub.app/juejin/trending/weekly)
+
+路由: `/juejin/trending/weekly`
+
+参数: 无
+
+### 本月最热 <Author uid="moaix"/>
+
+举例: [https://rsshub.app/juejin/trending/monthly](https://rsshub.app/juejin/trending/monthly)
+
+路由: `/juejin/trending/monthly`
+
+参数: 无
+
+### 历史最热 <Author uid="moaix"/>
+
+举例: [https://rsshub.app/juejin/trending/hottest](https://rsshub.app/juejin/trending/hottest)
+
+路由: `/juejin/trending/hottest`
+
+参数: 无
+
 ## 简书
 
 ### 首页 <Author uid="DIYgod"/>

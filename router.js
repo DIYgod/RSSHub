@@ -134,6 +134,7 @@ router.get('/ncm/djradio/:id', require('./routes/ncm/djradio'));
 // 掘金
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
 router.get('/juejin/tag/:tag', require('./routes/juejin/tag'));
+router.get('/juejin/trending/:type', require('./routes/juejin/trending'));
 
 // 自如
 router.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
