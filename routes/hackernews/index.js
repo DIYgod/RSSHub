@@ -13,29 +13,32 @@ module.exports = async (ctx) => {
 
     const data = res.data;
     const $ = cheerio.load(data);
-    const list = $('.athing');
+    const lists = $('.athing');
+    const dates = $('.age');
 
     ctx.state.data = {
         title: 'Hacker News',
         link: 'https://news.ycombinator.com/',
-        item: list
+        item: lists
             .map((index, element) => {
                 const item = $(element);
                 const storylink = item.find('.storylink');
-                const dateString = item.find('.age > a').text();
+                const dateString = $(dates[index])
+                    .find('a')
+                    .text();
 
                 let date;
                 if (dateString.includes('ago')) {
                     // 处理表示相对日期的字符串
-                    const list = dateString
-                        .match(/(\dd )?(\d{1,2}h )?(\d{1,2}m )?ago/)
+                    const dateList = dateString
+                        .match(/(\d days? )?(\d{1,2} hours? )?(\d{1,2} minutes? )?ago/)
                         .slice(1)
-                        .map((s) => (s ? Number(s.slice(0, -2)) : 0));
+                        .map((s) => (s ? Number(s.split(' ')[0]) : 0));
 
                     date = DateTime.local().minus({
-                        days: list[0],
-                        hours: list[1],
-                        minutes: list[2],
+                        days: dateList[0],
+                        hours: dateList[1],
+                        minutes: dateList[2],
                     });
                 } else {
                     // 表示绝对日期的字符串
