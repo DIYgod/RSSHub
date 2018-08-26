@@ -405,6 +405,9 @@ router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
 // 开源中国
 router.get('/oschina/news', require('./routes/oschina/news'));
 
+// Hacker News
+router.get('/hackernews', require('./routes/hackernews/index'));
+
 // 腾讯视频 SDK
 router.get('/qcloud/mlvb/changelog', require('./routes/qcloud/mlvb/changelog'));
 

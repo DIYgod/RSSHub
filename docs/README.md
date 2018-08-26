@@ -1953,6 +1953,16 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 
 参数：无
 
+## Hacker News
+
+### News <Author uid="moaix"/>
+
+举例: [https://rsshub.app/hackernews](https://rsshub.app/hackernews)
+
+路由: `/hackernews`
+
+参数：无
+
 ## All the Flight Deals
 
 ### 特价机票 <Author uid="HenryQW"/>
