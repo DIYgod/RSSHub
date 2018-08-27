@@ -2123,4 +2123,3 @@ type，分类
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
-
