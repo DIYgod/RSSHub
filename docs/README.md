@@ -2102,7 +2102,7 @@ type，必选，目前支持两种，`hot` 代表热门游记，`latest` 代表�
 
 #### 全国气象预警
 
-举例: <(https://rsshub.app/weatherAlarm>
+举例: <https://rsshub.app/weatherAlarm>
 
 路由: `/weatherAlarm`
 
@@ -2123,3 +2123,4 @@ type，分类
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
+
