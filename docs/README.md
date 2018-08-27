@@ -2123,3 +2123,13 @@ type，分类
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
+
+## Galgame
+
+### 忧郁的弟弟
+
+举例: [https://rsshub.app/galgame/website/mygalgame](https://rsshub.app/galgame/website/mygalgame)
+
+路由: `/galgame/website/mygalgame`
+
+参数: 无
