@@ -23,29 +23,31 @@ module.exports = async (ctx) => {
     const list = $('div.prices li a');
     const items = [];
 
-    if (type === '1') {
-        let lowest = 99999;
-        let lowIndex = 0;
+    if (!list.length === 0) {
+        if (type === '1') {
+            let lowest = 99999;
+            let lowIndex = 0;
 
-        list.each((i, e) => {
-            const current = parseInt(
-                $(e)
-                    .find('.price')
-                    .text()
-                    .replace(/\D/g, '')
-            );
+            list.each((i, e) => {
+                const current = parseInt(
+                    $(e)
+                        .find('.price')
+                        .text()
+                        .replace(/\D/g, '')
+                );
 
-            if (current < lowest) {
-                lowest = current;
-                lowIndex = i;
-            }
-        });
+                if (current < lowest) {
+                    lowest = current;
+                    lowIndex = i;
+                }
+            });
 
-        items.push(formatDesc($(list[lowIndex])));
-    } else {
-        list.each((i, e) => {
-            items.push(formatDesc($(e)));
-        });
+            items.push(formatDesc($(list[lowIndex])));
+        } else {
+            list.each((i, e) => {
+                items.push(formatDesc($(e)));
+            });
+        }
     }
 
     ctx.state.data = {
