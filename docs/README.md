@@ -474,9 +474,9 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 ### 分区视频(视频热度排序) <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/bilibili/partionhot/171/3](https://rsshub.app/bilibili/partionhot/171/3)
+举例: [https://rsshub.app/bilibili/partion/ranking/171/3](https://rsshub.app/bilibili/partion/ranking/171/3)
 
-路由: `/bilibili/partionhot/:tid/:days?`
+路由: `/bilibili/partion/ranking/:tid/:days?`
 
 参数:
 

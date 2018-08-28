@@ -29,7 +29,7 @@ module.exports = async (ctx) => {
         name = list[0].tname;
     }
 
-    const time_from = formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * days)); // 七天前的日期
+    const time_from = formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * days)); // n天前的日期
     const time_to = formatDate(new Date()); // 今天的日期
     const HotRankResponseApi = `https://s.search.bilibili.com/cate/search?main_ver=v3&search_type=video&view_type=hot_rank&cate_id=${tid}&time_from=${time_from}&time_to=${time_to}&_=${+new Date()}`;
     const HotRankResponse = await axios_ins.get(HotRankResponseApi);
@@ -37,25 +37,18 @@ module.exports = async (ctx) => {
 
     for (let i = 0; i < hotlist.length; i++) {
         let item = hotlist[i];
-        const key = item.id;
-        const value = await ctx.cache.get(key);
 
-        if (value) {
-            item = JSON.parse(value);
-        } else {
-            item = {
-                title: `${item.title} - ${item.author}`,
-                description: `${item.description}<img referrerpolicy="no-referrer" src="${item.pic}"></br>Tags:${item.tag}`,
-                pubDate: new Date(item.pubdate).toUTCString(),
-                link: item.arcurl,
-            };
-            ctx.cache.set(key, JSON.stringify(item), 24 * 60 * 60);
-        }
+        item = {
+            title: `${item.title} - ${item.author}`,
+            description: `${item.description}<img referrerpolicy="no-referrer" src="${item.pic}"></br>Tags:${item.tag}`,
+            pubDate: new Date(item.pubdate).toUTCString(),
+            link: item.arcurl,
+        };
         items.push(item);
     }
 
     ctx.state.data = {
-        title: `bilibili ${name}分区`,
+        title: `bilibili ${name} 最热视频`,
         link: 'https://www.bilibili.com',
         description: `bilibili ${name}分区 最热视频`,
         item: items,
