@@ -2222,3 +2222,13 @@ type，分类
 路由: `/mygalgame`
 
 参数: 无
+
+## 东南大学
+
+### 信息科学与工程学院 -- 学术活动 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/seu/radio/academic](https://rsshub.app/seu/radio/academic)
+
+路由: `/seu/radio/academic`
+
+参数: 无
