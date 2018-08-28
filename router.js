@@ -467,6 +467,9 @@ router.get('/weatherAlarm', require('./routes/weatherAlarm'));
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
+// 忧郁的弟弟
+router.get('/mygalgame', require('./routes/galgame/mygalgame'));
+
 // DPU
 router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
 
