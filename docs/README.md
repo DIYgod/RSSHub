@@ -2225,7 +2225,7 @@ type，分类
 
 ## 上海交通大学
 
-### 电子信息与电气工程学院 -- 学术动态
+### 电子信息与电气工程学院 -- 学术动态 <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/sjtu/seiee/academic](https://rsshub.app/sjtu/seiee/academic)
 
