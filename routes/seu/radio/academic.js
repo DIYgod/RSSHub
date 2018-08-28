@@ -1,10 +1,12 @@
 const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
+const url = require('url');
 
 const host = 'http://radio.seu.edu.cn/';
 
 module.exports = async (ctx) => {
-    const response = await axios.get(`${host}_s29/15986/list.psp`);
+    const link = url.resolve(host, '_s29/15986/list.psp');
+    const response = await axios.get(link);
 
     const $ = cheerio.load(response.data);
 
@@ -15,7 +17,7 @@ module.exports = async (ctx) => {
 
     const out = await Promise.all(
         list.map(async (itemUrl) => {
-            itemUrl = `${host}${itemUrl}`;
+            itemUrl = url.resolve(host, itemUrl);
             const cache = await ctx.cache.get(itemUrl);
             if (cache) {
                 return Promise.resolve(JSON.parse(cache));
@@ -30,7 +32,10 @@ module.exports = async (ctx) => {
                 author: $('.arti_publisher')
                     .text()
                     .replace('发布者：', ''),
-                description: $('.wp_articlecontent').html(),
+                description: $('.wp_articlecontent')
+                    .html()
+                    .replace(/src="\//g, `src="${url.resolve(host, '.')}`)
+                    .trim(),
                 pubDate: new Date(
                     $('.arti_update')
                         .text()
@@ -44,7 +49,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: '东南大学信息科学与工程学院 -- 学术活动',
-        link: `${host}seiee/list/683-1-20.htm`,
+        link,
         item: out,
     };
 };
