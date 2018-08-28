@@ -2206,4 +2206,5 @@ type，分类
 举例: <https://rsshub.app/ifanr/appso>
 
 路由: `/ifanr/appso`
+
 参数: 无

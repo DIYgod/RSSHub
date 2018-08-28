@@ -11,31 +11,29 @@ module.exports = async (ctx) => {
     const list = $('h3 a')
         .map((i, e) => $(e).attr('href'))
         .get();
-    const out = [];
 
-    for (let i = 0; i < Math.min(list.length, 5); i++) {
-        const itemUrl = list[i];
-        const cache = await ctx.cache.get(itemUrl);
-        if (cache) {
-            out.push(JSON.parse(cache));
-            continue;
-        }
+    const out = await Promise.all(
+        list.map(async (itemUrl) => {
+            const cache = await ctx.cache.get(itemUrl);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
 
-        const response = await axios.get(itemUrl);
-        const $ = cheerio.load(response.data);
-        const title = $('h1').text();
+            const response = await axios.get(itemUrl);
+            const $ = cheerio.load(response.data);
+            const title = $('h1').text();
 
-        const single = {
-            title,
-            link: itemUrl,
-            guid: itemUrl,
-            author: $('.c-article-header-meta__category').html(),
-            description: $('article').html(),
-            pubDate: new Date($('.c-article-header-meta__time').attr('date-timestamp')),
-        };
-        out.push(single);
-        ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
-    }
+            const single = {
+                title,
+                link: itemUrl,
+                author: $('.c-article-header-meta__category').html(),
+                description: $('article').html(),
+                pubDate: new Date($('.c-article-header-meta__time').attr('date-timestamp')),
+            };
+            ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
+            return Promise.resolve(single);
+        })
+    );
 
     ctx.state.data = {
         title: 'AppSo : 让手机更好用的数字生活媒体',
