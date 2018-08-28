@@ -2222,3 +2222,13 @@ type，分类
 路由: `/mygalgame`
 
 参数: 无
+
+## 中国科学院
+
+### 上海微系统与信息技术研究所 -- 学术活动 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/cas/sim/academic](https://rsshub.app/cas/sim/academic)
+
+路由: `/cas/sim/academic`
+
+参数: 无
