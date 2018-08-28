@@ -29,45 +29,54 @@ module.exports = async (ctx) => {
     const response = await axios_ins.get(host + word);
     const $ = cheerio.load(response.data);
     const text = $('a', '.list.list3');
-    const items = [];
 
-    for (let i = 0; i < text.length; i++) {
-        const link = host + $(text[i]).attr('href');
-        const article = await axios_ins.get(link);
-        const $1 = cheerio.load(article.data);
-        const res = $1('small')
-            .contents()
-            .filter(function() {
-                return this.nodeType === 3;
-            })
-            .text();
-        const reg = new RegExp('\n', 'g'); // 匹配回车符
-        const str = res.replace(reg, '').toString(); // 替换回车符为""，再转为string类型
-        const arr = str.split(' '); // 将字符串每个字符转换为数组的元素
-        let date = arr[1] + ' ' + arr[2];
-        date = date.replace(/^\s+|\s+$/g, '');
-        const item = {
-            title: $('.imgdesc', $(text[i]))
-                .find('.imgtitle')
-                .text(),
-            descriptions: $('.imgdesc', $(text[i]))
-                .find('.imgtext')
-                .text(),
-            pubDate: new Date(date).toUTCString(),
-            link: link,
-        };
-        items.push(item);
-    }
+    const resultItems = await Promise.all(
+        text.toArray().map(async (item) => {
+            const $item = $(item);
+            const link = host + $item.attr('href');
+            let resultItem = {};
+
+            const value = await ctx.cache.get(link);
+
+            if (value) {
+                resultItem = JSON.parse(value);
+            } else {
+                const article = await axios_ins.get(link);
+                const $1 = cheerio.load(article.data);
+                const res = $1('small')
+                    .contents()
+                    .filter(function() {
+                        return this.nodeType === 3;
+                    })
+                    .text();
+                const reg = new RegExp('\n', 'g'); // 匹配回车符
+                const str = res.replace(reg, '').toString(); // 替换回车符为""，再转为string类型
+                const arr = str.split(' '); // 将字符串每个字符转换为数组的元素
+                let date = arr[1] + ' ' + arr[2];
+                date = date.replace(/^\s+|\s+$/g, '');
+
+                resultItem = {
+                    title: $('.imgdesc', $item)
+                        .find('.imgtitle')
+                        .text(),
+                    description: $('.imgdesc', $item)
+                        .find('.imgtext')
+                        .text(),
+                    pubDate: new Date(date).toUTCString(),
+                    link: link,
+                };
+
+                ctx.cache.set(link, JSON.stringify(resultItem), 24 * 60 * 60);
+            }
+            // };
+            return Promise.resolve(resultItem);
+        })
+    );
 
     ctx.state.data = {
         title: `西南科技大学 计科学院 ${info}`,
         link: host + word,
         description: `西南科技大学 计科学院 ${info}`,
-        item: items.map((item) => ({
-            title: item.title,
-            description: item.descriptions,
-            link: item.link,
-            pubDate: item.pubDate,
-        })),
+        item: resultItems,
     };
 };
