@@ -21,9 +21,13 @@ module.exports = async (ctx) => {
         if (score !== '-') {
             const time = $('td.match_time_hidden').text();
             const type = $('td.gameweek').text();
-            const home = $('td:nth-of-type(4)');
-            const away = $('td:nth-of-type(6)');
-            const title = `${type} ${home.text().trim()} ${score} ${away.text().trim()}`;
+            const home = $('td:nth-of-type(4)')
+                .text()
+                .trim();
+            const away = $('td:nth-of-type(6)')
+                .text()
+                .trim();
+            const title = `${type} ${home} ${score} ${away}`;
 
             const single = {
                 title,
