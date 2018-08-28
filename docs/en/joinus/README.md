@@ -89,7 +89,7 @@ ctx.state.data = {
             title: '', // The article title
             description: '', // The article content
             pubDate: '', // The article publishing datetime
-            guid: '', // The article unique identifier, optional, default to the article link below，必须唯一，可选，默认为文章链接
+            guid: '', // The article unique identifier, optional, default to the article link below.
             link: '', // The article link
             itunes_item_image: '', // The article image
             enclosure_url: '', // the audio link
