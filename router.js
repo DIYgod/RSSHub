@@ -467,4 +467,7 @@ router.get('/weatherAlarm', require('./routes/weatherAlarm'));
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
+// ifanr
+router.get('/ifanr/appso', require('./routes/ifanr/appso'));
+
 module.exports = router;
