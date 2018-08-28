@@ -897,27 +897,35 @@ rid: 排行榜分区 id，默认 0
 
 ### 本周最热 <Author uid="moaix"/>
 
-举例: [https://rsshub.app/juejin/trending/weekly](https://rsshub.app/juejin/trending/weekly)
+举例: [https://rsshub.app/juejin/trending/ios/monthly](https://rsshub.app/juejin/trending/ios/monthly)
 
-路由: `/juejin/trending/weekly`
+路由: `/juejin/trending/:category/:type`
 
-参数: 无
+参数:
 
-### 本月最热 <Author uid="moaix"/>
+category，分类名，必选
 
-举例: [https://rsshub.app/juejin/trending/monthly](https://rsshub.app/juejin/trending/monthly)
+| category | 标签     |
+| -------- | -------- |
+| android  | Android  |
+| frontend | 前端     |
+| ios      | iOS      |
+| backend  | 后端     |
+| design   | 设计     |
+| product  | 产品     |
+| freebie  | 工具资源 |
+| article  | 阅读     |
+| ai       | 人工智能 |
+| devops   | 运维     |
+| all      | 全部     |
 
-路由: `/juejin/trending/monthly`
+type，类型，必选
 
-参数: 无
-
-### 历史最热 <Author uid="moaix"/>
-
-举例: [https://rsshub.app/juejin/trending/hottest](https://rsshub.app/juejin/trending/hottest)
-
-路由: `/juejin/trending/hottest`
-
-参数: 无
+| type       | 类型     |
+| ---------- | -------- |
+| weekly     | 本周最热 |
+| monthly    | 本月最热 |
+| historical | 历史最热 |
 
 ## 简书
 
@@ -1974,16 +1982,6 @@ id，可选，分区或标签的 ID，对应 URL 中的 `sid` 或 `tid`
 举例: [https://rsshub.app/oschina/news](https://rsshub.app/oschina/news)
 
 路由: `/oschina/news`
-
-参数：无
-
-## Hacker News
-
-### News <Author uid="moaix"/>
-
-举例: [https://rsshub.app/hackernews](https://rsshub.app/hackernews)
-
-路由: `/hackernews`
 
 参数：无
 

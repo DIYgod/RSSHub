@@ -134,7 +134,7 @@ router.get('/ncm/djradio/:id', require('./routes/ncm/djradio'));
 // 掘金
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
 router.get('/juejin/tag/:tag', require('./routes/juejin/tag'));
-router.get('/juejin/trending/:type', require('./routes/juejin/trending'));
+router.get('/juejin/trending/:category/:type', require('./routes/juejin/trending'));
 
 // 自如
 router.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
@@ -405,9 +405,6 @@ router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
 
 // 开源中国
 router.get('/oschina/news', require('./routes/oschina/news'));
-
-// Hacker News
-router.get('/hackernews', require('./routes/hackernews/index'));
 
 // 腾讯视频 SDK
 router.get('/qcloud/mlvb/changelog', require('./routes/qcloud/mlvb/changelog'));
