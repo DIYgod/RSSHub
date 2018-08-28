@@ -5,24 +5,41 @@ module.exports = async (ctx) => {
     const user = ctx.params.user;
 
     const host = `https://github.com/${user}`;
-    const url = `https://api.github.com/users/${user}/followers`;
+    const url = 'https://api.github.com/graphql';
 
     const response = await axios({
-        method: 'get',
+        method: 'post',
         url,
-        params: {
-            access_token: config.github.access_token,
+        headers: {
+            Authorization: `bearer ${config.github.access_token}`,
+        },
+        data: {
+            query: `
+            {
+                user(login: "${user}") {
+                  followers(last: 10) {
+                    edges {
+                      node {
+                        login
+                        avatarUrl
+                      }
+                    }
+                  }
+                }
+              }
+            `,
         },
     });
-    const data = response.data;
+
+    const data = response.data.data.user.followers.edges.reverse();
 
     ctx.state.data = {
         title: `${user}'s followers`,
         link: host,
         item: data.reverse().map((follower) => ({
-            title: `${follower.login} started following ${user}`,
-            description: `${follower.html_url} <br> <img src='${follower.avatar_url}'>`,
-            link: `https://github.com/${follower.login}`,
+            title: `${follower.node.login} started following ${user}`,
+            description: `<a href="https://github.com/${follower.node.login}">${follower.node.login}</a> <br> <img sytle="width:50px;" src='${follower.node.avatarUrl}'>`,
+            link: `https://github.com/${follower.node.login}`,
         })),
     };
 };
