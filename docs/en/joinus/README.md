@@ -68,7 +68,7 @@ ctx.state.data = {
 
 <details><summary>If you want to make a podcast RSS</summary><br>
 
-these datas can make your pocketcast descripted：
+these datas can make your pocketcast subscribed：
 
 -   [Create a podcast - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itca5b22233a)
 -   [Podcast best practices - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itc2b3780e76)
