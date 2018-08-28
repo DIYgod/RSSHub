@@ -66,9 +66,7 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>如果你想制作播客馈送型RSS，点这儿</summary><br>
-
-播客馈送是指向 XML 格式 RSS（丰富站点摘要）的网址（URL）。
+<details><summary>如果你想制作播客订阅型RSS，点这儿</summary><br>
 
 这些多的字段能使你的 RSS 被泛用型播客软件订阅：
 
@@ -83,6 +81,7 @@ ctx.state.data = {
     link: '', // 指向项目的链接
     itunes_author: '', // 主播名字，并且开启此项就认为该RSS是播客，会自动添加头部的xmlns
     itunes_category： '',// 播客分类
+    image: '', // 专辑图片，作为播客源时必填
     description: '', // 描述项目
     item: [
         // 其中一篇文章或一项内容
