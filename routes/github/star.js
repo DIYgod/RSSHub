@@ -17,7 +17,7 @@ module.exports = async (ctx) => {
         data: {
             query: `
             {
-                repository(owner: "diygod", name: "rsshub") {
+                repository(owner: "${user}", name: "${repo}") {
                   stargazers(last: 10) {
                     edges {
                       node {
