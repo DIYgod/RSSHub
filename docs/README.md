@@ -907,6 +907,38 @@ rid: 排行榜分区 id，默认 0
 
 参数: tag，标签名，可在标签 URL 中找到
 
+### 热门 <Author uid="moaix"/>
+
+举例: [https://rsshub.app/juejin/trending/ios/monthly](https://rsshub.app/juejin/trending/ios/monthly)
+
+路由: `/juejin/trending/:category/:type`
+
+参数:
+
+category，分类名，必选
+
+| category | 标签     |
+| -------- | -------- |
+| android  | Android  |
+| frontend | 前端     |
+| ios      | iOS      |
+| backend  | 后端     |
+| design   | 设计     |
+| product  | 产品     |
+| freebie  | 工具资源 |
+| article  | 阅读     |
+| ai       | 人工智能 |
+| devops   | 运维     |
+| all      | 全部     |
+
+type，类型，必选
+
+| type       | 类型     |
+| ---------- | -------- |
+| weekly     | 本周最热 |
+| monthly    | 本月最热 |
+| historical | 历史最热 |
+
 ## 简书
 
 ### 首页 <Author uid="DIYgod"/>
