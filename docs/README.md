@@ -2222,3 +2222,13 @@ type，分类
 路由: `/mygalgame`
 
 参数: 无
+
+## 上海科技大学
+
+### 信息科技与技术学院 -- 活动 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/shanghaitech/sist/activity](https://rsshub.app/shanghaitech/sist/activity)
+
+路由: `/shanghaitech/sist/activity`
+
+参数: 无
