@@ -276,6 +276,8 @@ if (config.github && config.github.access_token) {
 }
 router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
 router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
+router.get('/github/user/followers/:user', require('./routes/github/follower'));
+router.get('/github/stars/:user/:repo', require('./routes/github/star'));
 
 // konachan
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));

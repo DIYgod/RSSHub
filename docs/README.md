@@ -1500,14 +1500,35 @@ since，时间跨度，可在 [Trending 页](https://github.com/trending/javascr
 
 language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
 
-### Issue <Author uid="HenryQW"/>
+### 仓库 Issue <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
 
 路由: `/github/issue/:user/:repo`
 
+参数:
+
+user，用户名
+repo，仓库名
+
+### 用户 Followers <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/github/user/followers/HenryQW](https://rsshub.app/github/user/followers/HenryQW)
+
+路由: `/github/user/followers/:user`
+
 参数: user，用户名
-参数: repo，仓库名
+
+### 仓库 Stars <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/github/stars/DIYgod/RSSHub](https://rsshub.app/github/stars/DIYgod/RSSHub)
+
+路由: `/github/stars/:user/:repo`
+
+参数:
+
+user，用户名
+repo，仓库名
 
 ## 3DMGame
 
