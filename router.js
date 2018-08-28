@@ -387,7 +387,8 @@ router.get('/namoc/exhibition', require('./routes/namoc/exhibition'));
 router.get('/namoc/specials', require('./routes/namoc/specials'));
 
 // 懂球帝
-router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
+router.get('/dongqiudi/daily', require('./routes/dongqiudi/daily'));
+router.get('/dongqiudi/result/:team', require('./routes/dongqiudi/result'));
 
 // 维基百科
 router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
