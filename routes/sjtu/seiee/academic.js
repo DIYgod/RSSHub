@@ -1,10 +1,12 @@
 const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
+const url = require('url');
 
 const host = 'http://www.seiee.sjtu.edu.cn/';
 
 module.exports = async (ctx) => {
-    const response = await axios.get(`${host}seiee/list/683-1-20.htm`);
+    const link = url.resolve(host, 'seiee/list/683-1-20.htm');
+    const response = await axios.get(link);
 
     const $ = cheerio.load(response.data);
 
@@ -14,7 +16,7 @@ module.exports = async (ctx) => {
 
     const out = await Promise.all(
         list.map(async (itemUrl) => {
-            itemUrl = `${host}${itemUrl}`;
+            itemUrl = url.resolve(host, itemUrl);
             const cache = await ctx.cache.get(itemUrl);
             if (cache) {
                 return Promise.resolve(JSON.parse(cache));
@@ -27,7 +29,9 @@ module.exports = async (ctx) => {
                 title: $('h2.title_3').text(),
                 link: itemUrl,
                 author: '上海交通大学电子信息与电气工程学院',
-                description: $('.c_1.article_content').html(),
+                description: $('.c_1.article_content')
+                    .html()
+                    .replace(/src="\//g, `src="${url.resolve(host, '.')}`),
                 pubDate: new Date(
                     $('.date_1 span:first-of-type')
                         .text()
@@ -41,7 +45,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: '上海交通大学电子信息与电气工程学院 -- 学术动态',
-        link: `${host}seiee/list/683-1-20.htm`,
+        link,
         item: out,
     };
 };
