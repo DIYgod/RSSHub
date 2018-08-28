@@ -15,14 +15,15 @@ module.exports = async (ctx) => {
 
     for (let i = 0; i < Math.min(list.length, 5); i++) {
         const itemUrl = list[i];
-        const response = await axios.get(itemUrl);
-        const $ = cheerio.load(response.data);
-        const title = $('h1').text();
         const cache = await ctx.cache.get(itemUrl);
         if (cache) {
             out.push(JSON.parse(cache));
             continue;
         }
+
+        const response = await axios.get(itemUrl);
+        const $ = cheerio.load(response.data);
+        const title = $('h1').text();
 
         const single = {
             title,
