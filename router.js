@@ -473,4 +473,7 @@ router.get('/mygalgame', require('./routes/galgame/mygalgame'));
 // DPU
 router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
 
+// 东南大学
+router.get('/seu/radio/academic', require('./routes/seu/radio/academic'));
+
 module.exports = router;
