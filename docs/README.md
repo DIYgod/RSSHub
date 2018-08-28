@@ -1835,6 +1835,16 @@ id, 专辑 id, 可在对应**专辑**页面的 URL 中找到
 
 参数：无
 
+### 足球赛果 <Author uid="HenryQW"/>
+
+举例： 皇家马德里：[https://rsshub.app/dongqiudi/result/50001755](https://rsshub.app/dongqiudi/result/50001755)
+
+路由： `/dongqiudi/result/:team`
+
+参数：
+
+team，球队 id，可在[懂球帝数据](https://www.dongqiudi.com/data)中找到
+
 ## 维基百科
 
 ### 中国大陆新闻动态 <Author uid="HenryQW"/>
