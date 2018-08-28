@@ -2198,3 +2198,12 @@ type，分类
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
+
+## 爱范儿 ifanr <Author uid="HenryQW"/>
+
+### AppSolution
+
+举例: <https://rsshub.app/ifanr/appso>
+
+路由: `/ifanr/appso`
+参数: 无
