@@ -895,7 +895,7 @@ rid: 排行榜分区 id，默认 0
 
 参数: tag，标签名，可在标签 URL 中找到
 
-### 本周最热 <Author uid="moaix"/>
+### 热门 <Author uid="moaix"/>
 
 举例: [https://rsshub.app/juejin/trending/ios/monthly](https://rsshub.app/juejin/trending/ios/monthly)
 
