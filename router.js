@@ -467,4 +467,7 @@ router.get('/weatherAlarm', require('./routes/weatherAlarm'));
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
+// DPU
+router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
+
 module.exports = router;
