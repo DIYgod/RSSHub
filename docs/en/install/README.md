@@ -359,7 +359,7 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `REDIS_PASSWORD`: Redis password（invalid when `CACHE_TYPE` is set to memory)
 
-### 部分 RSS 模块配置
+### Route-specific Configurations
 
 -   `pixiv`: [registration](https://accounts.pixiv.net/signup)
 
