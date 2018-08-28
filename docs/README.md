@@ -2222,3 +2222,13 @@ type，分类
 路由: `/mygalgame`
 
 参数: 无
+
+## 上海交通大学
+
+### 电子信息与电气工程学院 -- 学术动态
+
+举例: [https://rsshub.app/sjtu/seiee/academic](https://rsshub.app/sjtu/seiee/academic)
+
+路由: `/sjtu/seiee/academic`
+
+参数: 无
