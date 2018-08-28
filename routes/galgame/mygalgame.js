@@ -1,13 +1,11 @@
-const axios = require('../../../utils/axios');
+const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const config = require('../../../config');
 
 module.exports = async (ctx) => {
     const res = await axios({
         method: 'get',
         url: 'https://www.mygalgame.com/',
         header: {
-            'User-Agent': config.ua,
             Referer: 'https://www.mygalgame.com/',
         },
     });
@@ -27,10 +25,14 @@ module.exports = async (ctx) => {
                 .slice(1)
                 .map((index, item) => {
                     item = $(item);
+                    const time = `${item.find('.month').text()}${item.find('.day').text()}日`;
+                    const date = new Date();
+                    const math = /(\d+)月(\d+)日/.exec(time);
+
                     return {
                         title: item.find('h1').text(),
                         description: `${item.find('.info p').text()}`,
-                        pubDate: `${item.find('.month').text()}${item.find('.day').text()}日`,
+                        pubDate: new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2]).toUTCString(),
                         link: item.find('h1 a').attr('href'),
                     };
                 })

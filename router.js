@@ -462,7 +462,7 @@ router.get('/weatherAlarm', require('./routes/weatherAlarm'));
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
-// Galgame
-router.get('/galgame/website/mygalgame', require('./routes/galgame/website/mygalgame'));
+// 忧郁的弟弟
+router.get('/mygalgame', require('./routes/galgame/mygalgame'));
 
 module.exports = router;
