@@ -464,13 +464,25 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### 分区视频 <Author uid="DIYgod"/>
+### 分区视频(投稿时间排序) <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/partion/33](https://rsshub.app/bilibili/partion/33)
 
 路由: `/bilibili/partion/:tid`
 
 参数: tid，分区 id
+
+### 分区视频(视频热度排序) <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/bilibili/partion/ranking/171/3](https://rsshub.app/bilibili/partion/ranking/171/3)
+
+路由: `/bilibili/partion/ranking/:tid/:days?`
+
+参数:
+
+tid，分区 id
+
+days, 可选, 缺省为 7, 指最近多少天内的热度排序
 
 动画
 
