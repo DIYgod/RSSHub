@@ -290,6 +290,20 @@ type, 可选, 默认为 `all`
 | -------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 实践创新 | 学科竞赛 | 研究生助教 | 教学改革 | 专业建设 | 课程建设 | 教材建设 | 教学成果 | 学术报告 |
 
+### 大连工业大学
+
+#### 教务处新闻 <Author uid="xu42"/>
+
+举例: [https://rsshub.app/dpu/jiaowu/xwdt](https://rsshub.app/dpu/jiaowu/xwdt)
+
+路由: `/dpu/jiaowu/:type?`
+
+参数: type, 可选, 默认为 `xwdt`
+
+| 新闻动态 | 通知公告 | 教务文件 |
+| -------- | -------- | -------- |
+| xwdt     | tzgg     | jwwj     |
+
 ## 媒体类
 
 ### 央视新闻
@@ -464,13 +478,25 @@ fid，收藏夹 ID,可在收藏夹的 URL 中找到,默认收藏夹建议使用 
 
 参数: uid，用户 id，可在 UP 主主页中找到
 
-### 分区视频 <Author uid="DIYgod"/>
+### 分区视频(投稿时间排序) <Author uid="DIYgod"/>
 
 举例: [https://rsshub.app/bilibili/partion/33](https://rsshub.app/bilibili/partion/33)
 
 路由: `/bilibili/partion/:tid`
 
 参数: tid，分区 id
+
+### 分区视频(视频热度排序) <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/bilibili/partion/ranking/171/3](https://rsshub.app/bilibili/partion/ranking/171/3)
+
+路由: `/bilibili/partion/ranking/:tid/:days?`
+
+参数:
+
+tid，分区 id
+
+days, 可选, 缺省为 7, 指最近多少天内的热度排序
 
 动画
 
@@ -894,6 +920,38 @@ rid: 排行榜分区 id，默认 0
 路由: `/juejin/tag/:tag`
 
 参数: tag，标签名，可在标签 URL 中找到
+
+### 热门 <Author uid="moaix"/>
+
+举例: [https://rsshub.app/juejin/trending/ios/monthly](https://rsshub.app/juejin/trending/ios/monthly)
+
+路由: `/juejin/trending/:category/:type`
+
+参数:
+
+category，分类名，必选
+
+| category | 标签     |
+| -------- | -------- |
+| android  | Android  |
+| frontend | 前端     |
+| ios      | iOS      |
+| backend  | 后端     |
+| design   | 设计     |
+| product  | 产品     |
+| freebie  | 工具资源 |
+| article  | 阅读     |
+| ai       | 人工智能 |
+| devops   | 运维     |
+| all      | 全部     |
+
+type，类型，必选
+
+| type       | 类型     |
+| ---------- | -------- |
+| weekly     | 本周最热 |
+| monthly    | 本月最热 |
+| historical | 历史最热 |
 
 ## 简书
 
@@ -1488,14 +1546,35 @@ since，时间跨度，可在 [Trending 页](https://github.com/trending/javascr
 
 language，语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到
 
-### Issue <Author uid="HenryQW"/>
+### 仓库 Issue <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
 
 路由: `/github/issue/:user/:repo`
 
+参数:
+
+user，用户名
+repo，仓库名
+
+### 用户 Followers <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/github/user/followers/HenryQW](https://rsshub.app/github/user/followers/HenryQW)
+
+路由: `/github/user/followers/:user`
+
 参数: user，用户名
-参数: repo，仓库名
+
+### 仓库 Stars <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/github/stars/DIYgod/RSSHub](https://rsshub.app/github/stars/DIYgod/RSSHub)
+
+路由: `/github/stars/:user/:repo`
+
+参数:
+
+user，用户名
+repo，仓库名
 
 ## 3DMGame
 
@@ -1834,6 +1913,16 @@ id, 专辑 id, 可在对应**专辑**页面的 URL 中找到
 路由： `/dongqiudi/daily`
 
 参数：无
+
+### 足球赛果 <Author uid="HenryQW"/>
+
+举例： 皇家马德里：[https://rsshub.app/dongqiudi/result/50001755](https://rsshub.app/dongqiudi/result/50001755)
+
+路由： `/dongqiudi/result/:team`
+
+参数：
+
+team，球队 id，可在[懂球帝数据](https://www.dongqiudi.com/data)中找到
 
 ## 维基百科
 

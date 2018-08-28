@@ -94,6 +94,7 @@ router.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
 router.get('/bilibili/user/followers/:uid', require('./routes/bilibili/followers'));
 router.get('/bilibili/user/followings/:uid', require('./routes/bilibili/followings'));
 router.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
+router.get('/bilibili/partion/ranking/:tid/:days?', require('./routes/bilibili/partion-ranking'));
 router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
 router.get('/bilibili/video/reply/:aid', require('./routes/bilibili/reply'));
 router.get('/bilibili/link/news/:product', require('./routes/bilibili/linkNews'));
@@ -134,6 +135,7 @@ router.get('/ncm/djradio/:id', require('./routes/ncm/djradio'));
 // 掘金
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
 router.get('/juejin/tag/:tag', require('./routes/juejin/tag'));
+router.get('/juejin/trending/:category/:type', require('./routes/juejin/trending'));
 
 // 自如
 router.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
@@ -275,6 +277,8 @@ if (config.github && config.github.access_token) {
 }
 router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
 router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
+router.get('/github/user/followers/:user', require('./routes/github/follower'));
+router.get('/github/stars/:user/:repo', require('./routes/github/star'));
 
 // konachan
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
@@ -387,7 +391,8 @@ router.get('/namoc/exhibition', require('./routes/namoc/exhibition'));
 router.get('/namoc/specials', require('./routes/namoc/specials'));
 
 // 懂球帝
-router.get('/dongqiudi/daily', require('./routes/dongqiudi/index'));
+router.get('/dongqiudi/daily', require('./routes/dongqiudi/daily'));
+router.get('/dongqiudi/result/:team', require('./routes/dongqiudi/result'));
 
 // 维基百科
 router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
@@ -464,5 +469,8 @@ router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
 // 忧郁的弟弟
 router.get('/mygalgame', require('./routes/galgame/mygalgame'));
+
+// DPU
+router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
 
 module.exports = router;

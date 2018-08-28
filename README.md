@@ -35,7 +35,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   UP 主投币视频
     -   UP 主粉丝
     -   UP 主关注用户
-    -   分区视频
+    -   分区视频(投稿时间排序)
+    -   分区视频(视频热度排序)
     -   视频评论
     -   link 公告
     -   直播开播
@@ -158,11 +159,13 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 -   GitHub
     -   用户仓库
     -   Trending
-    -   Issue
+    -   仓库 Issues
+    -   用户 Followers
+    -   仓库 Stars
 -   Konachan.com Anime Wallpapers
-    -   Popular Recent Posts
+    -   Recent Popular Posts
 -   yande.re
-    -   Popular Recent Posts
+    -   Recent Popular Posts
 -   纽约时报
     -   新闻早报
 -   3DMGame
@@ -221,6 +224,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   讨论区
 -   懂球帝
     -   早报
+    -   足球赛果
 -   维基百科
     -   中国大陆新闻动态
 -   雪球
@@ -262,6 +266,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   Explore
 -   忧郁的弟弟
     -   文章
+-   大连工业大学
+    -   教务处新闻
 
 </details>
 
