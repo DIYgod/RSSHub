@@ -28,7 +28,11 @@ module.exports = async (ctx) => {
                 link: itemUrl,
                 author: '上海交通大学电子信息与电气工程学院',
                 description: $('.c_1.article_content').html(),
-                pubDate: new Date($('.date_1 span').text()),
+                pubDate: new Date(
+                    $('.date_1 span:first-of-type')
+                        .text()
+                        .trim()
+                ),
             };
             ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
             return Promise.resolve(single);
