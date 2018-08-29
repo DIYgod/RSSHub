@@ -268,6 +268,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   文章
 -   大连工业大学
     -   教务处新闻
+-   ifanr
+    -   AppSolution
 
 </details>
 

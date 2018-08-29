@@ -2222,3 +2222,13 @@ type，分类
 路由: `/mygalgame`
 
 参数: 无
+
+## 爱范儿 ifanr <Author uid="HenryQW"/>
+
+### AppSolution
+
+举例: <https://rsshub.app/ifanr/appso>
+
+路由: `/ifanr/appso`
+
+参数: 无
