@@ -11,6 +11,8 @@ sidebar: auto
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
+[Telegram 群](https://t.me/rsshub)
+
 ## 鸣谢
 
 ### Special Sponsors
