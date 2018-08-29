@@ -13,6 +13,7 @@ const template = require('./middleware/template.js');
 const favicon = require('koa-favicon');
 const debug = require('./middleware/debug.js');
 const accessControl = require('./middleware/access-control.js');
+const auth = require('./middleware/auth');
 
 const router = require('./router');
 const protected_router = require('./protected_router');
@@ -32,6 +33,9 @@ app.use(favicon(__dirname + '/favicon.png'));
 
 // global error handing
 app.use(onerror);
+
+// HTTP basic authentication
+app.use(auth);
 
 // 1 set header
 app.use(header);
