@@ -2223,6 +2223,14 @@ type，分类
 
 参数: 无
 
+## 东南大学
+
+### 信息科学与工程学院 -- 学术活动 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/seu/radio/academic](https://rsshub.app/seu/radio/academic)
+
+路由: `/seu/radio/academic`
+
 ## 上海科技大学
 
 ### 信息科技与技术学院 -- 活动 <Author uid="HenryQW"/>
