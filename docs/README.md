@@ -196,7 +196,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 举例: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
 
-路由: `/appstore/iap/:country/:type/:id`
+路由: `/appstore/iap/:country/:id`
 
 参数:
 
