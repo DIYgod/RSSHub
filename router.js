@@ -476,4 +476,7 @@ router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
 // 中国科学院
 router.get('/cas/sim/academic', require('./routes/cas/sim/academic'));
 
+// ifanr
+router.get('/ifanr/appso', require('./routes/ifanr/appso'));
+
 module.exports = router;
