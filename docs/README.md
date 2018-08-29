@@ -2223,6 +2223,14 @@ type，分类
 
 参数: 无
 
+## 上海交通大学
+
+### 电子信息与电气工程学院 -- 学术动态 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/sjtu/seiee/academic](https://rsshub.app/sjtu/seiee/academic)
+
+路由: `/sjtu/seiee/academic`
+
 ## 中国科学院
 
 ### 上海微系统与信息技术研究所 -- 学术活动 <Author uid="HenryQW"/>
