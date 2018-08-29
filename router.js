@@ -476,4 +476,7 @@ router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
+// xkcd
+router.get('/?', require('./routes/xkcd/comic'));
+
 module.exports = router;
