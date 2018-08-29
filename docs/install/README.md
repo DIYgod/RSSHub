@@ -363,6 +363,16 @@ gcloud app deploy
 
 `REDIS_PASSWORD`: Redis 连接密码（memory 缓存类型时无效）
 
+`HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名, 默认为 `usernam3`, 请务必修改
+
+`HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码, 默认为 `passw0rd`, 请务必修改
+
+### 用户认证
+
+`protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证.
+
+支持该认证协议的阅读器, 在添加源地址时, 需要在源地址前添加认证信息, 例如：http://usernam3:passw0rd@localhost:1200/protected/rsshub/rss.
+
 ### 部分 RSS 模块配置
 
 -   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
