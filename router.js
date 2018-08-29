@@ -473,6 +473,9 @@ router.get('/mygalgame', require('./routes/galgame/mygalgame'));
 // DPU
 router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
 
+// 上海科技大学
+router.get('/shanghaitech/sist/activity', require('./routes/shanghaitech/sist/activity'));
+
 // 上海交通大学
 router.get('/sjtu/seiee/academic', require('./routes/sjtu/seiee/academic'));
 
