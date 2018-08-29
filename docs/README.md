@@ -304,6 +304,38 @@ type, 可选, 默认为 `all`
 | -------- | -------- | -------- |
 | xwdt     | tzgg     | jwwj     |
 
+### 东南大学
+
+#### 信息科学与工程学院学术活动 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/seu/radio/academic](https://rsshub.app/seu/radio/academic)
+
+路由: `/seu/radio/academic`
+
+### 上海科技大学
+
+#### 信息科技与技术学院活动 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/shanghaitech/sist/activity](https://rsshub.app/shanghaitech/sist/activity)
+
+路由: `/shanghaitech/sist/activity`
+
+### 上海交通大学
+
+#### 电子信息与电气工程学院学术动态 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/sjtu/seiee/academic](https://rsshub.app/sjtu/seiee/academic)
+
+路由: `/sjtu/seiee/academic`
+
+### 中国科学院
+
+#### 上海微系统与信息技术研究所学术活动 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/cas/sim/academic](https://rsshub.app/cas/sim/academic)
+
+路由: `/cas/sim/academic`
+
 ## 媒体类
 
 ### 央视新闻
@@ -2222,38 +2254,6 @@ type，分类
 路由: `/mygalgame`
 
 参数: 无
-
-## 东南大学
-
-### 信息科学与工程学院 -- 学术活动 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/seu/radio/academic](https://rsshub.app/seu/radio/academic)
-
-路由: `/seu/radio/academic`
-
-## 上海科技大学
-
-### 信息科技与技术学院 -- 活动 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/shanghaitech/sist/activity](https://rsshub.app/shanghaitech/sist/activity)
-
-路由: `/shanghaitech/sist/activity`
-
-## 上海交通大学
-
-### 电子信息与电气工程学院 -- 学术动态 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/sjtu/seiee/academic](https://rsshub.app/sjtu/seiee/academic)
-
-路由: `/sjtu/seiee/academic`
-
-## 中国科学院
-
-### 上海微系统与信息技术研究所 -- 学术活动 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/cas/sim/academic](https://rsshub.app/cas/sim/academic)
-
-路由: `/cas/sim/academic`
 
 ## 爱范儿 ifanr <Author uid="HenryQW"/>
 
