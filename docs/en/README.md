@@ -160,7 +160,19 @@ Parameters：
 
 -   type, App type，either `iOS` or `mac`
 
--   id, App Store app id, obtain from the app URL https://itunes.apple.com/cn/app/id1152443474, in this case, `id1152443474`.
+-   id, App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id1152443474, in this case, `id1152443474`.
+
+### App Store/Mac App Store In-App-Purchase Price Drop Alert <Author uid="HenryQW"/>
+
+Eg: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
+
+Route: `/appstore/iap/:country/:id`
+
+Parameters:
+
+-   country, App Store Country, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `us`.
+
+-   id, App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `id953286746`.
 
 ## pixiv
 
