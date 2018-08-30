@@ -434,6 +434,7 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
+router.get('/appstore/iap/:country/:id', require('./routes/appstore/in-app-purchase'));
 
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));

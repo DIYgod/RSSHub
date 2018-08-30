@@ -22,29 +22,27 @@ module.exports = async (ctx) => {
     });
 
     const $ = cheerio.load(response.data);
-    const list = $('#gs_res_ccl_mid .gs_r.gs_or.gs_scl .gs_ri');
+    const list = $('#gs_res_ccl_mid .gs_r.gs_or.gs_scl .gs_ri').get();
 
-    const out = [];
+    const out = await Promise.all(
+        list.map(async (item) => {
+            const $ = cheerio.load(item);
+            const itemUrl = $('h3 a').attr('href');
+            const cache = await ctx.cache.get(itemUrl);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+            const single = {
+                title: $('h3 a').text(),
+                author: $('.gs_a').text(),
+                description: $('.gs_rs').text(),
+                link: itemUrl,
+                guid: itemUrl,
+            };
 
-    for (let i = 0; i < list.length; i++) {
-        const $ = cheerio.load(list[i]);
-        const itemUrl = $('h3 a').attr('href');
-        const cache = await ctx.cache.get(itemUrl);
-        if (cache) {
-            out.push(JSON.parse(cache));
-            continue;
-        }
-        const single = {
-            title: $('h3 a').text(),
-            author: $('.gs_a').text(),
-            description: $('.gs_rs').text(),
-            link: itemUrl,
-            guid: itemUrl,
-        };
-
-        out.push(single);
-    }
-
+            return Promise.resolve(single);
+        })
+    );
     ctx.state.data = {
         title: `Google Scholar Monitor: ${query}`,
         link: url,

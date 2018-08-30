@@ -73,7 +73,7 @@ async function tokenLoop() {
         token = res.access_token;
         let refresh_token = res.refresh_token;
         let expires_in = res.expires_in * 0.9;
-        // eslint-disable-next-line no-constant-condition
+        /* eslint-disable no-constant-condition, no-await-in-loop */
         while (true) {
             await wait(expires_in * 1000);
             try {
@@ -87,6 +87,7 @@ async function tokenLoop() {
                 logger.err(`Pixiv refresh token failed, retry in ${expires_in} seconds.`, err);
             }
         }
+        /* eslint-enable no-await-in-loop */
     }
 }
 

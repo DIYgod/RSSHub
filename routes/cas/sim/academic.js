@@ -12,20 +12,21 @@ module.exports = async (ctx) => {
 
     const list = $('.list-news li')
         .slice(0, 10)
-        .map((i, e) => {
-            if ($(e).children().length > 0) {
-                return {
-                    link: $(e)
-                        .find('a')
-                        .attr('href'),
-                    date: $(e)
-                        .find('span')
-                        .text()
-                        .replace('[', '')
-                        .replace(']', ''),
-                };
-            }
-        })
+        .map(
+            (i, e) =>
+                $(e).children().length > 0
+                    ? {
+                          link: $(e)
+                              .find('a')
+                              .attr('href'),
+                          date: $(e)
+                              .find('span')
+                              .text()
+                              .replace('[', '')
+                              .replace(']', ''),
+                      }
+                    : null
+        )
         .get();
 
     const out = await Promise.all(
