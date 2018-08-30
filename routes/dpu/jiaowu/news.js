@@ -1,4 +1,4 @@
-const axios = require('../../utils/axios');
+const axios = require('../../../utils/axios');
 const iconv = require('iconv-lite');
 const cheerio = require('cheerio');
 const resolve_url = require('url').resolve;
@@ -6,13 +6,13 @@ const resolve_url = require('url').resolve;
 const base_url = 'http://jiaowu.dlpu.edu.cn';
 
 const map = {
-    xwdt: '/more/2',
-    tzgg: '/more/3',
-    jwwj: '/more/4',
+    2: '/more/2',
+    3: '/more/3',
+    4: '/more/4',
 };
 
 module.exports = async (ctx) => {
-    const type = ctx.params.type || 'xwdt';
+    const type = ctx.params.type || '2';
     const link = `${base_url}${map[type]}`;
 
     const response = await axios({
