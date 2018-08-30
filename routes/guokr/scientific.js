@@ -13,7 +13,7 @@ module.exports = async (ctx) => {
             title: item.title,
             description: `item.summary<br><img referrerpolicy="no-referrer" src="${item.image_info.url}">`,
             pubDate: item.date_published,
-            link: item.url
-        }))
+            link: item.url,
+        })),
     };
 };

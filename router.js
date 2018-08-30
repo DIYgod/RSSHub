@@ -489,6 +489,6 @@ router.get('/cas/sim/academic', require('./routes/cas/sim/academic'));
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
 // 果壳网
-router.get('/guokr/scientific', require('./routes/guokr/scientific'))
+router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
 module.exports = router;
