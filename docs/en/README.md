@@ -454,14 +454,20 @@ Route: `/atfd/:locations/:nearby?`
 
 Parameters:
 
--   locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
+-   locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」. They are not case sensitive. :
 
     1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-    2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
+    2. Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
 -   nearby: whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)
+
+::: tip
+
+If the city name contains a space like `Mexico City`, replace the space with `%20`, `Mexico%20City`.
+
+:::
 
 ## Google
 
