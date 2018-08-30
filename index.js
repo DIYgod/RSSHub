@@ -93,10 +93,10 @@ if (config.cacheType === 'memory') {
 
 // router
 
-app.use(mount('/', router.routes()))
-    .use(router.allowedMethods())
-    .use(mount('/protected', protected_router.routes()))
-    .use(protected_router.allowedMethods());
+app.use(mount('/', router.routes())).use(router.allowedMethods());
+
+// routes the require authentication
+app.use(mount('/protected', protected_router.routes())).use(protected_router.allowedMethods());
 
 // connect
 if (config.connect.port) {
