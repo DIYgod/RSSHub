@@ -8,33 +8,36 @@ module.exports = async (ctx) => {
 
     const host = 'http://www.dongqiudi.com';
 
-    const list = $('.detail.special ul li h3').slice(0, 10);
-    const out = [];
+    const list = $('.detail.special ul li h3')
+        .slice(0, 10)
+        .get();
+
     const proList = [];
 
-    for (let i = 0; i < list.length; i++) {
-        const $ = cheerio.load(list[i]);
-        const title = $('a').text();
-        const itemUrl = host + $('a').attr('href');
-        const cache = await ctx.cache.get(itemUrl);
-        if (cache) {
-            out.push(JSON.parse(cache));
-            continue;
-        }
-        const single = {
-            title,
-            link: itemUrl,
-            guid: itemUrl,
-        };
+    const out = await Promise.all(
+        list.map(async (item) => {
+            const $ = cheerio.load(item);
+            const title = $('a').text();
+            const itemUrl = host + $('a').attr('href');
+            const cache = await ctx.cache.get(itemUrl);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+            const single = {
+                title,
+                link: itemUrl,
+                guid: itemUrl,
+            };
 
-        try {
-            const es = axios.get(itemUrl);
-            proList.push(es);
-            out.push(single);
-        } catch (err) {
-            console.log(`${title}: ${itemUrl} -- ${err.response.status}: ${err.response.statusText}`);
-        }
-    }
+            try {
+                const es = axios.get(itemUrl);
+                proList.push(es);
+                return Promise.resolve(single);
+            } catch (err) {
+                console.log(`${title}: ${itemUrl} -- ${err.response.status}: ${err.response.statusText}`);
+            }
+        })
+    );
 
     const responses = await axios.all(proList);
     for (let i = 0; i < responses.length; i++) {
