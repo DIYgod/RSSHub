@@ -192,6 +192,18 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, App Store app id, 必选, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 id 为 id115244347
 
+### App Store/Mac App Store 内购价格更新（限免） <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
+
+路由: `/appstore/iap/:country/:id`
+
+参数:
+
+-   country, App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`
+
+-   id, App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`
+
 ## 大学类
 
 ### 上海海事大学
