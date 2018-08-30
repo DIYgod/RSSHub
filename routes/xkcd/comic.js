@@ -13,8 +13,8 @@ module.exports = async (ctx) => {
     const data = response.data;
     const $ = cheerio.load(data);
 
-    var preUrl = $('[rel="prev"]').attr('href');
-    var realUrl = String(Number(preUrl) + 1)
+    let preUrl = $('[rel="prev"]').attr('href');
+    let realUrl = String(Number(preUrl) + 1)
 
     ctx.state.data = {
         title: 'xkcd',
@@ -22,7 +22,7 @@ module.exports = async (ctx) => {
         description: $('img[title]').attr('title'),
         item: [
             {
-                title: item.find('.ctitle').text(),
+                title: $('.ctitle').text(),
                 description: $('img[title]').attr('title'),
                 link: "https://www.xkcd.com" + realUrl,
                 itunes_item_image: $('img', 'comic'),
