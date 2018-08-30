@@ -471,8 +471,9 @@ router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 // 忧郁的弟弟
 router.get('/mygalgame', require('./routes/galgame/mygalgame'));
 
-// DPU
-router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
+// 大连工业大学
+router.get('/dpu/jiaowu/news/:type?', require('./routes/dpu/jiaowu/news'));
+router.get('/dpu/wlfw/news/:type?', require('./routes/dpu/wlfw/news'));
 
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/seu/radio/academic'));

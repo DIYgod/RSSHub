@@ -322,17 +322,29 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 教务处新闻 <Author uid="xu42"/>
 
-举例: [https://rsshub.app/dpu/jiaowu/xwdt](https://rsshub.app/dpu/jiaowu/xwdt)
+举例: [https://rsshub.app/dpu/jiaowu/news/2](https://rsshub.app/dpu/jiaowu/news/2)
 
-路由: `/dpu/jiaowu/:type?`
+路由: `/dpu/jiaowu/news/:type?`
 
 参数:
 
--   type, 可选, 默认为 `xwdt`
+-   type, 可选, 默认为 `2`
 
 | 新闻动态 | 通知公告 | 教务文件 |
 | -------- | -------- | -------- |
-| xwdt     | tzgg     | jwwj     |
+| 2        | 3        | 4        |
+
+#### 网络服务新闻 <Author uid="xu42"/>
+
+举例: [https://rsshub.app/dpu/wlfw/news/2](https://rsshub.app/dpu/wlfw/news/2)
+
+路由: `/dpu/wlfw/news/:type?`
+
+参数: type, 可选, 默认为 `1`
+
+| 新闻动态 | 通知公告 |
+| -------- | -------- |
+| 1        | 2        |
 
 ### 东南大学
 
