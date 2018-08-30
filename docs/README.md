@@ -2266,3 +2266,13 @@ type，分类
 路由: `/ifanr/appso`
 
 参数: 无
+
+## XKCD
+
+### comic
+
+举例: [https://rsshub.app/xkcd/comic](https://rsshub.app/xkcd/comic)
+
+路由: `/xkcd/comic`
+
+参数: 无
