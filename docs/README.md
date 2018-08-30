@@ -2496,3 +2496,13 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 路由: `/ifanr/appso`
 
 参数: 无
+
+## 果壳网 guokr <Author uid="alphardex"/>
+
+### 科学人
+
+举例: <https://rsshub.app/guokr/scientific>
+
+路由: `/guokr/scientific`
+
+参数: 无
