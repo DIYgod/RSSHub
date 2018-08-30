@@ -473,6 +473,18 @@ router.get('/mygalgame', require('./routes/galgame/mygalgame'));
 // DPU
 router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
 
+// 东南大学
+router.get('/seu/radio/academic', require('./routes/seu/radio/academic'));
+
+// 上海科技大学
+router.get('/shanghaitech/sist/activity', require('./routes/shanghaitech/sist/activity'));
+
+// 上海交通大学
+router.get('/sjtu/seiee/academic', require('./routes/sjtu/seiee/academic'));
+
+// 中国科学院
+router.get('/cas/sim/academic', require('./routes/cas/sim/academic'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 

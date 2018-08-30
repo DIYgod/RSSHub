@@ -9,6 +9,8 @@
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
+[Telegram 群](https://t.me/rsshub)
+
 [使用文档](https://docs.rsshub.app/)
 
 [English docs](https://docs.rsshub.app/en)
@@ -268,6 +270,14 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   文章
 -   大连工业大学
     -   教务处新闻
+-   东南大学
+    -   信息科学与工程学院学术活动
+-   上海科技大学
+    -   信息科技与技术学院活动
+-   上海交通大学
+    -   电子信息与电气工程学院学术动态
+-   中国科学院
+    -   上海微系统与信息技术研究所学术活动
 -   ifanr
     -   AppSolution
 
