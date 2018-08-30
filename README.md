@@ -280,6 +280,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   上海微系统与信息技术研究所学术活动
 -   ifanr
     -   AppSolution
+-   xkcd
+    -   comic
 
 </details>
 
