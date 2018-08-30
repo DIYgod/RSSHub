@@ -1,7 +1,7 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
-module.exports = async(ctx) = >{
+module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: 'https://www.xkcd.com',
@@ -20,12 +20,13 @@ module.exports = async(ctx) = >{
         title: 'xkcd',
         link: 'https://www.xkcd.com',
         description: $('img[title]').attr('title'),
-        item: [{
-            title: $('.ctitle').text(),
-            description: $('img[title]').attr('title'),
-            link: "https://www.xkcd.com" + realUrl,
-            itunes_item_image: $('img', 'comic'),
-        },
+        item: [
+            {
+                title: $('.ctitle').text(),
+                description: $('img[title]').attr('title'),
+                link: "https://www.xkcd.com" + realUrl,
+                itunes_item_image: $('img', 'comic'),
+            },
         ],
     };
 };
