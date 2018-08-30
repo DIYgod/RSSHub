@@ -1,8 +1,9 @@
 const Router = require('koa-router');
 const router = new Router();
 const auth = require('koa-basic-auth');
+const config = require('./config');
 
-router.use('/(.*)', auth({ name: process.env.HTTP_BASIC_AUTH_NAME || 'usernam3', pass: process.env.HTTP_BASIC_AUTH_PASS || 'passw0rd' }));
+router.use('/(.*)', auth(config.authentication));
 
 // RSSHub
 router.get('/rsshub/rss', require('./routes/rsshub/rss'));
