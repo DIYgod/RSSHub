@@ -534,6 +534,254 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+## 社交媒体类
+
+### Twitter
+
+#### 用户 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIYgod)
+
+路由: `/twitter/user/:id`
+
+参数:
+
+-   id, 用户 id
+
+### Instagram
+
+#### 用户 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user/diygod)
+
+路由: `/instagram/user/:id`
+
+参数:
+
+-   id, 用户 id
+
+### 微博
+
+#### 博主 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/weibo/user/3306934123](https://rsshub.app/weibo/user/3306934123)
+
+路由: `/weibo/user/:uid`
+
+参数:
+
+-   uid, 用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
+
+::: warning 注意
+
+上述方案获取 V+ 付费博主会有数据缺失, 所以这里提供另外一种方式, 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
+
+:::
+
+举例: [https://rsshub.app/weibo/user2/3306934123](https://rsshub.app/weibo/user2/3306934123)
+
+路由: `/weibo/user2/:uid`
+
+#### 关键词 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/weibo/keyword/DIYgod](https://rsshub.app/weibo/keyword/DIYgod)
+
+路由: `/weibo/keyword/:keyword`
+
+参数:
+
+-   keyword, 你想订阅的微博关键词
+
+### 贴吧
+
+#### 帖子列表 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
+
+路由: `/tieba/forum/:kw`
+
+参数:
+
+-   kw, 吧名
+
+#### 精品帖子 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+
+路由: `/tieba/forum/good/:kw/:cid?`
+
+参数:
+
+-   kw: 吧名
+
+-   cid: 精品分类, 如果不传 `cid` 则获取全部分类
+
+#### 帖子动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/5853240586](https://rsshub.app/tieba/post/5853240586)
+
+路由: `/tieba/post/:id`
+
+参数:
+
+-   id: 帖子 ID
+
+#### 楼主动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/lz/5853240586](https://rsshub.app/tieba/post/lz/5853240586)
+
+路由: `/tieba/post/lz/:id`
+
+参数:
+
+-   id: 帖子 ID
+
+### 即刻
+
+#### 主题-精选 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/:id`
+
+参数:
+
+-   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+#### 主题-广场 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/square/:id`
+
+参数:
+
+-   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+#### 用户动态 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
+
+路由: `/jike/user/:id`
+
+参数:
+
+-   id, 用户 id, 可在即刻 web 端用户页 URL 中找到
+
+### 微信
+
+::: tip 提示
+
+公众号直接抓取困难, 故目前提供即刻和瓦斯两种间接抓取方案, 请自行选择
+
+:::
+
+#### 公众号（即刻来源） <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
+
+路由: `/jike/topic/:id`
+
+参数:
+
+-   id, 参考 [即刻-主题-精选](#主题-精选)
+
+#### 公众号（瓦斯来源） <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace)
+
+路由: `/wechat/wasi/:id`
+
+参数:
+
+-   id, 瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id
+
+### 豆瓣
+
+#### 正在上映的电影 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/playing](https://rsshub.app/douban/movie/playing)
+
+路由: `/douban/movie/playing`
+
+参数: 无
+
+#### 正在上映的高分电影 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/playing/7.5](https://rsshub.app/douban/movie/playing/7.5)
+
+路由
+
+`/douban/movie/playing/:score`
+
+`/douban/movie/playing/:score/:city`
+
+参数
+
+-   score: 返回大于等于这个分数的电影
+
+-   city: 城市的中文名, 可选, 默认北京
+
+#### 即将上映的电影 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/later](https://rsshub.app/douban/movie/later)
+
+路由: `/douban/movie/later`
+
+参数: 无
+
+#### 北美票房榜 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/ustop](https://rsshub.app/douban/movie/ustop)
+
+路由: `/douban/movie/ustop`
+
+参数: 无
+
+#### 豆瓣小组 <Author uid="derycktse"/>
+
+举例: [https://rsshub.app/douban/group/camera](https://rsshub.app/douban/group/camera)
+
+路由: `/douban/group/:groupid`
+
+参数:
+
+-   groupid: 豆瓣小组的 id
+
+#### 浏览发现 <Author uid="clarkzsd"/>
+
+举例: [https://rsshub.app/douban/explore](https://rsshub.app/douban/explore)
+
+路由: `/douban/explore`
+
+### Telegram
+
+#### 频道 <Author uid="DIYgod"/>
+
+::: tip 提示
+
+订阅要求: 将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员, 然后发一条消息后才可正常获取数据
+
+:::
+
+举例: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/telegram/channel/awesomeDIYgod)
+
+路由: `/telegram/channel/:username`
+
+参数:
+
+-   username, 频道 username
+
+#### 贴纸包 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
+
+路由: `/telegram/stickerpack/:name`
+
+参数:
+
+-   name, 贴纸包 id, 可在分享贴纸获得的 URL 中找到
+
 ## bilibili
 
 ### 番剧 <Author uid="DIYgod"/>
@@ -928,142 +1176,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id - 话题 ID. 在话题页面地址栏查看
 
-## 微博
-
-### 博主 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/weibo/user/3306934123](https://rsshub.app/weibo/user/3306934123)
-
-路由: `/weibo/user/:uid`
-
-参数:
-
--   uid, 用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
-
-::: warning 注意
-
-上述方案获取 V+ 付费博主会有数据缺失, 所以这里提供另外一种方式, 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
-
-:::
-
-举例: [https://rsshub.app/weibo/user2/3306934123](https://rsshub.app/weibo/user2/3306934123)
-
-路由: `/weibo/user2/:uid`
-
-### 关键词 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/weibo/keyword/DIYgod](https://rsshub.app/weibo/keyword/DIYgod)
-
-路由: `/weibo/keyword/:keyword`
-
-参数:
-
--   keyword, 你想订阅的微博关键词
-
-## 贴吧
-
-### 帖子列表 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
-
-路由: `/tieba/forum/:kw`
-
-参数:
-
--   kw, 吧名
-
-### 精品帖子 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
-
-路由: `/tieba/forum/good/:kw/:cid?`
-
-参数:
-
--   kw: 吧名
-
--   cid: 精品分类, 如果不传 `cid` 则获取全部分类
-
-### 帖子动态 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/post/5853240586](https://rsshub.app/tieba/post/5853240586)
-
-路由: `/tieba/post/:id`
-
-参数:
-
--   id: 帖子 ID
-
-### 楼主动态 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/post/lz/5853240586](https://rsshub.app/tieba/post/lz/5853240586)
-
-路由: `/tieba/post/lz/:id`
-
-参数:
-
--   id: 帖子 ID
-
-## 即刻
-
-### 主题-精选 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
-
-路由: `/jike/topic/:id`
-
-参数:
-
--   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
-
-### 主题-广场 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
-
-路由: `/jike/topic/square/:id`
-
-参数:
-
--   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
-
-### 用户动态 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
-
-路由: `/jike/user/:id`
-
-参数:
-
--   id, 用户 id, 可在即刻 web 端用户页 URL 中找到
-
-## 微信
-
-::: tip 提示
-
-公众号直接抓取困难, 故目前提供即刻和瓦斯两种间接抓取方案, 请自行选择
-
-:::
-
-### 公众号（即刻来源） <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
-
-路由: `/jike/topic/:id`
-
-参数:
-
--   id, 参考 [即刻-主题-精选](#主题-精选)
-
-### 公众号（瓦斯来源） <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace)
-
-路由: `/wechat/wasi/:id`
-
-参数:
-
--   id, 瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id
-
 ## 网易云音乐
 
 ### 歌单歌曲 <Author uid="DIYgod"/>
@@ -1396,80 +1508,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   date, 日期, 取值形如 `2018-4-25`
 
-## 豆瓣
-
-### 正在上映的电影 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/playing](https://rsshub.app/douban/movie/playing)
-
-路由: `/douban/movie/playing`
-
-参数: 无
-
-### 正在上映的高分电影 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/playing/7.5](https://rsshub.app/douban/movie/playing/7.5)
-
-路由
-
-`/douban/movie/playing/:score`
-
-`/douban/movie/playing/:score/:city`
-
-参数
-
--   score: 返回大于等于这个分数的电影
-
--   city: 城市的中文名, 可选, 默认北京
-
-### 即将上映的电影 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/later](https://rsshub.app/douban/movie/later)
-
-路由: `/douban/movie/later`
-
-参数: 无
-
-### 北美票房榜 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/ustop](https://rsshub.app/douban/movie/ustop)
-
-路由: `/douban/movie/ustop`
-
-参数: 无
-
-### 豆瓣小组 <Author uid="derycktse"/>
-
-举例: [https://rsshub.app/douban/group/camera](https://rsshub.app/douban/group/camera)
-
-路由: `/douban/group/:groupid`
-
-参数:
-
--   groupid: 豆瓣小组的 id
-
-### 浏览发现 <Author uid="clarkzsd"/>
-
-举例: [https://rsshub.app/douban/explore](https://rsshub.app/douban/explore)
-
-路由: `/douban/explore`
-
-## 煎蛋
-
-### 无聊图 <Author uid="Xuanwo"/>
-
-举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
-
-路由: `/jandan/:sub_model`
-
-### 妹子图 <Author uid="kobemtl"/>
-
-举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
-
-路由: `/jandan/:sub_model`
-
-参数: 无
-
 ## 喷嚏
 
 ### 图卦 <Author uid="tgly307"/>
@@ -1545,30 +1583,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   forum, 网站的 disqus name
-
-## Twitter
-
-### 用户 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIYgod)
-
-路由: `/twitter/user/:id`
-
-参数:
-
--   id, 用户 id
-
-## Instagram
-
-### 用户 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user/diygod)
-
-路由: `/instagram/user/:id`
-
-参数:
-
--   id, 用户 id
 
 ## Youtube
 
@@ -1675,34 +1689,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   type: hot 或 latest
-
-## Telegram
-
-### 频道 <Author uid="DIYgod"/>
-
-::: tip 提示
-
-订阅要求: 将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员, 然后发一条消息后才可正常获取数据
-
-:::
-
-举例: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/telegram/channel/awesomeDIYgod)
-
-路由: `/telegram/channel/:username`
-
-参数:
-
--   username, 频道 username
-
-### 贴纸包 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
-
-路由: `/telegram/stickerpack/:name`
-
-参数:
-
--   name, 贴纸包 id, 可在分享贴纸获得的 URL 中找到
 
 ## Readhub
 
@@ -2047,30 +2033,6 @@ GitHub 官方也提供了一些 RSS:
 | 最新   | 公告   | 新闻 | 活动     | 攻略     |
 | ------ | ------ | ---- | -------- | -------- |
 | latest | notice | news | activity | strategy |
-
-## 草榴社区
-
-### 分区帖子 <Author uid="zhboner"/>
-
-举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
-
-路由: `/t66y/:id`
-
-参数:
-
--   id, 分区 id, 可在分区页 URL 中找到
-
-| 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
-| -------------- | -------------- | ---------- | ---------- | ---------- |
-| 2              | 15             | 4          | 5          | 25         |
-
-| 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |
-| ---------- | ---------- | ----------- | ---------- |
-| 26         | 27         | 21          | 22         |
-
-| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
-| ---------- | ------------ | ------------ |
-| 7          | 8            | 16           |
 
 ## 机核网
 
@@ -2510,3 +2472,45 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 路由: `/guokr/scientific`
 
 参数: 无
+
+## NSFW 类
+
+### 煎蛋
+
+#### 无聊图 <Author uid="Xuanwo"/>
+
+举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
+
+路由: `/jandan/:sub_model`
+
+#### 妹子图 <Author uid="kobemtl"/>
+
+举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
+
+路由: `/jandan/:sub_model`
+
+参数: 无
+
+### 草榴社区
+
+#### 分区帖子 <Author uid="zhboner"/>
+
+举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
+
+路由: `/t66y/:id`
+
+参数:
+
+-   id, 分区 id, 可在分区页 URL 中找到
+
+| 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
+| -------------- | -------------- | ---------- | ---------- | ---------- |
+| 2              | 15             | 4          | 5          | 25         |
+
+| 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |
+| ---------- | ---------- | ----------- | ---------- |
+| 26         | 27         | 21          | 22         |
+
+| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
+| ---------- | ------------ | ------------ |
+| 7          | 8            | 16           |
