@@ -166,7 +166,9 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`
 
-### App Store/Mac App Store 应用更新 <Author uid="cielpy"/>
+## App Store/Mac App Store
+
+### 应用更新 <Author uid="cielpy"/>
 
 举例: [https://rsshub.app/appstore/update/cn/id444934666](https://rsshub.app/appstore/update/cn/id444934666)
 
@@ -178,7 +180,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, App Store app id, 必选, 如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8, 则 id 为 `id444934666`
 
-### App Store/Mac App Store 价格更新（限免） <Author uid="HenryQW"/>
+### 价格更新（限免） <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/appstore/price/cn/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
 
@@ -192,7 +194,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, App Store app id, 必选, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`
 
-### App Store/Mac App Store 内购价格更新（限免） <Author uid="HenryQW"/>
+### 内购价格更新（限免） <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
 
