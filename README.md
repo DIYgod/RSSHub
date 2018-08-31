@@ -290,16 +290,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### Special Sponsors
 
-<p>
-<a href="https://rixcloud.app/rsshub" target="_blank">
-    <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
-</a>
-</p>
-<p>
-<a href="https://werss.app?utm_source=rsshub" target="_blank">
-    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
-</a>
-</p>
+| <img width="240px" src="https://i.imgur.com/qRP0eMg.png"> | <img width="180px" src="https://cdn.weapp.design/werss/werss-logo.png"> | <img width="180px" src="https://i.imgur.com/FZtFAGz.png"> |
+| :-------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------------------------------: |
+
 
 ### Sponsors
 

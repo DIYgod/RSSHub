@@ -2,9 +2,12 @@
 sidebar: auto
 ---
 
-<p align="center">
-<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
-</p>
+<!-- <img src="https://i.imgur.com/mT3BrHk.gif" alt="RSSHub" width="100"> -->
+<div class="rsshub">
+    <span class="circle circle1"></span>
+    <span class="circle circle2"></span>
+    <span class="circle circle3"></span>
+</div>
 <h1 align="center" class="logo">RSSHub</h1>
 
 > 🍰 万物皆可 RSS
@@ -17,16 +20,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Special Sponsors
 
-<p>
-<a href="https://rixcloud.app/rsshub" target="_blank">
-    <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
-</a>
-</p>
-<p>
-<a href="https://werss.app?utm_source=rsshub" target="_blank">
-    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
-</a>
-</p>
+| <img width="240px" src="https://i.imgur.com/qRP0eMg.png"> | <img width="180px" src="https://cdn.weapp.design/werss/werss-logo.png"> | <img width="180px" src="https://i.imgur.com/FZtFAGz.png"> |
+| :-------------------------------------------------------: | :---------------------------------------------------------------------: | :-------------------------------------------------------: |
+
 
 ### Sponsors
 
