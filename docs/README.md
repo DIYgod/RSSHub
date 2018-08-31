@@ -404,8 +404,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 | -------- | -------- |
 | notice   | news     |
 
-## 媒体类
-
 =======
 
 ## 传统媒体类
