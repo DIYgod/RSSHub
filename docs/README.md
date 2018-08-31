@@ -388,7 +388,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
-## 媒体类
+## 传统媒体类
 
 ### 央视新闻
 
@@ -483,6 +483,56 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
+
+## 科技媒体类
+
+### 推酷
+
+#### 周刊 <Author uid="zpcc"/>
+
+举例: [https://rsshub.app/tuicool/mags/tech](https://rsshub.app/tuicool/mags/tech)
+
+路由: `/tuicool/mags/:type`
+
+参数:
+
+-   type
+
+| 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
+| -------- | -------- | -------- | -------- |
+| prog     | design   | startup  | tech     |
+
+### 科技星球
+
+#### 首页 <Author uid="vhgyux"/>
+
+举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
+
+路由: `/kejixingqiu/home`
+
+### 极客时间
+
+#### 专栏文章 <Author uid="fengchang"/>
+
+> 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+举例: [https://rsshub.app/geektime/column/48](https://rsshub.app/geektime/column/48)
+
+路由: `/geektime/column/:cid`
+
+参数:
+
+-   cid, 专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到
+
+### 爱范儿 ifanr <Author uid="HenryQW"/>
+
+#### AppSolution
+
+举例: <https://rsshub.app/ifanr/appso>
+
+路由: `/ifanr/appso`
+
+参数: 无
 
 ## bilibili
 
@@ -1484,20 +1534,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   keyword, 关键词
 
-## 极客时间
-
-### 专栏文章 <Author uid="fengchang"/>
-
-> 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
-
-举例: [https://rsshub.app/geektime/column/48](https://rsshub.app/geektime/column/48)
-
-路由: `/geektime/column/:cid`
-
-参数:
-
--   cid, 专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到
-
 ## Disqus
 
 ### 评论 <Author uid="DIYgod"/>
@@ -2036,14 +2072,6 @@ GitHub 官方也提供了一些 RSS:
 | ---------- | ------------ | ------------ |
 | 7          | 8            | 16           |
 
-## 科技星球
-
-### 首页 <Author uid="vhgyux"/>
-
-举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
-
-路由: `/kejixingqiu/home`
-
 ## 机核网
 
 ### 分类 <Author uid="MoguCloud"/>
@@ -2089,22 +2117,6 @@ GitHub 官方也提供了一些 RSS:
 路由: `/one`
 
 参数: 无
-
-## 推酷
-
-### 周刊 <Author uid="zpcc"/>
-
-举例: [https://rsshub.app/tuicool/mags/tech](https://rsshub.app/tuicool/mags/tech)
-
-路由: `/tuicool/mags/:type`
-
-参数:
-
--   type
-
-| 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
-| -------- | -------- | -------- | -------- |
-| prog     | design   | startup  | tech     |
 
 ## Hexo
 
@@ -2486,16 +2498,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 举例: [https://rsshub.app/mygalgame](https://rsshub.app/mygalgame)
 
 路由: `/mygalgame`
-
-参数: 无
-
-## 爱范儿 ifanr <Author uid="HenryQW"/>
-
-### AppSolution
-
-举例: <https://rsshub.app/ifanr/appso>
-
-路由: `/ifanr/appso`
 
 参数: 无
 
