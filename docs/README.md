@@ -206,6 +206,28 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`
 
+## 自然预报预警类
+
+### 中国气象网 <Author uid="ylc395"/>
+
+#### 全国气象预警
+
+举例: <https://rsshub.app/weatherAlarm>
+
+路由: `/weatherAlarm`
+
+参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
+
+### 中国地震局
+
+#### 地震速报 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/earthquake>
+
+路由: `/earthquake`
+
+参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
+
 ## 大学类
 
 ### 上海海事大学
@@ -781,6 +803,59 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   name, 贴纸包 id, 可在分享贴纸获得的 URL 中找到
+
+## 出行旅游类
+
+### All the Flight Deals
+
+#### 特价机票 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
+
+路由: `/atfd/:locations/:nearby?`
+
+参数:
+
+-   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
+
+1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
+2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
+
+ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
+
+-   nearby: 可选 0 或 1, 默认 0 为不包括, 是否包括临近机场
+
+### 马蜂窝
+
+#### 游记 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
+
+路由: `/mafengwo/note/:type`
+
+参数:
+
+-   type, 必选, 目前支持两种, `hot` 代表热门游记, `latest` 代表最新游记
+
+### Hopper Flight Deals
+
+#### Hopper 特价机票 <Author uid="HenryQW"/>
+
+本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票, 通常包含 6 个结果. 出行日期将由 Hopper 算法定义, 可能是明天也可能是 10 个月后.
+
+举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
+
+路由: `/hopper/:lowestOnly/:from/to?`
+
+参数:
+
+-   lowestOnly: 是否只返回最低价机票, `1`: 是, 其他任意值: 否
+
+-   from: 始发地, IATA 国际航空运输协会机场代码
+
+-   to: 目的地, IATA 国际航空运输协会机场代码, 可选, 缺省则目的地为`任意城市`
+
+-   IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
 
 ## bilibili
 
@@ -2274,25 +2349,6 @@ GitHub 官方也提供了一些 RSS:
 
 参数: 无
 
-## All the Flight Deals
-
-### 特价机票 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
-
-路由: `/atfd/:locations/:nearby?`
-
-参数:
-
--   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
-
-1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
-
-ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
-
--   nearby: 可选 0 或 1, 默认 0 为不包括, 是否包括临近机场
-
 ## Google
 
 ### 谷歌学术关键词更新 <Author uid="HenryQW"/>
@@ -2342,48 +2398,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 | ---- | ------ | ---- | -------- | -------- | -------- |
 | all  | latest | hot  | end_soon | coming   | outdated |
 
-## Hopper Flight Deals
-
-### Hopper 特价机票 <Author uid="HenryQW"/>
-
-本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票, 通常包含 6 个结果. 出行日期将由 Hopper 算法定义, 可能是明天也可能是 10 个月后.
-
-举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
-
-路由: `/hopper/:lowestOnly/:from/:to?`
-
-参数:
-
--   lowestOnly: 是否只返回最低价机票, `1`: 是, 其他任意值: 否
-
--   from: 始发地, IATA 国际航空运输协会机场代码
-
--   to: 目的地, IATA 国际航空运输协会机场代码, 可选, 缺省则目的地为`任意城市`
-
--   IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
-
-## 马蜂窝
-
-### 游记 <Author uid="sinchang"/>
-
-举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
-
-路由: `/mafengwo/note/:type`
-
-参数:
-
--   type, 必选, 目前支持两种, `hot` 代表热门游记, `latest` 代表最新游记
-
-## 中国地震局
-
-### 地震速报 <Author uid="ylc395"/>
-
-举例: <https://rsshub.app/earthquake>
-
-路由: `/earthquake`
-
-参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
-
 ## 网络小说
 
 ### 笔趣阁 <Author uid="jjeejj"/>
@@ -2426,16 +2440,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 -   id1/id2, 小说网站链接最后的数字, 可在对应小说页 URL 中找到
 
 举例网址: https://www.wenxuemi.com/files/article/html/6/6144/
-
-## 中国气象网 <Author uid="ylc395"/>
-
-### 全国气象预警
-
-举例: <https://rsshub.app/weatherAlarm>
-
-路由: `/weatherAlarm`
-
-参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
 
 ## GitLab
 
