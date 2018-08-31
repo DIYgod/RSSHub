@@ -150,7 +150,7 @@ id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/r
 
 ### App Store/Mac App Store Price Drop Alert <Author uid="HenryQW"/>
 
-eg: [https://rsshub.app/appstore/price/us/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
+Eg: [https://rsshub.app/appstore/price/us/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
 
 Route: `/appstore/price/:country/:type/:id`
 
