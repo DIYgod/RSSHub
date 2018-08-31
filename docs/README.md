@@ -165,11 +165,8 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   id, fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`
-<<<<<<< HEAD
-=======
 
 ## App Store/Mac App Store
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 
 ### 应用更新 <Author uid="cielpy"/>
 

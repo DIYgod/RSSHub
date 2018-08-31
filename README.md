@@ -283,13 +283,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   AppSolution
 -   果壳网
     -   科学人
-<<<<<<< HEAD
 -   xkcd - comic
     </details>
-=======
-
-</details>
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 
 ## 鸣谢
 

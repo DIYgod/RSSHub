@@ -498,10 +498,7 @@ router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 // 果壳网
 router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
-<<<<<<< HEAD
 // xkcd
 router.get('/xkcd/comic', require('./routes/xkcd/comic'));
 
-=======
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 module.exports = router;
