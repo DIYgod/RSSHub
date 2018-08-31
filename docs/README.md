@@ -165,8 +165,13 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   id, fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`
+<<<<<<< HEAD
+=======
 
-### App Store/Mac App Store 应用更新 <Author uid="cielpy"/>
+## App Store/Mac App Store
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+
+### 应用更新 <Author uid="cielpy"/>
 
 举例: [https://rsshub.app/appstore/update/cn/id444934666](https://rsshub.app/appstore/update/cn/id444934666)
 
@@ -178,7 +183,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, App Store app id, 必选, 如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8, 则 id 为 `id444934666`
 
-### App Store/Mac App Store 价格更新（限免） <Author uid="HenryQW"/>
+### 价格更新（限免） <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/appstore/price/cn/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
 
@@ -191,6 +196,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   type, App 类型, 必选, `iOS` 或 `mac`
 
 -   id, App Store app id, 必选, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`
+<<<<<<< HEAD
 
 ### App Store/Mac App Store 内购价格更新（限免） <Author uid="HenryQW"/>
 
@@ -200,6 +206,17 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数:
 
+=======
+
+### 内购价格更新（限免） <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
+
+路由: `/appstore/iap/:country/:id`
+
+参数:
+
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 -   country, App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`
 
 -   id, App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`
@@ -386,7 +403,11 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+<<<<<<< HEAD
 ## 媒体类
+=======
+## 传统媒体类
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 
 ### 央视新闻
 
@@ -415,11 +436,19 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 路由: `/caixin/:column/:category`
 
 参数:
+<<<<<<< HEAD
 
 -   column, 栏目名
 
 -   category, 栏目下的子分类名
 
+=======
+
+-   column, 栏目名
+
+-   category, 栏目下的子分类名
+
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 -   column 列表:
 
 | 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
@@ -479,8 +508,63 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 路由: `/bjnews/:category`
 
 参数:
+<<<<<<< HEAD
 
 -   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
+=======
+
+-   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
+
+## 科技媒体类
+
+### 推酷
+
+#### 周刊 <Author uid="zpcc"/>
+
+举例: [https://rsshub.app/tuicool/mags/tech](https://rsshub.app/tuicool/mags/tech)
+
+路由: `/tuicool/mags/:type`
+
+参数:
+
+-   type
+
+| 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
+| -------- | -------- | -------- | -------- |
+| prog     | design   | startup  | tech     |
+
+### 科技星球
+
+#### 首页 <Author uid="vhgyux"/>
+
+举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
+
+路由: `/kejixingqiu/home`
+
+### 极客时间
+
+#### 专栏文章 <Author uid="fengchang"/>
+
+> 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+举例: [https://rsshub.app/geektime/column/48](https://rsshub.app/geektime/column/48)
+
+路由: `/geektime/column/:cid`
+
+参数:
+
+-   cid, 专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到
+
+### 爱范儿 ifanr <Author uid="HenryQW"/>
+
+#### AppSolution
+
+举例: <https://rsshub.app/ifanr/appso>
+
+路由: `/ifanr/appso`
+
+参数: 无
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 
 ## bilibili
 
@@ -997,9 +1081,15 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
 
 路由: `/jike/topic/:id`
+<<<<<<< HEAD
 
 参数:
 
+=======
+
+参数:
+
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 -   id, 参考 [即刻-主题-精选](#主题-精选)
 
 ### 公众号（瓦斯来源） <Author uid="DIYgod"/>
@@ -1479,6 +1569,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 路由: `/jinritoutiao/keyword/:keyword`
 
 参数:
+<<<<<<< HEAD
 
 -   keyword, 关键词
 
@@ -1495,6 +1586,10 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   cid, 专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到
+=======
+
+-   keyword, 关键词
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 
 ## Disqus
 
@@ -2034,14 +2129,6 @@ GitHub 官方也提供了一些 RSS:
 | ---------- | ------------ | ------------ |
 | 7          | 8            | 16           |
 
-## 科技星球
-
-### 首页 <Author uid="vhgyux"/>
-
-举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
-
-路由: `/kejixingqiu/home`
-
 ## 机核网
 
 ### 分类 <Author uid="MoguCloud"/>
@@ -2069,9 +2156,15 @@ GitHub 官方也提供了一些 RSS:
 [https://rsshub.app/natgeo/news/ngnews](https://rsshub.app/natgeo/news/ngnews)
 
 路由: `/natgeo/:cat/:type?`
+<<<<<<< HEAD
 
 参数:
 
+=======
+
+参数:
+
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 -   cat, 分类
 
 -   type, 类型
@@ -2088,6 +2181,7 @@ GitHub 官方也提供了一些 RSS:
 
 参数: 无
 
+<<<<<<< HEAD
 ## 推酷
 
 ### 周刊 <Author uid="zpcc"/>
@@ -2104,6 +2198,8 @@ GitHub 官方也提供了一些 RSS:
 | -------- | -------- | -------- | -------- |
 | prog     | design   | startup  | tech     |
 
+=======
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 ## Hexo
 
 ### Next 主题 <Author uid="fengkx"/>
@@ -2153,9 +2249,15 @@ GitHub 官方也提供了一些 RSS:
 ### 讨论区 <Author uid="Chingyat"/>
 
 举例: [https://rsshub.app/qidian/forum/1010400217](https://rsshub.app/qidian/forum/1010400217)
+<<<<<<< HEAD
 
 路由: `/qidian/forum/:id`
 
+=======
+
+路由: `/qidian/forum/:id`
+
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 参数:
 
 -   id, 小说 id, 可在对应小说页 URL 中找到
@@ -2417,9 +2519,15 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 路由: `/novel/biquge/:id`
 
 参数:
+<<<<<<< HEAD
 
 -   id, 小说 id, 可在对应小说页 URL 中找到
 
+=======
+
+-   id, 小说 id, 可在对应小说页 URL 中找到
+
+>>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 举例网址: https://www.biquge5200.cc/52_52542/
 ::: tip 提示
 
@@ -2487,13 +2595,13 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 参数: 无
 
-## 爱范儿 ifanr <Author uid="HenryQW"/>
+## 果壳网 guokr <Author uid="alphardex"/>
 
-### AppSolution
+### 科学人
 
-举例: <https://rsshub.app/ifanr/appso>
+举例: <https://rsshub.app/guokr/scientific>
 
-路由: `/ifanr/appso`
+路由: `/guokr/scientific`
 
 参数: 无
 

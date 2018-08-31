@@ -1,16 +1,17 @@
-const axios = require('../../../utils/axios');
+const axios = require('../../../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
-const host = 'http://www.seiee.sjtu.edu.cn/';
+const host = 'http://radio.seu.edu.cn/';
 
 module.exports = async (ctx) => {
-    const link = url.resolve(host, 'seiee/list/683-1-20.htm');
+    const link = url.resolve(host, '_s29/15986/list.psp');
     const response = await axios.get(link);
 
     const $ = cheerio.load(response.data);
 
-    const list = $('.list_style_1 li a')
+    const list = $('.Article_Title a')
+        .slice(0, 10)
         .map((i, e) => $(e).attr('href'))
         .get();
 
@@ -26,16 +27,19 @@ module.exports = async (ctx) => {
             const $ = cheerio.load(response.data);
 
             const single = {
-                title: $('h2.title_3').text(),
+                title: $('.arti_title').text(),
                 link: itemUrl,
-                author: '上海交通大学电子信息与电气工程学院',
-                description: $('.c_1.article_content')
+                author: $('.arti_publisher')
+                    .text()
+                    .replace('发布者：', ''),
+                description: $('.wp_articlecontent')
                     .html()
-                    .replace(/src="\//g, `src="${url.resolve(host, '.')}`),
+                    .replace(/src="\//g, `src="${url.resolve(host, '.')}`)
+                    .trim(),
                 pubDate: new Date(
-                    $('.date_1 span:first-of-type')
+                    $('.arti_update')
                         .text()
-                        .trim()
+                        .replace('发布时间：', '')
                 ),
             };
             ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
@@ -44,7 +48,7 @@ module.exports = async (ctx) => {
     );
 
     ctx.state.data = {
-        title: '上海交通大学电子信息与电气工程学院 -- 学术动态',
+        title: '东南大学信息科学与工程学院 -- 学术活动',
         link,
         item: out,
     };
