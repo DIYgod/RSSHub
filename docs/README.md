@@ -94,6 +94,28 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
 -   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
+## 气象预报/灾害预警类
+
+### 中国气象网 <Author uid="ylc395"/>
+
+#### 全国气象预警
+
+举例: <https://rsshub.app/weatherAlarm>
+
+路由: `/weatherAlarm`
+
+参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
+
+### 中国地震局
+
+#### 地震速报 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/earthquake>
+
+路由: `/earthquake`
+
+参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
+
 ## 程序类
 
 ### RSSHub <Author uid="DIYgod"/>
@@ -546,6 +568,427 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+## 社交媒体类
+
+### Twitter
+
+#### 用户 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIYgod)
+
+路由: `/twitter/user/:id`
+
+参数:
+
+-   id, 用户 id
+
+### Instagram
+
+#### 用户 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user/diygod)
+
+路由: `/instagram/user/:id`
+
+参数:
+
+-   id, 用户 id
+
+### 微博
+
+#### 博主 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/weibo/user/3306934123](https://rsshub.app/weibo/user/3306934123)
+
+路由: `/weibo/user/:uid`
+
+参数:
+
+-   uid, 用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
+
+::: warning 注意
+
+上述方案获取 V+ 付费博主会有数据缺失, 所以这里提供另外一种方式, 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
+
+:::
+
+举例: [https://rsshub.app/weibo/user2/3306934123](https://rsshub.app/weibo/user2/3306934123)
+
+路由: `/weibo/user2/:uid`
+
+#### 关键词 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/weibo/keyword/DIYgod](https://rsshub.app/weibo/keyword/DIYgod)
+
+路由: `/weibo/keyword/:keyword`
+
+参数:
+
+-   keyword, 你想订阅的微博关键词
+
+### 贴吧
+
+#### 帖子列表 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
+
+路由: `/tieba/forum/:kw`
+
+参数:
+
+-   kw, 吧名
+
+#### 精品帖子 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+
+路由: `/tieba/forum/good/:kw/:cid?`
+
+参数:
+
+-   kw: 吧名
+
+-   cid: 精品分类, 如果不传 `cid` 则获取全部分类
+
+#### 帖子动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/5853240586](https://rsshub.app/tieba/post/5853240586)
+
+路由: `/tieba/post/:id`
+
+参数:
+
+-   id: 帖子 ID
+
+#### 楼主动态 <Author uid="u3u"/>
+
+举例: [https://rsshub.app/tieba/post/lz/5853240586](https://rsshub.app/tieba/post/lz/5853240586)
+
+路由: `/tieba/post/lz/:id`
+
+参数:
+
+-   id: 帖子 ID
+
+### 雪球
+
+#### 用户动态 <Author uid="imlonghao"/>
+
+举例: [https://rsshub.app/xueqiu/user/8152922548](https://rsshub.app/xueqiu/user/8152922548)
+
+路由: `/xueqiu/user/:id/:type?`
+
+参数:
+
+-   id, 用户 id, 可在用户主页 URL 中找到
+
+-   type, 可选, 动态的类型, 不填则默认全部
+
+| 原发布 | 长文 | 问答 | 热门 | 交易 |
+| ------ | ---- | ---- | ---- | ---- |
+| 0      | 2    | 4    | 9    | 11   |
+
+#### 用户收藏动态 <Author uid="imlonghao"/>
+
+举例: [https://rsshub.app/xueqiu/favorite/8152922548](https://rsshub.app/xueqiu/favorite/8152922548)
+
+路由: `/xueqiu/favorite/:id`
+
+参数:
+
+-   id, 用户 id, 可在用户主页 URL 中找到
+
+### 即刻
+
+#### 主题-精选 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/:id`
+
+参数:
+
+-   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+#### 主题-广场 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
+
+路由: `/jike/topic/square/:id`
+
+参数:
+
+-   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+#### 用户动态 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
+
+路由: `/jike/user/:id`
+
+参数:
+
+-   id, 用户 id, 可在即刻 web 端用户页 URL 中找到
+
+### 微信
+
+::: tip 提示
+
+公众号直接抓取困难, 故目前提供即刻和瓦斯两种间接抓取方案, 请自行选择
+
+:::
+
+#### 公众号（即刻来源） <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
+
+路由: `/jike/topic/:id`
+
+参数:
+
+-   id, 参考 [即刻-主题-精选](#主题-精选)
+
+#### 公众号（瓦斯来源） <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace)
+
+路由: `/wechat/wasi/:id`
+
+参数:
+
+-   id, 瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id
+
+### 豆瓣
+
+#### 正在上映的电影 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/playing](https://rsshub.app/douban/movie/playing)
+
+路由: `/douban/movie/playing`
+
+参数: 无
+
+#### 正在上映的高分电影 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/playing/7.5](https://rsshub.app/douban/movie/playing/7.5)
+
+路由
+
+`/douban/movie/playing/:score`
+
+`/douban/movie/playing/:score/:city`
+
+参数
+
+-   score: 返回大于等于这个分数的电影
+
+-   city: 城市的中文名, 可选, 默认北京
+
+#### 即将上映的电影 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/later](https://rsshub.app/douban/movie/later)
+
+路由: `/douban/movie/later`
+
+参数: 无
+
+#### 北美票房榜 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/douban/movie/ustop](https://rsshub.app/douban/movie/ustop)
+
+路由: `/douban/movie/ustop`
+
+参数: 无
+
+#### 豆瓣小组 <Author uid="derycktse"/>
+
+举例: [https://rsshub.app/douban/group/camera](https://rsshub.app/douban/group/camera)
+
+路由: `/douban/group/:groupid`
+
+参数:
+
+-   groupid: 豆瓣小组的 id
+
+#### 浏览发现 <Author uid="clarkzsd"/>
+
+举例: [https://rsshub.app/douban/explore](https://rsshub.app/douban/explore)
+
+路由: `/douban/explore`
+
+### Telegram
+
+#### 频道 <Author uid="DIYgod"/>
+
+::: tip 提示
+
+订阅要求: 将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员, 然后发一条消息后才可正常获取数据
+
+:::
+
+举例: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/telegram/channel/awesomeDIYgod)
+
+路由: `/telegram/channel/:username`
+
+参数:
+
+-   username, 频道 username
+
+#### 贴纸包 <Author uid="DIYgod"/>
+
+举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
+
+路由: `/telegram/stickerpack/:name`
+
+参数:
+
+-   name, 贴纸包 id, 可在分享贴纸获得的 URL 中找到
+
+## 头条媒体类
+
+### 开发者头条
+
+#### 今天头条 <Author uid="jjeejj"/>
+
+举例: [https://rsshub.app/toutiao/today](https://rsshub.app/toutiao/today)
+
+路由: `/toutiao/today`
+
+#### 独家号 <Author uid="jjeejj"/>
+
+举例: [https://rsshub.app/toutiao/user/140544](https://rsshub.app/toutiao/user/140544)
+
+路由: `/toutiao/user/:id`
+
+参数:
+
+-   id, 独家号 id, 可在对应独家号页 URL 中找到
+
+### 今日头条
+
+#### 关键词 <Author uid="uni-zheng"/>
+
+举例: [https://rsshub.app/jinritoutiao/keyword/ai](https://rsshub.app/jinritoutiao/keyword/ai)
+
+路由: `/jinritoutiao/keyword/:keyword`
+
+参数:
+
+-   keyword, 关键词
+
+## 出行旅游类
+
+### All the Flight Deals
+
+#### 特价机票 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
+
+路由: `/atfd/:locations/:nearby?`
+
+参数:
+
+-   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
+
+1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
+2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
+
+ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
+
+-   nearby: 可选 0 或 1, 默认 0 为不包括, 是否包括临近机场
+
+### 马蜂窝
+
+#### 游记 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
+
+路由: `/mafengwo/note/:type`
+
+参数:
+
+-   type, 必选, 目前支持两种, `hot` 代表热门游记, `latest` 代表最新游记
+
+### iMuseum
+
+#### 展览信息 <Author uid="sinchang"/>
+
+举例: [https://rsshub.app/imuseum/shanghai/all](https://rsshub.app/imuseum/shanghai/all)
+
+路由: `/imuseum/:city/:type`
+
+参数:
+
+-   city, 必选, 如 shanghai、beijing
+
+-   type, 可选, 不填则默认为 `all`
+
+| 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
+| ---- | ------ | ---- | -------- | -------- | -------- |
+| all  | latest | hot  | end_soon | coming   | outdated |
+
+### 中国美术馆
+
+#### 通知公告 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/namoc/announcement](https://rsshub.app/namoc/announcement)
+
+路由: `/namoc/announcement`
+
+参数: 无
+
+#### 新闻 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/namoc/news](https://rsshub.app/namoc/news)
+
+路由: `/namoc/news`
+
+参数: 无
+
+#### 媒体联报 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/namoc/media](https://rsshub.app/namoc/media)
+
+路由: `/namoc/media`
+
+参数: 无
+
+#### 展览预告 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/namoc/exhibition](https://rsshub.app/namoc/exhibition)
+
+路由: `/namoc/exhibition`
+
+参数: 无
+
+#### 焦点专题 <Author uid="HenryQW"/>
+
+举例: [https://rsshub.app/namoc/specials](https://rsshub.app/namoc/specials)
+
+路由: `/namoc/specials`
+
+参数: 无
+
+### Hopper Flight Deals
+
+#### Hopper 特价机票 <Author uid="HenryQW"/>
+
+本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票, 通常包含 6 个结果. 出行日期将由 Hopper 算法定义, 可能是明天也可能是 10 个月后.
+
+举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
+
+路由: `/hopper/:lowestOnly/:from/to?`
+
+参数:
+
+-   lowestOnly: 是否只返回最低价机票, `1`: 是, 其他任意值: 否
+
+-   from: 始发地, IATA 国际航空运输协会机场代码
+
+-   to: 目的地, IATA 国际航空运输协会机场代码, 可选, 缺省则目的地为`任意城市`
+
+-   IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
+
 ## bilibili
 
 ### 番剧 <Author uid="DIYgod"/>
@@ -940,142 +1383,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id - 话题 ID. 在话题页面地址栏查看
 
-## 微博
-
-### 博主 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/weibo/user/3306934123](https://rsshub.app/weibo/user/3306934123)
-
-路由: `/weibo/user/:uid`
-
-参数:
-
--   uid, 用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector('.opt_box .btn_bed').getAttribute('action-data'))[1]` 获取
-
-::: warning 注意
-
-上述方案获取 V+ 付费博主会有数据缺失, 所以这里提供另外一种方式, 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
-
-:::
-
-举例: [https://rsshub.app/weibo/user2/3306934123](https://rsshub.app/weibo/user2/3306934123)
-
-路由: `/weibo/user2/:uid`
-
-### 关键词 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/weibo/keyword/DIYgod](https://rsshub.app/weibo/keyword/DIYgod)
-
-路由: `/weibo/keyword/:keyword`
-
-参数:
-
--   keyword, 你想订阅的微博关键词
-
-## 贴吧
-
-### 帖子列表 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
-
-路由: `/tieba/forum/:kw`
-
-参数:
-
--   kw, 吧名
-
-### 精品帖子 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
-
-路由: `/tieba/forum/good/:kw/:cid?`
-
-参数:
-
--   kw: 吧名
-
--   cid: 精品分类, 如果不传 `cid` 则获取全部分类
-
-### 帖子动态 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/post/5853240586](https://rsshub.app/tieba/post/5853240586)
-
-路由: `/tieba/post/:id`
-
-参数:
-
--   id: 帖子 ID
-
-### 楼主动态 <Author uid="u3u"/>
-
-举例: [https://rsshub.app/tieba/post/lz/5853240586](https://rsshub.app/tieba/post/lz/5853240586)
-
-路由: `/tieba/post/lz/:id`
-
-参数:
-
--   id: 帖子 ID
-
-## 即刻
-
-### 主题-精选 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
-
-路由: `/jike/topic/:id`
-
-参数:
-
--   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
-
-### 主题-广场 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
-
-路由: `/jike/topic/square/:id`
-
-参数:
-
--   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
-
-### 用户动态 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
-
-路由: `/jike/user/:id`
-
-参数:
-
--   id, 用户 id, 可在即刻 web 端用户页 URL 中找到
-
-## 微信
-
-::: tip 提示
-
-公众号直接抓取困难, 故目前提供即刻和瓦斯两种间接抓取方案, 请自行选择
-
-:::
-
-### 公众号（即刻来源） <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
-
-路由: `/jike/topic/:id`
-
-参数:
-
--   id, 参考 [即刻-主题-精选](#主题-精选)
-
-### 公众号（瓦斯来源） <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace)
-
-路由: `/wechat/wasi/:id`
-
-参数:
-
--   id, 瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id
-
 ## 网易云音乐
 
 ### 歌单歌曲 <Author uid="DIYgod"/>
@@ -1312,176 +1619,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   number: 快递单号
 
-## 妹子图
-
-::: warning 注意
-
-该网站在国外无法访问, 故以下演示无效
-
-:::
-
-### 首页（最新） <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu](https://rsshub.app/mzitu)
-
-路由: `/mzitu/`
-
-### 分类 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/category/hot](https://rsshub.app/mzitu/category/hot)
-
-路由: `/mzitu/category/:category`
-
-参数:
-
--   category, 分类名
-
-| 热门 | 推荐 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
-| ---- | ---- | -------- | -------- | -------- | -------- |
-| hot  | best | xinggan  | japan    | taiwan   | mm       |
-
-### 所有专题 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/tags](https://rsshub.app/mzitu/tags)
-
-路由: `/mzitu/tags`
-
-### 专题详情 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/tag/shishen](https://rsshub.app/mzitu/tag/shishen)
-
-路由: `/mzitu/tag/:tag`
-
-参数:
-
--   tag, 专题名, 可在专题页 URL 中找到
-
-### 详情 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/post/129452](https://rsshub.app/mzitu/post/129452)
-
-路由: `/mzitu/post/:id`
-
-参数:
-
--   id, 详情 id, 可在详情页 URL 中找到
-
-## pixiv
-
-### 用户收藏 <Author uid="EYHN"/>
-
-举例: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
-
-路由: `/pixiv/user/bookmarks/:id`
-
-参数:
-
--   id, 用户 id, 可在用户主页 URL 中找到
-
-### 用户动态 <Author uid="EYHN"/>
-
-举例: [https://rsshub.app/pixiv/user/11](https://rsshub.app/pixiv/user/11)
-
-路由: `/pixiv/user/:id`
-
-参数:
-
--   id, 用户 id, 可在用户主页 URL 中找到
-
-### 排行榜 <Author uid="EYHN"/>
-
-举例: [https://rsshub.app/pixiv/ranking/week](https://rsshub.app/pixiv/ranking/week)
-
-路由: `/pixiv/ranking/:mode/:date?`
-
-参数
-
--   mode, 排行榜类型
-
-| pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行 | pixiv 新人排行 |
-| ------------ | ------------ | ------------ | -------------------- | -------------------- | ------------------ | -------------- |
-| day          | week         | month        | day_male             | day_female           | week_original      | week_rookie    |
-
-| pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
-| ----------------- | ------------------------- | ------------------------- | ----------------- | ---------------- |
-| day_r18           | day_male_r18              | day_female_r18            | week_r18          | week_r18g        |
-
--   date, 日期, 取值形如 `2018-4-25`
-
-## 豆瓣
-
-### 正在上映的电影 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/playing](https://rsshub.app/douban/movie/playing)
-
-路由: `/douban/movie/playing`
-
-参数: 无
-
-### 正在上映的高分电影 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/playing/7.5](https://rsshub.app/douban/movie/playing/7.5)
-
-路由
-
-`/douban/movie/playing/:score`
-
-`/douban/movie/playing/:score/:city`
-
-参数
-
--   score: 返回大于等于这个分数的电影
-
--   city: 城市的中文名, 可选, 默认北京
-
-### 即将上映的电影 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/later](https://rsshub.app/douban/movie/later)
-
-路由: `/douban/movie/later`
-
-参数: 无
-
-### 北美票房榜 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/douban/movie/ustop](https://rsshub.app/douban/movie/ustop)
-
-路由: `/douban/movie/ustop`
-
-参数: 无
-
-### 豆瓣小组 <Author uid="derycktse"/>
-
-举例: [https://rsshub.app/douban/group/camera](https://rsshub.app/douban/group/camera)
-
-路由: `/douban/group/:groupid`
-
-参数:
-
--   groupid: 豆瓣小组的 id
-
-### 浏览发现 <Author uid="clarkzsd"/>
-
-举例: [https://rsshub.app/douban/explore](https://rsshub.app/douban/explore)
-
-路由: `/douban/explore`
-
-## 煎蛋
-
-### 无聊图 <Author uid="Xuanwo"/>
-
-举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
-
-路由: `/jandan/:sub_model`
-
-### 妹子图 <Author uid="kobemtl"/>
-
-举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
-
-路由: `/jandan/:sub_model`
-
-参数: 无
-
 ## 喷嚏
 
 ### 图卦 <Author uid="tgly307"/>
@@ -1557,30 +1694,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   forum, 网站的 disqus name
-
-## Twitter
-
-### 用户 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIYgod)
-
-路由: `/twitter/user/:id`
-
-参数:
-
--   id, 用户 id
-
-## Instagram
-
-### 用户 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user/diygod)
-
-路由: `/instagram/user/:id`
-
-参数:
-
--   id, 用户 id
 
 ## Youtube
 
@@ -1687,34 +1800,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 
 -   type: hot 或 latest
-
-## Telegram
-
-### 频道 <Author uid="DIYgod"/>
-
-::: tip 提示
-
-订阅要求: 将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员, 然后发一条消息后才可正常获取数据
-
-:::
-
-举例: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/telegram/channel/awesomeDIYgod)
-
-路由: `/telegram/channel/:username`
-
-参数:
-
--   username, 频道 username
-
-### 贴纸包 <Author uid="DIYgod"/>
-
-举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
-
-路由: `/telegram/stickerpack/:name`
-
-参数:
-
--   name, 贴纸包 id, 可在分享贴纸获得的 URL 中找到
 
 ## Readhub
 
@@ -2216,76 +2301,6 @@ GitHub 官方也提供了一些 RSS:
 
 参数: 无
 
-## 雪球
-
-### 用户动态 <Author uid="imlonghao"/>
-
-举例: [https://rsshub.app/xueqiu/user/8152922548](https://rsshub.app/xueqiu/user/8152922548)
-
-路由: `/xueqiu/user/:id/:type?`
-
-参数:
-
--   id, 用户 id, 可在用户主页 URL 中找到
-
--   type, 可选, 动态的类型, 不填则默认全部
-
-| 原发布 | 长文 | 问答 | 热门 | 交易 |
-| ------ | ---- | ---- | ---- | ---- |
-| 0      | 2    | 4    | 9    | 11   |
-
-### 用户收藏动态 <Author uid="imlonghao"/>
-
-举例: [https://rsshub.app/xueqiu/favorite/8152922548](https://rsshub.app/xueqiu/favorite/8152922548)
-
-路由: `/xueqiu/favorite/:id`
-
-参数:
-
--   id, 用户 id, 可在用户主页 URL 中找到
-
-## 中国美术馆
-
-### 通知公告 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/namoc/announcement](https://rsshub.app/namoc/announcement)
-
-路由: `/namoc/announcement`
-
-参数: 无
-
-### 新闻 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/namoc/news](https://rsshub.app/namoc/news)
-
-路由: `/namoc/news`
-
-参数: 无
-
-### 媒体联报 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/namoc/media](https://rsshub.app/namoc/media)
-
-路由: `/namoc/media`
-
-参数: 无
-
-### 展览预告 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/namoc/exhibition](https://rsshub.app/namoc/exhibition)
-
-路由: `/namoc/exhibition`
-
-参数: 无
-
-### 焦点专题 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/namoc/specials](https://rsshub.app/namoc/specials)
-
-路由: `/namoc/specials`
-
-参数: 无
-
 ## Greasy Fork
 
 ### 脚本更新 <Author uid="imlonghao"/>
@@ -2324,25 +2339,6 @@ GitHub 官方也提供了一些 RSS:
 
 参数: 无
 
-## All the Flight Deals
-
-### 特价机票 <Author uid="HenryQW"/>
-
-举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
-
-路由: `/atfd/:locations/:nearby?`
-
-参数:
-
--   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
-
-1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
-
-ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
-
--   nearby: 可选 0 或 1, 默认 0 为不包括, 是否包括临近机场
-
 ## Google
 
 ### 谷歌学术关键词更新 <Author uid="HenryQW"/>
@@ -2373,66 +2369,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 路由: `/pigtails`
 
 参数: 无
-
-## iMuseum
-
-### 展览信息 <Author uid="sinchang"/>
-
-举例: [https://rsshub.app/imuseum/shanghai/all](https://rsshub.app/imuseum/shanghai/all)
-
-路由: `/imuseum/:city/:type`
-
-参数:
-
--   city, 必选, 如 shanghai、beijing
-
--   type, 可选, 不填则默认为 `all`
-
-| 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
-| ---- | ------ | ---- | -------- | -------- | -------- |
-| all  | latest | hot  | end_soon | coming   | outdated |
-
-## Hopper Flight Deals
-
-### Hopper 特价机票 <Author uid="HenryQW"/>
-
-本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票, 通常包含 6 个结果. 出行日期将由 Hopper 算法定义, 可能是明天也可能是 10 个月后.
-
-举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
-
-路由: `/hopper/:lowestOnly/:from/:to?`
-
-参数:
-
--   lowestOnly: 是否只返回最低价机票, `1`: 是, 其他任意值: 否
-
--   from: 始发地, IATA 国际航空运输协会机场代码
-
--   to: 目的地, IATA 国际航空运输协会机场代码, 可选, 缺省则目的地为`任意城市`
-
--   IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
-
-## 马蜂窝
-
-### 游记 <Author uid="sinchang"/>
-
-举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
-
-路由: `/mafengwo/note/:type`
-
-参数:
-
--   type, 必选, 目前支持两种, `hot` 代表热门游记, `latest` 代表最新游记
-
-## 中国地震局
-
-### 地震速报 <Author uid="ylc395"/>
-
-举例: <https://rsshub.app/earthquake>
-
-路由: `/earthquake`
-
-参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
 
 ## 网络小说
 
@@ -2477,16 +2413,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 举例网址: https://www.wenxuemi.com/files/article/html/6/6144/
 
-## 中国气象网 <Author uid="ylc395"/>
-
-### 全国气象预警
-
-举例: <https://rsshub.app/weatherAlarm>
-
-路由: `/weatherAlarm`
-
-参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
-
 ## GitLab
 
 ### Explore <Author uid="imlonghao"/>
@@ -2522,3 +2448,131 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 路由: `/guokr/scientific`
 
 参数: 无
+
+## NSFW 类
+
+### 煎蛋
+
+#### 无聊图 <Author uid="Xuanwo"/>
+
+举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
+
+路由: `/jandan/:sub_model`
+
+#### 妹子图 <Author uid="kobemtl"/>
+
+举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
+
+路由: `/jandan/:sub_model`
+
+参数: 无
+
+### 草榴社区
+
+#### 分区帖子 <Author uid="zhboner"/>
+
+举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
+
+路由: `/t66y/:id`
+
+参数:
+
+-   id, 分区 id, 可在分区页 URL 中找到
+
+| 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
+| -------------- | -------------- | ---------- | ---------- | ---------- |
+| 2              | 15             | 4          | 5          | 25         |
+
+| 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |
+| ---------- | ---------- | ----------- | ---------- |
+| 26         | 27         | 21          | 22         |
+
+| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
+| ---------- | ------------ | ------------ |
+| 7          | 8            | 16           |
+
+## 妹子图
+
+::: warning 注意
+
+该网站在国外无法访问, 故以下演示无效
+
+:::
+
+### 首页（最新） <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu](https://rsshub.app/mzitu)
+
+路由: `/mzitu/`
+
+### 分类 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/category/hot](https://rsshub.app/mzitu/category/hot)
+
+路由: `/mzitu/category/:category`
+
+参数:
+
+-   category, 分类名
+
+| 热门 | 推荐 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
+| ---- | ---- | -------- | -------- | -------- | -------- |
+| hot  | best | xinggan  | japan    | taiwan   | mm       |
+
+### 所有专题 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/tags](https://rsshub.app/mzitu/tags)
+
+路由: `/mzitu/tags`
+
+### 专题详情 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/tag/shishen](https://rsshub.app/mzitu/tag/shishen)
+
+路由: `/mzitu/tag/:tag`
+
+参数:
+
+-   tag, 专题名, 可在专题页 URL 中找到
+
+### 详情 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/post/129452](https://rsshub.app/mzitu/post/129452)
+
+路由: `/mzitu/post/:id`
+
+参数:
+
+-   id, 详情 id, 可在详情页 URL 中找到
+
+## pixiv
+
+### 用户收藏 <Author uid="EYHN"/>
+
+举例: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
+
+路由: `/pixiv/user/bookmarks/:id`
+
+参数:
+
+-   id, 用户 id, 可在用户主页 URL 中找到
+
+## 果壳网 guokr <Author uid="alphardex"/>
+
+举例: [https://rsshub.app/pixiv/ranking/week](https://rsshub.app/pixiv/ranking/week)
+
+路由: `/pixiv/ranking/:mode/:date?`
+
+参数
+
+-   mode, 排行榜类型
+
+| pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行 | pixiv 新人排行 |
+| ------------ | ------------ | ------------ | -------------------- | -------------------- | ------------------ | -------------- |
+| day          | week         | month        | day_male             | day_female           | week_original      | week_rookie    |
+
+| pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
+| ----------------- | ------------------------- | ------------------------- | ----------------- | ---------------- |
+| day_r18           | day_male_r18              | day_female_r18            | week_r18          | week_r18g        |
+
+-   date, 日期, 取值形如 `2018-4-25`
