@@ -94,6 +94,28 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
 -   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
 
+## 气象预报/灾害预警类
+
+### 中国气象网 <Author uid="ylc395"/>
+
+#### 全国气象预警
+
+举例: <https://rsshub.app/weatherAlarm>
+
+路由: `/weatherAlarm`
+
+参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
+
+### 中国地震局
+
+#### 地震速报 <Author uid="ylc395"/>
+
+举例: <https://rsshub.app/earthquake>
+
+路由: `/earthquake`
+
+参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
+
 ## 程序类
 
 ### RSSHub <Author uid="DIYgod"/>
@@ -201,28 +223,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   country, App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`
 
 -   id, App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`
-
-## 自然预报预警类
-
-### 中国气象网 <Author uid="ylc395"/>
-
-#### 全国气象预警
-
-举例: <https://rsshub.app/weatherAlarm>
-
-路由: `/weatherAlarm`
-
-参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
-
-### 中国地震局
-
-#### 地震速报 <Author uid="ylc395"/>
-
-举例: <https://rsshub.app/earthquake>
-
-路由: `/earthquake`
-
-参数: 无（提示:可通过全局过滤参数订阅您感兴趣的地区）
 
 ## 大学类
 
