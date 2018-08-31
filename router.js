@@ -493,4 +493,7 @@ router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 // 果壳网
 router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
+// 南京邮电大学
+router.get('/njupt/jwc/:type?', require('./routes/njupt/jwc'));
+
 module.exports = router;

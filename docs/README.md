@@ -404,6 +404,22 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 | ----- | ----- | ----- | ---- | ------- | ---- | ---- |
 | china | world | video | tech | society | law  | ent  |
 
+### 南京邮电大学
+
+#### 教务处通知与新闻 <Author uid="shaoye"/>
+
+举例: [https://rsshub.app/njupt/jwc/notice](https://rsshub.app/njupt/jwc/notice)
+
+路由: `/njupt/jwc/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notice`
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notice   | news     |
+
 ### 财新网
 
 > 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
