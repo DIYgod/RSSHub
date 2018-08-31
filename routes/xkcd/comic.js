@@ -1,31 +1,28 @@
 const axios = require('../../utils/axios');
-const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
-        url: 'https://www.xkcd.com',
+        url: 'https://xkcd.com/info.0.json',
         headers: {
             Referer: 'https://www.xkcd.com',
         },
     });
 
-    const data = response.data;
-    const $ = cheerio.load(data);
-
-    const preUrl = $('[rel="prev"]').attr('href');
-    const realUrl = String(Number(preUrl) + 1);
+    const data = JSON.parse(response.data);
 
     ctx.state.data = {
         title: 'xkcd',
         link: 'https://www.xkcd.com',
-        description: $('img[title]').attr('title'),
+        description: data.alt,
         item: [
             {
-                title: $('.ctitle').text(),
-                description: $('img[title]').attr('title'),
-                link: 'https://www.xkcd.com' + realUrl,
-                itunes_item_image: $('img', 'comic'),
+                title: data.title,
+                description: data.alt,
+                pubDate: data.year + data.month + data.day,
+                link: 'https://www.xkcd.com' + data.num,
+                guid: data.num,
+                itunes_item_image: data.img,
             },
         ],
     };
