@@ -193,7 +193,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   type, App 类型, 必选, `iOS` 或 `mac`
 
 -   id, App Store app id, 必选, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`
-<<<<<<< HEAD
+    <<<<<<< HEAD
 
 ### App Store/Mac App Store 内购价格更新（限免） <Author uid="HenryQW"/>
 
@@ -213,7 +213,8 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数:
 
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
+
 -   country, App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`
 
 -   id, App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`
@@ -401,10 +402,14 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数: 无
 
 <<<<<<< HEAD
+
 ## 媒体类
+
 =======
+
 ## 传统媒体类
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
 
 ### 央视新闻
 
@@ -445,7 +450,8 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   category, 栏目下的子分类名
 
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
+
 -   column 列表:
 
 | 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
@@ -507,8 +513,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 参数:
 <<<<<<< HEAD
 
--   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
-=======
+-   # category, 新京报的栏目名, 点击对应栏目后在地址栏找到
 
 -   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
 
@@ -561,7 +566,8 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 路由: `/ifanr/appso`
 
 参数: 无
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
 
 ## bilibili
 
@@ -1086,7 +1092,8 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数:
 
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
+
 -   id, 参考 [即刻-主题-精选](#主题-精选)
 
 ### 公众号（瓦斯来源） <Author uid="DIYgod"/>
@@ -1582,11 +1589,10 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数:
 
--   cid, 专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到
-=======
+-   # cid, 专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到
 
 -   keyword, 关键词
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+    > > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
 
 ## Disqus
 
@@ -2161,7 +2167,8 @@ GitHub 官方也提供了一些 RSS:
 
 参数:
 
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
+
 -   cat, 分类
 
 -   type, 类型
@@ -2179,6 +2186,7 @@ GitHub 官方也提供了一些 RSS:
 参数: 无
 
 <<<<<<< HEAD
+
 ## 推酷
 
 ### 周刊 <Author uid="zpcc"/>
@@ -2196,7 +2204,9 @@ GitHub 官方也提供了一些 RSS:
 | prog     | design   | startup  | tech     |
 
 =======
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
+
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
+
 ## Hexo
 
 ### Next 主题 <Author uid="fengkx"/>
@@ -2254,8 +2264,8 @@ GitHub 官方也提供了一些 RSS:
 
 路由: `/qidian/forum/:id`
 
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
-参数:
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
+> > > > > > > 参数:
 
 -   id, 小说 id, 可在对应小说页 URL 中找到
 
@@ -2524,9 +2534,9 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 -   id, 小说 id, 可在对应小说页 URL 中找到
 
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
-举例网址: https://www.biquge5200.cc/52_52542/
-::: tip 提示
+> > > > > > > 06fd000c344348693739e4f702d7ae73b379b192
+> > > > > > > 举例网址: https://www.biquge5200.cc/52_52542/
+> > > > > > > ::: tip 提示
 
 由于笔趣阁网站有多个, 各站点小说对应的小说 id 不同. 此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id.
 

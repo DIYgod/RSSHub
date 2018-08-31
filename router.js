@@ -452,13 +452,8 @@ router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 router.get('/mygalgame', require('./routes/galgame/mygalgame'));
 
 // 大连工业大学
-<<<<<<< HEAD
-router.get('/dpu/jiaowu/news/:type?', require('./routes/dpu/jiaowu/news'));
-router.get('/dpu/wlfw/news/:type?', require('./routes/dpu/wlfw/news'));
-=======
 router.get('/dpu/jiaowu/news/:type?', require('./routes/universities/dpu/jiaowu/news'));
 router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news'));
->>>>>>> 06fd000c344348693739e4f702d7ae73b379b192
 
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
