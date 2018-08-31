@@ -1,16 +1,28 @@
-const axios = require('../../../../utils/axios');
+const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
-const host = 'http://radio.seu.edu.cn/';
+const host = 'http://jwc.njupt.edu.cn';
+
+const map = {
+    notice: '/1594',
+    news: '/1596',
+};
 
 module.exports = async (ctx) => {
-    const link = url.resolve(host, '_s29/15986/list.psp');
-    const response = await axios.get(link);
-
+    const type = ctx.params.type || 'notice';
+    const link = host + map[type] + '/list.htm';
+    const response = await axios({
+        method: 'get',
+        url: link,
+        headers: {
+            Referer: host,
+        },
+    });
     const $ = cheerio.load(response.data);
 
-    const list = $('.Article_Title a')
+    const list = $('.content')
+        .find('a')
         .slice(0, 10)
         .map((i, e) => $(e).attr('href'))
         .get();
@@ -27,17 +39,15 @@ module.exports = async (ctx) => {
             const $ = cheerio.load(response.data);
 
             const single = {
-                title: $('.arti_title').text(),
+                title: $('.Article_Title').text(),
                 link: itemUrl,
-                author: $('.arti_publisher')
-                    .text()
-                    .replace('发布者：', ''),
                 description: $('.wp_articlecontent')
                     .html()
                     .replace(/src="\//g, `src="${url.resolve(host, '.')}`)
+                    .replace(/href="\//g, `href="${url.resolve(host, '.')}`)
                     .trim(),
                 pubDate: new Date(
-                    $('.arti_update')
+                    $('.Article_PublishDate')
                         .text()
                         .replace('发布时间：', '')
                 ),
@@ -46,9 +56,12 @@ module.exports = async (ctx) => {
             return Promise.resolve(single);
         })
     );
-
+    let info = '通知公告';
+    if (type === 'news') {
+        info = '教务快讯';
+    }
     ctx.state.data = {
-        title: '东南大学信息科学与工程学院 -- 学术活动',
+        title: '南京邮电大学 -- ' + info,
         link,
         item: out,
     };

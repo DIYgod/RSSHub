@@ -487,6 +487,9 @@ router.get('/scnu/cs/match', require('./routes/universities/scnu/cs/match'));
 // 中国科学院
 router.get('/cas/sim/academic', require('./routes/universities/cas/sim/academic'));
 
+// 南京邮电大学
+router.get('/njupt/jwc/:type?', require('./routes/universities/njupt/jwc'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 

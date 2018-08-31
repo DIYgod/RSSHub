@@ -2,9 +2,12 @@
 sidebar: auto
 ---
 
-<p align="center">
-<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
-</p>
+<!-- <img src="https://i.imgur.com/mT3BrHk.gif" alt="RSSHub" width="100"> -->
+<div class="rsshub">
+    <span class="circle circle1"></span>
+    <span class="circle circle2"></span>
+    <span class="circle circle3"></span>
+</div>
 <h1 align="center" class="logo">RSSHub</h1>
 
 > 🍰 万物皆可 RSS
@@ -17,16 +20,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Special Sponsors
 
-<p>
-<a href="https://rixcloud.app/rsshub" target="_blank">
-    <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
-</a>
-</p>
-<p>
-<a href="https://werss.app?utm_source=rsshub" target="_blank">
-    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
-</a>
-</p>
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> | <a href="https://j.youzan.com/ccPcrY" target="_blank"><img width="180px" src="https://i.imgur.com/FZtFAGz.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+
 
 ### Sponsors
 
@@ -40,7 +36,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Contributors
 
-[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+[![](https://opencollective.com/RSSHub/contributors.svg?width=740)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
 ::: tip 提示
 
@@ -166,9 +162,9 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`
 
-## App Store/Mac App Store
+### App Store/Mac App Store
 
-### 应用更新 <Author uid="cielpy"/>
+#### 应用更新 <Author uid="cielpy"/>
 
 举例: [https://rsshub.app/appstore/update/cn/id444934666](https://rsshub.app/appstore/update/cn/id444934666)
 
@@ -180,7 +176,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, App Store app id, 必选, 如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8, 则 id 为 `id444934666`
 
-### 价格更新（限免） <Author uid="HenryQW"/>
+#### 价格更新（限免） <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/appstore/price/cn/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
 
@@ -194,7 +190,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 -   id, App Store app id, 必选, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`
 
-### 内购价格更新（限免） <Author uid="HenryQW"/>
+#### 内购价格更新（限免） <Author uid="HenryQW"/>
 
 举例: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
 
@@ -409,6 +405,22 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 路由: `/cas/sim/academic`
 
 参数: 无
+
+### 南京邮电大学
+
+#### 教务处通知与新闻 <Author uid="shaoye"/>
+
+举例: [https://rsshub.app/njupt/jwc/notice](https://rsshub.app/njupt/jwc/notice)
+
+路由: `/njupt/jwc/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notice`
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notice   | news     |
 
 ## 传统媒体类
 
