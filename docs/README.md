@@ -386,6 +386,22 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+### 南京邮电大学
+
+#### 教务处通知与新闻 <Author uid="shaoye"/>
+
+举例: [https://rsshub.app/njupt/jwc/notice](https://rsshub.app/njupt/jwc/notice)
+
+路由: `/njupt/jwc/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notice`
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notice   | news     |
+
 ## 媒体类
 
 ### 央视新闻
@@ -403,22 +419,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 | 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
 | ----- | ----- | ----- | ---- | ------- | ---- | ---- |
 | china | world | video | tech | society | law  | ent  |
-
-### 南京邮电大学
-
-#### 教务处通知与新闻 <Author uid="shaoye"/>
-
-举例: [https://rsshub.app/njupt/jwc/notice](https://rsshub.app/njupt/jwc/notice)
-
-路由: `/njupt/jwc/:type?`
-
-参数:
-
--   type, 可选, 默认为 `notice`
-
-| 通知公告 | 教务快讯 |
-| -------- | -------- |
-| notice   | news     |
 
 ### 财新网
 
