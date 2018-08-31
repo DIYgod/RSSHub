@@ -2,12 +2,9 @@
 sidebar: auto
 ---
 
-<!-- <img src="https://i.imgur.com/mT3BrHk.gif" alt="RSSHub" width="100"> -->
-<div class="rsshub">
-    <span class="circle circle1"></span>
-    <span class="circle circle2"></span>
-    <span class="circle circle3"></span>
-</div>
+<p align="center">
+    <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+</p>
 <h1 align="center" class="logo">RSSHub</h1>
 
 > 🍰 万物皆可 RSS
