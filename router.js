@@ -434,6 +434,7 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
+router.get('/appstore/iap/:country/:id', require('./routes/appstore/in-app-purchase'));
 
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
@@ -470,8 +471,9 @@ router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 // 忧郁的弟弟
 router.get('/mygalgame', require('./routes/galgame/mygalgame'));
 
-// DPU
-router.get('/dpu/jiaowu/:type?', require('./routes/dpu/jiaowu'));
+// 大连工业大学
+router.get('/dpu/jiaowu/news/:type?', require('./routes/dpu/jiaowu/news'));
+router.get('/dpu/wlfw/news/:type?', require('./routes/dpu/wlfw/news'));
 
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/seu/radio/academic'));
@@ -487,6 +489,9 @@ router.get('/cas/sim/academic', require('./routes/cas/sim/academic'));
 
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
+
+// 果壳网
+router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
 // xkcd
 router.get('/xkcd/comic', require('./routes/xkcd/comic'));

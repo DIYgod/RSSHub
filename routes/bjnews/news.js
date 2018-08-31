@@ -6,31 +6,32 @@ module.exports = async (ctx) => {
     const res = await axios.get(url);
     const data = res.data;
     const $ = cheerio.load(data);
-    const list = $('#news_ul li');
-    const out = [];
+    const list = $('#news_ul li').get();
+
     const proList = [];
     const indexList = [];
-    let time, title, itemUrl;
-    for (let i = 0; i < Math.min(list.length, 10); i++) {
-        const $ = cheerio.load(list[i]);
-        time = $('p').text();
-        title = $('a').text();
-        itemUrl = $('a').attr('href');
-        const cache = await ctx.cache.get(itemUrl);
-        if (cache) {
-            out.push(JSON.parse(cache));
-            continue;
-        }
-        const single = {
-            title: title,
-            pubDate: new Date(time).toUTCString(),
-            link: itemUrl,
-            guid: itemUrl,
-        };
-        out.push(single);
-        proList.push(axios.get(itemUrl));
-        indexList.push(i);
-    }
+
+    const out = await Promise.all(
+        list.map(async (item, i) => {
+            const $ = cheerio.load(item);
+            const time = $('p').text();
+            const title = $('a').text();
+            const itemUrl = $('a').attr('href');
+            const cache = await ctx.cache.get(itemUrl);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+            const single = {
+                title,
+                pubDate: new Date(time).toUTCString(),
+                link: itemUrl,
+                guid: itemUrl,
+            };
+            proList.push(axios.get(itemUrl));
+            indexList.push(i);
+            return Promise.resolve(single);
+        })
+    );
     const responses = await axios.all(proList);
     for (let i = 0; i < responses.length; i++) {
         const res = responses[i];
