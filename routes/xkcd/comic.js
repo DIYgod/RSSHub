@@ -14,15 +14,14 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: 'xkcd',
         link: 'https://www.xkcd.com',
-        description: data.alt,
+        description: 'A webcomic of romance, sarcasm, math, and language.',
         item: [
             {
                 title: data.title,
-                description: data.alt,
+                description: `<img src="${data.img}"><br />${data.alt}`,
                 pubDate: data.year + data.month + data.day,
-                link: 'https://www.xkcd.com' + data.num,
+                link: 'https://www.xkcd.com/' + data.num,
                 guid: data.num,
-                itunes_item_image: data.img,
             },
         ],
     };
