@@ -19,14 +19,13 @@ module.exports = async (ctx) => {
     const item = list
         .map((i, e) => ({
             link,
-            guid:
-                `${titleTemp} ${$(e)
-                    .find('h3.we-lockup__title')
-                    .text()
-                    .trim()} is now ${$(e)
-                    .find('h5')
-                    .text()
-                    .trim()}` + Date.now(),
+            guid: `${titleTemp} ${$(e)
+                .find('h3.we-lockup__title')
+                .text()
+                .trim()} ${$(e)
+                .find('h5')
+                .text()
+                .trim()}`,
             title: `${titleTemp} ${$(e)
                 .find('h3.we-lockup__title')
                 .text()
