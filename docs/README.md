@@ -61,7 +61,7 @@ filter 选出想要的内容
 
 -   filter_description: 过滤描述
 
-举例: [https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件)
+举例: <https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件>
 
 filterout 去掉不要的内容
 
@@ -71,13 +71,13 @@ filterout 去掉不要的内容
 
 -   filterout_description: 过滤描述
 
-举例: [https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件)
+举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
 
 ### 条数限制
 
 可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS
 
-举例: bilibili 排行榜前 10 [https://rsshub.app/bilibili/ranking/0/3?limit=10](https://rsshub.app/bilibili/ranking/0/3?limit=10)
+举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
 ### 输出格式
 
@@ -85,17 +85,17 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 举例:
 
--   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
--   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
--   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
--   JSON Feed - [https://rsshub.app/jianshu/home.json](https://rsshub.app/jianshu/home.json)
--   和 filter 或其他 URL query 一起使用 [https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件](https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件)
+-   缺省 RSS 2.0 - <https://rsshub.app/jianshu/home>
+-   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
+-   Atom - <https://rsshub.app/jianshu/home.atom>
+-   JSON Feed - <https://rsshub.app/jianshu/home.json>
+-   和 filter 或其他 URL query 一起使用 <https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件>
 
 ## 程序更新类
 
 ### RSSHub <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/rsshub/rss](https://rsshub.app/rsshub/rss)
+举例: <https://rsshub.app/rsshub/rss>
 
 路由: `/rsshub/rss`
 
@@ -103,7 +103,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 ### MIUI <Author uid="Indexyz"/>
 
-举例: [https://rsshub.app/miui/aries/](https://rsshub.app/miui/aries/)
+举例: <https://rsshub.app/miui/aries/>
 
 路由: `/miui/:device/:type?`
 
@@ -119,7 +119,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 ### Firefox <Author uid="fengkx"/>
 
-举例: [https://rsshub.app/firefox/release/desktop](https://rsshub.app/firefox/release/desktop)
+举例: <https://rsshub.app/firefox/release/desktop>
 
 路由: `/firefox/release/:platform`
 
@@ -133,7 +133,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 ### 腾讯云移动直播 SDK <Author uid="cielpy"/>
 
-举例: [https://rsshub.app/qcloud/mlvb/changelog](https://rsshub.app/qcloud/mlvb/changelog)
+举例: <https://rsshub.app/qcloud/mlvb/changelog>
 
 路由: `/qcloud/mlvb/changelog`
 
@@ -141,7 +141,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 ### Bugly SDK <Author uid="cielpy"/>
 
-举例: [https://rsshub.app/bugly/changelog/1](https://rsshub.app/bugly/changelog/1)
+举例: <https://rsshub.app/bugly/changelog/1>
 
 路由: `/bugly/changelog/:platform`
 
@@ -151,7 +151,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 ### fir.im 应用 <Author uid="cielpy"/>
 
-举例: [https://rsshub.app/fir/update/xcz](https://rsshub.app/fir/update/xcz)
+举例: <https://rsshub.app/fir/update/xcz>
 
 路由: `/fir/update/:id`
 
@@ -163,7 +163,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 应用更新 <Author uid="cielpy"/>
 
-举例: [https://rsshub.app/appstore/update/cn/id444934666](https://rsshub.app/appstore/update/cn/id444934666)
+举例: <https://rsshub.app/appstore/update/cn/id444934666>
 
 路由: `/appstore/update/:country/:id`
 
@@ -175,7 +175,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 价格更新（限免） <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/appstore/price/cn/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
+举例: <https://rsshub.app/appstore/price/cn/mac/id1152443474>
 
 路由: `/appstore/price/:country/:type/:id`
 
@@ -189,7 +189,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 内购价格更新（限免） <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
+举例: <https://rsshub.app/appstore/iap/cn/id953286746>
 
 路由: `/appstore/iap/:country/:id`
 
@@ -202,7 +202,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 脚本更新 <Author uid="imlonghao"/>
 
-举例: [https://rsshub.app/greasyfork/zh-CN/bilibili.com](https://rsshub.app/greasyfork/zh-CN/bilibili.com)
+举例: <https://rsshub.app/greasyfork/zh-CN/bilibili.com>
 
 路由: `/greasyfork/:language/:domain?`
 
@@ -229,7 +229,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 学术讲座 <Author uid="simonsmh"/>
 
-举例: [https://rsshub.app/shmtu/events](https://rsshub.app/shmtu/events)
+举例: <https://rsshub.app/shmtu/events>
 
 路由: `/shmtu/events`
 
@@ -237,7 +237,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 通知公告 <Author uid="simonsmh"/>
 
-举例: [https://rsshub.app/shmtu/notes](https://rsshub.app/shmtu/notes)
+举例: <https://rsshub.app/shmtu/notes>
 
 路由: `/shmtu/notes`
 
@@ -245,7 +245,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 教务信息 <Author uid="simonsmh"/>
 
-举例: [https://rsshub.app/shmtu/jwc/1](https://rsshub.app/shmtu/jwc/1)
+举例: <https://rsshub.app/shmtu/jwc/1>
 
 路由: `/shmtu/jwc/:type`
 
@@ -257,7 +257,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 教务处通知 <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/swust/jwc/1](https://rsshub.app/swust/jwc/1)
+举例: <https://rsshub.app/swust/jwc/1>
 
 路由: `/swust/jwc/:type`
 
@@ -267,7 +267,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 计科学院通知 <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/swust/cs/1](https://rsshub.app/swust/cs/1)
+举例: <https://rsshub.app/swust/cs/1>
 
 路由: `swust/cs/:type`
 
@@ -279,7 +279,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 信科公告通知 <Author uid="Ir1d"/>
 
-举例: [https://rsshub.app/pku/eecs/0](https://rsshub.app/pku/eecs/0)
+举例: <https://rsshub.app/pku/eecs/0>
 
 路由: `/eecs/:type`
 
@@ -295,7 +295,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 教务处通知 <Author uid="fengkx"/>
 
-举例: [https://rsshub.app/scnu/jw](https://rsshub.app/scnu/jw)
+举例: <https://rsshub.app/scnu/jw>
 
 路由: `/scnu/jw`
 
@@ -303,7 +303,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 图书馆通知 <Author uid="fengkx"/>
 
-举例: [https://rsshub.app/scnu/library](https://rsshub.app/scnu/library)
+举例: <https://rsshub.app/scnu/library>
 
 路由: `/scnu/library`
 
@@ -311,7 +311,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 计算机学院竞赛通知 <Author uid="fengkx"/>
 
-举例: [https://rsshub.app/scnu/cs/match](https://rsshub.app/scnu/cs/match)
+举例: <https://rsshub.app/scnu/cs/match>
 
 路由: `/scnu/cs/match`
 
@@ -321,7 +321,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 教务处通知 <Author uid="Chingyat"/>
 
-举例: [https://rsshub.app/ju/jwc/all](https://rsshub.app/ju/jwc/all)
+举例: <https://rsshub.app/ju/jwc/all>
 
 路由: `/ju/jwc/:type?`
 
@@ -341,7 +341,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 教务处新闻 <Author uid="xu42"/>
 
-举例: [https://rsshub.app/dpu/jiaowu/news/2](https://rsshub.app/dpu/jiaowu/news/2)
+举例: <https://rsshub.app/dpu/jiaowu/news/2>
 
 路由: `/dpu/jiaowu/news/:type?`
 
@@ -355,7 +355,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 网络服务新闻 <Author uid="xu42"/>
 
-举例: [https://rsshub.app/dpu/wlfw/news/2](https://rsshub.app/dpu/wlfw/news/2)
+举例: <https://rsshub.app/dpu/wlfw/news/2>
 
 路由: `/dpu/wlfw/news/:type?`
 
@@ -369,7 +369,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 信息科学与工程学院学术活动 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/seu/radio/academic](https://rsshub.app/seu/radio/academic)
+举例: <https://rsshub.app/seu/radio/academic>
 
 路由: `/seu/radio/academic`
 
@@ -379,7 +379,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 信息科技与技术学院活动 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/shanghaitech/sist/activity](https://rsshub.app/shanghaitech/sist/activity)
+举例: <https://rsshub.app/shanghaitech/sist/activity>
 
 路由: `/shanghaitech/sist/activity`
 
@@ -389,7 +389,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 电子信息与电气工程学院学术动态 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/sjtu/seiee/academic](https://rsshub.app/sjtu/seiee/academic)
+举例: <https://rsshub.app/sjtu/seiee/academic>
 
 路由: `/sjtu/seiee/academic`
 
@@ -399,7 +399,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 上海微系统与信息技术研究所学术活动 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/cas/sim/academic](https://rsshub.app/cas/sim/academic)
+举例: <https://rsshub.app/cas/sim/academic>
 
 路由: `/cas/sim/academic`
 
@@ -409,7 +409,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 教务处通知与新闻 <Author uid="shaoye"/>
 
-举例: [https://rsshub.app/njupt/jwc/notice](https://rsshub.app/njupt/jwc/notice)
+举例: <https://rsshub.app/njupt/jwc/notice>
 
 路由: `/njupt/jwc/:type?`
 
@@ -427,7 +427,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 专题 <Author uid="idealclover"/>
 
-举例: [https://rsshub.app/cctv/world](https://rsshub.app/cctv/world)
+举例: <https://rsshub.app/cctv/world>
 
 路由: `/cctv/:category`
 
@@ -445,7 +445,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 新闻分类 <Author uid="idealclover"/>
 
-举例: [https://rsshub.app/caixin/finance/regulation](https://rsshub.app/caixin/finance/regulation)
+举例: <https://rsshub.app/caixin/finance/regulation>
 
 路由: `/caixin/:column/:category`
 
@@ -477,7 +477,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 新闻分类 <Author uid="ranpox"/>
 
-举例: [https://rsshub.app/infzm/5](https://rsshub.app/infzm/5)
+举例: <https://rsshub.app/infzm/5>
 
 路由: `/infzm/:id`
 
@@ -499,7 +499,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 新闻早报 <Author uid="yangkghjh"/>
 
-举例: [https://rsshub.app/nytimes/morning_post](https://rsshub.app/nytimes/morning_post)
+举例: <https://rsshub.app/nytimes/morning_post>
 
 路由: `/nytimes/morning_post`
 
@@ -509,13 +509,43 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 栏目 <Author uid="zhboner"/>
 
-举例: [https://rsshub.app/bjnews/realtime](https://rsshub.app/bjnews/realtime)
+举例: <https://rsshub.app/bjnews/realtime>
 
 路由: `/bjnews/:category`
 
 参数:
 
 -   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
+
+### 联合早报
+
+#### 即时新闻 <Author uid="lengthmin"/>
+
+举例: <https://rsshub.app/zaobao/realtime/china>
+
+路由: `/zaobao/realtime/:type?`
+
+参数:
+
+type，分类, 缺省为中港台
+
+| 中港台 | 新加坡    | 国际  | 财经     |
+| ------ | --------- | ----- | -------- |
+| china  | singapore | world | zfinance |
+
+#### 新闻 <Author uid="lengthmin"/>
+
+举例: <https://rsshub.app/zaobao/znews/greater-china>
+
+路由: `/zaobao/znews/:type?`
+
+参数:
+
+type，分类, 缺省为中港台
+
+| 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
+| ------------- | --------- | ------ | ------------- | ------ |
+| greater-china | singapore | sea    | international | sports |
 
 ## 预报预警类
 
@@ -525,7 +555,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 杭州市 <Author uid="znhocn"/>
 
-举例: [https://rsshub.app/tingshuitz/hangzhou](https://rsshub.app/tingshuitz/hangzhou)
+举例: <https://rsshub.app/tingshuitz/hangzhou>
 
 路由: `/tingshuitz/hangzhou`
 
@@ -533,7 +563,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 萧山区 <Author uid="znhocn"/>
 
-举例: [https://rsshub.app/tingshuitz/xiaoshan](https://rsshub.app/tingshuitz/xiaoshan)
+举例: <https://rsshub.app/tingshuitz/xiaoshan>
 
 路由: `/tingshuitz/xiaoshan`
 
@@ -541,7 +571,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 大连市 <Author uid="znhocn"/>
 
-举例: [https://rsshub.app/tingshuitz/dalian](https://rsshub.app/tingshuitz/dalian)
+举例: <https://rsshub.app/tingshuitz/dalian>
 
 路由: `/tingshuitz/dalian`
 
@@ -588,7 +618,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 展览信息 <Author uid="sinchang"/>
 
-举例: [https://rsshub.app/imuseum/shanghai/all](https://rsshub.app/imuseum/shanghai/all)
+举例: <https://rsshub.app/imuseum/shanghai/all>
 
 路由: `/imuseum/:city/:type`
 
@@ -607,7 +637,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票, 通常包含 6 个结果. 出行日期将由 Hopper 算法定义, 可能是明天也可能是 10 个月后.
 
-举例: 伦敦希思罗 &#9992; 北京首都国际 [https://rsshub.app/hopper/1/LHR/PEK](https://rsshub.app/hopper/1/LHR/PEK)
+举例: 伦敦希思罗 &#9992; 北京首都国际 <https://rsshub.app/hopper/1/LHR/PEK>
 
 路由: `/hopper/:lowestOnly/:from/:to?`
 
@@ -622,7 +652,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 游记 <Author uid="sinchang"/>
 
-举例: [https://rsshub.app/mafengwo/note/hot](https://rsshub.app/mafengwo/note/hot)
+举例: <https://rsshub.app/mafengwo/note/hot>
 
 路由: `/mafengwo/note/:type`
 
@@ -634,7 +664,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 通知公告 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/namoc/announcement](https://rsshub.app/namoc/announcement)
+举例: <https://rsshub.app/namoc/announcement>
 
 路由: `/namoc/announcement`
 
@@ -642,7 +672,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 新闻 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/namoc/news](https://rsshub.app/namoc/news)
+举例: <https://rsshub.app/namoc/news>
 
 路由: `/namoc/news`
 
@@ -650,7 +680,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 媒体联报 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/namoc/media](https://rsshub.app/namoc/media)
+举例: <https://rsshub.app/namoc/media>
 
 路由: `/namoc/media`
 
@@ -658,7 +688,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 展览预告 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/namoc/exhibition](https://rsshub.app/namoc/exhibition)
+举例: <https://rsshub.app/namoc/exhibition>
 
 路由: `/namoc/exhibition`
 
@@ -666,7 +696,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 焦点专题 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/namoc/specials](https://rsshub.app/namoc/specials)
+举例: <https://rsshub.app/namoc/specials>
 
 路由: `/namoc/specials`
 
@@ -676,7 +706,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 ### 笔趣阁 <Author uid="jjeejj"/>
 
-举例: [https://rsshub.app/novel/biquge/52_52542](https://rsshub.app/novel/biquge/52_52542)
+举例: <https://rsshub.app/novel/biquge/52_52542>
 
 路由: `/novel/biquge/:id`
 
@@ -693,7 +723,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 ### UU 看书 <Author uid="jacky2001114"/>
 
-举例: [https://rsshub.app/novel/uukanshu/49621](https://rsshub.app/novel/uukanshu/49621)
+举例: <https://rsshub.app/novel/uukanshu/49621>
 
 路由: `/novel/uukanshu/:id`
 
@@ -705,7 +735,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 ### 文学迷 <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/novel/wenxuemi/6/6144](https://rsshub.app/novel/wenxuemi/6/6144)
+举例: <https://rsshub.app/novel/wenxuemi/6/6144>
 
 路由: `/novel/wenxuemi/:id1/:id2`
 
@@ -719,7 +749,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 章节 <Author uid="Chingyat"/>
 
-举例: [https://rsshub.app/qidian/chapter/1010400217](https://rsshub.app/qidian/chapter/1010400217)
+举例: <https://rsshub.app/qidian/chapter/1010400217>
 
 路由: `/qidian/chapter/:id`
 
@@ -729,7 +759,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 讨论区 <Author uid="Chingyat"/>
 
-举例: [https://rsshub.app/qidian/forum/1010400217](https://rsshub.app/qidian/forum/1010400217)
+举例: <https://rsshub.app/qidian/forum/1010400217>
 
 路由: `/qidian/forum/:id`
 
@@ -743,7 +773,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 分类 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/juejin/category/frontend](https://rsshub.app/juejin/category/frontend)
+举例: <https://rsshub.app/juejin/category/frontend>
 
 路由: `/juejin/category/:category`
 
@@ -757,7 +787,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 标签 <Author uid="isheng5"/>
 
-举例: [https://rsshub.app/juejin/tag/架构](https://rsshub.app/juejin/tag/架构)
+举例: <https://rsshub.app/juejin/tag/架构>
 
 路由: `/juejin/tag/:tag`
 
@@ -767,7 +797,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 热门 <Author uid="moaix"/>
 
-举例: [https://rsshub.app/juejin/trending/ios/monthly](https://rsshub.app/juejin/trending/ios/monthly)
+举例: <https://rsshub.app/juejin/trending/ios/monthly>
 
 路由: `/juejin/trending/:category/:type`
 
@@ -801,7 +831,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 周报 <Author uid="csi0n"/>
 
-举例: [https://rsshub.app/dockone/weekly](https://rsshub.app/dockone/weekly)
+举例: <https://rsshub.app/dockone/weekly>
 
 路由: `/dockone/weekly`
 
@@ -811,13 +841,13 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 今天头条 <Author uid="jjeejj"/>
 
-举例: [https://rsshub.app/toutiao/today](https://rsshub.app/toutiao/today)
+举例: <https://rsshub.app/toutiao/today>
 
 路由: `/toutiao/today`
 
 #### 独家号 <Author uid="jjeejj"/>
 
-举例: [https://rsshub.app/toutiao/user/140544](https://rsshub.app/toutiao/user/140544)
+举例: <https://rsshub.app/toutiao/user/140544>
 
 路由: `/toutiao/user/:id`
 
@@ -829,7 +859,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 最热/最新主题 <Author uid="WhiteWorld"/>
 
-举例: [https://rsshub.app/v2ex/topics/latest](https://rsshub.app/v2ex/topics/latest)
+举例: <https://rsshub.app/v2ex/topics/latest>
 
 路由: `/v2ex/topics/:type`
 
@@ -853,7 +883,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 用户仓库 <Author uid="dragon-yuan"/>
 
-举例: [https://rsshub.app/github/repos/DIYgod](https://rsshub.app/github/repos/DIYgod)
+举例: <https://rsshub.app/github/repos/DIYgod>
 
 路由: `/github/repos/:user`
 
@@ -865,9 +895,9 @@ GitHub 官方也提供了一些 RSS:
 
 举例:
 
-[https://rsshub.app/github/trending/daily](https://rsshub.app/github/trending/daily)
+<https://rsshub.app/github/trending/daily>
 
-[https://rsshub.app/github/trending/daily/javascript](https://rsshub.app/github/trending/daily/javascript)
+<https://rsshub.app/github/trending/daily/javascript>
 
 路由: `/github/trending/:since/:language?`
 
@@ -878,7 +908,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 仓库 Issue <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/github/issue/DIYgod/RSSHub](https://rsshub.app/github/issue/DIYgod/RSSHub)
+举例: <https://rsshub.app/github/issue/DIYgod/RSSHub>
 
 路由: `/github/issue/:user/:repo`
 
@@ -889,7 +919,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 用户 Followers <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/github/user/followers/HenryQW](https://rsshub.app/github/user/followers/HenryQW)
+举例: <https://rsshub.app/github/user/followers/HenryQW>
 
 路由: `/github/user/followers/:user`
 
@@ -899,7 +929,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 仓库 Stars <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/github/stars/DIYgod/RSSHub](https://rsshub.app/github/stars/DIYgod/RSSHub)
+举例: <https://rsshub.app/github/stars/DIYgod/RSSHub>
 
 路由: `/github/stars/:user/:repo`
 
@@ -912,7 +942,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 资讯 <Author uid="tgly307"/>
 
-举例: [https://rsshub.app/oschina/news](https://rsshub.app/oschina/news)
+举例: <https://rsshub.app/oschina/news>
 
 路由: `/oschina/news`
 
@@ -922,7 +952,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### Explore <Author uid="imlonghao"/>
 
-举例: [https://rsshub.app/gitlab/explore/trending](https://rsshub.app/gitlab/explore/trending)
+举例: <https://rsshub.app/gitlab/explore/trending>
 
 路由: `/gitlab/explore/:type`
 
@@ -940,7 +970,7 @@ GitHub 官方也提供了一些 RSS:
 
 > 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
-举例: [https://rsshub.app/geektime/column/48](https://rsshub.app/geektime/column/48)
+举例: <https://rsshub.app/geektime/column/48>
 
 路由: `/geektime/column/:cid`
 
@@ -954,7 +984,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 直播开播 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/live/room/3](https://rsshub.app/bilibili/live/room/3)
+举例: <https://rsshub.app/bilibili/live/room/3>
 
 路由: `bilibili/live/room/:roomID`
 
@@ -964,7 +994,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 直播搜索 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/live/search/编程/online](https://rsshub.app/bilibili/live/search/编程/online)
+举例: <https://rsshub.app/bilibili/live/search/编程/online>
 
 路由: `bilibili/live/search/:key/:order`
 
@@ -981,7 +1011,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-举例: [https://rsshub.app/bilibili/live/area/143/online](https://rsshub.app/bilibili/live/area/143/online)
+举例: <https://rsshub.app/bilibili/live/area/143/online>
 
 路由: `bilibili/live/area/:areaID/:order`
 
@@ -994,7 +1024,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 直播间开播 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/douyu/room/24422](https://rsshub.app/douyu/room/24422)
+举例: <https://rsshub.app/douyu/room/24422>
 
 路由: `/douyu/room/:id`
 
@@ -1006,7 +1036,7 @@ GitHub 官方也提供了一些 RSS:
 
 #### 直播间开播下播 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/panda/room/10300](https://rsshub.app/panda/room/10300)
+举例: <https://rsshub.app/panda/room/10300>
 
 路由: `/panda/room/:id`
 
@@ -1018,7 +1048,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 番剧 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/bangumi/21680](https://rsshub.app/bilibili/bangumi/21680)
+举例: <https://rsshub.app/bilibili/bangumi/21680>
 
 路由: `/bilibili/bangumi/:seasonid`
 
@@ -1028,7 +1058,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主投稿 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/user/video/2267573](https://rsshub.app/bilibili/user/video/2267573)
+举例: <https://rsshub.app/bilibili/user/video/2267573>
 
 路由: `/bilibili/user/video/:uid`
 
@@ -1038,7 +1068,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主专栏 <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/bilibili/user/article/334958638](https://rsshub.app/bilibili/user/article/334958638)
+举例: <https://rsshub.app/bilibili/user/article/334958638>
 
 路由: `/bilibili/user/article/:uid`
 
@@ -1048,7 +1078,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主动态 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/user/dynamic/2267573](https://rsshub.app/bilibili/user/dynamic/2267573)
+举例: <https://rsshub.app/bilibili/user/dynamic/2267573>
 
 路由: `/bilibili/user/dynamic/:uid`
 
@@ -1058,7 +1088,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主频道 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/bilibili/channel/142821407/23390](https://rsshub.app/bilibili/channel/142821407/23390)
+举例: <https://rsshub.app/bilibili/channel/142821407/23390>
 
 路由: `/bilibili/channel/:uid/:cid`
 
@@ -1070,7 +1100,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主默认收藏夹 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/user/fav/2267573](https://rsshub.app/bilibili/user/fav/2267573)
+举例: <https://rsshub.app/bilibili/user/fav/2267573>
 
 路由: `/bilibili/user/fav/:uid`
 
@@ -1080,7 +1110,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主非默认收藏夹 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/fav/756508/50948568](https://rsshub.app/bilibili/fav/756508/50948568)
+举例: <https://rsshub.app/bilibili/fav/756508/50948568>
 
 路由: `/bilibili/fav/:uid/:fid`
 
@@ -1092,7 +1122,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主投币视频 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/user/coin/2267573](https://rsshub.app/bilibili/user/coin/2267573)
+举例: <https://rsshub.app/bilibili/user/coin/2267573>
 
 路由: `/bilibili/user/coin/:uid`
 
@@ -1102,7 +1132,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主粉丝 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/user/followers/2267573](https://rsshub.app/bilibili/user/followers/2267573)
+举例: <https://rsshub.app/bilibili/user/followers/2267573>
 
 路由: `/bilibili/user/followers/:uid`
 
@@ -1112,7 +1142,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### UP 主关注用户 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/user/followings/2267573](https://rsshub.app/bilibili/user/followings/2267573)
+举例: <https://rsshub.app/bilibili/user/followings/2267573>
 
 路由: `/bilibili/user/followings/:uid`
 
@@ -1122,7 +1152,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分区视频 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/partion/33](https://rsshub.app/bilibili/partion/33)
+举例: <https://rsshub.app/bilibili/partion/33>
 
 路由: `/bilibili/partion/:tid`
 
@@ -1228,7 +1258,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分区视频排行榜 <Author uid="lengthmin"/>
 
-举例: [https://rsshub.app/bilibili/partion/ranking/171/3](https://rsshub.app/bilibili/partion/ranking/171/3)
+举例: <https://rsshub.app/bilibili/partion/ranking/171/3>
 
 路由: `/bilibili/partion/ranking/:tid/:days?`
 
@@ -1240,7 +1270,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 视频评论 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/video/reply/21669336](https://rsshub.app/bilibili/video/reply/21669336)
+举例: <https://rsshub.app/bilibili/video/reply/21669336>
 
 路由: `/bilibili/video/reply/:aid`
 
@@ -1250,7 +1280,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### link 公告 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/link/news/live](https://rsshub.app/bilibili/link/news/live)
+举例: <https://rsshub.app/bilibili/link/news/live>
 
 路由: `/bilibili/link/news/:product`
 
@@ -1260,31 +1290,31 @@ GitHub 官方也提供了一些 RSS:
 
 ### 直播开播 <Author uid="Qixingchen"/>
 
-见 [#哔哩哔哩直播](#哔哩哔哩直播)
+见 <#哔哩哔哩直播>
 
 ### 直播搜索 <Author uid="Qixingchen"/>
 
-见 [#哔哩哔哩直播](#哔哩哔哩直播)
+见 <#哔哩哔哩直播>
 
 ### 直播分区 <Author uid="Qixingchen"/>
 
-见 [#哔哩哔哩直播](#哔哩哔哩直播)
+见 <#哔哩哔哩直播>
 
 ### 主站话题列表 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/blackboard](https://rsshub.app/bilibili/blackboard)
+举例: <https://rsshub.app/bilibili/blackboard>
 
 路由: `bilibili/blackboard`
 
 ### 会员购新品上架 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/mall/new](https://rsshub.app/bilibili/mall/new)
+举例: <https://rsshub.app/bilibili/mall/new>
 
 路由: `bilibili/mall/new`
 
 ### 会员购作品 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/mall/ip/1_4494](https://rsshub.app/bilibili/mall/ip/1_4494)
+举例: <https://rsshub.app/bilibili/mall/ip/1_4494>
 
 路由: `/bilibili/mall/ip/:id`
 
@@ -1294,7 +1324,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 排行榜 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/bilibili/ranking/0/3](https://rsshub.app/bilibili/ranking/0/3)
+举例: <https://rsshub.app/bilibili/ranking/0/3>
 
 路由: `/bilibili/ranking/:rid?/:day?`
 
@@ -1310,7 +1340,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 话题(频道/标签) <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/bilibili/topic/2233](https://rsshub.app/bilibili/topic/2233)
+举例: <https://rsshub.app/bilibili/topic/2233>
 
 路由: `/bilibili/topic/:topic`
 
@@ -1322,7 +1352,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 放送列表 <Author uid="hufan-akari"/>
 
-举例: [https://rsshub.app/bangumi/calendar/today](https://rsshub.app/bangumi/calendar/today)
+举例: <https://rsshub.app/bangumi/calendar/today>
 
 路由: `/bangumi/calendar/today`
 
@@ -1384,7 +1414,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 博主 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/weibo/user/3306934123](https://rsshub.app/weibo/user/3306934123)
+举例: <https://rsshub.app/weibo/user/3306934123>
 
 路由: `/weibo/user/:uid`
 
@@ -1398,13 +1428,13 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-举例: [https://rsshub.app/weibo/user2/3306934123](https://rsshub.app/weibo/user2/3306934123)
+举例: <https://rsshub.app/weibo/user2/3306934123>
 
 路由: `/weibo/user2/:uid`
 
 ### 关键词 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/weibo/keyword/DIYgod](https://rsshub.app/weibo/keyword/DIYgod)
+举例: <https://rsshub.app/weibo/keyword/DIYgod>
 
 路由: `/weibo/keyword/:keyword`
 
@@ -1416,7 +1446,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 帖子列表 <Author uid="u3u"/>
 
-举例: [https://rsshub.app/tieba/forum/女图](https://rsshub.app/tieba/forum/女图)
+举例: <https://rsshub.app/tieba/forum/女图>
 
 路由: `/tieba/forum/:kw`
 
@@ -1426,7 +1456,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 精品帖子 <Author uid="u3u"/>
 
-举例: [https://rsshub.app/tieba/forum/good/女图](https://rsshub.app/tieba/forum/good/女图)
+举例: <https://rsshub.app/tieba/forum/good/女图>
 
 路由: `/tieba/forum/good/:kw/:cid?`
 
@@ -1438,7 +1468,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 帖子动态 <Author uid="u3u"/>
 
-举例: [https://rsshub.app/tieba/post/5853240586](https://rsshub.app/tieba/post/5853240586)
+举例: <https://rsshub.app/tieba/post/5853240586>
 
 路由: `/tieba/post/:id`
 
@@ -1448,7 +1478,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 楼主动态 <Author uid="u3u"/>
 
-举例: [https://rsshub.app/tieba/post/lz/5853240586](https://rsshub.app/tieba/post/lz/5853240586)
+举例: <https://rsshub.app/tieba/post/lz/5853240586>
 
 路由: `/tieba/post/lz/:id`
 
@@ -1460,7 +1490,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 主题-精选 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0)
+举例: <https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0>
 
 路由: `/jike/topic/:id`
 
@@ -1470,7 +1500,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 主题-广场 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0](https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0)
+举例: <https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0>
 
 路由: `/jike/topic/square/:id`
 
@@ -1480,7 +1510,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户动态 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3](https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3)
+举例: <https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3>
 
 路由: `/jike/user/:id`
 
@@ -1498,7 +1528,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 公众号（即刻来源） <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jike/topic/584b8ac671a288001154a115](https://rsshub.app/jike/topic/584b8ac671a288001154a115)
+举例: <https://rsshub.app/jike/topic/584b8ac671a288001154a115>
 
 路由: `/jike/topic/:id`
 
@@ -1508,7 +1538,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 公众号（瓦斯来源） <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace](https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace)
+举例: <https://rsshub.app/wechat/wasi/5b5adaf358e5c4583338eace>
 
 路由: `/wechat/wasi/:id`
 
@@ -1520,7 +1550,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 歌单歌曲 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/ncm/playlist/35798529](https://rsshub.app/ncm/playlist/35798529)
+举例: <https://rsshub.app/ncm/playlist/35798529>
 
 路由: `/ncm/playlist/:id`
 
@@ -1530,7 +1560,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户歌单 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/ncm/user/playlist/45441555](https://rsshub.app/ncm/user/playlist/45441555)
+举例: <https://rsshub.app/ncm/user/playlist/45441555>
 
 路由: `/ncm/user/playlist/:uid`
 
@@ -1540,7 +1570,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 歌手专辑 <Author uid="metowolf"/>
 
-举例: [https://rsshub.app/ncm/artist/2116](https://rsshub.app/ncm/artist/2116)
+举例: <https://rsshub.app/ncm/artist/2116>
 
 路由: `/ncm/artist/:id`
 
@@ -1550,7 +1580,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 电台节目 <Author uid="hufan-akari"/>
 
-举例: [https://rsshub.app/ncm/djradio/347317067](https://rsshub.app/ncm/djradio/347317067)
+举例: <https://rsshub.app/ncm/djradio/347317067>
 
 路由: `/ncm/djradio/:id`
 
@@ -1562,7 +1592,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 首页 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
+举例: <https://rsshub.app/jianshu/home>
 
 路由: `/jianshu/home`
 
@@ -1570,7 +1600,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 7 日热门 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jianshu/trending/weekly](https://rsshub.app/jianshu/trending/weekly)
+举例: <https://rsshub.app/jianshu/trending/weekly>
 
 路由: `/jianshu/trending/weekly`
 
@@ -1578,7 +1608,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 30 日热门 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jianshu/trending/monthly](https://rsshub.app/jianshu/trending/monthly)
+举例: <https://rsshub.app/jianshu/trending/monthly>
 
 路由: `/jianshu/trending/monthly`
 
@@ -1586,7 +1616,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 专题 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jianshu/collection/xYuZYD](https://rsshub.app/jianshu/collection/xYuZYD)
+举例: <https://rsshub.app/jianshu/collection/xYuZYD>
 
 路由: `/jianshu/collection/:id`
 
@@ -1596,7 +1626,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 作者 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/jianshu/user/yZq3ZV](https://rsshub.app/jianshu/user/yZq3ZV)
+举例: <https://rsshub.app/jianshu/user/yZq3ZV>
 
 路由: `/jianshu/user/:id`
 
@@ -1614,7 +1644,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 收藏夹 <Author uid="huruji"/>
 
-举例: [https://rsshub.app/zhihu/collection/26444956](https://rsshub.app/zhihu/collection/26444956)
+举例: <https://rsshub.app/zhihu/collection/26444956>
 
 路由: `/zhihu/collection/:id`
 
@@ -1624,7 +1654,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户动态 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/zhihu/people/activities/diygod](https://rsshub.app/zhihu/people/activities/diygod)
+举例: <https://rsshub.app/zhihu/people/activities/diygod>
 
 路由: `/zhihu/people/activities/:id`
 
@@ -1634,7 +1664,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户回答 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/zhihu/people/answers/diygod](https://rsshub.app/zhihu/people/answers/diygod)
+举例: <https://rsshub.app/zhihu/people/answers/diygod>
 
 路由: `/zhihu/people/answers/:id`
 
@@ -1644,7 +1674,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 专栏 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/zhihu/zhuanlan/googledevelopers](https://rsshub.app/zhihu/zhuanlan/googledevelopers)
+举例: <https://rsshub.app/zhihu/zhuanlan/googledevelopers>
 
 路由: `/zhihu/zhuanlan/:id`
 
@@ -1654,15 +1684,21 @@ GitHub 官方也提供了一些 RSS:
 
 ### 知乎日报 <Author uid="DHPO"/>
 
-举例: [https://rsshub.app/zhihu/daily](https://rsshub.app/zhihu/daily)
+举例: <https://rsshub.app/zhihu/daily>
 
 路由: `/zhihu/daily`
+
+### 知乎热榜 <Author uid="Andiedie"/>
+
+举例: <https://rsshub.app/zhihu/hotlist>
+
+路由: `/zhihu/hotlist`
 
 ## 自如
 
 ### 房源 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/ziroom/room/sh/1/2/五角场](https://rsshub.app/ziroom/room/sh/1/2/五角场)
+举例: <https://rsshub.app/ziroom/room/sh/1/2/五角场>
 
 路由: `/ziroom/room/:city/:iswhole/:room/:keyword`
 
@@ -1684,7 +1720,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-举例: [https://rsshub.app/express/youzhengguoji/CV054432809US](https://rsshub.app/express/youzhengguoji/CV054432809US)
+举例: <https://rsshub.app/express/youzhengguoji/CV054432809US>
 
 路由: `/express/:company/:number`
 
@@ -1704,13 +1740,13 @@ GitHub 官方也提供了一些 RSS:
 
 ### 首页（最新） <Author uid="gee1k"/>
 
-举例: [https://rsshub.app/mzitu](https://rsshub.app/mzitu)
+举例: <https://rsshub.app/mzitu>
 
 路由: `/mzitu/`
 
 ### 分类 <Author uid="gee1k"/>
 
-举例: [https://rsshub.app/mzitu/category/hot](https://rsshub.app/mzitu/category/hot)
+举例: <https://rsshub.app/mzitu/category/hot>
 
 路由: `/mzitu/category/:category`
 
@@ -1724,13 +1760,13 @@ GitHub 官方也提供了一些 RSS:
 
 ### 所有专题 <Author uid="gee1k"/>
 
-举例: [https://rsshub.app/mzitu/tags](https://rsshub.app/mzitu/tags)
+举例: <https://rsshub.app/mzitu/tags>
 
 路由: `/mzitu/tags`
 
 ### 专题详情 <Author uid="gee1k"/>
 
-举例: [https://rsshub.app/mzitu/tag/shishen](https://rsshub.app/mzitu/tag/shishen)
+举例: <https://rsshub.app/mzitu/tag/shishen>
 
 路由: `/mzitu/tag/:tag`
 
@@ -1740,7 +1776,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 详情 <Author uid="gee1k"/>
 
-举例: [https://rsshub.app/mzitu/post/129452](https://rsshub.app/mzitu/post/129452)
+举例: <https://rsshub.app/mzitu/post/129452>
 
 路由: `/mzitu/post/:id`
 
@@ -1752,7 +1788,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户收藏 <Author uid="EYHN"/>
 
-举例: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
+举例: <https://rsshub.app/pixiv/user/bookmarks/15288095>
 
 路由: `/pixiv/user/bookmarks/:id`
 
@@ -1762,7 +1798,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户动态 <Author uid="EYHN"/>
 
-举例: [https://rsshub.app/pixiv/user/11](https://rsshub.app/pixiv/user/11)
+举例: <https://rsshub.app/pixiv/user/11>
 
 路由: `/pixiv/user/:id`
 
@@ -1772,7 +1808,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 排行榜 <Author uid="EYHN"/>
 
-举例: [https://rsshub.app/pixiv/ranking/week](https://rsshub.app/pixiv/ranking/week)
+举例: <https://rsshub.app/pixiv/ranking/week>
 
 路由: `/pixiv/ranking/:mode/:date?`
 
@@ -1794,7 +1830,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 正在上映的电影 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/douban/movie/playing](https://rsshub.app/douban/movie/playing)
+举例: <https://rsshub.app/douban/movie/playing>
 
 路由: `/douban/movie/playing`
 
@@ -1802,7 +1838,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 正在上映的高分电影 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/douban/movie/playing/7.5](https://rsshub.app/douban/movie/playing/7.5)
+举例: <https://rsshub.app/douban/movie/playing/7.5>
 
 路由
 
@@ -1818,7 +1854,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 即将上映的电影 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/douban/movie/later](https://rsshub.app/douban/movie/later)
+举例: <https://rsshub.app/douban/movie/later>
 
 路由: `/douban/movie/later`
 
@@ -1826,7 +1862,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 北美票房榜 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/douban/movie/ustop](https://rsshub.app/douban/movie/ustop)
+举例: <https://rsshub.app/douban/movie/ustop>
 
 路由: `/douban/movie/ustop`
 
@@ -1834,7 +1870,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 豆瓣小组 <Author uid="derycktse"/>
 
-举例: [https://rsshub.app/douban/group/camera](https://rsshub.app/douban/group/camera)
+举例: <https://rsshub.app/douban/group/camera>
 
 路由: `/douban/group/:groupid`
 
@@ -1844,21 +1880,33 @@ GitHub 官方也提供了一些 RSS:
 
 ### 浏览发现 <Author uid="clarkzsd"/>
 
-举例: [https://rsshub.app/douban/explore](https://rsshub.app/douban/explore)
+举例: <https://rsshub.app/douban/explore>
 
 路由: `/douban/explore`
+
+### 新书速递 <Author uid="fengkx"/>
+
+举例：<https://rsshub.app/douban/book/latest>
+
+路由：`/douban/book/latest`
+
+### 最新增加的音乐 <Author uid="fengkx"/>
+
+举例：<https://rsshub.app/douban/music/latest>
+
+路由：`/douban/music/latest`
 
 ## 煎蛋
 
 ### 无聊图 <Author uid="Xuanwo"/>
 
-举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
+举例: <https://rsshub.app/jandan/pic>
 
 路由: `/jandan/:sub_model`
 
 ### 妹子图 <Author uid="kobemtl"/>
 
-举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
+举例: <https://rsshub.app/jandan/ooxx>
 
 路由: `/jandan/:sub_model`
 
@@ -1868,7 +1916,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 图卦 <Author uid="tgly307"/>
 
-举例: [https://rsshub.app/dapenti/tugua](https://rsshub.app/dapenti/tugua)
+举例: <https://rsshub.app/dapenti/tugua>
 
 路由: `/dapenti/tugua`
 
@@ -1878,7 +1926,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 吐槽新帖 <Author uid="Qixingchen"/>
 
-举例: [https://rsshub.app/tucaoqq/post/28564/CdRI0728](https://rsshub.app/tucaoqq/post/28564/CdRI0728)
+举例: <https://rsshub.app/tucaoqq/post/28564/CdRI0728>
 
 路由: `/tucaoqq/post/:project/:key`
 
@@ -1892,7 +1940,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 关键词 <Author uid="uni-zheng"/>
 
-举例: [https://rsshub.app/jinritoutiao/keyword/ai](https://rsshub.app/jinritoutiao/keyword/ai)
+举例: <https://rsshub.app/jinritoutiao/keyword/ai>
 
 路由: `/jinritoutiao/keyword/:keyword`
 
@@ -1904,7 +1952,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 评论 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/disqus/posts/diygod-me](https://rsshub.app/disqus/posts/diygod-me)
+举例: <https://rsshub.app/disqus/posts/diygod-me>
 
 路由: `/disqus/posts/:forum`
 
@@ -1916,7 +1964,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/twitter/user/DIYgod](https://rsshub.app/twitter/user/DIYgod)
+举例: <https://rsshub.app/twitter/user/DIYgod>
 
 路由: `/twitter/user/:id`
 
@@ -1928,7 +1976,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/instagram/user/diygod](https://rsshub.app/instagram/user/diygod)
+举例: <https://rsshub.app/instagram/user/diygod>
 
 路由: `/instagram/user/:id`
 
@@ -1940,7 +1988,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/youtube/user/JFlaMusic](https://rsshub.app/youtube/user/JFlaMusic)
+举例: <https://rsshub.app/youtube/user/JFlaMusic>
 
 路由: `/youtube/user/:username`
 
@@ -1950,7 +1998,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 频道 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ](https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ)
+举例: <https://rsshub.app/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ>
 
 路由: `/youtube/channel/:id`
 
@@ -1962,7 +2010,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 动漫 <Author uid="ranpox"/>
 
-举例: [https://rsshub.app/iqiyi/dongman/a_19rrh1sifx](https://rsshub.app/iqiyi/dongman/a_19rrh1sifx)
+举例: <https://rsshub.app/iqiyi/dongman/a_19rrh1sifx>
 
 路由: `/iqiyi/dongman/:id`
 
@@ -1976,9 +2024,9 @@ GitHub 官方也提供了一些 RSS:
 
 举例:
 
-[https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
+<https://rsshub.app/dribbble/popular>
 
-[https://rsshub.app/dribbble/popular/week](https://rsshub.app/dribbble/popular/week)
+<https://rsshub.app/dribbble/popular/week>
 
 路由: `/dribbble/popular/:timeframe?`
 
@@ -1988,7 +2036,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户（团队） <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/dribbble/user/google](https://rsshub.app/dribbble/user/google)
+举例: <https://rsshub.app/dribbble/user/google>
 
 路由: `/dribbble/user/:name`
 
@@ -1998,7 +2046,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 关键词 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/dribbble/keyword/player](https://rsshub.app/dribbble/keyword/player)
+举例: <https://rsshub.app/dribbble/keyword/player>
 
 路由: `/dribbble/keyword/:keyword`
 
@@ -2016,7 +2064,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-举例: [https://rsshub.app/telegram/channel/awesomeDIYgod](https://rsshub.app/telegram/channel/awesomeDIYgod)
+举例: <https://rsshub.app/telegram/channel/awesomeDIYgod>
 
 路由: `/telegram/channel/:username`
 
@@ -2026,7 +2074,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 贴纸包 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/telegram/stickerpack/DIYgod](https://rsshub.app/telegram/stickerpack/DIYgod)
+举例: <https://rsshub.app/telegram/stickerpack/DIYgod>
 
 路由: `/telegram/stickerpack/:name`
 
@@ -2038,7 +2086,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分类 <Author uid="WhiteWorld"/>
 
-举例: [https://rsshub.app/readhub/category/topic](https://rsshub.app/readhub/category/topic)
+举例: <https://rsshub.app/readhub/category/topic>
 
 路由: `/readhub/category/:category`
 
@@ -2069,10 +2117,10 @@ GitHub 官方也提供了一些 RSS:
 
 举例:
 
--   过去 24 小时:[https://rsshub.app/konachan/post/popular_recent/1d](https://rsshub.app/konachan/post/popular_recent/1d)
--   过去一周:[https://rsshub.app/konachan/post/popular_recent/1w](https://rsshub.app/konachan/post/popular_recent/1w)
--   过去一月:[https://rsshub.app/konachan/post/popular_recent/1m](https://rsshub.app/konachan/post/popular_recent/1m)
--   过去一年:[https://rsshub.app/konachan/post/popular_recent/1y](https://rsshub.app/konachan/post/popular_recent?period=1y)
+-   过去 24 小时:<https://rsshub.app/konachan/post/popular_recent/1d>
+-   过去一周:<https://rsshub.app/konachan/post/popular_recent/1w>
+-   过去一月:<https://rsshub.app/konachan/post/popular_recent/1m>
+-   过去一年:<https://rsshub.app/konachan/post/popular_recent/1y>
 
 ## yande.re
 
@@ -2091,16 +2139,16 @@ GitHub 官方也提供了一些 RSS:
 
 举例:
 
--   过去 24 小时:[https://rsshub.app/yande.re/post/popular_recent/1d](https://rsshub.app/yande.re/post/popular_recent/1d)
--   过去一周:[https://rsshub.app/yande.re/post/popular_recent/1w](https://rsshub.app/yande.re/post/popular_recent/1w)
--   过去一月:[https://rsshub.app/yande.re/post/popular_recent/1m](https://rsshub.app/yande.re/post/popular_recent/1m)
+-   过去 24 小时:<https://rsshub.app/yande.re/post/popular_recent/1d>
+-   过去一周:<https://rsshub.app/yande.re/post/popular_recent/1w>
+-   过去一月:<https://rsshub.app/yande.re/post/popular_recent/1m>
 -   过去一年:[https://rsshub.app/yande.re/post/popular_recent/1y
 
 ## 3DMGame
 
 ### 新闻中心 <Author uid="zhboner"/>
 
-举例: [https://rsshub.app/3dm/news](https://rsshub.app/3dm/news)
+举例: <https://rsshub.app/3dm/news>
 
 路由: `/3dm/news`
 
@@ -2108,7 +2156,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 新闻 <Author uid="sinchang jacky2001114"/>
 
-举例: [https://rsshub.app/3dm/detroitbecomehuman/news](https://rsshub.app/3dm/detroitbecomehuman/news)
+举例: <https://rsshub.app/3dm/detroitbecomehuman/news>
 
 路由: `/3dm/:name/news`
 
@@ -2118,7 +2166,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 攻略 <Author uid="sinchang jacky2001114"/>
 
-举例: [https://rsshub.app/3dm/detroitbecomehuman/gl](https://rsshub.app/3dm/detroitbecomehuman/gl)
+举例: <https://rsshub.app/3dm/detroitbecomehuman/gl>
 
 路由: `/3dm/:name/gl`
 
@@ -2128,7 +2176,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 下载 <Author uid="sinchang"/>
 
-举例: [https://rsshub.app/3dm/detroitbecomehuman/download](https://rsshub.app/3dm/detroitbecomehuman/download)
+举例: <https://rsshub.app/3dm/detroitbecomehuman/download>
 
 路由: `/3dm/:name/download`
 
@@ -2150,7 +2198,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-举例: [https://rsshub.app/ximalaya/album/299146/](https://rsshub.app/ximalaya/album/299146/)
+举例: <https://rsshub.app/ximalaya/album/299146/>
 
 路由: `/ximalaya/album/:id`
 
@@ -2174,7 +2222,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Lookup Torrents by IMDB ID <Author uid="Songkeys"/>
 
-举例: [https://rsshub.app/eztv/torrents/6048596](https://rsshub.app/eztv/torrent/6048596)
+举例: <https://rsshub.app/eztv/torrents/6048596>
 
 路由: `/eztv/torrents/:imdb_id`
 
@@ -2192,7 +2240,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 关键词 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/smzdm/keyword/女装](https://rsshub.app/smzdm/keyword/女装)
+举例: <https://rsshub.app/smzdm/keyword/女装>
 
 路由: `/smzdm/keyword/:keyword`
 
@@ -2202,7 +2250,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 排行榜 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/smzdm/ranking/pinlei/11/3](https://rsshub.app/smzdm/ranking/pinlei/11/3)
+举例: <https://rsshub.app/smzdm/ranking/pinlei/11/3>
 
 路由: `/smzdm/ranking/:rank_type/:rank_id/:hour`
 
@@ -2252,7 +2300,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 崩坏 2-游戏公告 <Author uid="deepred5"/>
 
-举例: [https://rsshub.app/mihoyo/bh2/gach](https://rsshub.app/mihoyo/bh2/gach)
+举例: <https://rsshub.app/mihoyo/bh2/gach>
 
 路由: `/mihoyo/bh2/:type`
 
@@ -2266,7 +2314,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 崩坏 3-游戏公告 <Author uid="deepred5"/>
 
-举例: [https://rsshub.app/mihoyo/bh3/strategy](https://rsshub.app/mihoyo/bh3/strategy)
+举例: <https://rsshub.app/mihoyo/bh3/strategy>
 
 路由: `/mihoyo/bh3/:type`
 
@@ -2282,7 +2330,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分区帖子 <Author uid="zhboner"/>
 
-举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
+举例: <https://rsshub.app/t66y/7>
 
 路由: `/t66y/:id`
 
@@ -2306,7 +2354,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分类 <Author uid="MoguCloud"/>
 
-举例: [https://rsshub.app/gcores/category/1](https://rsshub.app/gcores/category/1)
+举例: <https://rsshub.app/gcores/category/1>
 
 路由: `/gcores/category/:category`
 
@@ -2324,9 +2372,9 @@ GitHub 官方也提供了一些 RSS:
 
 举例:
 
-[https://rsshub.app/natgeo/travel](https://rsshub.app/natgeo/travel)
+<https://rsshub.app/natgeo/travel>
 
-[https://rsshub.app/natgeo/news/ngnews](https://rsshub.app/natgeo/news/ngnews)
+<https://rsshub.app/natgeo/news/ngnews>
 
 路由: `/natgeo/:cat/:type?`
 
@@ -2342,7 +2390,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 图片文字问答 <Author uid="fengkx"/>
 
-举例: [https://rsshub.app/one](https://rsshub.app/one)
+举例: <https://rsshub.app/one>
 
 路由: `/one`
 
@@ -2352,7 +2400,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Next 主题 <Author uid="fengkx"/>
 
-举例: [http://rsshub.app/hexo/next/fengkx.top](http://rsshub.app/hexo/next/fengkx.top)
+举例: <http://rsshub.app/hexo/next/fengkx.top>
 
 路由: `/hexo/next/:url`
 
@@ -2364,7 +2412,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 众筹 <Author uid="DIYgod"/>
 
-举例: [https://rsshub.app/mi/crowdfunding](https://rsshub.app/mi/crowdfunding)
+举例: <https://rsshub.app/mi/crowdfunding>
 
 路由: `/mi/crowdfunding`
 
@@ -2374,7 +2422,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 运动日记 <Author uid="Dectinc"/>
 
-举例: [https://rsshub.app/keep/user/556b02c1ab59390afea671ea](https://rsshub.app/keep/user/556b02c1ab59390afea671ea)
+举例: <https://rsshub.app/keep/user/556b02c1ab59390afea671ea>
 
 路由: `/keep/user/:id`
 
@@ -2386,7 +2434,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 早报 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/dongqiudi/daily](https://rsshub.app/dongqiudi/daily)
+举例: <https://rsshub.app/dongqiudi/daily>
 
 路由: `/dongqiudi/daily`
 
@@ -2394,7 +2442,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 足球赛果 <Author uid="HenryQW"/>
 
-举例: 皇家马德里: [https://rsshub.app/dongqiudi/result/50001755](https://rsshub.app/dongqiudi/result/50001755)
+举例: 皇家马德里: <https://rsshub.app/dongqiudi/result/50001755>
 
 路由: `/dongqiudi/result/:team`
 
@@ -2406,7 +2454,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 中国大陆新闻动态 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/wikipedia/mainland](https://rsshub.app/wikipedia/mainland)
+举例: <https://rsshub.app/wikipedia/mainland>
 
 路由: `/wikipedia/mainland`
 
@@ -2416,7 +2464,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户动态 <Author uid="imlonghao"/>
 
-举例: [https://rsshub.app/xueqiu/user/8152922548](https://rsshub.app/xueqiu/user/8152922548)
+举例: <https://rsshub.app/xueqiu/user/8152922548>
 
 路由: `/xueqiu/user/:id/:type?`
 
@@ -2432,7 +2480,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户收藏动态 <Author uid="imlonghao"/>
 
-举例: [https://rsshub.app/xueqiu/favorite/8152922548](https://rsshub.app/xueqiu/favorite/8152922548)
+举例: <https://rsshub.app/xueqiu/favorite/8152922548>
 
 路由: `/xueqiu/favorite/:id`
 
@@ -2444,7 +2492,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 博文 <Author uid="imlonghao"/>
 
-举例: [https://rsshub.app/linkedkeeper/sub/1](https://rsshub.app/linkedkeeper/sub/1)
+举例: <https://rsshub.app/linkedkeeper/sub/1>
 
 路由: `/linkedkeeper/:type/:id?`
 
@@ -2464,7 +2512,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-举例: [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization)
+举例: <https://rsshub.app/google/scholar/data+visualization>
 
 路由: `/google/scholar/:query`
 
@@ -2472,14 +2520,14 @@ GitHub 官方也提供了一些 RSS:
 
 -   query: 查询语句, 支持「简单」和「高级」两种模式:
 
-1. 简单模式, 例如「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
-2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0, 5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5), 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为[https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5).
+1. 简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
+2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0, 5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
 
 ## Awesome Pigtails
 
 ### 最新图片 <author uid="Chingyat" />
 
-举例: [https://rsshub.app/pigtails](https://rsshub.app/pigtails)
+举例: <https://rsshub.app/pigtails>
 
 路由: `/pigtails`
 
@@ -2489,7 +2537,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 文章
 
-举例: [https://rsshub.app/mygalgame](https://rsshub.app/mygalgame)
+举例: <https://rsshub.app/mygalgame>
 
 路由: `/mygalgame`
 
@@ -2509,7 +2557,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 周刊 <Author uid="zpcc"/>
 
-举例: [https://rsshub.app/tuicool/mags/tech](https://rsshub.app/tuicool/mags/tech)
+举例: <https://rsshub.app/tuicool/mags/tech>
 
 路由: `/tuicool/mags/:type`
 
@@ -2525,7 +2573,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 首页 <Author uid="vhgyux"/>
 
-举例: [https://rsshub.app/kejixingqiu/home](https://rsshub.app/kejixingqiu/home)
+举例: <https://rsshub.app/kejixingqiu/home>
 
 路由: `/kejixingqiu/home`
 
@@ -2538,3 +2586,17 @@ GitHub 官方也提供了一些 RSS:
 路由: `/ifanr/appso`
 
 参数: 无
+
+## Apple <Author uid="metowolf"/>
+
+### 更换和维修扩展计划
+
+举例: <https://rsshub.app/apple/exchange_repair>
+
+路由: `/apple/exchange_repair`
+
+参数: 无
+
+### App Store/Mac App Store
+
+见 <#app-store-mac-app-store>

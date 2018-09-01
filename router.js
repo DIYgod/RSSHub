@@ -156,6 +156,7 @@ router.get('/zhihu/people/activities/:id', require('./routes/zhihu/activities'))
 router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
+router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
@@ -181,6 +182,8 @@ router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
 router.get('/douban/explore', require('./routes/douban/explore'));
+router.get('/douban/music/latest', require('./routes/douban/latest_music'));
+router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -498,5 +501,12 @@ router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
 // npm
 router.get('/npm/:pkg', require('./routes/npm/index'));
+
+// 联合早报
+router.get('/zaobao/realtime/:type?', require('./routes/zaobao/realtime'));
+router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
+
+// Apple
+router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
 
 module.exports = router;

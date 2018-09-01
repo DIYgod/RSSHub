@@ -164,7 +164,7 @@ Parameters：
 
 ### App Store/Mac App Store In-App-Purchase Price Drop Alert <Author uid="HenryQW"/>
 
-Eg: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
+Eg: [https://rsshub.app/appstore/iap/us/id953286746](https://rsshub.app/appstore/price/us/id953286746)
 
 Route: `/appstore/iap/:country/:id`
 
