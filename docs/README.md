@@ -1278,15 +1278,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 直播开播 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 直播搜索 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 直播分区 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 主站话题列表 <Author uid="Qixingchen"/>
 
@@ -2587,4 +2587,4 @@ GitHub 官方也提供了一些 RSS:
 
 ### App Store/Mac App Store
 
-见 <#app-store-mac-app-store>
+见 [#app-store-mac-app-store](#app-store-mac-app-store)
