@@ -1,7 +1,6 @@
 const axios = require('../../utils/axios');
 
 module.exports = async (ctx) => {
-    console.log('run');
     const {
         data: { data },
     } = await axios({
