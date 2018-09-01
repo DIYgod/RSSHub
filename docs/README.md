@@ -1836,6 +1836,18 @@ GitHub 官方也提供了一些 RSS:
 
 路由: `/douban/explore`
 
+### 新书速递 <Author uid="fengkx"/>
+
+举例：[https://rsshub.app/douban/book/latest](https://rsshub.app/douban/book/latest)
+
+路由：`douban/book/latest`
+
+### 最新增加的音乐 <Author uid="fengkx"/>
+
+举例：[https://rsshub.app/douban/music/latest](https://rsshub.app/douban/music/latest)
+
+路由：`douban/music/latest`
+
 ## 煎蛋
 
 ### 无聊图 <Author uid="Xuanwo"/>
