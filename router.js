@@ -8,11 +8,12 @@ const logger = require('./utils/logger');
 let gitHash;
 try {
     gitHash = require('git-rev-sync').short();
-} catch (e) {
+}
+catch (e) {
     gitHash = (process.env.HEROKU_SLUG_COMMIT && process.env.HEROKU_SLUG_COMMIT.slice(0, 7)) || 'unknown';
 }
 const startTime = +new Date();
-router.get('/', async (ctx) => {
+router.get('/', async(ctx) => {
     ctx.set({
         'Content-Type': 'text/html; charset=UTF-8',
     });
@@ -36,7 +37,8 @@ router.get('/', async (ctx) => {
     let showDebug;
     if (!config.debugInfo || config.debugInfo === 'false') {
         showDebug = false;
-    } else {
+    }
+    else {
         showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
     }
 
@@ -169,7 +171,8 @@ if (config.pixiv && config.pixiv.client_id && config.pixiv.client_secret && conf
     router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
     router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
     router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
-} else {
+}
+else {
     logger.warn('pixiv RSS is disabled for lacking config.');
 }
 
@@ -204,14 +207,16 @@ router.get('/jinritoutiao/keyword/:keyword', require('./routes/jinritoutiao/keyw
 // Disqus
 if (config.disqus && config.disqus.api_key) {
     router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
-} else {
+}
+else {
     logger.warn('Disqus RSS is disabled for lacking config.');
 }
 
 // Twitter
 if (config.twitter && config.twitter.consumer_key && config.twitter.consumer_secret && config.twitter.access_token && config.twitter.access_token_secret) {
     router.get('/twitter/user/:id', require('./routes/twitter/user'));
-} else {
+}
+else {
     logger.warn('Twitter RSS is disabled for lacking config.');
 }
 
@@ -222,7 +227,8 @@ router.get('/instagram/user/:id', require('./routes/instagram/user'));
 if (config.youtube && config.youtube.key) {
     router.get('/youtube/user/:username', require('./routes/youtube/user'));
     router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
-} else {
+}
+else {
     logger.warn('Youtube RSS is disabled for lacking config.');
 }
 
@@ -259,10 +265,12 @@ if (config.telegram && config.telegram.token) {
     router.get('/telegram/channel/:username', require('./routes/telegram/channel'));
     if (config.imgur && config.imgur.clientId) {
         router.get('/telegram/stickerpack/:name', require('./routes/telegram/stickerpack'));
-    } else {
+    }
+    else {
         logger.warn('Telegram Sticker Pack RSS is disabled for lacking config.');
     }
-} else {
+}
+else {
     logger.warn('Telegram RSS is disabled for lacking config.');
 }
 
@@ -272,7 +280,8 @@ router.get('/readhub/category/:category', require('./routes/readhub/category'));
 // GitHub
 if (config.github && config.github.access_token) {
     router.get('/github/repos/:user', require('./routes/github/repos'));
-} else {
+}
+else {
     logger.warn('GitHub Repos RSS is disabled for lacking config.');
 }
 router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
@@ -311,15 +320,6 @@ router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 router.get('/smzdm/keyword/:keyword', require('./routes/smzdm/keyword'));
 router.get('/smzdm/ranking/:rank_type/:rank_id/:hour', require('./routes/smzdm/ranking'));
 
-// SHMTU
-router.get('/shmtu/events', require('./routes/shmtu/events'));
-router.get('/shmtu/notes', require('./routes/shmtu/notes'));
-router.get('/shmtu/jwc/:type', require('./routes/shmtu/jwc'));
-
-// SWUST
-router.get('/swust/jwc/:type', require('./routes/swust/jwc'));
-router.get('/swust/cs/:type', require('./routes/swust/cs'));
-
 // 新京报
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
 
@@ -347,9 +347,6 @@ router.get('/t66y/:id', require('./routes/t66y/index'));
 // 科技星球
 router.get('/kejixingqiu/home', require('./routes/kejixingqiu/home'));
 
-// PKUEECS
-router.get('/pku/eecs/:type?', require('./routes/pku/eecs'));
-
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
@@ -370,11 +367,6 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
-
-// SCNU
-router.get('/scnu/jw', require('./routes/scnu/jw'));
-router.get('/scnu/library', require('./routes/scnu/library'));
-router.get('/scnu/cs/match', require('./routes/scnu/cs/match'));
 
 // Keep
 router.get('/keep/user/:id', require('./routes/keep/user'));
@@ -434,6 +426,7 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 // AppStore
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
+router.get('/appstore/iap/:country/:id', require('./routes/appstore/in-app-purchase'));
 
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
@@ -443,9 +436,6 @@ router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
 
 // 马蜂窝
 router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
-
-// 江南大学
-router.get('/ju/jwc/:type?', require('./routes/ju/jwc'));
 
 // 中国地震局震情速递（与地震台网同步更新）
 router.get('/earthquake', require('./routes/earthquake'));
@@ -466,6 +456,54 @@ router.get('/weatherAlarm', require('./routes/weatherAlarm'));
 
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
+
+// 忧郁的弟弟
+router.get('/mygalgame', require('./routes/galgame/mygalgame'));
+
+// 大连工业大学
+router.get('/dpu/jiaowu/news/:type?', require('./routes/universities/dpu/jiaowu/news'));
+router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news'));
+
+// 东南大学
+router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
+
+// 上海科技大学
+router.get('/shanghaitech/sist/activity', require('./routes/universities/shanghaitech/sist/activity'));
+
+// 上海交通大学
+router.get('/sjtu/seiee/academic', require('./routes/universities/sjtu/seiee/academic'));
+
+// 江南大学
+router.get('/ju/jwc/:type?', require('./routes/universities/ju/jwc'));
+
+// 北京大学
+router.get('/pku/eecs/:type?', require('./routes/universities/pku/eecs'));
+
+// 上海海事大学
+router.get('/shmtu/events', require('./routes/universities/shmtu/events'));
+router.get('/shmtu/notes', require('./routes/universities/shmtu/notes'));
+router.get('/shmtu/jwc/:type', require('./routes/universities/shmtu/jwc'));
+
+// 西南科技大学
+router.get('/swust/jwc/:type', require('./routes/universities/swust/jwc'));
+router.get('/swust/cs/:type', require('./routes/universities/swust/cs'));
+
+// 华南师范大学
+router.get('/scnu/jw', require('./routes/universities/scnu/jw'));
+router.get('/scnu/library', require('./routes/universities/scnu/library'));
+router.get('/scnu/cs/match', require('./routes/universities/scnu/cs/match'));
+
+// 中国科学院
+router.get('/cas/sim/academic', require('./routes/universities/cas/sim/academic'));
+
+// 南京邮电大学
+router.get('/njupt/jwc/:type?', require('./routes/universities/njupt/jwc'));
+
+// ifanr
+router.get('/ifanr/appso', require('./routes/ifanr/appso'));
+
+// 果壳网
+router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
 // 联合早报
 router.get('/zaobao/realtime/:type?', require('./routes/zaobao/realtime'));

@@ -32,7 +32,7 @@ module.exports = async (ctx) => {
             title: `${result.title} is now ${currency(result.currency)}${result.price} `,
             description: `<a href="${link}" target="_blank">Go to App Store</a>`,
             link,
-            guid: country + id,
+            guid: id + Date.now(),
         };
         item.push(single);
     }

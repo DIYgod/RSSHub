@@ -15,17 +15,17 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(data);
     const list = $('.ZQ_Left .lis');
-    const items = [];
 
-    for (let i = 0; i < list.length; i++) {
-        let item = $(list[i]);
-        const url = item.find('.bt').attr('href');
+    const items = await Promise.all(
+        list.map(async (i) => {
+            const item = $(i);
+            const url = item.find('.bt').attr('href');
 
-        const value = await ctx.cache.get(url);
-        if (value) {
-            item = JSON.parse(value);
-        } else {
-            item = {
+            const cache = await ctx.cache.get(url);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+            const single = {
                 title: item.find('.bt').text(),
                 pubDate: item.find('.time p').text(),
                 description: item.find('.miaoshu').text(),
@@ -34,10 +34,10 @@ module.exports = async (ctx) => {
             };
 
             ctx.cache.set(url, JSON.stringify(item), 24 * 60 * 60);
-        }
 
-        items.push(item);
-    }
+            return Promise.resolve(single);
+        })
+    );
 
     ctx.state.data = {
         title: $('title')

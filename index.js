@@ -4,17 +4,20 @@ const logger = require('./utils/logger');
 const config = require('./config');
 
 const onerror = require('./middleware/onerror');
-const header = require('./middleware/header.js');
+const header = require('./middleware/header');
 const utf8 = require('./middleware/utf8');
-const memoryCache = require('./middleware/lru-cache.js');
-const redisCache = require('./middleware/redis-cache.js');
-const parameter = require('./middleware/parameter.js');
-const template = require('./middleware/template.js');
+const memoryCache = require('./middleware/lru-cache');
+const redisCache = require('./middleware/redis-cache');
+const parameter = require('./middleware/parameter');
+const template = require('./middleware/template');
 const favicon = require('koa-favicon');
-const debug = require('./middleware/debug.js');
-const accessControl = require('./middleware/access-control.js');
+const debug = require('./middleware/debug');
+const accessControl = require('./middleware/access-control');
+const auth = require('./middleware/auth');
 
 const router = require('./router');
+const protected_router = require('./protected_router');
+const mount = require('koa-mount');
 
 process.on('uncaughtException', (e) => {
     logger.error('uncaughtException: ' + e);
@@ -30,6 +33,9 @@ app.use(favicon(__dirname + '/favicon.png'));
 
 // global error handing
 app.use(onerror);
+
+// HTTP basic authentication
+app.use(auth);
 
 // 1 set header
 app.use(header);
@@ -86,7 +92,11 @@ if (config.cacheType === 'memory') {
 }
 
 // router
-app.use(router.routes()).use(router.allowedMethods());
+
+app.use(mount('/', router.routes())).use(router.allowedMethods());
+
+// routes the require authentication
+app.use(mount('/protected', protected_router.routes())).use(protected_router.allowedMethods());
 
 // connect
 if (config.connect.port) {
