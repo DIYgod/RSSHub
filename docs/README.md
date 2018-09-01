@@ -1866,6 +1866,18 @@ GitHub 官方也提供了一些 RSS:
 
 路由: `/douban/explore`
 
+### 新书速递 <Author uid="fengkx"/>
+
+举例：[https://rsshub.app/douban/book/latest](https://rsshub.app/douban/book/latest)
+
+路由：`/douban/book/latest`
+
+### 最新增加的音乐 <Author uid="fengkx"/>
+
+举例：[https://rsshub.app/douban/music/latest](https://rsshub.app/douban/music/latest)
+
+路由：`/douban/music/latest`
+
 ## 煎蛋
 
 ### 无聊图 <Author uid="Xuanwo"/>
@@ -2554,5 +2566,15 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/ifanr/appso>
 
 路由: `/ifanr/appso`
+
+参数: 无
+
+## Apple <Author uid="metowolf"/>
+
+### 更换和维修扩展计划
+
+举例: <https://rsshub.app/apple/exchange_repair>
+
+路由: `/apple/exchange_repair`
 
 参数: 无

@@ -181,6 +181,8 @@ router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
 router.get('/douban/explore', require('./routes/douban/explore'));
+router.get('/douban/music/latest', require('./routes/douban/latest_music'));
+router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -499,5 +501,8 @@ router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 // 联合早报
 router.get('/zaobao/realtime/:type?', require('./routes/zaobao/realtime'));
 router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
+
+// Apple
+router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
 
 module.exports = router;
