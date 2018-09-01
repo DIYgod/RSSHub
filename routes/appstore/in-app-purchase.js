@@ -15,26 +15,23 @@ module.exports = async (ctx) => {
         .first()
         .text()
         .trim();
-    const list = $('div.l-row div.we-lockup');
+    const list = $('ol.list-with-numbers li.list-with-numbers__item');
     const item = list
-        .map((i, e) => ({
-            link,
-            guid: `${titleTemp} ${$(e)
-                .find('h3.we-lockup__title')
+        .map((i, e) => {
+            const title = `${titleTemp} ${$(e)
+                .find('span.list-with-numbers__item__title')
                 .text()
                 .trim()} ${$(e)
-                .find('h5')
+                .find('span.list-with-numbers__item__price')
                 .text()
-                .trim()}`,
-            title: `${titleTemp} ${$(e)
-                .find('h3.we-lockup__title')
-                .text()
-                .trim()} is now ${$(e)
-                .find('h5')
-                .text()
-                .trim()}`,
-            pubDate: new Date(Date.now()).toUTCString(),
-        }))
+                .trim()}`;
+            return {
+                link,
+                guid: title,
+                title,
+                pubDate: new Date(Date.now()).toUTCString(),
+            };
+        })
         .get();
 
     const platform = $('.we-localnav__title__product').text();
