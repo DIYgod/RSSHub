@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
     const list = $('div.prices li a');
     const items = [];
 
-    if (!list.length === 0) {
+    if (list.length !== 0) {
         if (type === '1') {
             let lowest = 99999;
             let lowIndex = 0;

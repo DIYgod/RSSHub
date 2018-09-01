@@ -12,21 +12,21 @@ const axios_ins = axios.create({
     responseType: 'arraybuffer',
 });
 
-function killViidii(orginUrl) {
+function killViidii(originUrl) {
     const decodeStr = /.*\?http/g;
     const decodeSig = /______/g;
     const jsSuffix = '&amp;z';
     const htmlSuffix = '&z';
     const returnSuffix = 'return false';
-    if (orginUrl.indexOf('viidii') !== -1) {
-        return orginUrl
+    if (originUrl.indexOf('viidii') !== -1) {
+        return originUrl
             .replace(decodeStr, 'http')
             .replace(decodeSig, '.')
             .replace(jsSuffix, '')
             .replace(htmlSuffix, '')
             .replace(returnSuffix, '');
     } else {
-        return orginUrl;
+        return originUrl;
     }
 }
 
@@ -39,54 +39,57 @@ module.exports = async (ctx) => {
     let list = $('#ajaxtable > tbody:nth-child(2)');
     list = $('.tr2', list)
         .not('.tr2.tac')
-        .nextAll();
+        .nextAll()
+        .slice(0, 20)
+        .get();
 
     const reqList = [];
-    const out = [];
     const indexList = []; // New item index
     let skip = 0;
 
-    for (let i = 0; i < Math.min(list.length, 20); i++) {
-        const $ = cheerio.load(list[i]);
-        let title = $('.tal h3 a');
-        const path = title.attr('href');
+    const out = await Promise.all(
+        list.map(async (item, i) => {
+            const $ = cheerio.load(item);
+            let title = $('.tal h3 a');
+            const path = title.attr('href');
 
-        // Filter duplicated entries
-        if (path.match(filterReg) !== null) {
-            skip++;
-            continue;
-        }
-        const link = url.resolve(base, path);
+            // Filter duplicated entries
+            if (path.match(filterReg) !== null) {
+                skip++;
+                return Promise.resolve('');
+            }
+            const link = url.resolve(base, path);
 
-        // Check cache
-        const cache = await ctx.cache.get(link);
-        if (cache) {
-            out.push(JSON.parse(cache));
-            continue;
-        }
+            // Check cache
+            const cache = await ctx.cache.get(link);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
 
-        if (
-            cheerio
-                .load(title)('font')
-                .text() !== ''
-        ) {
-            title = cheerio
-                .load(title)('font')
-                .text();
-        } else {
-            title = title.text();
-        }
+            if (
+                cheerio
+                    .load(title)('font')
+                    .text() !== ''
+            ) {
+                title = cheerio
+                    .load(title)('font')
+                    .text();
+            } else {
+                title = title.text();
+            }
 
-        const single = {
-            title: title,
-            link: link,
-            guid: path,
-        };
-        const promise = axios_ins.get(url.resolve(base, path));
-        reqList.push(promise);
-        indexList.push(i - skip);
-        out.push(single);
-    }
+            const single = {
+                title: title,
+                link: link,
+                guid: path,
+            };
+            const promise = axios_ins.get(url.resolve(base, path));
+            reqList.push(promise);
+            indexList.push(i - skip);
+            return Promise.resolve(single);
+        })
+    );
+
     let resList;
     try {
         resList = await axios.all(reqList);
