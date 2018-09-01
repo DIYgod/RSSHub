@@ -2198,3 +2198,33 @@ type，分类
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
+
+## 联合早报
+
+### 即时新闻 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/zaobao/realtime/china](https://rsshub.app/zaobao/realtime/china)
+
+路由: `/zaobao/realtime/:type?`
+
+参数:
+
+type，分类, 缺省为中港台
+
+| 中港台 | 新加坡    | 国际  | 财经     |
+| ------ | --------- | ----- | -------- |
+| china  | singapore | world | zfinance |
+
+### 新闻 <Author uid="lengthmin"/>
+
+举例: [https://rsshub.app/zaobao/znews/greater-china](https://rsshub.app/zaobao/znews/greater-china)
+
+路由: `/zaobao/znews/:type?`
+
+参数:
+
+type，分类, 缺省为中港台
+
+| 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
+| ------------- | --------- | ------ | ------------- | ------ |
+| greater-china | singapore | sea    | international | sports |

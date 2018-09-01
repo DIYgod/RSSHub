@@ -467,4 +467,8 @@ router.get('/weatherAlarm', require('./routes/weatherAlarm'));
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
+// 联合早报
+router.get('/zaobao/realtime/:type?', require('./routes/zaobao/realtime'));
+router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
+
 module.exports = router;
