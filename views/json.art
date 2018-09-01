@@ -1,0 +1,31 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "{{ title || 'RSSHub' }}",
+    "home_page_url": "{{ link || 'https://github.com/DIYgod/RSSHub' }}",
+    "description": "{{ description || title }} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)",
+    "author": {
+        "name": "{{@ author || 'RSSHub' }}"
+    },
+    "items": [
+        {{each item}}
+        {
+            "id": "{{ $value.guid || $value.link }}",
+            "url": "{{ $value.link }}",
+            "author": {
+                "name": "{{ $value.author }}"
+            },
+            "external_url": "",
+            "title": "{{ $value.title }}",
+            "content_html": "<%= ($value.content && $value.content.html) || '' %>",
+            "content_text": "<%= ($value.content && $value.content.text) || '' %>",
+            "summary": "{{ $value.description }}",
+            "image": "{{ $value.image }}",
+            "banner_image": "",
+            "date_published": "{{ $value.pubDate }}",
+            "date_modified": "",
+            "tags": [],
+            "attachments": []
+        }{{ if $index !== item.length - 1}},{{ /if}}
+        {{ /each }}
+    ]
+}

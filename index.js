@@ -1,44 +1,116 @@
-const express = require('express');
+const Koa = require('koa');
+const fs = require('fs');
 const logger = require('./utils/logger');
+const config = require('./config');
 
-logger.info('🍻 RSSHub start! Cheers!');
+const onerror = require('./middleware/onerror');
+const header = require('./middleware/header');
+const utf8 = require('./middleware/utf8');
+const memoryCache = require('./middleware/lru-cache');
+const redisCache = require('./middleware/redis-cache');
+const parameter = require('./middleware/parameter');
+const template = require('./middleware/template');
+const favicon = require('koa-favicon');
+const debug = require('./middleware/debug');
+const accessControl = require('./middleware/access-control');
+const auth = require('./middleware/auth');
 
-const app = express();
+const router = require('./router');
+const protected_router = require('./protected_router');
+const mount = require('koa-mount');
 
-app.all('*', require('./routes/all'));
+process.on('uncaughtException', (e) => {
+    logger.error('uncaughtException: ' + e);
+});
 
-// bilibili
-app.get('/bilibili/user/video/:uid', require('./routes/bilibili/video'));
-app.get('/bilibili/user/fav/:uid', require('./routes/bilibili/fav'));
-app.get('/bilibili/user/coin/:uid', require('./routes/bilibili/coin'));
-app.get('/bilibili/user/dynamic/:uid', require('./routes/bilibili/dynamic'));
-app.get('/bilibili/partion/:tid', require('./routes/bilibili/partion'));
-app.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));
+logger.info('🎉 RSSHub start! Cheers!');
 
-// 微博
-app.get('/weibo/user/:uid', require('./routes/weibo/user'));
+const app = new Koa();
+app.proxy = true;
 
-// 网易云音乐
-app.get('/ncm/playlist/:id', require('./routes/ncm/playlist'));
-app.get('/ncm/artist/:id', require('./routes/ncm/artist'));
+// favicon
+app.use(favicon(__dirname + '/favicon.png'));
 
-// 掘金
-app.get('/juejin/category/:category', require('./routes/juejin/category'));
+// global error handing
+app.use(onerror);
 
-// 自如
-app.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
+// HTTP basic authentication
+app.use(auth);
 
-// 快递
-app.get('/express/:company/:number', require('./routes/express/express'));
+// 1 set header
+app.use(header);
 
-// 简书
-app.get('/jianshu/home', require('./routes/jianshu/home'));
-app.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
-app.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
-app.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
-app.get('/jianshu/user/:id', require('./routes/jianshu/user'));
+app.use(accessControl);
 
-// 知乎
-app.get('/zhihu/collection/:id', require('./routes/zhihu/collection'));
+// 6 debug
+app.context.debug = {
+    hitCache: 0,
+    request: 0,
+    routes: [],
+    ips: [],
+};
+app.use(debug);
 
-app.listen(1200);
+// 5 fix incorrect `utf-8` characters
+app.use(utf8);
+
+// 4 generate body
+app.use(template);
+
+// 3 filter content
+app.use(parameter);
+
+// 2 cache
+if (config.cacheType === 'memory') {
+    app.use(
+        memoryCache({
+            app: app,
+            expire: config.cacheExpire,
+            ignoreQuery: true,
+        })
+    );
+} else if (config.cacheType === 'redis') {
+    app.use(
+        redisCache({
+            app: app,
+            expire: config.cacheExpire,
+            ignoreQuery: true,
+            redis: config.redis,
+            onerror: (e) => {
+                logger.error('Redis error: ', e);
+            },
+            onconnect: () => {
+                logger.info('Redis connected.');
+            },
+        })
+    );
+} else {
+    app.context.cache = {
+        get: () => null,
+        set: () => null,
+    };
+}
+
+// router
+
+app.use(mount('/', router.routes())).use(router.allowedMethods());
+
+// routes the require authentication
+app.use(mount('/protected', protected_router.routes())).use(protected_router.allowedMethods());
+
+// connect
+if (config.connect.port) {
+    app.listen(config.connect.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+    logger.info('Listening Port ' + config.connect.port);
+}
+if (config.connect.socket) {
+    if (fs.existsSync(config.connect.socket)) {
+        fs.unlinkSync(config.connect.socket);
+    }
+    app.listen(config.connect.socket, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
+    logger.info('Listening Unix Socket ' + config.connect.socket);
+    process.on('SIGINT', () => {
+        fs.unlinkSync(config.connect.socket);
+        process.exit();
+    });
+}

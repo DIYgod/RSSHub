@@ -1,51 +1,87 @@
-# RSSHub
+<p align="center">
+<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+</p>
+<h1 align="center">RSSHub</h1>
 
-> 🍭 使用 RSS 连接全世界
+> 🍰 万物皆可 RSS
 
 ## 介绍
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
-[使用文档](https://rsshub.js.org)
+[Telegram 群](https://t.me/rsshub)
 
-当前支持列表：
+[使用文档](https://docs.rsshub.app/)
 
-- bilibili
-  - 番剧
-  - UP 主投稿
-  - UP 主动态
-  - UP 主收藏夹
-  - 分区视频
-- 微博
-  - 博主
-- 网易云音乐
-  - 歌单
-- 掘金
-  - 分类
-- 简书
-  - 首页
-  - 7日热门
-  - 30日热门
-  - 专题
-  - 作者
-- 知乎
-  - 收藏夹
-- 自如
-  - 房源
-- 快递
+[English docs](https://docs.rsshub.app/en)
+
+## 鸣谢
+
+### Special Sponsors
+
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> | <a href="https://j.youzan.com/ccPcrY" target="_blank"><img width="180px" src="https://i.imgur.com/FZtFAGz.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+
+
+### Sponsors
+
+-   [Liuyang](https://github.com/lingllting)
+
+-   Zuyang
+
+-   [Sayori Studio](https://t.me/SayoriStudio)
+
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+
+### Contributors
+
+[![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
 ## 参与我们
 
 如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
 
-可以通过以下途径参与讨论：
+### 提交新的 RSS 内容
 
-- [Telegram 群](https://t.me/rsshub)
-- [QQ 群](https://jq.qq.com/?_wv=1027&k=5kIvhps): 711799039
+1.  在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由
+
+2.  在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径添加获取 RSS 内容的脚本
+
+3.  更新 README 和文档: [/README.md](https://github.com/DIYgod/RSSHub/blob/master/README.md) [/docs/README.md](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md)
+
+### 参与讨论
+
+1.  [Telegram 群](https://t.me/rsshub)
+
+## 部署
+
+见[文档](https://docs.rsshub.app/)
+
+## 赞助 RSSHub 的研发
+
+RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着项目规模的增长，也需要有相应的资金支持才能持续项目的维护与开发。
+
+你可以通过下列的方法来赞助 RSSHub 的开发。
+
+### 一次性赞助
+
+我们通过以下方式接受赞助：
+
+-   [微信支付](https://i.imgur.com/aq6PtWa.png)
+-   [支付宝](https://i.imgur.com/wv1Pj2k.png)
+-   [Paypal](https://www.paypal.me/DIYgod)
+-   比特币: 13CwQLHzPYm2tewNMSJBeArbbRM5NSmCD1
+
+### 周期性赞助
+
+周期性赞助可以获得额外的回报，比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
+
+-   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer 或 sponsor
+-   给我们发邮件联系赞助事宜: i#html.love
 
 ## Author
 
 **RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [MIT](./LICENSE) License.<br>
-Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/DPlayer/contributors)).
+Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/RSSHub/contributors)).
 
 > Blog [@DIYgod](https://diygod.me) · GitHub [@DIYgod](https://github.com/DIYgod) · Twitter [@DIYgod](https://twitter.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
