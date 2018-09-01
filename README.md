@@ -15,7 +15,6 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 [English docs](https://docs.rsshub.app/en)
 
-
 ## 鸣谢
 
 ### Special Sponsors

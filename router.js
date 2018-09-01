@@ -8,12 +8,11 @@ const logger = require('./utils/logger');
 let gitHash;
 try {
     gitHash = require('git-rev-sync').short();
-}
-catch (e) {
+} catch (e) {
     gitHash = (process.env.HEROKU_SLUG_COMMIT && process.env.HEROKU_SLUG_COMMIT.slice(0, 7)) || 'unknown';
 }
 const startTime = +new Date();
-router.get('/', async(ctx) => {
+router.get('/', async (ctx) => {
     ctx.set({
         'Content-Type': 'text/html; charset=UTF-8',
     });
@@ -37,8 +36,7 @@ router.get('/', async(ctx) => {
     let showDebug;
     if (!config.debugInfo || config.debugInfo === 'false') {
         showDebug = false;
-    }
-    else {
+    } else {
         showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
     }
 
@@ -171,8 +169,7 @@ if (config.pixiv && config.pixiv.client_id && config.pixiv.client_secret && conf
     router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
     router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
     router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
-}
-else {
+} else {
     logger.warn('pixiv RSS is disabled for lacking config.');
 }
 
@@ -207,16 +204,14 @@ router.get('/jinritoutiao/keyword/:keyword', require('./routes/jinritoutiao/keyw
 // Disqus
 if (config.disqus && config.disqus.api_key) {
     router.get('/disqus/posts/:forum', require('./routes/disqus/posts'));
-}
-else {
+} else {
     logger.warn('Disqus RSS is disabled for lacking config.');
 }
 
 // Twitter
 if (config.twitter && config.twitter.consumer_key && config.twitter.consumer_secret && config.twitter.access_token && config.twitter.access_token_secret) {
     router.get('/twitter/user/:id', require('./routes/twitter/user'));
-}
-else {
+} else {
     logger.warn('Twitter RSS is disabled for lacking config.');
 }
 
@@ -227,8 +222,7 @@ router.get('/instagram/user/:id', require('./routes/instagram/user'));
 if (config.youtube && config.youtube.key) {
     router.get('/youtube/user/:username', require('./routes/youtube/user'));
     router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
-}
-else {
+} else {
     logger.warn('Youtube RSS is disabled for lacking config.');
 }
 
@@ -265,12 +259,10 @@ if (config.telegram && config.telegram.token) {
     router.get('/telegram/channel/:username', require('./routes/telegram/channel'));
     if (config.imgur && config.imgur.clientId) {
         router.get('/telegram/stickerpack/:name', require('./routes/telegram/stickerpack'));
-    }
-    else {
+    } else {
         logger.warn('Telegram Sticker Pack RSS is disabled for lacking config.');
     }
-}
-else {
+} else {
     logger.warn('Telegram RSS is disabled for lacking config.');
 }
 
@@ -280,8 +272,7 @@ router.get('/readhub/category/:category', require('./routes/readhub/category'));
 // GitHub
 if (config.github && config.github.access_token) {
     router.get('/github/repos/:user', require('./routes/github/repos'));
-}
-else {
+} else {
     logger.warn('GitHub Repos RSS is disabled for lacking config.');
 }
 router.get('/github/trending/:since/:language?', require('./routes/github/trending'));
