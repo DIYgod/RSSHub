@@ -496,4 +496,7 @@ router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 // 果壳网
 router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
+// npm
+router.get('/npm/:pkg', require('./routes/npm/index'));
+
 module.exports = router;
