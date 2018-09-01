@@ -498,4 +498,7 @@ router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 // 果壳网
 router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
+// Apple
+router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
+
 module.exports = router;
