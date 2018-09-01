@@ -211,6 +211,18 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   language, 语言, 可在网站右上角找到, `all` 为所有语言
 -   domain, 按脚本生效域名过滤, 可选
 
+### npm
+
+#### Package 更新 <Author uid="fengkx"/>
+
+举例： [https://rsshub.app/npm/sqlite](https://rsshub.app/npm/sqlite)
+
+路由： `/npm/:pkg`
+
+参数：
+
+-   pkg 包名， 例如 jquery, axios
+
 ## 大学通知类
 
 ### 上海海事大学

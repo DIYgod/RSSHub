@@ -174,6 +174,18 @@ Parameters:
 
 -   id, App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `id953286746`.
 
+### npm
+
+#### Package Update <Author uid="fengkx"/>
+
+Eg： [https://rsshub.app/npm/sqlite](https://rsshub.app/npm/sqlite)
+
+Route： `/npm/:pkg`
+
+Parameters：
+
+-   pkg package name， such as jquery, axios
+
 ## pixiv
 
 ### User Bookmark <Author uid="EYHN"/>

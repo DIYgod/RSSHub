@@ -12,7 +12,7 @@ sidebar: auto
 
 1.  在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径添加获取 RSS 内容的脚本
 
-1.  更新 [README (/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/README.md) 和 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
 
 1.  执行 `npm run format` 自动处理代码格式后, 提交代码, 然后提交 pull request
 
