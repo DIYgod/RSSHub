@@ -498,6 +498,10 @@ router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 // 果壳网
 router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
+// 联合早报
+router.get('/zaobao/realtime/:type?', require('./routes/zaobao/realtime'));
+router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
+
 // Apple
 router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
 
