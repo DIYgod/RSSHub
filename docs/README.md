@@ -189,7 +189,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 内购价格更新（限免） <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/appstore/iap/cn/id1152443474](https://rsshub.app/appstore/price/cn/id1152443474)
+举例: [https://rsshub.app/appstore/iap/cn/id953286746](https://rsshub.app/appstore/price/cn/id953286746)
 
 路由: `/appstore/iap/:country/:id`
 
