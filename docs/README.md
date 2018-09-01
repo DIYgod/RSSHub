@@ -1682,102 +1682,6 @@ GitHub 官方也提供了一些 RSS:
 
 -   number: 快递单号
 
-## 妹子图
-
-::: warning 注意
-
-该网站在国外无法访问, 故以下演示无效
-
-:::
-
-### 首页（最新） <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu](https://rsshub.app/mzitu)
-
-路由: `/mzitu/`
-
-### 分类 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/category/hot](https://rsshub.app/mzitu/category/hot)
-
-路由: `/mzitu/category/:category`
-
-参数:
-
--   category, 分类名
-
-| 热门 | 推荐 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
-| ---- | ---- | -------- | -------- | -------- | -------- |
-| hot  | best | xinggan  | japan    | taiwan   | mm       |
-
-### 所有专题 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/tags](https://rsshub.app/mzitu/tags)
-
-路由: `/mzitu/tags`
-
-### 专题详情 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/tag/shishen](https://rsshub.app/mzitu/tag/shishen)
-
-路由: `/mzitu/tag/:tag`
-
-参数:
-
--   tag, 专题名, 可在专题页 URL 中找到
-
-### 详情 <Author uid="gee1k"/>
-
-举例: [https://rsshub.app/mzitu/post/129452](https://rsshub.app/mzitu/post/129452)
-
-路由: `/mzitu/post/:id`
-
-参数:
-
--   id, 详情 id, 可在详情页 URL 中找到
-
-## pixiv
-
-### 用户收藏 <Author uid="EYHN"/>
-
-举例: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
-
-路由: `/pixiv/user/bookmarks/:id`
-
-参数:
-
--   id, 用户 id, 可在用户主页 URL 中找到
-
-### 用户动态 <Author uid="EYHN"/>
-
-举例: [https://rsshub.app/pixiv/user/11](https://rsshub.app/pixiv/user/11)
-
-路由: `/pixiv/user/:id`
-
-参数:
-
--   id, 用户 id, 可在用户主页 URL 中找到
-
-### 排行榜 <Author uid="EYHN"/>
-
-举例: [https://rsshub.app/pixiv/ranking/week](https://rsshub.app/pixiv/ranking/week)
-
-路由: `/pixiv/ranking/:mode/:date?`
-
-参数
-
--   mode, 排行榜类型
-
-| pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行 | pixiv 新人排行 |
-| ------------ | ------------ | ------------ | -------------------- | -------------------- | ------------------ | -------------- |
-| day          | week         | month        | day_male             | day_female           | week_original      | week_rookie    |
-
-| pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
-| ----------------- | ------------------------- | ------------------------- | ----------------- | ---------------- |
-| day_r18           | day_male_r18              | day_female_r18            | week_r18          | week_r18g        |
-
--   date, 日期, 取值形如 `2018-4-25`
-
 ## 豆瓣
 
 ### 正在上映的电影 <Author uid="DIYgod"/>
@@ -1835,22 +1739,6 @@ GitHub 官方也提供了一些 RSS:
 举例: [https://rsshub.app/douban/explore](https://rsshub.app/douban/explore)
 
 路由: `/douban/explore`
-
-## 煎蛋
-
-### 无聊图 <Author uid="Xuanwo"/>
-
-举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
-
-路由: `/jandan/:sub_model`
-
-### 妹子图 <Author uid="kobemtl"/>
-
-举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
-
-路由: `/jandan/:sub_model`
-
-参数: 无
 
 ## 喷嚏
 
@@ -2266,30 +2154,6 @@ GitHub 官方也提供了一些 RSS:
 | ------ | ------ | ---- | -------- | -------- |
 | latest | notice | news | activity | strategy |
 
-## 草榴社区
-
-### 分区帖子 <Author uid="zhboner"/>
-
-举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
-
-路由: `/t66y/:id`
-
-参数:
-
--   id, 分区 id, 可在分区页 URL 中找到
-
-| 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
-| -------------- | -------------- | ---------- | ---------- | ---------- |
-| 2              | 15             | 4          | 5          | 25         |
-
-| 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |
-| ---------- | ---------- | ----------- | ---------- |
-| 26         | 27         | 21          | 22         |
-
-| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
-| ---------- | ------------ | ------------ |
-| 7          | 8            | 16           |
-
 ## 机核网
 
 ### 分类 <Author uid="MoguCloud"/>
@@ -2526,3 +2390,111 @@ GitHub 官方也提供了一些 RSS:
 路由: `/ifanr/appso`
 
 参数: 无
+
+## NSFW 类
+
+### 煎蛋
+
+#### 无聊图 <Author uid="Xuanwo"/>
+
+举例: [https://rsshub.app/jandan/pic](https://rsshub.app/jandan/pic)
+
+路由: `/jandan/:sub_model`
+
+#### 妹子图 <Author uid="kobemtl"/>
+
+举例: [https://rsshub.app/jandan/ooxx](https://rsshub.app/jandan/ooxx)
+
+路由: `/jandan/:sub_model`
+
+参数: 无
+
+### 草榴社区
+
+#### 分区帖子 <Author uid="zhboner"/>
+
+举例: [https://rsshub.app/t66y/7](https://rsshub.app/t66y/7)
+
+路由: `/t66y/:id`
+
+参数:
+
+-   id, 分区 id, 可在分区页 URL 中找到
+
+| 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
+| -------------- | -------------- | ---------- | ---------- | ---------- |
+| 2              | 15             | 4          | 5          | 25         |
+
+| 中字原创区 | 转帖交流区 | HTTP 下载区 | 在线成人区 |
+| ---------- | ---------- | ----------- | ---------- |
+| 26         | 27         | 21          | 22         |
+
+| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
+| ---------- | ------------ | ------------ |
+| 7          | 8            | 16           |
+
+### 妹子图
+
+::: warning 注意
+
+该网站在国外无法访问, 故以下演示无效
+
+:::
+
+#### 首页（最新） <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu](https://rsshub.app/mzitu)
+
+路由: `/mzitu/`
+
+#### 分类 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/category/hot](https://rsshub.app/mzitu/category/hot)
+
+路由: `/mzitu/category/:category`
+
+参数:
+
+-   category, 分类名
+
+| 热门 | 推荐 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
+| ---- | ---- | -------- | -------- | -------- | -------- |
+| hot  | best | xinggan  | japan    | taiwan   | mm       |
+
+#### 所有专题 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/tags](https://rsshub.app/mzitu/tags)
+
+路由: `/mzitu/tags`
+
+#### 专题详情 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/tag/shishen](https://rsshub.app/mzitu/tag/shishen)
+
+路由: `/mzitu/tag/:tag`
+
+参数:
+
+-   tag, 专题名, 可在专题页 URL 中找到
+
+#### 详情 <Author uid="gee1k"/>
+
+举例: [https://rsshub.app/mzitu/post/129452](https://rsshub.app/mzitu/post/129452)
+
+路由: `/mzitu/post/:id`
+
+参数:
+
+-   id, 详情 id, 可在详情页 URL 中找到
+
+### pixiv
+
+#### 用户收藏 <Author uid="EYHN"/>
+
+举例: [https://rsshub.app/pixiv/user/bookmarks/15288095](https://rsshub.app/pixiv/user/bookmarks/15288095)
+
+路由: `/pixiv/user/bookmarks/:id`
+
+参数:
+
+-   id, 用户 id, 可在用户主页 URL 中找到
