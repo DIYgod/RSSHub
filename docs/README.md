@@ -1676,6 +1676,12 @@ GitHub 官方也提供了一些 RSS:
 
 路由: `/zhihu/daily`
 
+### 知乎热榜 <Author uid="Andiedie"/>
+
+举例: [https://rsshub.app/zhihu/hotlist](https://rsshub.app/zhihu/hotlist)
+
+路由: `/zhihu/hotlist`
+
 ## 自如
 
 ### 房源 <Author uid="DIYgod"/>
