@@ -150,7 +150,7 @@ id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/r
 
 ### App Store/Mac App Store Price Drop Alert <Author uid="HenryQW"/>
 
-eg: [https://rsshub.app/appstore/price/us/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
+Eg: [https://rsshub.app/appstore/price/us/mac/id1152443474](https://rsshub.app/appstore/price/cn/mac/id1152443474)
 
 Route: `/appstore/price/:country/:type/:id`
 
@@ -160,7 +160,19 @@ Parameters：
 
 -   type, App type，either `iOS` or `mac`
 
--   id, App Store app id, obtain from the app URL https://itunes.apple.com/cn/app/id1152443474, in this case, `id1152443474`.
+-   id, App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id1152443474, in this case, `id1152443474`.
+
+### App Store/Mac App Store In-App-Purchase Price Drop Alert <Author uid="HenryQW"/>
+
+Eg: [https://rsshub.app/appstore/iap/us/id953286746](https://rsshub.app/appstore/price/us/id953286746)
+
+Route: `/appstore/iap/:country/:id`
+
+Parameters:
+
+-   country, App Store Country, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `us`.
+
+-   id, App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `id953286746`.
 
 ## pixiv
 
@@ -366,6 +378,28 @@ Parameters:
 
 -   repo, repo name
 
+### Follower <Author uid="HenryQW"/>
+
+Eg: [https://rsshub.app/github/user/followers/HenryQW](https://rsshub.app/github/user/followers/HenryQW)
+
+Route: `/github/user/follower/:user`
+
+Parameters:
+
+-   user, username
+
+### Star <Author uid="HenryQW"/>
+
+Eg: [https://rsshub.app/github/stars/DIYGod/RSSHub](https://rsshub.app/github/stars/DIYGod/RSSHub)
+
+Route: `/github/stars/:user/:repo`
+
+Parameters:
+
+-   user, username
+
+-   repo, repo name
+
 ## EZTV
 
 ::: tip
@@ -420,14 +454,20 @@ Route: `/atfd/:locations/:nearby?`
 
 Parameters:
 
--   locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」:
+-   locations: the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」. They are not case sensitive. :
 
     1. Origin's ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-    2. Multiple origins are support via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
+    2. Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
 -   nearby: whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)
+
+::: tip
+
+If the city name contains a space like `Mexico City`, replace the space with `%20`, `Mexico%20City`.
+
+:::
 
 ## Google
 

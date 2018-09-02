@@ -20,7 +20,7 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
 
 ### Access the target data source API
 
-Use [axios](https://github.com/axios/axios) to access the target data source API, assign the acquired title, link, description and datetime to ctx.state.data（refer to Data for the list of parameters）, typically it looks like this: [/routes/bilibili/bangumi.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
+Use [axios](https://github.com/axios/axios) to access the target data source API, assign the acquired title, link, description and datetime to ctx.state.data (refer to Data for the list of parameters) , typically it looks like this: [/routes/bilibili/bangumi.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
 
 ### Acquire data from HTML
 
@@ -65,6 +65,45 @@ ctx.state.data = {
     ],
 };
 ```
+
+<details><summary>If you want to make a podcast RSS</summary><br>
+
+Reference article:
+
+-   [Create a podcast - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itca5b22233a)
+-   [Podcast best practices - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itc2b3780e76)
+-   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
+-   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
+
+these datas can make your podcast subscribeable:
+
+```js
+ctx.state.data = {
+    title: '', // The feed title
+    link: '', // The feed link
+    itunes_author: '', // The channel's author, you must fill this data.
+    itunes_category:  '',// Channel category
+    image: '', // Channel's image
+    description: '', // The feed description
+    item: [
+        // An item of the feed
+        {
+            title: '', // The item title
+            description: '', // The item content
+            pubDate: '', // The item publishing datetime
+            guid: '', // The item unique identifier, optional, default to the item link below.
+            link: '', // The item link
+            itunes_item_image: '', // The item image
+            enclosure_url: '', // The item's audio link
+            enclosure_length: '', // The audio length, the unit is seconds.
+            enclosure_type: '', // 'audio/mpeg' or 'audio/m4a' or others
+            itunes_duration: '', // Covert the 'enclosure_length' to hh:mm:ss (1:33:52)
+        },
+    ],
+};
+```
+
+</details>
 
 ## Join the discussion
 
