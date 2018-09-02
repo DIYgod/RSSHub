@@ -506,4 +506,7 @@ router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
 // Apple
 router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
 
+// Minecraft CurseForge
+router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
+
 module.exports = router;
