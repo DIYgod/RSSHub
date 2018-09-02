@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
     const text = $('.hvr-shutter-out-vertical');
 
     ctx.state.data = {
-        title: '',
+        title: '北大信科通知',
         link: host + 'Survey/Notice/?Mtitle=' + type,
         description: '北大信科 公告通知',
         item:
