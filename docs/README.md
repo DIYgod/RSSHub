@@ -1278,15 +1278,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 直播开播 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 直播搜索 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 直播分区 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 主站话题列表 <Author uid="Qixingchen"/>
 
@@ -1505,6 +1505,14 @@ GitHub 官方也提供了一些 RSS:
 参数:
 
 -   id, 用户 id, 可在即刻 web 端用户页 URL 中找到
+
+### 即刻小报 <Author uid="Andiedie"/>
+
+举例: <https://rsshub.app/jike/daily>
+
+路由: `/jike/daily`
+
+参数: 无
 
 ## 微信
 
@@ -2587,7 +2595,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### App Store/Mac App Store
 
-见 <#app-store-mac-app-store>
+见 [#app-store-mac-app-store](#app-store-mac-app-store)
 
 ## Minecraft CurseForge
 

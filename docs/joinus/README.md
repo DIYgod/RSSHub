@@ -96,7 +96,7 @@ ctx.state.data = {
             itunes_item_image: '', // 图像
             enclosure_url: '', // 音频链接
             enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数
-            enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/m4a'], 或其他类型.
+            enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'], 或其他类型.
             itunes_duration: '', // 由enclosure_length转换为 时:分:秒
         },
     ],

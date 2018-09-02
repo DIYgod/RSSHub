@@ -96,7 +96,7 @@ ctx.state.data = {
             itunes_item_image: '', // The item image
             enclosure_url: '', // The item's audio link
             enclosure_length: '', // The audio length, the unit is seconds.
-            enclosure_type: '', // 'audio/mpeg' or 'audio/m4a' or others
+            enclosure_type: '', // 'audio/mpeg' or 'audio/x-m4a' or others
             itunes_duration: '', // Covert the 'enclosure_length' to hh:mm:ss (1:33:52)
         },
     ],
