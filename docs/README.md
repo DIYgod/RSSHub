@@ -363,6 +363,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+### 哈尔滨工业大学
+
+#### 哈尔滨工业大学教务处通知公告 <Author uid="lty96117"/>
+
+举例: <https://rsshub.app/hit/jwc>
+
+路由: `/hit/jwc`
+
+参数: 无
+
 ### 上海科技大学
 
 #### 信息科技与技术学院活动 <Author uid="HenryQW"/>
