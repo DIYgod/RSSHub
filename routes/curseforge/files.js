@@ -2,6 +2,7 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
 const BASE_URL = 'https://minecraft.curseforge.com/';
+const CACHE_TIME = 24 * 60 * 60;
 
 module.exports = async (ctx) => {
     const { project } = ctx.params;
@@ -17,6 +18,12 @@ module.exports = async (ctx) => {
             const document = {};
             const link = el.attr('href');
             document.link = `${BASE_URL}${link}`;
+            const cache = await ctx.cache.get(document.link);
+
+            if (cache) {
+                return JSON.parse(cache);
+            }
+
             const itemReq = await axios.get(document.link);
             const $item = cheerio.load(itemReq.data);
             const supportVersions = $item('.details-versions li')
@@ -28,6 +35,8 @@ module.exports = async (ctx) => {
             document.description = `${projectName} 的 ${document.author} 发布了新的文件: ${document.title}. 支持的版本为: ${supportVersions}`;
             document.pubDate = new Date(Number($item('.standard-datetime').attr('data-epoch')) * 1000).toUTCString();
             document.guid = $item('.md5').text();
+
+            await ctx.cache.set(document.link, JSON.stringify(document), CACHE_TIME);
 
             return document;
         });
