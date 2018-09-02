@@ -10,6 +10,9 @@ module.exports = async (ctx) => {
     });
 
     const data = JSON.parse(response.data);
+    const postTime = new Date();
+    postTime.setFullYear(parseInt(data.year), parseInt(data.month) - 1, parseInt(data.day));
+    postTime.setHours(0, 0, 0, 0); // 无法获取精确时间
 
     ctx.state.data = {
         title: 'xkcd',
@@ -19,7 +22,7 @@ module.exports = async (ctx) => {
             {
                 title: data.title,
                 description: `<img src="${data.img}"><br />${data.alt}`,
-                pubDate: data.year + data.month + data.day,
+                pubDate: postTime.toUTCString(),
                 link: 'https://www.xkcd.com/' + data.num,
                 guid: data.num,
             },

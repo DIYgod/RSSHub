@@ -2589,9 +2589,9 @@ GitHub 官方也提供了一些 RSS:
 
 见 <#app-store-mac-app-store>
 
-## xkcd <Author uid="arbent"/>
+## xkcd
 
-### xkcd 的科学漫画
+### xkcd 的科学漫画 <Author uid="arbent"/>
 
 举例: <https://rsshub.app/xkcd/comic>
 
@@ -2599,7 +2599,7 @@ GitHub 官方也提供了一些 RSS:
 
 参数: 无
 
-### what-if
+### what-if <Author uid="arbent"/>
 
 举例: <https://rsshub.app/xkcd/what-if>
 

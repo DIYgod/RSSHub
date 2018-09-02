@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
             {
                 title: $('h1').text(),
                 description: $('#question').text(),
-                pubDate: '',
+                pubDate: '', // 发表日期无法获取
                 guid: '',
                 link: 'https:' + $('article a:first').attr('href'),
             },
