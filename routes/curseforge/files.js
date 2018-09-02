@@ -10,7 +10,8 @@ module.exports = async (ctx) => {
     const { data } = projectFilesReq;
     const $ = cheerio.load(data);
     const projectName = $('.project-title span').text();
-    const reqs = $('.project-file-name-container > a').get()
+    const reqs = $('.project-file-name-container > a')
+        .get()
         .map(async (item) => {
             const el = $(item);
             const document = {};
