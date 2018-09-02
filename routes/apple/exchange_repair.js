@@ -1,22 +1,29 @@
-const axios = require('../../../../utils/axios');
+const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
-const host = 'http://radio.seu.edu.cn/';
+const host = 'https://www.apple.com/';
 
 module.exports = async (ctx) => {
-    const link = url.resolve(host, '_s29/15986/list.psp');
+    const link = url.resolve(host, 'cn/support/exchange_repair/');
     const response = await axios.get(link);
 
     const $ = cheerio.load(response.data);
 
-    const list = $('.Article_Title a')
-        .slice(0, 10)
+    const list = $('tr td a')
         .map((i, e) => $(e).attr('href'))
         .get();
 
+    const datelist = $('tr td p')
+        .map((i, e) =>
+            $(e)
+                .text()
+                .trim()
+        )
+        .get();
+
     const out = await Promise.all(
-        list.map(async (itemUrl) => {
+        list.map(async (itemUrl, index) => {
             itemUrl = url.resolve(host, itemUrl);
             const cache = await ctx.cache.get(itemUrl);
             if (cache) {
@@ -27,28 +34,22 @@ module.exports = async (ctx) => {
             const $ = cheerio.load(response.data);
 
             const single = {
-                title: $('.arti_title').text(),
+                title: $('h1').text(),
                 link: itemUrl,
-                author: $('.arti_publisher')
-                    .text()
-                    .replace('发布者：', ''),
-                description: $('.wp_articlecontent')
+                author: 'Apple Inc.',
+                description: $('#welcome')
                     .html()
-                    .replace(/src="\//g, `src="${url.resolve(host, '.')}`)
-                    .trim(),
-                pubDate: new Date(
-                    $('.arti_update')
-                        .text()
-                        .replace('发布时间：', '')
-                ),
+                    .replace(/src="\//g, `src="${url.resolve(host, '.')}`),
+                pubDate: new Date(datelist[index].replace(/(\d+) 年 (\d+) 月 (\d+) 日/, '$1-$2-$3')),
             };
+
             ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
             return Promise.resolve(single);
         })
     );
 
     ctx.state.data = {
-        title: '东南大学信息科学与工程学院 -- 学术活动',
+        title: 'Apple 支持 -- 更换和维修扩展计划',
         link,
         item: out,
     };
