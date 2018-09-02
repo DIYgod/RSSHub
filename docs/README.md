@@ -409,11 +409,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 | -------- | -------- |
 | notice   | news     |
 
-<<<<<<< HEAD
-## 媒体类
-
-=======
->>>>>>> upstream/master
 ## 传统媒体类
 
 ### 央视新闻
