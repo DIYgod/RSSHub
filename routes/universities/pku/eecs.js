@@ -31,7 +31,7 @@ module.exports = async (ctx) => {
                     item = $(item);
                     return {
                         title: item.find('p').text(),
-                        link: host + item.attr('href'),
+                        link: host + 'Survey/Notice/' + item.attr('href'),
                         description: item.find('p').text(),
                         pubDate: item.find('em').text(),
                     };
