@@ -409,6 +409,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 | -------- | -------- |
 | notice   | news     |
 
+### 哈尔滨工程大学
+
+#### 本科生院工作通知 <Author uid="XYenon"/>
+
+举例: <https://rsshub.app/heu/ugs/news>
+
+路由: `/heu/ugs/news`
+
+参数: 无
+
 ## 传统媒体类
 
 ### 央视新闻
