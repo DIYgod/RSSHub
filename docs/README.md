@@ -1506,6 +1506,14 @@ GitHub 官方也提供了一些 RSS:
 
 -   id, 用户 id, 可在即刻 web 端用户页 URL 中找到
 
+### 即刻小报 <Author uid="Andiedie"/>
+
+举例: <https://rsshub.app/jike/daily>
+
+路由: `/jike/daily`
+
+参数: 无
+
 ## 微信
 
 ::: tip 提示

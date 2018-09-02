@@ -233,6 +233,7 @@ if (config.youtube && config.youtube.key) {
 router.get('/jike/topic/:id', require('./routes/jike/topic'));
 router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
+router.get('/jike/daily', require('./routes/jike/daily'));
 
 // 极客时间
 router.get('/geektime/column/:cid', require('./routes/geektime/column'));
