@@ -2596,3 +2596,19 @@ GitHub 官方也提供了一些 RSS:
 ### App Store/Mac App Store
 
 见 [#app-store-mac-app-store](#app-store-mac-app-store)
+
+## xkcd
+
+### xkcd 的科学漫画 <Author uid="arbent"/>
+
+举例: <https://rsshub.app/xkcd/comic>
+
+路由: `/xkcd/comic`
+
+参数: 无
+
+### what-if <Author uid="arbent"/>
+
+举例: <https://rsshub.app/xkcd/what-if>
+
+路由: `/xkcd/what-if`
