@@ -1524,9 +1524,9 @@ GitHub 官方也提供了一些 RSS:
 
 ### 主题-纯文字 <Author uid="HenryQW"/>
 
-举例: <https://rsshub.app/jike/topicText/553870e8e4b0cafb0a1bef68>
+举例: <https://rsshub.app/jike/topic/text/553870e8e4b0cafb0a1bef68>
 
-路由: `/jike/topicText/:id`
+路由: `/jike/topic/text/:id`
 
 参数:
 
