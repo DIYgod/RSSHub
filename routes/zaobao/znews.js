@@ -55,7 +55,7 @@ module.exports = async (ctx) => {
                 const date = res.replace('发布/', '').toString();
                 let description = '';
                 $1('p', '.article-content-container').each(function() {
-                    description = description + $(this).html() + '<br/>';
+                    description = description + '<p>' + $(this).html() + '</p>';
                 });
 
                 resultItem = {

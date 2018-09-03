@@ -363,6 +363,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+### 哈尔滨工业大学
+
+#### 哈尔滨工业大学教务处通知公告 <Author uid="lty96117"/>
+
+举例: <https://rsshub.app/hit/jwc>
+
+路由: `/hit/jwc`
+
+参数: 无
+
 ### 上海科技大学
 
 #### 信息科技与技术学院活动 <Author uid="HenryQW"/>
@@ -408,6 +418,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 | 通知公告 | 教务快讯 |
 | -------- | -------- |
 | notice   | news     |
+
+### 哈尔滨工程大学
+
+#### 本科生院工作通知 <Author uid="XYenon"/>
+
+举例: <https://rsshub.app/heu/ugs/news>
+
+路由: `/heu/ugs/news`
+
+参数: 无
 
 ## 传统媒体类
 
@@ -1278,15 +1298,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 直播开播 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 直播搜索 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 直播分区 <Author uid="Qixingchen"/>
 
-见 <#哔哩哔哩直播>
+见 [#哔哩哔哩直播](#哔哩哔哩直播)
 
 ### 主站话题列表 <Author uid="Qixingchen"/>
 
@@ -1478,6 +1498,12 @@ GitHub 官方也提供了一些 RSS:
 
 ### 主题-精选 <Author uid="DIYgod"/>
 
+::: tip 提示
+
+部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#主题-纯文字">主题-纯文字 jike/topicText</a> 可能会提供更好的体验.
+
+:::
+
 举例: <https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0>
 
 路由: `/jike/topic/:id`
@@ -1496,6 +1522,16 @@ GitHub 官方也提供了一些 RSS:
 
 -   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
 
+### 主题-纯文字 <Author uid="HenryQW"/>
+
+举例: <https://rsshub.app/jike/topic/text/553870e8e4b0cafb0a1bef68>
+
+路由: `/jike/topic/text/:id`
+
+参数:
+
+-   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
 ### 用户动态 <Author uid="DIYgod"/>
 
 举例: <https://rsshub.app/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3>
@@ -1505,6 +1541,14 @@ GitHub 官方也提供了一些 RSS:
 参数:
 
 -   id, 用户 id, 可在即刻 web 端用户页 URL 中找到
+
+### 即刻小报 <Author uid="Andiedie"/>
+
+举例: <https://rsshub.app/jike/daily>
+
+路由: `/jike/daily`
+
+参数: 无
 
 ## 微信
 
@@ -2587,7 +2631,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### App Store/Mac App Store
 
-见 <#app-store-mac-app-store>
+见 [#app-store-mac-app-store](#app-store-mac-app-store)
 
 ## xkcd
 
