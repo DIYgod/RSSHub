@@ -1498,6 +1498,12 @@ GitHub 官方也提供了一些 RSS:
 
 ### 主题-精选 <Author uid="DIYgod"/>
 
+::: tip 提示
+
+部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#主题-纯文字">主题-纯文字 jike/topicText</a> 可能会提供更好的体验.
+
+:::
+
 举例: <https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0>
 
 路由: `/jike/topic/:id`
@@ -1511,6 +1517,16 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0>
 
 路由: `/jike/topic/square/:id`
+
+参数:
+
+-   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+### 主题-纯文字 <Author uid="HenryQW"/>
+
+举例: <https://rsshub.app/jike/topic/text/553870e8e4b0cafb0a1bef68>
+
+路由: `/jike/topic/text/:id`
 
 参数:
 
