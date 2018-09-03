@@ -23,8 +23,9 @@ module.exports = async (ctx) => {
             title: $('a', el).attr('title'),
         }))
         .get();
+
     const item = await Promise.all(
-        [...links].map(async ({ pubDate, link, title }) => {
+        [...links].slice(0, 10).map(async ({ pubDate, link, title }) => {
             if (type(link) === 'htm') {
                 const { data } = await axios.get(link);
                 const $ = cheerio.load(data);
