@@ -95,7 +95,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: '哈尔滨工程大学本科生院工作通知',
-        link: `${baseUrl}`,
+        link: `${baseUrl}/2821/list.htm`,
         item: item.filter((x) => x),
     };
 };
