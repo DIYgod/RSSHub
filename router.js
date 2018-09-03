@@ -462,6 +462,9 @@ router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
 
+// 哈尔滨工业大学
+router.get('/hit/jwc', require('./routes/universities/hit/jwc'));
+
 // 上海科技大学
 router.get('/shanghaitech/sist/activity', require('./routes/universities/shanghaitech/sist/activity'));
 
