@@ -527,4 +527,7 @@ router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
 // 抖音
 router.get('/douyin/user/:id', require('./routes/douyin/user'));
 
+// 少数派 sspai
+router.get('/sspai/series', require('./routes/sspai/series'));
+
 module.exports = router;
