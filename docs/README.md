@@ -2674,3 +2674,15 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/xkcd/what-if>
 
 路由: `/xkcd/what-if`
+
+## 抖音
+
+### 用户动态 <Author uid="DIYgod"/>
+
+举例: <https://rsshub.app/douyin/user/93610979153>
+
+路由: `/douyin/user/:id`
+
+参数:
+
+-   id, 用户 id, 可在 分享出去获得的用户主页 URL 中找到
