@@ -441,8 +441,8 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数:
 
-- author，可选，发布部门，默认为 `gztz`
-- category，可选，分类，默认为 `all`
+-   author，可选，发布部门，默认为 `gztz`
+-   category，可选，分类，默认为 `all`
 
 author 列表：
 
