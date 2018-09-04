@@ -2599,7 +2599,7 @@ GitHub 官方也提供了一些 RSS:
 
 ## Minecraft CurseForge
 
-### Mod 更新
+### Mod 更新 <Author uid="Indexyz"/>
 
 举例: <https://rsshub.app/curseforge/files/jei>
 

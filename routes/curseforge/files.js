@@ -32,7 +32,8 @@ module.exports = async (ctx) => {
                 .join(', ');
             document.author = $item('.user-tag a').text();
             document.title = $item('.details-header > h3').text();
-            document.description = `${projectName} 的 ${document.author} 发布了新的文件: ${document.title}. 支持的版本为: ${supportVersions}`;
+            document.description = `${projectName} 的 ${document.author} 发布了新的文件: ${document.title}. ` + `</br> 支持的版本为: ${supportVersions}`;
+
             document.pubDate = new Date(Number($item('.standard-datetime').attr('data-epoch')) * 1000).toUTCString();
             document.guid = $item('.md5').text();
 
