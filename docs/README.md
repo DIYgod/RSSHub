@@ -211,6 +211,18 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   language, 语言, 可在网站右上角找到, `all` 为所有语言
 -   domain, 按脚本生效域名过滤, 可选
 
+### Minecraft CurseForge
+
+#### Mod 更新 <Author uid="Indexyz"/>
+
+举例: <https://rsshub.app/curseforge/files/jei>
+
+路由: `/curseforge/files/:project`
+
+参数:
+
+-   project: 项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到
+
 ## 大学通知类
 
 ### 上海海事大学
@@ -2662,15 +2674,3 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/xkcd/what-if>
 
 路由: `/xkcd/what-if`
-
-## Minecraft CurseForge
-
-### Mod 更新 <Author uid="Indexyz"/>
-
-举例: <https://rsshub.app/curseforge/files/jei>
-
-路由: `/curseforge/files/:project`
-
-参数:
-
--   project: 项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到
