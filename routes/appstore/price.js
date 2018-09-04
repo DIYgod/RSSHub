@@ -1,6 +1,5 @@
 const axios = require('../../utils/axios');
 const currency = require('currency-symbol-map');
-
 module.exports = async (ctx) => {
     const country = ctx.params.country;
     const type = ctx.params.type.toLowerCase() === 'mac' ? 'macapps' : 'apps';
@@ -32,7 +31,7 @@ module.exports = async (ctx) => {
             title: `${result.title} is now ${currency(result.currency)}${result.price} `,
             description: `<a href="${link}" target="_blank">Go to App Store</a>`,
             link,
-            guid: id + Date.now(),
+            guid: id + result.priceLastChangeDate,
         };
         item.push(single);
     }
