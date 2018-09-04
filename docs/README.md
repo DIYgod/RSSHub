@@ -625,14 +625,13 @@ category 列表：
 | -------- |
 | lxkc     |
 
-工作通知：无
-=======
+# 工作通知：无
+
 #### 7 日热门 <Author uid="DIYgod"/>
 
 举例: <https://rsshub.app/jianshu/trending/weekly>
 
 路由: `/jianshu/trending/weekly`
->>>>>>> upstream/master
 
 参数: 无
 
@@ -1611,8 +1610,8 @@ GitHub 官方也提供了一些 RSS:
 
 参数:
 
-- author，可选，发布部门，默认为 `gztz`
-- category，可选，分类，默认为 `all`
+-   author，可选，发布部门，默认为 `gztz`
+-   category，可选，分类，默认为 `all`
 
 author 列表：
 
