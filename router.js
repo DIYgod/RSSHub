@@ -525,4 +525,7 @@ router.get('/xkcd/what-if', require('./routes/xkcd/what-if'));
 // Minecraft CurseForge
 router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
 
+// 抖音
+router.get('/douyin/user/:id', require('./routes/douyin/user'));
+
 module.exports = router;
