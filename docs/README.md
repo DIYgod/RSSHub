@@ -211,6 +211,18 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   language, 语言, 可在网站右上角找到, `all` 为所有语言
 -   domain, 按脚本生效域名过滤, 可选
 
+### Minecraft CurseForge
+
+#### Mod 更新 <Author uid="Indexyz"/>
+
+举例: <https://rsshub.app/curseforge/files/jei>
+
+路由: `/curseforge/files/:project`
+
+参数:
+
+-   project: 项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到
+
 ## 大学通知类
 
 ### 上海海事大学
@@ -363,6 +375,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+### 哈尔滨工业大学
+
+#### 哈尔滨工业大学教务处通知公告 <Author uid="lty96117"/>
+
+举例: <https://rsshub.app/hit/jwc>
+
+路由: `/hit/jwc`
+
+参数: 无
+
 ### 上海科技大学
 
 #### 信息科技与技术学院活动 <Author uid="HenryQW"/>
@@ -413,6 +435,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 本科生院工作通知 <Author uid="XYenon"/>
 
+<<<<<<< HEAD
 举例: <https://rsshub.app/heu/ugs/news/jwc/jxap>
 
 路由: `/heu/ugs/news/:author?/:category?`
@@ -471,6 +494,13 @@ category 列表：
 | lxkc     |
 
 工作通知：无
+=======
+举例: <https://rsshub.app/heu/ugs/news>
+
+路由: `/heu/ugs/news`
+
+参数: 无
+>>>>>>> upstream/master
 
 ## 传统媒体类
 
@@ -905,6 +935,20 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 参数:
 
 -   id, 独家号 id, 可在对应独家号页 URL 中找到
+
+### 众成翻译
+
+#### 首页 <Author uid="SirM2z"/>
+
+举例: <https://rsshub.app/zcfy/index>
+
+路由: `/zcfy/index`
+
+#### 热门 <Author uid="SirM2z"/>
+
+举例: <https://rsshub.app/zcfy/hot>
+
+路由: `/zcfy/hot`
 
 ### V2EX
 
@@ -1541,6 +1585,12 @@ GitHub 官方也提供了一些 RSS:
 
 ### 主题-精选 <Author uid="DIYgod"/>
 
+::: tip 提示
+
+部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#主题-纯文字">主题-纯文字 jike/topicText</a> 可能会提供更好的体验.
+
+:::
+
 举例: <https://rsshub.app/jike/topic/54dffb40e4b0f57466e675f0>
 
 路由: `/jike/topic/:id`
@@ -1554,6 +1604,16 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/jike/topic/square/54dffb40e4b0f57466e675f0>
 
 路由: `/jike/topic/square/:id`
+
+参数:
+
+-   id, 主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到
+
+### 主题-纯文字 <Author uid="HenryQW"/>
+
+举例: <https://rsshub.app/jike/topic/text/553870e8e4b0cafb0a1bef68>
+
+路由: `/jike/topic/text/:id`
 
 参数:
 
@@ -2659,3 +2719,19 @@ GitHub 官方也提供了一些 RSS:
 ### App Store/Mac App Store
 
 见 [#app-store-mac-app-store](#app-store-mac-app-store)
+
+## xkcd
+
+### xkcd 的科学漫画 <Author uid="arbent"/>
+
+举例: <https://rsshub.app/xkcd/comic>
+
+路由: `/xkcd/comic`
+
+参数: 无
+
+### what-if <Author uid="arbent"/>
+
+举例: <https://rsshub.app/xkcd/what-if>
+
+路由: `/xkcd/what-if`

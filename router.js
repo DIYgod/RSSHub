@@ -201,6 +201,10 @@ router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 
+// 众成翻译
+router.get('/zcfy/index', require('./routes/zcfy/index'));
+router.get('/zcfy/hot', require('./routes/zcfy/hot'));
+
 // 今日头条
 router.get('/jinritoutiao/keyword/:keyword', require('./routes/jinritoutiao/keyword'));
 
@@ -231,6 +235,7 @@ if (config.youtube && config.youtube.key) {
 
 // 即刻
 router.get('/jike/topic/:id', require('./routes/jike/topic'));
+router.get('/jike/topic/text/:id', require('./routes/jike/topicText'));
 router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
 router.get('/jike/daily', require('./routes/jike/daily'));
@@ -462,6 +467,9 @@ router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
 
+// 哈尔滨工业大学
+router.get('/hit/jwc', require('./routes/universities/hit/jwc'));
+
 // 上海科技大学
 router.get('/shanghaitech/sist/activity', require('./routes/universities/shanghaitech/sist/activity'));
 
@@ -495,7 +503,11 @@ router.get('/cas/sim/academic', require('./routes/universities/cas/sim/academic'
 router.get('/njupt/jwc/:type?', require('./routes/universities/njupt/jwc'));
 
 // 哈尔滨工程大学
+<<<<<<< HEAD
 router.get('/heu/ugs/news/:author?/:category?', require('./routes/universities/heu/ugs/news'));
+=======
+router.get('/heu/ugs/news', require('./routes/universities/heu/ugs/news'));
+>>>>>>> upstream/master
 
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
@@ -509,5 +521,12 @@ router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
 
 // Apple
 router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
+
+// XKCD
+router.get('/xkcd/comic', require('./routes/xkcd/comic'));
+router.get('/xkcd/what-if', require('./routes/xkcd/what-if'));
+
+// Minecraft CurseForge
+router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
 
 module.exports = router;
