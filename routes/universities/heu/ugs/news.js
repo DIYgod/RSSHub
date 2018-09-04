@@ -74,6 +74,13 @@ module.exports = async (ctx) => {
                 const { data } = await axios.get(link);
                 const $ = cheerio.load(data);
 
+                const key = link;
+                const value = await ctx.cache.get(key);
+
+                if (value) {
+                    return Promise.resolve({ pubDate, link, title, value });
+                }
+
                 const description =
                     $('div.wp_articlecontent').html() &&
                     $('div.wp_articlecontent')
@@ -85,6 +92,7 @@ module.exports = async (ctx) => {
                 if (!description) {
                     return;
                 }
+                ctx.cache.set(key, description, 60 * 60 * 24);
                 return Promise.resolve({ pubDate, link, title, description });
             } else {
                 // file to download
@@ -96,6 +104,6 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: '哈尔滨工程大学本科生院工作通知',
         link: `${baseUrl}/2821/list.htm`,
-        item: item.filter((x) => x),
+        item: item,
     };
 };

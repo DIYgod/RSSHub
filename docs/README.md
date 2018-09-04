@@ -435,7 +435,6 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 #### 本科生院工作通知 <Author uid="XYenon"/>
 
-<<<<<<< HEAD
 举例: <https://rsshub.app/heu/ugs/news/jwc/jxap>
 
 路由: `/heu/ugs/news/:author?/:category?`
@@ -494,13 +493,6 @@ category 列表：
 | lxkc     |
 
 工作通知：无
-=======
-举例: <https://rsshub.app/heu/ugs/news>
-
-路由: `/heu/ugs/news`
-
-参数: 无
->>>>>>> upstream/master
 
 ## 传统媒体类
 
