@@ -2684,9 +2684,3 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 路由: `/xkcd/comic`
 
 参数: 无
-
-#### what-if <Author uid="arbent"/>
-
-举例: <https://rsshub.app/xkcd/what-if>
-
-路由: `/xkcd/what-if`
