@@ -2,6 +2,8 @@ const axios = require('../../../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
+const baseUrl = 'http://ugs.hrbeu.edu.cn';
+
 const authorMap = {
     gztz: {
         all: '/2821',
@@ -50,60 +52,71 @@ const authorMap = {
     },
 };
 
-const baseUrl = 'http://ugs.hrbeu.edu.cn';
-const type = (filename) => filename.split('.').pop();
-
 module.exports = async (ctx) => {
     const author = ctx.params.author || 'gztz';
     const category = ctx.params.category || 'all';
-    const response = await axios.get(`${baseUrl}${authorMap[author][category]}/list.htm`);
+    const link = baseUrl + authorMap[author][category] + '/list.htm';
+    const response = await axios({
+        method: 'get',
+        url: link,
+        headers: {
+            Referer: baseUrl,
+        },
+    });
+    const $ = cheerio.load(response.data);
 
-    const { data } = response;
-    const $ = cheerio.load(data);
-    const links = $('.wp_article_list_table .border9')
-        .map((i, el) => ({
-            pubDate: new Date($('.date', el).text()).toUTCString(),
-            link: url.resolve(baseUrl, $('a', el).attr('href')),
-            title: $('a', el).text(),
-        }))
+    const urlList = $('.wp_article_list_table .border9')
+        .slice(0, 10)
+        .map((i, e) => $('a', e).attr('href'))
         .get();
 
-    const item = await Promise.all(
-        [...links].slice(0, 10).map(async ({ pubDate, link, title }) => {
-            if (type(link) === 'htm') {
-                const { data } = await axios.get(link);
-                const $ = cheerio.load(data);
+    const titleList = $('.wp_article_list_table .border9')
+        .slice(0, 10)
+        .map((i, e) => $('a', e).text())
+        .get();
 
-                const key = link;
-                const value = await ctx.cache.get(key);
+    const dateList = $('.wp_article_list_table .border9')
+        .slice(0, 10)
+        .map((i, e) => $('.date', e).text())
+        .get();
 
-                if (value) {
-                    return Promise.resolve({ pubDate, link, title, value });
+    const out = await Promise.all(
+        urlList.map(async (itemUrl, index) => {
+            itemUrl = url.resolve(baseUrl, itemUrl);
+            if (itemUrl.indexOf('.htm') !== -1) {
+                const cache = await ctx.cache.get(itemUrl);
+                if (cache) {
+                    return Promise.resolve(JSON.parse(cache));
                 }
-
-                const description =
-                    $('div.wp_articlecontent').html() &&
-                    $('div.wp_articlecontent')
+                const response = await axios.get(itemUrl);
+                const $ = cheerio.load(response.data);
+                const single = {
+                    title: titleList[index],
+                    link: itemUrl,
+                    description: $('.wp_articlecontent')
                         .html()
                         .replace(/src="\//g, `src="${url.resolve(baseUrl, '.')}`)
                         .replace(/href="\//g, `href="${url.resolve(baseUrl, '.')}`)
-                        .trim();
-                // check for some bug links.
-                if (!description) {
-                    return;
-                }
-                ctx.cache.set(key, description, 60 * 60 * 24);
-                return Promise.resolve({ pubDate, link, title, description });
+                        .trim(),
+                    pubDate: dateList[index],
+                };
+                ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
+                return Promise.resolve(single);
             } else {
-                // file to download
-                return Promise.resolve({ pubDate, link, title, description: '此链接为文件，点击以下载' });
+                const single = {
+                    title: titleList[index],
+                    link: itemUrl,
+                    description: '此链接为文件，请点击下载',
+                    pubDate: dateList[index],
+                };
+                return Promise.resolve(single);
             }
         })
     );
 
     ctx.state.data = {
         title: '哈尔滨工程大学本科生院工作通知',
-        link: `${baseUrl}/2821/list.htm`,
-        item: item,
+        link: baseUrl,
+        item: out,
     };
 };
