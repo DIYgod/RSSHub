@@ -201,6 +201,10 @@ router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
 router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 
+// 众成翻译
+router.get('/zcfy/index', require('./routes/zcfy/index'));
+router.get('/zcfy/hot', require('./routes/zcfy/hot'));
+
 // 今日头条
 router.get('/jinritoutiao/keyword/:keyword', require('./routes/jinritoutiao/keyword'));
 

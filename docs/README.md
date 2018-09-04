@@ -863,6 +863,20 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 -   id, 独家号 id, 可在对应独家号页 URL 中找到
 
+### 众成翻译
+
+#### 首页 <Author uid="SirM2z"/>
+
+举例: <https://rsshub.app/zcfy/index>
+
+路由: `/zcfy/index`
+
+#### 热门 <Author uid="SirM2z"/>
+
+举例: <https://rsshub.app/zcfy/hot>
+
+路由: `/zcfy/hot`
+
 ### V2EX
 
 #### 最热/最新主题 <Author uid="WhiteWorld"/>
