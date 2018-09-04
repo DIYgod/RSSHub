@@ -522,4 +522,7 @@ router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
 router.get('/xkcd/comic', require('./routes/xkcd/comic'));
 router.get('/xkcd/what-if', require('./routes/xkcd/what-if'));
 
+// Minecraft CurseForge
+router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
+
 module.exports = router;
