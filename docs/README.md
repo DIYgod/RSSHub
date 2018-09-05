@@ -2708,3 +2708,11 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 #### App Store/Mac App Store
 
 见 [#app-store-mac-app-store](#app-store-mac-app-store)
+
+### 少数派 sspai <Author uid="HenryQW"/>
+
+#### 最新上架付费专栏
+
+举例: <https://rsshub.app/sspai/series>
+
+路由: `/sspai/series`
