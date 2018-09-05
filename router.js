@@ -541,6 +541,7 @@ router.get('/xclient/app/:name', require('./routes/xclient/app'));
 // US
 router.get('/embassy/us/chicago', require('./routes/embassy/us/chicago'));
 router.get('/embassy/us/newyork', require('./routes/embassy/us/newyork'));
+router.get('/embassy/us/sanfrancisco', require('./routes/embassy/us/sanfrancisco'));
 
 // UK
 router.get('/embassy/uk/edinburgh', require('./routes/embassy/uk/edinburgh'));

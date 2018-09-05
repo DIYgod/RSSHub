@@ -2547,10 +2547,11 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 城市列表:
 
-| 城市   | 路由                   | 作者                    |
-| ------ | ---------------------- | ----------------------- |
-| 纽约   | `/embassy/us/newyork>` | <Author uid="HenryQW"/> |
-| 芝加哥 | `/embassy/us/chicago>` | <Author uid="HenryQW"/> |
+| 城市   | 路由                        | 作者                    |
+| ------ | --------------------------- | ----------------------- |
+| 纽约   | `/embassy/us/newyork>`      | <Author uid="HenryQW"/> |
+| 芝加哥 | `/embassy/us/chicago>`      | <Author uid="HenryQW"/> |
+| 旧金山 | `/embassy/us/sanfrancisco>` | <Author uid="HenryQW"/> |
 
 #### 英国 `UK`
 
