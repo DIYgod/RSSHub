@@ -1608,23 +1608,6 @@ GitHub 官方也提供了一些 RSS:
 
 -   type, 公告种类
 
-
-参数:
-
--   id - 话题 ID. 在话题页面地址栏查看
-
-### 米哈游
-
-#### 崩坏 2-游戏公告 <Author uid="deepred5"/>
-
-举例: <https://rsshub.app/mihoyo/bh2/gach>
-
-路由: `/mihoyo/bh2/:type`
-
-参数:
-
--   type, 公告种类
-
 | 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
 | -------- | -------- | -------- | -------- |
 | new      | version  | gach     | event    |
@@ -1887,7 +1870,7 @@ GitHub 官方也提供了一些 RSS:
 
 路由: `/ju/jwc/:type?`
 
-### 华南师范大学
+参数:
 
 -   type, 可选, 默认为 `all`
 
@@ -1930,37 +1913,6 @@ GitHub 官方也提供了一些 RSS:
 ### 东南大学
 
 #### 信息科学与工程学院学术活动 <Author uid="HenryQW"/>
-#### 教务处通知 <Author uid="fengkx"/>
-
-举例: <https://rsshub.app/scnu/jw>
-
-路由: `/scnu/jw`
-
-参数: 无
-
-#### 图书馆通知 <Author uid="fengkx"/>
-
-举例: <https://rsshub.app/scnu/library>
-
-路由: `/scnu/library`
-
-参数: 无
-
-#### 计算机学院竞赛通知 <Author uid="fengkx"/>
-
-举例: <https://rsshub.app/scnu/cs/match>
-
-路由: `/scnu/cs/match`
-
-参数: 无
-
-### 江南大学
-
-#### 教务处通知 <Author uid="Chingyat"/>
-
-举例: <https://rsshub.app/ju/jwc/all>
-
-路由: `/ju/jwc/:type?`
 
 举例: <https://rsshub.app/seu/radio/academic>
 
@@ -1985,35 +1937,8 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/shanghaitech/sist/activity>
 
 路由: `/shanghaitech/sist/activity`
--   type, 可选, 默认为 `all`
 
-| all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjs     |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 全部 | 通知公告 | 考试安排 | 违纪公告 | 推免工作 | 等级考试 | 学籍管理 | 毕业设计 | 实验教学 |
-
-| sjcx     | xkjs     | yjszj      | jxgg     | zyjs     | kcjs     | jcjs     | jxcg     | xsbg     |
-| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 实践创新 | 学科竞赛 | 研究生助教 | 教学改革 | 专业建设 | 课程建设 | 教材建设 | 教学成果 | 学术报告 |
-
-### 大连工业大学
-
-#### 教务处新闻 <Author uid="xu42"/>
-
-举例: <https://rsshub.app/dpu/jiaowu/news/2>
-
-路由: `/dpu/jiaowu/news/:type?`
-
-参数:
-
--   type, 可选, 默认为 `2`
-
-| 新闻动态 | 通知公告 | 教务文件 |
-| -------- | -------- | -------- |
-| 2        | 3        | 4        |
-
-#### 网络服务新闻 <Author uid="xu42"/>
-
-举例: <https://rsshub.app/dpu/wlfw/news/2>
+参数: 无
 
 ### 上海交通大学
 
@@ -2022,26 +1947,14 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/sjtu/seiee/academic>
 
 路由: `/sjtu/seiee/academic`
-路由: `/dpu/wlfw/news/:type?`
 
-参数: type, 可选, 默认为 `1`
-
-| 新闻动态 | 通知公告 |
-| -------- | -------- |
-| 1        | 2        |
-
-### 东南大学
+参数: 无
 
 ### 中国科学院
 
 #### 上海微系统与信息技术研究所学术活动 <Author uid="HenryQW"/>
 
 举例: <https://rsshub.app/cas/sim/academic>
-#### 信息科学与工程学院学术活动 <Author uid="HenryQW"/>
-
-举例: <https://rsshub.app/seu/radio/academic>
-
-路由: `/seu/radio/academic`
 
 路由: `/cas/sim/academic`
 
@@ -2050,13 +1963,6 @@ GitHub 官方也提供了一些 RSS:
 ### 南京邮电大学
 
 #### 教务处通知与新闻 <Author uid="shaoye"/>
-### 哈尔滨工业大学
-
-#### 哈尔滨工业大学教务处通知公告 <Author uid="lty96117"/>
-
-举例: <https://rsshub.app/hit/jwc>
-
-路由: `/hit/jwc`
 
 举例: <https://rsshub.app/njupt/jwc/notice>
 
@@ -2065,13 +1971,6 @@ GitHub 官方也提供了一些 RSS:
 参数:
 
 -   type, 可选, 默认为 `notice`
-### 上海科技大学
-
-#### 信息科技与技术学院活动 <Author uid="HenryQW"/>
-
-举例: <https://rsshub.app/shanghaitech/sist/activity>
-
-路由: `/shanghaitech/sist/activity`
 
 | 通知公告 | 教务快讯 |
 | -------- | -------- |
@@ -2084,15 +1983,8 @@ GitHub 官方也提供了一些 RSS:
 举例: <https://rsshub.app/heu/ugs/news/jwc/jxap>
 
 路由: `/heu/ugs/news/:author?/:category?`
-### 上海交通大学
 
-#### 电子信息与电气工程学院学术动态 <Author uid="HenryQW"/>
-
-举例: <https://rsshub.app/sjtu/seiee/academic>
-
-路由: `/sjtu/seiee/academic`
-
-参数: 无
+参数:
 
 -   author，可选，发布部门，默认为 `gztz`
 -   category，可选，分类，默认为 `all`
@@ -2108,23 +2000,6 @@ category 列表：
 `all` 为全部
 
 教务处：
-### 中国科学院
-
-#### 上海微系统与信息技术研究所学术活动 <Author uid="HenryQW"/>
-
-举例: <https://rsshub.app/cas/sim/academic>
-
-路由: `/cas/sim/academic`
-
-参数: 无
-
-### 南京邮电大学
-
-#### 教务处通知与新闻 <Author uid="shaoye"/>
-
-举例: <https://rsshub.app/njupt/jwc/notice>
-
-路由: `/njupt/jwc/:type?`
 
 | 教学安排 | 考试管理 | 学籍管理 | 外语统考 | 成绩管理 |
 | -------- | -------- | -------- | -------- | -------- |
@@ -2163,21 +2038,6 @@ category 列表：
 | lxkc     |
 
 工作通知：无
--   type, 可选, 默认为 `notice`
-
-| 通知公告 | 教务快讯 |
-| -------- | -------- |
-| notice   | news     |
-
-### 哈尔滨工程大学
-
-#### 本科生院工作通知 <Author uid="XYenon"/>
-
-举例: <https://rsshub.app/heu/ugs/news>
-
-路由: `/heu/ugs/news`
-
-参数: 无
 
 ## 传统媒体
 
@@ -2189,25 +2049,7 @@ category 列表：
 
 路由: `/cctv/:category`
 
-## 传统媒体
-
-### 央视新闻
-
-#### 专题 <Author uid="idealclover"/>
-
-举例: <https://rsshub.app/cctv/world>
-
-路由: `/cctv/:category`
-=======
--   category, 分类名
-
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- |
-| china | world | video | tech | society | law  | ent  |
-
-### 财新网
-
-> 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+参数:
 
 -   category, 分类名
 
@@ -2219,11 +2061,6 @@ category 列表：
 
 > 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
-#### 新闻分类 <Author uid="idealclover"/>
-
-举例: <https://rsshub.app/caixin/finance/regulation>
-
-路由: `/caixin/:column/:category`
 #### 新闻分类 <Author uid="idealclover"/>
 
 举例: <https://rsshub.app/caixin/finance/regulation>
@@ -2231,12 +2068,6 @@ category 列表：
 路由: `/caixin/:column/:category`
 
 参数:
-
--   column, 栏目名
-
--   category, 栏目下的子分类名
-
--   column 列表:
 
 -   column, 栏目名
 
@@ -2261,29 +2092,6 @@ category 列表：
 | coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
 
 ### 南方周末
-| 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
-| ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
-| economy | finance | china | science | international | opinion | culture | weekly |
-
-以金融板块为例的 category 列表: （其余 column 以类似方式寻找）
-
-| 监管       | 银行 | 证券基金 | 信托保险        | 投资       | 创新       | 市场   |
-| ---------- | ---- | -------- | --------------- | ---------- | ---------- | ------ |
-| regulation | bank | stock    | insurance_trust | investment | innovation | market |
-
-财新周刊 category 列表:
-
-| 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
-| ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
-| coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
-
-### 南方周末
-
-#### 新闻分类 <Author uid="ranpox"/>
-
-举例: <https://rsshub.app/infzm/5>
-
-路由: `/infzm/:id`
 
 #### 新闻分类 <Author uid="ranpox"/>
 
@@ -2292,24 +2100,6 @@ category 列表：
 路由: `/infzm/:id`
 
 参数:
-
--   id, 南方周末内容分区 id, 可在该内容分区的 URL 中找到(即http://www.infzm.com/contents/:id), 注意 contents 为内容分区, content 为文章页, 添加前请留意. 下面给出部分参考:
-
-| 全站 | 新闻 | 经济 | 文化 | 评论 | 图片 | 生活 | 时政 | 社会 | 科技 | 绿色 | 头条 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 0    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 1374 | 2553 |
-
-### 纽约时报
-
-::: tip 提示
-
-纽约时报 RSS: https://cn.nytimes.com/rss/
-
-:::
-
-#### 新闻早报 <Author uid="yangkghjh"/>
-
-举例: <https://rsshub.app/nytimes/morning_post>
 
 -   id, 南方周末内容分区 id, 可在该内容分区的 URL 中找到(即http://www.infzm.com/contents/:id), 注意 contents 为内容分区, content 为文章页, 添加前请留意. 下面给出部分参考:
 
