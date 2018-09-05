@@ -2532,6 +2532,18 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 :::
 
+### 大使馆
+
+举例: <https://rsshub.app/embassy/us>
+
+路由: `/embassy/:country`
+
+参数:
+
+-   country, 国家短代码, 见[支持国家列表](#支持国家列表)
+
+### 领事馆
+
 举例: <https://rsshub.app/embassy/us/chicago>
 
 路由: `/embassy/:country/:city`
@@ -2539,13 +2551,15 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 参数:
 
 -   country, 国家短代码, 见[支持国家列表](#支持国家列表)
--   city, 城市, 对应国家列表下的城市列表
+-   city, 城市, 对应国家列表下的`领事馆城市列表`
 
 ### 支持国家列表
 
 #### 美国 `US`
 
-城市列表:
+#### 大使馆: `/embassy/us`
+
+#### 领事馆城市列表:
 
 | 城市   | 路由                        | 作者                    |
 | ------ | --------------------------- | ----------------------- |
@@ -2555,12 +2569,15 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 英国 `UK`
 
-城市列表:
+#### 大使馆: `/embassy/uk`
 
-| 城市       | 路由                     | 作者                    |
-| ---------- | ------------------------ | ----------------------- |
-| 爱丁堡     | `/embassy/uk/edinburgh>` | <Author uid="HenryQW"/> |
-| 贝尔法斯特 | `/embassy/uk/belfast>`   | <Author uid="HenryQW"/> |
+#### 领事馆城市列表:
+
+| 城市       | 路由                      | 作者                    |
+| ---------- | ------------------------- | ----------------------- |
+| 爱丁堡     | `/embassy/uk/edinburgh>`  | <Author uid="HenryQW"/> |
+| 贝尔法斯特 | `/embassy/uk/belfast>`    | <Author uid="HenryQW"/> |
+| 曼彻斯特   | `/embassy/uk/manchester>` | <Author uid="HenryQW"/> |
 
 ## 待分类
 
