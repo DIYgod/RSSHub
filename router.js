@@ -540,5 +540,6 @@ router.get('/xclient/app/:name', require('./routes/xclient/app'));
 // 中国驻外使领事馆
 router.get('/embassy/us/chicago', require('./routes/embassy/us/chicago'));
 router.get('/embassy/uk/edinburgh', require('./routes/embassy/uk/edinburgh'));
+router.get('/embassy/uk/belfast', require('./routes/embassy/uk/belfast'));
 
 module.exports = router;
