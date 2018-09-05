@@ -2524,14 +2524,21 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 举例网址: http://booksky.so/BookDetail.aspx?Level=1&bid=98619
 
 ## 中国驻外领馆通知
+## 中国驻外使领馆通知
+
+::: tip 提示
+
+便于分类，使馆领馆统一归于 `embassy` 路由下，以所在城市区分。
+
+:::
 
 ### 美国
 
 #### 芝加哥 <Author uid="HenryQW"/>
 
-举例: <https://rsshub.app/consulate/us/chicago>
+举例: <https://rsshub.app/embassy/us/chicago>
 
-路由: `/consulate/us/chicago`
+路由: `/embassy/us/chicago`
 
 参数: 无
 
