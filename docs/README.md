@@ -2523,6 +2523,18 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 举例网址: http://booksky.so/BookDetail.aspx?Level=1&bid=98619
 
+## 中国驻外领馆通知
+
+### 美国
+
+#### 芝加哥 <Author uid="HenryQW"/>
+
+举例: <https://rsshub.app/consulate/us/chicago>
+
+路由: `/consulate/us/chicago`
+
+参数: 无
+
 ## 待分类
 
 ### 自如

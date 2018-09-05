@@ -537,4 +537,7 @@ router.get('/sspai/series', require('./routes/sspai/series'));
 // xclient.info
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
 
+// 中国驻外领事馆
+router.get('/consulate/us/chicago', require('./routes/consulate/us/chicago'));
+
 module.exports = router;
