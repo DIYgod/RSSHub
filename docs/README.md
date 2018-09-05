@@ -1768,6 +1768,18 @@ GitHub 官方也提供了一些 RSS:
 
 -   project: 项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到
 
+### xclient.info
+
+#### 应用更新
+
+举例: <https://rsshub.app/xclient/app/sketch>
+
+路由: `/xclient/app/:name`
+
+参数:
+
+-   name: 应用名，可在应用页 URL 中找到
+
 ## 大学通知
 
 ### 上海海事大学
