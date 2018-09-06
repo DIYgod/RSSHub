@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
     const list = [];
 
     $(config.list)
-        .slice(0, 5)
+        .slice(0, 10)
         .each((i, e) => {
             const temp = url.resolve(link, $(e).attr('href'));
             if (url.parse(temp).hostname === hostname) {

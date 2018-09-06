@@ -2566,6 +2566,20 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 ---
 
+#### 法国 `FR`
+
+-   大使馆: `/embassy/fr`
+
+-   领事馆城市列表:
+
+| 城市       | 路由                     |
+| ---------- | ------------------------ |
+| 马赛       | `/embassy/fr/marseille`  |
+| 斯特拉斯堡 | `/embassy/fr/strasbourg` |
+| 里昂       | `/embassy/fr/lyon`       |
+
+---
+
 #### 日本 `JP`
 
 -   大使馆: `/embassy/jp`
@@ -2591,9 +2605,9 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 | 城市 | 路由                  |
 | ---- | --------------------- |
-| 釜山 | `/embassy/jp/busan`   |
-| 济州 | `/embassy/jp/jeju`    |
-| 光州 | `/embassy/jp/gwangju` |
+| 釜山 | `/embassy/kr/busan`   |
+| 济州 | `/embassy/kr/jeju`    |
+| 光州 | `/embassy/kr/gwangju` |
 
 ---
 
