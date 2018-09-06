@@ -10,14 +10,21 @@ module.exports = async (ctx) => {
     const config = supportedList[country.toLowerCase()];
 
     const link = config.link;
+    const hostname = url.parse(link).hostname;
 
     const res = await axios.get(link);
     const $ = cheerio.load(res.data);
 
-    const list = $(config.list)
+    const list = [];
+
+    $(config.list)
         .slice(0, 5)
-        .map((i, e) => url.resolve(link, $(e).attr('href')))
-        .get();
+        .each((i, e) => {
+            const temp = url.resolve(link, $(e).attr('href'));
+            if (url.parse(temp).hostname === hostname) {
+                list.push(temp);
+            }
+        });
 
     const out = await Promise.all(
         list.map(async (link) => {

@@ -11,14 +11,21 @@ module.exports = async (ctx) => {
     const config = supportedList[country.toLowerCase()].consulates[city.toLowerCase()];
 
     const link = config.link;
+    const hostname = url.parse(link).hostname;
 
     const res = await axios.get(link);
     const $ = cheerio.load(res.data);
 
-    const list = $(config.list)
+    const list = [];
+
+    $(config.list)
         .slice(0, 5)
-        .map((i, e) => url.resolve(link, $(e).attr('href')))
-        .get();
+        .each((i, e) => {
+            const temp = url.resolve(link, $(e).attr('href'));
+            if (url.parse(temp).hostname === hostname) {
+                list.push(temp);
+            }
+        });
 
     const out = await Promise.all(
         list.map(async (link) => {
@@ -33,7 +40,12 @@ module.exports = async (ctx) => {
                 title: $(config.title).text(),
                 link: link,
                 description: $(config.description).html(),
-                pubDate: new Date($(config.pubDate).text()).toUTCString(),
+                pubDate: new Date(
+                    $(config.pubDate)
+                        .text()
+                        .replace('(', '')
+                        .replace(')', '')
+                ).toUTCString(),
             };
             ctx.cache.set(link, JSON.stringify(single), 24 * 60 * 60);
             return Promise.resolve(single);
