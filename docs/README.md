@@ -2511,6 +2511,18 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 -   id, 小说 id, 可在对应小说页 URL 中找到
 
+### 快眼看书 <Author uid="squkw"/>
+
+举例: <https://rsshub.app/novel/booksky/98619>
+
+路由: `/novel/booksky/:id`
+
+参数:
+
+-   id, 小说 id, 可在对应小说页 URL 中找到
+
+举例网址: http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+
 ## 待分类
 
 ### 自如
