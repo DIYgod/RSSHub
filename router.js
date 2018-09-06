@@ -537,4 +537,24 @@ router.get('/sspai/series', require('./routes/sspai/series'));
 // xclient.info
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
 
+// 中国驻外使领事馆
+
+// DE
+router.get('/embassy/de', require('./routes/embassy/de/embassy'));
+
+// US
+router.get('/embassy/us', require('./routes/embassy/us/embassy'));
+router.get('/embassy/us/chicago', require('./routes/embassy/us/chicago'));
+router.get('/embassy/us/newyork', require('./routes/embassy/us/newyork'));
+router.get('/embassy/us/sanfrancisco', require('./routes/embassy/us/sanfrancisco'));
+
+// UK
+router.get('/embassy/uk', require('./routes/embassy/uk/embassy'));
+router.get('/embassy/uk/edinburgh', require('./routes/embassy/uk/edinburgh'));
+router.get('/embassy/uk/belfast', require('./routes/embassy/uk/belfast'));
+router.get('/embassy/uk/manchester', require('./routes/embassy/uk/manchester'));
+
+// SG
+router.get('/embassy/sg', require('./routes/embassy/sg/embassy'));
+
 module.exports = router;

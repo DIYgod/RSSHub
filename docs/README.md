@@ -1778,7 +1778,7 @@ GitHub 官方也提供了一些 RSS:
 
 参数:
 
--   name: 应用名，可在应用页 URL 中找到
+-   name: 应用名, 可在应用页 URL 中找到
 
 ## 大学通知
 
@@ -2014,8 +2014,8 @@ GitHub 官方也提供了一些 RSS:
 
 参数:
 
--   author，可选，发布部门，默认为 `gztz`
--   category，可选，分类，默认为 `all`
+-   author, 可选, 发布部门, 默认为 `gztz`
+-   category, 可选, 分类, 默认为 `all`
 
 author 列表：
 
@@ -2173,7 +2173,7 @@ category 列表：
 
 参数:
 
-type，分类, 缺省为中港台
+type, 分类, 缺省为中港台
 
 | 中港台 | 新加坡    | 国际  | 财经     |
 | ------ | --------- | ----- | -------- |
@@ -2187,7 +2187,7 @@ type，分类, 缺省为中港台
 
 参数:
 
-type，分类, 缺省为中港台
+type, 分类, 缺省为中港台
 
 | 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
 | ------------- | --------- | ------ | ------------- | ------ |
@@ -2523,6 +2523,69 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 举例网址: http://booksky.so/BookDetail.aspx?Level=1&bid=98619
 
+## 中国驻外使领馆通知
+
+::: tip 提示
+
+便于分类, 使馆领馆统一归于 `embassy` 路由下, 以所在国家与城市区分.
+
+:::
+
+### 大使馆
+
+举例: <https://rsshub.app/embassy/us>
+
+路由: `/embassy/:country`
+
+参数:
+
+-   country, 国家短代码, 见[支持国家列表](#支持国家列表)
+
+### 领事馆
+
+举例: <https://rsshub.app/embassy/us/chicago>
+
+路由: `/embassy/:country/:city`
+
+参数:
+
+-   country, 国家短代码, 见[支持国家列表](#支持国家列表)
+-   city, 城市, 对应国家列表下的`领事馆城市列表`
+
+### 支持国家列表
+
+#### 德国 `DE`
+
+#### 大使馆: `/embassy/de`
+
+#### 美国 `US`
+
+#### 大使馆: `/embassy/us`
+
+#### 领事馆城市列表:
+
+| 城市   | 路由                       | 作者                    |
+| ------ | -------------------------- | ----------------------- |
+| 纽约   | `/embassy/us/newyork`      | <Author uid="HenryQW"/> |
+| 芝加哥 | `/embassy/us/chicago`      | <Author uid="HenryQW"/> |
+| 旧金山 | `/embassy/us/sanfrancisco` | <Author uid="HenryQW"/> |
+
+#### 英国 `UK`
+
+#### 大使馆: `/embassy/uk`
+
+#### 领事馆城市列表:
+
+| 城市       | 路由                     | 作者                    |
+| ---------- | ------------------------ | ----------------------- |
+| 爱丁堡     | `/embassy/uk/edinburgh`  | <Author uid="HenryQW"/> |
+| 贝尔法斯特 | `/embassy/uk/belfast`    | <Author uid="HenryQW"/> |
+| 曼彻斯特   | `/embassy/uk/manchester` | <Author uid="HenryQW"/> |
+
+#### 新加坡 `SG`
+
+#### 大使馆: `/embassy/sg`
+
 ## 待分类
 
 ### 自如
@@ -2535,7 +2598,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 参数
 
--   city: 城市, 北京 bj；上海 sh；深圳 sz；杭州 hz；南京 nj；广州 gz；成都 cd；武汉 wh；天津 tj
+-   city: 城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj
 
 -   iswhole: 是否整租
 
