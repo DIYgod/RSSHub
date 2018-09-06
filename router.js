@@ -450,6 +450,7 @@ router.get('/uukanshu/chapter/:uid', require('./routes/novel/uukanshu'));
 router.get('/novel/biquge/:id', require('./routes/novel/biquge'));
 router.get('/novel/uukanshu/:uid', require('./routes/novel/uukanshu'));
 router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
+router.get('/novel/booksky/:id', require('./routes/novel/booksky'));
 
 // 中国气象网
 router.get('/weatherAlarm', require('./routes/weatherAlarm'));

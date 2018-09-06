@@ -12,7 +12,7 @@ module.exports = async (ctx) => {
         url: `${baseUrl}${id}`,
         headers: {
             Host: 'booksky.so',
-            Referer: `http://booksky.so/`,
+            Referer: 'http://booksky.so/',
         },
         responseType: 'arraybuffer',
     });
@@ -21,24 +21,37 @@ module.exports = async (ctx) => {
 
     const list = $('tr[class=b]').attr('height', '25');
 
-    const title = $('font').attr('color', 'red').text();
+    const title = $('font')
+        .attr('color', 'red')
+        .text();
 
     ctx.state.data = {
         title: title,
         link: `${baseUrl}${id}`,
         description: '',
         item:
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                return {
-                    title: item.find('.s').text(),
-                    description: item.find('.t').eq(1).text(),
-                    pubDate: new Date(item.find('.t').eq(2).text()).toUTCString(),
-                    link: `http://booksky.so/${item.find('.s').children('a').attr('href')}`,
-                };
-            })
-            .get(),
+            list &&
+            list
+                .map((index, item) => {
+                    item = $(item);
+                    return {
+                        title: item.find('.s').text(),
+                        description: item
+                            .find('.t')
+                            .eq(1)
+                            .text(),
+                        pubDate: new Date(
+                            item
+                                .find('.t')
+                                .eq(2)
+                                .text()
+                        ).toUTCString(),
+                        link: `http://booksky.so/${item
+                            .find('.s')
+                            .children('a')
+                            .attr('href')}`,
+                    };
+                })
+                .get(),
     };
 };
