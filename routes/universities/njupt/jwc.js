@@ -36,7 +36,11 @@ module.exports = async (ctx) => {
     const dateList = $('.content tr')
         .find('div')
         .slice(0, 10)
-        .map((i, e) => $(e).text().replace('发布时间：', ''))
+        .map((i, e) =>
+            $(e)
+                .text()
+                .replace('发布时间：', '')
+        )
         .get();
 
     const out = await Promise.all(
