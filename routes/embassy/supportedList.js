@@ -7,6 +7,16 @@ module.exports = {
         title: '#article > table > tbody > tr:nth-child(2) b',
         description: '#article > table > tbody > tr:nth-child(10) > td > div',
         pubDate: '#article > table > tbody > tr:nth-child(6) > td',
+        consulates: {
+            munich: {
+                cityCN: '慕尼黑',
+                link: 'http://munich.chineseconsulate.org/chn/jqtz/',
+                list: '#docMore > tbody > tr > td:nth-child(2) > table:nth-child(2) > tbody > tr:nth-child(2) > td > table > tbody a',
+                title: '#article > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(1) > td',
+                description: '#article > tbody > tr:nth-child(2) > td > div',
+                pubDate: '#article > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(4) > td',
+            },
+        },
     },
     jp: {
         country: 'jp',
