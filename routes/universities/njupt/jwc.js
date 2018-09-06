@@ -36,7 +36,7 @@ module.exports = async (ctx) => {
     const dateList = $('.content tr')
         .find('div')
         .slice(0, 10)
-        .map((i, e) => $(e).text())
+        .map((i, e) => $(e).text().replace('发布时间：', ''))
         .get();
 
     const out = await Promise.all(
@@ -70,7 +70,7 @@ module.exports = async (ctx) => {
                     title: titleList[index],
                     link: itemUrl,
                     description: '该通知为文件，请点击原文链接↑下载',
-                    pubDate: dateList,
+                    pubDate: new Date(dateList[index]),
                 };
                 return Promise.resolve(single);
             }
