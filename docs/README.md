@@ -2560,6 +2560,23 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 ---
 
+#### 日本 `JP`
+
+-   大使馆: `/embassy/JP`
+
+-   领事馆城市列表:
+
+| 城市   | 路由                   |
+| ------ | ---------------------- |
+| 长崎   | `/embassy/jp/nagasaki` |
+| 大阪   | `/embassy/jp/osaka`    |
+| 福冈   | `/embassy/jp/fukuoka`  |
+| 名古屋 | `/embassy/jp/nagoya`   |
+| 札幌   | `/embassy/jp/sapporo`  |
+| 新潟   | `/embassy/jp/niigata`  |
+
+---
+
 #### 新加坡 `SG`
 
 -   大使馆: `/embassy/sg`
