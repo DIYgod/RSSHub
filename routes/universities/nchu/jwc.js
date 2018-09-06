@@ -25,22 +25,24 @@ module.exports = async (ctx) => {
 
     const linkList = $('td[width=515]')
         .find('a')
-        .map((_, e) => {
-            return {
-                title: $(e).text(),
-                link: `${host}/${$(e).attr('href')}`,
-            }
-        })
+        .map((_, e) => ({
+            title: $(e).text(),
+            link: `${host}/${$(e).attr('href')}`,
+        }))
         .get();
     $('td[width=85]')
-    .map((i, e) => linkList[i]['date'] = new Date(
-        $(e)
-        .text()
-        .replace('[', '')
-        .replace(']', '')
-        .split('/')
-        .join('-')).toUTCString())
-    .get();
+        .map(
+            (i, e) =>
+                (linkList[i].date = new Date(
+                    $(e)
+                        .text()
+                        .replace('[', '')
+                        .replace(']', '')
+                        .split('/')
+                        .join('-')
+                ).toUTCString())
+        )
+        .get();
 
     let info = '教务公告';
     if (type === 'news') {
