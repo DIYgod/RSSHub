@@ -42,8 +42,8 @@ module.exports = async (ctx) => {
     );
 
     ctx.state.data = {
-        title: '中国驻美大使馆 -- 重要通知',
-        description: '中国驻美大使馆 -- 重要通知',
+        title: '中国驻美国大使馆 -- 重要通知',
+        description: '中国驻美国大使馆 -- 重要通知',
         link,
         item: out,
     };

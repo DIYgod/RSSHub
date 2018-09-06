@@ -538,6 +538,10 @@ router.get('/sspai/series', require('./routes/sspai/series'));
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
 
 // 中国驻外使领事馆
+
+// DE
+router.get('/embassy/de', require('./routes/embassy/de/embassy'));
+
 // US
 router.get('/embassy/us', require('./routes/embassy/us/embassy'));
 router.get('/embassy/us/chicago', require('./routes/embassy/us/chicago'));

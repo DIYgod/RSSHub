@@ -3,12 +3,12 @@ const url = require('url');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
-    const link = 'http://www.chinese-embassy.org.uk/chn/lsfw/lsxz/txyxw/zxtg/';
+    const link = 'http://de.chineseembassy.org/chn/lsfw/jqtz/';
 
     const res = await axios.get(link);
     const $ = cheerio.load(res.data);
 
-    const list = $('body > table:nth-child(6) > tbody > tr > td:nth-child(2) > table > tbody > tr > td > table > tbody > tr:nth-child(2) > td > table > tbody > tr:nth-child(2) a')
+    const list = $('#docNum a')
         .slice(0, 5)
         .map((i, e) => ({
             link: url.resolve(link, $(e).attr('href')),
@@ -28,8 +28,8 @@ module.exports = async (ctx) => {
             const single = {
                 title: item.title,
                 link: item.link,
-                description: $('#article .content').html(),
-                pubDate: new Date($('#article > tbody > tr:nth-child(5) > td').text()).toUTCString(),
+                description: $('#article > table > tbody > tr:nth-child(10) > td > div').html(),
+                pubDate: new Date($('#article > table > tbody > tr:nth-child(6) > td').text()).toUTCString(),
             };
             ctx.cache.set(item.link, JSON.stringify(single), 24 * 60 * 60);
             return Promise.resolve(single);
@@ -37,8 +37,8 @@ module.exports = async (ctx) => {
     );
 
     ctx.state.data = {
-        title: '中国驻英国大使馆-- 重要通知',
-        description: '中国驻英国大使馆 -- 重要通知',
+        title: '中国驻德国大使馆-- 重要通知',
+        description: '中国驻德国大使馆 -- 重要通知',
         link,
         item: out,
     };
