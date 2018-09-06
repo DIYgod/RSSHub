@@ -2562,7 +2562,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 日本 `JP`
 
--   大使馆: `/embassy/JP`
+-   大使馆: `/embassy/jp`
 
 -   领事馆城市列表:
 
@@ -2574,6 +2574,20 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 | 名古屋 | `/embassy/jp/nagoya`   |
 | 札幌   | `/embassy/jp/sapporo`  |
 | 新潟   | `/embassy/jp/niigata`  |
+
+---
+
+#### 韩国 `KR`
+
+-   大使馆: `/embassy/kr`
+
+-   领事馆城市列表:
+
+| 城市 | 路由                  |
+| ---- | --------------------- |
+| 釜山 | `/embassy/jp/busan`   |
+| 济州 | `/embassy/jp/jeju`    |
+| 光州 | `/embassy/jp/gwangju` |
 
 ---
 
