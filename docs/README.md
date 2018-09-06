@@ -2579,6 +2579,10 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 | 贝尔法斯特 | `/embassy/uk/belfast`    | <Author uid="HenryQW"/> |
 | 曼彻斯特   | `/embassy/uk/manchester` | <Author uid="HenryQW"/> |
 
+#### 新加坡 `SG`
+
+#### 大使馆: `/embassy/sg`
+
 ## 待分类
 
 ### 自如

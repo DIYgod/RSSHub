@@ -550,4 +550,7 @@ router.get('/embassy/uk/edinburgh', require('./routes/embassy/uk/edinburgh'));
 router.get('/embassy/uk/belfast', require('./routes/embassy/uk/belfast'));
 router.get('/embassy/uk/manchester', require('./routes/embassy/uk/manchester'));
 
+// SG
+router.get('/embassy/sg', require('./routes/embassy/sg/embassy'));
+
 module.exports = router;
