@@ -2554,15 +2554,23 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 ### 支持国家列表
 
-#### 德国 `DE`
+### 德国 `DE`
 
-#### 大使馆: `/embassy/de`
+-   大使馆: `/embassy/de`
 
-#### 美国 `US`
+---
 
-#### 大使馆: `/embassy/us`
+### 新加坡 `SG`
 
-#### 领事馆城市列表:
+-   大使馆: `/embassy/sg`
+
+---
+
+### 美国 `US`
+
+-   大使馆: `/embassy/us`
+
+-   领事馆城市列表:
 
 | 城市   | 路由                       |
 | ------ | -------------------------- |
@@ -2570,21 +2578,19 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 | 芝加哥 | `/embassy/us/chicago`      |
 | 旧金山 | `/embassy/us/sanfrancisco` |
 
-#### 英国 `UK`
+---
 
-#### 大使馆: `/embassy/uk`
+### 英国 `UK`
 
-#### 领事馆城市列表:
+-   大使馆: `/embassy/uk`
+
+-   领事馆城市列表:
 
 | 城市       | 路由                     |
 | ---------- | ------------------------ |
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
-
-#### 新加坡 `SG`
-
-#### 大使馆: `/embassy/sg`
 
 ## 待分类
 
