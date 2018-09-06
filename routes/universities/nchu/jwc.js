@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
     $('td[width=85]')
         .map(
             (i, e) =>
-                (linkList[i].date = new Date(
+                (linkList[i].pubDate = new Date(
                     $(e)
                         .text()
                         .replace('[', '')
