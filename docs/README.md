@@ -2554,37 +2554,43 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 ### 支持国家列表
 
-#### 德国 `DE`
+### 德国 `DE`
 
-#### 大使馆: `/embassy/de`
+-   大使馆: `/embassy/de`
 
-#### 美国 `US`
+---
 
-#### 大使馆: `/embassy/us`
+### 新加坡 `SG`
 
-#### 领事馆城市列表:
+-   大使馆: `/embassy/sg`
 
-| 城市   | 路由                       | 作者                    |
-| ------ | -------------------------- | ----------------------- |
-| 纽约   | `/embassy/us/newyork`      | <Author uid="HenryQW"/> |
-| 芝加哥 | `/embassy/us/chicago`      | <Author uid="HenryQW"/> |
-| 旧金山 | `/embassy/us/sanfrancisco` | <Author uid="HenryQW"/> |
+---
 
-#### 英国 `UK`
+### 美国 `US`
 
-#### 大使馆: `/embassy/uk`
+-   大使馆: `/embassy/us`
 
-#### 领事馆城市列表:
+-   领事馆城市列表:
 
-| 城市       | 路由                     | 作者                    |
-| ---------- | ------------------------ | ----------------------- |
-| 爱丁堡     | `/embassy/uk/edinburgh`  | <Author uid="HenryQW"/> |
-| 贝尔法斯特 | `/embassy/uk/belfast`    | <Author uid="HenryQW"/> |
-| 曼彻斯特   | `/embassy/uk/manchester` | <Author uid="HenryQW"/> |
+| 城市   | 路由                       |
+| ------ | -------------------------- |
+| 纽约   | `/embassy/us/newyork`      |
+| 芝加哥 | `/embassy/us/chicago`      |
+| 旧金山 | `/embassy/us/sanfrancisco` |
 
-#### 新加坡 `SG`
+---
 
-#### 大使馆: `/embassy/sg`
+### 英国 `UK`
+
+-   大使馆: `/embassy/uk`
+
+-   领事馆城市列表:
+
+| 城市       | 路由                     |
+| ---------- | ------------------------ |
+| 爱丁堡     | `/embassy/uk/edinburgh`  |
+| 贝尔法斯特 | `/embassy/uk/belfast`    |
+| 曼彻斯特   | `/embassy/uk/manchester` |
 
 ## 待分类
 
