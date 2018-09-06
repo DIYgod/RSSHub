@@ -1988,6 +1988,22 @@ GitHub 官方也提供了一些 RSS:
 | -------- | -------- |
 | notice   | news     |
 
+### 南昌航空大学
+
+#### 教务处公告与新闻 <Author uid="Sg4Dylan"/>
+
+举例: <https://rsshub.app/nchu/jwc/notice>
+
+路由: `/nchu/jwc/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notice`
+
+| 教务公告 | 教务新闻 |
+| -------- | -------- |
+| notice   | news     |
+
 ### 哈尔滨工程大学
 
 #### 本科生院工作通知 <Author uid="XYenon"/>
