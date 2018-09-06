@@ -2523,7 +2523,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 举例网址: http://booksky.so/BookDetail.aspx?Level=1&bid=98619
 
-## 中国驻外领馆通知
 ## 中国驻外使领馆通知
 
 ::: tip 提示
