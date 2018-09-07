@@ -5,15 +5,15 @@ const resolve_url = require('url').resolve;
 const host = 'http://www.cuit.edu.cn/';
 
 const map = {
-    zhxw: '1',
-    xxgg: '2',
-    jjxw: '3',
-    xxdt: '4',
-    ggjl: '5',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
 };
 
 module.exports = async (ctx) => {
-    const type = ctx.params.type || 'zzxw';
+    const type = ctx.params.type || '1';
     const link = host + 'NewsList?id=' + map[type];
 
     const response = await axios({
