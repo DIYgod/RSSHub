@@ -441,6 +441,16 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 参数: 无
 
+### 重庆大学
+
+#### 教务网通知公告 <Author uid="El-Chiang"/>
+
+举例: <https://rsshub.app/cqu/jwc/announcement>
+
+路由: `/cqu/jwc/announcement`
+
+参数: 无
+
 ## 传统媒体类
 
 ### 央视新闻

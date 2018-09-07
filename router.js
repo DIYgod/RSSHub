@@ -505,6 +505,9 @@ router.get('/njupt/jwc/:type?', require('./routes/universities/njupt/jwc'));
 // 哈尔滨工程大学
 router.get('/heu/ugs/news', require('./routes/universities/heu/ugs/news'));
 
+// 重庆大学
+router.get('/cqu/jwc/announcement', require('./routes/universities/cqu/jwc/announcement'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
