@@ -2556,35 +2556,92 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 #### 德国 `DE`
 
-#### 大使馆: `/embassy/de`
+-   大使馆: `/embassy/de`
 
-#### 美国 `US`
+-   领事馆城市列表:
 
-#### 大使馆: `/embassy/us`
+| 城市   | 路由                 |
+| ------ | -------------------- |
+| 慕尼黑 | `/embassy/de/munich` |
 
-#### 领事馆城市列表:
+---
 
-| 城市   | 路由                       | 作者                    |
-| ------ | -------------------------- | ----------------------- |
-| 纽约   | `/embassy/us/newyork`      | <Author uid="HenryQW"/> |
-| 芝加哥 | `/embassy/us/chicago`      | <Author uid="HenryQW"/> |
-| 旧金山 | `/embassy/us/sanfrancisco` | <Author uid="HenryQW"/> |
+#### 法国 `FR`
 
-#### 英国 `UK`
+-   大使馆: `/embassy/fr`
 
-#### 大使馆: `/embassy/uk`
+-   领事馆城市列表:
 
-#### 领事馆城市列表:
+| 城市       | 路由                     |
+| ---------- | ------------------------ |
+| 马赛       | `/embassy/fr/marseille`  |
+| 斯特拉斯堡 | `/embassy/fr/strasbourg` |
+| 里昂       | `/embassy/fr/lyon`       |
 
-| 城市       | 路由                     | 作者                    |
-| ---------- | ------------------------ | ----------------------- |
-| 爱丁堡     | `/embassy/uk/edinburgh`  | <Author uid="HenryQW"/> |
-| 贝尔法斯特 | `/embassy/uk/belfast`    | <Author uid="HenryQW"/> |
-| 曼彻斯特   | `/embassy/uk/manchester` | <Author uid="HenryQW"/> |
+---
+
+#### 日本 `JP`
+
+-   大使馆: `/embassy/jp`
+
+-   领事馆城市列表:
+
+| 城市   | 路由                   |
+| ------ | ---------------------- |
+| 长崎   | `/embassy/jp/nagasaki` |
+| 大阪   | `/embassy/jp/osaka`    |
+| 福冈   | `/embassy/jp/fukuoka`  |
+| 名古屋 | `/embassy/jp/nagoya`   |
+| 札幌   | `/embassy/jp/sapporo`  |
+| 新潟   | `/embassy/jp/niigata`  |
+
+---
+
+#### 韩国 `KR`
+
+-   大使馆: `/embassy/kr`
+
+-   领事馆城市列表:
+
+| 城市 | 路由                  |
+| ---- | --------------------- |
+| 釜山 | `/embassy/kr/busan`   |
+| 济州 | `/embassy/kr/jeju`    |
+| 光州 | `/embassy/kr/gwangju` |
+
+---
 
 #### 新加坡 `SG`
 
-#### 大使馆: `/embassy/sg`
+-   大使馆: `/embassy/sg`
+
+---
+
+#### 美国 `US`
+
+-   大使馆: `/embassy/us`
+
+-   领事馆城市列表:
+
+| 城市   | 路由                       |
+| ------ | -------------------------- |
+| 纽约   | `/embassy/us/newyork`      |
+| 芝加哥 | `/embassy/us/chicago`      |
+| 旧金山 | `/embassy/us/sanfrancisco` |
+
+---
+
+#### 英国 `UK`
+
+-   大使馆: `/embassy/uk`
+
+-   领事馆城市列表:
+
+| 城市       | 路由                     |
+| ---------- | ------------------------ |
+| 爱丁堡     | `/embassy/uk/edinburgh`  |
+| 贝尔法斯特 | `/embassy/uk/belfast`    |
+| 曼彻斯特   | `/embassy/uk/manchester` |
 
 ## 待分类
 
