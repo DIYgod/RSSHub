@@ -74,7 +74,7 @@ module.exports = async (ctx) => {
                     title: titleList[index],
                     link: itemUrl,
                     description: '该通知为文件，请点击原文链接↑下载',
-                    pubDate: new Date(dateList[index]),
+                    pubDate: new Date(dateList[index].toUTCString()),
                 };
                 return Promise.resolve(single);
             }
