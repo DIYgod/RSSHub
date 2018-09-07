@@ -344,9 +344,6 @@ router.get('/caixin/:column/:category', require('./routes/caixin/category'));
 // 草榴社区
 router.get('/t66y/:id', require('./routes/t66y/index'));
 
-// 科技星球
-router.get('/kejixingqiu/home', require('./routes/kejixingqiu/home'));
-
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
@@ -522,9 +519,6 @@ router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
 // Apple
 router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
 
-// XKCD
-router.get('/xkcd/comic', require('./routes/xkcd/comic'));
-
 // Minecraft CurseForge
 router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
 
@@ -538,7 +532,6 @@ router.get('/sspai/series', require('./routes/sspai/series'));
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
 
 // 中国驻外使领事馆
-
 router.get('/embassy/:country', require('./routes/embassy/embassy'));
 router.get('/embassy/:country/:city', require('./routes/embassy/consulate'));
 
