@@ -532,7 +532,6 @@ router.get('/sspai/series', require('./routes/sspai/series'));
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
 
 // 中国驻外使领事馆
-router.get('/embassy/:country', require('./routes/embassy/embassy'));
-router.get('/embassy/:country/:city', require('./routes/embassy/consulate'));
+router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
 
 module.exports = router;
