@@ -1518,16 +1518,6 @@ GitHub 官方也提供了一些 RSS:
 
 参数: 无
 
-### xkcd
-
-#### xkcd 的科学漫画 <Author uid="arbent"/>
-
-举例: <https://rsshub.app/xkcd/comic>
-
-路由: `/xkcd/comic`
-
-参数: 无
-
 ## 动漫
 
 ### bilibili
@@ -2889,14 +2879,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 | 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
 | -------- | -------- | -------- | -------- |
 | prog     | design   | startup  | tech     |
-
-### 科技星球
-
-#### 首页 <Author uid="vhgyux"/>
-
-举例: <https://rsshub.app/kejixingqiu/home>
-
-路由: `/kejixingqiu/home`
 
 ### 爱范儿 ifanr <Author uid="HenryQW"/>
 
