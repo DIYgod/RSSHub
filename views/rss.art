@@ -9,7 +9,7 @@
         <link>{{ link || 'https://github.com/DIYgod/RSSHub' }}</link>
         <description><![CDATA[{{@ description || title }} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)]]></description>
         <generator>RSSHub</generator>
-        <webMaster>i@html.love (DIYgod)</webMaster>
+        <webMaster>i@diygod.me</webMaster>
         {{ if itunes_author }}<itunes:author>{{ itunes_author}}</itunes:author>{{ /if }}
         {{ if itunes_category }}<itunes:category text="{{ itunes_category }}"/>{{ /if }}
         <language>zh-cn</language>
