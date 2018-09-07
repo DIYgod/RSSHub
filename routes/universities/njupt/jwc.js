@@ -65,7 +65,7 @@ module.exports = async (ctx) => {
                         $('.Article_PublishDate')
                             .text()
                             .replace('发布时间：', '')
-                    ),
+                    ).toUTCString(),
                 };
                 ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
                 return Promise.resolve(single);
@@ -74,7 +74,7 @@ module.exports = async (ctx) => {
                     title: titleList[index],
                     link: itemUrl,
                     description: '该通知为文件，请点击原文链接↑下载',
-                    pubDate: new Date(dateList[index].toUTCString()),
+                    pubDate: new Date(dateList[index]).toUTCString(),
                 };
                 return Promise.resolve(single);
             }
