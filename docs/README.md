@@ -2235,7 +2235,7 @@ type, 分类, 缺省为中港台
 
 #### 特价机票 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
+举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
 路由: `/atfd/:locations/:nearby?`
 
@@ -2244,7 +2244,7 @@ type, 分类, 缺省为中港台
 -   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
 
 1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
+2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
 
