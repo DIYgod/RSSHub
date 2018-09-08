@@ -528,4 +528,16 @@ router.get('/xkcd/what-if', require('./routes/xkcd/what-if'));
 // Minecraft CurseForge
 router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
 
+// 抖音
+router.get('/douyin/user/:id', require('./routes/douyin/user'));
+
+// 少数派 sspai
+router.get('/sspai/series', require('./routes/sspai/series'));
+
+// xclient.info
+router.get('/xclient/app/:name', require('./routes/xclient/app'));
+
+// 中国驻外使领事馆
+router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
+
 module.exports = router;
