@@ -39,6 +39,7 @@ module.exports = async (ctx) => {
                         .replace('[', '')
                         .replace(']', '')
                 ).toUTCString(),
+                description: ' '
             }))
             .get(),
     };
