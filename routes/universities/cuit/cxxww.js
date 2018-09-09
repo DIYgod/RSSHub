@@ -4,17 +4,9 @@ const resolve_url = require('url').resolve;
 
 const host = 'http://www.cuit.edu.cn/';
 
-const map = {
-    1: '1',
-    2: '2',
-    3: '3',
-    4: '4',
-    5: '5',
-};
-
 module.exports = async (ctx) => {
     const type = ctx.params.type || '1';
-    const link = host + 'NewsList?id=' + map[type];
+    const link = host + 'NewsList?id=' + type;
 
     const response = await axios({
         method: 'get',
