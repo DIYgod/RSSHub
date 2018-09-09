@@ -506,6 +506,10 @@ router.get('/nchu/jwc/:type?', require('./routes/universities/nchu/jwc'));
 // 哈尔滨工程大学
 router.get('/heu/ugs/news/:author?/:category?', require('./routes/universities/heu/ugs/news'));
 
+// 重庆科技学院
+router.get('/cqust/jw/:type?', require('./routes/universities/cqust/jw'));
+router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
