@@ -2197,6 +2197,16 @@ category 列表：
 
 -   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
 
+### 澎湃新闻
+
+#### 首页头条 <Author uid="HenryQW"/>
+
+举例: <https://rsshub.app/thepaper/featured>
+
+路由: `/thepaper/featured`
+
+参数: 无
+
 ### 联合早报
 
 #### 即时新闻 <Author uid="lengthmin"/>
