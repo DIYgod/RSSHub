@@ -83,7 +83,7 @@ module.exports = async (ctx) => {
             }
 
             return {
-                title: text.length > 24 ? text.slice(0, 24) + '...' : text,
+                title: text,
                 description: html,
                 pubDate: new Date(item.date * 1000).toUTCString(),
                 link: `https://t.me/${username}/${item.message_id}`,

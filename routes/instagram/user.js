@@ -65,9 +65,10 @@ module.exports = async (ctx) => {
             for (let i = 0; i < images[index].length; i++) {
                 imgTPL += `<img referrerpolicy="no-referrer" src="${images[index][i]}"><br>`;
             }
+            const title = (item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题/Untitled';
             return {
-                title: `${type}${(item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题/Untitled'}`,
-                description: `${tip}${imgTPL}`,
+                title: `${type}${title}`,
+                description: `${title}<br>${tip}${imgTPL}`,
                 pubDate: new Date(item.taken_at_timestamp * 1000).toUTCString(),
                 link: `https://www.instagram.com/p/${item.shortcode}/`,
             };

@@ -31,7 +31,13 @@ module.exports = async (ctx, next) => {
         }
         // trim title length
         ctx.state.data.item.forEach((item) => {
-            item.title = item.title.length > 80 ? `${item.title.slice(0, 80)}...` : item.title;
+            for (let length = 0, i = 0; i < item.title.length; i++) {
+                length += Buffer.from(item.title[i]).length !== 1 ? 2 : 1;
+                if (length > 100) {
+                    item.title = `${item.title.slice(0, i)}...`;
+                    break;
+                }
+            }
         });
 
         const data = {
