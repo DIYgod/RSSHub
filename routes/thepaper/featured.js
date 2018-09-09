@@ -33,6 +33,7 @@ module.exports = async (ctx) => {
             }
             const res = await axios_ins.get(itemUrl);
             const content = cheerio.load(res.data);
+            const serverOffset = new Date().getTimezoneOffset() / 60;
             const single = {
                 title: content('h1').text(),
                 guid: itemUrl,
@@ -43,7 +44,7 @@ module.exports = async (ctx) => {
                         .html()
                         .split('&#xA0;')[0]
                 )
-                    .add(-8, 'hour')
+                    .add(-8 - serverOffset, 'hour')
                     .toISOString(),
                 author: content('#v3cont_id > div.news_content > p:nth-child(2)').text(),
             };
