@@ -29,6 +29,10 @@ module.exports = async (ctx, next) => {
                 template = path.resolve(__dirname, '../views/rss.art');
                 break;
         }
+        // trim title length
+        ctx.state.data.item.forEach((item) => {
+            item.title = item.title.length > 80 ? `${item.title.slice(0, 80)}...` : item.title;
+        });
 
         const data = {
             lastBuildDate: new Date().toUTCString(),
