@@ -2073,6 +2073,34 @@ category 列表：
 | -------- | -------- | -------- | -------- | -------- |
 | 1        | 2        | 3        | 4        | 5        |
 
+### 重庆科技学院
+
+#### 教务处公告 <Author uid="binarization"/>
+
+举例: <https://rsshub.app/cqust/jw/notify>
+
+路由: `/cqust/jw/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notify`
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notify   | news     |
+
+#### 图书馆公告 <Author uid="binarization"/>
+
+路由: `/cqust/lib/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `news`
+
+|  本馆公告 |
+| --------- |
+| news      |
+
 ## 传统媒体
 
 ### 央视新闻
@@ -2251,7 +2279,7 @@ type, 分类, 缺省为中港台
 
 #### 特价机票 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
+举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
 路由: `/atfd/:locations/:nearby?`
 
@@ -2260,7 +2288,7 @@ type, 分类, 缺省为中港台
 -   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
 
 1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
+2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
 

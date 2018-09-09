@@ -18,6 +18,8 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
 
 ## Write the script
 
+RSSHub provides 3 methods for acquiring data, these methods are sorted by **recommended**:
+
 ### Access the target data source API
 
 Use [axios](https://github.com/axios/axios) to access the target data source API, assign the acquired title, link, description and datetime to ctx.state.data (refer to Data for the list of parameters) , typically it looks like this: [/routes/bilibili/bangumi.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
@@ -25,6 +27,16 @@ Use [axios](https://github.com/axios/axios) to access the target data source API
 ### Acquire data from HTML
 
 If an API is not provided, data need to be scraped from HTML. Use [axios](https://github.com/axios/axios) to acquire the HTML and then use [cheerio](https://github.com/cheeriojs/cheerio) for scraping the relevant data and assign them to ctx.state.data, typically it looks like this: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)
+
+### Page rendering
+
+::: tip tip
+
+This method is comparatively less performant and consumes more resources, only use when necessary or your pull requests might be rejected.
+
+:::
+
+Some websites provides no API and pages require rendering too, use [puppeteer](https://github.com/GoogleChrome/puppeteer) render the pages via Headless Chrome and then use [cheerio](https://github.com/cheeriojs/cheerio) for scraping the relevant data and assign them to ctx.state.data, typically it looks like this: [/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
 
 ### Enable caching
 

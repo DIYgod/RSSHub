@@ -509,6 +509,10 @@ router.get('/heu/ugs/news/:author?/:category?', require('./routes/universities/h
 // 成都信息工程大学
 router.get('/cuit/cxxww/:type?', require('./routes/universities/cuit/cxxww'));
 
+// 重庆科技学院
+router.get('/cqust/jw/:type?', require('./routes/universities/cqust/jw'));
+router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
