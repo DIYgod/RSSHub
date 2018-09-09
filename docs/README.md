@@ -2057,6 +2057,34 @@ category 列表：
 
 工作通知：无
 
+### 重庆科技学院
+
+#### 教务处公告 <Author uid="binarization"/>
+
+举例: <https://rsshub.app/cqust/jw/notify>
+
+路由: `/cqust/jw/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notify`
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notify   | news     |
+
+#### 图书馆公告 <Author uid="binarization"/>
+
+路由: `/cqust/lib/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `news`
+
+|  本馆公告 |
+| --------- |
+| news      |
+
 ## 传统媒体
 
 ### 央视新闻
