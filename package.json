@@ -28,11 +28,11 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "eslint": "5.4.0",
+    "eslint": "5.5.0",
     "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-prettier": "^2.6.2",
     "lint-staged": "^7.2.2",
-    "nodemon": "^1.18.3",
+    "nodemon": "^1.18.4",
     "prettier": "^1.14.2",
     "prettier-check": "^2.0.0",
     "vuepress": "0.14.2",
@@ -62,14 +62,14 @@
     "luxon": "^1.3.3",
     "markdown-it": "^8.4.2",
     "path-to-regexp": "2.4.0",
-    "puppeteer": "^1.7.0",
-    "raven": "^2.6.3",
+    "puppeteer": "^1.8.0",
+    "raven": "^2.6.4",
     "readall": "1.1.0",
     "redis": "2.8.0",
     "rss-parser": "3.4.3",
-    "sharp": "^0.20.7",
+    "sharp": "^0.20.8",
     "twit": "2.2.11",
-    "winston": "3.0.0"
+    "winston": "3.1.0"
   },
   "engines": {
     "node": ">=8.0.0"
