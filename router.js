@@ -541,4 +541,7 @@ router.get('/xclient/app/:name', require('./routes/xclient/app'));
 // 中国驻外使领事馆
 router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
 
+// 澎湃新闻
+router.get('/thepaper/featured', require('./routes/thepaper/featured'));
+
 module.exports = router;
