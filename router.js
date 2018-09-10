@@ -533,4 +533,8 @@ router.get('/sspai/series', require('./routes/sspai/series'));
 // xclient.info
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
 
+
+// hanhan海贼王更新：http://m.hanhande.com/op/
+router.get('/hanhan/op', require('./routes/hanhan/op'));
+
 module.exports = router;
