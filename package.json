@@ -64,7 +64,7 @@
     "path-to-regexp": "2.4.0",
     "puppeteer": "^1.7.0",
     "raven": "^2.6.3",
-    "readall": "1.0.0",
+    "readall": "1.1.0",
     "redis": "2.8.0",
     "rss-parser": "3.4.3",
     "sharp": "^0.20.7",
