@@ -11,6 +11,7 @@ module.exports = {
     // 是否显示 Debug 信息，取值 boolean 'false' 'key' ，取值为 'false' false 时永远不显示，取值为 'key' 时带上 ?debug=key 显示
     debugInfo: process.env.DEBUG_INFO || true,
     sentry: process.env.SENTRY || '', // 使用 sentry 进行错误追踪，这里是 sentry 提供的 DSN 链接
+    titleLengthLimit: process.env.TITLE_LENGTH_LIMIT || 100,
     redis: {
         url: process.env.REDIS_URL || 'redis://localhost:6379/',
         options: {

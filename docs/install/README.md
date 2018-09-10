@@ -355,9 +355,11 @@ gcloud app deploy
 
 `CACHE_TYPE`: 缓存类型, 可为 `memory` 和 `redis`, 设为空可以禁止缓存, 默认为 `memory`
 
-`CACHE_EXPIRE`: 缓存过期时间, 单位为秒, 默认 300
+`CACHE_EXPIRE`: 缓存过期时间, 单位为秒, 默认 `300`
 
-`LISTEN_INADDR_ANY`: 是否允许公网连接, 默认 1
+`LISTEN_INADDR_ANY`: 是否允许公网连接, 默认 `1`
+
+`TITLE_LENGTH_LIMIT`: 限制输出标题的字节长度, 一个英文字符的长度为 1 字节, 部分语言如中文, 日文, 韩文或阿拉伯文等, 统一算作 2 字节, 默认 `100`
 
 `REDIS_URL`: Redis 连接地址（memory 缓存类型时无效）, 默认为 `redis://localhost:6379/`
 
