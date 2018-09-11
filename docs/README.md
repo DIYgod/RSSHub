@@ -91,6 +91,57 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - <https://rsshub.app/jianshu/home.json>
 -   和 filter 或其他 URL query 一起使用 <https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件>
 
+## API 接口
+
+RSSHub 提供下列 API 接口:
+
+### 可用公共路由列表
+
+::: tip 提示
+`protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中.
+:::
+
+举例: <https://rsshub.app/api/routes/bilibili>
+
+路由: `/api/routes/:name?`
+
+参数:
+
+-   name, 路由一级名称, 对应 [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的文件夹名称. 可选, **缺省则返回所有可用路由**.
+
+返回的 JSON 结果格式如下:
+
+```js
+{
+   "bilibili":{
+      "routes":[
+         "/bilibili/user/video/:uid",
+         "/bilibili/user/article/:uid",
+         "/bilibili/user/fav/:uid",
+         "/bilibili/user/coin/:uid",
+         "/bilibili/user/dynamic/:uid",
+         "/bilibili/user/followers/:uid",
+         "/bilibili/user/followings/:uid",
+         "/bilibili/partion/:tid",
+         "/bilibili/partion/ranking/:tid/:days?",
+         "/bilibili/bangumi/:seasonid",
+         "/bilibili/video/reply/:aid",
+         "/bilibili/link/news/:product",
+         "/bilibili/live/room/:roomID",
+         "/bilibili/live/search/:key/:order",
+         "/bilibili/live/area/:areaID/:order",
+         "/bilibili/fav/:uid/:fid",
+         "/bilibili/blackboard",
+         "/bilibili/mall/new",
+         "/bilibili/mall/ip/:id",
+         "/bilibili/ranking/:rid?/:day?",
+         "/bilibili/channel/:uid/:cid",
+         "/bilibili/topic/:topic"
+      ]
+   }
+}
+```
+
 ## 社交媒体
 
 ### bilibili
