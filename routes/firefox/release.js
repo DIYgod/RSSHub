@@ -22,6 +22,8 @@ module.exports = async (ctx) => {
                     .text()} release note`,
                 link: `https://www.mozilla.org/en-US/firefox/${ctx.params.platform}/notes/`,
                 description: $('.notes-section').html(),
+                guid: $('.version').find('h2').text(),
+                pubDate: new Date($('.version').find('p').text()).toUTCString(),
             },
         ],
         description: $('.description').text(),
