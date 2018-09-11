@@ -2,6 +2,7 @@ const axios = require('../../../../utils/axios');
 const cheerio = require('cheerio');
 
 const baseUrl = 'http://jwc.cqu.edu.cn';
+const cacheTime = 24 * 60 * 60;
 
 module.exports = async (ctx) => {
     const response = await axios({
@@ -14,7 +15,7 @@ module.exports = async (ctx) => {
 
     const data = response.data;
     const $ = cheerio.load(data);
-    const links = $('.views-row a')
+    const links = $('.views-row a').slice(0, 5)
         .map((index, item) => {
             item = $(item);
             return {
@@ -26,20 +27,28 @@ module.exports = async (ctx) => {
 
     const items = await Promise.all(
         [...links].map(async ({ title, link }) => {
+            const item = {
+                title: title,
+                link: link,
+            };
+            const cache = await ctx.cache.get(link);
+            if (cache) {
+                return JSON.parse(cache);
+            }
             const response = await axios({
                 method: 'get',
                 url: link,
             });
-            const data = response.data;
-            const $ = cheerio.load(data);
-            const author = $('.username').text();
-            const pubDate = $('time').attr('datetime');
-            const description =
+            const $ = cheerio.load(response.data);
+            item.author = $('.username').text();
+            item.pubDate = $('time').attr('datetime');
+            item.description =
                 $('div .field-items').html() &&
                 $('div .field-items')
                     .find('p')
                     .text();
-            return Promise.resolve({ title, author, pubDate, description, link });
+            await ctx.cache.set(item.link, JSON.stringify(item), cacheTime);
+            return Promise.resolve(item);
         })
     );
     ctx.state.data = {
