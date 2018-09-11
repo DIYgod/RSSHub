@@ -93,6 +93,10 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 
 ## API 接口
 
+::: warning 注意
+API 仍处于开发状态中,  并可能会有改动. 欢迎提供建议！
+:::
+
 RSSHub 提供下列 API 接口:
 
 ### 可用公共路由列表
@@ -109,38 +113,44 @@ RSSHub 提供下列 API 接口:
 
 -   name, 路由一级名称, 对应 [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的文件夹名称. 可选, **缺省则返回所有可用路由**.
 
-返回的 JSON 结果格式如下:
+成功请求将会返回 HTTP 状态码 `200 OK` 与 JSON 结果, 格式如下:
 
 ```js
 {
-   "bilibili":{
-      "routes":[
-         "/bilibili/user/video/:uid",
-         "/bilibili/user/article/:uid",
-         "/bilibili/user/fav/:uid",
-         "/bilibili/user/coin/:uid",
-         "/bilibili/user/dynamic/:uid",
-         "/bilibili/user/followers/:uid",
-         "/bilibili/user/followings/:uid",
-         "/bilibili/partion/:tid",
-         "/bilibili/partion/ranking/:tid/:days?",
-         "/bilibili/bangumi/:seasonid",
-         "/bilibili/video/reply/:aid",
-         "/bilibili/link/news/:product",
-         "/bilibili/live/room/:roomID",
-         "/bilibili/live/search/:key/:order",
-         "/bilibili/live/area/:areaID/:order",
-         "/bilibili/fav/:uid/:fid",
-         "/bilibili/blackboard",
-         "/bilibili/mall/new",
-         "/bilibili/mall/ip/:id",
-         "/bilibili/ranking/:rid?/:day?",
-         "/bilibili/channel/:uid/:cid",
-         "/bilibili/topic/:topic"
-      ]
-   }
+    "status": "success",
+    "data": {
+        "bilibili": {
+            "routes": [
+                "/bilibili/user/video/:uid",
+                "/bilibili/user/article/:uid",
+                "/bilibili/user/fav/:uid",
+                "/bilibili/user/coin/:uid",
+                "/bilibili/user/dynamic/:uid",
+                "/bilibili/user/followers/:uid",
+                "/bilibili/user/followings/:uid",
+                "/bilibili/partion/:tid",
+                "/bilibili/partion/ranking/:tid/:days?",
+                "/bilibili/bangumi/:seasonid",
+                "/bilibili/video/reply/:aid",
+                "/bilibili/link/news/:product",
+                "/bilibili/live/room/:roomID",
+                "/bilibili/live/search/:key/:order",
+                "/bilibili/live/area/:areaID/:order",
+                "/bilibili/fav/:uid/:fid",
+                "/bilibili/blackboard",
+                "/bilibili/mall/new",
+                "/bilibili/mall/ip/:id",
+                "/bilibili/ranking/:rid?/:day?",
+                "/bilibili/channel/:uid/:cid",
+                "/bilibili/topic/:topic"
+            ]
+        }
+    },
+    "message": "request returned 22 routes"
 }
 ```
+
+若无符合请求路由, 请求将会返回 HTTP 状态码 `204 No Content`.
 
 ## 社交媒体
 

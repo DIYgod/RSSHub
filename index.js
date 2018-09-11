@@ -17,8 +17,13 @@ const auth = require('./middleware/auth');
 
 const router = require('./router');
 const protected_router = require('./protected_router');
-const api_router = require('./api_router');
 const mount = require('koa-mount');
+
+// API related
+
+const apiTemplate = require('./middleware/api-template');
+const api_router = require('./api_router');
+const apiResponseHandler = require('./middleware/api-response-handler');
 
 process.on('uncaughtException', (e) => {
     logger.error('uncaughtException: ' + e);
@@ -55,9 +60,11 @@ app.use(debug);
 // 5 fix incorrect `utf-8` characters
 app.use(utf8);
 
+app.use(apiTemplate);
+app.use(apiResponseHandler());
+
 // 4 generate body
 app.use(template);
-
 // 3 filter content
 app.use(parameter);
 
