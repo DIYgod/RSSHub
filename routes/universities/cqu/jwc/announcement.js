@@ -15,7 +15,8 @@ module.exports = async (ctx) => {
 
     const data = response.data;
     const $ = cheerio.load(data);
-    const links = $('.views-row a').slice(0, 5)
+    const links = $('.views-row a')
+        .slice(0, 5)
         .map((index, item) => {
             item = $(item);
             return {
