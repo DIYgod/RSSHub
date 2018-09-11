@@ -21,6 +21,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const parsed = JSONbig.parse(item.card);
             const data = parsed.item || parsed;
+            const origin = parsed.origin ? JSONbig.parse(parsed.origin) : null;
 
             // img
             let imgHTML = '';
@@ -41,9 +42,11 @@ module.exports = async (ctx) => {
                 link = `https://t.bilibili.com/${item.desc.dynamic_id}`;
             }
 
+            const getDes = (data) => data.desc || data.description || data.content || data.summary || (data.vest && data.vest.content) + (data.sketch && data.sketch.title);
+
             return {
                 title: data.title || data.description || data.content || (data.vest && data.vest.content),
-                description: `${data.desc || data.description || data.content || data.summary || (data.vest && data.vest.content) + (data.sketch && data.sketch.title)}${imgHTML} `,
+                description: `${getDes(data)}${origin ? `<br><br>转发自: @${(origin.user && origin.user.uname) || (origin.owner && origin.owner.name)}: ${getDes(origin.item || origin)}` : ''}${imgHTML} `,
                 pubDate: new Date(item.desc.timestamp * 1000).toUTCString(),
                 link: link,
             };

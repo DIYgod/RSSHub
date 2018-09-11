@@ -89,6 +89,39 @@ For exmaple:
 -   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
 -   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
+## API
+
+RSSHub provides the following APIs:
+
+### List of Public Routes
+
+::: tip Tip
+This API **will not** return any routes under `protected_router.js`.
+:::
+
+Eg: <https://rsshub.app/api/routes/github>
+
+Route: `/api/routes/:name?`
+
+Parameters:
+
+-   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes). Optional, **returns all public routes if not specified**.
+
+The above example returns the following result in JSON:
+
+```js
+{
+   "github":{
+      "routes":[
+         "/github/trending/:since/:language?",
+         "/github/issue/:user/:repo",
+         "/github/user/followers/:user",
+         "/github/stars/:user/:repo"
+      ]
+   }
+}
+```
+
 ## Application Updates
 
 ### RSSHub
@@ -137,9 +170,9 @@ Route: `/appstore/update/:country/:id`
 
 Parameters：
 
-country, App Store Country, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`.
+-   country, App Store Country, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`.
 
-id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`.
+-   id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`.
 
 ### App Store/Mac App Store Price Drop Alert <Author uid="HenryQW"/>
 

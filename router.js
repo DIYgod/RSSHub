@@ -509,6 +509,13 @@ router.get('/heu/ugs/news/:author?/:category?', require('./routes/universities/h
 // 重庆大学
 router.get('/cqu/jwc/announcement', require('./routes/universities/cqu/jwc/announcement'));
 
+// 成都信息工程大学
+router.get('/cuit/cxxww/:type?', require('./routes/universities/cuit/cxxww'));
+
+// 重庆科技学院
+router.get('/cqust/jw/:type?', require('./routes/universities/cqust/jw'));
+router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
@@ -535,7 +542,9 @@ router.get('/sspai/series', require('./routes/sspai/series'));
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
 
 // 中国驻外使领事馆
-router.get('/embassy/:country', require('./routes/embassy/embassy'));
-router.get('/embassy/:country/:city', require('./routes/embassy/consulate'));
+router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
+
+// 澎湃新闻
+router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 
 module.exports = router;

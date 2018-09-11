@@ -91,6 +91,57 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - <https://rsshub.app/jianshu/home.json>
 -   和 filter 或其他 URL query 一起使用 <https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件>
 
+## API 接口
+
+RSSHub 提供下列 API 接口:
+
+### 可用公共路由列表
+
+::: tip 提示
+`protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中.
+:::
+
+举例: <https://rsshub.app/api/routes/bilibili>
+
+路由: `/api/routes/:name?`
+
+参数:
+
+-   name, 路由一级名称, 对应 [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的文件夹名称. 可选, **缺省则返回所有可用路由**.
+
+返回的 JSON 结果格式如下:
+
+```js
+{
+   "bilibili":{
+      "routes":[
+         "/bilibili/user/video/:uid",
+         "/bilibili/user/article/:uid",
+         "/bilibili/user/fav/:uid",
+         "/bilibili/user/coin/:uid",
+         "/bilibili/user/dynamic/:uid",
+         "/bilibili/user/followers/:uid",
+         "/bilibili/user/followings/:uid",
+         "/bilibili/partion/:tid",
+         "/bilibili/partion/ranking/:tid/:days?",
+         "/bilibili/bangumi/:seasonid",
+         "/bilibili/video/reply/:aid",
+         "/bilibili/link/news/:product",
+         "/bilibili/live/room/:roomID",
+         "/bilibili/live/search/:key/:order",
+         "/bilibili/live/area/:areaID/:order",
+         "/bilibili/fav/:uid/:fid",
+         "/bilibili/blackboard",
+         "/bilibili/mall/new",
+         "/bilibili/mall/ip/:id",
+         "/bilibili/ranking/:rid?/:day?",
+         "/bilibili/channel/:uid/:cid",
+         "/bilibili/topic/:topic"
+      ]
+   }
+}
+```
+
 ## 社交媒体
 
 ### bilibili
@@ -2067,6 +2118,50 @@ category 列表：
 
 参数: 无
 
+### 成都信息工程大学
+
+#### 成信新闻网 <Author uid="kimika"/>
+
+举例: <https://rsshub.app/cuit/cxxww/1>
+
+路由: `/cuit/cxxww/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `1`
+
+| 综合新闻 | 信息公告 | 焦点新闻 | 学术动态 | 工作交流 |
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |
+
+### 重庆科技学院
+
+#### 教务处公告 <Author uid="binarization"/>
+
+举例: <https://rsshub.app/cqust/jw/notify>
+
+路由: `/cqust/jw/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notify`
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notify   | news     |
+
+#### 图书馆公告 <Author uid="binarization"/>
+
+路由: `/cqust/lib/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `news`
+
+|  本馆公告 |
+| --------- |
+| news      |
+
 ## 传统媒体
 
 ### 央视新闻
@@ -2163,6 +2258,16 @@ category 列表：
 
 -   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
 
+### 澎湃新闻
+
+#### 首页头条 <Author uid="HenryQW"/>
+
+举例: <https://rsshub.app/thepaper/featured>
+
+路由: `/thepaper/featured`
+
+参数: 无
+
 ### 联合早报
 
 #### 即时新闻 <Author uid="lengthmin"/>
@@ -2245,7 +2350,7 @@ type, 分类, 缺省为中港台
 
 #### 特价机票 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
+举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
 路由: `/atfd/:locations/:nearby?`
 
@@ -2254,7 +2359,7 @@ type, 分类, 缺省为中港台
 -   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
 
 1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
+2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
 

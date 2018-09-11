@@ -17,6 +17,7 @@ const auth = require('./middleware/auth');
 
 const router = require('./router');
 const protected_router = require('./protected_router');
+const api_router = require('./api_router');
 const mount = require('koa-mount');
 
 process.on('uncaughtException', (e) => {
@@ -97,6 +98,9 @@ app.use(mount('/', router.routes())).use(router.allowedMethods());
 
 // routes the require authentication
 app.use(mount('/protected', protected_router.routes())).use(protected_router.allowedMethods());
+
+// API router
+app.use(mount('/api', api_router.routes())).use(api_router.allowedMethods());
 
 // connect
 if (config.connect.port) {
