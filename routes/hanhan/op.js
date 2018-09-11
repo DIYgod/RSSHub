@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(data);
     const list = $('ul.dmph').eq(1).find('li');
-
+    var millsec=new Date().getTime();
     ctx.state.data = {
         title: '海贼王hanhan',
         link: 'http://m.hanhande.com/op/',
@@ -34,7 +34,7 @@ module.exports = async (ctx) => {
                     return {
                         title: item.find('a').attr('title'),
                         description: `${item.find('a').attr('title')}`,
-                        pubDate: new Date().toUTCString(),
+                        pubDate: new Date(millsec-index*1000).toUTCString(),
                         link: `${item.find('a').attr('href')}`,
                     };
                 })
