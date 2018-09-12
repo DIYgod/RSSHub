@@ -16,7 +16,9 @@ module.exports = async (ctx) => {
 
     const data = res.data;
     const $ = cheerio.load(data);
-    const list = $('p.news_tit01, div.news_tit02').get();
+    const list = $('p.news_tit01, div.news_tit02')
+        .slice(0, 10)
+        .get();
 
     const out = await Promise.all(
         list.map(async (item) => {
