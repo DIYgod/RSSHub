@@ -168,9 +168,9 @@ Parameters:
 
 -   platform
 
-| Desktop | Android | Beta | Nightly | Android Beta |
-| ------- | ------- | ---- | ------- | ------------ |
-| desktop | android | beta | nightly | android-beta |
+| Desktop | Android | Beta | Nightly | Android Beta | ESR |
+| ------- | ------- | ---- | ------- | ------------ | ------------- |
+| desktop | android | beta | nightly | android-beta | organizations |
 
 ### App Store/Mac App Store Updates <Author uid="cielpy"/>
 

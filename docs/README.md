@@ -1723,9 +1723,9 @@ GitHub 官方也提供了一些 RSS:
 
 -   platform
 
-| 桌面    | Android | Beta | Nightly | Android Beta |
-| ------- | ------- | ---- | ------- | ------------ |
-| desktop | android | beta | nightly | android-beta |
+| 桌面    | Android | Beta | Nightly | Android Beta | ESR |
+| ------- | ------- | ---- | ------- | ------------ | ------------- |
+| desktop | android | beta | nightly | android-beta | organizations |
 
 ### 腾讯云移动直播 SDK <Author uid="cielpy"/>
 
