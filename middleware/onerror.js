@@ -7,7 +7,6 @@ if (config.sentry) {
 }
 
 module.exports = async (ctx, next) => {
-    console.log(123);
     try {
         await next();
     } catch (err) {
