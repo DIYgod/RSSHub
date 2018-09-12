@@ -1,5 +1,5 @@
 ---
-成都sidebar: auto
+sidebar: auto
 ---
 
 <p align="center">
