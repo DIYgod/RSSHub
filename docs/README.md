@@ -2108,6 +2108,16 @@ category 列表：
 
 工作通知：无
 
+### 重庆大学
+
+#### 教务网通知公告 <Author uid="El-Chiang"/>
+
+举例: <https://rsshub.app/cqu/jwc/announcement>
+
+路由: `/cqu/jwc/announcement`
+
+参数: 无
+
 ### 成都信息工程大学
 
 #### 成信新闻网 <Author uid="kimika"/>

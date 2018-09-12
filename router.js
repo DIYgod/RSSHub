@@ -506,6 +506,9 @@ router.get('/nchu/jwc/:type?', require('./routes/universities/nchu/jwc'));
 // 哈尔滨工程大学
 router.get('/heu/ugs/news/:author?/:category?', require('./routes/universities/heu/ugs/news'));
 
+// 重庆大学
+router.get('/cqu/jwc/announcement', require('./routes/universities/cqu/jwc/announcement'));
+
 // 成都信息工程大学
 router.get('/cuit/cxxww/:type?', require('./routes/universities/cuit/cxxww'));
 
