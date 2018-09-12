@@ -7,6 +7,7 @@ if (config.sentry) {
 }
 
 module.exports = async (ctx, next) => {
+    console.log(123);
     try {
         await next();
     } catch (err) {
@@ -15,7 +16,11 @@ module.exports = async (ctx, next) => {
             'Content-Type': 'text/html; charset=UTF-8',
         });
         ctx.body = `RSSHub 发生了一些意外: <pre>${err instanceof Error ? err.stack : err}</pre>`;
-        ctx.status = 404;
+        if (err.status === 401) {
+            ctx.status = 401;
+        } else {
+            ctx.status = 404;
+        }
 
         if (config.sentry) {
             Raven.captureException(
