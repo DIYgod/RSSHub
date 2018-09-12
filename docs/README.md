@@ -1723,7 +1723,7 @@ GitHub 官方也提供了一些 RSS:
 
 -   platform
 
-| 桌面    | Android | Beta | Nightly | Android Beta | ESR |
+| 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
