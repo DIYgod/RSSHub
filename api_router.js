@@ -6,29 +6,23 @@ router.get('/routes/:name?', (ctx) => {
     const allRoutes = Array.from(routes.stack);
     allRoutes.shift();
     const result = {};
+    let counter = 0;
 
     allRoutes.forEach((i) => {
         const path = i.path;
         const top = path.split('/')[1];
 
-        if (ctx.params.name === undefined) {
+        if (ctx.params.name === undefined || top === ctx.params.name) {
             if (result[top]) {
                 result[top].routes.push(path);
             } else {
                 result[top] = { routes: [path] };
             }
-        } else {
-            if (top === ctx.params.name) {
-                if (result[top]) {
-                    result[top].routes.push(path);
-                } else {
-                    result[top] = { routes: [path] };
-                }
-            }
+            counter++;
         }
     });
 
-    ctx.body = result;
+    ctx.body = { counter, result };
 });
 
 module.exports = router;

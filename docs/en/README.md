@@ -91,6 +91,10 @@ For exmaple:
 
 ## API
 
+::: warning Warning
+The API is under active development and is subject to change. All suggestions are welcome!
+:::
+
 RSSHub provides the following APIs:
 
 ### List of Public Routes
@@ -107,20 +111,26 @@ Parameters:
 
 -   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes). Optional, **returns all public routes if not specified**.
 
-The above example returns the following result in JSON:
+A successful request returns a HTTP status code `200 OK` with the result in JSON:
 
 ```js
 {
-   "github":{
-      "routes":[
-         "/github/trending/:since/:language?",
-         "/github/issue/:user/:repo",
-         "/github/user/followers/:user",
-         "/github/stars/:user/:repo"
-      ]
-   }
+    "status": "success",
+    "data": {
+        "github": {
+            "routes": [
+                "/github/trending/:since/:language?",
+                "/github/issue/:user/:repo",
+                "/github/user/followers/:user",
+                "/github/stars/:user/:repo"
+            ]
+        }
+    },
+    "message": "request returned 4 routes"
 }
 ```
+
+If no matching results were found, the server returns only a HTTP status code `204 No Content`.
 
 ## Application Updates
 
