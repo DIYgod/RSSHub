@@ -239,6 +239,7 @@ router.get('/jike/topic/text/:id', require('./routes/jike/topicText'));
 router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
 router.get('/jike/daily', require('./routes/jike/daily'));
+router.get('/jike/dev/:id', require('./routes/jike/topicDev'));
 
 // 极客时间
 router.get('/geektime/column/:cid', require('./routes/geektime/column'));
