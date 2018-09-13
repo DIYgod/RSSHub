@@ -356,6 +356,9 @@ router.get('/one', require('./routes/one/index'));
 // Firefox
 router.get('/firefox/release/:platform', require('./routes/firefox/release'));
 
+// Thunderbird
+router.get('/thunderbird/release', require('./routes/thunderbird/release'));
+
 // tuicool
 router.get('/tuicool/mags/:type', require('./routes/tuicool/mags'));
 

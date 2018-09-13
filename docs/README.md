@@ -1727,6 +1727,14 @@ GitHub 官方也提供了一些 RSS:
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
+### Thunderbird <Author uid="garywill"/>
+
+举例: <https://rsshub.app/thunderbird/release>
+
+路由: `/thunderbird/release/`
+
+参数: 无
+
 ### 腾讯云移动直播 SDK <Author uid="cielpy"/>
 
 举例: <https://rsshub.app/qcloud/mlvb/changelog>
