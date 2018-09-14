@@ -101,9 +101,12 @@ module.exports = async (ctx) => {
 
             // 5. 图片
             if (item.pictures) {
-                item.pictures.forEach((item) => {
-                    description += `<br/><img referrerpolicy="no-referrer" src="${item.picUrl}"/>`;
-                });
+                item.pictures.forEach(
+                    (pic) =>
+                        (description += `<picture><source srcset="${pic.picUrl.split('/thumbnail/')[0]}/strip/format/webp" type="image/webp"><source srcset="${pic.picUrl.split('?imageMogr2/')[0]}" type="image/jpeg"><img src="${
+                            pic.picUrl.split('?imageMogr2/')[0]
+                        }"></picture>`)
+                );
             }
 
             // rss标题
