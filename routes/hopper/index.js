@@ -1,5 +1,6 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
+const dayjs = require('dayjs');
 
 module.exports = async (ctx) => {
     const from = ctx.params.from.toUpperCase();
@@ -58,24 +59,7 @@ module.exports = async (ctx) => {
     };
 };
 
-function formatDate(v) {
-    return new Intl.DateTimeFormat('en-gb', {
-        year: 'numeric',
-        weekday: 'short',
-        month: 'short',
-        day: 'numeric',
-    }).format(new Date(v));
-}
-
-function getMonthYear(v) {
-    const date = new Date(v);
-    return date.toLocaleString('en-gb', {
-        month: 'long',
-        year: 'numeric',
-    });
-}
-
-function formatDesc(e) {
+const formatDesc = (e) => {
     const item = e.attr('href');
     let reg = new RegExp('destination=(.*?)&', 'g');
     const destination = reg.exec(item)[1];
@@ -88,14 +72,15 @@ function formatDesc(e) {
 
     const price = e.find('.price').text();
 
-    const title = `${origin} &#9992; ${destination} ${getMonthYear(departureDate)} for ${price}`;
+    const title = `${origin} &#9992; ${destination} ${dayjs(departureDate).format('YYYY MMM')} for ${price}`;
 
     const description = `<table><tbody><tr><th align="left" style="border: 1px solid black;">From</th><th align="left" style="border: 1px solid black;">To</th><th align="left" style="border: 1px solid black;">Price</th></tr><tr><td style="border: 1px solid black;">
-        ${origin}</td><td style="border: 1px solid black;">${destination}</td><td style="border: 1px solid black;">${price}</td></tr></tbody></table>${formatDate(departureDate)} &#9992; ${formatDate(returnDate)}`;
+        ${origin}</td><td style="border: 1px solid black;">${destination}</td><td style="border: 1px solid black;">${price}</td></tr></tbody></table>${dayjs(departureDate).format('YYYY MMM DD')} &#9992; ${dayjs(returnDate).format(
+        'YYYY MMM DD'
+    )}`;
     return {
         title,
         description,
-        guid: item,
         link: item,
     };
-}
+};

@@ -28,7 +28,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const date = new Date(item.createdAt);
             return {
-                title: `${title} ${dayjs(date).format('YYYY-MM-DD')}`,
+                title: `${title} ${dayjs(date).format('YYYY MMM DD')}`,
                 description: item.content.replace(new RegExp('\n', 'g'), '<br />'),
                 pubDate: date.toUTCString(),
                 link: `https://web.okjike.com/message-detail/${item.id}/officialMessage`,

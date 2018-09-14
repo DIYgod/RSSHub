@@ -91,6 +91,67 @@ RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出
 -   JSON Feed - <https://rsshub.app/jianshu/home.json>
 -   和 filter 或其他 URL query 一起使用 <https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件>
 
+## API 接口
+
+::: warning 注意
+API 仍处于开发状态中,  并可能会有改动. 欢迎提供建议！
+:::
+
+RSSHub 提供下列 API 接口:
+
+### 可用公共路由列表
+
+::: tip 提示
+`protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中.
+:::
+
+举例: <https://rsshub.app/api/routes/bilibili>
+
+路由: `/api/routes/:name?`
+
+参数:
+
+-   name, 路由一级名称, 对应 [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的文件夹名称. 可选, **缺省则返回所有可用路由**.
+
+成功请求将会返回 HTTP 状态码 `200 OK` 与 JSON 结果, 格式如下:
+
+```js
+{
+    "status": "success",
+    "data": {
+        "bilibili": {
+            "routes": [
+                "/bilibili/user/video/:uid",
+                "/bilibili/user/article/:uid",
+                "/bilibili/user/fav/:uid",
+                "/bilibili/user/coin/:uid",
+                "/bilibili/user/dynamic/:uid",
+                "/bilibili/user/followers/:uid",
+                "/bilibili/user/followings/:uid",
+                "/bilibili/partion/:tid",
+                "/bilibili/partion/ranking/:tid/:days?",
+                "/bilibili/bangumi/:seasonid",
+                "/bilibili/video/reply/:aid",
+                "/bilibili/link/news/:product",
+                "/bilibili/live/room/:roomID",
+                "/bilibili/live/search/:key/:order",
+                "/bilibili/live/area/:areaID/:order",
+                "/bilibili/fav/:uid/:fid",
+                "/bilibili/blackboard",
+                "/bilibili/mall/new",
+                "/bilibili/mall/ip/:id",
+                "/bilibili/ranking/:rid?/:day?",
+                "/bilibili/channel/:uid/:cid",
+                "/bilibili/topic/:topic"
+            ]
+        }
+    },
+    "message": "request returned 22 routes"
+}
+```
+
+若无符合请求路由, 请求将会返回 HTTP 状态码 `204 No Content`.
+
 ## 社交媒体
 
 ### bilibili
@@ -1518,16 +1579,6 @@ GitHub 官方也提供了一些 RSS:
 
 参数: 无
 
-### xkcd
-
-#### xkcd 的科学漫画 <Author uid="arbent"/>
-
-举例: <https://rsshub.app/xkcd/comic>
-
-路由: `/xkcd/comic`
-
-参数: 无
-
 ## 动漫
 
 ### bilibili
@@ -1672,9 +1723,17 @@ GitHub 官方也提供了一些 RSS:
 
 -   platform
 
-| 桌面    | Android | Beta | Nightly | Android Beta |
-| ------- | ------- | ---- | ------- | ------------ |
-| desktop | android | beta | nightly | android-beta |
+| 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
+| ------- | ------- | ---- | ------- | ------------ | ------------- |
+| desktop | android | beta | nightly | android-beta | organizations |
+
+### Thunderbird <Author uid="garywill"/>
+
+举例: <https://rsshub.app/thunderbird/release>
+
+路由: `/thunderbird/release/`
+
+参数: 无
 
 ### 腾讯云移动直播 SDK <Author uid="cielpy"/>
 
@@ -1767,6 +1826,18 @@ GitHub 官方也提供了一些 RSS:
 参数:
 
 -   project: 项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到
+
+### xclient.info
+
+#### 应用更新
+
+举例: <https://rsshub.app/xclient/app/sketch>
+
+路由: `/xclient/app/:name`
+
+参数:
+
+-   name: 应用名, 可在应用页 URL 中找到
 
 ## 大学通知
 
@@ -1976,15 +2047,138 @@ GitHub 官方也提供了一些 RSS:
 | -------- | -------- |
 | notice   | news     |
 
+### 南昌航空大学
+
+#### 教务处公告与新闻 <Author uid="Sg4Dylan"/>
+
+举例: <https://rsshub.app/nchu/jwc/notice>
+
+路由: `/nchu/jwc/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notice`
+
+| 教务公告 | 教务新闻 |
+| -------- | -------- |
+| notice   | news     |
+
 ### 哈尔滨工程大学
 
 #### 本科生院工作通知 <Author uid="XYenon"/>
 
-举例: <https://rsshub.app/heu/ugs/news>
+举例: <https://rsshub.app/heu/ugs/news/jwc/jxap>
 
-路由: `/heu/ugs/news`
+路由: `/heu/ugs/news/:author?/:category?`
+
+参数:
+
+-   author, 可选, 发布部门, 默认为 `gztz`
+-   category, 可选, 分类, 默认为 `all`
+
+author 列表：
+
+| 教务处 | 实践教学与交流处 | 教育评估处 | 专业建设处 | 国家大学生文化素质基地 | 教师教学发展中心 | 综合办公室 | 工作通知 |
+| ------ | ---------------- | ---------- | ---------- | ---------------------- | ---------------- | ---------- | -------- |
+| jwc    | sjjxyjlzx        | jypgc      | zyjsc      | gjdxswhszjd            | jsjxfzzx         | zhbgs      | gztz     |
+
+category 列表：
+
+`all` 为全部
+
+教务处：
+
+| 教学安排 | 考试管理 | 学籍管理 | 外语统考 | 成绩管理 |
+| -------- | -------- | -------- | -------- | -------- |
+| jxap     | ksgl     | xjgl     | wytk     | cjgl     |
+
+实践教学与交流处：
+
+| 实验教学 | 实验室建设 | 校外实习 | 学位论文 | 课程设计 | 创新创业 | 校际交流 |
+| -------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+| syjx     | sysjs      | xwsx     | xwlw     | kcsj     | cxcy     | xjjl     |
+
+教育评估处：
+
+| 教学研究与教学成果 | 质量监控 |
+| ------------------ | -------- |
+| jxyjyjxcg          | zljk     |
+
+专业建设处：
+
+| 专业与教材建设 | 陈赓实验班 | 教学名师与优秀主讲教师 | 课程建设 | 双语教学 |
+| -------------- | ---------- | ---------------------- | -------- | -------- |
+| zyyjcjs        | cgsyb      | jxmsyyxzjjs            | kcjs     | syjx     |
+
+国家大学生文化素质基地：无
+
+教师教学发展中心：
+
+| 教师培训 |
+| -------- |
+| jspx     |
+
+综合办公室：
+
+| 联系课程 |
+| -------- |
+| lxkc     |
+
+工作通知：无
+
+### 重庆大学
+
+#### 教务网通知公告 <Author uid="El-Chiang"/>
+
+举例: <https://rsshub.app/cqu/jwc/announcement>
+
+路由: `/cqu/jwc/announcement`
 
 参数: 无
+
+### 成都信息工程大学
+
+#### 成信新闻网 <Author uid="kimika"/>
+
+举例: <https://rsshub.app/cuit/cxxww/1>
+
+路由: `/cuit/cxxww/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `1`
+
+| 综合新闻 | 信息公告 | 焦点新闻 | 学术动态 | 工作交流 | 媒体成信 | 更名专题 | 文化活动 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        | 7        | 9        | 10       |
+
+### 重庆科技学院
+
+#### 教务处公告 <Author uid="binarization"/>
+
+举例: <https://rsshub.app/cqust/jw/notify>
+
+路由: `/cqust/jw/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `notify`
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notify   | news     |
+
+#### 图书馆公告 <Author uid="binarization"/>
+
+路由: `/cqust/lib/:type?`
+
+参数:
+
+-   type, 可选, 默认为 `news`
+
+|  本馆公告 |
+| --------- |
+| news      |
 
 ## 传统媒体
 
@@ -2082,6 +2276,16 @@ GitHub 官方也提供了一些 RSS:
 
 -   category, 新京报的栏目名, 点击对应栏目后在地址栏找到
 
+### 澎湃新闻
+
+#### 首页头条 <Author uid="HenryQW"/>
+
+举例: <https://rsshub.app/thepaper/featured>
+
+路由: `/thepaper/featured`
+
+参数: 无
+
 ### 联合早报
 
 #### 即时新闻 <Author uid="lengthmin"/>
@@ -2092,7 +2296,7 @@ GitHub 官方也提供了一些 RSS:
 
 参数:
 
-type，分类, 缺省为中港台
+type, 分类, 缺省为中港台
 
 | 中港台 | 新加坡    | 国际  | 财经     |
 | ------ | --------- | ----- | -------- |
@@ -2106,7 +2310,7 @@ type，分类, 缺省为中港台
 
 参数:
 
-type，分类, 缺省为中港台
+type, 分类, 缺省为中港台
 
 | 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
 | ------------- | --------- | ------ | ------------- | ------ |
@@ -2164,7 +2368,7 @@ type，分类, 缺省为中港台
 
 #### 特价机票 <Author uid="HenryQW"/>
 
-举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york, gb+london/1)
+举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
 路由: `/atfd/:locations/:nearby?`
 
@@ -2173,7 +2377,7 @@ type，分类, 缺省为中港台
 -   locations: 始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成:
 
 1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york, gb+london/)
+2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
 
@@ -2430,6 +2634,138 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 -   id, 小说 id, 可在对应小说页 URL 中找到
 
+### 快眼看书 <Author uid="squkw"/>
+
+举例: <https://rsshub.app/novel/booksky/98619>
+
+路由: `/novel/booksky/:id`
+
+参数:
+
+-   id, 小说 id, 可在对应小说页 URL 中找到
+
+举例网址: http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+
+## 中国驻外使领馆通知
+
+::: tip 提示
+
+便于分类, 使馆领馆统一归于 `embassy` 路由下, 以所在国家与城市区分.
+
+:::
+
+### 大使馆
+
+举例: <https://rsshub.app/embassy/us>
+
+路由: `/embassy/:country`
+
+参数:
+
+-   country, 国家短代码, 见[支持国家列表](#支持国家列表)
+
+### 领事馆
+
+举例: <https://rsshub.app/embassy/us/chicago>
+
+路由: `/embassy/:country/:city`
+
+参数:
+
+-   country, 国家短代码, 见[支持国家列表](#支持国家列表)
+-   city, 城市, 对应国家列表下的`领事馆城市列表`
+
+### 支持国家列表
+
+#### 德国 `DE`
+
+-   大使馆: `/embassy/de`
+
+-   领事馆城市列表:
+
+| 城市   | 路由                 |
+| ------ | -------------------- |
+| 慕尼黑 | `/embassy/de/munich` |
+
+---
+
+#### 法国 `FR`
+
+-   大使馆: `/embassy/fr`
+
+-   领事馆城市列表:
+
+| 城市       | 路由                     |
+| ---------- | ------------------------ |
+| 马赛       | `/embassy/fr/marseille`  |
+| 斯特拉斯堡 | `/embassy/fr/strasbourg` |
+| 里昂       | `/embassy/fr/lyon`       |
+
+---
+
+#### 日本 `JP`
+
+-   大使馆: `/embassy/jp`
+
+-   领事馆城市列表:
+
+| 城市   | 路由                   |
+| ------ | ---------------------- |
+| 长崎   | `/embassy/jp/nagasaki` |
+| 大阪   | `/embassy/jp/osaka`    |
+| 福冈   | `/embassy/jp/fukuoka`  |
+| 名古屋 | `/embassy/jp/nagoya`   |
+| 札幌   | `/embassy/jp/sapporo`  |
+| 新潟   | `/embassy/jp/niigata`  |
+
+---
+
+#### 韩国 `KR`
+
+-   大使馆: `/embassy/kr`
+
+-   领事馆城市列表:
+
+| 城市 | 路由                  |
+| ---- | --------------------- |
+| 釜山 | `/embassy/kr/busan`   |
+| 济州 | `/embassy/kr/jeju`    |
+| 光州 | `/embassy/kr/gwangju` |
+
+---
+
+#### 新加坡 `SG`
+
+-   大使馆: `/embassy/sg`
+
+---
+
+#### 美国 `US`
+
+-   大使馆: `/embassy/us`
+
+-   领事馆城市列表:
+
+| 城市   | 路由                       |
+| ------ | -------------------------- |
+| 纽约   | `/embassy/us/newyork`      |
+| 芝加哥 | `/embassy/us/chicago`      |
+| 旧金山 | `/embassy/us/sanfrancisco` |
+
+---
+
+#### 英国 `UK`
+
+-   大使馆: `/embassy/uk`
+
+-   领事馆城市列表:
+
+| 城市       | 路由                     |
+| ---------- | ------------------------ |
+| 爱丁堡     | `/embassy/uk/edinburgh`  |
+| 贝尔法斯特 | `/embassy/uk/belfast`    |
+| 曼彻斯特   | `/embassy/uk/manchester` |
+
 ## 待分类
 
 ### 自如
@@ -2442,7 +2778,7 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 参数
 
--   city: 城市, 北京 bj；上海 sh；深圳 sz；杭州 hz；南京 nj；广州 gz；成都 cd；武汉 wh；天津 tj
+-   city: 城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj
 
 -   iswhole: 是否整租
 
@@ -2677,14 +3013,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 | -------- | -------- | -------- | -------- |
 | prog     | design   | startup  | tech     |
 
-### 科技星球
-
-#### 首页 <Author uid="vhgyux"/>
-
-举例: <https://rsshub.app/kejixingqiu/home>
-
-路由: `/kejixingqiu/home`
-
 ### 爱范儿 ifanr <Author uid="HenryQW"/>
 
 #### AppSolution
@@ -2708,3 +3036,11 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 #### App Store/Mac App Store
 
 见 [#app-store-mac-app-store](#app-store-mac-app-store)
+
+### 少数派 sspai <Author uid="HenryQW"/>
+
+#### 最新上架付费专栏
+
+举例: <https://rsshub.app/sspai/series>
+
+路由: `/sspai/series`
