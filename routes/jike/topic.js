@@ -107,13 +107,11 @@ module.exports = async (ctx) => {
             }
 
             // rss标题
-            const TITEL_MAX_LENGTH = 20;
             // 优先将音频和视频名作为标题
             // 其次将正文内容作为标题
             // 若都没有 则是推送型消息，将连接标题作为主题
             // “无题” fallback
-            let title = audioName || videoName || content || linkName || '无题';
-            title = `${title.substr(0, TITEL_MAX_LENGTH)}${title.length > TITEL_MAX_LENGTH ? '...' : ''}`;
+            const title = audioName || videoName || content || linkName || '无题';
 
             return {
                 title,
