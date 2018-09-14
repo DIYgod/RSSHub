@@ -172,6 +172,14 @@ Parameters:
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
+### Thunderbird <Author uid="garywill"/>
+
+Eg: <https://rsshub.app/thunderbird/release>
+
+Route: `/thunderbird/release/`
+
+Parameters: N/A
+
 ### App Store/Mac App Store Updates <Author uid="cielpy"/>
 
 Eg: [https://rsshub.app/appstore/update/us/id697846300](https://rsshub.app/appstore/update/us/id697846300)
