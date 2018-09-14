@@ -96,7 +96,6 @@ module.exports = async (ctx) => {
                 }
             }
 
-
             // 4. 文字内容
             description += `<br/>${content}`;
 
