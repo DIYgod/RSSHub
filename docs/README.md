@@ -1763,6 +1763,14 @@ GitHub 官方也提供了一些 RSS:
 
 -   id, fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`
 
+### Nvidia Web Driver 更新 <Author uid="cielpy"/>
+
+举例: <https://rsshub.app/nvidia/webdriverupdate>
+
+路由: `/nvidia/webdriverupdate`
+
+参数: 无
+
 ### App Store/Mac App Store
 
 #### 应用更新 <Author uid="cielpy"/>

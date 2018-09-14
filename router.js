@@ -415,6 +415,9 @@ router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
 // Fir
 router.get('/fir/update/:id', require('./routes/fir/update'));
 
+// Nvidia Web Driver
+router.get('/nvidia/webdriverupdate', require('./routes/nvidia/webdriverupdate'));
+
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
 
