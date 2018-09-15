@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const title = item.mblog.text.replace(/<img.*?>/g, '[图片]').replace(/<.*?>/g, '');
             return {
-                title: `${item.mblog.user.screen_name}: ${title.length > 24 ? title.slice(0, 24) + '...' : title}`,
+                title: `${item.mblog.user.screen_name}: ${title}`,
                 description: `${item.mblog.user.screen_name}: ${weiboUtils.format(item.mblog)}`,
                 pubDate: weiboUtils.getTime(item.mblog.created_at),
                 link: `https://weibo.com/${item.mblog.user.id}/${item.mblog.bid}`,

@@ -18,7 +18,6 @@ module.exports = async (ctx) => {
         responseType: 'arraybuffer',
     });
     const responseHtml = iconv.decode(response.data, 'GBK');
-    // console.log('responseHtml',responseHtml);
     const $ = cheerio.load(responseHtml);
     const title = $('#list>dl>dt>b')
         .eq(0)
@@ -37,7 +36,6 @@ module.exports = async (ctx) => {
             link: e.attribs.href,
         }))
         .get();
-    // console.log('chapter_item',chapter_item)
     ctx.state.data = {
         title: `笔趣阁 ${title}`,
         link: `${baseUrl}${id}/`,

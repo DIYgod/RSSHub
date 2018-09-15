@@ -1,6 +1,8 @@
 const axios = require('../../utils/axios');
 const config = require('../../config');
-const md = require('markdown-it')();
+const md = require('markdown-it')({
+    html: true,
+});
 
 module.exports = async (ctx) => {
     const user = ctx.params.user;

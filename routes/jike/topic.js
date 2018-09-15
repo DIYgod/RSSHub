@@ -26,22 +26,24 @@ module.exports = async (ctx) => {
         description: topic.content,
         image: topic.squarePicture.picUrl || topic.squarePicture.middlePicUrl || topic.squarePicture.thumbnailUrl,
         item: data.map((item) => {
-            let contentTemplate = item.content;
+            let content = item.content;
+            let link = `https://web.okjike.com/message-detail/${item.id}/officialMessage`;
             if (item.linkInfo && (item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl)) {
-                contentTemplate = `<a href="${item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl}">${item.content}</a>`;
+                const source = item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl;
+                content = `<a href="${source}">${item.content}</a> - <a href="${link}">即刻</a>`;
+                link = source;
             }
 
-            let imgTemplate = '';
-            item.pictures &&
+            if (item.pictures) {
                 item.pictures.forEach((item) => {
-                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
+                    content += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
                 });
-
+            }
             return {
                 title: item.content,
-                description: `${contentTemplate}${imgTemplate}`,
+                description: content,
                 pubDate: new Date(item.createdAt).toUTCString(),
-                link: `https://web.okjike.com/message-detail/${item.id}/officialMessage`,
+                link: link,
             };
         }),
     };

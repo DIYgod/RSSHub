@@ -30,7 +30,7 @@ module.exports = async (ctx) => {
             const description = weiboUtils.format(item.mblog);
             const title = description.replace(/<img.*?>/g, '[图片]').replace(/<.*?>/g, '');
             return {
-                title: title.length > 24 ? title.slice(0, 24) + '...' : title,
+                title,
                 description: description,
                 pubDate: weiboUtils.getTime(item.mblog.created_at),
                 link: `https://weibo.com/${uid}/${item.mblog.bid}`,

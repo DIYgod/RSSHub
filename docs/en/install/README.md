@@ -339,7 +339,7 @@ You can access your `Google App Engine URL` to check the deployment status
 
 `RSSHub` reads its configurations from `config.js` or environment variables.
 
-::: tip 提示
+::: tip
 
 Use environment variables is recommended to avoid conflicts during upgrade.
 
@@ -355,11 +355,23 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
+`TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `100`
+
 `REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
 
 `REDIS_PASSWORD`: Redis password（invalid when `CACHE_TYPE` is set to memory)
 
-### 部分 RSS 模块配置
+`HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
+
+`HTTP_BASIC_AUTH_PASS`: Http basic authentication password, default to `passw0rd`, please change asap
+
+### User Authentication
+
+Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
+
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/rss.
+
+### Route-specific Configurations
 
 -   `pixiv`: [registration](https://accounts.pixiv.net/signup)
 
