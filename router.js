@@ -145,8 +145,7 @@ router.get('/express/:company/:number', require('./routes/express/express'));
 
 // 简书
 router.get('/jianshu/home', require('./routes/jianshu/home'));
-router.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
-router.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
+router.get('/jianshu/trending/:timeframe', require('./routes/jianshu/trending'));
 router.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
 router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 

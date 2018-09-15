@@ -370,9 +370,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="首页" author="DIYgod" example="/jianshu/home" path="/jianshu/home"/>
 
-<route name="7 日热门" author="DIYgod" example="/jianshu/trending/weekly" path="/jianshu/trending/weekly"/>
-
-<route name="30 日热门" author="DIYgod" example="/jianshu/trending/monthly" path="/jianshu/trending/monthly"/>
+<route name="热门" author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" :paramsDesc="['按周 `weekly` 或 按月 `monthly`']"/>
 
 <route name="专题" author="DIYgod" example="/jianshu/collection/xYuZYD" path="/jianshu/collection/:id" :paramsDesc="['专题 id, 可在专题页 URL 中找到']"/>
 
