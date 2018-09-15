@@ -12,7 +12,7 @@ router.get('/routes/:name?', (ctx) => {
         const path = i.path;
         const top = path.split('/')[1];
 
-        if (ctx.params.name === undefined || top === ctx.params.name) {
+        if (!ctx.params.name || top === ctx.params.name) {
             if (result[top]) {
                 result[top].routes.push(path);
             } else {
