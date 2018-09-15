@@ -1485,11 +1485,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
 
-<route name="新闻" author="sinchang jacky2001114" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/news" :paramsDesc="['游戏的编号可以在专题页的 url 中找到']"/>
+<route name="游戏资讯" author="sinchang jacky2001114" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '咨询类型']">
 
-<route name="攻略" author="sinchang jacky2001114" example="/j3dm/detroitbecomehuman/gl" path="/3dm/:name/gl" :paramsDesc="['游戏的编号可以在专题页的 url 中找到']"/>
+| 新闻 | 攻略 | 下载     | 区块链快讯 |
+| ---- | ---- | -------- | ---------- |
+| news | gl   | download | blockchain |
 
-<route name="下载" author="sinchang" example="/3dm/detroitbecomehuman/download" path="/3dm/:name/download" :paramsDesc="['游戏的编号可以在专题页的 url 中找到']"/>
+</route>
 
 ### 机核网
 
