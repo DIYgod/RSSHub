@@ -61,7 +61,7 @@ filter 选出想要的内容
 
 -   filter_description: 过滤描述
 
-bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件>
+举例: <https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件>
 
 filterout 去掉不要的内容
 
@@ -71,7 +71,7 @@ filterout 去掉不要的内容
 
 -   filterout_description: 过滤描述
 
-bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
+举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
 
 #### 条数限制
 
@@ -105,9 +105,9 @@ RSSHub 提供下列 API 接口:
 `protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中.
 :::
 
-api/routes/bilibili>
+举例: <https://rsshub.app/api/routes/bilibili>
 
-api/routes/:name?`
+路由: `/api/routes/:name?`
 
 参数:
 
