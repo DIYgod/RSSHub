@@ -305,8 +305,7 @@ router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/p
 router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
 // 3dm
-router.get('/3dm/:name/download', require('./routes/3dm/download'));
-router.get('/3dm/:name/:type', require('./routes/3dm/news'));
+router.get('/3dm/:name/:type', require('./routes/3dm/game'));
 router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
