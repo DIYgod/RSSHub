@@ -950,15 +950,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 上海科技大学
 
-<route name="信息科技与技术学院活动" author="HenryQW" example="/universities/shanghaitech/sist/activity" path="/shanghaitech/sist/activity"/>
+<route name="信息科技与技术学院活动" author="HenryQW" example="/shanghaitech/sist/activity" path="/universities/shanghaitech/sist/activity"/>
 
 ### 上海交通大学
 
-<route name="电子信息与电气工程学院学术动态" author="HenryQW" example="/universities/sjtu/seiee/academic" path="/sjtu/seiee/academic"/>
+<route name="电子信息与电气工程学院学术动态" author="HenryQW" example="/sjtu/seiee/academic" path="/universities/sjtu/seiee/academic"/>
 
 ### 中国科学院
 
-<route name="上海微系统与信息技术研究所学术活动" author="HenryQW" example="/universities/cas/sim/academic" path="/cas/sim/academic"/>
+<route name="上海微系统与信息技术研究所学术活动" author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>
 
 ### 南京邮电大学
 
@@ -1052,7 +1052,7 @@ category 列表：
 
 ### 重庆科技学院
 
-<route name="教务处公告" author="binarization" example="/universities/cqust/jw/notify" path="/cqust/jw/:type?" :paramsDesc="['可选, 默认为 `notify`']">
+<route name="教务处公告" author="binarization" example="/cqust/jw/notify" path="/universities/cqust/jw/:type?" :paramsDesc="['可选, 默认为 `notify`']">
 
 | 通知公告 | 教务快讯 |
 | -------- | -------- |
@@ -1070,7 +1070,7 @@ category 列表：
 
 ### 常州大学
 
-<route name="教务处" author="richardchien" example="/cczu/jwc/1425" path="/cczu/jwc/:category?" :paramsDesc="['可选, 默认为 `all`']">
+<route name="教务处" author="richardchien" example="/cczu/jwc/1425" path="/universities/cczu/jwc/:category?" :paramsDesc="['可选, 默认为 `all`']">
 
 | 全部 | 通知公告 | 教务新闻 | 各类活动与系列讲座 | 本科教学工程 | 他山之石 | 信息快递 |
 | ---- | -------- | -------- | ------------------ | ------------ | -------- | -------- |
@@ -1078,7 +1078,7 @@ category 列表：
 
 </route>
 
-<route name="新闻网" author="richardchien" example="/cczu/news/6620" path="/cczu/news/:category?" :paramsDesc="['可选, 默认为 `all`']">
+<route name="新闻网" author="richardchien" example="/cczu/news/6620" path="/universities/cczu/news/:category?" :paramsDesc="['可选, 默认为 `all`']">
 
 | 全部 | 常大要闻 | 校园快讯 | 媒体常大 | 时事热点 | 高教动态 | 网上橱窗 | 新媒常大 |
 | ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
