@@ -385,6 +385,7 @@ router.get('/namoc/specials', require('./routes/namoc/specials'));
 router.get('/dongqiudi/daily', require('./routes/dongqiudi/daily'));
 router.get('/dongqiudi/result/:team', require('./routes/dongqiudi/result'));
 router.get('/dongqiudi/team_news/:team', require('./routes/dongqiudi/team_news'));
+router.get('/dongqiudi/player_news/:id', require('./routes/dongqiudi/player_news'));
 
 // 维基百科
 router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));

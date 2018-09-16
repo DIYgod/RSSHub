@@ -1520,6 +1520,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="球队新闻" author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
 
+<route name="球员新闻" author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+
 ### 维基百科
 
 <route name="中国大陆新闻动态" author="HenryQW" example="/wikipedia/mainland" path="/wikipedia/mainland"/>
