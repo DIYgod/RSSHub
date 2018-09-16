@@ -645,7 +645,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 喜马拉雅
 
-<route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/jximalaya/album/299146" path="/ximalaya/album/:id" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到']">
+<route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到']">
 
 ::: warning 注意
 **付费内容可获取更新但无法收听**
