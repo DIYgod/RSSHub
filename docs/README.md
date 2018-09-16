@@ -350,8 +350,6 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户动态" author="DIYgod" example="/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻 web 端用户页 URL 中找到']"/>
 
-<route name="用户动态" author="DIYgod" example="/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻 web 端用户页 URL 中找到']"/>
-
 <route name="即刻小报" author="Andiedie" example="/jike/daily" path="/jike/daily"/>
 
 ### 微信
