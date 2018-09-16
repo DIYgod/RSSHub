@@ -2384,11 +2384,11 @@ type, 分类, 缺省为中港台
 
 参数: 无
 
-### 中国气象网 全国气象预警 <Author uid="ylc395"/>
+### 中央气象台 全国气象预警 <Author uid="ylc395"/>
 
-举例: <https://rsshub.app/weatherAlarm>
+举例: <https://rsshub.app/weatheralarm>
 
-路由: `/weatherAlarm`
+路由: `/weatheralarm`
 
 参数: 无（提示: 可以使用全局过滤参数订阅您感兴趣的地区的信息）
 

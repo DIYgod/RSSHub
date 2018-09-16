@@ -457,7 +457,7 @@ router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
 router.get('/novel/booksky/:id', require('./routes/novel/booksky'));
 
 // 中国气象网
-router.get('/weatherAlarm', require('./routes/weatherAlarm'));
+router.get('/weatheralarm', require('./routes/weatheralarm'));
 
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
