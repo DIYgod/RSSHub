@@ -863,6 +863,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="内购价格更新（限免）" author="HenryQW" example="/appstore/iap/cn/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`', 'App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`']"/>
 
+<route name="每日精品限免 / 促销应用" author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
+
 ### Greasy Fork
 
 <route name="脚本更新" author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']"/>
