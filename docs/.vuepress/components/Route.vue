@@ -1,6 +1,6 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 :id=path class="name">{{name}} <Author :uid=author /> 
+  <h4 class="name">{{name}} <Author :uid=author /> 
     <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
   </h4>
   <p class="example">
