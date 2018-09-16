@@ -16,7 +16,7 @@ module.exports = async (ctx, next) => {
     if (ctx.state.data && ctx.query && (ctx.query.filterout || ctx.query.filterout_title || ctx.query.filterout_description)) {
         ctx.state.data.item = ctx.state.data.item.filter((item) => {
             const title = item.title;
-            const description = item.description;
+            const description = item.description || title;
             return (
                 (ctx.query.filterout && !title.match(ctx.query.filterout) && !description.match(ctx.query.filterout)) ||
                 (ctx.query.filterout_title && !title.match(ctx.query.filterout_title)) ||

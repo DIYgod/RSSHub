@@ -2,11 +2,13 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
+    const link = `https://www.jianshu.com/trending/${ctx.params.timeframe}`;
+
     const response = await axios({
         method: 'get',
-        url: 'https://www.jianshu.com/trending/monthly',
+        url: link,
         headers: {
-            Referer: 'https://www.jianshu.com/trending/monthly',
+            Referer: link,
         },
     });
 
@@ -16,9 +18,9 @@ module.exports = async (ctx) => {
     const list = $('.note-list li');
 
     ctx.state.data = {
-        title: '简书 30 日热门',
-        link: 'https://www.jianshu.com/trending/monthly',
-        description: '简书 30 日热门',
+        title: `简书 ${ctx.params.timeframe === 'weekly' ? '7' : '30'} 日热门`,
+        link,
+        description: `简书 ${ctx.params.timeframe === 'weekly' ? '7' : '30'} 日热门`,
         item:
             list &&
             list
