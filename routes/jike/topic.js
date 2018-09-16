@@ -1,4 +1,5 @@
 const axios = require('../../utils/axios');
+const url = require('url');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -53,6 +54,12 @@ module.exports = async (ctx) => {
 
             if (item.linkInfo) {
                 const linkUrl = item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl;
+
+                // 对于即刻抓取的微信公众号文章 特殊处理
+                // 此时 Rss原文链接 变为 微信公众号链接
+                if (url.parse(linkUrl).host === 'mp.weixin.qq.com') {
+                    link = linkUrl;
+                }
 
                 // 1. 音频
                 const audioObject = item.linkInfo.audio || item.audio;
