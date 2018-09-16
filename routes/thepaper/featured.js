@@ -41,13 +41,15 @@ module.exports = async (ctx) => {
                 guid: itemUrl,
                 link: itemUrl.replace('https://m.', 'https://'),
                 description: content('#v3cont_id > div.news_content > div.news_part_father > div > div:nth-child(1)').html(),
-                pubDate: dayjs(
-                    content('#v3cont_id > div.news_content > p:nth-child(3)')
-                        .html()
-                        .split('&#xA0;')[0]
-                )
-                    .add(-8 - serverOffset, 'hour')
-                    .toISOString(),
+                pubDate: content('#v3cont_id > div.news_content > p:nth-child(3)').html()
+                    ? dayjs(
+                          content('#v3cont_id > div.news_content > p:nth-child(3)')
+                              .html()
+                              .split('&#xA0;')[0]
+                      )
+                          .add(-8 - serverOffset, 'hour')
+                          .toISOString()
+                    : null,
                 author: content('#v3cont_id > div.news_content > p:nth-child(2)').text(),
             };
             return Promise.resolve(single);
