@@ -457,7 +457,7 @@ router.get('/novel/wenxuemi/:id1/:id2', require('./routes/novel/wenxuemi'));
 router.get('/novel/booksky/:id', require('./routes/novel/booksky'));
 
 // 中国气象网
-router.get('/weatherAlarm', require('./routes/weatherAlarm'));
+router.get('/weatheralarm', require('./routes/weatheralarm'));
 
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
@@ -522,6 +522,10 @@ router.get('/cuit/cxxww/:type?', require('./routes/universities/cuit/cxxww'));
 // 重庆科技学院
 router.get('/cqust/jw/:type?', require('./routes/universities/cqust/jw'));
 router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
+
+// 常州大学
+router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
+router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
