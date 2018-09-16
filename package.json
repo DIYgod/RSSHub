@@ -50,6 +50,7 @@
     "form-data": "^2.3.2",
     "git-rev-sync": "1.12.0",
     "googleapis": "33.0.0",
+    "he": "^1.1.1",
     "iconv-lite": "0.4.24",
     "imgur": "^0.2.1",
     "json-bigint": "0.3.0",
