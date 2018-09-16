@@ -3,7 +3,7 @@ const DateTime = require('luxon').DateTime;
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
-    const alarmInfoURL = `http://www.nmc.cn/f/alarm.html`;
+    const alarmInfoURL = 'http://www.nmc.cn/f/alarm.html';
     const html = (await axios.get(alarmInfoURL)).data;
     const $ = cheerio.load(html);
     const alarmElements = $('.alarmlist > div:not(.pagination)').toArray();
@@ -18,7 +18,7 @@ module.exports = async (ctx) => {
             return {
                 title: $aEl.text(),
                 link: `http://www.nmc.cn${link}`,
-                pubDate: DateTime.fromFormat(dateString, 'yyyyMMddhhmmss', {zone: 'utc+8'}).toRFC2822(),
+                pubDate: DateTime.fromFormat(dateString, 'yyyyMMddhhmmss', { zone: 'utc+8' }).toRFC2822(),
             };
         }),
     };
