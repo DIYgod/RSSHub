@@ -350,8 +350,6 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户动态" author="DIYgod" example="/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻 web 端用户页 URL 中找到']"/>
 
-<route name="用户动态" author="DIYgod" example="/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻 web 端用户页 URL 中找到']"/>
-
 <route name="即刻小报" author="Andiedie" example="/jike/daily" path="/jike/daily"/>
 
 ### 微信
@@ -370,9 +368,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="首页" author="DIYgod" example="/jianshu/home" path="/jianshu/home"/>
 
-<route name="7 日热门" author="DIYgod" example="/jianshu/trending/weekly" path="/jianshu/trending/weekly"/>
-
-<route name="30 日热门" author="DIYgod" example="/jianshu/trending/monthly" path="/jianshu/trending/monthly"/>
+<route name="热门" author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" :paramsDesc="['按周 `weekly` 或 按月 `monthly`']"/>
 
 <route name="专题" author="DIYgod" example="/jianshu/collection/xYuZYD" path="/jianshu/collection/:id" :paramsDesc="['专题 id, 可在专题页 URL 中找到']"/>
 
@@ -1485,11 +1481,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
 
-<route name="新闻" author="sinchang jacky2001114" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/news" :paramsDesc="['游戏的编号可以在专题页的 url 中找到']"/>
+<route name="游戏资讯" author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
 
-<route name="攻略" author="sinchang jacky2001114" example="/j3dm/detroitbecomehuman/gl" path="/3dm/:name/gl" :paramsDesc="['游戏的编号可以在专题页的 url 中找到']"/>
+| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
+| ---- | ---- | -------- | ---------- |
+| news | gl   | resource | blockchain |
 
-<route name="下载" author="sinchang" example="/3dm/detroitbecomehuman/download" path="/3dm/:name/download" :paramsDesc="['游戏的编号可以在专题页的 url 中找到']"/>
+</route>
 
 ### 机核网
 
@@ -1558,7 +1556,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### Apple
 
-<route name="更换和维修扩展计划" author="metowolf" example="/apple/exchange_repair" path="/apple/exchange_repair"/>
+<route name="更换和维修扩展计划" author="metowolf" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认 `cn`']/>
 
 #### App Store/Mac App Store
 

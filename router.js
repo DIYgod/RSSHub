@@ -145,8 +145,7 @@ router.get('/express/:company/:number', require('./routes/express/express'));
 
 // 简书
 router.get('/jianshu/home', require('./routes/jianshu/home'));
-router.get('/jianshu/trending/weekly', require('./routes/jianshu/weekly'));
-router.get('/jianshu/trending/monthly', require('./routes/jianshu/monthly'));
+router.get('/jianshu/trending/:timeframe', require('./routes/jianshu/trending'));
 router.get('/jianshu/collection/:id', require('./routes/jianshu/collection'));
 router.get('/jianshu/user/:id', require('./routes/jianshu/user'));
 
@@ -306,8 +305,7 @@ router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/p
 router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
 // 3dm
-router.get('/3dm/:name/download', require('./routes/3dm/download'));
-router.get('/3dm/:name/:type', require('./routes/3dm/news'));
+router.get('/3dm/:name/:type', require('./routes/3dm/game'));
 router.get('/3dm/news', require('./routes/3dm/news_center'));
 
 // 喜马拉雅
@@ -538,7 +536,7 @@ router.get('/zaobao/realtime/:type?', require('./routes/zaobao/realtime'));
 router.get('/zaobao/znews/:type?', require('./routes/zaobao/znews'));
 
 // Apple
-router.get('/apple/exchange_repair', require('./routes/apple/exchange_repair'));
+router.get('/apple/exchange_repair/:country?', require('./routes/apple/exchange_repair'));
 
 // Minecraft CurseForge
 router.get('/curseforge/files/:project', require('./routes/curseforge/files'));
