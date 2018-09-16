@@ -523,6 +523,10 @@ router.get('/cuit/cxxww/:type?', require('./routes/universities/cuit/cxxww'));
 router.get('/cqust/jw/:type?', require('./routes/universities/cqust/jw'));
 router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
 
+// 常州大学
+router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
+router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
