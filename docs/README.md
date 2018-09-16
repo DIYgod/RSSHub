@@ -418,17 +418,17 @@ RSSHub 提供下列 API 接口:
 
 <route name="正在上映的高分电影" author="DIYgod" example="/douban/movie/playing/7.5/杭州" path="/douban/movie/playing/:score/:city?" :paramsDesc="['返回大于等于这个分数的电影', '城市的中文名, 可选, 默认北京']"/>
 
-<route name="即将上映的电影" author="DIYgod" example="/douban/movie/later" path="/jdouban/movie/later"/>
+<route name="即将上映的电影" author="DIYgod" example="/douban/movie/later" path="/douban/movie/later"/>
 
 <route name="北美票房榜" author="DIYgod" example="/douban/movie/ustop" path="/douban/movie/ustop"/>
 
-<route name="豆瓣小组" author="DIYgod" example="/jdouban/group/camera" path="/douban/group/:groupid" :paramsDesc="['豆瓣小组的 id']"/>
+<route name="豆瓣小组" author="DIYgod" example="/douban/group/camera" path="/douban/group/:groupid" :paramsDesc="['豆瓣小组的 id']"/>
 
 <route name="浏览发现" author="clarkzsd" example="/douban/explore" path="/douban/explore"/>
 
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
-<route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/jdouban/music/latest"/>
+<route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
 
 ### Disqus
 
@@ -1538,7 +1538,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 果壳网
 
-<route name="科学人" author="alphardex" example="/jguokr/scientific" path="/guokr/scientific"/>
+<route name="科学人" author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
 
 ### 推酷
 
