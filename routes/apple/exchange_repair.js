@@ -5,7 +5,14 @@ const url = require('url');
 const host = 'https://www.apple.com/';
 
 module.exports = async (ctx) => {
-    const link = url.resolve(host, 'cn/support/exchange_repair/');
+    let link;
+
+    if (!ctx.params.country) {
+        ctx.params.country = 'cn';
+    }
+
+    ctx.params.country === 'us' ? (link = url.resolve(host, '/support/exchange_repair/')) : (link = url.resolve(host, `${ctx.params.country}/support/exchange_repair/`));
+
     const response = await axios.get(link);
 
     const $ = cheerio.load(response.data);
