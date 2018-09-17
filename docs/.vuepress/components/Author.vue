@@ -1,5 +1,5 @@
 <template>
-  <span class="badge">
+  <span class="badge authors">
     By<a v-for="uid in uidList" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }}</a>
   </span>
 </template>

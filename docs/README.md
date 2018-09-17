@@ -312,7 +312,7 @@ RSSHub 提供下列 API 接口:
 
 ### 微博
 
-<route name="博主（方案1）" author="DIYgod" example="/weibo/user/3306934123" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector(\'.opt_box .btn_bed\').getAttribute(\'action-data\'))[1]` 获取']"/>
+<route name="博主（方案1）" author="DIYgod" example="/weibo/user/3306934123" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
 ::: warning 注意
 
@@ -320,7 +320,7 @@ RSSHub 提供下列 API 接口:
 
 :::
 
-<route name="博主（方案2）" author="DIYgod" example="/weibo/user2/3306934123" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector(\'.opt_box .btn_bed\').getAttribute(\'action-data\'))[1]` 获取']"/>
+<route name="博主（方案2）" author="DIYgod" example="/weibo/user2/3306934123" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
 <route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']"/>
 
@@ -418,21 +418,22 @@ RSSHub 提供下列 API 接口:
 
 <route name="正在上映的高分电影" author="DIYgod" example="/douban/movie/playing/7.5/杭州" path="/douban/movie/playing/:score/:city?" :paramsDesc="['返回大于等于这个分数的电影', '城市的中文名, 可选, 默认北京']"/>
 
-<route name="即将上映的电影" author="DIYgod" example="/douban/movie/later" path="/jdouban/movie/later"/>
+<route name="即将上映的电影" author="DIYgod" example="/douban/movie/later" path="/douban/movie/later"/>
 
 <route name="北美票房榜" author="DIYgod" example="/douban/movie/ustop" path="/douban/movie/ustop"/>
 
-<route name="豆瓣小组" author="DIYgod" example="/jdouban/group/camera" path="/douban/group/:groupid" :paramsDesc="['豆瓣小组的 id']"/>
+<route name="豆瓣小组" author="DIYgod" example="/douban/group/camera" path="/douban/group/:groupid" :paramsDesc="['豆瓣小组的 id']"/>
 
 <route name="浏览发现" author="clarkzsd" example="/douban/explore" path="/douban/explore"/>
 
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
-<route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/jdouban/music/latest"/>
+<route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
 
 ### Disqus
 
 <route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
+
 ### Twitter
 
 <route name="用户" author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']"/>
@@ -557,7 +558,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="用户仓库" author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" :paramsDesc="['用户名']"/>
 
-<route name="Trending" author="DIYgod" example="/<https://rsshub.app/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
+<route name="Trending" author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
 
 <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
@@ -645,7 +646,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 喜马拉雅
 
-<route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/jximalaya/album/299146" path="/ximalaya/album/:id" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到']">
+<route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到']">
 
 ::: warning 注意
 **付费内容可获取更新但无法收听**
@@ -816,9 +817,13 @@ GitHub 官方也提供了一些 RSS:
 
 ## 程序更新
 
-<route level="3" name="RSSHub" author="DIYgod" example="/rsshub/rss" path="/rsshub/rss"/>
+### RSSHub
 
-<route level="3" name="MIUI" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`', '类型, 可选参数']">
+<route name="有新路由啦" author="DIYgod" example="/rsshub/rss" path="/rsshub/rss"/>
+
+### MIUI
+
+<route name="MIUI 新版本发布" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`', '类型, 可选参数']">
 
 | 稳定版  | 开发版 |
 | ------- | ------ |
@@ -826,7 +831,9 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
-<route level="3" name="Firefox" author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['操作平台']">
+### Firefox
+
+<route name="新版本发布" author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['操作平台']">
 
 | 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
@@ -844,15 +851,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### Bugly SDK
 
-<route level="3" name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
+<route name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
 
 ### fir.im 应用
 
-<route level="3" name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
+<route name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
 
 ### Nvidia Web Driver
 
-<route level="3" name="更新日志" author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+<route name="更新日志" author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
 ### App Store/Mac App Store
 
@@ -861,6 +868,12 @@ GitHub 官方也提供了一些 RSS:
 <route name="价格更新（限免）" author="HenryQW" example="/appstore/price/cn/mac/id1152443474" path="/appstore/price/:country/:type/:id" :paramsDesc="['App Store 国家, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 country 为 `cn`', 'App 类型, `iOS` 或 `mac`', 'App Store app id, 必选, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`']"/>
 
 <route name="内购价格更新（限免）" author="HenryQW" example="/appstore/iap/cn/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`', 'App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`']"/>
+
+<route name="每日精品限免 / 促销应用" author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
+
+### F-Droid
+
+<route name="App更新" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App包名']">
 
 ### Greasy Fork
 
@@ -943,6 +956,8 @@ GitHub 官方也提供了一些 RSS:
 ### 东南大学
 
 <route name="信息科学与工程学院学术活动" author="HenryQW" example="/seu/radio/academic" path="/universities/seu/radio/academic"/>
+
+<route name="研究生招生网通知公告" author="Chingyat" example="/seu/yzb/1" path="/universities/seu/yzb/:type" :paramsDesc="['1 为硕士招生, 2 为博士招生, 3 为港澳台及中外合作办学']"/>
 
 ### 哈尔滨工业大学
 
@@ -1083,6 +1098,20 @@ category 列表：
 | 全部 | 常大要闻 | 校园快讯 | 媒体常大 | 时事热点 | 高教动态 | 网上橱窗 | 新媒常大 |
 | ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | all  | 6620     | 6621     | 6687     | 6628     | 6629     | 6640     | 6645     |
+
+</route>
+
+### 四川旅游学院
+
+<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy">
+
+</route>
+
+<route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc:type?" :paramsDesc="['可选参数, 默认为 `13`']">
+
+| 教务通知 | 信息公告 |
+| -------- | -------- |
+| 13       | 14       |
 
 </route>
 
@@ -1334,7 +1363,9 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="小说更新" author="jacky2001114" example="/novel/uukanshu/49621>" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
-<route level="3" name="文学迷" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6` https://www.wenxuemi.com/files/article/html/6/6144/', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144` https://www.wenxuemi.com/files/article/html/6/6144/']"/>
+### 文学迷
+
+<route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6` https://www.wenxuemi.com/files/article/html/6/6144/', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144` https://www.wenxuemi.com/files/article/html/6/6144/']"/>
 
 ### 起点
 
@@ -1342,13 +1373,19 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
-<route level="3" name="快眼看书" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619` http://booksky.so/BookDetail.aspx?Level=1&bid=98619']"/>
+### 快眼看书
 
-## 中国驻外使领馆通知
+<route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619` http://booksky.so/BookDetail.aspx?Level=1&bid=98619']"/>
 
-<route level="3" name="大使馆" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+## 中国驻外使领馆
 
-<route level="3" name="领事馆" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+### 大使馆
+
+<route name="大使馆重要通知" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+
+### 领事馆
+
+<route name="领事馆重要通知" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
 
 ### 支持国家列表
 
@@ -1515,7 +1552,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="早报" author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
 
-<route name="足球赛果" author="HenryQW" example="/dongqiudi/result/50001755" path="/jdongqiudi/result/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+<route name="足球赛果" author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+
+<route name="球队新闻" author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+
+<route name="球员新闻" author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
 
 ### 维基百科
 
@@ -1538,7 +1579,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 果壳网
 
-<route name="科学人" author="alphardex" example="/jguokr/scientific" path="/guokr/scientific"/>
+<route name="科学人" author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
 
 ### 推酷
 
@@ -1556,7 +1597,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### Apple
 
-<route name="更换和维修扩展计划" author="metowolf" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认 `cn`']/>
+<route name="更换和维修扩展计划" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认中国 `cn`']"/>
 
 #### App Store/Mac App Store
 

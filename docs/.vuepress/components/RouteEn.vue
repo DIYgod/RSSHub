@@ -1,20 +1,20 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 class="name">{{name}} <Author :uid=author /> 
+  <h4 :id=path class="name">{{name}} <Author :uid=author /> 
     <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
   </h4>
-  <p class="example">
-    举例: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
+  <p  class="example">
+    Example: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
   </p>
   <p class="path">
-    路由: <code>{{ path }}</code>
+    Route: <code>{{ path }}</code>
   </p>
   <div v-if="path.match(/(?<=:).*?(?=\/|$)/g)">
   <p>
-    参数:
-  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)">{{item.replace('?','')}}, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
+    Parameters:
+  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)">{{item.replace('?','')}}, {{(item.includes('?'))?'optional':'required'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
   </div>
-  <div v-else><p>参数: 无</p></div>
+  <div v-else><p>Parameters: N/A</p></div>
   <slot></slot>
 </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     },
     paramsDesc: {
       type: [Array, String],
-      default: '无'
+      default: 'N/A'
     }
   },
   methods: {
