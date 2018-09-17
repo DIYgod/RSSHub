@@ -1095,6 +1095,20 @@ category 列表：
 
 </route>
 
+### 四川旅游学院
+
+<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy">
+
+</route>
+
+<route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc:type?" :paramsDesc="['可选参数, 默认为 `13`']">
+
+| 教务通知 | 信息公告 |
+| -------- | -------- |
+| 13       | 14       |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
