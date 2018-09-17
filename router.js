@@ -429,6 +429,7 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
 router.get('/appstore/iap/:country/:id', require('./routes/appstore/in-app-purchase'));
+router.get('/appstore/xianmian', require('./routes/appstore/xianmian'));
 
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
