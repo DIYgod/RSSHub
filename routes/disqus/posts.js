@@ -40,7 +40,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const thread = threads.filter((i) => i.id === item.thread)[0];
             return {
-                title: `${item.author.name}: ${item.raw_message > 24 ? item.raw_message.slice(0, 24) + '...' : item.raw_message}`,
+                title: `${item.author.name}: ${item.raw_message}`,
                 description: `${item.author.name} 在《${thread.clean_title}》中发表评论: ${item.message}`,
                 pubDate: new Date(item.createdAt).toUTCString(),
                 link: `${thread.link}/#comment-${item.id}`,

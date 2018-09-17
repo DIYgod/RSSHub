@@ -113,7 +113,6 @@ module.exports = async (ctx) => {
         try {
             $ = cheerio.load(content);
         } catch (error) {
-            console.log(error);
             continue;
         }
 

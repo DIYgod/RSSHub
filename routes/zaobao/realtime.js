@@ -12,21 +12,25 @@ module.exports = async (ctx) => {
     const type = ctx.params.type || 'china';
 
     let info = '中港台';
-    let word = 'div#CN.list-sect-sub';
+    let word = '/realtime/china';
+    let div = 'div#CN.list-sect-sub';
     if (type === '2') {
         info = 'singapore';
-        word = 'div#SG.list-sect-sub';
+        word = '/realtime/singapore';
+        div = 'div#SG.list-sect-sub';
     } else if (type === 'world') {
         info = '国际';
-        word = 'div#Global.list-sect-sub';
+        word = '/realtime/world';
+        div = 'div#Global.list-sect-sub';
     } else if (type === 'zfinance') {
         info = '财经';
-        word = 'div#Finance.list-sect-sub';
+        word = '/zfinance/realtime';
+        div = 'div#Finance.list-sect-sub';
     }
 
     const response = await axios_ins.get(host);
     const $ = cheerio.load(response.data);
-    const data = $('li', word).find('div');
+    const data = $('li', div).find('div');
     // .attr('about')
     const resultItems = await Promise.all(
         data.toArray().map(async (item) => {
@@ -59,7 +63,7 @@ module.exports = async (ctx) => {
                     .replace(/(.{2})/, '$1:');
                 let description = '';
                 $1('p', '.article-content-container').each(function() {
-                    description = description + $(this).html() + '<br/>';
+                    description = description + '<p>' + $(this).html() + '</p>';
                 });
 
                 resultItem = {
@@ -78,7 +82,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: `《联合早报》${info} 即时`,
-        link: host,
+        link: baseUrl + word,
         description: '《联合早报》被公认是一份素质高、负责任、报道客观、言论公正、可信度高的报纸，对中国的发展采取积极的态度，在华人世界中享有崇高的信誉。',
         item: resultItems,
     };

@@ -77,7 +77,13 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 周期性赞助可以获得额外的回报，比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
 
 -   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer 或 sponsor
--   给我们发邮件联系赞助事宜: i#html.love
+-   给我们发邮件联系赞助事宜: i#diygod.me
+
+## 相关项目
+
+-   [Easy to RSS](https://github.com/idealclover/Easy-to-RSS): 一个一键式发现当前网页 RSS 的 chrome 扩展，与 RSSHub 联动支持更多网页
+
+-   [rsshub.js](https://github.com/SevenOutman/rsshub.js): JavaScript library for RSSHub
 
 ## Author
 

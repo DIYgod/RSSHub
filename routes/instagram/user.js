@@ -45,7 +45,7 @@ module.exports = async (ctx) => {
     );
 
     ctx.state.data = {
-        title: `${name}(@${id}) 的 Instagram`,
+        title: `${name}(@${id})'s Instagram`,
         link: `https://www.instagram.com/${id}/`,
         description: $('meta[name="description"]').attr('content'),
         item: list.map((item, index) => {
@@ -54,20 +54,21 @@ module.exports = async (ctx) => {
             let tip = '';
             switch (item.__typename) {
                 case 'GraphVideo':
-                    type = '[视频] ';
-                    tip = '打开原文播放视频: ';
+                    type = '[视频/Video] ';
+                    tip = '打开原文播放视频/click to play the video: ';
                     break;
                 case 'GraphSidecar':
-                    type = '[组图] ';
+                    type = '[组图/Carousel] ';
                     break;
             }
             let imgTPL = '';
             for (let i = 0; i < images[index].length; i++) {
                 imgTPL += `<img referrerpolicy="no-referrer" src="${images[index][i]}"><br>`;
             }
+            const title = (item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题/Untitled';
             return {
-                title: `${type}${(item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题'}`,
-                description: `${tip}${imgTPL}`,
+                title: `${type}${title}`,
+                description: `${title}<br>${tip}${imgTPL}`,
                 pubDate: new Date(item.taken_at_timestamp * 1000).toUTCString(),
                 link: `https://www.instagram.com/p/${item.shortcode}/`,
             };

@@ -39,7 +39,7 @@ module.exports = async (ctx) => {
                     responseType: 'arraybuffer',
                 });
 
-                const filePath = `cache/${item.file_id}.png`;
+                const filePath = `tmp/${item.file_id}.png`;
 
                 await sharp(fileResponse.data)
                     .png()

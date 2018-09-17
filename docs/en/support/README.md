@@ -22,4 +22,4 @@ We accept donations via the following ways:
 Recurring donors will be rewarded via express issue response, or even have your name displayed on our GitHub page and website.
 
 -   Become a Backer or a Sponser on [Patreon](https://www.patreon.com/DIYgod)
--   Contact us directly: i#html.love
+-   Contact us directly: i#diygod.me

@@ -30,7 +30,7 @@ module.exports = async (ctx) => {
                 url += `<a href="${u.expanded_url}" target="_blank"></a>`;
             });
             return {
-                title: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.full_text.length > 30 ? item.full_text.slice(0, 30) + '...' : item.full_text}`,
+                title: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.full_text}`,
                 description: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.full_text}${url}${img}`,
                 pubDate: new Date(item.created_at).toUTCString(),
                 link: `https://twitter.com/${id}/status/${item.id_str}`,

@@ -15,16 +15,9 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Special Sponsors
 
-<p>
-<a href="https://rixcloud.app/rsshub" target="_blank">
-    <img width="200px" src="https://i.imgur.com/PpcSVCZ.png">
-</a>
-</p>
-<p>
-<a href="https://werss.app?utm_source=rsshub" target="_blank">
-    <img width="150px" src="https://cdn.weapp.design/werss/werss-logo.png">
-</a>
-</p>
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> | <a href="https://j.youzan.com/ccPcrY" target="_blank"><img width="180px" src="https://i.imgur.com/FZtFAGz.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+
 
 ### Sponsors
 
@@ -96,6 +89,49 @@ For exmaple:
 -   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
 -   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
+## API
+
+::: warning Warning
+The API is under active development and is subject to change. All suggestions are welcome!
+:::
+
+RSSHub provides the following APIs:
+
+### List of Public Routes
+
+::: tip Tip
+This API **will not** return any routes under `protected_router.js`.
+:::
+
+Eg: <https://rsshub.app/api/routes/github>
+
+Route: `/api/routes/:name?`
+
+Parameters:
+
+-   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes). Optional, **returns all public routes if not specified**.
+
+A successful request returns a HTTP status code `200 OK` with the result in JSON:
+
+```js
+{
+    "status": "success",
+    "data": {
+        "github": {
+            "routes": [
+                "/github/trending/:since/:language?",
+                "/github/issue/:user/:repo",
+                "/github/user/followers/:user",
+                "/github/stars/:user/:repo"
+            ]
+        }
+    },
+    "message": "request returned 4 routes"
+}
+```
+
+If no matching results were found, the server returns only a HTTP status code `204 No Content`.
+
 ## Application Updates
 
 ### RSSHub
@@ -132,9 +168,17 @@ Parameters:
 
 -   platform
 
-| Desktop | Android | Beta | Nightly | Android Beta |
-| ------- | ------- | ---- | ------- | ------------ |
-| desktop | android | beta | nightly | android-beta |
+| Desktop | Android | Beta | Nightly | Android Beta | ESR           |
+| ------- | ------- | ---- | ------- | ------------ | ------------- |
+| desktop | android | beta | nightly | android-beta | organizations |
+
+### Thunderbird <Author uid="garywill"/>
+
+Eg: <https://rsshub.app/thunderbird/release>
+
+Route: `/thunderbird/release/`
+
+Parameters: N/A
 
 ### App Store/Mac App Store Updates <Author uid="cielpy"/>
 
@@ -144,9 +188,9 @@ Route: `/appstore/update/:country/:id`
 
 Parameters：
 
-country, App Store Country, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`.
+-   country, App Store Country, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`.
 
-id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`.
+-   id, App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`.
 
 ### App Store/Mac App Store Price Drop Alert <Author uid="HenryQW"/>
 
