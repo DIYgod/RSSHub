@@ -3,10 +3,9 @@ const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
 
-    console.log('getin')
     const response = await axios.get('http://www.dysfz.cc');
     const $ = cheerio.load(response.data);
-    const list = $('.movie-list li').get().slice(2)
+    const list = $('.movie-list li').get().slice(2);
     const data = {
         title: '电影首发站',
         link: 'http://www.dysfz.cc',
