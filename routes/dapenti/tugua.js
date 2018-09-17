@@ -39,7 +39,7 @@ module.exports = async (ctx) => {
                 .load(convert_data, {
                     decodeEntities: false,
                 })('div[class="oblog_text"]')
-                .text();
+                .html();
             const single = {
                 title: el.text(),
                 description: detail_data,
