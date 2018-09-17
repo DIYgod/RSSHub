@@ -472,6 +472,9 @@ router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
 
+// 南京理工大学
+router.get('/njust/jwc', require('./routes/universities/njust/jwc'));
+
 // 哈尔滨工业大学
 router.get('/hit/jwc', require('./routes/universities/hit/jwc'));
 
