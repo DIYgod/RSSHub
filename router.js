@@ -238,7 +238,6 @@ router.get('/jike/topic/text/:id', require('./routes/jike/topicText'));
 router.get('/jike/topic/square/:id', require('./routes/jike/topicSquare'));
 router.get('/jike/user/:id', require('./routes/jike/user'));
 router.get('/jike/daily', require('./routes/jike/daily'));
-router.get('/jike/dev/:id', require('./routes/jike/topicDev'));
 
 // 极客时间
 router.get('/geektime/column/:cid', require('./routes/geektime/column'));
@@ -384,6 +383,8 @@ router.get('/namoc/specials', require('./routes/namoc/specials'));
 // 懂球帝
 router.get('/dongqiudi/daily', require('./routes/dongqiudi/daily'));
 router.get('/dongqiudi/result/:team', require('./routes/dongqiudi/result'));
+router.get('/dongqiudi/team_news/:team', require('./routes/dongqiudi/team_news'));
+router.get('/dongqiudi/player_news/:id', require('./routes/dongqiudi/player_news'));
 
 // 维基百科
 router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
@@ -429,6 +430,7 @@ router.get('/imuseum/:city/:type', require('./routes/imuseum'));
 router.get('/appstore/update/:country/:id', require('./routes/appstore/update'));
 router.get('/appstore/price/:country/:type/:id', require('./routes/appstore/price'));
 router.get('/appstore/iap/:country/:id', require('./routes/appstore/in-app-purchase'));
+router.get('/appstore/xianmian', require('./routes/appstore/xianmian'));
 
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
@@ -524,6 +526,10 @@ router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
 // 常州大学
 router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
 router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
+
+// 四川旅游学院
+router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));
+router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
 
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
