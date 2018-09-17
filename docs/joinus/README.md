@@ -12,7 +12,47 @@ sidebar: auto
 
 1.  在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径添加获取 RSS 内容的脚本
 
-1.  更新 [README (/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/README.md) 和 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+
+    -   文档采用 vue 组件形式, 格式如下:
+        -   `name`: 路由名称
+        -   `author`: 路由作者, 多位作者使用单个空格分隔
+        -   `example`: 路由举例
+        -   `path`: 路由路径
+        -   `:paramsDesc`: 路由参数说明, 数组, 支持 markdown
+            1. 参数说明必须对应其在路径中出现的顺序
+            1. 如缺少说明将会导致`npm run docs:dev`报错
+            1. 说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
+            1. 不必在说明中标注`可选/必选`, 组件根据`?`自动判断
+    -   文档样例:
+
+        -   多参数:
+
+        ```vue
+        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        ```
+
+          <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+        -   复杂说明支持 slot:
+
+        ```vue
+        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+        
+        </route>
+        ```
+
+          <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+
+          </route>
 
 1.  执行 `npm run format` 自动处理代码格式后, 提交代码, 然后提交 pull request
 
