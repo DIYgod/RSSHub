@@ -14,7 +14,7 @@ module.exports = async (ctx) => {
             description: `
           <img referrerpolicy="no-referrer" src="${item.app.icon.image}"/>
           <br/>
-          原价：${item.discount_info[0].discounted_price} -> 现售：${item.discount_info[0].original_price}
+          原价：${item.discount_info[0].original_price} -> 现售：${item.discount_info[0].discounted_price}
           <br/>
           平台：${item.app.download_link[0].device}
           <br/>
