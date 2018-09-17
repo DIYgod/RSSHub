@@ -172,7 +172,7 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### F-Droid
 
-<routeEn name="App Update" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['app - App's package name']">
+<routeEn name="App Update" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['app - App\'s package name']">
 
 ### Greasy Fork
 
