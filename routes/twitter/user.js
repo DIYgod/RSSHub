@@ -19,7 +19,7 @@ module.exports = async (ctx) => {
         description: data[0].user.description,
         item: data.map((item) => {
             item = item.retweeted_status || item;
-            item.full_text = item.full_text.replace(/https:\/\/t\.co(.*)$/, '');
+            item.full_text = item.full_text.replace(/https:\/\/t\.co(.*)/g, '');
             let img = '';
             item.extended_entities &&
                 item.extended_entities.media.forEach((item) => {
