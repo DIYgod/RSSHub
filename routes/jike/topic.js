@@ -110,7 +110,7 @@ module.exports = async (ctx) => {
             if (item.pictures) {
                 item.pictures.forEach(
                     (pic) =>
-                        (description += `<picture><source srcset="${pic.picUrl.split('/thumbnail/')[0]}/strip/format/webp" type="image/webp"><source srcset="${pic.picUrl.split('?imageMogr2/')[0]}" type="image/jpeg"><img src="${
+                        (description += `<br/><picture><source srcset="${pic.picUrl.split('/thumbnail/')[0]}/strip/format/webp" type="image/webp"><source srcset="${pic.picUrl.split('?imageMogr2/')[0]}" type="image/jpeg"><img src="${
                             pic.picUrl.split('?imageMogr2/')[0]
                         }"></picture>`)
                 );
