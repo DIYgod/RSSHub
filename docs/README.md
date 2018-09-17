@@ -817,9 +817,13 @@ GitHub 官方也提供了一些 RSS:
 
 ## 程序更新
 
-<route level="3" name="RSSHub" author="DIYgod" example="/rsshub/rss" path="/rsshub/rss"/>
+### RSSHub
 
-<route level="3" name="MIUI" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`', '类型, 可选参数']">
+<route name="有新路由啦" author="DIYgod" example="/rsshub/rss" path="/rsshub/rss"/>
+
+### MIUI
+
+<route name="MIUI 新版本发布" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`', '类型, 可选参数']">
 
 | 稳定版  | 开发版 |
 | ------- | ------ |
@@ -827,7 +831,9 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
-<route level="3" name="Firefox" author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['操作平台']">
+### Firefox
+
+<route name="新版本发布" author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['操作平台']">
 
 | 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
@@ -845,15 +851,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### Bugly SDK
 
-<route level="3" name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
+<route name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
 
 ### fir.im 应用
 
-<route level="3" name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
+<route name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
 
 ### Nvidia Web Driver
 
-<route level="3" name="更新日志" author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+<route name="更新日志" author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
 ### App Store/Mac App Store
 
@@ -1337,7 +1343,9 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="小说更新" author="jacky2001114" example="/novel/uukanshu/49621>" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
-<route level="3" name="文学迷" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6` https://www.wenxuemi.com/files/article/html/6/6144/', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144` https://www.wenxuemi.com/files/article/html/6/6144/']"/>
+### 文学迷
+
+<route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6` https://www.wenxuemi.com/files/article/html/6/6144/', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144` https://www.wenxuemi.com/files/article/html/6/6144/']"/>
 
 ### 起点
 
@@ -1345,13 +1353,19 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
-<route level="3" name="快眼看书" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619` http://booksky.so/BookDetail.aspx?Level=1&bid=98619']"/>
+### 快眼看书
 
-## 中国驻外使领馆通知
+<route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619` http://booksky.so/BookDetail.aspx?Level=1&bid=98619']"/>
 
-<route level="3" name="大使馆" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+## 中国驻外使领馆
 
-<route level="3" name="领事馆" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+### 大使馆
+
+<route name="大使馆重要通知" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+
+### 领事馆
+
+<route name="领事馆重要通知" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
 
 ### 支持国家列表
 
@@ -1563,7 +1577,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### Apple
 
-<route name="更换和维修扩展计划" author="metowolf" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认 `cn`']/>
+<route name="更换和维修扩展计划" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认中国 `cn`']"/>
 
 #### App Store/Mac App Store
 
