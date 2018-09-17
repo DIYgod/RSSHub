@@ -31,15 +31,16 @@ module.exports = async (ctx, next) => {
                 break;
         }
         // trim title length
-        ctx.state.data.item.forEach((item) => {
-            for (let length = 0, i = 0; i < item.title.length; i++) {
-                length += Buffer.from(item.title[i]).length !== 1 ? 2 : 1;
-                if (length > config.titleLengthLimit) {
-                    item.title = `${item.title.slice(0, i)}...`;
-                    break;
+        ctx.state.data.item &&
+            ctx.state.data.item.forEach((item) => {
+                for (let length = 0, i = 0; i < item.title.length; i++) {
+                    length += Buffer.from(item.title[i]).length !== 1 ? 2 : 1;
+                    if (length > config.titleLengthLimit) {
+                        item.title = `${item.title.slice(0, i)}...`;
+                        break;
+                    }
                 }
-            }
-        });
+            });
 
         ctx.state.data.title && (ctx.state.data.title = he.decode(ctx.state.data.title));
         ctx.state.data.description && (ctx.state.data.description = he.decode(ctx.state.data.description));
