@@ -1,38 +1,35 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const resolve_url = require('url').resolve;
-
-const base_url = 'http://jwc.njust.edu.cn/';
-
-const map = {
-    all: '/',
-    T_Notices: '/1216/list.htm',
-    S_Notices:'/1217/list.htm',
-};
 
 module.exports = async (ctx) => {
-    const type = ctx.params.type || 'all';
-    const link = `${base_url}${map[type]}`;
-
-    const response = await axios({
+    const res = await axios({
         method: 'get',
-        url: link,
+        url: 'http://jwc.njust.edu.cn/1216/list.htm',
         headers: {
-            Referer: link,
+            Referer: 'https://jwc.njust.edu.cn',
         },
     });
-
-    const $ = cheerio.load(response.data);
+    const data = res.data;
+    const $ = cheerio.load(data);
+    const list = $('tr','table#newslist');
 
     ctx.state.data = {
-        link: link,
-        title: $('title').text(),
-        item: $('.pg-list>ul>li')
-            .map((_, elem) => ({
-                link: resolve_url(link, $('a', elem).attr('href')),
-                title: $('a', elem).text(),
-                pubDate: new Date($('span.food-time', elem).text()).toUTCString(),
-            }))
-            .get(),
+        title: $('title')
+            .first()
+            .text(),
+        link: `http://jwc.njust.edu.cn/1216/list.htm`,
+        description: '南京理工大学教务处 - 教师通知',
+        item:
+            list &&
+            list
+                .map((index, item) => {
+                    item = $(item);
+                    return {
+                        title: item.find('a').text(),
+                        pubDate: new Date(item.find('.time').text()).toUTCString(),
+                        link: item.find('a').attr('href'),
+                    };
+                })
+                .get(),
     };
 };
