@@ -873,7 +873,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### F-Droid
 
-<route name="App更新" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['app,必选 - App包名']">
+<route name="App更新" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App包名']">
 
 ### Greasy Fork
 
