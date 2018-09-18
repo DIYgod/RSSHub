@@ -11,13 +11,13 @@ module.exports = async (ctx) => {
     });
     const data = res.data;
     const $ = cheerio.load(data);
-    const list = $('tr','table#newslist');
+    const list = $('tr', 'table#newslist');
 
     ctx.state.data = {
         title: $('title')
             .first()
             .text(),
-        link: `http://jwc.njust.edu.cn/1216/list.htm`,
+        link: 'http://jwc.njust.edu.cn/1216/list.htm',
         description: '南京理工大学教务处 - 教师通知',
         item:
             list &&
