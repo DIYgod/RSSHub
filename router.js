@@ -566,4 +566,7 @@ router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
 // 澎湃新闻
 router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 
+// 电影首发站
+router.get('/dysfz/index', require('./routes/dysfz/index'));
+
 module.exports = router;

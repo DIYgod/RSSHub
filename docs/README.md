@@ -1610,3 +1610,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 > 少数派专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
 </route>
+
+### 电影首发站
+
+<route name="电影首发站" author="epirus" example="/dysfz/index" path="/dysfz/index">
+
+> 高清电影，百度网盘跟迅雷下载
+
+</route>
