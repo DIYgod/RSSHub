@@ -12,11 +12,53 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
 
 1.  Add the script to the corresponding directory [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes)
 
-1.  Update [README (/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/en/README.md) and [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
+1.  Update [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
 
-1.  Execute `npm run format` to lint the code before you commit and open a pull request
+    -   Documentation uses vue component:
+        -   `name`: route name
+        -   `author`: route authors, separated by a single space
+        -   `example`: route example
+        -   `path`: route path
+        -   `:paramsDesc`: route parameters description, in array, supports markdown
+            1. parameter description must be in the order of its appearance in route path
+            1. missing description will cause errors in `npm run docs:dev`
+            1. `'` `"` must be escaped as `\'` `\"`
+            1. it's redundant to indicate `optional/required` as the component will prepend based on `?`
+    -   Documentation examples:
+
+        -   Multiple parameters:
+
+        ```vue
+        <routeEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        ```
+
+        <routeEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+
+        -   Use component slot for complicated description:
+
+        ```vue
+        <routeEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+        
+        This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
+        
+        For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
+        
+        </routeEn>
+        ```
+
+        <routeEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+
+        This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
+
+        For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
+
+        </routeEn>
+
+1)  Execute `npm run format` to lint the code before you commit and open a pull request
 
 ## Write the script
+
+RSSHub provides 3 methods for acquiring data, these methods are sorted by **recommended**:
 
 ### Access the target data source API
 
@@ -25,6 +67,16 @@ Use [axios](https://github.com/axios/axios) to access the target data source API
 ### Acquire data from HTML
 
 If an API is not provided, data need to be scraped from HTML. Use [axios](https://github.com/axios/axios) to acquire the HTML and then use [cheerio](https://github.com/cheeriojs/cheerio) for scraping the relevant data and assign them to ctx.state.data, typically it looks like this: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)
+
+### Page rendering
+
+::: tip tip
+
+This method is comparatively less performant and consumes more resources, only use when necessary or your pull requests might be rejected.
+
+:::
+
+Some websites provides no API and pages require rendering too, use [puppeteer](https://github.com/GoogleChrome/puppeteer) render the pages via Headless Chrome and then use [cheerio](https://github.com/cheeriojs/cheerio) for scraping the relevant data and assign them to ctx.state.data, typically it looks like this: [/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
 
 ### Enable caching
 

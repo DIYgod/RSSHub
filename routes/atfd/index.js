@@ -1,4 +1,5 @@
 const axios = require('../../utils/axios');
+const dayjs = require('dayjs');
 
 module.exports = async (ctx) => {
     const locations = ctx.params.locations;
@@ -18,8 +19,7 @@ module.exports = async (ctx) => {
         host += `/${country}/${city.replace(' ', '_')}`;
     });
 
-    url = url.slice(0, -1);
-    url += `]&includeNearbyOrigins=${nearby}`;
+    url = url.slice(0, -1) + `]&includeNearbyOrigins=${nearby}`;
 
     const response = await axios({
         method: 'get',
@@ -35,7 +35,7 @@ module.exports = async (ctx) => {
         link: host,
         description: 'All the Flight Deals',
         item: data.map((item) => ({
-            title: item.title,
+            title: `[${dayjs(item.dateRanges[0].start).format('YYYY MMM DD')} to ${dayjs(item.dateRanges[0].end).format('YYYY MMM DD')}]  ${item.title}`,
             description: `<img src="https://alltheflightdeals.com/assets/cities/${item.cityPairs[0].destinationCity.id}.jpg" alt="${item.cityPairs[0].destination.city},${
                 item.cityPairs[0].destination.countryName
             }"> <br><table><tbody><tr><th align="left" style="border: 1px solid black;">From</th><th align="left" style="border: 1px solid black;">To</th><th align="left" style="border: 1px solid black;">Price</th></tr><tr><td style="border: 1px solid black;"><b>${
@@ -50,12 +50,11 @@ module.exports = async (ctx) => {
     };
 };
 
-function titleCase(str) {
-    return str
+const titleCase = (str) =>
+    str
         .toLowerCase()
         .split(' ')
         .map(function(word) {
             return word.replace(word[0], word[0].toUpperCase());
         })
         .join(' ');
-}

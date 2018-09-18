@@ -27,9 +27,6 @@ module.exports = async (ctx) => {
                     return '';
                 }
             } catch (ex) {
-                console.log(arguments);
-                console.log(photos);
-                console.log(ex);
                 return '';
             }
         });

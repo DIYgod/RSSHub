@@ -12,11 +12,53 @@ sidebar: auto
 
 1.  在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径添加获取 RSS 内容的脚本
 
-1.  更新 [README (/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/README.md) 和 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+
+    -   文档采用 vue 组件形式, 格式如下:
+        -   `name`: 路由名称
+        -   `author`: 路由作者, 多位作者使用单个空格分隔
+        -   `example`: 路由举例
+        -   `path`: 路由路径
+        -   `:paramsDesc`: 路由参数说明, 数组, 支持 markdown
+            1. 参数说明必须对应其在路径中出现的顺序
+            1. 如缺少说明将会导致`npm run docs:dev`报错
+            1. 说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
+            1. 不必在说明中标注`可选/必选`, 组件根据`?`自动判断
+    -   文档样例:
+
+        -   多参数:
+
+        ```vue
+        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        ```
+
+          <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+        -   复杂说明支持 slot:
+
+        ```vue
+        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+        
+        </route>
+        ```
+
+          <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+
+          </route>
 
 1.  执行 `npm run format` 自动处理代码格式后, 提交代码, 然后提交 pull request
 
 ## 编写脚本
+
+RSSHub 支持三种获取数据的办法, 方法按 **「推荐优先级」** 排列:
 
 ### 从接口获取数据
 
@@ -24,7 +66,17 @@ sidebar: auto
 
 ### 从 HTML 获取数据
 
-有时候数据是写在 HTML 里的, 没有接口供我们调用, 这时候可以使用 [axios](https://github.com/axios/axios) 请求 HTML 数据, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)
+有时候数据是写在 HTML 里的, **没有接口供我们调用**, 这时候可以使用 [axios](https://github.com/axios/axios) 请求 HTML 数据, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)
+
+### 渲染页面获取数据
+
+::: tip 提示
+
+由于此方法性能较差且消耗较多资源, 使用前请确保以上两种方法无法获取数据, 不然将导致您的 pull requests 被拒绝!
+
+:::
+
+部分网站**没有接口供调用, 且页面需要渲染**才能获取正确的 HTML, 这时候可以使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 通过 Headless Chrome 渲染页面, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析返回的 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
 
 ### 使用缓存
 
