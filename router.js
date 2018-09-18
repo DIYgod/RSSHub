@@ -525,6 +525,9 @@ router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
 router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
 router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 
+// 南京理工大学
+router.get('/njust', require('./routes/universities/njust/jwc'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
