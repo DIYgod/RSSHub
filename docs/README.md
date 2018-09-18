@@ -1087,6 +1087,10 @@ category 列表：
 
 </route>
 
+### 南京理工大学
+
+<route name="南京理工大学教务处通知" author="MilkShakeYoung" example="/njust/jwc" path="/universities/njust/jwc"/>
+
 ## 传统媒体
 
 ### 央视新闻
