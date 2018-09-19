@@ -20,7 +20,7 @@ module.exports = async (ctx) => {
           <br/>
           ${item.content}
         `,
-            pubDate: new Date(item.updated_at).toUTCString(),
+            pubDate: new Date(item.updated_at * 1000).toUTCString(),
             link: item.app.download_link[0].link,
         })),
     };
