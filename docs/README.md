@@ -1115,6 +1115,24 @@ category 列表：
 
 </route>
 
+### 电子科技大学
+
+<route name="教务处" author="achjqz" example="/uestc/jwc/student" path="/universities/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
+
+| 重要公告  | 学生事务公告 | 教师事务公告 |
+| --------- | ------------ | ------------ |
+| important | student      | teacher      |
+
+</route>
+
+<route name="新闻中心" author="achjqz" example="/uestc/news/culture" path="/universities/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
+
+| 学术    | 文化    | 公告         | 校内通知     |
+| ------- | ------- | ------------ | ------------ |
+| academy | culture | announcement | notification |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
