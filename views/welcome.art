@@ -85,6 +85,7 @@
         <p>-- Made with
             <i style="color:#d43f57">♥</i> by
             <a href="https://diygod.me" target="_blank">DIYgod</a>
+            , Modified By  <a href="https://achjqz.pw" target="_blank">anan</a>
         </p>
 
         {{ if showDebug }}
