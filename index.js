@@ -14,6 +14,7 @@ const favicon = require('koa-favicon');
 const debug = require('./middleware/debug');
 const accessControl = require('./middleware/access-control');
 
+const plugins = require('./plugins');
 const router = require('./router');
 const protected_router = require('./protected_router');
 const mount = require('koa-mount');
@@ -98,6 +99,10 @@ if (config.cacheType === 'memory') {
 // router
 
 app.use(mount('/', router.routes())).use(router.allowedMethods());
+
+// plugins router
+
+app.use(mount('/', plugins.routes())).use(plugins.allowedMethods());
 
 // routes the require authentication
 app.use(mount('/protected', protected_router.routes())).use(protected_router.allowedMethods());
