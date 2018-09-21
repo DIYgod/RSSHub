@@ -24,7 +24,7 @@ module.exports = async (ctx) => {
             data &&
             data.map((item) => ({
                 title: item.question.title,
-                description: item.content,
+                description: utils.ProcessImage(item.content),
                 pubDate: new Date(item.created_time * 1000).toUTCString(),
                 link: `https://www.zhihu.com/question/${item.question.id}/answer/${item.id}`,
             })),
