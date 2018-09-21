@@ -2,7 +2,7 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
-    const response = await axios.get('http://www.dysfz.cc');
+    const response = await axios.get('http://www.dysfz.vip');
     const $ = cheerio.load(response.data);
     const list = $('.movie-list li')
         .get()
