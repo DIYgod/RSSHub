@@ -118,7 +118,7 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>If you want to make a podcast RSS</summary><br>
+<details><summary>If you want to make a podcast feed</summary><br>
 
 Reference article:
 
