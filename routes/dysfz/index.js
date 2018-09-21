@@ -9,7 +9,7 @@ module.exports = async (ctx) => {
         .slice(2);
     const data = {
         title: '电影首发站',
-        link: 'http://www.dysfz.cc',
+        link: 'http://www.dysfz.vip',
         description: '高清电影',
         item: list.map((item) => ({
             title: $(item)
