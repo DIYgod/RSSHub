@@ -172,7 +172,7 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### F-Droid
 
-<routeEn name="App Update" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App\'s package name']">
+<routeEn name="App Update" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App\'s package name']" />
 
 ### Greasy Fork
 
@@ -204,7 +204,7 @@ If no matching results were found, the server returns only a HTTP status code `2
 | --------------------- | -------------------- | ---------------------- | ---------------------- | ---------------- |
 | day_r18               | day_male_r18         | day_female_r18         | week_r18               | week_r18g        |
 
-</routeEN>
+</routeEn>
 
 ### Disqus
 
@@ -284,7 +284,7 @@ GitHub provides some official RSS feeds:
 
 <routeEn name="Follower" author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" />
 
-<routeEn name="Star" author="HenryQW" path="/github/stars/:user/:repo" example="/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+<routeEn name="Star" author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
 
 ### GitLab
 
@@ -338,4 +338,4 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 
 ### Apple
 
-<routeEn name="Exchange and Repair Extension Programs" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']"/>
+<routeEn name="Exchange and Repair Extension Programs" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />

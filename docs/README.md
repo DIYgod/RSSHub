@@ -336,6 +336,12 @@ RSSHub 提供下列 API 接口:
 
 ### 即刻
 
+::: warning 注意
+
+即刻主题较为复杂, 部分主题可能出现不适配的情况. 如出现上述情况请[提 Issue](https://github.com/DIYgod/RSSHub/issues).
+
+:::
+
 <route name="主题-精选" author="DIYgod" example="/jike/topic/54dffb40e4b0f57466e675f0" path="/jike/topic/:id" :paramsDesc="['主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到']"/>
 
 ::: tip 提示
@@ -873,7 +879,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### F-Droid
 
-<route name="App更新" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App包名']">
+<route name="App更新" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App包名']" />
 
 ### Greasy Fork
 
@@ -1112,6 +1118,24 @@ category 列表：
 | 教务通知 | 信息公告 |
 | -------- | -------- |
 | 13       | 14       |
+
+</route>
+
+### 电子科技大学
+
+<route name="教务处" author="achjqz" example="/uestc/jwc/student" path="/universities/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
+
+| 重要公告  | 学生事务公告 | 教师事务公告 |
+| --------- | ------------ | ------------ |
+| important | student      | teacher      |
+
+</route>
+
+<route name="新闻中心" author="achjqz" example="/uestc/news/culture" path="/universities/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
+
+| 学术    | 文化    | 公告         | 校内通知     |
+| ------- | ------- | ------------ | ------------ |
+| academy | culture | announcement | notification |
 
 </route>
 
@@ -1552,11 +1576,17 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="早报" author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
 
+::: tip 提示
+
+部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.
+
+:::
+
 <route name="足球赛果" author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
 
 <route name="球队新闻" author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
 
-<route name="球员新闻" author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+<route name="球员新闻" author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
 
 ### 维基百科
 

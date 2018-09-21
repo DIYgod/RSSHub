@@ -535,6 +535,10 @@ router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));
 router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
 
+// 电子科技大学
+router.get('/uestc/jwc/:type?', require('./routes/universities/uestc/jwc'));
+router.get('/uestc/news/:type?', require('./routes/universities/uestc/news'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
