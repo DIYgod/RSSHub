@@ -288,6 +288,9 @@ router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
 router.get('/github/user/followers/:user', require('./routes/github/follower'));
 router.get('/github/stars/:user/:repo', require('./routes/github/star'));
 
+// f-droid
+router.get('/fdroid/apprelease/:app', require('./routes/fdroid/apprelease'));
+
 // konachan
 router.get('/konachan/post/popular_recent', require('./routes/konachan/post_popular_recent'));
 router.get('/konachan.com/post/popular_recent', require('./routes/konachan/post_popular_recent'));
@@ -471,6 +474,7 @@ router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news
 
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
+router.get('/seu/yzb/:type', require('./routes/universities/seu/yzb'));
 
 // 哈尔滨工业大学
 router.get('/hit/jwc', require('./routes/universities/hit/jwc'));
@@ -531,6 +535,10 @@ router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));
 router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
 
+// 电子科技大学
+router.get('/uestc/jwc/:type?', require('./routes/universities/uestc/jwc'));
+router.get('/uestc/news/:type?', require('./routes/universities/uestc/news'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
@@ -561,5 +569,8 @@ router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
 
 // 澎湃新闻
 router.get('/thepaper/featured', require('./routes/thepaper/featured'));
+
+// 电影首发站
+router.get('/dysfz/index', require('./routes/dysfz/index'));
 
 module.exports = router;

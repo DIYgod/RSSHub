@@ -312,7 +312,7 @@ RSSHub 提供下列 API 接口:
 
 ### 微博
 
-<route name="博主（方案1）" author="DIYgod" example="/weibo/user/3306934123" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector(\'.opt_box .btn_bed\').getAttribute(\'action-data\'))[1]` 获取']"/>
+<route name="博主（方案1）" author="DIYgod" example="/weibo/user/3306934123" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
 ::: warning 注意
 
@@ -320,7 +320,7 @@ RSSHub 提供下列 API 接口:
 
 :::
 
-<route name="博主（方案2）" author="DIYgod" example="/weibo/user2/3306934123" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `/uid=(\d+)/. exec(document.querySelector(\'.opt_box .btn_bed\').getAttribute(\'action-data\'))[1]` 获取']"/>
+<route name="博主（方案2）" author="DIYgod" example="/weibo/user2/3306934123" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
 <route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']"/>
 
@@ -335,6 +335,12 @@ RSSHub 提供下列 API 接口:
 <route name="楼主动态" author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
 
 ### 即刻
+
+::: warning 注意
+
+即刻主题较为复杂, 部分主题可能出现不适配的情况. 如出现上述情况请[提 Issue](https://github.com/DIYgod/RSSHub/issues).
+
+:::
 
 <route name="主题-精选" author="DIYgod" example="/jike/topic/54dffb40e4b0f57466e675f0" path="/jike/topic/:id" :paramsDesc="['主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到']"/>
 
@@ -558,7 +564,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="用户仓库" author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" :paramsDesc="['用户名']"/>
 
-<route name="Trending" author="DIYgod" example="/<https://rsshub.app/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
+<route name="Trending" author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
 
 <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
@@ -871,6 +877,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="每日精品限免 / 促销应用" author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
 
+### F-Droid
+
+<route name="App更新" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App包名']" />
+
 ### Greasy Fork
 
 <route name="脚本更新" author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']"/>
@@ -952,6 +962,8 @@ GitHub 官方也提供了一些 RSS:
 ### 东南大学
 
 <route name="信息科学与工程学院学术活动" author="HenryQW" example="/seu/radio/academic" path="/universities/seu/radio/academic"/>
+
+<route name="研究生招生网通知公告" author="Chingyat" example="/seu/yzb/1" path="/universities/seu/yzb/:type" :paramsDesc="['1 为硕士招生, 2 为博士招生, 3 为港澳台及中外合作办学']"/>
 
 ### 哈尔滨工业大学
 
@@ -1106,6 +1118,24 @@ category 列表：
 | 教务通知 | 信息公告 |
 | -------- | -------- |
 | 13       | 14       |
+
+</route>
+
+### 电子科技大学
+
+<route name="教务处" author="achjqz" example="/uestc/jwc/student" path="/universities/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
+
+| 重要公告  | 学生事务公告 | 教师事务公告 |
+| --------- | ------------ | ------------ |
+| important | student      | teacher      |
+
+</route>
+
+<route name="新闻中心" author="achjqz" example="/uestc/news/culture" path="/universities/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
+
+| 学术    | 文化    | 公告         | 校内通知     |
+| ------- | ------- | ------------ | ------------ |
+| academy | culture | announcement | notification |
 
 </route>
 
@@ -1546,11 +1576,17 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="早报" author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
 
+::: tip 提示
+
+部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.
+
+:::
+
 <route name="足球赛果" author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
 
 <route name="球队新闻" author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
 
-<route name="球员新闻" author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+<route name="球员新闻" author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
 
 ### 维基百科
 
@@ -1602,5 +1638,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series">
 
 > 少数派专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+</route>
+
+### 电影首发站
+
+<route name="电影首发站" author="epirus" example="/dysfz/index" path="/dysfz/index">
+
+> 高清电影，百度网盘跟迅雷下载
 
 </route>

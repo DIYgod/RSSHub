@@ -36,7 +36,7 @@ module.exports = async (ctx) => {
                         Referer: url,
                     },
                 });
-                item.description = storyDetail.data.body.replace(/<div class="meta">([\s\S]*?)<\/div>/g, '<strong>$1</strong>');
+                item.description = utils.ProcessImage(storyDetail.data.body.replace(/<div class="meta">([\s\S]*?)<\/div>/g, '<strong>$1</strong>'));
                 ctx.cache.set(key, item.description, 24 * 60 * 60);
             }
 
