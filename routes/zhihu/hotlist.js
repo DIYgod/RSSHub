@@ -18,24 +18,25 @@ module.exports = async (ctx) => {
                 case 'answer':
                     return {
                         title: item.target.question.title,
-                        author: item.target.author.name,
                         description: `${item.target.author.name}的回答<br/><br/>${utils.ProcessImage(item.target.content)}`,
-                        pubDate: new Date(item.created_time).toUTCString(),
-                        link: `https://www.zhihu.com/question/${item.target.question.id}`,
+                        pubDate: new Date(item.target.updated_time * 1000).toUTCString(),
+                        guid: item.target.id.toString(),
+                        link: `https://www.zhihu.com/question/${item.target.question.id}/answer/${item.target.id}`,
                     };
                 case 'article':
                     return {
                         title: item.target.title,
-                        author: item.target.author.name,
                         description: `${item.target.author.name}的文章<br/><br/>${utils.ProcessImage(item.target.content)}`,
-                        pubDate: new Date(item.created_time * 1000).toUTCString(),
+                        pubDate: new Date(item.updated * 1000).toUTCString(),
+                        guid: item.target.id.toString(),
                         link: `https://zhuanlan.zhihu.com/p/${item.target.id}`,
                     };
                 default:
                     return {
                         title: '未知类型',
                         description: '请点击链接提交issue',
-                        pubDate: new Date(item.created_time * 1000).toUTCString(),
+                        pubDate: new Date().toUTCString(),
+                        guid: new Date().getTime().toString(),
                         link: 'https://github.com/DIYgod/RSSHub/issues',
                     };
             }
