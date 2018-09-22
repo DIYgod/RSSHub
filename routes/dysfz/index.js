@@ -6,7 +6,6 @@ module.exports = async (ctx) => {
     const $ = cheerio.load(response.data);
     const list = $('.movie-list li')
         .get()
-        .slice(2);
     const data = {
         title: '电影首发站',
         link: 'http://www.dysfz.vip',
