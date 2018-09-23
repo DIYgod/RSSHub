@@ -2,14 +2,13 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
-    const response = await axios.get('http://www.dysfz.cc');
+    const response = await axios.get('http://www.dysfz.vip');
     const $ = cheerio.load(response.data);
     const list = $('.movie-list li')
         .get()
-        .slice(2);
     const data = {
         title: '电影首发站',
-        link: 'http://www.dysfz.cc',
+        link: 'http://www.dysfz.vip',
         description: '高清电影',
         item: list.map((item) => ({
             title: $(item)
