@@ -53,9 +53,9 @@ module.exports = async (ctx) => {
                     description: desc,
                     pubDate: new Date(track_item.createdAt).toUTCString(),
                     itunes_item_image: track_item.coverLarge.split('&')[0],
-                    enclosure_url: track_item.downloadUrl,
+                    enclosure_url: track_item.playPathAacv224,
                     enclosure_length: enclosure_length,
-                    enclosure_type: 'audio/aac',
+                    enclosure_type: 'audio/x-m4a',
                     itunes_duration: itunes_duration,
                 };
 
