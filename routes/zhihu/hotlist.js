@@ -19,6 +19,7 @@ module.exports = async (ctx) => {
                     return {
                         title: item.target.question.title,
                         description: `${item.target.author.name}的回答<br/><br/>${utils.ProcessImage(item.target.content)}`,
+                        author: item.target.author.name,
                         pubDate: new Date(item.target.updated_time * 1000).toUTCString(),
                         guid: item.target.id.toString(),
                         link: `https://www.zhihu.com/question/${item.target.question.id}/answer/${item.target.id}`,
@@ -27,6 +28,7 @@ module.exports = async (ctx) => {
                     return {
                         title: item.target.title,
                         description: `${item.target.author.name}的文章<br/><br/>${utils.ProcessImage(item.target.content)}`,
+                        author: item.target.author.name,
                         pubDate: new Date(item.updated * 1000).toUTCString(),
                         guid: item.target.id.toString(),
                         link: `https://zhuanlan.zhihu.com/p/${item.target.id}`,
