@@ -21,11 +21,9 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Sponsors
 
--   [Liuyang](https://github.com/lingllting)
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Xiaojiong Wang |
+| :--------------------------------------: | :----: | :----------------------------------------: | :------------: |
 
--   Zuyang
-
--   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -43,7 +41,7 @@ Free feel to test the [demo instance](https://rsshub.app), the cache expiry time
 
 ::: tip
 
-All parameters can be used together to generate a complex feed
+All parameters can be linked with `&` to used together to generate a complex feed
 
 :::
 

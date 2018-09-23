@@ -13,6 +13,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 [Telegram 群](https://t.me/rsshub)
 
+# 指南
+
 ## 鸣谢
 
 ### Special Sponsors
@@ -23,11 +25,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Sponsors
 
--   [Liuyang](https://github.com/lingllting)
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Xiaojiong Wang |
+| :--------------------------------------: | :----: | :----------------------------------------: | :------------: |
 
--   Zuyang
-
--   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -45,11 +45,11 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ::: tip 提示
 
-所有通用参数可以组合使用, 效果叠加
+所有通用参数可以使用 `&` 连接组合使用, 效果叠加
 
 :::
 
-#### 内容过滤
+### 内容过滤
 
 可以使用以下 URL query 过滤内容, 支持正则
 
@@ -73,13 +73,13 @@ filterout 去掉不要的内容
 
 举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
 
-#### 条数限制
+### 条数限制
 
 可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS
 
 举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
-#### 输出格式
+### 输出格式
 
 RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出格式, 在路由末尾添加 `.rss` `.atom` 或 `.json` 即可请求对应输出格式, 缺省为 RSS 2.0
 
