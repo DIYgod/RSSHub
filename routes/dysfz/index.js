@@ -4,8 +4,7 @@ const cheerio = require('cheerio');
 module.exports = async (ctx) => {
     const response = await axios.get('http://www.dysfz.vip');
     const $ = cheerio.load(response.data);
-    const list = $('.movie-list li')
-        .get()
+    const list = $('.movie-list li').get();
     const data = {
         title: '电影首发站',
         link: 'http://www.dysfz.vip',
