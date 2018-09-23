@@ -300,7 +300,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/:id" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
 
-<route name="排行榜" author="DIYgod" example="/bilibili/partion/rranking/0/3" path="/bilibili/partion/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
+<route name="排行榜" author="DIYgod" example="/bilibili/partion/ranking/0/3" path="/bilibili/partion/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
 
 | 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
 | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
