@@ -560,6 +560,7 @@ router.get('/douyin/user/:id', require('./routes/douyin/user'));
 
 // 少数派 sspai
 router.get('/sspai/series', require('./routes/sspai/series'));
+router.get('/sspai/shortcuts', require('./routes/sspai/shortcutsGallery'));
 
 // xclient.info
 router.get('/xclient/app/:name', require('./routes/xclient/app'));

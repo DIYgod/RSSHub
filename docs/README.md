@@ -1641,6 +1641,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
+<route name="Shortcuts Gallery" author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
+
 ### 电影首发站
 
 <route name="电影首发站" author="epirus" example="/dysfz/index" path="/dysfz/index">
