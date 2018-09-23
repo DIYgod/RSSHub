@@ -23,14 +23,14 @@ module.exports = async (ctx) => {
 
     const response = await axios({
         method: 'get',
-        url: `https://api.readhub.me/${category}`,
+        url: `https://api.readhub.cn/${category}`,
     });
 
     const data = response.data;
 
     ctx.state.data = {
         title: `Readhub-${title}`,
-        link: 'https://readhub.me',
+        link: 'https://readhub.cn',
         item: data.data.map((item) => ({
             title: item.title,
             pubDate: new Date(item.publishDate).toUTCString(),
