@@ -539,6 +539,11 @@ router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
 router.get('/uestc/jwc/:type?', require('./routes/universities/uestc/jwc'));
 router.get('/uestc/news/:type?', require('./routes/universities/uestc/news'));
 
+// 昆明理工大学
+router.get('/kmust/jwc/:type?', require('./routes/universities/kmust/jwc'));
+router.get('/kmust/job/careers/:type?', require('./routes/universities/kmust/job/careers'));
+router.get('/kmust/job/jobfairs', require('./routes/universities/kmust/job/jobfairs'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
