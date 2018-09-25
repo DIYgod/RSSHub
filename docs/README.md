@@ -1159,6 +1159,18 @@ category 列表：
 
 <route name="双选会" author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
 
+### 华中科技大学
+
+<route name="华科自动化学院通知" author="jinxiapu" example="/hust/auto/notice/0" path="/universities/hust/auto/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
+
+| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
+| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
+
+<route name="华科自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
