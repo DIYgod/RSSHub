@@ -1167,9 +1167,9 @@ category 列表：
 | ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
 | 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
 
-<route name="华科自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
-
 </route>
+
+<route name="华科自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
 
 ## 传统媒体
 
