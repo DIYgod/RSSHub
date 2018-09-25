@@ -1,6 +1,6 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const weiboUtils = require('./utils');
+const date = require('../../utils/date');
 
 module.exports = async (ctx) => {
     const uid = ctx.params.uid;
@@ -36,7 +36,7 @@ module.exports = async (ctx) => {
             .html()
             .replace(/^\s+|\s+$/g, '')
             .replace(/thumbnail/, 'large');
-        wb.pubDate = weiboUtils.getTime(item.find('.link_d').html());
+        wb.pubDate = date(item.find('.link_d').html(), 8);
         wb.link = item.find('.wgtCell_tm a').attr('href');
         wbs.push(wb);
     });
