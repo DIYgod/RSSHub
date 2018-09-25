@@ -1139,6 +1139,26 @@ category 列表：
 
 </route>
 
+### 昆明理工大学
+
+<route name="教务处" author="geekrainy" example="/kmust/jwc/notify" path="/universities/kmust/jwc/:type?" :paramsDesc="['默认为 `notify`']">
+
+| 教务通知 | 教务新闻 |
+| -------- | -------- |
+| notify   | news     |
+
+</route>
+
+<route name="宣讲会" author="geekrainy" example="/kmust/job/careers/inner" path="/universities/kmust/job/careers/:type?" :paramsDesc="['默认为 `inner`']">
+
+| 校内宣讲会 | 校外宣讲会 |
+| ---------- | ---------- |
+| inner      | outer      |
+
+</route>
+
+<route name="双选会" author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
+
 ## 传统媒体
 
 ### 央视新闻
