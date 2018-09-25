@@ -544,6 +544,10 @@ router.get('/kmust/jwc/:type?', require('./routes/universities/kmust/jwc'));
 router.get('/kmust/job/careers/:type?', require('./routes/universities/kmust/job/careers'));
 router.get('/kmust/job/jobfairs', require('./routes/universities/kmust/job/jobfairs'));
 
+// 华中科技大学
+router.get('/hust/auto/notice/:type?', require('./routes/universities/hust/auto/notice'));
+router.get('/hust/auto/news/', require('./routes/universities/hust/auto/news'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
