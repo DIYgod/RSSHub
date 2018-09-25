@@ -38,7 +38,7 @@ module.exports = async (ctx) => {
                         title: '未知类型',
                         description: '请点击链接提交issue',
                         pubDate: new Date().toUTCString(),
-                        guid: new Date().getTime().toString(),
+                        guid: item.target.type,
                         link: 'https://github.com/DIYgod/RSSHub/issues',
                     };
             }
