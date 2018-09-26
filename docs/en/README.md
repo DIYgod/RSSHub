@@ -218,9 +218,11 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### Youtube
 
-<routeEn name="User" path="/youtube/user/:username" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id']" />
+<routeEn name="User" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" />
 
-<routeEn name="Channel" path="/youtube/channel/:id" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id']" />
+<routeEn name="Channel" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" />
+
+<routeEn name="Playlist" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" />
 
 ### Telegram
 
