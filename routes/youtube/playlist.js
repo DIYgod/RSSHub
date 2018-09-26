@@ -2,7 +2,7 @@ const utils = require('./utils');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
-    const embed = ctx.params.embed === '1' ? true : false;
+    const embed = !ctx.params.embed;
 
     const playlistTitle = (await utils.getPlaylist(id, 'snippet')).data.items[0].snippet.title;
 

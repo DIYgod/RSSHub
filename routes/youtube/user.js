@@ -2,7 +2,7 @@ const utils = require('./utils');
 
 module.exports = async (ctx) => {
     const username = ctx.params.username;
-    const embed = ctx.params.embed === '1' ? true : false;
+    const embed = !ctx.params.embed;
 
     const playlistId = (await utils.getChannelWithUsername(username, 'contentDetails')).data.items[0].contentDetails.relatedPlaylists.uploads;
 
