@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
         },
     });
 
-    if (res.data.results) {
+    if (!res.data.results) {
         const unsupported = "当前 app 未被收录. Price monitor isn't available for this app.";
         ctx.state.data = {
             title: unsupported,
