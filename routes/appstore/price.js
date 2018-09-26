@@ -15,6 +15,15 @@ module.exports = async (ctx) => {
         },
     });
 
+    if (res.data.results) {
+        const unsupported = "当前 app 未被收录. Price monitor isn't available for this app.";
+        ctx.state.data = {
+            title: unsupported,
+            item: [{ title: unsupported }],
+        };
+        return;
+    }
+
     let result = res.data.results.apps;
     if (type === 'macapps') {
         result = res.data.results.macapps;
