@@ -28,14 +28,14 @@ module.exports = async (ctx) => {
             Referer: host,
         },
     });
-    const data = response.data.data;
+    const data = response.data.data.slice(0, 10);
 
     ctx.state.data = {
         title: 'All the Flight Deals',
         link: host,
         description: 'All the Flight Deals',
         item: data.map((item) => ({
-            title: `[${dayjs(item.dateRanges[0].start).format('YYYY MMM DD')} to ${dayjs(item.dateRanges[0].end).format('YYYY MMM DD')}]  ${item.title}`,
+            title: `[${item.dateRanges[0] ? dayjs(item.dateRanges[0].start).format('YYYY MMM DD') + 'to' + dayjs(item.dateRanges[0].end).format('YYYY MMM DD') : ''}]  ${item.title}`,
             description: `<img src="https://alltheflightdeals.com/assets/cities/${item.cityPairs[0].destinationCity.id}.jpg" alt="${item.cityPairs[0].destination.city},${
                 item.cityPairs[0].destination.countryName
             }"> <br><table><tbody><tr><th align="left" style="border: 1px solid black;">From</th><th align="left" style="border: 1px solid black;">To</th><th align="left" style="border: 1px solid black;">Price</th></tr><tr><td style="border: 1px solid black;"><b>${
