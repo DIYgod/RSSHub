@@ -450,9 +450,11 @@ RSSHub 提供下列 API 接口:
 
 ### Youtube
 
-<route name="用户" author="DIYgod" example="/youtube/user/JFlaMusic" path="/youtube/user/:username" :paramsDesc="['用户名']"/>
+<route name="用户" author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:embed?" :paramsDesc="['用户名', '`1`为内嵌视频, 默认否']"/>
 
-<route name="频道" author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ>" path="/youtube/channel/:id" :paramsDesc="['频道 id']"/>
+<route name="频道" author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:embed?" :paramsDesc="['频道 id', '`1`为内嵌视频, 默认否']"/>
+
+<route name="播放列表" author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:embed?" :paramsDesc="['播放列表 id', '`1`为内嵌视频, 默认否']"/>
 
 ### Dribbble
 
