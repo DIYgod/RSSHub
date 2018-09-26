@@ -226,8 +226,9 @@ router.get('/instagram/user/:id', require('./routes/instagram/user'));
 
 // Youtube
 if (config.youtube && config.youtube.key) {
-    router.get('/youtube/user/:username', require('./routes/youtube/user'));
-    router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
+    router.get('/youtube/user/:username/:embed?', require('./routes/youtube/user'));
+    router.get('/youtube/channel/:id/:embed?', require('./routes/youtube/channel'));
+    router.get('/youtube/playlist/:id/:embed?', require('./routes/youtube/playlist'));
 } else {
     logger.warn('Youtube RSS is disabled for lacking config.');
 }
