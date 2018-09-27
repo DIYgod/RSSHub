@@ -46,7 +46,7 @@ module.exports = async (ctx) => {
                     description: res,
                     link: link,
                 };
-                if (res.slice(0, 10).includes('正在手打中') == false) {
+                if (res.slice(0, 10).includes('正在手打中') === false) {
                     ctx.cache.set(link, JSON.stringify(resultItem), 24 * 60 * 60);
                 }
             }
