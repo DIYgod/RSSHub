@@ -2,6 +2,13 @@ const axios = require('../../utils/axios');
 const baseUrl = 'http://www.ximalaya.com';
 const axios_ins = axios.create({});
 
+const getFormatCode = function(strValue) {
+    return strValue
+        .replace(/(\r\n)+/g, '<br/>')
+        .replace(/(\n)+/g, '<br/>')
+        .replace(/(\s)+/g, ' ');
+};
+
 module.exports = async (ctx) => {
     const id = ctx.params.id; // 专辑id
 
@@ -15,7 +22,7 @@ module.exports = async (ctx) => {
 
     const albuminfo = AlbumInfoResponse.data.data.mainInfo; // 专辑数据
     const album_title = albuminfo.albumTitle; // 专辑标题
-    const album_cover = albuminfo.cover.split('&')[0];
+    const album_cover = albuminfo.cover.split('!')[0];
     const classify = albuminfo.crumbs.categoryPinyin; // 专辑分类
     const album_category = albuminfo.crumbs.categoryTitle; // 专辑分类名字
     const album_intro = albuminfo.richIntro; // 专辑介绍
@@ -42,9 +49,16 @@ module.exports = async (ctx) => {
                 const track_item = track.data;
                 const enclosure_length = track_item.duration; // 时间长度：单位（秒）
                 const itunes_duration = Math.floor(enclosure_length / 3600) + ':' + Math.floor((enclosure_length % 3600) / 60) + ':' + (((enclosure_length % 3600) % 60) / 100).toFixed(2).slice(-2);
-                let desc = track_item.intro;
+                let desc = getFormatCode(track_item.intro);
+                let itunes_item_image = '';
                 if (ispaid) {
-                    desc = '<br/> [付费内容无法收听]<br/>' + track_item.intro;
+                    desc = ' [付费内容无法收听] 请打开网页收听: ' + `<a href="${link}">${link}</a>` + '<br/>' + desc;
+                }
+
+                if (typeof track_item.coverLarge === 'undefined') {
+                    itunes_item_image = albuminfo.cover.split('!')[0];
+                } else {
+                    itunes_item_image = track_item.coverLarge.split('!')[0];
                 }
 
                 resultItem = {
@@ -52,7 +66,7 @@ module.exports = async (ctx) => {
                     link: link,
                     description: desc,
                     pubDate: new Date(track_item.createdAt).toUTCString(),
-                    itunes_item_image: track_item.coverLarge.split('&')[0],
+                    itunes_item_image: itunes_item_image,
                     enclosure_url: track_item.playPathAacv224,
                     enclosure_length: enclosure_length,
                     enclosure_type: 'audio/x-m4a',
