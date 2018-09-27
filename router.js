@@ -584,4 +584,7 @@ router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 // 电影首发站
 router.get('/dysfz/index', require('./routes/dysfz/index'));
 
+// きららファンタジア
+router.get('/kirara/news', require('./routes/kirara/news'));
+
 module.exports = router;

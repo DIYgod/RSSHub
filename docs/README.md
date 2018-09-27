@@ -646,7 +646,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="歌手专辑" author="metowolf" example="/ncm/artist/2116" path="/ncm/artist/:id" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到']"/>
 
-<route name="电台节目" author="hufan-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']"/>
+<route name="电台节目" author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']"/>
 
 ### 爱奇艺
 
@@ -746,7 +746,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="Popular Recent Posts" author="hufan-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
+<route name="Popular Recent Posts" author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
 
 举例:
 
@@ -765,7 +765,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="Popular Recent Posts" author="hufan-akari" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
+<route name="Popular Recent Posts" author="magic-akari" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
 
 举例:
 
@@ -780,7 +780,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails"/>
 
-## 动漫
+## 二次元
 
 ### bilibili
 
@@ -788,7 +788,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Bangumi
 
-<route name="放送列表" author="hufan-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today"/>
+<route name="放送列表" author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today"/>
 
 <route name="条目的吐槽箱" author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']"/>
 #### 条目的吐槽箱 <Author uid="ylc395"/>
@@ -822,6 +822,10 @@ GitHub 官方也提供了一些 RSS:
 ### 忧郁的弟弟
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="mygalgame"/>
+
+### きららファンタジア｜奇拉拉幻想曲
+
+<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
 
 ## 程序更新
 
