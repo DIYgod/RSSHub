@@ -123,18 +123,17 @@ ctx.state.data = {
 Reference article:
 
 -   [Create a podcast - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itca5b22233a)
--   [Podcast best practices - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itc2b3780e76)
--   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
--   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
+-   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
+-   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
 
-these datas can make your podcast subscribeable:
+these datas can make your podcast subscribeable:
 
 ```js
 ctx.state.data = {
     title: '', // The feed title
     link: '', // The feed link
     itunes_author: '', // The channel's author, you must fill this data.
-    itunes_category:  '',// Channel category
+    itunes_category: '', // Channel category
     image: '', // Channel's image
     description: '', // The feed description
     item: [
