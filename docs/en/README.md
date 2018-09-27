@@ -21,11 +21,9 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Sponsors
 
--   [Liuyang](https://github.com/lingllting)
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Xiaojiong Wang |
+| :--------------------------------------: | :----: | :----------------------------------------: | :------------: |
 
--   Zuyang
-
--   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -43,7 +41,7 @@ Free feel to test the [demo instance](https://rsshub.app), the cache expiry time
 
 ::: tip
 
-All parameters can be used together to generate a complex feed
+All parameters can be linked with `&` to used together to generate a complex feed
 
 :::
 
@@ -220,9 +218,11 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### Youtube
 
-<routeEn name="User" path="/youtube/user/:username" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id']" />
+<routeEn name="User" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" />
 
-<routeEn name="Channel" path="/youtube/channel/:id" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id']" />
+<routeEn name="Channel" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" />
+
+<routeEn name="Playlist" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" />
 
 ### Telegram
 

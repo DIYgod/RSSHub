@@ -13,6 +13,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 [Telegram 群](https://t.me/rsshub)
 
+# 指南
+
 ## 鸣谢
 
 ### Special Sponsors
@@ -23,11 +25,9 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Sponsors
 
--   [Liuyang](https://github.com/lingllting)
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Xiaojiong Wang |
+| :--------------------------------------: | :----: | :----------------------------------------: | :------------: |
 
--   Zuyang
-
--   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -45,11 +45,11 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ::: tip 提示
 
-所有通用参数可以组合使用, 效果叠加
+所有通用参数可以使用 `&` 连接组合使用, 效果叠加
 
 :::
 
-#### 内容过滤
+### 内容过滤
 
 可以使用以下 URL query 过滤内容, 支持正则
 
@@ -73,13 +73,13 @@ filterout 去掉不要的内容
 
 举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
 
-#### 条数限制
+### 条数限制
 
 可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS
 
 举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
-#### 输出格式
+### 输出格式
 
 RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出格式, 在路由末尾添加 `.rss` `.atom` 或 `.json` 即可请求对应输出格式, 缺省为 RSS 2.0
 
@@ -164,7 +164,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="UP 主动态" author="DIYgod" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
-<route name="UP 主频道" author="HenryQW" example="/bilibili/channel/142821407/23390" path="/bilibili/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
+<route name="UP 主频道" author="HenryQW" example="/bilibili/user/channel/142821407/23390" path="/bilibili/user/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
 
 <route name="UP 主默认收藏夹" author="DIYgod" example="/bilibili/user/fav/2267573" path="/bilibili/user/fav/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
@@ -300,7 +300,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/:id" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
 
-<route name="排行榜" author="DIYgod" example="/bilibili/partion/rranking/0/3" path="/bilibili/partion/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
+<route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
 
 | 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
 | ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -450,9 +450,11 @@ RSSHub 提供下列 API 接口:
 
 ### Youtube
 
-<route name="用户" author="DIYgod" example="/youtube/user/JFlaMusic" path="/youtube/user/:username" :paramsDesc="['用户名']"/>
+<route name="用户" author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:embed?" :paramsDesc="['用户名', '默认为开启内嵌视频, 任意值为关闭']"/>
 
-<route name="频道" author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ>" path="/youtube/channel/:id" :paramsDesc="['频道 id']"/>
+<route name="频道" author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+<route name="播放列表" author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:embed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ### Dribbble
 
@@ -875,7 +877,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="内购价格更新（限免）" author="HenryQW" example="/appstore/iap/cn/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`', 'App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`']"/>
 
-<route name="每日精品限免 / 促销应用" author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
+<route name="每日精品限免 / 促销应用（鲜面连线 by AppSo）" author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
 
 ### F-Droid
 
@@ -1138,6 +1140,38 @@ category 列表：
 | academy | culture | announcement | notification |
 
 </route>
+
+### 昆明理工大学
+
+<route name="教务处" author="geekrainy" example="/kmust/jwc/notify" path="/universities/kmust/jwc/:type?" :paramsDesc="['默认为 `notify`']">
+
+| 教务通知 | 教务新闻 |
+| -------- | -------- |
+| notify   | news     |
+
+</route>
+
+<route name="宣讲会" author="geekrainy" example="/kmust/job/careers/inner" path="/universities/kmust/job/careers/:type?" :paramsDesc="['默认为 `inner`']">
+
+| 校内宣讲会 | 校外宣讲会 |
+| ---------- | ---------- |
+| inner      | outer      |
+
+</route>
+
+<route name="双选会" author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
+
+### 华中科技大学
+
+<route name="华科自动化学院通知" author="jinxiapu" example="/hust/auto/notice/0" path="/universities/hust/auto/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
+
+| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
+| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
+
+</route>
+
+<route name="华科自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
 
 ## 传统媒体
 
@@ -1640,6 +1674,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 > 少数派专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
 </route>
+
+<route name="Shortcuts Gallery" author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
 
 ### 电影首发站
 

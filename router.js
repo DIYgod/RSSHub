@@ -226,8 +226,9 @@ router.get('/instagram/user/:id', require('./routes/instagram/user'));
 
 // Youtube
 if (config.youtube && config.youtube.key) {
-    router.get('/youtube/user/:username', require('./routes/youtube/user'));
-    router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
+    router.get('/youtube/user/:username/:embed?', require('./routes/youtube/user'));
+    router.get('/youtube/channel/:id/:embed?', require('./routes/youtube/channel'));
+    router.get('/youtube/playlist/:id/:embed?', require('./routes/youtube/playlist'));
 } else {
     logger.warn('Youtube RSS is disabled for lacking config.');
 }
@@ -539,6 +540,15 @@ router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
 router.get('/uestc/jwc/:type?', require('./routes/universities/uestc/jwc'));
 router.get('/uestc/news/:type?', require('./routes/universities/uestc/news'));
 
+// 昆明理工大学
+router.get('/kmust/jwc/:type?', require('./routes/universities/kmust/jwc'));
+router.get('/kmust/job/careers/:type?', require('./routes/universities/kmust/job/careers'));
+router.get('/kmust/job/jobfairs', require('./routes/universities/kmust/job/jobfairs'));
+
+// 华中科技大学
+router.get('/hust/auto/notice/:type?', require('./routes/universities/hust/auto/notice'));
+router.get('/hust/auto/news/', require('./routes/universities/hust/auto/news'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
@@ -560,6 +570,7 @@ router.get('/douyin/user/:id', require('./routes/douyin/user'));
 
 // 少数派 sspai
 router.get('/sspai/series', require('./routes/sspai/series'));
+router.get('/sspai/shortcuts', require('./routes/sspai/shortcutsGallery'));
 
 // xclient.info
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
