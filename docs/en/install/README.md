@@ -283,17 +283,17 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
 ### Route-specific Configurations
 
--   `Pixiv`: [registration](https://accounts.pixiv.net/signup)
+-   `pixiv`: [registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
     -   `PIXIV_PASSWORD`: Pixiv password
 
--   `Disqus`: [API Key application](https://disqus.com/api/applications/)
+-   `disqus`: [API Key application](https://disqus.com/api/applications/)
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   `Twitter`: [application creation](https://apps.twitter.com)
+-   `twitter`: [application creation](https://apps.twitter.com)
 
     -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
 
@@ -303,15 +303,15 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
 
--   `YouTube`: [API Key application](https://console.developers.google.com/)
+-   `youtube`: [API Key application](https://console.developers.google.com/)
 
     -   `YOUTUBE_KEY`: YouTube API Key
 
--   `Telegram`: [Bot application](https://telegram.org/blog/bot-revolution)
+-   `telegram`: [Bot application](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram bot token
 
--   `GitHub`: [Access Token application](https://github.com/settings/tokens)
+-   `github`: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 

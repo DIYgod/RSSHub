@@ -289,17 +289,17 @@ gcloud app deploy
 
 ### 部分 RSS 模块配置
 
--   `Pixiv`: [注册地址](https://accounts.pixiv.net/signup)
+-   `pixiv`: [注册地址](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv 用户名
 
     -   `PIXIV_PASSWORD`: Pixiv 密码
 
--   `Disqus`: [申请地址](https://disqus.com/api/applications/)
+-   `disqus`: [申请地址](https://disqus.com/api/applications/)
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   `Twitter`: [申请地址](https://apps.twitter.com)
+-   `twitter`: [申请地址](https://apps.twitter.com)
 
     -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
 
@@ -309,15 +309,15 @@ gcloud app deploy
 
     -   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
 
--   `YouTube`: [申请地址](https://console.developers.google.com/)
+-   `youtube`: [申请地址](https://console.developers.google.com/)
 
     -   `YOUTUBE_KEY`: YouTube API Key
 
--   `Telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+-   `telegram`: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
--   `GitHub`: [申请地址](https://github.com/settings/tokens)
+-   `gitHhub`: [申请地址](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
