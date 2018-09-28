@@ -584,6 +584,9 @@ router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 // 电影首发站
 router.get('/dysfz/index', require('./routes/dysfz/index'));
 
+// きららファンタジア
+router.get('/kirara/news', require('./routes/kirara/news'));
+
 // 电影天堂
 router.get('/dytt/index', require('./routes/dytt/index'));
 
