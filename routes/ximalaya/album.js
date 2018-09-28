@@ -44,7 +44,7 @@ module.exports = async (ctx) => {
                 const itunes_duration = Math.floor(enclosure_length / 3600) + ':' + Math.floor((enclosure_length % 3600) / 60) + ':' + (((enclosure_length % 3600) % 60) / 100).toFixed(2).slice(-2);
 
                 let desc = track_item.intro ? track_item.intro.replace(/((\r\n)+(\s)?)+/g, '<br/>') : '暂无简介';
-                const itunes_item_image = track_item.coverLarge ? albuminfo.cover.split('!')[0] : track_item.coverLarge.split('!')[0];
+                const itunes_item_image = track_item.coverLarge ? track_item.coverLarge.split('!')[0] : albuminfo.cover.split('!')[0];
 
                 if (ispaid) {
                     desc = desc + '<br/>' + ' [付费内容请打开网页收听] : ' + `<a href="${link}">${link}</a>`;
