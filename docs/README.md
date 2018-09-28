@@ -907,10 +907,20 @@ GitHub 官方也提供了一些 RSS:
 
 ### 西南科技大学
 
-<route name="教务处通知" author="lengthmin" example="/swust/jwc/1" path="/universities/swust/jwc/:type" :paramsDesc="['1 为通知公告, 2 为站点新闻']"/>
+<route name="教务处通知" author="lengthmin" example="/swust/jwc/1" path="/universities/swust/jwc/:type" :paramsDesc="['分区 type, 详见下方表格']">
 
-<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type" :paramsDesc="['1 为新闻动态, 2 为学术动态, 3 为通知公告, 4 为教研动态']"/>
+| 通知公告 | 学校新闻 |
+| -------- | -------- |
+| 1        | 2        |
 
+</route>
+<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type" :paramsDesc="['分区 type, 详见下方表格']">
+
+| 新闻动态 | 学术动态 | 通知公告 | 教研动态 |
+| -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        |
+
+</route>
 ### 北京大学
 
 <route name="信科公告通知" author="Ir1d" example="/pku/eecs/0" path="/universities/pku/eecs/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
@@ -1423,7 +1433,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 文学迷
 
-<route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6` https://www.wenxuemi.com/files/article/html/6/6144/', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144` https://www.wenxuemi.com/files/article/html/6/6144/']"/>
+<route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']">
+
+举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+</route>
 
 ### 起点
 
@@ -1433,7 +1446,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 快眼看书
 
-<route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619` http://booksky.so/BookDetail.aspx?Level=1&bid=98619']"/>
+<route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
+
+举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+</route>
 
 ## 中国驻外使领馆
 
