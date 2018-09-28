@@ -1,9 +1,10 @@
 const Router = require('koa-router');
 const router = new Router();
 const routes = require('./router');
+const plugins = require('./plugins');
 
 router.get('/routes/:name?', (ctx) => {
-    const allRoutes = Array.from(routes.stack);
+    const allRoutes = Array.from(routes.stack).concat(Array.from(plugins.stack));
     allRoutes.shift();
     const result = {};
     let counter = 0;
