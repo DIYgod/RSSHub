@@ -2,13 +2,6 @@ const axios = require('../../utils/axios');
 const baseUrl = 'http://www.ximalaya.com';
 const axios_ins = axios.create({});
 
-const getFormatCode = function(strValue) {
-    return strValue
-        .replace(/(\r\n)+/g, '<br/>')
-        .replace(/(\n)+/g, '<br/>')
-        .replace(/(\s)+/g, ' ');
-};
-
 module.exports = async (ctx) => {
     const id = ctx.params.id; // 专辑id
 
@@ -49,16 +42,12 @@ module.exports = async (ctx) => {
                 const track_item = track.data;
                 const enclosure_length = track_item.duration; // 时间长度：单位（秒）
                 const itunes_duration = Math.floor(enclosure_length / 3600) + ':' + Math.floor((enclosure_length % 3600) / 60) + ':' + (((enclosure_length % 3600) % 60) / 100).toFixed(2).slice(-2);
-                let desc = getFormatCode(track_item.intro);
-                let itunes_item_image = '';
-                if (ispaid) {
-                    desc = ' [付费内容无法收听] 请打开网页收听: ' + `<a href="${link}">${link}</a>` + '<br/>' + desc;
-                }
 
-                if (typeof track_item.coverLarge === 'undefined') {
-                    itunes_item_image = albuminfo.cover.split('!')[0];
-                } else {
-                    itunes_item_image = track_item.coverLarge.split('!')[0];
+                let desc = track_item.intro ? track_item.intro.replace(/((\r\n)+(\s)?)+/g, '<br/>') : '暂无简介';
+                const itunes_item_image = track_item.coverLarge ? track_item.coverLarge.split('!')[0] : albuminfo.cover.split('!')[0];
+
+                if (ispaid) {
+                    desc = desc + '<br/>' + ' [付费内容请打开网页收听] : ' + `<a href="${link}">${link}</a>`;
                 }
 
                 resultItem = {
