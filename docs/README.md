@@ -2276,3 +2276,19 @@ type，分类
 路由: `/guokr/scientific`
 
 参数: 无
+
+## 趣头条 <Author uid="alphardex"/>
+
+### 分类
+
+举例: [https://rsshub.app/qutoutiao/category/1](https://rsshub.app/qutoutiao/category/1)
+
+路由: `/qutoutiao/category/:cid`
+
+参数: cid，分类 id
+
+| 推荐 | 热点 | 娱乐 | 健康 | 养生 | 励志 | 科技 | ... |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
+| 255  | 1    | 6    | 42   | 5    | 4    | 7    | ... |
+
+更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。

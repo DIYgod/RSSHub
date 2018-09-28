@@ -282,6 +282,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
     -   AppSolution
 -   果壳网
     -   科学人
+-   趣头条
+    -   分类
 
 </details>
 

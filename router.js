@@ -491,4 +491,7 @@ router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 // 果壳网
 router.get('/guokr/scientific', require('./routes/guokr/scientific'));
 
+// 趣头条
+router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));
+
 module.exports = router;
