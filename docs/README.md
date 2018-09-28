@@ -1177,7 +1177,7 @@ category 列表：
 
 ### 华中科技大学
 
-<route name="华科自动化学院通知" author="jinxiapu" example="/hust/auto/notice/0" path="/universities/hust/auto/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
+<route name="自动化学院通知" author="jinxiapu" example="/hust/auto/notice/0" path="/universities/hust/auto/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
 
 | 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
 | ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
@@ -1185,7 +1185,7 @@ category 列表：
 
 </route>
 
-<route name="华科自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
+<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
 
 ## 传统媒体
 
@@ -1699,16 +1699,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 电影首发站
 
-<route name="电影首发站" author="epirus" example="/dysfz/index" path="/dysfz/index">
-
-> 高清电影，百度网盘跟迅雷下载
-
-</route>
+<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
 
 ### 电影天堂
 
-<route name="电影天堂" author="imgss" example="/dytt/index" path="/dytt/index">
-
-> 电影天堂新电影订阅
-
-</route>
+<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
