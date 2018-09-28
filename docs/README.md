@@ -646,7 +646,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="歌手专辑" author="metowolf" example="/ncm/artist/2116" path="/ncm/artist/:id" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到']"/>
 
-<route name="电台节目" author="hufan-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']"/>
+<route name="电台节目" author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']"/>
 
 ### 爱奇艺
 
@@ -746,7 +746,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="Popular Recent Posts" author="hufan-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
+<route name="Popular Recent Posts" author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
 
 举例:
 
@@ -765,7 +765,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="Popular Recent Posts" author="hufan-akari" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
+<route name="Popular Recent Posts" author="magic-akari" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
 
 举例:
 
@@ -780,7 +780,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails"/>
 
-## 动漫
+## 二次元
 
 ### bilibili
 
@@ -788,7 +788,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Bangumi
 
-<route name="放送列表" author="hufan-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today"/>
+<route name="放送列表" author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today"/>
 
 <route name="条目的吐槽箱" author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']"/>
 #### 条目的吐槽箱 <Author uid="ylc395"/>
@@ -822,6 +822,10 @@ GitHub 官方也提供了一些 RSS:
 ### 忧郁的弟弟
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="mygalgame"/>
+
+### きららファンタジア｜奇拉拉幻想曲
+
+<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
 
 ## 程序更新
 
@@ -907,10 +911,20 @@ GitHub 官方也提供了一些 RSS:
 
 ### 西南科技大学
 
-<route name="教务处通知" author="lengthmin" example="/swust/jwc/1" path="/universities/swust/jwc/:type" :paramsDesc="['1 为通知公告, 2 为站点新闻']"/>
+<route name="教务处通知" author="lengthmin" example="/swust/jwc/1" path="/universities/swust/jwc/:type" :paramsDesc="['分区 type, 详见下方表格']">
 
-<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type" :paramsDesc="['1 为新闻动态, 2 为学术动态, 3 为通知公告, 4 为教研动态']"/>
+| 通知公告 | 学校新闻 |
+| -------- | -------- |
+| 1        | 2        |
 
+</route>
+<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type" :paramsDesc="['分区 type, 详见下方表格']">
+
+| 新闻动态 | 学术动态 | 通知公告 | 教研动态 |
+| -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        |
+
+</route>
 ### 北京大学
 
 <route name="信科公告通知" author="Ir1d" example="/pku/eecs/0" path="/universities/pku/eecs/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
@@ -1163,7 +1177,7 @@ category 列表：
 
 ### 华中科技大学
 
-<route name="华科自动化学院通知" author="jinxiapu" example="/hust/auto/notice/0" path="/universities/hust/auto/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
+<route name="自动化学院通知" author="jinxiapu" example="/hust/auto/notice/0" path="/universities/hust/auto/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
 
 | 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
 | ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
@@ -1171,7 +1185,7 @@ category 列表：
 
 </route>
 
-<route name="华科自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
+<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
 
 ## 传统媒体
 
@@ -1423,7 +1437,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 文学迷
 
-<route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6` https://www.wenxuemi.com/files/article/html/6/6144/', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144` https://www.wenxuemi.com/files/article/html/6/6144/']"/>
+<route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']">
+
+举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+</route>
 
 ### 起点
 
@@ -1433,7 +1450,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 快眼看书
 
-<route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619` http://booksky.so/BookDetail.aspx?Level=1&bid=98619']"/>
+<route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
+
+举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+</route>
 
 ## 中国驻外使领馆
 
@@ -1679,8 +1699,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 电影首发站
 
-<route name="电影首发站" author="epirus" example="/dysfz/index" path="/dysfz/index">
+<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
 
-> 高清电影，百度网盘跟迅雷下载
+### 电影天堂
 
-</route>
+<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
