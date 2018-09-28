@@ -584,4 +584,7 @@ router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 // 电影首发站
 router.get('/dysfz/index', require('./routes/dysfz/index'));
 
+// 电影天堂
+router.get('/dytt/index', require('./routes/dytt/index'));
+
 module.exports = router;
