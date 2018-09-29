@@ -590,4 +590,7 @@ router.get('/kirara/news', require('./routes/kirara/news'));
 // 电影天堂
 router.get('/dytt/index', require('./routes/dytt/index'));
 
+// 趣头条
+router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));
+
 module.exports = router;

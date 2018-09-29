@@ -1704,3 +1704,15 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 电影天堂
 
 <route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
+
+### 趣头条
+
+<route name="分类" author="alphardex" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
+
+| 推荐 | 热点 | 娱乐 | 健康 | 养生 | 励志 | 科技 | ... |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
+| 255  | 1    | 6    | 42   | 5    | 4    | 7    | ... |
+
+更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
+
+</route>
