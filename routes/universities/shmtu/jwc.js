@@ -33,15 +33,18 @@ module.exports = async (ctx) => {
                     item = $(item);
                     return {
                         title: item.find('a').attr('title'),
-                        description:
+                        description: item.find('a').attr('title'),
+                        author:
                             '信息类别 - ' +
                             $('.gvItemNormal', item)
                                 .slice(1, 2)
-                                .text(),
+                                .text()
+                                .trim(),
                         pubDate: $('.gvItemNormal', item)
                             .slice(4)
-                            .text(),
-                        link: host + item.find('a').attr('href'),
+                            .text()
+                            .trim(),
+                        link: (host + item.find('a').attr('href')).replace('/Information/..', ''),
                     };
                 })
                 .get(),

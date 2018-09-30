@@ -2,7 +2,7 @@ const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
-    const host = 'http://www.shmtu.edu.cn';
+    const host = 'https://www.shmtu.edu.cn';
 
     const response = await axios({
         method: 'get',
@@ -25,8 +25,20 @@ module.exports = async (ctx) => {
                 .map((index, item) => {
                     item = $(item);
                     return {
-                        title: item.find('.title').text(),
-                        description: '发布部门 - ' + item.find('.department').text(),
+                        title: item
+                            .find('.title')
+                            .text()
+                            .trim(),
+                        description: item
+                            .find('.title')
+                            .text()
+                            .trim(),
+                        author:
+                            '发布部门 - ' +
+                            item
+                                .find('.department')
+                                .text()
+                                .trim(),
                         pubDate: item
                             .find('span')
                             .find('span')
