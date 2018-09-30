@@ -4,6 +4,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('./config');
 const logger = require('./utils/logger');
+const pidusage = require('pidusage');
 
 let gitHash;
 try {
@@ -11,13 +12,10 @@ try {
 } catch (e) {
     gitHash = (process.env.HEROKU_SLUG_COMMIT && process.env.HEROKU_SLUG_COMMIT.slice(0, 7)) || 'unknown';
 }
-const startTime = +new Date();
 router.get('/', async (ctx) => {
     ctx.set({
         'Content-Type': 'text/html; charset=UTF-8',
     });
-
-    const time = (+new Date() - startTime) / 1000;
 
     const routes = Object.keys(ctx.debug.routes).sort((a, b) => ctx.debug.routes[b] - ctx.debug.routes[a]);
     const hotRoutes = routes.slice(0, 10);
@@ -40,6 +38,8 @@ router.get('/', async (ctx) => {
         showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
     }
 
+    const stats = await pidusage(process.pid);
+
     ctx.set({
         'Cache-Control': 'no-cache',
     });
@@ -56,7 +56,7 @@ router.get('/', async (ctx) => {
             },
             {
                 name: '请求频率',
-                value: ((ctx.debug.request / time) * 60).toFixed(3) + ' 次/分钟',
+                value: ((ctx.debug.request / (stats.elapsed / 1000)) * 60).toFixed(3) + ' 次/分钟',
             },
             {
                 name: '缓存命中率',
@@ -64,11 +64,15 @@ router.get('/', async (ctx) => {
             },
             {
                 name: '内存占用',
-                value: process.memoryUsage().rss / 1000000 + ' MB',
+                value: stats.memory / 1000000 + ' MB',
+            },
+            {
+                name: 'CPU 占用',
+                value: stats.cpu + '%',
             },
             {
                 name: '运行时间',
-                value: time + ' 秒',
+                value: (stats.elapsed / 3600000).toFixed(2) + ' 小时',
             },
             {
                 name: '热门路由',
