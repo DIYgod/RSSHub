@@ -10,7 +10,7 @@ module.exports = function(options = {}) {
         prefix = 'koa-cache:',
         expire = 30 * 60, // 30 min
         routes = ['(.*)'],
-        exclude = [],
+        exclude = ['/'],
         passParam = '',
         maxLength = Infinity,
         ignoreQuery = false,

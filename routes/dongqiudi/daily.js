@@ -19,14 +19,10 @@ module.exports = async (ctx) => {
             const $ = cheerio.load(item);
             const title = $('a').text();
             const itemUrl = host + $('a').attr('href');
-            const cache = await ctx.cache.get(itemUrl);
-            if (cache) {
-                return Promise.resolve(JSON.parse(cache));
-            }
+
             const single = {
                 title,
                 link: itemUrl,
-                guid: itemUrl,
             };
 
             try {
@@ -47,7 +43,6 @@ module.exports = async (ctx) => {
         out[i].description = full.find('div:nth-of-type(1)').html();
         out[i].author = full.find('span.name').text();
         out[i].pubDate = new Date(full.find('span.time').text()).toUTCString();
-        ctx.cache.set(out[i].link, JSON.stringify(out[i]), 24 * 60 * 60);
     }
     ctx.state.data = {
         title: '懂球帝早报',

@@ -35,47 +35,6 @@ const weiboUtils = {
         }
         return temp;
     },
-
-    getTime: (html) => {
-        const setTimeZone = (date) => {
-            // 微博源提供的时间戳为北京时间，需要转换为 UTC
-            const serverOffset = new Date().getTimezoneOffset() / 60;
-            return new Date(date.getTime() - 60 * 60 * 1000 * (8 + serverOffset)).toUTCString();
-        };
-
-        let math;
-        let date = new Date();
-        if (/(\d+)分钟前/.exec(html)) {
-            math = /(\d+)分钟前/.exec(html);
-            date.setMinutes(date.getMinutes() - math[1]);
-            return setTimeZone(date);
-        } else if (/(\d+)小时前/.exec(html)) {
-            math = /(\d+)小时前/.exec(html);
-            date.setHours(date.getHours() - math[1]);
-            return setTimeZone(date);
-        } else if (/今天 (\d+):(\d+)/.exec(html)) {
-            math = /今天 (\d+):(\d+)/.exec(html);
-            date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), math[1], math[2]);
-            return setTimeZone(date);
-        } else if (/昨天 (\d+):(\d+)/.exec(html)) {
-            math = /昨天 (\d+):(\d+)/.exec(html);
-            date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1, math[1], math[2]);
-            return setTimeZone(date);
-        } else if (/(\d+)月(\d+)日 (\d+):(\d+)/.exec(html)) {
-            math = /(\d+)月(\d+)日 (\d+):(\d+)/.exec(html);
-            date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2], math[3], math[4]);
-            return setTimeZone(date);
-        } else if (/(\d+)-(\d+)-(\d+)/.exec(html)) {
-            math = /(\d+)-(\d+)-(\d+)/.exec(html);
-            date = new Date(math[1], parseInt(math[2]) - 1, math[3]);
-            return setTimeZone(date);
-        } else if (/(\d+)-(\d+)/.exec(html)) {
-            math = /(\d+)-(\d+)/.exec(html);
-            date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2]);
-            return setTimeZone(date);
-        }
-        return html;
-    },
 };
 
 module.exports = weiboUtils;

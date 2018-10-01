@@ -4,6 +4,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('./config');
 const logger = require('./utils/logger');
+const pidusage = require('pidusage');
 
 let gitHash;
 try {
@@ -11,13 +12,10 @@ try {
 } catch (e) {
     gitHash = (process.env.HEROKU_SLUG_COMMIT && process.env.HEROKU_SLUG_COMMIT.slice(0, 7)) || 'unknown';
 }
-const startTime = +new Date();
 router.get('/', async (ctx) => {
     ctx.set({
         'Content-Type': 'text/html; charset=UTF-8',
     });
-
-    const time = (+new Date() - startTime) / 1000;
 
     const routes = Object.keys(ctx.debug.routes).sort((a, b) => ctx.debug.routes[b] - ctx.debug.routes[a]);
     const hotRoutes = routes.slice(0, 10);
@@ -40,6 +38,8 @@ router.get('/', async (ctx) => {
         showDebug = config.debugInfo === true || config.debugInfo === ctx.query.debug;
     }
 
+    const stats = await pidusage(process.pid);
+
     ctx.set({
         'Cache-Control': 'no-cache',
     });
@@ -56,7 +56,7 @@ router.get('/', async (ctx) => {
             },
             {
                 name: '请求频率',
-                value: ((ctx.debug.request / time) * 60).toFixed(3) + ' 次/分钟',
+                value: ((ctx.debug.request / (stats.elapsed / 1000)) * 60).toFixed(3) + ' 次/分钟',
             },
             {
                 name: '缓存命中率',
@@ -64,11 +64,15 @@ router.get('/', async (ctx) => {
             },
             {
                 name: '内存占用',
-                value: process.memoryUsage().rss / 1000000 + ' MB',
+                value: stats.memory / 1000000 + ' MB',
+            },
+            {
+                name: 'CPU 占用',
+                value: stats.cpu + '%',
             },
             {
                 name: '运行时间',
-                value: time + ' 秒',
+                value: (stats.elapsed / 3600000).toFixed(2) + ' 小时',
             },
             {
                 name: '热门路由',
@@ -226,8 +230,9 @@ router.get('/instagram/user/:id', require('./routes/instagram/user'));
 
 // Youtube
 if (config.youtube && config.youtube.key) {
-    router.get('/youtube/user/:username', require('./routes/youtube/user'));
-    router.get('/youtube/channel/:id', require('./routes/youtube/channel'));
+    router.get('/youtube/user/:username/:embed?', require('./routes/youtube/user'));
+    router.get('/youtube/channel/:id/:embed?', require('./routes/youtube/channel'));
+    router.get('/youtube/playlist/:id/:embed?', require('./routes/youtube/playlist'));
 } else {
     logger.warn('Youtube RSS is disabled for lacking config.');
 }
@@ -535,6 +540,19 @@ router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));
 router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
 
+// 电子科技大学
+router.get('/uestc/jwc/:type?', require('./routes/universities/uestc/jwc'));
+router.get('/uestc/news/:type?', require('./routes/universities/uestc/news'));
+
+// 昆明理工大学
+router.get('/kmust/jwc/:type?', require('./routes/universities/kmust/jwc'));
+router.get('/kmust/job/careers/:type?', require('./routes/universities/kmust/job/careers'));
+router.get('/kmust/job/jobfairs', require('./routes/universities/kmust/job/jobfairs'));
+
+// 华中科技大学
+router.get('/hust/auto/notice/:type?', require('./routes/universities/hust/auto/notice'));
+router.get('/hust/auto/news/', require('./routes/universities/hust/auto/news'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
@@ -556,6 +574,7 @@ router.get('/douyin/user/:id', require('./routes/douyin/user'));
 
 // 少数派 sspai
 router.get('/sspai/series', require('./routes/sspai/series'));
+router.get('/sspai/shortcuts', require('./routes/sspai/shortcutsGallery'));
 
 // xclient.info
 router.get('/xclient/app/:name', require('./routes/xclient/app'));
@@ -565,5 +584,17 @@ router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
 
 // 澎湃新闻
 router.get('/thepaper/featured', require('./routes/thepaper/featured'));
+
+// 电影首发站
+router.get('/dysfz/index', require('./routes/dysfz/index'));
+
+// きららファンタジア
+router.get('/kirara/news', require('./routes/kirara/news'));
+
+// 电影天堂
+router.get('/dytt/index', require('./routes/dytt/index'));
+
+// 趣头条
+router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));
 
 module.exports = router;
