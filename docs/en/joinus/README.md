@@ -12,9 +12,49 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
 
 1.  Add the script to the corresponding directory [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes)
 
-1.  Update [README (/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/en/README.md) and [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
+1.  Update [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
 
-1.  Execute `npm run format` to lint the code before you commit and open a pull request
+    -   Documentation uses vue component:
+        -   `name`: route name
+        -   `author`: route authors, separated by a single space
+        -   `example`: route example
+        -   `path`: route path
+        -   `:paramsDesc`: route parameters description, in array, supports markdown
+            1. parameter description must be in the order of its appearance in route path
+            1. missing description will cause errors in `npm run docs:dev`
+            1. `'` `"` must be escaped as `\'` `\"`
+            1. it's redundant to indicate `optional/required` as the component will prepend based on `?`
+    -   Documentation examples:
+
+        -   Multiple parameters:
+
+        ```vue
+        <routeEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        ```
+
+        <routeEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+
+        -   Use component slot for complicated description:
+
+        ```vue
+        <routeEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+        
+        This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
+        
+        For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
+        
+        </routeEn>
+        ```
+
+        <routeEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+
+        This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
+
+        For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
+
+        </routeEn>
+
+1)  Execute `npm run format` to lint the code before you commit and open a pull request
 
 ## Write the script
 
@@ -78,23 +118,22 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>If you want to make a podcast RSS</summary><br>
+<details><summary>If you want to make a podcast feed</summary><br>
 
 Reference article:
 
 -   [Create a podcast - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itca5b22233a)
--   [Podcast best practices - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itc2b3780e76)
--   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
--   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
+-   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
+-   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
 
-these datas can make your podcast subscribeable:
+these datas can make your podcast subscribeable:
 
 ```js
 ctx.state.data = {
     title: '', // The feed title
     link: '', // The feed link
     itunes_author: '', // The channel's author, you must fill this data.
-    itunes_category:  '',// Channel category
+    itunes_category: '', // Channel category
     image: '', // Channel's image
     description: '', // The feed description
     item: [
