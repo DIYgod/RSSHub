@@ -1272,6 +1272,10 @@ Category 列表:
 
 </route>
 
+### NHK
+
+<route name="News Web Easy" author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
 ## 预报预警
 
 ### 停水通知

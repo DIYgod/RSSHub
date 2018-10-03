@@ -597,4 +597,7 @@ router.get('/dytt/index', require('./routes/dytt/index'));
 // 趣头条
 router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));
 
+// NHK NEW WEB EASY
+router.get('/nhk/news_web_easy', require('./routes/nhk/news_web_easy'));
+
 module.exports = router;
