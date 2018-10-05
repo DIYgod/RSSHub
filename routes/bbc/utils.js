@@ -6,15 +6,15 @@ const ProcessImage = ($, e, c) => {
 
         // handle cover image and lazy-loading images
         if (img[0].attribs.src) {
-            message = `<figure><img alt='${img[0].attribs.alt}' src='${img[0].attribs.src.replace(/(?<=\/news\/).*?(?=\/cpsprodpb)/, '600')}'>`;
+            message = `<figure><img alt='${img[0].attribs.alt}' src='${img[0].attribs.src.replace(/(?<=\/news\/).*?(?=\/cpsprodpb)/, '600')}'><br><figcaption>`;
         } else {
-            message = `<figure><img alt='${img[0].attribs['data-alt']}' src='${img[0].attribs['data-src'].replace(/(?<=\/news\/).*?(?=\/cpsprodpb)/, '600')}'>`;
+            message = `<figure><img alt='${img[0].attribs['data-alt']}' src='${img[0].attribs['data-src'].replace(/(?<=\/news\/).*?(?=\/cpsprodpb)/, '600')}'><br><figcaption>`;
         }
 
         // add image caption
         const figcaption = $(e).find('.media-caption__text');
         if (figcaption.length > 0) {
-            message += `<br><figcaption>${$(figcaption[0])
+            message += `${$(figcaption[0])
                 .text()
                 .trim()}`;
         }
@@ -22,7 +22,7 @@ const ProcessImage = ($, e, c) => {
         // add image copyright
         const copyright = $(e).find('.story-image-copyright');
         if (copyright.length > 0) {
-            message += `©${$(copyright[0])
+            message += ` ©${$(copyright[0])
                 .text()
                 .trim()}`;
         }

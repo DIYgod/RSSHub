@@ -598,6 +598,6 @@ router.get('/dytt/index', require('./routes/dytt/index'));
 router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));
 
 // BBC
-router.get('/bbc/chinese', require('./routes/bbc/chinese'));
+router.get('/bbc/:channel?', require('./routes/bbc/index'));
 
 module.exports = router;
