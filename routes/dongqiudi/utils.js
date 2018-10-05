@@ -7,10 +7,12 @@ const ProcessVideo = (content) => {
         const link = v.attribs.src;
         switch (v.attribs.site) {
             case 'qiniu':
-                content('div.video').replaceWith(`<video width="100%" controls> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`);
+                content(`<video width="100%" controls> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
+                content(v).remove();
                 break;
             case 'youku':
-                content('div.video').replaceWith(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`);
+                content(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`).insertAfter(v);
+                content(v).remove();
                 break;
             default:
                 break;
