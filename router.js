@@ -597,4 +597,7 @@ router.get('/dytt/index', require('./routes/dytt/index'));
 // 趣头条
 router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));
 
+// BBC
+router.get('/bbc/chinese', require('./routes/bbc/chinese'));
+
 module.exports = router;
