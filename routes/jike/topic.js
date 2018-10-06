@@ -19,8 +19,12 @@ module.exports = async (ctx) => {
     });
 
     const data = response.data.data;
-    const topic = data[0].topic;
 
+    if (common.emptyResponseCheck(ctx, data)) {
+        return;
+    }
+
+    const topic = data[0].topic;
     ctx.state.data = {
         title: `${topic.content} - 即刻主题精选`,
         link: `https://web.okjike.com/topic/${id}/official`,
