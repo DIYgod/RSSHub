@@ -1270,6 +1270,10 @@ Category 列表:
 
 </route>
 
+### NHK
+
+<route name="News Web Easy" author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
 ### BBC
 
 <route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['分类, 缺省为环球新闻']">
