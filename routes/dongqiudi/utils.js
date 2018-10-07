@@ -2,7 +2,27 @@ const dayjs = require('dayjs');
 const cheerio = require('cheerio');
 const axios = require('../../utils/axios');
 
+const ProcessVideo = (content) => {
+    content('div.video').each((i, v) => {
+        const link = v.attribs.src;
+        switch (v.attribs.site) {
+            case 'qiniu':
+                content(`<video width="100%" controls> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
+                content(v).remove();
+                break;
+            case 'youku':
+                content(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`).insertAfter(v);
+                content(v).remove();
+                break;
+            default:
+                break;
+        }
+    });
+    return content;
+};
+
 module.exports = {
+    ProcessVideo: ProcessVideo,
     ProcessFeed: async (ctx, link, api) => {
         const axios_ins = axios.create({
             headers: {
@@ -20,22 +40,7 @@ module.exports = {
             list.map(async (item) => {
                 const itemUrl = item.web_url;
                 const res = await axios_ins.get(itemUrl);
-                const content = cheerio.load(res.data);
-
-                content('div.video').each((i, v) => {
-                    const link = v.attribs.src;
-                    switch (v.attribs.site) {
-                        case 'qiniu':
-                            content('div.video').replaceWith(`<video width="100%" controls> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`);
-                            break;
-                        case 'youku':
-                            content('div.video').replaceWith(`<iframe height='100%' width='100%' src='${link}' frameborder=0 scrolling=no webkitallowfullscreen=true allowfullscreen=true></iframe>`);
-                            break;
-                        default:
-                            break;
-                    }
-                });
-
+                const content = ProcessVideo(cheerio.load(res.data));
                 const serverOffset = new Date().getTimezoneOffset() / 60;
                 const single = {
                     title: content('h1').text(),

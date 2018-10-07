@@ -25,8 +25,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Xiaojiong Wang |
-| :--------------------------------------: | :----: | :----------------------------------------: | :------------: |
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
+| :--------------------------------------: | :----: | :----------------------------------------: | :--: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -128,6 +128,7 @@ RSSHub 提供下列 API 接口:
                 "/bilibili/user/dynamic/:uid",
                 "/bilibili/user/followers/:uid",
                 "/bilibili/user/followings/:uid",
+                "/bilibili/user/channel/:uid/:cid",
                 "/bilibili/partion/:tid",
                 "/bilibili/partion/ranking/:tid/:days?",
                 "/bilibili/bangumi/:seasonid",
@@ -141,7 +142,6 @@ RSSHub 提供下列 API 接口:
                 "/bilibili/mall/new",
                 "/bilibili/mall/ip/:id",
                 "/bilibili/ranking/:rid?/:day?",
-                "/bilibili/channel/:uid/:cid",
                 "/bilibili/topic/:topic"
             ]
         }
@@ -164,7 +164,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="UP 主动态" author="DIYgod" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
-<route name="UP 主频道" author="HenryQW" example="/bilibili/user/channel/142821407/23390" path="/bilibili/user/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
+<route name="UP 主频道" author="HenryQW" example="/bilibili/user/channel/142821407/49017" path="/bilibili/user/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
 
 <route name="UP 主默认收藏夹" author="DIYgod" example="/bilibili/user/fav/2267573" path="/bilibili/user/fav/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
@@ -496,6 +496,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户自选动态" author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
+<route name="基金净值更新" author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
+
 ## 编程
 
 ### 掘金
@@ -670,9 +672,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-::: tip 提示
-
-:::
+</route>
 
 ### EZTV
 
@@ -1126,9 +1126,7 @@ category 列表：
 
 ### 四川旅游学院
 
-<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy">
-
-</route>
+<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy"/>
 
 <route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc:type?" :paramsDesc="['可选参数, 默认为 `13`']">
 
@@ -1186,7 +1184,7 @@ category 列表：
 
 </route>
 
-<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
+<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news" />
 
 ## 传统媒体
 
@@ -1271,6 +1269,20 @@ Category 列表:
 | 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
 | ------------- | --------- | ------ | ------------- | ------ |
 | greater-china | singapore | sea    | international | sports |
+
+</route>
+
+### NHK
+
+<route name="News Web Easy" author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+### BBC
+
+<route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['分类, 缺省为环球新闻']">
+
+| 中文网  | 环球新闻 |
+| ------- | -------- |
+| chinese | world    |
 
 </route>
 
@@ -1441,11 +1453,12 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']">
 
 举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+
 </route>
 
 ### 起点
 
-<route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id`" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
@@ -1454,6 +1467,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
 
 举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+
 </route>
 
 ## 中国驻外使领馆

@@ -21,8 +21,8 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Xiaojiong Wang |
-| :--------------------------------------: | :----: | :----------------------------------------: | :------------: |
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Anonymity |
+| :--------------------------------------: | :----: | :----------------------------------------: | :-------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -259,6 +259,18 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
 This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 
 For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
+
+</routeEn>
+
+## News
+
+### BBC
+
+<routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `world`']">
+
+| Chinese | World News |
+| ------- | ---------- |
+| chinese | world      |
 
 </routeEn>
 
