@@ -670,9 +670,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-::: tip 提示
-
-:::
+</route>
 
 ### EZTV
 
@@ -1126,9 +1124,7 @@ category 列表：
 
 ### 四川旅游学院
 
-<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy">
-
-</route>
+<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy"/>
 
 <route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc:type?" :paramsDesc="['可选参数, 默认为 `13`']">
 
@@ -1186,7 +1182,7 @@ category 列表：
 
 </route>
 
-<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
+<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news" />
 
 ## 传统媒体
 
@@ -1451,11 +1447,12 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']">
 
 举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+
 </route>
 
 ### 起点
 
-<route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id`" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
@@ -1464,6 +1461,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
 
 举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+
 </route>
 
 ## 中国驻外使领馆
