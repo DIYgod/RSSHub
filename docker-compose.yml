@@ -9,7 +9,8 @@ services:
       args:
         # 是否在构建过程中使用淘宝NPM源进行加速
         USE_CHINA_NPM_REGISTRY: 0
-        # 是否在构建过程中跳过安装 Chromium
+        # 是否在构建过程中跳过安装 Chromium, 参见 https://docs.rsshub.app/install/#docker-compose-deployment
+        # whether to skip puppeteer Chromium installation or not, refer to https://docs.rsshub.app/en/install/#docker-compose-deployment
         PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
     restart: always
     image: rsshub
