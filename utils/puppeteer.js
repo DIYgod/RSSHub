@@ -1,4 +1,3 @@
-const puppeteer = require('puppeteer');
 const logger = require('./logger');
 const config = require('../config');
 
@@ -10,7 +9,17 @@ const options = {
 };
 
 module.exports = (async () => {
-    const browser = await puppeteer.launch(options);
+    let browser;
+    if (config.puppeteerWSEndpoint) {
+        const puppeteer = require('puppeteer-core');
+        browser = await puppeteer.connect({
+            browserWSEndpoint: config.puppeteerWSEndpoint,
+        });
+    } else {
+        const puppeteer = require('puppeteer');
+        browser = await puppeteer.launch(options);
+    }
+
     logger.info('Puppeteer launched.');
 
     return async () => {

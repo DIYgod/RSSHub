@@ -65,6 +65,7 @@
     "pidusage": "^2.0.17",
     "plist": "^3.0.1",
     "puppeteer": "^1.8.0",
+    "puppeteer-core": "^1.9.0",
     "raven": "^2.6.4",
     "readall": "1.1.0",
     "redis": "2.8.0",
