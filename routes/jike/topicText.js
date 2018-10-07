@@ -1,5 +1,6 @@
 const axios = require('../../utils/axios');
 const dayjs = require('dayjs');
+const common = require('./common');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -19,6 +20,11 @@ module.exports = async (ctx) => {
     });
 
     const data = response.data.data;
+
+    if (common.emptyResponseCheck(ctx, data)) {
+        return;
+    }
+
     const title = data[0].topic.content;
 
     ctx.state.data = {
