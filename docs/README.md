@@ -1274,6 +1274,16 @@ Category 列表:
 
 </route>
 
+### BBC
+
+<route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['分类, 缺省为环球新闻']">
+
+| 中文网  | 环球新闻 |
+| ------- | -------- |
+| chinese | world    |
+
+</route>
+
 ## 预报预警
 
 ### 停水通知

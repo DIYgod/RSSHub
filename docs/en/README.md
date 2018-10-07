@@ -262,6 +262,18 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 </routeEn>
 
+## News
+
+### BBC
+
+<routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `world`']">
+
+| Chinese | World News |
+| ------- | ---------- |
+| chinese | world      |
+
+</routeEn>
+
 ## Programming
 
 ### GitHub
