@@ -30,5 +30,7 @@ module.exports = async (ctx, next) => {
         }
     }
 
-    await next();
+    if (ctx.response.status !== 403) {
+        await next();
+    }
 };
