@@ -494,6 +494,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户收藏动态" author="imlonghao" example="/xueqiu/favorite/8152922548" path="/xueqiu/favorite/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
+<route name="用户自选动态" author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
 ## 编程
 
 ### 掘金
