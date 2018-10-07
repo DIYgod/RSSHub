@@ -400,6 +400,7 @@ router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
 // 雪球
 router.get('/xueqiu/user/:id/:type?', require('./routes/xueqiu/user'));
 router.get('/xueqiu/favorite/:id', require('./routes/xueqiu/favorite'));
+router.get('/xueqiu/fund/:id', require('./routes/xueqiu/fund'));
 
 // Greasy Fork
 router.get('/greasyfork/:language/:domain?', require('./routes/greasyfork/scripts'));
