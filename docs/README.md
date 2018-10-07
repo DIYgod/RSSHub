@@ -128,6 +128,7 @@ RSSHub 提供下列 API 接口:
                 "/bilibili/user/dynamic/:uid",
                 "/bilibili/user/followers/:uid",
                 "/bilibili/user/followings/:uid",
+                "/bilibili/user/channel/:uid/:cid",
                 "/bilibili/partion/:tid",
                 "/bilibili/partion/ranking/:tid/:days?",
                 "/bilibili/bangumi/:seasonid",
@@ -141,7 +142,6 @@ RSSHub 提供下列 API 接口:
                 "/bilibili/mall/new",
                 "/bilibili/mall/ip/:id",
                 "/bilibili/ranking/:rid?/:day?",
-                "/bilibili/channel/:uid/:cid",
                 "/bilibili/topic/:topic"
             ]
         }
@@ -164,7 +164,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="UP 主动态" author="DIYgod" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
-<route name="UP 主频道" author="HenryQW" example="/bilibili/user/channel/142821407/23390" path="/bilibili/user/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
+<route name="UP 主频道" author="HenryQW" example="/bilibili/user/channel/142821407/49017" path="/bilibili/user/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
 
 <route name="UP 主默认收藏夹" author="DIYgod" example="/bilibili/user/fav/2267573" path="/bilibili/user/fav/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 

@@ -110,7 +110,7 @@ router.get('/bilibili/blackboard', require('./routes/bilibili/blackboard'));
 router.get('/bilibili/mall/new', require('./routes/bilibili/mallNew'));
 router.get('/bilibili/mall/ip/:id', require('./routes/bilibili/mallIP'));
 router.get('/bilibili/ranking/:rid?/:day?', require('./routes/bilibili/ranking'));
-router.get('/bilibili/channel/:uid/:cid', require('./routes/bilibili/userChannel'));
+router.get('/bilibili/user/channel/:uid/:cid', require('./routes/bilibili/userChannel'));
 router.get('/bilibili/topic/:topic', require('./routes/bilibili/topic'));
 
 // bangumi
