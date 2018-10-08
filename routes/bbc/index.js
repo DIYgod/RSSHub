@@ -12,7 +12,7 @@ module.exports = async (ctx) => {
         channel = channel.split('-').join('/');
 
         if (channel === 'chinese') {
-            feed = await parser.parseURL('https//feeds.bbci.co.uk/zhongwen/simp/rss.xml');
+            feed = await parser.parseURL('https://feeds.bbci.co.uk/zhongwen/simp/rss.xml');
             title = 'BBC News 中文网';
             link = 'https://www.bbc.com/zhongwen/simp';
         } else {

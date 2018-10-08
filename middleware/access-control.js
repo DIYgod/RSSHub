@@ -18,17 +18,23 @@ module.exports = async (ctx, next) => {
     const ip = ctx.ips[0] || ctx.ip;
     const requestPath = ctx.request.path;
 
-    if (whitelist) {
-        if (!(whitelist.indexOf(ip) !== -1 || whitelist.indexOf(requestPath) !== -1)) {
-            reject(ctx);
-        }
+    if (requestPath === '/') {
+        await next();
     } else {
-        if (blacklist) {
-            if (blacklist.indexOf(ip) !== -1 || blacklist.indexOf(requestPath) !== -1) {
+        if (whitelist) {
+            if (!(whitelist.indexOf(ip) !== -1 || whitelist.indexOf(requestPath) !== -1)) {
                 reject(ctx);
             }
+        } else {
+            if (blacklist) {
+                if (blacklist.indexOf(ip) !== -1 || blacklist.indexOf(requestPath) !== -1) {
+                    reject(ctx);
+                }
+            }
+        }
+
+        if (ctx.response.status !== 403) {
+            await next();
         }
     }
-
-    await next();
 };
