@@ -25,10 +25,10 @@ module.exports = async (ctx) => {
     const res3 = await axios({
         method: 'get',
         url: 'https://xueqiu.com/statuses/original/show.json',
-        params:{
+        params: {
             user_id: id,
         },
-        headers:{
+        headers: {
             Cookie: token,
             Referer: `https://xueqiu.com/u/${id}`,
         },
