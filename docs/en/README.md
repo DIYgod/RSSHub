@@ -266,11 +266,15 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 ### BBC
 
-<routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `world`']">
+<routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
-| Chinese | World News |
-| ------- | ---------- |
-| chinese | world      |
+Provides better reading experience (full text articles) over the official ones.
+
+Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
+
+-   Channel with a single path, such as `https://feeds.bbci.co.uk/news/business/rss.xml`, use `/bbc/business`.
+-   Channel contains multiple paths, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
+-   Exemption: use `/bbc/chinese` for BBC News Chinese.
 
 </routeEn>
 

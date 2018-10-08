@@ -8,27 +8,30 @@ module.exports = async (ctx) => {
     let feed, title, link;
 
     if (ctx.params.channel) {
-        switch (ctx.params.channel.toLowerCase()) {
-            case 'chinese':
-                feed = await parser.parseURL('http://feeds.bbci.co.uk/zhongwen/simp/rss.xml');
-                title = 'BBC 中文网';
-                link = 'https://www.bbc.com/zhongwen/simp';
-                break;
-            case 'world':
-                feed = await parser.parseURL('http://feeds.bbci.co.uk/news/world/rss.xml');
-                title = 'BBC News World';
-                link = 'https://www.bbc.co.uk/news/world';
-                break;
-            default:
-                feed = await parser.parseURL('http://feeds.bbci.co.uk/news/world/rss.xml');
-                title = 'BBC News World';
-                link = 'https://www.bbc.co.uk/news/world';
-                break;
+        let channel = ctx.params.channel.toLowerCase();
+        channel = channel.split('-').join('/');
+
+        if (channel === 'chinese') {
+            feed = await parser.parseURL('https//feeds.bbci.co.uk/zhongwen/simp/rss.xml');
+            title = 'BBC News 中文网';
+            link = 'https://www.bbc.com/zhongwen/simp';
+        } else {
+            try {
+                feed = await parser.parseURL(`https://feeds.bbci.co.uk/news/${channel}/rss.xml`);
+                title = `BBC News ${channel}`;
+                link = `https://www.bbc.co.uk/news/${channel}`;
+            } catch (error) {
+                ctx.state.data = {
+                    title: `BBC News ${channel} doesn't exist`,
+                    description: `BBC News ${channel} doesn't exist`,
+                };
+                return;
+            }
         }
     } else {
-        feed = await parser.parseURL('http://feeds.bbci.co.uk/news/world/rss.xml');
-        title = 'BBC News World';
-        link = 'https://www.bbc.co.uk/news/world';
+        feed = await parser.parseURL('https://feeds.bbci.co.uk/news/rss.xml');
+        title = 'BBC News Top Stories';
+        link = 'https://www.bbc.co.uk/news';
     }
 
     const items = await Promise.all(
