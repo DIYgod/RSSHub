@@ -54,6 +54,7 @@ module.exports = async (ctx) => {
                 title,
                 description,
                 pubDate: new Date(data.date).toUTCString(),
+                guid: `${fundName} ${new Date(data.date).toUTCString()}`,
                 link: url,
             },
         ],
