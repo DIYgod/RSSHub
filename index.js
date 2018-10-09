@@ -18,6 +18,10 @@ const router = require('./router');
 const protected_router = require('./protected_router');
 const mount = require('koa-mount');
 
+if (config.newrelicLicenseKey) {
+    require('newrelic');
+}
+
 // API related
 
 const apiTemplate = require('./middleware/api-template');
