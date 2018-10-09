@@ -605,4 +605,7 @@ router.get('/nhk/news_web_easy', require('./routes/nhk/news_web_easy'));
 // BBC
 router.get('/bbc/:channel?', require('./routes/bbc/index'));
 
+// FT 中文网
+router.get('/ft/chinese/:channel?', require('./routes/ft/chinese'));
+
 module.exports = router;
