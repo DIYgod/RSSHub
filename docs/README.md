@@ -1762,3 +1762,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
 
 </route>
+
+### 后续
+
+<route name="后续" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>

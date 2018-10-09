@@ -608,4 +608,7 @@ router.get('/bbc/:channel?', require('./routes/bbc/index'));
 // FT 中文网
 router.get('/ft/chinese/:channel?', require('./routes/ft/chinese'));
 
+// 后续
+router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
+
 module.exports = router;
