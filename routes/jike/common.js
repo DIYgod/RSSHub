@@ -1,6 +1,14 @@
 const url = require('url');
 
 module.exports = {
+    emptyResponseCheck: (ctx, data) => {
+        if (data.length === 0) {
+            ctx.state.data = {
+                title: '主题 ID 不存在，或该主题暂无内容',
+            };
+            return true;
+        }
+    },
     topicDataHanding: (data) =>
         data.map((item) => {
             let audioName, videoName, linkName;
@@ -84,12 +92,28 @@ module.exports = {
 
             // 5. 图片
             if (item.pictures) {
-                item.pictures.forEach(
-                    (pic) =>
-                        (description += `<br/><picture><source srcset="${pic.picUrl.split('/thumbnail/')[0]}/strip/format/webp" type="image/webp"><source srcset="${pic.picUrl.split('?imageMogr2/')[0]}" type="image/jpeg"><img src="${
+                item.pictures.forEach((pic) => {
+                    if (pic.format === 'gif') {
+                        description += `<img src="${pic.picUrl.split('?imageMogr2/')[0]}"></picture>`;
+                    } else {
+                        // jpeg, bmp, png, gif, webp
+                        // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+                        let type = 'jpeg';
+                        switch (pic.format) {
+                            case 'bmp':
+                                type = 'bmp';
+                                break;
+                            case 'png':
+                                type = 'png';
+                                break;
+                            default:
+                                break;
+                        }
+                        description += `<br/><picture><source srcset="${pic.picUrl.split('/thumbnail/')[0]}/strip/format/webp" type="image/webp"><source srcset="${
                             pic.picUrl.split('?imageMogr2/')[0]
-                        }"></picture>`)
-                );
+                        }" type="image/${type}"><img src="${pic.picUrl.split('?imageMogr2/')[0]}"></picture>`;
+                    }
+                });
             }
 
             // rss标题

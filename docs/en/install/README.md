@@ -4,57 +4,26 @@ sidebar: auto
 
 # Deployment
 
-RSSHub provides painless deployment, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
+RSSHub provides a painless deployment process if you are equipped with basic programming knowledge, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
+
+The deployment may involve the followings:
+
+1. Command line interface
+1. [Git](https://git-scm.com/)
+1. [Node.js >= 8.0.0](https://nodejs.org/)
+1. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+
+Deploy for public access may require:
+
+1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
+1. [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
+1. [Redis](https://redis.io/download)
+1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+1. [Google App Engine](https://cloud.google.com/appengine/)
 
 ## Manual Deployment
 
 Manually deploy a new `RSSHub` instance to a location of your choice.
-
-## System requirement
-
-Please ensure you have installed both [Git](https://git-scm.com/) and [Node.js >= 8.0.0](https://nodejs.org/).
-
-### Install Git
-
-::: tip
-
-Entering `git` to check whether Git is already installed：
-
-Use `cmd` for windows, use `terminal` for UNIX-based OS including macOS.
-
-```bash
-$ git
-usage: git [--version] [--help] [-C <path>] [-c name=value]
-...
-```
-
-:::
-
--   Windows：Download Git [from git's official website](https://git-scm.com/downloads).
--   macOS：Use [Homebrew](https://brew.sh/) `$ brew install git` or [download from git's official website](https://git-scm.com/download/mac).
--   UNIX: your package manager `$ sudo apt-get install git`.
-
-### Install Node.JS
-
-#### Windows
-
-Windows users please download [from node's official website](https://nodejs.org/zh-cn/). During the installation, please check `Add to PATH` option.
-
-#### UNIX-based
-
-The easiest way to install NodeJS is using [nvm](https://github.com/creationix/nvm).
-
-Install `nvm`
-
-```bash
-$ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
-```
-
-Upon completion please restart your terminal to install `Node.js`.
-
-```bash
-$ nvm install node
-```
 
 ### Download RSSHub
 
@@ -65,23 +34,19 @@ $ git clone https://github.com/DIYgod/RSSHub.git
 $ cd RSSHub
 ```
 
-Execute the following commands to the dependencies
+Execute the following commands to install dependencies
+
+Using `npm`
 
 ```bash
 $ npm install
 ```
 
-::: tip
-
-[Yarn](https://yarn.bootcss.com/) is recommended over `npm` for its performance and stability
-
-Use `Yarn` simplifies the dependency installation process
+Or `yarn`
 
 ```bash
 $ yarn
 ```
-
-:::
 
 ### Launch
 
@@ -91,7 +56,19 @@ Under `RSSHub`'s root directory, execute the following commands to launch
 $ npm start
 ```
 
+Or
+
+```bash
+$ yarn start
+```
+
 Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
+
+::: tip tip
+
+Refer to our [Guide](https://docs.rsshub.app/) for usage. Replace `https://rsshub.app/` with `http://localhost:1200` in any route example to see the effect.
+
+:::
 
 ### Update
 
@@ -121,65 +98,15 @@ To configure more options please refer to [Settings](#Settings).
 
 By default, `RSSHub` caches everything for 5 minutes in RAM. Redis support is built-in.
 
-::: tip
+::: tip tips
 
 Unless you are expecting high traffic or deploying in cluster-mode, Redis is not necessary.
 
 :::
 
-#### Install Redis
-
-**Windows**
-
-Please download Redis for Windows from [Redis' github](https://github.com/MicrosoftArchive/redis/releases).
-
-Under your installation directory, execute the following commands to start Redis.
-
-```bash
-$ redis-server  redis.windows.conf
-```
-
-**MacOS**
-
-Use [Homebrew](https://brew.sh/) to install Redis.
-
-```bash
-$ brew install redis
-```
-
-Execute the following commands to start Redis.
-
-```bash
-$ brew services start redis
-```
-
-**UNIX-based**
-
-Use your package manager to install Redis.
-
-```bash
-# apt
-$ sudo apt install redis-server
-
-# yum
-$ sudo yum install redis
-```
-
-Execute `$ redis-server` to start Redis.
-
-#### Enable RSSHub to Redis as the caching backend
-
 Change `CACHE_TYPE` to `redis`, RSSHub will try to connect to `redis://localhost:6379/`. For changing the target address, please refer to [Settings](#Settings).
 
 ## Docker Deployment
-
-Docker is the most popular containerization technology, it simplifies the deployment process down to one line of code.
-
-### Install Docker
-
-Please refer to [Docker's official guide](https://docs.docker.com/engine/installation/)
-
-### Deployment
 
 Execute the following command to pull RSSHub's docker image.
 
@@ -201,21 +128,6 @@ Execute the following command to stop `RSSHub`.
 $ docker stop rsshub
 ```
 
-### Update
-
-Execute the following command to pull the latest `RSSHub` docker image.
-
-```bash
-# stop the current rsshub container
-$ docker stop rsshub
-
-# delete the existing rsshub container
-$ docker rm rsshub
-
-# pull the latest rsshub image
-$ docker pull diygod/rsshub
-```
-
 ### Configuration
 
 The simplest way to configure RSSHub container is via system environment variables.
@@ -228,9 +140,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 To configure more options please refer to [Settings](#Settings).
 
-### Docker-compose Deployment
-
-[docker-compose](https://docs.docker.com/compose/overview/) simplifies multi-container deployment process：
+### docker-compose Deployment
 
 1.  Create a docker volume to persist Redis caches
 
@@ -263,7 +173,7 @@ $ docker-compose up
 
 Follow the [official guide](https://cloud.google.com/appengine/docs/flexible/nodejs/quickstart) for completing your GCP account settings, creating a new Node project, adding billing information (required), installing git and initializing gcloud([link](https://cloud.google.com/sdk/gcloud/)). Node.js is not required if you don't plan to debug RSSHub locally.
 
-Please note, GAE free tier doesn't support Flexible Environment , please check the pricing plan prior to deployment.
+Please note, GAE free tier doesn't support Flexible Environment, please check the pricing plan prior to deployment.
 
 Node.js standard environment is still under beta, unknown or unexpected errors might be encountered during the deployment.
 

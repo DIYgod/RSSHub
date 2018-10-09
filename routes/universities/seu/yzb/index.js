@@ -18,14 +18,13 @@ module.exports = async (ctx) => {
 
     const id = map.get(type).id;
 
-    const items = $(`#${id} > table > tbody > tr`)
+    const items = $(`#${id} tr tr`)
         .map((_, elem) => {
             const a = $('td:first-child > a', elem);
-
             return {
                 link: url.resolve(host, a.attr('href')),
                 title: a.attr('title'),
-                pubDate: new Date($('td:nth-child(2)').text()).toUTCString(),
+                pubDate: new Date($('td:nth-child(2)', elem).text()).toUTCString(),
             };
         })
         .get();

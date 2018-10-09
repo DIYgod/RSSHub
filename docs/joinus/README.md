@@ -118,12 +118,11 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>如果你想制作播客订阅型RSS, 点这儿</summary><br>
+<details><summary>如果你想制作podcast feed, 点这儿</summary><br>
 
 参考文章:
 
 -   [Podcasts Connect 帮助 创建播客 - Apple](https://help.apple.com/itc/podcasts_connect/#/itca5b22233a)
--   [Podcasts Connect 帮助 播客最佳做法 - Apple](https://help.apple.com/itc/podcasts_connect/#/itc2b3780e76)
 -   RSS 格式参考: https://codepen.io/jon-walstedt/pen/jsIup
 -   播客验证: https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
 
@@ -148,7 +147,7 @@ ctx.state.data = {
             itunes_item_image: '', // 图像
             enclosure_url: '', // 音频链接
             enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数
-            enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'], 或其他类型.
+            enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
             itunes_duration: '', // 由enclosure_length转换为 时:分:秒
         },
     ],

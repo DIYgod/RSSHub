@@ -19,6 +19,11 @@ module.exports = async (ctx) => {
     });
 
     const data = response.data.data;
+
+    if (common.emptyResponseCheck(ctx, data)) {
+        return;
+    }
+
     const topic = data[0].topic;
 
     ctx.state.data = {

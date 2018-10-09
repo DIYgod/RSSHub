@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
                     }
                     return {
                         title: item.find('.zm-item-title a').text(),
-                        description: `内容：${item.find('textarea').text()}`,
+                        description: utils.ProcessImage(item.find('textarea').text()),
                         link: linkUrl,
                     };
                 })
