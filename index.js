@@ -1,7 +1,10 @@
+const config = require('./config');
+if (config.newrelicLicenseKey) {
+    require('newrelic');
+}
 const Koa = require('koa');
 const fs = require('fs');
 const logger = require('./utils/logger');
-const config = require('./config');
 
 const onerror = require('./middleware/onerror');
 const header = require('./middleware/header');
@@ -17,10 +20,6 @@ const accessControl = require('./middleware/access-control');
 const router = require('./router');
 const protected_router = require('./protected_router');
 const mount = require('koa-mount');
-
-if (config.newrelicLicenseKey) {
-    require('newrelic');
-}
 
 // API related
 
