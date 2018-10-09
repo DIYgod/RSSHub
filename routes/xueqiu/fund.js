@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
     const guid = `xueqiu/fund ${ctx.params.id}`;
-    const cache = ctx.cache.get(guid);
+    const cache = await ctx.cache.get(guid);
 
     if (cache) {
         return JSON.parse(cache);
@@ -48,8 +48,7 @@ module.exports = async (ctx) => {
             title += '持平';
         }
 
-        description += ` ${data.percentage}%
-    （¥${data.value}）`;
+        description += ` ${data.percentage}%（¥${data.value}）`;
 
         const single = {
             title,
