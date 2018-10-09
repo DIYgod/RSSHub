@@ -702,6 +702,14 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### 电影首发站
+
+<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
+
+### 电影天堂
+
+<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
+
 ## 图片
 
 ### 妹子图
@@ -1416,7 +1424,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="关键词" author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']"/>
 
-<route name="排行榜" author="DIYgod" example="/jianshu/user/yZq3ZV" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
+<route name="排行榜" author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
 
 -   榜单类型
 
@@ -1742,14 +1750,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 </route>
 
 <route name="Shortcuts Gallery" author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
-
-### 电影首发站
-
-<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
-
-### 电影天堂
-
-<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
 
 ### 趣头条
 
