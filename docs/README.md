@@ -1278,15 +1278,42 @@ Category 列表:
 
 ### BBC
 
-<route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['分类, 缺省为热门']">
+<route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
+
+::: tip 提示
+
+由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
+
+:::
 
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 支持大部分频道, 频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
 
--   频道为单一路径, 如`https://feeds.bbci.co.uk/news/business/rss.xml` 则为 `/bbc/business`.
--   频道包含多重路径, 如 `https://feeds.bbci.co.uk/news/world/asia/rss.xml` 则替换 `/` 为 `-` `/bbc/world-asia`.
+-   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
+-   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
 -   例外: BBC 中文网为 `/bbc/chinese`.
+
+</route>
+
+### FT 中文网
+
+<route name="FT 中文网" author="HenryQW" example="/ft/chinese/hotstoryby7day" path="/ft/chinese/:channel?" :paramsDesc="['频道, 缺省为每日更新']">
+
+::: tip 提示
+
+-   不支持付费文章.
+-   由于未知原因 FT 中文网的 SSL 证书不被信任 (参见[SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取.
+-   由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
+
+:::
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+支持所有频道, 频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
+
+-   频道为单一路径, 如 http://www.ftchinese.com/rss/`news` 则为 `/ft/chinese/news`.
+-   频道包含多重路径, 如 http://www.ftchinese.com/rss/`column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
 
 </route>
 
