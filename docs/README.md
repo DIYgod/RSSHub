@@ -1194,6 +1194,10 @@ category 列表：
 
 <route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news" />
 
+### 山东大学
+
+<route name="研究生院学术活动" author="Ji4n1ng" example="/sdu/grad/academic" path="/universities/sdu/grad/academic" />
+
 ## 传统媒体
 
 ### 央视新闻
