@@ -494,6 +494,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户收藏动态" author="imlonghao" example="/xueqiu/favorite/8152922548" path="/xueqiu/favorite/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
+<route name="用户自选动态" author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
 <route name="基金净值更新" author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
 
 ## 编程
@@ -699,6 +701,14 @@ GitHub 官方也提供了一些 RSS:
 | 7          | 8            | 16           |
 
 </route>
+
+### 电影首发站
+
+<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
+
+### 电影天堂
+
+<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
 
 ## 图片
 
@@ -1184,6 +1194,10 @@ category 列表：
 
 <route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news" />
 
+### 山东大学
+
+<route name="研究生院学术活动" author="Ji4n1ng" example="/sdu/grad/academic" path="/universities/sdu/grad/academic" />
+
 ## 传统媒体
 
 ### 央视新闻
@@ -1276,11 +1290,42 @@ Category 列表:
 
 ### BBC
 
-<route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['分类, 缺省为环球新闻']">
+<route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
 
-| 中文网  | 环球新闻 |
-| ------- | -------- |
-| chinese | world    |
+::: tip 提示
+
+由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
+
+:::
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+支持大部分频道, 频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
+
+-   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
+-   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
+-   例外: BBC 中文网为 `/bbc/chinese`.
+
+</route>
+
+### FT 中文网
+
+<route name="FT 中文网" author="HenryQW" example="/ft/chinese/hotstoryby7day" path="/ft/chinese/:channel?" :paramsDesc="['频道, 缺省为每日更新']">
+
+::: tip 提示
+
+-   不支持付费文章.
+-   由于未知原因 FT 中文网的 SSL 证书不被信任 (参见[SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取.
+-   由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
+
+:::
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+支持所有频道, 频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
+
+-   频道为单一路径, 如 http://www.ftchinese.com/rss/`news` 则为 `/ft/chinese/news`.
+-   频道包含多重路径, 如 http://www.ftchinese.com/rss/`column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
 
 </route>
 
@@ -1383,7 +1428,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="关键词" author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']"/>
 
-<route name="排行榜" author="DIYgod" example="/jianshu/user/yZq3ZV" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
+<route name="排行榜" author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
 
 -   榜单类型
 
@@ -1710,14 +1755,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="Shortcuts Gallery" author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
 
-### 电影首发站
-
-<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
-
-### 电影天堂
-
-<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
-
 ### 趣头条
 
 <route name="分类" author="alphardex" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
@@ -1727,5 +1764,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | 255  | 1    | 6    | 42   | 5    | 4    | 7    | ... |
 
 更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
+
+</route>
+
+### The Verge
+
+<route name="The Verge" author="HenryQW" example="/verge" path="/verge">
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 </route>

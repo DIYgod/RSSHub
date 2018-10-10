@@ -266,11 +266,15 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 ### BBC
 
-<routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `world`']">
+<routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
-| Chinese | World News |
-| ------- | ---------- |
-| chinese | world      |
+Provides a better reading experience (full text articles) over the official ones.
+
+Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
+
+-   Channel with a single path, such as `https://feeds.bbci.co.uk/news/business/rss.xml`, use `/bbc/business`.
+-   Channel contains multiple paths, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
+-   Exemption: use `/bbc/chinese` for BBC News Chinese.
 
 </routeEn>
 
@@ -351,3 +355,11 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 ### Apple
 
 <routeEn name="Exchange and Repair Extension Programs" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />
+
+### The Verge
+
+<routeEn name="The Verge" author="HenryQW" example="/verge" path="/verge">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
