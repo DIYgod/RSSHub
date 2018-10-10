@@ -606,24 +606,24 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="论坛" author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
 
-| 版块          | category   |
-| --------------| ---------- |
-| 智能设备      | iot        |
-| 区块链安全    | blockchain |
-| Android 安全  | android    |
-| iOS 安全      | ios        |
-| 软件逆向      | re         |
-| 编程技术      | coding     |
-| 加壳脱壳      | unpack     |
-| 密码算法      | crypto     |
-| 二进制漏洞    | vuln       |
-| CrackMe       | crackme    |
-| Pwn           | pwn        |
-| WEB 安全      | web        |
-| 全站          | all        |
+| 版块         | category   |
+| ------------ | ---------- |
+| 智能设备     | iot        |
+| 区块链安全   | blockchain |
+| Android 安全 | android    |
+| iOS 安全     | ios        |
+| 软件逆向     | re         |
+| 编程技术     | coding     |
+| 加壳脱壳     | unpack     |
+| 密码算法     | crypto     |
+| 二进制漏洞   | vuln       |
+| CrackMe      | crackme    |
+| Pwn          | pwn        |
+| WEB 安全     | web        |
+| 全站         | all        |
 
-| 类型   | type     |
-| ------ | -------- |
+| 类型     | type   |
+| -------- | ------ |
 | 最新主题 | latest |
 | 精华主题 | digest |
 
