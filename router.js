@@ -555,6 +555,9 @@ router.get('/kmust/job/jobfairs', require('./routes/universities/kmust/job/jobfa
 router.get('/hust/auto/notice/:type?', require('./routes/universities/hust/auto/notice'));
 router.get('/hust/auto/news/', require('./routes/universities/hust/auto/news'));
 
+// 山东大学
+router.get('/sdu/grad/academic', require('./routes/universities/sdu/grad/academic'));
+
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
 
