@@ -1198,6 +1198,14 @@ category 列表：
 
 <route name="研究生院学术活动" author="Ji4n1ng" example="/sdu/grad/academic" path="/universities/sdu/grad/academic" />
 
+<route name="软件学院通知" author="Ji4n1ng" example="/sdu/sc/0" path="/universities/sdu/sc/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院公告 | 学术报告 | 新闻动态 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
