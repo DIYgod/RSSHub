@@ -1,4 +1,3 @@
-const logger = require('./logger');
 const config = require('../config');
 const puppeteer = require('puppeteer');
 
@@ -9,7 +8,7 @@ const options = {
     userDataDir: './tmp',
 };
 
-module.exports = (async () => {
+module.exports = async () => {
     let browser;
     if (config.puppeteerWSEndpoint) {
         browser = await puppeteer.connect({
@@ -19,16 +18,5 @@ module.exports = (async () => {
         browser = await puppeteer.launch(options);
     }
 
-    logger.info('Puppeteer launched.');
-
-    return async () => {
-        const page = await browser.newPage();
-
-        // 防止 page 未正确关闭，一分钟后自行关闭
-        setTimeout(() => {
-            page.close();
-        }, 60000);
-
-        return page;
-    };
-})();
+    return browser;
+};

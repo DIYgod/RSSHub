@@ -2,8 +2,8 @@ const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
-    const getPage = await require('../../utils/puppeteer');
-    const page = await getPage();
+    const browser = await require('../../utils/puppeteer')();
+    const page = await browser.newPage();
 
     const timerPromise = new Promise((resolve) => setTimeout(resolve, 1000));
     await timerPromise;
@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
             list: null,
         };
 
-        page.goto(`https://www.douyin.com/share/user/${id}`);
+        page.goto(`https://www.douyin.com/share/user/${id}`).catch(() => {});
 
         page.on('response', (response) => {
             const req = response.request();
@@ -26,6 +26,7 @@ module.exports = async (ctx) => {
                     result.description = $('.signature').text();
                     if (result.list) {
                         resolve(result);
+                        browser.close();
                     }
                 });
             } else if (req.url().match('www.douyin.com/aweme/v1/aweme/post')) {
@@ -33,6 +34,7 @@ module.exports = async (ctx) => {
                     result.list = data;
                     if (result.name) {
                         resolve(result);
+                        browser.close();
                     }
                 });
             }
