@@ -614,4 +614,7 @@ router.get('/ft/chinese/:channel?', require('./routes/ft/chinese'));
 // The Verge
 router.get('/verge', require('./routes/verge/index'));
 
+// 看雪
+router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
+
 module.exports = router;
