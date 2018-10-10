@@ -611,4 +611,7 @@ router.get('/bbc/:channel?', require('./routes/bbc/index'));
 // FT 中文网
 router.get('/ft/chinese/:channel?', require('./routes/ft/chinese'));
 
+// The Verge
+router.get('/verge', require('./routes/verge/index'));
+
 module.exports = router;

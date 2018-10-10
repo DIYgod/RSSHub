@@ -1766,3 +1766,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
 
 </route>
+
+### The Verge
+
+<route name="The Verge" author="HenryQW" example="/verge" path="/verge">
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+</route>
