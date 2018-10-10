@@ -43,7 +43,13 @@ module.exports = async (ctx) => {
 
             const $ = cheerio.load(response.data);
 
-            const description = utils.ProcessFeed($, item.link).html();
+            let description;
+
+            if (response.request.path.startsWith('/news/av')) {
+                description = utils.ProcessAVFeed($, item.link);
+            } else {
+                description = utils.ProcessFeed($, item.link);
+            }
 
             const single = {
                 title: item.title,
