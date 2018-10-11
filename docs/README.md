@@ -1239,6 +1239,14 @@ category 列表：
 
 </route>
 
+<route name="机械工程学院通知" author="Ji4n1ng" example="/sdu/mech/0" path="/universities/sdu/mech/:type?" :paramsDesc="['默认为 `0`']">
+
+| 通知公告 | 院所新闻 | 教学信息 | 学术动态 | 学院简报 |
+| -------- | -------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
