@@ -8,67 +8,23 @@ sidebar: auto
 
 ## 提交新的 RSS 内容
 
-1.  在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由
+### 步骤 1: 编写脚本
 
-1.  在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径添加获取 RSS 内容的脚本
+在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径下创建新的 js 脚本：
 
-1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
-
-    -   文档采用 vue 组件形式, 格式如下:
-        -   `name`: 路由名称
-        -   `author`: 路由作者, 多位作者使用单个空格分隔
-        -   `example`: 路由举例
-        -   `path`: 路由路径
-        -   `:paramsDesc`: 路由参数说明, 数组, 支持 markdown
-            1. 参数说明必须对应其在路径中出现的顺序
-            1. 如缺少说明将会导致`npm run docs:dev`报错
-            1. 说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
-            1. 不必在说明中标注`可选/必选`, 组件根据`?`自动判断
-    -   文档样例:
-
-        -   多参数:
-
-        ```vue
-        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
-        ```
-
-          <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
-
-        -   复杂说明支持 slot:
-
-        ```vue
-        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
-        
-        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
-        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
-        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
-        
-        </route>
-        ```
-
-          <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
-
-        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
-        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
-        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
-
-          </route>
-
-1.  执行 `npm run format` 自动处理代码格式后, 提交代码, 然后提交 pull request
-
-## 编写脚本
+#### 获取源数据
 
 RSSHub 支持三种获取数据的办法, 方法按 **「推荐优先级」** 排列:
 
-### 从接口获取数据
+1. 从接口获取数据
 
-使用 [axios](https://github.com/axios/axios) 请求接口, 然后把获取的标题、链接、描述、发布时间等数据赋值给 ctx.state.data (每个字段的含义在下面说明) , 可以直接看这个典型的例子: [/routes/bilibili/bangumi.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
+使用 [axios](https://github.com/axios/axios) 通过数据源提供的 API 接口获取数据, 然后把获取的标题、链接、描述、发布时间等数据赋值给 ctx.state.data (每个字段的含义在下面说明) , 可以直接看这个典型的例子: [/routes/bilibili/bangumi.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
 
-### 从 HTML 获取数据
+2. 从 HTML 获取数据
 
 有时候数据是写在 HTML 里的, **没有接口供我们调用**, 这时候可以使用 [axios](https://github.com/axios/axios) 请求 HTML 数据, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)
 
-### 渲染页面获取数据
+3. 渲染页面获取数据
 
 ::: tip 提示
 
@@ -78,17 +34,17 @@ RSSHub 支持三种获取数据的办法, 方法按 **「推荐优先级」** �
 
 部分网站**没有接口供调用, 且页面需要渲染**才能获取正确的 HTML, 这时候可以使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 通过 Headless Chrome 渲染页面, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析返回的 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
 
-### 使用缓存
+#### 使用缓存
 
 所有路由都有一个缓存, 缓存时间在 `config.js` 里设定, 但某些接口返回的内容可能长时间都不会变化, 这时应该给这些数据设置一个更长的缓存.
 
-添加缓存:
+-   添加缓存:
 
 ```js
 ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存时间, 单位为秒
 ```
 
-获取缓存:
+-   获取缓存:
 
 ```js
 const value = await ctx.cache.get((key: string));
@@ -96,7 +52,7 @@ const value = await ctx.cache.get((key: string));
 
 可以直接看这个典型的例子: [/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/routes/zhihu/daily.js), 这个例子中需要获取每篇文章的详细内容, 每篇文章都需要单独请求一次, 请求很多而且每个请求只需要一次, 这时候可以把结果缓存一天.
 
-### 数据
+#### 生成 RSS
 
 获取到的数据赋给 ctx.state.data, 然后数据会经过 [template.js](https://github.com/DIYgod/RSSHub/blob/master/middleware/template.js) 中间件处理, 最后传到 [/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/views/rss.art) 来生成最后的 RSS 结果, 每个字段的含义如下:
 
@@ -118,7 +74,7 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>如果你想制作podcast feed, 点这儿</summary><br>
+#### 制作播客 Podcast Feed
 
 参考文章:
 
@@ -154,7 +110,96 @@ ctx.state.data = {
 };
 ```
 
-</details>
+### 步骤 2: 添加脚本路由
+
+在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由:
+
+#### 举例
+
+1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
+
+| 类型                   | 代码                                                                               |
+| ---------------------- | ---------------------------------------------------------------------------------- |
+| 路由                   | `/bilibili/bangumi/:seasonid`                                                      |
+| 数据来源               | bilibili                                                                           |
+| 路由名称               | bangumi                                                                            |
+| 参数 1                 | :seasonid 必选                                                                     |
+| 参数 2                 | 无                                                                                 |
+| 参数 3                 | 无                                                                                 |
+| 脚本路径               | `./routes/bilibili/bangumi`                                                        |
+| router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
+
+1. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/routes/github/issue.js)
+
+| 类型                   | 代码                                                                         |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| 路由                   | `/github/issue/:user/:repo`                                                  |
+| 数据来源               | github                                                                       |
+| 路由名称               | issue                                                                        |
+| 参数 1                 | :user 必选                                                                   |
+| 参数 2                 | :repo 必选                                                                   |
+| 参数 3                 | 无                                                                           |
+| 脚本路径               | `./routes/github/issue`                                                      |
+| router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
+
+1. [embassy](https://github.com/DIYgod/RSSHub/blob/master/routes/embassy/index.js)
+
+| 类型                   | 代码                                                                         |
+| ---------------------- | ---------------------------------------------------------------------------- |
+| 路由                   | `/embassy/:country/:city?`                                                   |
+| 数据来源               | embassy                                                                      |
+| 路由名称               | 无                                                                           |
+| 参数 1                 | :country 必选                                                                |
+| 参数 2                 | ?city 可选                                                                   |
+| 参数 3                 | 无                                                                           |
+| 脚本路径               | `./routes/embassy/index`                                                     |
+| router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
+
+### 步骤 3: 添加脚本文档
+
+1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+
+    -   文档采用 vue 组件形式, 格式如下:
+        -   `name`: 路由名称
+        -   `author`: 路由作者, 多位作者使用单个空格分隔
+        -   `example`: 路由举例
+        -   `path`: 路由路径
+        -   `:paramsDesc`: 路由参数说明, 数组, 支持 markdown
+            1. 参数说明必须对应其在路径中出现的顺序
+            1. 如缺少说明将会导致`npm run docs:dev`报错
+            1. 说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
+            1. 不必在说明中标注`可选/必选`, 组件根据`?`自动判断
+    -   文档样例:
+
+        -   多参数:
+
+        ```vue
+        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        ```
+
+            <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+        -   复杂说明支持 slot:
+
+        ```vue
+        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+        
+        </route>
+        ```
+
+            <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+
+            </route>
+
+1.  执行 `npm run format` 自动处理代码格式后, 提交代码, 然后提交 pull request
 
 ## 参与讨论
 
