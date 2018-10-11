@@ -619,4 +619,7 @@ router.get('/verge', require('./routes/verge/index'));
 // 看雪
 router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
 
+// 有品
+router.get('/youpin/newproduct', require('./routes/youpin/newproduct'));
+
 module.exports = router;

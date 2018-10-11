@@ -1515,6 +1515,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="众筹" author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
+### 有品
+
+<route name="每日上新" author="xyqfer" example="/youpin/newproduct" path="/youpin/newproduct"/>
+
 ## 网络小说
 
 ### 笔趣阁
