@@ -1247,6 +1247,14 @@ category 列表：
 
 </route>
 
+<route name="能源与动力工程学院通知" author="Ji4n1ng" example="/sdu/epe/0" path="/universities/sdu/epe/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院动态 | 通知公告 | 学术论坛 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
