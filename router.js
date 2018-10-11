@@ -557,6 +557,8 @@ router.get('/hust/auto/news/', require('./routes/universities/hust/auto/news'));
 
 // 山东大学
 router.get('/sdu/grad/academic', require('./routes/universities/sdu/grad/academic'));
+router.get('/sdu/sc/:type?', require('./routes/universities/sdu/sc'));
+router.get('/sdu/cmse/:type?', require('./routes/universities/sdu/cmse'));
 
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));

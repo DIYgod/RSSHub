@@ -1223,6 +1223,22 @@ category 列表：
 
 <route name="研究生院学术活动" author="Ji4n1ng" example="/sdu/grad/academic" path="/universities/sdu/grad/academic" />
 
+<route name="软件学院通知" author="Ji4n1ng" example="/sdu/sc/0" path="/universities/sdu/sc/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院公告 | 学术报告 | 新闻动态 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
+<route name="材料科学与工程学院通知" author="Ji4n1ng" example="/sdu/cmse/0" path="/universities/sdu/cmse/:type?" :paramsDesc="['默认为 `0`']">
+
+| 通知公告 | 学院新闻 | 本科生教育 | 研究生教育 | 学术动态 |
+| -------- | -------- | ---------- | ---------- | -------- |
+| 0        | 1        | 2          | 3          | 4        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
