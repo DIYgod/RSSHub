@@ -621,4 +621,7 @@ router.get('/verge', require('./routes/verge/index'));
 // 看雪
 router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
 
+// 观止（每日一文）
+router.get('/guanzhi', require('./routes/guanzhi/guanzhi'));
+
 module.exports = router;
