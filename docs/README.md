@@ -1825,3 +1825,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 </route>
+
+### 观止（每日一文）
+
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
