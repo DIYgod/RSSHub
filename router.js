@@ -373,6 +373,7 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
+router.get('/mi/youpin/new', require('./routes/mi/youpin/new'));
 
 // Keep
 router.get('/keep/user/:id', require('./routes/keep/user'));
@@ -557,6 +558,10 @@ router.get('/hust/auto/news/', require('./routes/universities/hust/auto/news'));
 
 // 山东大学
 router.get('/sdu/grad/academic', require('./routes/universities/sdu/grad/academic'));
+router.get('/sdu/sc/:type?', require('./routes/universities/sdu/sc'));
+router.get('/sdu/cmse/:type?', require('./routes/universities/sdu/cmse'));
+router.get('/sdu/mech/:type?', require('./routes/universities/sdu/mech'));
+router.get('/sdu/epe/:type?', require('./routes/universities/sdu/epe'));
 
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
@@ -613,5 +618,11 @@ router.get('/ft/chinese/:channel?', require('./routes/ft/chinese'));
 
 // The Verge
 router.get('/verge', require('./routes/verge/index'));
+
+// 看雪
+router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
+
+// 观止（每日一文）
+router.get('/guanzhi', require('./routes/guanzhi/guanzhi'));
 
 module.exports = router;

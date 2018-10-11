@@ -602,6 +602,31 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="博文" author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" :paramsDesc="['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']"/>
 
+### 看雪
+
+<route name="论坛" author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
+
+| 版块         | category   |
+| ------------ | ---------- |
+| 智能设备     | iot        |
+| 区块链安全   | blockchain |
+| Android 安全 | android    |
+| iOS 安全     | ios        |
+| 软件逆向     | re         |
+| 编程技术     | coding     |
+| 加壳脱壳     | unpack     |
+| 密码算法     | crypto     |
+| 二进制漏洞   | vuln       |
+| CrackMe      | crackme    |
+| Pwn          | pwn        |
+| WEB 安全     | web        |
+| 全站         | all        |
+
+| 类型     | type   |
+| -------- | ------ |
+| 最新主题 | latest |
+| 精华主题 | digest |
+
 ## 直播
 
 ### 哔哩哔哩直播
@@ -1198,6 +1223,38 @@ category 列表：
 
 <route name="研究生院学术活动" author="Ji4n1ng" example="/sdu/grad/academic" path="/universities/sdu/grad/academic" />
 
+<route name="软件学院通知" author="Ji4n1ng" example="/sdu/sc/0" path="/universities/sdu/sc/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院公告 | 学术报告 | 新闻动态 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
+<route name="材料科学与工程学院通知" author="Ji4n1ng" example="/sdu/cmse/0" path="/universities/sdu/cmse/:type?" :paramsDesc="['默认为 `0`']">
+
+| 通知公告 | 学院新闻 | 本科生教育 | 研究生教育 | 学术动态 |
+| -------- | -------- | ---------- | ---------- | -------- |
+| 0        | 1        | 2          | 3          | 4        |
+
+</route>
+
+<route name="机械工程学院通知" author="Ji4n1ng" example="/sdu/mech/0" path="/universities/sdu/mech/:type?" :paramsDesc="['默认为 `0`']">
+
+| 通知公告 | 院所新闻 | 教学信息 | 学术动态 | 学院简报 |
+| -------- | -------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        |
+
+</route>
+
+<route name="能源与动力工程学院通知" author="Ji4n1ng" example="/sdu/epe/0" path="/universities/sdu/epe/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院动态 | 通知公告 | 学术论坛 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
@@ -1473,6 +1530,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 小米
 
 <route name="众筹" author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
+
+<route name="有品-每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
 
 ## 网络小说
 
@@ -1774,3 +1833,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 </route>
+
+### 观止（每日一文）
+
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
