@@ -268,7 +268,7 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 <routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
-Provides better reading experience (full text articles) over the official ones.
+Provides a better reading experience (full text articles) over the official ones.
 
 Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
 
@@ -355,3 +355,11 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 ### Apple
 
 <routeEn name="Exchange and Repair Extension Programs" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />
+
+### The Verge
+
+<routeEn name="The Verge" author="HenryQW" example="/verge" path="/verge">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>

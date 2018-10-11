@@ -2,8 +2,8 @@ const cheerio = require('cheerio');
 const url = require('url');
 
 module.exports = async (ctx) => {
-    const getPage = await require('../../utils/puppeteer');
-    const page = await getPage();
+    const browser = await require('../../utils/puppeteer')();
+    const page = await browser.newPage();
 
     const link = 'https://sspai.com/series';
 
@@ -11,6 +11,7 @@ module.exports = async (ctx) => {
 
     // eslint-disable-next-line no-undef
     const html = await page.evaluate(() => document.querySelector('div.new-series-wrapper').innerHTML);
+    browser.close();
 
     const $ = cheerio.load(html);
     const list = $('div.item');
