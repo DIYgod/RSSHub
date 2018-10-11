@@ -560,6 +560,7 @@ router.get('/hust/auto/news/', require('./routes/universities/hust/auto/news'));
 router.get('/sdu/grad/academic', require('./routes/universities/sdu/grad/academic'));
 router.get('/sdu/sc/:type?', require('./routes/universities/sdu/sc'));
 router.get('/sdu/cmse/:type?', require('./routes/universities/sdu/cmse'));
+router.get('/sdu/mech/:type?', require('./routes/universities/sdu/mech'));
 
 // ifanr
 router.get('/ifanr/appso', require('./routes/ifanr/appso'));
