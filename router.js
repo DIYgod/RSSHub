@@ -373,6 +373,7 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
+router.get('/mi/youpin/new', require('./routes/mi/youpin/new'));
 
 // Keep
 router.get('/keep/user/:id', require('./routes/keep/user'));
@@ -618,8 +619,5 @@ router.get('/verge', require('./routes/verge/index'));
 
 // 看雪
 router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
-
-// 有品
-router.get('/youpin/newproduct', require('./routes/youpin/newproduct'));
 
 module.exports = router;
