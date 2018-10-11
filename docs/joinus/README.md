@@ -4,7 +4,7 @@ sidebar: auto
 
 # 参与我们
 
-如果有任何想法或需求, 可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们, 同时我们欢迎各种 pull requests
+如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
 
 ## 提交新的 RSS 内容
 
@@ -14,29 +14,29 @@ sidebar: auto
 
 #### 获取源数据
 
-RSSHub 支持三种获取数据的办法, 方法按 **「推荐优先级」** 排列:
+RSSHub 支持三种获取数据的办法，方法按 **「推荐优先级」** 排列：
 
 1. 从接口获取数据
 
-使用 [axios](https://github.com/axios/axios) 通过数据源提供的 API 接口获取数据, 然后把获取的标题、链接、描述、发布时间等数据赋值给 ctx.state.data (每个字段的含义在下面说明) , 可以直接看这个典型的例子: [/routes/bilibili/bangumi.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
+使用 [axios](https://github.com/axios/axios) 通过数据源提供的 API 接口获取数据，然后把获取的标题、链接、描述、发布时间等数据赋值给 ctx.state.data (每个字段的含义在下面说明)，可以直接看这个典型的例子：[/routes/bilibili/bangumi.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
 
 2. 从 HTML 获取数据
 
-有时候数据是写在 HTML 里的, **没有接口供我们调用**, 这时候可以使用 [axios](https://github.com/axios/axios) 请求 HTML 数据, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)
+有时候数据是写在 HTML 里的，**没有接口供我们调用**，这时候可以使用 [axios](https://github.com/axios/axios) 请求 HTML 数据, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)
 
 3. 渲染页面获取数据
 
 ::: tip 提示
 
-由于此方法性能较差且消耗较多资源, 使用前请确保以上两种方法无法获取数据, 不然将导致您的 pull requests 被拒绝!
+由于此方法性能较差且消耗较多资源，使用前请确保以上两种方法无法获取数据，不然将导致您的 pull requests 被拒绝！
 
 :::
 
-部分网站**没有接口供调用, 且页面需要渲染**才能获取正确的 HTML, 这时候可以使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 通过 Headless Chrome 渲染页面, 然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析返回的 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子: [/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
+部分网站**没有接口供调用，且页面需要渲染**才能获取正确的 HTML，这时候可以使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 通过 Headless Chrome 渲染页面，然后使用 [cheerio](https://github.com/cheeriojs/cheerio) 解析返回的 HTML, 再把数据赋值给 ctx.state.data, 可以直接看这个典型的例子：[/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
 
 #### 使用缓存
 
-所有路由都有一个缓存, 缓存时间在 `config.js` 里设定, 但某些接口返回的内容可能长时间都不会变化, 这时应该给这些数据设置一个更长的缓存.
+所有路由都有一个缓存，全局缓存时间在 `config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间。
 
 -   添加缓存:
 
@@ -50,11 +50,32 @@ ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存
 const value = await ctx.cache.get((key: string));
 ```
 
-可以直接看这个典型的例子: [/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/routes/zhihu/daily.js), 这个例子中需要获取每篇文章的详细内容, 每篇文章都需要单独请求一次, 请求很多而且每个请求只需要一次, 这时候可以把结果缓存一天.
+例如知乎日报需要获取文章全文：[/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
+
+由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，从而提升性能并节省资源。
+
+```js
+const key = 'daily' + story.id; // story.id 为知乎日报返回的文章唯一识别符
+ctx.cache.set(key, item.description, 24 * 60 * 60); // 设置缓存时间为 24小时 * 60分钟 * 60秒 = 86400秒/1天
+```
+
+当同样的请求被发起时，优先使用未过期的缓存：
+
+```js
+const key = 'daily' + story.id;
+const value = await ctx.cache.get(key); // 从缓存中查询是否已存在该文章唯一识别符
+if (value) {
+    // 查询返回未过期缓存
+    item.description = value; // 直接赋值
+} else {
+    // 查询未发现未过期缓存
+    // 向数据源发起请求
+}
+```
 
 #### 生成 RSS
 
-获取到的数据赋给 ctx.state.data, 然后数据会经过 [template.js](https://github.com/DIYgod/RSSHub/blob/master/middleware/template.js) 中间件处理, 最后传到 [/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/views/rss.art) 来生成最后的 RSS 结果, 每个字段的含义如下:
+获取到的数据赋给 ctx.state.data, 然后数据会经过 [template.js](https://github.com/DIYgod/RSSHub/blob/master/middleware/template.js) 中间件处理，最后传到 [/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/views/rss.art) 来生成最后的 RSS 结果，每个字段的含义如下：
 
 ```js
 ctx.state.data = {
@@ -76,13 +97,13 @@ ctx.state.data = {
 
 #### 制作播客 Podcast Feed
 
-参考文章:
+参考文章：
 
 -   [Podcasts Connect 帮助 创建播客 - Apple](https://help.apple.com/itc/podcasts_connect/#/itca5b22233a)
 -   RSS 格式参考: https://codepen.io/jon-walstedt/pen/jsIup
 -   播客验证: https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
 
-这些字段能使你的 RSS 被泛用型播客软件订阅:
+这些字段能使你的 RSS 被泛用型播客软件订阅：
 
 ```js
 ctx.state.data = {
@@ -112,7 +133,7 @@ ctx.state.data = {
 
 ### 步骤 2: 添加脚本路由
 
-在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由:
+在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由：
 
 #### 举例
 
@@ -159,47 +180,75 @@ ctx.state.data = {
 
 1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
 
-    -   文档采用 vue 组件形式, 格式如下:
+    -   文档采用 vue 组件形式，格式如下：
         -   `name`: 路由名称
-        -   `author`: 路由作者, 多位作者使用单个空格分隔
+        -   `author`: 路由作者，多位作者使用单个空格分隔
         -   `example`: 路由举例
         -   `path`: 路由路径
-        -   `:paramsDesc`: 路由参数说明, 数组, 支持 markdown
+        -   `:paramsDesc`: 路由参数说明，数组，支持 markdown
             1. 参数说明必须对应其在路径中出现的顺序
             1. 如缺少说明将会导致`npm run docs:dev`报错
             1. 说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
-            1. 不必在说明中标注`可选/必选`, 组件根据`?`自动判断
-    -   文档样例:
+            1. 不必在说明中标注`可选/必选`，组件会根据路由`?`自动判断
+    -   文档样例：
 
-        -   多参数:
+        1. 多参数：
 
         ```vue
         <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
         ```
 
-            <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        结果预览：
 
-        -   复杂说明支持 slot:
+        ***
+
+        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+        ***
+
+
+        2. 无参数:
+
+        ```vue
+        <route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        ```
+
+        结果预览：
+
+        ***
+
+        <route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+
+        ***
+
+
+        3. 复杂说明支持 slot:
 
         ```vue
         <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
-        
+
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
         | frontend | android | ios | backend | design | product | freebie  | article | ai       |
-        
+
         </route>
         ```
 
-            <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        结果预览：
+
+        ***
+
+        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
         | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
-            </route>
+        </route>
 
-1.  执行 `npm run format` 自动处理代码格式后, 提交代码, 然后提交 pull request
+        ***
+
+1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
 
 ## 参与讨论
 
