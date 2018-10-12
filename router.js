@@ -620,4 +620,8 @@ router.get('/verge', require('./routes/verge/index'));
 // 看雪
 router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
 
+// 老司机
+router.get('/laosiji/hot', require('./routes/laosiji/hot'));
+router.get('/laosiji/feed', require('./routes/laosiji/feed'));
+
 module.exports = router;
