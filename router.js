@@ -564,7 +564,7 @@ router.get('/sdu/mech/:type?', require('./routes/universities/sdu/mech'));
 router.get('/sdu/epe/:type?', require('./routes/universities/sdu/epe'));
 
 // ifanr
-router.get('/ifanr/appso', require('./routes/ifanr/appso'));
+router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
 
 // 果壳网
 router.get('/guokr/scientific', require('./routes/guokr/scientific'));

@@ -27,7 +27,7 @@ services:
       - db.redis
 
   db.redis:
-    image: redis:4.0.9-alpine
+    image: redis:4.0.11-alpine
     volumes:
         - redis-data:/data
 
