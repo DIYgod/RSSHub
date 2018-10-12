@@ -1,9 +1,23 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
-const host = 'http://www.ifanr.com/app';
+let host = 'http://www.ifanr.com';
 
 module.exports = async (ctx) => {
+    if (ctx.params.channel) {
+        let channel = ctx.params.channel.toLowerCase();
+        channel = channel.split('-').join('/');
+
+        // 兼容旧版路由
+        if (channel === 'appso') {
+            host = `${host}/app`;
+        } else {
+            host = `${host}/${channel}`;
+        }
+    } else {
+        host = `${host}/app`;
+    }
+
     const response = await axios.get(host);
 
     const $ = cheerio.load(response.data);
@@ -28,7 +42,7 @@ module.exports = async (ctx) => {
                 link: itemUrl,
                 author: $('.c-article-header-meta__category').html(),
                 description: $('article').html(),
-                pubDate: new Date($('.c-article-header-meta__time').attr('date-timestamp')),
+                pubDate: new Date($('.c-article-header-meta__time').attr('data-timestamp') * 1000),
             };
             ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
             return Promise.resolve(single);
@@ -36,7 +50,7 @@ module.exports = async (ctx) => {
     );
 
     ctx.state.data = {
-        title: 'AppSo : 让手机更好用的数字生活媒体',
+        title: `${$('h1.c-archive-header__title').text()}：${$('div.c-archive-header__desc').text()}`,
         link: host,
         item: out,
     };
