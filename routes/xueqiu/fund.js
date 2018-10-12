@@ -31,11 +31,12 @@ module.exports = async (ctx) => {
         });
 
         const data = response.data.data.fund_nav_growth.pop();
+        const yesterday = response.data.data.fund_nav_growth.pop();
 
         let description = `${fundNameShort} <br> 最新净值 ${data.nav} <br> 今日`;
         let title = `${fundNameShort} ${data.date.substring(5)} `;
 
-        const value = parseFloat(data.value);
+        const value = (parseFloat(data.nav) - parseFloat(yesterday.nav)).toFixed(4);
 
         if (value > 0) {
             description += '涨幅';
@@ -48,7 +49,7 @@ module.exports = async (ctx) => {
             title += '持平';
         }
 
-        description += ` ${data.percentage}%（¥${data.value}）`;
+        description += ` ${data.percentage}%（¥${value}）`;
 
         const single = {
             title,
