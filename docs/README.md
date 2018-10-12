@@ -1239,6 +1239,22 @@ category 列表：
 
 </route>
 
+<route name="机械工程学院通知" author="Ji4n1ng" example="/sdu/mech/0" path="/universities/sdu/mech/:type?" :paramsDesc="['默认为 `0`']">
+
+| 通知公告 | 院所新闻 | 教学信息 | 学术动态 | 学院简报 |
+| -------- | -------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        |
+
+</route>
+
+<route name="能源与动力工程学院通知" author="Ji4n1ng" example="/sdu/epe/0" path="/universities/sdu/epe/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院动态 | 通知公告 | 学术论坛 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
@@ -1778,7 +1794,16 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 爱范儿 ifanr
 
-<route name="AppSolution" author="HenryQW" example="/ifanr/appso" path="/ifanr/appso"/>
+<route name="爱范儿频道" author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']">
+
+-   频道为单一路径, 如 https://www.ifanr.com/`coolbuy` 则为 `/ifanr/coolbuy`.
+-   频道包含多重路径, 如 https://www.ifanr.com/`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
+
+| AppSolution | 玩物志  | 董车会                  |
+| ----------- | ------- | ----------------------- |
+| app         | coolbuy | category-intelligentcar |
+
+</route>
 
 ### Apple
 
@@ -1817,3 +1842,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 </route>
+
+### 观止（每日一文）
+
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
