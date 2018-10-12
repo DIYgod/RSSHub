@@ -1794,7 +1794,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 爱范儿 ifanr
 
-<route name="爱范儿频道" author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']>
+<route name="爱范儿频道" author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']">
 
 -   频道为单一路径, 如 https://www.ifanr.com/`coolbuy` 则为 `/ifanr/coolbuy`.
 -   频道包含多重路径, 如 https://www.ifanr.com/`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
@@ -1803,7 +1803,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | ----------- | ------- | ----------------------- |
 | app         | coolbuy | category-intelligentcar |
 
-<route>
+</route>
 
 ### Apple
 
