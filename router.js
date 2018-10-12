@@ -199,4 +199,7 @@ router.get('/jike/user/:id', require('./routes/jike/user'));
 // 极客时间
 router.get('/geektime/column/:cid', require('./routes/geektime/column'));
 
+// avmoo
+router.get('/avmoo/actor/:code', require('./routes/avmoo/actor'));
+
 module.exports = router;
