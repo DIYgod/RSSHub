@@ -625,4 +625,7 @@ router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
 // 观止（每日一文）
 router.get('/guanzhi', require('./routes/guanzhi/guanzhi'));
 
+// 多维新闻网
+router.get('/dwnews/yaowen/:region?', require('./routes/dwnews/yaowen'));
+
 module.exports = router;

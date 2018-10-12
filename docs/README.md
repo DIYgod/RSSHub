@@ -1386,6 +1386,18 @@ Category 列表:
 
 </route>
 
+### 多维新闻网
+
+<route name="要闻" author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认全部，地区如下']">
+
+| 全部   | 国际   | 中国  | 香港     | 台湾   |
+| ------ | ------ | ----- | -------- | ------ |
+| yaowen | global | china | hongkong | taiwan |
+
+极少数新闻排版可能会出现问题，请在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们。
+
+</route>
+
 ## 预报预警
 
 ### 停水通知
