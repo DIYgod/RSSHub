@@ -150,6 +150,9 @@ $ docker volume create redis-data
 
 2.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
 
+    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
+    -   `USE_CHINA_NPM_REGISTRY=1` avoids GFW npm registry interference in mainland China. Default to 0.
+
 3.  Deploy
 
 ```bash
