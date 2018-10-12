@@ -1,4 +1,4 @@
-const axios = require('../../utils/axios');
+const axios = require('axios');
 const cheerio = require('cheerio');
 
 const baseUrl = 'https://avmoo.pw/cn';
