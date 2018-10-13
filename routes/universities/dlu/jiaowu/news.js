@@ -35,10 +35,11 @@ module.exports = async (ctx) => {
                 link: resolve_url(base_url, $('a', elem).attr('href')),
                 title: $('a', elem).attr('title'),
                 pubDate: new Date(
-                    new Date().getFullYear() + '-' +
-                    $('[class*="timestyle"]', elem)
-                        .text()
-                        .replace('/', '-')
+                    new Date().getFullYear() +
+                        '-' +
+                        $('[class*="timestyle"]', elem)
+                            .text()
+                            .replace('/', '-')
                 ).toUTCString(),
             }))
             .get(),
