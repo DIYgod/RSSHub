@@ -32,10 +32,10 @@ module.exports = async (ctx) => {
         host = `${link}/html/news/yaowen/list0.json`;
     }
 
-    const response = await axios.get(host);
+    const list = await axios.get(host);
 
     const out = await Promise.all(
-        response.data.slice(0, 10).map(async (item) => {
+        list.data.slice(0, 10).map(async (item) => {
             const cache = await ctx.cache.get(item.url);
             if (cache) {
                 return Promise.resolve(JSON.parse(cache));

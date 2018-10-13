@@ -13,8 +13,8 @@ const ProcessFeed = ($, item) => {
     }
 
     ProcessQuote($, content);
-    ProcessImage(content);
-    Clean(content);
+    ProcessImage($, content);
+    Clean($, content);
 
     return content.html();
 };
