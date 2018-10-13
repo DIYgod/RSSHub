@@ -1255,6 +1255,11 @@ category 列表：
 
 </route>
 
+### 大连大学
+
+<route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
