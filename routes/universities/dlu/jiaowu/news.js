@@ -33,7 +33,7 @@ module.exports = async (ctx) => {
         item: $('td[valign="top"]>table[cellspacing="3"][width="100%"] tr')
             .map((_, elem) => ({
                 link: resolve_url(base_url, $('a', elem).attr('href')),
-                title: $('a', elem).attr("title"),
+                title: $('a', elem).attr('title'),
                 pubDate: new Date(
                     new Date().getFullYear() + '-' +
                     $('[class*="timestyle"]', elem)
