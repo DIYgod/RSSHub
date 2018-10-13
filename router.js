@@ -628,4 +628,6 @@ router.get('/guanzhi', require('./routes/guanzhi/guanzhi'));
 // 多维新闻网
 router.get('/dwnews/yaowen/:region?', require('./routes/dwnews/yaowen'));
 
+router.get('/dwnews/hotnews/:type/:range', require('./routes/dwnews/hotnews'));
+
 module.exports = router;
