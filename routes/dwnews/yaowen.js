@@ -35,7 +35,7 @@ module.exports = async (ctx) => {
     const response = await axios.get(host);
 
     const out = await Promise.all(
-        response.data.map(async (item) => {
+        response.data.slice(0, 10).map(async (item) => {
             const cache = await ctx.cache.get(item.url);
             if (cache) {
                 return Promise.resolve(JSON.parse(cache));
