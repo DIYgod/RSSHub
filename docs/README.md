@@ -1009,6 +1009,11 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### 大连大学
+
+<route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
+</route>
+
 ### 东南大学
 
 <route name="信息科学与工程学院学术活动" author="HenryQW" example="/seu/radio/academic" path="/universities/seu/radio/academic"/>
