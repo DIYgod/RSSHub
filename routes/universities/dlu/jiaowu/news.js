@@ -11,7 +11,6 @@ const base_url = 'http://jwc1.dlu.edu.cn/';
 //     4: '/jwwj.htm',
 //     5: '/xxwj.htm'
 // };
-
 module.exports = async (ctx) => {
     // const type = ctx.params.type || '2';
     // const link = `${base_url}${map[type]}`;
@@ -19,6 +18,7 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url: base_url,
+        // url:link,
         responseType: 'arraybuffer',
         headers: {
             Referer: base_url,
