@@ -1851,3 +1851,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 观止（每日一文）
 
 <route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
+
+### 后续
+
+<route name="后续" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>

@@ -625,6 +625,9 @@ router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
 // 观止（每日一文）
 router.get('/guanzhi', require('./routes/guanzhi/guanzhi'));
 
+// 后续
+router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
+
 // 老司机
 router.get('/laosiji/hot', require('./routes/laosiji/hot'));
 router.get('/laosiji/feed', require('./routes/laosiji/feed'));
