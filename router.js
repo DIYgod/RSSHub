@@ -564,6 +564,9 @@ router.get('/sdu/cmse/:type?', require('./routes/universities/sdu/cmse'));
 router.get('/sdu/mech/:type?', require('./routes/universities/sdu/mech'));
 router.get('/sdu/epe/:type?', require('./routes/universities/sdu/epe'));
 
+// 大连大学
+router.get('/dlu/jiaowu/news', require('./routes/universities/dlu/jiaowu/news'));
+
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
 
