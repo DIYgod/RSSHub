@@ -735,6 +735,11 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
 
+### 老司机
+
+<route name="首页" author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
+<route name="24小时热门" author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
+
 ## 图片
 
 ### 妹子图
@@ -945,20 +950,22 @@ GitHub 官方也提供了一些 RSS:
 
 ### 西南科技大学
 
-<route name="教务处通知" author="lengthmin" example="/swust/jwc/1" path="/universities/swust/jwc/:type" :paramsDesc="['分区 type, 详见下方表格']">
+<route name="教务处新闻" author="lengthmin" example="/swust/jwc/news" path="/universities/swust/jwc/news"/>
+<route name="教务处通知" author="lengthmin" example="/swust/jwc/notice/1" path="/universities/swust/jwc/notice/:type?" :paramsDesc="['分区 type,缺省为 1, 详见下方表格']">
 
-| 通知公告 | 学校新闻 |
-| -------- | -------- |
-| 1        | 2        |
+| 创新创业教育 | 学生学业 | 建设与改革 | 教学质量保障 | 教学运行 | 教师教学 |
+| ------------ | -------- | ---------- | ------------ | -------- | -------- |
+| 1            | 2        | 3          | 4            | 5        | 6        |
 
 </route>
-<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type" :paramsDesc="['分区 type, 详见下方表格']">
+<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type?" :paramsDesc="['分区 type, 缺省为 1, 详见下方表格']">
 
 | 新闻动态 | 学术动态 | 通知公告 | 教研动态 |
 | -------- | -------- | -------- | -------- |
 | 1        | 2        | 3        | 4        |
 
 </route>
+
 ### 北京大学
 
 <route name="信科公告通知" author="Ir1d" example="/pku/eecs/0" path="/universities/pku/eecs/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
@@ -1390,6 +1397,18 @@ Category 列表:
 -   频道包含多重路径, 如 http://www.ftchinese.com/rss/`column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
 
 </route>
+
+### 多维新闻网
+
+<route name="要闻" author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
+
+| 全部   | 国际   | 中国  | 香港     | 台湾   |
+| ------ | ------ | ----- | -------- | ------ |
+| yaowen | global | china | hongkong | taiwan |
+
+</route>
+
+<route name="新闻排行榜" author="HenryQW" example="/dwnews/rank/photo/7" path="/dwnews/rank/:type/:range" :paramsDesc="['榜单类型，`news`为普通新闻，`photo`为图集新闻','榜单范围（天），`1` 或 `7`']"/>
 
 ## 预报预警
 
@@ -1851,3 +1870,17 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 观止（每日一文）
 
 <route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
+
+### 知晓程序
+
+<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
+
+| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
+| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
+| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
+
+</route>
+
+### 后续
+
+<route name="后续" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>
