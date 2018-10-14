@@ -950,20 +950,22 @@ GitHub 官方也提供了一些 RSS:
 
 ### 西南科技大学
 
-<route name="教务处通知" author="lengthmin" example="/swust/jwc/1" path="/universities/swust/jwc/:type" :paramsDesc="['分区 type, 详见下方表格']">
+<route name="教务处新闻" author="lengthmin" example="/swust/jwc/news" path="/universities/swust/jwc/news"/>
+<route name="教务处通知" author="lengthmin" example="/swust/jwc/notice/1" path="/universities/swust/jwc/notice/:type?" :paramsDesc="['分区 type,缺省为 1, 详见下方表格']">
 
-| 通知公告 | 学校新闻 |
-| -------- | -------- |
-| 1        | 2        |
+| 创新创业教育 | 学生学业 | 建设与改革 | 教学质量保障 | 教学运行 | 教师教学 |
+| ------------ | -------- | ---------- | ------------ | -------- | -------- |
+| 1            | 2        | 3          | 4            | 5        | 6        |
 
 </route>
-<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type" :paramsDesc="['分区 type, 详见下方表格']">
+<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type?" :paramsDesc="['分区 type, 缺省为 1, 详见下方表格']">
 
 | 新闻动态 | 学术动态 | 通知公告 | 教研动态 |
 | -------- | -------- | -------- | -------- |
 | 1        | 2        | 3        | 4        |
 
 </route>
+
 ### 北京大学
 
 <route name="信科公告通知" author="Ir1d" example="/pku/eecs/0" path="/universities/pku/eecs/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">

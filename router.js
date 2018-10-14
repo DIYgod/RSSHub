@@ -505,8 +505,9 @@ router.get('/shmtu/notes', require('./routes/universities/shmtu/notes'));
 router.get('/shmtu/jwc/:type', require('./routes/universities/shmtu/jwc'));
 
 // 西南科技大学
-router.get('/swust/jwc/:type', require('./routes/universities/swust/jwc'));
-router.get('/swust/cs/:type', require('./routes/universities/swust/cs'));
+router.get('/swust/jwc/news', require('./routes/universities/swust/jwc_news'));
+router.get('/swust/jwc/notice/:type?', require('./routes/universities/swust/jwc_notice'));
+router.get('/swust/cs/:type?', require('./routes/universities/swust/cs'));
 
 // 华南师范大学
 router.get('/scnu/jw', require('./routes/universities/scnu/jw'));
