@@ -735,6 +735,11 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
 
+### 老司机
+
+<route name="首页" author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
+<route name="24小时热门" author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
+
 ## 图片
 
 ### 妹子图
