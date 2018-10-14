@@ -1854,6 +1854,16 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
 
+### 知晓程序
+
+<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
+
+| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
+| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
+| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
+
+</route>
+
 ### 后续
 
 <route name="后续" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>
