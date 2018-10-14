@@ -628,4 +628,11 @@ router.get('/guanzhi', require('./routes/guanzhi/guanzhi'));
 // 知晓程序
 router.get('/miniapp/article/:category', require('./routes/miniapp/article'));
 
+// 后续
+router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
+
+// 老司机
+router.get('/laosiji/hot', require('./routes/laosiji/hot'));
+router.get('/laosiji/feed', require('./routes/laosiji/feed'));
+
 module.exports = router;
