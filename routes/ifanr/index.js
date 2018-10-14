@@ -1,9 +1,9 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
-let host = 'http://www.ifanr.com';
-
 module.exports = async (ctx) => {
+    let host = 'http://www.ifanr.com';
+
     if (ctx.params.channel) {
         let channel = ctx.params.channel.toLowerCase();
         channel = channel.split('-').join('/');
