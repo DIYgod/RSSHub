@@ -937,6 +937,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="应用更新" author="DIYgod" example="/xclient/app/sketch" path="/xclient/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
 
+### 微信公众平台
+
+<route name="系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
+
 ## 大学通知
 
 ### 上海海事大学
