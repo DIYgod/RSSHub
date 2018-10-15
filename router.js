@@ -644,4 +644,7 @@ router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
 router.get('/laosiji/hot', require('./routes/laosiji/hot'));
 router.get('/laosiji/feed', require('./routes/laosiji/feed'));
 
+// avmoo
+router.get('/avmoo/actor/:id', require('./routes/avmoo/actor'));
+
 module.exports = router;

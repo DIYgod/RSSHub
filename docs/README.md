@@ -685,8 +685,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到']">
 
-::: warning 注意
-专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
+::: warning 注意专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
 
 **付费内容不可收听，但可使用非播客软件(例如 Inoreader)获取更新**
 
@@ -1443,8 +1442,8 @@ Category 列表:
 
 举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
 
-1. 单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2. 逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
+1.  单个始发地, 例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
+2.  逗号分隔多个始发地, 例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
 
 ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wikipedia.org/wiki/ISO_3166-1)
 
@@ -1788,8 +1787,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="谷歌学术关键词更新" author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']">
 
-1. 简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
-2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0, 5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
+1.  简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
+2.  高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0, 5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
 
 ::: warning 注意
 
@@ -1886,3 +1885,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="首页" author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
 <route name="24小时热门" author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
+
+### avmoo
+
+<route name="演员" author="johnny_Ng" example="/avmoo/actor/9mi" path="/avmoo/actor/:id" :paramsDesc="['演员 id']"/>
