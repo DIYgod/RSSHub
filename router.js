@@ -119,6 +119,7 @@ router.get('/bangumi/subject/:id/:type', require('./routes/bangumi/subject'));
 router.get('/bangumi/person/:id', require('./routes/bangumi/person'));
 router.get('/bangumi/topic/:id', require('./routes/bangumi/group/reply.js'));
 router.get('/bangumi/group/:id', require('./routes/bangumi/group/topic.js'));
+router.get('/bangumi/subject/:id', require('./routes/bangumi/subject'));
 
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
@@ -374,6 +375,7 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
+router.get('/mi/youpin/crowdfunding', require('./routes/mi/youpin/crowdfunding'));
 router.get('/mi/youpin/new', require('./routes/mi/youpin/new'));
 
 // Keep
@@ -449,6 +451,7 @@ router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
 
 // wechat
 router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
+router.get('/wechat/announce', require('./routes/wechat/announce'));
 
 // 马蜂窝
 router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
@@ -643,5 +646,8 @@ router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
 // 老司机
 router.get('/laosiji/hot', require('./routes/laosiji/hot'));
 router.get('/laosiji/feed', require('./routes/laosiji/feed'));
+
+// 99% Invisible
+router.get('/99percentinvisible/transcript', require('./routes/99percentinvisible/transcript'));
 
 module.exports = router;

@@ -363,3 +363,7 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 Provides a better reading experience (full text articles) over the official one.
 
 </routeEn>
+
+### 99% Invisible
+
+<route name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
