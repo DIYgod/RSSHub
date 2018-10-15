@@ -370,6 +370,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/:id" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
 
+<route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
+
 ### 简书
 
 <route name="首页" author="DIYgod" example="/jianshu/home" path="/jianshu/home"/>
@@ -936,10 +938,6 @@ GitHub 官方也提供了一些 RSS:
 ### xclient.info
 
 <route name="应用更新" author="DIYgod" example="/xclient/app/sketch" path="/xclient/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
-
-### 微信公众平台
-
-<route name="系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
 
 ## 大学通知
 
