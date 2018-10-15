@@ -769,6 +769,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="妹子图" author="kobemtl" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
+<route name="热榜-妹子图" author="xyqfer" example="/jandan/top-ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+
 ### 喷嚏
 
 <route name="图卦" author="tgly307" example="/dapenti/tugua" path="/dapenti/tugua"/>
