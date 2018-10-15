@@ -4,8 +4,8 @@ const cheerio = require('cheerio');
 const baseUrl = 'https://avmoo.pw/cn';
 
 module.exports = async (ctx) => {
-    const code = ctx.params.code;
-    const url = `${baseUrl}/star/${code}`;
+    const id = ctx.params.id;
+    const url = `${baseUrl}/star/${id}`;
 
     const { data } = await axios(url);
 

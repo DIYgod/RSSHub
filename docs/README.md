@@ -732,3 +732,13 @@ key: 产品密钥
 路由: `/youtube/channel/:id`
 
 参数: id，频道 id
+
+## avmoo
+
+### 演员
+
+举例: [https://rsshub.app/avmoo/actor/9mi](https://rsshub.app/avmoo/actor/9mi)
+
+路由: `/avmoo/actor/:id`
+
+参数: id, 演员 id
