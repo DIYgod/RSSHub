@@ -6,7 +6,7 @@ module.exports = async (subjectID) => {
     const epsInfo = (await axios.get(url)).data;
     const activeEps = [];
 
-    epsInfo.eps.map((e) => {
+    epsInfo.eps.forEach((e) => {
         if (e.status !== 'NA') {
             activeEps.push(e);
         }
