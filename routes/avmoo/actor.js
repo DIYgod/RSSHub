@@ -38,13 +38,19 @@ module.exports = async (ctx) => {
                     .first()
                     .text(),
 
-                description: `${$(el)
-                    .find('.photo-info span')
-                    .contents()
-                    .filter((_, el) => el.nodeType === 3)
-                    .text()}<br><img src="${$(el)
-                    .find('img')
-                    .attr('src')}">`,
+                description: `<p style="text-align: center">
+                                <h1>
+                                ${$(el)
+                                    .find('.photo-info span')
+                                    .contents()
+                                    .filter((_, el) => el.nodeType === 3)
+                                    .text()}
+                                </h1>
+                                <br>
+                                <img src="${$(el)
+                                    .find('img')
+                                    .attr('src')}">
+                            </p>`,
 
                 pubDate: $(el)
                     .find('.photo-info date')
