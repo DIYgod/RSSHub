@@ -118,6 +118,7 @@ router.get('/bangumi/calendar/today', require('./routes/bangumi/calendar/today')
 router.get('/bangumi/subject/:id/:type', require('./routes/bangumi/subject'));
 router.get('/bangumi/person/:id', require('./routes/bangumi/person'));
 router.get('/bangumi/topic/:id', require('./routes/bangumi/group/reply.js'));
+router.get('/bangumi/group/:id', require('./routes/bangumi/group/topic.js'));
 
 // 微博
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
@@ -505,8 +506,9 @@ router.get('/shmtu/notes', require('./routes/universities/shmtu/notes'));
 router.get('/shmtu/jwc/:type', require('./routes/universities/shmtu/jwc'));
 
 // 西南科技大学
-router.get('/swust/jwc/:type', require('./routes/universities/swust/jwc'));
-router.get('/swust/cs/:type', require('./routes/universities/swust/cs'));
+router.get('/swust/jwc/news', require('./routes/universities/swust/jwc_news'));
+router.get('/swust/jwc/notice/:type?', require('./routes/universities/swust/jwc_notice'));
+router.get('/swust/cs/:type?', require('./routes/universities/swust/cs'));
 
 // 华南师范大学
 router.get('/scnu/jw', require('./routes/universities/scnu/jw'));
@@ -562,6 +564,9 @@ router.get('/sdu/sc/:type?', require('./routes/universities/sdu/sc'));
 router.get('/sdu/cmse/:type?', require('./routes/universities/sdu/cmse'));
 router.get('/sdu/mech/:type?', require('./routes/universities/sdu/mech'));
 router.get('/sdu/epe/:type?', require('./routes/universities/sdu/epe'));
+
+// 大连大学
+router.get('/dlu/jiaowu/news', require('./routes/universities/dlu/jiaowu/news'));
 
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
@@ -624,5 +629,19 @@ router.get('/pediy/topic/:category?/:type?', require('./routes/pediy/topic'));
 
 // 观止（每日一文）
 router.get('/guanzhi', require('./routes/guanzhi/guanzhi'));
+
+// 多维新闻网
+router.get('/dwnews/yaowen/:region?', require('./routes/dwnews/yaowen'));
+router.get('/dwnews/rank/:type/:range', require('./routes/dwnews/rank'));
+
+// 知晓程序
+router.get('/miniapp/article/:category', require('./routes/miniapp/article'));
+
+// 后续
+router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
+
+// 老司机
+router.get('/laosiji/hot', require('./routes/laosiji/hot'));
+router.get('/laosiji/feed', require('./routes/laosiji/feed'));
 
 module.exports = router;

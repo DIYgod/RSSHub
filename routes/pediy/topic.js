@@ -1,5 +1,5 @@
 const axios = require('../../utils/axios');
-const dateHelper = require('../../utils/date');
+const pediyUtils = require('./utils');
 const cheerio = require('cheerio');
 
 const baseUrl = 'https://bbs.pediy.com/';
@@ -56,40 +56,42 @@ module.exports = async (ctx) => {
         },
     });
 
-    const data = response.data;
-    const $ = cheerio.load(data);
+    const $ = cheerio.load(response.data);
+    const list = $('.thread');
 
     ctx.state.data = {
         title: `${title}`,
         link: baseUrl + path,
-        item: $('.thread')
-            .map((_, elem) => {
-                const subject = $('.subject a', elem).eq(1);
-                const author = $('.username', elem).eq(0);
+        item:
+            list &&
+            list
+                .map((_, elem) => {
+                    const subject = $('.subject a', elem).eq(1);
+                    const author = $('.username', elem).eq(0);
 
-                let pubDate = $('.date', elem).eq(0);
-                if (pubDate.text().indexOf('前') !== -1) {
-                    pubDate = dateHelper(pubDate.text(), 8);
-                } else {
-                    pubDate = pubDate.text();
-                }
+                    const pubDate = pediyUtils.dateParser(
+                        $('.date', elem)
+                            .eq(0)
+                            .text(),
+                        8
+                    );
 
-                let topic;
-                if (isSpecific) {
-                    topic = categoryId[category][1];
-                } else {
-                    topic = $('.subject a.small', elem)
-                        .eq(0)
-                        .text();
-                }
+                    let topic;
+                    if (isSpecific) {
+                        topic = categoryId[category][1];
+                    } else {
+                        topic = $('.subject a.small', elem)
+                            .eq(0)
+                            .text();
+                    }
 
-                return {
-                    title: subject.text(),
-                    link: baseUrl + subject.attr('href'),
-                    pubDate: pubDate,
-                    description: `作者: ${author.text()} 版块: ${topic}`,
-                };
-            })
-            .get(),
+                    return {
+                        title: subject.text(),
+                        link: baseUrl + subject.attr('href'),
+                        pubDate: `${pubDate}`,
+                        description: `作者: ${author.text()} 版块: ${topic}`,
+                    };
+                })
+                .get(),
     };
 };
