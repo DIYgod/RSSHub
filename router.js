@@ -374,6 +374,7 @@ router.get('/hexo/next/:url', require('./routes/hexo/next'));
 
 // 小米
 router.get('/mi/crowdfunding', require('./routes/mi/crowdfunding'));
+router.get('/mi/youpin/crowdfunding', require('./routes/mi/youpin/crowdfunding'));
 router.get('/mi/youpin/new', require('./routes/mi/youpin/new'));
 
 // Keep
