@@ -646,4 +646,7 @@ router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
 router.get('/laosiji/hot', require('./routes/laosiji/hot'));
 router.get('/laosiji/feed', require('./routes/laosiji/feed'));
 
+// 99% Invisible
+router.get('/99percentinvisible/transcript', require('./routes/99percentinvisible/transcript'));
+
 module.exports = router;
