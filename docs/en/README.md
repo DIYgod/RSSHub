@@ -312,6 +312,12 @@ GitHub provides some official RSS feeds:
 
 </routeEn>
 
+## Parcel Tracking
+
+### Hermes
+
+<routeEn name="Hermes UK" author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+
 ## Uncategorized
 
 ### EZTV
@@ -366,4 +372,4 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### 99% Invisible
 
-<route name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+<routeEn name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
