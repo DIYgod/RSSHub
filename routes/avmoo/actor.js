@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
 
                     link: url,
 
-                    description: `<img src="${$(el)
+                    description: `<img referrerpolicy="no-referrer" src="${$(el)
                         .find('img')
                         .attr('src')}"><br>${$(el)
                         .find('.photo-info p')
@@ -42,7 +42,7 @@ module.exports = async (ctx) => {
                     .find('.photo-info span')
                     .contents()
                     .filter((_, el) => el.nodeType === 3)
-                    .text()}<br><img src="${$(el)
+                    .text()}<br><img referrerpolicy="no-referrer" src="${$(el)
                     .find('img')
                     .attr('src')}">`,
 
