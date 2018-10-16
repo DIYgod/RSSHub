@@ -651,4 +651,7 @@ router.get('/laosiji/feed', require('./routes/laosiji/feed'));
 // 99% Invisible
 router.get('/99percentinvisible/transcript', require('./routes/99percentinvisible/transcript'));
 
+// 青空文庫
+router.get('/aozora/newbook/:count?', require('./routes/aozora/newbook'));
+
 module.exports = router;

@@ -1566,7 +1566,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="小米有品每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
 
-## 网络小说
+## 小说/文学
 
 ### 笔趣阁
 
@@ -1604,6 +1604,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
 
 </route>
+
+### 青空文庫(外文)
+
+<route name="青空文庫新着リスト" author="sgqy" example="/aozora/newbook/10" path="/aozora/newbook/:count?" :paramsDesc="更新数量. 设置每次下载列表大小. 范围是 1 到 50."/>
 
 ## 中国驻外使领馆
 
