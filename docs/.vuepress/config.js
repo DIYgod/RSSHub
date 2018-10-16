@@ -32,7 +32,7 @@ module.exports = {
                 },
                 nav: [
                     {
-                        text: '使用',
+                        text: '指南',
                         link: '/',
                     },
                     {
@@ -63,7 +63,7 @@ module.exports = {
                 },
                 nav: [
                     {
-                        text: 'Usage',
+                        text: 'Guide',
                         link: '/en/',
                     },
                     {

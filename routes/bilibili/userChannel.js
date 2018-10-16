@@ -15,7 +15,16 @@ module.exports = async (ctx) => {
             Referer: `https://space.bilibili.com/${uid}/`,
         },
     });
-    const data = response.data.data.list;
+
+    let data = response.data;
+    if (!data.data) {
+        ctx.state.data = {
+            title: '此 bilibili 频道不存在',
+        };
+        return;
+    } else {
+        data = data.data.list;
+    }
 
     const channelName = data.name;
 

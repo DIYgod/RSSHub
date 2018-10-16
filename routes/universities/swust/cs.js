@@ -10,7 +10,7 @@ module.exports = async (ctx) => {
         responseType: 'arraybuffer',
     });
 
-    let type = ctx.params.type;
+    let type = ctx.params.type || 1;
     let info = '新闻动态';
     let word = 'news';
     if (type === '2') {

@@ -1,6 +1,6 @@
 const axios = require('../../utils/axios');
-const DateTime = require('luxon').DateTime;
 const cheerio = require('cheerio');
+const date = require('../../utils/date');
 
 module.exports = async (ctx) => {
     const alarmInfoURL = 'http://www.nmc.cn/f/alarm.html';
@@ -12,13 +12,12 @@ module.exports = async (ctx) => {
         title: '中央气象台全国气象预警',
         link: alarmInfoURL,
         item: alarmElements.map((el) => {
-            const $aEl = $(el).find('a');
-            const link = $aEl.attr('href');
-            const dateString = link.match(/_(\d{14})\.html/)[1];
+            const $el = $(el);
+            const $aEl = $el.find('a');
             return {
                 title: $aEl.text(),
-                link: `http://www.nmc.cn${link}`,
-                pubDate: DateTime.fromFormat(dateString, 'yyyyMMddhhmmss', { zone: 'utc+8' }).toRFC2822(),
+                link: `http://www.nmc.cn${$aEl.attr('href')}`,
+                pubDate: date($el.find('.date').text(), 8),
             };
         }),
     };

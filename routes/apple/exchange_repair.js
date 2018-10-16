@@ -47,7 +47,7 @@ module.exports = async (ctx) => {
                 description: $('#welcome')
                     .html()
                     .replace(/src="\//g, `src="${url.resolve(host, '.')}`),
-                pubDate: new Date(datelist[index].replace(/(\d+) 年 (\d+) 月 (\d+) 日/, '$1-$2-$3')),
+                pubDate: new Date(datelist[index].replace(/(\d+) 年 (\d+) 月 (\d+) 日/, '$1-$2-$3')).toISOString(),
             };
 
             ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
@@ -55,8 +55,10 @@ module.exports = async (ctx) => {
         })
     );
 
+    const title = ctx.params.country === 'cn' ? 'Apple 支持 -- 更换和维修扩展计划' : `Apple ${ctx.params.country.toUpperCase()} Support -- Exchange and Repair Extension Programs`;
+
     ctx.state.data = {
-        title: 'Apple 支持 -- 更换和维修扩展计划',
+        title,
         link,
         item: out,
     };
