@@ -46,10 +46,12 @@ module.exports = async (ctx) => {
                     .find('img')
                     .attr('src')}">`,
 
-                pubDate: $(el)
-                    .find('.photo-info date')
-                    .last()
-                    .text(),
+                pubDate: new Date(
+                    $(el)
+                        .find('.photo-info date')
+                        .last()
+                        .text()
+                ).toUTCString(),
 
                 link: `${baseUrl}/movie/${$(el)
                     .find('a')
