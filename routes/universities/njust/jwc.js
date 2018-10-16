@@ -28,7 +28,7 @@ module.exports = async (ctx) => {
                     return {
                         title: item.find('a').text(),
                         link: `${baseURL + $(item.find('a')).attr('href')}`,
-                        pubDate: $(item.find('td[width="14%"]')),
+                        pubDate: new Date(item.find('td[width="14%"]').text()).toUTCString(),
                     };
                 })
                 .get(),
