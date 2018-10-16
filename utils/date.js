@@ -29,9 +29,6 @@ module.exports = (html, timeZone) => {
     } else if (/(\d+)-(\d+) (\d+):(\d+)/.exec(html)) {
         math = /(\d+)-(\d+) (\d+):(\d+)/.exec(html);
         date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2], math[3], math[4]);
-    } else if (/(\d+):(\d+)/.exec(html)) {
-        math = /(\d+):(\d+)/.exec(html);
-        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), math[1], math[2]);
     } else if (/(\d+)月(\d+)日 (\d+):(\d+)/.exec(html)) {
         math = /(\d+)月(\d+)日 (\d+):(\d+)/.exec(html);
         date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2], math[3], math[4]);
@@ -41,7 +38,11 @@ module.exports = (html, timeZone) => {
     } else if (/(\d+)-(\d+)/.exec(html)) {
         math = /(\d+)-(\d+)/.exec(html);
         date = new Date(date.getFullYear(), parseInt(math[1]) - 1, math[2]);
+    } else if (/(\d+):(\d+)/.exec(html)) {
+        math = /(\d+):(\d+)/.exec(html);
+        date = new Date(date.getFullYear(), date.getMonth(), date.getDate(), math[1], math[2]);
     }
+
     if (date && timeZone) {
         const serverOffset = new Date().getTimezoneOffset() / 60;
         return new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
