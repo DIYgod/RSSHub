@@ -1427,6 +1427,8 @@ Category 列表:
 
 <route name="大连市" author="DIYgod" example="/tingshuitz/dalian" path="/tingshuitz/dalian"/>
 
+<route name="广州市" author="xyqfer" example="/tingshuitz/guangzhou" path="/tingshuitz/guangzhou"/>
+
 ### 中央气象台
 
 <route name="全国气象预警" author="ylc395" example="/weatheralarm" path="/weatheralarm">
