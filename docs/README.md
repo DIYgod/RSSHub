@@ -687,7 +687,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到']">
 
-::: warning 注意专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
+::: warning 注意
+专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
 
 **付费内容不可收听，但可使用非播客软件(例如 Inoreader)获取更新**
 
