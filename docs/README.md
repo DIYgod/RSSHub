@@ -767,7 +767,11 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="无聊图" author="Xuanwo" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-<route name="妹子图" author="kobemtl" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+<route name="妹子图" author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+
+| 妹子图 | 热榜     |
+| ------ | -------- |
+| ooxx   | top-ooxx |
 
 ### 喷嚏
 
