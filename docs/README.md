@@ -402,6 +402,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="知乎热榜" author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist"/>
 
+<route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist"/>
+
 ### pixiv
 
 <route name="用户收藏" author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
@@ -1168,6 +1170,10 @@ category 列表：
 | all  | 6620     | 6621     | 6687     | 6628     | 6629     | 6640     | 6645     |
 
 </route>
+
+### 南京理工大学
+
+<route name="南京理工大学教务处通知" author="MilkShakeYoung" example="/njust/jwc" path="/universities/njust/jwc"/>
 
 ### 四川旅游学院
 
