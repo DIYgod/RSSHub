@@ -1169,6 +1169,10 @@ category 列表：
 
 </route>
 
+### 南京理工大学
+
+<route name="南京理工大学教务处通知" author="MilkShakeYoung" example="/njust/jwc" path="/universities/njust/jwc"/>
+
 ### 四川旅游学院
 
 <route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy"/>
