@@ -162,6 +162,7 @@ router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
+router.get('/zhihu/pin/hotlist', require('./routes/zhihu/pin/hotlist'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
