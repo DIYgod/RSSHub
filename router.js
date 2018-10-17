@@ -654,4 +654,7 @@ router.get('/laosiji/feed', require('./routes/laosiji/feed'));
 // 99% Invisible
 router.get('/99percentinvisible/transcript', require('./routes/99percentinvisible/transcript'));
 
+// Hermes UK
+router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
+
 module.exports = router;
