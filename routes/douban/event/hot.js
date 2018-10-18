@@ -13,7 +13,7 @@ module.exports = async (ctx) => {
     });
 
     ctx.state.data = {
-        title: '豆瓣同城-热门活动',
+        title: '豆瓣同城-热门活动-locationId',
         link: referer,
         item: response.data.subject_collection_items.map(({ title, url, date, cover, subtype, info, price_range }) => {
             const pubDate = new Date(date).toUTCString();

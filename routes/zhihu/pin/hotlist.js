@@ -10,6 +10,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: '知乎想法热榜',
+        link: 'https://www.zhihu.com/',
         description: '整点更新',
         item: data.map(({ target }) => {
             const pubDate = new Date(target.created * 1000).toUTCString();
