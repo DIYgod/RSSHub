@@ -402,6 +402,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="知乎热榜" author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist"/>
 
+<route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist"/>
+
 ### pixiv
 
 <route name="用户收藏" author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
@@ -437,6 +439,8 @@ RSSHub 提供下列 API 接口:
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
 <route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
+
+<route name="同城活动-热门" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
 
 ### Disqus
 
@@ -1171,7 +1175,11 @@ category 列表：
 
 ### 南京理工大学
 
-<route name="南京理工大学教务处通知" author="MilkShakeYoung" example="/njust" path="/universities/njust"/>
+<route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
+
+<route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 新闻及通知, 2 办事指南']"/>
+
+<route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/2" path="/universities/njust/gs/:type" :paramsDesc="['1 博闻讲堂, 2 学术公告']"/>
 
 ### 四川旅游学院
 
@@ -1492,15 +1500,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 中国美术馆
 
-<route name="通知公告" author="HenryQW" example="/namoc/announcement" path="/namoc/announcement"/>
+<route name="美术馆新闻" author="HenryQW" example="/namoc/announcement" path="/namoc/:type" :paramsDesc="['新闻类型， 可选如下']">
 
-<route name="新闻" author="HenryQW" example="/namoc/news" path="/namoc/news"/>
+| 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
+| ------------ | ---- | -------- | ---------- | -------- |
+| announcement | news | media    | exhibition | specials |
 
-<route name="媒体联报" author="HenryQW" example="/namoc/media" path="/namoc/media"/>
-
-<route name="展览预告" author="HenryQW" example="/namoc/exhibition" path="/namoc/exhibition"/>
-
-<route name="焦点专题" author="HenryQW" example="/namoc/specials" path="/namoc/specials"/>
+</route>
 
 ### 国家地理
 
@@ -1569,6 +1575,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小米有品众筹" author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
 
 <route name="小米有品每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+### 甩甩尾巴
+
+<route name="甩甩尾巴" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']"/>
+
+| 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
 
 ## 网络小说
 
@@ -1906,3 +1920,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 99% Invisible
 
 <route name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+
+### 腾讯大家
+
+<route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
