@@ -12,3 +12,4 @@ config/config.js
 yarn-error.log
 tmp
 newrelic_agent.log
+*.swp
