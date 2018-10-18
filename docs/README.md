@@ -1284,11 +1284,11 @@ category 列表：
 
 ### 央视新闻
 
-<route name="专题" author="idealclover" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
+<route name="专题" author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- |
-| china | world | video | tech | society | law  | ent  |
+| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 | 每周质量报告 |
+| ----- | ----- | ----- | ---- | ------- | ---- | ---- | ------------ |
+| china | world | video | tech | society | law  | ent  | mzzlbg       |
 
 </route>
 
