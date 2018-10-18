@@ -440,6 +440,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
 
+<route name="同城活动-热门" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
+
 ### Disqus
 
 <route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
@@ -1494,15 +1496,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 中国美术馆
 
-<route name="通知公告" author="HenryQW" example="/namoc/announcement" path="/namoc/announcement"/>
+<route name="美术馆新闻" author="HenryQW" example="/namoc/announcement" path="/namoc/:type" :paramsDesc="['新闻类型， 可选如下']">
 
-<route name="新闻" author="HenryQW" example="/namoc/news" path="/namoc/news"/>
+| 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
+| ------------ | ---- | -------- | ---------- | -------- |
+| announcement | news | media    | exhibition | specials |
 
-<route name="媒体联报" author="HenryQW" example="/namoc/media" path="/namoc/media"/>
-
-<route name="展览预告" author="HenryQW" example="/namoc/exhibition" path="/namoc/exhibition"/>
-
-<route name="焦点专题" author="HenryQW" example="/namoc/specials" path="/namoc/specials"/>
+</route>
 
 ### 国家地理
 
@@ -1571,6 +1571,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小米有品众筹" author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
 
 <route name="小米有品每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+### 甩甩尾巴
+
+<route name="甩甩尾巴" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']"/>
+
+| 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
 
 ## 小说·文学
 
@@ -1916,3 +1924,21 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 99% Invisible
 
 <route name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+
+### 腾讯大家
+
+<route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
+
+### 腾讯游戏开发者社区
+
+::: warning 注意
+
+有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
+
+:::
+
+<route name="开发者社区" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']"/>
+
+| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
+| hot  | plan | program | tech     | audio | project  | yunying  | test     |
