@@ -633,6 +633,45 @@ GitHub 官方也提供了一些 RSS:
 | 最新主题 | latest |
 | 精华主题 | digest |
 
+### 腾讯云移动直播 SDK
+
+<route name="更新日志" author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
+
+### Bugly SDK
+
+<route name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
+
+### fir.im 应用
+
+<route name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
+
+### 腾讯游戏开发者社区
+
+::: warning 注意
+
+有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
+
+:::
+
+<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
+
+| 热门 | 策划    | 程序 | 技术前沿 | 音频    | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ------- | ---- | -------- | ------- | -------- | -------- | -------- |
+| hot  |
+| plan | program | tech | audio    | project | yunying  | test     |
+
+</route>
+
+### 知晓程序
+
+<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
+
+| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
+| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
+| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
+
+</route>
+
 ## 直播
 
 ### 哔哩哔哩直播
@@ -904,18 +943,6 @@ GitHub 官方也提供了一些 RSS:
 ### Thunderbird
 
 <route name="更新日志" author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
-
-### 腾讯云移动直播 SDK
-
-<route name="更新日志" author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
-
-### Bugly SDK
-
-<route name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
-
-### fir.im 应用
-
-<route name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
 
 ### Nvidia Web Driver
 
@@ -1586,7 +1613,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-## 小说·文学
+## 小说·文学·阅读
+
+### 观止（每日一文）
+
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
 
 ### 笔趣阁
 
@@ -1904,20 +1935,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-### 观止（每日一文）
-
-<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
-
-### 知晓程序
-
-<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
-
-| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
-| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
-| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
-
-</route>
-
 ### 后续
 
 <route name="事件" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>
@@ -1934,20 +1951,3 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 腾讯大家
 
 <route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
-
-### 腾讯游戏开发者社区
-
-::: warning 注意
-
-有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
-
-:::
-
-<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
-
-| 热门 | 策划    | 程序 | 技术前沿 | 音频    | 项目管理 | 游戏运营 | 游戏测试 |
-| ---- | ------- | ---- | -------- | ------- | -------- | -------- | -------- |
-| hot  |
-| plan | program | tech | audio    | project | yunying  | test     |
-
-</route>
