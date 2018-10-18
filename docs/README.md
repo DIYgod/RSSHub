@@ -1570,6 +1570,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="小米有品每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
 
+### 甩甩尾巴
+
+<route name="甩甩尾巴" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']"/>
+
+| 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
+
 ## 网络小说
 
 ### 笔趣阁
