@@ -162,6 +162,7 @@ router.get('/zhihu/people/answers/:id', require('./routes/zhihu/answers'));
 router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
+router.get('/zhihu/pin/hotlist', require('./routes/zhihu/pin/hotlist'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
@@ -189,6 +190,7 @@ router.get('/douban/group/:groupid', require('./routes/douban/group'));
 router.get('/douban/explore', require('./routes/douban/explore'));
 router.get('/douban/music/latest', require('./routes/douban/latest_music'));
 router.get('/douban/book/latest', require('./routes/douban/latest_book'));
+router.get('/douban/event/hot/:locationId', require('./routes/douban/event/hot'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -546,8 +548,10 @@ router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
 router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 
 // 南京理工大学
-router.get('/njust', require('./routes/universities/njust/jwc'));
-
+// router.get('/njust/jwc/:category?', require('./routes/universities/njust/jwc'));
+router.get('/njust/jwc/:type', require('./routes/universities/njust/jwc'));
+router.get('/njust/cwc/:type', require('./routes/universities/njust/cwc'));
+router.get('/njust/gs/:type', require('./routes/universities/njust/gs'));
 // 四川旅游学院
 router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));
 router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
@@ -653,5 +657,14 @@ router.get('/laosiji/feed', require('./routes/laosiji/feed'));
 
 // 99% Invisible
 router.get('/99percentinvisible/transcript', require('./routes/99percentinvisible/transcript'));
+
+// Hermes UK
+router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
+
+// 腾讯大家
+router.get('/dajia/index', require('./routes/dajia/'));
+
+// 甩甩尾巴
+router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 
 module.exports = router;
