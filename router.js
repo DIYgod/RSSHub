@@ -661,4 +661,7 @@ router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
 // 腾讯大家
 router.get('/dajia/index', require('./routes/dajia/'));
 
+// 甩甩尾巴
+router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
+
 module.exports = router;

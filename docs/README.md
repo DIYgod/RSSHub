@@ -1494,15 +1494,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 中国美术馆
 
-<route name="通知公告" author="HenryQW" example="/namoc/announcement" path="/namoc/announcement"/>
+<route name="美术馆新闻" author="HenryQW" example="/namoc/announcement" path="/namoc/:type" :paramsDesc="['新闻类型， 可选如下']">
 
-<route name="新闻" author="HenryQW" example="/namoc/news" path="/namoc/news"/>
+| 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
+| ------------ | ---- | -------- | ---------- | -------- |
+| announcement | news | media    | exhibition | specials |
 
-<route name="媒体联报" author="HenryQW" example="/namoc/media" path="/namoc/media"/>
-
-<route name="展览预告" author="HenryQW" example="/namoc/exhibition" path="/namoc/exhibition"/>
-
-<route name="焦点专题" author="HenryQW" example="/namoc/specials" path="/namoc/specials"/>
+</route>
 
 ### 国家地理
 
@@ -1571,6 +1569,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小米有品众筹" author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
 
 <route name="小米有品每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+### 甩甩尾巴
+
+<route name="甩甩尾巴" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']"/>
+
+| 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
 
 ## 网络小说
 
