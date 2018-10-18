@@ -554,7 +554,7 @@ RSSHub 提供下列 API 接口:
 
 ### 众成翻译
 
-<route name="首页" author="SirM2z" example="/zcfy/index" path="/zcfy/index"/>
+<route name="首页" author="SirM2z" example="/zcfy" path="/zcfy/index"/>
 
 <route name="热门" author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
 
@@ -735,11 +735,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 电影首发站
 
-<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
+<route name="电影" author="epirus" example="/dysfz" path="/dysfz/index"/>
 
 ### 电影天堂
 
-<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
+<route name="新片精品" author="imgss" example="/dytt" path="/dytt/index"/>
 
 ## 图片
 
@@ -751,7 +751,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu"/>
+<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu/index"/>
 
 <route name="分类" author="gee1k" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
 
@@ -823,7 +823,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Awesome Pigtails
 
-<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails"/>
+<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
 ## 二次元
 
@@ -869,7 +869,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 忧郁的弟弟
 
-<route name="文章" author="DIYgod" example="/mygalgame" path="mygalgame"/>
+<route name="文章" author="DIYgod" example="/mygalgame" path="/galgame/mygalgame"/>
 
 ### きららファンタジア｜奇拉拉幻想曲
 
@@ -1933,7 +1933,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 腾讯大家
 
-<route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
+<route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
 
 ### 腾讯游戏开发者社区
 
