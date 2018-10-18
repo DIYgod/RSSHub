@@ -30,7 +30,9 @@ module.exports = function(options = {}) {
         const key = resolvedPrefix + common.md5(ignoreQuery ? path : url);
         const tkey = key + ':type';
 
-        let { match, routeExpire } = common.validityCheck(routes, exclude, path);
+        const validityCheck = common.validityCheck(routes, exclude, path);
+        const match = validityCheck.match;
+        let routeExpire = validityCheck.routeExpire;
 
         if (!match || (passParam && ctx.request.query[passParam])) {
             return await next();
