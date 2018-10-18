@@ -1494,15 +1494,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 中国美术馆
 
-<route name="通知公告" author="HenryQW" example="/namoc/announcement" path="/namoc/announcement"/>
+<route name="美术馆新闻" author="HenryQW" example="/namoc/announcement" path="/namoc/:type" :paramsDesc="['新闻类型， 可选如下']">
 
-<route name="新闻" author="HenryQW" example="/namoc/news" path="/namoc/news"/>
+| 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
+| ------------ | ---- | -------- | ---------- | -------- |
+| announcement | news | media    | exhibition | specials |
 
-<route name="媒体联报" author="HenryQW" example="/namoc/media" path="/namoc/media"/>
-
-<route name="展览预告" author="HenryQW" example="/namoc/exhibition" path="/namoc/exhibition"/>
-
-<route name="焦点专题" author="HenryQW" example="/namoc/specials" path="/namoc/specials"/>
+</route>
 
 ### 国家地理
 
