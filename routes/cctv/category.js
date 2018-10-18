@@ -1,29 +1,16 @@
-const axios = require('../../utils/axios');
-
 module.exports = async (ctx) => {
-    const category = ctx.params.category;
-    const url = `http://news.cctv.com/${category}/data/index.json`;
+    const { category } = ctx.params;
+    let responseData;
 
-    const response = await axios({
-        method: 'get',
-        url: url,
-        headers: {
-            Referer: url,
-        },
-    });
+    if (category === 'mzzlbg') {
+        // 每周质量报告
+        const getMzzlbg = require('./utils/mzzlbg');
+        responseData = await getMzzlbg();
+    } else {
+        // 央视新闻
+        const getNews = require('./utils/news');
+        responseData = await getNews(category);
+    }
 
-    const data = response.data;
-    const list = data.rollData;
-
-    ctx.state.data = {
-        title: `央视新闻 ${category}`,
-        link: `http://news.cctv.com/${category}`,
-        description: `央视新闻 ${category}`,
-        item: list.map((item) => ({
-            title: item.title,
-            description: item.description,
-            link: item.url,
-            pubDate: new Date(item.dateTime).toUTCString(),
-        })),
-    };
+    ctx.state.data = responseData;
 };
