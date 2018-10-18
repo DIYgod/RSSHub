@@ -440,7 +440,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
 
-<route name="同城活动-热门" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
+<route name="热门同城活动" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
 
 ### Disqus
 
@@ -1175,11 +1175,11 @@ category 列表：
 
 ### 南京理工大学
 
-<route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
+<route name="教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
 
-<route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 新闻及通知, 2 办事指南']"/>
+<route name="财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 新闻及通知, 2 办事指南']"/>
 
-<route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/2" path="/universities/njust/gs/:type" :paramsDesc="['1 博闻讲堂, 2 学术公告']"/>
+<route name="研究生院" author="MilkShakeYoung" example="/njust/gs/2" path="/universities/njust/gs/:type" :paramsDesc="['1 博闻讲堂, 2 学术公告']"/>
 
 ### 四川旅游学院
 
@@ -1578,11 +1578,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 甩甩尾巴
 
-<route name="甩甩尾巴" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']"/>
+<route name="分类" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
 
 | 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
+
+</route>
 
 ## 小说·文学
 
@@ -1941,8 +1943,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 :::
 
-<route name="开发者社区" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']"/>
+<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
 
-| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
-| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
-| hot  | plan | program | tech     | audio | project  | yunying  | test     |
+| 热门 | 策划    | 程序 | 技术前沿 | 音频    | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ------- | ---- | -------- | ------- | -------- | -------- | -------- |
+| hot  |
+| plan | program | tech | audio    | project | yunying  | test     |
+
+</route>
