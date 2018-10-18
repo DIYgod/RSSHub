@@ -23,7 +23,7 @@ module.exports = async (ctx) => {
                         break;
 
                     case 'image':
-                        description += `<img referrerpolicy="no-referrer" src="${item.url.replace('_xl.', '_r.').replace('_ms.', '_r.')}" />`;
+                        description += `<img referrerpolicy="no-referrer" src="${item.url.replace(/_.+\.jpg/g, '.jpg')}" />`;
                         break;
 
                     case 'video':

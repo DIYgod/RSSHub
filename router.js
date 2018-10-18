@@ -658,4 +658,7 @@ router.get('/99percentinvisible/transcript', require('./routes/99percentinvisibl
 // Hermes UK
 router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
 
+// 腾讯大家
+router.get('/dajia/index', require('./routes/dajia/'));
+
 module.exports = router;

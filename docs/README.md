@@ -1908,3 +1908,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 99% Invisible
 
 <route name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+
+### 腾讯大家
+
+<route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
