@@ -1288,11 +1288,11 @@ category 列表：
 
 ### 央视新闻
 
-<route name="专题" author="idealclover" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
+<route name="专题" author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- |
-| china | world | video | tech | society | law  | ent  |
+| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 | 每周质量报告 |
+| ----- | ----- | ----- | ---- | ------- | ---- | ---- | ------------ |
+| china | world | video | tech | society | law  | ent  | mzzlbg       |
 
 </route>
 
@@ -1584,7 +1584,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
 
-## 网络小说
+## 小说·文学
 
 ### 笔趣阁
 
@@ -1620,6 +1620,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
 
 举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+
+</route>
+
+### 青空文庫
+
+<route name="青空文庫新着リスト" author="sgqy" example="/aozora/newbook/10" path="/aozora/newbook/:count?" :paramsDesc="['更新数量. 设置每次下载列表大小. 范围是 1 到 50.']">
+
+书籍网站每日一更. 信息更新时间为书籍最初出版时间, 排序可能不符合网络发表时间, 请认准未读消息.
 
 </route>
 
@@ -1924,3 +1932,17 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 腾讯大家
 
 <route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
+
+### 腾讯游戏开发者社区
+
+::: warning 注意
+
+有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
+
+:::
+
+<route name="开发者社区" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']"/>
+
+| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
+| hot  | plan | program | tech     | audio | project  | yunying  | test     |
