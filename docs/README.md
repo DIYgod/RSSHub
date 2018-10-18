@@ -1611,9 +1611,9 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-### 青空文庫(外文)
+### 青空文庫
 
-<route name="青空文庫新着リスト" author="sgqy" example="/aozora/newbook/10" path="/aozora/newbook/:count?" :paramsDesc="[更新数量. 设置每次下载列表大小. 范围是 1 到 50.]">
+<route name="青空文庫新着リスト" author="sgqy" example="/aozora/newbook/10" path="/aozora/newbook/:count?" :paramsDesc="['更新数量. 设置每次下载列表大小. 范围是 1 到 50.']">
 
 书籍网站每日一更. 信息更新时间为书籍最初出版时间, 排序可能不符合网络发表时间, 请认准未读消息.
 
