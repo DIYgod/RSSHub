@@ -548,7 +548,9 @@ router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
 router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 
 // 南京理工大学
-router.get('/njust', require('./routes/universities/njust/jwc'));
+router.get('/njust/jwc/:type', require('./routes/universities/njust/jwc'));
+router.get('/njust/cwc/:type', require('./routes/universities/njust/cwc'));
+router.get('/njust/gs/:type', require('./routes/universities/njust/gs'));
 
 // 四川旅游学院
 router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));

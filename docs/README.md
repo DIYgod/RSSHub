@@ -1175,7 +1175,11 @@ category 列表：
 
 ### 南京理工大学
 
-<route name="南京理工大学教务处通知" author="MilkShakeYoung" example="/njust/jwc" path="/universities/njust/jwc"/>
+<route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
+
+<route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 新闻及通知, 2 办事指南']"/>
+
+<route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/2" path="/universities/njust/gs/:type" :paramsDesc="['1 博闻讲堂, 2 学术公告']"/>
 
 ### 四川旅游学院
 
