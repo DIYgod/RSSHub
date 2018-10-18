@@ -1920,3 +1920,17 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 腾讯大家
 
 <route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
+
+### 腾讯游戏开发者社区
+
+::: warning 注意
+
+有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
+
+:::
+
+<route name="开发者社区" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']"/>
+
+| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
+| hot  | plan | program | tech     | audio | project  | yunying  | test     |

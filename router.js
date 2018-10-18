@@ -665,4 +665,7 @@ router.get('/dajia/index', require('./routes/dajia/'));
 // 甩甩尾巴
 router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 
+// 腾讯游戏开发者社区
+router.get('/gameinstitute/community/:tag?', require('./routes/gameinstitute/community'));
+
 module.exports = router;
