@@ -12,9 +12,10 @@ module.exports = async (ctx) => {
         },
     });
     let list = [];
-    response.data.data.list.forEach((item) => {
-        list = list.concat(item.items);
-    });
+    response.data.data.list &&
+        response.data.data.list.forEach((item) => {
+            list = list.concat(item.items);
+        });
 
     ctx.state.data = {
         title: '小米众筹',
