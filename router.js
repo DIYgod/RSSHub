@@ -673,4 +673,6 @@ router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 // 腾讯游戏开发者社区
 router.get('/gameinstitute/community/:tag?', require('./routes/gameinstitute/community'));
 
+// 抽屉新热榜
+router.get('/chouti/:subject?', require('./routes/chouti'));
 module.exports = router;
