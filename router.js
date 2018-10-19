@@ -673,4 +673,7 @@ router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 // 腾讯游戏开发者社区
 router.get('/gameinstitute/community/:tag?', require('./routes/gameinstitute/community'));
 
+// 商务印书馆新书速递
+router.get('/commercialpress/latest', require('./routes/commercialpress/latest'));
+
 module.exports = router;

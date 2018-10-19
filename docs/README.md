@@ -1951,3 +1951,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | plan | program | tech | audio    | project | yunying  | test     |
 
 </route>
+
+### 商务印书馆
+
+<route name="新书速递" author="xyqfer" example="/commercialpress/latest" path="/commercialpress/latest"/>
