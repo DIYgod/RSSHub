@@ -633,18 +633,6 @@ GitHub 官方也提供了一些 RSS:
 | 最新主题 | latest |
 | 精华主题 | digest |
 
-### 腾讯云移动直播 SDK
-
-<route name="更新日志" author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
-
-### Bugly SDK
-
-<route name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
-
-### fir.im 应用
-
-<route name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
-
 ### 腾讯游戏开发者社区
 
 ::: warning 注意
@@ -908,7 +896,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 忧郁的弟弟
 
-<route name="文章" author="DIYgod" example="/mygalgame" path="/galgame/mygalgame"/>
+<route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
 ### きららファンタジア｜奇拉拉幻想曲
 
@@ -943,6 +931,18 @@ GitHub 官方也提供了一些 RSS:
 ### Thunderbird
 
 <route name="更新日志" author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
+
+### 腾讯云移动直播 SDK
+
+<route name="更新日志" author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
+
+### Bugly SDK
+
+<route name="更新日志" author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
+
+### fir.im 应用
+
+<route name="更新" author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" :paramsDesc="['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']"/>
 
 ### Nvidia Web Driver
 
