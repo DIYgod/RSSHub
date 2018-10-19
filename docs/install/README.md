@@ -154,6 +154,9 @@ $ docker volume create redis-data
 
 2.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
 
+    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` 用以跳过 puppeteer Chromium 的安装. 默认为 1, 需要在 `config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址, 以启用相应路由.
+    -   `USE_CHINA_NPM_REGISTRY=1` 防止 npm 受到来自 GFW 的干扰. 默认为 0.
+
 3.  部署
 
 ```bash

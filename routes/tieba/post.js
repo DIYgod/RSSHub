@@ -31,9 +31,8 @@ module.exports = async (ctx) => {
     const lz = ctx._matchedRoute.includes('lz') ? 1 : 0;
     const html = await getPost(id, lz);
     const $ = cheerio.load(html);
-    const title = $('.core_title_txt')
-        .attr('title')
-        .substr(3);
+    const title = $('.core_title_txt').attr('title');
+    // .substr(3);
     const list = $('.p_postlist > [data-field]:not(:has(".ad_bottom_view"))');
 
     ctx.state.data = {
