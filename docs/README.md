@@ -1284,6 +1284,18 @@ category 列表：
 <route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
 </route>
 
+### 同济大学
+
+<route name="同济大学软件学院通知" author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
+
+| 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
+| ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+| bkstz      | yjstz      | jgtz     | qttz     | xwdt     | xyxw     | xyhd     |
+
+注意: `qttz` 与 `xwdt` 在原网站等价.
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
