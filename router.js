@@ -661,6 +661,10 @@ router.get('/99percentinvisible/transcript', require('./routes/99percentinvisibl
 // 青空文庫
 router.get('/aozora/newbook/:count?', require('./routes/aozora/newbook'));
 
+// はてなブログ
+router.get('/hatena/d/:domain', require('./routes/hatena/blog'));
+router.get('/hatena/hot', require('./routes/hatena/hot'));
+
 // Hermes UK
 router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
 

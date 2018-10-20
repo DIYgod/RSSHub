@@ -504,6 +504,30 @@ RSSHub 提供下列 API 接口:
 
 <route name="基金净值更新" author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
 
+### はてなブログ
+
+<route name="博客主页" author="sgqy" example="/hatena/d/kazuuiword.hatenablog.com" path="/hatena/d/:domain" :paramsDesc="['博客域名.']">
+
+经测试, 以下域名均属于「はてなブログ」或与之兼容:
+
+-   hatenablog.com
+-   hatenablog.jp
+-   hateblo.jp
+-   hatenadiary.jp
+-   kansou-blog.jp
+-   netlorechase.net
+-   byosoku100.com
+
+理论上兼容域名不限于此, 若存在其他域名属于此博客, 亦可能兼容.
+
+</route>
+
+<route name="推荐文章" author="sgqy" example="/hatena/hot" path="/hatena/hot">
+
+注意: 本节点会解析当页所有域名, 若有不兼容网页, 则必有出错内容.
+
+</route>
+
 ## 编程
 
 ### 掘金
