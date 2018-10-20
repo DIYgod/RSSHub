@@ -19,23 +19,22 @@ module.exports = async (ctx) => {
     const data = response.data; // content is html format
 
     const $ = cheerio.load(data);
-    const list = $('div.archive-entries > section');
+    const author = $('span.fn').attr('data-user-name');
+    const list = $('div#main-inner').find('a.entry-title-link');
 
     // parse title and description
     const title = $('h1#title').text();
     const description = $('h2#blog-description').text();
 
-    // parse blog urls
-    const detail_urls = [];
+    // parse article urls
+    const urls = [];
     for (let i = 0; i < list.length; ++i) {
-        const link = $(list[i])
-            .find('a.entry-title-link')
-            .attr('href');
-        detail_urls.push(link);
+        const tmp = $(list[i]).attr('href');
+        urls.push(tmp);
     }
 
     // get articles
-    const article_list = await Promise.all(detail_urls.map((url) => get_article(url)));
+    const article_list = await Promise.all(urls.map((u) => get_article(u)));
 
     // feed the data
     ctx.state.data = {
@@ -43,5 +42,6 @@ module.exports = async (ctx) => {
         link: blog_url,
         description: description,
         item: article_list,
+        author: author,
     };
 };
