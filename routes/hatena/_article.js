@@ -2,7 +2,6 @@ const axios = require('../../utils/axios'); // get web content
 const cheerio = require('cheerio'); // html parser
 
 module.exports = async function get_article(url) {
-    console.log(url);
     const response = await axios({
         method: 'get',
         url: url,
