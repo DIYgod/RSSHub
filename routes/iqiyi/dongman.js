@@ -31,14 +31,14 @@ module.exports = async (ctx) => {
             list &&
             list
                 .map((index, item) => {
-                    const count = $(item)
+                    const episode = $(item)
                         .find('p.site-piclist_info_title a')
                         .text()
                         .trim();
                     const describe = $(item)
                         .find('p.site-piclist_info_describe a')
                         .text();
-                    const title = `${count}-${describe}`;
+                    const title = `${episode}-${describe}`;
 
                     return {
                         title,
