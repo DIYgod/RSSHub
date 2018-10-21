@@ -506,6 +506,15 @@ RSSHub 提供下列 API 接口:
 
 ### はてなブログ
 
+::: tip 提示
+
+はてなブログ提供[官方 RSS 源](http://help.hatenablog.com/entry/feed).
+
+-   Atom : http://博客域名/feed
+-   RSS 2.0: http://博客域名/rss
+
+:::
+
 <route name="博客主页" author="sgqy" example="/hatena/d/kazuuiword.hatenablog.com" path="/hatena/d/:domain" :paramsDesc="['博客域名.']">
 
 经测试, 以下域名均属于「はてなブログ」或与之兼容:
