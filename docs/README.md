@@ -1049,7 +1049,8 @@ GitHub 官方也提供了一些 RSS:
 
 ### 南京邮电大学
 
-<route name="教务处通知与新闻" author="shaoye" example="/njupt/jwc/notice" path="/universities/njupt/jwc/:type?" :paramsDesc="['默认为 `notice`']">
+<route name="教务处通知与新闻" author="shaoye" example="/
+pt/jwc/notice" path="/universities/njupt/jwc/:type?" :paramsDesc="['默认为 `notice`']">
 
 | 通知公告 | 教务快讯 |
 | -------- | -------- |
@@ -1175,7 +1176,8 @@ category 列表：
 
 ### 南京理工大学
 
-<route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
+<route name="南京理工大学教务处" author="MilkShakeYoung" example="/
+/jwc/4" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
 
 | 教师通知 | 学生通知 | 新闻 | 学院动态 |
 | -------- | -------- | ---- | -------- |
@@ -1191,7 +1193,7 @@ category 列表：
 
 </route>
 
-<route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/1" path="/universities/njust/gs/:type" :paramsDesc="['1 为通知公告, 2 为学术公告']"/>
+<route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/2" path="/universities/njust/gs/:type" :paramsDesc="['1 为通知公告, 2 为学术公告']"/>
 
 | 通知公告 | 学术公告 |
 | -------- | -------- |
