@@ -1177,22 +1177,27 @@ category 列表：
 
 <route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
 
-| 教师通知 | 学生通知 | 新闻 | 学院动态 | 
-| -------- | -------- | -------- | -------- |
-| 1   | 2     | 3   | 4     |
+| 教师通知 | 学生通知 | 新闻 | 学院动态 |
+| -------- | -------- | ---- | -------- |
+| 1        | 2        | 3    | 4        |
+
+</route>
 
 <route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 为新闻及通知, 2 为办事指南']"/>
 
 | 新闻及通知 | 办事指南 |
-| -------- | -------- |
-| 1   |2  |
+| ---------- | -------- |
+| 1          | 2        |
+
+</route>
 
 <route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/1" path="/universities/njust/gs/:type" :paramsDesc="['1 为通知公告, 2 为学术公告']"/>
 
-
 | 通知公告 | 学术公告 |
 | -------- | -------- |
-| 1   | 2     |
+| 1        | 2        |
+
+</route>
 
 ### 四川旅游学院
 
