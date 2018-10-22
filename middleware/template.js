@@ -53,6 +53,10 @@ module.exports = async (ctx, next) => {
                 ctx.state.data.item.forEach((item) => {
                     item.title && (item.title = he.decode(item.title));
                     item.description && (item.description = he.decode(item.description));
+                    if (item.category) {
+                        item.category.data && (item.category.data = he.decode(item.category.data));
+                        item.category.domain && (item.category.domain = he.decode(item.category.domain));
+                    }
                 });
         }
 

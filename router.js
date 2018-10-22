@@ -673,4 +673,7 @@ router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 // 腾讯游戏开发者社区
 router.get('/gameinstitute/community/:tag?', require('./routes/gameinstitute/community'));
 
+// 西安电子科技大学
+router.get('/xidian/jwc/:category?', require('./routes/xidian/jwc'));
+
 module.exports = router;

@@ -26,6 +26,11 @@
         <item>
             <title><![CDATA[{{@ $value.title }}]]></title>
             <description><![CDATA[{{@ $value.description || $value.title }}]]></description>
+            {{ if $value.category }}
+            <category {{ if $value.category.domain }} domain="{{@ $value.category.domain}}"{{ /if }}>
+                <![CDATA[{{@ $value.category.data}}]]>
+            </category>
+            {{ /if }}
             {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
             <guid>{{ $value.guid || $value.link }}</guid>
             <link>{{ $value.link }}</link>
