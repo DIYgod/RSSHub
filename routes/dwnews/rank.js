@@ -41,7 +41,7 @@ module.exports = async (ctx) => {
             const response = await axios.get(item.url.replace('.html', '_all.html'));
             const $ = cheerio.load(response.data);
 
-            const result = utils.ProcessRank($, item);
+            const result = utils.ProcessRank($, ctx.params.type);
 
             const single = {
                 title: item.title,
