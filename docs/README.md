@@ -1951,3 +1951,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | plan | program | tech | audio    | project | yunying  | test     |
 
 </route>
+
+### 抽屉
+
+<route name="新热榜" author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
+
+| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
+| ---- | ----- | ----- | ---- | --------- | -------- |
+| hot  | news  | scoff | pic  | tec       | ask      |
+
+</route>
