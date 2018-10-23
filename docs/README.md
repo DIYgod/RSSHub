@@ -1311,6 +1311,24 @@ category 列表：
 <route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
 </route>
 
+### 东莞理工学院
+
+<route name="教务处通知" author="AnyMoe" example="/dgut/jwc/" path="/universities/dgut/jwc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 教务公告 | 教学信息 |
+| -------- | -------- |
+| 1        | 2        |
+
+</route>
+
+<route name="学工部动态" author="AnyMoe" example="/dgut/xsc/" path="/universities/dgut/xsc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 学工动态 | 通知公告 | 网上公示 |
+| -------- | -------- | -------- |
+| 1        | 2        | 4        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻

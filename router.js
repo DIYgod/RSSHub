@@ -586,6 +586,10 @@ router.get('/sdu/epe/:type?', require('./routes/universities/sdu/epe'));
 // 大连大学
 router.get('/dlu/jiaowu/news', require('./routes/universities/dlu/jiaowu/news'));
 
+// 东莞理工学院
+router.get('/dgut/jwc/:type?', require('./routes/universities/dgut/jwc'));
+router.get('/dgut/xsc/:type?', require('./routes/universities/dgut/xsc'));
+
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
 
