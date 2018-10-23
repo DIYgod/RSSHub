@@ -5,7 +5,7 @@ module.exports = async (ctx) => {
     const base_host = 'http://jwc.dgut.edu.cn/';
     const host = base_host + 'dglgjwc/';
     const name = '教务处';
-    let type = ctx.params.type;
+    const type = ctx.params.type;
     let info, url_type;
     switch (type) {
         case '1':

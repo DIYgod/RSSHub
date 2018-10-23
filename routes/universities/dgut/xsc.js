@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 module.exports = async (ctx) => {
     const host = 'http://xsc.dgut.edu.cn/';
     const name = '学生工作部（学生处）';
-    let type = ctx.params.type;
+    const type = ctx.params.type;
     let info, url_type;
     switch (type) {
         case '1':
