@@ -36,12 +36,12 @@ module.exports = async (ctx) => {
         })
     );
 
-    const responses = await axios.all(proList);
-    for (let i = 0; i < responses.length; i++) {
+    const responses = await axios.all(proList.slice(0, 1));
+    for (let i = 0; i < 1; i++) {
         const $ = utils.ProcessVideo(cheerio.load(responses[i].data));
         const full = $('div.detail');
 
-        out[i].description = full.find('div:nth-of-type(1)').html();
+        out[i].description = utils.ProcessHref(full.find('div:nth-of-type(1)')).html();
         out[i].author = full.find('span.name').text();
         out[i].pubDate = new Date(full.find('span.time').text()).toUTCString();
     }
