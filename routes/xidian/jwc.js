@@ -29,11 +29,7 @@ module.exports = async (ctx) => {
                     item = $(item);
                     return {
                         title: item.find('a').attr('title'),
-                        description: arrC[this.index],
-                        category: {
-                            data: arrC[this.index],
-                            domain: 'https://jwc.xidian.edu.cn/tzgg1.htm',
-                        },
+                        description: arrC[this.index] + '<br>' + item.find('a').attr('title') + '<br><br>全文内容需使用校园网或VPN获取',
                         pubDate: new Date(
                             item
                                 .children()
@@ -55,7 +51,7 @@ module.exports = async (ctx) => {
     }
 
     ctx.state.data = {
-        title: '西电教务处首页',
+        title: '西电教务处',
         link: 'https://jwc.xidian.edu.cn',
         description: $('meta[Name="keywords"]').attr('Content'),
         item: result,
