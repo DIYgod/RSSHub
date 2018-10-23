@@ -1,5 +1,4 @@
 const axios = require('../../../utils/axios');
-const DateTime = require('luxon').DateTime;
 
 module.exports = async (subjectID) => {
     const url = `https://api.bgm.tv/subject/${subjectID}?responseGroup=large`;
@@ -19,7 +18,7 @@ module.exports = async (subjectID) => {
         item: activeEps.reverse().map((e) => ({
             title: `ep.${e.sort} ${e.name_cn}`,
             description: `<img src="${epsInfo.images.common}" alt="ep.${e.sort} ${e.name_cn}"><p>${e.desc.replace(/\n+/g, '<br>')}</p>`,
-            pubDate: DateTime.fromFormat(e.airdate, 'yyyy-L-dd'),
+            pubDate: new Date(e.airdate).toUTCString(),
             guid: e.id,
             link: e.url,
         })),

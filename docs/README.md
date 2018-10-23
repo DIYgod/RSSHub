@@ -686,6 +686,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="直播间开播下播" author="DIYgod" example="/panda/room/10300" path="/panda/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
+### 虎牙直播
+
+<route name="直播间开播" author="SettingDust" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+
 ## 音视频
 
 ### bilibili

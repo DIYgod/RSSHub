@@ -265,6 +265,9 @@ router.get('/douyu/room/:id', require('./routes/douyu/room'));
 // 熊猫直播
 router.get('/panda/room/:id', require('./routes/panda/room'));
 
+// 虎牙
+router.get('/huya/live/:id', require('./routes/huya/live'));
+
 // v2ex
 router.get('/v2ex/topics/:type', require('./routes/v2ex/topics'));
 
