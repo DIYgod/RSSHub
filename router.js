@@ -684,4 +684,7 @@ router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 // 抽屉新热榜
 router.get('/chouti/:subject?', require('./routes/chouti'));
 
+// 西安电子科技大学
+router.get('/xidian/jwc/:category?', require('./routes/xidian/jwc'));
+
 module.exports = router;

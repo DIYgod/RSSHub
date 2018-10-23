@@ -1315,6 +1315,19 @@ category 列表：
 <route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
 </route>
 
+### 西安电子科技大学
+
+<route name="教务处" author="ShadowySpirits" example="/xidian/jwc/xxfb" path="/xidian/jwc/:category?" :paramsDesc="['通知类别,默认为全部']">
+
+::: warning 注意
+
+全文内容需使用校园网或 VPN 获取
+:::
+
+| 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
+| :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+
 ### 东莞理工学院
 
 <route name="教务处通知" author="AnyMoe" example="/dgut/jwc/" path="/universities/dgut/jwc/:type?" :paramsDesc="['默认为 `2`']">
