@@ -298,7 +298,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="会员购新品上架" author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
 
-<route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/:id" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+<route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
 
 <route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
 
@@ -643,10 +643,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
 
-| 热门 | 策划    | 程序 | 技术前沿 | 音频    | 项目管理 | 游戏运营 | 游戏测试 |
-| ---- | ------- | ---- | -------- | ------- | -------- | -------- | -------- |
-| hot  |
-| plan | program | tech | audio    | project | yunying  | test     |
+| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
+| hot  | plan | program | tech     | audio | project  | yunying  | test     |
 
 </route>
 
