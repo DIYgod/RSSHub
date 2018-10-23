@@ -673,4 +673,7 @@ router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
 // 甩甩尾巴
 router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 
+// 抽屉新热榜
+router.get('/chouti/:subject?', require('./routes/chouti'));
+
 module.exports = router;
