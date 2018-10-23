@@ -554,7 +554,7 @@ RSSHub 提供下列 API 接口:
 
 ### 众成翻译
 
-<route name="首页" author="SirM2z" example="/zcfy/index" path="/zcfy/index"/>
+<route name="首页" author="SirM2z" example="/zcfy" path="/zcfy/index"/>
 
 <route name="热门" author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
 
@@ -632,6 +632,33 @@ GitHub 官方也提供了一些 RSS:
 | -------- | ------ |
 | 最新主题 | latest |
 | 精华主题 | digest |
+
+### 腾讯游戏开发者社区
+
+::: warning 注意
+
+有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
+
+:::
+
+<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
+
+| 热门 | 策划    | 程序 | 技术前沿 | 音频    | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ------- | ---- | -------- | ------- | -------- | -------- | -------- |
+| hot  |
+| plan | program | tech | audio    | project | yunying  | test     |
+
+</route>
+
+### 知晓程序
+
+<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
+
+| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
+| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
+| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
+
+</route>
 
 ## 直播
 
@@ -735,11 +762,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 电影首发站
 
-<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
+<route name="电影" author="epirus" example="/dysfz" path="/dysfz/index"/>
 
 ### 电影天堂
 
-<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
+<route name="新片精品" author="imgss" example="/dytt" path="/dytt/index"/>
 
 ## 图片
 
@@ -751,7 +778,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu"/>
+<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu/index"/>
 
 <route name="分类" author="gee1k" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
 
@@ -823,7 +850,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Awesome Pigtails
 
-<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails"/>
+<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
 ## 二次元
 
@@ -869,7 +896,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 忧郁的弟弟
 
-<route name="文章" author="DIYgod" example="/mygalgame" path="mygalgame"/>
+<route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
 ### きららファンタジア｜奇拉拉幻想曲
 
@@ -1586,7 +1613,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-## 小说·文学
+## 小说·文学·阅读
+
+### 观止（每日一文）
+
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
 
 ### 笔趣阁
 
@@ -1904,20 +1935,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-### 观止（每日一文）
-
-<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
-
-### 知晓程序
-
-<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
-
-| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
-| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
-| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
-
-</route>
-
 ### 后续
 
 <route name="事件" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>
@@ -1933,24 +1950,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 腾讯大家
 
-<route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
-
-### 腾讯游戏开发者社区
-
-::: warning 注意
-
-有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
-
-:::
-
-<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
-
-| 热门 | 策划    | 程序 | 技术前沿 | 音频    | 项目管理 | 游戏运营 | 游戏测试 |
-| ---- | ------- | ---- | -------- | ------- | -------- | -------- | -------- |
-| hot  |
-| plan | program | tech | audio    | project | yunying  | test     |
-
-</route>
+<route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
 
 ### 抽屉
 

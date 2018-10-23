@@ -201,15 +201,12 @@ router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));
 // Dockone
 router.get('/dockone/weekly', require('./routes/dockone/weekly'));
 
-// 腾讯吐个槽
-router.get('/tucaoqq/post/:project/:key', require('./routes/tucaoqq/post'));
-
 // 开发者头条
 router.get('/toutiao/today', require('./routes/toutiao/today'));
 router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 
 // 众成翻译
-router.get('/zcfy/index', require('./routes/zcfy/index'));
+router.get('/zcfy', require('./routes/zcfy/index'));
 router.get('/zcfy/hot', require('./routes/zcfy/hot'));
 
 // 今日头条
@@ -419,11 +416,24 @@ router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
 // 开源中国
 router.get('/oschina/news', require('./routes/oschina/news'));
 
+// 腾讯大家
+router.get('/dajia', require('./routes/tencent/dajia/index'));
+
+// 腾讯游戏开发者社区
+router.get('/gameinstitute/community/:tag?', require('./routes/tencent/gameinstitute/community'));
+
 // 腾讯视频 SDK
-router.get('/qcloud/mlvb/changelog', require('./routes/qcloud/mlvb/changelog'));
+router.get('/qcloud/mlvb/changelog', require('./routes/tencent/qcloud/mlvb/changelog'));
+
+// 腾讯吐个槽
+router.get('/tucaoqq/post/:project/:key', require('./routes/tencent/tucaoqq/post'));
 
 // Bugly SDK
-router.get('/bugly/changelog/:platform', require('./routes/bugly/changelog'));
+router.get('/bugly/changelog/:platform', require('./routes/tencent/bugly/changelog'));
+
+// wechat
+router.get('/wechat/wasi/:id', require('./routes/tencent/wechat/wasi'));
+router.get('/wechat/announce', require('./routes/tencent/wechat/announce'));
 
 // All the Flight Deals
 router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
@@ -451,10 +461,6 @@ router.get('/appstore/xianmian', require('./routes/appstore/xianmian'));
 
 // Hopper
 router.get('/hopper/:lowestOnly/:from/:to?', require('./routes/hopper/index'));
-
-// wechat
-router.get('/wechat/wasi/:id', require('./routes/wechat/wasi'));
-router.get('/wechat/announce', require('./routes/wechat/announce'));
 
 // 马蜂窝
 router.get('/mafengwo/note/:type', require('./routes/mafengwo/note'));
@@ -612,13 +618,13 @@ router.get('/embassy/:country/:city?', require('./routes/embassy/index'));
 router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 
 // 电影首发站
-router.get('/dysfz/index', require('./routes/dysfz/index'));
+router.get('/dysfz', require('./routes/dysfz/index'));
 
 // きららファンタジア
 router.get('/kirara/news', require('./routes/kirara/news'));
 
 // 电影天堂
-router.get('/dytt/index', require('./routes/dytt/index'));
+router.get('/dytt', require('./routes/dytt/index'));
 
 // 趣头条
 router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));
@@ -664,15 +670,10 @@ router.get('/aozora/newbook/:count?', require('./routes/aozora/newbook'));
 // Hermes UK
 router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
 
-// 腾讯大家
-router.get('/dajia/index', require('./routes/dajia/'));
-
 // 甩甩尾巴
 router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 
-// 腾讯游戏开发者社区
-router.get('/gameinstitute/community/:tag?', require('./routes/gameinstitute/community'));
-
 // 抽屉新热榜
 router.get('/chouti/:subject?', require('./routes/chouti'));
+
 module.exports = router;
