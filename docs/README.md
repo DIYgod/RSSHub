@@ -1649,6 +1649,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
+### 学姿势
+
+<route name="学姿势最新文章" author="qwertyuiop6" example="/xzs" path="/xzs"/>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）

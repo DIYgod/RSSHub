@@ -330,6 +330,9 @@ router.get('/eztv/torrents/:imdb_id', require('./routes/eztv/imdb'));
 router.get('/smzdm/keyword/:keyword', require('./routes/smzdm/keyword'));
 router.get('/smzdm/ranking/:rank_type/:rank_id/:hour', require('./routes/smzdm/ranking'));
 
+// 学姿势
+router.get('/xzs', require('./routes/xzs/index'));
+
 // 新京报
 router.get('/bjnews/:cat', require('./routes/bjnews/news'));
 
