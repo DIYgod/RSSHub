@@ -38,11 +38,10 @@ module.exports = async (ctx) => {
             if (cache) {
                 return Promise.resolve(JSON.parse(cache));
             }
-            item.url = 'http://news.dwnews.com/global/news/2018-10-08/60089463.html';
             const response = await axios.get(item.url.replace('.html', '_all.html'));
             const $ = cheerio.load(response.data);
 
-            const result = utils.ProcessRank($, item);
+            const result = utils.ProcessRank($, ctx.params.type);
 
             const single = {
                 title: item.title,

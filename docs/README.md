@@ -298,7 +298,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="会员购新品上架" author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
 
-<route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/:id" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+<route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
 
 <route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
 
@@ -554,7 +554,7 @@ RSSHub 提供下列 API 接口:
 
 ### 众成翻译
 
-<route name="首页" author="SirM2z" example="/zcfy/index" path="/zcfy/index"/>
+<route name="首页" author="SirM2z" example="/zcfy" path="/zcfy/index"/>
 
 <route name="热门" author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
 
@@ -633,6 +633,32 @@ GitHub 官方也提供了一些 RSS:
 | 最新主题 | latest |
 | 精华主题 | digest |
 
+### 腾讯游戏开发者社区
+
+::: warning 注意
+
+有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
+
+:::
+
+<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
+
+| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
+| hot  | plan | program | tech     | audio | project  | yunying  | test     |
+
+</route>
+
+### 知晓程序
+
+<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
+
+| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
+| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
+| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
+
+</route>
+
 ## 直播
 
 ### 哔哩哔哩直播
@@ -658,6 +684,10 @@ GitHub 官方也提供了一些 RSS:
 ### 熊猫直播
 
 <route name="直播间开播下播" author="DIYgod" example="/panda/room/10300" path="/panda/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
+### 虎牙直播
+
+<route name="直播间开播" author="SettingDust" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
 
 ## 音视频
 
@@ -735,11 +765,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 电影首发站
 
-<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
+<route name="电影" author="epirus" example="/dysfz" path="/dysfz/index"/>
 
 ### 电影天堂
 
-<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
+<route name="新片精品" author="imgss" example="/dytt" path="/dytt/index"/>
 
 ## 图片
 
@@ -751,7 +781,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu"/>
+<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu/index"/>
 
 <route name="分类" author="gee1k" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
 
@@ -823,7 +853,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Awesome Pigtails
 
-<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails"/>
+<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
 ## 二次元
 
@@ -869,7 +899,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 忧郁的弟弟
 
-<route name="文章" author="DIYgod" example="/mygalgame" path="mygalgame"/>
+<route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
 ### きららファンタジア｜奇拉拉幻想曲
 
@@ -1284,6 +1314,37 @@ category 列表：
 <route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
 </route>
 
+### 西安电子科技大学
+
+<route name="教务处" author="ShadowySpirits" example="/xidian/jwc/xxfb" path="/xidian/jwc/:category?" :paramsDesc="['通知类别,默认为全部']">
+
+::: warning 注意
+
+全文内容需使用校园网或 VPN 获取
+:::
+
+| 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
+| :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+
+### 东莞理工学院
+
+<route name="教务处通知" author="AnyMoe" example="/dgut/jwc/" path="/universities/dgut/jwc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 教务公告 | 教学信息 |
+| -------- | -------- |
+| 1        | 2        |
+
+</route>
+
+<route name="学工部动态" author="AnyMoe" example="/dgut/xsc/" path="/universities/dgut/xsc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 学工动态 | 通知公告 | 网上公示 |
+| -------- | -------- | -------- |
+| 1        | 2        | 4        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
@@ -1441,6 +1502,8 @@ Category 列表:
 
 <route name="广州市" author="xyqfer" example="/tingshuitz/guangzhou" path="/tingshuitz/guangzhou"/>
 
+<route name="东莞市" author="victoriqueko" example="/tingshuitz/dongguan" path="/tingshuitz/dongguan"/>
+
 ### 中央气象台
 
 <route name="全国气象预警" author="ylc395" example="/weatheralarm" path="/weatheralarm">
@@ -1586,7 +1649,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-## 小说·文学
+## 小说·文学·阅读
+
+### 观止（每日一文）
+
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
 
 ### 笔趣阁
 
@@ -1904,20 +1971,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-### 观止（每日一文）
-
-<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
-
-### 知晓程序
-
-<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
-
-| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
-| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
-| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
-
-</route>
-
 ### 后续
 
 <route name="事件" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>
@@ -1933,21 +1986,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 腾讯大家
 
-<route name="首页" author="xyqfer" example="/dajia/index" path="/dajia/index"/>
+<route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
 
-### 腾讯游戏开发者社区
+### 抽屉
 
-::: warning 注意
+<route name="新热榜" author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
 
-有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
-
-:::
-
-<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
-
-| 热门 | 策划    | 程序 | 技术前沿 | 音频    | 项目管理 | 游戏运营 | 游戏测试 |
-| ---- | ------- | ---- | -------- | ------- | -------- | -------- | -------- |
-| hot  |
-| plan | program | tech | audio    | project | yunying  | test     |
+| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
+| ---- | ----- | ----- | ---- | --------- | -------- |
+| hot  | news  | scoff | pic  | tec       | ask      |
 
 </route>
