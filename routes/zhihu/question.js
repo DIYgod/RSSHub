@@ -2,7 +2,8 @@ const axios = require('../../utils/axios');
 const utils = require('./utils');
 
 module.exports = async (ctx) => {
-    const { questionId, sort = 'default' } = ctx.params;
+    const { questionId } = ctx.params;
+    const sort = 'created';
     const limit = 20;
     const include = `data[*].content.excerpt&limit=${limit}&offset=0`;
     const url = `https://www.zhihu.com/api/v4/questions/${questionId}/answers?include=${include}&sort_by=${sort}`;

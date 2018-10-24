@@ -404,7 +404,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist"/>
 
-<route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId/:sort?" :paramsDesc="['问题 id', '回答排序方式，默认为`default`默认排序，可选`created`按时间排序']"/>
+<route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']"/>
 
 ### pixiv
 
