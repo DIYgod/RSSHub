@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 const sourceTimezoneOffset = -8;
 module.exports = async (ctx) => {
     const category = ctx.params.category;
-    const url = `https://www.g-cores.com/categories/${category}/originals`;
+    const url = `https://www.gcores.com/categories/${category}/originals`;
     const res = await axios({
         method: 'get',
         url: url,

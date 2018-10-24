@@ -236,6 +236,8 @@ Bot initialization required: Add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_
 
 </routeEN>
 
+<routeEn name="Sticker Pack" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
+
 ## Travel
 
 ### All the Flight Deals
