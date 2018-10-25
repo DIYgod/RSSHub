@@ -32,10 +32,10 @@ module.exports = async (ctx, next) => {
 
     // telegram instant view
     if (ctx.state.data && ctx.query && ctx.query.tgiv) {
-        ctx.state.data.item.map(item => {
-            const encodedlink = encodeURIComponent(item.link)
-            item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.query.tgiv}`
-            return item
-        })
+        ctx.state.data.item.map((item) => {
+            const encodedlink = encodeURIComponent(item.link);
+            item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.query.tgiv}`;
+            return item;
+        });
     }
 };
