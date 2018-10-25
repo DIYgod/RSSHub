@@ -79,6 +79,16 @@ filterout 去掉不要的内容
 
 举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
+### 输出 Telegram 即时预览链接
+
+可以输出 Telegram 可识别的即时预览链接, 主要用于文章类 RSS
+
+Telegram 即时预览模式需要在官网制作页面处理模板，请前往[官网](https://instantview.telegram.org/)了解更多
+
+-   tgiv: 模板 hash，可从模板制作页面分享出来的链接末尾获取（`&rhash=`后面跟着的字符串）
+
+举例: <https://rsshub.app//novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+
 ### 输出格式
 
 RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出格式, 在路由末尾添加 `.rss` `.atom` 或 `.json` 即可请求对应输出格式, 缺省为 RSS 2.0
