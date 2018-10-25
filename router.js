@@ -163,6 +163,7 @@ router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
 router.get('/zhihu/pin/hotlist', require('./routes/zhihu/pin/hotlist'));
+router.get('/zhihu/question/:questionId', require('./routes/zhihu/question'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
