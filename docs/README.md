@@ -444,6 +444,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="热门同城活动" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
 
+<route name="商务印书馆新书速递" author="xyqfer" example="/douban/commercialpress/latest" path="/douban/commercialpress/latest"/>
+
 ### Disqus
 
 <route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>

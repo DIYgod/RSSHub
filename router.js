@@ -192,6 +192,7 @@ router.get('/douban/explore', require('./routes/douban/explore'));
 router.get('/douban/music/latest', require('./routes/douban/latest_music'));
 router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 router.get('/douban/event/hot/:locationId', require('./routes/douban/event/hot'));
+router.get('/douban/commercialpress/latest', require('./routes/douban/commercialpress/latest'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
