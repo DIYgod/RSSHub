@@ -2001,3 +2001,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | hot  | news  | scoff | pic  | tec       | ask      |
 
 </route>
+
+### 油价
+
+<route name="今日油价" author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>

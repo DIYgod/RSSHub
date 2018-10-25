@@ -689,4 +689,7 @@ router.get('/chouti/:subject?', require('./routes/chouti'));
 // 西安电子科技大学
 router.get('/xidian/jwc/:category?', require('./routes/xidian/jwc'));
 
+// 油价
+router.get('/oilprice/:area', require('./routes/oilprice'));
+
 module.exports = router;
