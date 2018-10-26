@@ -700,6 +700,6 @@ router.get('/oilprice/:area', require('./routes/oilprice'));
 
 // nHentai
 router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
-router.get('/nhentai/:key/:artist', require('./routes/nhentai/other'));
+router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
 module.exports = router;

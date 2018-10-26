@@ -11,7 +11,7 @@ module.exports = async (ctx) => {
         return;
     }
 
-    const list = await getList(`https://nhentai.net/${key}/${keyword}`);
+    const list = await getList(`https://nhentai.net/${key}/${keyword.toLowerCase().replace(' ', '-')}`);
     const details = await Promise.all(list.map(getDetailWithCache.bind(null, ctx.cache)));
 
     ctx.state.data = {
