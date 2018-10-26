@@ -17,7 +17,7 @@ module.exports = async (ctx) => {
                 title: `${data.live_intro}`,
                 pubDate: new Date(data.rec_live_time).toUTCString(),
                 guid: data.uid,
-                link: url,
+                link: data.game_liveLink,
                 image: data.game_avatarUrl180,
             },
         ];
