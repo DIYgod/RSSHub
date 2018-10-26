@@ -87,7 +87,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 -   tgiv: 模板 hash，可从模板制作页面分享出来的链接末尾获取（`&rhash=`后面跟着的字符串）
 
-举例: <https://rsshub.app//novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+举例: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
 
 ### 输出格式
 
