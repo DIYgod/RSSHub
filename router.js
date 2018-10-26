@@ -689,6 +689,9 @@ router.get('/chouti/:subject?', require('./routes/chouti'));
 // 西安电子科技大学
 router.get('/xidian/jwc/:category?', require('./routes/xidian/jwc'));
 
+// 优酷
+router.get('/youku/channel/:channelId/:embed?', require('./routes/youku/channel'));
+
 // 油价
 router.get('/oilprice/:area', require('./routes/oilprice'));
 
