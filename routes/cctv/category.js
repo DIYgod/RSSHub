@@ -9,7 +9,7 @@ module.exports = async (ctx) => {
     } else {
         // 央视新闻
         const getNews = require('./utils/news');
-        responseData = await getNews(category);
+        responseData = await getNews(category, ctx);
     }
 
     ctx.state.data = responseData;

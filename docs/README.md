@@ -404,6 +404,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist"/>
 
+<route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']"/>
+
 ### pixiv
 
 <route name="用户收藏" author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
@@ -441,6 +443,8 @@ RSSHub 提供下列 API 接口:
 <route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
 
 <route name="热门同城活动" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
+
+<route name="商务印书馆新书速递" author="xyqfer" example="/douban/commercialpress/latest" path="/douban/commercialpress/latest"/>
 
 ### Disqus
 
@@ -687,7 +691,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 虎牙直播
 
-<route name="直播间开播" author="SettingDust" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+<route name="直播间开播" author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
 
 ## 音视频
 
@@ -770,6 +774,10 @@ GitHub 官方也提供了一些 RSS:
 ### 电影天堂
 
 <route name="新片精品" author="imgss" example="/dytt" path="/dytt/index"/>
+
+### 优酷
+
+<route name="频道" author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ## 图片
 
@@ -2001,3 +2009,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | hot  | news  | scoff | pic  | tec       | ask      |
 
 </route>
+
+### 油价
+
+<route name="今日油价" author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>

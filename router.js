@@ -163,6 +163,7 @@ router.get('/zhihu/zhuanlan/:id', require('./routes/zhihu/zhuanlan'));
 router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
 router.get('/zhihu/pin/hotlist', require('./routes/zhihu/pin/hotlist'));
+router.get('/zhihu/question/:questionId', require('./routes/zhihu/question'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
@@ -191,6 +192,7 @@ router.get('/douban/explore', require('./routes/douban/explore'));
 router.get('/douban/music/latest', require('./routes/douban/latest_music'));
 router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 router.get('/douban/event/hot/:locationId', require('./routes/douban/event/hot'));
+router.get('/douban/commercialpress/latest', require('./routes/douban/commercialpress/latest'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -689,5 +691,11 @@ router.get('/xidian/jwc/:category?', require('./routes/xidian/jwc'));
 
 // Westore
 router.get('/westore/new', require('./routes/westore/new'));
+
+// 优酷
+router.get('/youku/channel/:channelId/:embed?', require('./routes/youku/channel'));
+
+// 油价
+router.get('/oilprice/:area', require('./routes/oilprice'));
 
 module.exports = router;
