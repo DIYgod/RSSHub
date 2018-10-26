@@ -1657,6 +1657,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
+### Westore
+
+<route name="新品" author="xyqfer" example="/westore/new" path="/westore/new"/>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
