@@ -600,6 +600,9 @@ router.get('/dlu/jiaowu/news', require('./routes/universities/dlu/jiaowu/news'))
 router.get('/dgut/jwc/:type?', require('./routes/universities/dgut/jwc'));
 router.get('/dgut/xsc/:type?', require('./routes/universities/dgut/xsc'));
 
+// 同济大学
+router.get('/tju/sse/:type?', require('./routes/universities/tju/sse/notice'));
+
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
 
