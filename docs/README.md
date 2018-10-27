@@ -334,6 +334,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']"/>
 
+<route name="热搜榜" author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" />
+
 ### 贴吧
 
 <route name="帖子列表" author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']"/>

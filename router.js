@@ -125,6 +125,7 @@ router.get('/bangumi/subject/:id', require('./routes/bangumi/subject'));
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
 router.get('/weibo/user2/:uid', require('./routes/weibo/user2'));
 router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
+router.get('/weibo/search/hot', require('./routes/weibo/search/hot'));
 
 // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
