@@ -22,8 +22,9 @@ exports.getDetail = async (url) => {
     galleryThumbs = galleryThumbs.map((src) => src.replace(/(.+)(\d+)t\.(.+)/, (_, p1, p2, p3) => `${p1}${p2}.${p3}`));
     galleryThumbs = galleryThumbs.map((src) => src.replace('t.nhentai.net', 'i.nhentai.net'));
 
-    const renderImg = (src) => `<img referrerpolicy="no-referrer" src="${src}" />`;
+    const renderImg = (src) => `<img referrerpolicy="no-referrer" src="${src}" /><br />`;
     return {
+        title: $('div#info > h2').text() || $('div#info > h1').text(),
         pubDate: new Date($('time').attr('datetime')).toUTCString(),
         guid: `full:${url}`,
         description: `
