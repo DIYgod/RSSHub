@@ -26,7 +26,7 @@ const ProcessHref = (content) => {
         cheerio
             .load(v)('a')
             .each((j, y) => {
-                y.attribs.href = y.attribs.href.replace('dongqiudi:///', 'https://www.dongqiudi.com/archive/');
+                y.attribs.href = y.attribs.href.replace('dongqiudi:///news', 'https://www.dongqiudi.com/share/article');
             });
     });
     return content;
