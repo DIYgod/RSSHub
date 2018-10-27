@@ -907,31 +907,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="小组话题" author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
-### 米哈游
-
-<route name="崩坏 2-游戏公告" author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
-
-| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
-| -------- | -------- | -------- | -------- |
-| new      | version  | gach     | event    |
-
-</route>
-
-<route name="崩坏 3-游戏公告" author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
-
-| 最新   | 公告   | 新闻 | 活动     | 攻略     |
-| ------ | ------ | ---- | -------- | -------- |
-| latest | notice | news | activity | strategy |
-
-</route>
-
 ### 忧郁的弟弟
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
-
-### きららファンタジア｜奇拉拉幻想曲
-
-<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
 
 ## 程序更新
 
@@ -1724,6 +1702,28 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | news | gl   | resource | blockchain |
 
 </route>
+
+### 米哈游
+
+<route name="崩坏 2-游戏公告" author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
+
+| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
+| -------- | -------- | -------- | -------- |
+| new      | version  | gach     | event    |
+
+</route>
+
+<route name="崩坏 3-游戏公告" author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
+
+| 最新   | 公告   | 新闻 | 活动     | 攻略     |
+| ------ | ------ | ---- | -------- | -------- |
+| latest | notice | news | activity | strategy |
+
+</route>
+
+### きららファンタジア｜奇拉拉幻想曲
+
+<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
 
 ### 旅法师营地
 
