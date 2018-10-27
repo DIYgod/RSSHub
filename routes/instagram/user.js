@@ -18,28 +18,50 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(response.data);
 
-    // 获取组图
-    const images = await Promise.all(
+    // retrieve media objects
+    const media = await Promise.all(
         list.map(async (item) => {
             item = item.node;
-            if (item.__typename === 'GraphSidecar') {
-                const url = `https://www.instagram.com/p/${item.shortcode}`;
 
-                const cache = await ctx.cache.get(url);
-                if (cache) {
-                    return Promise.resolve(JSON.parse(cache));
-                }
+            const url = `https://www.instagram.com/p/${item.shortcode}`;
+            const cache = await ctx.cache.get(item.shortcode);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+
+            if (item.__typename === 'GraphImage') {
+                const single = {
+                    image: item.display_url,
+                };
+
+                ctx.cache.set(item.shortcode, JSON.stringify(single), 24 * 60 * 60);
+                return Promise.resolve([single]);
+            } else if (item.__typename === 'GraphSidecar') {
                 const response = await axios({
                     method: 'get',
                     url,
                 });
                 const data = JSON.parse(response.data.match(/<script type="text\/javascript">window._sharedData = (.*);<\/script>/)[1]) || {};
-                const single = data.entry_data.PostPage[0].graphql.shortcode_media.edge_sidecar_to_children.edges.map((item) => item.node.display_url);
+                const single = data.entry_data.PostPage[0].graphql.shortcode_media.edge_sidecar_to_children.edges.map((item) => ({
+                    image: item.node.display_url,
+                    video: item.node.video_url,
+                }));
 
-                ctx.cache.set(url, JSON.stringify(single), 24 * 60 * 60);
+                ctx.cache.set(item.shortcode, JSON.stringify(single), 24 * 60 * 60);
                 return Promise.resolve(single);
-            } else {
-                return Promise.resolve([item.display_url]);
+            } else if (item.__typename === 'GraphVideo') {
+                const response = await axios({
+                    method: 'get',
+                    url,
+                });
+                const data = JSON.parse(response.data.match(/<script type="text\/javascript">window._sharedData = (.*);<\/script>/)[1]) || {};
+                const single = {
+                    image: data.entry_data.PostPage[0].graphql.shortcode_media.display_url,
+                    video: data.entry_data.PostPage[0].graphql.shortcode_media.video_url,
+                };
+
+                ctx.cache.set(item.shortcode, JSON.stringify(single), 24 * 60 * 60);
+                return Promise.resolve([single]);
             }
         })
     );
@@ -50,25 +72,36 @@ module.exports = async (ctx) => {
         description: $('meta[name="description"]').attr('content'),
         item: list.map((item, index) => {
             item = item.node;
-            let type = '';
-            let tip = '';
-            switch (item.__typename) {
-                case 'GraphVideo':
-                    type = '[视频/Video] ';
-                    tip = '打开原文播放视频/click to play the video: ';
-                    break;
-                case 'GraphSidecar':
-                    type = '[组图/Carousel] ';
-                    break;
+            let image = 0;
+            let video = 0;
+
+            let content = '';
+
+            for (let i = 0; i < media[index].length; i++) {
+                if (media[index][i].image) {
+                    content += `<img referrerpolicy="no-referrer" src="${media[index][i].image}"><br>`;
+                    image++;
+                }
+
+                if (media[index][i].video) {
+                    content += `<video width="100%" controls> <source src="${media[index][i].video}" type="video/mp4"> Your RSS reader does not support video playback. </video>`;
+                    video++;
+                }
             }
-            let imgTPL = '';
-            for (let i = 0; i < images[index].length; i++) {
-                imgTPL += `<img referrerpolicy="no-referrer" src="${images[index][i]}"><br>`;
+
+            let title = (item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题/Untitled';
+
+            if (image > 1) {
+                title = `[组图/Carousel]${title}`;
             }
-            const title = (item.edge_media_to_caption.edges && item.edge_media_to_caption.edges[0] && item.edge_media_to_caption.edges[0].node.text) || '无题/Untitled';
+
+            if (video > 0) {
+                title = `[视频/Video]${title}`;
+            }
+
             return {
-                title: `${type}${title}`,
-                description: `${title}<br>${tip}${imgTPL}`,
+                title: `${title}`,
+                description: `${title}<br>${content}`,
                 pubDate: new Date(item.taken_at_timestamp * 1000).toUTCString(),
                 link: `https://www.instagram.com/p/${item.shortcode}/`,
             };

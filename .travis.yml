@@ -1,6 +1,7 @@
 language: node_js
 
-node_js: stable
+node_js:
+  - "lts/*"
 
 install:
   - yarn
