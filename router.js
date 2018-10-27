@@ -323,6 +323,9 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 router.get('/3dm/:name/:type', require('./routes/3dm/game'));
 router.get('/3dm/news', require('./routes/3dm/news_center'));
 
+// 旅法师营地
+router.get('/lfsyd/:typecode', require('./routes/lfsyd/index'));
+
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
 router.get('/ximalaya/album/:id', require('./routes/ximalaya/album'));

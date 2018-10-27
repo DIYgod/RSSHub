@@ -1693,6 +1693,34 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="新品" author="xyqfer" example="/westore/new" path="/westore/new"/>
 
+## 游戏资讯
+
+### 3DMGame
+
+<route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
+
+<route name="游戏资讯" author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
+
+| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
+| ---- | ---- | -------- | ---------- |
+| news | gl   | resource | blockchain |
+
+</route>
+
+### 旅法师营地
+
+<route name="旅法师营地" author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
+
+| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王　 | 　电子游戏 | 　手机游戏 | 　桌面游戏 |
+| -------- | -------- | ------ | ------ | -------- | ---------- | ---------- | ---------- |
+| 1        | 2        | 3      | 14     | 16       | 4          | 22         | 9          |
+
+| 影之诗 | Artifact 　 | 玩家杂谈 | 营地电台　 | 2047 　 | 魂武 |
+| ------ | ----------- | -------- | ---------- | ------- | ---- |
+| 17     | 67          | 21       | 5          | 62      | 68   |
+
+</route>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
@@ -1878,18 +1906,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
 | -------- | -------- | ---------- | ---------- |
 | topic    | news     | technews   | blockchain |
-
-</route>
-
-### 3DMGame
-
-<route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
-
-<route name="游戏资讯" author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
-
-| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
-| ---- | ---- | -------- | ---------- |
-| news | gl   | resource | blockchain |
 
 </route>
 
