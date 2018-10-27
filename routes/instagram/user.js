@@ -24,7 +24,7 @@ module.exports = async (ctx) => {
             item = item.node;
 
             const url = `https://www.instagram.com/p/${item.shortcode}`;
-            const cache = await ctx.cache.get(item.shortcode);
+            const cache = await ctx.cache.get(url);
             if (cache) {
                 return Promise.resolve(JSON.parse(cache));
             }
@@ -34,7 +34,7 @@ module.exports = async (ctx) => {
                     image: item.display_url,
                 };
 
-                ctx.cache.set(item.shortcode, JSON.stringify(single), 24 * 60 * 60);
+                ctx.cache.set(url, JSON.stringify([single]), 24 * 60 * 60);
                 return Promise.resolve([single]);
             } else if (item.__typename === 'GraphSidecar') {
                 const response = await axios({
@@ -47,7 +47,7 @@ module.exports = async (ctx) => {
                     video: item.node.video_url,
                 }));
 
-                ctx.cache.set(item.shortcode, JSON.stringify(single), 24 * 60 * 60);
+                ctx.cache.set(url, JSON.stringify(single), 24 * 60 * 60);
                 return Promise.resolve(single);
             } else if (item.__typename === 'GraphVideo') {
                 const response = await axios({
@@ -60,7 +60,7 @@ module.exports = async (ctx) => {
                     video: data.entry_data.PostPage[0].graphql.shortcode_media.video_url,
                 };
 
-                ctx.cache.set(item.shortcode, JSON.stringify(single), 24 * 60 * 60);
+                ctx.cache.set(url, JSON.stringify([single]), 24 * 60 * 60);
                 return Promise.resolve([single]);
             }
         })
