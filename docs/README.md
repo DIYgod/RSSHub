@@ -2079,3 +2079,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 油价
 
 <route name="今日油价" author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
+
+### nHentai
+
+<route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
+<route name="高级搜索" author="MegrezZhu" example="/nhentai/search/translated" path="/nhentai/search/:keyword" :paramsDesc="['用于搜索的关键词，用法详见[官网](https://nhentai.net/info/)']" />
