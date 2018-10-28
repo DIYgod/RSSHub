@@ -698,4 +698,7 @@ router.get('/youku/channel/:channelId/:embed?', require('./routes/youku/channel'
 // 油价
 router.get('/oilprice/:area', require('./routes/oilprice'));
 
+// Auto Trader
+router.get('/autotrader/:query', require('./routes/autotrader'));
+
 module.exports = router;
