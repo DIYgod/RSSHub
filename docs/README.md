@@ -1,4 +1,4 @@
----
+
 sidebar: auto
 ---
 
@@ -334,6 +334,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']"/>
 
+<route name="热搜榜" author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" />
+
 ### 贴吧
 
 <route name="帖子列表" author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']"/>
@@ -416,6 +418,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']"/>
 
+<route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']"/>
+
 ### pixiv
 
 <route name="用户收藏" author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
@@ -450,11 +454,19 @@ RSSHub 提供下列 API 接口:
 
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
-<route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
+<route name="最新增加的音乐" author="fengkx xyqfer" example="/douban/music/latest/chinese" path="/douban/music/latest/:area?" :paramsDesc="['区域类型，默认全部']">
+
+| 华语    | 欧美    | 日韩        |
+| ------- | ------- | ----------- |
+| chinese | western | japankorean |
+
+</route>
 
 <route name="热门同城活动" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
 
 <route name="商务印书馆新书速递" author="xyqfer" example="/douban/commercialpress/latest" path="/douban/commercialpress/latest"/>
+
+<route name="豆瓣书店" author="xyqfer" example="/douban/bookstore" path="/douban/bookstore"/>
 
 ### Disqus
 
@@ -897,31 +909,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="小组话题" author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
-### 米哈游
-
-<route name="崩坏 2-游戏公告" author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
-
-| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
-| -------- | -------- | -------- | -------- |
-| new      | version  | gach     | event    |
-
-</route>
-
-<route name="崩坏 3-游戏公告" author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
-
-| 最新   | 公告   | 新闻 | 活动     | 攻略     |
-| ------ | ------ | ---- | -------- | -------- |
-| latest | notice | news | activity | strategy |
-
-</route>
-
 ### 忧郁的弟弟
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
-
-### きららファンタジア｜奇拉拉幻想曲
-
-<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
 
 ## 程序更新
 
@@ -1223,11 +1213,29 @@ category 列表：
 
 ### 南京理工大学
 
-<route name="教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
+<route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
 
-<route name="财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 新闻及通知, 2 办事指南']"/>
+| 教师通知 | 学生通知 | 新闻 | 学院动态 |
+| -------- | -------- | ---- | -------- |
+| 1        | 2        | 3    | 4        |
 
-<route name="研究生院" author="MilkShakeYoung" example="/njust/gs/2" path="/universities/njust/gs/:type" :paramsDesc="['1 博闻讲堂, 2 学术公告']"/>
+</route>
+
+<route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 为新闻及通知, 2 为办事指南']"/>
+
+| 新闻及通知 | 办事指南 |
+| ---------- | -------- |
+| 1          | 2        |
+
+</route>
+
+<route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/1" path="/universities/njust/gs/:type" :paramsDesc="['1 为通知公告, 2 为学术公告']"/>
+
+| 通知公告 | 学术公告 |
+| -------- | -------- |
+| 1        | 2        |
+
+</route>
 
 ### 四川旅游学院
 
@@ -1362,6 +1370,18 @@ category 列表：
 | 1        | 2        | 4        |
 
 </route>
+
+### 同济大学
+
+ <route name="同济大学软件学院通知" author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
+
+| 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
+| ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+| bkstz      | yjstz      | jgtz     | qttz     | xwdt     | xyxw     | xyhd     |
+
+注意: `qttz` 与 `xwdt` 在原网站等价.
+
+ </route>
 
 ## 传统媒体
 
@@ -1671,6 +1691,56 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="新品" author="xyqfer" example="/westore/new" path="/westore/new"/>
 
+## 游戏资讯
+
+### 3DMGame
+
+<route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
+
+<route name="游戏资讯" author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
+
+| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
+| ---- | ---- | -------- | ---------- |
+| news | gl   | resource | blockchain |
+
+</route>
+
+### 米哈游
+
+<route name="崩坏 2-游戏公告" author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
+
+| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
+| -------- | -------- | -------- | -------- |
+| new      | version  | gach     | event    |
+
+</route>
+
+<route name="崩坏 3-游戏公告" author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
+
+| 最新   | 公告   | 新闻 | 活动     | 攻略     |
+| ------ | ------ | ---- | -------- | -------- |
+| latest | notice | news | activity | strategy |
+
+</route>
+
+### きららファンタジア｜奇拉拉幻想曲
+
+<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
+
+### 旅法师营地
+
+<route name="旅法师营地" author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
+
+| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王　 | 　电子游戏 | 　手机游戏 | 　桌面游戏 |
+| -------- | -------- | ------ | ------ | -------- | ---------- | ---------- | ---------- |
+| 1        | 2        | 3      | 14     | 16       | 4          | 22         | 9          |
+
+| 影之诗 | Artifact 　 | 玩家杂谈 | 营地电台　 | 2047 　 | 魂武 |
+| ------ | ----------- | -------- | ---------- | ------- | ---- |
+| 17     | 67          | 21       | 5          | 62      | 68   |
+
+</route>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
@@ -1859,18 +1929,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-### 3DMGame
-
-<route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
-
-<route name="游戏资讯" author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
-
-| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
-| ---- | ---- | -------- | ---------- |
-| news | gl   | resource | blockchain |
-
-</route>
-
 ### 机核网
 
 <route name="分类" author="MoguCloud" example="/gcores/category/1" path="/gcores/category/:category" :paramsDesc="['分类名']">
@@ -2023,6 +2081,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 油价
 
 <route name="今日油价" author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
+
+### nHentai
+
+<route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
+<route name="高级搜索" author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-&quote;mosaic+censorship&quote;" path="/nhentai/search/:keyword" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入，但空格等特殊符号是否会转换取决于浏览器和阅读器的实现。用法详见[官网](https://nhentai.net/info/)']" />
 
 ### AutoTrader
 
