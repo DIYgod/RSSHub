@@ -27,10 +27,23 @@ module.exports = async (ctx) => {
             let keyFacts = '<table><tr>';
             $('.keyFacts__list .keyFacts__label').each((i, e) => {
                 keyFacts += `<td>${$(e).text()}</td>`;
-                if (i === 3) {
+                if ((i + 1) % 4 === 0) {
                     keyFacts += '</tr><tr>';
                 }
             });
+            keyFacts += '</tr><tr>';
+
+            $('.fpaSpecifications__economy .fpaSpecifications__listItem').each((i, e) => {
+                keyFacts += `<td>${$(e)
+                    .find('.fpaSpecifications__term')
+                    .text()}: ${$(e)
+                    .find('.fpaSpecifications__description')
+                    .text()}</td>`;
+                if ((i + 1) % 4 === 0) {
+                    keyFacts += '</tr><tr>';
+                }
+            });
+
             keyFacts += '</tr></table><br/>';
 
             let images = '';
