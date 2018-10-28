@@ -1,4 +1,5 @@
 const ProcessFeed = ($, link) => {
+    const title = $('h1').text();
     let content = $('div.story-container');
 
     // 处理封面图片
@@ -27,7 +28,7 @@ const ProcessFeed = ($, link) => {
     });
     content = content.html();
 
-    return { content, author };
+    return { content, author, title };
 };
 
 module.exports = {

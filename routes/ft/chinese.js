@@ -6,13 +6,14 @@ const parser = new Parser();
 
 module.exports = async (ctx) => {
     let feed;
+    const { site = 'www' } = ctx.query;
 
     if (ctx.params.channel) {
         let channel = ctx.params.channel.toLowerCase();
         channel = channel.split('-').join('/');
 
         try {
-            feed = await parser.parseURL(`http://www.ftchinese.com/rss/${channel}`);
+            feed = await parser.parseURL(`http://${site}.ftchinese.com/rss/${channel}`);
         } catch (error) {
             ctx.state.data = {
                 title: `FT 中文网 ${channel} 不存在`,
@@ -21,7 +22,7 @@ module.exports = async (ctx) => {
             return;
         }
     } else {
-        feed = await parser.parseURL('http://www.ftchinese.com/rss/feed');
+        feed = await parser.parseURL(`http://${site}.ftchinese.com/rss/feed`);
     }
 
     const items = await Promise.all(
@@ -36,7 +37,7 @@ module.exports = async (ctx) => {
             const result = utils.ProcessFeed($, item.link);
 
             const single = {
-                title: item.title,
+                title: result.title,
                 description: result.content,
                 author: result.author,
                 pubDate: item.pubDate,
