@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
         items = [
             {
                 title: `${data.live_intro}`,
-                pubDate: new Date(data.rec_live_time).toUTCString(),
+                pubDate: new Date(data.rec_live_time * 1000).toUTCString(),
                 guid: data.uid,
                 link: data.game_liveLink,
                 image: data.game_avatarUrl180,
@@ -25,7 +25,7 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: `${data.game_nick}的虎牙直播`,
-        link: url,
+        link: `https://huya.com/${id}`,
         item: items,
     };
 };
