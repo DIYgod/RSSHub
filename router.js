@@ -195,6 +195,7 @@ router.get('/douban/music/latest/:area?', require('./routes/douban/latest_music'
 router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 router.get('/douban/event/hot/:locationId', require('./routes/douban/event/hot'));
 router.get('/douban/commercialpress/latest', require('./routes/douban/commercialpress/latest'));
+router.get('/douban/bookstore', require('./routes/douban/bookstore'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));

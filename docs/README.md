@@ -466,6 +466,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="商务印书馆新书速递" author="xyqfer" example="/douban/commercialpress/latest" path="/douban/commercialpress/latest"/>
 
+<route name="豆瓣书店" author="xyqfer" example="/douban/bookstore" path="/douban/bookstore"/>
+
 ### Disqus
 
 <route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
