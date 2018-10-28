@@ -711,4 +711,7 @@ router.get('/oilprice/:area', require('./routes/oilprice'));
 router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
 router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
+// 看漫画
+router.get('/manhuagui/comic/:id', require('./routes/manhuagui/comic'));
+
 module.exports = router;

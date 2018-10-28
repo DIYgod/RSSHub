@@ -913,6 +913,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
+### 看漫画
+
+<route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']">
+
 ## 程序更新
 
 ### RSSHub
