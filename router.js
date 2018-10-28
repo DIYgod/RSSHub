@@ -125,6 +125,7 @@ router.get('/bangumi/subject/:id', require('./routes/bangumi/subject'));
 router.get('/weibo/user/:uid', require('./routes/weibo/user'));
 router.get('/weibo/user2/:uid', require('./routes/weibo/user2'));
 router.get('/weibo/keyword/:keyword', require('./routes/weibo/keyword'));
+router.get('/weibo/search/hot', require('./routes/weibo/search/hot'));
 
 // 贴吧
 router.get('/tieba/forum/:kw', require('./routes/tieba/forum'));
@@ -164,6 +165,7 @@ router.get('/zhihu/daily', require('./routes/zhihu/daily'));
 router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
 router.get('/zhihu/pin/hotlist', require('./routes/zhihu/pin/hotlist'));
 router.get('/zhihu/question/:questionId', require('./routes/zhihu/question'));
+router.get('/zhihu/topic/:topicId', require('./routes/zhihu/topic'));
 
 // 妹子图
 router.get('/mzitu', require('./routes/mzitu/category'));
@@ -189,10 +191,11 @@ router.get('/douban/movie/later', require('./routes/douban/later'));
 router.get('/douban/movie/ustop', require('./routes/douban/ustop'));
 router.get('/douban/group/:groupid', require('./routes/douban/group'));
 router.get('/douban/explore', require('./routes/douban/explore'));
-router.get('/douban/music/latest', require('./routes/douban/latest_music'));
+router.get('/douban/music/latest/:area?', require('./routes/douban/latest_music'));
 router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 router.get('/douban/event/hot/:locationId', require('./routes/douban/event/hot'));
 router.get('/douban/commercialpress/latest', require('./routes/douban/commercialpress/latest'));
+router.get('/douban/bookstore', require('./routes/douban/bookstore'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -320,6 +323,9 @@ router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 // 3dm
 router.get('/3dm/:name/:type', require('./routes/3dm/game'));
 router.get('/3dm/news', require('./routes/3dm/news_center'));
+
+// 旅法师营地
+router.get('/lfsyd/:typecode', require('./routes/lfsyd/index'));
 
 // 喜马拉雅
 router.get('/ximalaya/album/:classify/:id', require('./routes/ximalaya/album'));
@@ -594,6 +600,9 @@ router.get('/dlu/jiaowu/news', require('./routes/universities/dlu/jiaowu/news'))
 // 东莞理工学院
 router.get('/dgut/jwc/:type?', require('./routes/universities/dgut/jwc'));
 router.get('/dgut/xsc/:type?', require('./routes/universities/dgut/xsc'));
+
+// 同济大学
+router.get('/tju/sse/:type?', require('./routes/universities/tju/sse/notice'));
 
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
