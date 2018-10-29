@@ -711,4 +711,7 @@ router.get('/oilprice/:area', require('./routes/oilprice'));
 router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
 router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
+// AcFun
+router.get('/acfun/bangumi/:id', require('./routes/acfun/bangumi'));
+
 module.exports = router;

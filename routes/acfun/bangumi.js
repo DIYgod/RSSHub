@@ -1,0 +1,43 @@
+const axios = require('../../utils/axios');
+
+module.exports = async (ctx) => {
+    const { id } = ctx.params;
+    const url = `http://www.acfun.cn/bangumi/aa${id}`;
+
+    const bangumiPage = await axios({
+        method: 'get',
+        url,
+        headers: {
+            Referer: 'http://www.acfun.cn',
+        },
+    });
+    const albumInfo = JSON.parse(bangumiPage.data.match(/<script>var albumInfo = (.*)<\/script>/)[1]) || {};
+    const api = `http://www.acfun.cn/album/abm/bangumis/video?albumId=${id}&num=1&size=${albumInfo.contentsCount || 9999}`;
+
+    const response = await axios({
+        method: 'get',
+        url: api,
+        headers: {
+            Referer: 'http://www.acfun.cn',
+        },
+    });
+    const data = response.data.data;
+
+    ctx.state.data = {
+        title: albumInfo.title,
+        link: url,
+        description: albumInfo.intro,
+        item: data.content
+            .map((item) => {
+                const video = item.videos[0] || {};
+
+                return {
+                    title: `${video.episodeName}-${video.newTitle}`,
+                    description: `<img referrerpolicy="no-referrer" src="${video.image}">`,
+                    link: `http://www.acfun.cn/bangumi/ab${id}_${video.groupId}_${video.id}`,
+                    pubDate: new Date(video.onlineTime).toUTCString(),
+                };
+            })
+            .reverse(),
+    };
+};
