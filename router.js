@@ -168,7 +168,7 @@ router.get('/zhihu/question/:questionId', require('./routes/zhihu/question'));
 router.get('/zhihu/topic/:topicId', require('./routes/zhihu/topic'));
 
 // 妹子图
-router.get('/mzitu', require('./routes/mzitu/category'));
+router.get('/mzitu/home/:type?', require('./routes/mzitu/home'));
 router.get('/mzitu/tags', require('./routes/mzitu/tags'));
 router.get('/mzitu/category/:category', require('./routes/mzitu/category'));
 router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
