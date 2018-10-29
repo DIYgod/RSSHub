@@ -15,6 +15,7 @@ module.exports = async (ctx) => {
         description: '妹子图美女专题栏目,为您精心准备各种美女图片专题,包括名站美女写真,妹子特点分类,美女大全等专题。',
         item: data.map((item) => ({
             title: item.name,
+            description: `${item.name}`,
             link: `http://www.mzitu.com/tag/${item.slug}`,
         })),
     };
