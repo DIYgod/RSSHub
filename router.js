@@ -715,4 +715,7 @@ router.get('/oilprice/:area', require('./routes/oilprice'));
 router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
 router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
+// Auto Trader
+router.get('/autotrader/:query', require('./routes/autotrader'));
+
 module.exports = router;
