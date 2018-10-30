@@ -690,6 +690,9 @@ router.get('/99percentinvisible/transcript', require('./routes/99percentinvisibl
 // 青空文庫
 router.get('/aozora/newbook/:count?', require('./routes/aozora/newbook'));
 
+// solidot
+router.get('/solidot/:type?', require('./routes/solidot/main'));
+
 // Hermes UK
 router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
 
