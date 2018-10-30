@@ -630,6 +630,24 @@ GitHub 官方也提供了一些 RSS:
 
 > 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
+### 安全客
+
+::: tip 提示
+
+官方提供了混合的主页资讯 RSS: https://api.anquanke.com/data/v1/rss
+
+:::
+
+<route name="最新漏洞列表" author="qwertyuiop6" example="/aqk/vul" path="/aqk/vul"/>
+
+<route name="分类订阅" author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
+
+| 360 网络安全周报 | 活动     | 　知识　  | 　资讯　 | 　招聘　 |
+| ---------------- | -------- | --------- | -------- | -------- |
+| week             | activity | knowledge | news     | job      |
+
+</route>
+
 ### LinkedKeeper
 
 <route name="博文" author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" :paramsDesc="['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']"/>
@@ -2090,3 +2108,12 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
 <route name="高级搜索" author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-&quote;mosaic+censorship&quote;" path="/nhentai/search/:keyword" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入，但空格等特殊符号是否会转换取决于浏览器和阅读器的实现。用法详见[官网](https://nhentai.net/info/)']" />
+
+### AutoTrader
+
+<route name="搜索结果" author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['查询语句']">
+
+1. 在 AutoTrader 选择筛选条件进行搜索
+1. 复制查询结果 URL 中`?`后的部分，例如 `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` 则为 `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
+
+</route>

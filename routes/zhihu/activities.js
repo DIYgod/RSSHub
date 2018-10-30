@@ -79,7 +79,7 @@ module.exports = async (ctx) => {
                 }
 
                 return {
-                    title: `${item.action_text}: ${title}`,
+                    title: `${data[0].actor.name}${item.action_text}: ${title}`,
                     description: description,
                     pubDate: new Date(item.created_time * 1000).toUTCString(),
                     link: url,

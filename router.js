@@ -428,6 +428,10 @@ router.get('/linkedkeeper/:type/:id?', require('./routes/linkedkeeper/index'));
 // 开源中国
 router.get('/oschina/news', require('./routes/oschina/news'));
 
+// 安全客
+router.get('/aqk/vul', require('./routes/aqk/vul'));
+router.get('/aqk/:category', require('./routes/aqk/category'));
+
 // 腾讯大家
 router.get('/dajia', require('./routes/tencent/dajia/index'));
 
@@ -713,5 +717,8 @@ router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
 // AcFun
 router.get('/acfun/bangumi/:id', require('./routes/acfun/bangumi'));
+
+// Auto Trader
+router.get('/autotrader/:query', require('./routes/autotrader'));
 
 module.exports = router;
