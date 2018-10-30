@@ -823,27 +823,21 @@ GitHub 官方也提供了一些 RSS:
 
 ### 妹子图
 
-::: warning 注意
+<route name="首页（最新）" author="gee1k xyqfer" example="/mzitu/home" path="/mzitu/home/:type?" :paramsDesc="['类型，默认最新，可选`hot`最热']"/>
 
-该网站在国外无法访问, 由于 RSSHub 演示部署于国外, 故以下演示无效.
+<route name="分类" author="gee1k xyqfer" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
 
-:::
-
-<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu/index"/>
-
-<route name="分类" author="gee1k" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
-
-| 热门 | 推荐 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
-| ---- | ---- | -------- | -------- | -------- | -------- |
-| hot  | best | xinggan  | japan    | taiwan   | mm       |
+| 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
+| -------- | -------- | -------- | -------- |
+| xinggan  | japan    | taiwan   | mm       |
 
 </route>
 
-<route name="所有专题" author="gee1k" example="/mzitu/tags" path="/mzitu/tags"/>
+<route name="所有专题" author="gee1k xyqfer" example="/mzitu/tags" path="/mzitu/tags"/>
 
-<route name="专题详情" author="gee1k" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
+<route name="专题详情" author="gee1k xyqfer" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
 
-<route name="详情" author="gee1k" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
+<route name="详情" author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
 
 ### 煎蛋
 

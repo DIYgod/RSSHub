@@ -1,42 +1,30 @@
 const axios = require('../../utils/axios');
-const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
     let tag = ctx.params.tag;
     tag = tag === undefined || tag === 'undefined' ? '' : tag;
 
-    const url = `http://www.mzitu.com/tag/${tag}`;
-
-    const response = await axios({
+    const tagsUrl = `http://adr.meizitu.net/wp-json/wp/v2/tags?slug=${tag}`;
+    const tagsResponse = await axios({
         method: 'get',
-        url: url,
-        headers: {
-            Referer: url,
-        },
+        url: tagsUrl,
     });
+    const { id, name } = tagsResponse.data[0] || {};
 
-    const data = response.data;
-    const $ = cheerio.load(data);
-    const list = $('#pins li');
+    const tagUrl = `http://adr.meizitu.net/wp-json/wp/v2/posts?tags=${id}&per_page=20`;
+    const tagResponse = await axios({
+        method: 'get',
+        url: tagUrl,
+    });
+    const data = tagResponse.data;
 
     ctx.state.data = {
-        title: $('title').text(),
-        link: url,
-        description: $('meta[name="description"]').attr('content') || $('title').text(),
-        item:
-            list &&
-            list
-                .map((item, index) => {
-                    item = $(index);
-                    const linkA = item.find('a');
-                    const previewImg = linkA.find('img');
-                    return {
-                        title: previewImg.attr('alt'),
-                        description: `描述：${previewImg.attr('alt')}<br><img referrerpolicy="no-referrer" src="${previewImg.data('original')}">`,
-                        pubDate: new Date(item.find('.time').text()).toUTCString(),
-                        link: linkA.attr('href'),
-                    };
-                })
-                .get(),
+        title: name,
+        link: `http://www.mzitu.com/tag/${tag}`,
+        item: data.map((item) => ({
+            title: item.title,
+            description: `<img referrerpolicy="no-referrer" src="${item.thumb_src}">`,
+            link: `http://www.mzitu.com/${item.id}`,
+        })),
     };
 };
