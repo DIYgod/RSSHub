@@ -819,6 +819,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="频道" author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
 
+### AcFun
+
+<route name="番剧" author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+
 ## 图片
 
 ### 妹子图
