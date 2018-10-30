@@ -711,4 +711,16 @@ router.get('/oilprice/:area', require('./routes/oilprice'));
 router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
 router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
+// 众包
+router.get('/zhongbao/yiniu/:category', require('./routes/zhongbao/yiniu'));
+router.get('/zhongbao/oschina/:category', require('./routes/zhongbao/oschina'));
+router.get('/zhongbao/rdplat/:category', require('./routes/zhongbao/rdplat'));
+router.get('/zhongbao/epwk/:category', require('./routes/zhongbao/epwk'));
+router.get('/zhongbao/jfh/:category', require('./routes/zhongbao/jfh'));
+router.get('/zhongbao/zbj/:category', require('./routes/zhongbao/zbj'));
+router.get('/zhongbao/21ic/:category', require('./routes/zhongbao/21ic'));
+
+//forum
+router.get('/forum/macd/:param', require('./routes/forum/macd'));
+
 module.exports = router;
