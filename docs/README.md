@@ -1495,14 +1495,13 @@ Category 列表:
 
 ### FT 中文网
 
-<route name="FT 中文网" author="HenryQW" example="/ft/chinese/hotstoryby7day" path="/ft/chinese/:channel?" :paramsDesc="['频道, 缺省为每日更新']">
+<route name="FT 中文网" author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道, 缺省为每日更新']">
 
 ::: tip 提示
 
 -   不支持付费文章.
 -   由于未知原因 FT 中文网的 SSL 证书不被信任 (参见[SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取.
 -   由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
--   如需繁体可使用路由`/ft/traditional`，参数及注意事项同`/ft/chinese`
 
 :::
 
