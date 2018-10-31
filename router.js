@@ -196,6 +196,7 @@ router.get('/douban/book/latest', require('./routes/douban/latest_book'));
 router.get('/douban/event/hot/:locationId', require('./routes/douban/event/hot'));
 router.get('/douban/commercialpress/latest', require('./routes/douban/commercialpress/latest'));
 router.get('/douban/bookstore', require('./routes/douban/bookstore'));
+router.get('/douban/book/rank/:type', require('./routes/douban/book/rank'));
 
 // 煎蛋
 router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
@@ -717,6 +718,9 @@ router.get('/oilprice/:area', require('./routes/oilprice'));
 // nHentai
 router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
 router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
+
+// 龙腾网
+router.get('/ltaaa/:type?', require('./routes/ltaaa/main'));
 
 // AcFun
 router.get('/acfun/bangumi/:id', require('./routes/acfun/bangumi'));

@@ -468,6 +468,14 @@ RSSHub 提供下列 API 接口:
 
 <route name="豆瓣书店" author="xyqfer" example="/douban/bookstore" path="/douban/bookstore"/>
 
+<route name="热门图书排行" author="xyqfer" example="/douban/book/rank/fiction" path="/douban/book/rank/:type" :paramsDesc="['图书类型']">
+
+| 虚构    | 非虚构     |
+| ------- | ---------- |
+| fiction | nonfiction |
+
+</route>
+
 ### Disqus
 
 <route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
@@ -529,6 +537,16 @@ RSSHub 提供下列 API 接口:
 <route name="用户自选动态" author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
 <route name="基金净值更新" author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
+
+### 龙腾网
+
+<route name="转译网贴" author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
+
+| 最新 | 每周 | 每月  | 全年 |
+| ---- | ---- | ----- | ---- |
+| (空) | week | month | year |
+
+</route>
 
 ## 编程
 

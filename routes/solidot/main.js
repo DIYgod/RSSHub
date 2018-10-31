@@ -46,19 +46,14 @@ module.exports = async (ctx) => {
         const cat_img = $(a[i])
             .find('div.icon_float > a')
             .html();
-        const date_raw = $(a[i]).find('div.talk_time');
-        $(date_raw)
-            .find('div.icon_float')
-            .remove();
-        $(date_raw)
-            .find('span.user')
-            .remove();
-        $(date_raw)
-            .find('b')
-            .remove();
-        const date_str_zh = $(date_raw)
-            .text()
-            .replace(/^[^`]*发表于(.*分)[^`]*$/g, '$1'); // use [^`] to match \n
+        const date_raw = $(a[i])
+            .find('div.talk_time')
+            .clone()
+            .children()
+            .remove()
+            .end()
+            .text();
+        const date_str_zh = date_raw.replace(/^[^`]*发表于(.*分)[^`]*$/g, '$1'); // use [^`] to match \n
         const date_str = date_str_zh
             .replace(/[年月]/g, '-')
             .replace(/时/g, ':')
