@@ -168,7 +168,7 @@ router.get('/zhihu/question/:questionId', require('./routes/zhihu/question'));
 router.get('/zhihu/topic/:topicId', require('./routes/zhihu/topic'));
 
 // 妹子图
-router.get('/mzitu', require('./routes/mzitu/category'));
+router.get('/mzitu/home/:type?', require('./routes/mzitu/home'));
 router.get('/mzitu/tags', require('./routes/mzitu/tags'));
 router.get('/mzitu/category/:category', require('./routes/mzitu/category'));
 router.get('/mzitu/post/:id', require('./routes/mzitu/post'));
@@ -690,6 +690,9 @@ router.get('/99percentinvisible/transcript', require('./routes/99percentinvisibl
 // 青空文庫
 router.get('/aozora/newbook/:count?', require('./routes/aozora/newbook'));
 
+// solidot
+router.get('/solidot/:type?', require('./routes/solidot/main'));
+
 // Hermes UK
 router.get('/parcel/hermesuk/:tracking', require('./routes/parcel/hermesuk'));
 
@@ -717,6 +720,9 @@ router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
 // 龙腾网
 router.get('/ltaaa/:type?', require('./routes/ltaaa/main'));
+
+// AcFun
+router.get('/acfun/bangumi/:id', require('./routes/acfun/bangumi'));
 
 // Auto Trader
 router.get('/autotrader/:query', require('./routes/autotrader'));

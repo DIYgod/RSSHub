@@ -829,31 +829,29 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="频道" author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
 
+### AcFun
+
+<route name="番剧" author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+
 ## 图片
 
 ### 妹子图
 
-::: warning 注意
+<route name="首页（最新）" author="gee1k xyqfer" example="/mzitu/home" path="/mzitu/home/:type?" :paramsDesc="['类型，默认最新，可选`hot`最热']"/>
 
-该网站在国外无法访问, 由于 RSSHub 演示部署于国外, 故以下演示无效.
+<route name="分类" author="gee1k xyqfer" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
 
-:::
-
-<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu/index"/>
-
-<route name="分类" author="gee1k" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
-
-| 热门 | 推荐 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
-| ---- | ---- | -------- | -------- | -------- | -------- |
-| hot  | best | xinggan  | japan    | taiwan   | mm       |
+| 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
+| -------- | -------- | -------- | -------- |
+| xinggan  | japan    | taiwan   | mm       |
 
 </route>
 
-<route name="所有专题" author="gee1k" example="/mzitu/tags" path="/mzitu/tags"/>
+<route name="所有专题" author="gee1k xyqfer" example="/mzitu/tags" path="/mzitu/tags"/>
 
-<route name="专题详情" author="gee1k" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
+<route name="专题详情" author="gee1k xyqfer" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
 
-<route name="详情" author="gee1k" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
+<route name="详情" author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
 
 ### 煎蛋
 
@@ -912,6 +910,11 @@ GitHub 官方也提供了一些 RSS:
 ### Awesome Pigtails
 
 <route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
+
+### nHentai
+
+<route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
+<route name="高级搜索" author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入，但空格等特殊符号是否会转换取决于浏览器和阅读器的实现。用法详见[官网](https://nhentai.net/info/)']" />
 
 ## 二次元
 
@@ -1554,6 +1557,24 @@ Category 列表:
 
 <route name="新闻排行榜" author="HenryQW" example="/dwnews/rank/photo/7" path="/dwnews/rank/:type/:range" :paramsDesc="['榜单类型，`news`为普通新闻，`photo`为图集新闻','榜单范围（天），`1` 或 `7`']"/>
 
+### Solidot
+
+<route name="最新消息" author="sgqy" example="/solidot/linux" path="/solidot/:type?" :paramsDesc="['消息类型. 默认为 www. 在网站上方选择后复制子域名即可']">
+
+::: tip 提示
+
+Solidot 提供的 feed:
+
+-   https://www.solidot.org/index.rss
+
+:::
+
+| 全部 | 创业    | Linux | 科学    | 科技       | 移动   | 苹果  | 硬件     | 软件     | 安全     | 游戏  | 书籍  | ask | idle | 博客 | 云计算 |
+| ---- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ------ |
+| www  | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud  |
+
+</route>
+
 ## 预报预警
 
 ### 停水通知
@@ -2109,11 +2130,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 油价
 
 <route name="今日油价" author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
-
-### nHentai
-
-<route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
-<route name="高级搜索" author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-&quote;mosaic+censorship&quote;" path="/nhentai/search/:keyword" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入，但空格等特殊符号是否会转换取决于浏览器和阅读器的实现。用法详见[官网](https://nhentai.net/info/)']" />
 
 ### AutoTrader
 
