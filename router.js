@@ -718,6 +718,9 @@ router.get('/oilprice/:area', require('./routes/oilprice'));
 router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
 router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 
+// 龙腾网
+router.get('/ltaaa/:type?', require('./routes/ltaaa/main'));
+
 // AcFun
 router.get('/acfun/bangumi/:id', require('./routes/acfun/bangumi'));
 
