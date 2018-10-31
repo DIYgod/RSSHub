@@ -615,6 +615,7 @@ GitHub 官方也提供了一些 RSS:
 -   仓库 releases: https://github.com/:owner/:repo/releases.atom
 -   仓库 commits: https://github.com/:owner/:repo/commits.atom
 -   用户动态: https://github.com/:user.atom
+-   专属动态: https://github.com/:user.private.atom?token=:secret (登录后在仪表盘页面获取)
 
 :::
 
