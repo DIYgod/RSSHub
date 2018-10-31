@@ -1,4 +1,3 @@
-
 const axios = require('../../utils/axios');
 
 exports.getList = async (id) => {

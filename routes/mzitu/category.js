@@ -32,14 +32,16 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: `妹子图-${mapper[category].name}`,
         link: `http://www.mzitu.com/${category}`,
-        item: await Promise.all(data.map(async (item) => {
-            const list = await getList(item.id);
-            const listDescription = list.join('');
-            return {
-                title: item.title,
-                description: `<img referrerpolicy="no-referrer" src="${item.thumb_src}"><br />${listDescription}`,
-                link: `http://www.mzitu.com/${item.id}`,
-            };
-        })),
+        item: await Promise.all(
+            data.map(async (item) => {
+                const list = await getList(item.id);
+                const listDescription = list.join('');
+                return {
+                    title: item.title,
+                    description: `<img referrerpolicy="no-referrer" src="${item.thumb_src}"><br />${listDescription}`,
+                    link: `http://www.mzitu.com/${item.id}`,
+                };
+            })
+        ),
     };
 };
