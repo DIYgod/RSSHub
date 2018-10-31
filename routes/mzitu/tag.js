@@ -27,7 +27,7 @@ module.exports = async (ctx) => {
                 const list = await getList(item.id);
                 const listDescription = list.join('');
                 return {
-                    title: item.title,
+                    title: `${item.title} ${list.length} pages`,
                     description: `<img referrerpolicy="no-referrer" src="${item.thumb_src}"><br />${listDescription}`,
                     link: `http://www.mzitu.com/${item.id}`,
                 };
