@@ -109,6 +109,9 @@ app.use(mount('/protected', protected_router.routes())).use(protected_router.all
 app.use(mount('/api', api_router.routes())).use(api_router.allowedMethods());
 
 // connect
+if (config.connect.disabled) {
+    process.exit();
+}
 if (config.connect.port) {
     app.listen(config.connect.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
     logger.info('Listening Port ' + config.connect.port);

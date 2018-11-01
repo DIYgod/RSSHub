@@ -10,7 +10,7 @@
     "docs:build": "vuepress build docs",
     "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
     "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run lint && timeout 5 node index.js"
+    "test": "npm run lint && CONNECT_DISABLED=1 node index.js"
   },
   "repository": {
     "type": "git",
