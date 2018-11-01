@@ -7,6 +7,9 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url,
+        headers: {
+            'Accept-Language': 'zh-Hans;q=0.9,zh-Hant;q=0.8',
+        },
     });
 
     const $ = cheerio.load(response.data);
