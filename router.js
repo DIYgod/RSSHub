@@ -411,8 +411,11 @@ router.get('/dongqiudi/result/:team', require('./routes/dongqiudi/result'));
 router.get('/dongqiudi/team_news/:team', require('./routes/dongqiudi/team_news'));
 router.get('/dongqiudi/player_news/:id', require('./routes/dongqiudi/player_news'));
 
-// 维基百科
+// 维基百科 Wikipedia
 router.get('/wikipedia/mainland', require('./routes/wikipedia/mainland'));
+
+// 联合国 United Nations
+router.get('/un/scveto', require('./routes/un/scveto'));
 
 // 雪球
 router.get('/xueqiu/user/:id/:type?', require('./routes/xueqiu/user'));
