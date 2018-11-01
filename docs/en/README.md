@@ -291,6 +291,7 @@ GitHub provides some official RSS feeds:
 -   Repo releases: https://github.com/:owner/:repo/releases.atom
 -   Repo commits: https://github.com/:owner/:repo/commits.atom
 -   User activities: https://github.com/:user.atom
+-   Private feed: https://github.com/:user.private.atom?token=:secret (You can find it in dashboard page after login)
 
 :::
 
