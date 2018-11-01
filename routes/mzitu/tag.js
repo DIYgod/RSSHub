@@ -1,4 +1,5 @@
 const axios = require('../../utils/axios');
+const { getList } = require('./util');
 
 module.exports = async (ctx) => {
     let tag = ctx.params.tag;
@@ -21,10 +22,16 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: name,
         link: `http://www.mzitu.com/tag/${tag}`,
-        item: data.map((item) => ({
-            title: item.title,
-            description: `<img referrerpolicy="no-referrer" src="${item.thumb_src}">`,
-            link: `http://www.mzitu.com/${item.id}`,
-        })),
+        item: await Promise.all(
+            data.map(async (item) => {
+                const list = await getList(item.id);
+                const listDescription = list.join('');
+                return {
+                    title: `${item.title} ${list.length} pages`,
+                    description: `<img referrerpolicy="no-referrer" src="${item.thumb_src}"><br />${listDescription}`,
+                    link: `http://www.mzitu.com/${item.id}`,
+                };
+            })
+        ),
     };
 };
