@@ -660,7 +660,7 @@ router.get('/nhk/news_web_easy', require('./routes/nhk/news_web_easy'));
 router.get('/bbc/:channel?', require('./routes/bbc/index'));
 
 // FT 中文网
-router.get('/ft/chinese/:channel?', require('./routes/ft/chinese'));
+router.get('/ft/:language/:channel?', require('./routes/ft/channel'));
 
 // The Verge
 router.get('/verge', require('./routes/verge/index'));
@@ -727,5 +727,8 @@ router.get('/acfun/bangumi/:id', require('./routes/acfun/bangumi'));
 
 // Auto Trader
 router.get('/autotrader/:query', require('./routes/autotrader'));
+
+// 极客公园
+router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
 
 module.exports = router;
