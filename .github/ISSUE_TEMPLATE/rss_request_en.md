@@ -4,15 +4,15 @@ about: Submit a new RSS request
 ---
 
 <!--
-Please ensure no relevant content in [documentation](https://docs.rsshub.app/en) and [issue](https://github.com/DIYgod/RSSHub/issues), website doesn't provide this kind of RSS feed, and provide all the information required by this template
-Otherwise issue will be closed immediately
+Please ensure the RSS requested is not listed in [documentation](https://docs.rsshub.app/en) or [issue](https://github.com/DIYgod/RSSHub/issues), website doesn't provide this kind of RSS feed, and provide all the information required by this template.
+Otherwise the issue will be closed immediately.
 
-Now we have too many RSS request that we don't have much time to make it, please try to make it yourself according to [guide](https://docs.rsshub.app/en/joinus) and make a pull requset if possible
+We are flooded with feature requests and short-handed, please try to make it yourself, the [guide](https://docs.rsshub.app/en/joinus) is a good place to start. Submit a pull request when done!
 -->
 
 ### Website URL
 
-### What content do you want in RSS?
+### What content should be included?
 
 - [ ] content one
 - [ ] content two
