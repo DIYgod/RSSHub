@@ -59,9 +59,7 @@
         {{ /if }}
 
         {{ if $e.category }}
-        {{ each $e.category $c }}
-        <category term="{{ $c }}"></category>
-        {{ /each }}        
+        <category term="{{ $e.category }}"></category>
         {{ /if }}
         
     </entry>

@@ -1,5 +1,6 @@
 const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
+const utils = require('./utils');
 
 module.exports = async (ctx) => {
     const url = 'https://zh.wikipedia.org/wiki/Portal:%E4%B8%AD%E5%9C%8B%E5%A4%A7%E9%99%B8%E6%96%B0%E8%81%9E%E5%8B%95%E6%85%8B';
@@ -7,6 +8,9 @@ module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
         url,
+        headers: {
+            'Accept-Language': 'zh-Hans;q=0.9,zh-Hant;q=0.8',
+        },
     });
 
     const $ = cheerio.load(response.data);
@@ -17,10 +21,7 @@ module.exports = async (ctx) => {
     for (let i = 0; i < list.length - 1; i++) {
         const item = {
             title: $(list[i]).text(),
-            desc: full
-                .find(`ul:nth-of-type(${i + 1})`)
-                .html()
-                .replace(/href="\/wiki/g, 'href="https://zh.wikipedia.org/wiki'),
+            desc: utils.ProcessLink(full.find(`ul:nth-of-type(${i + 1})`), 'zh'),
             url,
         };
         items.push(item);

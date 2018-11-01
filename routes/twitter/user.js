@@ -27,7 +27,7 @@ module.exports = async (ctx) => {
                 });
             let url = '';
             item.entities.urls.forEach((u) => {
-                url += `<a href="${u.expanded_url}" target="_blank"></a>`;
+                url += `<a href="${u.expanded_url}" target="_blank">${u.expanded_url}</a>`;
             });
             return {
                 title: `${item.in_reply_to_screen_name ? 'Re ' : ''}${item.full_text}`,

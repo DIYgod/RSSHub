@@ -25,8 +25,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Xiaojiong Wang |
-| :--------------------------------------: | :----: | :----------------------------------------: | :------------: |
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
+| :--------------------------------------: | :----: | :----------------------------------------: | :--: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -79,6 +79,16 @@ filterout 去掉不要的内容
 
 举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
+### 输出 Telegram 即时预览链接
+
+可以输出 Telegram 可识别的即时预览链接, 主要用于文章类 RSS
+
+Telegram 即时预览模式需要在官网制作页面处理模板，请前往[官网](https://instantview.telegram.org/)了解更多
+
+-   tgiv: 模板 hash，可从模板制作页面分享出来的链接末尾获取（`&rhash=`后面跟着的字符串）
+
+举例: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+
 ### 输出格式
 
 RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出格式, 在路由末尾添加 `.rss` `.atom` 或 `.json` 即可请求对应输出格式, 缺省为 RSS 2.0
@@ -128,6 +138,7 @@ RSSHub 提供下列 API 接口:
                 "/bilibili/user/dynamic/:uid",
                 "/bilibili/user/followers/:uid",
                 "/bilibili/user/followings/:uid",
+                "/bilibili/user/channel/:uid/:cid",
                 "/bilibili/partion/:tid",
                 "/bilibili/partion/ranking/:tid/:days?",
                 "/bilibili/bangumi/:seasonid",
@@ -141,7 +152,6 @@ RSSHub 提供下列 API 接口:
                 "/bilibili/mall/new",
                 "/bilibili/mall/ip/:id",
                 "/bilibili/ranking/:rid?/:day?",
-                "/bilibili/channel/:uid/:cid",
                 "/bilibili/topic/:topic"
             ]
         }
@@ -164,7 +174,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="UP 主动态" author="DIYgod" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
-<route name="UP 主频道" author="HenryQW" example="/bilibili/user/channel/142821407/23390" path="/bilibili/user/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
+<route name="UP 主频道" author="HenryQW" example="/bilibili/user/channel/142821407/49017" path="/bilibili/user/channel/:uid/:cid" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到']"/>
 
 <route name="UP 主默认收藏夹" author="DIYgod" example="/bilibili/user/fav/2267573" path="/bilibili/user/fav/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
@@ -298,7 +308,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="会员购新品上架" author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
 
-<route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/:id" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+<route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
 
 <route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
 
@@ -323,6 +333,8 @@ RSSHub 提供下列 API 接口:
 <route name="博主（方案2）" author="DIYgod" example="/weibo/user2/3306934123" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
 <route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']"/>
+
+<route name="热搜榜" author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" />
 
 ### 贴吧
 
@@ -370,6 +382,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/:id" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
 
+<route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
+
 ### 简书
 
 <route name="首页" author="DIYgod" example="/jianshu/home" path="/jianshu/home"/>
@@ -399,6 +413,12 @@ RSSHub 提供下列 API 接口:
 <route name="知乎日报" author="DHPO" example="/zhihu/daily" path="/zhihu/daily"/>
 
 <route name="知乎热榜" author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist"/>
+
+<route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist"/>
+
+<route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']"/>
+
+<route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']"/>
 
 ### pixiv
 
@@ -434,7 +454,27 @@ RSSHub 提供下列 API 接口:
 
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
-<route name="最新增加的音乐" author="fengkx" example="/douban/music/latest" path="/douban/music/latest"/>
+<route name="最新增加的音乐" author="fengkx xyqfer" example="/douban/music/latest/chinese" path="/douban/music/latest/:area?" :paramsDesc="['区域类型，默认全部']">
+
+| 华语    | 欧美    | 日韩        |
+| ------- | ------- | ----------- |
+| chinese | western | japankorean |
+
+</route>
+
+<route name="热门同城活动" author="xyqfer" example="/douban/event/hot/118172" path="/douban/event/hot/:locationId" :paramsDesc="['位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取']"/>
+
+<route name="商务印书馆新书速递" author="xyqfer" example="/douban/commercialpress/latest" path="/douban/commercialpress/latest"/>
+
+<route name="豆瓣书店" author="xyqfer" example="/douban/bookstore" path="/douban/bookstore"/>
+
+<route name="热门图书排行" author="xyqfer" example="/douban/book/rank/fiction" path="/douban/book/rank/:type" :paramsDesc="['图书类型']">
+
+| 虚构    | 非虚构     |
+| ------- | ---------- |
+| fiction | nonfiction |
+
+</route>
 
 ### Disqus
 
@@ -494,6 +534,20 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户收藏动态" author="imlonghao" example="/xueqiu/favorite/8152922548" path="/xueqiu/favorite/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
+<route name="用户自选动态" author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
+<route name="基金净值更新" author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
+
+### 龙腾网
+
+<route name="转译网贴" author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
+
+| 最新 | 每周 | 每月  | 全年 |
+| ---- | ---- | ----- | ---- |
+| (空) | week | month | year |
+
+</route>
+
 ## 编程
 
 ### 掘金
@@ -544,7 +598,7 @@ RSSHub 提供下列 API 接口:
 
 ### 众成翻译
 
-<route name="首页" author="SirM2z" example="/zcfy/index" path="/zcfy/index"/>
+<route name="首页" author="SirM2z" example="/zcfy" path="/zcfy/index"/>
 
 <route name="热门" author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
 
@@ -561,6 +615,7 @@ GitHub 官方也提供了一些 RSS:
 -   仓库 releases: https://github.com/:owner/:repo/releases.atom
 -   仓库 commits: https://github.com/:owner/:repo/commits.atom
 -   用户动态: https://github.com/:user.atom
+-   专属动态: https://github.com/:user.private.atom?token=:secret (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
 
 :::
 
@@ -594,9 +649,78 @@ GitHub 官方也提供了一些 RSS:
 
 > 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
+### 安全客
+
+::: tip 提示
+
+官方提供了混合的主页资讯 RSS: https://api.anquanke.com/data/v1/rss
+
+:::
+
+<route name="最新漏洞列表" author="qwertyuiop6" example="/aqk/vul" path="/aqk/vul"/>
+
+<route name="分类订阅" author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
+
+| 360 网络安全周报 | 活动     | 　知识　  | 　资讯　 | 　招聘　 |
+| ---------------- | -------- | --------- | -------- | -------- |
+| week             | activity | knowledge | news     | job      |
+
+</route>
+
 ### LinkedKeeper
 
 <route name="博文" author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" :paramsDesc="['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']"/>
+
+### 看雪
+
+<route name="论坛" author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
+
+| 版块         | category   |
+| ------------ | ---------- |
+| 智能设备     | iot        |
+| 区块链安全   | blockchain |
+| Android 安全 | android    |
+| iOS 安全     | ios        |
+| 软件逆向     | re         |
+| 编程技术     | coding     |
+| 加壳脱壳     | unpack     |
+| 密码算法     | crypto     |
+| 二进制漏洞   | vuln       |
+| CrackMe      | crackme    |
+| Pwn          | pwn        |
+| WEB 安全     | web        |
+| 全站         | all        |
+
+| 类型     | type   |
+| -------- | ------ |
+| 最新主题 | latest |
+| 精华主题 | digest |
+
+### 腾讯游戏开发者社区
+
+::: warning 注意
+
+有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
+
+:::
+
+<route name="分类" author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
+
+| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
+| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
+| hot  | plan | program | tech     | audio | project  | yunying  | test     |
+
+</route>
+
+### 知晓程序
+
+<route name="文章" author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
+
+| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
+| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
+| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
+
+</route>
 
 ## 直播
 
@@ -623,6 +747,10 @@ GitHub 官方也提供了一些 RSS:
 ### 熊猫直播
 
 <route name="直播间开播下播" author="DIYgod" example="/panda/room/10300" path="/panda/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
+### 虎牙直播
+
+<route name="直播间开播" author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
 
 ## 音视频
 
@@ -668,9 +796,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-::: tip 提示
-
-:::
+</route>
 
 ### EZTV
 
@@ -700,37 +826,62 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### 电影首发站
+
+<route name="电影" author="epirus" example="/dysfz" path="/dysfz/index"/>
+
+### 电影天堂
+
+<route name="新片精品" author="imgss" example="/dytt" path="/dytt/index"/>
+
+### 优酷
+
+<route name="频道" author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+### AcFun
+
+<route name="番剧" author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+
+::: tip 提示
+
+番剧 id 不包含开头的 aa。
+例如：http://www.acfun.cn/bangumi/aa5022158 的番剧 id 是 5022158，不包括开头的 aa。
+
+:::
+
 ## 图片
 
 ### 妹子图
 
-::: warning 注意
+<route name="首页（最新）" author="gee1k xyqfer" example="/mzitu/home" path="/mzitu/home/:type?" :paramsDesc="['类型，默认最新，可选`hot`最热']"/>
 
-该网站在国外无法访问, 由于 RSSHub 演示部署于国外, 故以下演示无效.
+<route name="分类" author="gee1k xyqfer" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
 
-:::
-
-<route name="首页（最新）" author="gee1k" example="/mzitu" path="/mzitu"/>
-
-<route name="分类" author="gee1k" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
-
-| 热门 | 推荐 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
-| ---- | ---- | -------- | -------- | -------- | -------- |
-| hot  | best | xinggan  | japan    | taiwan   | mm       |
+| 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
+| -------- | -------- | -------- | -------- |
+| xinggan  | japan    | taiwan   | mm       |
 
 </route>
 
-<route name="所有专题" author="gee1k" example="/mzitu/tags" path="/mzitu/tags"/>
+<route name="所有专题" author="gee1k xyqfer" example="/mzitu/tags" path="/mzitu/tags"/>
 
-<route name="专题详情" author="gee1k" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
+<route name="专题详情" author="gee1k xyqfer" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
 
-<route name="详情" author="gee1k" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
+<route name="详情" author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
 
 ### 煎蛋
 
-<route name="无聊图" author="Xuanwo" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+<route name="无聊图" author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-<route name="妹子图" author="kobemtl" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+| 无聊图 | 无聊图热榜 | 4 小时热榜 |
+| ------ | ---------- | ---------- |
+| pic    | top        | top-4h     |
+
+<route name="妹子图" author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+
+| 妹子图 | 妹子图热榜 |
+| ------ | ---------- |
+| ooxx   | top-ooxx   |
 
 ### 喷嚏
 
@@ -778,7 +929,12 @@ GitHub 官方也提供了一些 RSS:
 
 ### Awesome Pigtails
 
-<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails"/>
+<route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
+
+### nHentai
+
+<route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
+<route name="高级搜索" author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入，但空格等特殊符号是否会转换取决于浏览器和阅读器的实现。用法详见[官网](https://nhentai.net/info/)']" />
 
 ## 二次元
 
@@ -790,6 +946,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="放送列表" author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today"/>
 
+<route name="条目的章节" author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/ep/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+
 <route name="条目的吐槽箱" author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']"/>
 
 <route name="条目的评论" author="ylc395" example="/bangumi/subject/214265/blogs" path="/bangumi/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
@@ -800,31 +958,11 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="小组话题的新回复" author="ylc395" example="/bangumi/topic/24657" path="/bangumi/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']"/>
 
-### 米哈游
-
-<route name="崩坏 2-游戏公告" author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
-
-| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
-| -------- | -------- | -------- | -------- |
-| new      | version  | gach     | event    |
-
-</route>
-
-<route name="崩坏 3-游戏公告" author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
-
-| 最新   | 公告   | 新闻 | 活动     | 攻略     |
-| ------ | ------ | ---- | -------- | -------- |
-| latest | notice | news | activity | strategy |
-
-</route>
+<route name="小组话题" author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
 ### 忧郁的弟弟
 
-<route name="文章" author="DIYgod" example="/mygalgame" path="mygalgame"/>
-
-### きららファンタジア｜奇拉拉幻想曲
-
-<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
+<route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
 ## 程序更新
 
@@ -910,20 +1048,22 @@ GitHub 官方也提供了一些 RSS:
 
 ### 西南科技大学
 
-<route name="教务处通知" author="lengthmin" example="/swust/jwc/1" path="/universities/swust/jwc/:type" :paramsDesc="['分区 type, 详见下方表格']">
+<route name="教务处新闻" author="lengthmin" example="/swust/jwc/news" path="/universities/swust/jwc/news"/>
+<route name="教务处通知" author="lengthmin" example="/swust/jwc/notice/1" path="/universities/swust/jwc/notice/:type?" :paramsDesc="['分区 type,缺省为 1, 详见下方表格']">
 
-| 通知公告 | 学校新闻 |
-| -------- | -------- |
-| 1        | 2        |
+| 创新创业教育 | 学生学业 | 建设与改革 | 教学质量保障 | 教学运行 | 教师教学 |
+| ------------ | -------- | ---------- | ------------ | -------- | -------- |
+| 1            | 2        | 3          | 4            | 5        | 6        |
 
 </route>
-<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type" :paramsDesc="['分区 type, 详见下方表格']">
+<route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type?" :paramsDesc="['分区 type, 缺省为 1, 详见下方表格']">
 
 | 新闻动态 | 学术动态 | 通知公告 | 教研动态 |
 | -------- | -------- | -------- | -------- |
 | 1        | 2        | 3        | 4        |
 
 </route>
+
 ### 北京大学
 
 <route name="信科公告通知" author="Ir1d" example="/pku/eecs/0" path="/universities/pku/eecs/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
@@ -1122,11 +1262,35 @@ category 列表：
 
 </route>
 
-### 四川旅游学院
+### 南京理工大学
 
-<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy">
+<route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
+
+| 教师通知 | 学生通知 | 新闻 | 学院动态 |
+| -------- | -------- | ---- | -------- |
+| 1        | 2        | 3    | 4        |
 
 </route>
+
+<route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 为新闻及通知, 2 为办事指南']"/>
+
+| 新闻及通知 | 办事指南 |
+| ---------- | -------- |
+| 1          | 2        |
+
+</route>
+
+<route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/1" path="/universities/njust/gs/:type" :paramsDesc="['1 为通知公告, 2 为学术公告']"/>
+
+| 通知公告 | 学术公告 |
+| -------- | -------- |
+| 1        | 2        |
+
+</route>
+
+### 四川旅游学院
+
+<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy"/>
 
 <route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc:type?" :paramsDesc="['可选参数, 默认为 `13`']">
 
@@ -1184,17 +1348,101 @@ category 列表：
 
 </route>
 
-<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news">
+<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news" />
+
+### 山东大学
+
+<route name="研究生院学术活动" author="Ji4n1ng" example="/sdu/grad/academic" path="/universities/sdu/grad/academic" />
+
+<route name="软件学院通知" author="Ji4n1ng" example="/sdu/sc/0" path="/universities/sdu/sc/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院公告 | 学术报告 | 新闻动态 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
+<route name="材料科学与工程学院通知" author="Ji4n1ng" example="/sdu/cmse/0" path="/universities/sdu/cmse/:type?" :paramsDesc="['默认为 `0`']">
+
+| 通知公告 | 学院新闻 | 本科生教育 | 研究生教育 | 学术动态 |
+| -------- | -------- | ---------- | ---------- | -------- |
+| 0        | 1        | 2          | 3          | 4        |
+
+</route>
+
+<route name="机械工程学院通知" author="Ji4n1ng" example="/sdu/mech/0" path="/universities/sdu/mech/:type?" :paramsDesc="['默认为 `0`']">
+
+| 通知公告 | 院所新闻 | 教学信息 | 学术动态 | 学院简报 |
+| -------- | -------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        |
+
+</route>
+
+<route name="能源与动力工程学院通知" author="Ji4n1ng" example="/sdu/epe/0" path="/universities/sdu/epe/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院动态 | 通知公告 | 学术论坛 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</route>
+
+### 大连大学
+
+<route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
+</route>
+
+### 西安电子科技大学
+
+<route name="教务处" author="ShadowySpirits" example="/xidian/jwc/xxfb" path="/xidian/jwc/:category?" :paramsDesc="['通知类别,默认为全部']">
+
+::: warning 注意
+
+全文内容需使用校园网或 VPN 获取
+:::
+
+| 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
+| :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+
+### 东莞理工学院
+
+<route name="教务处通知" author="AnyMoe" example="/dgut/jwc/" path="/universities/dgut/jwc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 教务公告 | 教学信息 |
+| -------- | -------- |
+| 1        | 2        |
+
+</route>
+
+<route name="学工部动态" author="AnyMoe" example="/dgut/xsc/" path="/universities/dgut/xsc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 学工动态 | 通知公告 | 网上公示 |
+| -------- | -------- | -------- |
+| 1        | 2        | 4        |
+
+</route>
+
+### 同济大学
+
+ <route name="同济大学软件学院通知" author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
+
+| 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
+| ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+| bkstz      | yjstz      | jgtz     | qttz     | xwdt     | xyxw     | xyhd     |
+
+注意: `qttz` 与 `xwdt` 在原网站等价.
+
+ </route>
 
 ## 传统媒体
 
 ### 央视新闻
 
-<route name="专题" author="idealclover" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
+<route name="专题" author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- |
-| china | world | video | tech | society | law  | ent  |
+| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 | 每周质量报告 |
+| ----- | ----- | ----- | ---- | ------- | ---- | ---- | ------------ |
+| china | world | video | tech | society | law  | ent  | mzzlbg       |
 
 </route>
 
@@ -1272,6 +1520,85 @@ Category 列表:
 
 </route>
 
+### NHK
+
+<route name="News Web Easy" author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+### BBC
+
+<route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
+
+::: tip 提示
+
+由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
+
+:::
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+支持大部分频道, 频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
+
+-   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
+-   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
+-   例外: BBC 中文网为 `/bbc/chinese`.
+
+</route>
+
+### FT 中文网
+
+<route name="FT 中文网" author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道, 缺省为每日更新']">
+
+::: tip 提示
+
+-   不支持付费文章.
+-   由于未知原因 FT 中文网的 SSL 证书不被信任 (参见[SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取.
+-   由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
+
+:::
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+支持所有频道, 频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
+
+-   频道为单一路径, 如 http://www.ftchinese.com/rss/`news` 则为 `/ft/chinese/news`.
+-   频道包含多重路径, 如 http://www.ftchinese.com/rss/`column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
+
+</route>
+
+### 多维新闻网
+
+<route name="要闻" author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
+
+| 全部   | 国际   | 中国  | 香港     | 台湾   |
+| ------ | ------ | ----- | -------- | ------ |
+| yaowen | global | china | hongkong | taiwan |
+
+</route>
+
+<route name="新闻排行榜" author="HenryQW" example="/dwnews/rank/photo/7" path="/dwnews/rank/:type/:range" :paramsDesc="['榜单类型，`news`为普通新闻，`photo`为图集新闻','榜单范围（天），`1` 或 `7`']"/>
+
+### Solidot
+
+<route name="最新消息" author="sgqy" example="/solidot/linux" path="/solidot/:type?" :paramsDesc="['消息类型. 默认为 www. 在网站上方选择后复制子域名即可']">
+
+::: tip 提示
+
+Solidot 提供的 feed:
+
+-   https://www.solidot.org/index.rss
+
+:::
+
+| 全部 | 创业    | Linux | 科学    | 科技       | 移动   | 苹果  | 硬件     | 软件     | 安全     | 游戏  | 书籍  | ask | idle | 博客 | 云计算 |
+| ---- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ------ |
+| www  | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud  |
+
+</route>
+
+### 极客公园
+
+<route name="全球快讯" author="xyqfer" example="/geekpark/breakingnews" path="/geekpark/breakingnews" />
+
 ## 预报预警
 
 ### 停水通知
@@ -1283,6 +1610,10 @@ Category 列表:
 <route name="萧山区" author="znhocn" example="/tingshuitz/xiaoshan" path="/tingshuitz/xiaoshan"/>
 
 <route name="大连市" author="DIYgod" example="/tingshuitz/dalian" path="/tingshuitz/dalian"/>
+
+<route name="广州市" author="xyqfer" example="/tingshuitz/guangzhou" path="/tingshuitz/guangzhou"/>
+
+<route name="东莞市" author="victoriqueko" example="/tingshuitz/dongguan" path="/tingshuitz/dongguan"/>
 
 ### 中央气象台
 
@@ -1343,15 +1674,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 中国美术馆
 
-<route name="通知公告" author="HenryQW" example="/namoc/announcement" path="/namoc/announcement"/>
+<route name="美术馆新闻" author="HenryQW" example="/namoc/announcement" path="/namoc/:type" :paramsDesc="['新闻类型， 可选如下']">
 
-<route name="新闻" author="HenryQW" example="/namoc/news" path="/namoc/news"/>
+| 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
+| ------------ | ---- | -------- | ---------- | -------- |
+| announcement | news | media    | exhibition | specials |
 
-<route name="媒体联报" author="HenryQW" example="/namoc/media" path="/namoc/media"/>
-
-<route name="展览预告" author="HenryQW" example="/namoc/exhibition" path="/namoc/exhibition"/>
-
-<route name="焦点专题" author="HenryQW" example="/namoc/specials" path="/namoc/specials"/>
+</route>
 
 ### 国家地理
 
@@ -1371,7 +1700,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="关键词" author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']"/>
 
-<route name="排行榜" author="DIYgod" example="/jianshu/user/yZq3ZV" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
+<route name="排行榜" author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
 
 -   榜单类型
 
@@ -1415,9 +1744,81 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 小米
 
-<route name="众筹" author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
+<route name="小米众筹" author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
-## 网络小说
+<route name="小米有品众筹" author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+
+<route name="小米有品每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+### 甩甩尾巴
+
+<route name="分类" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
+
+| 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
+
+</route>
+
+### Westore
+
+<route name="新品" author="xyqfer" example="/westore/new" path="/westore/new"/>
+
+## 游戏资讯
+
+### 3DMGame
+
+<route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
+
+<route name="游戏资讯" author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
+
+| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
+| ---- | ---- | -------- | ---------- |
+| news | gl   | resource | blockchain |
+
+</route>
+
+### 米哈游
+
+<route name="崩坏 2-游戏公告" author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
+
+| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
+| -------- | -------- | -------- | -------- |
+| new      | version  | gach     | event    |
+
+</route>
+
+<route name="崩坏 3-游戏公告" author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
+
+| 最新   | 公告   | 新闻 | 活动     | 攻略     |
+| ------ | ------ | ---- | -------- | -------- |
+| latest | notice | news | activity | strategy |
+
+</route>
+
+### きららファンタジア｜奇拉拉幻想曲
+
+<route name="公告" author="magic-akari" example="/kirara/news" path="/kirara/news"/>
+
+### 旅法师营地
+
+<route name="旅法师营地" author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
+
+| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王　 | 　电子游戏 | 　手机游戏 | 　桌面游戏 |
+| -------- | -------- | ------ | ------ | -------- | ---------- | ---------- | ---------- |
+| 1        | 2        | 3      | 14     | 16       | 4          | 22         | 9          |
+
+| 影之诗 | Artifact 　 | 玩家杂谈 | 营地电台　 | 2047 　 | 魂武 |
+| ------ | ----------- | -------- | ---------- | ------- | ---- |
+| 17     | 67          | 21       | 5          | 62      | 68   |
+
+</route>
+
+## 小说·文学·阅读
+
+### 观止（每日一文）
+
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
 
 ### 笔趣阁
 
@@ -1439,11 +1840,12 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小说更新" author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']">
 
 举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+
 </route>
 
 ### 起点
 
-<route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id`" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
@@ -1452,6 +1854,15 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="小说更新" author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
 
 举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+
+</route>
+
+### 青空文庫
+
+<route name="青空文庫新着リスト" author="sgqy" example="/aozora/newbook/10" path="/aozora/newbook/:count?" :paramsDesc="['更新数量. 设置每次下载列表大小. 范围是 1 到 50.']">
+
+书籍网站每日一更. 信息更新时间为书籍最初出版时间, 排序可能不符合网络发表时间, 请认准未读消息.
+
 </route>
 
 ## 中国驻外使领馆
@@ -1591,18 +2002,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
-### 3DMGame
-
-<route name="新闻中心" author="zhboner" example="/3dm/news" path="/3dm/news"/>
-
-<route name="游戏资讯" author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
-
-| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
-| ---- | ---- | -------- | ---------- |
-| news | gl   | resource | blockchain |
-
-</route>
-
 ### 机核网
 
 <route name="分类" author="MoguCloud" example="/gcores/category/1" path="/gcores/category/:category" :paramsDesc="['分类名']">
@@ -1676,7 +2075,16 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 爱范儿 ifanr
 
-<route name="AppSolution" author="HenryQW" example="/ifanr/appso" path="/ifanr/appso"/>
+<route name="爱范儿频道" author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']">
+
+-   频道为单一路径, 如 https://www.ifanr.com/`coolbuy` 则为 `/ifanr/coolbuy`.
+-   频道包含多重路径, 如 https://www.ifanr.com/`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
+
+| AppSolution | 玩物志  | 董车会                  |
+| ----------- | ------- | ----------------------- |
+| app         | coolbuy | category-intelligentcar |
+
+</route>
 
 ### Apple
 
@@ -1696,14 +2104,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="Shortcuts Gallery" author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
 
-### 电影首发站
-
-<route name="电影" author="epirus" example="/dysfz/index" path="/dysfz/index"/>
-
-### 电影天堂
-
-<route name="新片精品" author="imgss" example="/dytt/index" path="/dytt/index"/>
-
 ### 趣头条
 
 <route name="分类" author="alphardex" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
@@ -1715,3 +2115,55 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
 
 </route>
+
+### The Verge
+
+<route name="The Verge" author="HenryQW" example="/verge" path="/verge">
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+</route>
+
+### 后续
+
+<route name="事件" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>
+
+### 老司机
+
+<route name="首页" author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
+<route name="24小时热门" author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
+
+### 99% Invisible
+
+<route name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+
+### 腾讯大家
+
+<route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
+
+### 抽屉
+
+<route name="新热榜" author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
+
+| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
+| ---- | ----- | ----- | ---- | --------- | -------- |
+| hot  | news  | scoff | pic  | tec       | ask      |
+
+</route>
+
+### 油价
+
+<route name="今日油价" author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
+
+### AutoTrader
+
+<route name="搜索结果" author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['查询语句']">
+
+1. 在 AutoTrader 选择筛选条件进行搜索
+1. 复制查询结果 URL 中`?`后的部分，例如 `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` 则为 `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
+
+</route>
+
+### 联合国
+
+<route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>

@@ -1,5 +1,6 @@
 const axios = require('../../utils/axios');
 const dayjs = require('dayjs');
+const common = require('./common');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -19,6 +20,11 @@ module.exports = async (ctx) => {
     });
 
     const data = response.data.data;
+
+    if (common.emptyResponseCheck(ctx, data)) {
+        return;
+    }
+
     const title = data[0].topic.content;
 
     ctx.state.data = {
@@ -28,7 +34,7 @@ module.exports = async (ctx) => {
         item: data.map((item) => {
             const date = new Date(item.createdAt);
             return {
-                title: `${title} ${dayjs(date).format('YYYY MMM DD')}`,
+                title: `${title} ${dayjs(date).format('MM月DD日')}`,
                 description: item.content.replace(new RegExp('\n', 'g'), '<br />'),
                 pubDate: date.toUTCString(),
                 link: `https://web.okjike.com/message-detail/${item.id}/officialMessage`,

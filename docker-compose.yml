@@ -1,14 +1,17 @@
-version: '2.1'
+version: '3'
 
 services:
 
-  rsshub:
+  service.rsshub:
     build:
       dockerfile: ./Dockerfile
       context: .
       args:
         # 是否在构建过程中使用淘宝NPM源进行加速
         USE_CHINA_NPM_REGISTRY: 0
+        # 是否在构建过程中跳过安装 Chromium, 参见 https://docs.rsshub.app/install/#docker-compose-deployment
+        # whether to skip puppeteer Chromium installation or not, refer to https://docs.rsshub.app/en/install/#docker-compose-deployment
+        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
     restart: always
     image: rsshub
     ports:
@@ -16,18 +19,15 @@ services:
     environment:
       NODE_ENV: production
       CACHE_TYPE: redis
-      REDIS_URL: 'redis://redis:6379/'
-    command: node index.js
-    links:
-      - redis
+      REDIS_URL: 'redis://db.redis:6379/'
     volumes:
-      - ./config/app.json:/usr/src/app/app.json
-      - ./config/config.js:/usr/src/app/config.json
+      - ./config/app.json:/app/app.json
+      - ./config/config.js:/app/config.js
     depends_on:
-      - redis
+      - db.redis
 
-  redis:
-    image: redis:4.0.9-alpine
+  db.redis:
+    image: redis:4.0.11-alpine
     volumes:
         - redis-data:/data
 
