@@ -8,6 +8,7 @@ install:
 
 script:
   - npm run lint
+  - npm run start
 
 cache:
   yarn: true
