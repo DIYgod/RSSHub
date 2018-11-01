@@ -40,7 +40,7 @@ const getData = async ({ site = 'www', channel }) => {
     let feed;
 
     if (channel) {
-        let channel = channel.toLowerCase();
+        channel = channel.toLowerCase();
         channel = channel.split('-').join('/');
 
         try {

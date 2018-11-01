@@ -10,7 +10,7 @@ module.exports = async (ctx) => {
         link: 'http://app.so/xianmian/',
         description: '鲜面连线 by AppSo：每日精品限免 / 促销应用',
         item: data.map((item) => ({
-            title: `「${item.discount_info[0].discounted_price === 0 ? '免费' : '降价'}」${item.app.name}`,
+            title: `「${item.discount_info[0].discounted_price === '0.00' ? '免费' : '降价'}」${item.app.name}`,
             description: `
           <img referrerpolicy="no-referrer" src="${item.app.icon.image}"/>
           <br/>
