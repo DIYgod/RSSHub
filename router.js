@@ -728,4 +728,7 @@ router.get('/acfun/bangumi/:id', require('./routes/acfun/bangumi'));
 // Auto Trader
 router.get('/autotrader/:query', require('./routes/autotrader'));
 
+// 极客公园
+router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
+
 module.exports = router;

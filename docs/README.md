@@ -1594,6 +1594,10 @@ Solidot 提供的 feed:
 
 </route>
 
+### 极客公园
+
+<route name="全球快讯" author="xyqfer" example="/geekpark/breakingnews" path="/geekpark/breakingnews" />
+
 ## 预报预警
 
 ### 停水通知
