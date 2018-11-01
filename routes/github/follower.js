@@ -17,7 +17,7 @@ module.exports = async (ctx) => {
             query: `
             {
                 user(login: "${user}") {
-                  followers(last: 10) {
+                  followers(first: 10) {
                     edges {
                       node {
                         login
@@ -31,7 +31,7 @@ module.exports = async (ctx) => {
         },
     });
 
-    const data = response.data.data.user.followers.edges.reverse();
+    const data = response.data.data.user.followers.edges;
 
     ctx.state.data = {
         title: `${user}'s followers`,
