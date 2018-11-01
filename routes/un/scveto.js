@@ -1,6 +1,6 @@
-const axios = require('../utils/axios');
+const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
-const utils = require('../routes/wikipedia/utils');
+const utils = require('../wikipedia/utils');
 
 module.exports = async (ctx) => {
     const url = 'https://en.wikipedia.org/wiki/List_of_vetoed_United_Nations_Security_Council_resolutions';
