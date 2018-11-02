@@ -14,7 +14,7 @@ module.exports = async (ctx) => {
 
     const chapter_item = [];
 
-    $('.book-chapter>.book-chapter-box>ul>li>a').each(function(i, elem) {
+    $('.book-chapter>.book-chapter-box>ul>li>a').each(function() {
         chapter_item.push({
             title: $(this).text(),
             link: $(this).attr('href')
