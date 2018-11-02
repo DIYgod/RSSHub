@@ -2173,3 +2173,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 百度
 
 <route name="百度趣画" author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
+
+### 搜狗
+
+<route name="搜狗特色LOGO" author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
