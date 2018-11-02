@@ -17,13 +17,13 @@ module.exports = async (ctx) => {
     $('.book-chapter>.book-chapter-box>ul>li>a').each(function() {
         chapter_item.push({
             title: $(this).text(),
-            link: $(this).attr('href')
+            link: $(this).attr('href'),
         });
     });
 
     ctx.state.data = {
         title: `刺猬猫 ${name}`,
         link: `http://www.ciweimao.com/book/${id}`,
-        item: chapter_item
+        item: chapter_item,
     };
 };
