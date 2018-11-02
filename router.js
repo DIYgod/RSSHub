@@ -302,6 +302,7 @@ router.get('/github/trending/:since/:language?', require('./routes/github/trendi
 router.get('/github/issue/:user/:repo', require('./routes/github/issue'));
 router.get('/github/user/followers/:user', require('./routes/github/follower'));
 router.get('/github/stars/:user/:repo', require('./routes/github/star'));
+router.get('/github/status', require('./routes/github/status'));
 
 // f-droid
 router.get('/fdroid/apprelease/:app', require('./routes/fdroid/apprelease'));

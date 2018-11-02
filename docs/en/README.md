@@ -305,6 +305,8 @@ GitHub provides some official RSS feeds:
 
 <routeEn name="Star" author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
 
+<routeEn name="Status" author="sgqy" path="/github/status" example="/github/status" />
+
 ### GitLab
 
 <routeEn name="Explore" author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">

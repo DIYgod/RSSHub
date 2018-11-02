@@ -629,6 +629,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
+<route name="运行状态" author="sgqy" example="/github/status" path="/github/status" />
+
 ### 开源中国
 
 <route name="资讯" author="tgly307" example="/oschina/news" path="/oschina/news"/>
