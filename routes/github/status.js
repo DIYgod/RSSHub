@@ -1,8 +1,5 @@
 // Warning: The author still knows nothing about javascript!
 
-// params:
-// type: notification type
-
 const axios = require('../../utils/axios'); // get web content
 const cheerio = require('cheerio'); // html parser
 
@@ -47,6 +44,7 @@ module.exports = async (ctx) => {
             description: `<span style="color:${color}">${content}</span>`,
             author: 'GitHub.com',
             category: type.slice(2),
+            url: base_url,
         };
         msg.push(item);
     }
