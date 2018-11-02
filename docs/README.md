@@ -2059,6 +2059,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
+<route name="Google Doodles" author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']" />
+
 ### 果壳网
 
 <route name="科学人" author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
