@@ -466,6 +466,7 @@ router.get('/nvidia/webdriverupdate', require('./routes/nvidia/webdriverupdate')
 
 // Google
 router.get('/google/scholar/:query', require('./routes/google/scholar'));
+router.get('/google/doodles/:language?', require('./routes/google/doodles'));
 
 // Awesome Pigtals
 router.get('/pigtails', require('./routes/pigtails'));
@@ -733,6 +734,9 @@ router.get('/autotrader/:query', require('./routes/autotrader'));
 
 // 极客公园
 router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
+
+// 百度
+router.get('/baidu/doodles', require('./routes/baidu/doodles'));
 
 // sankakucomplex
 router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
