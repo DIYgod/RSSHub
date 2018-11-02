@@ -738,4 +738,8 @@ router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
 // 百度
 router.get('/baidu/doodles', require('./routes/baidu/doodles'));
 
+// 動漫花園
+router.get('/dmhy/search/:keyword', require('./routes/dmhy/search'));
+router.get('/dmhy/team/:team_id', require('./routes/dmhy/team'));
+
 module.exports = router;

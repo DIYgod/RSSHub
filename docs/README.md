@@ -964,6 +964,16 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
+### 动漫花园
+
+<route name="搜寻" author="maple3142" example="/dmhy/search/哥布林" path="/dmhy/search/:keyword" :paramsDesc="['关键字']"/>
+
+<route name="联盟" author="maple3142" example="/dmhy/team/303" path="/dmhy/team/:team_id" :paramsDesc="['聯盟 id']">
+
+官网 (<http://share.dmhy.org/topics/list/team_id/303>) 右上角点`联盟+`，选择目标联盟，网址尾端即为`team_id`
+
+</route>
+
 ## 程序更新
 
 ### RSSHub
