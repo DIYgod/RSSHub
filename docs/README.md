@@ -849,6 +849,10 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
+### Sankaku Complex
+
+<route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
+
 ## 图片
 
 ### 妹子图

@@ -734,4 +734,7 @@ router.get('/autotrader/:query', require('./routes/autotrader'));
 // 极客公园
 router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
 
+// sankakucomplex
+router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
+
 module.exports = router;
