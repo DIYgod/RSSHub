@@ -735,4 +735,7 @@ router.get('/autotrader/:query', require('./routes/autotrader'));
 // 极客公园
 router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
 
+// 百度
+router.get('/baidu/doodles', require('./routes/baidu/doodles'));
+
 module.exports = router;

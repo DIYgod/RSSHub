@@ -2169,3 +2169,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 联合国
 
 <route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+### 百度
+
+<route name="百度趣画" author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
