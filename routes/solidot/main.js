@@ -5,6 +5,7 @@
 
 const axios = require('../../utils/axios'); // get web content
 const cheerio = require('cheerio'); // html parser
+const get_article = require('./_article');
 
 const base_url = 'https://$type$.solidot.org';
 module.exports = async (ctx) => {
@@ -19,59 +20,15 @@ module.exports = async (ctx) => {
     const data = response.data; // content is html format
     const $ = cheerio.load(data);
 
-    // get content
-    const a = $('div.block_m');
-
-    const msg_list = [];
+    // get urls
+    const a = $('div.block_m').find('div.bg_htit > h2 > a');
+    const urls = [];
     for (let i = 0; i < a.length; ++i) {
-        const title = $(a[i])
-            .find('div.bg_htit > h2 > a')
-            .text();
-        const link =
-            list_url +
-            $(a[i])
-                .find('div.bg_htit > h2 > a')
-                .attr('href');
-        const content = $(a[i])
-            .find('div.p_mainnew')
-            .html()
-            .replace(/href="\//g, 'href="' + list_url);
-        const author = $(a[i])
-            .find('div.talk_time > b')
-            .text()
-            .replace(/^来自/, '');
-        const category = $(a[i])
-            .find('div.icon_float > a')
-            .attr('title');
-        const cat_img = $(a[i])
-            .find('div.icon_float > a')
-            .html();
-        const date_raw = $(a[i])
-            .find('div.talk_time')
-            .clone()
-            .children()
-            .remove()
-            .end()
-            .text();
-        const date_str_zh = date_raw.replace(/^[^`]*发表于(.*分)[^`]*$/g, '$1'); // use [^`] to match \n
-        const date_str = date_str_zh
-            .replace(/[年月]/g, '-')
-            .replace(/时/g, ':')
-            .replace(/[日分]/g, '');
-        let date = new Date(date_str);
-        date.setHours(date.getHours() - 8);
-        date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
-        const item = {
-            title: title,
-            author: author,
-            pubDate: date.toUTCString(),
-            category: category, // not supported: 2018-10-29
-            link: link,
-            description: content + '<br/><br/>' + cat_img,
-        };
-
-        msg_list.push(item);
+        urls.push($(a[i]).attr('href'));
     }
+
+    // get articles
+    const msg_list = await Promise.all(urls.map((u) => get_article(u)));
 
     // feed the data
     ctx.state.data = {
