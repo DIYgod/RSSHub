@@ -741,4 +741,10 @@ router.get('/baidu/doodles', require('./routes/baidu/doodles'));
 // 搜狗
 router.get('/sogou/doodles', require('./routes/sogou/doodles'));
 
+// 香港天文台
+router.get('/hko/weather', require('./routes/hko/weather'));
+
+// sankakucomplex
+router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
+
 module.exports = router;
