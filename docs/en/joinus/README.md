@@ -105,11 +105,15 @@ ctx.state.data = {
     title: '', // The feed title
     link: '', // The feed link
     description: '', // The feed description
+    language: '', // The language of the channel
     item: [
         // An article of the feed
         {
             title: '', //  The article title
-            description: '', // The article content
+            author: '', // Author of the article
+            category: '', // Article category
+            // category: [''], // Multiple category
+            description: '', // The article summury or content
             pubDate: '', // The article publishing datetime
             guid: '', // The article unique identifier, optional, default to the article link below
             link: '', // The article link
@@ -136,11 +140,15 @@ ctx.state.data = {
     itunes_category: '', // Channel category
     image: '', // Channel's image
     description: '', // The feed description
+    language: '', // The language of the channel
     item: [
         // An item of the feed
         {
             title: '', // The item title
-            description: '', // The item content
+            author: '', // Author of the article
+            category: '', // Article category
+            // category: [''], // Multiple category
+            description: '', // The article summury or content
             pubDate: '', // The item publishing datetime
             guid: '', // The item unique identifier, optional, default to the item link below.
             link: '', // The item link
