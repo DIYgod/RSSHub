@@ -738,4 +738,7 @@ router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
 // 百度
 router.get('/baidu/doodles', require('./routes/baidu/doodles'));
 
+// sankakucomplex
+router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
+
 module.exports = router;
