@@ -261,11 +261,15 @@ ctx.state.data = {
     title: '', // 项目的标题
     link: '', // 指向项目的链接
     description: '', // 描述项目
+    language: '', // 频道语言
     item: [
         // 其中一篇文章或一项内容
         {
             title: '', // 文章标题
-            description: '', // 文章内容或描述
+            author: '', // 文章作者
+            category: '', // 文章分类
+            // category: [''], // 多个分类
+            description: '', // 文章摘要或全文
             pubDate: '', // 文章发布时间
             guid: '', // 文章唯一标示, 必须唯一, 可选, 默认为文章链接
             link: '', // 指向文章的链接
@@ -292,11 +296,15 @@ ctx.state.data = {
     itunes_category: '', // 播客分类
     image: '', // 专辑图片, 作为播客源时必填
     description: '', // 描述项目
+    language: '', // 频道语言
     item: [
         // 其中一篇文章或一项内容
         {
             title: '', // 文章标题
-            description: '', // 文章内容或描述
+            author: '', // 文章作者
+            category: '', // 文章分类
+            // category: [''], // 多个分类
+            description: '', // 文章摘要或全文
             pubDate: '', // 文章发布时间
             guid: '', // 文章唯一标示, 必须唯一, 可选, 默认为文章链接
             link: '', // 指向文章的链接

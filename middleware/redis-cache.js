@@ -41,8 +41,22 @@ module.exports = function(options = {}) {
     });
 
     options.app.context.cache = {
-        get: async (key) => await redisClient.get(key),
-        set: async (key, value, maxAge) => await redisClient.setex(key, maxAge, value),
+        get: async (key) => {
+            if (key) {
+                await redisClient.get(key);
+            }
+        },
+        set: async (key, value, maxAge) => {
+            if (!value) {
+                value = '';
+            }
+            if (typeof value === 'object') {
+                value = JSON.stringify(value);
+            }
+            if (key) {
+                await redisClient.setex(key, maxAge, value);
+            }
+        },
     };
 
     return async function cache(ctx, next) {

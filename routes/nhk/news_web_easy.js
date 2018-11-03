@@ -8,11 +8,15 @@ module.exports = async (ctx) => {
     let items = [];
     for (const articles of Object.values(dates)) {
         for (const article of articles) {
+            const date = new Date(article.news_prearranged_time);
+            date.setHours(date.getHours() - 9); // Japan is +0900
+            const pub_date_utc = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+
             items.push({
                 title: article.title,
                 description: `<h1>${article.title_with_ruby}</h1><img referrerpolicy="no-referrer" src="${article.news_web_image_uri}"/><br/>`,
                 guid: article.news_id,
-                pubDate: new Date(article.news_publication_time).toUTCString(),
+                pubDate: pub_date_utc.toUTCString(),
                 link: `https://www3.nhk.or.jp/news/easy/${article.news_id}/${article.news_id}.html`,
             });
         }

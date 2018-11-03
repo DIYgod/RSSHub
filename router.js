@@ -143,6 +143,8 @@ router.get('/ncm/djradio/:id', require('./routes/ncm/djradio'));
 router.get('/juejin/category/:category', require('./routes/juejin/category'));
 router.get('/juejin/tag/:tag', require('./routes/juejin/tag'));
 router.get('/juejin/trending/:category/:type', require('./routes/juejin/trending'));
+router.get('/juejin/books', require('./routes/juejin/books'));
+router.get('/juejin/pins', require('./routes/juejin/pins'));
 
 // 自如
 router.get('/ziroom/room/:city/:iswhole/:room/:keyword', require('./routes/ziroom/room'));
@@ -397,6 +399,9 @@ router.get('/keep/user/:id', require('./routes/keep/user'));
 // 起点
 router.get('/qidian/chapter/:id', require('./routes/qidian/chapter'));
 router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
+
+// 刺猬猫
+router.get('/ciweimao/chapter/:id', require('./routes/ciweimao/chapter'));
 
 // 中国美术馆
 router.get('/namoc/announcement', require('./routes/namoc/announcement'));
@@ -737,5 +742,14 @@ router.get('/geekpark/breakingnews', require('./routes/geekpark/breakingnews'));
 
 // 百度
 router.get('/baidu/doodles', require('./routes/baidu/doodles'));
+
+// 搜狗
+router.get('/sogou/doodles', require('./routes/sogou/doodles'));
+
+// 香港天文台
+router.get('/hko/weather', require('./routes/hko/weather'));
+
+// sankakucomplex
+router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
 
 module.exports = router;

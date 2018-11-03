@@ -586,6 +586,12 @@ RSSHub 提供下列 API 接口:
 
 </route>
 
+<route name="小册" author="xyqfer" example="/juejin/books" path="/juejin/books"/>
+
+> 掘金小册需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+<route name="沸点" author="xyqfer" example="/juejin/pins" path="/juejin/pins"/>
+
 ### Dockone
 
 <route name="周报" author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
@@ -848,6 +854,10 @@ GitHub 官方也提供了一些 RSS:
 例如：http://www.acfun.cn/bangumi/aa5022158 的番剧 id 是 5022158，不包括开头的 aa。
 
 :::
+
+### Sankaku Complex
+
+<route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
 
 ## 图片
 
@@ -1631,6 +1641,10 @@ Solidot 提供的 feed:
 
 </route>
 
+### 香港天文台
+
+<route name="Current Weather Report" author="calpa" example="/hko/weather" path="/hko/weather"/>
+
 ## 出行旅游
 
 ### All the Flight Deals
@@ -1848,6 +1862,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+### 刺猬猫
+
+<route name="章节" author="Netrvin" example="/ciweimao/chapter/100045750" path="/ciweimao/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ### 快眼看书
 
@@ -2173,3 +2191,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 百度
 
 <route name="百度趣画" author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
+
+### 搜狗
+
+<route name="搜狗特色LOGO" author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
