@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <generator>RSSHub</generator>
     <webMaster>i@diygod.me</webMaster>
-    <language>zh-cn</language>
+    <language>{{ language || 'zh-cn' }}</language>
     <id>{{ id || link }}</id>
     <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
 
@@ -58,8 +58,12 @@
         <content type="html" src="{{ $e.link }}"><![CDATA[{{@ $e.description }}]]></content>
         {{ /if }}
 
-        {{ if $e.category }}
+        {{ if typeof $e.category === 'string' }}
         <category term="{{ $e.category }}"></category>
+        {{ else }}
+                {{ each $e.category $c }}
+                <category term="{{ $c }}"></category>
+                {{ /each }}
         {{ /if }}
         
     </entry>
