@@ -2177,3 +2177,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 百度
 
 <route name="百度趣画" author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
+
+### 香港天文台
+
+<route name="Current Weather Report" author="calpa" example="/hko/weather" path="/hko/weather"/>
