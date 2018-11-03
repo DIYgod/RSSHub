@@ -586,6 +586,12 @@ RSSHub 提供下列 API 接口:
 
 </route>
 
+<route name="小册" author="xyqfer" example="/juejin/books" path="/juejin/books"/>
+
+> 掘金小册需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+<route name="沸点" author="xyqfer" example="/juejin/pins" path="/juejin/pins"/>
+
 ### Dockone
 
 <route name="周报" author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
