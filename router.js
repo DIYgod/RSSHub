@@ -398,6 +398,9 @@ router.get('/keep/user/:id', require('./routes/keep/user'));
 router.get('/qidian/chapter/:id', require('./routes/qidian/chapter'));
 router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
 
+// 刺猬猫
+router.get('/ciweimao/chapter/:id', require('./routes/ciweimao/chapter'));
+
 // 中国美术馆
 router.get('/namoc/announcement', require('./routes/namoc/announcement'));
 router.get('/namoc/news', require('./routes/namoc/news'));
