@@ -60,7 +60,8 @@ module.exports = async (ctx) => {
             }
             return {
                 title: `#${index + 1} ${illust.title}`,
-                description: `<p>画师：${illust.user.name} - 上传于：${new Date(illust.create_date).toLocaleString('zh-cn')} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p><br>${images.join('')}`,
+                pubDate: new Date(illust.create_date).toUTCString(),
+                description: `<p>画师：${illust.user.name} - 阅览数：${illust.total_view} - 收藏数：${illust.total_bookmarks}</p><br>${images.join('')}`,
                 link: `https://www.pixiv.net/member_illust.php?mode=medium&illust_id=${illust.id}`,
                 author: `${illust.user.name}`,
             };
