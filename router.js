@@ -752,4 +752,12 @@ router.get('/hko/weather', require('./routes/hko/weather'));
 // sankakucomplex
 router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
 
+// gnn游戏新闻
+router.get('/gnn/gnn', require('./routes/gnn/gnn'));
+
+// a9vg游戏新闻
+router.get('/a9vg/a9vg', require('./routes/a9vg/a9vg'));
+
+// rs05
+router.get('/rs05/rs05', require('./routes/rs05/rs05'));
 module.exports = router;
