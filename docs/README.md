@@ -1826,6 +1826,8 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | ------ | ----------- | -------- | ---------- | ------- | ---- |
 | 17     | 67          | 21       | 5          | 62      | 68   |
 
+</route>
+
 ### GNN.tw 游戏新闻
 
 <route name="GNN.tw 游戏新闻" author="monner-henster" example="/gnn/gnn" path="/gnn/gnn"/>
