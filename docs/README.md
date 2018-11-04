@@ -2195,3 +2195,9 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 搜狗
 
 <route name="搜狗特色LOGO" author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
+
+### IT 桔子
+
+<route name="投融资事件" author="xyqfer" example="/itjuzi/invest" path="/itjuzi/invest"/>
+
+<route name="并购事件" author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
