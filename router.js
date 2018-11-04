@@ -752,4 +752,7 @@ router.get('/hko/weather', require('./routes/hko/weather'));
 // sankakucomplex
 router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
 
+// cmacapps
+router.get('/cmacapps', require('./routes/cmacapps/index'));
+
 module.exports = router;
