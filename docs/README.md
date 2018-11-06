@@ -2016,9 +2016,9 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="分类" author="WhiteWorld" example="/readhub/category/topic" path="/readhub/category/:category" :paramsDesc="['分类名']">
 
-| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
-| -------- | -------- | ---------- | ---------- |
-| topic    | news     | technews   | blockchain |
+| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 | 每日早报 |
+| -------- | -------- | ---------- | ---------- | -------- |
+| topic    | news     | technews   | blockchain | daily    |
 
 </route>
 
