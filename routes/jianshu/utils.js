@@ -42,8 +42,10 @@ const ProcessFeed = async (list, caches) => {
                 .text()
                 .match(/\d{4}.\d{2}.\d{2} \d{2}:\d{2}/)
         );
+
+        const timeZone = 8;
         const serverOffset = date.getTimezoneOffset() / 60;
-        result[i].pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (8 + serverOffset)).toUTCString();
+        result[i].pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
         caches.set(result[i].link, JSON.stringify(result[i]), 1 * 60 * 60);
     }
 
