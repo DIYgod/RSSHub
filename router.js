@@ -753,6 +753,10 @@ router.get('/hko/weather', require('./routes/hko/weather'));
 // sankakucomplex
 router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
 
+// IT桔子
+router.get('/itjuzi/invest', require('./routes/itjuzi/invest'));
+router.get('/itjuzi/merge', require('./routes/itjuzi/merge'));
+
 // 探物
 router.get('/tanwu/products', require('./routes/tanwu/products'));
 
