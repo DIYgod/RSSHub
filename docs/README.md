@@ -1830,6 +1830,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
+### GNN.tw 游戏新闻
+
+<route name="GNN.tw 游戏新闻" author="monner-henster" example="/gnn/gnn" path="/gnn/gnn"/>
+
+### a9vgNews 游戏新闻
+
+<route name="a9vgNews 游戏新闻" author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
