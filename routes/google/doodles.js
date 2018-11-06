@@ -7,9 +7,7 @@ module.exports = async (ctx) => {
     const month = current.getMonth() + 1;
     const link = `https://www.google.com/doodles?hl=${language}`;
 
-    const {
-        data: { data },
-    } = await axios({
+    const { data } = await axios({
         method: 'get',
         url: `https://www.google.com/doodles/json/${year}/${month}?hl=${language}`,
         headers: {
