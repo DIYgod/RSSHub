@@ -2201,3 +2201,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="投融资事件" author="xyqfer" example="/itjuzi/invest" path="/itjuzi/invest"/>
 
 <route name="并购事件" author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
+
+### 探物
+
+<route name="产品" author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>

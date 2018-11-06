@@ -756,4 +756,7 @@ router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
 router.get('/itjuzi/invest', require('./routes/itjuzi/invest'));
 router.get('/itjuzi/merge', require('./routes/itjuzi/merge'));
 
+// 探物
+router.get('/tanwu/products', require('./routes/tanwu/products'));
+
 module.exports = router;
