@@ -753,6 +753,9 @@ router.get('/hko/weather', require('./routes/hko/weather'));
 // sankakucomplex
 router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
 
+// 技术头条
+router.get('/blogread/newest', require('./routes/blogread/newest'));
+
 // gnn游戏新闻
 router.get('/gnn/gnn', require('./routes/gnn/gnn'));
 

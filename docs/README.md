@@ -730,6 +730,10 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### 技术头条
+
+<route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
+
 ## 直播
 
 ### 哔哩哔哩直播
