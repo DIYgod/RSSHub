@@ -420,6 +420,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']"/>
 
+<route name="用户想法" author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']"/>
+
 ### pixiv
 
 <route name="用户收藏" author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
@@ -2203,3 +2205,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 搜狗
 
 <route name="搜狗特色LOGO" author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
+
+### IT 桔子
+
+<route name="投融资事件" author="xyqfer" example="/itjuzi/invest" path="/itjuzi/invest"/>
+
+<route name="并购事件" author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
+
+### 探物
+
+<route name="产品" author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>
