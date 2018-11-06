@@ -752,4 +752,7 @@ router.get('/hko/weather', require('./routes/hko/weather'));
 // sankakucomplex
 router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
 
+// 探物
+router.get('/tanwu/products', require('./routes/tanwu/products'));
+
 module.exports = router;
