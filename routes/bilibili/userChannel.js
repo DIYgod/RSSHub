@@ -6,14 +6,11 @@ module.exports = async (ctx) => {
     const uid = ctx.params.uid;
 
     const userName = await cache.getUsernameFromUID(ctx, uid);
-    const host = `https://api.bilibili.com/x/space/channel/video?mid=${uid}&cid=${cid}&pn=1&ps=10&order=0`;
+    const host = 'https://api.bilibili.com/x/space/channel/video?mid=142821407&cid=49017&pn=1&ps=10&order=0';
 
     const response = await axios({
         method: 'get',
         url: host,
-        headers: {
-            Referer: `https://space.bilibili.com/${uid}/`,
-        },
     });
 
     let data = response.data;
