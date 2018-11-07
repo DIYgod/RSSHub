@@ -57,8 +57,8 @@ module.exports = async (ctx) => {
                         url = `https://www.zhihu.com/pin/${detail.id}`;
                         break;
                     case 'question':
-                        title = utils.ProcessImage(detail.detail);
-                        description = detail.excerpt;
+                        title = detail.title;
+                        description = utils.ProcessImage(detail.detail);
                         url = `https://www.zhihu.com/question/${detail.id}`;
                         break;
                     case 'column':

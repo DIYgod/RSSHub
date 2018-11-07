@@ -1,4 +1,5 @@
 const axios = require('../../../utils/axios');
+const { generateData } = require('./utils');
 
 module.exports = async (ctx) => {
     const {
@@ -12,49 +13,6 @@ module.exports = async (ctx) => {
         title: '知乎想法热榜',
         link: 'https://www.zhihu.com/',
         description: '整点更新',
-        item: data.map(({ target }) => {
-            const pubDate = new Date(target.created * 1000).toUTCString();
-            const author = target.author.name;
-            const title = `${author}：${target.excerpt_title}`;
-            const link = `https://www.zhihu.com/pin/${target.id}`;
-            const description = target.content.reduce((description, item) => {
-                switch (item.type) {
-                    case 'text':
-                        description += `<div>${item.content}</div>`;
-                        break;
-
-                    case 'image':
-                        description += `<img referrerpolicy="no-referrer" src="${item.url.replace(/_.+\.jpg/g, '.jpg')}" />`;
-                        break;
-
-                    case 'video':
-                        description += `<video
-                    controls="controls"
-                    width="${item.playlist.hd.width}"
-                    height="${item.playlist.hd.height}"
-                    poster="${item.cover_info.thumbnail}"
-                    src="${item.playlist.hd.play_url}"
-                  >`;
-                        break;
-
-                    case 'link':
-                        description += `<div><a href="${item.url}">${item.title}</a><br><img referrerpolicy="no-referrer" src="${item.image_url}" /></div>`;
-                        break;
-
-                    default:
-                        description += '未知类型，请点击<a href="https://github.com/DIYgod/RSSHub/issues">链接</a>提交issue';
-                }
-
-                return description;
-            }, `<a href="https://www.zhihu.com${target.author.url}">${author}</a>：`);
-
-            return {
-                title,
-                description,
-                author,
-                pubDate,
-                link,
-            };
-        }),
+        item: generateData(data),
     };
 };

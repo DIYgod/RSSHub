@@ -420,6 +420,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']"/>
 
+<route name="用户想法" author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']"/>
+
 ### pixiv
 
 <route name="用户收藏" author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
@@ -727,6 +729,10 @@ GitHub 官方也提供了一些 RSS:
 | all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
 
 </route>
+
+### 技术头条
+
+<route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
 
 ## 直播
 
@@ -1828,6 +1834,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </route>
 
+### GNN.tw 游戏新闻
+
+<route name="GNN.tw 游戏新闻" author="monner-henster" example="/gnn/gnn" path="/gnn/gnn"/>
+
+### a9vgNews 游戏新闻
+
+<route name="a9vgNews 游戏新闻" author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
@@ -2014,9 +2028,9 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="分类" author="WhiteWorld" example="/readhub/category/topic" path="/readhub/category/:category" :paramsDesc="['分类名']">
 
-| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 |
-| -------- | -------- | ---------- | ---------- |
-| topic    | news     | technews   | blockchain |
+| 热门话题 | 科技动态 | 开发者资讯 | 区块链快讯 | 每日早报 |
+| -------- | -------- | ---------- | ---------- | -------- |
+| topic    | news     | technews   | blockchain | daily    |
 
 </route>
 
@@ -2195,3 +2209,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 搜狗
 
 <route name="搜狗特色LOGO" author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
+
+### IT 桔子
+
+<route name="投融资事件" author="xyqfer" example="/itjuzi/invest" path="/itjuzi/invest"/>
+
+<route name="并购事件" author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
+
+### 探物
+
+<route name="产品" author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>
