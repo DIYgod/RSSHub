@@ -770,4 +770,7 @@ router.get('/itjuzi/merge', require('./routes/itjuzi/merge'));
 // 探物
 router.get('/tanwu/products', require('./routes/tanwu/products'));
 
+// GitChat
+router.get('/gitchat/newest', require('./routes/gitchat/newest'));
+
 module.exports = router;

@@ -736,6 +736,12 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
 
+### GitChat
+
+<route name="最新" author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
+
+> GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
 ## 直播
 
 ### 哔哩哔哩直播
