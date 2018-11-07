@@ -103,14 +103,82 @@ sidebar: auto
 
     ```js
     const $ = cheerio.load(data); // 使用 cheerio 加载返回的 HTML
-    const list = $('.note-list li'); // 使用 cheerio 选择器，选择 class="note-list" 下的所有 <li> 元素，返回 cheerio node 对象数组
+    const list = $('.note-list li').get();
+    // 使用 cheerio 选择器，选择 class="note-list" 下的所有 <li> 元素，返回 cheerio node 对象数组
+    // cheerio get() 方法将 cheerio node 对象数组转换为 node 对象数组
 
     // 注：每一个 cheerio node 对应一个 HTML DOM
     // 注：cheerio 选择器与 jquery 选择器几乎相同
     // 参考 cheerio 文档：https://cheerio.js.org/
     ```
 
-    赋值给 `ctx.state.data`
+    使用 /jianshu/utils.js 类进行全文获取：
+
+    ```js
+    const result = await util.ProcessFeed(list, ctx.cache);
+    ```
+
+    /jianshu/utils.js 类中的全文获取逻辑：
+
+    ```js
+    const requestList = [];
+
+    // 使用 Promise.all() 进行 async 并发
+    const result = await Promise.all(
+        // 遍历每一篇文章
+        list.map(async (item) => {
+            const $ = cheerio.load(item);
+
+            // 还原相对链接为绝对链接
+            const itemUrl = url.resolve(host, $('.title').attr('href'));
+
+            // 查询缓存
+            const cache = await caches.get(itemUrl);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+
+            // 返回新的对象
+            const single = {
+                title: $('.title').text(),
+                link: itemUrl,
+                author: $('.nickname').text(),
+                guid: itemUrl,
+            };
+
+            // 创建新的 axios 请求，存入 requestList 备用
+            const es = axios.get(itemUrl);
+            requestList.push(es);
+            return Promise.resolve(single);
+        })
+    );
+
+    // 并发所有 axios 请求
+    const responses = await axios.all(requestList);
+
+    // 循环 axios 结果
+    for (let i = 0; i < responses.length; i++) {
+        const $ = cheerio.load(responses[i].data);
+
+        // 根据网站 HTML，适配相应 selectors
+        result[i].description = $('.show-content-free').html();
+        const date = new Date(
+            $('.publish-time')
+                .text()
+                .match(/\d{4}.\d{2}.\d{2} \d{2}:\d{2}/)
+        );
+
+        // 处理日期时区，东八区 GMT +8 即为 8
+        const timeZone = 8;
+        const serverOffset = date.getTimezoneOffset() / 60;
+        result[i].pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
+
+        // 存入缓存，缓存时间（单位：秒）设置为 1（小时） * 60（分钟） * 60（秒）= 3600（秒）
+        caches.set(result[i].link, JSON.stringify(result[i]), 1 * 60 * 60);
+    }
+    ```
+
+    将结果 `result` 赋值给 `ctx.state.data`
 
     ```js
     ctx.state.data = {
@@ -118,25 +186,7 @@ sidebar: auto
         link: 'https://www.jianshu.com',
         // 选择 <meta name="description"> 的 content 属性
         description: $('meta[name="description"]').attr('content'),
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    // 遍历 cheerio node 对象数组
-                    // 注意，此处采用的为 cheerio map() 方法与 node 内置 map() 不同
-                    item = $(item);
-                    return {
-                        // 文章标题
-                        title: item.find('.title').text(),
-                        // 文章正文，对每一个 <li> DOM 进行操作，生成正文
-                        description: `作者：${item.find('.nickname').text()}<br>描述：${item.find('.abstract').text()}<br><img referrerpolicy="no-referrer" src="https:${item.find('.img-blur').data('echo')}">`,
-                        // 文章发布时间
-                        pubDate: new Date(item.find('.time').data('shared-at')).toUTCString(),
-                        // 文章链接
-                        link: `https://www.jianshu.com${item.find('.title').attr('href')}`,
-                    };
-                })
-                .get(), // cheerio get() 方法将 cheerio node 对象数组转换为 node 对象数组
+        item: result,
     };
 
     // 至此本路由结束

@@ -386,13 +386,13 @@ RSSHub 提供下列 API 接口:
 
 ### 简书
 
-<route name="首页" author="DIYgod" example="/jianshu/home" path="/jianshu/home"/>
+<route name="首页" author="DIYgod HenryQW" example="/jianshu/home" path="/jianshu/home"/>
 
 <route name="热门" author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" :paramsDesc="['按周 `weekly` 或 按月 `monthly`']"/>
 
-<route name="专题" author="DIYgod" example="/jianshu/collection/xYuZYD" path="/jianshu/collection/:id" :paramsDesc="['专题 id, 可在专题页 URL 中找到']"/>
+<route name="专题" author="DIYgod HenryQW" example="/jianshu/collection/xYuZYD" path="/jianshu/collection/:id" :paramsDesc="['专题 id, 可在专题页 URL 中找到']"/>
 
-<route name="作者" author="DIYgod" example="/jianshu/user/yZq3ZV" path="/jianshu/user/:id" :paramsDesc="['作者 id, 可在作者主页 URL 中找到']"/>
+<route name="作者" author="DIYgod HenryQW" example="/jianshu/user/yZq3ZV" path="/jianshu/user/:id" :paramsDesc="['作者 id, 可在作者主页 URL 中找到']"/>
 
 ### 知乎
 
