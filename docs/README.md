@@ -384,6 +384,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
 
+<route name="小程序插件" author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
+
 ### 简书
 
 <route name="首页" author="DIYgod HenryQW" example="/jianshu/home" path="/jianshu/home"/>
