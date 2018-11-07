@@ -168,6 +168,7 @@ router.get('/zhihu/hotlist', require('./routes/zhihu/hotlist'));
 router.get('/zhihu/pin/hotlist', require('./routes/zhihu/pin/hotlist'));
 router.get('/zhihu/question/:questionId', require('./routes/zhihu/question'));
 router.get('/zhihu/topic/:topicId', require('./routes/zhihu/topic'));
+router.get('/zhihu/people/pins/:id', require('./routes/zhihu/pin/people'));
 
 // 妹子图
 router.get('/mzitu/home/:type?', require('./routes/mzitu/home'));
@@ -751,5 +752,21 @@ router.get('/hko/weather', require('./routes/hko/weather'));
 
 // sankakucomplex
 router.get('/sankakucomplex/post', require('./routes/sankakucomplex/post'));
+
+// 技术头条
+router.get('/blogread/newest', require('./routes/blogread/newest'));
+
+// gnn游戏新闻
+router.get('/gnn/gnn', require('./routes/gnn/gnn'));
+
+// a9vg游戏新闻
+router.get('/a9vg/a9vg', require('./routes/a9vg/a9vg'));
+
+// IT桔子
+router.get('/itjuzi/invest', require('./routes/itjuzi/invest'));
+router.get('/itjuzi/merge', require('./routes/itjuzi/merge'));
+
+// 探物
+router.get('/tanwu/products', require('./routes/tanwu/products'));
 
 module.exports = router;
