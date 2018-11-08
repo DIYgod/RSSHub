@@ -40,54 +40,57 @@ module.exports = async (ctx) => {
     list = $('.tr2', list)
         .not('.tr2.tac')
         .nextAll()
-        .slice(0, 20)
+        .slice(0, -1)
         .get();
 
     const reqList = [];
     const indexList = []; // New item index
-    let skip = 0;
+    // let skip = 0;
 
     const out = await Promise.all(
-        list.map(async (item, i) => {
-            const $ = cheerio.load(item);
-            let title = $('.tal h3 a');
-            const path = title.attr('href');
+        list
+            .map(async (item, i) => {
+                const $ = cheerio.load(item);
+                let title = $('.tal h3 a');
+                const path = title.attr('href');
 
-            // Filter duplicated entries
-            if (path.match(filterReg) !== null) {
-                skip++;
-                return Promise.resolve('');
-            }
-            const link = url.resolve(base, path);
+                // Filter duplicated entries
+                if (path.match(filterReg) !== null) {
+                    // skip++;
+                    return Promise.resolve('');
+                }
+                const link = url.resolve(base, path);
 
-            // Check cache
-            const cache = await ctx.cache.get(link);
-            if (cache) {
-                return Promise.resolve(JSON.parse(cache));
-            }
+                // Check cache
+                const cache = await ctx.cache.get(link);
+                if (cache) {
+                    return Promise.resolve(JSON.parse(cache));
+                }
 
-            if (
-                cheerio
-                    .load(title)('font')
-                    .text() !== ''
-            ) {
-                title = cheerio
-                    .load(title)('font')
-                    .text();
-            } else {
-                title = title.text();
-            }
+                if (
+                    cheerio
+                        .load(title)('font')
+                        .text() !== ''
+                ) {
+                    title = cheerio
+                        .load(title)('font')
+                        .text();
+                } else {
+                    title = title.text();
+                }
 
-            const single = {
-                title: title,
-                link: link,
-                guid: path,
-            };
-            const promise = axios_ins.get(url.resolve(base, path));
-            reqList.push(promise);
-            indexList.push(i - skip);
-            return Promise.resolve(single);
-        })
+                const single = {
+                    title: title,
+                    link: link,
+                    guid: path,
+                };
+                const promise = axios_ins.get(url.resolve(base, path));
+                reqList.push(promise);
+                // indexList.push(i - skip);
+                indexList.push(i);
+                return Promise.resolve(single);
+            })
+            .filter((item) => item !== '')
     );
 
     let resList;
