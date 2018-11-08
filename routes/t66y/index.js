@@ -43,9 +43,8 @@ module.exports = async (ctx) => {
         .slice(0, -1)
         .get();
 
-    const reqList = [];
+    const resList = [];
     const indexList = []; // New item index
-    // let skip = 0;
 
     const out = await Promise.all(
         list
@@ -56,7 +55,6 @@ module.exports = async (ctx) => {
 
                 // Filter duplicated entries
                 if (path.match(filterReg) !== null) {
-                    // skip++;
                     return Promise.resolve('');
                 }
                 const link = url.resolve(base, path);
@@ -79,30 +77,32 @@ module.exports = async (ctx) => {
                     title = title.text();
                 }
 
+                if (!title) {
+                    return Promise.resolve('');
+                }
+
                 const single = {
                     title: title,
                     link: link,
                     guid: path,
                 };
-                const promise = axios_ins.get(url.resolve(base, path));
-                reqList.push(promise);
-                // indexList.push(i - skip);
+
+                try {
+                    const response = await axios_ins.get(url.resolve(base, path));
+                    resList.push(response.data);
+                } catch (err) {
+                    return Promise.resolve('');
+                }
+
                 indexList.push(i);
                 return Promise.resolve(single);
             })
             .filter((item) => item !== '')
     );
 
-    let resList;
-    try {
-        resList = await axios.all(reqList);
-    } catch (error) {
-        ctx.state.data = `Error occurred: ${error}`;
-        return;
-    }
     for (let i = 0; i < resList.length; i++) {
         let item = resList[i];
-        item = iconv.decode(item.data, 'gbk');
+        item = iconv.decode(item, 'gbk');
         let $ = cheerio.load(item);
         let time = $('#main > div:nth-child(4) > table > tbody > tr:nth-child(2) > th > div').text();
         const regex = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/;
