@@ -2227,3 +2227,17 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 探物
 
 <route name="产品" author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>
+
+### 下厨房
+
+<route name="用户作品" author="xyqfer" example="/xiachufang/user/cooked/103309404" path="/xiachufang/user/cooked/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
+<route name="用户菜谱" author="xyqfer" example="/xiachufang/user/created/103309404" path="/xiachufang/user/created/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
+<route name="作品动态" author="xyqfer" example="/xiachufang/popular/hot" path="/xiachufang/popular/:timeframe?" :paramsDesc="['默认最新上传']">
+
+| 正在流行 | 24 小时最佳 |
+| -------- | ----------- |
+| hot      | pop         |
+
+</route>
