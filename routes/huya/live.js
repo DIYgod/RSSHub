@@ -11,7 +11,7 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(response.data);
 
-    const timestamp = parseInt(response.data.match(/"startTime":(\d+)/)[1]);
+    const timestamp = parseInt(response.data.match(/"startTime":"?(\d+)/)[1]) * 1000;
 
     let item;
     if (response.data.match(/"isOn":(\w{4})/)[1] === 'true') {

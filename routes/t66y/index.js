@@ -33,7 +33,7 @@ function killViidii(originUrl) {
 const sourceTimezoneOffset = -8;
 const filterReg = /read\.php/;
 module.exports = async (ctx) => {
-    const res = await axios_ins.get(url.resolve(base, `${section}${ctx.params.id}`));
+    const res = await axios_ins.get(url.resolve(base, `${section}${ctx.params.id}&search=today`));
     const data = iconv.decode(res.data, 'gbk');
     const $ = cheerio.load(data);
     let list = $('#ajaxtable > tbody:nth-child(2)');

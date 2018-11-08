@@ -460,6 +460,7 @@ router.get('/bugly/changelog/:platform', require('./routes/tencent/bugly/changel
 // wechat
 router.get('/wechat/wasi/:id', require('./routes/tencent/wechat/wasi'));
 router.get('/wechat/announce', require('./routes/tencent/wechat/announce'));
+router.get('/wechat/miniprogram/plugins', require('./routes/tencent/wechat/miniprogram/plugins'));
 
 // All the Flight Deals
 router.get('/atfd/:locations/:nearby?', require('./routes/atfd/index'));
@@ -768,5 +769,8 @@ router.get('/itjuzi/merge', require('./routes/itjuzi/merge'));
 
 // 探物
 router.get('/tanwu/products', require('./routes/tanwu/products'));
+
+// GitChat
+router.get('/gitchat/newest', require('./routes/gitchat/newest'));
 
 module.exports = router;
