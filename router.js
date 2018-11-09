@@ -773,4 +773,7 @@ router.get('/tanwu/products', require('./routes/tanwu/products'));
 // GitChat
 router.get('/gitchat/newest', require('./routes/gitchat/newest'));
 
+// 经济观察报
+router.get('/eeo/:category?', require('./routes/eeo/index'));
+
 module.exports = router;
