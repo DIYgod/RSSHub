@@ -1,5 +1,6 @@
 const axios = require('../../utils/axios');
 const weiboUtils = require('./utils');
+const date = require('../../utils/date');
 
 module.exports = async (ctx) => {
     const uid = ctx.params.uid;
@@ -32,7 +33,7 @@ module.exports = async (ctx) => {
             return {
                 title,
                 description: description,
-                pubDate: weiboUtils.getTime(item.mblog.created_at),
+                pubDate: date(item.mblog.created_at, 8),
                 link: `https://weibo.com/${uid}/${item.mblog.bid}`,
             };
         }),

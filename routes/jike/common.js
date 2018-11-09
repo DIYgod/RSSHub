@@ -1,6 +1,14 @@
 const url = require('url');
 
 module.exports = {
+    emptyResponseCheck: (ctx, data) => {
+        if (data.length === 0) {
+            ctx.state.data = {
+                title: '主题 ID 不存在，或该主题暂无内容',
+            };
+            return true;
+        }
+    },
     topicDataHanding: (data) =>
         data.map((item) => {
             let audioName, videoName, linkName;

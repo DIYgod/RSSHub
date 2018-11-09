@@ -57,8 +57,8 @@ module.exports = async (ctx) => {
                         url = `https://www.zhihu.com/pin/${detail.id}`;
                         break;
                     case 'question':
-                        title = utils.ProcessImage(detail.detail);
-                        description = detail.excerpt;
+                        title = detail.title;
+                        description = utils.ProcessImage(detail.detail);
                         url = `https://www.zhihu.com/question/${detail.id}`;
                         break;
                     case 'column':
@@ -79,7 +79,7 @@ module.exports = async (ctx) => {
                 }
 
                 return {
-                    title: `${item.action_text}: ${title}`,
+                    title: `${data[0].actor.name}${item.action_text}: ${title}`,
                     description: description,
                     pubDate: new Date(item.created_time * 1000).toUTCString(),
                     link: url,

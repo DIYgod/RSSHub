@@ -105,11 +105,15 @@ ctx.state.data = {
     title: '', // The feed title
     link: '', // The feed link
     description: '', // The feed description
+    language: '', // The language of the channel
     item: [
         // An article of the feed
         {
             title: '', //  The article title
-            description: '', // The article content
+            author: '', // Author of the article
+            category: '', // Article category
+            // category: [''], // Multiple category
+            description: '', // The article summury or content
             pubDate: '', // The article publishing datetime
             guid: '', // The article unique identifier, optional, default to the article link below
             link: '', // The article link
@@ -118,30 +122,33 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>If you want to make a podcast RSS</summary><br>
+<details><summary>If you want to make a podcast feed</summary><br>
 
 Reference article:
 
 -   [Create a podcast - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itca5b22233a)
--   [Podcast best practices - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itc2b3780e76)
--   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
--   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
+-   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
+-   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
 
-these datas can make your podcast subscribeable:
+these datas can make your podcast subscribeable:
 
 ```js
 ctx.state.data = {
     title: '', // The feed title
     link: '', // The feed link
     itunes_author: '', // The channel's author, you must fill this data.
-    itunes_category:  '',// Channel category
+    itunes_category: '', // Channel category
     image: '', // Channel's image
     description: '', // The feed description
+    language: '', // The language of the channel
     item: [
         // An item of the feed
         {
             title: '', // The item title
-            description: '', // The item content
+            author: '', // Author of the article
+            category: '', // Article category
+            // category: [''], // Multiple category
+            description: '', // The article summury or content
             pubDate: '', // The item publishing datetime
             guid: '', // The item unique identifier, optional, default to the item link below.
             link: '', // The item link

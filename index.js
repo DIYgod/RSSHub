@@ -1,7 +1,10 @@
+const config = require('./config');
+if (config.newrelicLicenseKey) {
+    require('newrelic');
+}
 const Koa = require('koa');
 const fs = require('fs');
 const logger = require('./utils/logger');
-const config = require('./config');
 
 const onerror = require('./middleware/onerror');
 const header = require('./middleware/header');
@@ -106,6 +109,9 @@ app.use(mount('/protected', protected_router.routes())).use(protected_router.all
 app.use(mount('/api', api_router.routes())).use(api_router.allowedMethods());
 
 // connect
+if (config.connect.disabled) {
+    process.exit();
+}
 if (config.connect.port) {
     app.listen(config.connect.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
     logger.info('Listening Port ' + config.connect.port);

@@ -29,4 +29,13 @@ module.exports = async (ctx, next) => {
     if (ctx.state.data && ctx.query && ctx.query.limit) {
         ctx.state.data.item = ctx.state.data.item.slice(0, parseInt(ctx.query.limit));
     }
+
+    // telegram instant view
+    if (ctx.state.data && ctx.query && ctx.query.tgiv) {
+        ctx.state.data.item.map((item) => {
+            const encodedlink = encodeURIComponent(item.link);
+            item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.query.tgiv}`;
+            return item;
+        });
+    }
 };
