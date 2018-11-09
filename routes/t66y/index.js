@@ -32,6 +32,7 @@ function killViidii(originUrl) {
 
 const sourceTimezoneOffset = -8;
 const filterReg = /read\.php/;
+
 module.exports = async (ctx) => {
     const res = await axios_ins.get(url.resolve(base, `${section}${ctx.params.id}&search=today`));
     const data = iconv.decode(res.data, 'gbk');
@@ -43,67 +44,9 @@ module.exports = async (ctx) => {
         .slice(0, -1)
         .get();
 
-    const resList = [];
-    const indexList = []; // New item index
-
-    const out = await Promise.all(
-        list
-            .map(async (item, i) => {
-                const $ = cheerio.load(item);
-                let title = $('.tal h3 a');
-                const path = title.attr('href');
-
-                // Filter duplicated entries
-                if (path.match(filterReg) !== null) {
-                    return Promise.resolve('');
-                }
-                const link = url.resolve(base, path);
-
-                // Check cache
-                const cache = await ctx.cache.get(link);
-                if (cache) {
-                    return Promise.resolve(JSON.parse(cache));
-                }
-
-                if (
-                    cheerio
-                        .load(title)('font')
-                        .text() !== ''
-                ) {
-                    title = cheerio
-                        .load(title)('font')
-                        .text();
-                } else {
-                    title = title.text();
-                }
-
-                if (!title) {
-                    return Promise.resolve('');
-                }
-
-                const single = {
-                    title: title,
-                    link: link,
-                    guid: path,
-                };
-
-                try {
-                    const response = await axios_ins.get(url.resolve(base, path));
-                    resList.push(response.data);
-                } catch (err) {
-                    return Promise.resolve('');
-                }
-
-                indexList.push(i);
-                return Promise.resolve(single);
-            })
-            .filter((item) => item !== '')
-    );
-
-    for (let i = 0; i < resList.length; i++) {
-        let item = resList[i];
-        item = iconv.decode(item, 'gbk');
-        let $ = cheerio.load(item);
+    const parseContent = (htmlString) => {
+        htmlString = iconv.decode(htmlString, 'gbk');
+        let $ = cheerio.load(htmlString);
         let time = $('#main > div:nth-child(4) > table > tbody > tr:nth-child(2) > th > div').text();
         const regex = /\d{4}-\d{2}-\d{2} \d{2}:\d{2}/;
         const regRes = regex.exec(time);
@@ -116,7 +59,7 @@ module.exports = async (ctx) => {
         try {
             $ = cheerio.load(content);
         } catch (error) {
-            continue;
+            return null;
         }
 
         // Handle video
@@ -134,12 +77,12 @@ module.exports = async (ctx) => {
         // Handle img tag
         let images = $('img');
         for (let k = 0; k < images.length; k++) {
-            $(images[k]).replaceWith(`<img src="${$(images[k]).attr('data-src')}">`);
+            $(images[k]).replaceWith(`<img src="${$(images[k]).attr('data-src')}" referrerpolicy="no-referrer" />`);
         }
         // Handle input tag
         images = $('input');
         for (let k = 0; k < images.length; k++) {
-            $(images[k]).replaceWith(`<img src="${$(images[k]).attr('data-src')}">`);
+            $(images[k]).replaceWith(`<img src="${$(images[k]).attr('data-src')}" referrerpolicy="no-referrer" />`);
         }
 
         // Handle links
@@ -148,14 +91,73 @@ module.exports = async (ctx) => {
             $(links[k]).attr('href', killViidii($(links[k]).attr('href')));
         }
 
-        out[indexList[i]].description = $.html();
-        out[indexList[i]].pubDate = time.toUTCString();
-        ctx.cache.set(out[indexList[i]].link, JSON.stringify(out[indexList[i]]), 3 * 60 * 60);
-    }
+        return {
+            description: $.html(),
+            pubDate: time.toUTCString(),
+        };
+    };
+
+    const out = await Promise.all(
+        list.map(async (item) => {
+            const $ = cheerio.load(item);
+            let title = $('.tal h3 a');
+            const path = title.attr('href');
+
+            // Filter duplicated entries
+            if (path.match(filterReg) !== null) {
+                return Promise.resolve('');
+            }
+            const link = url.resolve(base, path);
+
+            // Check cache
+            const cache = await ctx.cache.get(link);
+            if (cache) {
+                return Promise.resolve(JSON.parse(cache));
+            }
+
+            if (
+                cheerio
+                    .load(title)('font')
+                    .text() !== ''
+            ) {
+                title = cheerio
+                    .load(title)('font')
+                    .text();
+            } else {
+                title = title.text();
+            }
+
+            if (!title) {
+                return Promise.resolve('');
+            }
+
+            const single = {
+                title: title,
+                link: link,
+                guid: path,
+            };
+
+            try {
+                const response = await axios_ins.get(url.resolve(base, path));
+                const result = parseContent(response.data);
+
+                if (!result) {
+                    return Promise.resolve('');
+                }
+
+                single.description = result.description;
+                single.pubDate = result.pubDate;
+            } catch (err) {
+                return Promise.resolve('');
+            }
+            ctx.cache.set(link, JSON.stringify(single), 3 * 60 * 60);
+            return Promise.resolve(single);
+        })
+    );
 
     ctx.state.data = {
         title: $('title').text(),
         link: url.resolve(base, `${section}${ctx.params.id}`),
-        item: out,
+        item: out.filter((item) => item !== ''),
     };
 };
