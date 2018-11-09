@@ -773,4 +773,7 @@ router.get('/tanwu/products', require('./routes/tanwu/products'));
 // GitChat
 router.get('/gitchat/newest', require('./routes/gitchat/newest'));
 
+// The Guardian
+router.get('/guardian/editorial', require('./routes/guardian/editorial'));
+
 module.exports = router;

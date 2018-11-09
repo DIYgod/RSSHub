@@ -389,3 +389,11 @@ Provides a better reading experience (full text articles) over the official one.
 ### United Nations
 
 <routeEn name="Security Council Vetoed a Resolution" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+### The Guardian
+
+<routeEn name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
