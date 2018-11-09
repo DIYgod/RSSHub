@@ -2236,4 +2236,4 @@ category 对应的关键词有
 | ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | -------- |
 
 
-<route name="经济观察网" author="epirus" example="/eeo/观察者" path="/eeo/:category" :paramsDesc="['分类']"/>
+<route name="经济观察网" author="epirus" example="/eeo/观察家" path="/eeo/:category" :paramsDesc="['分类']"/>
