@@ -773,6 +773,9 @@ router.get('/tanwu/products', require('./routes/tanwu/products'));
 // GitChat
 router.get('/gitchat/newest', require('./routes/gitchat/newest'));
 
+// The Guardian
+router.get('/guardian/editorial', require('./routes/guardian/editorial'));
+
 // 下厨房
 router.get('/xiachufang/user/cooked/:id', require('./routes/xiachufang/user/cooked'));
 router.get('/xiachufang/user/created/:id', require('./routes/xiachufang/user/created'));
