@@ -781,4 +781,7 @@ router.get('/xiachufang/user/cooked/:id', require('./routes/xiachufang/user/cook
 router.get('/xiachufang/user/created/:id', require('./routes/xiachufang/user/created'));
 router.get('/xiachufang/popular/:timeframe?', require('./routes/xiachufang/popular'));
 
+// 经济观察报
+router.get('/eeo/:category?', require('./routes/eeo/index'));
+
 module.exports = router;
