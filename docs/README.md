@@ -1595,6 +1595,20 @@ Category 列表:
 
 </route>
 
+### 卫报 The Guardian
+
+<route name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+
+::: tip 提示
+
+由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
+
+:::
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</route>
+
 ### 多维新闻网
 
 <route name="要闻" author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
