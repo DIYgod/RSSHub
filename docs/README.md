@@ -1512,13 +1512,17 @@ Category 列表:
 
 ### 纽约时报
 
+<route name="全球纵览" author="HenryQW" example="/nytimes" path="/nytimes/index">
+
 ::: tip 提示
 
-纽约时报 RSS: https://cn.nytimes.com/rss/
+由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
 
 :::
 
-<route name="新闻早报" author="yangkghjh" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</route>
 
 ### 新京报
 
