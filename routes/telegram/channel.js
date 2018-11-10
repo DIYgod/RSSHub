@@ -31,7 +31,7 @@ module.exports = async (ctx) => {
         });
     }
 
-    const data = response.data.result.filter((item) => item.channel_post && item.channel_post.chat && item.channel_post.chat.username === username).reverse();
+    const data = response.data.result.filter((item) => item.channel_post && item.channel_post.chat && (item.channel_post.chat.username === username || (item.channel_post.chat.id || '').toString() === username)).reverse();
 
     let title;
     let post;
