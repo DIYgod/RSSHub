@@ -715,7 +715,7 @@ router.get('/dgtle/trade/:typeId?', require('./routes/dgtle/trade'));
 router.get('/chouti/:subject?', require('./routes/chouti'));
 
 // 西安电子科技大学
-router.get('/xidian/jwc/:category?', require('./routes/xidian/jwc'));
+router.get('/xidian/jwc/:category?', require('./routes/universities/xidian/jwc'));
 
 // Westore
 router.get('/westore/new', require('./routes/westore/new'));
