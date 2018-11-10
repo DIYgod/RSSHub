@@ -850,11 +850,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 电影首发站
 
-<route name="电影" author="epirus" example="/dysfz" path="/dysfz/index"/>
+<route name="电影" author="epirus" example="/dysfz" path="/dysfz"/>
 
 ### 电影天堂
 
-<route name="新片精品" author="imgss" example="/dytt" path="/dytt/index"/>
+<route name="新片精品" author="imgss" example="/dytt" path="/dytt"/>
 
 ### 优酷
 
