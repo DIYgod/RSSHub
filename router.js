@@ -773,4 +773,9 @@ router.get('/tanwu/products', require('./routes/tanwu/products'));
 // GitChat
 router.get('/gitchat/newest', require('./routes/gitchat/newest'));
 
+// 下厨房
+router.get('/xiachufang/user/cooked/:id', require('./routes/xiachufang/user/cooked'));
+router.get('/xiachufang/user/created/:id', require('./routes/xiachufang/user/created'));
+router.get('/xiachufang/popular/:timeframe?', require('./routes/xiachufang/popular'));
+
 module.exports = router;
