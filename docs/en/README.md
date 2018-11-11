@@ -77,14 +77,13 @@ Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https
 
 ### Output Formats
 
-RSSHub supports RSS 2.0、Atom and [JSON Feed](https://jsonfeed.org/) as the output formats, simply append `.rss` `.atom` or `.json` to the end of the feed address, default to RSS 2.0
+RSSHub supports RSS 2.0 and Atom as the output formats, simply append `.rss` `.atom` to the end of the feed address, default to RSS 2.0
 
 For exmaple:
 
 -   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
 -   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
 -   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
--   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
 -   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
 ## API
