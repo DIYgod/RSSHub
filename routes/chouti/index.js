@@ -21,7 +21,7 @@ module.exports = async (ctx) => {
         author: item.nick,
         description: `${item.title}<br><img src="${item.originalImgUrl}" referrerpolicy="no-referrer" /><br><a href="${host}${item.commentsUrl}">评论</a>`,
         link: item.url,
-        pubDate: new Date(item.createtime).toUTCString(),
+        pubDate: new Date(item.createtime / 1000).toUTCString(),
     }));
 
     ctx.state.data = {
