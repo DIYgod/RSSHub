@@ -5,7 +5,7 @@ module.exports = async (ctx) => {
     const url = 'http://rss.weather.gov.hk/rss/CurrentWeather.xml';
     const cache = ctx.cache.get(url);
     if (cache) {
-        return Promise.parse(cache);
+        return JSON.parse(cache);
     }
 
     const { data } = await axios({ method: 'get', url });
