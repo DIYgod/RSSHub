@@ -784,4 +784,7 @@ router.get('/xiachufang/popular/:timeframe?', require('./routes/xiachufang/popul
 // 经济观察报
 router.get('/eeo/:category?', require('./routes/eeo/index'));
 
+// 腾讯视频
+router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlist'));
+
 module.exports = router;
