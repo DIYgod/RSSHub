@@ -2,7 +2,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../config');
 const he = require('he');
-const typeRegrx = /\.(atom|rss|json)$/;
+const typeRegrx = /\.(atom|rss)$/;
 
 module.exports = async (ctx, next) => {
     ctx.state.type = ctx.request.path.match(typeRegrx) || ['', ''];
@@ -19,12 +19,6 @@ module.exports = async (ctx, next) => {
                 break;
             case 'rss':
                 template = path.resolve(__dirname, '../views/rss.art');
-                break;
-            case 'json':
-                template = path.resolve(__dirname, '../views/json.art');
-                ctx.set({
-                    'Content-Type': 'application/json; charset=UTF-8',
-                });
                 break;
             default:
                 template = path.resolve(__dirname, '../views/rss.art');
