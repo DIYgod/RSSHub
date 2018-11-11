@@ -2,7 +2,8 @@ const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
 module.exports = async (ctx) => {
     const id = ctx.params.id;
-    const { data } = await axios.get(`https://v.qq.com/detail/j/${id}.html`);
+    const link = `https://v.qq.com/detail/${id[0]}/${id}.html`;
+    const { data } = await axios.get(link);
     const $ = cheerio.load(data);
     const episodeName = $('[itemprop=episodeNumber]')
         .toArray()
@@ -18,7 +19,7 @@ module.exports = async (ctx) => {
     }
     ctx.state.data = {
         title: $('title').text(),
-        link: `https://v.qq.com/detail/j/${id}.html`,
+        link,
         description: $('meta[name=description]').attr('content'),
         item: items,
     };
