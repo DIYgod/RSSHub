@@ -2,7 +2,7 @@ const art = require('art-template');
 const path = require('path');
 const config = require('../config');
 const he = require('he');
-const typeRegrx = /\.(atom|rss|json)$/;
+const typeRegrx = /\.(atom|rss)$/;
 
 module.exports = async (ctx, next) => {
     ctx.state.type = ctx.request.path.match(typeRegrx) || ['', ''];
