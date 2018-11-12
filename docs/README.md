@@ -1089,6 +1089,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="应用更新" author="DIYgod" example="/xclient/app/sketch" path="/xclient/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
 
+### Typora
+
+<route name="Changelog" author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
 ## 大学通知
 
 ### 上海海事大学
