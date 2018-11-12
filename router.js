@@ -791,6 +791,7 @@ router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlis
 router.get('/manhuagui/comic/:id', require('./routes/manhuagui/comic'));
 
 // Tits Guru
+router.get('/tits-guru/home', require('./routes/titsguru/home'));
 router.get('/tits-guru/daily', require('./routes/titsguru/daily'));
 
 module.exports = router;

@@ -962,6 +962,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Tits Guru
 
+<route name="Home" author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
 <route name="Babe of The Day" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
 
 ### nHentai
