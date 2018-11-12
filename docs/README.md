@@ -2284,3 +2284,9 @@ category 对应的关键词有
 
 
 <route name="经济观察网" author="epirus" example="/eeo/观察家" path="/eeo/:category" :paramsDesc="['分类']"/>
+
+### TSSstatus
+
+<route name="Status" author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']"/>
+
+> board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
