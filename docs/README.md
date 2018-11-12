@@ -672,9 +672,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="分类订阅" author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
 
-| 360 网络安全周报 | 活动     | 知识      | 资讯 | 招聘 |
-| ---------------- | -------- | --------- | ---- | ---- |
-| week             | activity | knowledge | news | job  |
+| 360 网络安全周报 | 活动     | 　知识　  | 　资讯　 | 　招聘　 |
+| ---------------- | -------- | --------- | -------- | -------- |
+| week             | activity | knowledge | news     | job      |
 
 </route>
 
@@ -963,6 +963,7 @@ GitHub 官方也提供了一些 RSS:
 ### Tits Guru
 
 <route name="Babe of The Day" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+
 ### nHentai
 
 <route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
@@ -1862,13 +1863,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="旅法师营地" author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
 
-| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王 | 电子游戏 | 手机游戏 | 桌面游戏 |
-| -------- | -------- | ------ | ------ | ------ | -------- | -------- | -------- |
-| 1        | 2        | 3      | 14     | 16     | 4        | 22       | 9        |
+| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王　 | 　电子游戏 | 　手机游戏 | 　桌面游戏 |
+| -------- | -------- | ------ | ------ | -------- | ---------- | ---------- | ---------- |
+| 1        | 2        | 3      | 14     | 16       | 4          | 22         | 9          |
 
-| 影之诗 | Artifact | 玩家杂谈 | 营地电台 | 2047 | 魂武 |
-| ------ | -------- | -------- | -------- | ---- | ---- |
-| 17     | 67       | 21       | 5        | 62   | 68   |
+| 影之诗 | Artifact 　 | 玩家杂谈 | 营地电台　 | 2047 　 | 魂武 |
+| ------ | ----------- | -------- | ---------- | ------- | ---- |
+| 17     | 67          | 21       | 5          | 62      | 68   |
 
 </route>
 
