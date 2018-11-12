@@ -2311,4 +2311,11 @@ category 对应的关键词有
 
 ### 9To5
 
-<route name="9To5Mac" author="HenryQW" example="/9to5/mac" path="/9to5/mac"/>
+<route name="9To5 分站" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['分站名字']">
+
+支持分站：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
+
+</route>
