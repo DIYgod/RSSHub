@@ -835,7 +835,9 @@ GitHub 官方也提供了一些 RSS:
 
 ### 草榴社区
 
-<route name="分区帖子" author="zhboner" example="/t66y/7" path="/t66y/:id" :paramsDesc="['分区 id, 可在分区页 URL 中找到']">
+<route name="分区帖子" author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+
+> 注意：并非所欲的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
 
 | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
 | -------------- | -------------- | ---------- | ---------- | ---------- |
@@ -845,9 +847,21 @@ GitHub 官方也提供了一些 RSS:
 | ---------- | ---------- | ----------- | ---------- |
 | 26         | 27         | 21          | 22         |
 
-| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
-| ---------- | ------------ | ------------ |
-| 7          | 8            | 16           |
+| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 | 成人文学交流 |
+| ---------- | ------------ | ------------ | ------------ |
+| 7          | 8            | 16           | 20           |
+
+</route>
+
+### sexinsex
+
+<route name="分区帖子" author="cnzgray" example="/sexinsex/230/634" path="/sexinsex/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+
+> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的[字幕]这一子类型。
+
+| 亚洲成人无码原创区 | 亚洲成人有码原创区 | 欧美无码原创区 | 欧美无码区 | 亚洲有码薄码区 |
+| ------------------ | ------------------ | -------------- | ---------- | -------------- |
+| 143                | 230                | 229            | 77         | 58             |
 
 </route>
 
@@ -1002,6 +1016,16 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']">
 
+### Anime1
+
+<route name="動畫" author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
+
+时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
+
+</route>
+
+<route name="搜尋" author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
+
 ## 程序更新
 
 ### RSSHub
@@ -1073,6 +1097,10 @@ GitHub 官方也提供了一些 RSS:
 ### xclient.info
 
 <route name="应用更新" author="DIYgod" example="/xclient/app/sketch" path="/xclient/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
+
+### Typora
+
+<route name="Changelog" author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
 ## 大学通知
 
@@ -2283,3 +2311,9 @@ category 对应的关键词有
 
 
 <route name="经济观察网" author="epirus" example="/eeo/观察家" path="/eeo/:category" :paramsDesc="['分类']"/>
+
+### TSSstatus
+
+<route name="Status" author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']"/>
+
+> board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
