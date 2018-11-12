@@ -800,4 +800,7 @@ router.get('/tssstatus/:board/:build', require('./routes/tssstatus'));
 router.get('/anime1/anime/:time/:name', require('./routes/anime1/anime'));
 router.get('/anime1/search/:keyword', require('./routes/anime1/search'));
 
+// 9to5
+router.get('/9to5/mac', require('./routes/9to5/mac'));
+
 module.exports = router;
