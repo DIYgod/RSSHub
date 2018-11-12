@@ -714,4 +714,7 @@ router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
 // 看漫画
 router.get('/manhuagui/comic/:id', require('./routes/manhuagui/comic'));
 
+// Tits Guru
+router.get('/tits-guru/daily', require('./routes/titsguru/daily'));
+
 module.exports = router;
