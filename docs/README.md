@@ -993,6 +993,16 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
+### Anime1
+
+<route name="動畫" author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
+
+时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
+
+</route>
+
+<route name="搜尋" author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
+
 ## 程序更新
 
 ### RSSHub

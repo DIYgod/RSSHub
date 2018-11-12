@@ -790,4 +790,8 @@ router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlis
 // TSSstatus
 router.get('/tssstatus/:board/:build', require('./routes/tssstatus'));
 
+// Anime1
+router.get('/anime1/anime/:time/:name', require('./routes/anime1/anime'));
+router.get('/anime1/search/:keyword', require('./routes/anime1/search'));
+
 module.exports = router;
