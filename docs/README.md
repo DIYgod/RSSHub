@@ -2308,3 +2308,7 @@ category 对应的关键词有
 <route name="Status" author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']"/>
 
 > board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
+
+### 9To5
+
+<route name="9To5Mac" author="HenryQW" example="/9to5/mac" path="/9to5/mac"/>

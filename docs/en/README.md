@@ -398,3 +398,7 @@ Provides a better reading experience (full text articles) over the official one.
 Provides a better reading experience (full text articles) over the official one.
 
 </routeEn>
+
+### 9To5
+
+<routeEn name="9To5Mac" author="HenryQW" example="/9to5/mac" path="/9to5/mac"/>
