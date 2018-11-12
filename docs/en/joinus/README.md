@@ -37,12 +37,19 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
         -   Use component slot for complicated description:
 
         ```vue
-        <routeEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
-        
-        This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
-        
-        For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
-        
+        <routeEn
+            name="Flight Deals"
+            author="HenryQW"
+            path="/hopper/:lowestOnly/:from/:to?"
+            example="/hopper/1/LHR/PEK"
+            :paramsDesc="[
+                'set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed',
+                'origin airport IATA code',
+                'destination airport IATA code, if unset the destination will be set to `anywhere`',
+            ]"
+        >
+            This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now). For
+            airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
         </routeEn>
         ```
 
@@ -105,11 +112,15 @@ ctx.state.data = {
     title: '', // The feed title
     link: '', // The feed link
     description: '', // The feed description
+    language: '', // The language of the channel
     item: [
         // An article of the feed
         {
             title: '', //  The article title
-            description: '', // The article content
+            author: '', // Author of the article
+            category: '', // Article category
+            // category: [''], // Multiple category
+            description: '', // The article summury or content
             pubDate: '', // The article publishing datetime
             guid: '', // The article unique identifier, optional, default to the article link below
             link: '', // The article link
@@ -136,11 +147,15 @@ ctx.state.data = {
     itunes_category: '', // Channel category
     image: '', // Channel's image
     description: '', // The feed description
+    language: '', // The language of the channel
     item: [
         // An item of the feed
         {
             title: '', // The item title
-            description: '', // The item content
+            author: '', // Author of the article
+            category: '', // Article category
+            // category: [''], // Multiple category
+            description: '', // The article summury or content
             pubDate: '', // The item publishing datetime
             guid: '', // The item unique identifier, optional, default to the item link below.
             link: '', // The item link

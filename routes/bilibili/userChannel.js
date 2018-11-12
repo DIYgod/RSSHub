@@ -7,7 +7,6 @@ module.exports = async (ctx) => {
 
     const userName = await cache.getUsernameFromUID(ctx, uid);
     const host = `https://api.bilibili.com/x/space/channel/video?mid=${uid}&cid=${cid}&pn=1&ps=10&order=0`;
-
     const response = await axios({
         method: 'get',
         url: host,

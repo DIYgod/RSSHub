@@ -23,10 +23,8 @@ module.exports = async (ctx) => {
     const type = ctx.params.type || 'latest';
     let path;
     let title;
-    let isSpecific;
 
     if (categoryId.hasOwnProperty(category)) {
-        isSpecific = true;
         if (type === 'digest') {
             // type为digest时只获取精华帖
             path = `forum-${categoryId[category][0]}-1.htm?digest=1`;
@@ -38,7 +36,6 @@ module.exports = async (ctx) => {
         }
     } else {
         // category未知时则获取全站最新帖
-        isSpecific = false;
         if (category === 'digest') {
             path = 'new-digest.htm';
             title = '看雪论坛精华主题';
@@ -58,40 +55,66 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(response.data);
     const list = $('.thread');
+    const resultItem = await Promise.all(
+        list
+            ? list
+                  .map(async (_, elem) => {
+                      const subject = $('.subject a', elem).eq(1);
+
+                      const pubDate = pediyUtils.dateParser(
+                          $('.date', elem)
+                              .eq(0)
+                              .text(),
+                          8
+                      );
+
+                      const link = `${baseUrl}${subject.attr('href')}`;
+                      const key = `pediy: ${link}`;
+                      const value = await ctx.cache.get(key);
+                      let description;
+
+                      if (value) {
+                          description = value;
+                      } else {
+                          const postDetail = await axios({
+                              method: 'get',
+                              url: link,
+                          });
+                          const $ = cheerio.load(postDetail.data);
+                          $('.card')
+                              .eq(0)
+                              .find('.message img')
+                              .each(function(_, item) {
+                                  item = $(item);
+
+                                  const src = item.attr('src');
+                                  if (!src.startsWith('https://') && !src.startsWith('http://')) {
+                                      item.attr('src', `https://bbs.pediy.com/${src}`);
+                                  }
+                                  item.attr('referrerpolicy', 'no-referrer');
+                              });
+
+                          description = $('.card')
+                              .eq(0)
+                              .find('.message')
+                              .html();
+                          ctx.cache.set(key, description, 24 * 60 * 60);
+                      }
+
+                      return Promise.resolve({
+                          title: subject.text(),
+                          link,
+                          pubDate: `${pubDate}`,
+                          description,
+                      });
+                  })
+                  .get()
+            : []
+    );
 
     ctx.state.data = {
         title: `${title}`,
         link: baseUrl + path,
-        item:
-            list &&
-            list
-                .map((_, elem) => {
-                    const subject = $('.subject a', elem).eq(1);
-                    const author = $('.username', elem).eq(0);
-
-                    const pubDate = pediyUtils.dateParser(
-                        $('.date', elem)
-                            .eq(0)
-                            .text(),
-                        8
-                    );
-
-                    let topic;
-                    if (isSpecific) {
-                        topic = categoryId[category][1];
-                    } else {
-                        topic = $('.subject a.small', elem)
-                            .eq(0)
-                            .text();
-                    }
-
-                    return {
-                        title: subject.text(),
-                        link: baseUrl + subject.attr('href'),
-                        pubDate: `${pubDate}`,
-                        description: `作者: ${author.text()} 版块: ${topic}`,
-                    };
-                })
-                .get(),
+        item: resultItem,
     };
 };

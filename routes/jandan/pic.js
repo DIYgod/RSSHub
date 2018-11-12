@@ -8,7 +8,7 @@ const jandan_decode = (m) => base64_decode(m);
 const baseUrl = 'http://jandan.net/';
 
 module.exports = async (ctx) => {
-    const sub_model = ctx.params.sub_model;
+    const { sub_model } = ctx.params;
 
     const response = await axios({
         method: 'get',
@@ -19,7 +19,6 @@ module.exports = async (ctx) => {
     });
 
     const $ = cheerio.load(response.data);
-
     const items = [];
     $('.commentlist > li').each((_, item) => {
         // Get current comment id, if comment_id is 'adsense', just need to skip..
@@ -42,7 +41,6 @@ module.exports = async (ctx) => {
         }
 
         const imgList = [];
-
         $(item)
             .find('.text .img-hash')
             .each((_, item) => {
@@ -56,30 +54,61 @@ module.exports = async (ctx) => {
             return;
         }
 
+        $(item)
+            .find('.img-hash')
+            .remove();
+        const text =
+            $(item)
+                .find('.text p')
+                .text() || '';
+
         // TODO: should load user's comments.
 
         items.push({
             guid: comment_id,
-            title: comment_id,
-            description: imgList.reduce((description, imgUrl) => {
-                description += `<img referrerpolicy="no-referrer" src="http:${imgUrl}"><br>`;
-                return description;
-            }, ''),
+            title: `${comment_id}${text === '' ? '' : '/' + text}`,
+            description:
+                `${text}<br>` +
+                imgList.reduce((description, imgUrl) => {
+                    description += `<img referrerpolicy="no-referrer" src="http:${imgUrl}"><br>`;
+                    return description;
+                }, ''),
             link,
         });
     });
 
     let rss_title;
     let description;
-    if (sub_model === 'pic') {
-        rss_title = '煎蛋无聊图';
-        description = '煎蛋官方无聊图，无限活力的热门图区。';
-    } else if (sub_model === 'ooxx') {
-        rss_title = '煎蛋妹子图';
-        description = '这儿才是正版妹子图。';
-    } else if (sub_model === 'top-ooxx') {
-        rss_title = '煎蛋妹子图热榜';
-        description = ''; // TODO: 这里写啥好
+
+    switch (sub_model) {
+        case 'pic':
+            rss_title = '煎蛋无聊图';
+            description = '煎蛋官方无聊图，无限活力的热门图区。';
+            break;
+
+        case 'ooxx':
+            rss_title = '煎蛋妹子图';
+            description = '这儿才是正版妹子图。';
+            break;
+
+        case 'top-ooxx':
+            rss_title = '煎蛋妹子图热榜';
+            description = '';
+            break;
+
+        case 'top-4h':
+            rss_title = '煎蛋4小时热榜';
+            description = '';
+            break;
+
+        case 'top':
+            rss_title = '煎蛋无聊图热榜';
+            description = '';
+            break;
+
+        default:
+            rss_title = '未知内容';
+            description = '未知内容，请前往 https://github.com/DIYgod/RSSHub/issues 提交 issue';
     }
 
     ctx.state.data = {
