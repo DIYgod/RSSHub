@@ -787,4 +787,7 @@ router.get('/eeo/:category?', require('./routes/eeo/index'));
 // 腾讯视频
 router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlist'));
 
+// typora
+router.get('/typora/changelog', require('./routes/typora/changelog'));
+
 module.exports = router;

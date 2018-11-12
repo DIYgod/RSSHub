@@ -743,6 +743,10 @@ GitHub 官方也提供了一些 RSS:
 
 > GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
+### Typora
+
+<route name="Changelog" author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
 ## 直播
 
 ### 哔哩哔哩直播
