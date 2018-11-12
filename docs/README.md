@@ -853,6 +853,18 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### sexinsex
+
+<route name="分区帖子" author="cnzgray" example="/sexinsex/230/634" path="/sexinsex/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+
+> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的[字幕]这一子类型。
+
+| 亚洲成人无码原创区 | 亚洲成人有码原创区 | 欧美无码原创区 | 欧美无码区 | 亚洲有码薄码区 |
+| ------------------ | ------------------ | -------------- | ---------- | -------------- |
+| 143                | 230                | 229            | 77         | 58             |
+
+</route>
+
 ### 电影首发站
 
 <route name="电影" author="epirus" example="/dysfz" path="/dysfz"/>

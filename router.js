@@ -368,6 +368,9 @@ router.get('/caixin/:column/:category', require('./routes/caixin/category'));
 // 草榴社区
 router.get('/t66y/:id/:type?', require('./routes/t66y/index'));
 
+// 色中色
+router.get('/sexinsex/:id/:type?', require('./routes/sexinsex/index'));
+
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
 
