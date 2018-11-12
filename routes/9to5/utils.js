@@ -17,7 +17,6 @@ const ProcessFeed = (data) => {
     content.find('div').each((i, e) => {
         if ($(e)[0].attribs.class) {
             const classes = $(e)[0].attribs.class;
-            console.log(classes);
             if (classes.match(/th\w{8}\sth\w{8}/g)) {
                 $(e).remove();
             }
