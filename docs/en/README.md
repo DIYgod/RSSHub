@@ -398,3 +398,11 @@ Provides a better reading experience (full text articles) over the official one.
 Provides a better reading experience (full text articles) over the official one.
 
 </routeEn>
+
+### iDownloadBlog
+
+<routeEn name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
