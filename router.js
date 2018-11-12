@@ -787,4 +787,7 @@ router.get('/eeo/:category?', require('./routes/eeo/index'));
 // 腾讯视频
 router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlist'));
 
+// TSSstatus
+router.get('/tssstatus/:board/:build', require('./routes/tssstatus'));
+
 module.exports = router;
