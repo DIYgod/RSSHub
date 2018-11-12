@@ -800,4 +800,7 @@ router.get('/tssstatus/:board/:build', require('./routes/tssstatus'));
 router.get('/anime1/anime/:time/:name', require('./routes/anime1/anime'));
 router.get('/anime1/search/:keyword', require('./routes/anime1/search'));
 
+// gitea
+router.get('/gitea/blog', require('./routes/gitea/blog'));
+
 module.exports = router;
