@@ -366,7 +366,10 @@ router.get('/cctv/:category', require('./routes/cctv/category'));
 router.get('/caixin/:column/:category', require('./routes/caixin/category'));
 
 // 草榴社区
-router.get('/t66y/:id', require('./routes/t66y/index'));
+router.get('/t66y/:id/:type?', require('./routes/t66y/index'));
+
+// 色中色
+router.get('/sexinsex/:id/:type?', require('./routes/sexinsex/index'));
 
 // 机核
 router.get('/gcores/category/:category', require('./routes/gcores/category'));
@@ -786,5 +789,15 @@ router.get('/eeo/:category?', require('./routes/eeo/index'));
 
 // 腾讯视频
 router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlist'));
+
+// typora
+router.get('/typora/changelog', require('./routes/typora/changelog'));
+
+// TSSstatus
+router.get('/tssstatus/:board/:build', require('./routes/tssstatus'));
+
+// Anime1
+router.get('/anime1/anime/:time/:name', require('./routes/anime1/anime'));
+router.get('/anime1/search/:keyword', require('./routes/anime1/search'));
 
 module.exports = router;
