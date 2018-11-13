@@ -39,8 +39,18 @@ module.exports = async (ctx) => {
 
             // 处理文章图片
             content.find('figure.e-image').each((i, e) => {
-                let src = $(e).find('picture > img')[0].attribs.srcset;
-                src = src.match(/(?<=320w,).*?(?=520w)/g)[0].trim();
+                let src;
+
+                // 处理 jpeg, png
+                if ($(e).find('picture > source').length > 0) {
+                    src = $(e)
+                        .find('picture > img')[0]
+                        .attribs.srcset.match(/(?<=320w,).*?(?=520w)/g)[0]
+                        .trim();
+                } else if ($(e).find('img.c-dynamic-image').length > 0) {
+                    // 处理 gif
+                    src = $(e).find('span.e-image__image')[0].attribs['data-original'];
+                }
 
                 $(`<img src='${src}'>`).insertBefore(e);
                 $(e).remove();

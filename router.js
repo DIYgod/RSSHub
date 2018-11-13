@@ -691,6 +691,7 @@ router.get('/dwnews/rank/:type/:range', require('./routes/dwnews/rank'));
 
 // 知晓程序
 router.get('/miniapp/article/:category', require('./routes/miniapp/article'));
+router.get('/miniapp/store/newest', require('./routes/miniapp/store/newest'));
 
 // 后续
 router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
@@ -790,6 +791,13 @@ router.get('/eeo/:category?', require('./routes/eeo/index'));
 // 腾讯视频
 router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlist'));
 
+// 看漫画
+router.get('/manhuagui/comic/:id', require('./routes/manhuagui/comic'));
+
+// Tits Guru
+router.get('/tits-guru/home', require('./routes/titsguru/home'));
+router.get('/tits-guru/daily', require('./routes/titsguru/daily'));
+
 // typora
 router.get('/typora/changelog', require('./routes/typora/changelog'));
 
@@ -802,5 +810,11 @@ router.get('/anime1/search/:keyword', require('./routes/anime1/search'));
 
 // gitea
 router.get('/gitea/blog', require('./routes/gitea/blog'));
+
+// iDownloadBlog
+router.get('/idownloadblog', require('./routes/idownloadblog/index'));
+
+// 9to5
+router.get('/9to5/:type', require('./routes/9to5/subsite'));
 
 module.exports = router;
