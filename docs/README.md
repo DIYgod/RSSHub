@@ -1026,6 +1026,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']">
 
+### 动漫之家
+
+<route name="漫画更新" author="georeth" path="/dmzj/comic/:id" example="/dmzj/comic/qwnjtyldtzm" :paramsDesc="['漫画ID']">
+
 ### Anime1
 
 <route name="動畫" author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">

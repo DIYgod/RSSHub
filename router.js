@@ -794,6 +794,9 @@ router.get('/tencentvideo/playlist/:id', require('./routes/tencent/video/playlis
 // 看漫画
 router.get('/manhuagui/comic/:id', require('./routes/manhuagui/comic'));
 
+// 动漫之家
+router.get('/dmzj/comic/:id', require('./routes/dmzj/comic'));
+
 // Tits Guru
 router.get('/tits-guru/home', require('./routes/titsguru/home'));
 router.get('/tits-guru/daily', require('./routes/titsguru/daily'));
