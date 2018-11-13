@@ -2298,9 +2298,9 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="作品动态" author="xyqfer" example="/xiachufang/popular/hot" path="/xiachufang/popular/:timeframe?" :paramsDesc="['默认最新上传']">
 
-| 正在流行 | 24 小时最佳 |
-| -------- | ----------- |
-| hot      | pop         |
+| 正在流行 | 24 小时最佳 | 本周最受欢迎 | 新秀菜谱 | 月度最佳   |
+| -------- | ----------- | ------------ | -------- | ---------- |
+| hot      | pop         | week         | rising   | monthhonor |
 
 </route>
 
