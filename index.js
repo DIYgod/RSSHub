@@ -95,6 +95,15 @@ if (config.cacheType === 'memory') {
     app.context.cache = {
         get: () => null,
         set: () => null,
+        tryGet: async function(key, getValueFunc, maxAge) {
+            let v = await this.get(key);
+            if (!v) {
+                v = await getValueFunc();
+                this.set(key, v, maxAge);
+            }
+
+            return v;
+        },
     };
 }
 
