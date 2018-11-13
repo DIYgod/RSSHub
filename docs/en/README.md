@@ -398,3 +398,14 @@ Provides a better reading experience (full text articles) over the official one.
 Provides a better reading experience (full text articles) over the official one.
 
 </routeEn>
+
+### 9To5
+
+<routeEn name="9To5 Sub-site" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
+
+Supported sub-sites：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
+
+</routeEn>
