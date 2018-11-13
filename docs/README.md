@@ -91,14 +91,13 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 ### 输出格式
 
-RSSHub 同时支持 RSS 2.0、Atom 和 [JSON Feed](https://jsonfeed.org/) 输出格式, 在路由末尾添加 `.rss` `.atom` 或 `.json` 即可请求对应输出格式, 缺省为 RSS 2.0
+RSSHub 同时支持 RSS 2.0 和 Atom 输出格式, 在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式, 缺省为 RSS 2.0
 
 举例:
 
 -   缺省 RSS 2.0 - <https://rsshub.app/jianshu/home>
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
--   JSON Feed - <https://rsshub.app/jianshu/home.json>
 -   和 filter 或其他 URL query 一起使用 <https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件>
 
 ## API 接口
@@ -734,6 +733,8 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+<route name="小程序商店-最新" author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest"/>
+
 ### 技术头条
 
 <route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
@@ -743,6 +744,14 @@ GitHub 官方也提供了一些 RSS:
 <route name="最新" author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
 
 > GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+### Gitea
+
+<route name="博客" author="cnzgray" example="/gitea/blog" path="/gitea/blog">
+
+> gitea 博客一般发布最新的 release 信息，路由选择用 blog 名称主要因为其地址名为 blog，而非 changlog，慎重起见还是用 blog 命名。
+
+</route>
 
 ## 直播
 
@@ -802,6 +811,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="动漫" author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
 
+### 腾讯视频
+
+ <route name="播放列表" author="Andiedie" example="/tencentvideo/playlist/jx7g4sm320sqm7i" path="/tencentvideo/playlist/:id" :paramsDesc="['播放列表 ID，可以在 URL 中找到']" />
+
 ### 喜马拉雅
 
 <route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到']">
@@ -832,7 +845,9 @@ GitHub 官方也提供了一些 RSS:
 
 ### 草榴社区
 
-<route name="分区帖子" author="zhboner" example="/t66y/7" path="/t66y/:id" :paramsDesc="['分区 id, 可在分区页 URL 中找到']">
+<route name="分区帖子" author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+
+> 注意：并非所欲的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
 
 | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
 | -------------- | -------------- | ---------- | ---------- | ---------- |
@@ -842,9 +857,21 @@ GitHub 官方也提供了一些 RSS:
 | ---------- | ---------- | ----------- | ---------- |
 | 26         | 27         | 21          | 22         |
 
-| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 |
-| ---------- | ------------ | ------------ |
-| 7          | 8            | 16           |
+| 技术讨论区 | 新时代的我们 | 达盖尔的旗帜 | 成人文学交流 |
+| ---------- | ------------ | ------------ | ------------ |
+| 7          | 8            | 16           | 20           |
+
+</route>
+
+### sexinsex
+
+<route name="分区帖子" author="cnzgray" example="/sexinsex/230/634" path="/sexinsex/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+
+> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的[字幕]这一子类型。
+
+| 亚洲成人无码原创区 | 亚洲成人有码原创区 | 欧美无码原创区 | 欧美无码区 | 亚洲有码薄码区 |
+| ------------------ | ------------------ | -------------- | ---------- | -------------- |
+| 143                | 230                | 229            | 77         | 58             |
 
 </route>
 
@@ -957,6 +984,11 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
+### Tits Guru
+
+<route name="Home" author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
+<route name="Babe of The Day" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+
 ### nHentai
 
 <route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
@@ -989,6 +1021,20 @@ GitHub 官方也提供了一些 RSS:
 ### 忧郁的弟弟
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
+
+### 看漫画
+
+<route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']">
+
+### Anime1
+
+<route name="動畫" author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
+
+时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
+
+</route>
+
+<route name="搜尋" author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
 
 ## 程序更新
 
@@ -1061,6 +1107,10 @@ GitHub 官方也提供了一些 RSS:
 ### xclient.info
 
 <route name="应用更新" author="DIYgod" example="/xclient/app/sketch" path="/xclient/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
+
+### Typora
+
+<route name="Changelog" author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
 ## 大学通知
 
@@ -2256,9 +2306,47 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="作品动态" author="xyqfer" example="/xiachufang/popular/hot" path="/xiachufang/popular/:timeframe?" :paramsDesc="['默认最新上传']">
 
-| 正在流行 | 24 小时最佳 |
-| -------- | ----------- |
-| hot      | pop         |
+| 正在流行 | 24 小时最佳 | 本周最受欢迎 | 新秀菜谱 | 月度最佳   |
+| -------- | ----------- | ------------ | -------- | ---------- |
+| hot      | pop         | week         | rising   | monthhonor |
+
+</route>
+
+### 经济观察网
+
+<route name="经济观察网" author="epirus" example="/eeo/观察家" path="/eeo/:category" :paramsDesc="['分类']">
+category 对应的关键词有
+
+| 时事 | 政策 | 证券 | 资本 | 理财 | 新科技 | 大健康 | 房产 | 汽车 | 消费 | 影视 | 娱乐 | 体育 | 教育 | 观察家 | 专栏 | 书评 | 个人历史 |
+| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | -------- |
+
+
+</route>
+
+### TSSstatus
+
+<route name="Status" author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']">
+
+board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
+
+</route>
+
+### iDownloadBlog
+
+<route name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+</route>
+
+### 9To5
+
+<route name="9To5 分站" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['分站名字']">
+
+支持分站：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
 
 </route>
 

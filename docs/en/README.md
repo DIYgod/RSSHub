@@ -77,14 +77,13 @@ Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https
 
 ### Output Formats
 
-RSSHub supports RSS 2.0、Atom and [JSON Feed](https://jsonfeed.org/) as the output formats, simply append `.rss` `.atom` or `.json` to the end of the feed address, default to RSS 2.0
+RSSHub supports RSS 2.0 and Atom as the output formats, simply append `.rss` `.atom` to the end of the feed address, default to RSS 2.0
 
 For exmaple:
 
 -   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
 -   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
 -   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
--   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
 -   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
 ## API
@@ -397,5 +396,24 @@ Provides a better reading experience (full text articles) over the official one.
 <routeEn name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
 
 Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
+### iDownloadBlog
+
+<routeEn name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
+### 9To5
+
+<routeEn name="9To5 Sub-site" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
+
+Supported sub-sites：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
 
 </routeEn>
