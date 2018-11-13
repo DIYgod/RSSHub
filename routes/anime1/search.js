@@ -11,7 +11,7 @@ module.exports = async (ctx) => {
         title,
         link: `https://anime1.me/?s=${keyword}`,
         description: title,
-        item: $('article')
+        item: $('article:has(.cat-links)')
             .toArray()
             .map((art) => {
                 const $el = $(art);
