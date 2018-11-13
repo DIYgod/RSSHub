@@ -974,6 +974,11 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
+### Tits Guru
+
+<route name="Home" author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
+<route name="Babe of The Day" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+
 ### nHentai
 
 <route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
@@ -1006,6 +1011,10 @@ GitHub 官方也提供了一些 RSS:
 ### 忧郁的弟弟
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
+
+### 看漫画
+
+<route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']">
 
 ### Anime1
 
@@ -2317,5 +2326,16 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 <route name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
 
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+</route>
+
+### 9To5
+
+<route name="9To5 分站" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['分站名字']">
+
+支持分站：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
 
 </route>
