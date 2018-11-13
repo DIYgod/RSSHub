@@ -745,6 +745,14 @@ GitHub 官方也提供了一些 RSS:
 
 > GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
+### Gitea
+
+<route name="博客" author="cnzgray" example="/gitea/blog" path="/gitea/blog">
+
+> gitea 博客一般发布最新的 release 信息，路由选择用 blog 名称主要因为其地址名为 blog，而非 changlog，慎重起见还是用 blog 命名。
+
+</route>
+
 ## 直播
 
 ### 哔哩哔哩直播
