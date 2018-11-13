@@ -691,6 +691,7 @@ router.get('/dwnews/rank/:type/:range', require('./routes/dwnews/rank'));
 
 // 知晓程序
 router.get('/miniapp/article/:category', require('./routes/miniapp/article'));
+router.get('/miniapp/store/newest', require('./routes/miniapp/store/newest'));
 
 // 后续
 router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
