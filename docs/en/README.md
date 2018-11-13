@@ -399,6 +399,14 @@ Provides a better reading experience (full text articles) over the official one.
 
 </routeEn>
 
+### iDownloadBlog
+
+<routeEn name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
 ### 9To5
 
 <routeEn name="9To5 Sub-site" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
