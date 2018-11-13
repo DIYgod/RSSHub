@@ -733,6 +733,8 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+<route name="小程序商店-最新" author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest"/>
+
 ### 技术头条
 
 <route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
