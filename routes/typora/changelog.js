@@ -14,13 +14,7 @@ module.exports = async (ctx) => {
 
     const $ = cheerio.load(response.data);
 
-    const parseContent = async (link) => {
-        // Check cache
-        const cache = await ctx.cache.get(link);
-        if (cache) {
-            return Promise.resolve(JSON.parse(cache));
-        }
-
+    const loadContent = async (link) => {
         const response = await axios({
             method: 'get',
             url: link,
@@ -36,17 +30,13 @@ module.exports = async (ctx) => {
         // const author = $('.post-meta span').text();
         const html = $('#pagecontainer').html();
 
-        const result = {
+        return {
             title: title,
             link: link,
             guid: link,
             pubDate: pubDate,
             description: html,
         };
-
-        ctx.cache.set(link, JSON.stringify(result), 3 * 60 * 60);
-
-        return result;
     };
 
     const items = await Promise.all(
@@ -55,7 +45,7 @@ module.exports = async (ctx) => {
             .map(async (item) => {
                 const node = $('a', item);
                 const link = node.attr('href');
-                const result = await parseContent(link);
+                const result = await ctx.cache.tryGet(link, async () => loadContent(link), 3 * 60 * 60);
 
                 return Promise.resolve(result);
             })
