@@ -15,15 +15,14 @@ axiosRetry(axios, {
 });
 
 if (config.http_proxy.host && config.http_proxy.port) {
-    const agent = tunnel.httpsOverHttp({proxy: config.http_proxy});
-    axios.interceptors.request.use(function (config) {
+    const agent = tunnel.httpsOverHttp({ proxy: config.http_proxy });
+    axios.interceptors.request.use(function(config) {
         if (config.url.indexOf('https') !== -1) {
             config.httpsAgent = agent;
             config.proxy = false;
         }
         return config;
     });
-
 }
 
 axios.defaults.headers.common['User-Agent'] = config.ua;

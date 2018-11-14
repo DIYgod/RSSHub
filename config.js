@@ -55,6 +55,6 @@ module.exports = {
     newrelicLicenseKey: process.env.NEWRELIC_LICENSE_KEY,
     http_proxy: {
         host: process.env.HTTP_PROXY_HOST,
-        port: process.env.HTTP_PROXY_PORT
-    }
+        port: process.env.HTTP_PROXY_PORT,
+    },
 };
