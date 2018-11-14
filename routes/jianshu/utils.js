@@ -2,54 +2,54 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
+// 加载文章页
+async function load(link) {
+    const response = await axios.get(link);
+    const $ = cheerio.load(response.data);
+
+    // 解析日期
+    const date = new Date(
+        $('.publish-time')
+            .text()
+            .match(/\d{4}.\d{2}.\d{2} \d{2}:\d{2}/)
+    );
+    const timeZone = 8;
+    const serverOffset = date.getTimezoneOffset() / 60;
+    const pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
+
+    // 提取内容
+    const description = $('.show-content-free').html();
+
+    return { description, pubDate };
+}
+
 const ProcessFeed = async (list, caches) => {
     const host = 'https://www.jianshu.com';
 
-    const requestList = [];
-
-    const result = await Promise.all(
+    return await Promise.all(
         list.map(async (item) => {
             const $ = cheerio.load(item);
 
-            const itemUrl = url.resolve(host, $('.title').attr('href'));
+            const $title = $('.title');
+            // 还原相对链接为绝对链接
+            const itemUrl = url.resolve(host, $title.attr('href'));
 
-            const cache = await caches.get(itemUrl);
-            if (cache) {
-                return Promise.resolve(JSON.parse(cache));
-            }
+            // 列表上提取到的信息
             const single = {
-                title: $('.title').text(),
+                title: $title.text(),
                 link: itemUrl,
                 author: $('.nickname').text(),
                 guid: itemUrl,
             };
 
-            const es = axios.get(itemUrl);
-            requestList.push(es);
-            return Promise.resolve(single);
+            // 使用tryGet方法从缓存获取内容。
+            // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容。
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+
+            // 合并解析后的结果集作为该篇文章最终的输出结果
+            return Promise.resolve(Object.assign({}, single, other));
         })
     );
-
-    const responses = await axios.all(requestList);
-
-    for (let i = 0; i < responses.length; i++) {
-        const $ = cheerio.load(responses[i].data);
-
-        result[i].description = $('.show-content-free').html();
-
-        const date = new Date(
-            $('.publish-time')
-                .text()
-                .match(/\d{4}.\d{2}.\d{2} \d{2}:\d{2}/)
-        );
-
-        const timeZone = 8;
-        const serverOffset = date.getTimezoneOffset() / 60;
-        result[i].pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
-        caches.set(result[i].link, JSON.stringify(result[i]), 1 * 60 * 60);
-    }
-
-    return result;
 };
 
 module.exports = {
