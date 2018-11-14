@@ -539,6 +539,7 @@ router.get('/shanghaitech/sist/activity', require('./routes/universities/shangha
 
 // 上海交通大学
 router.get('/sjtu/seiee/academic', require('./routes/universities/sjtu/seiee/academic'));
+router.get('/sjtu/gs/tzgg/:type?', require('./routes/universities/sjtu/gs/tzgg'));
 
 // 江南大学
 router.get('/ju/jwc/:type?', require('./routes/universities/ju/jwc'));
