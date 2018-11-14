@@ -53,4 +53,8 @@ module.exports = {
     },
     puppeteerWSEndpoint: process.env.PUPPETEER_WS_ENDPOINT,
     newrelicLicenseKey: process.env.NEWRELIC_LICENSE_KEY,
+    http_proxy: {
+        host: process.env.HTTP_PROXY_HOST,
+        port: process.env.HTTP_PROXY_PORT
+    }
 };
