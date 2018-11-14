@@ -31,20 +31,6 @@ function killViidii(originUrl) {
 
 const sourceTimezoneOffset = -8;
 
-async function readPost(tid, page) {
-    // 请求帖子
-    let response = await axios_ins.get(url.resolve(base, `/read.php?tid=${tid}&page=${page}`));
-    const html = iconv.decode(response.data, 'gbk');
-    if (page === 1) {
-        // 跟踪重定向
-        const $ = cheerio.load(html);
-        const redirect = $('a:last-child').attr('href');
-        response = await axios_ins.get(url.resolve(base, redirect));
-        return iconv.decode(response.data, 'gbk');
-    }
-    return html;
-}
-
 function parseContent(htmlString) {
     let $ = cheerio.load(htmlString, { decodeEntities: false });
     let time = $('.tipad').text();
@@ -98,8 +84,15 @@ function parseContent(htmlString) {
 }
 
 module.exports = async (ctx) => {
-    let html = await readPost(ctx.params.tid, 1);
-    let $ = cheerio.load(html, { decodeEntities: false });
+    const tid = ctx.params.tid;
+    let response = await axios_ins.get(url.resolve(base, `/read.php?tid=${tid}`));
+    let html = iconv.decode(response.data, 'gbk');
+    // 跟踪重定向
+    let $ = cheerio.load(html);
+    const redirect = $('a:last-child').attr('href');
+    response = await axios_ins.get(url.resolve(base, redirect));
+    html = iconv.decode(response.data, 'gbk');
+    $ = cheerio.load(html, { decodeEntities: false });
     // 获取楼主id、末页
     const uid = /uid=(\d+)/.exec(
         $('.t.t2')
@@ -110,53 +103,64 @@ module.exports = async (ctx) => {
     const lasturl = $('.pages:first-child>a:last-child').attr('href');
     const lastpage = lasturl ? /page=(\d+)/.exec(lasturl)[1] : 1;
     // 从缓存中获取上次读取的页吗
-    let page = (await ctx.cache.tryGet(`/t66y/post/${ctx.params.id}`, () => 0, 24 * 60 * 60)) + 1;
+    let page = 0;
+    const cachePage = JSON.parse(await ctx.cache.tryGet(`/t66y/post/${tid}`, () => JSON.stringify({ page }), 3 * 60 * 60));
+    page = cachePage.page + 1;
     if (page > lastpage) {
         page = lastpage;
     }
 
     // 请求帖子
-    const link = url.resolve(base, `/read.php?tid=${ctx.params.tid}&page=${page}`);
-    if (page > 1) {
-        // 只有第二页开始需要重新读取
-        html = await ctx.cache.tryGet(
-            link,
-            async () => {
-                const response = await axios_ins.get(link, {
-                    headers: {
-                        Referer: url.resolve(base, `/read.php?tid=${ctx.params.tid}`),
-                    },
-                });
-                return iconv.decode(response.data, 'gbk');
-            },
-            24 * 60 * 60
-        );
-        $ = cheerio.load(html, { decodeEntities: false });
-    }
+    const load = async (page) => {
+        const link = url.resolve(base, `/read.php?tid=${tid}&page=${page}`);
+        if (page > 1) {
+            // 只有第二页开始需要重新读取
+            html = await ctx.cache.tryGet(
+                link,
+                async () => {
+                    const response = await axios_ins.get(link, {
+                        headers: {
+                            Referer: url.resolve(base, redirect),
+                        },
+                    });
+                    return iconv.decode(response.data, 'gbk');
+                },
+                3 * 60 * 60
+            );
+            $ = cheerio.load(html, { decodeEntities: false });
+        }
 
-    const title = /本頁主題: (.+)\n?/.exec($('#main div.t .h:first-child').text())[1];
-    const items = $('.t.t2')
-        .get()
-        .filter((item) => {
-            const matchs = /uid=(\d+)/.exec($('.tiptop>a:first-child', item).attr('href'));
-            return matchs.length === 2 && uid === matchs[1];
-        })
-        .map((item, index) => {
-            const single = {
-                title: `P${page}#${index + 1} ${title}`,
-                link: `${link}#${index + 1}`,
-                guid: `${link}#${index + 1}`,
+        const title = /本頁主題: (.+)\n?/.exec($('#main div.t .h:first-child').text())[1];
+        const items = $('.t.t2')
+            .get()
+            .filter((item) => {
+                const matchs = /uid=(\d+)/.exec($('.tiptop>a:first-child', item).attr('href'));
+                return matchs.length === 2 && uid === matchs[1];
+            })
+            .map((item, index) => {
+                const single = {
+                    title: `P${page}#${index + 1} ${title}`,
+                    link: `${link}#${index + 1}`,
+                    guid: `${link}#${index + 1}`,
+                };
+                const result = parseContent($(item).html());
+                return Object.assign(single, result);
+            });
+
+        // 记录读取的最后页码
+        ctx.cache.set(`/t66y/post/${tid}`, JSON.stringify({ page }), 3 * 60 * 60);
+
+        if (items.length === 0) {
+            // 如果没有读到内容，则读取下一页。
+            return load(page + 1);
+        } else {
+            return {
+                title: title,
+                link: url.resolve(base, `/read.php?tid=${tid}`),
+                item: items,
             };
-            const result = parseContent($(item).html());
-            return Object.assign(single, result);
-        });
-
-    // 记录读取的最后页码
-    ctx.cache.set(`/t66y/post/${ctx.params.id}`, page, 24 * 60 * 60);
-
-    ctx.state.data = {
-        title: title,
-        link: url.resolve(base, `/read.php?tid=${ctx.params.tid}`),
-        item: items,
+        }
     };
+
+    ctx.state.data = await load(page);
 };
