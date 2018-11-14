@@ -733,6 +733,8 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+<route name="小程序商店-最新" author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest"/>
+
 ### 技术头条
 
 <route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
@@ -742,6 +744,14 @@ GitHub 官方也提供了一些 RSS:
 <route name="最新" author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
 
 > GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+### Gitea
+
+<route name="博客" author="cnzgray" example="/gitea/blog" path="/gitea/blog">
+
+> gitea 博客一般发布最新的 release 信息，路由选择用 blog 名称主要因为其地址名为 blog，而非 changlog，慎重起见还是用 blog 命名。
+
+</route>
 
 ## 直播
 
@@ -974,6 +984,11 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="最新图片" author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
+### Tits Guru
+
+<route name="Home" author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
+<route name="Babe of The Day" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+
 ### nHentai
 
 <route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值']" />
@@ -1006,6 +1021,10 @@ GitHub 官方也提供了一些 RSS:
 ### 忧郁的弟弟
 
 <route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
+
+### 看漫画
+
+<route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']">
 
 ### Anime1
 
@@ -2287,24 +2306,46 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="作品动态" author="xyqfer" example="/xiachufang/popular/hot" path="/xiachufang/popular/:timeframe?" :paramsDesc="['默认最新上传']">
 
-| 正在流行 | 24 小时最佳 |
-| -------- | ----------- |
-| hot      | pop         |
+| 正在流行 | 24 小时最佳 | 本周最受欢迎 | 新秀菜谱 | 月度最佳   |
+| -------- | ----------- | ------------ | -------- | ---------- |
+| hot      | pop         | week         | rising   | monthhonor |
 
 </route>
 
 ### 经济观察网
 
+<route name="经济观察网" author="epirus" example="/eeo/观察家" path="/eeo/:category" :paramsDesc="['分类']">
 category 对应的关键词有
 
 | 时事 | 政策 | 证券 | 资本 | 理财 | 新科技 | 大健康 | 房产 | 汽车 | 消费 | 影视 | 娱乐 | 体育 | 教育 | 观察家 | 专栏 | 书评 | 个人历史 |
 | ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | -------- |
 
 
-<route name="经济观察网" author="epirus" example="/eeo/观察家" path="/eeo/:category" :paramsDesc="['分类']"/>
+</route>
 
 ### TSSstatus
 
-<route name="Status" author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']"/>
+<route name="Status" author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']">
 
-> board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
+board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
+
+</route>
+
+### iDownloadBlog
+
+<route name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+
+通过提取文章全文, 以提供比官方源更佳的阅读体验.
+
+</route>
+
+### 9To5
+
+<route name="9To5 分站" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['分站名字']">
+
+支持分站：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
+
+</route>

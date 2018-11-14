@@ -22,7 +22,7 @@ module.exports = function(options = {}) {
     options.app.context.cache = {
         get: (key) => {
             if (key) {
-                memoryCache.get(key);
+                return memoryCache.get(key);
             }
         },
         set: (key, value, maxAge) => {
