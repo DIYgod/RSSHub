@@ -12,11 +12,6 @@ module.exports = async (ctx) => {
         .map((index, elem) => {
             elem = $(elem);
             const $link = elem.find('dt a');
-            const pubDate = elem
-                .find('.small')
-                .text()
-                .match(/\s[0-9-]+\s[0-9:]+\s/g)[0]
-                .trim();
 
             return {
                 title: $link.text(),
@@ -25,7 +20,6 @@ module.exports = async (ctx) => {
                     .eq(0)
                     .text(),
                 link: $link.attr('href'),
-                pubDate: new Date(pubDate).toUTCString(),
                 author: elem
                     .find('.small a')
                     .eq(0)
