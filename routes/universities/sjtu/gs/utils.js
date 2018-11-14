@@ -32,16 +32,16 @@ const ProcessFeed = async (list, caches, host) => {
     for (let i = 0; i < responses.length; i++) {
         const $ = cheerio.load(responses[i].data);
 
-	$('a').map(function(){
-	    if($(this).attr('href')){
-	        $(this).attr('href', url.resolve(host, $(this).attr('href')));
-	    }
-	});
-	$('img').map(function(){
-	    if($(this).attr('src')){
-	        $(this).attr('src', url.resolve(host, $(this).attr('src')));
-	    }
-	});
+        $('a').each(function() {
+            if ($(this).attr('href')) {
+                $(this).attr('href', url.resolve(host, $(this).attr('href')));
+            }
+        });
+        $('img').each(function() {
+            if ($(this).attr('src')) {
+                $(this).attr('src', url.resolve(host, $(this).attr('src')));
+            }
+        });
         result[i].description = $('.ssdd').html();
 
         const date = new Date(

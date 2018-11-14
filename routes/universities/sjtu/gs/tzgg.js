@@ -4,11 +4,11 @@ const util = require('./utils');
 
 module.exports = async (ctx) => {
     const type = ctx.params.type;
-    var url = ""
-    if(type){
+    let url = '';
+    if (type) {
         url = `http://www.gs.sjtu.edu.cn/index/tzgg/${type}.htm`;
-    }else{
-        url = `http://www.gs.sjtu.edu.cn/index/tzgg.htm`;
+    } else {
+        url = 'http://www.gs.sjtu.edu.cn/index/tzgg.htm';
     }
 
     const response = await axios({
