@@ -169,6 +169,8 @@ router.get('/zhihu/pin/hotlist', require('./routes/zhihu/pin/hotlist'));
 router.get('/zhihu/question/:questionId', require('./routes/zhihu/question'));
 router.get('/zhihu/topic/:topicId', require('./routes/zhihu/topic'));
 router.get('/zhihu/people/pins/:id', require('./routes/zhihu/pin/people'));
+router.get('/zhihu/bookstore/newest', require('./routes/zhihu/bookstore/newest'));
+router.get('/zhihu/pin/daily', require('./routes/zhihu/pin/daily'));
 
 // 妹子图
 router.get('/mzitu/home/:type?', require('./routes/mzitu/home'));
