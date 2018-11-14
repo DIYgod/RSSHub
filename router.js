@@ -368,6 +368,7 @@ router.get('/cctv/:category', require('./routes/cctv/category'));
 router.get('/caixin/:column/:category', require('./routes/caixin/category'));
 
 // 草榴社区
+router.get('/t66y/post/:tid', require('./routes/t66y/post'));
 router.get('/t66y/:id/:type?', require('./routes/t66y/index'));
 
 // 色中色
