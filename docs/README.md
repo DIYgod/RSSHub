@@ -867,6 +867,18 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+<route name="帖子跟踪" author="cnzgray" example="/t66y/post/3286088" path="/t66y/post/:tid" :paramsDesc="['帖子 id, 可在帖子 URL 中找到']">
+
+::: tip 提示
+
+帖子 id 查找办法:
+
+打开想跟踪的帖子，比如：http://t66y.com/htm_data/20/1811/3286088.html。其中`3286088`就是帖子id。
+
+:::
+
+</route>
+
 ### sexinsex
 
 <route name="分区帖子" author="cnzgray" example="/sexinsex/230/634" path="/sexinsex/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
