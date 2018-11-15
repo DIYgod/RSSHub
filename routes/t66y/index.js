@@ -55,6 +55,7 @@ module.exports = async (ctx) => {
         time = regRes === null ? new Date() : new Date(regRes[0]);
         time.setTime(time.getTime() + (sourceTimezoneOffset - time.getTimezoneOffset() / 60) * 60 * 60 * 1000);
 
+        const author = $('#main > div:nth-child(4) > table > tbody > tr.tr1.do_not_catch > th.r_two > b').text();
         const content = $('#main > div:nth-child(4) > table > tbody > tr.tr1.do_not_catch > th:nth-child(2) > table > tbody > tr > td > div.tpc_content.do_not_catch').html();
 
         // Change the image tag to display image in rss reader
@@ -94,6 +95,7 @@ module.exports = async (ctx) => {
         }
 
         return {
+            author: author,
             description: $('body').html(),
             pubDate: time.toUTCString(),
         };
@@ -152,6 +154,7 @@ module.exports = async (ctx) => {
                     return Promise.resolve('');
                 }
 
+                single.author = result.author;
                 single.description = result.description;
                 single.pubDate = result.pubDate;
             } catch (err) {

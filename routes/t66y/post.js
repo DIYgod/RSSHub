@@ -39,6 +39,7 @@ function parseContent(htmlString) {
     time = regRes === null ? new Date() : new Date(regRes[0]);
     time.setTime(time.getTime() + (sourceTimezoneOffset - time.getTimezoneOffset() / 60) * 60 * 60 * 1000);
 
+    const author = $('th.r_two > b').text();
     const content = $('.tpc_content').html();
 
     // Change the image tag to display image in rss reader
@@ -78,6 +79,7 @@ function parseContent(htmlString) {
     }
 
     return {
+        author: author,
         description: $('body').html(),
         pubDate: time.toUTCString(),
     };
@@ -154,11 +156,7 @@ module.exports = async (ctx) => {
             // 如果没有读到内容，则读取下一页。
             return load(page + 1);
         } else {
-            return {
-                title: title,
-                link: url.resolve(base, `/read.php?tid=${tid}`),
-                item: items,
-            };
+            return { title: title, link: url.resolve(base, `/read.php?tid=${tid}`), item: items };
         }
     };
 
