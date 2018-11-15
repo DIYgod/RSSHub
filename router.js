@@ -627,6 +627,9 @@ router.get('/dgut/xsc/:type?', require('./routes/universities/dgut/xsc'));
 // 同济大学
 router.get('/tju/sse/:type?', require('./routes/universities/tju/sse/notice'));
 
+// 华南理工大学
+router.get('/scut/jwc/:category?', require('./routes/universities/scut/jwc'));
+
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
 
