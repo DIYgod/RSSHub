@@ -824,4 +824,8 @@ router.get('/9to5/:type', require('./routes/9to5/subsite'));
 // TesterHome
 router.get('/testerhome/newest', require('./routes/testerhome/newest'));
 
+// 刷屏
+router.get('/weseepro/newest', require('./routes/weseepro/newest'));
+router.get('/weseepro/circle', require('./routes/weseepro/circle'));
+
 module.exports = router;
