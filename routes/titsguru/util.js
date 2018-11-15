@@ -1,5 +1,31 @@
 const { resolve } = require('url');
+const cheerio = require('cheerio');
+const axios = require('../../utils/axios');
 const day = require('dayjs');
+
+exports.getPage = async (url) => {
+    const { data } = await axios.get(url, {
+        headers: { Accept: '' },
+    });
+    const $ = cheerio.load(data);
+
+    const title = $('.header-wrapper > h1').text();
+
+    const items = $('.post-row')
+        .map((_, ele) => exports.mapDetail($(ele)))
+        .toArray();
+
+    return {
+        title: `TitsGuru - ${title}`,
+        link: url,
+        description: `TitsGuru - ${title}`,
+        item: items,
+    };
+};
+
+exports.createHandler = (url) => async (ctx) => {
+    ctx.state.data = await exports.getPage(url);
+};
 
 exports.mapDetail = (ele) => {
     const link = resolve('https://tits-guru.com', ele.find('.img-link').attr('href'));
@@ -40,3 +66,5 @@ exports.parseDate = (str) => {
     }
     return new Date(`${dayStr} ${timeStr} UTC`);
 };
+
+exports.normalizeKeyword = (keyword) => keyword.toLowerCase().replace(/[^\da-z]/g, '-');
