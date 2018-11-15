@@ -2373,3 +2373,9 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 | Mac | Google | Toys |
 
 </route>
+
+### 刷屏
+
+<route name="最新" author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
+
+<route name="朋友圈" author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>
