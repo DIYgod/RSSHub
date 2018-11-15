@@ -821,4 +821,8 @@ router.get('/idownloadblog', require('./routes/idownloadblog/index'));
 // 9to5
 router.get('/9to5/:type', require('./routes/9to5/subsite'));
 
+// 刷屏
+router.get('/weseepro/newest', require('./routes/weseepro/newest'));
+router.get('/weseepro/circle', require('./routes/weseepro/circle'));
+
 module.exports = router;
