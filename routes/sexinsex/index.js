@@ -22,6 +22,7 @@ module.exports = async (ctx) => {
     const parseContent = (htmlString) => {
         htmlString = iconv.decode(htmlString, 'gbk');
         let $ = cheerio.load(htmlString, { decodeEntities: false });
+        const author = $('#wrapper > div:nth-child(1) > form > div:nth-child(2) > table > tbody > tr:nth-child(1) > td.postauthor > cite > a').text();
         let time = $('.postinfo').text();
         const regex = /\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}/;
         const regRes = regex.exec(time);
@@ -34,6 +35,7 @@ module.exports = async (ctx) => {
         $('div.quote').remove();
 
         return {
+            author: author,
             description: $('body').html(),
             pubDate: time.toUTCString(),
         };
@@ -79,6 +81,7 @@ module.exports = async (ctx) => {
                         return Promise.resolve('');
                     }
 
+                    single.author = result.author;
                     single.description = result.description;
                     single.pubDate = result.pubDate;
                 } catch (err) {
