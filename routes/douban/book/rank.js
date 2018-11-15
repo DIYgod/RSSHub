@@ -16,9 +16,10 @@ module.exports = async (ctx) => {
         title: `豆瓣热门图书-${type === 'fiction' ? '虚构类' : '非虚构类'}`,
         link: referer,
         description: '每周一更新',
-        item: response.data.subject_collection_items.map(({ title, url, cover, info, rating }) => {
+        item: response.data.subject_collection_items.map(({ title, url, cover, info, rating, null_rating_reason }) => {
+            const rate = rating ? `${rating.value.toFixed(1)}分` : null_rating_reason;
             const description = `<img referrerpolicy="no-referrer" src="${cover.url}"><br>
-              ${title}/${info}/${rating.value.toFixed(1)}分
+              ${title}/${info}/${rate}
             `;
 
             return {
