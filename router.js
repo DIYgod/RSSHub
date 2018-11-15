@@ -821,4 +821,7 @@ router.get('/idownloadblog', require('./routes/idownloadblog/index'));
 // 9to5
 router.get('/9to5/:type', require('./routes/9to5/subsite'));
 
+// TesterHome
+router.get('/testerhome/newest', require('./routes/testerhome/newest'));
+
 module.exports = router;

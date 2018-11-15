@@ -757,6 +757,10 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### TesterHome
+
+<route name="最新发布" author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
+
 ## 直播
 
 ### 哔哩哔哩直播
