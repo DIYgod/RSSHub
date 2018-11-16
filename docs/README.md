@@ -1539,6 +1539,16 @@ category 列表：
 注意: `qttz` 与 `xwdt` 在原网站等价.
 
  </route>
+ 
+### 华南理工大学
+
+<route name="教务处新闻动态" author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 可选, 默认为 `1`']">
+
+| 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |
+
+</route>
 
 ## 传统媒体
 
