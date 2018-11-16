@@ -833,4 +833,7 @@ router.get('/testerhome/newest', require('./routes/testerhome/newest'));
 router.get('/weseepro/newest', require('./routes/weseepro/newest'));
 router.get('/weseepro/circle', require('./routes/weseepro/circle'));
 
+// NGA
+router.get('/nga/forum/:fid', require('./routes/nga/forum'));
+
 module.exports = router;
