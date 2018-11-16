@@ -833,6 +833,9 @@ router.get('/testerhome/newest', require('./routes/testerhome/newest'));
 router.get('/weseepro/newest', require('./routes/weseepro/newest'));
 router.get('/weseepro/circle', require('./routes/weseepro/circle'));
 
+// 玩物志
+router.get('/coolbuy/newest', require('./routes/coolbuy/newest'));
+
 // NGA
 router.get('/nga/forum/:fid', require('./routes/nga/forum'));
 

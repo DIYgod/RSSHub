@@ -1906,6 +1906,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="新品" author="xyqfer" example="/westore/new" path="/westore/new"/>
 
+### 玩物志
+
+<route name="最新" author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
+
 ## 游戏资讯
 
 ### 3DMGame
