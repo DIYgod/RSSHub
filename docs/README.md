@@ -1007,7 +1007,9 @@ GitHub 官方也提供了一些 RSS:
 ### Tits Guru
 
 <route name="Home" author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
-<route name="Babe of The Day" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+<route name="Daily Best" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+<route name="Models" author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" :paramsDesc="['指定模特名字，详见[这里](https://tits-guru.com/models)']"/>
+<route name="Categories" author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
 ### nHentai
 

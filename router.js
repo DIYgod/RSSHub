@@ -801,6 +801,8 @@ router.get('/manhuagui/comic/:id', require('./routes/manhuagui/comic'));
 // Tits Guru
 router.get('/tits-guru/home', require('./routes/titsguru/home'));
 router.get('/tits-guru/daily', require('./routes/titsguru/daily'));
+router.get('/tits-guru/category/:type', require('./routes/titsguru/category'));
+router.get('/tits-guru/model/:name', require('./routes/titsguru/model'));
 
 // typora
 router.get('/typora/changelog', require('./routes/typora/changelog'));
