@@ -766,4 +766,7 @@ router.get('/itjuzi/merge', require('./routes/itjuzi/merge'));
 // 探物
 router.get('/tanwu/products', require('./routes/tanwu/products'));
 
+//rs05
+router.get('/rs05/rs05', require('./routes/rs05/rs05'));
+
 module.exports = router;
