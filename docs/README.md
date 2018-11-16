@@ -165,7 +165,7 @@ RSSHub 提供下列 API 接口:
 
 ### bilibili
 
-<route name="番剧" author="DIYgod" example="/bilibili/bangumi/21680" path="/bilibili/:seasonid" :paramsDesc="['番剧 id, 番剧主页打开控制台执行 `window.__INITIAL_STATE__.ssId` 或 `window.__INITIAL_STATE__.mediaInfo.param.season_id` 获取']"/>
+<route name="番剧" author="DIYgod" example="/bilibili/bangumi/21680" path="/bilibili/bangumi/:seasonid" :paramsDesc="['番剧 id, 番剧主页打开控制台执行 `window.__INITIAL_STATE__.ssId` 或 `window.__INITIAL_STATE__.mediaInfo.param.season_id` 获取']"/>
 
 <route name="UP 主投稿" author="DIYgod" example="/bilibili/user/video/2267573" path="/bilibili/user/video/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
 
@@ -556,6 +556,10 @@ RSSHub 提供下列 API 接口:
 | (空) | week | month | year |
 
 </route>
+
+### NGA
+
+<route name="论坛" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
 
 ## 编程
 
@@ -1007,7 +1011,9 @@ GitHub 官方也提供了一些 RSS:
 ### Tits Guru
 
 <route name="Home" author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
-<route name="Babe of The Day" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+<route name="Daily Best" author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+<route name="Models" author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" :paramsDesc="['指定模特名字，详见[这里](https://tits-guru.com/models)']"/>
+<route name="Categories" author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
 ### nHentai
 
@@ -1537,6 +1543,16 @@ category 列表：
 注意: `qttz` 与 `xwdt` 在原网站等价.
 
  </route>
+ 
+### 华南理工大学
+
+<route name="教务处新闻动态" author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 可选, 默认为 `1`']">
+
+| 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |
+
+</route>
 
 ## 传统媒体
 
