@@ -557,6 +557,10 @@ RSSHub 提供下列 API 接口:
 
 </route>
 
+### NGA
+
+<route name="论坛" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
+
 ## 编程
 
 ### 掘金
