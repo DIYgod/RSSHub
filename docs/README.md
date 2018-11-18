@@ -2403,3 +2403,23 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 <route name="最新" author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
 
 <route name="朋友圈" author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>
+
+### JavBus
+
+<route name="首页" author="MegrezZhu" example="/javbus/home" path="/javbus/home" />
+
+<route name="分类" author="MegrezZhu" example="/javbus/genre/7g" path="/javbus/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/genre)的链接']" />
+
+<route name="演员" author="MegrezZhu" example="/javbus/star/2jv" path="/javbus/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/actresses)的链接']" />
+
+<route name="首页/步兵" author="MegrezZhu" example="/javbus/uncensored/home" path="/javbus/uncensored/home" />
+
+<route name="分类/步兵" author="MegrezZhu" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/uncensored/genre)的链接']" />
+
+<route name="演员/步兵" author="MegrezZhu" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/uncensored/actresses)的链接']" />
+
+<route name="首页/欧陆风云" author="MegrezZhu" example="/javbus/western/home" path="/javbus/western/home" />
+
+<route name="分类/欧陆风云" author="MegrezZhu" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
+
+<route name="演员/欧陆风云" author="MegrezZhu" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
