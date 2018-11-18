@@ -31,7 +31,7 @@ module.exports = async function get_article(url) {
     date = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
 
     const item = {
-        title: $('div.bg_htit > h2').text(),
+        title: $('div.block_m > div.ct_tittle > div.bg_htit > h2').text(),
         pubDate: date.toUTCString(),
         author: $('div.talk_time > b')
             .text()
