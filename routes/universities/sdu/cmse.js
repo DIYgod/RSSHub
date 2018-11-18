@@ -18,34 +18,36 @@ module.exports = async (ctx) => {
         .get();
 
     const out = await Promise.all(
-        list.filter((e) => e.startsWith('../info')).map(async (itemUrl) => {
-            itemUrl = url.resolve(host, itemUrl.slice('3'));
-            const cache = await ctx.cache.get(itemUrl);
-            if (cache) {
-                return Promise.resolve(JSON.parse(cache));
-            }
+        list
+            .filter((e) => e.startsWith('../info'))
+            .map(async (itemUrl) => {
+                itemUrl = url.resolve(host, itemUrl.slice('3'));
+                const cache = await ctx.cache.get(itemUrl);
+                if (cache) {
+                    return Promise.resolve(JSON.parse(cache));
+                }
 
-            const response = await axios.get(itemUrl);
-            const $ = cheerio.load(response.data);
+                const response = await axios.get(itemUrl);
+                const $ = cheerio.load(response.data);
 
-            const rawDate = $('#show_info')
-                .text()
-                .split(/\s{4}/);
-            let date = rawDate[0].split('：')[1];
-            date = date.slice(0, 4) + '-' + date.slice(5, 7) + '-' + date.slice(8, 10) + ' ' + date.slice(12);
-
-            const single = {
-                title: $('#show_title')
+                const rawDate = $('#show_info')
                     .text()
-                    .trim(),
-                link: itemUrl,
-                author: '山东大学材料科学与工程学院',
-                description: $('#show_content').html(),
-                pubDate: new Date(date),
-            };
-            ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
-            return Promise.resolve(single);
-        })
+                    .split(/\s{4}/);
+                let date = rawDate[0].split('：')[1];
+                date = date.slice(0, 4) + '-' + date.slice(5, 7) + '-' + date.slice(8, 10) + ' ' + date.slice(12);
+
+                const single = {
+                    title: $('#show_title')
+                        .text()
+                        .trim(),
+                    link: itemUrl,
+                    author: '山东大学材料科学与工程学院',
+                    description: $('#show_content').html(),
+                    pubDate: new Date(date),
+                };
+                ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
+                return Promise.resolve(single);
+            })
     );
 
     ctx.state.data = {
