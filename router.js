@@ -839,4 +839,15 @@ router.get('/coolbuy/newest', require('./routes/coolbuy/newest'));
 // NGA
 router.get('/nga/forum/:fid', require('./routes/nga/forum'));
 
+// JavBus
+router.get('/javbus/home', require('./routes/javbus/home'));
+router.get('/javbus/genre/:gid', require('./routes/javbus/genre'));
+router.get('/javbus/star/:sid', require('./routes/javbus/star'));
+router.get('/javbus/uncensored/home', require('./routes/javbus/uncensored/home'));
+router.get('/javbus/uncensored/genre/:gid', require('./routes/javbus/uncensored/genre'));
+router.get('/javbus/uncensored/star/:sid', require('./routes/javbus/uncensored/star'));
+router.get('/javbus/western/home', require('./routes/javbus/western/home'));
+router.get('/javbus/western/genre/:gid', require('./routes/javbus/western/genre'));
+router.get('/javbus/western/star/:sid', require('./routes/javbus/western/star'));
+
 module.exports = router;
