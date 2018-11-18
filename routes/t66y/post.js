@@ -112,6 +112,8 @@ module.exports = async (ctx) => {
         page = lastpage;
     }
 
+    // 记录重试次数
+    let retry = 0;
     // 请求帖子
     const load = async (page) => {
         const link = url.resolve(base, `/read.php?tid=${tid}&page=${page}`);
@@ -152,8 +154,9 @@ module.exports = async (ctx) => {
         // 记录读取的最后页码
         ctx.cache.set(`/t66y/post/${tid}`, JSON.stringify({ page }), 3 * 60 * 60);
 
-        if (items.length === 0) {
-            // 如果没有读到内容，则读取下一页。
+        // 如果没有读到内容，则读取下一页，最多读取3页
+        if (items.length === 0 && retry < 3) {
+            retry++; // 记录重试次数
             return load(page + 1);
         } else {
             return { title: title, link: url.resolve(base, `/read.php?tid=${tid}`), item: items };
