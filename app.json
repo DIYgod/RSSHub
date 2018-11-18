@@ -5,9 +5,6 @@
     "website": "https://docs.rsshub.app/",
     "logo": "https://i.imgur.com/NZpRScX.png",
     "keywords": ["RSS"],
-    "engines": {
-        "node": "10.x"
-    },
     "env": {
         "PORT": {
             "value": "80",
