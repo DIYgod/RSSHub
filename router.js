@@ -850,4 +850,8 @@ router.get('/javbus/western/home', require('./routes/javbus/western/home'));
 router.get('/javbus/western/genre/:gid', require('./routes/javbus/western/genre'));
 router.get('/javbus/western/star/:sid', require('./routes/javbus/western/star'));
 
+// 中山大学
+//  数据科学与计算机学院
+router.get('/sysu/sdcs', require('./routes/universities/sysu/sdcs'));
+
 module.exports = router;
