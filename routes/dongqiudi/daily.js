@@ -36,8 +36,8 @@ module.exports = async (ctx) => {
         })
     );
 
-    const responses = await axios.all(proList.slice(0, 1));
-    for (let i = 0; i < 1; i++) {
+    const responses = await axios.all(proList);
+    for (let i = 0; i < proList.length; i++) {
         const $ = utils.ProcessVideo(cheerio.load(responses[i].data));
         const full = $('div.detail');
 
