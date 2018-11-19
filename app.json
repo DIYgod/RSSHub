@@ -6,6 +6,10 @@
     "logo": "https://i.imgur.com/NZpRScX.png",
     "keywords": ["RSS"],
     "env": {
+        "NODE_MODULES_CACHE": {
+            "value": "false",
+            "required": true
+        },
         "PORT": {
             "value": "80",
             "required": false

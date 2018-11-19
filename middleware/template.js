@@ -3,8 +3,13 @@ const path = require('path');
 const config = require('../config');
 const he = require('he');
 const typeRegrx = /\.(atom|rss)$/;
+const unsupportedRegrx = /\.json$/;
 
 module.exports = async (ctx, next) => {
+    if (ctx.request.path.match(unsupportedRegrx)) {
+        throw Error('<b>JSON output had been removed, see: <a href="https://github.com/DIYgod/RSSHub/issues/1114">https://github.com/DIYgod/RSSHub/issues/1114</a></b>');
+    }
+
     ctx.state.type = ctx.request.path.match(typeRegrx) || ['', ''];
     ctx.request.path = ctx.request.path.replace(typeRegrx, '');
 

@@ -218,6 +218,7 @@ router.get('/toutiao/user/:id', require('./routes/toutiao/user'));
 
 // 众成翻译
 router.get('/zcfy', require('./routes/zcfy/index'));
+router.get('/zcfy/index', require('./routes/zcfy/index')); // 兼容
 router.get('/zcfy/hot', require('./routes/zcfy/hot'));
 
 // 今日头条
@@ -664,12 +665,14 @@ router.get('/thepaper/featured', require('./routes/thepaper/featured'));
 
 // 电影首发站
 router.get('/dysfz', require('./routes/dysfz/index'));
+router.get('/dysfz/index', require('./routes/dysfz/index')); // 兼容
 
 // きららファンタジア
 router.get('/kirara/news', require('./routes/kirara/news'));
 
 // 电影天堂
 router.get('/dytt', require('./routes/dytt/index'));
+router.get('/dytt/index', require('./routes/dytt/index')); // 兼容
 
 // 趣头条
 router.get('/qutoutiao/category/:cid', require('./routes/qutoutiao/category'));

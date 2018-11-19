@@ -278,6 +278,8 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication password, default to `passw0rd`, please change asap
 
+`LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
+
 ### User Authentication
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.

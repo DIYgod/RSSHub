@@ -27,15 +27,17 @@ module.exports = async (ctx) => {
         title: `${name}的微博`,
         link: `http://weibo.com/${uid}/`,
         description: `${name}的微博`,
-        item: response.data.data.cards.filter((item) => item.mblog && !item.mblog.isTop).map((item) => {
-            const description = weiboUtils.format(item.mblog);
-            const title = description.replace(/<img.*?>/g, '[图片]').replace(/<.*?>/g, '');
-            return {
-                title,
-                description: description,
-                pubDate: date(item.mblog.created_at, 8),
-                link: `https://weibo.com/${uid}/${item.mblog.bid}`,
-            };
-        }),
+        item: response.data.data.cards
+            .filter((item) => item.mblog && !item.mblog.isTop)
+            .map((item) => {
+                const description = weiboUtils.format(item.mblog);
+                const title = description.replace(/<img.*?>/g, '[图片]').replace(/<.*?>/g, '');
+                return {
+                    title,
+                    description: description,
+                    pubDate: date(item.mblog.created_at, 8),
+                    link: `https://weibo.com/${uid}/${item.mblog.bid}`,
+                };
+            }),
     };
 };
