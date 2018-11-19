@@ -47,7 +47,7 @@ module.exports = function(options = {}) {
             }
         },
         set: async (key, value, maxAge) => {
-            if (!value) {
+            if (!value || value === 'undefined') {
                 value = '';
             }
             if (typeof value === 'object') {
