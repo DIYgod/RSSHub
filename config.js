@@ -52,4 +52,5 @@ module.exports = {
         pass: process.env.HTTP_BASIC_AUTH_PASS || 'passw0rd',
     },
     puppeteerWSEndpoint: process.env.PUPPETEER_WS_ENDPOINT,
+    loggerLevel: process.env.LOGGER_LEVEL || 'info',
 };

@@ -284,6 +284,8 @@ gcloud app deploy
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码, 默认为 `passw0rd`, 请务必修改
 
+`LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
+
 ### 用户认证
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证.
