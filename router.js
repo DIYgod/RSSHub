@@ -853,4 +853,8 @@ router.get('/javbus/western/home', require('./routes/javbus/western/home'));
 router.get('/javbus/western/genre/:gid', require('./routes/javbus/western/genre'));
 router.get('/javbus/western/star/:sid', require('./routes/javbus/western/star'));
 
+// 動畫瘋
+router.get('/anigamer/new_anime', require('./routes/anigamer/new_anime'));
+router.get('/anigamer/anime/:sn', require('./routes/anigamer/anime'));
+
 module.exports = router;
