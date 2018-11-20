@@ -1560,6 +1560,10 @@ category 列表：
 
 </route>
 
+### 中山大学
+
+<route name="数据科学与计算机学院动态" author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+
 ## 传统媒体
 
 ### 央视新闻
