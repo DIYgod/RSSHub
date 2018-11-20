@@ -1062,6 +1062,12 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="搜尋" author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
 
+### 動畫瘋
+
+<route name="最後更新" author="maple3142" example="/anigamer/new_anime" path="/anigamer/new_anime"/>
+
+<route name="動畫" author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
+
 ## 程序更新
 
 ### RSSHub
