@@ -30,21 +30,17 @@ module.exports = async (ctx) => {
                 pubDate: new Date(postdate * 1000).toUTCString(),
             };
 
-            const description = await ctx.cache.tryGet(
-                `nga-forum: ${link}`,
-                async () => {
-                    const response = await axiosInstance.request({
-                        method: 'post',
-                        url: '?__lib=post&__act=list',
-                        data: qs.stringify({
-                            tid,
-                        }),
-                    });
+            const description = await ctx.cache.tryGet(`nga-forum: ${link}`, async () => {
+                const response = await axiosInstance.request({
+                    method: 'post',
+                    url: '?__lib=post&__act=list',
+                    data: qs.stringify({
+                        tid,
+                    }),
+                });
 
-                    return response.data.result[0].content;
-                },
-                24 * 60 * 60
-            );
+                return response.data.result[0].content;
+            });
 
             item.description = description;
             return Promise.resolve(item);

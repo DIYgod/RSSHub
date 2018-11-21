@@ -106,7 +106,7 @@ module.exports = async (ctx) => {
     const lastpage = lasturl ? /page=(\d+)/.exec(lasturl)[1] : 1;
     // 从缓存中获取上次读取的页吗
     let page = 0;
-    const cachePage = JSON.parse(await ctx.cache.tryGet(`/t66y/post/${tid}`, () => JSON.stringify({ page }), 3 * 60 * 60));
+    const cachePage = await ctx.cache.tryGet(`/t66y/post/${tid}`, () => ({ page }));
     page = cachePage.page + 1;
     if (page > lastpage) {
         page = lastpage;
@@ -119,18 +119,14 @@ module.exports = async (ctx) => {
         const link = url.resolve(base, `/read.php?tid=${tid}&page=${page}`);
         if (page > 1) {
             // 只有第二页开始需要重新读取
-            html = await ctx.cache.tryGet(
-                link,
-                async () => {
-                    const response = await axios_ins.get(link, {
-                        headers: {
-                            Referer: url.resolve(base, redirect),
-                        },
-                    });
-                    return iconv.decode(response.data, 'gbk');
-                },
-                3 * 60 * 60
-            );
+            html = await ctx.cache.tryGet(link, async () => {
+                const response = await axios_ins.get(link, {
+                    headers: {
+                        Referer: url.resolve(base, redirect),
+                    },
+                });
+                return iconv.decode(response.data, 'gbk');
+            });
             $ = cheerio.load(html, { decodeEntities: false });
         }
 

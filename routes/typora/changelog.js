@@ -45,7 +45,7 @@ module.exports = async (ctx) => {
             .map(async (item) => {
                 const node = $('a', item);
                 const link = node.attr('href');
-                const result = await ctx.cache.tryGet(link, async () => loadContent(link), 3 * 60 * 60);
+                const result = await ctx.cache.tryGet(link, async () => loadContent(link));
 
                 return Promise.resolve(result);
             })
