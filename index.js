@@ -92,29 +92,27 @@ if (config.cacheType === 'memory') {
     app.context.cache = {
         get: () => null,
         set: () => null,
-
-        /**
-         *
-         * try get from cache.
-         * if not exists use `getValue` function to get value, and put into cahche.
-         *
-         * @param key cache key
-         * @param getValueFunc a function to get value. call it when key not exists.
-         * @param maxAge
-         *
-         * @returns {Promise<void>}
-         */
-        tryGet: async function(key, getValueFunc, maxAge) {
-            let v = await this.get(key);
-            if (!v) {
-                v = await getValueFunc();
-                this.set(key, v, maxAge);
-            }
-
-            return v;
-        },
     };
 }
+app.context.cache.tryGet = async function(key, getValueFunc, maxAge = 24 * 60 * 60) {
+    let v = await this.get(key);
+    if (!v) {
+        v = await getValueFunc();
+        this.set(key, v, maxAge);
+    } else {
+        let parsed;
+        try {
+            parsed = JSON.parse(v);
+        } catch (e) {
+            parsed = null;
+        }
+        if (parsed) {
+            v = parsed;
+        }
+    }
+
+    return v;
+};
 
 // router
 

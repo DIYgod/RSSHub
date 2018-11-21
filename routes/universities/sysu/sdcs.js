@@ -24,7 +24,7 @@ module.exports = async (ctx) => {
     };
 };
 
-const getDetails = (cache, urls) => Promise.all(urls.map((url) => cache.tryGet(url, () => getDetail(url), 24 * 60 * 60)));
+const getDetails = (cache, urls) => Promise.all(urls.map((url) => cache.tryGet(url, () => getDetail(url))));
 
 const timezone = 8;
 const serverOffset = new Date().getTimezoneOffset() / 60;
