@@ -445,6 +445,8 @@ RSSHub 提供下列 API 接口:
 
 </route>
 
+<route name="关键词" author="DIYgod" example="/pixiv/search/麻衣/popular" path="/pixiv/search/:keyword/:order?" :paramsDesc="['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序']"/>
+
 ### 豆瓣
 
 <route name="正在上映的电影" author="DIYgod" example="/douban/movie/playing" path="/douban/movie/playing"/>
