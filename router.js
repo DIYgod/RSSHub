@@ -184,6 +184,7 @@ if (config.pixiv && config.pixiv.client_id && config.pixiv.client_secret && conf
     router.get('/pixiv/user/bookmarks/:id', require('./routes/pixiv/bookmarks'));
     router.get('/pixiv/user/:id/', require('./routes/pixiv/user'));
     router.get('/pixiv/ranking/:mode/:date?', require('./routes/pixiv/ranking'));
+    router.get('/pixiv/search/:keyword/:order?', require('./routes/pixiv/search'));
 } else {
     logger.warn('pixiv RSS is disabled for lacking config.');
 }
