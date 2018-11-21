@@ -559,7 +559,7 @@ RSSHub 提供下列 API 接口:
 
 ### NGA
 
-<route name="论坛" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
+<route name="分区帖子" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
 
 ## 编程
 
@@ -2372,7 +2372,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 经济观察网
 
-<route name="经济观察网" author="epirus" example="/eeo/15" path="/eeo/:category" :paramsDesc="['分类']">
+<route name="分类资讯" author="epirus" example="/eeo/15" path="/eeo/:category" :paramsDesc="['分类']">
 category 对应的关键词有
 
 | 时事 | 政策 | 证券 | 资本 | 理财 | 新科技 | 大健康 | 房产 | 汽车 | 消费 | 影视 | 娱乐 | 体育 | 教育 | 观察家 | 专栏 | 书评 | 个人历史 | 宏观 |
@@ -2381,7 +2381,7 @@ category 对应的关键词有
 
 </route>
 
-### TSSstatus
+### TSSstatus（iOS 降级通道）
 
 <route name="Status" author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']">
 
@@ -2391,7 +2391,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### iDownloadBlog
 
-<route name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+<route name="blog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
 
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
