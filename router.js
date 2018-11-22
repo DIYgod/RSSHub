@@ -861,4 +861,7 @@ router.get('/sysu/sdcs', require('./routes/universities/sysu/sdcs'));
 router.get('/anigamer/new_anime', require('./routes/anigamer/new_anime'));
 router.get('/anigamer/anime/:sn', require('./routes/anigamer/anime'));
 
+// Apkpure
+router.get('/apkpure/versions/:region/:pkg', require('./routes/apkpure/versions'));
+
 module.exports = router;
