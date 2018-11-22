@@ -7466,10 +7466,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rss-parser@3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-3.5.3.tgz#4b125c44371eafbd1150479188c0f33bf02e6e92"
-  integrity sha512-oByqqKTuB6tCg/4UTPXUpJmG4Wr+H72qsBcSnBZM9nH1NhjV8lXzx8uKibN9Sq+mZwwZQyOitjoQvZ/ePsttKA==
+rss-parser@3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-3.5.4.tgz#3b267d96c57bdc22ff5cc847ef9bcd3dce4ae2cc"
+  integrity sha512-dC7wHtz/p8QWQnsGgCB+HEYE01Dk8/AHMzSk0ZvoV3S0mhBqQNO/yi3H2fPh3qV2NNLNNEBg+8ZDSipKxjR5tQ==
   dependencies:
     entities "^1.1.1"
     xml2js "^0.4.19"
