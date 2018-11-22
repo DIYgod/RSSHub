@@ -43,6 +43,11 @@ module.exports = async (ctx, next) => {
                             }
                         }
                     }
+
+                    if (item.enclosure_length) {
+                        const itunes_duration = Math.floor(item.enclosure_length / 3600) + ':' + Math.floor((item.enclosure_length % 3600) / 60) + ':' + (((item.enclosure_length % 3600) % 60) / 100).toFixed(2).slice(-2);
+                        item.itunes_duration = itunes_duration;
+                    }
                 });
 
             // decode HTML entities

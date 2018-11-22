@@ -41,7 +41,6 @@ module.exports = async (ctx) => {
                 const track = await axios_ins.get(TrackInfoApi + trackId);
                 const track_item = track.data;
                 const enclosure_length = track_item.duration; // 时间长度：单位（秒）
-                const itunes_duration = Math.floor(enclosure_length / 3600) + ':' + Math.floor((enclosure_length % 3600) / 60) + ':' + (((enclosure_length % 3600) % 60) / 100).toFixed(2).slice(-2);
 
                 let desc = track_item.intro ? track_item.intro.replace(/((\r\n)+(\s)?)+/g, '<br/>') : '暂无简介';
                 const itunes_item_image = track_item.coverLarge ? track_item.coverLarge.split('!')[0] : albuminfo.cover.split('!')[0];
@@ -59,7 +58,6 @@ module.exports = async (ctx) => {
                     enclosure_url: track_item.playPathAacv224,
                     enclosure_length: enclosure_length,
                     enclosure_type: 'audio/x-m4a',
-                    itunes_duration: itunes_duration,
                 };
 
                 ctx.cache.set(link, JSON.stringify(resultItem), 24 * 60 * 60);
