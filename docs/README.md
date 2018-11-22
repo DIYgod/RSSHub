@@ -1146,6 +1146,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Changelog" author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
+### Apkpure
+
+<route name="Versions" author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']">
+
 ## 大学通知
 
 ### 上海海事大学
