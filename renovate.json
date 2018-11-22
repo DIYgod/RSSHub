@@ -2,7 +2,6 @@
   "extends": [
     "config:base"
   ],
-  "prCreation": "status-success",
   "prHourlyLimit": 0,
   "separateMajorMinor": false
 }
