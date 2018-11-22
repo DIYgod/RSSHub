@@ -14,7 +14,7 @@ module.exports = function(options = {}) {
         ignoreQuery = false,
     } = options;
 
-    const memoryCache = lru({
+    const memoryCache = new lru({
         maxAge: expire * 1000,
         max: maxLength,
     });
