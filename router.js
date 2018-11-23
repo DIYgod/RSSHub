@@ -744,8 +744,8 @@ router.get('/youku/channel/:channelId/:embed?', require('./routes/youku/channel'
 router.get('/oilprice/:area', require('./routes/oilprice'));
 
 // nHentai
-router.get('/nhentai/search/:keyword', require('./routes/nhentai/search'));
-router.get('/nhentai/:key/:keyword', require('./routes/nhentai/other'));
+router.get('/nhentai/search/:keyword/:mode?', require('./routes/nhentai/search'));
+router.get('/nhentai/:key/:keyword/:mode?', require('./routes/nhentai/other'));
 
 // 龙腾网
 router.get('/ltaaa/:type?', require('./routes/ltaaa/main'));
