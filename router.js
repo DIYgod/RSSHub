@@ -596,8 +596,10 @@ router.get('/njust/cwc/:type', require('./routes/universities/njust/cwc'));
 router.get('/njust/gs/:type', require('./routes/universities/njust/gs'));
 
 // 四川旅游学院
-router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));
-router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
+router.get('/sctu/xgxy', require('./routes/universities/sctu/information-engineer-faculty/index'));
+router.get('/sctu/xgxy/:id', require('./routes/universities/sctu/information-engineer-faculty/context'));
+router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc/index'));
+router.get('/sctu/jwc/:type/:id', require('./routes/universities/sctu/jwc/context'));
 
 // 电子科技大学
 router.get('/uestc/jwc/:type?', require('./routes/universities/uestc/jwc'));
