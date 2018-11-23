@@ -1,9 +1,11 @@
-const { getList, getDetailWithCache } = require('./util');
+const { getSimple, getDetails } = require('./util');
 
 const supportedKeys = ['parody', 'character', 'tag', 'artist', 'group', 'language', 'category'];
 
 module.exports = async (ctx) => {
-    const { keyword, key } = ctx.params;
+    const { keyword, key, mode } = ctx.params;
+    const isSimple = mode !== 'detail';
+
     if (supportedKeys.indexOf(key) === -1) {
         ctx.state.data = {
             title: 'nHentai - unsupported',
@@ -11,13 +13,12 @@ module.exports = async (ctx) => {
         return;
     }
 
-    const list = await getList(`https://nhentai.net/${key}/${keyword.toLowerCase().replace(' ', '-')}`);
-    const details = await Promise.all(list.map(getDetailWithCache.bind(null, ctx.cache)));
+    const simples = await getSimple(`https://nhentai.net/${key}/${keyword.toLowerCase().replace(' ', '-')}`);
 
     ctx.state.data = {
         title: `nHentai - ${key} - ${keyword}`,
         link: 'https://nhentai.net',
         description: 'hentai',
-        item: details,
+        item: isSimple ? simples : await getDetails(ctx.cache, simples),
     };
 };

@@ -1,14 +1,15 @@
-const { getList, getDetailWithCache } = require('./util');
+const { getSimple, getDetails } = require('./util');
 
 module.exports = async (ctx) => {
-    const { keyword } = ctx.params;
-    const list = await getList(`https://nhentai.net/search/?q=${keyword}`);
-    const details = await Promise.all(list.map(getDetailWithCache.bind(null, ctx.cache)));
+    const { keyword, mode } = ctx.params;
+    const isSimple = mode !== 'detail';
+
+    const simples = await getSimple(`https://nhentai.net/search/?q=${keyword}`);
 
     ctx.state.data = {
         title: `nHentai - search - ${keyword}`,
         link: 'https://nhentai.net',
         description: 'hentai',
-        item: details,
+        item: isSimple ? simples : await getDetails(ctx.cache, simples),
     };
 };
