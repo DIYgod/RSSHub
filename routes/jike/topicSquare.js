@@ -1,4 +1,5 @@
 const axios = require('../../utils/axios');
+const common = require('./common');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
@@ -18,6 +19,11 @@ module.exports = async (ctx) => {
     });
 
     const data = response.data.data;
+
+    if (common.emptyResponseCheck(ctx, data)) {
+        return;
+    }
+
     const topic = data[0].topic;
 
     ctx.state.data = {
@@ -25,24 +31,6 @@ module.exports = async (ctx) => {
         link: `https://web.okjike.com/topic/${id}/user`,
         description: topic.content,
         image: topic.squarePicture.picUrl || topic.squarePicture.middlePicUrl || topic.squarePicture.thumbnailUrl,
-        item: data.map((item) => {
-            let contentTemplate = item.content;
-            if (item.linkInfo && (item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl)) {
-                contentTemplate = `<a href="${item.linkInfo.originalLinkUrl || item.linkInfo.linkUrl}">${item.content}</a>`;
-            }
-
-            let imgTemplate = '';
-            item.pictures &&
-                item.pictures.forEach((item) => {
-                    imgTemplate += `<br><img referrerpolicy="no-referrer" src="${item.picUrl}">`;
-                });
-
-            return {
-                title: item.content,
-                description: `${item.user.screenName}: ${contentTemplate}${imgTemplate}`,
-                pubDate: new Date(item.createdAt).toUTCString(),
-                link: `https://web.okjike.com/post-detail/${item.id}/originalPost`,
-            };
-        }),
+        item: common.topicDataHanding(data),
     };
 };

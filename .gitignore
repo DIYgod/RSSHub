@@ -11,3 +11,5 @@ config/app.json
 config/config.js
 yarn-error.log
 tmp
+*.swp
+*.iml

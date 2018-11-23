@@ -34,12 +34,12 @@ module.exports = async (ctx) => {
                 switch (item.target.type) {
                     case 'answer':
                         title = detail.question.title;
-                        description = detail.content;
+                        description = utils.ProcessImage(detail.content);
                         url = `https://www.zhihu.com/question/${detail.question.id}/answer/${detail.id}`;
                         break;
                     case 'article':
                         title = detail.title;
-                        description = detail.content;
+                        description = utils.ProcessImage(detail.content);
                         url = `https://zhuanlan.zhihu.com/p/${detail.id}`;
                         break;
                     case 'pin':
@@ -58,7 +58,7 @@ module.exports = async (ctx) => {
                         break;
                     case 'question':
                         title = detail.title;
-                        description = detail.excerpt;
+                        description = utils.ProcessImage(detail.detail);
                         url = `https://www.zhihu.com/question/${detail.id}`;
                         break;
                     case 'column':
@@ -79,7 +79,7 @@ module.exports = async (ctx) => {
                 }
 
                 return {
-                    title: `${item.action_text}: ${title}`,
+                    title: `${data[0].actor.name}${item.action_text}: ${title}`,
                     description: description,
                     pubDate: new Date(item.created_time * 1000).toUTCString(),
                     link: url,

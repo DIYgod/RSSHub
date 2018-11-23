@@ -37,12 +37,10 @@ module.exports = async (ctx) => {
         title: `豆瓣小组-${groupid}`,
         link: `https://www.douban.com/group/${groupid}/`,
         item: topics.map((topic) => ({
-            title: `${topic.title} from ${topic.author.name}`,
-            description: `<a href="${topic.author.alt}"><img src='${topic.author.avatar}'/></a><br>
-            作者：<a href="${topic.author.alt}">${topic.author.name}</a><br>
-            发表时间: ${topic.created}<br>
-            最后更新: ${topic.updated}<br><br>
-            ${topic.content}`,
+            title: `${topic.title}  [来自: ${topic.author.name}]`,
+            author: topic.author.name,
+            pubDate: new Date(topic.updated).toUTCString(),
+            description: topic.content,
             link: topic.share_url,
         })),
     };

@@ -2,28 +2,24 @@ const axios = require('../../utils/axios');
 
 module.exports = async (ctx) => {
     const seasonid = ctx.params.seasonid;
-
     const response = await axios({
         method: 'get',
-        url: `https://bangumi.bilibili.com/jsonp/seasoninfo/${seasonid}.ver?callback=seasonListCallback&jsonp=jsonp&_=${+new Date()}`,
-        headers: {
-            Referer: `https://bangumi.bilibili.com/anime/${seasonid}/`,
-        },
+        url: `https://www.bilibili.com/bangumi/play/ss${seasonid}`,
     });
 
-    const data = JSON.parse(response.data.match(/^seasonListCallback\((.*)\);$/)[1]).result || {};
+    const data = JSON.parse(response.data.match(/window\.__INITIAL_STATE__=([\s\S]+);\(function\(\)/)[1]) || {};
 
     ctx.state.data = {
-        title: data.title,
+        title: data.mediaInfo.title,
         link: `https://bangumi.bilibili.com/anime/${seasonid}/`,
-        description: data.evaluate,
+        description: data.mediaInfo.evaluate,
         item:
-            data.episodes &&
-            data.episodes.map((item) => ({
+            data.epList &&
+            data.epList.reverse().map((item) => ({
                 title: `第${item.index}话 ${item.index_title}`,
-                description: `更新时间：${item.update_time}<img referrerpolicy="no-referrer" src="${item.cover}">`,
-                pubDate: new Date(item.update_time).toUTCString(),
-                link: item.webplay_url,
+                description: `更新时间：${item.pub_real_time}<img referrerpolicy="no-referrer" src="${item.cover}">`,
+                pubDate: new Date(item.pub_real_time).toUTCString(),
+                link: `https://www.bilibili.com/bangumi/play/ep${item.ep_id}`,
             })),
     };
 };

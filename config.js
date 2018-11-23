@@ -2,6 +2,7 @@ module.exports = {
     connect: {
         port: process.env.PORT || 1200, // 监听端口
         socket: process.env.SOCKET || null, // 监听 Unix Socket, null 为禁用
+        disabled: process.env.CONNECT_DISABLED, // 禁用监听，测试用
     },
     cacheType: process.env.CACHE_TYPE || 'memory', // 缓存类型，支持 'memory' 和 'redis'，设为空可以禁止缓存
     cacheExpire: process.env.CACHE_EXPIRE || 5 * 60, // 缓存时间，单位为秒
@@ -50,4 +51,6 @@ module.exports = {
         name: process.env.HTTP_BASIC_AUTH_NAME || 'usernam3',
         pass: process.env.HTTP_BASIC_AUTH_PASS || 'passw0rd',
     },
+    puppeteerWSEndpoint: process.env.PUPPETEER_WS_ENDPOINT,
+    loggerLevel: process.env.LOGGER_LEVEL || 'info',
 };

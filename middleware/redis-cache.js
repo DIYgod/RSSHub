@@ -1,10 +1,8 @@
-// baed on https://github.com/coderhaoxin/koa-redis-cache
+// based on https://github.com/coderhaoxin/koa-redis-cache
 
-const pathToRegExp = require('path-to-regexp');
 const wrapper = require('co-redis');
-const readall = require('readall');
-const crypto = require('crypto');
 const Redis = require('redis');
+const common = require('./cache-common');
 
 module.exports = function(options = {}) {
     let redisAvailable = false;
@@ -13,7 +11,7 @@ module.exports = function(options = {}) {
         prefix = 'koa-redis-cache:',
         expire = 30 * 60, // 30 min
         routes = ['(.*)'],
-        exclude = [],
+        exclude = ['/'],
         passParam = '',
         maxLength = Infinity,
         ignoreQuery = false,
@@ -43,38 +41,33 @@ module.exports = function(options = {}) {
     });
 
     options.app.context.cache = {
-        get: async (key) => await redisClient.get(key),
-        set: async (key, value, maxAge) => await redisClient.setex(key, maxAge, value),
+        get: async (key) => {
+            if (key) {
+                return await redisClient.get(key);
+            }
+        },
+        set: async (key, value, maxAge) => {
+            if (!value || value === 'undefined') {
+                value = '';
+            }
+            if (typeof value === 'object') {
+                value = JSON.stringify(value);
+            }
+            if (key) {
+                await redisClient.setex(key, maxAge, value);
+            }
+        },
     };
 
     return async function cache(ctx, next) {
         const { url, path } = ctx.request;
         const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
-        const key = resolvedPrefix + md5(ignoreQuery ? path : url);
+        const key = resolvedPrefix + common.md5(ignoreQuery ? path : url);
         const tkey = key + ':type';
-        let match = false;
-        let routeExpire = false;
 
-        for (let i = 0; i < routes.length; i++) {
-            let route = routes[i];
-
-            if (typeof routes[i] === 'object') {
-                route = routes[i].path;
-                routeExpire = routes[i].expire;
-            }
-
-            if (paired(route, path)) {
-                match = true;
-                break;
-            }
-        }
-
-        for (let j = 0; j < exclude.length; j++) {
-            if (paired(exclude[j], path)) {
-                match = false;
-                break;
-            }
-        }
+        const validityCheck = common.validityCheck(routes, exclude, path);
+        const match = validityCheck.match;
+        let routeExpire = validityCheck.routeExpire;
 
         if (!redisAvailable || !match || (passParam && ctx.request.query[passParam])) {
             return await next();
@@ -155,32 +148,3 @@ module.exports = function(options = {}) {
         }
     }
 };
-
-function paired(route, path) {
-    const options = {
-        sensitive: true,
-        strict: true,
-    };
-
-    return pathToRegExp(route, [], options).exec(path);
-}
-
-// eslint-disable-next-line no-unused-vars
-function read(stream) {
-    return new Promise((resolve, reject) => {
-        readall(stream, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-    });
-}
-
-function md5(str) {
-    return crypto
-        .createHash('md5')
-        .update(str)
-        .digest('hex');
-}

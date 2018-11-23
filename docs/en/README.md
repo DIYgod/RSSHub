@@ -15,17 +15,15 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> | <a href="https://j.youzan.com/ccPcrY" target="_blank"><img width="180px" src="https://i.imgur.com/FZtFAGz.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
 
 
 ### Sponsors
 
--   [Liuyang](https://github.com/lingllting)
+| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Anonymity |
+| :--------------------------------------: | :----: | :----------------------------------------: | :-------: |
 
--   Zuyang
-
--   [Sayori Studio](https://t.me/SayoriStudio)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
 
@@ -43,7 +41,7 @@ Free feel to test the [demo instance](https://rsshub.app), the cache expiry time
 
 ::: tip
 
-All parameters can be used together to generate a complex feed
+All parameters can be linked with `&` to used together to generate a complex feed
 
 :::
 
@@ -79,14 +77,13 @@ Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https
 
 ### Output Formats
 
-RSSHub supports RSS 2.0、Atom and [JSON Feed](https://jsonfeed.org/) as the output formats, simply append `.rss` `.atom` or `.json` to the end of the feed address, default to RSS 2.0
+RSSHub supports RSS 2.0 and Atom as the output formats, simply append `.rss` `.atom` to the end of the feed address, default to RSS 2.0
 
 For exmaple:
 
 -   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
 -   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
 -   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
--   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
 -   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
 ## API
@@ -170,6 +167,10 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 <routeEn name="In-App-Purchase Price Drop Alert" author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store Country, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `id953286746`']" />
 
+### F-Droid
+
+<routeEn name="App Update" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App\'s package name']" />
+
 ### Greasy Fork
 
 <routeEn name="Script Update" author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
@@ -200,7 +201,7 @@ If no matching results were found, the server returns only a HTTP status code `2
 | --------------------- | -------------------- | ---------------------- | ---------------------- | ---------------- |
 | day_r18               | day_male_r18         | day_female_r18         | week_r18               | week_r18g        |
 
-</routeEN>
+</routeEn>
 
 ### Disqus
 
@@ -216,9 +217,11 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### Youtube
 
-<routeEn name="User" path="/youtube/user/:username" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id']" />
+<routeEn name="User" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" />
 
-<routeEn name="Channel" path="/youtube/channel/:id" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id']" />
+<routeEn name="Channel" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" />
+
+<routeEn name="Playlist" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" />
 
 ### Telegram
 
@@ -226,11 +229,15 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ::: tip
 
-Bot initialization required: Add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_bot) as an admin to the channel and send at least one message in the channel for the bot to obtain the chat_id.
+Bot initialization required: add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_bot) as an admin to the channel and send at least one message in the channel for the bot to obtain the _chat_id_.
+
+For private channels, pass the channel `id` (such as `-1001001234567`) intstead of `:username`. The easiest way to get id is [described here](https://stackoverflow.com/a/39943226/3160483).
 
 :::
 
 </routeEN>
+
+<routeEn name="Sticker Pack" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
 
 ## Travel
 
@@ -258,6 +265,22 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 </routeEn>
 
+## News
+
+### BBC
+
+<routeEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+
+Provides a better reading experience (full text articles) over the official ones.
+
+Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
+
+-   Channel with a single path, such as `https://feeds.bbci.co.uk/news/business/rss.xml`, use `/bbc/business`.
+-   Channel contains multiple paths, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
+-   Exemption: use `/bbc/chinese` for BBC News Chinese.
+
+</routeEn>
+
 ## Programming
 
 ### GitHub
@@ -269,6 +292,7 @@ GitHub provides some official RSS feeds:
 -   Repo releases: https://github.com/:owner/:repo/releases.atom
 -   Repo commits: https://github.com/:owner/:repo/commits.atom
 -   User activities: https://github.com/:user.atom
+-   Private feed: https://github.com/:user.private.atom?token=:secret (You can find **Subscribe to your news feed** in [dashboard](https://github.com) page after login)
 
 :::
 
@@ -280,7 +304,7 @@ GitHub provides some official RSS feeds:
 
 <routeEn name="Follower" author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" />
 
-<routeEn name="Star" author="HenryQW" path="/github/stars/:user/:repo" example="/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+<routeEn name="Star" author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
 
 ### GitLab
 
@@ -291,6 +315,12 @@ GitHub provides some official RSS feeds:
 | trending | starred    | all |
 
 </routeEn>
+
+## Parcel Tracking
+
+### Hermes
+
+<routeEn name="Hermes UK" author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
 
 ## Uncategorized
 
@@ -334,4 +364,56 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 
 ### Apple
 
-<routeEn name="Exchange and Repair Extension Programs" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']"/>
+<routeEn name="Exchange and Repair Extension Programs" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />
+
+### The Verge
+
+<routeEn name="The Verge" author="HenryQW" example="/verge" path="/verge">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
+### 99% Invisible
+
+<routeEn name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+
+### AutoTrader
+
+<routeEn name="Search" author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['the search query']">
+
+1. Conduct a search with desired filters on AutoTrader
+1. Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
+
+</routeEn>
+
+### United Nations
+
+<routeEn name="Security Council Vetoed a Resolution" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+### The Guardian
+
+<routeEn name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
+### iDownloadBlog
+
+<routeEn name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
+### 9To5
+
+<routeEn name="9To5 Sub-site" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
+
+Supported sub-sites：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
+
+</routeEn>

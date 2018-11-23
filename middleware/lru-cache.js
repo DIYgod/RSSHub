@@ -1,59 +1,52 @@
-// baed on https://github.com/coderhaoxin/koa-redis-cache
+// based on https://github.com/coderhaoxin/koa-redis-cache
 
-const pathToRegExp = require('path-to-regexp');
-const readall = require('readall');
-const crypto = require('crypto');
 const lru = require('lru-cache');
+const common = require('./cache-common');
 
 module.exports = function(options = {}) {
     const {
         prefix = 'koa-cache:',
         expire = 30 * 60, // 30 min
         routes = ['(.*)'],
-        exclude = [],
+        exclude = ['/'],
         passParam = '',
         maxLength = Infinity,
         ignoreQuery = false,
     } = options;
 
-    const memoryCache = lru({
+    const memoryCache = new lru({
         maxAge: expire * 1000,
         max: maxLength,
     });
 
     options.app.context.cache = {
-        get: (key) => memoryCache.get(key),
-        set: (key, value, maxAge) => memoryCache.set(key, value, maxAge * 1000),
+        get: (key) => {
+            if (key) {
+                return memoryCache.get(key);
+            }
+        },
+        set: (key, value, maxAge) => {
+            if (!value || value === 'undefined') {
+                value = '';
+            }
+            if (typeof value === 'object') {
+                value = JSON.stringify(value);
+            }
+            if (key) {
+                memoryCache.set(key, value, maxAge * 1000);
+            }
+        },
     };
 
     return async function cache(ctx, next) {
         const { url, path } = ctx.request;
         const resolvedPrefix = typeof prefix === 'function' ? prefix.call(ctx, ctx) : prefix;
-        const key = resolvedPrefix + md5(ignoreQuery ? path : url);
+        const key = resolvedPrefix + common.md5(ignoreQuery ? path : url);
         const tkey = key + ':type';
-        let match = false;
-        let routeExpire = false;
 
-        for (let i = 0; i < routes.length; i++) {
-            let route = routes[i];
-
-            if (typeof routes[i] === 'object') {
-                route = routes[i].path;
-                routeExpire = routes[i].expire;
-            }
-
-            if (paired(route, path)) {
-                match = true;
-                break;
-            }
-        }
-
-        for (let j = 0; j < exclude.length; j++) {
-            if (paired(exclude[j], path)) {
-                match = false;
-                break;
-            }
-        }
+        const validityCheck = common.validityCheck(routes, exclude, path);
+        const match = validityCheck.match;
+        let routeExpire = validityCheck.routeExpire;
 
         if (!match || (passParam && ctx.request.query[passParam])) {
             return await next();
@@ -134,32 +127,3 @@ module.exports = function(options = {}) {
         }
     }
 };
-
-function paired(route, path) {
-    const options = {
-        sensitive: true,
-        strict: true,
-    };
-
-    return pathToRegExp(route, [], options).exec(path);
-}
-
-// eslint-disable-next-line no-unused-vars
-function read(stream) {
-    return new Promise((resolve, reject) => {
-        readall(stream, (err, data) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(data);
-            }
-        });
-    });
-}
-
-function md5(str) {
-    return crypto
-        .createHash('md5')
-        .update(str)
-        .digest('hex');
-}

@@ -1,7 +1,7 @@
+const config = require('./config');
 const Koa = require('koa');
 const fs = require('fs');
 const logger = require('./utils/logger');
-const config = require('./config');
 
 const onerror = require('./middleware/onerror');
 const header = require('./middleware/header');
@@ -94,6 +94,25 @@ if (config.cacheType === 'memory') {
         set: () => null,
     };
 }
+app.context.cache.tryGet = async function(key, getValueFunc, maxAge = 24 * 60 * 60) {
+    let v = await this.get(key);
+    if (!v) {
+        v = await getValueFunc();
+        this.set(key, v, maxAge);
+    } else {
+        let parsed;
+        try {
+            parsed = JSON.parse(v);
+        } catch (e) {
+            parsed = null;
+        }
+        if (parsed) {
+            v = parsed;
+        }
+    }
+
+    return v;
+};
 
 // router
 
@@ -106,6 +125,9 @@ app.use(mount('/protected', protected_router.routes())).use(protected_router.all
 app.use(mount('/api', api_router.routes())).use(api_router.allowedMethods());
 
 // connect
+if (config.connect.disabled) {
+    process.exit();
+}
 if (config.connect.port) {
     app.listen(config.connect.port, parseInt(config.listenInaddrAny) ? null : '127.0.0.1');
     logger.info('Listening Port ' + config.connect.port);

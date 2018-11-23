@@ -10,7 +10,7 @@ module.exports = async (ctx, next) => {
     try {
         await next();
     } catch (err) {
-        logger.error('Promise error: ' + (err instanceof Error ? err.stack : err));
+        logger.error(`Error in ${ctx.request.path}: ${err instanceof Error ? err.stack : err}`);
         ctx.set({
             'Content-Type': 'text/html; charset=UTF-8',
         });
