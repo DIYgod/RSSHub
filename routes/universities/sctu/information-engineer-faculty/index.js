@@ -1,27 +1,25 @@
-const axios = require('../../../utils/axios');
+const axios = require('../../../../utils/axios');
 const cheerio = require('cheerio');
 const iconv = require('iconv-lite');
 
 module.exports = async (ctx) => {
-    const dirname = 'http://www.sctu.edu.cn/jwc/';
     const response = await axios({
         method: 'get',
-        url: `${dirname}list.asp?type=12&fl=${+ctx.params.type === 14 ? 14 : 13}`,
+        url: 'http://it.sctu.edu.cn/list.asp?fa=2&fl=12&zi=0',
         responseType: 'arraybuffer',
         headers: {
-            Referer: 'http://www.sctu.edu.cn',
+            Referer: 'http://it.sctu.edu.cn/',
         },
     });
-
     // HTML-buffer转为gb2312
     const data = iconv.decode(response.data, 'gb2312');
 
     const $ = cheerio.load(data);
 
-    const list = $('#list1 ul li');
+    const list = $('.list_dt a');
 
     ctx.state.data = {
-        title: '四川旅游学院首页',
+        title: '四川旅游学院信息与工程系',
         link: 'http://www.sctu.edu.cn',
         description: $('meta[name="description"]').attr('content'),
         item:
@@ -31,10 +29,9 @@ module.exports = async (ctx) => {
                     item = $(item);
 
                     return {
-                        title: $(item.find('a')).text(),
-                        pubDate: $(item.find('dl')).text(),
-                        description: `发布日期：${$(item.find('dl')).text()}`,
-                        link: `${dirname + $(item.find('a')).attr('href')}`,
+                        title: $(item.find('div')[0]).text(),
+                        description: $(item.find('div')[1]).text(),
+                        link: `http://it.sctu.edu.cn/${item.attr('href')}`,
                     };
                 })
                 .get(),
