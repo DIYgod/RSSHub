@@ -1384,29 +1384,7 @@ category 列表：
 
 </route>
 
-### 四川旅游学院
-
-<route name="信息与工程学院动态公告列表" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/information-engineer-faculty/index">
-
-</route>
-
-<route name="信息与工程学院公告详情" author="talenHuang" example="/sctu/xgxy/652" path="/universities/sctu/information-engineer-faculty/context/:id" :paramsDesc="['文章id']">
-
-</route>
-
-<route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc/index:type?" :paramsDesc="['可选参数, 默认为 `13`']">
-
-| 教务通知 | 信息公告 |
-| -------- | -------- |
-| 13       | 14       |
-
-<route name="教务处通告详情" author="talenHuang" example="/sctu/jwc/13/645" path="/universities/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']">
-
-</route>
-
-## 传统媒体
-
-### 央视新闻
+### 南京理工大学
 
 <route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']"/>
 
@@ -1434,13 +1412,21 @@ category 列表：
 
 ### 四川旅游学院
 
-<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/xgxy"/>
+<route name="信息与工程学院动态公告列表" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/information-engineer-faculty/index">
 
-<route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc:type?" :paramsDesc="['可选参数, 默认为 `13`']">
+</route>
+
+<route name="信息与工程学院公告详情" author="talenHuang" example="/sctu/xgxy/652" path="/universities/sctu/information-engineer-faculty/context/:id" :paramsDesc="['文章id']">
+
+</route>
+
+<route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc/index:type?" :paramsDesc="['可选参数, 默认为 `13`']">
 
 | 教务通知 | 信息公告 |
 | -------- | -------- |
 | 13       | 14       |
+
+<route name="教务处通告详情" author="talenHuang" example="/sctu/jwc/13/645" path="/universities/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']">
 
 </route>
 

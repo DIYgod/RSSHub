@@ -590,21 +590,16 @@ router.get('/cqust/lib/:type?', require('./routes/universities/cqust/lib'));
 router.get('/cczu/jwc/:category?', require('./routes/universities/cczu/jwc'));
 router.get('/cczu/news/:category?', require('./routes/universities/cczu/news'));
 
-<<<<<<< HEAD
-// 四川旅游学院
-router.get('/sctu/xgxy', require('./routes/universities/sctu/information-engineer-faculty/index'));
-router.get('/sctu/xgxy/:id', require('./routes/universities/sctu/information-engineer-faculty/context'));
-router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc/index'));
-router.get('/sctu/jwc/:type/:id', require('./routes/universities/sctu/jwc/context'));
-=======
 // 南京理工大学
 router.get('/njust/jwc/:type', require('./routes/universities/njust/jwc'));
 router.get('/njust/cwc/:type', require('./routes/universities/njust/cwc'));
 router.get('/njust/gs/:type', require('./routes/universities/njust/gs'));
 
 // 四川旅游学院
-router.get('/sctu/xgxy', require('./routes/universities/sctu/xgxy'));
-router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc'));
+router.get('/sctu/xgxy', require('./routes/universities/sctu/information-engineer-faculty/index'));
+router.get('/sctu/xgxy/:id', require('./routes/universities/sctu/information-engineer-faculty/context'));
+router.get('/sctu/jwc/:type?', require('./routes/universities/sctu/jwc/index'));
+router.get('/sctu/jwc/:type/:id', require('./routes/universities/sctu/jwc/context'));
 
 // 电子科技大学
 router.get('/uestc/jwc/:type?', require('./routes/universities/uestc/jwc'));
@@ -638,7 +633,6 @@ router.get('/tju/sse/:type?', require('./routes/universities/tju/sse/notice'));
 
 // 华南理工大学
 router.get('/scut/jwc/:category?', require('./routes/universities/scut/jwc'));
->>>>>>> rss/master
 
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
