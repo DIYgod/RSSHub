@@ -1097,7 +1097,11 @@ category 列表：
 
 ### 四川旅游学院
 
-<route name="信息与工程学院动态公告" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/information-engineer-faculty/index">
+<route name="信息与工程学院动态公告列表" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/information-engineer-faculty/index">
+
+</route>
+
+<route name="信息与工程学院公告详情" author="talenHuang" example="/sctu/xgxy/652" path="/universities/sctu/information-engineer-faculty/context/:id" :paramsDesc="['文章id']">
 
 </route>
 
@@ -1106,6 +1110,8 @@ category 列表：
 | 教务通知 | 信息公告 |
 | -------- | -------- |
 | 13       | 14       |
+
+<route name="教务处通告详情" author="talenHuang" example="/sctu/jwc/13/645" path="/universities/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']">
 
 </route>
 
