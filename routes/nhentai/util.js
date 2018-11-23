@@ -11,7 +11,8 @@ exports.getSimple = async (url) => {
         .toArray();
 };
 
-exports.getDetails = async (cache, simples) => Promise.all(simples.map((simple) => cache.tryGet(simple.link, () => getDetail(simple), 24 * 60 * 60)));
+const MAX_DETAIL = 5;
+exports.getDetails = async (cache, simples) => Promise.all(simples.slice(0, MAX_DETAIL).map((simple) => cache.tryGet(simple.link, () => getDetail(simple), 24 * 60 * 60)));
 
 const parseSimpleDetail = ($ele) => {
     const link = resolve('https://nhentai.net', $ele.attr('href'));
@@ -27,8 +28,6 @@ const parseSimpleDetail = ($ele) => {
 };
 
 const getDetail = async (simple) => {
-    console.log('cache miss!');
-
     const { link } = simple;
     const { data } = await axios.get(link);
     const $ = cheerio.load(data);
