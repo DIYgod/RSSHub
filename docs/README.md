@@ -861,7 +861,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="分区帖子" author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
 
-> 注意：并非所欲的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
+> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
 
 | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
 | -------------- | -------------- | ---------- | ---------- | ---------- |
@@ -947,6 +947,16 @@ GitHub 官方也提供了一些 RSS:
 <route name="专题详情" author="gee1k xyqfer" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
 
 <route name="详情" author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
+
+### 豆瓣美女
+
+<route name="分类" author="kba977" example="/dbmv" path="/dbmv/:category?" :paramsDesc="['分类 id - 若不填该参数, 默认所有']">
+
+| 大胸妹 | 小翘臀 | 黑丝袜 | 美腿控 | 有颜值 | 大杂烩 |
+| ------ | ------ | ------ | ------ | ------ | ------ |
+| 2      | 6      | 7      | 3      | 4      | 5      |
+
+</route>
 
 ### 煎蛋
 

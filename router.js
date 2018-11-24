@@ -866,4 +866,7 @@ router.get('/anigamer/anime/:sn', require('./routes/anigamer/anime'));
 // Apkpure
 router.get('/apkpure/versions/:region/:pkg', require('./routes/apkpure/versions'));
 
+// 豆瓣美女
+router.get('/dbmv/:category?', require('./routes/dbmv/index'));
+
 module.exports = router;
