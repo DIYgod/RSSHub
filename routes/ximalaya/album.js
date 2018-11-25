@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
 
     const albuminfo = AlbumInfoResponse.data.data.mainInfo; // 专辑数据
     const album_title = albuminfo.albumTitle; // 专辑标题
-    const album_cover = albuminfo.cover.split('!')[0];
+    const album_cover = 'http:' + albuminfo.cover.split('!')[0];
     const classify = albuminfo.crumbs.categoryPinyin; // 专辑分类
     const album_category = albuminfo.crumbs.categoryTitle; // 专辑分类名字
     const album_intro = albuminfo.richIntro; // 专辑介绍
