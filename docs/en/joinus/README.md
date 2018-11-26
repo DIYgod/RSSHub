@@ -129,13 +129,7 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>If you want to make a podcast feed</summary><br>
-
-Reference article:
-
--   [Create a podcast - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itca5b22233a)
--   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
--   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
+#### make a podcast feed
 
 these datas can make your podcast subscribeable:
 
@@ -163,7 +157,6 @@ ctx.state.data = {
             enclosure_url: '', // The item's audio link
             enclosure_length: '', // The audio length, the unit is seconds.
             enclosure_type: '', // 'audio/mpeg' or 'audio/x-m4a' or others
-            itunes_duration: '', // Covert the 'enclosure_length' to hh:mm:ss (1:33:52)
         },
     ],
 };

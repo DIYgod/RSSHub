@@ -325,12 +325,6 @@ ctx.state.data = {
 
 #### 制作播客 Podcast Feed
 
-参考文章：
-
--   [Podcasts Connect 帮助 创建播客 - Apple](https://help.apple.com/itc/podcasts_connect/#/itca5b22233a)
--   RSS 格式参考: https://codepen.io/jon-walstedt/pen/jsIup
--   播客验证: https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
-
 这些字段能使你的 RSS 被泛用型播客软件订阅：
 
 ```js
@@ -357,7 +351,6 @@ ctx.state.data = {
             enclosure_url: '', // 音频链接
             enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数
             enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
-            itunes_duration: '', // 由enclosure_length转换为 时:分:秒
         },
     ],
 };
