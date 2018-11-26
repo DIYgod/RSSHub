@@ -1,0 +1,51 @@
+const axios = require('../../utils/axios');
+const cheerio = require('cheerio');
+
+module.exports = async (ctx) => {
+    const url = 'http://jwc.cpu.edu.cn/851/list.htm';
+
+    const response = await axios({
+        method: 'get',
+        url: url,
+        headers: {
+            Referer: 'http://jwc.cpu.edu.cn',
+        },
+    });
+
+    const data = response.data;
+    const $ = cheerio.load(data);
+
+    const $list = $('div#wp_news_w6 ul.news_list li a');
+
+    const resultItem = [];
+    for (let i = 0; i < $list.length; i++) {
+        const title = $list.eq(i).attr('title');
+        const href = $list.eq(i).attr('href');
+        const detail_url = 'http://jwc.cpu.edu.cn' + href;
+        const single = {
+            title: title,
+            link: detail_url,
+            description: '',
+        };
+        const detail = await axios({
+            method: 'get',
+            url: detail_url,
+            headers: {
+                Referer: 'http://jwc.cpu.edu.cn',
+            },
+        });
+        {
+            const detail_data = detail.data;
+            const $ = cheerio.load(detail_data);
+            single.description = $('div.article').html();
+        }
+        resultItem.push(single);
+    }
+
+    ctx.state.data = {
+        title: '中国医科大学 - 教务处 | 最新通知',
+        link: url,
+        item: resultItem,
+        description: '中国医科大学 | 教务处',
+    };
+};
