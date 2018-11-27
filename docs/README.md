@@ -1588,6 +1588,16 @@ category 列表：
 
 <route name="数据科学与计算机学院动态" author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
 
+### 中国药科大学
+
+<route name="中国药科大学" author="kba977" example="/cpu/home" path="/cpu/:type" :paramsDesc="['分类, 见下表']">
+
+| 首页 | 教务处 | 研究生院 |
+| ---- | ------ | -------- |
+| home | jwc    | yjsy     |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻

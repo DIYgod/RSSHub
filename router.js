@@ -869,4 +869,9 @@ router.get('/apkpure/versions/:region/:pkg', require('./routes/apkpure/versions'
 // 豆瓣美女
 router.get('/dbmv/:category?', require('./routes/dbmv/index'));
 
+// 中国药科大学
+router.get('/cpu/home', require('./routes/cpu/home'));
+router.get('/cpu/jwc', require('./routes/cpu/jwc'));
+router.get('/cpu/yjsy', require('./routes/cpu/yjsy'));
+
 module.exports = router;
