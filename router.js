@@ -409,6 +409,9 @@ router.get('/keep/user/:id', require('./routes/keep/user'));
 router.get('/qidian/chapter/:id', require('./routes/qidian/chapter'));
 router.get('/qidian/forum/:id', require('./routes/qidian/forum'));
 
+// 纵横
+router.get('/zongheng/chapter/:id', require('./routes/zongheng/chapter'));
+
 // 刺猬猫
 router.get('/ciweimao/chapter/:id', require('./routes/ciweimao/chapter'));
 
