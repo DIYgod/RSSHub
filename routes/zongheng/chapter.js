@@ -4,10 +4,7 @@ const cheerio = require('cheerio');
 module.exports = async (ctx) => {
     const id = ctx.params.id;
 
-    const [$, $home] = (await Promise.all([
-        axios.get(`http://book.zongheng.com/showchapter/${id}.html`),
-        axios.get(`http://book.zongheng.com/book/${id}.html`)
-    ])).map((res) => cheerio.load(res.data));
+    const [$, $home] = (await Promise.all([axios.get(`http://book.zongheng.com/showchapter/${id}.html`), axios.get(`http://book.zongheng.com/book/${id}.html`)])).map((res) => cheerio.load(res.data));
     const date_re = /更新时间：(.*)$/;
     const cover_url = $home('.book-img img').attr('src');
     const description = $home('.book-dec').text();
