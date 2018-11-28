@@ -42,9 +42,7 @@ module.exports = async (ctx) => {
                 title: item.title,
                 link: itemUrl,
                 author: '上海交通大学电子信息与电气工程学院本科教务办',
-                description: $('.article_content')
-                    .html()
-                    .replace(/src="\//g, `src="${url.resolve(host, '.')}`),
+                description: $('.article_content').text(),
                 pubDate: new Date(item.date),
             };
             ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
