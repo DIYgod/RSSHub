@@ -12,11 +12,10 @@ module.exports = async (ctx) => {
         title: '老司机-首页',
         link: 'http://www.laosiji.com/new_web/index.html',
         description: '老司机-首页',
-        item: data.map(({ title, resourceid, image, publishtime }) => ({
+        item: data.map(({ title, resourceid, image }) => ({
             title,
             link: `http://www.laosiji.com/thread/${resourceid}.html`,
             description: `<img referrerpolicy="no-referrer" src="${image.url}">`,
-            pubDate: publishtime,
         })),
     };
 };
