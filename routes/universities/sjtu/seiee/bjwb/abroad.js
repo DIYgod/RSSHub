@@ -5,8 +5,7 @@ const url = require('url');
 const host = 'http://bjwb.seiee.sjtu.edu.cn';
 
 module.exports = async (ctx) => {
-    const type = ctx.params.type;
-    const link = url.resolve(host, `bkjwb/list/${type}-1-20.htm`);
+    const link = url.resolve(host, `bkjwb/list/1507-1-20.htm`);
     const response = await axios.get(link);
 
     const $ = cheerio.load(response.data);
