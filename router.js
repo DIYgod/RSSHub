@@ -544,6 +544,11 @@ router.get('/shanghaitech/sist/activity', require('./routes/universities/shangha
 
 // 上海交通大学
 router.get('/sjtu/seiee/academic', require('./routes/universities/sjtu/seiee/academic'));
+router.get('/sjtu/seiee/bjwb/major_select', require('./routes/universities/sjtu/seiee/bjwb/major_select'));
+router.get('/sjtu/seiee/bjwb/major_transfer', require('./routes/universities/sjtu/seiee/bjwb/major_transfer'));
+router.get('/sjtu/seiee/bjwb/postgraduate', require('./routes/universities/sjtu/seiee/bjwb/postgraduate'));
+router.get('/sjtu/seiee/bjwb/abroad', require('./routes/universities/sjtu/seiee/bjwb/abroad'));
+
 router.get('/sjtu/gs/tzgg/:type?', require('./routes/universities/sjtu/gs/tzgg'));
 
 // 江南大学
