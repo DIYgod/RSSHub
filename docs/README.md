@@ -1606,6 +1606,14 @@ category 列表：
 
 </route>
 
+### 温州商学院
+
+<route name="温州商学院" author="howel52" example="/wzbc/notice" path="/wzbc/:type" :paramsDesc="['分类, 见下表']">
+
+| 校园新闻 | 媒体商院 | 通知公告 | 人才招聘 | 行事历  | 招标公告 | 学术动态 |
+| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
+| news     | media    | notice   | jobs     | workday | tender   | activity |
+
 ## 传统媒体
 
 ### 央视新闻
