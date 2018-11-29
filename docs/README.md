@@ -924,6 +924,16 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
+### 字幕组（ZiMuZu.tv）
+
+::: tip 提示
+
+跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
+
+:::
+
+<route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id" :paramsDesc="['影视 id，对应影视的 URL 中找到']"/>
+
 ### Sankaku Complex
 
 <route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
