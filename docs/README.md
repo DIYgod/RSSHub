@@ -1616,7 +1616,6 @@ category 列表：
 
 </route>
 
-
 ### 温州商学院
 
 <route name="温州商学院" author="howel52" example="/wzbc/notice" path="/wzbc/:type" :paramsDesc="['分类, 见下表']">
@@ -1626,7 +1625,6 @@ category 列表：
 | news     | media    | notice   | jobs     | workday | tender   | activity |
 
 </route>
-
 
 ## 传统媒体
 
