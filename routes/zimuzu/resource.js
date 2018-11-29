@@ -8,8 +8,8 @@ const parser = new Parser({
 module.exports = async (ctx) => {
     const id = ctx.params.id;
     const feed = await parser.parseURL(`http://diaodiaode.me/rss/feed/${id}`);
-    console.log(feed);
     feed.items.map((item) => {
+        item.link = null;
         item.enclosure_url = item.magnet;
         item.enclosure_type = 'application/x-bittorrent';
         return item;
