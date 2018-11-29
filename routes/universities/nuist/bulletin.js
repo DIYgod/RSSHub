@@ -30,13 +30,13 @@ module.exports = async (ctx) => {
     const list = $('.news_list').find('.news');
 
     ctx.state.data = {
-        title: baseTitle + (category == '791' ? '' : ':' + map[category]),
+        title: baseTitle + (category === '791' ? '' : ':' + map[category]),
         link: link,
         item: list
             .map((_, item) => {
                 item = $(item);
 
-                if (category == 'xsbgw') {
+                if (category === 'xsbgw') {
                     const itemXsTitle = item.find('.xs_title .btt a');
                     return {
                         title: itemXsTitle.text(),
