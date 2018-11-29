@@ -36,7 +36,7 @@ module.exports = async (ctx) => {
             .map((_, item) => {
                 item = $(item);
 
-                if (category === 'xsbgw') {
+                if (category == 'xsbgw') {
                     const itemXsTitle = item.find('.xs_title .btt a');
                     return {
                         title: itemXsTitle.text(),
