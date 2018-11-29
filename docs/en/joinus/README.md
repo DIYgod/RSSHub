@@ -129,34 +129,37 @@ ctx.state.data = {
 };
 ```
 
-#### make a podcast feed
+#### Podcast feed
 
-these datas can make your podcast subscribeable:
+Used for audio type feed, these **additional** datas can make your podcast subscribeable:
 
 ```js
 ctx.state.data = {
-    title: '', // The feed title
-    link: '', // The feed link
     itunes_author: '', // The channel's author, you must fill this data.
     itunes_category: '', // Channel category
     image: '', // Channel's image
-    description: '', // The feed description
-    language: '', // The language of the channel
     item: [
-        // An item of the feed
         {
-            title: '', // The item title
-            author: '', // Author of the article
-            category: '', // Article category
-            // category: [''], // Multiple category
-            description: '', // The article summury or content
-            pubDate: '', // The item publishing datetime
-            guid: '', // The item unique identifier, optional, default to the item link below.
-            link: '', // The item link
             itunes_item_image: '', // The item image
             enclosure_url: '', // The item's audio link
             enclosure_length: '', // The audio length, the unit is seconds.
             enclosure_type: '', // 'audio/mpeg' or 'audio/x-m4a' or others
+        },
+    ],
+};
+```
+
+#### BT feed
+
+Used for download type feed, these **additional** datas can make your BT client subscribeable and can auto download:
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            enclosure_url: '', // Magnet URI
+            enclosure_length: '', // The audio length, the unit is seconds, optional
+            enclosure_type: 'application/x-bittorrent', // Fixed to 'application/x-bittorrent'
         },
     ],
 };

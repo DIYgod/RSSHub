@@ -924,6 +924,16 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
+### 字幕组（ZiMuZu.tv）
+
+::: tip 提示
+
+跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
+
+:::
+
+<route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id" :paramsDesc="['影视 id，对应影视的 URL 中找到']"/>
+
 ### Sankaku Complex
 
 <route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
@@ -1255,6 +1265,14 @@ GitHub 官方也提供了一些 RSS:
 ### 上海交通大学
 
 <route name="电子信息与电气工程学院学术动态" author="HenryQW" example="/sjtu/seiee/academic" path="/universities/sjtu/seiee/academic"/>
+
+<route name="电子信息与电气工程学院本科教务办 -- 分专业" author="SkyZH" example="/sjtu/seiee/bjwb/major_select" path="/universities/sjtu/seiee/bjwb/major_select"/>
+
+<route name="电子信息与电气工程学院本科教务办 -- 转专业" author="SkyZH" example="/sjtu/seiee/bjwb/major_transfer" path="/universities/sjtu/seiee/bjwb/major_transfer"/>
+
+<route name="电子信息与电气工程学院本科教务办 -- 交换交流" author="SkyZH" example="/sjtu/seiee/bjwb/abroad" path="/universities/sjtu/seiee/bjwb/abroad"/>
+
+<route name="电子信息与电气工程学院本科教务办 -- 直升研究生" author="SkyZH" example="/sjtu/seiee/bjwb/postgraduate" path="/universities/sjtu/seiee/bjwb/postgraduate"/>
 
 <route name="研究生通知公告" author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/universities/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
 
@@ -1597,6 +1615,18 @@ category 列表：
 | home | jwc    | yjsy     |
 
 </route>
+
+
+### 温州商学院
+
+<route name="温州商学院" author="howel52" example="/wzbc/notice" path="/wzbc/:type" :paramsDesc="['分类, 见下表']">
+
+| 校园新闻 | 媒体商院 | 通知公告 | 人才招聘 | 行事历  | 招标公告 | 学术动态 |
+| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
+| news     | media    | notice   | jobs     | workday | tender   | activity |
+
+</route>
+
 
 ## 传统媒体
 
@@ -2046,6 +2076,10 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+### 纵横
+
+<route name="章节" author="georeth" example="/zongheng/chapter/672340" path="/zongheng/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ### 刺猬猫
 

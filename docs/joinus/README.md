@@ -323,34 +323,37 @@ ctx.state.data = {
 };
 ```
 
-#### 制作播客 Podcast Feed
+##### 播客源
 
-这些字段能使你的 RSS 被泛用型播客软件订阅：
+用于音频类 RSS，**额外**添加这些字段能使你的 RSS 被泛用型播客软件订阅：
 
 ```js
 ctx.state.data = {
-    title: '', // 项目的标题
-    link: '', // 指向项目的链接
     itunes_author: '', // 主播名字, 必须填充本字段才会被视为播客
     itunes_category: '', // 播客分类
     image: '', // 专辑图片, 作为播客源时必填
-    description: '', // 描述项目
-    language: '', // 频道语言
     item: [
-        // 其中一篇文章或一项内容
         {
-            title: '', // 文章标题
-            author: '', // 文章作者
-            category: '', // 文章分类
-            // category: [''], // 多个分类
-            description: '', // 文章摘要或全文
-            pubDate: '', // 文章发布时间
-            guid: '', // 文章唯一标示, 必须唯一, 可选, 默认为文章链接
-            link: '', // 指向文章的链接
             itunes_item_image: '', // 图像
             enclosure_url: '', // 音频链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数
+            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
             enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
+        },
+    ],
+};
+```
+
+##### BT 源
+
+用于下载类 RSS，**额外**添加这些字段能使你的 RSS 被 BT 客户端识别并自动下载：
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            enclosure_url: '', // 磁力链接
+            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_type: 'application/x-bittorrent', // 固定为 'application/x-bittorrent'
         },
     ],
 };
