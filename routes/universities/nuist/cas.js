@@ -2,17 +2,16 @@ const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
-const baseTitle = "NUIST AS（南信大大气科学学院）";
-const baseUrl = "http://cas.nuist.edu.cn";
+const baseTitle = 'NUIST AS（南信大大气科学学院）';
+const baseUrl = 'http://cas.nuist.edu.cn';
 const map = {
-    12: "信息公告",
-    11: "新闻快讯",
-    3: "科学研究",
-    110: "网上公示",
-    4: "本科教育",
-    5: "研究生教育"
+    12: '信息公告',
+    11: '新闻快讯',
+    3: '科学研究',
+    110: '网上公示',
+    4: '本科教育',
+    5: '研究生教育',
 };
-
 
 module.exports = async (ctx) => {
     const category = map.hasOwnProperty(ctx.params.category) ? ctx.params.category : 12;
@@ -26,10 +25,27 @@ module.exports = async (ctx) => {
         .map((index, item) => {
             const td = $(item).find('td.gridline');
             return {
-                title: $(item).find('.Title').text().trim(),
-                link: url.resolve(baseUrl, $(item).find('.Title').attr('href')),
-                category: td.eq(1).text().trim(),
-                pubDate: new Date(td.eq(2).text().replace('[', '').replace(']', '')).toUTCString()
+                title: $(item)
+                    .find('.Title')
+                    .text()
+                    .trim(),
+                link: url.resolve(
+                    baseUrl,
+                    $(item)
+                        .find('.Title')
+                        .attr('href')
+                ),
+                category: td
+                    .eq(1)
+                    .text()
+                    .trim(),
+                pubDate: new Date(
+                    td
+                        .eq(2)
+                        .text()
+                        .replace('[', '')
+                        .replace(']', '')
+                ).toUTCString(),
             };
         })
         .get();
@@ -45,7 +61,12 @@ module.exports = async (ctx) => {
             const $ = cheerio.load(response.data);
             const article = $('#ctl00_ctl00_body_lmnr');
 
-            item.author = article.find('.zzxx').text().split(' ')[0].trimRight().replace('作者:', '');
+            item.author = article
+                .find('.zzxx')
+                .text()
+                .split(' ')[0]
+                .trimRight()
+                .replace('作者:', '');
             item.description = article.find('.xwco').html();
 
             await ctx.cache.set(item.link, JSON.stringify(item), 24 * 60 * 60);

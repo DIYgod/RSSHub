@@ -2,9 +2,8 @@ const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
-const baseTitle = "南信大学生工作处";
-const baseUrl = "http://xgc.nuist.edu.cn";
-
+const baseTitle = '南信大学生工作处';
+const baseUrl = 'http://xgc.nuist.edu.cn';
 
 module.exports = async (ctx) => {
     const link = baseUrl + '/419/list.htm';
@@ -17,7 +16,7 @@ module.exports = async (ctx) => {
             item = $(item);
             return {
                 title: item.text(),
-                link: url.resolve(baseUrl, item.attr('href'))
+                link: url.resolve(baseUrl, item.attr('href')),
             };
         })
         .get();
@@ -32,8 +31,16 @@ module.exports = async (ctx) => {
             const response = await axios.get(item.link);
             const $ = cheerio.load(response.data);
             const articleInfo = $('.arti_metas');
-            item.author = articleInfo.find('.arti_publisher').text().replace('作者：', '')
-            item.pubDate = new Date(articleInfo.find('.arti_update').text().match(/\d+/g)).toUTCString();
+            item.author = articleInfo
+                .find('.arti_publisher')
+                .text()
+                .replace('作者：', '');
+            item.pubDate = new Date(
+                articleInfo
+                    .find('.arti_update')
+                    .text()
+                    .match(/\d+/g)
+            ).toUTCString();
             item.description = $('.wp_articlecontent ').html();
 
             await ctx.cache.set(item.link, JSON.stringify(item), 24 * 60 * 60);

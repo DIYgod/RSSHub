@@ -26,7 +26,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 ### Sponsors
 
 | [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
-| :--------------------------------------: | :----: | :----------------------------------------: |:--: |
+| :--------------------------------------: | :----: | :----------------------------------------: | :--: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -1348,9 +1348,103 @@ category 列表：
 
 <route name="教务网通知公告" author="El-Chiang" example="/cqu/jwc/announcement" path="/universities/cqu/jwc/announcement"/>
 
+### 南京信息工程大学
+
+::: tip 提示
+
+😚 路由地址全部按照 **学校官网域名和栏目编号** 设计
+
+🎉 使用方法：
+
+以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目
+
+获得 URL 中的**分域名**和**栏目编号（可选）**：https://`bulletin`.nuist.edu.cn/`791`/list.htm
+
+将其替换到 RSS 路由地址中即可：
+
+https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bulletin`/`791`
+
+:::
+
+<route name="南信大信息公告栏" author="gylidian" example="/nuist/bulletin/791" path="/universities/nuist/bulletin/:category?" :paramsDesc="['默认为 `791`']"/>
+
+| 全部 | 文件公告 | 学术报告 | 招标信息 | 会议通知 | 党政事务 | 组织人事 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 791  | 792      | xsbgw    | 779      | 780      | 781      | 782      |
+
+| 科研信息 | 招生就业 | 教学考试 | 专题讲座 | 校园活动 | 学院动态 | 其他 |
+| -------- | -------- | -------- | -------- | -------- | -------- | ---- |
+| 783      | 784      | 785      | 786      | 788      | 789      | qt   |
+
+::: warning 注意
+
+全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
+
+:::
+
+</route>
+
+<route name="NUIST CS（南信大计软院）" author="gylidian" example="/nuist/scs/2242" path="/universities/nuist/scs/:category?" :paramsDesc="['默认为 `2242`']"/>
+
+| 学院新闻 | 学生工作 | 通知公告 | 教务通知 | 科研动态 | 招生就业 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 2242     | 2237     | 2245     | 2246     | 2243     | 2244     |
+
+</route>
+
+<route name="南信大本科教学信息网" author="gylidian" example="/nuist/jwc/1" path="/universities/nuist/jwc/:category?" :paramsDesc="['默认为 `1`']"/>
+
+| 通知公告 | 教学新闻 | 规章制度 | 教学研究 | 教务管理 | 考试中心 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 4        | 5        | 6        | 7        |
+
+| 教材建设 | 实践教学 | 三百工程 | 创新创业 | 规章制度 | 业务办理 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 8        | 9        | 56       | 60       | 62       | 43       |
+
+</route>
+
+<route name="南信大研究生院学科建设处" author="gylidian" example="/nuist/yjs/11" path="/universities/nuist/yjs/:category?" :paramsDesc="['默认为 `11`']"/>
+
+| 招生工作 | 培养工作 | 学位工作 | 学生工作 | 就业工作 | 国际合作 | 文件下载 | 工作动态 | 通知公告 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 3        | 4        | 5        | 6        | 7        | 8        | 9        | 10       | 11       |
+
+</route>
+
+<route name="南信大学生工作处" author="gylidian" example="/nuist/xgc" path="/universities/nuist/xgc"/>
+
+<route name="NUIST ESE（南信大环科院）" author="gylidian" example="/nuist/sese/11" path="/universities/nuist/sese/:category?" :paramsDesc="['默认为 `11`']"/>
+
+| 通知公告 | 新闻快讯 | 学术动态 | 学生工作 | 研究生教育 | 本科教育 |
+| -------- | -------- | -------- | -------- | ---------- | -------- |
+| 11       | 10       | 12       | 6        | 4          | 3        |
+
+</route>
+
+<route name="NUIST AS（南信大大气科学学院）" author="gylidian" example="/nuist/cas/12" path="/universities/nuist/cas/:category?" :paramsDesc="['默认为 `12`']"/>
+
+| 信息公告 | 新闻快讯 | 科学研究 | 网上公示 | 本科教育 | 研究生教育 |
+| -------- | -------- | -------- | -------- | -------- | ---------- |
+| 12       | 11       | 3        | 110      | 4        | 5          |
+
+</route>
+
+<route name="南京信息工程大学图书馆" author="gylidian" example="/nuist/lib" path="/universities/nuist/library/lib"/>
+
+::: tip 提示
+
+学校图书馆官网提供了[新书通报](http://lib2.nuist.edu.cn/newbook/newbook_cls_browse.php)的订阅
+
+由于图书馆通知频率过低(故只提供 3 条)，有待将其和 **网络信息中心**、**基建处**、**总务处** 等的通知整合起来
+
+:::
+
+</route>
+
 ### 成都信息工程大学
 
-<route name="成信新闻网" author="kimika" example="/cuit/cxxww/1" path="/universities/cuit/cxxww/:type?" :paramsDesc="['默认为 `1`']"/>
+<route name="成信新闻网" author="kimika" example="/nuist/xgc" path="/universities/cuit/cxxww/:type?" :paramsDesc="['默认为 `1`']"/>
 
 | 综合新闻 | 信息公告 | 焦点新闻 | 学术动态 | 工作交流 | 媒体成信 | 更名专题 | 文化活动 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |

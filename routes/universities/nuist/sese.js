@@ -2,17 +2,16 @@ const axios = require('../../../utils/axios');
 const cheerio = require('cheerio');
 const url = require('url');
 
-const baseTitle = "NUIST ESE（南信大环科院）";
-const baseUrl = "http://sese.nuist.edu.cn";
+const baseTitle = 'NUIST ESE（南信大环科院）';
+const baseUrl = 'http://sese.nuist.edu.cn';
 const map = {
-    11: "通知公告",
-    10: "新闻快讯",
-    12: "学术动态",
-    6: "学生工作",
-    4: "研究生教育",
-    3: "本科教育"
+    11: '通知公告',
+    10: '新闻快讯',
+    12: '学术动态',
+    6: '学生工作',
+    4: '研究生教育',
+    3: '本科教育',
 };
-
 
 module.exports = async (ctx) => {
     const category = map.hasOwnProperty(ctx.params.category) ? ctx.params.category : 11;
@@ -29,7 +28,12 @@ module.exports = async (ctx) => {
                 title: a.eq(1).text(),
                 link: url.resolve(baseUrl, a.eq(1).attr('href')),
                 category: a.first().text(),
-                pubDate: new Date($(item).find('.gridlinedate').text().match(/\d+/g)).toUTCString()
+                pubDate: new Date(
+                    $(item)
+                        .find('.gridlinedate')
+                        .text()
+                        .match(/\d+/g)
+                ).toUTCString(),
             };
         })
         .get();
@@ -45,7 +49,10 @@ module.exports = async (ctx) => {
             const $ = cheerio.load(response.data);
             const article = $('#ctl00_ctl00_mainbody_rightbody_listcontent_lmnr');
 
-            item.author = article.find('.zzxx span').first().text();
+            item.author = article
+                .find('.zzxx span')
+                .first()
+                .text();
             item.description = article.find('.xwco').html();
 
             await ctx.cache.set(item.link, JSON.stringify(item), 24 * 60 * 60);

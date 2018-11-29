@@ -45,7 +45,8 @@ router.get('/', async (ctx) => {
     });
     ctx.body = art(path.resolve(__dirname, './views/welcome.art'), {
         showDebug,
-        debug: [{
+        debug: [
+            {
                 name: 'git hash',
                 value: gitHash,
             },
