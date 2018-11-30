@@ -83,6 +83,8 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 -   [rsshub.js](https://github.com/SevenOutman/rsshub.js): JavaScript library for RSSHub
 
+-   [RSSHelper](https://greasyfork.org/zh-CN/scripts/374570-rsshelper): 可以发现 RSS 的 Tampermonkey 插件
+
 ## Author
 
 **RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [MIT](./LICENSE) License.<br>
