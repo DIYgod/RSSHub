@@ -42,7 +42,7 @@ module.exports = async (ctx) => {
             title: `${item.title} - ${item.author}`,
             description: `${item.description}<img referrerpolicy="no-referrer" src="${item.pic}"><br/>Tags:${item.tag}`,
             pubDate: new Date(item.pubdate).toUTCString(),
-            link: item.arcurl,
+            link: `https://www.bilibili.com/video/av${item.id}`,
         };
         items.push(item);
     }
