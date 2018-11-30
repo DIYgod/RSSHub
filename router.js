@@ -525,7 +525,7 @@ router.get('/weatheralarm', require('./routes/weatheralarm'));
 // Gitlab
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
-// 忧郁的弟弟
+// 忧郁的loli 换了域名，向下兼容
 router.get('/mygalgame', require('./routes/galgame/mmgal'));
 router.get('/mmgal', require('./routes/galgame/mmgal'));
 
