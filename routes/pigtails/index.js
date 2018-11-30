@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
 const axios = require('../../utils/axios');
 
-const base_url = 'https://pigtails.info';
+const base_url = 'https://pigtails.moe';
 module.exports = async (ctx) => {
     const response = await axios({
         method: 'get',
