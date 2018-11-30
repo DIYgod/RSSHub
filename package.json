@@ -34,7 +34,7 @@
     "eslint-plugin-prettier": "3.0.0",
     "lint-staged": "8.1.0",
     "nodemon": "1.18.7",
-    "prettier": "1.15.2",
+    "prettier": "1.15.3",
     "prettier-check": "2.0.0",
     "vuepress": "0.14.8",
     "yorkie": "2.0.0"
