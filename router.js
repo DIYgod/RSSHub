@@ -526,7 +526,8 @@ router.get('/weatheralarm', require('./routes/weatheralarm'));
 router.get('/gitlab/explore/:type', require('./routes/gitlab/explore'));
 
 // 忧郁的弟弟
-router.get('/mygalgame', require('./routes/galgame/mygalgame'));
+router.get('/mygalgame', require('./routes/galgame/mmgal'));
+router.get('/mmgal', require('./routes/galgame/mmgal'));
 
 // 大连工业大学
 router.get('/dpu/jiaowu/news/:type?', require('./routes/universities/dpu/jiaowu/news'));
