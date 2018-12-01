@@ -1624,6 +1624,8 @@ category 列表：
 | -------- | -------- | -------- | -------- | ------- | -------- | -------- |
 | news     | media    | notice   | jobs     | workday | tender   | activity |
 
+</route>
+
 ## 传统媒体
 
 ### 央视新闻

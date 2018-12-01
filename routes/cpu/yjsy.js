@@ -44,9 +44,9 @@ module.exports = async (ctx) => {
     );
 
     ctx.state.data = {
-        title: '中国医科大学 - 研究生院 | 最新通知',
+        title: '中国药科大学 - 研究生院 | 最新通知',
         link: url,
         item: resultItem,
-        description: '中国医科大学 | 研究生院',
+        description: '中国药科大学 | 研究生院',
     };
 };
