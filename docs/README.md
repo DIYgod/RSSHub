@@ -861,7 +861,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="分区帖子" author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
 
-> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
+> 注意：并非所欲的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
 
 | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
 | -------------- | -------------- | ---------- | ---------- | ---------- |
@@ -924,16 +924,6 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-### 字幕组（ZiMuZu.tv）
-
-::: tip 提示
-
-跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
-
-:::
-
-<route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id" :paramsDesc="['影视 id，对应影视的 URL 中找到']"/>
-
 ### Sankaku Complex
 
 <route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
@@ -957,16 +947,6 @@ GitHub 官方也提供了一些 RSS:
 <route name="专题详情" author="gee1k xyqfer" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
 
 <route name="详情" author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
-
-### 豆瓣美女
-
-<route name="分类" author="kba977" example="/dbmv" path="/dbmv/:category?" :paramsDesc="['分类 id - 若不填该参数, 默认所有']">
-
-| 大胸妹 | 小翘臀 | 黑丝袜 | 美腿控 | 有颜值 | 大杂烩 |
-| ------ | ------ | ------ | ------ | ------ | ------ |
-| 2      | 6      | 7      | 3      | 4      | 5      |
-
-</route>
 
 ### 煎蛋
 
@@ -1042,6 +1022,10 @@ GitHub 官方也提供了一些 RSS:
 <route name="分类筛选" author="MegrezZhu" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" :paramsDesc="['筛选条件，可选: parody, character, tag, artist, group, language, category','筛选值', '模式，`simple`为仅封面，`detail`会包括本子每一页，但对服务器负载大。默认为`simple`']" />
 <route name="高级搜索" author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入，但空格等特殊符号是否会转换取决于浏览器和阅读器的实现。用法详见[官网](https://nhentai.net/info/)', '模式，`simple`为仅封面，`detail`会包括本子每一页，但对服务器负载大。默认为`simple`']" />
 
+### 鲸图
+
+<route name="最新图片" author="extrastu" example="/jingtu/list" path="/jingtu/list"/>
+
 ## 二次元
 
 ### bilibili
@@ -1066,9 +1050,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="小组话题" author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
-### 忧郁的 loli
+### 忧郁的弟弟
 
-<route name="文章" author="DIYgod" example="/mmgal" path="/mmgal"/>
+<route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
 
 ### 看漫画
 
@@ -1265,14 +1249,6 @@ GitHub 官方也提供了一些 RSS:
 ### 上海交通大学
 
 <route name="电子信息与电气工程学院学术动态" author="HenryQW" example="/sjtu/seiee/academic" path="/universities/sjtu/seiee/academic"/>
-
-<route name="电子信息与电气工程学院本科教务办 -- 分专业" author="SkyZH" example="/sjtu/seiee/bjwb/major_select" path="/universities/sjtu/seiee/bjwb/major_select"/>
-
-<route name="电子信息与电气工程学院本科教务办 -- 转专业" author="SkyZH" example="/sjtu/seiee/bjwb/major_transfer" path="/universities/sjtu/seiee/bjwb/major_transfer"/>
-
-<route name="电子信息与电气工程学院本科教务办 -- 交换交流" author="SkyZH" example="/sjtu/seiee/bjwb/abroad" path="/universities/sjtu/seiee/bjwb/abroad"/>
-
-<route name="电子信息与电气工程学院本科教务办 -- 直升研究生" author="SkyZH" example="/sjtu/seiee/bjwb/postgraduate" path="/universities/sjtu/seiee/bjwb/postgraduate"/>
 
 <route name="研究生通知公告" author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/universities/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
 
@@ -1605,26 +1581,6 @@ category 列表：
 ### 中山大学
 
 <route name="数据科学与计算机学院动态" author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
-
-### 中国药科大学
-
-<route name="中国药科大学" author="kba977" example="/cpu/home" path="/cpu/:type" :paramsDesc="['分类, 见下表']">
-
-| 首页 | 教务处 | 研究生院 |
-| ---- | ------ | -------- |
-| home | jwc    | yjsy     |
-
-</route>
-
-### 温州商学院
-
-<route name="温州商学院" author="howel52" example="/wzbc/notice" path="/wzbc/:type" :paramsDesc="['分类, 见下表']">
-
-| 校园新闻 | 媒体商院 | 通知公告 | 人才招聘 | 行事历  | 招标公告 | 学术动态 |
-| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
-| news     | media    | notice   | jobs     | workday | tender   | activity |
-
-</route>
 
 ## 传统媒体
 
@@ -2074,10 +2030,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 <route name="章节" author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 <route name="讨论区" author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
-
-### 纵横
-
-<route name="章节" author="georeth" example="/zongheng/chapter/672340" path="/zongheng/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ### 刺猬猫
 
