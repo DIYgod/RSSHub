@@ -1024,7 +1024,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 鲸图
 
-<route name="最新图片" author="extrastu" example="/jingtu/list" path="/jingtu/list"/>
+<route name="数字尾巴用户最新图片" author="extrastu" example="/jingtu/list" path="/jingtu/list"/>
 
 ## 二次元
 
