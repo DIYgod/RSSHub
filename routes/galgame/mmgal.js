@@ -4,9 +4,9 @@ const cheerio = require('cheerio');
 module.exports = async (ctx) => {
     const res = await axios({
         method: 'get',
-        url: 'https://www.mygalgame.com/',
+        url: 'https://www.mmgal.com/',
         header: {
-            Referer: 'https://www.mygalgame.com/',
+            Referer: 'https://www.mmgal.com/',
         },
     });
 
@@ -17,8 +17,8 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         title: $('title').text(),
-        link: 'https://www.mygalgame.com/',
-        description: '忧郁的弟弟 - Galgame资源发布站',
+        link: 'https://www.mmgal.com/',
+        description: '忧郁的loli - Galgame资源发布站',
         item:
             list &&
             list

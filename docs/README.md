@@ -1066,9 +1066,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="小组话题" author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
-### 忧郁的弟弟
+### 忧郁的 loli
 
-<route name="文章" author="DIYgod" example="/mygalgame" path="/mygalgame"/>
+<route name="文章" author="DIYgod" example="/mmgal" path="/mmgal"/>
 
 ### 看漫画
 
