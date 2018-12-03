@@ -887,6 +887,6 @@ router.get('/cpu/jwc', require('./routes/cpu/jwc'));
 router.get('/cpu/yjsy', require('./routes/cpu/yjsy'));
 
 // 字幕组
-router.get('/zimuzu/resource/:id', require('./routes/zimuzu/resource'));
+router.get('/zimuzu/resource/:id?', require('./routes/zimuzu/resource'));
 
 module.exports = router;
