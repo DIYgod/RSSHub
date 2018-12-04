@@ -932,7 +932,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id" :paramsDesc="['影视 id，对应影视的 URL 中找到']"/>
+<route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']"/>
 
 ### Sankaku Complex
 

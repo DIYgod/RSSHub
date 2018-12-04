@@ -6,7 +6,7 @@ const parser = new Parser({
 });
 
 module.exports = async (ctx) => {
-    const id = ctx.params.id;
+    const { id = 0 } = ctx.params;
     const feed = await parser.parseURL(`http://diaodiaode.me/rss/feed/${id}`);
     feed.items.map((item) => {
         item.link = null;
