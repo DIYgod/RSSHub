@@ -45,10 +45,15 @@ module.exports = async (ctx) => {
 
             if (item.is_quote_status) {
                 const quoteData = item.quoted_status;
-                const author = quoteData.user;
-                quote += `<br><br>${author.name}: ${formatText(quoteData.full_text)}<br>`;
-                quote += formatMedia(quoteData);
-                quote += formatUrl(quoteData);
+
+                if (quoteData) {
+                    const author = quoteData.user;
+                    quote += `<br><br>${author.name}: ${formatText(quoteData.full_text)}<br>`;
+                    quote += formatMedia(quoteData);
+                    quote += formatUrl(quoteData);
+                } else {
+                    url = formatUrl(item);
+                }
             } else {
                 url = formatUrl(item);
             }
