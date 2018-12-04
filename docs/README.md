@@ -1274,6 +1274,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="电子信息与电气工程学院本科教务办 -- 直升研究生" author="SkyZH" example="/sjtu/seiee/bjwb/postgraduate" path="/universities/sjtu/seiee/bjwb/postgraduate"/>
 
+<route name="电子信息与电气工程学院本科教务办 -- 国际办学" author="SkyZH" example="/sjtu/seiee/bjwb/international" path="/universities/sjtu/seiee/bjwb/international"/>
+
 <route name="研究生通知公告" author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/universities/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
 
 | 通知公告 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
