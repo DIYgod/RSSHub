@@ -7,11 +7,21 @@ module.exports = async (ctx) => {
     });
 
     const data = response.data.data.data;
-    const generateMessage = (message) => `
+    const generateMessage = (message) => {
+        let name = '';
+        let content = '';
+
+        if (message.topMessage.account) {
+            name = message.topMessage.account.name;
+            content = message.topMessage.content.replace(/\n/g, '<br>');
+        }
+
+        return `
             <img referrerpolicy="no-referrer" src="${message.link.img_url}"/><br><br>
             <a href="${message.link.url}">${message.link.summary}</a><br><br>
-            <strong>${message.topMessage.account.name}</strong>: ${message.topMessage.content.replace(/\n/g, '<br>')}<br><br>
+            <strong>${name}</strong>: ${content}<br><br>
         `;
+    };
 
     ctx.state.data = {
         title: '刷屏-最新',
