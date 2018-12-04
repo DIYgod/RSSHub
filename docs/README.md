@@ -2413,6 +2413,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="百度趣画" author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
 
+<route name="搜索风云榜" author="xyqfer" example="/baidu/topwords/1" path="/baidu/topwords/:boardId?" :paramsDesc="['榜单 id, 默认为`1`']">
+
+| 实时热点 | 今日热点 | 七日热点 | 民生热点 | 娱乐热点 | 体育热点 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 341      | 42       | 342      | 344      | 11       |
+
+</route>
+
 ### 搜狗
 
 <route name="搜狗特色LOGO" author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
