@@ -724,6 +724,7 @@ router.get('/houxu/:type/:id', require('./routes/houxu/houxu'));
 // 老司机
 router.get('/laosiji/hot', require('./routes/laosiji/hot'));
 router.get('/laosiji/feed', require('./routes/laosiji/feed'));
+router.get('/laosiji/hotshow/:id', require('./routes/laosiji/hotshow'));
 
 // 99% Invisible
 router.get('/99percentinvisible/transcript', require('./routes/99percentinvisible/transcript'));
