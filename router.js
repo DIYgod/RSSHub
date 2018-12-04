@@ -327,6 +327,7 @@ router.get('/yande.re/post/popular_recent/:period', require('./routes/yande.re/p
 
 // 纽约时报
 router.get('/nytimes', require('./routes/nytimes/index'));
+router.get('/nytimes/morning_post', require('./routes/nytimes/morning_post'));
 
 // 3dm
 router.get('/3dm/:name/:type', require('./routes/3dm/game'));
