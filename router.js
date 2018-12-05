@@ -896,4 +896,8 @@ router.get('/zimuzu/resource/:id?', require('./routes/zimuzu/resource'));
 // 虎嗅
 router.get('/huxiu/tag/:id', require('./routes/huxiu/tag'));
 
+// Steam
+router.get('/steam/search/:params', require('./routes/steam/search'));
+router.get('/steam/news/:appids', require('./routes/steam/news'));
+
 module.exports = router;
