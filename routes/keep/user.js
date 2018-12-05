@@ -1,84 +1,47 @@
 const axios = require('axios');
-const cheerio = require('cheerio');
-
-const keep_project_and_duration = (text) => {
-    const project = text
-        .split(', ', 1)
-        .toString()
-        .trim()
-        .slice(2)
-        .trim();
-    const duration = text
-        .split(', ')
-        .splice(1)
-        .join(', ');
-    if (duration) {
-        return `项目：${project}<br>时长：${duration}<br>`;
-    } else {
-        return `项目：${project}<br>`;
-    }
-};
-
-const keep_item_description = (item) => {
-    let description = '';
-    description += keep_project_and_duration(item.find('.title').text());
-    const comment = item.find('.diary-cont').text();
-    if (comment) {
-        description += `备注：${comment}<br>`;
-    }
-    const location = item.find('.location').text();
-    if (location) {
-        description += `地点：${item.find('.location').text()}<br>`;
-    }
-
-    description += item.find('.diary-img');
-    return description;
-};
-
-const keep_item_date = (item) => {
-    const time = item.find('.diary-time').text();
-    const matches = /20\d{2}\/\d{2}\/\d{2}/g.exec(item.find('.diary-img').attr('src'));
-    if (!matches) {
-        return new Date(time).toUTCString();
-    }
-    return new Date(matches + ' ' + time).toUTCString();
-};
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
-    const requestUrl = `https://show.gotokeep.com/usersfulldiary?userId=${id}`;
 
     const response = await axios({
         method: 'get',
-        url: requestUrl,
+        url: `https://api.gotokeep.com/social/v3/people/${id}/home`,
         headers: {
-            Host: 'show.gotokeep.com',
+            Referer: `https://show.gotokeep.com/users/${id}`,
         },
     });
 
-    const data = response.data;
-
-    const $ = cheerio.load(data);
-    const userName = $('.user-name').text();
-    const list = $('a.diary-right');
+    response.data.data.entries[0] = response.data.data.entries[0].entries;
+    const data = response.data.data.entries.reduce((all, current) => all.concat(current.entries));
 
     ctx.state.data = {
-        title: `Keep 运动日记 - ${userName}`,
-        link: requestUrl,
-        description: $('meta[name="description"]').attr('content'),
+        title: `Keep 动态 - ${data[0].author.username}`,
+        link: `https://show.gotokeep.com/users/${id}`,
         language: 'zh-cn',
         item:
-            list &&
-            list
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.find('.title').text(),
-                        pubDate: keep_item_date(item),
-                        link: `https://show.gotokeep.com${item.attr('href')}`,
-                        description: keep_item_description(item),
-                    };
-                })
-                .get(),
+            data &&
+            data.map((item) => {
+                let images = [];
+                if (item.images) {
+                    images = item.meta.picture ? item.images.concat(item.meta.picture) : item.images;
+                } else if (item.meta.picture) {
+                    images = [item.meta.picture];
+                }
+                let imagesTpl = '';
+                images.forEach((item) => {
+                    imagesTpl += `<img referrerpolicy="no-referrer" src="${item}">`;
+                });
+
+                const minute = Math.floor(item.meta.secondDuration / 60);
+                const second = item.meta.secondDuration - minute * 60;
+                return {
+                    title: item.meta.title.trim(),
+                    pubDate: item.created,
+                    link: `https://show.gotokeep.com/entries/${item.id}`,
+                    description: `项目：${item.meta.name === item.meta.workoutName ? item.meta.name : `${item.meta.name} - ${item.meta.workoutName}`}<br>时长：${minute}分${second}秒${item.content ? `<br>备注：${item.content}` : ''}${
+                        imagesTpl ? `<br>${imagesTpl}` : ''
+                    }`,
+                };
+            }),
     };
 };
