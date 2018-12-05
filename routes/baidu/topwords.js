@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
             title: item.keyword,
             description: `
         <a href="${desc.originlink}">${desc.title}</a><br>
-        ${desc.description}
+        ${desc.description || ''}
       `,
             link: desc.originlink,
             pubDate: new Date(desc.pubDate).toUTCString(),
