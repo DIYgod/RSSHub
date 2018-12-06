@@ -2527,3 +2527,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 虎嗅
 
 <route name="标签" author="xyqfer" example="/huxiu/tag/291" path="/huxiu/tag/:id" :paramsDesc="['标签 id']" />
+
+### 扇贝单词
+
+<route name="打卡" author="xyqfer" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:userId" :paramsDesc="['用户 id']" />
