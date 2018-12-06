@@ -36,7 +36,7 @@ module.exports = async (ctx) => {
                     action += `${index === 0 ? '' : ';'}${task.operation}了 ${task.num} ${task.unit}${task.name}，学习时间 ${minute} 分 ${second} 秒`;
                 });
                 return {
-                    title: `${username} 的第 ${item.checkin_days_num} 天打卡`,
+                    title: `${username} 的第 ${item.checkin_days_num} 天扇贝打卡`,
                     pubDate: new Date(`${item.date} 00:00:00+08`),
                     guid: item.id,
                     description: action,
