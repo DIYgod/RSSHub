@@ -40,6 +40,7 @@ module.exports = async (ctx) => {
                     pubDate: new Date(`${item.date} 00:00:00+08`),
                     guid: item.id,
                     description: action,
+                    link: `https://web.shanbay.com/web/wechat/calendar/?user_id=${id}`,
                 };
             }),
     };
