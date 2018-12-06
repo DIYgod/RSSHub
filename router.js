@@ -900,4 +900,7 @@ router.get('/huxiu/tag/:id', require('./routes/huxiu/tag'));
 router.get('/steam/search/:params', require('./routes/steam/search'));
 router.get('/steam/news/:appids', require('./routes/steam/news'));
 
+// 扇贝
+router.get('/shanbay/checkin/:id', require('./routes/shanbay/checkin'));
+
 module.exports = router;

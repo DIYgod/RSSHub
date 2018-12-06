@@ -15,7 +15,7 @@ module.exports = async (ctx) => {
     const data = response.data.data.entries.reduce((all, current) => all.concat(current.entries));
 
     ctx.state.data = {
-        title: `Keep 动态 - ${data[0].author.username}`,
+        title: `${data[0].author.username} 的 Keep 动态`,
         link: `https://show.gotokeep.com/users/${id}`,
         language: 'zh-cn',
         item:
