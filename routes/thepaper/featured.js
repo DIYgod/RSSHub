@@ -37,7 +37,9 @@ module.exports = async (ctx) => {
             const content = cheerio.load(res.data);
             const serverOffset = new Date().getTimezoneOffset() / 60;
             const single = {
-                title: content('h1').text(),
+                title: $(item)
+                    .find('a')
+                    .text(),
                 guid: itemUrl,
                 link: itemUrl.replace('https://m.', 'https://'),
                 description: content('#v3cont_id > div.news_content > div.news_part_father > div > div:nth-child(1)').html(),
