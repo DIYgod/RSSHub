@@ -4,32 +4,31 @@ const url = require('url');
 
 const host = 'http://xsb.seiee.sjtu.edu.cn';
 const config = {
-    'news': {
+    news: {
         link: `xsb/list/2938-1-20.htm`,
-        title: '新闻发布'
+        title: '新闻发布',
     },
-    'scholarship': {
+    scholarship: {
         link: `xsb/list/611-1-20.htm`,
-        title: '奖学金'
+        title: '奖学金',
     },
-    'activity': {
+    activity: {
         link: `xsb/list/2676-1-20.htm`,
-        title: '党团活动'
+        title: '党团活动',
     },
-    'lecture': {
+    lecture: {
         link: `xsb/list/1981-1-20.htm`,
-        title: '讲座活动'
+        title: '讲座活动',
     },
-    'all': {
+    all: {
         link: `xsb/list/705-1-20.htm`,
-        title: '信息通告'
+        title: '信息通告',
     },
-    'financialAid': {
+    financialAid: {
         link: `xsb/list/1001-1-20.htm`,
-        title: '助学金'
-    }
+        title: '助学金',
+    },
 };
-
 
 module.exports = async (ctx) => {
     let type = ctx.params.type;
@@ -69,7 +68,9 @@ module.exports = async (ctx) => {
                 title: item.title,
                 link: itemUrl,
                 author: '上海交通大学电子信息与电气工程学院学生工作办公室',
-                description: $('.article_box').text().slice(0, -7),
+                description: $('.article_box')
+                    .text()
+                    .slice(0, -7),
                 pubDate: new Date(item.date),
             };
             ctx.cache.set(itemUrl, JSON.stringify(single), 24 * 60 * 60);
