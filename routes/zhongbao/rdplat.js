@@ -2,28 +2,28 @@ const axios = require('../../utils/axios');
 const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
-    const category = ctx.params.category; //http://www.rdplat.com/leaderTask/index?parameter=m101
+    const category = ctx.params.category; //https://www.rdplat.com/leaderTask/index?parameter=m101
     
-    const geturl = `http://www.rdplat.com/leaderTask/index?parameter=${category}`;
+    const geturl = `https://www.rdplat.com/leaderTask/index?parameter=${category}`;
 
-    //console.log(geturl)
+    console.log(geturl)
     const response = await axios({
         method: 'get',
         url: `${geturl}`,
         headers: {
             Host: 'www.rdplat.com',
-            Referer: 'http://www.rdplat.com/',
+            //Referer: 'https://www.rdplat.com/',
         },
 
     });
-    //console.log("get response");
+    console.log("get response");
     const responseHtml = response.data; 
     //console.log("decode ok");
     //console.log('responseHtml',responseHtml);
     const $ = cheerio.load(responseHtml);
     const categorytitle = $('title').text().trim();
     const content = $('meta[name="description"]').attr('content');
-    const div = $('div[class="mfm"]>div[class="left"]>ul');
+    const div = $('div[id="result"]>div[class="demand_search_result"]>ul');
     const taskList = div.find('li').map((i, e) => $(e).find('a').attr('href')).get();
     
     //console.log("taskList :" + taskList); 
@@ -49,7 +49,7 @@ module.exports = async (ctx) => {
                 const $ = cheerio.load(taskDetail.data);
                 const titlename = $('title').text().trim();
                 //console.log('titlename :' + titlename);
-                task.title = titlename
+                task.title = titlename.split('最新外包,众包需求-开发宝')[0]
                 try {
                     task.description = $('div[class="text_shadow_area text_shadow_area1"]').html() + $('div[class="text_shadow_area text_shadow_area2"]').html();
                     const myDate = $('div.task_number_time>span').slice(1,2).text();
@@ -90,6 +90,8 @@ module.exports = async (ctx) => {
         {
             console.log(i+": "+ctx.state.data['item'][i].title);
             console.log(i+": "+ctx.state.data['item'][i].pubDate);
+            console.log(i+": "+ctx.state.data['item'][i].link);
+            //console.log(i+": "+ctx.state.data['item'][i].description);
         }
     }
 };
