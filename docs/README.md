@@ -1263,6 +1263,7 @@ GitHub 官方也提供了一些 RSS:
 | all  | jxfw     | jxjs     | xspy     | jxzy     |
 
 </route>
+
 ### 哈尔滨工业大学
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
