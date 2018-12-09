@@ -11,7 +11,16 @@ module.exports = async (ctx) => {
         let img = '';
         item.extended_entities &&
             item.extended_entities.media.forEach((item) => {
-                img += `<br>${item.type === 'video' ? 'Video: ' : ''}<img referrerpolicy="no-referrer" src="${item.media_url_https}">`;
+                let content = '';
+                if (item.type === 'animated_gif') {
+                    content = item.video_info.variants.reduce((content, video) => {
+                        content += `<br><video src="${video.url}" controls poster="${item.media_url_https}" style="width: 100%"></video>`;
+                        return content;
+                    }, '');
+                } else {
+                    content = `<br>${item.type === 'video' ? 'Video: ' : ''}<img referrerpolicy="no-referrer" src="${item.media_url_https}">`;
+                }
+                img += content;
             });
 
         return img;
