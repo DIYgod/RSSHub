@@ -1258,6 +1258,16 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="研究生招生网通知公告" author="Chingyat" example="/seu/yzb/1" path="/universities/seu/yzb/:type" :paramsDesc="['1 为硕士招生, 2 为博士招生, 3 为港澳台及中外合作办学']"/>
 
+### 南京航空航天大学
+
+<route name="教务通知" author="arcosx" example="/nuaa/jwc/all" path="/universities/nuaa/jwc/:type" :paramsDesc="['分类名']">
+
+| 全部 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | jxfw     | jxjs     | xspy     | jxzy     |
+
+</route>
+
 ### 哈尔滨工业大学
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
