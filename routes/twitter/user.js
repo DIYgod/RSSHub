@@ -7,19 +7,39 @@ module.exports = async (ctx) => {
     const id = ctx.params.id;
 
     const formatText = (text) => text.replace(/https:\/\/t\.co(.*)/g, '');
+    const formatVideo = (media) => {
+        let content = '';
+        const video = media.video_info.variants.reduce((video, item) => {
+            if ((item.bitrate || 0) > (video.bitrate || 0)) {
+                video = item;
+            }
+            return video;
+        }, {});
+
+        if (video.url) {
+            content = `<br><video src="${video.url}" controls poster="${media.media_url_https}" style="width: 100%"></video>`;
+        }
+
+        return content;
+    };
     const formatMedia = (item) => {
         let img = '';
         item.extended_entities &&
             item.extended_entities.media.forEach((item) => {
+                // https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/extended-entities-object
                 let content = '';
-                if (item.type === 'animated_gif') {
-                    content = item.video_info.variants.reduce((content, video) => {
-                        content += `<br><video src="${video.url}" controls poster="${item.media_url_https}" style="width: 100%"></video>`;
-                        return content;
-                    }, '');
-                } else {
-                    content = `<br>${item.type === 'video' ? 'Video: ' : ''}<img referrerpolicy="no-referrer" src="${item.media_url_https}">`;
+                switch (item.type) {
+                    case 'animated_gif':
+                    case 'video':
+                        content = formatVideo(item);
+                        break;
+
+                    case 'photo':
+                    default:
+                        content = `<br><img referrerpolicy="no-referrer" src="${item.media_url_https}">`;
+                        break;
                 }
+
                 img += content;
             });
 
