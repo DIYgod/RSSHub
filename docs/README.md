@@ -1268,6 +1268,8 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+<route name="计算机科学与技术学院学术活动" author="LogicJake" example="/nuaa/cs/academic" path="/universities/nuaa/cs/academic"/>
+
 ### 哈尔滨工业大学
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
