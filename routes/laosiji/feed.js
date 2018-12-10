@@ -1,4 +1,5 @@
 const axios = require('../../utils/axios');
+const parseDate = require('../../utils/date');
 
 module.exports = async (ctx) => {
     const response = await axios({
@@ -12,10 +13,11 @@ module.exports = async (ctx) => {
         title: '老司机-首页',
         link: 'http://www.laosiji.com/new_web/index.html',
         description: '老司机-首页',
-        item: data.map(({ title, resourceid, image }) => ({
+        item: data.map(({ title, resourceid, image, publishtime }) => ({
             title,
             link: `http://www.laosiji.com/thread/${resourceid}.html`,
             description: `<img referrerpolicy="no-referrer" src="${image.url}">`,
+            pubDate: parseDate(publishtime, 8),
         })),
     };
 };
