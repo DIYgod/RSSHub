@@ -1284,6 +1284,14 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+<route name="电子信息与电气工程学院学生工作办公室" author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
+
+| 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 |
+| -------- | ----------- | ------------ | -------- | -------- | -------- |
+| 空       | scholarship | financialAid | lecture  | activity | news     |
+
+</route>
+
 ### 中国科学院
 
 <route name="上海微系统与信息技术研究所学术活动" author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>

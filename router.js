@@ -551,6 +551,7 @@ router.get('/sjtu/seiee/bjwb/major_transfer', require('./routes/universities/sjt
 router.get('/sjtu/seiee/bjwb/postgraduate', require('./routes/universities/sjtu/seiee/bjwb/postgraduate'));
 router.get('/sjtu/seiee/bjwb/abroad', require('./routes/universities/sjtu/seiee/bjwb/abroad'));
 router.get('/sjtu/seiee/bjwb/international', require('./routes/universities/sjtu/seiee/bjwb/international'));
+router.get('/sjtu/seiee/xsb/:type?', require('./routes/universities/sjtu/seiee/xsb'));
 
 router.get('/sjtu/gs/tzgg/:type?', require('./routes/universities/sjtu/gs/tzgg'));
 
