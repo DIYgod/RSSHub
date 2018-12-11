@@ -1,70 +1,41 @@
 const axios = require('../../../utils/axios');
-const cheerio = require('cheerio'); 
+const cheerio = require('cheerio');
+const resolve_url = require('url').resolve;
 
-const host = 'http://jwc.henu.edu.cn/';
+const base_url = 'http://jwc.henu.edu.cn';
 
-const getnewlist = ($) => {
-    const items = $('.list td');
-    return {
-        title: $('tit1').text(),
-        item:
-            items &&
-            items
-                .map((index, item) => {
-                    item = $(item);
-                    return {
-                        title: item.text(),
-                        link: `${host}${item.find('a').attr('href')}`,
-                        description: item.text(),
-                        pubDate: item.find('span').text(),
-                    };
-                })
-                .get(),
-    };
-};
- 
-const MAP = {
-    // 学生专栏
-    news: {
-        path: 'xszl',
-        func: getnewlist,
-    },
-    // 教师专栏
-    media: {
-        path: 'jszl',
-        func: getnewlist,
-    },
-    // 新闻公告
-    notice: {
-        path: 'xwgg',
-        func: getnewlist,
-    },
-    // 院部动态
-    jobs: {
-        path: 'ybdt',
-        func: getnewlist,
-    },
-    // 高教前沿
-    workday: {
-        path: 'gjqy',
-        func: getnewlist,
-    },
+const map = {
+    all: '/',
+    xszl: '/jwzl/xszl.htm',
+    jszl: '/jwzl/jszl.htm',
+    xwgg: '/jwzl/xwgg.htm',
+    ybdt: '/jwzl/ybdt.htm',
+    gjqy: '/jwzl/gjqy.htm',
 };
 
 module.exports = async (ctx) => {
-    let type = ctx.params && ctx.params.type;
-
-    if (!(type in MAP)) {
-        type = 'notice';
-    }
+    const type = ctx.params.type || 'all';
+    const link = `${base_url}${map[type]}`;
 
     const response = await axios({
         method: 'get',
-        url: `${host}/jwzl/${MAP[type].path}`,
+        url: link,
         headers: {
-            Referer: host,
+            Referer: link,
         },
     });
+
     const $ = cheerio.load(response.data);
-    ctx.state.data = MAP[type].func($);
+
+    ctx.state.data = {
+        link: link,
+        title: $('title').text(),
+        item: $('.list>tr')
+            .map((_, elem) => ({
+                link: resolve_url(link, $('a', elem).attr('href')),
+                title: $('tit1', elem).text(),
+                pubDate: new Date($('time1.span', elem).text()).toUTCString(),
+            }))
+            .get(),
+    };
 };
