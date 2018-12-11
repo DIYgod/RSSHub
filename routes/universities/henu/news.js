@@ -1,6 +1,5 @@
 const axios = require('../../../../utils/axios');
-const cheerio = require('cheerio');
-const url = require('url');
+const cheerio = require('cheerio'); 
  
 const host = 'http://jwc.henu.edu.cn/';
 
