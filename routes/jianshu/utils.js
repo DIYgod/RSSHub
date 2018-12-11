@@ -26,6 +26,8 @@ async function load(link) {
         }
         $elem.attr('referrerpolicy', 'no-referrer');
     });
+    // 去除样式
+    $('.image-container, .image-container-fill').removeAttr('style');
     // 提取内容
     const description = $('.show-content-free').html();
 
