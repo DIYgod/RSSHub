@@ -42,7 +42,7 @@ module.exports = async (ctx) => {
 
     const out = await Promise.all(
         list.map(async (info) => {
-            const title = info.title  || 'tzgg';
+            const title = info.title || 'tzgg';
             const date = info.date;
             const itemUrl = url.resolve(host, info.link);
 
