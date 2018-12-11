@@ -1,4 +1,5 @@
 const axios = require('../../utils/axios');
+const parseDate = require('../../utils/date');
 const qs = require('querystring');
 
 module.exports = async (ctx) => {
@@ -23,10 +24,11 @@ module.exports = async (ctx) => {
     ctx.state.data = {
         title: `老司机-${data.name}`,
         link,
-        item: data.sns.list.map(({ title, resourceid, image }) => ({
+        item: data.sns.list.map(({ title, resourceid, image, publishtime }) => ({
             title,
             link: `http://www.laosiji.com/thread/${resourceid}.html`,
             description: `<img referrerpolicy="no-referrer" src="${image.url}">`,
+            pubDate: parseDate(publishtime, 8),
         })),
     };
 };
