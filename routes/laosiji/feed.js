@@ -1,4 +1,5 @@
 const axios = require('../../utils/axios');
+const parseDate = require('../../utils/date');
 
 module.exports = async (ctx) => {
     const response = await axios({
@@ -16,7 +17,7 @@ module.exports = async (ctx) => {
             title,
             link: `http://www.laosiji.com/thread/${resourceid}.html`,
             description: `<img referrerpolicy="no-referrer" src="${image.url}">`,
-            pubDate: publishtime,
+            pubDate: parseDate(publishtime, 8),
         })),
     };
 };

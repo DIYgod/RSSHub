@@ -563,6 +563,10 @@ RSSHub 提供下列 API 接口:
 
 <route name="分区帖子" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
 
+### Facebook
+
+<route name="粉絲專頁" author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
+
 ## 编程
 
 ### 掘金
@@ -1254,6 +1258,18 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="研究生招生网通知公告" author="Chingyat" example="/seu/yzb/1" path="/universities/seu/yzb/:type" :paramsDesc="['1 为硕士招生, 2 为博士招生, 3 为港澳台及中外合作办学']"/>
 
+### 南京航空航天大学
+
+<route name="教务通知" author="arcosx" example="/nuaa/jwc/all" path="/universities/nuaa/jwc/:type" :paramsDesc="['分类名']">
+
+| 全部 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | jxfw     | jxjs     | xspy     | jxzy     |
+
+</route>
+
+<route name="计算机科学与技术学院学术活动" author="LogicJake" example="/nuaa/cs/academic" path="/universities/nuaa/cs/academic"/>
+
 ### 哈尔滨工业大学
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
@@ -1281,6 +1297,14 @@ GitHub 官方也提供了一些 RSS:
 | 通知公告 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 空       | gzxx     | xwxx1    | pyxx     | xwxx     | gjjl     | cxgc     |
+
+</route>
+
+<route name="电子信息与电气工程学院学生工作办公室" author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
+
+| 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 |
+| -------- | ----------- | ------------ | -------- | -------- | -------- |
+| 空       | scholarship | financialAid | lecture  | activity | news     |
 
 </route>
 
