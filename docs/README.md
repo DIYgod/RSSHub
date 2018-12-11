@@ -1268,7 +1268,11 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
-<route name="计算机科学与技术学院学术活动" author="LogicJake" example="/nuaa/cs/academic" path="/universities/nuaa/cs/academic"/>
+<route name="计算机科学与技术学院" author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+
+| 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
 
 ### 哈尔滨工业大学
 

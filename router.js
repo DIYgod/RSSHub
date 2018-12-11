@@ -540,7 +540,7 @@ router.get('/seu/yzb/:type', require('./routes/universities/seu/yzb'));
 
 // 南京航空航天大学
 router.get('/nuaa/jwc/:type?', require('./routes/universities/nuaa/jwc/jwc'));
-router.get('/nuaa/cs/academic', require('./routes/universities/nuaa/cs/academic'));
+router.get('/nuaa/cs/:type?', require('./routes/universities/nuaa/cs/index'));
 
 // 哈尔滨工业大学
 router.get('/hit/jwc', require('./routes/universities/hit/jwc'));
