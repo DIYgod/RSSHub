@@ -7,7 +7,6 @@ const T = new Twit(config.twitter);
 module.exports = async (ctx) => {
     const id = ctx.params.id;
 
-    const formatText = (text) => text.replace(/https:\/\/t\.co(.*)/g, '');
     const getQueryParams = (url) => URL.parse(url, true).query;
     const getOrigionImg = (url) => {
         // https://greasyfork.org/zh-CN/scripts/2312-resize-image-on-open-image-in-new-tab/code#n150
@@ -31,11 +30,43 @@ module.exports = async (ctx) => {
             return url;
         }
     };
+
+    const formatText = (text) => text.replace(/https:\/\/t\.co(.*)/g, '');
+    const formatVideo = (media) => {
+        let content = '';
+        const video = media.video_info.variants.reduce((video, item) => {
+            if ((item.bitrate || 0) > (video.bitrate || 0)) {
+                video = item;
+            }
+            return video;
+        }, {});
+
+        if (video.url) {
+            content = `<br><video src="${video.url}" controls poster="${getOrigionImg(media.media_url_https)}" style="width: 100%"></video>`;
+        }
+
+        return content;
+    };
+
     const formatMedia = (item) => {
         let img = '';
         item.extended_entities &&
             item.extended_entities.media.forEach((item) => {
-                img += `<br>${item.type === 'video' ? 'Video: ' : ''}<img referrerpolicy="no-referrer" src="${getOrigionImg(item.media_url_https)}">`;
+                // https://developer.twitter.com/en/docs/tweets/data-dictionary/overview/extended-entities-object
+                let content = '';
+                switch (item.type) {
+                    case 'animated_gif':
+                    case 'video':
+                        content = formatVideo(item);
+                        break;
+
+                    case 'photo':
+                    default:
+                        content = `<br><img referrerpolicy="no-referrer" src="${getOrigionImg(item.media_url_https)}">`;
+                        break;
+                }
+
+                img += content;
             });
 
         return img;
