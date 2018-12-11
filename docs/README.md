@@ -1268,7 +1268,7 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
-<route name="计算机科学与技术学院学术活动" author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+<route name="计算机科学与技术学院" author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
 
 | 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -1856,6 +1856,12 @@ Solidot 提供的 feed:
 <route name="广州市" author="xyqfer" example="/tingshuitz/guangzhou" path="/tingshuitz/guangzhou"/>
 
 <route name="东莞市" author="victoriqueko" example="/tingshuitz/dongguan" path="/tingshuitz/dongguan"/>
+
+### 停电通知
+
+<route name="国家电网" author="xyqfer" example="/tingdiantz/95598/36401/36101/2018-12-11/2018-12-18" path="/tingdiantz/95598/:orgNo/:provinceNo/:outageStartTime/:outageEndTime/:scope?" :paramsDesc="['所属省供电公司编码', '所属地市供电公司编码', '开始时间', '结束时间', '停电范围关键字']"/>
+
+> 以上参数可从[查询页面](http://m.95598.cn/95598/woutageNotice/winitOutageNotice)打开控制台抓包获得
 
 ### 中央气象台
 

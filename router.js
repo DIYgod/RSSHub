@@ -911,4 +911,7 @@ router.get('/shanbay/checkin/:id', require('./routes/shanbay/checkin'));
 // Facebook
 router.get('/facebook/page/:id', require('./routes/facebook/page'));
 
+// 停电通知
+router.get('/tingdiantz/95598/:orgNo/:provinceNo/:outageStartTime/:outageEndTime/:scope?', require('./routes/tingdiantz/95598'));
+
 module.exports = router;
