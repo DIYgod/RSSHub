@@ -17,6 +17,15 @@ async function load(link) {
     const serverOffset = date.getTimezoneOffset() / 60;
     const pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
 
+    // 还原图片地址
+    $('img').each((index, elem) => {
+        const $elem = $(elem);
+        const src = $elem.attr('data-original-src');
+        if (src && src !== '') {
+            $elem.attr('src', `https:${src}`);
+        }
+        $elem.attr('referrerpolicy', 'no-referrer');
+    });
     // 提取内容
     const description = $('.show-content-free').html();
 
