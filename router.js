@@ -537,6 +537,7 @@ router.get('/dpu/wlfw/news/:type?', require('./routes/universities/dpu/wlfw/news
 // 东南大学
 router.get('/seu/radio/academic', require('./routes/universities/seu/radio/academic'));
 router.get('/seu/yzb/:type', require('./routes/universities/seu/yzb'));
+router.get('/seu/cse/:type?', require('./routes/universities/seu/cse'));
 
 // 南京航空航天大学
 router.get('/nuaa/jwc/:type?', require('./routes/universities/nuaa/jwc/jwc'));
