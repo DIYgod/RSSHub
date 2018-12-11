@@ -29,12 +29,12 @@ module.exports = async (ctx) => {
 
     ctx.state.data = {
         link: link,
-        title: $('tit1').text(),
-        item: $('.list>td')
+        title: $('title').text(),
+        item: $('.list>tr')
             .map((_, elem) => ({
                 link: resolve_url(link, $('a', elem).attr('href')),
-                title: $('a', elem).text(),
-                pubDate: new Date($('span.food-time', elem).text()).toUTCString(),
+                title: $('tit1', elem).text(),
+                pubDate: new Date($('time1.span', elem).text()).toUTCString(),
             }))
             .get(),
     };
