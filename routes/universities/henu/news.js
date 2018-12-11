@@ -1,7 +1,7 @@
 const axios = require('../../../utils/axios');
 const cheerio = require('cheerio'); 
  
-const host = 'http://jwc.henu.edu.cn/';
+const host = 'http://jwc.henu.edu.cn';
 
 const getnewlist = ($) => {
     const items = $('.list td');
