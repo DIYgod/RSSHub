@@ -16,7 +16,6 @@ const map = {
 module.exports = async (ctx) => {
     const type = ctx.params.type || 'all';
     const link = `${base_url}${map[type]}`;
-
     const response = await axios({
         method: 'get',
         url: link,
@@ -24,9 +23,7 @@ module.exports = async (ctx) => {
             Referer: link,
         },
     });
-
     const $ = cheerio.load(response.data);
-
     ctx.state.data = {
         link: link,
         title: $('title').text(),
