@@ -15,7 +15,11 @@ module.exports = async (ctx) => {
             list: null,
         };
 
-        page.goto(`https://www.douyin.com/share/user/${id}`).catch(() => {});
+        page.goto(`https://www.douyin.com/share/user/${id}`)
+            .then(() => {
+                page.click('.user-tab').catch(() => {});
+            })
+            .catch(() => {});
 
         page.on('response', (response) => {
             const req = response.request();
