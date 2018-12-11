@@ -1656,9 +1656,9 @@ category 列表：
 
 <route name="河南大学" author="CasterWx" example="/henu/xszl" path="/henu/:type" :paramsDesc="['分类, 见下表']">
 
-| 学生专栏 | 教师专栏 | 新闻公告 | 院部动态 | 高教前沿  |
-| -------- | -------- | -------- | -------- | ------- |
-| xszl     | jszl    | xwgg   | ybdt     | gjqy | 
+| 学生专栏 | 教师专栏 | 新闻公告 | 院部动态 | 高教前沿 |
+| -------- | -------- | -------- | -------- | -------- |
+| xszl     | jszl     | xwgg     | ybdt     | gjqy     |
 
 </route>
 
