@@ -2564,4 +2564,8 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 扇贝
 
- <route name="打卡" author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" :paramsDesc="['用户 id']" />
+<route name="打卡" author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" :paramsDesc="['用户 id']" />
+
+### 36kr
+
+<route name="搜索文章" author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
