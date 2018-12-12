@@ -2,15 +2,8 @@ const axios = require('../../utils/axios');
 
 const audio = 'https://www.bilibili.com/audio/au';
 
-const map = {
-    1: 10627,
-    2: 10624,
-    3: 10628,
-};
-
 module.exports = async (ctx) => {
-    const type = Number.parseInt(ctx.params.type);
-    const id = map[type];
+    const id = Number.parseInt(ctx.params.id);
     const link = `https://www.bilibili.com/audio/am${id}`;
 
     const apiMenuUrl = `https://www.bilibili.com/audio/music-service-c/web/menu/info?sid=${id}`;
