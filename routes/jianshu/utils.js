@@ -28,6 +28,17 @@ async function load(link) {
     });
     // 去除样式
     $('.image-container, .image-container-fill').removeAttr('style');
+    // 处理视频
+    $('.video-package').each((index, elem) => {
+        const $item = $(elem);
+        const desc = $item.find('.video-description').html();
+        const url = $item.attr('data-video-url');
+
+        $item.html(`
+            <p>${desc}</p>
+            <iframe frameborder="0" src="${url}" allowFullScreen="true"></iframe>
+        `);
+    });
     // 提取内容
     const description = $('.show-content-free').html();
 
