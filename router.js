@@ -654,6 +654,9 @@ router.get('/scut/jwc/:category?', require('./routes/universities/scut/jwc'));
 // 温州商学院
 router.get('/wzbc/:type?', require('./routes/universities/wzbc/news'));
 
+// 河南大学
+router.get('/henu/:type?', require('./routes/universities/henu/news'));
+
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
 
