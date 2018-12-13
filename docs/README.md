@@ -319,7 +319,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="话题(频道/标签)" author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
 
-<route name="歌单" author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']/>
+<route name="歌单" author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
 
 ### 微博
 
