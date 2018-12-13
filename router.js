@@ -236,6 +236,7 @@ if (config.disqus && config.disqus.api_key) {
 // Twitter
 if (config.twitter && config.twitter.consumer_key && config.twitter.consumer_secret && config.twitter.access_token && config.twitter.access_token_secret) {
     router.get('/twitter/user/:id', require('./routes/twitter/user'));
+    router.get('/twitter/list/:id/:name', require('./routes/twitter/list'));
 } else {
     logger.warn('Twitter RSS is disabled for lacking config.');
 }
