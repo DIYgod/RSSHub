@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 
 module.exports = async (ctx) => {
     const id = ctx.params.id;
-    const url = `http://huya.com/${id}`;
+    const url = `https://www.huya.com/${id}`;
     const response = await axios({
         method: 'get',
         url: url,
