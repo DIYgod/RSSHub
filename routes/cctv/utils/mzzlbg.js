@@ -24,7 +24,7 @@ module.exports = async () => {
                 url: url,
             });
 
-            item.description = `<video src="${videoDetail.hls_url}" controls poster="${video.img.replace(/\?.+/g, '')}" style="width: 100%"></video>`;
+            item.description = `<video src="${videoDetail.hls_url}" controls="controls" poster="${video.img.replace(/\?.+/g, '')}" style="width: 100%"></video>`;
             return Promise.resolve(item);
         })
     );

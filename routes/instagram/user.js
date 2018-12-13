@@ -84,7 +84,7 @@ module.exports = async (ctx) => {
                 }
 
                 if (media[index][i].video) {
-                    content += `<video width="100%" controls> <source src="${media[index][i].video}" type="video/mp4"> Your RSS reader does not support video playback. </video>`;
+                    content += `<video width="100%" controls="controls"> <source src="${media[index][i].video}" type="video/mp4"> Your RSS reader does not support video playback. </video>`;
                     video++;
                 }
             }
