@@ -211,6 +211,8 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 <routeEn name="User" path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['twitter handler']" />
 
+<routeEn name="List" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']"/>
+
 ### Instagram
 
 <routeEn name="User" path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" />

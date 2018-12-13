@@ -497,8 +497,6 @@ RSSHub 提供下列 API 接口:
 
 <route name="列表" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户 twitter 名', 'list 名称']"/>
 
-> 官方文档: [How to use Twitter Lists](https://help.twitter.com/en/using-twitter/twitter-lists)
-
 ### Instagram
 
 <route name="用户" author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']"/>
