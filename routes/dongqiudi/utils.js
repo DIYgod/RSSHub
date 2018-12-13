@@ -7,7 +7,7 @@ const ProcessVideo = (content) => {
         const link = v.attribs.src;
         switch (v.attribs.site) {
             case 'qiniu':
-                content(`<video width="100%" controls> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
+                content(`<video width="100%" controls="controls"> <source src="${link}" type="video/mp4"> Your RSS reader does not support video playback. </video>`).insertAfter(v);
                 content(v).remove();
                 break;
             case 'youku':

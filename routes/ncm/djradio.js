@@ -46,7 +46,8 @@ module.exports = async (ctx) => {
             const duration = ~~(pg.duration / 1000);
             const itunes_duration = `${(duration / 60).toFixed(0).padStart(2, '0')}:${(duration % 60).toFixed(0).padStart(2, '0')}`;
 
-            const html = image + description + `<div><audio src="http://music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3" controls></audio><p>时长: ${itunes_duration}</p><p><a href="${src}">查看节目</a></p></div>`;
+            const html =
+                image + description + `<div><audio src="http://music.163.com/song/media/outer/url?id=${pg.mainTrackId}.mp3" controls="controls"></audio><p>时长: ${itunes_duration}</p><p><a href="${src}">查看节目</a></p></div>`;
 
             return {
                 title: pg.name,

@@ -36,7 +36,7 @@ const ProcessFeed = ({ data = [] }) => {
         }, {});
 
         if (video.url) {
-            content = `<br><video src="${video.url}" controls poster="${getOrigionImg(media.media_url_https)}" style="width: 100%"></video>`;
+            content = `<br><video src="${video.url}" controls="controls" poster="${getOrigionImg(media.media_url_https)}" style="width: 100%"></video>`;
         }
 
         return content;
