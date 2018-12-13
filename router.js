@@ -598,6 +598,16 @@ router.get('/heu/ugs/news/:author?/:category?', require('./routes/universities/h
 // 重庆大学
 router.get('/cqu/jwc/announcement', require('./routes/universities/cqu/jwc/announcement'));
 
+// 南京信息工程大学
+router.get('/nuist/bulletin/:category?', require('./routes/universities/nuist/bulletin'));
+router.get('/nuist/jwc/:category?', require('./routes/universities/nuist/jwc'));
+router.get('/nuist/yjs/:category?', require('./routes/universities/nuist/yjs'));
+router.get('/nuist/xgc', require('./routes/universities/nuist/xgc'));
+router.get('/nuist/scs/:category?', require('./routes/universities/nuist/scs'));
+router.get('/nuist/lib', require('./routes/universities/nuist/library/lib'));
+router.get('/nuist/sese/:category?', require('./routes/universities/nuist/sese'));
+router.get('/nuist/cas/:category?', require('./routes/universities/nuist/cas'));
+
 // 成都信息工程大学
 router.get('/cuit/cxxww/:type?', require('./routes/universities/cuit/cxxww'));
 
