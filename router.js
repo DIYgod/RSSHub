@@ -889,4 +889,7 @@ router.get('/cpu/yjsy', require('./routes/cpu/yjsy'));
 // 字幕组
 router.get('/zimuzu/resource/:id', require('./routes/zimuzu/resource'));
 
+
+router.get('/jingtu/list', require('./routes/jingtu/list'))
+
 module.exports = router;
