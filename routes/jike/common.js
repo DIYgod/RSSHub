@@ -109,9 +109,8 @@ module.exports = {
                             default:
                                 break;
                         }
-                        description += `<br/><picture><source srcset="${pic.picUrl.split('/thumbnail/')[0]}/strip/format/webp" type="image/webp"><source srcset="${
-                            pic.picUrl.split('?imageMogr2/')[0]
-                        }" type="image/${type}"><img src="${pic.picUrl.split('?imageMogr2/')[0]}"></picture>`;
+                        const imgUrl = pic.picUrl.match(/\.[a-z0-9]+?\?imageMogr2/) ? pic.picUrl.split('?imageMogr2/')[0] : pic.picUrl.replace(/thumbnail\/.+/, '');
+                        description += `<br/><picture><source srcset="${pic.picUrl.split('/thumbnail/')[0]}/strip/format/webp" type="image/webp"><source srcset="${imgUrl}" type="image/${type}"><img src="${imgUrl}"></picture>`;
                     }
                 });
             }
