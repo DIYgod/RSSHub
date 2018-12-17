@@ -1,15 +1,35 @@
 module.exports = async (ctx, next) => {
     await next();
 
+    const getUnicodeStr = (str) =>
+        Array.prototype.reduce
+            .call(
+                str,
+                (unicodeStr, item) => {
+                    if (item === '|') {
+                        unicodeStr += item;
+                    } else {
+                        unicodeStr += `&#x${item.charCodeAt(0).toString(16)};`;
+                    }
+                    return unicodeStr;
+                },
+                ''
+            )
+            .toUpperCase();
+
     // filter
     if (ctx.state.data && ctx.query && (ctx.query.filter || ctx.query.filter_title || ctx.query.filter_description)) {
         ctx.state.data.item = ctx.state.data.item.filter((item) => {
             const title = item.title;
             const description = item.description || title;
             return !(
-                (ctx.query.filter && !title.match(ctx.query.filter) && !description.match(ctx.query.filter)) ||
-                (ctx.query.filter_title && !title.match(ctx.query.filter_title)) ||
-                (ctx.query.filter_description && !description.match(ctx.query.filter_description))
+                (ctx.query.filter &&
+                    !title.match(ctx.query.filter) &&
+                    !title.toUpperCase().match(getUnicodeStr(ctx.query.filter)) &&
+                    !description.match(ctx.query.filter) &&
+                    !description.toUpperCase().match(getUnicodeStr(ctx.query.filter))) ||
+                (ctx.query.filter_title && !title.match(ctx.query.filter_title) && !title.toUpperCase().match(getUnicodeStr(ctx.query.filter_title))) ||
+                (ctx.query.filter_description && !description.match(ctx.query.filter_description) && !description.toUpperCase().match(getUnicodeStr(ctx.query.filter_description)))
             );
         });
     }
@@ -18,9 +38,13 @@ module.exports = async (ctx, next) => {
             const title = item.title;
             const description = item.description || title;
             return (
-                (ctx.query.filterout && !title.match(ctx.query.filterout) && !description.match(ctx.query.filterout)) ||
-                (ctx.query.filterout_title && !title.match(ctx.query.filterout_title)) ||
-                (ctx.query.filterout_description && !description.match(ctx.query.filterout_description))
+                (ctx.query.filterout &&
+                    !title.match(ctx.query.filterout) &&
+                    !title.toUpperCase().match(getUnicodeStr(ctx.query.filterout)) &&
+                    !description.match(ctx.query.filterout) &&
+                    !description.toUpperCase().match(getUnicodeStr(ctx.query.filterout))) ||
+                (ctx.query.filterout_title && !title.match(ctx.query.filterout_title) && !title.toUpperCase().match(getUnicodeStr(ctx.query.filterout_title))) ||
+                (ctx.query.filterout_description && !description.match(ctx.query.filterout_description) && !description.toUpperCase().match(getUnicodeStr(ctx.query.filterout_description)))
             );
         });
     }
