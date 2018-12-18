@@ -8,7 +8,7 @@ module.exports = async (ctx) => {
         outageStartTime = new Date( Date.now() - 86400000 ).toISOString().slice(0,10);
     }
     if (!outageEndTime) {
-        outageStartTime = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        outageEndTime = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
     }
     const anHui = provinceNo === '34101' ? '01' : '02';
     const response = await axios({
