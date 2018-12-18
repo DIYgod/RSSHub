@@ -4,11 +4,11 @@ const qs = require('querystring');
 module.exports = async (ctx) => {
     const { orgNo, provinceNo, scope = '' } = ctx.params;
     let { outageStartTime, outageEndTime } = ctx.params;
-    if(!outageStartTime){
-        let outageStartTime = new Date( Date.now() - 86400000 ).toISOString().slice(0,10);
+    if( !outageStartTime ){
+        outageStartTime = new Date( Date.now() - 86400000 ).toISOString().slice(0,10);
     }
-    if(!outageEndTime){
-        let outageEndTime = new Date( Date.now() + 86400000 ).toISOString().slice(0,10);
+    if( !outageEndTime ){
+        outageEndTime = new Date( Date.now() + 86400000 ).toISOString().slice(0,10);
     }
     const anHui = provinceNo === '34101' ? '01' : '02';
     const response = await axios({
