@@ -2,7 +2,9 @@ const axios = require('../../utils/axios');
 const qs = require('querystring');
 
 module.exports = async (ctx) => {
-    const { orgNo, provinceNo, outageStartTime, outageEndTime, scope = '' } = ctx.params;
+    const { orgNo, provinceNo, outageStartTimeDeprecated, outageEndTimeDeprecated, scope = '' } = ctx.params;
+    const outageStartTime = new Date( Date.now() - 86400000 ).toISOString().slice(0,10);
+    const outageEndTime = new Date( Date.now() + 86400000 ).toISOString().slice(0,10);
     const anHui = provinceNo === '34101' ? '01' : '02';
     const response = await axios({
         method: 'post',
