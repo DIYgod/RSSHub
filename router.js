@@ -669,6 +669,9 @@ router.get('/wzbc/:type?', require('./routes/universities/wzbc/news'));
 // 河南大学
 router.get('/henu/:type?', require('./routes/universities/henu/news'));
 
+// 南开大学
+router.get('/nku/jwc/:type?', require('./routes/universities/nku/jwc/index'));
+
 // ifanr
 router.get('/ifanr/:channel?', require('./routes/ifanr/index'));
 
