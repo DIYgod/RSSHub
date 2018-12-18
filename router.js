@@ -929,6 +929,7 @@ router.get('/facebook/page/:id', require('./routes/facebook/page'));
 
 // 停电通知
 router.get('/tingdiantz/95598/:orgNo/:provinceNo/:outageStartTime/:outageEndTime/:scope?', require('./routes/tingdiantz/95598'));
+router.get('/tingdiantz/95598/:orgNo/:provinceNo/:scope?', require('./routes/tingdiantz/95598'));
 
 // 36kr
 router.get('/36kr/search/article/:keyword', require('./routes/36kr/search/article'));
