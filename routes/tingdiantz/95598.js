@@ -5,10 +5,10 @@ module.exports = async (ctx) => {
     const { orgNo, provinceNo, scope = '' } = ctx.params;
     let { outageStartTime, outageEndTime } = ctx.params;
     if (!outageStartTime) {
-        outageStartTime = new Date( Date.now() - 86400000 ).toISOString().slice(0,10);
+        outageStartTime = new Date( Date.now() - 86400000 ).toISOString().slice(0, 10);
     }
     if (!outageEndTime) {
-        outageEndTime = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        outageEndTime = new Date( Date.now() - 86400000 ).toISOString().slice(0, 10);
     }
     const anHui = provinceNo === '34101' ? '01' : '02';
     const response = await axios({
