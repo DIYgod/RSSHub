@@ -1106,11 +1106,17 @@ GitHub 官方也提供了一些 RSS:
 
 ### MIUI
 
-<route name="MIUI 新版本发布" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`', '类型, 可选参数']">
+<route name="MIUI 新版本发布" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型, 可选参数', '地区, 默认为 `cn`']">
 
-| 稳定版  | 开发版 |
-| ------- | ------ |
-| release | dev    |
+| 类型   | type    |
+| ------ | ------- |
+| 稳定版 | release |
+| 开发版 | dev     |
+
+| 地区   | region |
+| ------ | ------ |
+| 国内版 | cn     |
+| 国际版 | global |
 
 </route>
 

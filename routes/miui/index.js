@@ -4,10 +4,11 @@ const cacheLength = 5;
 const cacheDays = 30;
 
 module.exports = async (ctx) => {
-    const { type = 'release', device } = ctx.params;
+    const { type = 'release', device, region = 'cn' } = ctx.params;
     const releaseType = type === 'release' ? 'F' : 'X';
     const localeTypeName = type === 'release' ? '稳定版' : '开发版';
-    const cacheName = `RSSHubMIUIUpdate|${device}|${releaseType}`;
+    const regionName = region === 'global' ? 'global' : 'cn';
+    const cacheName = `RSSHubMIUIUpdate|${device}|${releaseType}|${regionName}`;
 
     const response = await axios({
         method: 'get',
@@ -16,7 +17,7 @@ module.exports = async (ctx) => {
         params: {
             d: device,
             b: releaseType,
-            r: 'cn',
+            r: regionName,
             l: 'zh_CN',
             n: '',
         },
