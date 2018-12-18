@@ -4,10 +4,10 @@ const qs = require('querystring');
 module.exports = async (ctx) => {
     const { orgNo, provinceNo, scope = '' } = ctx.params;
     let { outageStartTime, outageEndTime } = ctx.params;
-    if(!outageStartTime) {
+    if (!outageStartTime) {
         outageStartTime = new Date( Date.now() - 86400000 ).toISOString().slice(0,10);
     }
-    if(!outageEndTime) {
+    if (!outageEndTime) {
         outageEndTime = new Date( Date.now() + 86400000 ).toISOString().slice(0,10);
     }
     const anHui = provinceNo === '34101' ? '01' : '02';
