@@ -2,15 +2,8 @@ const axios = require('../../utils/axios');
 const qs = require('querystring');
 
 module.exports = async (ctx) => {
-    const {
-        orgNo,
-        provinceNo,
-        scope = ''
-    } = ctx.params;
-    let {
-        outageStartTime,
-        outageEndTime
-    } = ctx.params;
+    const { orgNo, provinceNo, scope = '' } = ctx.params;
+    let { outageStartTime, outageEndTime } = ctx.params;
     if (!outageStartTime) {
         outageStartTime = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
     }
