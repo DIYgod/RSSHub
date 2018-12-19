@@ -933,4 +933,7 @@ router.get('/tingdiantz/95598/:orgNo/:provinceNo/:outageStartTime/:outageEndTime
 // 36kr
 router.get('/36kr/search/article/:keyword', require('./routes/36kr/search/article'));
 
+// icourse163
+router.get('/icourse163/newest', require('./routes/icourse163/newest'));
+
 module.exports = router;
