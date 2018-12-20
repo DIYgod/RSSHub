@@ -360,7 +360,7 @@ router.get('/tingshuitz/guangzhou', require('./routes/tingshuitz/guangzhou'));
 router.get('/tingshuitz/dongguan', require('./routes/tingshuitz/dongguan'));
 
 // MIUI 更新
-router.get('/miui/:device/:type?', require('./routes/miui/index'));
+router.get('/miui/:device/:type?/:region?', require('./routes/miui/index'));
 
 // 米哈游
 router.get('/mihoyo/bh3/:type', require('./routes/mihoyo/bh3'));
