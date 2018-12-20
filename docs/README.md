@@ -1770,6 +1770,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </route>
 
+### 南开大学
+
+<route name="南开大学教务处" author="zhongweili" example="/nku/jwc/1" path="/universities/nku/jwc/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
+
+| 通知公告 | 新闻动态 |
+| -------- | -------- |
+| 1        | 2        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
