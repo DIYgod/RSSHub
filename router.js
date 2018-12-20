@@ -937,4 +937,7 @@ router.get('/tingdiantz/95598/:orgNo/:provinceNo/:scope?', require('./routes/tin
 // 36kr
 router.get('/36kr/search/article/:keyword', require('./routes/36kr/search/article'));
 
+// icourse163
+router.get('/icourse163/newest', require('./routes/icourse163/newest'));
+
 module.exports = router;
