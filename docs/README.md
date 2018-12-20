@@ -1973,7 +1973,9 @@ Solidot 提供的 feed:
 
 ### 停电通知
 
-<route name="国家电网" author="xyqfer" example="/tingdiantz/95598/36401/36101/2018-12-11/2018-12-18" path="/tingdiantz/95598/:orgNo/:provinceNo/:outageStartTime/:outageEndTime/:scope?" :paramsDesc="['所属省供电公司编码', '所属地市供电公司编码', '开始时间', '结束时间', '停电范围关键字']"/>
+获取未来一天的停电通知
+
+<route name="国家电网" author="xyqfer" example="/tingdiantz/95598/36401/36101" path="/tingdiantz/95598/:orgNo/:provinceNo/:scope?" :paramsDesc="['所属省供电公司编码', '所属地市供电公司编码', '停电范围关键字']"/>
 
 > 以上参数可从[查询页面](http://m.95598.cn/95598/woutageNotice/winitOutageNotice)打开控制台抓包获得
 
