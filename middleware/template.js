@@ -1,7 +1,6 @@
 const art = require('art-template');
 const path = require('path');
 const config = require('../config');
-const he = require('he');
 const typeRegrx = /\.(atom|rss)$/;
 const unsupportedRegrx = /\.json$/;
 
@@ -48,15 +47,6 @@ module.exports = async (ctx, next) => {
                         const itunes_duration = Math.floor(item.enclosure_length / 3600) + ':' + Math.floor((item.enclosure_length % 3600) / 60) + ':' + (((item.enclosure_length % 3600) % 60) / 100).toFixed(2).slice(-2);
                         item.itunes_duration = itunes_duration;
                     }
-                });
-
-            // decode HTML entities
-            ctx.state.data.title && (ctx.state.data.title = he.decode(ctx.state.data.title));
-            ctx.state.data.description && (ctx.state.data.description = he.decode(ctx.state.data.description));
-            ctx.state.data.item &&
-                ctx.state.data.item.forEach((item) => {
-                    item.title && (item.title = he.decode(item.title));
-                    item.description && (item.description = he.decode(item.description));
                 });
         }
 
