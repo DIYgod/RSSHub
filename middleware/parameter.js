@@ -4,13 +4,15 @@ module.exports = async (ctx, next) => {
     await next();
 
     // decode HTML entities
-    ctx.state.data.title && (ctx.state.data.title = he.decode(ctx.state.data.title));
-    ctx.state.data.description && (ctx.state.data.description = he.decode(ctx.state.data.description));
-    ctx.state.data.item &&
-        ctx.state.data.item.forEach((item) => {
-            item.title && (item.title = he.decode(item.title));
-            item.description && (item.description = he.decode(item.description));
-        });
+    if (ctx.state.data) {
+        ctx.state.data.title && (ctx.state.data.title = he.decode(ctx.state.data.title));
+        ctx.state.data.description && (ctx.state.data.description = he.decode(ctx.state.data.description));
+        ctx.state.data.item &&
+            ctx.state.data.item.forEach((item) => {
+                item.title && (item.title = he.decode(item.title));
+                item.description && (item.description = he.decode(item.description));
+            });
+    }
 
     // filter
     if (ctx.state.data && ctx.query && (ctx.query.filter || ctx.query.filter_title || ctx.query.filter_description)) {
