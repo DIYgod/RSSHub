@@ -994,6 +994,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="图卦" author="tgly307" example="/dapenti/tugua" path="/dapenti/tugua"/>
 
+<route name="主题" author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" :paramsDesc="['主题 id']"/>
+
 ### Konachan Anime Wallpapers
 
 ::: tip 提示
