@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "eslint": "5.10.0",
+    "eslint": "5.11.0",
     "eslint-config-prettier": "3.3.0",
     "eslint-plugin-prettier": "3.0.0",
     "lint-staged": "8.1.0",
