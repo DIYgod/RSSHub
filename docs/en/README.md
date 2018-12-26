@@ -57,6 +57,8 @@ Set `filter` to include the content
 
 -   filter_description: filter description only
 
+-   filter_author: filter author only
+
 For example: [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
 
 Set `filterout` to exclude unwanted content
@@ -66,6 +68,8 @@ Set `filterout` to exclude unwanted content
 -   filterout_title: filter title only
 
 -   filterout_description: filter description only
+
+-   filterout_author: filter author only
 
 For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
