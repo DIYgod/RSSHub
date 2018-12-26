@@ -26,7 +26,7 @@ module.exports = async (ctx) => {
         const url = item.url;
         const urlTitle = item.urlTitle;
         const description = `
-            ${content}<br>
+            ${content.replace(/\n/g, '<br>')}<br>
             ${imgs}<br>
             <a href="${url}">${urlTitle}</a><br>
         `;
