@@ -2,35 +2,48 @@ const axios = require('../../utils/axios');
 
 module.exports = async (ctx) => {
     const response = await axios({
-        method: 'get',
-        url: 'https://short-msg-ms.juejin.im/v1/pinList/recommend?uid=&device_id=&token=&src=web&before&limit=50',
+        method: 'post',
+        url: 'https://web-api.juejin.im/graphql',
+        data: { operationName: '', query: '', variables: { size: 20, after: '', afterPosition: '' }, extensions: { query: { id: '964dab26a3f9997283d173b865509890' } } },
+        headers: {
+            'X-Agent': 'Juejin/Web',
+        },
     });
 
-    const data = response.data.d.list;
-
-    ctx.state.data = {
-        title: '沸点 - 掘金',
-        link: 'https://juejin.im/pins',
-        item: data.map(({ content, objectId, createdAt, user, pictures, url, urlTitle }) => {
-            const imgs = pictures.reduce((imgs, item) => {
-                imgs += `
+    const items = response.data.data.recommendedActivityFeed.items.edges.map(({ node: { targets: [item] } }) => {
+        const content = item.content;
+        const title = content;
+        const guid = item.id;
+        const link = `https://juejin.im/pin/${guid}`;
+        const pubDate = new Date(item.createdAt).toUTCString();
+        const author = item.user.username;
+        const imgs = item.pictures.reduce((imgs, item) => {
+            imgs += `
           <img referrerpolicy="no-referrer" src="${item}"><br>
         `;
-                return imgs;
-            }, '');
+            return imgs;
+        }, '');
+        const url = item.url;
+        const urlTitle = item.urlTitle;
+        const description = `
+            ${content.replace(/\n/g, '<br>')}<br>
+            ${imgs}<br>
+            <a href="${url}">${urlTitle}</a><br>
+        `;
 
-            return {
-                title: content,
-                link: `https://juejin.im/pin/${objectId}`,
-                description: `
-          ${content}<br>
-          ${imgs}<br>
-          <a href="${url}">${urlTitle}</a><br>
-        `,
-                pubDate: new Date(createdAt).toUTCString(),
-                author: user.username,
-                guid: objectId,
-            };
-        }),
+        return {
+            title,
+            link,
+            description,
+            guid,
+            pubDate,
+            author,
+        };
+    });
+
+    ctx.state.data = {
+        title: '沸点 - 动态',
+        link: 'https://juejin.im/activities/recommended',
+        item: items,
     };
 };
