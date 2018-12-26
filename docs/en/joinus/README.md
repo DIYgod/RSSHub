@@ -8,7 +8,7 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
 
 ## Submit new RSS source
 
-1.  Add a new route in [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js)
+1.  Add a new route in [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js)
 
 1.  Add the script to the corresponding directory [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes)
 
@@ -87,7 +87,7 @@ Some websites provides no API and pages require rendering too, use [puppeteer](h
 
 ### Enable caching
 
-All routes has a default cache expiry time set in `config.js`, it should be increased when the data source is not subject to frequent updates.
+All routes has a default cache expiry time set in `lib/config.js`, it should be increased when the data source is not subject to frequent updates.
 
 Add to cache:
 

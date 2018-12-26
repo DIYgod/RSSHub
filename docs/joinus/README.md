@@ -260,7 +260,7 @@ sidebar: auto
 
 #### 使用缓存
 
-所有路由都有一个缓存，全局缓存时间在 `config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间。
+所有路由都有一个缓存，全局缓存时间在 `lib/config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间。
 
 -   添加缓存:
 
@@ -361,48 +361,48 @@ ctx.state.data = {
 
 ### 步骤 2: 添加脚本路由
 
-在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由：
+在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由：
 
 #### 举例
 
 1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
 
-| 类型                   | 代码                                                                               |
-| ---------------------- | ---------------------------------------------------------------------------------- |
-| 路由                   | `/bilibili/bangumi/:seasonid`                                                      |
-| 数据来源               | bilibili                                                                           |
-| 路由名称               | bangumi                                                                            |
-| 参数 1                 | :seasonid 必选                                                                     |
-| 参数 2                 | 无                                                                                 |
-| 参数 3                 | 无                                                                                 |
-| 脚本路径               | `./routes/bilibili/bangumi`                                                        |
-| router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
+| 类型                       | 代码                                                                               |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
+| 数据来源                   | bilibili                                                                           |
+| 路由名称                   | bangumi                                                                            |
+| 参数 1                     | :seasonid 必选                                                                     |
+| 参数 2                     | 无                                                                                 |
+| 参数 3                     | 无                                                                                 |
+| 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
+| lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
 
 1. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/routes/github/issue.js)
 
-| 类型                   | 代码                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| 路由                   | `/github/issue/:user/:repo`                                                  |
-| 数据来源               | github                                                                       |
-| 路由名称               | issue                                                                        |
-| 参数 1                 | :user 必选                                                                   |
-| 参数 2                 | :repo 必选                                                                   |
-| 参数 3                 | 无                                                                           |
-| 脚本路径               | `./routes/github/issue`                                                      |
-| router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
+| 类型                       | 代码                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| 路由                       | `/github/issue/:user/:repo`                                                  |
+| 数据来源                   | github                                                                       |
+| 路由名称                   | issue                                                                        |
+| 参数 1                     | :user 必选                                                                   |
+| 参数 2                     | :repo 必选                                                                   |
+| 参数 3                     | 无                                                                           |
+| 脚本路径                   | `./routes/github/issue`                                                      |
+| lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
 
 1. [embassy](https://github.com/DIYgod/RSSHub/blob/master/routes/embassy/index.js)
 
-| 类型                   | 代码                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| 路由                   | `/embassy/:country/:city?`                                                   |
-| 数据来源               | embassy                                                                      |
-| 路由名称               | 无                                                                           |
-| 参数 1                 | :country 必选                                                                |
-| 参数 2                 | ?city 可选                                                                   |
-| 参数 3                 | 无                                                                           |
-| 脚本路径               | `./routes/embassy/index`                                                     |
-| router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
+| 类型                       | 代码                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| 路由                       | `/embassy/:country/:city?`                                                   |
+| 数据来源                   | embassy                                                                      |
+| 路由名称                   | 无                                                                           |
+| 参数 1                     | :country 必选                                                                |
+| 参数 2                     | ?city 可选                                                                   |
+| 参数 3                     | 无                                                                           |
+| 脚本路径                   | `./routes/embassy/index`                                                     |
+| lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
 
 ### 步骤 3: 添加脚本文档
 

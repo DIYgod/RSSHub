@@ -101,7 +101,7 @@ RSSHub provides the following APIs:
 ### List of Public Routes
 
 ::: tip Tip
-This API **will not** return any routes under `protected_router.js`.
+This API **will not** return any routes under `lib/protected_router.js`.
 :::
 
 Eg: <https://rsshub.app/api/routes/github>

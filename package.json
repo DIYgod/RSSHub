@@ -2,15 +2,15 @@
   "name": "rsshub",
   "version": "0.0.1",
   "description": "Make RSS Great Again!",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node lib/index.js",
+    "dev": "nodemon lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
     "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run lint && CONNECT_DISABLED=1 node index.js"
+    "test": "npm run lint && CONNECT_DISABLED=1 node lib/index.js"
   },
   "repository": {
     "type": "git",
