@@ -210,6 +210,7 @@ router.get('/jandan/:sub_model', require('./routes/jandan/pic'));
 
 // 喷嚏
 router.get('/dapenti/tugua', require('./routes/dapenti/tugua'));
+router.get('/dapenti/subject/:id', require('./routes/dapenti/subject'));
 
 // Dockone
 router.get('/dockone/weekly', require('./routes/dockone/weekly'));
