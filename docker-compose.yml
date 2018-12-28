@@ -21,8 +21,8 @@ services:
       CACHE_TYPE: redis
       REDIS_URL: 'redis://db.redis:6379/'
     volumes:
-      - ./config/app.json:/app/app.json
-      - ./config/config.js:/app/config.js
+      - ./lib/config/app.json:/app/lib/app.json
+      - ./lib/config/config.js:/app/lib/config.js
     depends_on:
       - db.redis
 

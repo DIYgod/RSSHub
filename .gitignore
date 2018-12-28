@@ -7,8 +7,8 @@ package-lock.json
 .idea
 .DS_Store
 docs/.vuepress/dist
-config/app.json
-config/config.js
+lib/config/app.json
+lib/config/config.js
 yarn-error.log
 tmp
 *.swp
