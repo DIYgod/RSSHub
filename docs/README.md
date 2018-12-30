@@ -1870,6 +1870,8 @@ Category 列表:
 
 <route name="首页头条" author="HenryQW" example="/thepaper/featured" path="/thepaper/featured"/>
 
+<route name="频道" author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
+
 ### 联合早报
 
 <route name="即时新闻" author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为中港台']">
