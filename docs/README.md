@@ -794,6 +794,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="最新发布" author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
+### Linux Patchwork
+
+<route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
+
 ## 直播
 
 ### 哔哩哔哩直播
