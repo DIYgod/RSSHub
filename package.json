@@ -31,7 +31,7 @@
   "devDependencies": {
     "eslint": "5.11.1",
     "eslint-config-prettier": "3.3.0",
-    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-prettier": "3.0.1",
     "jest": "23.6.0",
     "lint-staged": "8.1.0",
     "nodemon": "1.18.9",
