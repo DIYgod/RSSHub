@@ -668,6 +668,15 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
+<route name="搜索结果" author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
+
+| 排序选项           | sort      |
+| ------------------ | --------- |
+| 最佳匹配           | bestmatch |
+| 根据 star 数量排序 | stars     |
+| 根据 fork 数量排序 | forks     |
+| 根据更新时间排序   | updated   |
+
 ### 开源中国
 
 <route name="资讯" author="tgly307" example="/oschina/news" path="/oschina/news"/>
