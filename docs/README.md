@@ -2734,3 +2734,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 中国大学 MOOC(慕课)
 
 <route name="最新" author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
+
+### 好奇心日报
+
+<route name="最新" author="suprio" example="/qdaily" path="/qdaily/index" />
