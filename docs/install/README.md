@@ -322,7 +322,7 @@ gcloud app deploy
 
     -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
--   `gitHhub`: [申请地址](https://github.com/settings/tokens)
+-   `github`: [申请地址](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
