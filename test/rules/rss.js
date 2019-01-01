@@ -6,7 +6,7 @@ function checkDate(date) {
     expect(Date.parse(date)).toEqual(expect.any(Number));
     // expect(new Date() - new Date(date)).toBeGreaterThan(0);
     // date must be in 1 year
-    expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12);
+    // expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12);
 }
 
 module.exports = async (response) => {
@@ -28,9 +28,12 @@ module.exports = async (response) => {
         expect(item.title).toEqual(expect.any(String));
         expect(item.link).toEqual(expect.any(String));
         expect(item.content).toEqual(expect.any(String));
-        expect(item.pubDate).toEqual(expect.any(String));
         expect(item.guid).toEqual(expect.any(String));
-        checkDate(item.pubDate);
+        if (item.pubDate) {
+            console.log(item.pubDate);
+            expect(item.pubDate).toEqual(expect.any(String));
+            checkDate(item.pubDate);
+        }
 
         // guid must be unique
         expect(guids).not.toContain(item.guid);

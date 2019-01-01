@@ -18,6 +18,6 @@ describe('response', () => {
         it(`GET ${url}`, async () => {
             const response = await request.get(url);
             await check(response);
-        });
+        }, 10e4);
     });
 });
