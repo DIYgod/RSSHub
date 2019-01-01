@@ -1,8 +1,13 @@
 {
-    "text": ["/"],
+    "text": [
+        "/"
+    ],
     "rss": [
         "/bilibili/bangumi/21680",
         "/weibo/user/1195230310",
+        "/weibo/user2/1195230310",
+        "/weibo/keyword/rsshub",
+        "/weibo/search/hot",
         "/bangumi/subject/240038",
         "/bangumi/calendar/today",
         "/bangumi/subject/240038/comments?minLength=100",

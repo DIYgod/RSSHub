@@ -30,7 +30,6 @@ module.exports = async (response) => {
         expect(item.content).toEqual(expect.any(String));
         expect(item.guid).toEqual(expect.any(String));
         if (item.pubDate) {
-            console.log(item.pubDate);
             expect(item.pubDate).toEqual(expect.any(String));
             checkDate(item.pubDate);
         }
