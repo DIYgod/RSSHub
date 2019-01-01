@@ -8,6 +8,10 @@ install:
 script:
   - npm run test
 
+after_script:
+  - npm install codecov
+  - ./node_modules/.bin/codecov
+
 cache:
   yarn: true
   directories:

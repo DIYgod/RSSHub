@@ -57,6 +57,8 @@ Set `filter` to include the content
 
 -   filter_description: filter description only
 
+-   filter_author: filter author only
+
 For example: [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
 
 Set `filterout` to exclude unwanted content
@@ -66,6 +68,8 @@ Set `filterout` to exclude unwanted content
 -   filterout_title: filter title only
 
 -   filterout_description: filter description only
+
+-   filterout_author: filter author only
 
 For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
@@ -97,7 +101,7 @@ RSSHub provides the following APIs:
 ### List of Public Routes
 
 ::: tip Tip
-This API **will not** return any routes under `protected_router.js`.
+This API **will not** return any routes under `lib/protected_router.js`.
 :::
 
 Eg: <https://rsshub.app/api/routes/github>
@@ -210,6 +214,8 @@ If no matching results were found, the server returns only a HTTP status code `2
 ### Twitter
 
 <routeEn name="User" path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['twitter handler']" />
+
+<routeEn name="List" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']"/>
 
 ### Instagram
 

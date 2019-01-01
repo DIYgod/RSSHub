@@ -80,7 +80,7 @@ $ git pull
 
 ### Configuration
 
-`RSSHub` reads its configurations from `config.js` or system environment variables.
+`RSSHub` reads its configurations from `lib/config.js` or system environment variables.
 
 **How to set system environment variables**
 
@@ -150,7 +150,7 @@ $ docker volume create redis-data
 
 2.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
 
-    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
+    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `lib/config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
     -   `USE_CHINA_NPM_REGISTRY=1` avoids GFW npm registry interference in mainland China. Default to 0.
 
 3.  Deploy
@@ -250,7 +250,7 @@ You can access your `Google App Engine URL` to check the deployment status
 
 ### Application Settings
 
-`RSSHub` reads its configurations from `config.js` or environment variables.
+`RSSHub` reads its configurations from `lib/config.js` or environment variables.
 
 ::: tip
 

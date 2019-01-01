@@ -9,6 +9,10 @@ sidebar: auto
 
 > 🍰 万物皆可 RSS
 
+[![telegram](https://img.shields.io/badge/chat-telegram-brightgreen.svg?style=flat-square)](https://t.me/rsshub)
+[![build status](https://img.shields.io/travis/DIYgod/RSSHub/master.svg?style=flat-square)](https://travis-ci.org/DIYgod/RSSHub)
+[![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square)](https://codecov.io/github/DIYgod/RSSHub?branch=master)
+
 RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
 [Telegram 群](https://t.me/rsshub)
@@ -61,6 +65,8 @@ filter 选出想要的内容
 
 -   filter_description: 过滤描述
 
+-   filter_author: 过滤作者
+
 举例: <https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件>
 
 filterout 去掉不要的内容
@@ -70,6 +76,8 @@ filterout 去掉不要的内容
 -   filterout_title: 过滤标题
 
 -   filterout_description: 过滤描述
+
+-   filterout_author: 过滤作者
 
 举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
 
@@ -319,6 +327,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="话题(频道/标签)" author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
 
+<route name="歌单" author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
+
 ### 微博
 
 <route name="博主（方案1）" author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
@@ -493,6 +503,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户" author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']"/>
 
+<route name="列表" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户 twitter 名', 'list 名称']"/>
+
 ### Instagram
 
 <route name="用户" author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']"/>
@@ -562,6 +574,12 @@ RSSHub 提供下列 API 接口:
 ### NGA
 
 <route name="分区帖子" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
+
+<route name="帖子" author="xyqfer" example="/nga/post/15939161" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']"/>
+
+### Facebook
+
+<route name="粉絲專頁" author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
 
 ## 编程
 
@@ -650,6 +668,15 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
+<route name="搜索结果" author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
+
+| 排序选项           | sort      |
+| ------------------ | --------- |
+| 最佳匹配           | bestmatch |
+| 根据 star 数量排序 | stars     |
+| 根据 fork 数量排序 | forks     |
+| 根据更新时间排序   | updated   |
+
 ### 开源中国
 
 <route name="资讯" author="tgly307" example="/oschina/news" path="/oschina/news"/>
@@ -682,9 +709,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="分类订阅" author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
 
-| 360 网络安全周报 | 活动     | 　知识　  | 　资讯　 | 　招聘　 |
-| ---------------- | -------- | --------- | -------- | -------- |
-| week             | activity | knowledge | news     | job      |
+| 360 网络安全周报 | 活动     | 知识      | 资讯 | 招聘 |
+| ---------------- | -------- | --------- | ---- | ---- |
+| week             | activity | knowledge | news | job  |
 
 </route>
 
@@ -766,6 +793,10 @@ GitHub 官方也提供了一些 RSS:
 ### TesterHome
 
 <route name="最新发布" author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
+
+### Linux Patchwork
+
+<route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
 
 ## 直播
 
@@ -932,7 +963,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id" :paramsDesc="['影视 id，对应影视的 URL 中找到']"/>
+<route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']"/>
 
 ### Sankaku Complex
 
@@ -958,7 +989,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="详情" author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
 
-### 豆瓣美女
+### 不羞涩
 
 <route name="分类" author="kba977" example="/dbmv" path="/dbmv/:category?" :paramsDesc="['分类 id - 若不填该参数, 默认所有']">
 
@@ -985,6 +1016,8 @@ GitHub 官方也提供了一些 RSS:
 ### 喷嚏
 
 <route name="图卦" author="tgly307" example="/dapenti/tugua" path="/dapenti/tugua"/>
+
+<route name="主题" author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" :paramsDesc="['主题 id']"/>
 
 ### Konachan Anime Wallpapers
 
@@ -1098,11 +1131,17 @@ GitHub 官方也提供了一些 RSS:
 
 ### MIUI
 
-<route name="MIUI 新版本发布" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`', '类型, 可选参数']">
+<route name="MIUI 新版本发布" author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型, 可选参数', '地区, 默认为 `cn`']">
 
-| 稳定版  | 开发版 |
-| ------- | ------ |
-| release | dev    |
+| 类型   | type    |
+| ------ | ------- |
+| 稳定版 | release |
+| 开发版 | dev     |
+
+| 地区   | region |
+| ------ | ------ |
+| 国内版 | cn     |
+| 国际版 | global |
 
 </route>
 
@@ -1254,6 +1293,28 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="研究生招生网通知公告" author="Chingyat" example="/seu/yzb/1" path="/universities/seu/yzb/:type" :paramsDesc="['1 为硕士招生, 2 为博士招生, 3 为港澳台及中外合作办学']"/>
 
+<route name="东南大学计算机技术与工程学院" author="LogicJake" example="/seu/cse/xyxw" path="/universities/seu/cse/:type?" :paramsDesc="['分类名(默认为xyxw)']"/>
+
+| 学院新闻 | 通知公告 | 教务信息 | 就业信息 | 学工事务 |
+| -------- | -------- | -------- | -------- | -------- |
+| xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |
+
+### 南京航空航天大学
+
+<route name="教务通知" author="arcosx" example="/nuaa/jwc/all" path="/universities/nuaa/jwc/:type" :paramsDesc="['分类名']">
+
+| 全部 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | jxfw     | jxjs     | xspy     | jxzy     |
+
+</route>
+
+<route name="计算机科学与技术学院" author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+
+| 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
+
 ### 哈尔滨工业大学
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
@@ -1274,11 +1335,21 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="电子信息与电气工程学院本科教务办 -- 直升研究生" author="SkyZH" example="/sjtu/seiee/bjwb/postgraduate" path="/universities/sjtu/seiee/bjwb/postgraduate"/>
 
+<route name="电子信息与电气工程学院本科教务办 -- 国际办学" author="SkyZH" example="/sjtu/seiee/bjwb/international" path="/universities/sjtu/seiee/bjwb/international"/>
+
 <route name="研究生通知公告" author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/universities/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
 
 | 通知公告 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 空       | gzxx     | xwxx1    | pyxx     | xwxx     | gjjl     | cxgc     |
+
+</route>
+
+<route name="电子信息与电气工程学院学生工作办公室" author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
+
+| 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 |
+| -------- | ----------- | ------------ | -------- | -------- | -------- |
+| 空       | scholarship | financialAid | lecture  | activity | news     |
 
 </route>
 
@@ -1365,6 +1436,100 @@ category 列表：
 ### 重庆大学
 
 <route name="教务网通知公告" author="El-Chiang" example="/cqu/jwc/announcement" path="/universities/cqu/jwc/announcement"/>
+
+### 南京信息工程大学
+
+::: tip 提示
+
+路由地址全部按照 **学校官网域名和栏目编号** 设计
+
+使用方法：
+
+以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目
+
+获得 URL 中的**分域名**和**栏目编号（可选）**：https://`bulletin`.nuist.edu.cn/`791`/list.htm
+
+将其替换到 RSS 路由地址中即可：
+
+https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bulletin`/`791`
+
+:::
+
+ <route name="南信大信息公告栏" author="gylidian" example="/nuist/bulletin/791" path="/universities/nuist/bulletin/:category?" :paramsDesc="['默认为 `791`']"/>
+
+| 全部 | 文件公告 | 学术报告 | 招标信息 | 会议通知 | 党政事务 | 组织人事 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 791  | 792      | xsbgw    | 779      | 780      | 781      | 782      |
+
+| 科研信息 | 招生就业 | 教学考试 | 专题讲座 | 校园活动 | 学院动态 | 其他 |
+| -------- | -------- | -------- | -------- | -------- | -------- | ---- |
+| 783      | 784      | 785      | 786      | 788      | 789      | qt   |
+
+::: warning 注意
+
+全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
+
+:::
+
+ </route>
+
+ <route name="NUIST CS（南信大计软院）" author="gylidian" example="/nuist/scs/2242" path="/universities/nuist/scs/:category?" :paramsDesc="['默认为 `2242`']"/>
+
+| 学院新闻 | 学生工作 | 通知公告 | 教务通知 | 科研动态 | 招生就业 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 2242     | 2237     | 2245     | 2246     | 2243     | 2244     |
+
+ </route>
+
+ <route name="南信大本科教学信息网" author="gylidian" example="/nuist/jwc/1" path="/universities/nuist/jwc/:category?" :paramsDesc="['默认为 `1`']"/>
+
+| 通知公告 | 教学新闻 | 规章制度 | 教学研究 | 教务管理 | 考试中心 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 4        | 5        | 6        | 7        |
+
+| 教材建设 | 实践教学 | 三百工程 | 创新创业 | 规章制度 | 业务办理 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 8        | 9        | 56       | 60       | 62       | 43       |
+
+ </route>
+
+ <route name="南信大研究生院学科建设处" author="gylidian" example="/nuist/yjs/11" path="/universities/nuist/yjs/:category?" :paramsDesc="['默认为 `11`']"/>
+
+| 招生工作 | 培养工作 | 学位工作 | 学生工作 | 就业工作 | 国际合作 | 文件下载 | 工作动态 | 通知公告 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 3        | 4        | 5        | 6        | 7        | 8        | 9        | 10       | 11       |
+
+ </route>
+
+ <route name="南信大学生工作处" author="gylidian" example="/nuist/xgc" path="/universities/nuist/xgc"/>
+
+ <route name="NUIST ESE（南信大环科院）" author="gylidian" example="/nuist/sese/11" path="/universities/nuist/sese/:category?" :paramsDesc="['默认为 `11`']"/>
+
+| 通知公告 | 新闻快讯 | 学术动态 | 学生工作 | 研究生教育 | 本科教育 |
+| -------- | -------- | -------- | -------- | ---------- | -------- |
+| 11       | 10       | 12       | 6        | 4          | 3        |
+
+ </route>
+
+ <route name="NUIST AS（南信大大气科学学院）" author="gylidian" example="/nuist/cas/12" path="/universities/nuist/cas/:category?" :paramsDesc="['默认为 `12`']"/>
+
+| 信息公告 | 新闻快讯 | 科学研究 | 网上公示 | 本科教育 | 研究生教育 |
+| -------- | -------- | -------- | -------- | -------- | ---------- |
+| 12       | 11       | 3        | 110      | 4        | 5          |
+
+ </route>
+
+ <route name="南京信息工程大学图书馆" author="gylidian" example="/nuist/lib" path="/universities/nuist/library/lib"/>
+
+::: tip 提示
+
+学校图书馆官网提供了[新书通报](http://lib2.nuist.edu.cn/newbook/newbook_cls_browse.php)的订阅
+
+由于图书馆通知频率过低(故只提供 3 条)，有待将其和 **网络信息中心**、**基建处**、**总务处** 等的通知整合起来
+
+:::
+
+ </route>
 
 ### 成都信息工程大学
 
@@ -1624,6 +1789,28 @@ category 列表：
 | -------- | -------- | -------- | -------- | ------- | -------- | -------- |
 | news     | media    | notice   | jobs     | workday | tender   | activity |
 
+</route>
+
+### 河南大学
+
+<route name="河南大学" author="CasterWx" example="/henu/xszl" path="/henu/:type" :paramsDesc="['分类, 见下表']">
+
+| 学生专栏 | 教师专栏 | 新闻公告 | 院部动态 | 高教前沿 |
+| -------- | -------- | -------- | -------- | -------- |
+| xszl     | jszl     | xwgg     | ybdt     | gjqy     |
+
+</route>
+
+### 南开大学
+
+<route name="南开大学教务处" author="zhongweili" example="/nku/jwc/1" path="/universities/nku/jwc/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
+
+| 通知公告 | 新闻动态 |
+| -------- | -------- |
+| 1        | 2        |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
@@ -1688,6 +1875,8 @@ Category 列表:
 
 </route>
 
+<route name="每日简报" author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+
 ### 新京报
 
 <route name="栏目" author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
@@ -1695,6 +1884,8 @@ Category 列表:
 ### 澎湃新闻
 
 <route name="首页头条" author="HenryQW" example="/thepaper/featured" path="/thepaper/featured"/>
+
+<route name="频道" author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
 
 ### 联合早报
 
@@ -1822,6 +2013,14 @@ Solidot 提供的 feed:
 <route name="广州市" author="xyqfer" example="/tingshuitz/guangzhou" path="/tingshuitz/guangzhou"/>
 
 <route name="东莞市" author="victoriqueko" example="/tingshuitz/dongguan" path="/tingshuitz/dongguan"/>
+
+### 停电通知
+
+获取未来一天的停电通知
+
+<route name="国家电网" author="xyqfer" example="/tingdiantz/95598/36401/36101" path="/tingdiantz/95598/:orgNo/:provinceNo/:scope?" :paramsDesc="['所属省供电公司编码', '所属地市供电公司编码', '停电范围关键字']"/>
+
+> 以上参数可从[查询页面](http://m.95598.cn/95598/woutageNotice/winitOutageNotice)打开控制台抓包获得
 
 ### 中央气象台
 
@@ -2020,13 +2219,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="旅法师营地" author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
 
-| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王　 | 　电子游戏 | 　手机游戏 | 　桌面游戏 |
-| -------- | -------- | ------ | ------ | -------- | ---------- | ---------- | ---------- |
-| 1        | 2        | 3      | 14     | 16       | 4          | 22         | 9          |
+| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王 | 电子游戏 | 手机游戏 | 桌面游戏 |
+| -------- | -------- | ------ | ------ | ------ | -------- | -------- | -------- |
+| 1        | 2        | 3      | 14     | 16     | 4        | 22       | 9        |
 
-| 影之诗 | Artifact 　 | 玩家杂谈 | 营地电台　 | 2047 　 | 魂武 |
-| ------ | ----------- | -------- | ---------- | ------- | ---- |
-| 17     | 67          | 21       | 5          | 62      | 68   |
+| 影之诗 | Artifact | 玩家杂谈 | 营地电台 | 2047 | 魂武 |
+| ------ | -------- | -------- | -------- | ---- | ---- |
+| 17     | 67       | 21       | 5        | 62   | 68   |
 
 </route>
 
@@ -2037,6 +2236,17 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### a9vgNews 游戏新闻
 
 <route name="a9vgNews 游戏新闻" author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
+
+### Steam
+
+<route name="Steam search" author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']">
+参数 params 请从 Steam 的 URL 取得
+
+Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的 params 是 `specials=1&term=atelier`，将它填入 RSSHub 的路由就好
+
+</route>
+
+<route name="Steam news" author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']"/>
 
 ## 小说·文学·阅读
 
@@ -2254,7 +2464,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### Keep
 
-<route name="运动日记" author="Dectinc" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
+<route name="运动日记" author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
 
 ### 懂球帝
 
@@ -2366,6 +2576,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="首页" author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
 <route name="24小时热门" author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
+<route name="节目" author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
 
 ### 99% Invisible
 
@@ -2405,6 +2616,14 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 百度
 
 <route name="百度趣画" author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
+
+<route name="搜索风云榜" author="xyqfer" example="/baidu/topwords/1" path="/baidu/topwords/:boardId?" :paramsDesc="['榜单 id, 默认为`1`']">
+
+| 实时热点 | 今日热点 | 七日热点 | 民生热点 | 娱乐热点 | 体育热点 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 341      | 42       | 342      | 344      | 11       |
+
+</route>
 
 ### 搜狗
 
@@ -2497,3 +2716,25 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 <route name="分类/欧陆风云" author="MegrezZhu" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
 
 <route name="演员/欧陆风云" author="MegrezZhu" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
+
+### 虎嗅
+
+<route name="标签" author="xyqfer" example="/huxiu/tag/291" path="/huxiu/tag/:id" :paramsDesc="['标签 id']" />
+
+<route name="搜索" author="xyqfer" example="/huxiu/search/%E8%99%8E%E5%97%85%E6%97%A9%E6%8A%A5" path="/huxiu/search/:keyword" :paramsDesc="['关键字']" />
+
+### 扇贝
+
+<route name="打卡" author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" :paramsDesc="['用户 id']" />
+
+### 36kr
+
+<route name="搜索文章" author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
+
+### 中国大学 MOOC(慕课)
+
+<route name="最新" author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
+
+### 好奇心日报
+
+<route name="最新" author="suprio" example="/qdaily" path="/qdaily/index" />
