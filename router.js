@@ -537,4 +537,6 @@ router.get('/xclient/app/:name', require('./routes/xclient/app'));
 // hanhan海贼王更新：http://m.hanhande.com/op/
 router.get('/hanhan/op', require('./routes/hanhan/op'));
 
+router.get('/blog/yinwang',require('./routes/blog/yinwang'))
+
 module.exports = router;
