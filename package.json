@@ -10,7 +10,7 @@
     "docs:build": "vuepress build docs",
     "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
     "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run lint && CONNECT_DISABLED=1 node lib/index.js"
+    "test": "npm run lint && NODE_ENV=test jest --coverage --runInBand --forceExit"
   },
   "repository": {
     "type": "git",
@@ -29,13 +29,15 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "eslint": "5.11.0",
+    "eslint": "5.11.1",
     "eslint-config-prettier": "3.3.0",
-    "eslint-plugin-prettier": "3.0.0",
+    "eslint-plugin-prettier": "3.0.1",
+    "jest": "23.6.0",
     "lint-staged": "8.1.0",
     "nodemon": "1.18.9",
     "prettier": "1.15.3",
     "prettier-check": "2.0.0",
+    "supertest": "3.3.0",
     "vuepress": "0.14.8",
     "yorkie": "2.0.0"
   },
@@ -76,5 +78,16 @@
   },
   "engines": {
     "node": ">=8.0.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/*.js"
+    ],
+    "coverageReporters": [
+      "text-summary",
+      "lcov"
+    ],
+    "bail": true,
+    "testEnvironment": "node"
   }
 }
