@@ -57,7 +57,7 @@
     "imgur": "^0.3.1",
     "json-bigint": "0.3.0",
     "koa": "2.6.2",
-    "koa-basic-auth": "^3.0.0",
+    "koa-basic-auth": "^4.0.0",
     "koa-favicon": "2.0.1",
     "koa-mount": "^4.0.0",
     "koa-router": "7.4.0",
