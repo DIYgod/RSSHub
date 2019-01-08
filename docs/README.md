@@ -1958,6 +1958,8 @@ Category 列表:
 
 <route name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
 
+<route name="China" author="Polynomia" example="/guardian/china" path="/guardian/china">
+
 ::: tip 提示
 
 由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
