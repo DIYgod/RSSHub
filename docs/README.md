@@ -581,6 +581,10 @@ RSSHub 提供下列 API 接口:
 
 <route name="粉絲專頁" author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
 
+### 币乎
+
+<route name="用户动态" author="LogicJake" example="/bihu/people/activaties" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
+
 ## 编程
 
 ### 掘金
@@ -1953,6 +1957,8 @@ Category 列表:
 ### 卫报 The Guardian
 
 <route name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+
+<route name="China" author="Polynomia" example="/guardian/china" path="/guardian/china">
 
 ::: tip 提示
 
