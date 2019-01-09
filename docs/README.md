@@ -583,7 +583,7 @@ RSSHub 提供下列 API 接口:
 
 ### 币乎
 
-<route name="用户动态" author="LogicJake" example="/bihu/people/activaties" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
+<route name="用户动态" author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
 
 ## 编程
 
