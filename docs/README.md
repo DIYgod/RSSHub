@@ -2185,6 +2185,30 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="最新" author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
 
+### 京东众筹
+
+<route name="众筹项目" author="LogicJake" example="/jingdong/zhongchou/all/zcz/zhtj" path="/jingdong/zhongchou/:type/:status/:sort" :paramsDesc="['类型','状态','排序方式']">
+
+类型
+
+| 全部 | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| all  | kj   | ms   | jd   | sj   | yl   | wh   | gy   | qt   |
+
+状态
+
+| 全部 | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
+| ---- | ------ | ------ | -------- | -------- |
+| all  | yrz    | zcz    | zccg     | xmcg     |
+
+排序方式
+
+| 综合推荐 | 最新上线 | 金额最多 | 支持最多 | 即将结束 |
+| -------- | -------- | -------- | -------- | -------- |
+| zhtj     | zxsx     | jezg     | zczd     | jjjs     |
+
+</route>
+
 ## 游戏资讯
 
 ### 3DMGame
