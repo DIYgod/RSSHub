@@ -4,9 +4,9 @@ const parser = new Parser();
 function checkDate(date) {
     expect(date).toEqual(expect.any(String));
     expect(Date.parse(date)).toEqual(expect.any(Number));
-    // expect(new Date() - new Date(date)).toBeGreaterThan(0);
+    expect(new Date() - new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
     // date must be in 1 year
-    // expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12);
+    expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 5);
 }
 
 module.exports = async (response) => {
