@@ -286,6 +286,8 @@ gcloud app deploy
 
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
+`RSS_PROXY`: 使用 proxy 来访问, 目前只支持 SocksProxy, 格式为 socks://127.0.0.1:1234
+
 ### 用户认证
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证.

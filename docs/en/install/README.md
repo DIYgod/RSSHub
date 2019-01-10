@@ -280,6 +280,8 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
+`RSS_PROXY`: Using proxy to access most RSS source, only support socks proxy for now. eg. `socks://127.0.0.1:1234`
+
 ### User Authentication
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
