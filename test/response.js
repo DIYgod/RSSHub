@@ -2,7 +2,7 @@ const supertest = require('supertest');
 const app = require('../lib/index');
 const request = supertest(app.callback());
 
-const cases = require('./cases.json');
+const cases = require('./cases');
 const statusCheck = require('./rules/status');
 const check = require('./rules/index');
 
@@ -18,6 +18,6 @@ describe('response', () => {
         it(`GET ${url}`, async () => {
             const response = await request.get(url);
             await check(response);
-        });
+        }, 10e4);
     });
 });

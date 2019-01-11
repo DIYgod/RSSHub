@@ -389,7 +389,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众号（即刻来源）" author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-主题-精选](#/jike/topic/:id)']"/>
 
-<route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/:id" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
+<route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
 
 <route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
 
@@ -583,7 +583,7 @@ RSSHub 提供下列 API 接口:
 
 ### 币乎
 
-<route name="用户动态" author="LogicJake" example="/bihu/people/activaties" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
+<route name="用户动态" author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
 
 ## 编程
 
@@ -2184,6 +2184,30 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 ### 玩物志
 
 <route name="最新" author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
+
+### 京东众筹
+
+<route name="众筹项目" author="LogicJake" example="/jingdong/zhongchou/all/zcz/zhtj" path="/jingdong/zhongchou/:type/:status/:sort" :paramsDesc="['类型','状态','排序方式']">
+
+类型
+
+| 全部 | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| all  | kj   | ms   | jd   | sj   | yl   | wh   | gy   | qt   |
+
+状态
+
+| 全部 | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
+| ---- | ------ | ------ | -------- | -------- |
+| all  | yrz    | zcz    | zccg     | xmcg     |
+
+排序方式
+
+| 综合推荐 | 最新上线 | 金额最多 | 支持最多 | 即将结束 |
+| -------- | -------- | -------- | -------- | -------- |
+| zhtj     | zxsx     | jezg     | zczd     | jjjs     |
+
+</route>
 
 ## 游戏资讯
 

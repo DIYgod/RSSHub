@@ -4,9 +4,9 @@ const parser = new Parser();
 function checkDate(date) {
     expect(date).toEqual(expect.any(String));
     expect(Date.parse(date)).toEqual(expect.any(Number));
-    expect(new Date() - new Date(date)).toBeGreaterThan(0);
+    expect(new Date() - new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
     // date must be in 1 year
-    expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12);
+    expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 5);
 }
 
 module.exports = async (response) => {
@@ -28,9 +28,11 @@ module.exports = async (response) => {
         expect(item.title).toEqual(expect.any(String));
         expect(item.link).toEqual(expect.any(String));
         expect(item.content).toEqual(expect.any(String));
-        expect(item.pubDate).toEqual(expect.any(String));
         expect(item.guid).toEqual(expect.any(String));
-        checkDate(item.pubDate);
+        if (item.pubDate) {
+            expect(item.pubDate).toEqual(expect.any(String));
+            checkDate(item.pubDate);
+        }
 
         // guid must be unique
         expect(guids).not.toContain(item.guid);
