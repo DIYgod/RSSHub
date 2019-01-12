@@ -6,7 +6,7 @@ install:
   - yarn
 
 script:
-  - npm run test
+  - travis_wait 60 npm run test
 
 after_script:
   - npm install codecov

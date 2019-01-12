@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "eslint": "5.11.1",
+    "eslint": "5.12.0",
     "eslint-config-prettier": "3.3.0",
     "eslint-plugin-prettier": "3.0.1",
     "jest": "23.6.0",
@@ -57,7 +57,7 @@
     "imgur": "^0.3.1",
     "json-bigint": "0.3.0",
     "koa": "2.6.2",
-    "koa-basic-auth": "^3.0.0",
+    "koa-basic-auth": "^4.0.0",
     "koa-favicon": "2.0.1",
     "koa-mount": "^4.0.0",
     "koa-router": "7.4.0",
@@ -71,7 +71,7 @@
     "raven": "^2.6.4",
     "readall": "1.1.0",
     "redis": "2.8.0",
-    "rss-parser": "3.6.0",
+    "rss-parser": "3.6.2",
     "sharp": "^0.21.0",
     "twit": "2.2.11",
     "winston": "3.1.0"
@@ -81,7 +81,7 @@
   },
   "jest": {
     "testMatch": [
-      "**/test/*.js"
+      "**/test/index.js"
     ],
     "coverageReporters": [
       "text-summary",

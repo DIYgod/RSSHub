@@ -10,7 +10,7 @@ sidebar: auto
 
 ### 步骤 1: 编写脚本
 
-在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径下创建新的 js 脚本：
+在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
 
 #### 获取源数据
 
@@ -24,7 +24,7 @@ sidebar: auto
 
     1. **使用 axios 从接口获取数据**
 
-    样例：[/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/coin.js)。
+    样例：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
     使用 axios 通过数据源提供的 API 接口获取数据：
 
@@ -85,7 +85,7 @@ sidebar: auto
 
     2. **使用 axios 从 HTML 获取数据**
 
-    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)。
+    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
 
     使用 axios 请求 HTML 数据：
 
@@ -196,7 +196,7 @@ sidebar: auto
     :::
 
     部分网站**没有接口供调用，且页面需要渲染**才能获取正确的 HTML，
-    样例：[/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
+    样例：[/lib/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/sspai/series.js)
 
     ```js
     // 使用 RSSHub 提供的 puppeteer 工具类，初始化 Chrome 进程
@@ -274,7 +274,7 @@ ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存
 const value = await ctx.cache.get((key: string));
 ```
 
-例如知乎日报需要获取文章全文：[/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
+例如知乎日报需要获取文章全文：[/lib/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
 
 由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，从而提升性能并节省资源。
 
@@ -299,7 +299,7 @@ if (value) {
 
 #### 生成 RSS
 
-获取到的数据赋给 ctx.state.data, 然后数据会经过 [template.js](https://github.com/DIYgod/RSSHub/blob/master/middleware/template.js) 中间件处理，最后传到 [/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/views/rss.art) 来生成最后的 RSS 结果，每个字段的含义如下：
+获取到的数据赋给 ctx.state.data, 然后数据会经过 [template.js](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) 中间件处理，最后传到 [/lib/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/lib/views/rss.art) 来生成最后的 RSS 结果，每个字段的含义如下：
 
 ```js
 ctx.state.data = {
@@ -365,7 +365,7 @@ ctx.state.data = {
 
 #### 举例
 
-1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
+1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
 
 | 类型                       | 代码                                                                               |
 | -------------------------- | ---------------------------------------------------------------------------------- |
@@ -378,7 +378,7 @@ ctx.state.data = {
 | 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
 | lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
 
-1. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/routes/github/issue.js)
+1. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
 
 | 类型                       | 代码                                                                         |
 | -------------------------- | ---------------------------------------------------------------------------- |
@@ -391,7 +391,7 @@ ctx.state.data = {
 | 脚本路径                   | `./routes/github/issue`                                                      |
 | lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
 
-1. [embassy](https://github.com/DIYgod/RSSHub/blob/master/routes/embassy/index.js)
+1. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
 
 | 类型                       | 代码                                                                         |
 | -------------------------- | ---------------------------------------------------------------------------- |
