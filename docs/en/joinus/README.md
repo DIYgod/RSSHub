@@ -8,7 +8,7 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
 
 ## Submit new RSS source
 
-1.  Add a new route in [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js)
+1.  Add a new route in [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js)
 
 1.  Add the script to the corresponding directory [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes)
 
@@ -37,12 +37,19 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
         -   Use component slot for complicated description:
 
         ```vue
-        <routeEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
-        
-        This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
-        
-        For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
-        
+        <routeEn
+            name="Flight Deals"
+            author="HenryQW"
+            path="/hopper/:lowestOnly/:from/:to?"
+            example="/hopper/1/LHR/PEK"
+            :paramsDesc="[
+                'set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed',
+                'origin airport IATA code',
+                'destination airport IATA code, if unset the destination will be set to `anywhere`',
+            ]"
+        >
+            This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now). For
+            airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
         </routeEn>
         ```
 
@@ -80,7 +87,7 @@ Some websites provides no API and pages require rendering too, use [puppeteer](h
 
 ### Enable caching
 
-All routes has a default cache expiry time set in `config.js`, it should be increased when the data source is not subject to frequent updates.
+All routes has a default cache expiry time set in `lib/config.js`, it should be increased when the data source is not subject to frequent updates.
 
 Add to cache:
 
@@ -122,41 +129,37 @@ ctx.state.data = {
 };
 ```
 
-<details><summary>If you want to make a podcast feed</summary><br>
+#### Podcast feed
 
-Reference article:
-
--   [Create a podcast - Apple](https://help.apple.com/itc/podcasts_connect/?lang=en#/itca5b22233a)
--   Itunes podcast XML generator : https://codepen.io/jon-walstedt/pen/jsIup
--   Feed Validation Service : https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
-
-these datas can make your podcast subscribeable:
+Used for audio type feed, these **additional** datas can make your podcast subscribeable:
 
 ```js
 ctx.state.data = {
-    title: '', // The feed title
-    link: '', // The feed link
     itunes_author: '', // The channel's author, you must fill this data.
     itunes_category: '', // Channel category
     image: '', // Channel's image
-    description: '', // The feed description
-    language: '', // The language of the channel
     item: [
-        // An item of the feed
         {
-            title: '', // The item title
-            author: '', // Author of the article
-            category: '', // Article category
-            // category: [''], // Multiple category
-            description: '', // The article summury or content
-            pubDate: '', // The item publishing datetime
-            guid: '', // The item unique identifier, optional, default to the item link below.
-            link: '', // The item link
             itunes_item_image: '', // The item image
             enclosure_url: '', // The item's audio link
             enclosure_length: '', // The audio length, the unit is seconds.
             enclosure_type: '', // 'audio/mpeg' or 'audio/x-m4a' or others
-            itunes_duration: '', // Covert the 'enclosure_length' to hh:mm:ss (1:33:52)
+        },
+    ],
+};
+```
+
+#### BT feed
+
+Used for download type feed, these **additional** datas can make your BT client subscribeable and can auto download:
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            enclosure_url: '', // Magnet URI
+            enclosure_length: '', // The audio length, the unit is seconds, optional
+            enclosure_type: 'application/x-bittorrent', // Fixed to 'application/x-bittorrent'
         },
     ],
 };

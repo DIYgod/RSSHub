@@ -15,8 +15,8 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> | <a href="https://j.youzan.com/ccPcrY" target="_blank"><img width="180px" src="https://i.imgur.com/FZtFAGz.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
 
 
 ### Sponsors
@@ -57,6 +57,8 @@ Set `filter` to include the content
 
 -   filter_description: filter description only
 
+-   filter_author: filter author only
+
 For example: [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
 
 Set `filterout` to exclude unwanted content
@@ -66,6 +68,8 @@ Set `filterout` to exclude unwanted content
 -   filterout_title: filter title only
 
 -   filterout_description: filter description only
+
+-   filterout_author: filter author only
 
 For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
@@ -77,14 +81,13 @@ Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https
 
 ### Output Formats
 
-RSSHub supports RSS 2.0、Atom and [JSON Feed](https://jsonfeed.org/) as the output formats, simply append `.rss` `.atom` or `.json` to the end of the feed address, default to RSS 2.0
+RSSHub supports RSS 2.0 and Atom as the output formats, simply append `.rss` `.atom` to the end of the feed address, default to RSS 2.0
 
 For exmaple:
 
 -   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
 -   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
 -   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
--   JSON Feed - [https://rsshub.app/dribbble/popular.json](https://rsshub.app/dribbble/popular.json)
 -   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
 ## API
@@ -98,7 +101,7 @@ RSSHub provides the following APIs:
 ### List of Public Routes
 
 ::: tip Tip
-This API **will not** return any routes under `protected_router.js`.
+This API **will not** return any routes under `lib/protected_router.js`.
 :::
 
 Eg: <https://rsshub.app/api/routes/github>
@@ -212,6 +215,8 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 <routeEn name="User" path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['twitter handler']" />
 
+<routeEn name="List" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']"/>
+
 ### Instagram
 
 <routeEn name="User" path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" />
@@ -230,7 +235,9 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ::: tip
 
-Bot initialization required: Add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_bot) as an admin to the channel and send at least one message in the channel for the bot to obtain the chat_id.
+Bot initialization required: add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_bot) as an admin to the channel and send at least one message in the channel for the bot to obtain the _chat_id_.
+
+For private channels, pass the channel `id` (such as `-1001001234567`) intstead of `:username`. The easiest way to get id is [described here](https://stackoverflow.com/a/39943226/3160483).
 
 :::
 
@@ -389,3 +396,30 @@ Provides a better reading experience (full text articles) over the official one.
 ### United Nations
 
 <routeEn name="Security Council Vetoed a Resolution" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+### The Guardian
+
+<routeEn name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
+### iDownloadBlog
+
+<routeEn name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</routeEn>
+
+### 9To5
+
+<routeEn name="9To5 Sub-site" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
+
+Supported sub-sites：
+| Mac | Google | Toys |
+| --- | ------ | ---- |
+| Mac | Google | Toys |
+
+</routeEn>

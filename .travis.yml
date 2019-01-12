@@ -1,13 +1,16 @@
 language: node_js
 
-node_js:
-  - "lts/*"
+node_js: stable
 
 install:
   - yarn
 
 script:
-  - npm run test
+  - travis_wait 60 npm run test
+
+after_script:
+  - npm install codecov
+  - ./node_modules/.bin/codecov
 
 cache:
   yarn: true

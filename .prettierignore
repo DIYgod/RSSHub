@@ -2,3 +2,5 @@ package.json
 docs/.vuepress/dist
 package-lock.json
 .github/
+renovate.json
+coverage

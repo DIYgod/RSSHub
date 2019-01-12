@@ -10,7 +10,7 @@ sidebar: auto
 
 ### 步骤 1: 编写脚本
 
-在 [/routes/](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的路由对应路径下创建新的 js 脚本：
+在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
 
 #### 获取源数据
 
@@ -24,7 +24,7 @@ sidebar: auto
 
     1. **使用 axios 从接口获取数据**
 
-    样例：[/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/coin.js)。
+    样例：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
     使用 axios 通过数据源提供的 API 接口获取数据：
 
@@ -85,7 +85,7 @@ sidebar: auto
 
     2. **使用 axios 从 HTML 获取数据**
 
-    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/routes/jianshu/home.js)。
+    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
 
     使用 axios 请求 HTML 数据：
 
@@ -103,14 +103,77 @@ sidebar: auto
 
     ```js
     const $ = cheerio.load(data); // 使用 cheerio 加载返回的 HTML
-    const list = $('.note-list li'); // 使用 cheerio 选择器，选择 class="note-list" 下的所有 <li> 元素，返回 cheerio node 对象数组
+    const list = $('.note-list li').get();
+    // 使用 cheerio 选择器，选择 class="note-list" 下的所有 <li> 元素，返回 cheerio node 对象数组
+    // cheerio get() 方法将 cheerio node 对象数组转换为 node 对象数组
 
     // 注：每一个 cheerio node 对应一个 HTML DOM
     // 注：cheerio 选择器与 jquery 选择器几乎相同
     // 参考 cheerio 文档：https://cheerio.js.org/
     ```
 
-    赋值给 `ctx.state.data`
+    使用 /jianshu/utils.js 类进行全文获取：
+
+    ```js
+    const result = await util.ProcessFeed(list, ctx.cache);
+    ```
+
+    /jianshu/utils.js 类中的全文获取逻辑：
+
+    ```js
+    // 专门定义一个function用于加载文章内容
+    async function load(link) {
+        // 异步请求文章
+        const response = await axios.get(link);
+        // 加载文章内容
+        const $ = cheerio.load(response.data);
+
+        // 解析日期
+        const date = new Date(
+            $('.publish-time')
+                .text()
+                .match(/\d{4}.\d{2}.\d{2} \d{2}:\d{2}/)
+        );
+        const timeZone = 8;
+        const serverOffset = date.getTimezoneOffset() / 60;
+        const pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
+
+        // 提取内容
+        const description = $('.show-content-free').html();
+
+        // 返回解析的结果
+        return { description, pubDate };
+    }
+
+    // 使用 Promise.all() 进行 async 并发
+    const result = await Promise.all(
+        // 遍历每一篇文章
+        list.map(async (item) => {
+            const $ = cheerio.load(item);
+
+            const $title = $('.title');
+            // 还原相对链接为绝对链接
+            const itemUrl = url.resolve(host, $title.attr('href'));
+
+            // 列表上提取到的信息
+            const single = {
+                title: $title.text(),
+                link: itemUrl,
+                author: $('.nickname').text(),
+                guid: itemUrl,
+            };
+
+            // 使用tryGet方法从缓存获取内容。
+            // 当缓存中无法获取到链接内容的时候，则使用load方法加载文章内容。
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+
+            // 合并解析后的结果集作为该篇文章最终的输出结果
+            return Promise.resolve(Object.assign({}, single, other));
+        })
+    );
+    ```
+
+    将结果 `result` 赋值给 `ctx.state.data`
 
     ```js
     ctx.state.data = {
@@ -118,25 +181,7 @@ sidebar: auto
         link: 'https://www.jianshu.com',
         // 选择 <meta name="description"> 的 content 属性
         description: $('meta[name="description"]').attr('content'),
-        item:
-            list &&
-            list
-                .map((index, item) => {
-                    // 遍历 cheerio node 对象数组
-                    // 注意，此处采用的为 cheerio map() 方法与 node 内置 map() 不同
-                    item = $(item);
-                    return {
-                        // 文章标题
-                        title: item.find('.title').text(),
-                        // 文章正文，对每一个 <li> DOM 进行操作，生成正文
-                        description: `作者：${item.find('.nickname').text()}<br>描述：${item.find('.abstract').text()}<br><img referrerpolicy="no-referrer" src="https:${item.find('.img-blur').data('echo')}">`,
-                        // 文章发布时间
-                        pubDate: new Date(item.find('.time').data('shared-at')).toUTCString(),
-                        // 文章链接
-                        link: `https://www.jianshu.com${item.find('.title').attr('href')}`,
-                    };
-                })
-                .get(), // cheerio get() 方法将 cheerio node 对象数组转换为 node 对象数组
+        item: result,
     };
 
     // 至此本路由结束
@@ -151,7 +196,7 @@ sidebar: auto
     :::
 
     部分网站**没有接口供调用，且页面需要渲染**才能获取正确的 HTML，
-    样例：[/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/routes/sspai/series.js)
+    样例：[/lib/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/sspai/series.js)
 
     ```js
     // 使用 RSSHub 提供的 puppeteer 工具类，初始化 Chrome 进程
@@ -215,7 +260,7 @@ sidebar: auto
 
 #### 使用缓存
 
-所有路由都有一个缓存，全局缓存时间在 `config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间。
+所有路由都有一个缓存，全局缓存时间在 `lib/config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间。
 
 -   添加缓存:
 
@@ -229,7 +274,7 @@ ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存
 const value = await ctx.cache.get((key: string));
 ```
 
-例如知乎日报需要获取文章全文：[/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
+例如知乎日报需要获取文章全文：[/lib/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
 
 由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，从而提升性能并节省资源。
 
@@ -254,7 +299,7 @@ if (value) {
 
 #### 生成 RSS
 
-获取到的数据赋给 ctx.state.data, 然后数据会经过 [template.js](https://github.com/DIYgod/RSSHub/blob/master/middleware/template.js) 中间件处理，最后传到 [/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/views/rss.art) 来生成最后的 RSS 结果，每个字段的含义如下：
+获取到的数据赋给 ctx.state.data, 然后数据会经过 [template.js](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) 中间件处理，最后传到 [/lib/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/lib/views/rss.art) 来生成最后的 RSS 结果，每个字段的含义如下：
 
 ```js
 ctx.state.data = {
@@ -278,41 +323,37 @@ ctx.state.data = {
 };
 ```
 
-#### 制作播客 Podcast Feed
+##### 播客源
 
-参考文章：
-
--   [Podcasts Connect 帮助 创建播客 - Apple](https://help.apple.com/itc/podcasts_connect/#/itca5b22233a)
--   RSS 格式参考: https://codepen.io/jon-walstedt/pen/jsIup
--   播客验证: https://podba.se/validate/?url=https://rsshub.app/ximalaya/album/299146/
-
-这些字段能使你的 RSS 被泛用型播客软件订阅：
+用于音频类 RSS，**额外**添加这些字段能使你的 RSS 被泛用型播客软件订阅：
 
 ```js
 ctx.state.data = {
-    title: '', // 项目的标题
-    link: '', // 指向项目的链接
     itunes_author: '', // 主播名字, 必须填充本字段才会被视为播客
     itunes_category: '', // 播客分类
     image: '', // 专辑图片, 作为播客源时必填
-    description: '', // 描述项目
-    language: '', // 频道语言
     item: [
-        // 其中一篇文章或一项内容
         {
-            title: '', // 文章标题
-            author: '', // 文章作者
-            category: '', // 文章分类
-            // category: [''], // 多个分类
-            description: '', // 文章摘要或全文
-            pubDate: '', // 文章发布时间
-            guid: '', // 文章唯一标示, 必须唯一, 可选, 默认为文章链接
-            link: '', // 指向文章的链接
             itunes_item_image: '', // 图像
             enclosure_url: '', // 音频链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数
+            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
             enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
-            itunes_duration: '', // 由enclosure_length转换为 时:分:秒
+        },
+    ],
+};
+```
+
+##### BT 源
+
+用于下载类 RSS，**额外**添加这些字段能使你的 RSS 被 BT 客户端识别并自动下载：
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            enclosure_url: '', // 磁力链接
+            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_type: 'application/x-bittorrent', // 固定为 'application/x-bittorrent'
         },
     ],
 };
@@ -320,48 +361,48 @@ ctx.state.data = {
 
 ### 步骤 2: 添加脚本路由
 
-在 [/router.js](https://github.com/DIYgod/RSSHub/blob/master/router.js) 里添加路由：
+在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由：
 
 #### 举例
 
-1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/routes/bilibili/bangumi.js)
+1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
 
-| 类型                   | 代码                                                                               |
-| ---------------------- | ---------------------------------------------------------------------------------- |
-| 路由                   | `/bilibili/bangumi/:seasonid`                                                      |
-| 数据来源               | bilibili                                                                           |
-| 路由名称               | bangumi                                                                            |
-| 参数 1                 | :seasonid 必选                                                                     |
-| 参数 2                 | 无                                                                                 |
-| 参数 3                 | 无                                                                                 |
-| 脚本路径               | `./routes/bilibili/bangumi`                                                        |
-| router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
+| 类型                       | 代码                                                                               |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
+| 数据来源                   | bilibili                                                                           |
+| 路由名称                   | bangumi                                                                            |
+| 参数 1                     | :seasonid 必选                                                                     |
+| 参数 2                     | 无                                                                                 |
+| 参数 3                     | 无                                                                                 |
+| 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
+| lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
 
-1. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/routes/github/issue.js)
+1. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
 
-| 类型                   | 代码                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| 路由                   | `/github/issue/:user/:repo`                                                  |
-| 数据来源               | github                                                                       |
-| 路由名称               | issue                                                                        |
-| 参数 1                 | :user 必选                                                                   |
-| 参数 2                 | :repo 必选                                                                   |
-| 参数 3                 | 无                                                                           |
-| 脚本路径               | `./routes/github/issue`                                                      |
-| router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
+| 类型                       | 代码                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| 路由                       | `/github/issue/:user/:repo`                                                  |
+| 数据来源                   | github                                                                       |
+| 路由名称                   | issue                                                                        |
+| 参数 1                     | :user 必选                                                                   |
+| 参数 2                     | :repo 必选                                                                   |
+| 参数 3                     | 无                                                                           |
+| 脚本路径                   | `./routes/github/issue`                                                      |
+| lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
 
-1. [embassy](https://github.com/DIYgod/RSSHub/blob/master/routes/embassy/index.js)
+1. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
 
-| 类型                   | 代码                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------- |
-| 路由                   | `/embassy/:country/:city?`                                                   |
-| 数据来源               | embassy                                                                      |
-| 路由名称               | 无                                                                           |
-| 参数 1                 | :country 必选                                                                |
-| 参数 2                 | ?city 可选                                                                   |
-| 参数 3                 | 无                                                                           |
-| 脚本路径               | `./routes/embassy/index`                                                     |
-| router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
+| 类型                       | 代码                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| 路由                       | `/embassy/:country/:city?`                                                   |
+| 数据来源                   | embassy                                                                      |
+| 路由名称                   | 无                                                                           |
+| 参数 1                     | :country 必选                                                                |
+| 参数 2                     | ?city 可选                                                                   |
+| 参数 3                     | 无                                                                           |
+| 脚本路径                   | `./routes/embassy/index`                                                     |
+| lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
 
 ### 步骤 3: 添加脚本文档
 
@@ -382,7 +423,7 @@ ctx.state.data = {
         1. 多参数：
 
         ```vue
-        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
         ```
 
         结果预览：
