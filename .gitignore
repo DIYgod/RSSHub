@@ -13,3 +13,4 @@ yarn-error.log
 tmp
 *.swp
 *.iml
+coverage

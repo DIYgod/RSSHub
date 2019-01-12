@@ -9,6 +9,10 @@ sidebar: auto
 
 > 🍰 万物皆可 RSS
 
+[![telegram](https://img.shields.io/badge/chat-telegram-brightgreen.svg?style=flat-square)](https://t.me/rsshub)
+[![build status](https://img.shields.io/travis/DIYgod/RSSHub/master.svg?style=flat-square)](https://travis-ci.org/DIYgod/RSSHub)
+[![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square)](https://codecov.io/github/DIYgod/RSSHub?branch=master)
+
 RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪怪的内容生成 RSS 订阅源
 
 [Telegram 群](https://t.me/rsshub)
@@ -571,6 +575,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="分区帖子" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
 
+<route name="帖子" author="xyqfer" example="/nga/post/15939161" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']"/>
+
 ### Facebook
 
 <route name="粉絲專頁" author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
@@ -661,6 +667,15 @@ GitHub 官方也提供了一些 RSS:
 <route name="用户" author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" :paramsDesc="['用户名']"/>
 
 <route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+<route name="搜索结果" author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
+
+| 排序选项           | sort      |
+| ------------------ | --------- |
+| 最佳匹配           | bestmatch |
+| 根据 star 数量排序 | stars     |
+| 根据 fork 数量排序 | forks     |
+| 根据更新时间排序   | updated   |
 
 ### 开源中国
 
@@ -778,6 +793,10 @@ GitHub 官方也提供了一些 RSS:
 ### TesterHome
 
 <route name="最新发布" author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
+
+### Linux Patchwork
+
+<route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
 
 ## 直播
 
@@ -1865,6 +1884,8 @@ Category 列表:
 ### 澎湃新闻
 
 <route name="首页头条" author="HenryQW" example="/thepaper/featured" path="/thepaper/featured"/>
+
+<route name="频道" author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
 
 ### 联合早报
 
