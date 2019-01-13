@@ -1815,6 +1815,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </route>
 
+### 北京航空航天大学
+
+<route name="北京航空航天大学" author="AlanDecode" example="/buaa/news/zonghe" path="/buaa/news/:type" :paramsDesc="['新闻版块']">
+
+| 综合新闻 | 信息公告 | 学术文化     | 校园风采 | 科教在线 | 媒体北航 | 专题新闻 | 北航人物 |
+| -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- |
+| zonghe   | gonggao  | xueshuwenhua | fengcai  | kejiao   | meiti    | zhuanti  | renwu    |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
