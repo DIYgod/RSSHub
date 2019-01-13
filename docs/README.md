@@ -1956,10 +1956,6 @@ Category 列表:
 
 ### 卫报 The Guardian
 
-<route name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
-
-<route name="China" author="Polynomia" example="/guardian/china" path="/guardian/china">
-
 ::: tip 提示
 
 由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
@@ -1968,7 +1964,9 @@ Category 列表:
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-</route>
+<route name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial"/>
+
+<route name="China" author="Polynomia" example="/guardian/china" path="/guardian/china"/>
 
 ### 多维新闻网
 
