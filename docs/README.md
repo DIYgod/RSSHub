@@ -2786,3 +2786,8 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 好奇心日报
 
 <route name="最新" author="suprio" example="/qdaily" path="/qdaily/index" />
+
+
+### 科学探索_新浪科技
+
+<route name="最新" author="yexiang" example="/discovery" path="/sinatechdiscovery/index" />
