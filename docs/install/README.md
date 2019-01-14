@@ -286,7 +286,11 @@ gcloud app deploy
 
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
-`RSS_PROXY`: 使用 proxy 来访问, 目前只支持 SocksProxy, 格式为 socks://127.0.0.1:1234
+`PROXY_PROTOCOL`: 使用 proxy 来访问的协议, 目前只支持 socks, socks4,socks4a,socks5,socks5h
+
+`PROXY_HOST`: proxy 的域名
+
+`PROXY_PORT`: proxy 的端口
 
 ### 用户认证
 

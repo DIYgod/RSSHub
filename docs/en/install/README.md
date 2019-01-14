@@ -280,7 +280,11 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
-`RSS_PROXY`: Using proxy to access most RSS source, only support socks proxy for now. eg. `socks://127.0.0.1:1234`
+`PROXY_PROTOCOL`: Using proxy of such protocol, Supports socks, socks4,socks4a,socks5,socks5h
+
+`PROXY_HOST`: host of the proxy
+
+`PROXY_PORT`: port of the proxy
 
 ### User Authentication
 
