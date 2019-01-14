@@ -87,6 +87,10 @@
       "text-summary",
       "lcov"
     ],
+    "collectCoverageFrom": [
+      "lib/**/*.js",
+      "!lib/routes/**/*.js"
+    ],
     "bail": true,
     "testEnvironment": "node"
   }
