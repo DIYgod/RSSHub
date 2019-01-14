@@ -64,7 +64,7 @@
     "lru-cache": "5.1.1",
     "luxon": "^1.7.1",
     "markdown-it": "^8.4.2",
-    "path-to-regexp": "2.4.0",
+    "path-to-regexp": "3.0.0",
     "pidusage": "^2.0.17",
     "plist": "^3.0.1",
     "puppeteer": "^1.10.0",
