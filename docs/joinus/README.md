@@ -258,6 +258,8 @@ sidebar: auto
     // 注：由于此路由只是起到一个新专栏上架提醒的作用，无法访问付费文章，因此没有文章正文
     ```
 
+---
+
 #### 使用缓存
 
 所有路由都有一个缓存，全局缓存时间在 `lib/config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间。
@@ -296,6 +298,8 @@ if (value) {
     // 向数据源发起请求
 }
 ```
+
+---
 
 #### 生成 RSS 源
 
@@ -343,7 +347,7 @@ ctx.state.data = {
 };
 ```
 
-##### BT/磁力 源
+##### BT/磁力源
 
 用于下载类 RSS，**额外**添加这些字段能使你的 RSS 被 BT 客户端识别并自动下载：
 
@@ -359,15 +363,17 @@ ctx.state.data = {
 };
 ```
 
+---
+
 ### 步骤 2: 添加脚本路由
 
-在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由：
+在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
 
 #### 举例
 
 1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
 
-| 类型                       | 代码                                                                               |
+| 名称                       | 说明                                                                               |
 | -------------------------- | ---------------------------------------------------------------------------------- |
 | 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
 | 数据来源                   | bilibili                                                                           |
@@ -378,9 +384,9 @@ ctx.state.data = {
 | 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
 | lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
 
-1. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
+2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
 
-| 类型                       | 代码                                                                         |
+| 名称                       | 说明                                                                         |
 | -------------------------- | ---------------------------------------------------------------------------- |
 | 路由                       | `/github/issue/:user/:repo`                                                  |
 | 数据来源                   | github                                                                       |
@@ -391,9 +397,9 @@ ctx.state.data = {
 | 脚本路径                   | `./routes/github/issue`                                                      |
 | lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
 
-1. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
+3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
 
-| 类型                       | 代码                                                                         |
+| 名称                       | 说明                                                                         |
 | -------------------------- | ---------------------------------------------------------------------------- |
 | 路由                       | `/embassy/:country/:city?`                                                   |
 | 数据来源                   | embassy                                                                      |
@@ -403,6 +409,8 @@ ctx.state.data = {
 | 参数 3                     | 无                                                                           |
 | 脚本路径                   | `./routes/embassy/index`                                                     |
 | lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
+
+---
 
 ### 步骤 3: 添加脚本文档
 
@@ -478,6 +486,9 @@ ctx.state.data = {
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
 
+---
+
 ## 参与讨论
 
 1.  [Telegram 群](https://t.me/rsshub)
+2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)

@@ -68,7 +68,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
         link: `https://space.bilibili.com/${uid}`,
         // the source description
         description: `${name} 的 bilibili 投币视频`,
-        // iterate through all leaf objects 
+        // iterate through all leaf objects
         item: data.map((item) => ({
             // the article title
             title: item.title,
@@ -150,7 +150,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
     // use Promise.all() to initiate requests in parallel
     const result = await Promise.all(
-        // loop through every article 
+        // loop through every article
         list.map(async (item) => {
             const $ = cheerio.load(item);
 
@@ -182,7 +182,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     ctx.state.data = {
         title: '简书首页',
         link: 'https://www.jianshu.com',
-        // select "content" property of <meta name="description"> 
+        // select "content" property of <meta name="description">
         description: $('meta[name="description"]').attr('content'),
         item: result,
     };
@@ -192,7 +192,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
     3. **Acquire data via page rendering using puppeteer**
 
-    ::: tip tip
+    ::: tip tips
 
     This method consumes more resources and is less performant, use only when the above methods failed to acquire data, otherwise your pull requests will be rejected!
 
@@ -261,9 +261,11 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // PS: the route acts as a notifier of new articles, it does not provide access to the content behind the paywall, thus not content were fetched
     ```
 
+---
+
 #### Enable Caching
 
-By default there is a global caching period set in  `lib/config.js`, some sources might have a low update frequency, a longer caching period should be set.
+By default there is a global caching period set in `lib/config.js`, some sources might have a low update frequency, a longer caching period should be set.
 
 -   Save to cache:
 
@@ -300,6 +302,8 @@ if (value) {
 }
 ```
 
+---
+
 #### Produce RSS Feed
 
 Assign the acquired data to ctx.state.data, the middleware [template.js](https://github.com/DIYgod/RSSHub/blob/master/middleware/template.js) will then process the data and render the RSS output [/views/rss.art](https://github.com/DIYgod/RSSHub/blob/master/views/rss.art), the list of parameters:
@@ -326,7 +330,7 @@ ctx.state.data = {
 };
 ```
 
-#### Podcast feed
+##### Podcast feed
 
 Used for audio feed, these **additional** data are in accordance with many podcast players' subscription format:
 
@@ -346,7 +350,7 @@ ctx.state.data = {
 };
 ```
 
-#### BT/Magnet feed
+##### BT/Magnet feed
 
 Used for downloader feed, these **additional** data are in accordance with many downloaders' subscription format to trigger automated download:
 
@@ -363,6 +367,55 @@ ctx.state.data = {
 ```
 
 </details>
+
+---
+
+### Step 2: Add the script into router
+
+Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js)
+
+#### Example
+
+1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
+
+| Name                               | Description                                                                        |
+| ---------------------------------- | ---------------------------------------------------------------------------------- |
+| Route                              | `/bilibili/bangumi/:seasonid`                                                      |
+| Data Source                        | bilibili                                                                           |
+| Route Name                         | bangumi                                                                            |
+| Parameter 1                        | :seasonid required                                                                 |
+| Parameter 2                        | n/a                                                                                |
+| Parameter 3                        | n/a                                                                                |
+| Route Path                         | `./routes/bilibili/bangumi`                                                        |
+| the complete code in lib/router.js | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
+
+2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
+
+| Name                               | Description                                                                  |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
+| Route                              | `/github/issue/:user/:repo`                                                  |
+| Data Source                        | github                                                                       |
+| Route Name                         | issue                                                                        |
+| Parameter 1                        | :user, required                                                              |
+| Parameter 2                        | :repo, required                                                              |
+| Parameter 3                        | n/a                                                                          |
+| Route Path                         | `./routes/github/issue`                                                      |
+| the complete code in lib/router.js | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
+
+3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
+
+| Name                               | Description                                                                  |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
+| Route                              | `/embassy/:country/:city?`                                                   |
+| Data Source                        | embassy                                                                      |
+| Route Name                         | n/a                                                                          |
+| Parameter 1                        | :country, required                                                           |
+| Parameter 2                        | ?city, optional                                                              |
+| Parameter 3                        | n/a                                                                          |
+| Route Path                         | `./routes/embassy/index`                                                     |
+| the complete code in lib/router.js | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
+
+---
 
 ### Step 3: Add the documentation
 
@@ -417,6 +470,9 @@ ctx.state.data = {
 
 1.  Execute `npm run format` to lint the code before you commit and open a pull request
 
+---
+
 ## Join the discussion
 
 1.  [Telegram Group](https://t.me/rsshub)
+2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
