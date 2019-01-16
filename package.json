@@ -37,7 +37,7 @@
     "nodemon": "1.18.9",
     "prettier": "1.15.3",
     "prettier-check": "2.0.0",
-    "supertest": "3.3.0",
+    "supertest": "3.4.0",
     "vuepress": "0.14.8",
     "yorkie": "2.0.0"
   },
