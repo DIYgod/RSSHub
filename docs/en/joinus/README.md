@@ -120,7 +120,7 @@ ctx.state.data = {
             author: '', // Author of the article
             category: '', // Article category
             // category: [''], // Multiple category
-            description: '', // The article summury or content
+            description: '', // The article summary or content
             pubDate: '', // The article publishing datetime
             guid: '', // The article unique identifier, optional, default to the article link below
             link: '', // The article link
@@ -131,7 +131,7 @@ ctx.state.data = {
 
 #### Podcast feed
 
-Used for audio type feed, these **additional** datas can make your podcast subscribeable:
+Used for audio feed, these **additional** data are in accordance with many podcast players' subscription format:
 
 ```js
 ctx.state.data = {
@@ -149,9 +149,9 @@ ctx.state.data = {
 };
 ```
 
-#### BT feed
+#### BT/Magnet feed
 
-Used for download type feed, these **additional** datas can make your BT client subscribeable and can auto download:
+Used for downloader feed, these **additional** data are in accordance with many downloaders' subscription format to trigger automated download:
 
 ```js
 ctx.state.data = {
