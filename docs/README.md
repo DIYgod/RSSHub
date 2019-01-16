@@ -2014,6 +2014,10 @@ Solidot 提供的 feed:
 
 <route name="全球快讯" author="xyqfer" example="/geekpark/breakingnews" path="/geekpark/breakingnews" />
 
+### 华尔街见闻
+
+<route name="华尔街见闻" author="conanjunn" example="/wallstreetcn/news/global" path="/wallstreetcn/news/global" />
+
 ## 预报预警
 
 ### 停水通知
