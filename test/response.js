@@ -64,6 +64,11 @@ describe('response', () => {
     it(`/test (cache)`, async () => {
         const response = await request.get('/test');
         expect(response.status).toBe(200);
+        if (config.cacheType === 'memory') {
+            expect(response.headers['x-koa-memory-cache']).toBe('true');
+        } else if (config.cacheType === 'redis') {
+            expect(response.headers['x-koa-redis-cache']).toBe('true');
+        }
 
         await checkRSS(response);
     });
