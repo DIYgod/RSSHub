@@ -423,3 +423,7 @@ Supported sub-sites：
 | Mac | Google | Toys |
 
 </routeEn>
+
+### All Poetry
+
+<routeEn name="Poems" author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
