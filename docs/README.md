@@ -2800,3 +2800,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 多抓鱼
 
 <route name="搜索结果" author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
+
+### 美团技术团队
+
+<route name="最新文章" author="ph87" example="/meituan/tech" path="/meituan/tech" />
