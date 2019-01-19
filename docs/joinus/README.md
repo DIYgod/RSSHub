@@ -484,7 +484,7 @@ ctx.state.data = {
 
         ***
 
-1.  请一定要注意把<route>的标签关闭！
+1.  请一定要注意把`<route>`的标签关闭！
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
 
