@@ -2805,3 +2805,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 多抓鱼
 
 <route name="搜索结果" author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
+
+### 创业邦
+
+<route name="作者" author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id']"/>
