@@ -338,7 +338,7 @@ ctx.state.data = {
     image: '', // 专辑图片, 作为播客源时必填
     item: [
         {
-            itunes_item_image: '', // 图像
+            itunes_item_image: '', // 每个track单独的图片
             enclosure_url: '', // 音频链接
             enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
             enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
@@ -483,6 +483,8 @@ ctx.state.data = {
         </route>
 
         ***
+
+1.  请一定要注意把`<route>`的标签关闭！
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
 
