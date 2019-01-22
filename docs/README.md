@@ -995,6 +995,20 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="详情" author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
 
+### 性感美女网
+
+<route name="Hot100" author="machsix" exmaple="/xgyw/hot" path="/xgyw/hot/:count?" :paramsDesc="['可选, 数目, 默认`100`(最大值)']"/>
+
+<route name="New100" author="machsix" exmaple="/xgyw/new" path="/xgyw/new/:count?" :paramsDesc="['可选, 数目, 默认`100`(最大值)']"/>
+::: warning 注意
+过大的**count**值会造成rsshub无法抓取所有链接，应逐步增加**count**值（如20,40,60,80,100)。每步执行结束rsshub会缓存抓取的图片链接，从而增强成功率。
+
+:::
+
+<route name="关键词" author="machsix" exmaple="/xgyw/search" path="/xgyw/new/:key?" :paramsDesc="['必选, 搜索关键词']"/>
+
+</route>
+
 ### 不羞涩
 
 <route name="分类" author="kba977" example="/dbmv" path="/dbmv/:category?" :paramsDesc="['分类 id - 若不填该参数, 默认所有']">
