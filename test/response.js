@@ -72,4 +72,32 @@ describe('response', () => {
 
         await checkRSS(response);
     });
+
+    it(`/api/routes/test`, async () => {
+        const response = await request.get('/api/routes/test');
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({
+            status: 0,
+            data: {
+                test: {
+                    routes: ['/test'],
+                },
+            },
+            message: 'request returned 1 route',
+        });
+    });
+
+    it(`/api/routes`, async () => {
+        const response = await request.get('/api/routes');
+        expect(response.status).toBe(200);
+        expect(response.body).toMatchObject({
+            status: 0,
+            data: {
+                test: {
+                    routes: ['/test'],
+                },
+            },
+            message: expect.stringMatching(/request returned (\d+) routes/),
+        });
+    });
 });
