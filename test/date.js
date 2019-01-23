@@ -61,4 +61,8 @@ describe('date', () => {
     it('H:m', async () => {
         expect(+new Date(parseDate('02:03'))).toBe(+new Date('2019-1-1 02:03'));
     });
+
+    it('Invalid', async () => {
+        expect(parseDate('RSSHub')).toBe('RSSHub');
+    });
 });
