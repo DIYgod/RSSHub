@@ -1005,7 +1005,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-<route name="关键词" author="machsix" exmaple="/xgyw/search" path="/xgyw/new/:key?" :paramsDesc="['必选, 搜索关键词']"/>
+<route name="关键词" author="machsix" example="/xgyw/search" path="/xgyw/new/:key?" :paramsDesc="['必选, 搜索关键词']"/>
 
 </route>
 
