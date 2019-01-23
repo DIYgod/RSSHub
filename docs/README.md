@@ -2819,3 +2819,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 创业邦
 
 <route name="作者" author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id']"/>
+
+### 政府
+
+<route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
