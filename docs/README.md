@@ -2818,4 +2818,4 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 政府
 
-<route name="作者" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
+<route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
