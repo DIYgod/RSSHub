@@ -1000,14 +1000,12 @@ GitHub 官方也提供了一些 RSS:
 <route name="Hot100" author="machsix" example="/xgyw/hot" path="/xgyw/hot/:count?" :paramsDesc="['可选, 数目, 默认`100`(最大值)']"/>
 
 <route name="New100" author="machsix" example="/xgyw/new" path="/xgyw/new/:count?" :paramsDesc="['可选, 数目, 默认`100`(最大值)']"/>
-::: warning 注意
-过大的**count**值会造成rsshub无法抓取所有链接，应逐步增加**count**值（如20,40,60,80,100)。每步执行结束rsshub会缓存抓取的图片链接，从而增强成功率。
 
+::: warning 注意
+过大的**count**值会造成 rsshub 无法抓取所有链接，应逐步增加**count**值（如 20,40,60,80,100)。每步执行结束 rsshub 会缓存抓取的图片链接，从而增强成功率。
 :::
 
-<route name="关键词" author="machsix" example="/xgyw/search/黑丝" path="/xgyw/search/:key?" :paramsDesc="['必选, 搜索关键词']"/>
-
-</route>
+<route name="关键词" author="machsix" example="/xgyw/search/黑丝" path="/xgyw/search/:key" :paramsDesc="['必选, 搜索关键词']"/>
 
 ### 不羞涩
 
