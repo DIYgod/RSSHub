@@ -944,6 +944,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="新片精品" author="imgss" example="/dytt" path="/dytt"/>
 
+### 人生05电影
+
+<route name="电影更新列表" author="monner-henster" example="/rs05/rs05" path="/rs05/rs05"/>
+
 ### 优酷
 
 <route name="频道" author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
