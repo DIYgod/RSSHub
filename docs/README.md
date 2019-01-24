@@ -944,9 +944,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="新片精品" author="imgss" example="/dytt" path="/dytt"/>
 
-### 人生05电影
+### rs05 人生 05 电影
 
-<route name="电影更新列表" author="monner-henster" example="/rs05/rs05" path="/rs05/rs05"/>
+<route name="rs05电影列表" author="monner-henster" example="/rs05/rs05" path="/rs05/rs05"/>
 
 ### 优酷
 
