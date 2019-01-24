@@ -2267,8 +2267,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <route name="a9vgNews 游戏新闻" author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
 
-<<<<<<< HEAD
-=======
 ### Steam
 
 <route name="Steam search" author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']">
@@ -2280,7 +2278,6 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="Steam news" author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']"/>
 
->>>>>>> upstream/master
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
