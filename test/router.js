@@ -1,6 +1,6 @@
 const supertest = require('supertest');
-const app = require('../lib/index');
-const request = supertest(app.callback());
+const { server } = require('../lib/index');
+const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
 const config = require('../lib/config');
@@ -46,6 +46,10 @@ async function checkRSS(response) {
     });
 }
 
+afterAll(() => {
+    server.close();
+});
+
 describe('router', () => {
     // root
     it(`/`, async () => {
@@ -56,14 +60,14 @@ describe('router', () => {
     });
 
     // route
-    it(`/test (origin)`, async () => {
-        const response = await request.get('/test');
+    it(`/test/1 (origin)`, async () => {
+        const response = await request.get('/test/1');
         expect(response.status).toBe(200);
 
         await checkRSS(response);
     });
-    it(`/test (cache)`, async () => {
-        const response = await request.get('/test');
+    it(`/test/1 (cache)`, async () => {
+        const response = await request.get('/test/1');
         expect(response.status).toBe(200);
         if (config.cacheType === 'memory') {
             expect(response.headers['x-koa-memory-cache']).toBe('true');
@@ -82,7 +86,7 @@ describe('router', () => {
             status: 0,
             data: {
                 test: {
-                    routes: ['/test'],
+                    routes: ['/test/:id'],
                 },
             },
             message: 'request returned 1 route',
@@ -96,7 +100,7 @@ describe('router', () => {
             status: 0,
             data: {
                 test: {
-                    routes: ['/test'],
+                    routes: ['/test/:id'],
                 },
             },
             message: expect.stringMatching(/request returned (\d+) routes/),
