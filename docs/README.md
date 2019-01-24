@@ -997,15 +997,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 性感美女网
 
-<route name="Hot100" author="machsix" example="/xgyw/hot" path="/xgyw/hot/:count?" :paramsDesc="['可选, 数目, 默认`100`(最大值)']"/>
+<route name="Hot100" author="machsix" example="/xgyw/hot/10" path="/xgyw/hot/:count?" :paramsDesc="['抓取数目, 默认`10`,最大`100`']"/>
 
-<route name="New100" author="machsix" example="/xgyw/new" path="/xgyw/new/:count?" :paramsDesc="['可选, 数目, 默认`100`(最大值)']"/>
+<route name="New100" author="machsix" example="/xgyw/new/10" path="/xgyw/new/:count?" :paramsDesc="['抓取数目, 默认`10`,最大`100`']"/>
+
+<route name="关键词" author="machsix" example="/xgyw/search/黑丝/20/5" path="/xgyw/search/:key/:count/:speed?" :paramsDesc="['搜索关键词', '抓取数目, 默认`10`', '抓取速度, 默认`5`']"/>
 
 ::: warning 注意
-过大的**count**值会造成 rsshub 无法抓取所有链接，应逐步增加**count**值（如 20,40,60,80,100)。每步执行结束 rsshub 会缓存抓取的图片链接，从而增强成功率。
+过大的**count**值和**speed**值会增加 rsshub 服务器负载同时触发网站反爬虫机制
 :::
-
-<route name="关键词" author="machsix" example="/xgyw/search/黑丝" path="/xgyw/search/:key" :paramsDesc="['必选, 搜索关键词']"/>
 
 ### 不羞涩
 
