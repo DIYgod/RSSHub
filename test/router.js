@@ -46,7 +46,8 @@ async function checkRSS(response) {
     });
 }
 
-describe('response', () => {
+describe('router', () => {
+    // root
     it(`/`, async () => {
         const response = await request.get('/');
         expect(response.status).toBe(200);
@@ -54,13 +55,13 @@ describe('response', () => {
         expect(response.headers['cache-control']).toBe('no-cache');
     });
 
+    // route
     it(`/test (origin)`, async () => {
         const response = await request.get('/test');
         expect(response.status).toBe(200);
 
         await checkRSS(response);
     });
-
     it(`/test (cache)`, async () => {
         const response = await request.get('/test');
         expect(response.status).toBe(200);
@@ -73,6 +74,7 @@ describe('response', () => {
         await checkRSS(response);
     });
 
+    // api
     it(`/api/routes/test`, async () => {
         const response = await request.get('/api/routes/test');
         expect(response.status).toBe(200);
