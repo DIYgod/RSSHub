@@ -2823,3 +2823,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 政府
 
 <route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
+
+### 移动支付网
+
+<route name="新闻" author="LogicJake" example="/mpaypass/news" path="/mpaypass/news"/>
