@@ -66,6 +66,7 @@
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "luxon": "^1.7.1",
+    "lz-string": "^1.4.4",
     "markdown-it": "^8.4.2",
     "node-fetch": "^2.3.0",
     "path-to-regexp": "3.0.0",
