@@ -31,9 +31,9 @@
   "devDependencies": {
     "axios-mock-adapter": "1.16.0",
     "eslint": "5.12.1",
-    "eslint-config-prettier": "3.6.0",
+    "eslint-config-prettier": "4.0.0",
     "eslint-plugin-prettier": "3.0.1",
-    "jest": "23.6.0",
+    "jest": "24.0.0",
     "lint-staged": "8.1.0",
     "mockdate": "2.0.2",
     "nodemon": "1.18.9",
@@ -46,7 +46,7 @@
   "dependencies": {
     "art-template": "4.13.2",
     "axios": "0.18.0",
-    "axios-retry": "3.1.1",
+    "axios-retry": "3.1.2",
     "cheerio": "1.0.0-rc.2",
     "co-redis": "2.1.1",
     "currency-symbol-map": "^4.0.4",
@@ -58,7 +58,7 @@
     "iconv-lite": "0.4.24",
     "imgur": "^0.3.1",
     "json-bigint": "0.3.0",
-    "koa": "2.6.2",
+    "koa": "2.7.0",
     "koa-basic-auth": "^4.0.0",
     "koa-favicon": "2.0.1",
     "koa-mount": "^4.0.0",
@@ -77,7 +77,7 @@
     "sharp": "^0.21.0",
     "socks-proxy-agent": "^4.0.1",
     "twit": "2.2.11",
-    "winston": "3.1.0"
+    "winston": "3.2.0"
   },
   "engines": {
     "node": ">=8.0.0"

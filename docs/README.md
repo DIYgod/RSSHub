@@ -391,6 +391,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
 
+<route name="公众号（ wemp.app 来源）" author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']"/>
+
 <route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
 
 <route name="小程序插件" author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
@@ -945,6 +947,10 @@ GitHub 官方也提供了一些 RSS:
 ### 电影天堂
 
 <route name="新片精品" author="imgss" example="/dytt" path="/dytt"/>
+
+### rs05 人生 05 电影
+
+<route name="rs05电影列表" author="monner-henster" example="/rs05/rs05" path="/rs05/rs05"/>
 
 ### 优酷
 
@@ -2808,10 +2814,6 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 <route name="最新" author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
-### 好奇心日报
-
-<route name="最新" author="suprio" example="/qdaily" path="/qdaily/index" />
-
 ### 多抓鱼
 
 <route name="搜索结果" author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
@@ -2823,3 +2825,11 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 政府
 
 <route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
+
+### 惠誉评级
+
+<route name="板块信息" author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址site后面']"/>
+
+### 移动支付网
+
+<route name="新闻" author="LogicJake" example="/mpaypass/news" path="/mpaypass/news"/>
