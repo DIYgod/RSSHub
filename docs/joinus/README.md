@@ -267,10 +267,16 @@ sidebar: auto
 -   添加缓存:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存时间, 单位为秒
+ctx.cache.set((key: string), (value: string), (time: number), (persistent: boolean)); // time 为缓存时间。单位为秒。persistent 为 true 则为缓存自动延长过期时间 (Redis 下则为永不过期)。
 ```
 
 -   获取缓存:
+
+::: tip 提示
+
+ 由于 Redis 下 `persistent = true` 的缓存不会过期，`Get()` 下 `persistent` 参数仅适用于 LRU memory 缓存，对于 Redis 不会有任何效果。
+
+:::
 
 ```js
 const value = await ctx.cache.get((key: string));
@@ -278,18 +284,18 @@ const value = await ctx.cache.get((key: string));
 
 例如知乎日报需要获取文章全文：[/lib/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
 
-由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，从而提升性能并节省资源。
+由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，并且该缓存被再次访问后会延长过期时间，从而提升性能并节省资源。
 
 ```js
 const key = 'daily' + story.id; // story.id 为知乎日报返回的文章唯一识别符
-ctx.cache.set(key, item.description, 24 * 60 * 60); // 设置缓存时间为 24小时 * 60分钟 * 60秒 = 86400秒 = 1天
+ctx.cache.set(key, item.description, 24 * 60 * 60, true); // 设置 LRU memory 缓存时间为 24小时 * 60分钟 * 60秒 = 86400秒 = 1天
 ```
 
 当同样的请求被发起时，优先使用未过期的缓存：
 
 ```js
 const key = 'daily' + story.id;
-const value = await ctx.cache.get(key); // 从缓存中查询是否已存在该文章唯一识别符
+const value = await ctx.cache.get(key, true); // 从 LRU memory 缓存中查询是否已存在该文章唯一识别符
 if (value) {
     // 查询返回未过期缓存
     item.description = value; // 直接赋值
