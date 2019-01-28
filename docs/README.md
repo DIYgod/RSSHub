@@ -391,6 +391,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
 
+<route name="公众号（ wemp.app 来源）" author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']"/>
+
 <route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
 
 <route name="小程序插件" author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
