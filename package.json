@@ -84,7 +84,7 @@
   },
   "jest": {
     "testMatch": [
-      "**/test/*.js"
+      "**/test/**/*.js"
     ],
     "coverageReporters": [
       "text-summary",

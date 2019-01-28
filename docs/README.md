@@ -2827,3 +2827,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 惠誉评级
 
 <route name="板块信息" author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址site后面']"/>
+
+### 移动支付网
+
+<route name="新闻" author="LogicJake" example="/mpaypass/news" path="/mpaypass/news"/>
