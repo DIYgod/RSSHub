@@ -2772,23 +2772,23 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### JavBus
 
-<route name="首页" author="MegrezZhu CoderTonyChan" example="/javbus/home" path="/javbus/home" :paramsDesc="['模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="首页" author="MegrezZhu CoderTonyChan" example="/javbus/home" path="/javbus/home/:mode?" :paramsDesc="['模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
-<route name="分类" author="MegrezZhu CoderTonyChan" example="/javbus/genre/7g" path="/javbus/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/genre)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="分类" author="MegrezZhu CoderTonyChan" example="/javbus/genre/7g" path="/javbus/genre/:gid/:mode?" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/genre)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
-<route name="演员" author="MegrezZhu CoderTonyChan" example="/javbus/star/2jv" path="/javbus/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/actresses)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="演员" author="MegrezZhu CoderTonyChan" example="/javbus/star/2jv" path="/javbus/star/:sid/:mode?" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/actresses)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
-<route name="首页/步兵" author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/home" path="/javbus/uncensored/home" :paramsDesc="['模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="首页/步兵" author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/home" path="/javbus/uncensored/home/:mode?" :paramsDesc="['模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
-<route name="分类/步兵" author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/uncensored/genre)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="分类/步兵" author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid/:mode?" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/uncensored/genre)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
-<route name="演员/步兵" author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/uncensored/actresses)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="演员/步兵" author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid/:mode?" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/uncensored/actresses)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
-<route name="首页/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/home" path="/javbus/western/home" :paramsDesc="['模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']"/>
+<route name="首页/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/home" path="/javbus/western/home/:mode?" :paramsDesc="['模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']"/>
 
-<route name="分类/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="分类/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid/:mode?" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
-<route name="演员/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
+<route name="演员/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid/:mode?" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接','模式，`simple`为仅封面，`detail`会包括详细信息，但对服务器负载大。默认为`simple`']" />
 
 ### 虎嗅
 
