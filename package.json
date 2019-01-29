@@ -10,7 +10,8 @@
     "docs:build": "vuepress build docs",
     "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
     "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run lint && NODE_ENV=test jest --coverage --runInBand --forceExit"
+    "test": "npm run lint && NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "jest": "NODE_ENV=test jest --runInBand --forceExit"
   },
   "repository": {
     "type": "git",
