@@ -73,7 +73,6 @@
     "plist": "^3.0.1",
     "puppeteer": "^1.10.0",
     "raven": "^2.6.4",
-    "readall": "1.1.0",
     "redis": "2.8.0",
     "rss-parser": "3.6.2",
     "sharp": "^0.21.0",
