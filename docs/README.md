@@ -2833,3 +2833,14 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 移动支付网
 
 <route name="新闻" author="LogicJake" example="/mpaypass/news" path="/mpaypass/news"/>
+
+### 新浪科技
+
+<route name="科学探索" author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']>
+
+分类：
+| zx | twhk | dwzw | zrdl | lskg | smyx | shbk | kjqy |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
+
+</route>
