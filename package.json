@@ -78,8 +78,7 @@
     "sharp": "^0.21.0",
     "socks-proxy-agent": "^4.0.1",
     "twit": "2.2.11",
-    "winston": "3.1.0",
-    "xml-js": "^1.6.9"
+    "winston": "3.1.0"
   },
   "engines": {
     "node": ">=8.0.0"
