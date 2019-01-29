@@ -1,6 +1,6 @@
 const supertest = require('supertest');
-const app = require('../lib/index');
-const request = supertest(app.callback());
+const { server } = require('../lib/index');
+const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
 const config = require('../lib/config');
@@ -46,7 +46,12 @@ async function checkRSS(response) {
     });
 }
 
-describe('response', () => {
+afterAll(() => {
+    server.close();
+});
+
+describe('router', () => {
+    // root
     it(`/`, async () => {
         const response = await request.get('/');
         expect(response.status).toBe(200);
@@ -54,15 +59,15 @@ describe('response', () => {
         expect(response.headers['cache-control']).toBe('no-cache');
     });
 
-    it(`/test (origin)`, async () => {
-        const response = await request.get('/test');
+    // route
+    it(`/test/1 (origin)`, async () => {
+        const response = await request.get('/test/1');
         expect(response.status).toBe(200);
 
         await checkRSS(response);
     });
-
-    it(`/test (cache)`, async () => {
-        const response = await request.get('/test');
+    it(`/test/1 (cache)`, async () => {
+        const response = await request.get('/test/1');
         expect(response.status).toBe(200);
         if (config.cacheType === 'memory') {
             expect(response.headers['x-koa-memory-cache']).toBe('true');
@@ -71,5 +76,34 @@ describe('response', () => {
         }
 
         await checkRSS(response);
+    });
+
+    // api
+    it(`/api/routes/test`, async () => {
+        const response = await request.get('/api/routes/test');
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual({
+            status: 0,
+            data: {
+                test: {
+                    routes: ['/test/:id'],
+                },
+            },
+            message: 'request returned 1 route',
+        });
+    });
+
+    it(`/api/routes`, async () => {
+        const response = await request.get('/api/routes');
+        expect(response.status).toBe(200);
+        expect(response.body).toMatchObject({
+            status: 0,
+            data: {
+                test: {
+                    routes: ['/test/:id'],
+                },
+            },
+            message: expect.stringMatching(/request returned (\d+) routes/),
+        });
     });
 });
