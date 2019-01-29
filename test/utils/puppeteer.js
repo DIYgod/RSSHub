@@ -1,4 +1,4 @@
-const puppeteer = require('../lib/utils/puppeteer');
+const puppeteer = require('../../lib/utils/puppeteer');
 
 describe('puppeteer', () => {
     it('puppeteer run', async () => {

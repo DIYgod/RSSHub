@@ -1,7 +1,7 @@
-const axios = require('../lib/utils/axios');
+const axios = require('../../lib/utils/axios');
 const MockAdapter = require('axios-mock-adapter');
 const mock = new MockAdapter(axios);
-const config = require('../lib/config');
+const config = require('../../lib/config');
 
 describe('axios', () => {
     it('axios headers', async () => {

@@ -1,4 +1,4 @@
-const parseDate = require('../lib/utils/date');
+const parseDate = require('../../lib/utils/date');
 const MockDate = require('mockdate');
 
 describe('date', () => {
