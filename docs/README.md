@@ -2838,7 +2838,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 新浪科技
 
-<route name="科学探索" author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']>
+<route name="科学探索" author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
 
 分类：
 | zx | twhk | dwzw | zrdl | lskg | smyx | shbk | kjqy |
