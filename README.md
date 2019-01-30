@@ -8,6 +8,7 @@
 [![telegram](https://img.shields.io/badge/chat-telegram-brightgreen.svg?style=flat-square)](https://t.me/rsshub)
 [![build status](https://img.shields.io/travis/DIYgod/RSSHub/master.svg?style=flat-square)](https://travis-ci.org/DIYgod/RSSHub)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square)](https://codecov.io/github/DIYgod/RSSHub?branch=master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDIYgod%2FRSSHub.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FDIYgod%2FRSSHub?ref=badge_shield)
 
 ## 介绍
 
@@ -95,3 +96,7 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/RSSHub/contributors)).
 
 > Blog [@DIYgod](https://diygod.me) · GitHub [@DIYgod](https://github.com/DIYgod) · Twitter [@DIYgod](https://twitter.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDIYgod%2FRSSHub.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDIYgod%2FRSSHub?ref=badge_large)
