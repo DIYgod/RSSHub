@@ -270,16 +270,10 @@ By default there is a global caching period set in `lib/config.js`, some sources
 -   Save to cache:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number), (persistent: boolean)); // time is the caching period in seconds. When persistent is set to true, the cache will refresh its expiry time upon every re-request (Under Redis this means the cache will never expire).
+ctx.cache.set((key: string), (value: string), (time: number)); // time is the caching period in seconds.
 ```
 
 -   Access the cache:
-
-::: tip tips
-
-Since Redis caches with `persistent = true` will never expire, parameter `persistent` for `Get()` only has effect on LRU memory cache, it serves no purpose for Redis.
-
-:::
 
 ```js
 const value = await ctx.cache.get((key: string));
@@ -291,14 +285,14 @@ Given the update frequency is known, set the appropriate caching period to reuse
 
 ```js
 const key = 'daily' + story.id; // story.id is the unique identifier of each article
-ctx.cache.set(key, item.description, 24 * 60 * 60, true); // set the LRU memeroy caching period to 24 hours * 60 minutes * 60 seconds = 86,400 seconds = 1 day
+ctx.cache.set(key, item.description, 24 * 60 * 60); // set the caching period to 24 hours * 60 minutes * 60 seconds = 86,400 seconds = 1 day
 ```
 
 When the identical requests come in, reuse the cache：
 
 ```js
 const key = 'daily' + story.id;
-const value = await ctx.cache.get(key, true); // query the LRU memory cache to find the unique identifier
+const value = await ctx.cache.get(key); // query the cache to find the unique identifier
 if (value) {
     // return the cached data
     item.description = value; // assign the cached data
