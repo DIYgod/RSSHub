@@ -4322,10 +4322,10 @@ googleapis-common@^0.7.0:
     url-template "^2.0.8"
     uuid "^3.2.1"
 
-googleapis@37.0.0:
-  version "37.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-37.0.0.tgz#1c3d89f1c7419c8541ac66e1168aa55808828edc"
-  integrity sha512-ERXNeGSLApFe73Xq3RRfKF/3tkfvjtJIQ1vtxo1Z3R7Rrik82nfFRyd79Dm/Eff2oh2WVPuo3waBqxMvf6iLaQ==
+googleapis@37.1.0:
+  version "37.1.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-37.1.0.tgz#34a663179ea5a1b290b7af1ea1a1ae9a9eabfcb0"
+  integrity sha512-ajQF/BA95pCknQWtNFelcSuwZpiUKyKlfbEFd/q3gWMWJWlkMd4Bb+oI6+A0lQ0spqQF/zzMyviTiLCaws5hkw==
   dependencies:
     google-auth-library "^3.0.0"
     googleapis-common "^0.7.0"
