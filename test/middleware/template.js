@@ -28,10 +28,6 @@ describe('template', () => {
         expect(parsed1.items[0].author).toEqual(expect.any(String));
         expect(parsed1.items[0].content).toEqual(expect.any(String));
         expect(parsed1.items[0].guid).toEqual(expect.any(String));
-
-        const response2 = await request.get('/test/1');
-        const parsed2 = await parser.parseString(response2.text);
-        expect(parsed2).toMatchObject(parsed1);
     });
 
     it(`.atom`, async () => {
