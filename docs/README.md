@@ -1155,7 +1155,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### ebb.io
 
-<route name="ebb" author="Tsuki" example="/routes/ebb" path="/routes/ebb"/>
+<route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
 
 ## 程序更新
 
