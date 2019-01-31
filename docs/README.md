@@ -1145,7 +1145,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Animen 动漫平台
 
-<route name="news" author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="[‘板块类型']">
+<route name="news" author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="['板块类型']">
 
 | 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
