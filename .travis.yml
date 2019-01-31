@@ -2,14 +2,11 @@ language: node_js
 
 node_js: stable
 
-services:
-  - redis-server
+before_install:
+  sudo service redis-server start --bind 127.0.0.1
 
 install:
   - yarn
-
-before_install:
-  sudo service redis-server start --bind 127.0.0.1
 
 script:
   - npm run test
