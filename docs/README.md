@@ -2850,3 +2850,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 | 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
 
 </route>
+
+### 日报 | D2 资源库
+
+<route name="日报 | D2 资源库" author="Andiedie" example="/d2/daily" path="/d2/daily"/>
