@@ -2337,6 +2337,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="用户动态" author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
+### Indienova
+
+<route name="indienova 文章" author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
