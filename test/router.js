@@ -6,9 +6,6 @@ const parser = new Parser();
 const config = require('../lib/config');
 
 async function checkRSS(response) {
-    expect(response.headers['content-type']).toBe('application/xml; charset=utf-8');
-    expect(response.headers['cache-control']).toBe(`max-age=${config.cacheExpire / 2}`);
-
     const checkDate = (date) => {
         expect(date).toEqual(expect.any(String));
         expect(Date.parse(date)).toEqual(expect.any(Number));
@@ -93,7 +90,6 @@ describe('router', () => {
             message: 'request returned 1 route',
         });
     });
-
     it(`/api/routes`, async () => {
         const response = await request.get('/api/routes');
         expect(response.status).toBe(200);
