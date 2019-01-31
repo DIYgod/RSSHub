@@ -20,9 +20,6 @@
   "keywords": [
     "RSS"
   ],
-  "gitHooks": {
-    "pre-commit": "npm run lint"
-  },
   "author": "DIYgod",
   "license": "MIT",
   "bugs": {
@@ -38,7 +35,7 @@
     "lint-staged": "8.1.1",
     "mockdate": "2.0.2",
     "nodemon": "1.18.9",
-    "prettier": "1.16.2",
+    "prettier": "1.16.3",
     "prettier-check": "2.0.0",
     "supertest": "3.4.2",
     "vuepress": "0.14.8",
@@ -66,6 +63,7 @@
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "luxon": "^1.7.1",
+    "lz-string": "^1.4.4",
     "markdown-it": "^8.4.2",
     "node-fetch": "^2.3.0",
     "path-to-regexp": "3.0.0",
