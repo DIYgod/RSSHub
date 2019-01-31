@@ -1153,6 +1153,10 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### ebb.io
+
+<route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
+
 ## 程序更新
 
 ### RSSHub
