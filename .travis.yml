@@ -8,6 +8,9 @@ services:
 install:
   - yarn
 
+before_install:
+  sudo service redis-server start --bind 127.0.0.1
+
 script:
   - npm run test
 
