@@ -58,20 +58,9 @@ describe('router', () => {
     });
 
     // route
-    it(`/test/1 (origin)`, async () => {
+    it(`/test/1`, async () => {
         const response = await request.get('/test/1');
         expect(response.status).toBe(200);
-
-        await checkRSS(response);
-    });
-    it(`/test/1 (cache)`, async () => {
-        const response = await request.get('/test/1');
-        expect(response.status).toBe(200);
-        if (config.cacheType === 'memory') {
-            expect(response.headers['x-koa-memory-cache']).toBe('true');
-        } else if (config.cacheType === 'redis') {
-            expect(response.headers['x-koa-redis-cache']).toBe('true');
-        }
 
         await checkRSS(response);
     });
