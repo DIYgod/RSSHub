@@ -267,7 +267,7 @@ sidebar: auto
 -   添加缓存:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存时间, 单位为秒
+ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存时间。单位为秒。
 ```
 
 -   获取缓存:
@@ -278,7 +278,7 @@ const value = await ctx.cache.get((key: string));
 
 例如知乎日报需要获取文章全文：[/lib/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
 
-由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，从而提升性能并节省资源。
+由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，并且该缓存被再次访问后会延长过期时间，从而提升性能并节省资源。
 
 ```js
 const key = 'daily' + story.id; // story.id 为知乎日报返回的文章唯一识别符
