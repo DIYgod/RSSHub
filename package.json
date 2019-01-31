@@ -20,6 +20,9 @@
   "keywords": [
     "RSS"
   ],
+  "gitHooks": {
+    "pre-commit": "npm run lint"
+  },
   "author": "DIYgod",
   "license": "MIT",
   "bugs": {
