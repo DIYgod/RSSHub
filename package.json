@@ -88,6 +88,10 @@
     "testMatch": [
       "**/test/**/*.js"
     ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/"
+    ],
     "coverageReporters": [
       "text-summary",
       "lcov"
