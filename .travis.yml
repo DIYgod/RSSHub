@@ -2,8 +2,8 @@ language: node_js
 
 node_js: stable
 
-before_install:
-  sudo service redis-server start --bind 127.0.0.1
+services:
+  - redis-server
 
 install:
   - yarn
