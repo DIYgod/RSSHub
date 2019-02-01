@@ -2,11 +2,18 @@ language: node_js
 
 node_js: stable
 
+before_install:
+  sudo service redis-server start --bind 127.0.0.1
+
 install:
   - yarn
 
 script:
   - npm run test
+
+after_script:
+  - npm install codecov
+  - ./node_modules/.bin/codecov
 
 cache:
   yarn: true

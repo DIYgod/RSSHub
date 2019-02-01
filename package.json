@@ -2,15 +2,16 @@
   "name": "rsshub",
   "version": "0.0.1",
   "description": "Make RSS Great Again!",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node lib/index.js",
+    "dev": "nodemon lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
     "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run lint && CONNECT_DISABLED=1 node index.js"
+    "test": "npm run lint && NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "jest": "NODE_ENV=test jest --runInBand --forceExit"
   },
   "repository": {
     "type": "git",
@@ -29,52 +30,73 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "eslint": "5.9.0",
-    "eslint-config-prettier": "3.3.0",
-    "eslint-plugin-prettier": "3.0.0",
-    "lint-staged": "8.1.0",
-    "nodemon": "1.18.7",
-    "prettier": "1.15.2",
+    "axios-mock-adapter": "1.16.0",
+    "eslint": "5.12.1",
+    "eslint-config-prettier": "4.0.0",
+    "eslint-plugin-prettier": "3.0.1",
+    "jest": "24.0.0",
+    "lint-staged": "8.1.1",
+    "mockdate": "2.0.2",
+    "nodemon": "1.18.9",
+    "prettier": "1.16.3",
     "prettier-check": "2.0.0",
+    "supertest": "3.4.2",
     "vuepress": "0.14.8",
     "yorkie": "2.0.0"
   },
   "dependencies": {
     "art-template": "4.13.2",
     "axios": "0.18.0",
-    "axios-retry": "3.1.1",
+    "axios-retry": "3.1.2",
     "cheerio": "1.0.0-rc.2",
     "co-redis": "2.1.1",
     "currency-symbol-map": "^4.0.4",
     "dayjs": "^1.7.7",
     "form-data": "^2.3.2",
     "git-rev-sync": "1.12.0",
-    "googleapis": "35.0.0",
+    "googleapis": "37.1.0",
     "he": "^1.1.1",
     "iconv-lite": "0.4.24",
     "imgur": "^0.3.1",
     "json-bigint": "0.3.0",
-    "koa": "2.6.2",
-    "koa-basic-auth": "^3.0.0",
+    "koa": "2.7.0",
+    "koa-basic-auth": "^4.0.0",
     "koa-favicon": "2.0.1",
     "koa-mount": "^4.0.0",
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "luxon": "^1.7.1",
+    "lz-string": "^1.4.4",
     "markdown-it": "^8.4.2",
-    "path-to-regexp": "2.4.0",
+    "node-fetch": "^2.3.0",
+    "path-to-regexp": "3.0.0",
     "pidusage": "^2.0.17",
     "plist": "^3.0.1",
     "puppeteer": "^1.10.0",
-    "raven": "^2.6.4",
-    "readall": "1.1.0",
     "redis": "2.8.0",
-    "rss-parser": "3.5.4",
+    "rss-parser": "3.6.2",
+    "sanitize-html": "^1.20.0",
     "sharp": "^0.21.0",
+    "socks-proxy-agent": "^4.0.1",
     "twit": "2.2.11",
-    "winston": "3.1.0"
+    "winston": "3.2.1"
   },
   "engines": {
     "node": ">=8.0.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/**/*.js"
+    ],
+    "coverageReporters": [
+      "text-summary",
+      "lcov"
+    ],
+    "collectCoverageFrom": [
+      "lib/**/*.js",
+      "!lib/routes/**/*.js"
+    ],
+    "bail": true,
+    "testEnvironment": "node"
   }
 }
