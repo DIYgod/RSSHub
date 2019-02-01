@@ -1,3 +1,5 @@
+process.env.SOCKET = '/tmp/RSSHub.socket';
+
 const supertest = require('supertest');
 const { server } = require('../lib/index');
 const request = supertest(server);
