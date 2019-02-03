@@ -2880,3 +2880,13 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 加摩根大通研究所
 
 <route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+## 通用配置路由
+
+<route name="配置" author="SettingDust"  example="/common/uraaka-joshi" path="/selector-common/:config" :paramsDesc="['配置文件名']"/>
+
+### 裏垢女子まとめ
+
+<route name="主页" author="SettingDust"  example="/common/uraaka-joshi" path="/common/uraaka-joshi"/>
+
+<route name="用户" author="SettingDust"  example="/common/uraaka-joshi-user?id=_rrwq" path="/common/uraaka-joshi-user?id=:id" :paramsDesc="['用户id']"/>
