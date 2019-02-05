@@ -475,6 +475,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="浏览发现" author="clarkzsd" example="/douban/explore" path="/douban/explore"/>
 
+<route name="浏览发现分栏目" author="LogicJake" example="/douban/explore/column/2" path="/douban/explore_column/:id" :paramsDesc="['分栏目id']"/>
+
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
 <route name="最新增加的音乐" author="fengkx xyqfer" example="/douban/music/latest/chinese" path="/douban/music/latest/:area?" :paramsDesc="['区域类型，默认全部']">
