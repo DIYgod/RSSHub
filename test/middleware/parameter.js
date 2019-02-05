@@ -10,7 +10,7 @@ afterAll(() => {
 
 describe('filter', () => {
     it(`filter`, async () => {
-        const response = await request.get('/test/1?filter=Item4|Title5');
+        const response = await request.get('/test/1?filter=Description4|Title5');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(2);
         expect(parsed.items[0].title).toBe('Title4');
@@ -18,14 +18,14 @@ describe('filter', () => {
     });
 
     it(`filter_title`, async () => {
-        const response = await request.get('/test/1?filter_title=Item4|Title5');
+        const response = await request.get('/test/1?filter_title=Description4|Title5');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Title5');
     });
 
     it(`filter_description`, async () => {
-        const response = await request.get('/test/1?filter_description=Item4|Title5');
+        const response = await request.get('/test/1?filter_description=Description4|Title5');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(1);
         expect(parsed.items[0].title).toBe('Title4');
@@ -40,7 +40,7 @@ describe('filter', () => {
     });
 
     it(`filterout`, async () => {
-        const response = await request.get('/test/1?filterout=Item4|Title5');
+        const response = await request.get('/test/1?filterout=Description4|Title5');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(3);
         expect(parsed.items[0].title).toBe('Title1');
@@ -49,7 +49,7 @@ describe('filter', () => {
     });
 
     it(`filterout_title`, async () => {
-        const response = await request.get('/test/1?filterout_title=Item4|Title5');
+        const response = await request.get('/test/1?filterout_title=Description4|Title5');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(4);
         expect(parsed.items[0].title).toBe('Title1');
@@ -59,7 +59,7 @@ describe('filter', () => {
     });
 
     it(`filterout_description`, async () => {
-        const response = await request.get('/test/1?filterout_description=Item4|Title5');
+        const response = await request.get('/test/1?filterout_description=Description4|Title5');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(4);
         expect(parsed.items[0].title).toBe('Title1');

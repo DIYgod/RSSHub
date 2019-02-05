@@ -553,6 +553,10 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户动态" author="DIYgod" example="/douyin/user/93610979153" path="/douyin/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+### 美拍
+
+<route name="用户动态" author="ihewro" example="/meipai/user/56537299" path="/meipai/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
+
 ### 雪球
 
 <route name="用户动态" author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" :paramsDesc="['用户 id, 可在用户主页 URL 中找到', '动态的类型, 不填则默认全部']">
@@ -1142,6 +1146,20 @@ GitHub 官方也提供了一些 RSS:
 <route name="最後更新" author="maple3142" example="/anigamer/new_anime" path="/anigamer/new_anime"/>
 
 <route name="動畫" author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
+
+### Animen 动漫平台
+
+<route name="news" author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="['板块类型']">
+
+| 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
+| zx   | jd   | dh   | mh   | yx   | xs   | zrb    | hd   | yy   | ft   | qt   | xwg    | lrb    | gg   |
+
+</route>
+
+### ebb.io
+
+<route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
 
 ## 程序更新
 
@@ -2323,6 +2341,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="用户动态" author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
+### Indienova
+
+<route name="indienova 文章" author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
@@ -2850,3 +2872,11 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 | 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
 
 </route>
+
+### 日报 | D2 资源库
+
+<route name="日报 | D2 资源库" author="Andiedie" example="/d2/daily" path="/d2/daily"/>
+
+### 加摩根大通研究所
+
+<route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
