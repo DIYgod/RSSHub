@@ -816,6 +816,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
 
+### segmentfault
+
+<route name="频道" author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
+
 ## 直播
 
 ### 哔哩哔哩直播
