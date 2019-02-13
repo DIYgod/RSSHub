@@ -187,6 +187,10 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 <routeEn name="Changelog" author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+### Docker Hub
+
+<routeEn name="Image New Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
+
 ## Social Media
 
 ### pixiv
@@ -244,6 +248,16 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 </routeEN>
 
 <routeEn name="Sticker Pack" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
+
+## ACG
+
+### Vol.moe
+
+<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
+
+| Comics are serialized | Comics is finshed |
+| --------------------- | ----------------- |
+| serial                | finsh             |
 
 ## Travel
 
