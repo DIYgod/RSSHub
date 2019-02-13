@@ -1161,9 +1161,9 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['模式']">
 
-| 连载 | 完结 | 
-| ---- | ---- | 
-| serial   | finsh   | 
+| 连载   | 完结  |
+| ------ | ----- |
+| serial | finsh |
 
 </route>
 
