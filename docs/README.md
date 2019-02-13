@@ -475,6 +475,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="浏览发现" author="clarkzsd" example="/douban/explore" path="/douban/explore"/>
 
+<route name="浏览发现分栏目" author="LogicJake" example="/douban/explore/column/2" path="/douban/explore_column/:id" :paramsDesc="['分栏目id']"/>
+
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
 <route name="最新增加的音乐" author="fengkx xyqfer" example="/douban/music/latest/chinese" path="/douban/music/latest/:area?" :paramsDesc="['区域类型，默认全部']">
@@ -989,6 +991,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
 
+### 高清电台
+
+<route name="最新电影" author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
+
 ## 图片
 
 ### 妹子图
@@ -1157,6 +1163,16 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### Vol.moe
+
+<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['模式']">
+
+| 连载   | 完结  |
+| ------ | ----- |
+| serial | finsh |
+
+</route>
+
 ### ebb.io
 
 <route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
@@ -1246,6 +1262,10 @@ GitHub 官方也提供了一些 RSS:
 ### Apkpure
 
 <route name="Versions" author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
+
+### Docker Hub
+
+<route name="镜像有新 Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
 
 ## 大学通知
 
@@ -2409,6 +2429,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="Poems" author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+### 轻小说文库
+
+<route name="章节" author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
 ## 中国驻外使领馆
 
 ### 大使馆
@@ -2689,6 +2713,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 腾讯大家
 
 <route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
+<route name="作者作品" author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
+<route name="专栏" author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
 
 ### 抽屉
 
@@ -2880,3 +2906,8 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 加摩根大通研究所
 
 <route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+### 人人都是产品经理
+
+<route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户id']"/>
+<route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户id']"/>
