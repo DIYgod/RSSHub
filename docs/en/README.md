@@ -187,6 +187,10 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 <routeEn name="Changelog" author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+### Docker Hub
+
+<routeEn name="Image New Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
+
 ## Social Media
 
 ### pixiv
