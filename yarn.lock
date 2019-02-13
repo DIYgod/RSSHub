@@ -4306,10 +4306,10 @@ googleapis-common@^0.7.0:
     url-template "^2.0.8"
     uuid "^3.2.1"
 
-googleapis@37.1.0:
-  version "37.1.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-37.1.0.tgz#34a663179ea5a1b290b7af1ea1a1ae9a9eabfcb0"
-  integrity sha512-ajQF/BA95pCknQWtNFelcSuwZpiUKyKlfbEFd/q3gWMWJWlkMd4Bb+oI6+A0lQ0spqQF/zzMyviTiLCaws5hkw==
+googleapis@37.2.0:
+  version "37.2.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-37.2.0.tgz#63bfcadaccc7cb8c1d8dff90573c48ca18132409"
+  integrity sha512-UenlZ0c4eaVAylIPvvsIlL/q5/3Xg8DuKug5aqdmRMk+tTVfJUmEKgp3s4ZSUOI5oKqO/+arIW5UnY2S62B13w==
   dependencies:
     google-auth-library "^3.0.0"
     googleapis-common "^0.7.0"
