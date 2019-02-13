@@ -1163,6 +1163,16 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### Vol.moe
+
+<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['模式']">
+
+| 连载   | 完结  |
+| ------ | ----- |
+| serial | finsh |
+
+</route>
+
 ### ebb.io
 
 <route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
