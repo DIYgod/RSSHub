@@ -989,6 +989,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
 
+### 高清电台
+
+<route name="最新电影" author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
+
 ## 图片
 
 ### 妹子图
