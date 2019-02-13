@@ -2893,4 +2893,5 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 人人都是产品经理
 
+<route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户id']"/>
 <route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户id']"/>
