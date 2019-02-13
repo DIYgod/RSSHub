@@ -66,4 +66,12 @@ describe('template', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title.length).toBe(103);
     });
+
+    it(`replace newlines with <br>`, async () => {
+        const response = await request.get('/test/long');
+        const parsed = await parser.parseString(response.text);
+        const test = parsed.items[0].description;
+        expect(test).not.toContain('\r');
+        expect(test).not.toContain('\n');
+    });
 });
