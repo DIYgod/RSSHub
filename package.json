@@ -31,7 +31,7 @@
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
     "axios-mock-adapter": "1.16.0",
-    "eslint": "5.12.1",
+    "eslint": "5.13.0",
     "eslint-config-prettier": "4.0.0",
     "eslint-plugin-prettier": "3.0.1",
     "jest": "24.0.0",
