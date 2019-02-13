@@ -2890,3 +2890,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 加摩根大通研究所
 
 <route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+### 人人都是产品经理
+
+<route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户id']"/>
