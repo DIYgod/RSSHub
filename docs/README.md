@@ -475,6 +475,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="浏览发现" author="clarkzsd" example="/douban/explore" path="/douban/explore"/>
 
+<route name="浏览发现分栏目" author="LogicJake" example="/douban/explore/column/2" path="/douban/explore_column/:id" :paramsDesc="['分栏目id']"/>
+
 <route name="新书速递" author="fengkx" example="/douban/book/latest" path="douban/book/latest"/>
 
 <route name="最新增加的音乐" author="fengkx xyqfer" example="/douban/music/latest/chinese" path="/douban/music/latest/:area?" :paramsDesc="['区域类型，默认全部']">
@@ -2898,3 +2900,8 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 加摩根大通研究所
 
 <route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+### 人人都是产品经理
+
+<route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户id']"/>
+<route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户id']"/>
