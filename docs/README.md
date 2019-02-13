@@ -2703,6 +2703,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 腾讯大家
 
 <route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
+<route name="作者作品" author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
+<route name="专栏" author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
 
 ### 抽屉
 
