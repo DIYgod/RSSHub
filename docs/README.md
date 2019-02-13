@@ -989,6 +989,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
 
+### 高清电台
+
+<route name="最新电影" author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
+
 ## 图片
 
 ### 妹子图
@@ -2418,6 +2422,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### All Poetry
 
 <route name="Poems" author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
+
+### 轻小说文库
+
+<route name="章节" author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ## 中国驻外使领馆
 
