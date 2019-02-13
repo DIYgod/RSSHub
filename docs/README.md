@@ -1253,6 +1253,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Versions" author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
 
+### Docker Hub
+
+<route name="镜像有新 Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
+
 ## 大学通知
 
 ### 上海海事大学
