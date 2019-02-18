@@ -816,6 +816,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
 
+### LeetCode
+
+<route name="文章" author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
+
 ## 直播
 
 ### 哔哩哔哩直播
