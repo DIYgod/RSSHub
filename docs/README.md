@@ -1430,6 +1430,13 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
 
+<route name="今日哈工大" author="ranpox" example="/hit/today/10" path="/universities/hit/today/:category" :paramsDesc="['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']"/>
+
+::: tip 提示
+今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
+例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
+:::
+
 ### 上海科技大学
 
 <route name="信息科技与技术学院活动" author="HenryQW" example="/shanghaitech/sist/activity" path="/universities/shanghaitech/sist/activity"/>
