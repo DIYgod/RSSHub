@@ -599,6 +599,10 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户动态" author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
 
+### 虎扑
+
+<route name="虎扑BBS步行街" author="LogicJake" example="/hupu/bxj/bxj/2" path="/hupu/bxj/:id/:order?" :paramsDesc="['栏目id，可在栏目 URL 找到', '排序方式，1最新回帖（默认），2最新发帖']"/>
+
 ## 编程
 
 ### 掘金
@@ -681,6 +685,8 @@ GitHub 官方也提供了一些 RSS:
 <route name="Trending" author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
 
 <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+<route name="仓库 Pull Requests" author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
 <route name="用户" author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" :paramsDesc="['用户名']"/>
 
@@ -820,6 +826,16 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="频道" author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
 
+### 牛客网
+
+<route name="讨论区" author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
+
+| 最新回复 | 最新发表 | 最新 | 精华 |
+| -------- | -------- | ---- | ---- |
+| 0        | 3        | 1    | 4    |
+
+</router>
+
 ## 直播
 
 ### 哔哩哔哩直播
@@ -849,6 +865,10 @@ GitHub 官方也提供了一些 RSS:
 ### 虎牙直播
 
 <route name="直播间开播" author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+
+### kingkong 直播
+
+<route name="直播间开播" author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 音视频
 
@@ -1167,6 +1187,16 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### Vol.moe
+
+<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['模式']">
+
+| 连载   | 完结  |
+| ------ | ----- |
+| serial | finsh |
+
+</route>
+
 ### ebb.io
 
 <route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
@@ -1256,6 +1286,10 @@ GitHub 官方也提供了一些 RSS:
 ### Apkpure
 
 <route name="Versions" author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
+
+### Docker Hub
+
+<route name="镜像有新 Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
 
 ## 大学通知
 
@@ -2578,6 +2612,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="Next 主题博客" author="fengkx" example="/hexo/next/fengkx.top" path="/hexo/next/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
+<route name="Yilia 主题博客" author="aha2mao" example="/hexo/yilia/litten.me" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+
 ### Keep
 
 <route name="运动日记" author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
@@ -2703,6 +2739,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 腾讯大家
 
 <route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
+<route name="作者作品" author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
+<route name="专栏" author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
 
 ### 抽屉
 
@@ -2894,6 +2932,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 加摩根大通研究所
 
 <route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+### 多知网
+
+<route name="首页" author="WenryXu" example="/duozhi" path="/duozhi"/>
 
 ### 人人都是产品经理
 
