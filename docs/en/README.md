@@ -245,7 +245,7 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 
 :::
 
-</routeEN>
+</routeEn>
 
 <routeEn name="Sticker Pack" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
 
@@ -253,11 +253,13 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 
 ### Vol.moe
 
-<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
+<routeEn name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
 
 | Comics are serialized | Comics is finshed |
 | --------------------- | ----------------- |
-| serial                | finsh             |
+| serial                | finish            |
+
+</routeEn>
 
 ## Travel
 
@@ -357,6 +359,8 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 ### Hexo Blog
 
 <routeEn name="Blog using Next theme" author="fengkx" path="/hexo/next/:url" example="/hexo/next/fengkx.top" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+
+<routeEn name="Blog using Yilia theme" author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/litten.me" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
 ### Google
 
