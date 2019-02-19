@@ -149,6 +149,7 @@ RSSHub 提供下列 API 接口:
                 "/bilibili/partion/:tid",
                 "/bilibili/partion/ranking/:tid/:days?",
                 "/bilibili/bangumi/:seasonid",
+                "/bilibili/video/page/:aid",
                 "/bilibili/video/reply/:aid",
                 "/bilibili/link/news/:product",
                 "/bilibili/live/room/:roomID",
@@ -294,6 +295,8 @@ RSSHub 提供下列 API 接口:
 </route>
 
 <route name="分区视频排行榜" author="lengthmin" example="/bilibili/partion/ranking/171/3" path="/bilibili/partion/ranking/:tid/:days?" :paramsDesc="['分区 id, 见上方表格', '缺省为 7, 指最近多少天内的热度排序']"/>
+
+<route name="视频选集列表" author="sxzz" example="/bilibili/video/page/39732828" path="/bilibili/video/page/:aid" :paramsDesc="['可在视频页 URL 中找到']"/>
 
 <route name="视频评论" author="Qixingchen" example="/bilibili/video/reply/21669336" path="/bilibili/video/reply/:aid" :paramsDesc="['可在视频页 URL 中找到']"/>
 
