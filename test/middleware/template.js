@@ -68,10 +68,15 @@ describe('template', () => {
     });
 
     it(`replace newlines with <br>`, async () => {
-        const response = await request.get('/test/long');
+        const response = await request.get('/test/linebreaker');
         const parsed = await parser.parseString(response.text);
-        const test = parsed.items[0].description;
+        const test = parsed.items[0].content;
+
+        // line breakers should have been replaced with <br>
         expect(test).not.toContain('\r');
         expect(test).not.toContain('\n');
+
+        // content should not start with and/or end with <br>|<br/>, which are meaningless
+        expect(test).toEqual(expect.not.stringMatching(/^(<br>| |<br\/>)+|(<br>| |<br\/>)+$/g));
     });
 });
