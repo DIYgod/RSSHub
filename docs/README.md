@@ -856,6 +856,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="直播间开播" author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
 
+### kingkong 直播
+
+<route name="直播间开播" author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
 ## 音视频
 
 ### bilibili
