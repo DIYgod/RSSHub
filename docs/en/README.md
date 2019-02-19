@@ -245,7 +245,7 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 
 :::
 
-</routeEN>
+</routeEn>
 
 <routeEn name="Sticker Pack" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
 
@@ -253,11 +253,13 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 
 ### Vol.moe
 
-<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
+<routeEn name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
 
 | Comics are serialized | Comics is finshed |
 | --------------------- | ----------------- |
-| serial                | finsh             |
+| serial                | finish            |
+
+</routeEn>
 
 ## Travel
 
