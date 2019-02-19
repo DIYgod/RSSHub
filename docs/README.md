@@ -2965,3 +2965,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 鲸跃汽车
 
 <route name="首页" author="LogicJake" example="/whalegogo/home" path="/whalegogo/home"/>
+
+### 每日安全
+
+<route name="推送" author="LogicJake" example="/security/pulses" path="/security/pulses"/>
