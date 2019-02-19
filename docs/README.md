@@ -2506,6 +2506,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="章节" author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
+### 爱思想
+
+<route name="栏目" author="HenryQW" example="/aisixiang/column/722" path="/aisixiang/column/:id" :paramsDesc="['栏目 ID, 可在对应栏目 URL 中找到']"/>
+
+<route name="排行榜" author="HenryQW" example="/aisixiang/column/1/7" path="/aisixiang/ranking/:type?/:range?" :paramsDesc="['排行榜类型', '排行榜范围, 仅适用于点击排行榜, 可选日(1)，周(7)，月(30)']">
+
+| 文章点击排行 | 文章推荐排行 | 最近更新文章 |
+| ------------ | ------------ | ------------ |
+| 1            | 10           | 11           |
+
+</route>
+
 ## 政务消息
 
 ### 中国驻外使领馆
