@@ -15,14 +15,14 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: |
 
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Anonymity |
-| :--------------------------------------: | :----: | :----------------------------------------: | :-------: |
+| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
+| :--------------------------------------: | :----------------------------------------: | :--: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
