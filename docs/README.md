@@ -2917,6 +2917,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 <route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
 
+### 多知网
+
+<route name="首页" author="WenryXu" example="/duozhi" path="/duozhi"/>
+
 ### 人人都是产品经理
 
 <route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户id']"/>
