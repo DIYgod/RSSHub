@@ -686,6 +686,8 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
+<route name="仓库 Pull Requests" author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
 <route name="用户" author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" :paramsDesc="['用户名']"/>
 
 <route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
@@ -820,6 +822,16 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
 
+### 牛客网
+
+<route name="讨论区" author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
+
+| 最新回复 | 最新发表 | 最新 | 精华 |
+| -------- | -------- | ---- | ---- |
+| 0        | 3        | 1    | 4    |
+
+</router>
+
 ## 直播
 
 ### 哔哩哔哩直播
@@ -849,6 +861,10 @@ GitHub 官方也提供了一些 RSS:
 ### 虎牙直播
 
 <route name="直播间开播" author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+
+### kingkong 直播
+
+<route name="直播间开播" author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 音视频
 
@@ -1167,6 +1183,16 @@ GitHub 官方也提供了一些 RSS:
 
 </route>
 
+### Vol.moe
+
+<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['模式']">
+
+| 连载   | 完结  |
+| ------ | ----- |
+| serial | finsh |
+
+</route>
+
 ### ebb.io
 
 <route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
@@ -1256,6 +1282,10 @@ GitHub 官方也提供了一些 RSS:
 ### Apkpure
 
 <route name="Versions" author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
+
+### Docker Hub
+
+<route name="镜像有新 Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
 
 ## 大学通知
 
@@ -2703,6 +2733,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 腾讯大家
 
 <route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
+<route name="作者作品" author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
+<route name="专栏" author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
 
 ### 抽屉
 
@@ -2894,6 +2926,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 加摩根大通研究所
 
 <route name="新闻" author="howel.52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+### 多知网
+
+<route name="首页" author="WenryXu" example="/duozhi" path="/duozhi"/>
 
 ### 人人都是产品经理
 
