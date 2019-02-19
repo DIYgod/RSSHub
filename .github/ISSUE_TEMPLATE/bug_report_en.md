@@ -6,6 +6,7 @@ about: Submit discovered bugs
 <!--
 Please ensure you have read [documentation](https://docs.rsshub.app/en), and provide all the information required by this template.
 Otherwise the issue will be closed immediately.
+Due to the anti-crawling of the source website, some RSS of the demo will return status code 403. Please do not repeat the issue.
 -->
 
 ### Involved route
