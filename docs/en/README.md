@@ -358,6 +358,8 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 <routeEn name="Blog using Next theme" author="fengkx" path="/hexo/next/:url" example="/hexo/next/fengkx.top" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
+<routeEn name="Blog using Yilia theme" author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/litten.me" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+
 ### Google
 
 <routeEn name="Google Scholar Keywords Monitoring" author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" :paramsDesc="['query statement which supports「Basic」and「Advanced」modes']" >
