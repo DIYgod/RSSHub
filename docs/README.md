@@ -2955,7 +2955,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 惠誉评级
 
-<route name="板块信息" author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址site后面']"/>
+<route name="板块信息" author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址 site 后面']"/>
 
 ### 移动支付网
 
@@ -2975,9 +2975,9 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 人人都是产品经理
 
-<route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户id']"/>
+<route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']"/>
 
-<route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户id']"/>
+<route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
 
 ### 鲸跃汽车
 
@@ -2986,3 +2986,13 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 每日安全
 
 <route name="推送" author="LogicJake" example="/security/pulses" path="/security/pulses"/>
+
+### DoNews
+
+<route name="栏目" author="HenryQW" example="/donews" path="/donews/:column?" :paramsDesc="['栏目代码, 默认为首页.']">
+
+| 首页 | 商业    | 创业     | 互娱 | 科技       | 专栏    |
+| ---- | ------- | -------- | ---- | ---------- | ------- |
+| (空) | company | business | ent  | technology | idonews |
+
+</route>
