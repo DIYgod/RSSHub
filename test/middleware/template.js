@@ -75,8 +75,11 @@ describe('template', () => {
         // line breakers should have been replaced with <br>
         expect(test).not.toContain('\r');
         expect(test).not.toContain('\n');
+        expect(test).not.toContain('<br/>');
 
         // content should not start with and/or end with <br>|<br/>, which are meaningless
-        expect(test).toEqual(expect.not.stringMatching(/^(<br>| |<br\/>)+|(<br>| |<br\/>)+$/g));
+        expect(test).toEqual(expect.not.stringMatching(/^(\s+|<br>)+|(<br>|\s+)+$/g));
+
+        expect(test).toEqual(expect.not.stringMatching(/(<br>\s+<br>)|(<br>){2,}/g));
     });
 });
