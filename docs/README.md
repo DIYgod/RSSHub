@@ -1437,6 +1437,10 @@ GitHub 官方也提供了一些 RSS:
 例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
 :::
 
+::: warning 注意
+部分文章需要经过统一身份认证后才能阅读全文。
+:::
+
 ### 上海科技大学
 
 <route name="信息科技与技术学院活动" author="HenryQW" example="/shanghaitech/sist/activity" path="/universities/shanghaitech/sist/activity"/>
