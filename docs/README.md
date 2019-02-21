@@ -23,14 +23,14 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: |
 
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
-| :--------------------------------------: | :----: | :----------------------------------------: | :--: |
+| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
+| :--------------------------------------: | :----------------------------------------: | :--: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -1318,6 +1318,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="镜像有新 Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
 
+### Xiaomi.eu
+
+<route name="ROM Releases" author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+
 ## 大学通知
 
 ### 上海海事大学
@@ -1429,6 +1433,17 @@ GitHub 官方也提供了一些 RSS:
 ### 哈尔滨工业大学
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
+
+<route name="今日哈工大" author="ranpox" example="/hit/today/10" path="/universities/hit/today/:category" :paramsDesc="['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']"/>
+
+::: tip 提示
+今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
+例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
+:::
+
+::: warning 注意
+部分文章需要经过统一身份认证后才能阅读全文。
+:::
 
 ### 上海科技大学
 
@@ -2794,7 +2809,17 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 后续
 
-<route name="事件" author="fengkx" example="/houxu/events/38" path="/houxu/:type/:id" :paramsDesc="['类型', 'ID']"/>
+<route name="Live" author="ciaranchen" example="/houxu/live/5/original" path="/houxu/live/:id/:timeline?" :paramsDesc="['Live ID', '时间线筛选条件。默认为all。']">
+
+| 全部 | 原创     | 精选     |
+| ---- | -------- | -------- |
+| all  | original | featured |
+
+</route>
+
+<route name="最新Live" author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型。实时进展`realtime` 或 最近关注`new`']" />
+
+<route name="最新专栏" author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
 
 ### 老司机
 
@@ -2938,7 +2963,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 惠誉评级
 
-<route name="板块信息" author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址site后面']"/>
+<route name="板块信息" author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址 site 后面']"/>
 
 ### 移动支付网
 
@@ -2958,10 +2983,24 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 人人都是产品经理
 
-<route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户id']"/>
+<route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']"/>
 
-<route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户id']"/>
+<route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
 
 ### 鲸跃汽车
 
 <route name="首页" author="LogicJake" example="/whalegogo/home" path="/whalegogo/home"/>
+
+### 每日安全
+
+<route name="推送" author="LogicJake" example="/security/pulses" path="/security/pulses"/>
+
+### DoNews
+
+<route name="栏目" author="HenryQW" example="/donews" path="/donews/:column?" :paramsDesc="['栏目代码, 默认为首页.']">
+
+| 首页 | 商业    | 创业     | 互娱 | 科技       | 专栏    |
+| ---- | ------- | -------- | ---- | ---------- | ------- |
+| (空) | company | business | ent  | technology | idonews |
+
+</route>
