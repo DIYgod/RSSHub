@@ -2801,7 +2801,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 后续
 
-<route name="Live" author="Ciaran" example="/houxu/lives/5/original" path="/houxu/lives/:id/:timeline?" :paramsDesc="['Live ID', '时间线筛选条件。默认为all。']">
+<route name="Live" author="ciaranchen" example="/houxu/live/5/original" path="/houxu/live/:id/:timeline?" :paramsDesc="['Live ID', '时间线筛选条件。默认为all。']">
 
 | 全部 | 原创     | 精选     |
 | ---- | -------- | -------- |
@@ -2809,9 +2809,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </route>
 
-<route name="最新Live" author="Ciaran" example="/houxu/new_lives/new" path="/houxu/new_lives/:type" :paramsDesc="['类型。实时进展`realtime` 或 最近关注`new`']" />
+<route name="最新Live" author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型。实时进展`realtime` 或 最近关注`new`']" />
 
-<route name="最新专栏" author="Ciaran" example="/houxu/new_events" path="/houxu/new_events"/>
+<route name="最新专栏" author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
 
 ### 老司机
 
