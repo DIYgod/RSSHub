@@ -372,7 +372,7 @@ RSSHub 提供下列 API 接口:
 
 ::: tip 提示
 
-部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#主题-纯文字">主题-纯文字 jike/topicText</a> 可能会提供更好的体验.
+部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#/jike/topic/text/:id">主题-纯文字 /jike/topic/text/:id</a> 可能会提供更好的体验.
 
 :::
 
