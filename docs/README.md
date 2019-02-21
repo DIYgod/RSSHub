@@ -1318,6 +1318,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="镜像有新 Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
 
+### Xiaomi.eu
+
+<route name="ROM Releases" author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+
 ## 大学通知
 
 ### 上海海事大学
