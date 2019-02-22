@@ -650,6 +650,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="沸点" author="xyqfer" example="/juejin/pins" path="/juejin/pins"/>
 
+<route name="专栏" author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
+
 ### Dockone
 
 <route name="周报" author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
