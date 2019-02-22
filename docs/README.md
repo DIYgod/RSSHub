@@ -372,7 +372,7 @@ RSSHub 提供下列 API 接口:
 
 ::: tip 提示
 
-部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#主题-纯文字">主题-纯文字 jike/topicText</a> 可能会提供更好的体验.
+部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#/jike/topic/text/:id">主题-纯文字 /jike/topic/text/:id</a> 可能会提供更好的体验.
 
 :::
 
@@ -649,6 +649,8 @@ RSSHub 提供下列 API 接口:
 > 掘金小册需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
 <route name="沸点" author="xyqfer" example="/juejin/pins" path="/juejin/pins"/>
+
+<route name="专栏" author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
 
 ### Dockone
 
@@ -1318,6 +1320,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="镜像有新 Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
 
+### Xiaomi.eu
+
+<route name="ROM Releases" author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+
 ## 大学通知
 
 ### 上海海事大学
@@ -1435,6 +1441,10 @@ GitHub 官方也提供了一些 RSS:
 ::: tip 提示
 今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
 例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
+:::
+
+::: warning 注意
+部分文章需要经过统一身份认证后才能阅读全文。
 :::
 
 ### 上海科技大学
