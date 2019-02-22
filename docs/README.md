@@ -1054,7 +1054,7 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="首页（最新）" author="gee1k xyqfer" example="/mzitu/home" path="/mzitu/home/:type?" :paramsDesc="['类型，默认最新，可选`hot`最热']"/>
 
-<route name="分类" author="gee1k xyqfer" example="/mzitu/category/hot" path="/mzitu/category/:category" :paramsDesc="['分类名']">
+<route name="分类" author="gee1k xyqfer" example="/mzitu/category/xinggan" path="/mzitu/category/:category" :paramsDesc="['分类名']">
 
 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
 | -------- | -------- | -------- | -------- |
