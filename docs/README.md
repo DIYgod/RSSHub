@@ -372,7 +372,7 @@ RSSHub 提供下列 API 接口:
 
 ::: tip 提示
 
-部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#主题-纯文字">主题-纯文字 jike/topicText</a> 可能会提供更好的体验.
+部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#/jike/topic/text/:id">主题-纯文字 /jike/topic/text/:id</a> 可能会提供更好的体验.
 
 :::
 
@@ -649,6 +649,8 @@ RSSHub 提供下列 API 接口:
 > 掘金小册需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
 <route name="沸点" author="xyqfer" example="/juejin/pins" path="/juejin/pins"/>
+
+<route name="专栏" author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
 
 ### Dockone
 
