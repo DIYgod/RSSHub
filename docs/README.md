@@ -394,7 +394,7 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众号（即刻来源）" author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-主题-精选](#/jike/topic/:id)']"/>
 
-<route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
+<route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id, 可以结合通用参数使用实现公众号内容过滤']"/>
 
 <route name="公众号（ wemp.app 来源）" author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']"/>
 
@@ -2706,6 +2706,22 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <route name="运动日记" author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
 
 ### 懂球帝
+
+::: tip 提示
+
+可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
+
+:::
+
+<route name="头条新闻" author="dxmpalb" example="/dongqiudi/top_news" path="/dongqiudi/top_news"/>
+
+<route name="专题" author="dxmpalb" example="/dongqiudi/special/41" path="/dongqiudi/special/:id" :paramsDesc="['专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配']">
+
+| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
+| ---------- | ------------ | -------------- |
+| 41         | 52           | 53             |
+
+</route>
 
 <route name="早报" author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
 
