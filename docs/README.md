@@ -3011,4 +3011,6 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### UI 中国
 
+<route name="推荐文章" author="WenryXu" example="/ui-cn/article" path="/ui-cn/article"/>
+
 <route name="个人作品" author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" :paramsDesc="['用户id']"/>
