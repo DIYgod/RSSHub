@@ -3006,3 +3006,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 | (空) | company | business | ent  | technology | idonews |
 
 </route>
+
+### UI 中国
+
+<route name="个人作品" author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" :paramsDesc="['用户id']"/>
