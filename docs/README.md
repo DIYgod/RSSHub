@@ -2711,6 +2711,22 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 懂球帝
 
+::: tip 提示
+
+可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
+
+:::
+
+<route name="头条新闻" author="dxmpalb" example="/dongqiudi/top_news" path="/dongqiudi/top_news"/>
+
+<route name="专题" author="dxmpalb" example="/dongqiudi/special/41" path="/dongqiudi/special/:id" :paramsDesc="['专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配']">
+
+| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
+| ---------- | ------------ | -------------- |
+| 41         | 52           | 53             |
+
+</route>
+
 <route name="早报" author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
 
 ::: tip 提示
