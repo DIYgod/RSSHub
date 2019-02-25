@@ -2183,6 +2183,10 @@ category 对应的关键词有
 
 <route name="东莞市" author="victoriqueko" example="/tingshuitz/dongguan" path="/tingshuitz/dongguan"/>
 
+<route name="西安市" author="ciaranchen" example="/tingshuitz/xian" path="/tingshuitz/xian"/>
+
+<route name="阳江市" author="ciaranchen" example="/tingshuitz/yangjiang" path="/tingshuitz/yangjiang"/>
+
 ### 停电通知
 
 获取未来一天的停电通知
