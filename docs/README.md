@@ -39,11 +39,33 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=740)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
-::: tip 提示
+Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
-演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 10 分钟, 可以随意使用
+## 常见问题
 
-:::
+**Q: RSSHub 是怎么工作的？**
+
+**A:** 请求路由时，RSSHub 会按照给定规则请求源站数据，然后以 RSS 格式输出；如果在设定缓存时间内重新请求路由，则会直接返回缓存内容，不请求源站；再加一点点魔法。
+
+**Q: 演示地址可以用么？**
+
+**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 10 分钟, 可以随意使用。部分网站反爬策略严格，可能无法确保可用性，自建可以提高稳定性。
+
+**Q: 文档滚动好卡啊！**
+
+**A:** 因为文档内容太多了，以后可能考虑拆分。
+
+**Q: 没有我想订阅的网站怎么办嘤嘤嘤 QAQ**
+
+**A:** 如果你会写 JavaScript，请按照[规则](/joinus/#%E6%8F%90%E4%BA%A4%E6%96%B0%E7%9A%84-rss-%E5%86%85%E5%AE%B9)提交 pull request，否则按照要求[提交 issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_zh.md)，然后等待有缘人完成你的需求，也可以考虑[赞助项目](/support)或附上一张你自己的女装照来获得更快的 issue 响应速度。
+
+**Q: 可以推荐一下好用的 RSS 阅读器么？**
+
+**A:** 最强组合：[Tiny Tiny RSS](https://github.com/HenryQW/docker-ttrss-plugins) + Reeder。
+
+**Q: 我怎么才能知道 RSSHub 更新了哪些路由？**
+
+**A:** 可以使用 RSS 订阅[RSSHub 有新路由啦](#rsshub)。
 
 ## 通用参数
 
@@ -336,7 +358,7 @@ RSSHub 提供下列 API 接口:
 
 ### 微博
 
-<route name="博主（方案1）" author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
+<route name="博主（方案1）" author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']" crawlerBadge="1"/>
 
 ::: warning 注意
 
@@ -346,9 +368,9 @@ RSSHub 提供下列 API 接口:
 
 <route name="博主（方案2）" author="DIYgod" example="/weibo/user2/1195230310" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
-<route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']"/>
+<route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" crawlerBadge="1"/>
 
-<route name="热搜榜" author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" />
+<route name="热搜榜" author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" crawlerBadge="1"/>
 
 ### 贴吧
 
@@ -414,35 +436,29 @@ RSSHub 提供下列 API 接口:
 
 ### 知乎
 
-::: warning 注意
+<route name="收藏夹" author="huruji" example="/zhihu/collection/26444956" path="/zhihu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']" crawlerBadge="1"/>
 
-知乎反爬虫策略非常严格, 以下演示经常失效, 建议自搭
+<route name="用户动态" author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
 
-:::
+<route name="用户回答" author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
 
-<route name="收藏夹" author="huruji" example="/zhihu/collection/26444956" path="/zhihu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']"/>
+<route name="专栏" author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']" crawlerBadge="1"/>
 
-<route name="用户动态" author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']"/>
+<route name="知乎日报" author="DHPO" example="/zhihu/daily" path="/zhihu/daily" crawlerBadge="1"/>
 
-<route name="用户回答" author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']"/>
+<route name="知乎热榜" author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" crawlerBadge="1"/>
 
-<route name="专栏" author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']"/>
+<route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist" crawlerBadge="1"/>
 
-<route name="知乎日报" author="DHPO" example="/zhihu/daily" path="/zhihu/daily"/>
+<route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']" crawlerBadge="1"/>
 
-<route name="知乎热榜" author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist"/>
+<route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']" crawlerBadge="1"/>
 
-<route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist"/>
+<route name="用户想法" author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
 
-<route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']"/>
+<route name="知乎书店-新书" author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" crawlerBadge="1"/>
 
-<route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']"/>
-
-<route name="用户想法" author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']"/>
-
-<route name="知乎书店-新书" author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest"/>
-
-<route name="知乎想法-24小时新闻汇总" author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily"/>
+<route name="知乎想法-24小时新闻汇总" author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" crawlerBadge="1"/>
 
 ### pixiv
 
@@ -2747,16 +2763,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### Google
 
-<route name="谷歌学术关键词更新" author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']">
+<route name="谷歌学术关键词更新" author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" crawlerBadge="1">
 
 1. 简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
 2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
-
-::: warning 注意
-
-谷歌学术反爬虫机制非常严格, 以下 demo 无法确保可用性. 私人部署可能会提高稳定性.
-
-:::
 
 </route>
 

@@ -31,6 +31,8 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
+Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
+
 ::: tip
 
 Free feel to test the [demo instance](https://rsshub.app), the cache expiry time is set to 10 minutes.
