@@ -3037,11 +3037,11 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 | ---- | ------- | -------- | ---- | ---------- | ------- |
 | (空) | company | business | ent  | technology | idonews |
 
+</route>
+
 ### instapaper
 
 <route name="个人分享" author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
-
-</route>
 
 ### UI 中国
 
