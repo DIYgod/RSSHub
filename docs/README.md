@@ -1895,7 +1895,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 上海大学
 
-<route name="上海大学教务处通知公告" author="tuxinghuan" example="shu/jwc/notice" path="/university/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
+<route name="上海大学教务处通知公告" author="tuxinghuan" example="/shu/jwc/notice" path="/university/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
 
 | 通知通告 | 新闻 |
 | -------- | ---- |
