@@ -3015,6 +3015,8 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 人人都是产品经理
 
+<route name="热门文章" author="WenryXu" example="/woshipm/popular" path="/woshipm/popular"/>
+
 <route name="用户收藏" author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']"/>
 
 <route name="用户文章" author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
@@ -3036,3 +3038,9 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 | (空) | company | business | ent  | technology | idonews |
 
 </route>
+
+### UI 中国
+
+<route name="推荐文章" author="WenryXu" example="/ui-cn/article" path="/ui-cn/article"/>
+
+<route name="个人作品" author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" :paramsDesc="['用户id']"/>
