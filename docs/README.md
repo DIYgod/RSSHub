@@ -3039,6 +3039,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 </route>
 
+### instapaper
+
+<route name="个人分享" author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
+
 ### UI 中国
 
 <route name="推荐文章" author="WenryXu" example="/ui-cn/article" path="/ui-cn/article"/>
