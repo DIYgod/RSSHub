@@ -1036,6 +1036,16 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']"/>
 
+### 猪猪字幕组 （www.zzrbl.com）
+
+<route name="最近更新" author="ykelvis" example="/zzrbl/1" path="/zzrbl/:type?" :paramsDesc="['分类选项，可选，默认为1，日剧分类']">
+
+| 日剧 | 日影 | 其它 |
+| ---- | ---- | ---- |
+|  1   |  2   |  3   |
+
+</route>
+
 ### Sankaku Complex
 
 <route name="Post" author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post"/>
