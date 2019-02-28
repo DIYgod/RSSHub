@@ -3047,6 +3047,8 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 | ---- | ------- | -------- | ---- | ---------- | ------- |
 | (空) | company | business | ent  | technology | idonews |
 
+</route>
+
 ### WeGene
 
 <route name="最近更新" author="LogicJake" example="/wegene/newest" path="/wegene/newest"/>
