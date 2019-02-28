@@ -15,14 +15,14 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> |
+| :-----------------------------------------------------------------------------------------------------------------: |
 
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | Anonymity |
-| :--------------------------------------: | :----: | :----------------------------------------: | :-------: |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
+| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -30,6 +30,8 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 ### Contributors
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+
+Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ::: tip
 
@@ -245,7 +247,7 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 
 :::
 
-</routeEN>
+</routeEn>
 
 <routeEn name="Sticker Pack" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
 
@@ -253,11 +255,13 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 
 ### Vol.moe
 
-<route name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
+<routeEn name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
 
 | Comics are serialized | Comics is finshed |
 | --------------------- | ----------------- |
-| serial                | finsh             |
+| serial                | finish            |
+
+</routeEn>
 
 ## Travel
 
