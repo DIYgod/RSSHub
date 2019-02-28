@@ -2733,7 +2733,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="Next 主题博客" author="fengkx" example="/hexo/next/fengkx.top" path="/hexo/next/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
-<route name="Yilia 主题博客" author="aha2mao" example="/hexo/yilia/litten.me" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+<route name="Yilia 主题博客" author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
 ### Keep
 
