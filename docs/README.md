@@ -3089,3 +3089,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 <route name="推荐文章" author="WenryXu" example="/ui-cn/article" path="/ui-cn/article"/>
 
 <route name="个人作品" author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" :paramsDesc="['用户id']"/>
+
+### 12306
+
+<route name="最新动态" author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
