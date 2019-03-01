@@ -1464,7 +1464,8 @@ GitHub 官方也提供了一些 RSS:
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
 
-<route name="研究生院" author="Johnson" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
+<route name="研究生院" author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
+
 | 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
 | -------- | -------- | -------- | -------- | -------- |
 | latest   | yyxw     | sjwj     | glwj     | xxfw     |
