@@ -270,7 +270,7 @@ By default there is a global caching period set in `lib/config.js`, some sources
 -   Save to cache:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time is the caching period in seconds
+ctx.cache.set((key: string), (value: string), (time: number)); // time is the caching period in seconds.
 ```
 
 -   Access the cache:
@@ -297,7 +297,7 @@ if (value) {
     // return the cached data
     item.description = value; // assign the cached data
 } else {
-    // no cached found
+    // no cache found
     // initiate request to the data source
 }
 ```

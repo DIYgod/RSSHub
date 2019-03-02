@@ -6,9 +6,6 @@ const parser = new Parser();
 const config = require('../lib/config');
 
 async function checkRSS(response) {
-    expect(response.headers['content-type']).toBe('application/xml; charset=utf-8');
-    expect(response.headers['cache-control']).toBe(`max-age=${config.cacheExpire / 2}`);
-
     const checkDate = (date) => {
         expect(date).toEqual(expect.any(String));
         expect(Date.parse(date)).toEqual(expect.any(Number));
@@ -24,6 +21,7 @@ async function checkRSS(response) {
     expect(parsed.description).toEqual(expect.any(String));
     expect(parsed.link).toEqual(expect.any(String));
     expect(parsed.lastBuildDate).toEqual(expect.any(String));
+    expect(parsed.ttl).toEqual(config.cacheExpire + '');
     expect(parsed.items).toEqual(expect.any(Array));
     checkDate(parsed.lastBuildDate);
 
@@ -60,20 +58,9 @@ describe('router', () => {
     });
 
     // route
-    it(`/test/1 (origin)`, async () => {
+    it(`/test/1`, async () => {
         const response = await request.get('/test/1');
         expect(response.status).toBe(200);
-
-        await checkRSS(response);
-    });
-    it(`/test/1 (cache)`, async () => {
-        const response = await request.get('/test/1');
-        expect(response.status).toBe(200);
-        if (config.cacheType === 'memory') {
-            expect(response.headers['x-koa-memory-cache']).toBe('true');
-        } else if (config.cacheType === 'redis') {
-            expect(response.headers['x-koa-redis-cache']).toBe('true');
-        }
 
         await checkRSS(response);
     });
@@ -92,7 +79,6 @@ describe('router', () => {
             message: 'request returned 1 route',
         });
     });
-
     it(`/api/routes`, async () => {
         const response = await request.get('/api/routes');
         expect(response.status).toBe(200);

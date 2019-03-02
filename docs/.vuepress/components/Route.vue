@@ -1,6 +1,6 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 class="name">{{name}} <Author :uid=author /> 
+  <h4 class="name">{{name}} <Badge text="反爬严格" type="warn" v-if="crawlerBadge"/> <Author :uid=author />
     <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
   </h4>
   <p class="example">
@@ -31,19 +31,23 @@ export default {
     },
     name: {
       type: String,
-      required: true 
+      required: true
     },
     path: {
       type: String,
-      required: true 
+      required: true
     },
     example: {
       type: String,
-      required: true 
+      required: true
     },
     paramsDesc: {
       type: [Array, String],
       default: '无'
+    },
+    crawlerBadge: {
+      type: Boolean,
+      default: null
     }
   },
   methods: {
@@ -57,7 +61,7 @@ export default {
 }
 </script>
 <style>
-li.params p { 
+li.params p {
   display: inline;
   }
 .routeBlock {
