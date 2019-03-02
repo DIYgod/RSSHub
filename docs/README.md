@@ -3093,3 +3093,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 12306
 
 <route name="最新动态" author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
+
+### 北京天文馆
+
+<route name="每日一图" author="radaiming" example="/bjp/apod" path="/bjp/apod"/>
