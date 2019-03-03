@@ -859,20 +859,6 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
-"@iamstarkov/listr-update-renderer@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@iamstarkov/listr-update-renderer/-/listr-update-renderer-0.4.1.tgz#d7c48092a2dcf90fd672b6c8b458649cb350c77e"
-  integrity sha512-IJyxQWsYDEkf8C8QthBn5N8tIUR9V9je6j3sMIpAkonaadjbvxmRC6RAhpa3RKxndhNnU2M6iNbtJwd7usQYIA==
-  dependencies:
-    chalk "^1.1.3"
-    cli-truncate "^0.2.1"
-    elegant-spinner "^1.0.1"
-    figures "^1.7.0"
-    indent-string "^3.0.0"
-    log-symbols "^1.0.2"
-    log-update "^2.3.0"
-    strip-ansi "^3.0.1"
-
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -3462,6 +3448,14 @@ eslint-scope@^4.0.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
+eslint-scope@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-4.0.2.tgz#5f10cd6cabb1965bf479fa65745673439e21cb0e"
+  integrity sha512-5q1+B/ogmHl8+paxtOKx38Z8LtWkVGuNt3+GQNErqwLl6ViNp/gdJGMCjZNxZ8j/VYjDNZ2Fo+eQc1TAVPIzbg==
+  dependencies:
+    esrecurse "^4.1.0"
+    estraverse "^4.1.1"
+
 eslint-utils@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/eslint-utils/-/eslint-utils-1.3.1.tgz#9a851ba89ee7c460346f97cf8939c7298827e512"
@@ -3472,10 +3466,10 @@ eslint-visitor-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
   integrity sha512-qzm/XxIbxm/FHyH341ZrbnMUpe+5Bocte9xkmFMzPMjRaZMcXww+MpBptFvtU+79L362nqiLhekCxCxDPaUMBQ==
 
-eslint@5.14.1:
-  version "5.14.1"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.14.1.tgz#490a28906be313685c55ccd43a39e8d22efc04ba"
-  integrity sha512-CyUMbmsjxedx8B0mr79mNOqetvkbij/zrXnFeK2zc3pGRn3/tibjiNAv/3UxFEyfMDjh+ZqTrJrEGBFiGfD5Og==
+eslint@5.15.0:
+  version "5.15.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.15.0.tgz#f313a2f7c7628d39adeefdba4a9c41f842012c9e"
+  integrity sha512-xwG7SS5JLeqkiR3iOmVgtF8Y6xPdtr6AAsN6ph7Q6R/fv+3UlKYoika8SmNzmb35qdRF+RfTY35kMEdtbi+9wg==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.9.1"
@@ -3483,7 +3477,7 @@ eslint@5.14.1:
     cross-spawn "^6.0.5"
     debug "^4.0.1"
     doctrine "^3.0.0"
-    eslint-scope "^4.0.0"
+    eslint-scope "^4.0.2"
     eslint-utils "^1.3.1"
     eslint-visitor-keys "^1.0.0"
     espree "^5.0.1"
@@ -6060,12 +6054,11 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
-lint-staged@8.1.4:
-  version "8.1.4"
-  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-8.1.4.tgz#a726592c0e55231116af295e730643bb711c169b"
-  integrity sha512-oFbbhB/VzN8B3i/sIdb9gMfngGArI6jIfxSn+WPdQb2Ni3GJeS6T4j5VriSbQfxfMuYoQlMHOoFt+lfcWV0HfA==
+lint-staged@8.1.5:
+  version "8.1.5"
+  resolved "https://registry.yarnpkg.com/lint-staged/-/lint-staged-8.1.5.tgz#372476fe1a58b8834eb562ed4c99126bd60bdd79"
+  integrity sha512-e5ZavfnSLcBJE1BTzRTqw6ly8OkqVyO3GL2M6teSmTBYQ/2BuueD5GIt2RPsP31u/vjKdexUyDCxSyK75q4BDA==
   dependencies:
-    "@iamstarkov/listr-update-renderer" "0.4.1"
     chalk "^2.3.1"
     commander "^2.14.1"
     cosmiconfig "^5.0.2"
@@ -6078,6 +6071,7 @@ lint-staged@8.1.4:
     is-glob "^4.0.0"
     is-windows "^1.0.2"
     listr "^0.14.2"
+    listr-update-renderer "^0.5.0"
     lodash "^4.17.11"
     log-symbols "^2.2.0"
     micromatch "^3.1.8"
