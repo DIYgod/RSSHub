@@ -1474,6 +1474,12 @@ GitHub 官方也提供了一些 RSS:
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
 
+<route name="研究生院" author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
+
+| 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
+| -------- | -------- | -------- | -------- | -------- |
+| latest   | yyxw     | sjwj     | glwj     | xxfw     |
+
 ### 哈尔滨工业大学
 
 <route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
