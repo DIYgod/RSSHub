@@ -3077,7 +3077,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </route>
 
-### instapaper
+### Instapaper
 
 <route name="个人分享" author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
@@ -3093,7 +3093,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 北京天文馆
 
-<route name="每日一图" author="radaiming" example="/bjp/apod" path="/bjp/apod"/>
+<route name="每日一图" author="HenryQW" example="/bjp/apod" path="/bjp/apod"/>
 
 ### 洛谷
 
