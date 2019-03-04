@@ -10136,10 +10136,10 @@ vuepress-html-webpack-plugin@^3.2.0:
     toposort "^1.0.0"
     util.promisify "1.0.0"
 
-vuepress@0.14.9:
-  version "0.14.9"
-  resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-0.14.9.tgz#94c0fdf44e2dee22b6452b76dbfd03a9c22495a6"
-  integrity sha512-fsbAmo5TG39q2frEhNYFu7IwuFkYpuTe2BinwdU7BjXyjdApzkWza8n2SPMsBYakAgba5JIwNEZR8bkvnVUhXQ==
+vuepress@0.14.10:
+  version "0.14.10"
+  resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-0.14.10.tgz#070281ad0c9d48e7c848eb9511c96ceb106414ab"
+  integrity sha512-upD0br3AUmZQ+kNJMg135jW36JjYAdShl6XYwDmVMw4XbtcLDSMGWTLqLCQN3PTIs/7TgiJ3cLWNL1ps63gyUQ==
   dependencies:
     "@babel/core" "7.0.0-beta.47"
     "@vue/babel-preset-app" "3.0.0-beta.11"
