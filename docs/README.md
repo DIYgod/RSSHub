@@ -2049,15 +2049,13 @@ Category 列表:
 
 ### 纽约时报
 
-<route name="全球纵览" author="HenryQW" example="/nytimes" path="/nytimes/index">
-
-::: tip 提示
-
-由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
-
-:::
+<route name="官方 RSS" author="HenryQW" example="/nytimes/dual" path="/nytimes/index/:lang?" :paramsDesc="['语言, 缺省中文']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+| 默认中文 | 中英对照 | 英文 |
+| -------- | -------- | ---- |
+| (空)     | dual     | en   |
 
 </route>
 
@@ -2099,12 +2097,6 @@ Category 列表:
 
 <route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
 
-::: tip 提示
-
-由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
-
-:::
-
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 支持大部分频道, 频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
@@ -2123,7 +2115,6 @@ Category 列表:
 
 -   不支持付费文章.
 -   由于未知原因 FT 中文网的 SSL 证书不被信任 (参见[SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取.
--   由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
 
 :::
 
@@ -2137,12 +2128,6 @@ Category 列表:
 </route>
 
 ### 卫报 The Guardian
-
-::: tip 提示
-
-由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
-
-:::
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
