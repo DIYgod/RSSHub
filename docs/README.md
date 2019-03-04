@@ -2742,7 +2742,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ::: tip 提示
 
-可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
+-   可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
+-   不支持 gif 集锦播放
 
 :::
 
