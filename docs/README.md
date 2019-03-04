@@ -3092,3 +3092,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 洛谷
 
 <route name="日报" author="LogicJake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2019年日报']"/>
+
+### 决胜网
+
+<route name="最新资讯" author="WenryXu" example="/juesheng" path="/juesheng"/>
