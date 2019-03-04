@@ -636,7 +636,7 @@ RSSHub 提供下列 API 接口:
 
 ### Dcard
 
-<route name="板塊與帖子" author="DIYgod HenryQW" example="/dcard/funny/popular" path="/dcard/:section?/:type?" :paramsDesc="['板塊名稱，默認為首頁', '排序，popular 熱門；latest 最新，默認為 latest']"/>
+<route name="板塊與帖子" author="DIYgod HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得，例外為：首頁=posts', '排序，popular 熱門；latest 最新，默認為 latest']"/>
 
 ## 编程
 
