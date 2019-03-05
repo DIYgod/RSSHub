@@ -2250,7 +2250,7 @@ category 对应的关键词有
 
 ### 中国地震局
 
-<route name="地震速报" author="ylc395" example="/earthquake" path="/earthquake">
+<route name="地震速报" author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']">
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
