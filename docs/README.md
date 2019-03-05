@@ -29,8 +29,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
+| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -420,6 +420,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="公众号（ wemp.app 来源）" author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']"/>
 
+<route name="公众号（传送门来源）" author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+
 <route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
 
 <route name="小程序插件" author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
@@ -534,6 +536,8 @@ RSSHub 提供下列 API 接口:
 
 </route>
 
+<route name="话题" author="LogicJake" example="/douban/topic/48823" path="/douban/topic/:id/:sort?" :paramsDesc="['话题id','排序方式，hot或new，默认为new']"/>
+
 ### Disqus
 
 <route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
@@ -606,6 +610,12 @@ RSSHub 提供下列 API 接口:
 
 <route name="基金净值更新" author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
 
+<route name="股票信息" author="YuYang" example="/xueqiu/stock_info/SZ000002" path="/xueqiu/stock_info/:id/:type?" :paramsDesc="['股票代码（需要带上交易所）', '动态的类型, 不填则为股票公告']">
+
+| 公告         | 新闻 | 研报     |
+| ------------ | ---- | -------- |
+| announcement | news | research |
+
 ### 龙腾网
 
 <route name="转译网贴" author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
@@ -632,11 +642,13 @@ RSSHub 提供下列 API 接口:
 
 ### 虎扑
 
-<route name="虎扑BBS步行街" author="LogicJake" example="/hupu/bxj/bxj/2" path="/hupu/bxj/:id/:order?" :paramsDesc="['栏目id，可在栏目 URL 找到', '排序方式，1最新回帖（默认），2最新发帖']"/>
+<route name="虎扑BBS论坛" author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖']"/>
 
 ### Dcard
 
-<route name="帖子" author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']"/>
+<route name="首頁帖子" author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']"/>
+
+<route name="板塊帖子" author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']"/>
 
 ## 编程
 
@@ -2053,15 +2065,13 @@ Category 列表:
 
 ### 纽约时报
 
-<route name="全球纵览" author="HenryQW" example="/nytimes" path="/nytimes/index">
-
-::: tip 提示
-
-由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
-
-:::
+<route name="官方 RSS" author="HenryQW" example="/nytimes/dual" path="/nytimes/index/:lang?" :paramsDesc="['语言, 缺省中文']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+| 默认中文 | 中英对照 | 英文 |
+| -------- | -------- | ---- |
+| (空)     | dual     | en   |
 
 </route>
 
@@ -2103,12 +2113,6 @@ Category 列表:
 
 <route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
 
-::: tip 提示
-
-由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
-
-:::
-
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 支持大部分频道, 频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
@@ -2127,7 +2131,6 @@ Category 列表:
 
 -   不支持付费文章.
 -   由于未知原因 FT 中文网的 SSL 证书不被信任 (参见[SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取.
--   由于众所周知的原因, 文章内的图片在中国大陆可能无法正常显示.
 
 :::
 
@@ -2141,12 +2144,6 @@ Category 列表:
 </route>
 
 ### 卫报 The Guardian
-
-::: tip 提示
-
-由于众所周知的原因，文章内的图片在中国大陆可能无法正常显示。
-
-:::
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
@@ -2253,7 +2250,7 @@ category 对应的关键词有
 
 ### 中国地震局
 
-<route name="地震速报" author="ylc395" example="/earthquake" path="/earthquake">
+<route name="地震速报" author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']">
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
@@ -2582,7 +2579,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="栏目" author="HenryQW" example="/aisixiang/column/722" path="/aisixiang/column/:id" :paramsDesc="['栏目 ID, 可在对应栏目 URL 中找到']"/>
 
-<route name="排行榜" author="HenryQW" example="/aisixiang/column/1/7" path="/aisixiang/ranking/:type?/:range?" :paramsDesc="['排行榜类型', '排行榜范围, 仅适用于点击排行榜, 可选日(1)，周(7)，月(30)']">
+<route name="排行榜" author="HenryQW" example="/aisixiang/ranking/1/7" path="/aisixiang/ranking/:type?/:range?" :paramsDesc="['排行榜类型', '排行榜范围, 仅适用于点击排行榜, 可选日(1)，周(7)，月(30)']">
 
 | 文章点击排行 | 文章推荐排行 | 最近更新文章 |
 | ------------ | ------------ | ------------ |
@@ -2692,6 +2689,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 中国政府网
 
 <route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
+<route name="最新文件" author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
 
 ### 联合国
 
@@ -2761,7 +2759,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ::: tip 提示
 
-可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
+-   可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
+-   不支持 gif 集锦播放
 
 :::
 
@@ -3086,7 +3085,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </route>
 
-### instapaper
+### Instapaper
 
 <route name="个人分享" author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
@@ -3099,3 +3098,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 12306
 
 <route name="最新动态" author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
+
+### 北京天文馆
+
+<route name="每日一图" author="HenryQW" example="/bjp/apod" path="/bjp/apod"/>
+
+### 洛谷
+
+<route name="日报" author="LogicJake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2019年日报']"/>
+
+### 决胜网
+
+<route name="最新资讯" author="WenryXu" example="/juesheng" path="/juesheng"/>
