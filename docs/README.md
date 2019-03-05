@@ -642,7 +642,7 @@ RSSHub 提供下列 API 接口:
 
 ### 虎扑
 
-<route name="虎扑BBS步行街" author="LogicJake" example="/hupu/bxj/bxj/2" path="/hupu/bxj/:id/:order?" :paramsDesc="['栏目id，可在栏目 URL 找到', '排序方式，1最新回帖（默认），2最新发帖']"/>
+<route name="虎扑BBS论坛" author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖']"/>
 
 ### Dcard
 
