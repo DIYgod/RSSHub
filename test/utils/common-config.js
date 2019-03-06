@@ -1,19 +1,38 @@
-const buildData = require('../../lib/utils/common-config');
+const configUtils = require('../../lib/utils/common-config');
 
 describe('common-config', () => {
-    it('config-content', async () => {
-        const link = 'http://127.0.0.1:1200/';
-        const data = await buildData({
-            link,
-            url: link,
-            title: `$('.content>h1>span').text()`,
-            item: {
-                item: 'details>div',
-                title: `$('.debug-key').text()`,
-                description: `$('.debug-value').text()`,
+    it('transElemText', async () => {
+        const $ = () => 'RSSHub';
+        expect(configUtils.transElemText($, '$()')).toBe('RSSHub');
+    });
+
+    it('replaceParams', async () => {
+        const $ = () => 'RSSHub';
+        const data = {
+            params: {
+                title: 'RSSHub',
             },
-        });
-        expect(data.title).toBe('RSSHub');
-        expect(data.item.length).toBe(9);
+            title: '%title%',
+        };
+        expect(configUtils.replaceParams(data, data.title, $)).toBe('RSSHub');
+    });
+
+    it('getProp', async () => {
+        const $ = () => 'RSSHub';
+        const data = {
+            title: 'RSSHub',
+        };
+        expect(configUtils.getProp(data, ['title'], $)).toBe('RSSHub');
+    });
+
+    it('all', async () => {
+        const $ = () => 'RSSHub';
+        const data = {
+            params: {
+                title: '$()',
+            },
+            title: '%title%',
+        };
+        expect(configUtils.getProp(data, ['title'], $)).toBe('RSSHub');
     });
 });
