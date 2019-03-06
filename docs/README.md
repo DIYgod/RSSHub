@@ -3111,12 +3111,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <route name="最新资讯" author="WenryXu" example="/juesheng" path="/juesheng"/>
 
-## 通用配置路由
-
-<route name="配置" author="SettingDust"  example="/common/uraaka-joshi" path="/selector-common/:config" :paramsDesc="['配置文件名']"/>
-
 ### 裏垢女子まとめ
 
-<route name="主页" author="SettingDust"  example="/common/uraaka-joshi" path="/common/uraaka-joshi"/>
+<route name="主页" author="SettingDust"  example="/uraaka-joshi" path="/common/uraaka-joshi"/>
 
-<route name="用户" author="SettingDust"  example="/common/uraaka-joshi-user?id=_rrwq" path="/common/uraaka-joshi-user?id=:id" :paramsDesc="['用户id']"/>
+<route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/common/uraaka-joshi/:id" :paramsDesc="['用户名']"/>

@@ -1,1 +1,1 @@
-web: node lib/index.js
+web: node lib/common-config.js

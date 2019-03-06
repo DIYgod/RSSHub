@@ -402,7 +402,7 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
 | Route Path                         | `./routes/github/issue`                                                      |
 | the complete code in lib/router.js | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
 
-3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
+3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/common-config.js)
 
 | Name                               | Description                                                                  |
 | ---------------------------------- | ---------------------------------------------------------------------------- |
