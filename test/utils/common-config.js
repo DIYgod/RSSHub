@@ -2,7 +2,7 @@ const buildData = require('../../lib/utils/common-config');
 
 describe('common-config', () => {
     it('config-content', async () => {
-        const link = 'http://localhost:1200';
+        const link = 'http://0.0.0.0:1200';
         const data = await buildData({
             link,
             url: link,
