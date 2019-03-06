@@ -616,6 +616,8 @@ RSSHub 提供下列 API 接口:
 | ------------ | ---- | -------- |
 | announcement | news | research |
 
+</route>
+
 ### 龙腾网
 
 <route name="转译网贴" author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
