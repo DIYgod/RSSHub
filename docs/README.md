@@ -2693,6 +2693,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
 <route name="最新文件" author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
 
+### 中华人民共和国生态环境部
+
+<route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
+
 ### 联合国
 
 <route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
