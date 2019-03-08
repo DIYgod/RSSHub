@@ -1,4 +1,4 @@
-const configUtils = require('../../lib/utils/index');
+const configUtils = require('../../lib/utils/common-config');
 
 describe('index', () => {
     it('transElemText', async () => {
