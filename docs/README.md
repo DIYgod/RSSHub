@@ -3113,6 +3113,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 裏垢女子まとめ
 
-<route name="主页" author="SettingDust"  example="/uraaka-joshi" path="/common/uraaka-joshi"/>
+<route name="主页" author="SettingDust"  example="/uraaka-joshi" path="/uraaka-joshi"/>
 
-<route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/common/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
+<route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
