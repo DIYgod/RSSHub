@@ -1,6 +1,6 @@
-const configUtils = require('../../lib/utils/common-config');
+const configUtils = require('../../lib/utils/index');
 
-describe('common-config', () => {
+describe('index', () => {
     it('transElemText', async () => {
         const $ = () => 'RSSHub';
         expect(configUtils.transElemText($, '$()')).toBe('RSSHub');

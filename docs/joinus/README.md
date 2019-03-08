@@ -397,7 +397,7 @@ ctx.state.data = {
 | 脚本路径                   | `./routes/github/issue`                                                      |
 | lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
 
-3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/common-config.js)
+3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
 
 | 名称                       | 说明                                                                         |
 | -------------------------- | ---------------------------------------------------------------------------- |
