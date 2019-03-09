@@ -71,6 +71,7 @@
     "luxon": "^1.7.1",
     "lz-string": "^1.4.4",
     "markdown-it": "^8.4.2",
+    "nock": "^10.0.6",
     "node-fetch": "^2.3.0",
     "path-to-regexp": "3.0.0",
     "pidusage": "^2.0.17",
