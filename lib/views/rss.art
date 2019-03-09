@@ -12,7 +12,7 @@
         <webMaster>i@diygod.me</webMaster>
         {{ if itunes_author }}<itunes:author>{{ itunes_author}}</itunes:author>{{ /if }}
         {{ if itunes_category }}<itunes:category text="{{ itunes_category }}"/>{{ /if }}
-        <language>{{ language || 'zh-cn' }}</language>
+        <language>{{ language || 'zh-cmn-Hans' }}</language>
         {{ if image }}
         <image>
             <url>{{ image }}</url>
