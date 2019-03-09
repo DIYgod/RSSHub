@@ -1094,6 +1094,23 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="演员/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
 
+### Mp4Ba
+
+**类型参考这里**
+| 1 | 2 | 3 | 4 |
+| - | - | - | - |
+| 电影 | 连续剧 | 综艺 | 动画 | 
+
+| 5 | 6 | 7 | 8 | 9 |
+| - | - | - | - | - |
+| 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
+
+| 10 | 11 | 12 | 13 | 14 | 15 |
+| -- | -- | -- | -- | -- | -- |
+| 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
+
+<route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']"/>
+
 ## 图片
 
 ### 妹子图
@@ -3118,12 +3135,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 <route name="主页" author="SettingDust"  example="/uraaka-joshi" path="/uraaka-joshi"/>
 
 <route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
-
-### Mp4Ba
-
-**类型参考这里**
-| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
-| - | - | - | - | - | - | - | - | - | -- | -- | -- | -- | -- | -- |
-| 电影 | 连续剧 | 综艺 | 动画 | 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 | 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
-
-<route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param?" :paramsDesc="['类型/关键字']"/>
