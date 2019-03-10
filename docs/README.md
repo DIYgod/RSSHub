@@ -1383,7 +1383,7 @@ GitHub 官方也提供了一些 RSS:
 ### 西南科技大学
 
 ::: warning 注意
-rsshub 的 demo 服务器在国外，使用该源需自建国内服务
+非校园网有一定几率无法访问这些网站
 :::
 
 <route name="教务处新闻" author="lengthmin" example="/swust/jwc/news" path="/universities/swust/jwc/news"/>
