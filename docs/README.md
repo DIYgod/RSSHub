@@ -1368,6 +1368,10 @@ GitHub 官方也提供了一些 RSS:
 
 ### 西南科技大学
 
+::: warning 注意
+rsshub 的 demo 服务器在国外，使用该源需自建国内服务
+:::
+
 <route name="教务处新闻" author="lengthmin" example="/swust/jwc/news" path="/universities/swust/jwc/news"/>
 
 <route name="教务处通知" author="lengthmin" example="/swust/jwc/notice/1" path="/universities/swust/jwc/notice/:type?" :paramsDesc="['分区 type,缺省为 1, 详见下方表格']">
@@ -2204,7 +2208,7 @@ category 对应的关键词有
 
 分类：
 | zx | twhk | dwzw | zrdl | lskg | smyx | shbk | kjqy |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
 
 </route>
@@ -3101,3 +3105,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 洛谷
 
 <route name="日报" author="LogicJake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2019年日报']"/>
+
+### IBC
+
+<route name="IBCラジオ イヤーマイッタマイッタ" author="lengthmin" example="/ibc/maitta" path="/ibc/maitta" />
