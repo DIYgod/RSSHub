@@ -590,6 +590,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户动态" author="DIYgod" example="/douyin/user/93610979153" path="/douyin/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+<route name="喜欢的视频" author="xyqfer" example="/douyin/like/93610979153" path="/douyin/like/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
+
 ### 美拍
 
 <route name="用户动态" author="ihewro" example="/meipai/user/56537299" path="/meipai/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
@@ -2693,6 +2695,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
 <route name="最新文件" author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
 
+### 中华人民共和国生态环境部
+
+<route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
+
 ### 联合国
 
 <route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
@@ -3112,3 +3118,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 决胜网
 
 <route name="最新资讯" author="WenryXu" example="/juesheng" path="/juesheng"/>
+
+### 博客: 敬维
+
+<route name="博客: 敬维" author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
+
+### 裏垢女子まとめ
+
+<route name="主页" author="SettingDust"  example="/uraaka-joshi" path="/uraaka-joshi"/>
+
+<route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
