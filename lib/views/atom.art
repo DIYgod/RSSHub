@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <generator>RSSHub</generator>
-    <webMaster>i@diygod.me</webMaster>
+    <webMaster>i@diygod.me (DIYgod)</webMaster>
     <language>{{ language || 'zh-cn' }}</language>
     <id>{{ id || link }}</id>
     <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
