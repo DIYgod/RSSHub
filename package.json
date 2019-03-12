@@ -34,7 +34,7 @@
     "eslint": "5.15.1",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-prettier": "3.0.1",
-    "jest": "24.4.0",
+    "jest": "24.5.0",
     "lint-staged": "8.1.5",
     "mockdate": "2.0.2",
     "nodemon": "1.18.10",
