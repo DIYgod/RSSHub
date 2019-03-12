@@ -654,6 +654,12 @@ RSSHub 提供下列 API 接口:
 
 <route name="板塊帖子" author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']"/>
 
+### 好奇心日报
+
+<route name="分类" author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id?" :paramsDesc="['分类id，可在分类URL找到']"/>
+
+<route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id?" :paramsDesc="['栏目id，可在栏目URL找到']"/>
+
 ## 编程
 
 ### 掘金
@@ -1095,6 +1101,23 @@ GitHub 官方也提供了一些 RSS:
 <route name="分类/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
 
 <route name="演员/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
+
+### Mp4Ba
+
+**类型参考这里**
+| 1 | 2 | 3 | 4 |
+| - | - | - | - |
+| 电影 | 连续剧 | 综艺 | 动画 |
+
+| 5      | 6      | 7      | 8      | 9      |
+| ------ | ------ | ------ | ------ | ------ |
+| 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
+
+| 10     | 11     | 12     | 13     | 14     | 15     |
+| ------ | ------ | ------ | ------ | ------ | ------ |
+| 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
+
+<route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']"/>
 
 ## 图片
 
@@ -2084,6 +2107,10 @@ Category 列表:
 ### 新京报
 
 <route name="栏目" author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
+
+### 界面新闻
+
+<route name="栏目" author="WenhuWee" example="/jiemian/list/79" path="/jiemian/list/:category" :paramsDesc="['对应栏目后在地址栏找到']"/>
 
 ### 澎湃新闻
 
@@ -3128,6 +3155,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 决胜网
 
 <route name="最新资讯" author="WenryXu" example="/juesheng" path="/juesheng"/>
+
+### 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+<route name="IBC岩手放送｜IBCラジオ　イヤーマイッタマイッタ" author="fengkx" example="/maitta" path="/maitta" />
 
 ### 博客: 敬维
 
