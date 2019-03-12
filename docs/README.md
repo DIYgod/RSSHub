@@ -3136,6 +3136,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <route name="最新资讯" author="WenryXu" example="/juesheng" path="/juesheng"/>
 
+### 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+<route name="IBC岩手放送｜IBCラジオ　イヤーマイッタマイッタ" author="fengkx" example="/maitta" path="/maitta" />
+
 ### 博客: 敬维
 
 <route name="博客: 敬维" author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
