@@ -2108,6 +2108,10 @@ Category 列表:
 
 <route name="栏目" author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
 
+### 界面新闻
+
+<route name="栏目" author="WenhuWee" example="/jiemian/list/79" path="/jiemian/list/:category" :paramsDesc="['对应栏目后在地址栏找到']"/>
+
 ### 澎湃新闻
 
 <route name="首页头条" author="HenryQW" example="/thepaper/featured" path="/thepaper/featured"/>
