@@ -656,9 +656,9 @@ RSSHub 提供下列 API 接口:
 
 ### 好奇心日报
 
-<route name="分类" author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id?" :paramsDesc="['分类id，可在分类URL找到']"/>
+<route name="分类" author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类id，可在分类URL找到']"/>
 
-<route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id?" :paramsDesc="['栏目id，可在栏目URL找到']"/>
+<route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
 
 ## 编程
 
@@ -2534,9 +2534,19 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="用户动态" author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
+<route name="游戏新闻" author="MyFaith" example="/xiaoheihe/news" path="xiaoheihe/news"/>
+
+<route name="游戏打折情况" author="MyFaith" example="/xiaoheihe/discount" path="xiaoheihe/discount"/>
+
 ### Indienova
 
 <route name="indienova 文章" author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
+
+### 游戏时光
+
+<route name="游戏时光新闻" author="MyFaith" example="/vgtime/news" path="vgtime/news"/>
+
+<route name="游戏时光游戏发售表" author="MyFaith" example="/vgtime/release" path="vgtime/release"/>
 
 ## 小说·文学·阅读
 
