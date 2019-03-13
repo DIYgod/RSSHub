@@ -8858,10 +8858,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rss-parser@3.6.3:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-3.6.3.tgz#0c2e71ae0e9463a082d5a013b0e939d5a8a6961f"
-  integrity sha512-HASaMXqkUUw7mS+Sz780ml3Da3dG4ddIA3FRyXE8ae1KIiiDxG+jzrsNk/bpK1zDrDKe2WztjfQ5MRF323Kg3g==
+rss-parser@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-3.7.0.tgz#945d82864678a805558c1de68b52f00adeaacd92"
+  integrity sha512-xN1fwjVxBO0unbrUAOIUK5MAyEaaZTpKWnPY+d3QYigIG4awtbdqxHPOLuOwsTIJFsaKC78nPxIGRJG92p86Hw==
   dependencies:
     entities "^1.1.1"
     xml2js "^0.4.19"
