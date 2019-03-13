@@ -590,6 +590,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="用户动态" author="DIYgod" example="/douyin/user/93610979153" path="/douyin/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+<route name="喜欢的视频" author="xyqfer" example="/douyin/like/93610979153" path="/douyin/like/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
+
 ### 美拍
 
 <route name="用户动态" author="ihewro" example="/meipai/user/56537299" path="/meipai/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
@@ -615,6 +617,8 @@ RSSHub 提供下列 API 接口:
 | 公告         | 新闻 | 研报     |
 | ------------ | ---- | -------- |
 | announcement | news | research |
+
+</route>
 
 ### 龙腾网
 
@@ -649,6 +653,12 @@ RSSHub 提供下列 API 接口:
 <route name="首頁帖子" author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']"/>
 
 <route name="板塊帖子" author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']"/>
+
+### 好奇心日报
+
+<route name="分类" author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类id，可在分类URL找到']"/>
+
+<route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
 
 ## 编程
 
@@ -1091,6 +1101,23 @@ GitHub 官方也提供了一些 RSS:
 <route name="分类/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
 
 <route name="演员/欧陆风云" author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
+
+### Mp4Ba
+
+**类型参考这里**
+| 1 | 2 | 3 | 4 |
+| - | - | - | - |
+| 电影 | 连续剧 | 综艺 | 动画 |
+
+| 5      | 6      | 7      | 8      | 9      |
+| ------ | ------ | ------ | ------ | ------ |
+| 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
+
+| 10     | 11     | 12     | 13     | 14     | 15     |
+| ------ | ------ | ------ | ------ | ------ | ------ |
+| 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
+
+<route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']"/>
 
 ## 图片
 
@@ -1843,7 +1870,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 华中科技大学
 
-<route name="自动化学院通知" author="jinxiapu" example="/hust/auto/notice/0" path="/universities/hust/auto/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
+<route name="人工智能和自动化学院通知" author="RayHY" example="/hust/aia/notice/0" path="/universities/hust/aia/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
 
 | 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
 | ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
@@ -1851,7 +1878,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </route>
 
-<route name="自动化学院新闻" author="jinxiapu" example="/hust/auto/news" path="/universities/hust/auto/news" />
+<route name="人工智能和自动化学院新闻" author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
 
 ### 山东大学
 
@@ -2080,6 +2107,10 @@ Category 列表:
 ### 新京报
 
 <route name="栏目" author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
+
+### 界面新闻
+
+<route name="栏目" author="WenhuWee" example="/jiemian/list/79" path="/jiemian/list/:category" :paramsDesc="['对应栏目后在地址栏找到']"/>
 
 ### 澎湃新闻
 
@@ -2503,9 +2534,19 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="用户动态" author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
+<route name="游戏新闻" author="MyFaith" example="/xiaoheihe/news" path="xiaoheihe/news"/>
+
+<route name="游戏打折情况" author="MyFaith" example="/xiaoheihe/discount" path="xiaoheihe/discount"/>
+
 ### Indienova
 
 <route name="indienova 文章" author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
+
+### 游戏时光
+
+<route name="游戏时光新闻" author="MyFaith" example="/vgtime/news" path="vgtime/news"/>
+
+<route name="游戏时光游戏发售表" author="MyFaith" example="/vgtime/release" path="vgtime/release"/>
 
 ## 小说·文学·阅读
 
@@ -2690,6 +2731,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
 <route name="最新文件" author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
+
+### 中华人民共和国生态环境部
+
+<route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
 
 ### 联合国
 
@@ -3110,3 +3155,21 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 决胜网
 
 <route name="最新资讯" author="WenryXu" example="/juesheng" path="/juesheng"/>
+
+### 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+<route name="IBC岩手放送｜IBCラジオ　イヤーマイッタマイッタ" author="fengkx" example="/maitta" path="/maitta" />
+
+### 博客: 敬维
+
+<route name="博客: 敬维" author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
+
+### 裏垢女子まとめ
+
+<route name="主页" author="SettingDust"  example="/uraaka-joshi" path="/uraaka-joshi"/>
+
+<route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
+
+### 今日热榜
+
+<route name="榜单" author="LogicJake"  example="/tophub/Om4ejxvxEN" path="/tophub/:id" :paramsDesc="['榜单id，可在 URL 中找到']"/>
