@@ -148,22 +148,25 @@ To configure more options please refer to [Settings](#Settings).
 $ docker volume create redis-data
 ```
 
-2.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
+1.  Copy `lib/config.js` to `lib/config/config.js`, to avoid conflicts with master branch. Git will ignore this file as it contains sensitive information.
+
+1.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
 
     -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `lib/config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
     -   `USE_CHINA_NPM_REGISTRY=1` avoids GFW npm registry interference in mainland China. Default to 0.
 
-3.  Deploy
+1.  Deploy
 
 ```bash
-$ docker-compose up
+$ docker-compose up -d
 ```
 
-4.  Update
+1.  Update
 
 ```bash
+$ git pull
 $ docker-compose build
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 ## Heroku Deployment
