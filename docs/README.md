@@ -386,21 +386,21 @@ RSSHub 提供下列 API 接口:
 
 ::: warning 注意
 
-即刻主题较为复杂, 部分主题可能出现不适配的情况. 如出现上述情况请[提 Issue](https://github.com/DIYgod/RSSHub/issues).
+即刻圈子较为复杂, 部分圈子可能出现不适配的情况. 如出现上述情况请[提 Issue](https://github.com/DIYgod/RSSHub/issues).
 
 :::
 
-<route name="主题-精选" author="DIYgod" example="/jike/topic/54dffb40e4b0f57466e675f0" path="/jike/topic/:id" :paramsDesc="['主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到']"/>
+<route name="圈子-精选" author="DIYgod" example="/jike/topic/54dffb40e4b0f57466e675f0" path="/jike/topic/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
 
 ::: tip 提示
 
-部分主题如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#/jike/topic/text/:id">主题-纯文字 /jike/topic/text/:id</a> 可能会提供更好的体验.
+部分圈子如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#/jike/topic/text/:id">圈子-纯文字 /jike/topic/text/:id</a> 可能会提供更好的体验.
 
 :::
 
-<route name="主题-广场" author="DIYgod" example="/jike/topic/square/54dffb40e4b0f57466e675f0" path="/jike/topic/square/:id" :paramsDesc="['主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到']"/>
+<route name="圈子-广场" author="DIYgod" example="/jike/topic/square/54dffb40e4b0f57466e675f0" path="/jike/topic/square/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
 
-<route name="主题-纯文字" author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" :paramsDesc="['主题 id, 可在即刻 web 端主题页或 APP 分享出来的主题页 URL 中找到']"/>
+<route name="圈子-纯文字" author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
 
 <route name="用户动态" author="DIYgod" example="/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻 web 端用户页 URL 中找到']"/>
 
@@ -414,7 +414,7 @@ RSSHub 提供下列 API 接口:
 
 :::
 
-<route name="公众号（即刻来源）" author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-主题-精选](#/jike/topic/:id)']"/>
+<route name="公众号（即刻来源）" author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-圈子-精选](#/jike/topic/:id)']"/>
 
 <route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
 
@@ -461,6 +461,8 @@ RSSHub 提供下列 API 接口:
 <route name="知乎书店-新书" author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" crawlerBadge="1"/>
 
 <route name="知乎想法-24小时新闻汇总" author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" crawlerBadge="1"/>
+
+<route name="知乎书店-知乎周刊" author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" crawlerBadge="1"/>
 
 ### pixiv
 
@@ -659,6 +661,8 @@ RSSHub 提供下列 API 接口:
 <route name="分类" author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类id，可在分类URL找到']"/>
 
 <route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
+
+<route name="标签" author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签id，可在tagURL找到']"/>
 
 ## 编程
 
@@ -3038,7 +3042,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 刷屏
 
 <route name="最新" author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
-
+<route name="最新（无中间页）" author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct"/>
 <route name="朋友圈" author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>
 
 ### 虎嗅
