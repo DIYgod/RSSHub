@@ -3038,7 +3038,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 ### 刷屏
 
 <route name="最新" author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
-
+<route name="最新（无中间页）" author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct"/>
 <route name="朋友圈" author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>
 
 ### 虎嗅
