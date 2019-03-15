@@ -662,6 +662,8 @@ RSSHub 提供下列 API 接口:
 
 <route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
 
+<route name="标签" author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签id，可在tagURL找到']"/>
+
 ## 编程
 
 ### 掘金
