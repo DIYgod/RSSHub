@@ -2044,6 +2044,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </route>
 
+### 浙江工商大学
+
+<route name="浙江工商大学" author="nicolaszf" example="/zjgsu/tzgg" path="/zjgsu/:type" :paramsDesc="['分类, 见下表']">
+
+| 通知公告 | 学生专区 | 公示公告 |
+| -------- | -------- | -------- |
+| tzgg     | xszq     | gsgg     |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
