@@ -2044,6 +2044,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </route>
 
+### 浙江工商大学
+
+<route name="浙江工商大学" author="nicolaszf" example="/zjgsu/tzgg" path="/zjgsu/:type" :paramsDesc="['分类, 见下表']">
+
+| 通知公告 | 学生专区 | 公示公告 |
+| -------- | -------- | -------- |
+| tzgg     | xszq     | gsgg     |
+
+</route>
+
 ## 传统媒体
 
 ### 央视新闻
@@ -2267,6 +2277,8 @@ category 对应的关键词有
 
 <route name="阳江市" author="ciaranchen" example="/tingshuitz/yangjiang" path="/tingshuitz/yangjiang"/>
 
+<route name="南京市" author="ocleo1" example="/tingshuitz/nanjing" path="/tingshuitz/nanjing"/>
+
 ### 停电通知
 
 获取未来一天的停电通知
@@ -2274,6 +2286,8 @@ category 对应的关键词有
 <route name="国家电网" author="xyqfer" example="/tingdiantz/95598/36401/36101" path="/tingdiantz/95598/:orgNo/:provinceNo/:scope?" :paramsDesc="['所属省供电公司编码', '所属地市供电公司编码', '停电范围关键字']"/>
 
 > 以上参数可从[查询页面](http://m.95598.cn/95598/woutageNotice/winitOutageNotice)打开控制台抓包获得
+
+<route name="南京市" author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>
 
 ### 中央气象台
 
@@ -3173,6 +3187,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 <route name="主页" author="SettingDust"  example="/uraaka-joshi" path="/uraaka-joshi"/>
 
 <route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
+
+### 西祠胡同
+
+<route name="频道" author="LogicJake" example="/xici" path="/xici/:id?" :paramsDesc="['频道id，默认为首页推荐']">
+
+| 首页推荐 | 民生 | 情感 | 亲子 |
+| -------- | ---- | ---- | ---- |
+| (空)     | ms   | qg   | qz   |
+
+</route>
 
 ### 今日热榜
 
