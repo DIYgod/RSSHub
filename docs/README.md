@@ -2267,6 +2267,8 @@ category 对应的关键词有
 
 <route name="阳江市" author="ciaranchen" example="/tingshuitz/yangjiang" path="/tingshuitz/yangjiang"/>
 
+<route name="南京市" author="ocleo1" example="/tingshuitz/nanjing" path="/tingshuitz/nanjing"/>
+
 ### 停电通知
 
 获取未来一天的停电通知
@@ -2274,6 +2276,8 @@ category 对应的关键词有
 <route name="国家电网" author="xyqfer" example="/tingdiantz/95598/36401/36101" path="/tingdiantz/95598/:orgNo/:provinceNo/:scope?" :paramsDesc="['所属省供电公司编码', '所属地市供电公司编码', '停电范围关键字']"/>
 
 > 以上参数可从[查询页面](http://m.95598.cn/95598/woutageNotice/winitOutageNotice)打开控制台抓包获得
+
+<route name="南京市" author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>
 
 ### 中央气象台
 
