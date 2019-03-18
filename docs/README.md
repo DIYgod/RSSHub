@@ -3178,6 +3178,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <route name="用户" author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
 
+### 西祠胡同
+
+<route name="频道" author="LogicJake" example="/xici" path="/xici/:id?" :paramsDesc="['频道id，默认为首页推荐']">
+
+| 首页推荐 | 民生 | 情感 | 亲子 |
+| -------- | ---- | ---- | ---- |
+| (空)     | ms   | qg   | qz   |
+
+</route>
+
 ### 今日热榜
 
 <route name="榜单" author="LogicJake"  example="/tophub/Om4ejxvxEN" path="/tophub/:id" :paramsDesc="['榜单id，可在 URL 中找到']"/>
