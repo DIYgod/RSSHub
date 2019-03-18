@@ -3201,3 +3201,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 今日热榜
 
 <route name="榜单" author="LogicJake"  example="/tophub/Om4ejxvxEN" path="/tophub/:id" :paramsDesc="['榜单id，可在 URL 中找到']"/>
+
+### 親子王國
+
+<route name="板块" author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" :paramsDesc="['板块id，可在 URL 中找到', '排序方式']">
+
+| 发帖时间 | 回复/查看 | 查看 | 最后发表 | 热门 |
+| -------- | --------- | ---- | -------- | ---- |
+| dateline | reply     | view | lastpost | heat |
+
+</route>
