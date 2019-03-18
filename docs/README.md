@@ -1305,6 +1305,10 @@ GitHub 官方也提供了一些 RSS:
 
 <route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
 
+### Anitama
+
+<route name="Anitama Channel" author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
+
 ## 程序更新
 
 ### RSSHub
