@@ -2576,7 +2576,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游研社
 
-<route name="游研社推游" author="LightStrawberry" example="/yystv/recommend" path="/yystv/recommend"/>
+<route name="游研社" author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category"/>
+
+| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
+| --------- | ------- | ------ | ------- | ---- | -------- |
+| recommend | history | big    | culture | news | retro    |
 
 ## 小说·文学·阅读
 
