@@ -2058,7 +2058,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </route>
 
-
 ### 浙江大学
 
 <route name="浙大研究生院" author="Caicailiushui" example="/zju/grs/1" path="/universities/zju/grs/:type" :paramsDesc="['1 为 全部公告, 2 为教学管理, 3 为各类资助，4 为学科建设 5 为海外交流']">
@@ -2086,8 +2085,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 1        | 2        | 3                  | 4                | 5                  | 6              | 7                  | 8                  | 9              | 10             |
 
 </route>
-
-
 
 ## 传统媒体
 
