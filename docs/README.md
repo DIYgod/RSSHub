@@ -2570,6 +2570,14 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <route name="游戏时光游戏发售表" author="MyFaith" example="/vgtime/release" path="vgtime/release"/>
 
+### 游民星空
+
+<route name="游民星空今日推荐" author="LightStrawberry" example="/gamersky/news" path="/gamersky/news"/>
+
+### 游研社
+
+<route name="游研社推游" author="LightStrawberry" example="/yystv/recommend" path="/yystv/recommend"/>
+
 ## 小说·文学·阅读
 
 ### 观止（每日一文）
