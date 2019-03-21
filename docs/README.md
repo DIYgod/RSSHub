@@ -3215,3 +3215,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | dateline | reply     | view | lastpost | heat |
 
 </route>
+
+### 半月谈
+
+<route name="板块" author="LogicJake" example="/banyuetan/jicengzhili" path="/banyuetan/:name" :paramsDesc="['板块名称，可在 URL 中找到']"/>
