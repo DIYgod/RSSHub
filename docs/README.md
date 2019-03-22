@@ -767,6 +767,20 @@ GitHub 官方也提供了一些 RSS:
 ### 开源中国
 
 <route name="资讯" author="tgly307" example="/oschina/news" path="/oschina/news"/>
+<route name="用户博客" author="dxmpalb" example="/oschina/user/xxiaobian" path="/oschina/user/:id" :paramsDesc="['用户 id, 可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']">
+
+| 小小编辑  |
+| --------- |
+| xxiaobian |
+
+</route>
+<route name="数字型账号用户博客" author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:id" :paramsDesc="['用户 id, 可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']">
+
+| EAWorld 的博客 |
+| -------------- |
+| 3920392        |
+
+</route>
 
 ### GitLab
 
@@ -2055,6 +2069,32 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 通知公告 | 学生专区 | 公示公告 |
 | -------- | -------- | -------- |
 | tzgg     | xszq     | gsgg     |
+
+</route>
+
+### 浙江大学
+
+<route name="浙大研究生院" author="Caicailiushui" example="/zju/grs/1" path="/universities/zju/grs/:type" :paramsDesc="['1 为 全部公告, 2 为教学管理, 3 为各类资助，4 为学科建设 5 为海外交流']">
+
+| 全部公告 | 教学管理 | 各类资助 | 学科建设 | 海外交流 |
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |
+
+</route>
+
+<route name="浙大就业服务平台" author="Caicailiushui" example="/zju/career/1" path="/universities/zju/career/:type" :paramsDesc="['1 为新闻动态, 2 为活动通知, 3 为学院通知，4 为告示通知 ']">
+
+| 新闻动态 | 活动通知 | 学院通知 | 告示通知 |
+| -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        |
+
+</route>
+
+<route name="浙大物理系" author="Caicailiushui" example="/zju/physics/1" path="/universities/zju/physics/:type" :paramsDesc="['1 为本系动态, 2 为科研通知, 3 为研究生教育最新消息，4 为学生思政最新消息，5 为研究生思政消息公告，6 为研究生奖助学金，7 为研究生思政就业信息，8 为本科生思政消息公告，9 为本科生奖助学金，10 为本科生就业信息 ']">
+
+| 本系动态 | 科研通知 | 研究生教育最新消息 | 学生思政最新消息 | 研究生思政消息公告 | 研究生奖助学金 | 研究生思政就业信息 | 本科生思政消息公告 | 本科生奖助学金 | 本科生就业信息 |
+| -------- | -------- | ------------------ | ---------------- | ------------------ | -------------- | ------------------ | ------------------ | -------------- | -------------- |
+| 1        | 2        | 3                  | 4                | 5                  | 6              | 7                  | 8                  | 9              | 10             |
 
 </route>
 
