@@ -3230,6 +3230,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </route>
 
+### 大众点评
+
+<route name="用户" author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
+
 ### 半月谈
 
 <route name="板块" author="LogicJake" example="/banyuetan/jicengzhili" path="/banyuetan/:name" :paramsDesc="['板块名称，可在 URL 中找到']"/>
