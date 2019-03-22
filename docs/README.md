@@ -3222,6 +3222,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 | -------- | --------- | ---- | -------- | ---- |
 | dateline | reply     | view | lastpost | heat |
 
+### 人民日报
+
+<route name="观点" author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
+
 </route>
 
 ### 半月谈
