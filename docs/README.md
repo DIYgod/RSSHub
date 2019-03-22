@@ -767,6 +767,20 @@ GitHub 官方也提供了一些 RSS:
 ### 开源中国
 
 <route name="资讯" author="tgly307" example="/oschina/news" path="/oschina/news"/>
+<route name="用户博客" author="dxmpalb" example="/oschina/user/xxiaobian" path="/oschina/user/:id" :paramsDesc="['用户 id, 可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']">
+
+| 小小编辑  |
+| --------- |
+| xxiaobian |
+
+</route>
+<route name="数字型账号用户博客" author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:id" :paramsDesc="['用户 id, 可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']">
+
+| EAWorld 的博客 |
+| -------------- |
+| 3920392        |
+
+</route>
 
 ### GitLab
 
