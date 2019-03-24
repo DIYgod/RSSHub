@@ -27,7 +27,7 @@ services:
       - db.redis
 
   db.redis:
-    image: redis:5.0.3-alpine
+    image: redis:5.0.4-alpine
     volumes:
         - redis-data:/data
     expose:
