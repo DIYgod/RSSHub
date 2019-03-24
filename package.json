@@ -31,7 +31,7 @@
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
     "axios-mock-adapter": "1.16.0",
-    "eslint": "5.15.1",
+    "eslint": "5.15.3",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-prettier": "3.0.1",
     "jest": "24.5.0",
@@ -40,7 +40,7 @@
     "nodemon": "1.18.10",
     "prettier": "1.16.4",
     "prettier-check": "2.0.0",
-    "supertest": "3.4.2",
+    "supertest": "4.0.2",
     "vuepress": "0.14.10",
     "yorkie": "2.0.0"
   },
@@ -74,9 +74,9 @@
     "plist": "^3.0.1",
     "puppeteer": "^1.10.0",
     "redis": "2.8.0",
-    "rss-parser": "3.6.3",
+    "rss-parser": "3.7.0",
     "sanitize-html": "^1.20.0",
-    "sharp": "^0.21.0",
+    "sharp": "^0.22.0",
     "socks-proxy-agent": "^4.0.1",
     "twit": "2.2.11",
     "winston": "3.2.1"
