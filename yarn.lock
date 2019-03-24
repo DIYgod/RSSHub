@@ -1151,14 +1151,14 @@
   dependencies:
     lodash.throttle "^4.1.1"
 
-"@vuepress/plugin-back-to-top@^1.0.0-alpha.44":
+"@vuepress/plugin-back-to-top@1.0.0-alpha.44":
   version "1.0.0-alpha.44"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-back-to-top/-/plugin-back-to-top-1.0.0-alpha.44.tgz#e480c23283118a8c90c3291ad1acbae593cf333c"
   integrity sha512-h2jbvWEDwphoQQ6dq+dvEcFc4gbXFSuUgA7yqfQkqTdtxLnEOkFV5CXoUKhMMJyPR4PqBO6Z4n361BYpSvTwuQ==
   dependencies:
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-clean-urls@^1.0.0-alpha.44":
+"@vuepress/plugin-clean-urls@1.0.0-alpha.44":
   version "1.0.0-alpha.44"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-clean-urls/-/plugin-clean-urls-1.0.0-alpha.44.tgz#a90b208b38fb5641e5f51ee113148dc35e99d8ff"
   integrity sha512-Lmm4xQvmYLhTv3V3Pd3ZoNg2Xc0K1o5T0S/FsZku0tKUxolN204NZgh/lpvtb0Xq05S7NYu8JTz0EEPC9TxiEw==
@@ -1170,7 +1170,7 @@
   dependencies:
     markdown-it-container "^2.0.0"
 
-"@vuepress/plugin-google-analytics@^1.0.0-alpha.44":
+"@vuepress/plugin-google-analytics@1.0.0-alpha.44":
   version "1.0.0-alpha.44"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-google-analytics/-/plugin-google-analytics-1.0.0-alpha.44.tgz#5fa4edc341cffc634804c6f72db076fd0bffc3c0"
   integrity sha512-oBFXHlO5I3M0jGg/Ob8WsVY1g+4Xcm6AT70m89/RB3GjHhPHMDF0bRCyoLOzLzVnWUEqOH/0HbDDK0MnGFGB8w==
@@ -1189,7 +1189,7 @@
   dependencies:
     nprogress "^0.2.0"
 
-"@vuepress/plugin-pwa@^1.0.0-alpha.44":
+"@vuepress/plugin-pwa@1.0.0-alpha.44":
   version "1.0.0-alpha.44"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.0.0-alpha.44.tgz#2cfe73e3d6c01487da988bac554b01afa6d19753"
   integrity sha512-bWUwDNeiehLxxSmCpBPQJIr771oNuSrLCSEqDp7rVz+k/Rca28NYUulF/+KsKGFfnpi5cZeUBff35DPeb97R7g==
@@ -10604,7 +10604,7 @@ vuepress-html-webpack-plugin@^3.2.0:
     toposort "^1.0.0"
     util.promisify "1.0.0"
 
-vuepress@^1.0.0-alpha.44:
+vuepress@1.0.0-alpha.44:
   version "1.0.0-alpha.44"
   resolved "https://registry.yarnpkg.com/vuepress/-/vuepress-1.0.0-alpha.44.tgz#044048047651f7e8890d48886e97f2ad5eb5ddea"
   integrity sha512-m6tYdmQbqZQ2frqyPa/OwFoRRv+SY0nkv6dai+74+Vy4IAnPmY7/otrlvmWVNpPh6X4pT2HvNh08YetfUnWX7g==
