@@ -2820,6 +2820,14 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | :----------------------------: | :----------------: |
 | legislative-opinion-collection | opinion-collection |
 
+##### 南京市
+
+<route name="南京市人民政府" author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
+
+| 南京信息 |  部门动态  | 各区动态 |  民生信息  |
+| :------: | :--------: | :------: | :--------: |
+|   news   | department | district | livelihood |
+
 ### 中华人民共和国生态环境部
 
 <route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
