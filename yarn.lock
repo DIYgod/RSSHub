@@ -1158,11 +1158,6 @@
   dependencies:
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-clean-urls@1.0.0-alpha.44":
-  version "1.0.0-alpha.44"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-clean-urls/-/plugin-clean-urls-1.0.0-alpha.44.tgz#a90b208b38fb5641e5f51ee113148dc35e99d8ff"
-  integrity sha512-Lmm4xQvmYLhTv3V3Pd3ZoNg2Xc0K1o5T0S/FsZku0tKUxolN204NZgh/lpvtb0Xq05S7NYu8JTz0EEPC9TxiEw==
-
 "@vuepress/plugin-container@^1.0.0-alpha.44":
   version "1.0.0-alpha.44"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-container/-/plugin-container-1.0.0-alpha.44.tgz#57d067633804079d6d624d58a5def75859676c4a"

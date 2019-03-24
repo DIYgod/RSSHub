@@ -2,15 +2,15 @@
 
 ## bilibili
 
-见 [#bilibili](/social-media#bilibili)
+见 [#bilibili](/social-media.html#bilibili)
 
 ## Youtube
 
-见 [#youtube](/social-media#youtube)
+见 [#youtube](/social-media.html#youtube)
 
 ## 抖音
 
-见 [#抖音](/social-media#抖音)
+见 [#抖音](/social-media.html#抖音)
 
 ## 网易云音乐
 

@@ -134,15 +134,15 @@
 
 ### 直播开播 <Author uid="Qixingchen"/>
 
-见 [#哔哩哔哩直播](/live#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
 
 ### 直播搜索 <Author uid="Qixingchen"/>
 
-见 [#哔哩哔哩直播](/live#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
 
 ### 直播分区 <Author uid="Qixingchen"/>
 
-见 [#哔哩哔哩直播](/live#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
 
 <route name="主站话题列表" author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" />
 

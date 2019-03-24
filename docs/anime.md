@@ -2,7 +2,7 @@
 
 ## bilibili
 
-见 [#bilibili](/social-media#bilibili)
+见 [#bilibili](/social-media.html#bilibili)
 
 ## Bangumi
 

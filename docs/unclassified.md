@@ -139,7 +139,7 @@
 
 ### App Store/Mac App Store
 
-见 [#app-store-mac-app-store](/program-update#app-store-mac-app-store)
+见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
 
 ## 少数派 sspai
 
