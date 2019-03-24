@@ -2804,6 +2804,30 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
 <route name="最新文件" author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
 
+#### 江苏省
+
+<route name="江苏省人民政府" author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
+
+|  省政府常务会议   |    要闻关注    |  部门资讯  |  市县动态   |       政策解读        |
+| :---------------: | :------------: | :--------: | :---------: | :-------------------: |
+| executive-meeting | important-news | department | city-county | policy-interpretation |
+
+| 政府信息公开年度报告 |   政府信息公开制度    | 省政府及办公厅文件 |     规范性文件     |
+| :------------------: | :-------------------: | :----------------: | :----------------: |
+|    annual-report     | information-publicity |   documentation    | normative-document |
+
+|          立法意见征集          |      意见征集      |
+| :----------------------------: | :----------------: |
+| legislative-opinion-collection | opinion-collection |
+
+##### 南京市
+
+<route name="南京市人民政府" author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
+
+| 南京信息 |  部门动态  | 各区动态 |  民生信息  |
+| :------: | :--------: | :------: | :--------: |
+|   news   | department | district | livelihood |
+
 ### 中华人民共和国生态环境部
 
 <route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
