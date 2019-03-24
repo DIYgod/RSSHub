@@ -5,7 +5,16 @@ module.exports = {
         },
         '@vuepress/pwa': {
             serviceWorker: true,
-            updatePopup: true,
+            updatePopup: {
+                '/': {
+                    message: '发现新内容可用',
+                    buttonText: '刷新',
+                },
+                '/en/': {
+                    message: 'New content is available',
+                    buttonText: 'Refresh',
+                },
+            },
         },
         '@vuepress/back-to-top': true,
         '@vuepress/clean-urls': true,
