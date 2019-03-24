@@ -3289,3 +3289,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 <route name="书评" author="jubyshu" example="/bookbang/review" path="/bookbang/review" />
 
 <route name="连载" author="jubyshu" example="/bookbang/serial/minamisawanao" path="/bookbang/serial/:id" :paramsDesc="['连载专栏id，可在URL中找到']" />
+
+### Aeon
+
+<route name="分类订阅" author="jubyshu" example="/aeon/essays" path="/aeon/:id" :paramsDesc="['分类id']" />
+
+| 全部 | 哲学     | 科学    | 心理学     | 健康  | 社会   |  科技    |  文化 | 随笔| 想法 | 经典 |
+| ----| --------| ------- | --------- | ----- |-------|-------  |------|----|---|----|
+|home|philosophy|science| psychology| health|society|technology|culture|essays|ideas|classics|
