@@ -2618,7 +2618,19 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游研社
 
-<route name="游研社推游" author="LightStrawberry" example="/yystv/recommend" path="/yystv/recommend"/>
+<route name="游研社" author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category" :paramsDesc="['专栏类型']"/>
+
+| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
+| --------- | ------- | ------ | ------- | ---- | -------- |
+| recommend | history | big    | culture | news | retro    |
+
+### psnine
+
+<route name="首页-白金攻略/游戏开箱" author="LightStrawberry" example="/psnine/index" path="/psnine/index"/>
+<route name="新闻-游戏资讯" author="LightStrawberry" example="/psnine/news" path="/psnine/news"/>
+<route name="数折-折扣信息推送" author="LightStrawberry" example="/psnine/shuzhe" path="/psnine/shuzhe"/>
+<route name="闲游-二手盘信息" author="LightStrawberry" example="/psnine/trade" path="/psnine/trade"/>
+<route name="游戏-新游戏奖杯信息" author="LightStrawberry" example="/psnine/game" path="/psnine/game"/>
 
 ## 小说·文学·阅读
 
