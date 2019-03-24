@@ -491,14 +491,14 @@ ctx.state.data = {
         1. 多参数：
 
         ```vue
-        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
+        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
         ```
 
         结果预览：
 
         ***
 
-        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
         ***
 
@@ -506,14 +506,14 @@ ctx.state.data = {
         2. 无参数:
 
         ```vue
-        <route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
         ```
 
         结果预览：
 
         ***
 
-        <route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
         ***
 
@@ -521,29 +521,29 @@ ctx.state.data = {
         3. 复杂说明支持 slot:
 
         ```vue
-        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
         | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
-        </route>
+        </Route>
         ```
 
         结果预览：
 
         ***
 
-        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
         | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
-        </route>
+        </Route>
 
         ***
 
-1.  请一定要注意把`<route>`的标签关闭！
+1.  请一定要注意把`<Route>`的标签关闭！
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
