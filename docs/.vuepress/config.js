@@ -1,6 +1,14 @@
 module.exports = {
-    ga: 'UA-48084758-10',
-    serviceWorker: true,
+    plugins: {
+        '@vuepress/google-analytics': {
+            ga: 'UA-48084758-10',
+        },
+        '@vuepress/pwa': {
+            serviceWorker: true,
+            updatePopup: true,
+        },
+        '@vuepress/back-to-top': true,
+    },
     locales: {
         '/': {
             lang: 'zh-CN',
@@ -20,16 +28,10 @@ module.exports = {
         locales: {
             '/': {
                 lang: 'zh-CN',
-                selectText: 'Languages',
+                selectText: '选择语言',
                 label: '简体中文',
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
-                serviceWorker: {
-                    updatePopup: {
-                        message: '发现新内容可用',
-                        buttonText: '刷新',
-                    },
-                },
                 nav: [
                     {
                         text: '指南',
@@ -55,12 +57,6 @@ module.exports = {
                 label: 'English',
                 editLinkText: 'Edit this page on GitHub',
                 lastUpdated: 'Last Updated',
-                serviceWorker: {
-                    updatePopup: {
-                        message: 'New content is available',
-                        buttonText: 'Refresh',
-                    },
-                },
                 nav: [
                     {
                         text: 'Guide',
