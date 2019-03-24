@@ -6,6 +6,11 @@ sidebar: auto
 
 如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
 
+## 参与讨论
+
+1.  [Telegram 群](https://t.me/rsshub)
+2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
+
 ## 提交新的 RSS 内容
 
 ### 步骤 1: 编写脚本
@@ -542,10 +547,3 @@ ctx.state.data = {
 1.  请一定要注意把`<route>`的标签关闭！
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
-
----
-
-## 参与讨论
-
-1.  [Telegram 群](https://t.me/rsshub)
-2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)

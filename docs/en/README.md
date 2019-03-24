@@ -2,10 +2,10 @@
 sidebar: auto
 ---
 
-<p align="center">
-<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+<p align="center" class="logo-img">
+    <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
 </p>
-<h1 align="center" class="logo">RSSHub</h1>
+<h1 align="center" class="logo-text">RSSHub</h1>
 
 > 🍰 Everything is RSSible
 
@@ -15,9 +15,7 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: |
-
+<a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a>
 
 ### Sponsors
 

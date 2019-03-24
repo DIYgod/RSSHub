@@ -8,6 +8,7 @@ module.exports = {
             updatePopup: true,
         },
         '@vuepress/back-to-top': true,
+        '@vuepress/clean-urls': true,
     },
     locales: {
         '/': {
@@ -50,6 +51,37 @@ module.exports = {
                         link: '/support/',
                     },
                 ],
+                sidebar: {
+                    '/': [
+                        {
+                            title: '指南',
+                            collapsable: true,
+                            children: ['', 'parameters', 'api'],
+                        },
+                        {
+                            title: '路由',
+                            collapsable: false,
+                            children: [
+                                'social-media',
+                                'programming',
+                                'live',
+                                'multimedia',
+                                'picture',
+                                'anime',
+                                'program-update',
+                                'university',
+                                'traditional-media',
+                                'forecast',
+                                'travel',
+                                'shopping',
+                                'game',
+                                'reading',
+                                'government',
+                                'unclassified',
+                            ],
+                        },
+                    ],
+                },
             },
             '/en/': {
                 lang: 'en-US',
