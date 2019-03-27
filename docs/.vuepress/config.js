@@ -64,7 +64,7 @@ module.exports = {
                         {
                             title: '指南',
                             collapsable: true,
-                            children: ['', 'parameters', 'api'],
+                            children: ['', 'parameter', 'api'],
                         },
                         {
                             title: '路由',
@@ -85,7 +85,7 @@ module.exports = {
                                 'game',
                                 'reading',
                                 'government',
-                                'unclassified',
+                                'other',
                             ],
                         },
                     ],
