@@ -188,4 +188,4 @@
 
 <Route name="最近更新剧集" author="junfengP" example="/yyets/latest" path="/yyets/latest"/>
 
-> 官方自带RSS， 该RSS只是为了配合**filter**等参数过滤，进行更新提醒。追剧推荐使用官方客户端。
+> 官方自带 RSS， 该 RSS 只是为了配合**filter**等参数过滤，进行更新提醒。追剧推荐使用官方客户端。
