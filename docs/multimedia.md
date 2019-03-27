@@ -183,3 +183,9 @@
 | 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
 
 <Route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']"/>
+
+## 人人影视
+
+<Route name="最近更新剧集" author="junfengP" example="/yyets/latest" path="/yyets/latest"/>
+
+> 官方自带RSS， 该RSS只是为了配合**filter**等参数过滤，进行更新提醒。追剧推荐使用官方客户端。
