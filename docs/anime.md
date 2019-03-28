@@ -26,6 +26,10 @@
 
 <Route name="文章" author="DIYgod" example="/mmgal" path="/mmgal"/>
 
+## 终点分享
+
+<Route name="最新汉化" author="junfengP" example="/zdfx" path="/zdfx"/>
+
 ## 看漫画
 
 <Route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']"/>

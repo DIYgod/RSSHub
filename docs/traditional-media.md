@@ -204,6 +204,7 @@ category 对应的关键词有
 ## 人民日报
 
 <Route name="观点" author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
+<Route name="习近平系列重要讲话" author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>
 
 ## 半月谈
 
