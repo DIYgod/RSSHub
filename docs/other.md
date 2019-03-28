@@ -461,3 +461,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 艾瑞
 
 <route name="产业研究报告" author="brilon" example="/iresearch/report" path="/iresearch/report"/>
+
+### MobData
+
+<route name="分析报告" author="brilon" example="/mobdata/report" path="/mobdata/report"/>
