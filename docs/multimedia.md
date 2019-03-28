@@ -110,6 +110,10 @@
 
 <Route name="新片精品" author="imgss" example="/dytt" path="/dytt"/>
 
+## 6vhao电影
+
+<Route name="飘红推荐" author="Syasuker" example="/6vhao" path="/6vhao"/>
+
 ## rs05 人生 05 电影
 
 <Route name="rs05电影列表" author="monner-henster" example="/rs05/rs05" path="/rs05/rs05"/>
