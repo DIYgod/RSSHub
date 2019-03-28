@@ -457,3 +457,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route name="推荐" author="brilon" example="/infoq/recommend" path="/infoq/recommend"/>
 
 <Route name="话题" author="brilon" example="/infoq/topic/1" path="/infoq/topic/:id" :paramsDesc="['话题id，可在[InfoQ全部话题](https://www.infoq.cn/topics)页面找到URL里的话题id']" />
+
+### 艾瑞
+
+<route name="产业研究报告" author="brilon" example="/iresearch/report" path="/iresearch/report"/>
