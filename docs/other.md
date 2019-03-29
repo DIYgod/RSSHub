@@ -461,3 +461,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 艾瑞
 
 <route name="产业研究报告" author="brilon" example="/iresearch/report" path="/iresearch/report"/>
+
+### 腾讯谷雨
+
+<Route name="栏目" author="LogicJake" example="/tencent/guyu/channel/lab" path="/tencent/guyu/channel/:name" :paramsDesc="['栏目名称，包括lab，report，story，shalong']"/>
