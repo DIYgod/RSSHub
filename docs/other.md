@@ -469,3 +469,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 腾讯谷雨
 
 <Route name="栏目" author="LogicJake" example="/tencent/guyu/channel/lab" path="/tencent/guyu/channel/:name" :paramsDesc="['栏目名称，包括lab，report，story，shalong']"/>
+
+### checkee.info
+
+<Route name="美国签证 check 动态" author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
