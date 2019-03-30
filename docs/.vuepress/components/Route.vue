@@ -9,10 +9,10 @@
   <p class="path">
     路由: <code>{{ path }}</code>
   </p>
-  <div v-if="path.match(/(?<=:).*?(?=\/|$)/g)">
+  <div v-if="path.match(/:.*?(\/|$)/g)">
   <p>
     参数:
-  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)">{{item.replace('?','')}}, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
+  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)">{{item.replace(':','').replace('/','').replace('?','')}}, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
   </div>
   <div v-else><p>参数: 无</p></div>
   <slot></slot>
@@ -46,7 +46,7 @@ export default {
       default: '无'
     },
     crawlerBadge: {
-      type: Boolean,
+      type: String,
       default: null
     }
   },
