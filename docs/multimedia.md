@@ -110,7 +110,7 @@
 
 <Route name="新片精品" author="imgss" example="/dytt" path="/dytt"/>
 
-## 6vhao电影
+## 6vhao 电影
 
 <Route name="飘红推荐" author="Syasuker" example="/6vhao" path="/6vhao"/>
 
