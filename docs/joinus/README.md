@@ -6,6 +6,11 @@ sidebar: auto
 
 如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
 
+## 参与讨论
+
+1.  [Telegram 群](https://t.me/rsshub)
+2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
+
 ## 提交新的 RSS 内容
 
 ### 步骤 1: 编写脚本
@@ -258,6 +263,61 @@ sidebar: auto
     // 注：由于此路由只是起到一个新专栏上架提醒的作用，无法访问付费文章，因此没有文章正文
     ```
 
+    4. **使用通用配置型路由**
+
+    很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
+    通用配置即通过 cherrio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
+
+    首先我们需要几个数据：
+
+    1. RSS 来源链接
+    2. 数据来源链接
+    3. RSS 标题（非 item 标题）
+
+    ```js
+    const buildData = require('../../utils/common-config');
+    module.exports = async (ctx) => {
+        ctx.state.data = await buildData({
+            link: RSS来源链接,
+            url: 数据来源链接,
+            title: '%title%', //这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
+            params: {
+                title: RSS标题,
+            },
+        });
+    };
+    ```
+
+    至此，我们的 RSS 还没有任何内容，内容需要由`item`完成，也是核心部分，需要有 CSS 选择器以及 jQuery 的函数知识（请去 W3School 学习）  
+    下面为一个实例  
+    建议在打开[此链接](https://www.uraaka-joshi.com/)的开发者工具之后再阅读以下内容，请善用开发者工具的搜索功能搜寻`$('xxx')`中的内容
+
+    ```js
+    const buildData = require('../../utils/common-config');
+
+    module.exports = async (ctx) => {
+        const link = `https://www.uraaka-joshi.com/`;
+        ctx.state.data = await buildData({
+            link,
+            url: link,
+            title: `%title%`,
+            params: {
+                title: '裏垢女子まとめ',
+            },
+            item: {
+                item: '.content-main .stream .stream-item',
+                title: `$('.post-account-group').text() + ' - %title%'`, //只支持$().xxx()这样的js语句，也足够使用
+                link: `$('.post-account-group').attr('href')`, //.text()代表获取元素的文本，attr()表示获取指定属性
+                description: `$('.post .context').html()`, // .html()代表获取元素的html代码
+                pubDate: `new Date($('.post-time').attr('datetime')).toUTCString()`, // 日期的格式多种多样，可以尝试使用**/utils/date**
+                guid: `new Date($('.post-time').attr('datetime')).getTime()`, // guid必须唯一，这是RSS的不同item的标志
+            },
+        });
+    };
+    ```
+
+    至此我们完成了一个最简单的路由
+
 ---
 
 #### 使用缓存
@@ -431,14 +491,14 @@ ctx.state.data = {
         1. 多参数：
 
         ```vue
-        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
+        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
         ```
 
         结果预览：
 
         ***
 
-        <route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
         ***
 
@@ -446,14 +506,14 @@ ctx.state.data = {
         2. 无参数:
 
         ```vue
-        <route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
         ```
 
         结果预览：
 
         ***
 
-        <route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
         ***
 
@@ -461,36 +521,29 @@ ctx.state.data = {
         3. 复杂说明支持 slot:
 
         ```vue
-        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
         | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
-        </route>
+        </Route>
         ```
 
         结果预览：
 
         ***
 
-        <route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
         | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
-        </route>
+        </Route>
 
         ***
 
-1.  请一定要注意把`<route>`的标签关闭！
+1.  请一定要注意把`<Route>`的标签关闭！
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
-
----
-
-## 参与讨论
-
-1.  [Telegram 群](https://t.me/rsshub)
-2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)

@@ -15,7 +15,7 @@ services:
     restart: always
     image: rsshub
     ports:
-      - 1200:1200
+      - "1200:1200"
     environment:
       NODE_ENV: production
       CACHE_TYPE: redis
@@ -27,9 +27,11 @@ services:
       - db.redis
 
   db.redis:
-    image: redis:4.0.11-alpine
+    image: redis:5.0.4-alpine
     volumes:
         - redis-data:/data
+    expose:
+      - "6379"
 
 volumes:
   redis-data:
