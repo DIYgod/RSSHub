@@ -31,7 +31,7 @@
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "1.0.0-alpha.47",
-    "@vuepress/plugin-google-analytics": "1.0.0-alpha.44",
+    "@vuepress/plugin-google-analytics": "1.0.0-alpha.47",
     "@vuepress/plugin-pwa": "1.0.0-alpha.44",
     "axios-mock-adapter": "1.16.0",
     "eslint": "5.16.0",
