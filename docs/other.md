@@ -462,6 +462,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <route name="产业研究报告" author="brilon" example="/iresearch/report" path="/iresearch/report"/>
 
+### ZAKER
+
+<Route name="source" author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id" :paramsDesc="['source id，可在 URL 中找到']"/>
+
 ### MobData
 
 <route name="分析报告" author="brilon" example="/mobdata/report" path="/mobdata/report"/>
