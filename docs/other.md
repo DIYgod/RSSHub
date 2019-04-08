@@ -183,7 +183,13 @@
 
 </Route>
 
-<Route name="最新Live" author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型。实时进展`realtime` 或 最近关注`new`']" />
+<Route name="最新Live" author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型']">
+
+| Live 实时（往事进展） | 最近 Live（最新关注） |
+| --------------------- | --------------------- |
+| realtime              | new                   |
+
+</Route>
 
 <Route name="最新专栏" author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
 
