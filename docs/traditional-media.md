@@ -209,3 +209,7 @@ category 对应的关键词有
 ## 半月谈
 
 <Route name="板块" author="LogicJake" example="/banyuetan/jicengzhili" path="/banyuetan/:name" :paramsDesc="['板块名称，可在 URL 中找到']"/>
+
+## 21 财经
+
+<Route name="频道" author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
