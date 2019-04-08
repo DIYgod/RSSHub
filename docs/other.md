@@ -155,7 +155,7 @@
 
 ## 趣头条
 
-<Route name="分类" author="alphardex" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
+<Route name="分类" author="alphardex LogicJake" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
 
 | 推荐 | 热点 | 娱乐 | 健康 | 养生 | 励志 | 科技 | ... |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
