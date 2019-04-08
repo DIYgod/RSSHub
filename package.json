@@ -44,7 +44,7 @@
     "prettier": "1.16.4",
     "prettier-check": "2.0.0",
     "supertest": "4.0.2",
-    "vuepress": "1.0.0-alpha.44",
+    "vuepress": "1.0.0-alpha.47",
     "yorkie": "2.0.0"
   },
   "dependencies": {
