@@ -38,13 +38,13 @@ Category 列表:
 
 ## 南方周末
 
-<Route name="新闻分类" author="ranpox" example="/infzm/5" path="/infzm/:id" :paramsDesc="['南方周末内容分区 id, 可在该内容分区的 URL 中找到(即http://www.infzm.com/contents/:id), 注意 contents 为内容分区, content 为文章页, 添加前请留意.']">
+<Route name="新闻分类" author="ranpox xyqfer" example="/infzm/2" path="/infzm/:id" :paramsDesc="['南方周末内容分区 id, 可在该内容分区的 URL 中找到(即 https://www.infzm.com/contents?term_id=:id)']">
 
 下面给出部分参考:
 
-| 全站 | 新闻 | 经济 | 文化 | 评论 | 图片 | 生活 | 时政 | 社会 | 科技 | 绿色 | 头条 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 0    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   | 13   | 1374 | 2553 |
+| 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |
 
 </Route>
 
