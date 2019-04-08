@@ -469,3 +469,13 @@
 <Route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
 
 <Route name="标签" author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签id，可在tagURL找到']"/>
+
+## Matters
+
+<Route name="最新排序" author="xyqfer" example="/matters/latest" path="/matters/latest" />
+
+<Route name="熱門文章" author="Cerebrater" example="/matters/hot" path="/matters/hot" />
+
+<Route name="标签" author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
+
+<Route name="作者" author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
