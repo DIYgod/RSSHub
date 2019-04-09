@@ -84,7 +84,7 @@ $ git pull
 
 ### 添加配置
 
-可以通过修改 `config.js` 或者设置环境变量来配置 RSSHub.
+可以通过修改 `lib/config.js` 或者设置环境变量来配置 RSSHub.
 
 **如何设置环境变量**
 
@@ -152,22 +152,25 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 $ docker volume create redis-data
 ```
 
-2.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
+1.  复制 `lib/config.js` 至 `lib/config/config.js`, 以避免与 master 分支冲突. 由于包含敏感信息, 该配置文件会被 git 忽略.
 
-    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` 用以跳过 puppeteer Chromium 的安装. 默认为 1, 需要在 `config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址, 以启用相应路由.
+1.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
+
+    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` 用以跳过 puppeteer Chromium 的安装. 默认为 1, 需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址, 以启用相应路由.
     -   `USE_CHINA_NPM_REGISTRY=1` 防止 npm 受到来自 GFW 的干扰. 默认为 0.
 
-3.  部署
+1.  部署
 
 ```bash
-$ docker-compose up
+$ docker-compose up -d
 ```
 
-4.  更新
+1.  更新
 
 ```bash
+$ git pull
 $ docker-compose build
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 ## 部署到 Heroku
@@ -256,7 +259,7 @@ gcloud app deploy
 
 ### 应用配置
 
-可以通过修改 `config.js` 或者设置环境变量来配置 RSSHub.
+可以通过修改 `lib/config.js` 或者设置环境变量来配置 RSSHub.
 
 ::: tip 提示
 
@@ -283,6 +286,14 @@ gcloud app deploy
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名, 默认为 `usernam3`, 请务必修改
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码, 默认为 `passw0rd`, 请务必修改
+
+`LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
+
+`PROXY_PROTOCOL`: 使用 proxy 来访问的协议, 目前只支持 socks, socks4,socks4a,socks5,socks5h
+
+`PROXY_HOST`: proxy 的域名
+
+`PROXY_PORT`: proxy 的端口
 
 ### 用户认证
 
@@ -320,7 +331,7 @@ gcloud app deploy
 
     -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
--   `gitHhub`: [申请地址](https://github.com/settings/tokens)
+-   `github`: [申请地址](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 

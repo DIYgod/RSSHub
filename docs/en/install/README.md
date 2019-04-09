@@ -80,7 +80,7 @@ $ git pull
 
 ### Configuration
 
-`RSSHub` reads its configurations from `config.js` or system environment variables.
+`RSSHub` reads its configurations from `lib/config.js` or system environment variables.
 
 **How to set system environment variables**
 
@@ -148,22 +148,25 @@ To configure more options please refer to [Settings](#Settings).
 $ docker volume create redis-data
 ```
 
-2.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
+1.  Copy `lib/config.js` to `lib/config/config.js`, to avoid conflicts with master branch. Git will ignore this file as it contains sensitive information.
 
-    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
+1.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
+
+    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `lib/config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
     -   `USE_CHINA_NPM_REGISTRY=1` avoids GFW npm registry interference in mainland China. Default to 0.
 
-3.  Deploy
+1.  Deploy
 
 ```bash
-$ docker-compose up
+$ docker-compose up -d
 ```
 
-4.  Update
+1.  Update
 
 ```bash
+$ git pull
 $ docker-compose build
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 ## Heroku Deployment
@@ -250,7 +253,7 @@ You can access your `Google App Engine URL` to check the deployment status
 
 ### Application Settings
 
-`RSSHub` reads its configurations from `config.js` or environment variables.
+`RSSHub` reads its configurations from `lib/config.js` or environment variables.
 
 ::: tip
 
@@ -277,6 +280,14 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication password, default to `passw0rd`, please change asap
+
+`LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
+
+`PROXY_PROTOCOL`: Using proxy of such protocol, Supports socks, socks4,socks4a,socks5,socks5h
+
+`PROXY_HOST`: host of the proxy
+
+`PROXY_PORT`: port of the proxy
 
 ### User Authentication
 

@@ -1,6 +1,6 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 class="name">{{name}} <Author :uid=author /> 
+  <h4 class="name">{{name}} <Badge text="反爬严格" type="warn" v-if="crawlerBadge"/> <Author :uid=author />
     <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
   </h4>
   <p class="example">
@@ -9,10 +9,10 @@
   <p class="path">
     路由: <code>{{ path }}</code>
   </p>
-  <div v-if="path.match(/(?<=:).*?(?=\/|$)/g)">
+  <div v-if="path.match(/:.*?(\/|$)/g)">
   <p>
     参数:
-  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)">{{item.replace('?','')}}, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
+  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)">{{item.replace(':','').replace('/','').replace('?','')}}, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
   </div>
   <div v-else><p>参数: 无</p></div>
   <slot></slot>
@@ -31,19 +31,23 @@ export default {
     },
     name: {
       type: String,
-      required: true 
+      required: true
     },
     path: {
       type: String,
-      required: true 
+      required: true
     },
     example: {
       type: String,
-      required: true 
+      required: true
     },
     paramsDesc: {
       type: [Array, String],
       default: '无'
+    },
+    crawlerBadge: {
+      type: String,
+      default: null
     }
   },
   methods: {
@@ -57,7 +61,7 @@ export default {
 }
 </script>
 <style>
-li.params p { 
+li.params p {
   display: inline;
   }
 .routeBlock {
