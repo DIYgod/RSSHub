@@ -2,9 +2,9 @@
 
 ## 上海海事大学
 
-<Route name="官网信息" author="simonsmh" example="/shmtu/www/events" path="/universities/shmtu/www/events" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
+<Route name="官网信息" author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
 
-<Route name="教务信息" author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/universities/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
+<Route name="教务信息" author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
 
 ## 西南科技大学
 
