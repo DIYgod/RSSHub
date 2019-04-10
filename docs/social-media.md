@@ -132,6 +132,8 @@
 
 <Route name="link 公告" author="Qixingchen" example="/bilibili/link/news/live" path="/bilibili/link/news/:product" :paramsDesc="['公告分类, 包括 直播:live 小视频:vc 相簿:wh']"/>
 
+<Route name="视频搜索" author="Symty" example="/bilibili/vsearch/藤原千花" path="/bilibili/vsearch/:kw" :paramsDesc="['检索关键字']"/>
+
 ### 直播开播 <Author uid="Qixingchen"/>
 
 见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
