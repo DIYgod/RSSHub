@@ -483,3 +483,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### checkee.info
 
 <Route name="美国签证 check 动态" author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
+
+### LaTex 开源小屋
+
+<Route name="LaTex 开源小屋" author="dxmpalb" example="/latex/article" path="/latex/article"/>
+
