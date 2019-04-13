@@ -1,5 +1,11 @@
 # 大学通知
 
+## 北京理工大学
+
+<Route name="教务处通知" author="sinofp" example="/bit/jwc" path="/universities/bit/jwc" />
+
+<Route name="计院通知" author="sinofp" example="/bit/cs" path="/universities/bit/cs" />
+
 ## 上海海事大学
 
 <Route name="官网信息" author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
