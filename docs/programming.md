@@ -250,3 +250,9 @@ GitHub 官方也提供了一些 RSS:
 | 0        | 3        | 1    | 4    |
 
 </Route>
+
+## PMCaff
+
+<Route name="PMCaff精选" author="idealclover" example="/" path="/pmcaff/category">
+
+</Route>
