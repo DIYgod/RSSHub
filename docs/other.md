@@ -155,7 +155,7 @@
 
 ## 趣头条
 
-<Route name="分类" author="alphardex" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
+<Route name="分类" author="alphardex LogicJake" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
 
 | 推荐 | 热点 | 娱乐 | 健康 | 养生 | 励志 | 科技 | ... |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
@@ -183,7 +183,13 @@
 
 </Route>
 
-<Route name="最新Live" author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型。实时进展`realtime` 或 最近关注`new`']" />
+<Route name="最新Live" author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型']">
+
+| Live 实时（往事进展） | 最近 Live（最新关注） |
+| --------------------- | --------------------- |
+| realtime              | new                   |
+
+</Route>
 
 <Route name="最新专栏" author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
 
@@ -461,6 +467,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 艾瑞
 
 <route name="产业研究报告" author="brilon" example="/iresearch/report" path="/iresearch/report"/>
+
+### ZAKER
+
+<Route name="source" author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id" :paramsDesc="['source id，可在 URL 中找到']"/>
 
 ### MobData
 
