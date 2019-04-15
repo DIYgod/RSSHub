@@ -607,6 +607,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route name="数据科学与计算机学院动态" author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
 
+## 中国传媒大学
+
+<Route name="中国传媒大学研究生招生网" author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
+
 ## 中国药科大学
 
 <Route name="中国药科大学" author="kba977" example="/cpu/home" path="/cpu/:type" :paramsDesc="['分类, 见下表']">
