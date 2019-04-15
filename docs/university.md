@@ -1,5 +1,11 @@
 # 大学通知
 
+## 北京理工大学
+
+<Route name="教务处通知" author="sinofp" example="/bit/jwc" path="/universities/bit/jwc" />
+
+<Route name="计院通知" author="sinofp" example="/bit/cs" path="/universities/bit/cs" />
+
 ## 上海海事大学
 
 <Route name="官网信息" author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
@@ -162,6 +168,16 @@
 ## 中国科学院
 
 <Route name="上海微系统与信息技术研究所学术活动" author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>
+
+## 北京邮电大学
+
+<Route name="硕士研究生招生通知" author="ihewro" example="/bupt/yz/int" path="/bupt/yzwf/:type" :paramsDesc="['学院英文缩写']">
+
+| 综合 | 信息与通信工程学院 | 电子工程学院 | 计算机学院 | 自动化学院 | 软件学院 | 数字媒体与设计艺术学院 | 网络空间安全学院 | 理学院 | 经济管理学院 | 人文学院 | 马克思主义学院 | 网络技术研究院 | 信息光子学与光通信研究院 |
+| ---- | ------------------ | ------------ | ---------- | ---------- | -------- | ---------------------- | ---------------- | ------ | ------------ | -------- | -------------- | -------------- | ------------------------ |
+| all  | sice               | see          | scs        | sa         | sse      | sdmda                  | scss             | sci    | sem          | sh       | mtri           | int            | ipoc                     |
+
+</Route>
 
 ## 南京邮电大学
 

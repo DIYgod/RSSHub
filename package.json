@@ -41,7 +41,7 @@
     "lint-staged": "8.1.5",
     "mockdate": "2.0.2",
     "nodemon": "1.18.11",
-    "prettier": "1.16.4",
+    "prettier": "1.17.0",
     "prettier-check": "2.0.0",
     "supertest": "4.0.2",
     "vuepress": "1.0.0-alpha.47",
