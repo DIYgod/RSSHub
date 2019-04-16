@@ -474,7 +474,7 @@
 
 ## Matters
 
-<Route name="最新排序" author="xyqfer" example="/matters/latest" path="/matters/latest" />
+<Route name="最新排序" author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
 
 <Route name="熱門文章" author="Cerebrater" example="/matters/hot" path="/matters/hot" />
 
