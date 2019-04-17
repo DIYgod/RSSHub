@@ -14,9 +14,3 @@ tmp
 *.swp
 *.iml
 coverage
-/lib/routes/journal/cookie.js
-/.vs
-/bin
-/obj
-/RSSHub-Nodejs.njsproj
-/RSSHub-Nodejs.sln
