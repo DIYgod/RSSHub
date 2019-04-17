@@ -90,6 +90,14 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route name="游民星空今日推荐" author="LightStrawberry" example="/gamersky/news" path="/gamersky/news"/>
 
+<Route name="游民娱乐" author="LogicJake" example="/gamersky/ent/ymfl" path="/gamersky/ent/:category" :paramsDesc="['分类类型']">
+
+| 趣囧时间 | 游民影院 | 游观天下 | 壁纸图库 | 游民盘点 | 游民福利 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| qysj     | ymyy     | ygtx     | bztk     | ympd     | ymfl     |
+
+</Route>
+
 ## 游研社
 
 <Route name="游研社" author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category" :paramsDesc="['专栏类型']"/>
