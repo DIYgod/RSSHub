@@ -255,6 +255,9 @@ category 列表：
 
 </Route>
 
+##广东海洋大学
+<Route name="广东海洋大学教务通知" author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
+
 ## 重庆大学
 
 <Route name="教务网通知公告" author="El-Chiang" example="/cqu/jwc/announcement" path="/universities/cqu/jwc/announcement"/>
