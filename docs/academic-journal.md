@@ -1,4 +1,4 @@
-# 学术期刊
+# 学术期刊 academic-journal
 
 ## ACS
 
