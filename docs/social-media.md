@@ -132,6 +132,8 @@
 
 <Route name="link 公告" author="Qixingchen" example="/bilibili/link/news/live" path="/bilibili/link/news/:product" :paramsDesc="['公告分类, 包括 直播:live 小视频:vc 相簿:wh']"/>
 
+<Route name="视频搜索" author="Symty" example="/bilibili/vsearch/藤原千花" path="/bilibili/vsearch/:kw/:order?" :paramsDesc="['检索关键字', '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow']"/>
+
 ### 直播开播 <Author uid="Qixingchen"/>
 
 见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
@@ -472,10 +474,14 @@
 
 ## Matters
 
-<Route name="最新排序" author="xyqfer" example="/matters/latest" path="/matters/latest" />
+<Route name="最新排序" author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
 
 <Route name="熱門文章" author="Cerebrater" example="/matters/hot" path="/matters/hot" />
 
 <Route name="标签" author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
 
 <Route name="作者" author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
+
+## 方格子
+
+<Route name="出版專題" author="Maecenas" example="/vocus/publication/bass" path="/vocus/publication/:id" :paramsDesc="['出版專題 id，可在出版專題主页的 URL 找到']"/>
