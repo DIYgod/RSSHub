@@ -283,11 +283,15 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
-`PROXY_PROTOCOL`: Using proxy of such protocol, Supports socks, socks4,socks4a,socks5,socks5h
+`PROXY_PROTOCOL`: Using proxy, Supports socks, http, https
 
-`PROXY_HOST`: host of the proxy
+`PROXY_HOST`: host or IP of the proxy
 
 `PROXY_PORT`: port of the proxy
+
+`PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
+
+`PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
 
 ### User Authentication
 
