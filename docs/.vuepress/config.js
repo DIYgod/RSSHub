@@ -70,6 +70,7 @@ module.exports = {
                             title: '路由',
                             collapsable: false,
                             children: [
+                                'academic-journal',
                                 'social-media',
                                 'programming',
                                 'live',
