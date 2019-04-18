@@ -702,3 +702,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | all  | xyxw     | xshhd    | csjsxy       | xxgcxy       | jjx      | glxy     | clx    | jxgcx      | hlx    | flx    | wyx    | ysx    |
 
 </Route>
+
+## 广东海洋大学
+
+<Route name="广东海洋大学" author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
