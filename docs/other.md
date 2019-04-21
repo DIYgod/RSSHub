@@ -489,3 +489,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 电商在线
 
 <Route name="电商在线" author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" :paramsDesc="['类别id，可在 URL 中找到']" />
+
+### 马良行
+
+<Route name="马良行" author="junfengP" example="/mlhang" path="/mlhang" />
