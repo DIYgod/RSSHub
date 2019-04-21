@@ -131,8 +131,10 @@ GitHub 官方也提供了一些 RSS:
 ## 极客时间
 
 <Route name="专栏文章" author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" :paramsDesc="['专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到']"/>
+<Route name="极客新闻" author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
 
-> 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> -   极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> -   极客新闻不需要付费,可通过 RSS 订阅.
 
 ## 安全客
 
