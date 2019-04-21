@@ -1,4 +1,4 @@
-# 游戏资讯
+# 游戏
 
 ## 3DMGame
 
@@ -100,7 +100,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 游研社
 
-<Route name="游研社" author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category" :paramsDesc="['专栏类型']"/>
+<Route name="游研社" author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
 | --------- | ------- | ------ | ------- | ---- | -------- |
@@ -115,3 +115,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route name="数折-折扣信息推送" author="LightStrawberry" example="/psnine/shuzhe" path="/psnine/shuzhe"/>
 <Route name="闲游-二手盘信息" author="LightStrawberry" example="/psnine/trade" path="/psnine/trade"/>
 <Route name="游戏-新游戏奖杯信息" author="LightStrawberry" example="/psnine/game" path="/psnine/game"/>
+
+## PlayStation Store
+
+<Route name="游戏列表" author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']">
+
+适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
+
+</Route>
