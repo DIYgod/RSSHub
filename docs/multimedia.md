@@ -189,3 +189,11 @@
 | 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
 
 <Route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']"/>
+
+## 中国高清网
+
+<Route name="电影" author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签tag，视频清晰度']" />
+
+| 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
+| ---- | ------ | ----- | ---- | --- | ------ |
+| 留空 | bluray | 1080p | 720p | 3d  | webdl  |
