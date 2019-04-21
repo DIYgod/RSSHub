@@ -225,6 +225,8 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 <RouteEn name="User" path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" />
 
+<RouteEn name="Hashtag" author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']" />
+
 ### Youtube
 
 <RouteEn name="User" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" />
