@@ -420,7 +420,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
-<Route name="IBC岩手放送｜IBCラジオ　イヤーマイッタマイッタ" author="fengkx" example="/maitta" path="/maitta" />
+<Route name="IBC岩手放送｜IBCラジオ　イヤーマイッタマイッタ" author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
 
 ## 博客: 敬维
 
