@@ -3,7 +3,7 @@ sidebar: auto
 ---
 
 <p align="center" class="logo-img">
-    <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+    <img src="/logo.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 

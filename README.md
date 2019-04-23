@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+<img src="https://i.loli.net/2019/04/23/5cbeb7e41414c.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center">RSSHub</h1>
 

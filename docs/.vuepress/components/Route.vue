@@ -76,6 +76,6 @@ li.params p {
   margin: 1rem 0 2rem;
 }
 #app .page .badge.tip {
-  background-color: #FFD6A6;
+  background-color: #FFB74D;
 }
 </style>
