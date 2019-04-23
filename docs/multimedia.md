@@ -20,7 +20,7 @@
 
 <Route name="歌手专辑" author="metowolf" example="/ncm/artist/2116" path="/ncm/artist/:id" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到']"/>
 
-<Route name="电台节目" author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']"/>
+<Route name="电台节目" author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']"/ supportPodcast="1">
 
 ## 爱奇艺
 
@@ -32,7 +32,7 @@
 
 ## 喜马拉雅
 
-<Route name="专辑(支持泛用型播客订阅)" author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']">
+<Route name="专辑" author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1">
 
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
@@ -108,7 +108,7 @@
 
 ## 电影天堂
 
-<Route name="新片精品" author="imgss" example="/dytt" path="/dytt"/>
+<Route name="新片精品" author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
 ## rs05 人生 05 电影
 
@@ -137,7 +137,7 @@
 
 :::
 
-<Route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']"/>
+<Route name="影视" author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
 
 ## Sankaku Complex
 
@@ -188,7 +188,7 @@
 | ------ | ------ | ------ | ------ | ------ | ------ |
 | 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
 
-<Route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']"/>
+<Route name="资源" author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']" supportBT="1"/>
 
 ## 中国高清网
 

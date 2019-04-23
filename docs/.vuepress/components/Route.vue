@@ -1,6 +1,6 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 class="name">{{name}} <Badge text="反爬严格" type="warn" v-if="crawlerBadge"/> <Author :uid=author />
+  <h4 class="name">{{name}} <Badge text="支持 BT" type="tip" v-if="supportBT"/> <Badge text="支持播客" type="tip" v-if="supportPodcast"/> <Author :uid=author /> <Badge text="反爬严格" type="warn" v-if="crawlerBadge"/>
     <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
   </h4>
   <p class="example">
@@ -48,6 +48,14 @@ export default {
     crawlerBadge: {
       type: String,
       default: null
+    },
+    supportBT: {
+      type: String,
+      default: null
+    },
+    supportPodcast: {
+      type: String,
+      default: null
     }
   },
   methods: {
@@ -66,5 +74,8 @@ li.params p {
   }
 .routeBlock {
   margin: 1rem 0 2rem;
+}
+#app .page .badge.tip {
+  background-color: #FFD6A6;
 }
 </style>
