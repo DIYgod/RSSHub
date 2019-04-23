@@ -55,7 +55,7 @@
     "co-redis": "2.1.1",
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.8.12",
-    "form-data": "2.3.2",
+    "form-data": "2.3.3",
     "git-rev-sync": "1.12.0",
     "googleapis": "39.2.0",
     "he": "1.2.0",
