@@ -1,8 +1,8 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 class="name">{{name}} <Badge text="支持 BT" type="tip" v-if="supportBT"/> <Badge text="支持播客" type="tip" v-if="supportPodcast"/> <Author :uid=author /> <Badge text="反爬严格" type="warn" v-if="crawlerBadge"/>
+  <h3 class="name">{{name}} <Badge text="支持 BT" type="tip" v-if="supportBT"/> <Badge text="支持播客" type="tip" v-if="supportPodcast"/> <Author :uid=author /> <Badge text="反爬严格" type="warn" v-if="crawlerBadge"/>
     <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
-  </h4>
+  </h3>
   <p class="example">
     举例: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
   </p>
