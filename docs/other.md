@@ -153,7 +153,7 @@
 
 <Route name="Matrix" author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" />
 
-<Route name="专栏" author="LogicJake" example="/sspai/column/104" path="/sspai/column"  :paramsDesc="['专栏 id']"/>
+<Route name="专栏" author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
 
 ## 趣头条
 
