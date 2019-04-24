@@ -486,6 +486,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="美国签证 check 动态" author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
 
+### 古诗文网
+
+<Route name="首页推荐" author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+
 ### 电商在线
 
 <Route name="电商在线" author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" :paramsDesc="['类别id，可在 URL 中找到']" />
