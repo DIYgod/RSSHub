@@ -289,11 +289,15 @@ gcloud app deploy
 
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
-`PROXY_PROTOCOL`: 使用 proxy 来访问的协议, 目前只支持 socks, socks4,socks4a,socks5,socks5h
+`PROXY_PROTOCOL`: 使用代理, 支持 socks, http, https
 
-`PROXY_HOST`: proxy 的域名
+`PROXY_HOST`: 代理服务器域名或 IP
 
-`PROXY_PORT`: proxy 的端口
+`PROXY_PORT`: 代理服务器端口
+
+`PROXY_AUTH`: 给代理服务器的身份验证凭证，`Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
+
+`PROXY_URL_REGEX`: 启用代理的 URL 正则表达式，默认全部开启 `.*`
 
 ### 用户认证
 

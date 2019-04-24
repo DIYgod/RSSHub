@@ -89,6 +89,8 @@ GitHub 官方也提供了一些 RSS:
 
 <Route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
+<Route name="仓库 Branches" author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
 <Route name="搜索结果" author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
 
 | 排序选项           | sort      |
@@ -129,8 +131,10 @@ GitHub 官方也提供了一些 RSS:
 ## 极客时间
 
 <Route name="专栏文章" author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" :paramsDesc="['专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到']"/>
+<Route name="极客新闻" author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
 
-> 极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> -   极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> -   极客新闻不需要付费,可通过 RSS 订阅.
 
 ## 安全客
 
