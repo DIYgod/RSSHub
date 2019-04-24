@@ -153,6 +153,8 @@
 
 <Route name="Matrix" author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" />
 
+<Route name="专栏" author="LogicJake" example="/sspai/column/104" path="/sspai/column"  :paramsDesc="['专栏 id']"/>
+
 ## 趣头条
 
 <Route name="分类" author="alphardex" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
