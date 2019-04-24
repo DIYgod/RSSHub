@@ -1,12 +1,16 @@
 # 大学通知
 
+## 北京理工大学
+
+<Route name="教务处通知" author="sinofp" example="/bit/jwc" path="/universities/bit/jwc" />
+
+<Route name="计院通知" author="sinofp" example="/bit/cs" path="/universities/bit/cs" />
+
 ## 上海海事大学
 
-<Route name="学术讲座" author="simonsmh" example="/shmtu/events" path="/universities/shmtu/events"/>
+<Route name="官网信息" author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
 
-<Route name="通知公告" author="simonsmh" example="/shmtu/notes" path="/universities/shmtu/notes"/>
-
-<Route name="教务信息" author="simonsmh" example="/shmtu/jwc/1" path="/universities/shmtu/jwc/:type" :paramsDesc="['1 为教务新闻, 2 为教务公告']"/>
+<Route name="教务信息" author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
 
 ## 西南科技大学
 
@@ -164,6 +168,16 @@
 ## 中国科学院
 
 <Route name="上海微系统与信息技术研究所学术活动" author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>
+
+## 北京邮电大学
+
+<Route name="硕士研究生招生通知" author="ihewro" example="/bupt/yz/int" path="/bupt/yzwf/:type" :paramsDesc="['学院英文缩写']">
+
+| 综合 | 信息与通信工程学院 | 电子工程学院 | 计算机学院 | 自动化学院 | 软件学院 | 数字媒体与设计艺术学院 | 网络空间安全学院 | 理学院 | 经济管理学院 | 人文学院 | 马克思主义学院 | 网络技术研究院 | 信息光子学与光通信研究院 |
+| ---- | ------------------ | ------------ | ---------- | ---------- | -------- | ---------------------- | ---------------- | ------ | ------------ | -------- | -------------- | -------------- | ------------------------ |
+| all  | sice               | see          | scs        | sa         | sse      | sdmda                  | scss             | sci    | sem          | sh       | mtri           | int            | ipoc                     |
+
+</Route>
 
 ## 南京邮电大学
 
@@ -678,3 +692,21 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 1        | 2        | 3                  | 4                | 5                  | 6              | 7                  | 8                  | 9              | 10             | 11       |
 
 </Route>
+
+## 中国传媒大学
+
+<Route name="中国传媒大学研究生招生网" author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
+
+## 北京科技大学天津学院
+
+<Route name="北京科技大学天津学院" author="henbf" example="/ustb/tj/news/all" path="/universities/ustb/tj/news/:type" :paramsDesc="['默认为 `all`']">
+
+| 全部 | 学院新闻 | 学术活动 | 城市建设学院 | 信息工程学院 | 经济学院 | 管理学院 | 材料系 | 机械工程系 | 护理系 | 法律系 | 外语系 | 艺术系 |
+| ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
+| all  | xyxw     | xshhd    | csjsxy       | xxgcxy       | jjx      | glxy     | clx    | jxgcx      | hlx    | flx    | wyx    | ysx    |
+
+</Route>
+
+## 广东海洋大学
+
+<Route name="广东海洋大学" author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
