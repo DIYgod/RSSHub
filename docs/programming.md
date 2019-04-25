@@ -44,6 +44,8 @@
 
 <Route name="专栏" author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
 
+<Route name="收藏集" author="isQ" example="/juejin/collections/xiaoming" path="/juejin/collections/:userId" :paramsDesc="['用户唯一标志符, 在浏览器地址栏URL中能够找到']"/>
+
 ## Dockone
 
 <Route name="周报" author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
