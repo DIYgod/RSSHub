@@ -1,4 +1,4 @@
-# 待分类
+# 其他
 
 ## 自如
 
@@ -152,6 +152,8 @@
 <Route name="Shortcuts Gallery" author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
 
 <Route name="Matrix" author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" />
+
+<Route name="专栏" author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
 
 ## 趣头条
 
@@ -329,6 +331,8 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 <Route name="作者" author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id']"/>
 
+<Route name="标签" author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
+
 ## 惠誉评级
 
 <Route name="板块信息" author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址 site 后面']"/>
@@ -418,7 +422,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
-<Route name="IBC岩手放送｜IBCラジオ　イヤーマイッタマイッタ" author="fengkx" example="/maitta" path="/maitta" />
+<Route name="IBC岩手放送｜IBCラジオ　イヤーマイッタマイッタ" author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
 
 ## 博客: 敬维
 
@@ -464,30 +468,34 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="话题" author="brilon" example="/infoq/topic/1" path="/infoq/topic/:id" :paramsDesc="['话题id，可在[InfoQ全部话题](https://www.infoq.cn/topics)页面找到URL里的话题id']" />
 
-### 艾瑞
+## 艾瑞
 
 <route name="产业研究报告" author="brilon" example="/iresearch/report" path="/iresearch/report"/>
 
-### ZAKER
+## ZAKER
 
 <Route name="source" author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id" :paramsDesc="['source id，可在 URL 中找到']"/>
 
-### MobData
+## MobData
 
 <route name="分析报告" author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
-### 腾讯谷雨
+## 腾讯谷雨
 
 <Route name="栏目" author="LogicJake" example="/tencent/guyu/channel/lab" path="/tencent/guyu/channel/:name" :paramsDesc="['栏目名称，包括lab，report，story，shalong']"/>
 
-### checkee.info
+## checkee.info
 
 <Route name="美国签证 check 动态" author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
 
-### 电商在线
+## 古诗文网
+
+<Route name="首页推荐" author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+
+## 电商在线
 
 <Route name="电商在线" author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" :paramsDesc="['类别id，可在 URL 中找到']" />
 
-### 马良行
+## 马良行
 
 <Route name="马良行" author="junfengP" example="/mlhang" path="/mlhang" />

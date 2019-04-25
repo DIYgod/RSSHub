@@ -30,6 +30,7 @@ module.exports = {
             description: '🍰 Everthing can be RSS',
         },
     },
+    head: [['link', { rel: 'icon', href: `/logo.png` }]],
     themeConfig: {
         repo: 'DIYgod/RSSHub',
         editLinks: true,
