@@ -46,6 +46,8 @@
 
 <Route name="收藏集" author="isQ" example="/juejin/collections/xiaoming" path="/juejin/collections/:userId" :paramsDesc="['用户唯一标志符, 在浏览器地址栏URL中能够找到']"/>
 
+<Route name="单个收藏夹" author="isQ" example="/juejin/collection/21jk3j21ia12da3da" path="/juejin/collection/:collectionId" :paramsDesc="['收藏夹唯一标志符, 在浏览器地址栏URL中能够找到']"/>
+
 ## Dockone
 
 <Route name="周报" author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
