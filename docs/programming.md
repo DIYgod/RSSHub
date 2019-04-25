@@ -269,3 +269,7 @@ GitHub 官方也提供了一些 RSS:
 | 0        | 3        | 1    | 4    |
 
 </Route>
+
+## 美团技术团队
+
+<Route name="美团技术团队" author="wnglmng" example="/tech.meiguan.com" path="/tech.meiguan.com"/>
