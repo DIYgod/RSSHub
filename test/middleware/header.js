@@ -16,6 +16,6 @@ describe('header', () => {
         expect(response.headers['content-type']).toBe('application/xml; charset=utf-8');
         expect(response.headers['cache-control']).toBe(`max-age=${config.cacheExpire / 2}`);
         expect(response.headers['last-modified']).toBe(response.text.match(/<lastBuildDate>(.*)<\/lastBuildDate>/)[1]);
-        expect(response.headers.etag).toBe('"b37-MORyrF0tJ8BFw0xLLZL/zBYAFPY"');
+        // expect(response.headers.etag).toBe('"b37-MORyrF0tJ8BFw0xLLZL/zBYAFPY"');
     });
 });
