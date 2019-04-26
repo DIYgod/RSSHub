@@ -78,7 +78,7 @@
     "puppeteer": "1.14.0",
     "redis": "2.8.0",
     "rss-parser": "3.7.0",
-    "sanitize-html": "1.20.0",
+    "sanitize-html": "1.20.1",
     "socks-proxy-agent": "4.0.2",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
