@@ -75,7 +75,7 @@
     "path-to-regexp": "3.0.0",
     "pidusage": "2.0.17",
     "plist": "3.0.1",
-    "puppeteer": "1.14.0",
+    "puppeteer": "1.15.0",
     "redis": "2.8.0",
     "rss-parser": "3.7.0",
     "sanitize-html": "1.20.1",
