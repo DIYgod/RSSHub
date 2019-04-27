@@ -26,6 +26,10 @@
 
 <Route name="文章" author="DIYgod" example="/mmgal" path="/mmgal"/>
 
+## say 花火
+
+<Route name="文章" author="junfengP" example="/sayhuahuo" path="/sayhuahuo"/>
+
 ## 终点分享
 
 <Route name="最新汉化" author="junfengP" example="/zdfx" path="/zdfx"/>
