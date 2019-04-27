@@ -2,7 +2,7 @@
 {{ if itunes_author }}
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 {{else}}
-<rss version="2.0">
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 {{ /if }}
     <channel>
         <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
@@ -24,6 +24,7 @@
         <ttl>{{ ttl }}</ttl>
         {{ each item }}
         <item>
+            <dc:creator><![CDATA[{{@ $value.creator }}]]></dc:creator>
             <title><![CDATA[{{@ $value.title }}]]></title>
             <description><![CDATA[{{@ $value.description || $value.title }}]]></description>
             {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
