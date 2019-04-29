@@ -84,7 +84,7 @@ $ git pull
 
 ### 添加配置
 
-可以通过修改 `lib/config.js` 或者设置环境变量来配置 RSSHub.
+可以通过设置环境变量来配置 RSSHub.
 
 **如何设置环境变量**
 
@@ -152,12 +152,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 $ docker volume create redis-data
 ```
 
-1.  复制 `lib/config.js` 至 `lib/config/config.js`, 以避免与 master 分支冲突. 由于包含敏感信息, 该配置文件会被 git 忽略.
-
-1.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
-
-    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` 用以跳过 puppeteer Chromium 的安装. 默认为 1, 需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址, 以启用相应路由.
-    -   `USE_CHINA_NPM_REGISTRY=1` 防止 npm 受到来自 GFW 的干扰. 默认为 0.
+1.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置（可选）
 
 1.  部署
 
@@ -259,7 +254,7 @@ gcloud app deploy
 
 ### 应用配置
 
-可以通过修改 `lib/config.js` 或者设置环境变量来配置 RSSHub.
+可以通过设置环境变量来配置 RSSHub.
 
 ::: tip 提示
 
