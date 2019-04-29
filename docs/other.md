@@ -155,6 +155,11 @@
 
 <Route name="专栏" author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
 
+## 异次元软件世界
+
+<Route name="首页" author="kimi360" example="/iplay/home" path="/iplay/home">
+</Route>
+
 ## 趣头条
 
 <Route name="分类" author="alphardex LogicJake" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">

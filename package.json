@@ -45,6 +45,7 @@
     "prettier-check": "2.0.0",
     "supertest": "4.0.2",
     "vuepress": "1.0.0-alpha.47",
+    "webpack": "^4.28.4",
     "yorkie": "2.0.0"
   },
   "dependencies": {
