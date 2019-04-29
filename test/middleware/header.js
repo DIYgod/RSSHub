@@ -11,7 +11,6 @@ describe('header', () => {
     it(`header`, async () => {
         const response = await request.get('/test/1');
         expect(response.headers['access-control-allow-origin']).toBe('127.0.0.1:1200');
-        expect(response.headers['access-control-allow-headers']).toBe('Content-Type, Content-Length, Authorization, Accept, X-Requested-With');
         expect(response.headers['access-control-allow-methods']).toBe('GET');
         expect(response.headers['content-type']).toBe('application/xml; charset=utf-8');
         expect(response.headers['cache-control']).toBe(`public, max-age=${config.cacheExpire}`);
