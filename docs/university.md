@@ -708,3 +708,13 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ## 广东海洋大学
 
 <Route name="广东海洋大学" author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
+
+## 深圳大学
+
+<Route name="深圳大学研究生招生网" author="NagaruZ" example="/szu/yz/1" path="/universities/szu/yz/:type?" :paramsDesc="['默认为1']" >
+
+| 研究生 | 博士生 |
+| ------ | ------ |
+| 1      | 2      |
+
+</Route>
