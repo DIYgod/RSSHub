@@ -250,6 +250,50 @@ gcloud app deploy
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况.
 
+### 部署至 arm32v7 设备（树莓派）
+
+#### 直接拉取镜像
+
+运行下面的命令下载 rsshub:arm32v7 镜像. (暂时还没有自动构建，更新缓慢)
+
+```
+docker pull pjf1996/rsshub:arm32v7
+```
+
+#### 自己构建
+
+首先下载 `RSSHub` 源码
+
+```
+$ git clone https://github.com/DIYgod/RSSHub.git
+$ cd RSSHub
+```
+
+运行下列命令构建 `rsshub:arm32v7`镜像
+
+```
+$ docker build -f ./Dockerfile.arm32v7 -t rsshub:arm32v7 .
+```
+
+::: tip 提示
+
+puppeteer 本身不会下载 chrome-arm，需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址, 以启用相应路由.
+
+TO DO: 暂时还没有找到合适的 `chrome websocket` arm32v7 镜像
+
+:::
+
+运行 RSSHub
+
+```bash
+# 直接拉取镜像方式
+$ docker run -d --name rsshub -p 1200:1200 pjf1996/rsshub:arm32v7
+# 自己构建镜像方式
+$ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
+```
+
+其余参数见[使用 Docker 部署](#使用-Docker-部署)
+
 ## 配置
 
 ### 应用配置
