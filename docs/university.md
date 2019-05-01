@@ -726,4 +726,3 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 <Route name="MIT graduateadmissions's blogs by department" author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/universities/mit/graduateadmissions/department/:name" :paramsDesc="['department name which can be found in url']"/>
 
 <Route name="MIT graduateadmissions's blogs by category" author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/universities/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
-
