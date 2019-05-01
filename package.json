@@ -40,7 +40,7 @@
     "jest": "24.7.1",
     "lint-staged": "8.1.5",
     "mockdate": "2.0.2",
-    "nodemon": "1.18.11",
+    "nodemon": "1.19.0",
     "prettier": "1.17.0",
     "prettier-check": "2.0.0",
     "supertest": "4.0.2",
