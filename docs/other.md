@@ -503,3 +503,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 ## 毕马威
 
 <Route name="洞察" author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
+
+## gradCafe(一个比较流行的国外研究生录取结果通知)
+
+<Route name="gradCafe result" author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
+<Route name="gradCafe result by key words" author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']/>
