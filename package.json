@@ -72,7 +72,7 @@
     "luxon": "1.12.1",
     "lz-string": "1.4.4",
     "markdown-it": "8.4.2",
-    "node-fetch": "2.4.1",
+    "node-fetch": "2.5.0",
     "path-to-regexp": "3.0.0",
     "pidusage": "2.0.17",
     "plist": "3.0.1",
