@@ -86,15 +86,14 @@ $ git pull
 
 可以通过设置环境变量来配置 RSSHub.
 
-**如何设置环境变量**
+在项目根目录新建一个 `.env` 文件，每行以 `NAME=VALUE` 格式添加环境变量，例如
 
-Windows 系统在 cmd.exe 中运行 `$ set PORT=1000`
+```
+CACHE_TYPE=redis
+CACHE_EXPIRE=600
+```
 
-macOS & Linux 运行 `$ PORT=1000`
-
-再运行 `$ npm start` 启动 RSSHub 即可将监听端口设置为 `1000`.
-
-此处设置的环境变量在关闭终端后就会被清除, 如果您想保存这些配置可以编写一个简单的 [批处理文件](https://en.wikipedia.org/wiki/Batch_file) 或 [shell](https://en.wikipedia.org/wiki/Shell_script).
+注意它不会覆盖已有的环境变量，更多规则请参考 [dotenv](https://github.com/motdotla/dotenv)
 
 更多配置项请看 [应用配置](#应用配置)
 
