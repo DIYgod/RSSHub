@@ -499,3 +499,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ## 马良行
 
 <Route name="马良行" author="junfengP" example="/mlhang" path="/mlhang" />
+
+## 福利资源-met.red
+
+<Route name="福利资源-met.red" author="junfengP" example="/metred/fuli" path="/metred/fuli" />
