@@ -155,6 +155,11 @@
 
 <Route name="专栏" author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
 
+## 异次元软件世界
+
+<Route name="首页" author="kimi360" example="/iplay/home" path="/iplay/home">
+</Route>
+
 ## 趣头条
 
 <Route name="分类" author="alphardex LogicJake" example="/qutoutiao/category/1" path="/qutoutiao/category/:cid" :paramsDesc="['分类 id']">
@@ -503,3 +508,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ## 世界卫生组织
 
 <Route name="媒体中心" author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
+
+## 毕马威
+
+<Route name="洞察" author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
+
+## gradCafe(一个比较流行的国外研究生录取结果通知)
+
+<Route name="gradCafe result" author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
+<Route name="gradCafe result by key words" author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']/>

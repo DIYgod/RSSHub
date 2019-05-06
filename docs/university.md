@@ -708,3 +708,21 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ## 广东海洋大学
 
 <Route name="广东海洋大学" author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
+
+## 深圳大学
+
+<Route name="深圳大学研究生招生网" author="NagaruZ" example="/szu/yz/1" path="/universities/szu/yz/:type?" :paramsDesc="['默认为1']" >
+
+| 研究生 | 博士生 |
+| ------ | ------ |
+| 1      | 2      |
+
+</Route>
+
+## MIT
+
+<Route name="MIT graduateadmissions's all blogs" author="LogicJake" example="/mit/graduateadmissions/index/all" path="/universities/mit/graduateadmissions/index/all"/>
+
+<Route name="MIT graduateadmissions's blogs by department" author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/universities/mit/graduateadmissions/department/:name" :paramsDesc="['department name which can be found in url']"/>
+
+<Route name="MIT graduateadmissions's blogs by category" author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/universities/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>

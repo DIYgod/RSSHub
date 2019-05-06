@@ -82,15 +82,14 @@ $ git pull
 
 `RSSHub` reads its configurations from `lib/config.js` or system environment variables.
 
-**How to set system environment variables**
+Create a `.env` file in the root directory of your project. Add environment-specific variables on new lines in the form of `NAME=VALUE`. For example:
 
-Under Windows, enter `$ set PORT=1000` in cmd
+```
+CACHE_TYPE=redis
+CACHE_EXPIRE=600
+```
 
-Under UNIX-based OS, enter `$ PORT=1000` in terminal
-
-Enter `$ npm start` to start a `RSSHub` install with port `1000`.
-
-System environment variables set here will be purged after closing cmd/terminal, if you want persist the variables, you can create a simple [batch script](https://en.wikipedia.org/wiki/Batch_file) or [shell script](https://en.wikipedia.org/wiki/Shell_script).
+Please notice that it will not override already existed environment variables, more rules please refer to [dotenv](https://github.com/motdotla/dotenv)
 
 To configure more options please refer to [Settings](#Settings).
 

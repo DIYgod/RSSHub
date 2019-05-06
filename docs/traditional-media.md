@@ -213,3 +213,7 @@ category 对应的关键词有
 ## 21 财经
 
 <Route name="频道" author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
+
+## The Economist
+
+ <Route name="GRE Vocabulary" author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
