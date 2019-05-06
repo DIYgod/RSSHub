@@ -505,6 +505,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="马良行" author="junfengP" example="/mlhang" path="/mlhang" />
 
+## 世界卫生组织
+
+<Route name="媒体中心" author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
+
 ## 福利资源-met.red
 
 <Route name="福利资源-met.red" author="junfengP" example="/metred/fuli" path="/metred/fuli" />
