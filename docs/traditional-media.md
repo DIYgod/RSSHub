@@ -201,6 +201,8 @@ category 对应的关键词有
 
 </Route>
 
+<Route name="滚动新闻" author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
+
 ## 人民日报
 
 <Route name="观点" author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
