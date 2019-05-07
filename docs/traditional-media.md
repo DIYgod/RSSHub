@@ -220,7 +220,7 @@ category 对应的关键词有
 
 ## 朝日新聞中文網
 
-<Route name="新闻分类" author="qiwihui" example="/sina/society" path="/sina/discovery/:category/:subCate?" :paramsDesc="['版块, '子板块']">
+<Route name="新闻分类" author="qiwihui" example="/sina/society" path="/sina/discovery/:category/:subCate?" :paramsDesc="['版块', '子板块']">
 
 版块：
 
