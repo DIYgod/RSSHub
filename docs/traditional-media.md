@@ -217,3 +217,29 @@ category 对应的关键词有
 ## The Economist
 
  <Route name="GRE Vocabulary" author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+
+## 朝日新聞中文網
+
+<Route name="新闻分类" author="qiwihui" example="/sina/society" path="/sina/discovery/:category/:subCate?" :paramsDesc="['版块', '子板块']">
+
+版块：
+
+| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    |
+| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| 國內綜合 | 政治・經濟       | 文化・生活 | 旅遊・活動 | 體育・奧運 | 商業・商品 | IT・科技   | 國際・東亞 | 評論・專欄 |
+
+版块 `cool_japan` 和 `travel` 包含子板块子板块：
+
+`cool_japan`：
+
+| entertainment | anime | life       | style_culture |
+| ------------- | ----- | ---------- | ------------- |
+| 藝能          | 動漫  | 生活・美食 | 時尚・藝文    |
+
+`travel`:
+
+| news | scenery | topic | move |
+| ---- | ------- | ----- | ---- |
+| 資訊 | 風景    | 體驗  | 交通 |
+
+</Route>
