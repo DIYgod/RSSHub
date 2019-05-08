@@ -525,3 +525,21 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="gradCafe result" author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
 <Route name="gradCafe result by key words" author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']/>
+
+## 且听风吟福利（www.qtfyfl.com）
+
+<Route name="分类" author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" :paramsDesc="['分类，可在 URL 中找到']">
+
+| 最新文章 | 福利社  | 求出处    | 套图集  | 门事件     | 内涵图   | 电影下载       | 影视资讯 |
+| -------- | ------- | --------- | ------- | ---------- | -------- | -------------- | -------- |
+| latest   | fulishe | qiuchuchu | taotuji | menshijian | neihantu | dianyingxiazai | yingshi  |
+
+| 电视剧下载 | 动漫下载 | 电影彩蛋 | 影视剧情 | 涨姿势     | 娱乐 | 明星八卦 | 音乐歌曲 |
+| ---------- | -------- | -------- | -------- | ---------- | ---- | -------- | -------- |
+| dianshiju  | dongman  | caidan   | juqing   | zhangzishi | yule | mingxing | music    |
+
+| 游戏  | 电脑软件 | 实时热点     | 心灵鸡汤 | 符号大全 | 国际新闻 | 科技苑 | 其他  |
+| ----- | -------- | ------------ | -------- | -------- | -------- | ------ | ----- |
+| games | software | shishiredian | xljt     | fhdq     | xljt     | tech   | other |
+
+</Route>
