@@ -9,7 +9,7 @@
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
-    "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
+    "format:staged": "eslint \"**/*.js\" --fix && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
     "test": "npm run lint && NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "NODE_ENV=test jest --runInBand --forceExit"
   },
@@ -21,7 +21,7 @@
     "RSS"
   ],
   "gitHooks": {
-    "pre-commit": "npm run lint"
+    "pre-commit": "npm run format:staged"
   },
   "author": "DIYgod",
   "license": "MIT",
@@ -38,11 +38,11 @@
     "eslint-config-prettier": "4.2.0",
     "eslint-plugin-prettier": "3.0.1",
     "jest": "24.8.0",
-    "lint-staged": "8.1.6",
     "mockdate": "2.0.2",
     "nodemon": "1.19.0",
     "prettier": "1.17.0",
     "prettier-check": "2.0.0",
+    "pretty-quick": "^1.10.0",
     "supertest": "4.0.2",
     "vuepress": "1.0.0-alpha.47",
     "yorkie": "2.0.0"
