@@ -43,7 +43,7 @@
     "nodemon": "1.19.0",
     "prettier": "1.17.0",
     "prettier-check": "2.0.0",
-    "pretty-quick": "^1.10.0",
+    "pretty-quick": "1.10.0",
     "supertest": "4.0.2",
     "vuepress": "1.0.0-alpha.47",
     "yorkie": "2.0.0"
