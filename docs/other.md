@@ -517,6 +517,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="洞察" author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 7x24 小时快讯
+
+<Route name="7x24小时快讯" author="occupy5" example="/fx678/kx" path="/fx678/kx" />
+
 ## gradCafe(一个比较流行的国外研究生录取结果通知)
 
 <Route name="gradCafe result" author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
