@@ -197,3 +197,7 @@
 | 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
 | ---- | ------ | ----- | ---- | --- | ------ |
 | 留空 | bluray | 1080p | 720p | 3d  | webdl  |
+
+## SoundCloud
+
+<Route name="Tracks" author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
