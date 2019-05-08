@@ -168,7 +168,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
             // use tryGet() to query the cache
             // if the query returns no result, query the data source via load() to get article content
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
 
             // merge two objects to form the final output
             return Promise.resolve(Object.assign({}, single, other));
@@ -270,7 +270,7 @@ By default there is a global caching period set in `lib/config.js`, some sources
 -   Save to cache:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time is the caching period in seconds.
+ctx.cache.set((key: string), (value: string)); // time is the caching period in seconds.
 ```
 
 -   Access the cache:
@@ -285,7 +285,7 @@ Given the update frequency is known, set the appropriate caching period to reuse
 
 ```js
 const key = 'daily' + story.id; // story.id is the unique identifier of each article
-ctx.cache.set(key, item.description, 24 * 60 * 60); // set the caching period to 24 hours * 60 minutes * 60 seconds = 86,400 seconds = 1 day
+ctx.cache.set(key, item.description); // set cache
 ```
 
 When the identical requests come in, reuse the cache：
