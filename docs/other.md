@@ -521,13 +521,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="7x24小时快讯" author="occupy5" example="/fx678/kx" path="/fx678/kx" />
 
-## gradCafe(一个比较流行的国外研究生录取结果通知)
+## gradCafe
 
 <Route name="gradCafe result" author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
 
 <Route name="gradCafe result by key words" author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
-## 且听风吟福利（www.qtfyfl.com）
+## 且听风吟福利
 
 <Route name="分类" author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" :paramsDesc="['分类，可在 URL 中找到']">
 
