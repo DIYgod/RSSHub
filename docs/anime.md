@@ -85,3 +85,8 @@
 ## Anitama
 
 <Route name="Anitama Channel" author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
+
+## 鼠绘漫画
+
+<Route name="鼠绘漫画" author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']"/>
+
