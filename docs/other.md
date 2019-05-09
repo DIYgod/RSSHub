@@ -550,3 +550,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route name="首页" author="qiwihui" example="/paidai" path="/paidao" />
 <Route name="论坛" author="qiwihui" example="/paidai/bbs" path="/paidao/bbs" />
 <Route name="商道" author="qiwihui" example="/paidai/news" path="/paidao/news" />
+
+## 财新博客
+
+<Route name="用户博客" author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column" :paramsDesc="['博客名称，可在博客主页的 URL 找到']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验.
+
+</Route>
