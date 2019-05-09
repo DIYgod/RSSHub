@@ -311,7 +311,9 @@ $ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
 
 `CACHE_TYPE`: 缓存类型, 可为 `memory` 和 `redis`, 设为空可以禁止缓存, 默认为 `memory`
 
-`CACHE_EXPIRE`: 缓存过期时间, 单位为秒, 默认 `300`
+`CACHE_EXPIRE`: 路由缓存过期时间, 单位为秒, 默认 `5 * 60`
+
+`CACHE_CONTENT_EXPIRE`: 内容缓存过期时间，单位为秒, 默认 `24 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: 是否允许公网连接, 默认 `1`
 
