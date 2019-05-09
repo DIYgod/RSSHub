@@ -339,9 +339,9 @@ gcloud app deploy
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   `bilibili`:
+-   `bilibili`: 控制台执行 document.cookie
 
-    -   `BILIBILI_COOKIE_{uid}`: id 为{uid}的 b 站用户登录后的 Cookie 值
+    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值
 
 ### 访问控制
 
