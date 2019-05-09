@@ -1,8 +1,28 @@
 # 二次元
 
-## bilibili
+## Anime1
 
-见 [#bilibili](/social-media.html#bilibili)
+<Route name="動畫" author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
+
+时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
+
+</Route>
+
+<Route name="搜尋" author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
+
+## Animen 动漫平台
+
+<Route name="news" author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="['板块类型']">
+
+| 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
+| zx   | jd   | dh   | mh   | yx   | xs   | zrb    | hd   | yy   | ft   | qt   | xwg    | lrb    | gg   |
+
+</Route>
+
+## Anitama
+
+<Route name="Anitama Channel" author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
 
 ## Bangumi
 
@@ -22,55 +42,17 @@
 
 <Route name="小组话题" author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
-## 忧郁的 loli
+## bilibili
 
-<Route name="文章" author="DIYgod" example="/mmgal" path="/mmgal"/>
+见 [#bilibili](/social-media.html#bilibili)
+
+## ebb.io
+
+<Route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
 
 ## say 花火
 
 <Route name="文章" author="junfengP" example="/sayhuahuo" path="/sayhuahuo"/>
-
-## 终点分享
-
-<Route name="最新汉化" author="junfengP" example="/zdfx" path="/zdfx"/>
-
-## 看漫画
-
-<Route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']"/>
-
-## 動畫狂
-
-<Route name="漫画更新" author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
-
-## 咚漫
-
-<Route name="漫画更新" author="Machsix" path="/dongmanmanhua/comic/:category/:name/:id" example="/dongmanmanhua/comic/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
-
-## Anime1
-
-<Route name="動畫" author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
-
-时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
-
-</Route>
-
-<Route name="搜尋" author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
-
-## 動畫瘋
-
-<Route name="最後更新" author="maple3142" example="/anigamer/new_anime" path="/anigamer/new_anime"/>
-
-<Route name="動畫" author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
-
-## Animen 动漫平台
-
-<Route name="news" author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="['板块类型']">
-
-| 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-| zx   | jd   | dh   | mh   | yx   | xs   | zrb    | hd   | yy   | ft   | qt   | xwg    | lrb    | gg   |
-
-</Route>
 
 ## Vol.moe
 
@@ -82,18 +64,36 @@
 
 </Route>
 
-## ebb.io
+## 嘀哩嘀哩-dilidili
 
-<Route name="ebb" author="Tsuki" example="/ebb" path="/ebb"/>
+<Route name="嘀哩嘀哩番剧更新" author="SunShinenny" path="/dilidili/fanju/:id?" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id，打开对应番剧,从url中最后一位查看']"/>
 
-## Anitama
+## 動畫瘋
 
-<Route name="Anitama Channel" author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
+<Route name="最後更新" author="maple3142" example="/anigamer/new_anime" path="/anigamer/new_anime"/>
+
+<Route name="動畫" author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
+
+## 動畫狂
+
+<Route name="漫画更新" author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
+
+## 咚漫
+
+<Route name="漫画更新" author="Machsix" path="/dongmanmanhua/comic/:category/:name/:id" example="/dongmanmanhua/comic/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
+
+## 看漫画
+
+<Route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']"/>
 
 ## 鼠绘漫画
 
 <Route name="鼠绘漫画" author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']"/>
 
-## 嘀哩嘀哩-dilidili
+## 忧郁的 loli
 
-<Route name="嘀哩嘀哩番剧更新" author="SunShinenny" path="/dilidili/fanju/:id?" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id，打开对应番剧,从url中最后一位查看']"/>
+<Route name="文章" author="DIYgod" example="/mmgal" path="/mmgal"/>
+
+## 终点分享
+
+<Route name="最新汉化" author="junfengP" example="/zdfx" path="/zdfx"/>

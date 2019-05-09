@@ -1,5 +1,9 @@
 # 直播
 
+## kingkong 直播
+
+<Route name="直播间开播" author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
 ## 哔哩哔哩直播
 
 <Route name="直播开播" author="Qixingchen" example="/bilibili/live/room/3" path="/bilibili/live/room/:roomID" :paramsDesc="['房间号, 可在直播间 URL 中找到, 长短号均可']"/>
@@ -23,7 +27,3 @@
 ## 虎牙直播
 
 <Route name="直播间开播" author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
-
-## kingkong 直播
-
-<Route name="直播间开播" author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>

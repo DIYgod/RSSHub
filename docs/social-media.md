@@ -1,5 +1,35 @@
 # 社交媒体
 
+### 直播分区 <Author uid="Qixingchen"/>
+
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+
+<Route name="主站话题列表" author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" />
+
+<Route name="会员购新品上架" author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
+
+<Route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+
+<Route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
+
+| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
+| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
+
+</Route>
+
+<Route name="话题(频道/标签)" author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
+
+<Route name="歌单" author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
+
+### 直播开播 <Author uid="Qixingchen"/>
+
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+
+### 直播搜索 <Author uid="Qixingchen"/>
+
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+
 ## bilibili
 
 <Route name="番剧" author="DIYgod" example="/bilibili/bangumi/media/9192" path="/bilibili/bangumi/media/:mediaid" :paramsDesc="['番剧媒体 id, 番剧主页 URL 中获取']"/>
@@ -134,145 +164,57 @@
 
 <Route name="视频搜索" author="Symty" example="/bilibili/vsearch/藤原千花" path="/bilibili/vsearch/:kw/:order?" :paramsDesc="['检索关键字', '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow']"/>
 
-### 直播开播 <Author uid="Qixingchen"/>
+## Dcard
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+<Route name="首頁帖子" author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']"/>
 
-### 直播搜索 <Author uid="Qixingchen"/>
+<Route name="板塊帖子" author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']"/>
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+## Disqus
 
-### 直播分区 <Author uid="Qixingchen"/>
+<Route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+## Dribbble
 
-<Route name="主站话题列表" author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" />
+<Route name="流行" author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" :paramsDesc="['时间维度, 支持 week month year ever']"/>
 
-<Route name="会员购新品上架" author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
+<Route name="用户（团队" author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" :paramsDesc="['用户名, 可在该用户主页 URL 中找到']"/>
 
-<Route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+<Route name="关键词" author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
 
-<Route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
+## Facebook
 
-| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
-| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
+<Route name="粉絲專頁" author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
+
+## Instagram
+
+<Route name="用户" author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']"/>
+
+<Route name="标签" author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" />
+
+## Matters
+
+<Route name="最新排序" author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
+
+<Route name="熱門文章" author="Cerebrater" example="/matters/hot" path="/matters/hot" />
+
+<Route name="标签" author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
+
+<Route name="作者" author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
+
+## NGA
+
+<Route name="分区帖子" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
+
+<Route name="帖子" author="xyqfer" example="/nga/post/15939161" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']"/>
+
+# Saraba1st
+
+<Route name="帖子" author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']">
+
+帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
 
 </Route>
-
-<Route name="话题(频道/标签)" author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
-
-<Route name="歌单" author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
-
-## 微博
-
-<Route name="博主（方案1）" author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']" crawlerBadge="1"/>
-
-::: warning 注意
-
-上述方案 1 获取 V+ 付费博主会有数据缺失, 所以这里提供方案 2 , 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
-
-:::
-
-<Route name="博主（方案2）" author="DIYgod" example="/weibo/user2/1195230310" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
-
-<Route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" crawlerBadge="1"/>
-
-<Route name="热搜榜" author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" crawlerBadge="1"/>
-
-<Route name="超话" author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" crawlerBadge="1"/>
-
-## 贴吧
-
-<Route name="帖子列表" author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']"/>
-
-<Route name="精品帖子" author="u3u" example="/tieba/forum/good/女图" path="/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']"/>
-
-<Route name="帖子动态" author="u3u" example="/tieba/post/5853240586" path="/tieba/post/:id" :paramsDesc="['帖子 ID']"/>
-
-<Route name="楼主动态" author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
-
-## 即刻
-
-::: warning 注意
-
-即刻圈子较为复杂, 部分圈子可能出现不适配的情况. 如出现上述情况请[提 Issue](https://github.com/DIYgod/RSSHub/issues).
-
-:::
-
-<Route name="圈子-精选" author="DIYgod" example="/jike/topic/54dffb40e4b0f57466e675f0" path="/jike/topic/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
-
-::: tip 提示
-
-部分圈子如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#/jike/topic/text/:id">圈子-纯文字 /jike/topic/text/:id</a> 可能会提供更好的体验.
-
-:::
-
-<Route name="圈子-广场" author="DIYgod" example="/jike/topic/square/54dffb40e4b0f57466e675f0" path="/jike/topic/square/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
-
-<Route name="圈子-纯文字" author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
-
-<Route name="用户动态" author="DIYgod" example="/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻 web 端用户页 URL 中找到']"/>
-
-<Route name="即刻小报" author="Andiedie" example="/jike/daily" path="/jike/daily"/>
-
-## 微信
-
-::: tip 提示
-
-公众号直接抓取困难, 故目前提供即刻和瓦斯两种间接抓取方案, 请自行选择
-
-:::
-
-<Route name="公众号（即刻来源）" author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-圈子-精选](#/jike/topic/:id)']"/>
-
-<Route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
-
-<Route name="公众号（ wemp.app 来源）" author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']"/>
-
-<Route name="公众号（传送门来源）" author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
-
-<Route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
-
-<Route name="小程序插件" author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
-
-## 简书
-
-<Route name="首页" author="DIYgod HenryQW" example="/jianshu/home" path="/jianshu/home"/>
-
-<Route name="热门" author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" :paramsDesc="['按周 `weekly` 或 按月 `monthly`']"/>
-
-<Route name="专题" author="DIYgod HenryQW" example="/jianshu/collection/xYuZYD" path="/jianshu/collection/:id" :paramsDesc="['专题 id, 可在专题页 URL 中找到']"/>
-
-<Route name="作者" author="DIYgod HenryQW" example="/jianshu/user/yZq3ZV" path="/jianshu/user/:id" :paramsDesc="['作者 id, 可在作者主页 URL 中找到']"/>
-
-## 知乎
-
-<Route name="收藏夹" author="huruji" example="/zhihu/collection/26444956" path="/zhihu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']" crawlerBadge="1"/>
-
-<Route name="用户动态" author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
-
-<Route name="用户回答" author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
-
-<Route name="专栏" author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']" crawlerBadge="1"/>
-
-<Route name="知乎日报" author="DHPO" example="/zhihu/daily" path="/zhihu/daily" crawlerBadge="1"/>
-
-<Route name="知乎热榜" author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" crawlerBadge="1"/>
-
-<Route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist" crawlerBadge="1"/>
-
-<Route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']" crawlerBadge="1"/>
-
-<Route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']" crawlerBadge="1"/>
-
-<Route name="用户想法" author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
-
-<Route name="知乎书店-新书" author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" crawlerBadge="1"/>
-
-<Route name="知乎想法-24小时新闻汇总" author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" crawlerBadge="1"/>
-
-<Route name="知乎书店-知乎周刊" author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" crawlerBadge="1"/>
 
 ## pixiv
 
@@ -293,6 +235,42 @@
 </Route>
 
 <Route name="关键词" author="DIYgod" example="/pixiv/search/麻衣/popular" path="/pixiv/search/:keyword/:order?" :paramsDesc="['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序']"/>
+
+## Telegram
+
+<Route name="频道" author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']">
+
+::: tip 提示
+
+订阅要求: 将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员, 然后发一条消息后才可正常获取数据
+
+如果是私有频道，`username`请传入频道`id`(比如`-1001001234567`)，具体获取可参考[这里](https://stackoverflow.com/questions/33858927/how-to-obtain-the-chat-id-of-a-private-telegram-channel)
+
+:::
+
+</Route>
+
+<Route name="贴纸包" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['贴纸包 id, 可在分享贴纸获得的 URL 中找到']"/>
+
+## Twitter
+
+<Route name="用户" author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']"/>
+
+<Route name="列表" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户 twitter 名', 'list 名称']"/>
+
+<Route name="Likes" author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['用户 twitter 名']"/>
+
+## Youtube
+
+<Route name="用户" author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:embed?" :paramsDesc="['用户名', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+<Route name="频道" author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+<Route name="播放列表" author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:embed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+## 币乎
+
+<Route name="用户动态" author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
 
 ## 豆瓣
 
@@ -350,65 +328,123 @@
 
 <Route name="话题" author="LogicJake" example="/douban/topic/48823" path="/douban/topic/:id/:sort?" :paramsDesc="['话题id','排序方式，hot或new，默认为new']"/>
 
-## Disqus
-
-<Route name="评论" author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
-
-## Twitter
-
-<Route name="用户" author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']"/>
-
-<Route name="列表" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户 twitter 名', 'list 名称']"/>
-
-<Route name="Likes" author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['用户 twitter 名']"/>
-
-## Instagram
-
-<Route name="用户" author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']"/>
-
-<Route name="标签" author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" />
-
-## Youtube
-
-<Route name="用户" author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:embed?" :paramsDesc="['用户名', '默认为开启内嵌视频, 任意值为关闭']"/>
-
-<Route name="频道" author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
-
-<Route name="播放列表" author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:embed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']"/>
-
-## Dribbble
-
-<Route name="流行" author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" :paramsDesc="['时间维度, 支持 week month year ever']"/>
-
-<Route name="用户（团队" author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" :paramsDesc="['用户名, 可在该用户主页 URL 中找到']"/>
-
-<Route name="关键词" author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
-
-## Telegram
-
-<Route name="频道" author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']">
-
-::: tip 提示
-
-订阅要求: 将机器人 [@RSSHub_bot](https://t.me/RSSHub_bot) 加为频道管理员, 然后发一条消息后才可正常获取数据
-
-如果是私有频道，`username`请传入频道`id`(比如`-1001001234567`)，具体获取可参考[这里](https://stackoverflow.com/questions/33858927/how-to-obtain-the-chat-id-of-a-private-telegram-channel)
-
-:::
-
-</Route>
-
-<Route name="贴纸包" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['贴纸包 id, 可在分享贴纸获得的 URL 中找到']"/>
-
 ## 抖音
 
 <Route name="用户动态" author="DIYgod" example="/douyin/user/93610979153" path="/douyin/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
 <Route name="喜欢的视频" author="xyqfer" example="/douyin/like/93610979153" path="/douyin/like/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+## 方格子
+
+<Route name="出版專題" author="Maecenas" example="/vocus/publication/bass" path="/vocus/publication/:id" :paramsDesc="['出版專題 id，可在出版專題主页的 URL 找到']"/>
+
+## 好奇心日报
+
+<Route name="分类" author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类id，可在分类URL找到']"/>
+
+<Route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
+
+<Route name="标签" author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签id，可在tagURL找到']"/>
+
+## 虎扑
+
+<Route name="虎扑BBS论坛" author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
+
+## 即刻
+
+::: warning 注意
+
+即刻圈子较为复杂, 部分圈子可能出现不适配的情况. 如出现上述情况请[提 Issue](https://github.com/DIYgod/RSSHub/issues).
+
+:::
+
+<Route name="圈子-精选" author="DIYgod" example="/jike/topic/54dffb40e4b0f57466e675f0" path="/jike/topic/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
+
+::: tip 提示
+
+部分圈子如 `一觉醒来发生了什么: 553870e8e4b0cafb0a1bef68` 提供纯文字内容, <a href="#/jike/topic/text/:id">圈子-纯文字 /jike/topic/text/:id</a> 可能会提供更好的体验.
+
+:::
+
+<Route name="圈子-广场" author="DIYgod" example="/jike/topic/square/54dffb40e4b0f57466e675f0" path="/jike/topic/square/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
+
+<Route name="圈子-纯文字" author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']"/>
+
+<Route name="用户动态" author="DIYgod" example="/jike/user/82D23B32-CF36-4C59-AD6F-D05E3552CBF3" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻 web 端用户页 URL 中找到']"/>
+
+<Route name="即刻小报" author="Andiedie" example="/jike/daily" path="/jike/daily"/>
+
+## 简书
+
+<Route name="首页" author="DIYgod HenryQW" example="/jianshu/home" path="/jianshu/home"/>
+
+<Route name="热门" author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" :paramsDesc="['按周 `weekly` 或 按月 `monthly`']"/>
+
+<Route name="专题" author="DIYgod HenryQW" example="/jianshu/collection/xYuZYD" path="/jianshu/collection/:id" :paramsDesc="['专题 id, 可在专题页 URL 中找到']"/>
+
+<Route name="作者" author="DIYgod HenryQW" example="/jianshu/user/yZq3ZV" path="/jianshu/user/:id" :paramsDesc="['作者 id, 可在作者主页 URL 中找到']"/>
+
+## 龙腾网
+
+<Route name="转译网贴" author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
+
+| 最新 | 每周 | 每月  | 全年 |
+| ---- | ---- | ----- | ---- |
+| (空) | week | month | year |
+
+</Route>
+
 ## 美拍
 
 <Route name="用户动态" author="ihewro" example="/meipai/user/56537299" path="/meipai/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
+
+## 贴吧
+
+<Route name="帖子列表" author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']"/>
+
+<Route name="精品帖子" author="u3u" example="/tieba/forum/good/女图" path="/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']"/>
+
+<Route name="帖子动态" author="u3u" example="/tieba/post/5853240586" path="/tieba/post/:id" :paramsDesc="['帖子 ID']"/>
+
+<Route name="楼主动态" author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
+
+## 微博
+
+<Route name="博主（方案1）" author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']" crawlerBadge="1"/>
+
+::: warning 注意
+
+上述方案 1 获取 V+ 付费博主会有数据缺失, 所以这里提供方案 2 , 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
+
+:::
+
+<Route name="博主（方案2）" author="DIYgod" example="/weibo/user2/1195230310" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
+
+<Route name="关键词" author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" crawlerBadge="1"/>
+
+<Route name="热搜榜" author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" crawlerBadge="1"/>
+
+<Route name="超话" author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" crawlerBadge="1"/>
+
+## 微信
+
+::: tip 提示
+
+公众号直接抓取困难, 故目前提供即刻和瓦斯两种间接抓取方案, 请自行选择
+
+:::
+
+<Route name="公众号（即刻来源）" author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-圈子-精选](#/jike/topic/:id)']"/>
+
+<Route name="公众号（瓦斯来源）" author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
+
+<Route name="公众号（ wemp.app 来源）" author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']"/>
+
+<Route name="公众号（传送门来源）" author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+
+<Route name="公众平台系统公告栏目" author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
+
+<Route name="小程序插件" author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
 
 ## 雪球
 
@@ -434,72 +470,36 @@
 
 </Route>
 
-## 龙腾网
-
-<Route name="转译网贴" author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
-
-| 最新 | 每周 | 每月  | 全年 |
-| ---- | ---- | ----- | ---- |
-| (空) | week | month | year |
-
-</Route>
-
-## NGA
-
-<Route name="分区帖子" author="xyqfer" example="/nga/forum/485" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']"/>
-
-<Route name="帖子" author="xyqfer" example="/nga/post/15939161" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']"/>
-
-# Saraba1st
-
-<Route name="帖子" author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']">
-
-帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
-
-</Route>
-
-## Facebook
-
-<Route name="粉絲專頁" author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
-
-## 币乎
-
-<Route name="用户动态" author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
-
-## 虎扑
-
-<Route name="虎扑BBS论坛" author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
-
-## Dcard
-
-<Route name="首頁帖子" author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']"/>
-
-<Route name="板塊帖子" author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']"/>
-
-## 好奇心日报
-
-<Route name="分类" author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类id，可在分类URL找到']"/>
-
-<Route name="栏目" author="WenhuWee" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
-
-<Route name="标签" author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签id，可在tagURL找到']"/>
-
-## Matters
-
-<Route name="最新排序" author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
-
-<Route name="熱門文章" author="Cerebrater" example="/matters/hot" path="/matters/hot" />
-
-<Route name="标签" author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
-
-<Route name="作者" author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
-
-## 方格子
-
-<Route name="出版專題" author="Maecenas" example="/vocus/publication/bass" path="/vocus/publication/:id" :paramsDesc="['出版專題 id，可在出版專題主页的 URL 找到']"/>
-
 ## 一亩三分地
 
 <Route name="主题帖" author="Maecenas" example="/1point3acres/user/1/threads" path="/1point3acres/user/:id/threads" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
 
 <Route name="回帖" author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
+
+## 知乎
+
+<Route name="收藏夹" author="huruji" example="/zhihu/collection/26444956" path="/zhihu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']" crawlerBadge="1"/>
+
+<Route name="用户动态" author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
+
+<Route name="用户回答" author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
+
+<Route name="专栏" author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']" crawlerBadge="1"/>
+
+<Route name="知乎日报" author="DHPO" example="/zhihu/daily" path="/zhihu/daily" crawlerBadge="1"/>
+
+<Route name="知乎热榜" author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" crawlerBadge="1"/>
+
+<Route name="知乎想法热榜" author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist" crawlerBadge="1"/>
+
+<Route name="问题" author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']" crawlerBadge="1"/>
+
+<Route name="话题" author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']" crawlerBadge="1"/>
+
+<Route name="用户想法" author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" crawlerBadge="1"/>
+
+<Route name="知乎书店-新书" author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" crawlerBadge="1"/>
+
+<Route name="知乎想法-24小时新闻汇总" author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" crawlerBadge="1"/>
+
+<Route name="知乎书店-知乎周刊" author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" crawlerBadge="1"/>
