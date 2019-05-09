@@ -14,7 +14,7 @@
 
 > 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
-<Route name="新闻分类" author="idealclover" example="/caixin/finance/regulation" path="/caixin/:column/:category" :paramsDesc="['栏目名', '栏目下的子分类名']">
+<Route name="新闻分类" author="idealclover" example="/caixin/news/finance/regulation" path="/caixin/news/:column/:category" :paramsDesc="['栏目名', '栏目下的子分类名']">
 
 Column 列表:
 
