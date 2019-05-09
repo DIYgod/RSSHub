@@ -86,6 +86,6 @@ describe('cache', () => {
         expect(parsed1.items[0].content).toBe('Cache1');
         expect(parsed2.items[0].content).toBe('Cache1');
         expect(parsed3.items[0].content).toBe('Cache1');
-        expect(parsed4.items[0].content).toBe('Cache1');
+        expect(parsed4.items[0].content).toBe('Cache2');
     });
 });

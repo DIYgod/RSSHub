@@ -42,6 +42,10 @@
 
 <Route name="漫画更新" author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
+## 咚漫
+
+<Route name="漫画更新" author="Machsix" path="/dongmanmanhua/comic/:category/:name/:id" example="/dongmanmanhua/comic/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
+
 ## Anime1
 
 <Route name="動畫" author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
@@ -85,3 +89,7 @@
 ## Anitama
 
 <Route name="Anitama Channel" author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
+
+## 嘀哩嘀哩-dilidili
+
+<Route name="嘀哩嘀哩番剧更新" author="SunShinenny" path="/dilidili/fanju/:id?" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id，打开对应番剧,从url中最后一位查看']"/>
