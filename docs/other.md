@@ -544,3 +544,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 | games | software | shishiredian | xljt     | fhdq     | xljt     | tech   | other |
 
 </Route>
+
+## 派代
+
+<Route name="首页" author="qiwihui" example="/paidai" path="/paidao" />
+<Route name="论坛" author="qiwihui" example="/paidai/bbs" path="/paidao/bbs" />
+<Route name="商道" author="qiwihui" example="/paidai/news" path="/paidao/news" />
