@@ -89,3 +89,7 @@
 ## Anitama
 
 <Route name="Anitama Channel" author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
+
+## 嘀哩嘀哩-dilidili
+
+<Route name="嘀哩嘀哩番剧更新" author="SunShinenny" path="/dilidili/fanju/:id?" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id，打开对应番剧,从url中最后一位查看']"/>
