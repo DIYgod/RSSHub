@@ -71,7 +71,7 @@
     "koa-mount": "4.0.0",
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
-    "luxon": "1.13.1",
+    "luxon": "1.13.2",
     "lz-string": "1.4.4",
     "markdown-it": "8.4.2",
     "node-fetch": "2.5.0",
