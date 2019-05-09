@@ -134,7 +134,12 @@
 
 <Route name="视频搜索" author="Symty" example="/bilibili/vsearch/藤原千花" path="/bilibili/vsearch/:kw/:order?" :paramsDesc="['检索关键字', '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow']"/>
 
-<Route name="关注UP主投稿" author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid" :paramsDesc="['用户 id']"/>
+::: warning 注意
+
+用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+<Route name="用户动态首页投稿视频" author="LogicJake" example="/bilibili/followings/dynamic/2267573" path="/bilibili/dynamic_video/:uid" :paramsDesc="['用户 id']"/>
 
 ### 直播开播 <Author uid="Qixingchen"/>
 
