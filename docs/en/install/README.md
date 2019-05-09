@@ -266,7 +266,9 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `CACHE_TYPE`: cache type, `memory` or `redis`, empty this value will disable caching, default to `memory`
 
-`CACHE_EXPIRE`: cache expiry time in seconds, default to `300`
+`CACHE_EXPIRE`: route cache expiry time in seconds, default to `5 * 60`
+
+`CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, default to `24 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
