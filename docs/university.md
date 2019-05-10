@@ -1,36 +1,12 @@
 # 大学通知
 
-## 北京理工大学
+## MIT
 
-<Route name="教务处通知" author="sinofp" example="/bit/jwc" path="/universities/bit/jwc" />
+<Route name="MIT graduateadmissions's all blogs" author="LogicJake" example="/mit/graduateadmissions/index/all" path="/universities/mit/graduateadmissions/index/all"/>
 
-<Route name="计院通知" author="sinofp" example="/bit/cs" path="/universities/bit/cs" />
+<Route name="MIT graduateadmissions's blogs by department" author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/universities/mit/graduateadmissions/department/:name" :paramsDesc="['department name which can be found in url']"/>
 
-## 上海海事大学
-
-<Route name="官网信息" author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
-
-<Route name="教务信息" author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
-
-## 西南科技大学
-
-<Route name="教务处新闻" author="lengthmin" example="/swust/jwc/news" path="/universities/swust/jwc/news"/>
-
-<Route name="教务处通知" author="lengthmin" example="/swust/jwc/notice/1" path="/universities/swust/jwc/notice/:type?" :paramsDesc="['分区 type,缺省为 1, 详见下方表格']">
-
-| 创新创业教育 | 学生学业 | 建设与改革 | 教学质量保障 | 教学运行 | 教师教学 |
-| ------------ | -------- | ---------- | ------------ | -------- | -------- |
-| 1            | 2        | 3          | 4            | 5        | 6        |
-
-</Route>
-
-<Route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type?" :paramsDesc="['分区 type, 缺省为 1, 详见下方表格']">
-
-| 新闻动态 | 学术动态 | 通知公告 | 教研动态 |
-| -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        |
-
-</Route>
+<Route name="MIT graduateadmissions's blogs by category" author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/universities/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
 
 ## 北京大学
 
@@ -42,26 +18,73 @@
 
 </Route>
 
-## 华南师范大学
+## 北京航空航天大学
 
-<Route name="教务处通知" author="fengkx" example="/scnu/jw" path="/universities/scnu/jw"/>
+<Route name="北京航空航天大学" author="AlanDecode" example="/buaa/news/zonghe" path="/buaa/news/:type" :paramsDesc="['新闻版块']">
 
-<Route name="图书馆通知" author="fengkx" example="/scnu/library" path="/universities/scnu/library"/>
+| 综合新闻 | 信息公告 | 学术文化     | 校园风采 | 科教在线 | 媒体北航 | 专题新闻 | 北航人物 |
+| -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- |
+| zonghe   | gonggao  | xueshuwenhua | fengcai  | kejiao   | meiti    | zhuanti  | renwu    |
 
-<Route name="计算机学院竞赛通知" author="fengkx" example="/scnu/cs/match" path="/universities/scnu/cs/match"/>
+</Route>
 
-## 江南大学
+## 北京科技大学天津学院
 
-<Route name="教务处通知" author="Chingyat" example="/ju/jwc/all" path="/universities/ju/jwc/:type?" :paramsDesc="['默认为 `all`']">
+<Route name="北京科技大学天津学院" author="henbf" example="/ustb/tj/news/all" path="/universities/ustb/tj/news/:type" :paramsDesc="['默认为 `all`']">
 
-| all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjs     |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 全部 | 通知公告 | 考试安排 | 违纪公告 | 推免工作 | 等级考试 | 学籍管理 | 毕业设计 | 实验教学 |
+| 全部 | 学院新闻 | 学术活动 | 城市建设学院 | 信息工程学院 | 经济学院 | 管理学院 | 材料系 | 机械工程系 | 护理系 | 法律系 | 外语系 | 艺术系 |
+| ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
+| all  | xyxw     | xshhd    | csjsxy       | xxgcxy       | jjx      | glxy     | clx    | jxgcx      | hlx    | flx    | wyx    | ysx    |
 
-| sjcx     | xkjs     | yjszj      | jxgg     | zyjs     | kcjs     | jcjs     | jxcg     | xsbg     |
-| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 实践创新 | 学科竞赛 | 研究生助教 | 教学改革 | 专业建设 | 课程建设 | 教材建设 | 教学成果 | 学术报告 |
+</Route>
 
+## 北京理工大学
+
+<Route name="教务处通知" author="sinofp" example="/bit/jwc" path="/universities/bit/jwc" />
+
+<Route name="计院通知" author="sinofp" example="/bit/cs" path="/universities/bit/cs" />
+
+## 北京邮电大学
+
+<Route name="硕士研究生招生通知" author="ihewro" example="/bupt/yz/int" path="/bupt/yzwf/:type" :paramsDesc="['学院英文缩写']">
+
+| 综合 | 信息与通信工程学院 | 电子工程学院 | 计算机学院 | 自动化学院 | 软件学院 | 数字媒体与设计艺术学院 | 网络空间安全学院 | 理学院 | 经济管理学院 | 人文学院 | 马克思主义学院 | 网络技术研究院 | 信息光子学与光通信研究院 |
+| ---- | ------------------ | ------------ | ---------- | ---------- | -------- | ---------------------- | ---------------- | ------ | ------------ | -------- | -------------- | -------------- | ------------------------ |
+| all  | sice               | see          | scs        | sa         | sse      | sdmda                  | scss             | sci    | sem          | sh       | mtri           | int            | ipoc                     |
+
+</Route>
+
+## 常州大学
+
+<Route name="教务处" author="richardchien" example="/cczu/jwc/1425" path="/universities/cczu/jwc/:category?" :paramsDesc="['可选, 默认为 `all`']">
+
+| 全部 | 通知公告 | 教务新闻 | 各类活动与系列讲座 | 本科教学工程 | 他山之石 | 信息快递 |
+| ---- | -------- | -------- | ------------------ | ------------ | -------- | -------- |
+| all  | 1425     | 1437     | 1485               | 1487         | 1442     | 1445     |
+
+</Route>
+
+<Route name="新闻网" author="richardchien" example="/cczu/news/6620" path="/universities/cczu/news/:category?" :paramsDesc="['可选, 默认为 `all`']">
+
+| 全部 | 常大要闻 | 校园快讯 | 媒体常大 | 时事热点 | 高教动态 | 网上橱窗 | 新媒常大 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| all  | 6620     | 6621     | 6687     | 6628     | 6629     | 6640     | 6645     |
+
+</Route>
+
+## 成都信息工程大学
+
+<Route name="成信新闻网" author="kimika" example="/cuit/cxxww/1" path="/universities/cuit/cxxww/:type?" :paramsDesc="['默认为 `1`']">
+
+| 综合新闻 | 信息公告 | 焦点新闻 | 学术动态 | 工作交流 | 媒体成信 | 更名专题 | 文化活动 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        | 7        | 9        | 10       |
+
+</Route>
+
+## 大连大学
+
+<Route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
 </Route>
 
 ## 大连工业大学
@@ -82,6 +105,42 @@
 
 </Route>
 
+## 电子科技大学
+
+<Route name="教务处" author="achjqz" example="/uestc/jwc/student" path="/universities/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
+
+| 重要公告  | 学生事务公告 | 教师事务公告 |
+| --------- | ------------ | ------------ |
+| important | student      | teacher      |
+
+</Route>
+
+<Route name="新闻中心" author="achjqz" example="/uestc/news/culture" path="/universities/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
+
+| 学术    | 文化    | 公告         | 校内通知     |
+| ------- | ------- | ------------ | ------------ |
+| academy | culture | announcement | notification |
+
+</Route>
+
+## 东莞理工学院
+
+<Route name="教务处通知" author="AnyMoe" example="/dgut/jwc/" path="/universities/dgut/jwc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 教务公告 | 教学信息 |
+| -------- | -------- |
+| 1        | 2        |
+
+</Route>
+
+<Route name="学工部动态" author="AnyMoe" example="/dgut/xsc/" path="/universities/dgut/xsc/:type?" :paramsDesc="['默认为 `2`']">
+
+| 学工动态 | 通知公告 | 网上公示 |
+| -------- | -------- | -------- |
+| 1        | 2        | 4        |
+
+</Route>
+
 ## 东南大学
 
 <Route name="信息科学与工程学院学术活动" author="HenryQW" example="/seu/radio/academic" path="/universities/seu/radio/academic"/>
@@ -94,108 +153,9 @@
 | -------- | -------- | -------- | -------- | -------- |
 | xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |
 
-## 南京航空航天大学
+## 广东海洋大学
 
-<Route name="教务通知" author="arcosx" example="/nuaa/jwc/all" path="/universities/nuaa/jwc/:type" :paramsDesc="['分类名']">
-
-| 全部 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
-| ---- | -------- | -------- | -------- | -------- |
-| all  | jxfw     | jxjs     | xspy     | jxzy     |
-
-</Route>
-
-<Route name="计算机科学与技术学院" author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
-
-| 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
-
-<Route name="研究生院" author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
-
-| 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
-| -------- | -------- | -------- | -------- | -------- |
-| latest   | yyxw     | sjwj     | glwj     | xxfw     |
-
-## 哈尔滨工业大学
-
-<Route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
-
-<Route name="今日哈工大" author="ranpox" example="/hit/today/10" path="/universities/hit/today/:category" :paramsDesc="['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']"/>
-
-::: tip 提示
-今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
-例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
-:::
-
-::: warning 注意
-部分文章需要经过统一身份认证后才能阅读全文。
-:::
-
-## 上海科技大学
-
-<Route name="信息科技与技术学院活动" author="HenryQW" example="/shanghaitech/sist/activity" path="/universities/shanghaitech/sist/activity"/>
-
-## 上海交通大学
-
-<Route name="电子信息与电气工程学院学术动态" author="HenryQW" example="/sjtu/seiee/academic" path="/universities/sjtu/seiee/academic"/>
-
-<Route name="电子信息与电气工程学院本科教务办" author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
-
-| 分专业       | 转专业         | 直升研究生   | 交换交流 | 国际办学      |
-| ------------ | -------------- | ------------ | -------- | ------------- |
-| major_select | major_transfer | postgraduate | abroad   | international |
-
-</Route>
-
-<Route name="研究生通知公告" author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/universities/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
-
-| 通知公告 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 空       | gzxx     | xwxx1    | pyxx     | xwxx     | gjjl     | cxgc     |
-
-</Route>
-
-<Route name="电子信息与电气工程学院学生工作办公室" author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
-
-| 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 |
-| -------- | ----------- | ------------ | -------- | -------- | -------- |
-| 空       | scholarship | financialAid | lecture  | activity | news     |
-
-</Route>
-
-## 中国科学院
-
-<Route name="上海微系统与信息技术研究所学术活动" author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>
-
-## 北京邮电大学
-
-<Route name="硕士研究生招生通知" author="ihewro" example="/bupt/yz/int" path="/bupt/yzwf/:type" :paramsDesc="['学院英文缩写']">
-
-| 综合 | 信息与通信工程学院 | 电子工程学院 | 计算机学院 | 自动化学院 | 软件学院 | 数字媒体与设计艺术学院 | 网络空间安全学院 | 理学院 | 经济管理学院 | 人文学院 | 马克思主义学院 | 网络技术研究院 | 信息光子学与光通信研究院 |
-| ---- | ------------------ | ------------ | ---------- | ---------- | -------- | ---------------------- | ---------------- | ------ | ------------ | -------- | -------------- | -------------- | ------------------------ |
-| all  | sice               | see          | scs        | sa         | sse      | sdmda                  | scss             | sci    | sem          | sh       | mtri           | int            | ipoc                     |
-
-</Route>
-
-## 南京邮电大学
-
-<Route name="教务处通知与新闻" author="shaoye" example="/njupt/jwc/notice" path="/universities/njupt/jwc/:type?" :paramsDesc="['默认为 `notice`']">
-
-| 通知公告 | 教务快讯 |
-| -------- | -------- |
-| notice   | news     |
-
-</Route>
-
-## 南昌航空大学
-
-<Route name="教务处公告与新闻" author="Sg4Dylan" example="/nchu/jwc/notice" path="/universities/nchu/jwc/:type?" :paramsDesc="['默认为 `notice`']">
-
-| 教务公告 | 教务新闻 |
-| -------- | -------- |
-| notice   | news     |
-
-</Route>
+<Route name="广东海洋大学" author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
 ## 哈尔滨工程大学
 
@@ -253,9 +213,152 @@ category 列表：
 
 </Route>
 
-## 重庆大学
+## 哈尔滨工业大学
 
-<Route name="教务网通知公告" author="El-Chiang" example="/cqu/jwc/announcement" path="/universities/cqu/jwc/announcement"/>
+<Route name="哈尔滨工业大学教务处通知公告" author="lty96117" example="/hit/jwc" path="/universities/hit/jwc"/>
+
+<Route name="今日哈工大" author="ranpox" example="/hit/today/10" path="/universities/hit/today/:category" :paramsDesc="['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']"/>
+
+::: tip 提示
+今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
+例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
+:::
+
+::: warning 注意
+部分文章需要经过统一身份认证后才能阅读全文。
+:::
+
+## 河南大学
+
+<Route name="河南大学" author="CasterWx" example="/henu/xszl" path="/henu/:type" :paramsDesc="['分类, 见下表']">
+
+| 学生专栏 | 教师专栏 | 新闻公告 | 院部动态 | 高教前沿 |
+| -------- | -------- | -------- | -------- | -------- |
+| xszl     | jszl     | xwgg     | ybdt     | gjqy     |
+
+</Route>
+
+## 华南理工大学
+
+<Route name="教务处新闻动态" author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 可选, 默认为 `1`']">
+
+| 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |
+
+</Route>
+
+## 华南师范大学
+
+<Route name="教务处通知" author="fengkx" example="/scnu/jw" path="/universities/scnu/jw"/>
+
+<Route name="图书馆通知" author="fengkx" example="/scnu/library" path="/universities/scnu/library"/>
+
+<Route name="计算机学院竞赛通知" author="fengkx" example="/scnu/cs/match" path="/universities/scnu/cs/match"/>
+
+## 华中科技大学
+
+<Route name="人工智能和自动化学院通知" author="RayHY" example="/hust/aia/notice/0" path="/universities/hust/aia/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
+
+| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
+| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
+
+</Route>
+
+<Route name="人工智能和自动化学院新闻" author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
+
+## 江南大学
+
+<Route name="教务处通知" author="Chingyat" example="/ju/jwc/all" path="/universities/ju/jwc/:type?" :paramsDesc="['默认为 `all`']">
+
+| all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjs     |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部 | 通知公告 | 考试安排 | 违纪公告 | 推免工作 | 等级考试 | 学籍管理 | 毕业设计 | 实验教学 |
+
+| sjcx     | xkjs     | yjszj      | jxgg     | zyjs     | kcjs     | jcjs     | jxcg     | xsbg     |
+| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 实践创新 | 学科竞赛 | 研究生助教 | 教学改革 | 专业建设 | 课程建设 | 教材建设 | 教学成果 | 学术报告 |
+
+</Route>
+
+## 昆明理工大学
+
+<Route name="教务处" author="geekrainy" example="/kmust/jwc/notify" path="/universities/kmust/jwc/:type?" :paramsDesc="['默认为 `notify`']">
+
+| 教务通知 | 教务新闻 |
+| -------- | -------- |
+| notify   | news     |
+
+</Route>
+
+<Route name="宣讲会" author="geekrainy" example="/kmust/job/careers/inner" path="/universities/kmust/job/careers/:type?" :paramsDesc="['默认为 `inner`']">
+
+| 校内宣讲会 | 校外宣讲会 |
+| ---------- | ---------- |
+| inner      | outer      |
+
+</Route>
+
+<Route name="双选会" author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
+
+## 南昌航空大学
+
+<Route name="教务处公告与新闻" author="Sg4Dylan" example="/nchu/jwc/notice" path="/universities/nchu/jwc/:type?" :paramsDesc="['默认为 `notice`']">
+
+| 教务公告 | 教务新闻 |
+| -------- | -------- |
+| notice   | news     |
+
+</Route>
+
+## 南京航空航天大学
+
+<Route name="教务通知" author="arcosx" example="/nuaa/jwc/all" path="/universities/nuaa/jwc/:type" :paramsDesc="['分类名']">
+
+| 全部 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | jxfw     | jxjs     | xspy     | jxzy     |
+
+</Route>
+
+<Route name="计算机科学与技术学院" author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+
+| 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
+
+<Route name="研究生院" author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
+
+| 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
+| -------- | -------- | -------- | -------- | -------- |
+| latest   | yyxw     | sjwj     | glwj     | xxfw     |
+
+## 南京理工大学
+
+<Route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']">
+
+| 教师通知 | 学生通知 | 新闻 | 学院动态 |
+| -------- | -------- | ---- | -------- |
+| 1        | 2        | 3    | 4        |
+
+</Route>
+
+<Route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 为新闻及通知, 2 为办事指南']">
+
+| 新闻及通知 | 办事指南 |
+| ---------- | -------- |
+| 1          | 2        |
+
+</Route>
+
+<Route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/1" path="/universities/njust/gs/:type" :paramsDesc="['1 为通知公告, 2 为学术公告']">
+
+| 通知公告 | 学术公告 |
+| -------- | -------- |
+| 1        | 2        |
+
+</Route>
 
 ## 南京信息工程大学
 
@@ -351,149 +454,25 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
-## 成都信息工程大学
+## 南京邮电大学
 
-<Route name="成信新闻网" author="kimika" example="/cuit/cxxww/1" path="/universities/cuit/cxxww/:type?" :paramsDesc="['默认为 `1`']">
-
-| 综合新闻 | 信息公告 | 焦点新闻 | 学术动态 | 工作交流 | 媒体成信 | 更名专题 | 文化活动 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        | 5        | 7        | 9        | 10       |
-
-</Route>
-
-## 重庆科技学院
-
-<Route name="教务处公告" author="binarization" example="/cqust/jw/notify" path="/universities/cqust/jw/:type?" :paramsDesc="['可选, 默认为 `notify`']">
+<Route name="教务处通知与新闻" author="shaoye" example="/njupt/jwc/notice" path="/universities/njupt/jwc/:type?" :paramsDesc="['默认为 `notice`']">
 
 | 通知公告 | 教务快讯 |
 | -------- | -------- |
-| notify   | news     |
+| notice   | news     |
 
 </Route>
 
-<Route name="图书馆公告" author="binarization" example="/cqust/lib/news" path="/universities/cqust/lib/:type?" :paramsDesc="['可选, 默认为 `news`']">
+## 南开大学
 
-| 本馆公告 |
-| -------- |
-| news     |
+<Route name="南开大学教务处" author="zhongweili" example="/nku/jwc/1" path="/universities/nku/jwc/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
 
-</Route>
-
-## 常州大学
-
-<Route name="教务处" author="richardchien" example="/cczu/jwc/1425" path="/universities/cczu/jwc/:category?" :paramsDesc="['可选, 默认为 `all`']">
-
-| 全部 | 通知公告 | 教务新闻 | 各类活动与系列讲座 | 本科教学工程 | 他山之石 | 信息快递 |
-| ---- | -------- | -------- | ------------------ | ------------ | -------- | -------- |
-| all  | 1425     | 1437     | 1485               | 1487         | 1442     | 1445     |
-
-</Route>
-
-<Route name="新闻网" author="richardchien" example="/cczu/news/6620" path="/universities/cczu/news/:category?" :paramsDesc="['可选, 默认为 `all`']">
-
-| 全部 | 常大要闻 | 校园快讯 | 媒体常大 | 时事热点 | 高教动态 | 网上橱窗 | 新媒常大 |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| all  | 6620     | 6621     | 6687     | 6628     | 6629     | 6640     | 6645     |
-
-</Route>
-
-## 南京理工大学
-
-<Route name="南京理工大学教务处" author="MilkShakeYoung" example="/njust/jwc/1" path="/universities/njust/jwc/:type" :paramsDesc="['1 为教师通知, 2 为学生通知, 3 为新闻，4 为学院动态']">
-
-| 教师通知 | 学生通知 | 新闻 | 学院动态 |
-| -------- | -------- | ---- | -------- |
-| 1        | 2        | 3    | 4        |
-
-</Route>
-
-<Route name="南京理工大学财务处" author="MilkShakeYoung" example="/njust/cwc/1" path="/universities/njust/cwc/:type" :paramsDesc="['1 为新闻及通知, 2 为办事指南']">
-
-| 新闻及通知 | 办事指南 |
-| ---------- | -------- |
-| 1          | 2        |
-
-</Route>
-
-<Route name="南京理工大学研究生院" author="MilkShakeYoung" example="/njust/gs/1" path="/universities/njust/gs/:type" :paramsDesc="['1 为通知公告, 2 为学术公告']">
-
-| 通知公告 | 学术公告 |
+| 通知公告 | 新闻动态 |
 | -------- | -------- |
 | 1        | 2        |
 
 </Route>
-
-## 四川旅游学院
-
-<Route name="信息与工程学院动态公告列表" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/information-engineer-faculty/index">
-
-</Route>
-
-<Route name="信息与工程学院公告详情" author="talenHuang" example="/sctu/xgxy/652" path="/universities/sctu/information-engineer-faculty/context/:id" :paramsDesc="['文章id']">
-
-</Route>
-
-<Route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc/index:type?" :paramsDesc="['可选参数, 默认为 `13`']">
-
-| 教务通知 | 信息公告 |
-| -------- | -------- |
-| 13       | 14       |
-
-</Route>
-
-<Route name="教务处通告详情" author="talenHuang" example="/sctu/jwc/13/645" path="/universities/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']">
-
-</Route>
-
-## 电子科技大学
-
-<Route name="教务处" author="achjqz" example="/uestc/jwc/student" path="/universities/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
-
-| 重要公告  | 学生事务公告 | 教师事务公告 |
-| --------- | ------------ | ------------ |
-| important | student      | teacher      |
-
-</Route>
-
-<Route name="新闻中心" author="achjqz" example="/uestc/news/culture" path="/universities/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
-
-| 学术    | 文化    | 公告         | 校内通知     |
-| ------- | ------- | ------------ | ------------ |
-| academy | culture | announcement | notification |
-
-</Route>
-
-## 昆明理工大学
-
-<Route name="教务处" author="geekrainy" example="/kmust/jwc/notify" path="/universities/kmust/jwc/:type?" :paramsDesc="['默认为 `notify`']">
-
-| 教务通知 | 教务新闻 |
-| -------- | -------- |
-| notify   | news     |
-
-</Route>
-
-<Route name="宣讲会" author="geekrainy" example="/kmust/job/careers/inner" path="/universities/kmust/job/careers/:type?" :paramsDesc="['默认为 `inner`']">
-
-| 校内宣讲会 | 校外宣讲会 |
-| ---------- | ---------- |
-| inner      | outer      |
-
-</Route>
-
-<Route name="双选会" author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
-
-## 华中科技大学
-
-<Route name="人工智能和自动化学院通知" author="RayHY" example="/hust/aia/notice/0" path="/universities/hust/aia/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
-
-| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
-| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
-
-</Route>
-
-<Route name="人工智能和自动化学院新闻" author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
 
 ## 山东大学
 
@@ -531,9 +510,106 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
-## 大连大学
+## 上海大学
 
-<Route name="教务处信息" author="SettingDust" example="/dlu/jiaowu/news" path="/universities/dlu/jiaowu/news">
+<Route name="上海大学教务处通知公告" author="tuxinghuan" example="/shu/jwc/notice" path="/university/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
+
+| 通知通告 | 新闻 |
+| -------- | ---- |
+| notice   | news |
+
+</Route>
+
+## 上海海事大学
+
+<Route name="官网信息" author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
+
+<Route name="教务信息" author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
+
+## 上海交通大学
+
+<Route name="电子信息与电气工程学院学术动态" author="HenryQW" example="/sjtu/seiee/academic" path="/universities/sjtu/seiee/academic"/>
+
+<Route name="电子信息与电气工程学院本科教务办" author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
+
+| 分专业       | 转专业         | 直升研究生   | 交换交流 | 国际办学      |
+| ------------ | -------------- | ------------ | -------- | ------------- |
+| major_select | major_transfer | postgraduate | abroad   | international |
+
+</Route>
+
+<Route name="研究生通知公告" author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/universities/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
+
+| 通知公告 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 空       | gzxx     | xwxx1    | pyxx     | xwxx     | gjjl     | cxgc     |
+
+</Route>
+
+<Route name="电子信息与电气工程学院学生工作办公室" author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
+
+| 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 |
+| -------- | ----------- | ------------ | -------- | -------- | -------- |
+| 空       | scholarship | financialAid | lecture  | activity | news     |
+
+</Route>
+
+## 上海科技大学
+
+<Route name="信息科技与技术学院活动" author="HenryQW" example="/shanghaitech/sist/activity" path="/universities/shanghaitech/sist/activity"/>
+
+## 深圳大学
+
+<Route name="深圳大学研究生招生网" author="NagaruZ" example="/szu/yz/1" path="/universities/szu/yz/:type?" :paramsDesc="['默认为1']" >
+
+| 研究生 | 博士生 |
+| ------ | ------ |
+| 1      | 2      |
+
+</Route>
+
+## 四川旅游学院
+
+<Route name="信息与工程学院动态公告列表" author="talenHuang" example="/sctu/xgxy" path="/universities/sctu/information-engineer-faculty/index">
+
+</Route>
+
+<Route name="信息与工程学院公告详情" author="talenHuang" example="/sctu/xgxy/652" path="/universities/sctu/information-engineer-faculty/context/:id" :paramsDesc="['文章id']">
+
+</Route>
+
+<Route name="教务处" author="talenHuang" example="/sctu/jwc/13" path="/universities/sctu/jwc/index:type?" :paramsDesc="['可选参数, 默认为 `13`']">
+
+| 教务通知 | 信息公告 |
+| -------- | -------- |
+| 13       | 14       |
+
+</Route>
+
+<Route name="教务处通告详情" author="talenHuang" example="/sctu/jwc/13/645" path="/universities/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']">
+
+</Route>
+
+## 同济大学
+
+ <Route name="同济大学软件学院通知" author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
+
+| 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
+| ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+| bkstz      | yjstz      | jgtz     | qttz     | xwdt     | xyxw     | xyhd     |
+
+注意: `qttz` 与 `xwdt` 在原网站等价.
+
+ </Route>
+
+## 温州商学院
+
+<Route name="温州商学院" author="howel52" example="/wzbc/notice" path="/wzbc/:type" :paramsDesc="['分类, 见下表']">
+
+| 校园新闻 | 媒体商院 | 通知公告 | 人才招聘 | 行事历  | 招标公告 | 学术动态 |
+| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
+| news     | media    | notice   | jobs     | workday | tender   | activity |
+
 </Route>
 
 ## 西安电子科技大学
@@ -551,117 +627,23 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
-## 东莞理工学院
+## 西南科技大学
 
-<Route name="教务处通知" author="AnyMoe" example="/dgut/jwc/" path="/universities/dgut/jwc/:type?" :paramsDesc="['默认为 `2`']">
+<Route name="教务处新闻" author="lengthmin" example="/swust/jwc/news" path="/universities/swust/jwc/news"/>
 
-| 教务公告 | 教学信息 |
-| -------- | -------- |
-| 1        | 2        |
+<Route name="教务处通知" author="lengthmin" example="/swust/jwc/notice/1" path="/universities/swust/jwc/notice/:type?" :paramsDesc="['分区 type,缺省为 1, 详见下方表格']">
 
-</Route>
-
-<Route name="学工部动态" author="AnyMoe" example="/dgut/xsc/" path="/universities/dgut/xsc/:type?" :paramsDesc="['默认为 `2`']">
-
-| 学工动态 | 通知公告 | 网上公示 |
-| -------- | -------- | -------- |
-| 1        | 2        | 4        |
+| 创新创业教育 | 学生学业 | 建设与改革 | 教学质量保障 | 教学运行 | 教师教学 |
+| ------------ | -------- | ---------- | ------------ | -------- | -------- |
+| 1            | 2        | 3          | 4            | 5        | 6        |
 
 </Route>
 
-## 上海大学
+<Route name="计科学院通知" author="lengthmin" example="/swust/cs/1" path="/universities/swust/cs/:type?" :paramsDesc="['分区 type, 缺省为 1, 详见下方表格']">
 
-<Route name="上海大学教务处通知公告" author="tuxinghuan" example="/shu/jwc/notice" path="/university/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
-
-| 通知通告 | 新闻 |
-| -------- | ---- |
-| notice   | news |
-
-</Route>
-
-## 同济大学
-
- <Route name="同济大学软件学院通知" author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
-
-| 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
-| ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
-| bkstz      | yjstz      | jgtz     | qttz     | xwdt     | xyxw     | xyhd     |
-
-注意: `qttz` 与 `xwdt` 在原网站等价.
-
- </Route>
-
-## 华南理工大学
-
-<Route name="教务处新闻动态" author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 可选, 默认为 `1`']">
-
-| 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
-| -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        | 5        |
-
-</Route>
-
-## 中山大学
-
-<Route name="数据科学与计算机学院动态" author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
-
-## 中国药科大学
-
-<Route name="中国药科大学" author="kba977" example="/cpu/home" path="/cpu/:type" :paramsDesc="['分类, 见下表']">
-
-| 首页 | 教务处 | 研究生院 |
-| ---- | ------ | -------- |
-| home | jwc    | yjsy     |
-
-</Route>
-
-## 温州商学院
-
-<Route name="温州商学院" author="howel52" example="/wzbc/notice" path="/wzbc/:type" :paramsDesc="['分类, 见下表']">
-
-| 校园新闻 | 媒体商院 | 通知公告 | 人才招聘 | 行事历  | 招标公告 | 学术动态 |
-| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
-| news     | media    | notice   | jobs     | workday | tender   | activity |
-
-</Route>
-
-## 河南大学
-
-<Route name="河南大学" author="CasterWx" example="/henu/xszl" path="/henu/:type" :paramsDesc="['分类, 见下表']">
-
-| 学生专栏 | 教师专栏 | 新闻公告 | 院部动态 | 高教前沿 |
-| -------- | -------- | -------- | -------- | -------- |
-| xszl     | jszl     | xwgg     | ybdt     | gjqy     |
-
-</Route>
-
-## 南开大学
-
-<Route name="南开大学教务处" author="zhongweili" example="/nku/jwc/1" path="/universities/nku/jwc/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
-
-| 通知公告 | 新闻动态 |
-| -------- | -------- |
-| 1        | 2        |
-
-</Route>
-
-## 北京航空航天大学
-
-<Route name="北京航空航天大学" author="AlanDecode" example="/buaa/news/zonghe" path="/buaa/news/:type" :paramsDesc="['新闻版块']">
-
-| 综合新闻 | 信息公告 | 学术文化     | 校园风采 | 科教在线 | 媒体北航 | 专题新闻 | 北航人物 |
-| -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- |
-| zonghe   | gonggao  | xueshuwenhua | fengcai  | kejiao   | meiti    | zhuanti  | renwu    |
-
-</Route>
-
-## 浙江工商大学
-
-<Route name="浙江工商大学" author="nicolaszf" example="/zjgsu/tzgg" path="/zjgsu/:type" :paramsDesc="['分类, 见下表']">
-
-| 通知公告 | 学生专区 | 公示公告 |
-| -------- | -------- | -------- |
-| tzgg     | xszq     | gsgg     |
+| 新闻动态 | 学术动态 | 通知公告 | 教研动态 |
+| -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        |
 
 </Route>
 
@@ -691,38 +673,56 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 浙江工商大学
+
+<Route name="浙江工商大学" author="nicolaszf" example="/zjgsu/tzgg" path="/zjgsu/:type" :paramsDesc="['分类, 见下表']">
+
+| 通知公告 | 学生专区 | 公示公告 |
+| -------- | -------- | -------- |
+| tzgg     | xszq     | gsgg     |
+
+</Route>
+
 ## 中国传媒大学
 
 <Route name="中国传媒大学研究生招生网" author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
 
-## 北京科技大学天津学院
+## 中国科学院
 
-<Route name="北京科技大学天津学院" author="henbf" example="/ustb/tj/news/all" path="/universities/ustb/tj/news/:type" :paramsDesc="['默认为 `all`']">
+<Route name="上海微系统与信息技术研究所学术活动" author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>
 
-| 全部 | 学院新闻 | 学术活动 | 城市建设学院 | 信息工程学院 | 经济学院 | 管理学院 | 材料系 | 机械工程系 | 护理系 | 法律系 | 外语系 | 艺术系 |
-| ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
-| all  | xyxw     | xshhd    | csjsxy       | xxgcxy       | jjx      | glxy     | clx    | jxgcx      | hlx    | flx    | wyx    | ysx    |
+## 中国药科大学
 
-</Route>
+<Route name="中国药科大学" author="kba977" example="/cpu/home" path="/cpu/:type" :paramsDesc="['分类, 见下表']">
 
-## 广东海洋大学
-
-<Route name="广东海洋大学" author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
-
-## 深圳大学
-
-<Route name="深圳大学研究生招生网" author="NagaruZ" example="/szu/yz/1" path="/universities/szu/yz/:type?" :paramsDesc="['默认为1']" >
-
-| 研究生 | 博士生 |
-| ------ | ------ |
-| 1      | 2      |
+| 首页 | 教务处 | 研究生院 |
+| ---- | ------ | -------- |
+| home | jwc    | yjsy     |
 
 </Route>
 
-## MIT
+## 重庆大学
 
-<Route name="MIT graduateadmissions's all blogs" author="LogicJake" example="/mit/graduateadmissions/index/all" path="/universities/mit/graduateadmissions/index/all"/>
+<Route name="教务网通知公告" author="El-Chiang" example="/cqu/jwc/announcement" path="/universities/cqu/jwc/announcement"/>
 
-<Route name="MIT graduateadmissions's blogs by department" author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/universities/mit/graduateadmissions/department/:name" :paramsDesc="['department name which can be found in url']"/>
+## 重庆科技学院
 
-<Route name="MIT graduateadmissions's blogs by category" author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/universities/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
+<Route name="教务处公告" author="binarization" example="/cqust/jw/notify" path="/universities/cqust/jw/:type?" :paramsDesc="['可选, 默认为 `notify`']">
+
+| 通知公告 | 教务快讯 |
+| -------- | -------- |
+| notify   | news     |
+
+</Route>
+
+<Route name="图书馆公告" author="binarization" example="/cqust/lib/news" path="/universities/cqust/lib/:type?" :paramsDesc="['可选, 默认为 `news`']">
+
+| 本馆公告 |
+| -------- |
+| news     |
+
+</Route>
+
+## 中山大学
+
+<Route name="数据科学与计算机学院动态" author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
