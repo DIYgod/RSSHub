@@ -24,7 +24,7 @@ const sortByHeading = async (filePath) => {
 
                 b.content.push(content[i]);
                 i++;
-                while (i < content.length && !/^##.*$/.test(content[i])) {
+                while (i < content.length && !/^##\s.*$/.test(content[i])) {
                     b.content.push(content[i]);
                     i++;
                 }

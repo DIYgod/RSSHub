@@ -1,35 +1,5 @@
 # 社交媒体
 
-### 直播分区 <Author uid="Qixingchen"/>
-
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
-
-<Route name="主站话题列表" author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" />
-
-<Route name="会员购新品上架" author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
-
-<Route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
-
-<Route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
-
-| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
-| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
-
-</Route>
-
-<Route name="话题(频道/标签)" author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
-
-<Route name="歌单" author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
-
-### 直播开播 <Author uid="Qixingchen"/>
-
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
-
-### 直播搜索 <Author uid="Qixingchen"/>
-
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
-
 ## bilibili
 
 <Route name="番剧" author="DIYgod" example="/bilibili/bangumi/media/9192" path="/bilibili/bangumi/media/:mediaid" :paramsDesc="['番剧媒体 id, 番剧主页 URL 中获取']"/>
@@ -163,6 +133,36 @@
 <Route name="link 公告" author="Qixingchen" example="/bilibili/link/news/live" path="/bilibili/link/news/:product" :paramsDesc="['公告分类, 包括 直播:live 小视频:vc 相簿:wh']"/>
 
 <Route name="视频搜索" author="Symty" example="/bilibili/vsearch/藤原千花" path="/bilibili/vsearch/:kw/:order?" :paramsDesc="['检索关键字', '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow']"/>
+
+### 直播开播 <Author uid="Qixingchen"/>
+
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+
+### 直播搜索 <Author uid="Qixingchen"/>
+
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+
+### 直播分区 <Author uid="Qixingchen"/>
+
+见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+
+<Route name="主站话题列表" author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" />
+
+<Route name="会员购新品上架" author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
+
+<Route name="会员购作品" author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+
+<Route name="排行榜" author="DIYgod" example="/bilibili/ranking/0/3" path="/bilibili/ranking/:tid/:days?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30']">
+
+| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
+| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
+
+</Route>
+
+<Route name="话题(频道/标签)" author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
+
+<Route name="歌单" author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
 
 ## Dcard
 

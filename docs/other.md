@@ -1,9 +1,5 @@
 # 其他
 
-### App Store/Mac App Store
-
-见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
-
 ## 12306
 
 <Route name="最新动态" author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
@@ -34,6 +30,10 @@
 ## Apple
 
 <Route name="更换和维修扩展计划" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认中国 `cn`']"/>
+
+### App Store/Mac App Store
+
+见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
 
 ## AutoTrader
 
