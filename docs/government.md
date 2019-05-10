@@ -1,11 +1,5 @@
 # 政务消息
 
-## 中国驻外使领馆
-
-<Route name="大使馆重要通知" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
-
-<Route name="领事馆重要通知" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
-
 ### 支持国家列表
 
 #### 德国 `DE`
@@ -20,17 +14,9 @@
 
 ---
 
-#### 法国 `FR`
+#### 新加坡 `SG`
 
--   大使馆: `/embassy/fr`
-
--   领事馆城市列表:
-
-| 城市       | 路由                     |
-| ---------- | ------------------------ |
-| 马赛       | `/embassy/fr/marseille`  |
-| 斯特拉斯堡 | `/embassy/fr/strasbourg` |
-| 里昂       | `/embassy/fr/lyon`       |
+-   大使馆: `/embassy/sg`
 
 ---
 
@@ -51,23 +37,17 @@
 
 ---
 
-#### 韩国 `KR`
+#### 法国 `FR`
 
--   大使馆: `/embassy/kr`
+-   大使馆: `/embassy/fr`
 
 -   领事馆城市列表:
 
-| 城市 | 路由                  |
-| ---- | --------------------- |
-| 釜山 | `/embassy/kr/busan`   |
-| 济州 | `/embassy/kr/jeju`    |
-| 光州 | `/embassy/kr/gwangju` |
-
----
-
-#### 新加坡 `SG`
-
--   大使馆: `/embassy/sg`
+| 城市       | 路由                     |
+| ---------- | ------------------------ |
+| 马赛       | `/embassy/fr/marseille`  |
+| 斯特拉斯堡 | `/embassy/fr/strasbourg` |
+| 里昂       | `/embassy/fr/lyon`       |
 
 ---
 
@@ -96,6 +76,24 @@
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+#### 韩国 `KR`
+
+-   大使馆: `/embassy/kr`
+
+-   领事馆城市列表:
+
+| 城市 | 路由                  |
+| ---- | --------------------- |
+| 釜山 | `/embassy/kr/busan`   |
+| 济州 | `/embassy/kr/jeju`    |
+| 光州 | `/embassy/kr/gwangju` |
+
+---
+
+## 联合国
+
+<Route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
 ## 中国政府
 
@@ -127,10 +125,12 @@
 
 </Route>
 
+## 中国驻外使领馆
+
+<Route name="大使馆重要通知" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+
+<Route name="领事馆重要通知" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+
 ## 中华人民共和国生态环境部
 
 <Route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
-
-## 联合国
-
-<Route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>

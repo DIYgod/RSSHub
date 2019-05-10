@@ -13,16 +13,6 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 
 </Route>
 
-## iMuseum
-
-<Route name="展览信息" author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type" :paramsDesc="['如 shanghai, beijing', '不填则默认为 `all`']">
-
-| 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
-| ---- | ------ | ---- | -------- | -------- | -------- |
-| all  | latest | hot  | end_soon | coming   | outdated |
-
-</Route>
-
 ## Hopper Flight Deals
 
 <Route name="Hopper 特价机票" author="HenryQW" example="/hopper/1/LHR/PEK" path="/hopper/:lowestOnly/:from/:to?" :paramsDesc="['是否只返回最低价机票, `1`: 是, 其他任意值: 否', '始发地, IATA 国际航空运输协会机场代码', '目的地, IATA 国际航空运输协会机场代码, 可选, 缺省则目的地为`任意城市`']">
@@ -34,6 +24,20 @@ ISO 3166-1 国家代码列表请参见 [维基百科 ISO_3166-1](https://zh.wiki
 IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运输协会机场代码](<https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81_(A)>)
 
 </Route>
+
+## iMuseum
+
+<Route name="展览信息" author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type" :paramsDesc="['如 shanghai, beijing', '不填则默认为 `all`']">
+
+| 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
+| ---- | ------ | ---- | -------- | -------- | -------- |
+| all  | latest | hot  | end_soon | coming   | outdated |
+
+</Route>
+
+## 国家地理
+
+<Route name="分类" author="fengkx" example="/natgeo/news/ngnews" path="/natgeo/:cat/:type?" :paramsDesc="['分类', '类型, 例如`https://www.natgeomedia.com/category/news/ngnews`对应 cat, type 分别为 news, ngnews']"/>
 
 ## 马蜂窝
 
@@ -48,7 +52,3 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | announcement | news | media    | exhibition | specials |
 
 </Route>
-
-## 国家地理
-
-<Route name="分类" author="fengkx" example="/natgeo/news/ngnews" path="/natgeo/:cat/:type?" :paramsDesc="['分类', '类型, 例如`https://www.natgeomedia.com/category/news/ngnews`对应 cat, type 分别为 news, ngnews']"/>

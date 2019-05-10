@@ -8,8 +8,8 @@
     "dev": "nodemon lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
-    "format:staged": "eslint \"**/*.js\" --fix && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
+    "format": "eslint \"**/*.js\" --fix && node docs/format.js && prettier \"**/*.{js,json,md}\" --write",
+    "format:staged": "eslint \"**/*.js\" --fix && node docs/format.js && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
     "test": "npm run format:check && NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "NODE_ENV=test jest --runInBand --forceExit"
@@ -77,6 +77,7 @@
     "node-fetch": "2.5.0",
     "path-to-regexp": "3.0.0",
     "pidusage": "2.0.17",
+    "pinyin": "^2.9.0",
     "plist": "3.0.1",
     "puppeteer": "1.15.0",
     "redis": "2.8.0",
