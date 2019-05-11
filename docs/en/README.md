@@ -3,7 +3,7 @@ sidebar: auto
 ---
 
 <p align="center" class="logo-img">
-    <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+    <img src="/logo.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
@@ -110,7 +110,7 @@ Route: `/api/routes/:name?`
 
 Parameters:
 
--   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes). Optional, **returns all public routes if not specified**.
+-   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). Optional, **returns all public routes if not specified**.
 
 A successful request returns a HTTP status code `200 OK` with the result in JSON:
 
@@ -224,6 +224,8 @@ If no matching results were found, the server returns only a HTTP status code `2
 ### Instagram
 
 <RouteEn name="User" path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" />
+
+<RouteEn name="Hashtag" author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']" />
 
 ### Youtube
 

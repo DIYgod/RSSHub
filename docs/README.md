@@ -1,7 +1,7 @@
 # 关于
 
 <p align="center" class="logo-img">
-    <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+    <img src="/logo.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
@@ -55,4 +55,4 @@ Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 **Q: 我怎么才能知道 RSSHub 更新了哪些路由？**
 
-**A:** 可以使用 RSS 订阅[RSSHub 有新路由啦](#rsshub)。
+**A:** 可以使用 RSS 订阅[RSSHub 有新路由啦](/program-update.html#rsshub)。
