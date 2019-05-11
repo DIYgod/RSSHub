@@ -521,6 +521,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="7x24小时快讯" author="occupy5" example="/fx678/kx" path="/fx678/kx" />
 
+## 观察者风闻话题
+
+<Route name="观察者风闻话题" author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+
 ## gradCafe(一个比较流行的国外研究生录取结果通知)
 
 <Route name="gradCafe result" author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
