@@ -86,6 +86,10 @@
 
 <Route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']"/>
 
+## 漫画 DB
+
+<Route name="漫画DB" author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
+
 ## 鼠绘漫画
 
 <Route name="鼠绘漫画" author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']"/>
