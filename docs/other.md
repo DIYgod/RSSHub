@@ -551,10 +551,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="今日油价" author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
-## 福利资源-met.red
-
-<Route name="福利资源-met.red" author="junfengP" example="/metred/fuli" path="/metred/fuli" />
-
 ## 中国大学 MOOC(慕课)
 
 <Route name="最新" author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
