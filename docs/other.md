@@ -499,3 +499,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ## 马良行
 
 <Route name="马良行" author="junfengP" example="/mlhang" path="/mlhang" />
+
+## 中国银行
+
+<Route name="中国银行外汇牌价" author="LogicJake" example="/boc/whpj" path="/boc/whpj" />
