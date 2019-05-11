@@ -8,9 +8,10 @@
     "dev": "nodemon lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
-    "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run lint && NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "format": "eslint \"**/*.js\" --fix && node docs/format.js && prettier \"**/*.{js,json,md}\" --write",
+    "format:staged": "eslint \"**/*.js\" --fix && node docs/format.js && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
+    "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
+    "test": "npm run format:check && NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "NODE_ENV=test jest --runInBand --forceExit"
   },
   "repository": {
@@ -21,7 +22,7 @@
     "RSS"
   ],
   "gitHooks": {
-    "pre-commit": "npm run lint"
+    "pre-commit": "npm run format:staged"
   },
   "author": "DIYgod",
   "license": "MIT",
@@ -38,11 +39,12 @@
     "eslint-config-prettier": "4.2.0",
     "eslint-plugin-prettier": "3.0.1",
     "jest": "24.8.0",
-    "lint-staged": "8.1.6",
     "mockdate": "2.0.2",
     "nodemon": "1.19.0",
+    "pinyin": "2.9.0",
     "prettier": "1.17.0",
     "prettier-check": "2.0.0",
+    "pretty-quick": "1.10.0",
     "supertest": "4.0.2",
     "vuepress": "1.0.0-alpha.47",
     "yorkie": "2.0.0"
@@ -54,7 +56,7 @@
     "cheerio": "1.0.0-rc.3",
     "co-redis": "2.1.1",
     "currency-symbol-map": "4.0.4",
-    "dayjs": "1.8.13",
+    "dayjs": "1.8.14",
     "dotenv": "8.0.0",
     "etag": "1.8.1",
     "form-data": "2.3.3",
@@ -70,7 +72,7 @@
     "koa-mount": "4.0.0",
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
-    "luxon": "1.13.0",
+    "luxon": "1.13.2",
     "lz-string": "1.4.4",
     "markdown-it": "8.4.2",
     "node-fetch": "2.5.0",
