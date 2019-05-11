@@ -12,6 +12,10 @@
 
 <Route name="7x24小时快讯" author="occupy5" example="/fx678/kx" path="/fx678/kx" />
 
+## 观察者风闻话题
+
+<Route name="观察者风闻话题" author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+
 ## 99% Invisible
 
 <Route name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
