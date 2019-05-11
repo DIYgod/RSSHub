@@ -170,7 +170,7 @@ sidebar: auto
 
             // 使用 tryGet() 方法从缓存获取内容
             // 当缓存中无法获取到链接内容的时候，则使用 load() 方法加载文章内容
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
 
             // 合并解析后的结果集作为该篇文章最终的输出结果
             return Promise.resolve(Object.assign({}, single, other));
@@ -327,7 +327,7 @@ sidebar: auto
 -   添加缓存:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存时间。单位为秒。
+ctx.cache.set((key: string), (value: string)); // time 为缓存时间。单位为秒。
 ```
 
 -   获取缓存:
@@ -342,7 +342,7 @@ const value = await ctx.cache.get((key: string));
 
 ```js
 const key = 'daily' + story.id; // story.id 为知乎日报返回的文章唯一识别符
-ctx.cache.set(key, item.description, 24 * 60 * 60); // 设置缓存时间为 24小时 * 60分钟 * 60秒 = 86400秒 = 1天
+ctx.cache.set(key, item.description); // 设置缓存
 ```
 
 当同样的请求被发起时，优先使用未过期的缓存：

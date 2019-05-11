@@ -1,5 +1,138 @@
 # 编程
 
+## Dockone
+
+<Route name="周报" author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
+
+## GitChat
+
+<Route name="最新" author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
+
+> GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
+## Gitea
+
+<Route name="博客" author="cnzgray" example="/gitea/blog" path="/gitea/blog">
+
+> gitea 博客一般发布最新的 release 信息，路由选择用 blog 名称主要因为其地址名为 blog，而非 changlog，慎重起见还是用 blog 命名。
+
+</Route>
+
+## GitHub
+
+::: tip 提示
+
+GitHub 官方也提供了一些 RSS:
+
+-   仓库 releases: https://github.com/:owner/:repo/releases.atom
+-   仓库 commits: https://github.com/:owner/:repo/commits.atom
+-   用户动态: https://github.com/:user.atom
+-   专属动态: https://github.com/:user.private.atom?token=:secret (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
+
+:::
+
+<Route name="用户仓库" author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" :paramsDesc="['用户名']"/>
+
+<Route name="Trending" author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
+
+<Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+<Route name="仓库 Pull Requests" author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+<Route name="用户" author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" :paramsDesc="['用户名']"/>
+
+<Route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+<Route name="仓库 Branches" author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+<Route name="文件 Commits" author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['用户名', '仓库名', '分支名', '文件路径']">
+
+| 用户名   | 仓库名   | 分支名   | 文件路径        |
+| -------- | -------- | -------- | --------------- |
+| `DIYgod` | `RSSHub` | `master` | `lib/router.js` |
+
+> -   **分支名**中如果有 `/` 等特殊字符需使用 urlencode 进行编码，通常 `/` 需要被替换成 `%2f`
+> -   **文件路径**中如果有特殊字符同样需使用 urlencode 进行编码，但文件路径可以正常识别 `/` 字符
+> -   **文件路径**如果以 `.rss`, `.atom`, `.json` 结尾，需要将后缀中的 `.` 替换成 `%2e`
+>     > Reeder 订阅 `%2erss` 或类似后缀的时候会出错，此时再在路由后面加上 `.rss` 即可正常订阅
+>     >
+>     > 如： `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` 替换成 `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss` 即可
+
+</Route>
+
+<Route name="搜索结果" author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
+
+| 排序选项           | sort      |
+| ------------------ | --------- |
+| 最佳匹配           | bestmatch |
+| 根据 star 数量排序 | stars     |
+| 根据 fork 数量排序 | forks     |
+| 根据更新时间排序   | updated   |
+
+## GitLab
+
+<Route name="Explore" author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['分类']">
+
+| Trending | Most stars | All |
+| -------- | ---------- | --- |
+| trending | starred    | all |
+
+</Route>
+
+## LeetCode
+
+<Route name="文章" author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
+
+## LinkedKeeper
+
+<Route name="博文" author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" :paramsDesc="['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']"/>
+
+## Linux Patchwork
+
+<Route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
+
+## segmentfault
+
+<Route name="频道" author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
+
+## TesterHome
+
+<Route name="最新发布" author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
+
+## V2EX
+
+<Route name="最热/最新主题" author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
+
+## 安全客
+
+::: tip 提示
+
+官方提供了混合的主页资讯 RSS: https://api.anquanke.com/data/v1/rss
+
+:::
+
+<Route name="最新漏洞列表" author="qwertyuiop6" example="/aqk/vul" path="/aqk/vul"/>
+
+<Route name="分类订阅" author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
+
+| 360 网络安全周报 | 活动     | 知识      | 资讯 | 招聘 |
+| ---------------- | -------- | --------- | ---- | ---- |
+| week             | activity | knowledge | news | job  |
+
+</Route>
+
+## 极客时间
+
+<Route name="专栏文章" author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" :paramsDesc="['专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到']"/>
+<Route name="极客新闻" author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
+
+> -   极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> -   极客新闻不需要付费,可通过 RSS 订阅.
+
+## 技术头条
+
+<Route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
+
 ## 掘金
 
 <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
@@ -48,61 +181,13 @@
 
 <Route name="单个收藏夹" author="isQ" example="/juejin/collection/5cbf079df265da03462270f9" path="/juejin/collection/:collectionId" :paramsDesc="['收藏夹唯一标志符, 在浏览器地址栏URL中能够找到']"/>
 
-## Dockone
-
-<Route name="周报" author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
+<Route name="分享" author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
 
 ## 开发者头条
 
 <Route name="今天头条" author="jjeejj" example="/toutiao/today" path="/toutiao/today"/>
 
 <Route name="独家号" author="jjeejj" example="/toutiao/user/140544" path="/toutiao/user/:id" :paramsDesc="['独家号 id, 可在对应独家号页 URL 中找到']"/>
-
-## 众成翻译
-
-<Route name="首页" author="SirM2z" example="/zcfy" path="/zcfy/index"/>
-
-<Route name="热门" author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
-
-## V2EX
-
-<Route name="最热/最新主题" author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
-
-## GitHub
-
-::: tip 提示
-
-GitHub 官方也提供了一些 RSS:
-
--   仓库 releases: https://github.com/:owner/:repo/releases.atom
--   仓库 commits: https://github.com/:owner/:repo/commits.atom
--   用户动态: https://github.com/:user.atom
--   专属动态: https://github.com/:user.private.atom?token=:secret (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
-
-:::
-
-<Route name="用户仓库" author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" :paramsDesc="['用户名']"/>
-
-<Route name="Trending" author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
-
-<Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
-
-<Route name="仓库 Pull Requests" author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
-
-<Route name="用户" author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" :paramsDesc="['用户名']"/>
-
-<Route name="仓库 Stars" author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
-
-<Route name="仓库 Branches" author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
-
-<Route name="搜索结果" author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
-
-| 排序选项           | sort      |
-| ------------------ | --------- |
-| 最佳匹配           | bestmatch |
-| 根据 star 数量排序 | stars     |
-| 根据 fork 数量排序 | forks     |
-| 根据更新时间排序   | updated   |
 
 ## 开源中国
 
@@ -137,46 +222,6 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## GitLab
-
-<Route name="Explore" author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['分类']">
-
-| Trending | Most stars | All |
-| -------- | ---------- | --- |
-| trending | starred    | all |
-
-</Route>
-
-## 极客时间
-
-<Route name="专栏文章" author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" :paramsDesc="['专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到']"/>
-<Route name="极客新闻" author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
-
-> -   极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
-> -   极客新闻不需要付费,可通过 RSS 订阅.
-
-## 安全客
-
-::: tip 提示
-
-官方提供了混合的主页资讯 RSS: https://api.anquanke.com/data/v1/rss
-
-:::
-
-<Route name="最新漏洞列表" author="qwertyuiop6" example="/aqk/vul" path="/aqk/vul"/>
-
-<Route name="分类订阅" author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
-
-| 360 网络安全周报 | 活动     | 知识      | 资讯 | 招聘 |
-| ---------------- | -------- | --------- | ---- | ---- |
-| week             | activity | knowledge | news | job  |
-
-</Route>
-
-## LinkedKeeper
-
-<Route name="博文" author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" :paramsDesc="['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']"/>
-
 ## 看雪
 
 <Route name="论坛" author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
@@ -201,6 +246,16 @@ GitHub 官方也提供了一些 RSS:
 | -------- | ------ |
 | 最新主题 | latest |
 | 精华主题 | digest |
+
+## 牛客网
+
+<Route name="讨论区" author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
+
+| 最新回复 | 最新发表 | 最新 | 精华 |
+| -------- | -------- | ---- | ---- |
+| 0        | 3        | 1    | 4    |
+
+</Route>
 
 ## 腾讯游戏开发者社区
 
@@ -230,46 +285,8 @@ GitHub 官方也提供了一些 RSS:
 
 <Route name="小程序商店-最新" author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest"/>
 
-## 技术头条
+## 众成翻译
 
-<Route name="最新分享" author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
+<Route name="首页" author="SirM2z" example="/zcfy" path="/zcfy/index"/>
 
-## GitChat
-
-<Route name="最新" author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
-
-> GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
-
-## Gitea
-
-<Route name="博客" author="cnzgray" example="/gitea/blog" path="/gitea/blog">
-
-> gitea 博客一般发布最新的 release 信息，路由选择用 blog 名称主要因为其地址名为 blog，而非 changlog，慎重起见还是用 blog 命名。
-
-</Route>
-
-## TesterHome
-
-<Route name="最新发布" author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
-
-## Linux Patchwork
-
-<Route name="Patch Comments" author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
-
-## LeetCode
-
-<Route name="文章" author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
-
-## segmentfault
-
-<Route name="频道" author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
-
-## 牛客网
-
-<Route name="讨论区" author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
-
-| 最新回复 | 最新发表 | 最新 | 精华 |
-| -------- | -------- | ---- | ---- |
-| 0        | 3        | 1    | 4    |
-
-</Route>
+<Route name="热门" author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>

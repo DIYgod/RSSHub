@@ -55,4 +55,4 @@ Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 **Q: 我怎么才能知道 RSSHub 更新了哪些路由？**
 
-**A:** 可以使用 RSS 订阅[RSSHub 有新路由啦](#rsshub)。
+**A:** 可以使用 RSS 订阅[RSSHub 有新路由啦](/program-update.html#rsshub)。

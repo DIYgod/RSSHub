@@ -84,17 +84,16 @@ $ git pull
 
 ### 添加配置
 
-可以通过修改 `lib/config.js` 或者设置环境变量来配置 RSSHub.
+可以通过设置环境变量来配置 RSSHub.
 
-**如何设置环境变量**
+在项目根目录新建一个 `.env` 文件，每行以 `NAME=VALUE` 格式添加环境变量，例如
 
-Windows 系统在 cmd.exe 中运行 `$ set PORT=1000`
+```
+CACHE_TYPE=redis
+CACHE_EXPIRE=600
+```
 
-macOS & Linux 运行 `$ PORT=1000`
-
-再运行 `$ npm start` 启动 RSSHub 即可将监听端口设置为 `1000`.
-
-此处设置的环境变量在关闭终端后就会被清除, 如果您想保存这些配置可以编写一个简单的 [批处理文件](https://en.wikipedia.org/wiki/Batch_file) 或 [shell](https://en.wikipedia.org/wiki/Shell_script).
+注意它不会覆盖已有的环境变量，更多规则请参考 [dotenv](https://github.com/motdotla/dotenv)
 
 更多配置项请看 [应用配置](#应用配置)
 
@@ -152,12 +151,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 $ docker volume create redis-data
 ```
 
-1.  复制 `lib/config.js` 至 `lib/config/config.js`, 以避免与 master 分支冲突. 由于包含敏感信息, 该配置文件会被 git 忽略.
-
-1.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
-
-    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` 用以跳过 puppeteer Chromium 的安装. 默认为 1, 需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址, 以启用相应路由.
-    -   `USE_CHINA_NPM_REGISTRY=1` 防止 npm 受到来自 GFW 的干扰. 默认为 0.
+1.  修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置（可选）
 
 1.  部署
 
@@ -255,11 +249,55 @@ gcloud app deploy
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况.
 
+### 部署至 arm32v7 设备（树莓派）
+
+#### 直接拉取镜像
+
+运行下面的命令下载 rsshub:arm32v7 镜像. (暂时还没有自动构建，更新缓慢)
+
+```
+docker pull pjf1996/rsshub:arm32v7
+```
+
+#### 自己构建
+
+首先下载 `RSSHub` 源码
+
+```
+$ git clone https://github.com/DIYgod/RSSHub.git
+$ cd RSSHub
+```
+
+运行下列命令构建 `rsshub:arm32v7`镜像
+
+```
+$ docker build -f ./Dockerfile.arm32v7 -t rsshub:arm32v7 .
+```
+
+::: tip 提示
+
+puppeteer 本身不会下载 chrome-arm，需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址, 以启用相应路由.
+
+TO DO: 暂时还没有找到合适的 `chrome websocket` arm32v7 镜像
+
+:::
+
+运行 RSSHub
+
+```bash
+# 直接拉取镜像方式
+$ docker run -d --name rsshub -p 1200:1200 pjf1996/rsshub:arm32v7
+# 自己构建镜像方式
+$ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
+```
+
+其余参数见[使用 Docker 部署](#使用-Docker-部署)
+
 ## 配置
 
 ### 应用配置
 
-可以通过修改 `lib/config.js` 或者设置环境变量来配置 RSSHub.
+可以通过设置环境变量来配置 RSSHub.
 
 ::: tip 提示
 
@@ -273,7 +311,9 @@ gcloud app deploy
 
 `CACHE_TYPE`: 缓存类型, 可为 `memory` 和 `redis`, 设为空可以禁止缓存, 默认为 `memory`
 
-`CACHE_EXPIRE`: 缓存过期时间, 单位为秒, 默认 `300`
+`CACHE_EXPIRE`: 路由缓存过期时间, 单位为秒, 默认 `5 * 60`
+
+`CACHE_CONTENT_EXPIRE`: 内容缓存过期时间，单位为秒, 默认 `24 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: 是否允许公网连接, 默认 `1`
 

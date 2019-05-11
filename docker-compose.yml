@@ -3,35 +3,28 @@ version: '3'
 services:
 
   service.rsshub:
-    build:
-      dockerfile: ./Dockerfile
-      context: .
-      args:
-        # 是否在构建过程中使用淘宝NPM源进行加速
-        USE_CHINA_NPM_REGISTRY: 0
-        # 是否在构建过程中跳过安装 Chromium, 参见 https://docs.rsshub.app/install/#docker-compose-deployment
-        # whether to skip puppeteer Chromium installation or not, refer to https://docs.rsshub.app/en/install/#docker-compose-deployment
-        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 1
+    image: diygod/rsshub
     restart: always
-    image: rsshub
     ports:
       - "1200:1200"
     environment:
       NODE_ENV: production
       CACHE_TYPE: redis
       REDIS_URL: 'redis://db.redis:6379/'
-    volumes:
-      - ./lib/config/app.json:/app/lib/app.json
-      - ./lib/config/config.js:/app/lib/config.js
+      PUPPETEER_WS_ENDPOINT: 'ws://service.browserless:3000'
     depends_on:
       - db.redis
+      - service.browserless
+
+  service.browserless:
+    image: browserless/chrome
+    restart: always
 
   db.redis:
-    image: redis:5.0.4-alpine
+    image: redis
+    restart: always
     volumes:
         - redis-data:/data
-    expose:
-      - "6379"
 
 volumes:
   redis-data:
