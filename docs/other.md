@@ -290,6 +290,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="首页推荐" author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
 
+## 观察者风闻话题
+
+<Route name="观察者风闻话题" author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+
 ## 果壳网
 
 <Route name="科学人" author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
