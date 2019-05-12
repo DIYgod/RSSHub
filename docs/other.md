@@ -555,6 +555,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="最新" author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
+## 中国银行
+
+<Route name="中国银行外汇牌价" author="LogicJake" example="/boc/whpj" path="/boc/whpj" />
+
 ## 自如
 
 <Route name="房源" author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
