@@ -37,7 +37,7 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ## 国家地理
 
-<Route name="分类" author="fengkx" example="/natgeo/news/ngnews" path="/natgeo/:cat/:type?" :paramsDesc="['分类', '类型, 例如`https://www.natgeomedia.com/category/news/ngnews`对应 cat, type 分别为 news, ngnews']"/>
+<Route name="分类" author="fengkx" example="/natgeo/environment/article" path="/natgeo/:cat/:type?" :paramsDesc="['分类', '类型, 例如`https://www.natgeomedia.com/environment/photo/`对应 cat, type 分别为 environment, photo']"/>
 
 ## 马蜂窝
 
