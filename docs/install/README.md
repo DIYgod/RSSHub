@@ -379,6 +379,10 @@ $ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
+-   `bilibili`: 控制台执行 document.cookie
+
+    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值
+
 ### 访问控制
 
 可以通过修改 `middleware/access-control.js` 或者设置环境变量来配置黑名单和白名单.
