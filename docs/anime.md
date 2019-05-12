@@ -66,7 +66,11 @@
 
 ## 嘀哩嘀哩-dilidili
 
-<Route name="嘀哩嘀哩番剧更新" author="SunShinenny" path="/dilidili/fanju/:id?" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id，打开对应番剧,从url中最后一位查看']"/>
+<Route name="嘀哩嘀哩番剧更新" author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id']">
+请打开对应番剧的纵览页(非具体某集),从url中最后一位查看番剧id.(一般为英文)
+除去超长的番剧(例如海贼)这种具有特殊页面的,绝大多数页面都可以解析.
+最适合用来追新番
+</Route>
 
 ## 動畫瘋
 
@@ -85,6 +89,10 @@
 ## 看漫画
 
 <Route name="漫画更新" author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']"/>
+
+## 漫画 DB
+
+<Route name="漫画DB" author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
 
 ## 鼠绘漫画
 
