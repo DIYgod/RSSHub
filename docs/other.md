@@ -490,6 +490,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route name="产品" author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>
 
+## 淘股吧股票论坛
+
+<Route name="论坛总版" author="emdoe" example="/taoguba/index" path="/taoguba/index"/>
+<Route name="用户博客" author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
+
 ## 腾讯大家
 
 <Route name="首页" author="xyqfer" example="/dajia" path="/dajia"/>
