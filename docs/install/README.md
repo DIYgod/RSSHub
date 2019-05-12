@@ -313,7 +313,7 @@ $ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
 
 `CACHE_EXPIRE`: 路由缓存过期时间, 单位为秒, 默认 `5 * 60`
 
-`CACHE_CONTENT_EXPIRE`: 内容缓存过期时间，单位为秒, 默认 `24 * 60 * 60`
+`CACHE_CONTENT_EXPIRE`: 内容缓存过期时间，每次访问会重新计算过期时间，单位为秒, 默认 `1 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: 是否允许公网连接, 默认 `1`
 
