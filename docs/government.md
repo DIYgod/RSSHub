@@ -1,10 +1,62 @@
+---
+pageClass: routes
+---
+
 # 政务消息
+
+## 联合国
+
+### 安理会否决了决议
+
+<Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+## 中国政府
+
+### 最新政策
+
+<Route author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
+
+### 最新文件
+
+<Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
+
+### 江苏省人民政府
+
+<Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
+
+|  省政府常务会议   |    要闻关注    |  部门资讯  |  市县动态   |       政策解读        |
+| :---------------: | :------------: | :--------: | :---------: | :-------------------: |
+| executive-meeting | important-news | department | city-county | policy-interpretation |
+
+| 政府信息公开年度报告 |   政府信息公开制度    | 省政府及办公厅文件 |     规范性文件     |
+| :------------------: | :-------------------: | :----------------: | :----------------: |
+|    annual-report     | information-publicity |   documentation    | normative-document |
+
+|          立法意见征集          |      意见征集      |
+| :----------------------------: | :----------------: |
+| legislative-opinion-collection | opinion-collection |
+
+</Route>
+
+### 南京市人民政府
+
+<Route author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
+
+| 南京信息 |  部门动态  | 各区动态 |  民生信息  |
+| :------: | :--------: | :------: | :--------: |
+|   news   | department | district | livelihood |
+
+</Route>
 
 ## 中国驻外使领馆
 
-<Route name="大使馆重要通知" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+### 大使馆重要通知
 
-<Route name="领事馆重要通知" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+<Route author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+
+### 领事馆重要通知
+
+<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
 
 ### 支持国家列表
 
@@ -97,40 +149,8 @@
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
-## 中国政府
-
-<Route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
-
-<Route name="最新文件" author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
-
-<Route name="江苏省人民政府" author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
-
-|  省政府常务会议   |    要闻关注    |  部门资讯  |  市县动态   |       政策解读        |
-| :---------------: | :------------: | :--------: | :---------: | :-------------------: |
-| executive-meeting | important-news | department | city-county | policy-interpretation |
-
-| 政府信息公开年度报告 |   政府信息公开制度    | 省政府及办公厅文件 |     规范性文件     |
-| :------------------: | :-------------------: | :----------------: | :----------------: |
-|    annual-report     | information-publicity |   documentation    | normative-document |
-
-|          立法意见征集          |      意见征集      |
-| :----------------------------: | :----------------: |
-| legislative-opinion-collection | opinion-collection |
-
-</Route>
-
-<Route name="南京市人民政府" author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
-
-| 南京信息 |  部门动态  | 各区动态 |  民生信息  |
-| :------: | :--------: | :------: | :--------: |
-|   news   | department | district | livelihood |
-
-</Route>
-
 ## 中华人民共和国生态环境部
 
-<Route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
+### 公示
 
-## 联合国
-
-<Route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+<Route author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>

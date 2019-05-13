@@ -268,7 +268,7 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `CACHE_EXPIRE`: route cache expiry time in seconds, default to `5 * 60`
 
-`CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, default to `24 * 60 * 60`
+`CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, it will be recalculated when it is accessed, default to `1 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
