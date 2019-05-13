@@ -785,7 +785,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 经济信息工程学院
 
-<Route name="经济信息工程学院" author="Hivol" example="/swufe/seie/tzgg" path="/universities/swufe/seie/:type?" :paramsDesc="['分类名(默认为tzgg)']" >
+<Route author="Hivol" example="/swufe/seie/tzgg" path="/universities/swufe/seie/:type?" :paramsDesc="['分类名(默认为tzgg)']" >
 
 | 学院新闻 | 通知公告 |
 | -------- | -------- |
