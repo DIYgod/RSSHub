@@ -80,6 +80,18 @@ pageClass: routes
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
 
+## Hpoi 手办维基
+
+### 浏览周边
+
+<Route author="howel52" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '关键词']">
+
+| 角色手办  | 作品手办 |
+| --------- | -------- |
+| charactar | works    |
+
+</Route>
+
 ## say 花火
 
 ### 文章
