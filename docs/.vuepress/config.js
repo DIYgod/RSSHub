@@ -70,6 +70,7 @@ module.exports = {
                         {
                             title: '路由',
                             collapsable: false,
+                            sidebarDepth: 3,
                             children: [
                                 'social-media',
                                 'programming',

@@ -313,7 +313,7 @@ $ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
 
 `CACHE_EXPIRE`: 路由缓存过期时间, 单位为秒, 默认 `5 * 60`
 
-`CACHE_CONTENT_EXPIRE`: 内容缓存过期时间，单位为秒, 默认 `24 * 60 * 60`
+`CACHE_CONTENT_EXPIRE`: 内容缓存过期时间，每次访问会重新计算过期时间，单位为秒, 默认 `1 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: 是否允许公网连接, 默认 `1`
 
@@ -379,9 +379,9 @@ $ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   `bilibili`: 控制台执行 document.cookie
+-   `bilibili`
 
-    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值
+    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
 
 ### 访问控制
 
