@@ -781,6 +781,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 西南财经大学
+
+### 经济信息工程学院
+
+<Route author="Hivol" example="/swufe/seie/tzgg" path="/universities/swufe/seie/:type?" :paramsDesc="['分类名(默认为tzgg)']" >
+
+| 学院新闻 | 通知公告 |
+| -------- | -------- |
+| xyxw     | tzgg     |
+
+</Route>
+
 ## 西南科技大学
 
 ### 教务处新闻
