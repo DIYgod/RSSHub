@@ -1,8 +1,11 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h3 class="name">{{name}} <Badge text="支持 BT" type="tip" v-if="supportBT"/> <Badge text="支持播客" type="tip" v-if="supportPodcast"/> <Author :uid=author /> <Badge text="反爬严格" type="warn" v-if="crawlerBadge"/>
-    <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
-  </h3>
+  <p class="badge">
+    <Badge text="支持 BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="支持播客" type="tip" vertical="middle" v-if="supportPodcast"/> <Badge text="反爬严格" vertical="middle" type="warn" v-if="crawlerBadge"/>
+  </p>
+  <p class="author">
+    作者: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
+  </p>
   <p class="example">
     举例: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
   </p>
@@ -19,19 +22,11 @@
 </div>
 </template>
 <script>
-import Author from "./Author.vue"
 export default {
-  components:{
-      'Author': Author
-  },
   props: {
     author: {
       type: String,
       default: 'DIYgod'
-    },
-    name: {
-      type: String,
-      required: true
     },
     path: {
       type: String,
