@@ -1,8 +1,8 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 :id=path class="name">{{name}} <Author :uid=author /> 
-    <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
-  </h4>
+  <p class="author">
+    Author: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
+  </p>
   <p  class="example">
     Example: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
   </p>
@@ -19,27 +19,19 @@
 </div>
 </template>
 <script>
-import Author from "./Author.vue"
 export default {
-  components:{
-      'Author': Author
-  },
   props: {
     author: {
       type: String,
       default: 'DIYgod'
     },
-    name: {
-      type: String,
-      required: true 
-    },
     path: {
       type: String,
-      required: true 
+      required: true
     },
     example: {
       type: String,
-      required: true 
+      required: true
     },
     paramsDesc: {
       type: [Array, String],
@@ -57,7 +49,7 @@ export default {
 }
 </script>
 <style>
-li.params p { 
+li.params p {
   display: inline;
   }
 .routeBlock {

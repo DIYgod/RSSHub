@@ -1,12 +1,20 @@
+---
+pageClass: routes
+---
+
 # 传统媒体
 
 ## 21 财经
 
-<Route name="频道" author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
+### 频道
+
+<Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
 
 ## BBC
 
-<Route name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
+### BBC
+
+<Route author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
 
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
@@ -20,7 +28,9 @@
 
 ## FT 中文网
 
-<Route name="FT 中文网" author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道, 缺省为每日更新']">
+### FT 中文网
+
+<Route author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道, 缺省为每日更新']">
 
 ::: tip 提示
 
@@ -40,11 +50,15 @@
 
 ## NHK
 
-<Route name="News Web Easy" author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+### News Web Easy
+
+<Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
 ## Solidot
 
-<Route name="最新消息" author="sgqy" example="/solidot/linux" path="/solidot/:type?" :paramsDesc="['消息类型. 默认为 www. 在网站上方选择后复制子域名即可']">
+### 最新消息
+
+<Route author="sgqy" example="/solidot/linux" path="/solidot/:type?" :paramsDesc="['消息类型. 默认为 www. 在网站上方选择后复制子域名即可']">
 
 ::: tip 提示
 
@@ -62,17 +76,23 @@ Solidot 提供的 feed:
 
 ## The Economist
 
- <Route name="GRE Vocabulary" author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+### GRE Vocabulary
+
+<Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
 
 ## 半月谈
 
-<Route name="板块" author="LogicJake" example="/banyuetan/jicengzhili" path="/banyuetan/:name" :paramsDesc="['板块名称，可在 URL 中找到']"/>
+### 板块
+
+<Route author="LogicJake" example="/banyuetan/jicengzhili" path="/banyuetan/:name" :paramsDesc="['板块名称，可在 URL 中找到']"/>
 
 ## 财新网
 
 > 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
-<Route name="新闻分类" author="idealclover" example="/caixin/finance/regulation" path="/caixin/:column/:category" :paramsDesc="['栏目名', '栏目下的子分类名']">
+### 新闻分类
+
+<Route author="idealclover" example="/caixin/finance/regulation" path="/caixin/:column/:category" :paramsDesc="['栏目名', '栏目下的子分类名']">
 
 Column 列表:
 
@@ -96,7 +116,9 @@ Category 列表:
 
 ## 多维新闻网
 
-<Route name="要闻" author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
+### 要闻
+
+<Route author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
 
 | 全部   | 国际   | 中国  | 香港     | 台湾   |
 | ------ | ------ | ----- | -------- | ------ |
@@ -104,23 +126,33 @@ Category 列表:
 
 </Route>
 
-<Route name="新闻排行榜" author="HenryQW" example="/dwnews/rank/photo/7" path="/dwnews/rank/:type/:range" :paramsDesc="['榜单类型，`news`为普通新闻，`photo`为图集新闻','榜单范围（天），`1` 或 `7`']"/>
+### 新闻排行榜
+
+<Route author="HenryQW" example="/dwnews/rank/photo/7" path="/dwnews/rank/:type/:range" :paramsDesc="['榜单类型，`news`为普通新闻，`photo`为图集新闻','榜单范围（天），`1` 或 `7`']"/>
 
 ## 华尔街见闻
 
-<Route name="华尔街见闻" author="conanjunn" example="/wallstreetcn/news/global" path="/wallstreetcn/news/global" />
+### 华尔街见闻
+
+<Route author="conanjunn" example="/wallstreetcn/news/global" path="/wallstreetcn/news/global" />
 
 ## 极客公园
 
-<Route name="全球快讯" author="xyqfer" example="/geekpark/breakingnews" path="/geekpark/breakingnews" />
+### 全球快讯
+
+<Route author="xyqfer" example="/geekpark/breakingnews" path="/geekpark/breakingnews" />
 
 ## 界面新闻
 
-<Route name="栏目" author="WenhuWee" example="/jiemian/list/79" path="/jiemian/list/:category" :paramsDesc="['对应栏目后在地址栏找到']"/>
+### 栏目
+
+<Route author="WenhuWee" example="/jiemian/list/79" path="/jiemian/list/:category" :paramsDesc="['对应栏目后在地址栏找到']"/>
 
 ## 经济观察网
 
-<Route name="分类资讯" author="epirus" example="/eeo/15" path="/eeo/:category" :paramsDesc="['分类']">
+### 分类资讯
+
+<Route author="epirus" example="/eeo/15" path="/eeo/:category" :paramsDesc="['分类']">
 
 category 对应的关键词有
 
@@ -132,7 +164,9 @@ category 对应的关键词有
 
 ## 联合早报
 
-<Route name="即时新闻" author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为中港台']">
+### 即时新闻
+
+<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为中港台']">
 
 | 中港台 | 新加坡    | 国际  | 财经     |
 | ------ | --------- | ----- | -------- |
@@ -140,7 +174,9 @@ category 对应的关键词有
 
 </Route>
 
-<Route name="新闻" author="lengthmin" example="/zaobao/znews/greater-china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为中港台']">
+### 新闻
+
+<Route author="lengthmin" example="/zaobao/znews/greater-china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为中港台']">
 
 | 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
 | ------------- | --------- | ------ | ------------- | ------ |
@@ -150,7 +186,9 @@ category 对应的关键词有
 
 ## 南方周末
 
-<Route name="新闻分类" author="ranpox xyqfer" example="/infzm/2" path="/infzm/:id" :paramsDesc="['南方周末内容分区 id, 可在该内容分区的 URL 中找到(即 https://www.infzm.com/contents?term_id=:id)']">
+### 新闻分类
+
+<Route author="ranpox xyqfer" example="/infzm/2" path="/infzm/:id" :paramsDesc="['南方周末内容分区 id, 可在该内容分区的 URL 中找到(即 https://www.infzm.com/contents?term_id=:id)']">
 
 下面给出部分参考:
 
@@ -162,7 +200,9 @@ category 对应的关键词有
 
 ## 纽约时报
 
-<Route name="官方 RSS" author="HenryQW" example="/nytimes/dual" path="/nytimes/index/:lang?" :paramsDesc="['语言, 缺省中文']">
+### 官方 RSS
+
+<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/index/:lang?" :paramsDesc="['语言, 缺省中文']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
@@ -172,34 +212,52 @@ category 对应的关键词有
 
 </Route>
 
-<Route name="每日简报" author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+### 每日简报
+
+<Route author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
 
 ## 澎湃新闻
 
-<Route name="首页头条" author="HenryQW" example="/thepaper/featured" path="/thepaper/featured"/>
+### 首页头条
 
-<Route name="频道" author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
+<Route author="HenryQW" example="/thepaper/featured" path="/thepaper/featured"/>
+
+### 频道
+
+<Route author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
 
 ## 人民日报
 
-<Route name="观点" author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
-<Route name="习近平系列重要讲话" author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>
+### 观点
+
+<Route author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
+### 习近平系列重要讲话
+
+<Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>
 
 ## 卫报 The Guardian
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-<Route name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial"/>
+### Editorial
 
-<Route name="China" author="Polynomia" example="/guardian/china" path="/guardian/china"/>
+<Route author="HenryQW" example="/guardian/editorial" path="/guardian/editorial"/>
+
+### China
+
+<Route author="Polynomia" example="/guardian/china" path="/guardian/china"/>
 
 ## 新京报
 
-<Route name="栏目" author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
+### 栏目
+
+<Route author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
 
 ## 新浪科技
 
-<Route name="科学探索" author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
+### 科学探索
+
+<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
 
 分类：
 | zx | twhk | dwzw | zrdl | lskg | smyx | shbk | kjqy |
@@ -208,11 +266,15 @@ category 对应的关键词有
 
 </Route>
 
-<Route name="滚动新闻" author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
+### 滚动新闻
+
+<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
 
 ## 央视新闻
 
-<Route name="专题" author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
+### 专题
+
+<Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
 | 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 | 每周质量报告 |
 | ----- | ----- | ----- | ---- | ------- | ---- | ---- | ------------ |
@@ -222,7 +284,9 @@ category 对应的关键词有
 
 ## 朝日新聞中文網
 
-<Route name="新闻分类" author="qiwihui" example="/sina/society" path="/sina/discovery/:category/:subCate?" :paramsDesc="['版块', '子板块']">
+### 新闻分类
+
+<Route author="qiwihui" example="/sina/society" path="/sina/discovery/:category/:subCate?" :paramsDesc="['版块', '子板块']">
 
 版块：
 
