@@ -664,6 +664,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
 
+### 作者
+
+<Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
+
 ## 世界卫生组织
 
 ### 媒体中心
