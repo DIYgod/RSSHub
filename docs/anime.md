@@ -84,7 +84,7 @@ pageClass: routes
 
 ### 浏览周边
 
-<Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '关键词']">
+<Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '角色/作品 ID']">
 
 | 角色手办  | 作品手办 |
 | --------- | -------- |
