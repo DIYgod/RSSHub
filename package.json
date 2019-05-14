@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "1.0.0-alpha.47",
-    "@vuepress/plugin-google-analytics": "1.0.0-alpha.47",
-    "@vuepress/plugin-pwa": "1.0.0-alpha.47",
+    "@vuepress/plugin-back-to-top": "1.0.0-alpha.48",
+    "@vuepress/plugin-google-analytics": "1.0.0-alpha.48",
+    "@vuepress/plugin-pwa": "1.0.0-alpha.48",
     "axios-mock-adapter": "1.16.0",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.2.0",
@@ -46,7 +46,7 @@
     "prettier-check": "2.0.0",
     "pretty-quick": "1.10.0",
     "supertest": "4.0.2",
-    "vuepress": "1.0.0-alpha.47",
+    "vuepress": "1.0.0-alpha.48",
     "yorkie": "2.0.0"
   },
   "dependencies": {
