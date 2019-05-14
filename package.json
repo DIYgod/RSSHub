@@ -110,7 +110,10 @@
       "!lib/routes/**/*.js"
     ],
     "bail": true,
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/lib/$1"
+    }
   },
   "_moduleAliases": {
     "@": "./lib"
