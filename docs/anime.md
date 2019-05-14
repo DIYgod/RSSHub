@@ -110,14 +110,14 @@ pageClass: routes
 
 </Route>
 
-## 嘀哩嘀哩-dilidili
+## 嘀哩嘀哩 - dilidili
 
 ### 嘀哩嘀哩番剧更新
 
 <Route author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id']">
 
 请打开对应番剧的纵览页(非具体某集),从 url 中最后一位查看番剧 id.(一般为英文)
-除去超长的番剧(例如海贼)这种具有特殊页面的,绝大多数页面都可以解析.
+除去'海贼'此类具有特殊页面的超长番剧,绝大多数页面都可以解析.
 最适合用来追新番
 
 </Route>
