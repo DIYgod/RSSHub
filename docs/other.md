@@ -512,6 +512,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 服务器
+
+### 搬瓦工
+
+<Route author="NathanDai" example="/bandwagonhost/inf/1312600/private_AXS90dhlmeMnMPInpSBDdkGI" path="/bandwagonhost/inf/:veid/:api_key" :paramsDesc="['搬瓦工VPS的veid', '搬瓦工VPS的API_KEY']"/>
+
 ## 老司机
 
 ### 首页
