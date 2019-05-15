@@ -75,6 +75,7 @@
     "luxon": "1.13.2",
     "lz-string": "1.4.4",
     "markdown-it": "8.4.2",
+    "module-alias": "^2.2.0",
     "node-fetch": "2.5.0",
     "path-to-regexp": "3.0.0",
     "pidusage": "2.0.17",
@@ -109,6 +110,12 @@
       "!lib/routes/**/*.js"
     ],
     "bail": true,
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/lib/$1"
+    }
+  },
+  "_moduleAliases": {
+    "@": "./lib"
   }
 }
