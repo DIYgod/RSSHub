@@ -202,7 +202,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
     ```js
     // use puppeteer util class, initialise a browser instance
-    const browser = await require('../../utils/puppeteer')();
+    const browser = await require('@/utils/puppeteer')();
     // open a new page
     const page = await browser.newPage();
     // access the target link
