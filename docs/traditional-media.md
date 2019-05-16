@@ -282,11 +282,11 @@ category 对应的关键词有
 
 </Route>
 
-## 朝日新聞中文網
+## 朝日新聞中文網（繁體中文版）
 
-### 新闻分类
+### 新聞分類
 
-<Route author="qiwihui" example="/sina/society" path="/sina/discovery/:category/:subCate?" :paramsDesc="['版块', '子板块']">
+<Route author="qiwihui" example="/asahichinese-f/society" path="/asahichinese-f/:category/:subCate?" :paramsDesc="['版块', '子版块']">
 
 版块：
 
@@ -294,7 +294,7 @@ category 对应的关键词有
 | -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
 | 國內綜合 | 政治・經濟       | 文化・生活 | 旅遊・活動 | 體育・奧運 | 商業・商品 | IT・科技   | 國際・東亞 | 評論・專欄 |
 
-版块 `cool_japan` 和 `travel` 包含子板块子板块：
+版块 `cool_japan` 和 `travel` 包含子版块：
 
 `cool_japan`：
 
