@@ -397,6 +397,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 分类
 
 <Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
+
 ## 福利资源-met.red
 
 ### 福利资源-met.red
