@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "1.0.0-alpha.47",
-    "@vuepress/plugin-google-analytics": "1.0.0-alpha.47",
-    "@vuepress/plugin-pwa": "1.0.0-alpha.47",
+    "@vuepress/plugin-back-to-top": "1.0.0-alpha.48",
+    "@vuepress/plugin-google-analytics": "1.0.0-alpha.48",
+    "@vuepress/plugin-pwa": "1.0.0-alpha.48",
     "axios-mock-adapter": "1.16.0",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.2.0",
@@ -42,11 +42,11 @@
     "mockdate": "2.0.2",
     "nodemon": "1.19.0",
     "pinyin": "2.9.0",
-    "prettier": "1.17.0",
+    "prettier": "1.17.1",
     "prettier-check": "2.0.0",
     "pretty-quick": "1.10.0",
     "supertest": "4.0.2",
-    "vuepress": "1.0.0-alpha.47",
+    "vuepress": "1.0.0-alpha.48",
     "yorkie": "2.0.0"
   },
   "dependencies": {
@@ -61,7 +61,7 @@
     "etag": "1.8.1",
     "form-data": "2.3.3",
     "git-rev-sync": "1.12.0",
-    "googleapis": "39.2.0",
+    "googleapis": "40.0.0",
     "he": "1.2.0",
     "iconv-lite": "0.4.24",
     "imgur": "0.3.1",
@@ -75,11 +75,12 @@
     "luxon": "1.13.2",
     "lz-string": "1.4.4",
     "markdown-it": "8.4.2",
+    "module-alias": "2.2.0",
     "node-fetch": "2.5.0",
     "path-to-regexp": "3.0.0",
     "pidusage": "2.0.17",
     "plist": "3.0.1",
-    "puppeteer": "1.15.0",
+    "puppeteer": "1.16.0",
     "redis": "2.8.0",
     "rss-parser": "3.7.0",
     "sanitize-html": "1.20.1",
@@ -109,6 +110,12 @@
       "!lib/routes/**/*.js"
     ],
     "bail": true,
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/lib/$1"
+    }
+  },
+  "_moduleAliases": {
+    "@": "./lib"
   }
 }
