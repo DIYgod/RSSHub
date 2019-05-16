@@ -392,6 +392,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="WenryXu" example="/duozhi" path="/duozhi"/>
 
+## 飞地
+
+### 分类
+
+<Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
 ## 福利资源-met.red
 
 ### 福利资源-met.red
@@ -817,9 +822,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 房源
 
 <Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
-
-## 飞地
-
-### 分类
-
-<Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
