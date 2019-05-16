@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+<img src="https://i.loli.net/2019/04/23/5cbeb7e41414c.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center">RSSHub</h1>
 
@@ -23,14 +23,12 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: |
-
+<a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a>
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
+| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -65,21 +63,19 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 你可以通过下列的方法来赞助 RSSHub 的开发。
 
-### 一次性赞助
+## 周期性赞助
 
-我们通过以下方式接受赞助：
+周期性赞助可以获得额外的回报, 比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中.
 
--   [微信支付](https://i.imgur.com/aq6PtWa.png)
--   [支付宝](https://i.imgur.com/wv1Pj2k.png)
--   [Paypal](https://www.paypal.me/DIYgod)
--   比特币: 13CwQLHzPYm2tewNMSJBeArbbRM5NSmCD1
-
-### 周期性赞助
-
-周期性赞助可以获得额外的回报，比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中。
-
--   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助成为 backer 或 sponsor
+-   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助
 -   给我们发邮件联系赞助事宜: i#diygod.me
+
+## 一次性赞助
+
+我们通过以下方式接受赞助:
+
+-   [微信支付](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
+-   [支付宝](https://i.loli.net/2019/03/23/5c950ebbc980e.png)
 
 ## 相关项目
 
