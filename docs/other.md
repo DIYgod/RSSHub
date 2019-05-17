@@ -833,8 +833,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 知识库
 
-<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:id" :paramsDesc="['知识库id']"/>
+<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:id" :paramsDesc="['知识库id，可通过知识库具体页面控制面板Network下找到一个actions请求,参数里的target_id即当前知识库id。']">
 
 | Node.js专栏 | 阮一峰每周分享 | 语雀使用手册 |
 | ---------- | ------------- | ------------ |
 | 75258      | 102804        | 75257        |
+
+</Route>
