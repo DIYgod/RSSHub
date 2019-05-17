@@ -791,8 +791,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 首页
 
-<Route author="kimi360" example="/iplay/home" path="/iplay/home">
-</Route>
+<Route author="kimi360" example="/iplay/home" path="/iplay/home"/>
 
 ## 移动支付网
 
@@ -816,7 +815,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 中国银行外汇牌价
 
-<Route author="LogicJake" example="/boc/whpj" path="/boc/whpj" />
+<Route author="LogicJake HenryQW" example="/boc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91" path="/boc/whpj/:format?" :paramsDesc="['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']">
+
+| 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
+| ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
+
+</Route>
 
 ## 自如
 
