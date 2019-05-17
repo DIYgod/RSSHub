@@ -202,6 +202,12 @@ pageClass: routes
 
 <Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
 
+## 色花堂中文论坛
+
+### 帖子
+
+<Route author="qiwihui" example="/dsndsht23" path="/dsndsht23" />
+
 ## 腾讯视频
 
 ### 播放列表
