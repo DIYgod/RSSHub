@@ -28,7 +28,7 @@ sidebar: auto
 下载 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml)
 
 ```bash
-wget https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml
+wget https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml
 ```
 
 创建 volume 持久化 Redis 缓存
@@ -402,4 +402,4 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   bilibili 用户关注视频动态路由
 
-    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
+    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
