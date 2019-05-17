@@ -42,7 +42,15 @@ pageClass: routes
 
 ### eShop 新发售游戏
 
-<Route author="Aaron Liu" example="/nintendo/eshop/hk" path="/nintendo/eshop/：region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服)']"/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服)']"/>
+
+### 首页资讯（香港）
+
+<Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+
+### 直面会
+
+<Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
 ## PlayStation Store
 
