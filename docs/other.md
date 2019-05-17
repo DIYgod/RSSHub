@@ -414,7 +414,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 观察者风闻话题
 
-<Route author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+<Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
 
 ## 果壳网
 
