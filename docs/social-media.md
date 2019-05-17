@@ -348,6 +348,10 @@ pageClass: routes
 
 ## Twitter
 
+### 个人时间线
+
+<Route author="qiwihui" example="/twitter/home" path="/twitter/home" />
+
 ### 用户
 
 <Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']"/>
