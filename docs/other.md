@@ -817,3 +817,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 房源
 
 <Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
+
+## 语雀
+
+### 知识库
+
+<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:id" :paramsDesc="['知识库id']"/>
+
+| Node.js专栏 | 阮一峰每周分享 | 语雀使用手册 |
+| ---------- | ------------- | ------------ |
+| 75258      | 102804        | 75257        |
