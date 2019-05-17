@@ -206,7 +206,7 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="qiwihui" example="/dsndsht23" path="/dsndsht23" />
+<Route author="qiwihui" example="/dsndsht23" path="/dsndsht23" supportBT="1" />
 
 ## 腾讯视频
 

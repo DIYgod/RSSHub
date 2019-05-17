@@ -282,34 +282,6 @@ category 对应的关键词有
 
 </Route>
 
-## 朝日新聞中文网（简体中文版）
-
-### 新闻分类
-
-<Route author="zhouchang29" example="/asahichinese-j/society" path="/asahichinese-j/:category/:subCate?" :paramsDesc="['版块', '子版块']">
-
-版块：
-
-| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    |
-| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-| 日本社会 | 政治・经济       | 文娱・生活 | 旅游・活动 | 体育・奥运 | 商务・商品 | IT・科技   | 国际・东亚 | 观点・专栏 |
-
-版块 `cool_japan` 和 `travel` 包含子版块：
-
-`cool_japan`：
-
-| entertainment | anime | life       | style_culture |
-| ------------- | ----- | ---------- | ------------- |
-| 艺能          | 动漫  | 生活・美食 | 时尚・文化    |
-
-`travel`:
-
-| news | scenery | topic | move |
-| ---- | ------- | ----- | ---- |
-| 资讯 | 风景    | 体验  | 交通 |
-
-</Route>
-
 ## 朝日新聞中文網（繁體中文版）
 
 ### 新聞分類
@@ -335,5 +307,33 @@ category 对应的关键词有
 | news | scenery | topic | move |
 | ---- | ------- | ----- | ---- |
 | 資訊 | 風景    | 體驗  | 交通 |
+
+</Route>
+
+## 朝日新聞中文网（简体中文版）
+
+### 新闻分类
+
+<Route author="zhouchang29" example="/asahichinese-j/society" path="/asahichinese-j/:category/:subCate?" :paramsDesc="['版块', '子版块']">
+
+版块：
+
+| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    |
+| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
+| 日本社会 | 政治・经济       | 文娱・生活 | 旅游・活动 | 体育・奥运 | 商务・商品 | IT・科技   | 国际・东亚 | 观点・专栏 |
+
+版块 `cool_japan` 和 `travel` 包含子版块：
+
+`cool_japan`：
+
+| entertainment | anime | life       | style_culture |
+| ------------- | ----- | ---------- | ------------- |
+| 艺能          | 动漫  | 生活・美食 | 时尚・文化    |
+
+`travel`:
+
+| news | scenery | topic | move |
+| ---- | ------- | ----- | ---- |
+| 资讯 | 风景    | 体验  | 交通 |
 
 </Route>
