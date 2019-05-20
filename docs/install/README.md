@@ -406,4 +406,4 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   语雀 全部路由: [注册地址](https://www.yuque.com/register)
 
-    -   `YUQUE_TOKEN`: 语雀Token，获取 Token 可通过点击语雀的个人头像，并进入 个人设置 页面拿到
+    -   `YUQUE_TOKEN`: 语雀 Token，获取 Token 可通过点击语雀的个人头像，并进入 个人设置 页面拿到
