@@ -97,6 +97,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']"/>
 
+## SteamGifts
+
+### Discussions
+
+<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
+
 ## 旅法师营地
 
 ### 旅法师营地
@@ -192,3 +198,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 公告
 
 <Route author="magic-akari" example="/kirara/news" path="/kirara/news"/>
+
+## MaxNews
+
+### Dota 2
+
+<Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
