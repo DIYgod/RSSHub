@@ -403,3 +403,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 -   bilibili 用户关注视频动态路由
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
+
+-   语雀 全部路由: [注册地址](https://www.yuque.com/register)
+
+    -   `YUQUE_TOKEN`: 语雀Token，获取 Token 可通过点击语雀的个人头像，并进入 个人设置 页面拿到

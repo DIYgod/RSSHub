@@ -805,6 +805,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
+## 语雀
+
+### 知识库
+
+<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+
+| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
+| ------------ | -------------- | ------------ |
+| 75258        | 102804         | 75257        |
+
+</Route>
+
 ## 中国大学 MOOC(慕课)
 
 ### 最新
@@ -828,15 +840,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 房源
 
 <Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
-
-## 语雀
-
-### 知识库
-
-<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:id" :paramsDesc="['知识库id，可通过知识库具体页面控制面板Network下找到一个actions请求,参数里的target_id即当前知识库id。']">
-
-| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
-| ------------ | -------------- | ------------ |
-| 75258        | 102804         | 75257        |
-
-</Route>
