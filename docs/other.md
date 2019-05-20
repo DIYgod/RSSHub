@@ -416,12 +416,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
 
-## 数英网
-
-### 数英网最新文章
-
-<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
-
 ## 果壳网
 
 ### 科学人
@@ -685,6 +679,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 媒体中心
 
 <Route author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
+
+## 数英网
+
+### 数英网最新文章
+
+<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
 
 ## 刷屏
 
