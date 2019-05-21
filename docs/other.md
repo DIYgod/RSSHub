@@ -416,6 +416,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
 
+## 数英网
+
+### 数英网最新文章
+
+<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
+
 ## 果壳网
 
 ### 科学人
@@ -804,6 +810,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 今日油价
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
+
+## 语雀
+
+### 知识库
+
+<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+
+| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
+| ------------ | -------------- | ------------ |
+| 75258        | 102804         | 75257        |
+
+</Route>
 
 ## 中国大学 MOOC(慕课)
 
