@@ -102,6 +102,16 @@ pageClass: routes
 
 <Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为all，其余可以选择1，7，30，365']"/>
 
+### 好文分类
+
+<Route author="LogicJake" example="/smzdm/haowen/fenlei/shenghuodianqi" path="/smzdm/haowen/fenlei/:name/:sort?" :paramsDesc="['分类名，可在 URL 中查看','排序方式，默认为最新']">
+
+| 最新 | 周排行 | 月排行 |
+| ---- | ------ | ------ |
+| 0    | 7      | 30     |
+
+</Route>
+
 ## 甩甩尾巴
 
 ### 分类

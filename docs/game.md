@@ -38,6 +38,12 @@ pageClass: routes
 
 <Route author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
 
+## MaxNews
+
+### Dota 2
+
+<Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
+
 ## Nintendo
 
 ### eShop 新发售游戏
@@ -198,9 +204,3 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 公告
 
 <Route author="magic-akari" example="/kirara/news" path="/kirara/news"/>
-
-## MaxNews
-
-### Dota 2
-
-<Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
