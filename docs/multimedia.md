@@ -202,6 +202,12 @@ pageClass: routes
 
 <Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
 
+## 柠檬 私房歌 (ningmeng.name)
+
+### 私房歌
+
+<Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" />
+
 ## 色花堂中文论坛
 
 ### 原创 BT 电影
