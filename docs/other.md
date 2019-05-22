@@ -392,6 +392,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="WenryXu" example="/duozhi" path="/duozhi"/>
 
+## 飞地
+
+### 分类
+
+<Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
+
 ## 福利资源-met.red
 
 ### 福利资源-met.red
@@ -408,7 +414,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 观察者风闻话题
 
-<Route author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+<Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+
+## 数英网
+
+### 数英网最新文章
+
+<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
 
 ## 果壳网
 
@@ -785,8 +797,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 首页
 
-<Route author="kimi360" example="/iplay/home" path="/iplay/home">
-</Route>
+<Route author="kimi360" example="/iplay/home" path="/iplay/home"/>
 
 ## 移动支付网
 
@@ -800,6 +811,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
+## 语雀
+
+### 知识库
+
+<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+
+| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
+| ------------ | -------------- | ------------ |
+| 75258        | 102804         | 75257        |
+
+</Route>
+
 ## 中国大学 MOOC(慕课)
 
 ### 最新
@@ -810,7 +833,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 中国银行外汇牌价
 
-<Route author="LogicJake" example="/boc/whpj" path="/boc/whpj" />
+<Route author="LogicJake HenryQW" example="/boc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91" path="/boc/whpj/:format?" :paramsDesc="['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']">
+
+| 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
+| ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
+
+</Route>
 
 ## 自如
 
