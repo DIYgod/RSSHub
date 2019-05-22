@@ -696,6 +696,28 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
 
+### 数英网文章专题
+
+<Route author="occupy5" example="/digitaling/articles/latest" path="/digitaling/articles/:category/:subcate?" :paramsDesc="['文章专题分类 ','hot分类下的子类']" />
+
+| 最新文章 | 头条     | 热文 | 精选   |
+| -------- | -------- | ---- | ------ |
+| latest   | headline | hot  | choice |
+
+分类`hot`下的子类
+
+| 近期热门文章 | 近期最多收藏 | 近期最多赞 |
+| ------------ | ------------ | ---------- |
+| views        | collects     | zan        |
+
+### 数英网项目专题
+
+<Route author="occupy5" example="/digitaling/projects/all" path="/digitaling/projects/:category" :paramsDesc="['项目专题分类 ']" />
+
+| 全部 | 每周项目精选 | 每月项目精选 | 海外项目精选  | 近期热门项目 | 近期最多收藏 |
+| ---- | ------------ | ------------ | ------------- | ------------ | ------------ |
+| all  | weekly       | monthly      | international | hot          | favorite     |
+
 ## 刷屏
 
 ### 最新
