@@ -28,6 +28,10 @@ pageClass: routes
 
 <Route author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
 
+### 最新限免（GoFans）
+
+<Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans"/>
+
 ## Bugly SDK
 
 ### 更新日志

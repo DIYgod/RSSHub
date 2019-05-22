@@ -205,7 +205,7 @@ sidebar: auto
 
     ```js
     // 使用 RSSHub 提供的 puppeteer 工具类，初始化 Chrome 进程
-    const browser = await require('../../utils/puppeteer')();
+    const browser = await require('@/utils/puppeteer')();
     // 创建一个新的浏览器页面
     const page = await browser.newPage();
     // 访问指定的链接
@@ -275,7 +275,7 @@ sidebar: auto
     3. RSS 标题（非 item 标题）
 
     ```js
-    const buildData = require('../../utils/common-config');
+    const buildData = require('@/utils/common-config');
     module.exports = async (ctx) => {
         ctx.state.data = await buildData({
             link: RSS来源链接,
@@ -293,7 +293,7 @@ sidebar: auto
     建议在打开[此链接](https://www.uraaka-joshi.com/)的开发者工具之后再阅读以下内容，请善用开发者工具的搜索功能搜寻`$('xxx')`中的内容
 
     ```js
-    const buildData = require('../../utils/common-config');
+    const buildData = require('@/utils/common-config');
 
     module.exports = async (ctx) => {
         const link = `https://www.uraaka-joshi.com/`;
