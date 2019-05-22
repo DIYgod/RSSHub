@@ -811,6 +811,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
+## 语雀
+
+### 知识库
+
+<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+
+| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
+| ------------ | -------------- | ------------ |
+| 75258        | 102804         | 75257        |
+
+</Route>
+
 ## 中国大学 MOOC(慕课)
 
 ### 最新
