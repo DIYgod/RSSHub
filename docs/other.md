@@ -674,6 +674,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
 
+### 专题
+
+<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
+此为专题广场更新提示=>集合型而非单篇文章.与下方"专题内文章更新"存在明显区别!
+</Route>
+
+### 专题内文章更新
+
+<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
+
 ## 世界卫生组织
 
 ### 媒体中心
@@ -681,6 +691,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
 
 ## 数英网
+
+### 数英网最新文章
+
+<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
 
 ### 数英网文章专题
 
@@ -829,6 +843,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
+## 语雀
+
+### 知识库
+
+<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+
+| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
+| ------------ | -------------- | ------------ |
+| 75258        | 102804         | 75257        |
+
+</Route>
+
 ## 中国大学 MOOC(慕课)
 
 ### 最新
@@ -852,3 +878,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 房源
 
 <Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
+
+## 紫竹张先生
+
+### 全文
+
+<Route author="HenryQW" example="/zzz" path="/zzz/index"/>
