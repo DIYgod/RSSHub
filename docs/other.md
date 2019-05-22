@@ -674,6 +674,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
 
+### 专题
+
+<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
+此为专题广场更新提示=>集合型而非单篇文章.与下方"专题内文章更新"存在明显区别!
+</Route>
+
+### 专题内文章更新
+
+<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
+
 ## 世界卫生组织
 
 ### 媒体中心
