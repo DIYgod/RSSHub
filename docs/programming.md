@@ -4,6 +4,15 @@ pageClass: routes
 
 # 编程
 
+## AlgoCasts
+
+### 视频更新
+
+<Route author="ImSingee" example="/algocasts" path="/algocasts"></Route>
+
+> 默认只有更新提醒，如果加上 `?full=1` 参数则可额外输出标签和描述信息，开启此选项默认仅拉取前十条最近更新。
+> AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
 ## Dockone
 
 ### 周报
