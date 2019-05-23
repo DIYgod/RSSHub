@@ -646,6 +646,16 @@ pageClass: routes
 
 <Route author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
 
+### 公众号（Telegrame 频道来源）
+
+<Route author="LogicJake" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id" :paramsDesc="['公众号绑定频道 id']">
+
+::: warning 注意
+
+该方法需要通过 efb 进行频道绑定，具体操作见[https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
+:::
+</Route>
+
 ### 公众平台系统公告栏目
 
 <Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
