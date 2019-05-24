@@ -82,7 +82,7 @@
     "plist": "3.0.1",
     "puppeteer": "1.17.0",
     "redis": "2.8.0",
-    "rss-parser": "3.7.0",
+    "rss-parser": "3.7.1",
     "sanitize-html": "1.20.1",
     "sharp": "0.22.1",
     "socks-proxy-agent": "4.0.2",
