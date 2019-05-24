@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
+## Bing 壁纸
+
+### 每日壁纸
+
+<Route author="FHYunCai" example="/bing" path="/bing"/>
+
 ## Konachan Anime Wallpapers
 
 ::: tip 提示
@@ -151,9 +157,3 @@ pageClass: routes
 ### 主题
 
 <Route author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" :paramsDesc="['主题 id']"/>
-
-## Bing 壁纸
-
-### 每日壁纸
-
-<Route author="FHYunCai" example="/bing" path="/bing"/>
