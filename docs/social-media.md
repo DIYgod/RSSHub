@@ -640,7 +640,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
 
-### 公众号（Telegrame 频道来源）
+### 公众号（Telegram 频道来源）
 
 <Route author="LogicJake" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id" :paramsDesc="['公众号绑定频道 id']">
 
