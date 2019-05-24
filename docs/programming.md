@@ -8,9 +8,8 @@ pageClass: routes
 
 ### 视频更新
 
-<Route author="ImSingee" example="/algocasts" path="/algocasts/:full?" :paramsDesc="['是否输出详情']"></Route>
+<Route author="ImSingee" example="/algocasts" path="/algocasts"></Route>
 
-> 默认只有更新内容标题，如果传入任何非空 `full` 参数则可额外输出标签和描述信息，开启此选项则仅拉取前十条最近更新。
 > AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
 ## Dockone
