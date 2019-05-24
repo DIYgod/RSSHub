@@ -4,6 +4,14 @@ pageClass: routes
 
 # 编程
 
+## AlgoCasts
+
+### 视频更新
+
+<Route author="ImSingee" example="/algocasts" path="/algocasts"></Route>
+
+> AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
 ## Dockone
 
 ### 周报
