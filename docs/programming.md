@@ -4,6 +4,14 @@ pageClass: routes
 
 # 编程
 
+## AlgoCasts
+
+### 视频更新
+
+<Route author="ImSingee" example="/algocasts" path="/algocasts"></Route>
+
+> AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
 ## Dockone
 
 ### 周报
@@ -117,7 +125,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 打卡
 
-<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['国家 country, 中国(cn)和美国(us)', '用户名 user, 可在LeetCode用户主页的 URL 中找到']"/>
+<Route author="NathanDai" example="/leetcode/us/nathandai" path="/leetcode/:country:user" :paramsDesc="['国家 country, 中国(cn)和美国(us)', '用户名 user, 可在LeetCode用户主页的 URL 中找到']"/>
 
 ## LinkedKeeper
 
