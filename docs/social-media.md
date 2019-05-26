@@ -298,7 +298,7 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/15939161" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']"/>
 
-# Saraba1st
+## Saraba1st
 
 ### 帖子
 
