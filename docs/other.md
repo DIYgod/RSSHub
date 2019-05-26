@@ -552,6 +552,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="junfengP" example="/mlhang" path="/mlhang" />
 
+## 没品
+
+### 首页
+
+<Route author="yeFoenix" example="/meipin" path="/meipin"/>
+
 ## 每日安全
 
 ### 推送
