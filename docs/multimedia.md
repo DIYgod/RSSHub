@@ -202,6 +202,16 @@ pageClass: routes
 
 <Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
 
+## 猫眼电影
+
+### 正在热映
+
+<Route author="HenryQW" example="/maoyan/hot" path="/maoyan/hot" />
+
+### 即将上映
+
+<Route author="HenryQW" example="/maoyan/upcoming" path="/maoyan/upcoming" />
+
 ## 柠檬 私房歌 (ningmeng.name)
 
 ### 私房歌
