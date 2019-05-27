@@ -25,13 +25,13 @@ pageClass: routes
 
 ::: tip 提示
 
-网站提供了全部种子的 RSS: https://eztv.ag/ezrss.xml
+网站提供了全部种子的 RSS: https://eztv.io/ezrss.xml
 
 :::
 
 ### Lookup Torrents by IMDB ID
 
-<Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']"/>
+<Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']" supportBT="1"/>
 
 ## JavBus
 
