@@ -885,8 +885,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
 
-##空气质量
+## 空气质量
 
-###实时 AQI
+### 实时 AQI
 
-<Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音，详见[aqicn.org](http://aqicn.org/city/)']"/>
+<Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
