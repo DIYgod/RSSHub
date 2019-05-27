@@ -298,16 +298,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/15939161" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']"/>
 
-## Saraba1st
-
-### 帖子
-
-<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']">
-
-帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
-
-</Route>
-
 ## pixiv
 
 ### 用户收藏
@@ -335,6 +325,16 @@ pageClass: routes
 ### 关键词
 
 <Route author="DIYgod" example="/pixiv/search/麻衣/popular" path="/pixiv/search/:keyword/:order?" :paramsDesc="['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序']"/>
+
+## Saraba1st
+
+### 帖子
+
+<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']">
+
+帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
+
+</Route>
 
 ## Telegram
 
