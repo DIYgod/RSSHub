@@ -117,6 +117,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Hacker News
+
+### Top Links
+
+<Route author="cf020031308" example="/hackernews/best" path="/hackernews/best" />
+
 ## LeetCode
 
 ### 文章
