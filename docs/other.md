@@ -890,3 +890,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## cnBeta
+
+### 最新
+
+<Route author="kt286" example="/cnbeta" path="/cnbeta"/>
