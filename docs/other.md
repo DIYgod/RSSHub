@@ -831,6 +831,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 新浪专栏
+
+### 创事记
+
+<Route author="xapool" example="/sina/csj" path="/sina/csj"/>
+
 ## 异次元软件世界
 
 ### 首页
@@ -895,3 +901,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## cnBeta
+
+### 最新
+
+<Route author="kt286" example="/cnbeta" path="/cnbeta"/>
