@@ -388,7 +388,7 @@ pageClass: routes
 
 ### 正在上映的高分电影
 
-<Route author="DIYgod" example="/douban/movie/playing/7.5/杭州" path="/douban/movie/playing/:score/:city?" :paramsDesc="['返回大于等于这个分数的电影', '城市的中文名, 可选, 默认北京']"/>
+<Route author="DIYgod" example="/douban/movie/playing/7.5" path="/douban/movie/playing/:score" :paramsDesc="['返回大于等于这个分数的电影'"/>
 
 ### 即将上映的电影
 
