@@ -25,13 +25,13 @@ pageClass: routes
 
 ::: tip 提示
 
-网站提供了全部种子的 RSS: https://eztv.ag/ezrss.xml
+网站提供了全部种子的 RSS: https://eztv.io/ezrss.xml
 
 :::
 
 ### Lookup Torrents by IMDB ID
 
-<Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']"/>
+<Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']" supportBT="1"/>
 
 ## JavBus
 
@@ -201,6 +201,34 @@ pageClass: routes
 ### 最新电影
 
 <Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
+
+## 猫眼电影
+
+### 正在热映
+
+<Route author="HenryQW" example="/maoyan/hot" path="/maoyan/hot" />
+
+### 即将上映
+
+<Route author="HenryQW" example="/maoyan/upcoming" path="/maoyan/upcoming" />
+
+## 柠檬 私房歌 (ningmeng.name)
+
+### 私房歌
+
+<Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" />
+
+## 色花堂中文论坛
+
+### 原创 BT 电影
+
+<Route author="qiwihui junfengP" example="/dsndsht23" path="/dsndsht23/:subforumid?" supportBT="1" :paramsDesc="['版块 id, 为空默认高清中文字幕']">
+
+| 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV |
+| -------- | -------- | ------------ | ------------ | ------------ | -------- | ------------ | ------- | -------- | -------- | ----------- | ------------ |
+| mrhj     | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | yzmzym       | vr      | omwm     | dmyc     | ai          | ydsc         |
+
+</Route>
 
 ## 腾讯视频
 

@@ -78,6 +78,14 @@ pageClass: routes
 
 <Route author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
+### 限时免费
+
+<Route author="LogicJake" example="/qidian/free" path="/qidian/free/:type?" :paramsDesc="['默认不填为起点中文网，填 mm 为起点女生网']"/>
+
+### 限时免费下期预告
+
+<Route author="LogicJake" example="/qidian/free-next" path="/qidian/free-next/:type?" :paramsDesc="['默认不填为起点中文网，填 mm 为起点女生网']"/>
+
 ## 青空文庫
 
 ### 青空文庫新着リスト

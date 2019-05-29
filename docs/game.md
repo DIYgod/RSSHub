@@ -38,11 +38,25 @@ pageClass: routes
 
 <Route author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
 
+## MaxNews
+
+### Dota 2
+
+<Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
+
 ## Nintendo
 
 ### eShop 新发售游戏
 
-<Route author="Aaron Liu" example="/nintendo/eshop/hk" path="/nintendo/eshop/：region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服)']"/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服)']"/>
+
+### 首页资讯（香港）
+
+<Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+
+### 直面会
+
+<Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
 ## PlayStation Store
 
@@ -88,6 +102,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### Steam news
 
 <Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']"/>
+
+## SteamGifts
+
+### Discussions
+
+<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
 
 ## 旅法师营地
 

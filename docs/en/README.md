@@ -249,13 +249,17 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### Twitter
 
-### User
+### User timeline
 
-<RouteEn path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['twitter handler']" />
+<RouteEn path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['user name']" />
 
-### List
+### List timeline
 
 <RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']"/>
+
+### User likes
+
+<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']"/>
 
 ### Instagram
 
