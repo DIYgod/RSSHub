@@ -849,6 +849,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/mpaypass/news" path="/mpaypass/news"/>
 
+### 分类
+
+<Route author="zhuan-zhu" example="/mpaypass/main/policy" path="mpaypass/main/:type?"
+:paramsDesc="['新闻类型,类型可在URL中找到，类似policy，eye等，空或其他任意值展示最新新闻']"/>
+
 ## 油价
 
 ### 今日油价
