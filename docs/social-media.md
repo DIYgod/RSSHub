@@ -490,7 +490,7 @@ pageClass: routes
 
 ### 首页
 
-<Route author="HenryQW" example="/qdaily/notch/index" path="/qdaily/notch/index" />
+<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
 
 ### 探索
 
