@@ -182,6 +182,16 @@ pageClass: routes
 :::
 </Route>
 
+### 用户关注专栏
+
+<route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']">
+::: warning 注意
+
+用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+</Route>
+
 ### 直播开播
 
 见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
