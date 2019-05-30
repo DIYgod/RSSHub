@@ -4,6 +4,14 @@ pageClass: routes
 
 # 编程
 
+## AlgoCasts
+
+### 视频更新
+
+<Route author="ImSingee" example="/algocasts" path="/algocasts"></Route>
+
+> AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+
 ## Dockone
 
 ### 周报
@@ -109,11 +117,42 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Hacker News
+
+### 分类
+
+<Route author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['内容分区', '链接类型（可不填）']">
+
+网站地址：https://news.ycombinator.com/
+
+| 内容分区 | section                             |
+| -------- | ----------------------------------- |
+| index    | https://news.ycombinator.com/       |
+| new      | https://news.ycombinator.com/newest |
+| past     | https://news.ycombinator.com/front  |
+| ask      | https://news.ycombinator.com/ask    |
+| show     | https://news.ycombinator.com/show   |
+| jobs     | https://news.ycombinator.com/jobs   |
+| best     | https://news.ycombinator.com/best   |
+
+> 网站有默认的 RSS：https://news.ycombinator.com/rss 内容同 index，应优先考虑
+
+| 链接类型 | type                          |
+| -------- | ----------------------------- |
+| story    | 默认值，链向用户分享的地址    |
+| comments | 链向 Hacker News 上的讨论页面 |
+
+</Route>
+
 ## LeetCode
 
 ### 文章
 
 <Route author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
+
+### 打卡
+
+<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['国家 country, 中国(cn)和美国(us)', '用户名 user, 可在LeetCode用户主页的 URL 中找到']"/>
 
 ## LinkedKeeper
 
