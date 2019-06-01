@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "art-template": "4.13.2",
-    "axios": "0.18.0",
+    "axios": "0.19.0",
     "axios-retry": "3.1.2",
     "cheerio": "1.0.0-rc.3",
     "co-redis": "2.1.1",
