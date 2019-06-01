@@ -256,8 +256,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']">
 
--   频道为单一路径, 如 <https://www.ifanr.com/>`coolbuy` 则为 `/ifanr/coolbuy`.
--   频道包含多重路径, 如 <https://www.ifanr.com/>`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
+-   频道为单一路径, 如 https://www.ifanr.com/`coolbuy` 则为 `/ifanr/coolbuy`.
+-   频道包含多重路径, 如 https://www.ifanr.com/`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
 
 | AppSolution | 玩物志  | 董车会                  |
 | ----------- | ------- | ----------------------- |
