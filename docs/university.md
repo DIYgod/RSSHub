@@ -632,6 +632,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 计算机科学与技术学院通知
+
+<Route author="suxb201" example="/sdu/cs/0" path="/universities/sdu/cs/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院公告 | 学术报告 | 新闻动态 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学教务处通知公告
