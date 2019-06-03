@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="Chingyat" example="/pigtails" path="/pigtails/index"/>
 
+## Bing 壁纸
+
+### 每日壁纸
+
+<Route author="FHYunCai" example="/bing" path="/bing"/>
+
 ## Konachan Anime Wallpapers
 
 ::: tip 提示
