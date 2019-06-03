@@ -19,7 +19,7 @@ sidebar: auto
 
 #### 获取源数据
 
--   获取源数据的主要手段为使用 [axios](https://github.com/axios/axios) 发起 HTTP 请求（请求接口或请求网页）获取数据
+-   获取源数据的主要手段为使用 [got](https://github.com/sindresorhus/got) 发起 HTTP 请求（请求接口或请求网页）获取数据
 -   个别情况需要使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 模拟浏览器渲染目标页面并获取数据
 
 -   返回的数据一般为 JSON 或 HTML 格式
@@ -27,15 +27,15 @@ sidebar: auto
 
 -   以下三种获取数据方法按 **「推荐优先级」** 排列：
 
-    1. **使用 axios 从接口获取数据**
+    1. **使用 got 从接口获取数据**
 
     样例：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
-    使用 axios 通过数据源提供的 API 接口获取数据：
+    使用 got 通过数据源提供的 API 接口获取数据：
 
     ```js
     // 发起 HTTP GET 请求
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/space/coin/video?vmid=${uid}&jsonp=jsonp`,
     });
@@ -88,15 +88,15 @@ sidebar: auto
     // 至此本路由结束
     ```
 
-    2. **使用 axios 从 HTML 获取数据**
+    2. **使用 got 从 HTML 获取数据**
 
     有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
 
-    使用 axios 请求 HTML 数据：
+    使用 got 请求 HTML 数据：
 
     ```js
     // 发起 HTTP GET 请求
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: 'https://www.jianshu.com',
     });
@@ -129,7 +129,7 @@ sidebar: auto
     // 专门定义一个function用于加载文章内容
     async function load(link) {
         // 异步请求文章
-        const response = await axios.get(link);
+        const response = await got.get(link);
         // 加载文章内容
         const $ = cheerio.load(response.data);
 

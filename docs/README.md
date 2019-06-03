@@ -47,7 +47,7 @@ Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 **Q: 演示地址可以用么？**
 
-**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟, 可以随意使用。部分网站反爬策略严格，如微博、知乎、即刻，可能无法确保可用性，自建可以提高稳定性。
+**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟, 可以随意使用。部分网站反爬策略严格，如微博、知乎，可能无法确保可用性，自建可以提高稳定性。
 
 **Q: 为什么 RSSHub 里的图片加载不出来？**
 

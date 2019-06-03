@@ -182,6 +182,16 @@ pageClass: routes
 :::
 </Route>
 
+### 用户关注专栏
+
+<route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']">
+::: warning 注意
+
+用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+</Route>
+
 ### 直播开播
 
 见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
@@ -388,7 +398,7 @@ pageClass: routes
 
 ### 正在上映的高分电影
 
-<Route author="DIYgod" example="/douban/movie/playing/7.5/杭州" path="/douban/movie/playing/:score/:city?" :paramsDesc="['返回大于等于这个分数的电影', '城市的中文名, 可选, 默认北京']"/>
+<Route author="DIYgod" example="/douban/movie/playing/7.5" path="/douban/movie/playing/:score" :paramsDesc="['返回大于等于这个分数的电影']"/>
 
 ### 即将上映的电影
 
@@ -600,19 +610,9 @@ pageClass: routes
 
 ## 微博
 
-### 博主（方案 1）
+### 博主
 
 <Route author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']" crawlerBadge="1"/>
-
-::: warning 注意
-
-上述方案 1 获取 V+ 付费博主会有数据缺失, 所以这里提供方案 2 , 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
-
-:::
-
-### 博主（方案 2）
-
-<Route author="DIYgod" example="/weibo/user2/1195230310" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
 ### 关键词
 

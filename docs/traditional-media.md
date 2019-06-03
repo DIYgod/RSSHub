@@ -184,6 +184,16 @@ category 对应的关键词有
 
 </Route>
 
+## 连线 Wired
+
+非订阅用户每月有阅读全文次数限制。
+
+### 标签
+
+<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']">
+
+</Route>
+
 ## 南方周末
 
 ### 新闻分类
