@@ -168,7 +168,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
             // use tryGet() to query the cache
             // if the query returns no result, query the data source via load() to get article content
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
 
             // merge two objects to form the final output
             return Promise.resolve(Object.assign({}, single, other));
@@ -202,7 +202,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
     ```js
     // use puppeteer util class, initialise a browser instance
-    const browser = await require('../../utils/puppeteer')();
+    const browser = await require('@/utils/puppeteer')();
     // open a new page
     const page = await browser.newPage();
     // access the target link
@@ -270,7 +270,7 @@ By default there is a global caching period set in `lib/config.js`, some sources
 -   Save to cache:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time is the caching period in seconds.
+ctx.cache.set((key: string), (value: string)); // time is the caching period in seconds.
 ```
 
 -   Access the cache:
@@ -285,7 +285,7 @@ Given the update frequency is known, set the appropriate caching period to reuse
 
 ```js
 const key = 'daily' + story.id; // story.id is the unique identifier of each article
-ctx.cache.set(key, item.description, 24 * 60 * 60); // set the caching period to 24 hours * 60 minutes * 60 seconds = 86,400 seconds = 1 day
+ctx.cache.set(key, item.description); // set cache
 ```
 
 When the identical requests come in, reuse the cache：
@@ -422,7 +422,6 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
 1.  Update [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
 
     -   Documentation uses vue component:
-        -   `name`: route name
         -   `author`: route authors, separated by a single space
         -   `example`: route example
         -   `path`: route path
@@ -436,16 +435,15 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
         -   Multiple parameters:
 
         ```vue
-        <RouteEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        <RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
         ```
 
-        <RouteEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        <RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
 
         -   Use component slot for complicated description:
 
         ```vue
         <RouteEn
-            name="Flight Deals"
             author="HenryQW"
             path="/hopper/:lowestOnly/:from/:to?"
             example="/hopper/1/LHR/PEK"
@@ -460,7 +458,7 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
         </RouteEn>
         ```
 
-        <RouteEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+        <RouteEn author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
 
         This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 

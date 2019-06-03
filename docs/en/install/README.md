@@ -4,13 +4,13 @@ sidebar: auto
 
 # Deployment
 
-RSSHub provides a painless deployment process if you are equipped with basic programming knowledge, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
+RSSHub provides a painless deployment process if you are equipped with basic programming knowledge, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new/choose) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
 
 The deployment may involve the followings:
 
 1. Command line interface
 1. [Git](https://git-scm.com/)
-1. [Node.js >= 8.0.0](https://nodejs.org/)
+1. [Node.js](https://nodejs.org/)
 1. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 Deploy for public access may require:
@@ -82,15 +82,14 @@ $ git pull
 
 `RSSHub` reads its configurations from `lib/config.js` or system environment variables.
 
-**How to set system environment variables**
+Create a `.env` file in the root directory of your project. Add environment-specific variables on new lines in the form of `NAME=VALUE`. For example:
 
-Under Windows, enter `$ set PORT=1000` in cmd
+```
+CACHE_TYPE=redis
+CACHE_EXPIRE=600
+```
 
-Under UNIX-based OS, enter `$ PORT=1000` in terminal
-
-Enter `$ npm start` to start a `RSSHub` install with port `1000`.
-
-System environment variables set here will be purged after closing cmd/terminal, if you want persist the variables, you can create a simple [batch script](https://en.wikipedia.org/wiki/Batch_file) or [shell script](https://en.wikipedia.org/wiki/Shell_script).
+Please notice that it will not override already existed environment variables, more rules please refer to [dotenv](https://github.com/motdotla/dotenv)
 
 To configure more options please refer to [Settings](#Settings).
 
@@ -267,7 +266,9 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `CACHE_TYPE`: cache type, `memory` or `redis`, empty this value will disable caching, default to `memory`
 
-`CACHE_EXPIRE`: cache expiry time in seconds, default to `300`
+`CACHE_EXPIRE`: route cache expiry time in seconds, default to `5 * 60`
+
+`CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, it will be recalculated when it is accessed, default to `1 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
@@ -283,11 +284,15 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
-`PROXY_PROTOCOL`: Using proxy of such protocol, Supports socks, socks4,socks4a,socks5,socks5h
+`PROXY_PROTOCOL`: Using proxy, Supports socks, http, https
 
-`PROXY_HOST`: host of the proxy
+`PROXY_HOST`: host or IP of the proxy
 
 `PROXY_PORT`: port of the proxy
+
+`PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
+
+`PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
 
 ### User Authentication
 

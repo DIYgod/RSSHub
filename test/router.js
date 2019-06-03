@@ -21,7 +21,7 @@ async function checkRSS(response) {
     expect(parsed.description).toEqual(expect.any(String));
     expect(parsed.link).toEqual(expect.any(String));
     expect(parsed.lastBuildDate).toEqual(expect.any(String));
-    expect(parsed.ttl).toEqual(config.cacheExpire + '');
+    expect(parsed.ttl).toEqual(config.cache.routeExpire + '');
     expect(parsed.items).toEqual(expect.any(Array));
     checkDate(parsed.lastBuildDate);
 

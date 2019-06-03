@@ -3,7 +3,7 @@
     "description": "万物皆可 RSS",
     "repository": "https://github.com/DIYgod/RSSHub",
     "website": "https://docs.rsshub.app/",
-    "logo": "https://i.imgur.com/NZpRScX.png",
+    "logo": "https://i.loli.net/2019/04/23/5cbeb7e41414c.png",
     "keywords": ["RSS"],
     "env": {
         "NODE_MODULES_CACHE": {

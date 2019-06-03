@@ -170,7 +170,7 @@ sidebar: auto
 
             // 使用 tryGet() 方法从缓存获取内容
             // 当缓存中无法获取到链接内容的时候，则使用 load() 方法加载文章内容
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
 
             // 合并解析后的结果集作为该篇文章最终的输出结果
             return Promise.resolve(Object.assign({}, single, other));
@@ -205,7 +205,7 @@ sidebar: auto
 
     ```js
     // 使用 RSSHub 提供的 puppeteer 工具类，初始化 Chrome 进程
-    const browser = await require('../../utils/puppeteer')();
+    const browser = await require('@/utils/puppeteer')();
     // 创建一个新的浏览器页面
     const page = await browser.newPage();
     // 访问指定的链接
@@ -275,7 +275,7 @@ sidebar: auto
     3. RSS 标题（非 item 标题）
 
     ```js
-    const buildData = require('../../utils/common-config');
+    const buildData = require('@/utils/common-config');
     module.exports = async (ctx) => {
         ctx.state.data = await buildData({
             link: RSS来源链接,
@@ -293,7 +293,7 @@ sidebar: auto
     建议在打开[此链接](https://www.uraaka-joshi.com/)的开发者工具之后再阅读以下内容，请善用开发者工具的搜索功能搜寻`$('xxx')`中的内容
 
     ```js
-    const buildData = require('../../utils/common-config');
+    const buildData = require('@/utils/common-config');
 
     module.exports = async (ctx) => {
         const link = `https://www.uraaka-joshi.com/`;
@@ -327,7 +327,7 @@ sidebar: auto
 -   添加缓存:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存时间。单位为秒。
+ctx.cache.set((key: string), (value: string)); // time 为缓存时间。单位为秒。
 ```
 
 -   获取缓存:
@@ -342,7 +342,7 @@ const value = await ctx.cache.get((key: string));
 
 ```js
 const key = 'daily' + story.id; // story.id 为知乎日报返回的文章唯一识别符
-ctx.cache.set(key, item.description, 24 * 60 * 60); // 设置缓存时间为 24小时 * 60分钟 * 60秒 = 86400秒 = 1天
+ctx.cache.set(key, item.description); // 设置缓存
 ```
 
 当同样的请求被发起时，优先使用未过期的缓存：
@@ -477,7 +477,6 @@ ctx.state.data = {
 1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
 
     -   文档采用 vue 组件形式，格式如下：
-        -   `name`: 路由名称
         -   `author`: 路由作者，多位作者使用单个空格分隔
         -   `example`: 路由举例
         -   `path`: 路由路径
@@ -491,14 +490,14 @@ ctx.state.data = {
         1. 多参数：
 
         ```vue
-        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
+        <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
         ```
 
         结果预览：
 
         ***
 
-        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
         ***
 
@@ -506,14 +505,14 @@ ctx.state.data = {
         2. 无参数:
 
         ```vue
-        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
         ```
 
         结果预览：
 
         ***
 
-        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
         ***
 
@@ -521,7 +520,7 @@ ctx.state.data = {
         3. 复杂说明支持 slot:
 
         ```vue
-        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
@@ -534,7 +533,7 @@ ctx.state.data = {
 
         ***
 
-        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
