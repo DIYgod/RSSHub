@@ -74,6 +74,14 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## Dilbert Comic Strip
+
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+
+通过提取漫画，提供比官方源更佳的阅读体验。
+
+</Route>
+
 ## DoNews
 
 ### 栏目
