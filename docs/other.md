@@ -915,11 +915,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## Dilbert Comic Strip
-
-<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
-
-通过提取漫画全文，提供比官方源更佳的阅读体验。
-
-</Route>
