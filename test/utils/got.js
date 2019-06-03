@@ -1,8 +1,8 @@
-const axios = require('../../lib/utils/axios');
+const got = require('../../lib/utils/got');
 const config = require('../../lib/config');
 const nock = require('nock');
-describe('axios', () => {
-    it('axios headers', async () => {
+describe('got', () => {
+    it('got headers', async () => {
         nock('http://fortest.com')
             .get('/test')
             .reply(function() {
@@ -16,12 +16,12 @@ describe('axios', () => {
                 ];
             });
 
-        const response = await axios.get('http://fortest.com/test');
+        const response = await got.get('http://fortest.com/test');
         expect(response.status).toBe(200);
         expect(response.data.code).toBe(0);
     });
 
-    it('axios retry', async () => {
+    it('got retry', async () => {
         const requestRun = jest.fn();
         let requestTime;
         nock('http://fortest.com')
@@ -44,7 +44,7 @@ describe('axios', () => {
             });
 
         try {
-            await axios.get('http://fortest.com/testRerty');
+            await got.get('http://fortest.com/testRerty');
         } catch (error) {
             expect(error.name).toBe('RequestError');
         }
