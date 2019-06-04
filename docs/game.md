@@ -177,6 +177,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 游戏打折情报
+
+### 游戏折扣
+
+<Route author="LogicJake" example="/yxdzqb/hot_chinese" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
+
+| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
+| -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
+| new            | hot                | hot_chinese            | low            | low_chinese            |
+
+</Route>
+
 ## 游戏时光
 
 ### 游戏时光新闻
