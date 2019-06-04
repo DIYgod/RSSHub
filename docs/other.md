@@ -74,6 +74,16 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## Dan Abramov Blog
+
+### overreacted
+
+<Route author="chenyueban" example="/dan-abramov" path="/dan-abramov">
+
+> Dan Abramov(Redux 作者, React 开发团队成员) 的 Blog
+
+</Route>
+
 ## Dilbert Comic Strip
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
