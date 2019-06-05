@@ -13,6 +13,8 @@ sidebar: auto
 
 ## 提交新的 RSS 内容
 
+开始编写 RSS 源前请确认源站没有提供 RSS，部分网页会在 HTML 头部包含 type 为 `application/atom+xml` 或 `application/rss+xml` 的 link 元素来指明 RSS 链接
+
 ### 步骤 1: 编写脚本
 
 在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
@@ -90,7 +92,7 @@ sidebar: auto
 
     2. **使用 got 从 HTML 获取数据**
 
-    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
+    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/douban/explore.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)。
 
     使用 got 请求 HTML 数据：
 
@@ -98,7 +100,7 @@ sidebar: auto
     // 发起 HTTP GET 请求
     const response = await got({
         method: 'get',
-        url: 'https://www.jianshu.com',
+        url: 'https://www.douban.com/explore',
     });
 
     const data = response.data; // response.data 为 HTTP GET 请求返回的 HTML，也就是简书首页的所有 HTML
@@ -108,85 +110,39 @@ sidebar: auto
 
     ```js
     const $ = cheerio.load(data); // 使用 cheerio 加载返回的 HTML
-    const list = $('.note-list li').get();
-    // 使用 cheerio 选择器，选择 class="note-list" 下的所有 "li"元素，返回 cheerio node 对象数组
-    // cheerio get() 方法将 cheerio node 对象数组转换为 node 对象数组
+    const list = $('div[data-item_id]');
+    // 使用 cheerio 选择器，选择 class="list-item" 的所有元素，返回 cheerio node 对象数组
 
     // 注：每一个 cheerio node 对应一个 HTML DOM
     // 注：cheerio 选择器与 jquery 选择器几乎相同
     // 参考 cheerio 文档：https://cheerio.js.org/
     ```
 
-    使用 /jianshu/utils.js 类进行全文获取：
-
-    ```js
-    const result = await util.ProcessFeed(list, ctx.cache);
-    ```
-
-    /jianshu/utils.js 类中的全文获取逻辑：
-
-    ```js
-    // 专门定义一个function用于加载文章内容
-    async function load(link) {
-        // 异步请求文章
-        const response = await got.get(link);
-        // 加载文章内容
-        const $ = cheerio.load(response.data);
-
-        // 解析日期
-        const date = new Date(
-            $('.publish-time')
-                .text()
-                .match(/\d{4}.\d{2}.\d{2} \d{2}:\d{2}/)
-        );
-        const timeZone = 8;
-        const serverOffset = date.getTimezoneOffset() / 60;
-        const pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
-
-        // 提取内容
-        const description = $('.show-content-free').html();
-
-        // 返回解析的结果
-        return { description, pubDate };
-    }
-
-    // 使用 Promise.all() 进行 async 并发
-    const result = await Promise.all(
-        // 遍历每一篇文章
-        list.map(async (item) => {
-            const $ = cheerio.load(item);
-
-            const $title = $('.title');
-            // 还原相对链接为绝对链接
-            const itemUrl = url.resolve(host, $title.attr('href'));
-
-            // 列表上提取到的信息
-            const single = {
-                title: $title.text(),
-                link: itemUrl,
-                author: $('.nickname').text(),
-                guid: itemUrl,
-            };
-
-            // 使用 tryGet() 方法从缓存获取内容
-            // 当缓存中无法获取到链接内容的时候，则使用 load() 方法加载文章内容
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
-
-            // 合并解析后的结果集作为该篇文章最终的输出结果
-            return Promise.resolve(Object.assign({}, single, other));
-        })
-    );
-    ```
-
-    将结果 `result` 赋值给 `ctx.state.data`
+    使用 map 遍历数组，解析出每一个 item 的结果
 
     ```js
     ctx.state.data = {
-        title: '简书首页',
-        link: 'https://www.jianshu.com',
-        // 选择 <meta name="description"> 的 content 属性
-        description: $('meta[name="description"]').attr('content'),
-        item: result,
+        title: '豆瓣-浏览发现',
+        link: 'https://www.douban.com/explore',
+        item:
+            list &&
+            list
+                .map((index, item) => {
+                    item = $(item);
+                    itemPicUrl = `${item.find('a.cover').attr('style')}`.replace('background-image:url(', '').replace(')', '');
+                    return {
+                        title: item
+                            .find('.title a')
+                            .first()
+                            .text(),
+                        description: `作者：${item
+                            .find('.usr-pic a')
+                            .last()
+                            .text()}<br>描述：${item.find('.content p').text()}<br><img referrerpolicy="no-referrer" src="${itemPicUrl}">`,
+                        link: item.find('.title a').attr('href'),
+                    };
+                })
+                .get(),
     };
 
     // 至此本路由结束
@@ -200,7 +156,7 @@ sidebar: auto
 
     :::
 
-    部分网站**没有接口供调用，且页面需要渲染**才能获取正确的 HTML，
+    部分网站**没有接口供调用，且页面有加密**
     样例：[/lib/routes/sspai/series.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/sspai/series.js)
 
     ```js
@@ -288,9 +244,8 @@ sidebar: auto
     };
     ```
 
-    至此，我们的 RSS 还没有任何内容，内容需要由`item`完成，也是核心部分，需要有 CSS 选择器以及 jQuery 的函数知识（请去 W3School 学习）  
-    下面为一个实例  
-    建议在打开[此链接](https://www.uraaka-joshi.com/)的开发者工具之后再阅读以下内容，请善用开发者工具的搜索功能搜寻`$('xxx')`中的内容
+    至此，我们的 RSS 还没有任何内容，内容需要由`item`完成
+    下面为一个实例
 
     ```js
     const buildData = require('@/utils/common-config');
@@ -322,42 +277,26 @@ sidebar: auto
 
 #### 使用缓存
 
-所有路由都有一个缓存，全局缓存时间在 `lib/config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间。
+所有路由都有一个缓存，全局缓存时间在 `lib/config.js` 里设定，但某些接口返回的内容更新频率较低，这时应该给这些数据设置一个更长的缓存时间，比如需要额外请求的全文内容
 
--   添加缓存:
+例如 bilibili 专栏 需要获取文章全文：[/lib/routes/bilibili/followings_article.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/followings_article.js)
 
-```js
-ctx.cache.set((key: string), (value: string)); // time 为缓存时间。单位为秒。
-```
-
--   获取缓存:
+由于无法从一个接口获取所有文章的全文，所以每篇文章都需要单独请求一次，而这些数据一般是不变的，应该把这些数据保存到缓存里，避免每次访问路由都去请求那么多接口
 
 ```js
-const value = await ctx.cache.get((key: string));
+const description = await ctx.cache.tryGet(link, async () => {
+    const result = await got.get(link);
+
+    const $ = cheerio.load(result.data);
+    $('img').each(function(i, e) {
+        $(e).attr('src', $(e).attr('data-src'));
+    });
+
+    return $('.article-holder').html();
+});
 ```
 
-例如知乎日报需要获取文章全文：[/lib/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/zhihu/daily.js), 每篇文章都需要单独请求一次。
-
-由于已知文章更新频率为一天，把结果缓存一天，可以让后续的请求直接使用已缓存的数据，并且该缓存被再次访问后会延长过期时间，从而提升性能并节省资源。
-
-```js
-const key = 'daily' + story.id; // story.id 为知乎日报返回的文章唯一识别符
-ctx.cache.set(key, item.description); // 设置缓存
-```
-
-当同样的请求被发起时，优先使用未过期的缓存：
-
-```js
-const key = 'daily' + story.id;
-const value = await ctx.cache.get(key); // 从缓存中查询是否已存在该文章唯一识别符
-if (value) {
-    // 查询返回未过期缓存
-    item.description = value; // 直接赋值
-} else {
-    // 查询未发现未过期缓存
-    // 向数据源发起请求
-}
-```
+tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache.js#L128)，第一个参数为缓存的 key，第二个参数为缓存数据获取方法，第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)，且每次访问缓存会重新计算过期时间
 
 ---
 
