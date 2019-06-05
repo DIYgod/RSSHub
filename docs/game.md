@@ -109,6 +109,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
 
+## 怪物猎人
+
+### 更新
+
+<Route author="DIYgod" example="/monsterhunter/update" path="/monsterhunter/update"/>
+
 ## 旅法师营地
 
 ### 旅法师营地
