@@ -40,6 +40,9 @@ sidebar: auto
     const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/space/coin/video?vmid=${uid}&jsonp=jsonp`,
+        headers: {
+            Referer: `https://space.bilibili.com/${uid}/`,
+        },
     });
 
     const data = response.data.data; // response.data 为 HTTP GET 请求返回的数据对象
