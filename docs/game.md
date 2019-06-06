@@ -109,6 +109,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
 
+## 怪物猎人
+
+### 更新
+
+<Route author="DIYgod" example="/monsterhunter/update" path="/monsterhunter/update"/>
+
 ## 旅法师营地
 
 ### 旅法师营地
@@ -193,11 +199,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏时光新闻
 
-<Route author="MyFaith" example="/vgtime/news" path="vgtime/news"/>
+<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news"/>
 
 ### 游戏时光游戏发售表
 
-<Route author="MyFaith" example="/vgtime/release" path="vgtime/release"/>
+<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release"/>
+
+### 关键词资讯
+
+<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword"/>
 
 ## 游研社
 
