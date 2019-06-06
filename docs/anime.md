@@ -4,6 +4,11 @@ pageClass: routes
 
 # 二次元
 
+## 005.tv
+
+### 二次元资讯
+
+<Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
 ## Anime1
 
 ### 動畫

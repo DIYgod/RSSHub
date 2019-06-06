@@ -184,6 +184,16 @@ category 对应的关键词有
 
 </Route>
 
+## 连线 Wired
+
+非订阅用户每月有阅读全文次数限制。
+
+### 标签
+
+<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']">
+
+</Route>
+
 ## 南方周末
 
 ### 新闻分类
@@ -231,6 +241,11 @@ category 对应的关键词有
 ### 观点
 
 <Route author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
+
+### 环保频道
+
+<Route author="zsimple"  example="/people/env/74877" path="/people/env/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
+
 ### 习近平系列重要讲话
 
 <Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>

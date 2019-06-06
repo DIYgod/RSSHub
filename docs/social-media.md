@@ -182,6 +182,16 @@ pageClass: routes
 :::
 </Route>
 
+### 用户关注专栏
+
+<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']">
+::: warning 注意
+
+用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+</Route>
+
 ### 直播开播
 
 见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
@@ -258,17 +268,17 @@ pageClass: routes
 
 ### 粉絲專頁
 
-<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
+<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']" crawlerBadge="1"/>
 
 ## Instagram
 
 ### 用户
 
-<Route author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']" crawlerBadge="1"/>
 
 ### 标签
 
-<Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" />
+<Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" crawlerBadge="1"/>
 
 ## Matters
 
@@ -298,16 +308,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/15939161" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']"/>
 
-# Saraba1st
-
-### 帖子
-
-<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']">
-
-帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
-
-</Route>
-
 ## pixiv
 
 ### 用户收藏
@@ -335,6 +335,16 @@ pageClass: routes
 ### 关键词
 
 <Route author="DIYgod" example="/pixiv/search/麻衣/popular" path="/pixiv/search/:keyword/:order?" :paramsDesc="['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序']"/>
+
+## Saraba1st
+
+### 帖子
+
+<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']">
+
+帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
+
+</Route>
 
 ## Telegram
 
@@ -388,7 +398,7 @@ pageClass: routes
 
 ### 正在上映的高分电影
 
-<Route author="DIYgod" example="/douban/movie/playing/7.5/杭州" path="/douban/movie/playing/:score/:city?" :paramsDesc="['返回大于等于这个分数的电影', '城市的中文名, 可选, 默认北京']"/>
+<Route author="DIYgod" example="/douban/movie/playing/7.5" path="/douban/movie/playing/:score" :paramsDesc="['返回大于等于这个分数的电影']"/>
 
 ### 即将上映的电影
 
@@ -486,25 +496,35 @@ pageClass: routes
 
 <Route author="LogicJake" example="/vocus/user/tsetyan" path="/vocus/user/:id" :paramsDesc="['用户 id，可在用户主页的 URL 找到']"/>
 
+## 好奇怪
+
+### 首页
+
+<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
+
+### 探索
+
+<Route author="HenryQW" example="/qdaily/notch/explore/1" path="/qdaily/explore/:id" :paramsDesc="['探索 id，可通过好奇怪 APP 复制分享链接找到']"/>
+
 ## 好奇心日报
 
 ### 分类
 
-<Route author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类id，可在分类URL找到']"/>
+<Route author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类 id，可在分类 URL 找到']"/>
 
 ### 栏目
 
-<Route author="WenhuWee emdoe" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目id，可在栏目URL找到']"/>
+<Route author="WenhuWee emdoe" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目 id，可在栏目 URL 找到']"/>
 
 ### 标签
 
-<Route author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签id，可在tagURL找到']"/>
+<Route author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签 id，可在 tag URL 找到']"/>
 
 ## 虎扑
 
 ### 虎扑 BBS 论坛
 
-<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
+<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
 
 ## 即刻
 
@@ -590,19 +610,9 @@ pageClass: routes
 
 ## 微博
 
-### 博主（方案 1）
+### 博主
 
 <Route author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']" crawlerBadge="1"/>
-
-::: warning 注意
-
-上述方案 1 获取 V+ 付费博主会有数据缺失, 所以这里提供方案 2 , 这种方式的缺点是描述不如上面的完善, 建议优先选择第一种方案
-
-:::
-
-### 博主（方案 2）
-
-<Route author="DIYgod" example="/weibo/user2/1195230310" path="/weibo/user2/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']"/>
 
 ### 关键词
 
