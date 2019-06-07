@@ -695,8 +695,8 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 <Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
 
 | 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 | 本科生综合测评 |
-| -------- | ----------- | ------------ | -------- | -------- | -------- | ---- |
-| 空       | scholarship | financialAid | lecture  | activity | news     | zhcp |
+| -------- | ----------- | ------------ | -------- | -------- | -------- | -------------- |
+| 空       | scholarship | financialAid | lecture  | activity | news     | zhcp           |
 
 </Route>
 
