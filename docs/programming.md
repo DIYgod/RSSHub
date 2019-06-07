@@ -152,7 +152,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 打卡
 
-<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/us/:user" :paramsDesc="[现在只支持国际版的leetcode, '用户名 user, 可在LeetCode用户主页的 URL 中找到']"/>
+<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/us/:user" :paramsDesc="['现在只支持国际版的leetcode', '用户名 user, 可在LeetCode用户主页的 URL 中找到']"/>
 
 ## LinkedKeeper
 
