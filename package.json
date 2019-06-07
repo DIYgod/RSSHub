@@ -42,7 +42,7 @@
     "nock": "11.0.0-beta.17",
     "nodemon": "1.19.1",
     "pinyin": "2.9.0",
-    "prettier": "1.17.1",
+    "prettier": "1.18.2",
     "prettier-check": "2.0.0",
     "pretty-quick": "1.11.0",
     "supertest": "4.0.2",
