@@ -1,12 +1,28 @@
+---
+pageClass: routes
+---
+
 # 直播
+
+## kingkong 直播
+
+### 直播间开播
+
+<Route author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 哔哩哔哩直播
 
-<Route name="直播开播" author="Qixingchen" example="/bilibili/live/room/3" path="/bilibili/live/room/:roomID" :paramsDesc="['房间号, 可在直播间 URL 中找到, 长短号均可']"/>
+### 直播开播
 
-<Route name="直播搜索" author="Qixingchen" example="/bilibili/live/search/编程/online" path="/bilibili/live/search/:key/:order" :paramsDesc="['搜索关键字', '排序方式, live_time 开播时间, online 人气']"/>
+<Route author="Qixingchen" example="/bilibili/live/room/3" path="/bilibili/live/room/:roomID" :paramsDesc="['房间号, 可在直播间 URL 中找到, 长短号均可']"/>
 
-<Route name="直播分区" author="Qixingchen" example="/bilibili/live/area/143/online" path="/bilibili/live/area/:areaID/:order" :paramsDesc="['分区 ID 分区增删较多, 可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询', '排序方式, live_time 开播时间, online 人气']">
+### 直播搜索
+
+<Route author="Qixingchen" example="/bilibili/live/search/编程/online" path="/bilibili/live/search/:key/:order" :paramsDesc="['搜索关键字', '排序方式, live_time 开播时间, online 人气']"/>
+
+### 直播分区
+
+<Route author="Qixingchen" example="/bilibili/live/area/143/online" path="/bilibili/live/area/:areaID/:order" :paramsDesc="['分区 ID 分区增删较多, 可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询', '排序方式, live_time 开播时间, online 人气']">
 
 ::: warning 注意
 
@@ -18,16 +34,12 @@
 
 ## 斗鱼直播
 
-<Route name="直播间开播" author="DIYgod" example="/douyu/room/24422" path="/douyu/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+### 直播间开播
 
-## 熊猫直播
-
-<Route name="直播间开播下播" author="DIYgod" example="/panda/room/10300" path="/panda/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+<Route author="DIYgod" example="/douyu/room/24422" path="/douyu/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 虎牙直播
 
-<Route name="直播间开播" author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+### 直播间开播
 
-## kingkong 直播
-
-<Route name="直播间开播" author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+<Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>

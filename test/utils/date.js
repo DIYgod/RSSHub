@@ -34,6 +34,10 @@ describe('date', () => {
         expect(+new Date(parseDate('昨天 20:00'))).toBe(+new Date('2018-12-31 20:00'));
     });
 
+    it('前天 H:m', async () => {
+        expect(+new Date(parseDate('前天 20:00'))).toBe(+new Date('2018-12-30 20:00'));
+    });
+
     it('Y年M月D日H时', async () => {
         expect(+new Date(parseDate('2018年4月2日1时'))).toBe(+new Date('2018-4-2 01:00'));
     });
@@ -44,6 +48,14 @@ describe('date', () => {
 
     it('M-D H:m', async () => {
         expect(+new Date(parseDate('2-3 02:03'))).toBe(+new Date('2019-2-3 02:03'));
+    });
+
+    it('Y/M/D H:m', async () => {
+        expect(+new Date(parseDate('2018/4/2 02:03'))).toBe(+new Date('2018-4-2 02:03'));
+    });
+
+    it('M/D H:m', async () => {
+        expect(+new Date(parseDate('2/3 02:03'))).toBe(+new Date('2019-2-3 02:03'));
     });
 
     it('M月D日 H:m', async () => {

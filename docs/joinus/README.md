@@ -19,7 +19,7 @@ sidebar: auto
 
 #### 获取源数据
 
--   获取源数据的主要手段为使用 [axios](https://github.com/axios/axios) 发起 HTTP 请求（请求接口或请求网页）获取数据
+-   获取源数据的主要手段为使用 [got](https://github.com/sindresorhus/got) 发起 HTTP 请求（请求接口或请求网页）获取数据
 -   个别情况需要使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 模拟浏览器渲染目标页面并获取数据
 
 -   返回的数据一般为 JSON 或 HTML 格式
@@ -27,15 +27,15 @@ sidebar: auto
 
 -   以下三种获取数据方法按 **「推荐优先级」** 排列：
 
-    1. **使用 axios 从接口获取数据**
+    1. **使用 got 从接口获取数据**
 
     样例：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
-    使用 axios 通过数据源提供的 API 接口获取数据：
+    使用 got 通过数据源提供的 API 接口获取数据：
 
     ```js
     // 发起 HTTP GET 请求
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/space/coin/video?vmid=${uid}&jsonp=jsonp`,
     });
@@ -88,15 +88,15 @@ sidebar: auto
     // 至此本路由结束
     ```
 
-    2. **使用 axios 从 HTML 获取数据**
+    2. **使用 got 从 HTML 获取数据**
 
     有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
 
-    使用 axios 请求 HTML 数据：
+    使用 got 请求 HTML 数据：
 
     ```js
     // 发起 HTTP GET 请求
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: 'https://www.jianshu.com',
     });
@@ -129,7 +129,7 @@ sidebar: auto
     // 专门定义一个function用于加载文章内容
     async function load(link) {
         // 异步请求文章
-        const response = await axios.get(link);
+        const response = await got.get(link);
         // 加载文章内容
         const $ = cheerio.load(response.data);
 
@@ -170,7 +170,7 @@ sidebar: auto
 
             // 使用 tryGet() 方法从缓存获取内容
             // 当缓存中无法获取到链接内容的时候，则使用 load() 方法加载文章内容
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
 
             // 合并解析后的结果集作为该篇文章最终的输出结果
             return Promise.resolve(Object.assign({}, single, other));
@@ -205,7 +205,7 @@ sidebar: auto
 
     ```js
     // 使用 RSSHub 提供的 puppeteer 工具类，初始化 Chrome 进程
-    const browser = await require('../../utils/puppeteer')();
+    const browser = await require('@/utils/puppeteer')();
     // 创建一个新的浏览器页面
     const page = await browser.newPage();
     // 访问指定的链接
@@ -275,7 +275,7 @@ sidebar: auto
     3. RSS 标题（非 item 标题）
 
     ```js
-    const buildData = require('../../utils/common-config');
+    const buildData = require('@/utils/common-config');
     module.exports = async (ctx) => {
         ctx.state.data = await buildData({
             link: RSS来源链接,
@@ -293,7 +293,7 @@ sidebar: auto
     建议在打开[此链接](https://www.uraaka-joshi.com/)的开发者工具之后再阅读以下内容，请善用开发者工具的搜索功能搜寻`$('xxx')`中的内容
 
     ```js
-    const buildData = require('../../utils/common-config');
+    const buildData = require('@/utils/common-config');
 
     module.exports = async (ctx) => {
         const link = `https://www.uraaka-joshi.com/`;
@@ -327,7 +327,7 @@ sidebar: auto
 -   添加缓存:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time 为缓存时间。单位为秒。
+ctx.cache.set((key: string), (value: string)); // time 为缓存时间。单位为秒。
 ```
 
 -   获取缓存:
@@ -342,7 +342,7 @@ const value = await ctx.cache.get((key: string));
 
 ```js
 const key = 'daily' + story.id; // story.id 为知乎日报返回的文章唯一识别符
-ctx.cache.set(key, item.description, 24 * 60 * 60); // 设置缓存时间为 24小时 * 60分钟 * 60秒 = 86400秒 = 1天
+ctx.cache.set(key, item.description); // 设置缓存
 ```
 
 当同样的请求被发起时，优先使用未过期的缓存：
@@ -477,7 +477,6 @@ ctx.state.data = {
 1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
 
     -   文档采用 vue 组件形式，格式如下：
-        -   `name`: 路由名称
         -   `author`: 路由作者，多位作者使用单个空格分隔
         -   `example`: 路由举例
         -   `path`: 路由路径
@@ -491,14 +490,14 @@ ctx.state.data = {
         1. 多参数：
 
         ```vue
-        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
+        <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
         ```
 
         结果预览：
 
         ***
 
-        <Route name="仓库 Issue" author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
         ***
 
@@ -506,14 +505,14 @@ ctx.state.data = {
         2. 无参数:
 
         ```vue
-        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
         ```
 
         结果预览：
 
         ***
 
-        <Route name="最新上架付费专栏" author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+        <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
         ***
 
@@ -521,7 +520,7 @@ ctx.state.data = {
         3. 复杂说明支持 slot:
 
         ```vue
-        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
@@ -534,7 +533,7 @@ ctx.state.data = {
 
         ***
 
-        <Route name="分类" author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
         | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
