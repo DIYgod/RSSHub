@@ -18,6 +18,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/universities/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
 
+## Polimi
+
+### News
+
+<Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
+
 ## 北京大学
 
 ### 信科公告通知
