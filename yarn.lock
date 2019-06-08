@@ -8239,10 +8239,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-query-string@6.6.0:
-  version "6.6.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.6.0.tgz#a6b7dfd57ad67e346b143d033df2b1e4cfb6b53a"
-  integrity sha512-Xhvaa80rZzfvI7gYXF6ism5otKTyea90XROstBTBKiWE/tDfnIDbQwkGLguJaQBNweVCW4T9DoTe5eyox0CbZQ==
+query-string@6.7.0:
+  version "6.7.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.7.0.tgz#7e92bf8525140cf8c5ebf500f26716b0de5b7023"
+  integrity sha512-oQ01H1jrgDRbPq5SjtJF470S418GOrKkds+fpvAt6DQatHXl7bmkaJulHbTIM+QNGtoPpa8f5k9W3Zk50zXRPQ==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
