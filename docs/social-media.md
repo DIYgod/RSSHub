@@ -184,7 +184,7 @@ pageClass: routes
 
 ### 用户关注专栏
 
-<route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']">
+<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']">
 ::: warning 注意
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -268,17 +268,17 @@ pageClass: routes
 
 ### 粉絲專頁
 
-<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']"/>
+<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']" crawlerBadge="1"/>
 
 ## Instagram
 
 ### 用户
 
-<Route author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']" crawlerBadge="1"/>
 
 ### 标签
 
-<Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" />
+<Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" crawlerBadge="1"/>
 
 ## Matters
 
