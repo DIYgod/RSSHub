@@ -140,6 +140,12 @@ pageClass: routes
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
 
+## 怪物猎人
+
+### 更新
+
+见 [#怪物猎人](/game.html#怪物猎人)
+
 ## 腾讯云移动直播 SDK
 
 ### 更新日志

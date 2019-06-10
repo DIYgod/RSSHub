@@ -18,6 +18,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/universities/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
 
+## Polimi
+
+### News
+
+<Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
+
 ## 北京大学
 
 ### 信科公告通知
@@ -632,6 +638,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 计算机科学与技术学院通知
+
+<Route author="suxb201" example="/sdu/cs/0" path="/universities/sdu/cs/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院公告 | 学术报告 | 新闻动态 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学教务处通知公告
@@ -682,11 +698,11 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 电子信息与电气工程学院学生工作办公室
 
-<Route author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
+<Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
 
-| 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 |
-| -------- | ----------- | ------------ | -------- | -------- | -------- |
-| 空       | scholarship | financialAid | lecture  | activity | news     |
+| 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 | 本科生综合测评 |
+| -------- | ----------- | ------------ | -------- | -------- | -------- | -------------- |
+| 空       | scholarship | financialAid | lecture  | activity | news     | zhcp           |
 
 </Route>
 
