@@ -358,3 +358,5 @@ category 对应的关键词有
 | news | scenery | topic | move |
 | ---- | ------- | ----- | ---- |
 | 资讯 | 风景    | 体验  | 交通 |
+
+</Route>
