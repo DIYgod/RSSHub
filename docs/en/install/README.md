@@ -302,7 +302,7 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
 ### Route-specific Configurations
 
--   `pixiv`: [registration](https://accounts.pixiv.net/signup)
+-   `pixiv`: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
@@ -312,7 +312,7 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   `twitter`: [application creation](https://apps.twitter.com)
+-   `twitter`: [Application creation](https://apps.twitter.com)
 
     -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key, support multiple keys, split them with `,`
 

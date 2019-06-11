@@ -38,7 +38,7 @@ pageClass: routes
 
 <Route author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
 
-## MaxNews
+## Maxjia News
 
 ### Dota 2
 
