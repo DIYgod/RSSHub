@@ -114,6 +114,14 @@ Category 列表:
 
 </Route>
 
+## 东方网
+
+### 上海新闻
+
+<Route author="saury" example="/eastday/sh" path="/eastday/sh" />
+
+</Route>
+
 ## 多维新闻网
 
 ### 要闻
