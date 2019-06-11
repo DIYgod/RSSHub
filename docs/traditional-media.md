@@ -86,6 +86,12 @@ Solidot 提供的 feed:
 
 <Route author="LogicJake" example="/banyuetan/jicengzhili" path="/banyuetan/:name" :paramsDesc="['板块名称，可在 URL 中找到']"/>
 
+## 北极星电力网
+
+### 北极星环保
+
+<Route author="zsimple"  example="/bjx/huanbao" path="/bjx/huanbao" />
+
 ## 财新网
 
 > 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
