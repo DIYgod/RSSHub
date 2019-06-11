@@ -44,6 +44,32 @@ pageClass: routes
 
 <Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
 
+## Metacritic
+
+### 新游发行
+
+<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['主机平台', '发行类型，默认为 `new`', '排序类型，默认为`date`']">
+
+支持的主机平台:
+
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+
+发行类型，默认为 `new`:
+
+| 新游发行 | 即将发行 | 全部 |
+| -------- | -------- | ---- |
+| new      | coming   | all  |
+
+排序类型，默认为`date`:
+
+| 日期 | Metacritic 评分 | 用户评分  |
+| ---- | --------------- | --------- |
+| date | metascore       | userscore |
+
+</Route>
+
 ## Nintendo
 
 ### eShop 新发售游戏

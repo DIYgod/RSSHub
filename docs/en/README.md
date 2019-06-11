@@ -343,6 +343,32 @@ Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk
 
 </RouteEn>
 
+## Metacritic
+
+### Game Releases
+
+<RouteEn author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['console platform', 'release type, default to `new`', 'sorting type, default to `date`']">
+
+Platforms supported:
+
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+
+Release types, default to `new`:
+
+| New | Coming Soon | All |
+| --- | ----------- | --- |
+| new | coming      | all |
+
+Sorting types, default to `date`:
+
+| Date | Metacritic Score | User Score |
+| ---- | ---------------- | ---------- |
+| date | metascore        | userscore  |
+
+</RouteEn>
+
 ## ACG
 
 ### Vol.moe
