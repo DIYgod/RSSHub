@@ -91,7 +91,7 @@ describe('cache', () => {
     });
 
     it('no cache', async () => {
-        delete process.env.CACHE_EXPIRE;
+        process.env.CACHE_TYPE = '';
         server = require('../../lib/index').server;
         const request = supertest(server);
 
