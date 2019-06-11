@@ -362,6 +362,18 @@ pageClass: routes
 
 <Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']"/>
 
+### 用户关注时间线
+
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['用户 twitter 名']">
+
+::: warning 注意
+
+用户关注时间线需要对应用户的 Twitter token， 所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
 ### 列表时间线
 
 <Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户 twitter 名', 'list 名称']"/>
