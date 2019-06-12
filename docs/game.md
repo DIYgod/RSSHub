@@ -26,6 +26,12 @@ pageClass: routes
 
 <Route author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
 
+## dekudeals
+
+### 分类
+
+<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
