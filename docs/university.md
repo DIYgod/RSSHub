@@ -594,17 +594,13 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 山东大学
 
-### 研究生院学术活动
-
-<Route author="Ji4n1ng" example="/sdu/grad/academic" path="/universities/sdu/grad/academic" />
-
 ### 软件学院通知
 
 <Route author="Ji4n1ng" example="/sdu/sc/0" path="/universities/sdu/sc/:type?" :paramsDesc="['默认为 `0`']">
 
-| 学院公告 | 学术报告 | 新闻动态 |
-| -------- | -------- | -------- |
-| 0        | 1        | 2        |
+| 通知公告 | 学术动态 | 本科教育 | 研究生教育 |
+| -------- | -------- | -------- | ---------- |
+| 0        | 1        | 2        | 3          |
 
 </Route>
 
