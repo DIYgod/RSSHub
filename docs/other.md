@@ -538,6 +538,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 快科技（原驱动之家）
+
+### 最新新闻
+
+<Route author="kt286" example="/kkj/news" path="/kkj/news"/>
+
 ## 老司机
 
 ### 首页
