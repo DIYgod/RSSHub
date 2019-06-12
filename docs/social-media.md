@@ -362,6 +362,18 @@ pageClass: routes
 
 <Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']"/>
 
+### 用户关注时间线
+
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['用户 twitter 名']">
+
+::: warning 注意
+
+用户关注时间线需要对应用户的 Twitter token， 所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
 ### 列表时间线
 
 <Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户 twitter 名', 'list 名称']"/>
@@ -637,10 +649,6 @@ pageClass: routes
 ### 公众号（即刻来源）
 
 <Route author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-圈子-精选](#/jike/topic/:id)']" crawlerBadge="1"/>
-
-### 公众号（瓦斯来源）
-
-<Route author="DIYgod" example="/wechat/wasi/5b575db858e5c4583338db11" path="/wechat/wasi/:id" :paramsDesc="['瓦斯公众号 id, 可在[瓦斯](https://w.qnmlgb.tech/wx)搜索公众号, 打开公众号页, 在 URL 中找到 id']"/>
 
 ### 公众号（ wemp.app 来源）
 
