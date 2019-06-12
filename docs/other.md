@@ -65,6 +65,12 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## NOI 全国青少年信息学奥林匹克竞赛
+
+### 新闻
+
+<Route author="WenryXu" example="/noi" path="/noi"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
