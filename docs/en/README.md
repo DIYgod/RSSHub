@@ -251,7 +251,19 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 #### User timeline
 
-<RouteEn path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['user name']" />
+<RouteEn path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['user id']" />
+
+### User following timeline
+
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['user id']">
+
+::: warning
+
+User following timeline needs Twitter token corresponding id, so this route is only for self-hosted, see Install - Route-specific Configurations for details
+
+:::
+
+</Route>
 
 #### List timeline
 
