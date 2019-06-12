@@ -384,6 +384,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
 
+    -   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 consumer_key consumer_secret access_token access_token_secret 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
+
 -   youtube 全部路由: [申请地址](https://console.developers.google.com/)
 
     -   `YOUTUBE_KEY`: YouTube API Key

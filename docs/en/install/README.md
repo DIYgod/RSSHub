@@ -318,6 +318,8 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret, support multiple keys, split them with `,`
 
+    -   `TWITTER_TOKEN_{id}`: Twitter token corresponding id, replace `{id}` with id, the value is splitting consumer_key consumer_secret access_token access_token_secret with `,`, `{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
+
 -   `youtube`: [API Key application](https://console.developers.google.com/)
 
     -   `YOUTUBE_KEY`: YouTube API Key
