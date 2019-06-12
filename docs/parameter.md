@@ -60,9 +60,3 @@ RSSHub 同时支持 RSS 2.0 和 Atom 输出格式, 在路由末尾添加 `.rss` 
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
 -   和 filter 或其他 URL query 一起使用 <https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件>
-
-## 路由空内容提示
-
-提示用户该路由故障，无法获取更新内容。以便用户前往源站阅览信息，同时提出 issue。
-
-举例: <https://rsshub.app/bilibili/ranking/0/3?warning=1>
