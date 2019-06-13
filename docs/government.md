@@ -160,5 +160,11 @@ pageClass: routes
 ### 部内信息
 
 <Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/bnxx"/>
+
 ### 政策解读
+
 <Route author="SunShinenny" example="/gov/veterans/zcjd" path="/gov/veterans/zcjd"/>
+
+### 首页信息
+
+<Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
