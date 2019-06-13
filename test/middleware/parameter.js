@@ -39,6 +39,14 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title5');
     });
 
+    it(`filter_time`, async () => {
+        const response = await request.get('/test/1?filter_time=25');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(2);
+        expect(parsed.items[0].title).toBe('Title1');
+        expect(parsed.items[1].title).toBe('Title2');
+    });
+
     it(`filterout`, async () => {
         const response = await request.get('/test/1?filterout=Description4|Title5');
         const parsed = await parser.parseString(response.text);
