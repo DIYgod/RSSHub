@@ -16,7 +16,7 @@ pageClass: routes
 
 <Route author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
-## 7x24 小时快讯
+## 汇通网
 
 ### 7x24 小时快讯
 
