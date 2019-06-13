@@ -90,6 +90,47 @@ describe('cache', () => {
         expect(parsed4.items[0].content).toBe('Cache2');
     });
 
+    it('redis with quit', async () => {
+        process.env.CACHE_TYPE = 'redis';
+        server = require('../../lib/index').server;
+        const client = require('../../lib/index').cache;
+        client.quit();
+        const request = supertest(server);
+
+        const response1 = await request.get('/test/cache');
+        const parsed1 = await parser.parseString(response1.text);
+
+        const response2 = await request.get('/test/cache');
+        const parsed2 = await parser.parseString(response2.text);
+
+        expect(response2.status).toBe(200);
+        expect(response2.headers).not.toHaveProperty('x-koa-redis-cache');
+        expect(response2.headers).not.toHaveProperty('x-koa-memory-cache');
+
+        expect(parsed1.items[0].content).toBe('Cache1');
+        expect(parsed2.items[0].content).toBe('Cache2');
+    });
+
+    it('redis with error', async () => {
+        process.env.CACHE_TYPE = 'redis';
+        process.env.REDIS_URL = 'redis://wrongpath:6379';
+        server = require('../../lib/index').server;
+        const request = supertest(server);
+
+        const response1 = await request.get('/test/cache');
+        const parsed1 = await parser.parseString(response1.text);
+
+        const response2 = await request.get('/test/cache');
+        const parsed2 = await parser.parseString(response2.text);
+
+        expect(response2.status).toBe(200);
+        expect(response2.headers).not.toHaveProperty('x-koa-redis-cache');
+        expect(response2.headers).not.toHaveProperty('x-koa-memory-cache');
+
+        expect(parsed1.items[0].content).toBe('Cache1');
+        expect(parsed2.items[0].content).toBe('Cache2');
+    });
+
     it('no cache', async () => {
         process.env.CACHE_TYPE = '';
         server = require('../../lib/index').server;
