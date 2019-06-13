@@ -97,3 +97,16 @@ describe('tgiv', () => {
         expect(parsed.items[1].link).toBe(`https://t.me/iv?url=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub%2Fissues%2F2&rhash=test`);
     });
 });
+
+describe('empty', () => {
+    it(`empty`, async () => {
+        const response1 = await request.get('/test/empty');
+        expect(response1.status).toBe(404);
+        expect(response1.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: this route is empty/);
+
+        const response2 = await request.get('/test/1?limit=0');
+        expect(response2.status).toBe(200);
+        const parsed = await parser.parseString(response2.text);
+        expect(parsed.items.length).toBe(0);
+    });
+});
