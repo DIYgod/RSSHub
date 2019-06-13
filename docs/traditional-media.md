@@ -86,6 +86,12 @@ Solidot 提供的 feed:
 
 <Route author="LogicJake" example="/banyuetan/jicengzhili" path="/banyuetan/:name" :paramsDesc="['板块名称，可在 URL 中找到']"/>
 
+## 北极星电力网
+
+### 北极星环保
+
+<Route author="zsimple"  example="/bjx/huanbao" path="/bjx/huanbao" />
+
 ## 财新网
 
 > 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
@@ -111,6 +117,14 @@ Category 列表:
 | 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
 | ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
 | coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
+
+</Route>
+
+## 东方网
+
+### 上海新闻
+
+<Route author="saury" example="/eastday/sh" path="/eastday/sh" />
 
 </Route>
 
@@ -305,9 +319,9 @@ category 对应的关键词有
 
 版块：
 
-| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    |
-| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-| 國內綜合 | 政治・經濟       | 文化・生活 | 旅遊・活動 | 體育・奧運 | 商業・商品 | IT・科技   | 國際・東亞 | 評論・專欄 |
+| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    | whatsnew |
+| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
+| 國內綜合 | 政治・經濟       | 文化・生活 | 旅遊・活動 | 體育・奧運 | 商業・商品 | IT・科技   | 國際・東亞 | 評論・專欄 | 最新消息 |
 
 版块 `cool_japan` 和 `travel` 包含子版块：
 
@@ -333,9 +347,9 @@ category 对应的关键词有
 
 版块：
 
-| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    |
-| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- |
-| 日本社会 | 政治・经济       | 文娱・生活 | 旅游・活动 | 体育・奥运 | 商务・商品 | IT・科技   | 国际・东亚 | 观点・专栏 |
+| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    | whatsnew |
+| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
+| 日本社会 | 政治・经济       | 文娱・生活 | 旅游・活动 | 体育・奥运 | 商务・商品 | IT・科技   | 国际・东亚 | 观点・专栏 | 最新     |
 
 版块 `cool_japan` 和 `travel` 包含子版块：
 
