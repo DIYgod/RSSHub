@@ -524,6 +524,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
 
+## 快科技（原驱动之家）
+
+### 最新新闻
+
+<Route author="kt286" example="/kkj/news" path="/kkj/news"/>
+
 ## 老司机
 
 ### 首页
