@@ -4,6 +4,12 @@ pageClass: routes
 
 # 编程
 
+## AI 研习社
+
+### 最新
+
+<Route author="kt286" example="/aiyanxishe" path="/aiyanxishe">
+
 ## AlgoCasts
 
 ### 视频更新
