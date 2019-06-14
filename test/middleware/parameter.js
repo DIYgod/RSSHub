@@ -121,9 +121,9 @@ describe('empty', () => {
 
 describe('allow_empty', () => {
     it(`allow_empty`, async () => {
-        const response1 = await request.get('/test/allow_empty');
-        expect(response1.status).toBe(200);
-        const parsed = await parser.parseString(response1.text);
+        const response = await request.get('/test/allow_empty');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(0);
     });
 });
