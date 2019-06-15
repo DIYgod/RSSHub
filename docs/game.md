@@ -26,6 +26,12 @@ pageClass: routes
 
 <Route author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
 
+## dekudeals
+
+### 分类
+
+<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
@@ -38,11 +44,37 @@ pageClass: routes
 
 <Route author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
 
-## MaxNews
+## Maxjia News
 
 ### Dota 2
 
 <Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
+
+## Metacritic
+
+### 新游发行
+
+<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['主机平台', '发行类型，默认为 `new`', '排序类型，默认为`date`']">
+
+支持的主机平台:
+
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+
+发行类型，默认为 `new`:
+
+| 新游发行 | 即将发行 | 全部 |
+| -------- | -------- | ---- |
+| new      | coming   | all  |
+
+排序类型，默认为`date`:
+
+| 日期 | Metacritic 评分 | 用户评分  |
+| ---- | --------------- | --------- |
+| date | metascore       | userscore |
+
+</Route>
 
 ## Nintendo
 

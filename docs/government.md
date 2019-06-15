@@ -154,3 +154,17 @@ pageClass: routes
 ### 公示
 
 <Route author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
+
+## 中华人民共和国退役军人事务部
+
+### 部内信息
+
+<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/bnxx"/>
+
+### 政策解读
+
+<Route author="SunShinenny" example="/gov/veterans/zcjd" path="/gov/veterans/zcjd"/>
+
+### 首页信息
+
+<Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>

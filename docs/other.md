@@ -16,12 +16,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
-## 7x24 小时快讯
-
-### 7x24 小时快讯
-
-<Route author="occupy5" example="/fx678/kx" path="/fx678/kx" />
-
 ## 99% Invisible
 
 ### Transcript
@@ -194,6 +188,12 @@ pageClass: routes
 | topic    | news     | technews   | blockchain | daily    |
 
 </Route>
+
+## sixthtone
+
+### 最新文章
+
+<Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
 ## The Verge
 
@@ -476,6 +476,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" :paramsDesc="['用户 id']" />
 
+## 汇通网
+
+### 7x24 小时快讯
+
+<Route author="occupy5" example="/fx678/kx" path="/fx678/kx" />
+
 ## 惠誉评级
 
 ### 板块信息
@@ -524,19 +530,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
 
-## 快递
+## 快科技（原驱动之家）
 
-### 快递
+### 最新新闻
 
-<Route author="DIYgod" example="/express/youzhengguoji/CV054432809US" path="/express/:company/:number" :paramsDesc="['快递公司代码, 参考 [API URL 所支持的快递公司及参数说明](https://www.kuaidi100.com/download/api_kuaidi100_com%2820140729%29.doc)', '快递单号']">
-
-::: warning 注意
-
-快递送达后请及时取消订阅, 以免浪费服务器资源
-
-:::
-
-</Route>
+<Route author="kt286" example="/kkj/news" path="/kkj/news"/>
 
 ## 老司机
 
