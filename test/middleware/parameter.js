@@ -118,3 +118,12 @@ describe('empty', () => {
         expect(parsed.items.length).toBe(0);
     });
 });
+
+describe('allow_empty', () => {
+    it(`allow_empty`, async () => {
+        const response = await request.get('/test/allow_empty');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(0);
+    });
+});

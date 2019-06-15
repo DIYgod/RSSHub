@@ -17,17 +17,10 @@ describe('got', () => {
             .reply(function() {
                 expect(this.req.headers['user-agent']).toBe(config.ua);
                 expect(this.req.headers['x-app']).toBe('RSSHub');
-                return [
-                    200,
-                    {
-                        code: 0,
-                    },
-                ];
+                return [200, ''];
             });
 
-        const response = await got.get('http://rsshub.test/test');
-        expect(response.status).toBe(200);
-        expect(response.data.code).toBe(0);
+        await got.get('http://rsshub.test/test');
     });
 
     it('retry', async () => {
@@ -44,12 +37,7 @@ describe('got', () => {
                     expect(now - requestTime).toBeLessThan(120);
                 }
                 requestTime = new Date();
-                return [
-                    404,
-                    {
-                        code: 1,
-                    },
-                ];
+                return [404, '0'];
             });
 
         try {
@@ -60,6 +48,38 @@ describe('got', () => {
 
         // retries
         expect(requestRun).toHaveBeenCalledTimes(config.requestRetry);
+    });
+
+    it('axios', async () => {
+        nock('http://rsshub.test')
+            .post('/post')
+            .reply(function() {
+                return [200, '{"code": 0}'];
+            });
+
+        const response1 = await got.post('http://rsshub.test/post', {
+            form: true,
+            data: {
+                test: 1,
+            },
+        });
+        expect(response1.statusCode).toBe(200);
+        expect(response1.status).toBe(200);
+        expect(response1.body).toBe('{"code": 0}');
+        expect(response1.data.code).toBe(0);
+
+        nock('http://rsshub.test')
+            .get(/^\/params/)
+            .reply(function() {
+                expect(this.req.path).toBe('/params?test=1');
+                return [200, ''];
+            });
+
+        await got.get('http://rsshub.test/params', {
+            params: {
+                test: 1,
+            },
+        });
     });
 
     it('proxy socks', async () => {
