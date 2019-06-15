@@ -189,6 +189,12 @@ pageClass: routes
 
 </Route>
 
+## sixthtone
+
+### 最新文章
+
+<Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
+
 ## The Verge
 
 ### The Verge
