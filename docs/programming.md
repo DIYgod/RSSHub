@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 最新
 
-<Route author="kt286" example="/aiyanxishe" path="/aiyanxishe">
+<Route author="kt286" example="/aiyanxishe" path="/aiyanxishe"/>
 
 ## AlgoCasts
 
