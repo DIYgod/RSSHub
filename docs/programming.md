@@ -6,9 +6,9 @@ pageClass: routes
 
 ## AI 研习社
 
-### 最新
+### 首页
 
-<Route author="kt286" example="/aiyanxishe" path="/aiyanxishe"/>
+<Route author="kt286" example="/aiyanxishe/109/hot" path="/aiyanxishe/:id/:sort?" :paramsDesc="['领域 id，全部领域为 all，单独领域 id 抓包可得','排序方式，默认为 new（最新），也可选择 hot（最热）或 recommend（推荐）']"/>
 
 ## AlgoCasts
 
