@@ -277,6 +277,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
 
+### 百度招聘
+
+<Route author="SunShinenny" example="/baidu/zhaopin/:city/:keyword" path="/baidu/zhaopin" :paramsDesc="['查询城市','查询关键词']" crawlerBadge="1">
+
+建议打开网页搜索，确认有数据后订阅。
+
+</Route>
+
 ### 搜索风云榜
 
 <Route author="xyqfer" example="/baidu/topwords/1" path="/baidu/topwords/:boardId?" :paramsDesc="['榜单 id, 默认为`1`']">
