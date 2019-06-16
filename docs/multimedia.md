@@ -230,6 +230,16 @@ pageClass: routes
 
 </Route>
 
+### 色花图片
+
+<Route author="junfengP" example="/dsndsht23/picture/hrxazp" path="/dsndsht23/picture/:subforumid" :paramsDesc="['子版块 id']">
+
+| 华人性爱自拍 | 华人街拍区 | 亚洲性爱 | 欧美性爱 | 卡通动漫 |
+| ------------ | ---------- | -------- | -------- | -------- |
+| hrxazp       | hrjpq      | yzxa     | omxa     | ktdm     |
+
+</Route>
+
 ## 腾讯视频
 
 ### 播放列表
