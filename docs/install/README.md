@@ -70,7 +70,7 @@ $ docker pull diygod/rsshub
 然后运行 RSSHub 即可
 
 ```bash
-$ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
+$ docker run -d -e "TZ=Asia/Shanghai" --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
 在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/), enjoy it! ✅
