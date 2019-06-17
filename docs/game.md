@@ -42,7 +42,7 @@ pageClass: routes
 
 ### indienova 文章
 
-<Route author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
+<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
 ## Maxjia News
 
