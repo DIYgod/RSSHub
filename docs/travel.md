@@ -51,8 +51,6 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <Route author="howel52" example="/flyertea/preferential" path="/flyertea/preferential" />
 
-</Route>
-
 ## 国家地理
 
 ### 分类
@@ -74,3 +72,5 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
 | ------------ | ---- | -------- | ---------- | -------- |
 | announcement | news | media    | exhibition | specials |
+
+</Route>
