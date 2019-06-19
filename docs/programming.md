@@ -429,3 +429,13 @@ GitHub 官方也提供了一些 RSS:
 ### 热门
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+
+## V8
+
+### 博客
+
+<Route author="zhangpanweb" example="/v8/blog" path="/v8/blog"/>
+
+### JavaScript and WebAssembly features
+
+<Route author="zhangpanweb" example="/v8/features" path="/v8/features"/>
