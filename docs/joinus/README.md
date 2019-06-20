@@ -488,3 +488,46 @@ ctx.state.data = {
 1.  请一定要注意把`<Route>`的标签关闭！
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
+
+## 一些开发 tips
+
+### VS Code 调试配置
+
+`.vscode/launch.js`
+
+#### 使用 nodemon 调试
+
+在终端使用 `npm run dev` 或 `yarn dev` 开始调试。
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Node: Nodemon",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector"
+        }
+    ]
+}
+```
+
+#### 不使用 nodemon 调试
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/lib/index.js",
+            "env": { "NODE_ENV": "dev" }
+        }
+    ]
+}
+```
