@@ -80,7 +80,7 @@
     "pidusage": "2.0.17",
     "plist": "3.0.1",
     "puppeteer": "1.17.0",
-    "query-string": "6.7.0",
+    "query-string": "6.8.1",
     "redis": "2.8.0",
     "rss-parser": "3.7.1",
     "sanitize-html": "1.20.1",
