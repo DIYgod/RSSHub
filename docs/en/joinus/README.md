@@ -14,7 +14,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
 #### Acquiring Data
 
--   Typically the data are acquired via HTTP requests (via API or webpage) sent by [axios](https://github.com/axios/axios)
+-   Typically the data are acquired via HTTP requests (via API or webpage) sent by [got](https://github.com/sindresorhus/got)
 -   Occasionally [puppeteer](https://github.com/GoogleChrome/puppeteer) is required for browser stimulation and page rendering in order to acquire the data
 
 -   The acquired data are most likely in JSON or HTML format
@@ -23,15 +23,15 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 -   Below is a list of data acquisition methods, ordered by the **「level of recommendation」**
 
 
-    1. **Acquire data via API using axios**
+    1. **Acquire data via API using got**
 
     Example：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
-    Acquiring data via the official API provided by the data source using axios:
+    Acquiring data via the official API provided by the data source using got:
 
     ```js
     // Initiate a HTTP GET request
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/space/coin/video?vmid=${uid}&jsonp=jsonp`,
     });
@@ -84,15 +84,15 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // the route is now done
     ```
 
-    2. **Acquire data via HTML webpage using axios**
+    2. **Acquire data via HTML webpage using got**
 
     Data have to be acquired via HTML webpage if **no API was provided**, for example: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
 
-    Acquiring data by scrapping the HTML using axios:
+    Acquiring data by scrapping the HTML using got:
 
     ```js
     // Initiate a HTTP GET request
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: 'https://www.jianshu.com',
     });
@@ -125,7 +125,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // define a function to load the article content
     async function load(link) {
         // get the article asynchronously
-        const response = await axios.get(link);
+        const response = await got.get(link);
         // load the article content
         const $ = cheerio.load(response.data);
 
@@ -474,3 +474,46 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
 
 1.  [Telegram Group](https://t.me/rsshub)
 2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
+
+## Some Tips for Development
+
+### VS Code debug configuration
+
+`.vscode/launch.js`
+
+#### Debugging with nodemon
+
+In terminal, run `npm run dev` or `yarn dev` to start debugging.
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Node: Nodemon",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector"
+        }
+    ]
+}
+```
+
+#### Debugging without nodemon
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/lib/index.js",
+            "env": { "NODE_ENV": "dev" }
+        }
+    ]
+}
+```

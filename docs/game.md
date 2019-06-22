@@ -26,6 +26,12 @@ pageClass: routes
 
 <Route author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
 
+## dekudeals
+
+### 分类
+
+<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
@@ -36,13 +42,39 @@ pageClass: routes
 
 ### indienova 文章
 
-<Route author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
+<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
-## MaxNews
+## Maxjia News
 
 ### Dota 2
 
 <Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
+
+## Metacritic
+
+### 新游发行
+
+<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['主机平台', '发行类型，默认为 `new`', '排序类型，默认为`date`']">
+
+支持的主机平台:
+
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+
+发行类型，默认为 `new`:
+
+| 新游发行 | 即将发行 | 全部 |
+| -------- | -------- | ---- |
+| new      | coming   | all  |
+
+排序类型，默认为`date`:
+
+| 日期 | Metacritic 评分 | 用户评分  |
+| ---- | --------------- | --------- |
+| date | metascore       | userscore |
+
+</Route>
 
 ## Nintendo
 
@@ -108,6 +140,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### Discussions
 
 <Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
+
+## 怪物猎人
+
+### 更新
+
+<Route author="DIYgod" example="/monsterhunter/update" path="/monsterhunter/update"/>
 
 ## 旅法师营地
 
@@ -177,15 +215,31 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 游戏打折情报
+
+### 游戏折扣
+
+<Route author="LogicJake" example="/yxdzqb/hot_chinese" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
+
+| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
+| -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
+| new            | hot                | hot_chinese            | low            | low_chinese            |
+
+</Route>
+
 ## 游戏时光
 
 ### 游戏时光新闻
 
-<Route author="MyFaith" example="/vgtime/news" path="vgtime/news"/>
+<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news"/>
 
 ### 游戏时光游戏发售表
 
-<Route author="MyFaith" example="/vgtime/release" path="vgtime/release"/>
+<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release"/>
+
+### 关键词资讯
+
+<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword"/>
 
 ## 游研社
 

@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## Nautilus
+
+### 话题
+
+<Route author="emdoe" example=“/nautilus/topic/Art” path="/nautilus/topic/:tid" :paramsDesc=“[‘话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+
 ## UU 看书
 
 ### 小说更新
@@ -26,7 +32,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/aisixiang/ranking/1/7" path="/aisixiang/ranking/:type?/:range?" :paramsDesc="['排行榜类型', '排行榜范围, 仅适用于点击排行榜, 可选日(1)，周(7)，月(30)']">
 
-| 文章点击排行 | 文章推荐排行 | 最近更新文章 |
+| 文章点击排行 | 最近更新文章 | 文章推荐排行 |
 | ------------ | ------------ | ------------ |
 | 1            | 10           | 11           |
 

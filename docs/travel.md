@@ -37,13 +37,19 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 ### 展览信息
 
-<Route author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type" :paramsDesc="['如 shanghai, beijing', '不填则默认为 `all`']">
+<Route author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type?" :paramsDesc="['如 shanghai, beijing', '不填则默认为 `all`']">
 
 | 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
 | ---- | ------ | ---- | -------- | -------- | -------- |
 | all  | latest | hot  | end_soon | coming   | outdated |
 
 </Route>
+
+## 飞客茶馆
+
+### 优惠信息
+
+<Route author="howel52" example="/flyertea/preferential" path="/flyertea/preferential" />
 
 ## 国家地理
 

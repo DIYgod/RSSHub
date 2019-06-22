@@ -1,9 +1,15 @@
+process.env.SOCKET = 'socket';
+
 const supertest = require('supertest');
 const { server } = require('../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
 const config = require('../lib/config');
+
+afterAll(() => {
+    delete process.env.SOCKET;
+});
 
 async function checkRSS(response) {
     const checkDate = (date) => {
@@ -21,7 +27,7 @@ async function checkRSS(response) {
     expect(parsed.description).toEqual(expect.any(String));
     expect(parsed.link).toEqual(expect.any(String));
     expect(parsed.lastBuildDate).toEqual(expect.any(String));
-    expect(parsed.ttl).toEqual(config.cache.routeExpire + '');
+    expect(parsed.ttl).toEqual(((config.cache.routeExpire / 60) | 0) + '');
     expect(parsed.items).toEqual(expect.any(Array));
     checkDate(parsed.lastBuildDate);
 
