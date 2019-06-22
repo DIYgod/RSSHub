@@ -205,6 +205,12 @@ pageClass: routes
 
 </Route>
 
+## TOPYS
+
+### 分类
+
+<Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
+
 ## TSSstatus（iOS 降级通道）
 
 ### Status
