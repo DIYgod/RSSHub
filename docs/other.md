@@ -271,6 +271,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="brilon" example="/iresearch/report" path="/iresearch/report"/>
 
+## 巴比特
+
+### 作者专栏
+
+<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
+
 ## 百度
 
 ### 百度趣画

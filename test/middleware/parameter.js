@@ -127,3 +127,11 @@ describe('allow_empty', () => {
         expect(parsed.items.length).toBe(0);
     });
 });
+
+describe('wrong_path', () => {
+    it(`wrong_path`, async () => {
+        const response = await request.get('/wrong');
+        expect(response.status).toBe(404);
+        expect(response.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: wrong path/);
+    });
+});
