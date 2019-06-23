@@ -45,6 +45,12 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 </Route>
 
+## 飞客茶馆
+
+### 优惠信息
+
+<Route author="howel52" example="/flyertea/preferential" path="/flyertea/preferential" />
+
 ## 国家地理
 
 ### 分类
