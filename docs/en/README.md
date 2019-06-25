@@ -19,7 +19,7 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) |
 | :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
 
 
@@ -33,7 +33,7 @@ Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ::: tip
 
-Free feel to test the [demo instance](https://rsshub.app), the cache expiry time is set to 10 minutes.
+Feel free to test the [demo instance](https://rsshub.app), the cache expiry time is set to 10 minutes.
 
 :::
 
