@@ -172,6 +172,36 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
 
+## LWN.net
+
+### Security alerts
+
+<Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" :paramsDesc="['对应发行版标识']">
+
+| 发行版           | 标识               |
+| :--------------- | :----------------- |
+| Arch Linux       | `Arch_Linux`       |
+| CentOS           | `CentOS`           |
+| Debian           | `Debian`           |
+| Fedora           | `Fedora`           |
+| Gentoo           | `Gentoo`           |
+| Mageia           | `Mageia`           |
+| openSUSE         | `openSUSE`         |
+| Oracle           | `Oracle`           |
+| Red Hat          | `Red_Hat`          |
+| Scientific Linux | `Scientific_Linux` |
+| Slackware        | `Slackware`        |
+| SUSE             | `SUSE`             |
+| Ubuntu           | `Ubuntu`           |
+
+::: tip 提示
+
+注意标识大小写
+
+:::
+
+</Route>
+
 ## segmentfault
 
 ### 频道
