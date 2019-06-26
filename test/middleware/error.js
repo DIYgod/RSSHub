@@ -9,6 +9,7 @@ afterAll(() => {
 describe('error', () => {
     it(`error`, async () => {
         const response = await request.get('/test/0');
+        expect(response.status).toBe(404);
         expect(response.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: Error test/);
     });
 });

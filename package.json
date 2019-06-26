@@ -5,12 +5,13 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "node lib/index.js",
-    "dev": "nodemon lib/index.js",
+    "dev": "NODE_ENV=dev nodemon --inspect lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "format": "eslint \"**/*.js\" --fix && prettier \"**/*.{js,json,md}\" --write",
-    "lint": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run lint && NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "format": "eslint \"**/*.js\" --fix && node docs/format.js && prettier \"**/*.{js,json,md}\" --write",
+    "format:staged": "eslint \"**/*.js\" --fix && node docs/format.js && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
+    "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
+    "test": "npm run format:check && NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "NODE_ENV=test jest --runInBand --forceExit"
   },
   "repository": {
@@ -21,7 +22,7 @@
     "RSS"
   ],
   "gitHooks": {
-    "pre-commit": "npm run lint"
+    "pre-commit": "npm run format:staged"
   },
   "author": "DIYgod",
   "license": "MIT",
@@ -30,36 +31,36 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "1.0.0-alpha.47",
-    "@vuepress/plugin-google-analytics": "1.0.0-alpha.47",
-    "@vuepress/plugin-pwa": "1.0.0-alpha.47",
-    "axios-mock-adapter": "1.16.0",
+    "@vuepress/plugin-back-to-top": "1.0.2",
+    "@vuepress/plugin-google-analytics": "1.0.2",
+    "@vuepress/plugin-pwa": "1.0.2",
     "eslint": "5.16.0",
-    "eslint-config-prettier": "4.2.0",
-    "eslint-plugin-prettier": "3.0.1",
+    "eslint-config-prettier": "5.1.0",
+    "eslint-plugin-prettier": "3.1.0",
     "jest": "24.8.0",
-    "lint-staged": "8.1.6",
-    "mockdate": "2.0.2",
-    "nodemon": "1.19.0",
-    "prettier": "1.17.0",
+    "mockdate": "2.0.3",
+    "nock": "11.0.0-beta.20",
+    "nodemon": "1.19.1",
+    "pinyin": "2.9.0",
+    "prettier": "1.18.2",
     "prettier-check": "2.0.0",
+    "pretty-quick": "1.11.1",
     "supertest": "4.0.2",
-    "vuepress": "1.0.0-alpha.47",
+    "vuepress": "1.0.2",
     "yorkie": "2.0.0"
   },
   "dependencies": {
     "art-template": "4.13.2",
-    "axios": "0.18.0",
-    "axios-retry": "3.1.2",
     "cheerio": "1.0.0-rc.3",
     "co-redis": "2.1.1",
     "currency-symbol-map": "4.0.4",
-    "dayjs": "1.8.13",
+    "dayjs": "1.8.14",
     "dotenv": "8.0.0",
     "etag": "1.8.1",
-    "form-data": "2.3.3",
+    "form-data": "2.4.0",
     "git-rev-sync": "1.12.0",
-    "googleapis": "39.2.0",
+    "googleapis": "40.0.0",
+    "got": "9.6.0",
     "he": "1.2.0",
     "iconv-lite": "0.4.24",
     "imgur": "0.3.1",
@@ -70,16 +71,18 @@
     "koa-mount": "4.0.0",
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
-    "luxon": "1.13.0",
+    "luxon": "1.16.0",
     "lz-string": "1.4.4",
     "markdown-it": "8.4.2",
-    "node-fetch": "2.5.0",
+    "module-alias": "2.2.0",
+    "node-fetch": "2.6.0",
     "path-to-regexp": "3.0.0",
     "pidusage": "2.0.17",
     "plist": "3.0.1",
-    "puppeteer": "1.15.0",
+    "puppeteer": "1.18.0",
+    "query-string": "6.8.1",
     "redis": "2.8.0",
-    "rss-parser": "3.7.0",
+    "rss-parser": "3.7.1",
     "sanitize-html": "1.20.1",
     "sharp": "0.22.1",
     "socks-proxy-agent": "4.0.2",
@@ -107,6 +110,12 @@
       "!lib/routes/**/*.js"
     ],
     "bail": true,
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/lib/$1"
+    }
+  },
+  "_moduleAliases": {
+    "@": "./lib"
   }
 }

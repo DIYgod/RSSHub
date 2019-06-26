@@ -35,6 +35,10 @@ module.exports = {
         repo: 'DIYgod/RSSHub',
         editLinks: true,
         docsDir: 'docs',
+        algolia: {
+            apiKey: '6247bc0db93150fd9e531b93a3fa4046',
+            indexName: 'rsshub',
+        },
         locales: {
             '/': {
                 lang: 'zh-CN',
@@ -70,6 +74,7 @@ module.exports = {
                         {
                             title: '路由',
                             collapsable: false,
+                            sidebarDepth: 3,
                             children: [
                                 'social-media',
                                 'programming',

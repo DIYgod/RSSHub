@@ -4,13 +4,13 @@ sidebar: auto
 
 # Deployment
 
-RSSHub provides a painless deployment process if you are equipped with basic programming knowledge, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
+RSSHub provides a painless deployment process if you are equipped with basic programming knowledge, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new/choose) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
 
 The deployment may involve the followings:
 
 1. Command line interface
 1. [Git](https://git-scm.com/)
-1. [Node.js >= 8.0.0](https://nodejs.org/)
+1. [Node.js](https://nodejs.org/)
 1. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 Deploy for public access may require:
@@ -266,7 +266,9 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `CACHE_TYPE`: cache type, `memory` or `redis`, empty this value will disable caching, default to `memory`
 
-`CACHE_EXPIRE`: cache expiry time in seconds, default to `300`
+`CACHE_EXPIRE`: route cache expiry time in seconds, default to `5 * 60`
+
+`CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, it will be recalculated when it is accessed, default to `1 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
@@ -300,7 +302,7 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
 ### Route-specific Configurations
 
--   `pixiv`: [registration](https://accounts.pixiv.net/signup)
+-   `pixiv`: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
@@ -310,15 +312,13 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   `twitter`: [application creation](https://apps.twitter.com)
+-   `twitter`: [Application creation](https://apps.twitter.com)
 
-    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
+    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key, support multiple keys, split them with `,`
 
-    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
+    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret, support multiple keys, split them with `,`
 
-    -   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
-
-    -   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
+    -   `TWITTER_TOKEN_{id}`: Twitter token corresponding id, replace `{id}` with id, the value is splitting consumer_key consumer_secret access_token access_token_secret with `,`, `{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
 
 -   `youtube`: [API Key application](https://console.developers.google.com/)
 
