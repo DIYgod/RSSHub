@@ -62,7 +62,7 @@
     "googleapis": "40.0.0",
     "got": "9.6.0",
     "he": "1.2.0",
-    "iconv-lite": "0.4.24",
+    "iconv-lite": "0.5.0",
     "imgur": "0.3.1",
     "json-bigint": "0.3.0",
     "koa": "2.7.0",
