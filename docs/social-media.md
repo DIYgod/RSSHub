@@ -412,7 +412,7 @@ pageClass: routes
 
 ### 用户
 
-<Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']"/>
+<Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" supportPodcast="1"/>
 
 ## 豆瓣
 
