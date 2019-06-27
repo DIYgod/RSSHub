@@ -4,17 +4,11 @@ pageClass: routes
 
 # 其他
 
-## 12306
-
-### 最新动态
-
-<Route author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
-
 ## 36kr
 
 ### 搜索文章
 
-<Route author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
+<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 99% Invisible
 
@@ -205,6 +199,12 @@ pageClass: routes
 
 </Route>
 
+## TOPYS
+
+### 分类
+
+<Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
+
 ## TSSstatus（iOS 降级通道）
 
 ### Status
@@ -270,6 +270,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 产业研究报告
 
 <Route author="brilon" example="/iresearch/report" path="/iresearch/report"/>
+
+## 巴比特
+
+### 作者专栏
+
+<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
 
 ## 百度
 

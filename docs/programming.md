@@ -6,9 +6,9 @@ pageClass: routes
 
 ## AI 研习社
 
-### 最新
+### 首页
 
-<Route author="kt286" example="/aiyanxishe" path="/aiyanxishe"/>
+<Route author="kt286" example="/aiyanxishe/109/hot" path="/aiyanxishe/:id/:sort?" :paramsDesc="['领域 id，全部领域为 all，单独领域 id 抓包可得','排序方式，默认为 new（最新），也可选择 hot（最热）或 recommend（推荐）']"/>
 
 ## AlgoCasts
 
@@ -171,6 +171,36 @@ GitHub 官方也提供了一些 RSS:
 ### Patch Comments
 
 <Route author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
+
+## LWN.net
+
+### Security alerts
+
+<Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" :paramsDesc="['对应发行版标识']">
+
+| 发行版           | 标识               |
+| :--------------- | :----------------- |
+| Arch Linux       | `Arch_Linux`       |
+| CentOS           | `CentOS`           |
+| Debian           | `Debian`           |
+| Fedora           | `Fedora`           |
+| Gentoo           | `Gentoo`           |
+| Mageia           | `Mageia`           |
+| openSUSE         | `openSUSE`         |
+| Oracle           | `Oracle`           |
+| Red Hat          | `Red_Hat`          |
+| Scientific Linux | `Scientific_Linux` |
+| Slackware        | `Slackware`        |
+| SUSE             | `SUSE`             |
+| Ubuntu           | `Ubuntu`           |
+
+::: tip 提示
+
+注意标识大小写
+
+:::
+
+</Route>
 
 ## segmentfault
 
