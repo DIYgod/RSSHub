@@ -272,6 +272,10 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
+`REQUEST_RETRY`: retries allowed for failed requests, default to `2`
+
+`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
+
 `TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `100`
 
 `REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
