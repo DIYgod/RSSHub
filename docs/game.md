@@ -253,6 +253,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 掌上英雄联盟
+
+### 推荐
+
+<Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend"/>
+
 ## きららファンタジア｜奇拉拉幻想曲
 
 ### 公告
