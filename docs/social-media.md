@@ -408,6 +408,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
 
+## 唱吧
+
+### 用户
+
+<Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" supportPodcast="1"/>
+
 ## 豆瓣
 
 ### 正在上映的电影
