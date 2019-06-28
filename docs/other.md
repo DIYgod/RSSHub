@@ -4,17 +4,11 @@ pageClass: routes
 
 # 其他
 
-## 12306
-
-### 最新动态
-
-<Route author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
-
 ## 36kr
 
 ### 搜索文章
 
-<Route author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
+<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 99% Invisible
 
@@ -204,6 +198,12 @@ pageClass: routes
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 </Route>
+
+## TOPYS
+
+### 分类
+
+<Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
 
 ## TSSstatus（iOS 降级通道）
 

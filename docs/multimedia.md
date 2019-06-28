@@ -300,6 +300,12 @@ pageClass: routes
 | ---- | ------ | ----- | ---- | --- | ------ |
 | 留空 | bluray | 1080p | 720p | 3d  | webdl  |
 
+## 中国广播
+
+### 电台节目
+
+<Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
+
 ## 字幕组（ZiMuZu.tv）
 
 ::: tip 提示
