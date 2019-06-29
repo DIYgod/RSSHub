@@ -382,6 +382,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['用户 twitter 名']"/>
 
+## VueVlog
+
+### 用户
+
+<Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']"/>
+
 ## Youtube
 
 ### 用户
@@ -401,6 +407,12 @@ pageClass: routes
 ### 用户动态
 
 <Route author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
+
+## 唱吧
+
+### 用户
+
+<Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" supportPodcast="1"/>
 
 ## 豆瓣
 
