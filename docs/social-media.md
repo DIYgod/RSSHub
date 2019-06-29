@@ -732,6 +732,12 @@ pageClass: routes
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
 
+## 优读
+
+### 公众号
+
+<Route author="kt286" example="/uread/weixin/shensing" path="/uread/weixin/:userid" :paramsDesc="['公众号ID, 可在 优读APP 中找到']"/>
+
 ## 直播吧
 
 ### 子论坛
