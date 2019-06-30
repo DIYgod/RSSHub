@@ -128,4 +128,4 @@ pageClass: routes
 
 ### 主页
 
-<Route author="kt186" example="/zreading" path="/zreading" />
+<Route author="kt286" example="/zreading" path="/zreading" />
