@@ -4,6 +4,12 @@ pageClass: routes
 
 # 出行旅游
 
+## 12306
+
+### 最新动态
+
+<Route author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
+
 ## All the Flight Deals
 
 ### 特价机票
