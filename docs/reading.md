@@ -123,3 +123,9 @@ pageClass: routes
 ### 章节
 
 <Route author="georeth" example="/zongheng/chapter/672340" path="/zongheng/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+## 左岸读书
+
+### 主页
+
+<Route author="kt286" example="/zreading" path="/zreading" />
