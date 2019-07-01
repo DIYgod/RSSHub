@@ -809,7 +809,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/qyzc" path="/tprtc/qyzc"/>
 
-### 产权转让
+### 新闻动态
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
