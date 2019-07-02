@@ -680,6 +680,10 @@ pageClass: routes
 :::
 </Route>
 
+### 公众号 (优读来源)
+
+<Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号ID, 可在 优读APP 中找到']"/>
+
 ### 公众平台系统公告栏目
 
 <Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
