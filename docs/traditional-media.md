@@ -96,6 +96,9 @@ Solidot 提供的 feed:
 
 > 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
+### 首页新闻
+<Route author="EsuRt"  example="/caixin/article" path="/caixin/article" />
+
 ### 新闻分类
 
 <Route author="idealclover" example="/caixin/finance/regulation" path="/caixin/:column/:category" :paramsDesc="['栏目名', '栏目下的子分类名']">
