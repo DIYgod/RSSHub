@@ -1,11 +1,9 @@
----
-sidebar: auto
----
+# 关于
 
-<p align="center">
-    <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+<p align="center" class="logo-img">
+    <img src="/logo.png" alt="RSSHub" width="100">
 </p>
-<h1 align="center" class="logo">RSSHub</h1>
+<h1 align="center" class="logo-text">RSSHub</h1>
 
 > 🍰 万物皆可 RSS
 
@@ -17,20 +15,16 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 [Telegram 群](https://t.me/rsshub)
 
-# 指南
-
 ## 鸣谢
 
 ### Special Sponsors
 
-| <a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a> | <a href="https://werss.app?utm_source=rsshub" target="_blank"><img width="170px" src="https://cdn.weapp.design/werss/werss-logo.png"></a> |
-| :-----------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
-
+<a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a>
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | Zuyang | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 |
-| :--------------------------------------: | :----: | :----------------------------------------: | :--: |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
+| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -2747,28 +2741,28 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 <route name="首页/欧陆风云" author="MegrezZhu" example="/javbus/western/home" path="/javbus/western/home" />
 
-<route name="分类/欧陆风云" author="MegrezZhu" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
+## 常见问题
 
-<route name="演员/欧陆风云" author="MegrezZhu" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
+**Q: RSS 是什么？RSS 如何使用？可以推荐一下好用的 RSS 阅读器么？**
 
-### 虎嗅
+**A:** [我有特别的 RSS 使用技巧](https://diygod.me/ohmyrss/)
 
-<route name="标签" author="xyqfer" example="/huxiu/tag/291" path="/huxiu/tag/:id" :paramsDesc="['标签 id']" />
+**Q: RSSHub 是如何工作的？**
 
-<route name="搜索" author="xyqfer" example="/huxiu/search/%E8%99%8E%E5%97%85%E6%97%A9%E6%8A%A5" path="/huxiu/search/:keyword" :paramsDesc="['关键字']" />
+**A:** 请求路由时，RSSHub 会按照给定规则请求源站数据，然后以 RSS 格式输出；如果在设定缓存时间内重新请求路由，则会直接返回缓存内容，不请求源站；再加一点点魔法。
 
-### 扇贝
+**Q: 演示地址可以用么？**
 
-<route name="打卡" author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" :paramsDesc="['用户 id']" />
+**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟, 可以随意使用。部分网站反爬策略严格，如微博、知乎，可能无法确保可用性，自建可以提高稳定性。
 
-### 36kr
+**Q: 为什么 RSSHub 里的图片加载不出来？**
 
-<route name="搜索文章" author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
+**A:** RSSHub 里的图片地址都是源站地址，大部分有防盗链，所以 RSSHub 给图片加了 `referrerpolicy="no-referrer"` 属性来防止跨域问题，但部分 RSS 服务会自作主张去掉这个属性，如 Feedly、Inoreader，在它们的网页端图片会触发跨域加载不出来
 
-### 中国大学 MOOC(慕课)
+**Q: 没有我想订阅的网站怎么办嘤嘤嘤 QAQ**
 
-<route name="最新" author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
+**A:** 如果你会写 JavaScript，请按照[规则](/joinus/#%E6%8F%90%E4%BA%A4%E6%96%B0%E7%9A%84-rss-%E5%86%85%E5%AE%B9)提交 pull request，否则按照要求[提交 issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_zh.md)，然后等待有缘人完成你的需求，也可以考虑[赞助项目](/support)或附上一张你自己的女装照来获得更快的 issue 响应速度。
 
-### 好奇心日报
+**Q: 我怎么才能知道 RSSHub 更新了哪些路由？**
 
-<route name="最新" author="suprio" example="/qdaily" path="/qdaily/index" />
+**A:** 可以使用 RSS 订阅[RSSHub 有新路由啦](/program-update.html#rsshub)。

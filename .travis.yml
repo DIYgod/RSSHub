@@ -2,11 +2,14 @@ language: node_js
 
 node_js: stable
 
+services:
+  - redis-server
+
 install:
   - yarn
 
 script:
-  - travis_wait 60 npm run test
+  - npm run test
 
 after_script:
   - npm install codecov

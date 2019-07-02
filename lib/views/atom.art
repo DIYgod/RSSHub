@@ -17,7 +17,7 @@
     </author>
 
     {{if contributor }}
-    {{ each contributor }}    
+    {{ each contributor }}
     <contributor>
         <name><![CDATA[{{@ $value }}]]></name>
     </contributor>
@@ -37,13 +37,13 @@
         <id>{{ $e.id || $e.link }}</id>
         <title><![CDATA[{{@ $e.title }}]]></title>
 
-        <published>{{ $e.published || $e.updated }}</published>
+        <published>{{ $e.pubDate || $e.updated }}</published>
         <updated>{{ $e.updated }}</updated>
-        
+
         {{ if $e.author }}
         <author>
             <name><![CDATA[{{@ $e.author || 'RSSHub' }}]]></name>
-        </author>        
+        </author>
         {{ /if }}
 
         <link href="{{ $e.link }}" />
@@ -65,7 +65,7 @@
                 <category term="{{ $c }}"></category>
                 {{ /each }}
         {{ /if }}
-        
+
     </entry>
     {{ /each }}
 
