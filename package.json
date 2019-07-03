@@ -82,7 +82,7 @@
     "puppeteer": "1.18.1",
     "query-string": "6.8.1",
     "redis": "2.8.0",
-    "rss-parser": "3.7.1",
+    "rss-parser": "3.7.2",
     "sanitize-html": "1.20.1",
     "sharp": "0.22.1",
     "socks-proxy-agent": "4.0.2",
