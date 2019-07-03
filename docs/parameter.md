@@ -20,7 +20,10 @@ filter 选出想要的内容
 
 -   filter_author: 过滤作者
 
-举例: <https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件>
+-   filter_time: 过滤时间，仅支持数字，单位为秒。返回指定时间范围内的内容。如果条目没有输出`pubDate`或者格式不正确将不会被过滤
+
+举例 1: <https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件>
+举例 2: <https://rsshub.app/nga/forum/485?filter_time=600>
 
 filterout 去掉不要的内容
 

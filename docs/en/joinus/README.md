@@ -14,7 +14,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
 #### Acquiring Data
 
--   Typically the data are acquired via HTTP requests (via API or webpage) sent by [axios](https://github.com/axios/axios)
+-   Typically the data are acquired via HTTP requests (via API or webpage) sent by [got](https://github.com/sindresorhus/got)
 -   Occasionally [puppeteer](https://github.com/GoogleChrome/puppeteer) is required for browser stimulation and page rendering in order to acquire the data
 
 -   The acquired data are most likely in JSON or HTML format
@@ -23,15 +23,15 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 -   Below is a list of data acquisition methods, ordered by the **「level of recommendation」**
 
 
-    1. **Acquire data via API using axios**
+    1. **Acquire data via API using got**
 
     Example：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
-    Acquiring data via the official API provided by the data source using axios:
+    Acquiring data via the official API provided by the data source using got:
 
     ```js
     // Initiate a HTTP GET request
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/space/coin/video?vmid=${uid}&jsonp=jsonp`,
     });
@@ -84,15 +84,15 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // the route is now done
     ```
 
-    2. **Acquire data via HTML webpage using axios**
+    2. **Acquire data via HTML webpage using got**
 
     Data have to be acquired via HTML webpage if **no API was provided**, for example: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
 
-    Acquiring data by scrapping the HTML using axios:
+    Acquiring data by scrapping the HTML using got:
 
     ```js
     // Initiate a HTTP GET request
-    const response = await axios({
+    const response = await got({
         method: 'get',
         url: 'https://www.jianshu.com',
     });
@@ -125,7 +125,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // define a function to load the article content
     async function load(link) {
         // get the article asynchronously
-        const response = await axios.get(link);
+        const response = await got.get(link);
         // load the article content
         const $ = cheerio.load(response.data);
 
@@ -168,7 +168,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
             // use tryGet() to query the cache
             // if the query returns no result, query the data source via load() to get article content
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl), 3 * 60 * 60);
+            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
 
             // merge two objects to form the final output
             return Promise.resolve(Object.assign({}, single, other));
@@ -202,7 +202,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
     ```js
     // use puppeteer util class, initialise a browser instance
-    const browser = await require('../../utils/puppeteer')();
+    const browser = await require('@/utils/puppeteer')();
     // open a new page
     const page = await browser.newPage();
     // access the target link
@@ -270,7 +270,7 @@ By default there is a global caching period set in `lib/config.js`, some sources
 -   Save to cache:
 
 ```js
-ctx.cache.set((key: string), (value: string), (time: number)); // time is the caching period in seconds.
+ctx.cache.set((key: string), (value: string)); // time is the caching period in seconds.
 ```
 
 -   Access the cache:
@@ -285,7 +285,7 @@ Given the update frequency is known, set the appropriate caching period to reuse
 
 ```js
 const key = 'daily' + story.id; // story.id is the unique identifier of each article
-ctx.cache.set(key, item.description, 24 * 60 * 60); // set the caching period to 24 hours * 60 minutes * 60 seconds = 86,400 seconds = 1 day
+ctx.cache.set(key, item.description); // set cache
 ```
 
 When the identical requests come in, reuse the cache：
@@ -422,7 +422,6 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
 1.  Update [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
 
     -   Documentation uses vue component:
-        -   `name`: route name
         -   `author`: route authors, separated by a single space
         -   `example`: route example
         -   `path`: route path
@@ -436,16 +435,15 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
         -   Multiple parameters:
 
         ```vue
-        <RouteEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        <RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
         ```
 
-        <RouteEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        <RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
 
         -   Use component slot for complicated description:
 
         ```vue
         <RouteEn
-            name="Flight Deals"
             author="HenryQW"
             path="/hopper/:lowestOnly/:from/:to?"
             example="/hopper/1/LHR/PEK"
@@ -460,7 +458,7 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
         </RouteEn>
         ```
 
-        <RouteEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+        <RouteEn author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
 
         This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 
@@ -476,3 +474,46 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
 
 1.  [Telegram Group](https://t.me/rsshub)
 2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
+
+## Some Tips for Development
+
+### VS Code debug configuration
+
+`.vscode/launch.js`
+
+#### Debugging with nodemon
+
+In terminal, run `npm run dev` or `yarn dev` to start debugging.
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Node: Nodemon",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector"
+        }
+    ]
+}
+```
+
+#### Debugging without nodemon
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/lib/index.js",
+            "env": { "NODE_ENV": "dev" }
+        }
+    ]
+}
+```
