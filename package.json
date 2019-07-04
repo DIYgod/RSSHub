@@ -57,7 +57,7 @@
     "dayjs": "1.8.14",
     "dotenv": "8.0.0",
     "etag": "1.8.1",
-    "form-data": "2.4.0",
+    "form-data": "2.5.0",
     "git-rev-sync": "1.12.0",
     "googleapis": "40.0.1",
     "got": "9.6.0",
