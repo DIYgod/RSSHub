@@ -899,6 +899,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 中南大学
+
+### 招聘信息
+
+<Route author="csuhan" example="/csu/job/1/1/15" path="/universities/csu/job/:type/:pageindex/pagesize?" :paramsDesc="['招聘类型','页码','信息数量']">
+
+| 招聘类型 | 本部招聘 | 湘雅招聘 | 铁道招聘 | 在线招聘 | 事业招考 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 参数     | 1        | 2        | 3        | 4        | 5        |
+
+</Route>
+
 ## 重庆大学
 
 ### 教务网通知公告
