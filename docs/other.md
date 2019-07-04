@@ -939,3 +939,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 网页抓捕
+
+### 网页抓捕
+
+<Route author="dodying" example="/grab/:url/:title" path="/grab/doc/:url/:title" :paramsDesc="['链接地址，经过encodeURIComponent处理','标题的选择器，本身为链接或子节点有链接']">
+

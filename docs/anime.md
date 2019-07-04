@@ -178,3 +178,45 @@ pageClass: routes
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## 漫画
+
+### 90mh
+
+<Route author="dodying" path="/comic/90mh/:id" example="/comic/90mh/nvpengyoujiewoyixia" :paramsDesc="['漫画ID']"/>
+
+### 新新漫画
+
+<Route author="dodying" path="/comic/177mh/:id" example="/comic/177mh/123402" :paramsDesc="['漫画ID']"/>
+
+### 哔哩哔哩漫画
+
+<Route author="dodying" path="/comic/bilibili/:id" example="/comic/bilibili/26009" :paramsDesc="['漫画ID']"/>
+
+### 动漫之家
+
+<Route author="dodying" path="/comic/dmzj/:id/:name" example="/comic/dmzj/43109/xiangbaoyangnanzigaozhongshengdeyujiedegushi" :paramsDesc="['漫画ID',"漫画名称"]"/>
+
+### 古风漫画
+
+<Route author="dodying" path="/comic/gufengmh8/:id" example="/comic/gufengmh8/wunaishicaolong" :paramsDesc="['漫画ID']"/>
+
+### KuKu动漫
+
+<Route author="dodying" path="/comic/kukudm/:id" example="/comic/kukudm/2329" :paramsDesc="['漫画ID']"/>
+
+### 来漫画
+
+<Route author="dodying" path="/comic/laimanhua/:id" example="/comic/laimanhua/19663" :paramsDesc="['漫画ID']"/>
+
+### 漫画DB
+
+<Route author="dodying" path="/comic/manhuadb/:id" example="/comic/manhuadb/1425" :paramsDesc="['漫画ID']"/>
+
+### 漫画堆
+
+<Route author="dodying" path="/comic/manhuadui/:id" example="/comic/manhuadui/wangxiangxueshenghui" :paramsDesc="['漫画ID']"/>
+
+### 動漫易
+
+<Route author="dodying" path="/comic/twocomic/:id" example="/comic/twocomic/14884" :paramsDesc="['漫画ID']"/>

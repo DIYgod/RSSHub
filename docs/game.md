@@ -264,3 +264,13 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 公告
 
 <Route author="magic-akari" example="/kirara/news" path="/kirara/news"/>
+
+## 限免
+
+### 外星人论坛
+
+<Route author="dodying" example="/giveaway/alienwarearena" path="/giveaway/alienwarearena"/>
+
+### Price Tag
+
+<Route author="dodying" example="/giveaway/appfan" path="/giveaway/appfan"/>

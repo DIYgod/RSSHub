@@ -932,3 +932,9 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+
+## 温州医科大学
+
+### 教务处
+
+<Route author="dodying" example="/wzyk/jwc/tzgg/wsxs.htm" path="/wzyk/jwc/:a/:b?" :paramsDesc="['location.pathname，最大长度为2']">

@@ -35,53 +35,17 @@ pageClass: routes
 
 ## JavBus
 
-### 首页
+### 主站
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/home" path="/javbus/home"/>
+<Route author="dodying" example="/javbus/uncensored/genre/1bc" path="/javbus/:a?/:b?/:c?" :paramsDesc="['location.pathname，最大长度为3']">
 
-### 分类
+### 主站简洁版
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/genre/7g" path="/javbus/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/genre)的链接']" />
+<Route author="dodying" example="/javbus-mini/uncensored/genre/1bc" path="/javbus/:a?/:b?/:c?" :paramsDesc="['location.pathname，最大长度为3']">
 
-### 演员
+### 欧陆风云
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/star/2jv" path="/javbus/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/actresses)的链接']" />
-
-### 系列
-
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
-
-### 首页/步兵
-
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/home" path="/javbus/uncensored/home"/>
-
-### 分类/步兵
-
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/uncensored/genre)的链接']" />
-
-### 演员/步兵
-
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/uncensored/actresses)的链接']" />
-
-### 系列/步兵
-
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/uncensored/series/1ft" path="/javbus/uncensored/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
-
-### 首页/欧陆风云
-
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/home" path="/javbus/western/home"/>
-
-### 分类/欧陆风云
-
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
-
-### 演员/欧陆风云
-
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
-
-### 系列/欧陆风云
-
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/western/series/20" path="/javbus/western/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+<Route author="dodying" example="/javbus-western/genre/8q" path="/javbus/:a?/:b?/:c?" :paramsDesc="['location.pathname，最大长度为3']">
 
 ## Mp4Ba
 
