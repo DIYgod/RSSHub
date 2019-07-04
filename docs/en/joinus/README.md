@@ -474,3 +474,46 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
 
 1.  [Telegram Group](https://t.me/rsshub)
 2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
+
+## Some Tips for Development
+
+### VS Code debug configuration
+
+`.vscode/launch.js`
+
+#### Debugging with nodemon
+
+In terminal, run `npm run dev` or `yarn dev` to start debugging.
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Node: Nodemon",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector"
+        }
+    ]
+}
+```
+
+#### Debugging without nodemon
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/lib/index.js",
+            "env": { "NODE_ENV": "dev" }
+        }
+    ]
+}
+```

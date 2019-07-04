@@ -4,23 +4,11 @@ pageClass: routes
 
 # 其他
 
-## 12306
-
-### 最新动态
-
-<Route author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
-
 ## 36kr
 
 ### 搜索文章
 
-<Route author="xyqfer" example="/36kr/search/article/8%E7%82%B91%E6%B0%AA" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
-
-## 7x24 小时快讯
-
-### 7x24 小时快讯
-
-<Route author="occupy5" example="/fx678/kx" path="/fx678/kx" />
+<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 99% Invisible
 
@@ -50,6 +38,12 @@ pageClass: routes
 ### App Store/Mac App Store
 
 见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
+
+## archdaily
+
+### 首页
+
+<Route author="kt286" example="/archdaily" path="/archdaily"/>
 
 ## AutoTrader
 
@@ -177,6 +171,12 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## NBA
+
+### 头条新闻
+
+<Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
@@ -195,6 +195,12 @@ pageClass: routes
 
 </Route>
 
+## sixthtone
+
+### 最新文章
+
+<Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
+
 ## The Verge
 
 ### The Verge
@@ -204,6 +210,12 @@ pageClass: routes
 通过提取文章全文, 以提供比官方源更佳的阅读体验.
 
 </Route>
+
+## TOPYS
+
+### 分类
+
+<Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
 
 ## TSSstatus（iOS 降级通道）
 
@@ -250,6 +262,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id" :paramsDesc="['source id，可在 URL 中找到']"/>
 
+### channel
+
+<Route author="kt286" example="/zaker/channel/13" path="/zaker/source/:id" :paramsDesc="['channel id，可在 URL 中找到']"/>
+
 ## 爱范儿 ifanr
 
 ### 爱范儿频道
@@ -270,6 +286,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 产业研究报告
 
 <Route author="brilon" example="/iresearch/report" path="/iresearch/report"/>
+
+## 巴比特
+
+### 作者专栏
+
+<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
 
 ## 百度
 
@@ -476,6 +498,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" :paramsDesc="['用户 id']" />
 
+## 汇通网
+
+### 7x24 小时快讯
+
+<Route author="occupy5" example="/fx678/kx" path="/fx678/kx" />
+
 ## 惠誉评级
 
 ### 板块信息
@@ -524,19 +552,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
 
-## 快递
+## 快科技（原驱动之家）
 
-### 快递
+### 最新新闻
 
-<Route author="DIYgod" example="/express/youzhengguoji/CV054432809US" path="/express/:company/:number" :paramsDesc="['快递公司代码, 参考 [API URL 所支持的快递公司及参数说明](https://www.kuaidi100.com/download/api_kuaidi100_com%2820140729%29.doc)', '快递单号']">
-
-::: warning 注意
-
-快递送达后请及时取消订阅, 以免浪费服务器资源
-
-:::
-
-</Route>
+<Route author="kt286" example="/kkj/news" path="/kkj/news"/>
 
 ## 老司机
 
@@ -794,6 +814,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 吐槽新帖
 
 <Route author="Qixingchen" example="/tucaoqq/post/28564/CdRI0728" path="/tucaoqq/post/:project/:key" :paramsDesc="['产品 ID', '产品密钥']"/>
+
+## 天津产权交易中心
+
+### 产权转让
+
+<Route author="kt286" example="/tprtc/cqzr" path="/tprtc/cqzr"/>
+
+### 企业资产转让
+
+<Route author="kt286" example="/tprtc/qyzc" path="/tprtc/qyzc"/>
+
+### 新闻动态
+
+<Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
 ## 推酷
 
