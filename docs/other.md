@@ -171,6 +171,12 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## NBA
+
+### 头条新闻
+
+<Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
