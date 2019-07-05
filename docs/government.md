@@ -20,6 +20,18 @@ pageClass: routes
 
 <Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
 
+### 滚动新闻
+
+<Route author="EsuRt" example="/gov/xinwen/gundong" path="/gov/xinwen/gundong"/>
+
+### 新闻要闻
+
+<Route author="EsuRt" example="/gov/xinwen/yaowen" path="/gov/xinwen/yaowen"/>
+
+### 国务院信息
+
+<Route author="EsuRt" example="/gov/statecouncil/news" path="/gov/statecouncil/news"/>
+
 ### 江苏省人民政府
 
 <Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">

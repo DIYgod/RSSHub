@@ -39,6 +39,12 @@ pageClass: routes
 
 见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
 
+## archdaily
+
+### 首页
+
+<Route author="kt286" example="/archdaily" path="/archdaily"/>
+
 ## AutoTrader
 
 ### 搜索结果
@@ -165,6 +171,12 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## NBA
+
+### 头条新闻
+
+<Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
@@ -249,6 +261,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### source
 
 <Route author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id" :paramsDesc="['source id，可在 URL 中找到']"/>
+
+### channel
+
+<Route author="kt286" example="/zaker/channel/13" path="/zaker/source/:id" :paramsDesc="['channel id，可在 URL 中找到']"/>
 
 ## 爱范儿 ifanr
 

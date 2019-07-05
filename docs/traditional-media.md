@@ -120,6 +120,10 @@ Category 列表:
 
 </Route>
 
+### 首页新闻
+
+<Route author="EsuRt"  example="/caixin/article" path="/caixin/article"/>
+
 ## 东方网
 
 ### 上海新闻
