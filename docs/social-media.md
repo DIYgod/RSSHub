@@ -408,6 +408,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" :paramsDesc="['用户 id']"/>
 
+## 唱吧
+
+### 用户
+
+<Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" supportPodcast="1"/>
+
 ## 豆瓣
 
 ### 正在上映的电影
@@ -673,6 +679,10 @@ pageClass: routes
 该方法需要通过 efb 进行频道绑定，具体操作见[https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
 :::
 </Route>
+
+### 公众号 (优读来源)
+
+<Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
 
 ### 公众平台系统公告栏目
 

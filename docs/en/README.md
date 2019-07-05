@@ -651,3 +651,9 @@ Supported sub-sites：
 #### Poems
 
 <RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
+
+## aptonic
+
+### New Dropzone Actions
+
+<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
