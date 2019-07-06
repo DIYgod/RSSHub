@@ -434,6 +434,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 印记中文周刊
+
+### 最新一期
+
+<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly"/>
+
 ## 知晓程序
 
 ### 文章
