@@ -367,6 +367,7 @@ GitHub 官方也提供了一些 RSS:
 | xxiaobian |
 
 </Route>
+
 ### 数字型账号用户博客
 
 <Route author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:id" :paramsDesc="['用户 id, 可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']">
@@ -376,6 +377,10 @@ GitHub 官方也提供了一些 RSS:
 | 3920392        |
 
 </Route>
+
+### 问答主题
+
+<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
 
 ## 看雪
 
