@@ -636,7 +636,7 @@ pageClass: routes
 
 ### 博主
 
-<Route author="DIYgod" example="/weibo/user/1195230310" path="/weibo/user/:uid" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取']" crawlerBadge="1"/>
+<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:displayVideo?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '是否直接显示微博视频, 缺省 `0` 不显示, 若需要显示则填 `1` (耗时略长请谨慎选择)']" crawlerBadge="1"/>
 
 ### 关键词
 
