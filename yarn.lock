@@ -6886,10 +6886,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@11.0.0-beta.20:
-  version "11.0.0-beta.20"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.20.tgz#1566512010e4c5c6adc2244f611b2023c008c587"
-  integrity sha512-vZp0yVA793qXU6RmTOcOKqqzNWUEgaLizYwNyaq8p7wVHqlbcomIn3BlHIBzJMEF5z/JEvS9drPccoxct0kGMQ==
+nock@11.0.0-beta.21:
+  version "11.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.21.tgz#c02c66fb7d26cc49677d1252aeadb4791991e762"
+  integrity sha512-t/gf913pdw34y4ZbkWsDXXd9ShtCRcScZTFLzd1LPcr/W6lUrGYQxtQ4zWwUnnLqcG2mejOaCP8tcckc7QsXEA==
   dependencies:
     chai "^4.1.2"
     debug "^4.1.0"
