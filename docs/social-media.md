@@ -532,9 +532,9 @@ pageClass: routes
 
 ## 好奇心日报
 
-### 栏目
+### 标签，栏目，分类
 
-<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表'，'对应 id，可在 URL 找到']">
+<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']">
 
 | 标签 | 栏目   | 分类       |
 | ---- | ------ | ---------- |
