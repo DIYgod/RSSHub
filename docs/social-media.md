@@ -532,17 +532,15 @@ pageClass: routes
 
 ## 好奇心日报
 
-### 分类
+### 标签，栏目，分类
 
-<Route author="WenhuWee" example="/qdaily/category/5" path="/qdaily/category/:id" :paramsDesc="['分类 id，可在分类 URL 找到']"/>
+<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']">
 
-### 栏目
+| 标签 | 栏目   | 分类       |
+| ---- | ------ | ---------- |
+| tag  | column | researcach |
 
-<Route author="WenhuWee emdoe" example="/qdaily/column/59" path="/qdaily/column/:id" :paramsDesc="['栏目 id，可在栏目 URL 找到']"/>
-
-### 标签
-
-<Route author="SivaGao" example="/qdaily/tag/29" path="/qdaily/tag/:id" :paramsDesc="['标签 id，可在 tag URL 找到']"/>
+</Route>
 
 ## 虎扑
 
