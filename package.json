@@ -72,7 +72,7 @@
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "lz-string": "1.4.4",
-    "markdown-it": "8.4.2",
+    "markdown-it": "9.0.0",
     "module-alias": "2.2.0",
     "node-fetch": "2.6.0",
     "path-to-regexp": "3.0.0",
