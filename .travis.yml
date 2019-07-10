@@ -2,11 +2,18 @@ language: node_js
 
 node_js: stable
 
+services:
+  - redis-server
+
 install:
   - yarn
 
 script:
-  - npm run lint
+  - npm run test
+
+after_script:
+  - npm install codecov
+  - ./node_modules/.bin/codecov
 
 cache:
   yarn: true
