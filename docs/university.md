@@ -207,6 +207,12 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- |
 | xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |
 
+## 广东工业大学
+
+### 校内新闻网
+
+<Route author="Jiangming1399" example="/gdut/news" path="/gdut/news"/>
+
 ## 广东海洋大学
 
 ### 广东海洋大学
