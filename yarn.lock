@@ -6891,10 +6891,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@11.0.0-beta.21:
-  version "11.0.0-beta.21"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.21.tgz#c02c66fb7d26cc49677d1252aeadb4791991e762"
-  integrity sha512-t/gf913pdw34y4ZbkWsDXXd9ShtCRcScZTFLzd1LPcr/W6lUrGYQxtQ4zWwUnnLqcG2mejOaCP8tcckc7QsXEA==
+nock@11.0.0-beta.23:
+  version "11.0.0-beta.23"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.23.tgz#e18d1d9b11e7444f8a4925331f5f4b6172b770e4"
+  integrity sha512-D03++S4wWPxqM3XUXaHTvU9TrwjypaSrroVK1k7CT3w95i93js2TUwZ3KvR08pbmO23bG747RK4LVl7vEemteQ==
   dependencies:
     chai "^4.1.2"
     debug "^4.1.0"
