@@ -61,9 +61,28 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <Route author="nicolaszf" example="/flyertea/creditcard/zhongxin" path="/flyertea/creditcard/:bank" :paramsDesc="['信用卡板块各银行的拼音简称']">
 
-| 国内信用卡 | 浦发银行 | 招商银行  | 中信银行 | 交通银行 | 中国银行  | 工商银行  | 广发银行 | 农业银行 | 建设银行 | 汇丰银行 | 民生银行  | 兴业银行 | 花旗银行 | 无卡支付 | 投资理财 | 网站权益汇 | 境外信用卡    |
-| ---------- | -------- | --------- | -------- | -------- | --------- | --------- | -------- | -------- | -------- | -------- | --------- | -------- | -------- | -------- | -------- | ---------- | ------------- |
-| creditcard | pufa     | zhaoshang | zhongxin | jiaotong | zhonghang | gongshang | guangfa  | nongye   | jianshe  | huifeng  | mingsheng | xingye   | huaqi    | wuka     | 137      | 145        | intcreditcard |
+| 信用卡模块 | bank          |
+| ---------- | ------------- |
+| 国内信用卡 | creditcard    |
+| 浦发银行   | pufa          |
+| 招商银行   | zhaoshang     |
+| 中信银行   | zhongxin      |
+| 交通银行   | jiaotong      |
+| 中国银行   | zhonghang     |
+| 工商银行   | gongshang     |
+| 广发银行   | guangfa       |
+| 农业银行   | nongye        |
+| 建设银行   | jianshe       |
+| 汇丰银行   | huifeng       |
+| 民生银行   | mingsheng     |
+| 兴业银行   | xingye        |
+| 花旗银行   | huaqi         |
+| 无卡支付   | wuka          |
+| 投资理财   | 137           |
+| 网站权益汇 | 145           |
+| 境外信用卡 | intcreditcard |
+
+</Route>
 
 ## 国家地理
 
