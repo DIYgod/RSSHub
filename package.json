@@ -5,14 +5,14 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "node lib/index.js",
-    "dev": "NODE_ENV=dev nodemon --inspect lib/index.js",
+    "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "format": "eslint \"**/*.js\" --fix && node docs/format.js && prettier \"**/*.{js,json,md}\" --write",
     "format:staged": "eslint \"**/*.js\" --fix && node docs/format.js && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
-    "test": "npm run format:check && NODE_ENV=test jest --coverage --runInBand --forceExit",
-    "jest": "NODE_ENV=test jest --runInBand --forceExit"
+    "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "@vuepress/plugin-back-to-top": "1.0.2",
     "@vuepress/plugin-google-analytics": "1.0.2",
     "@vuepress/plugin-pwa": "1.0.2",
+    "cross-env": "5.2.0",
     "eslint": "6.0.1",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-prettier": "3.1.0",
