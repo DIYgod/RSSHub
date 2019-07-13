@@ -197,3 +197,9 @@ pageClass: routes
 ### 首页信息
 
 <Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
+
+## 中央纪委国家监委
+
+### 审查调查
+
+<Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
