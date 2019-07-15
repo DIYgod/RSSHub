@@ -197,3 +197,9 @@ pageClass: routes
 ### 首页信息
 
 <Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
+
+## 中华人民共和国外交部
+
+### 发言人表态
+
+<Route author="nicolaszf" example="/gov/fmprc/fyrbt" path="/gov/fmprc/fyrbt"/>
