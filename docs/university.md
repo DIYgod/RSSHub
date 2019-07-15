@@ -312,7 +312,7 @@ category 列表：
 
 ### 教务处新闻动态
 
-<Route author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 可选, 默认为 `1`']">
+<Route author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 默认为 `1`']">
 
 | 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
 | -------- | -------- | -------- | -------- | -------- |
