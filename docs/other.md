@@ -887,6 +887,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 香水时代
+
+### 首页
+
+<Route author="kt286" example="/nosetime/home" path="/nosetime/home"/>
+
+### 香评
+
+<Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" :paramsDesc="['用户id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']"/>
+
 ## 新浪专栏
 
 ### 创事记
