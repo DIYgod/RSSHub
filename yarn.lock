@@ -6512,10 +6512,10 @@ markdown-it-table-of-contents@^0.4.0:
   resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.4.4.tgz#3dc7ce8b8fc17e5981c77cc398d1782319f37fbc"
   integrity sha512-TAIHTHPwa9+ltKvKPWulm/beozQU41Ab+FIefRaQV1NRnpzwcV9QOe6wXQS5WLivm5Q/nlo0rl6laGkMDZE7Gw==
 
-markdown-it@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-9.0.0.tgz#804e9285d2a0e2457216ed6a1d96e219483f2fb1"
-  integrity sha512-bUVTYGt/K/mYr3HlE+PBe6TOTyWghcpSZqOD9t+NFRlwJMhp9Kp6WQ8fJ26I6v1Xo71UmPYt1S4Hc9Lq8GZx2Q==
+markdown-it@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-9.0.1.tgz#aafe363c43718720b6575fd10625cde6e4ff2d47"
+  integrity sha512-XC9dMBHg28Xi7y5dPuLjM61upIGPJG8AiHNHYqIaXER2KNnn7eKnM5/sF0ImNnyoV224Ogn9b1Pck8VH4k0bxw==
   dependencies:
     argparse "^1.0.7"
     entities "~1.1.1"
@@ -6910,10 +6910,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@11.0.0-beta.23:
-  version "11.0.0-beta.23"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.23.tgz#e18d1d9b11e7444f8a4925331f5f4b6172b770e4"
-  integrity sha512-D03++S4wWPxqM3XUXaHTvU9TrwjypaSrroVK1k7CT3w95i93js2TUwZ3KvR08pbmO23bG747RK4LVl7vEemteQ==
+nock@11.0.0-beta.26:
+  version "11.0.0-beta.26"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.26.tgz#70c39409262da020ae9ec9218d7fd37782bd097f"
+  integrity sha512-0nwr5RrkQh9CblGk/9NCihmh+mbCUSDwMss+v/RgpHafM3/Eo3UQZe+Z8vrDfjcf1Lv8/4OFdgfpl2qhufAI7g==
   dependencies:
     chai "^4.1.2"
     debug "^4.1.0"

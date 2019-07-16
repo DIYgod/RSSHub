@@ -72,6 +72,10 @@ pageClass: routes
 
 <Route author="ocleo1" example="/tingshuitz/nanjing" path="/tingshuitz/nanjing"/>
 
+### 武汉市
+
+<Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan"/>
+
 ## 香港天文台
 
 ### Current Weather Report
