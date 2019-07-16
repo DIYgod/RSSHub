@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+<img src="https://i.loli.net/2019/04/23/5cbeb7e41414c.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center">RSSHub</h1>
 
@@ -23,7 +23,7 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### Special Sponsors
 
-<a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://partner.lizhi.io/rsshub/office_365_share" target="_blank"><img height="60px" src="https://i.imgur.com/GyYi9MI.png"></a>
 
 ### Sponsors
 
@@ -72,7 +72,7 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 ## 一次性赞助
 
-我们通过以下方式接受赞助 :
+我们通过以下方式接受赞助:
 
 -   [微信支付](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
 -   [支付宝](https://i.loli.net/2019/03/23/5c950ebbc980e.png)

@@ -1,10 +1,91 @@
+---
+pageClass: routes
+---
+
 # 政务消息
+
+## 联合国
+
+### 安理会否决了决议
+
+<Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+## 中国政府
+
+### 最新政策
+
+<Route author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
+
+### 最新文件
+
+<Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
+
+### 信息稿件
+
+<Route author="ciaranchen" example="/gov/zhengce/govall/orpro=555&notpro=2&search_field=title" path="/gov/zhengce/govall/:advance?" :paramsDesc="['高级搜索选项，将作为请求参数直接添加到url后。目前已知的选项及其意义如下。' ]" >
+
+|              选项               |                       意义                       |              备注              |
+| :-----------------------------: | :----------------------------------------------: | :----------------------------: |
+|              orpro              |             包含以下任意一个关键词。             |          用空格分隔。          |
+|             allpro              |                包含以下全部关键词                |                                |
+|             notpro              |                 不包含以下关键词                 |                                |
+|              inpro              |                完整不拆分的关键词                |                                |
+|           searchfield           | title: 搜索词在标题中; content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
+| pubmintimeYear, pubmintimeMonth |                    从某年某月                    | 单独使用月份参数无法只筛选月份 |
+| pubmaxtimeYear, pubmaxtimeMonth |                    到某年某月                    | 单独使用月份参数无法只筛选月份 |
+|              colid              |                       栏目                       |      比较复杂，不建议使用      |
+
+</Route>
+
+### 滚动新闻
+
+<Route author="EsuRt" example="/gov/xinwen/gundong" path="/gov/xinwen/gundong"/>
+
+### 新闻要闻
+
+<Route author="EsuRt" example="/gov/xinwen/yaowen" path="/gov/xinwen/yaowen"/>
+
+### 国务院信息
+
+<Route author="EsuRt" example="/gov/statecouncil/news" path="/gov/statecouncil/news"/>
+
+### 江苏省人民政府
+
+<Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
+
+|  省政府常务会议   |    要闻关注    |  部门资讯  |  市县动态   |       政策解读        |
+| :---------------: | :------------: | :--------: | :---------: | :-------------------: |
+| executive-meeting | important-news | department | city-county | policy-interpretation |
+
+| 政府信息公开年度报告 |   政府信息公开制度    | 省政府及办公厅文件 |     规范性文件     |
+| :------------------: | :-------------------: | :----------------: | :----------------: |
+|    annual-report     | information-publicity |   documentation    | normative-document |
+
+|          立法意见征集          |      意见征集      |
+| :----------------------------: | :----------------: |
+| legislative-opinion-collection | opinion-collection |
+
+</Route>
+
+### 南京市人民政府
+
+<Route author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
+
+| 南京信息 |  部门动态  | 各区动态 |  民生信息  |
+| :------: | :--------: | :------: | :--------: |
+|   news   | department | district | livelihood |
+
+</Route>
 
 ## 中国驻外使领馆
 
-<Route name="大使馆重要通知" author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+### 大使馆重要通知
 
-<Route name="领事馆重要通知" author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+<Route author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+
+### 领事馆重要通知
+
+<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
 
 ### 支持国家列表
 
@@ -97,40 +178,34 @@
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
-## 中国政府
-
-<Route name="最新政策" author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
-
-<Route name="最新文件" author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
-
-<Route name="江苏省人民政府" author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
-
-|  省政府常务会议   |    要闻关注    |  部门资讯  |  市县动态   |       政策解读        |
-| :---------------: | :------------: | :--------: | :---------: | :-------------------: |
-| executive-meeting | important-news | department | city-county | policy-interpretation |
-
-| 政府信息公开年度报告 |   政府信息公开制度    | 省政府及办公厅文件 |     规范性文件     |
-| :------------------: | :-------------------: | :----------------: | :----------------: |
-|    annual-report     | information-publicity |   documentation    | normative-document |
-
-|          立法意见征集          |      意见征集      |
-| :----------------------------: | :----------------: |
-| legislative-opinion-collection | opinion-collection |
-
-</Route>
-
-<Route name="南京市人民政府" author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
-
-| 南京信息 |  部门动态  | 各区动态 |  民生信息  |
-| :------: | :--------: | :------: | :--------: |
-|   news   | department | district | livelihood |
-
-</Route>
-
 ## 中华人民共和国生态环境部
 
-<Route name="公示" author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
+### 公示
 
-## 联合国
+<Route author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
 
-<Route name="安理会否决了决议" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+## 中华人民共和国退役军人事务部
+
+### 部内信息
+
+<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/bnxx"/>
+
+### 政策解读
+
+<Route author="SunShinenny" example="/gov/veterans/zcjd" path="/gov/veterans/zcjd"/>
+
+### 首页信息
+
+<Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
+
+## 中央纪委国家监委
+
+### 审查调查
+
+<Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
+
+## 中华人民共和国外交部
+
+### 发言人表态
+
+<Route author="nicolaszf" example="/gov/fmprc/fyrbt" path="/gov/fmprc/fyrbt"/>

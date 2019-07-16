@@ -3,7 +3,7 @@ sidebar: auto
 ---
 
 <p align="center" class="logo-img">
-    <img src="https://i.imgur.com/NZpRScX.png" alt="RSSHub" width="100">
+    <img src="/logo.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
@@ -15,15 +15,37 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Special Sponsors
 
-<a href="https://rixcloud.app/rsshub" target="_blank"><img width="240px" src="https://i.imgur.com/qRP0eMg.png"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a href="https://partner.lizhi.io/rsshub/office_365_share" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://i.imgur.com/GyYi9MI.png"></a>
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) |
+| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :-------: | :----------------------------------: |
 
 
-[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+[![](https://opencollective.com/static/images/become_sponsor.svg)](/support/)
+
+## FAQs
+
+**Q: How does RSSHub work？**
+
+**A:** When a request is received, RSSHub fetches the corresponding data from the original site, the result ing contents will be output in RSS format. Caching is implemented to avoid requesting original sites for content. And of course, we throw in a little magic 🎩.
+
+**Q: Can I use the demo instance？**
+
+**A:** [rsshub.app](https://rsshub.app) is the demo instance provided, running the latest build of RSSHub from master branch, the cache is set 20 minutes and it's free to use. However, popular websites such as Instagram and YouTube etc. may pose a request quota on individual IP address, which means it can get unreliable from time to time for the demo instance. You are encouraged to [host your own RSSHub instance](/en/install/) for a better usability.
+
+**Q: Why are images not loading in some RSSHub routes？**
+
+**A:** RSSHub fetches and respects the original image URLs from original sites, `referrerpolicy="no-referrer"` attribute is added to all images to solve the issues caused by cross-domain requests. Third party RSS service providers such as Feedly and Inoreader, strip this attribute off which leads to cross-domain requests being blocked.
+
+**Q: The website I want is not supported QAQ**
+
+**A:** If you are a JavaScript developer, please follow [this guide](/joinus) for submitting a pull request, otherwise, follow the issue template to [submit a new issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_en.md), and patiently wait for Santa Claus. For priority responses, consider [sponsoring us](/support).
+
+**Q: Where do I get the changelog for RSSHub？**
+
+**A:** Subscribe our RSS here: [RSSHub added a new route](/en/#rsshub).
 
 ### Contributors
 
@@ -33,7 +55,7 @@ Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ::: tip
 
-Free feel to test the [demo instance](https://rsshub.app), the cache expiry time is set to 10 minutes.
+Feel free to test the [demo instance](https://rsshub.app), the cache expiry time is set to 10 minutes.
 
 :::
 
@@ -83,7 +105,7 @@ Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https
 
 RSSHub supports RSS 2.0 and Atom as the output formats, simply append `.rss` `.atom` to the end of the feed address, default to RSS 2.0
 
-For exmaple:
+For example:
 
 -   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
 -   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
@@ -110,7 +132,7 @@ Route: `/api/routes/:name?`
 
 Parameters:
 
--   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes). Optional, **returns all public routes if not specified**.
+-   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). Optional, **returns all public routes if not specified**.
 
 A successful request returns a HTTP status code `200 OK` with the result in JSON:
 
@@ -137,11 +159,15 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### RSSHub
 
-<RouteEn name="Update" path="/rsshub/rss" example="/rsshub/rss" />
+#### Update
+
+<RouteEn path="/rsshub/rss" example="/rsshub/rss" />
 
 ### MIUI
 
-<RouteEn name="New firmware" author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?" :paramsDesc="['the device `codename` eg. `aries` for Mi 2S','type']" >
+#### New firmware
+
+<RouteEn author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?" :paramsDesc="['the device `codename` eg. `aries` for Mi 2S','type']" >
 
 | stable  | development |
 | ------- | ----------- |
@@ -151,7 +177,9 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### Firefox
 
-<RouteEn name="New Release" author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['the platform']" >
+#### New Release
+
+<RouteEn author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['the platform']" >
 
 | Desktop | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
@@ -159,47 +187,71 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 </RouteEn>
 
-### Thunderbird <Author uid="garywill"/>
+### Thunderbird
 
-<RouteEn name="Update" author="garywill" path="/thunderbird/release" example="/thunderbird/release" />
+#### Update
+
+<RouteEn author="garywill" path="/thunderbird/release" example="/thunderbird/release" />
 
 ### App Store/Mac App Store
 
-<RouteEn name="App Update" author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" :paramsDesc="['App Store Country, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://itunes.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']" />
+#### App Update
 
-<RouteEn name="App Update" author="HenryQW" example="/appstore/price/us/mac/id1152443474" path="/appstore/price/:country/:type/:id" :paramsDesc="['App Store Country, obtain from the app URL https://itunes.apple.com/us/app/id1152443474, in this case, `us`', 'App type，either `iOS` or `mac`', 'App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id1152443474, in this case, `id1152443474`']" />
+<RouteEn author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" :paramsDesc="['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']" />
 
-<RouteEn name="In-App-Purchase Price Drop Alert" author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store Country, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://itunes.apple.com/us/app/id953286746, in this case, `id953286746`']" />
+#### Price Drop
+
+<RouteEn author="HenryQW" example="/appstore/price/us/mac/id1152443474" path="/appstore/price/:country/:type/:id" :paramsDesc="['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`', 'App type，either `iOS` or `mac`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `id1152443474`']" />
+
+#### In-App-Purchase Price Drop Alert
+
+<RouteEn author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']" />
 
 ### F-Droid
 
-<RouteEn name="App Update" author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App\'s package name']" />
+#### App Update
+
+<RouteEn author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App\'s package name']" />
 
 ### Greasy Fork
 
-<RouteEn name="Script Update" author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
+#### Script Update
+
+<RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
 
 ### Thunderbird
 
-<RouteEn name="Changelog" author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
+#### Changelog
+
+<RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
 ### Nvidia Web Driver
 
-<RouteEn name="Changelog" author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+#### Changelog
+
+<RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
 ### Docker Hub
 
-<RouteEn name="Image New Build" author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
+#### Image New Build
+
+<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
 
 ## Social Media
 
 ### pixiv
 
-<RouteEn name="User Bookmark" author="EYHN" path="/pixiv/user/bookmarks/:id" example="/pixiv/user/bookmarks/15288095" :paramsDesc="['user id, available in user\'s homepage URL']" />
+#### User Bookmark
 
-<RouteEn name="User Activity" author="EYHN" path="/pixiv/user/:id" example="/pixiv/user/15288095" :paramsDesc="['user id, available in user\'s homepage URL']" />
+<RouteEn author="EYHN" path="/pixiv/user/bookmarks/:id" example="/pixiv/user/bookmarks/15288095" :paramsDesc="['user id, available in user\'s homepage URL']" />
 
-<RouteEn name="Rankings" author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" :paramsDesc="['rank type', 'format: `2018-4-25`']" >
+#### User Activity
+
+<RouteEn author="EYHN" path="/pixiv/user/:id" example="/pixiv/user/15288095" :paramsDesc="['user id, available in user\'s homepage URL']" />
+
+#### Rankings
+
+<RouteEn author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" :paramsDesc="['rank type', 'format: `2018-4-25`']" >
 
 | pixiv daily rank | pixiv weekly rank | pixiv monthly rank | pixiv male rank | pixiv female rank | pixiv original rank | pixiv rookie user rank |
 | ---------------- | ----------------- | ------------------ | --------------- | ----------------- | ------------------- | ---------------------- |
@@ -213,47 +265,151 @@ If no matching results were found, the server returns only a HTTP status code `2
 
 ### Disqus
 
-<RouteEn name="Comment" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
+#### Comment
+
+<RouteEn path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
 
 ### Twitter
 
-<RouteEn name="User" path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['twitter handler']" />
+#### User timeline
 
-<RouteEn name="List" author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']"/>
+<RouteEn path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['user id']" />
 
-### Instagram
+### User following timeline
 
-<RouteEn name="User" path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" />
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['user id']">
 
-### Youtube
+::: warning
 
-<RouteEn name="User" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" />
-
-<RouteEn name="Channel" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" />
-
-<RouteEn name="Playlist" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" />
-
-### Telegram
-
-<RouteEn name="Channel" path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" >
-
-::: tip
-
-Bot initialization required: add Telegram Bot [@RSSHub_bot](https://t.me/RSSHub_bot) as an admin to the channel and send at least one message in the channel for the bot to obtain the _chat_id_.
-
-For private channels, pass the channel `id` (such as `-1001001234567`) intstead of `:username`. The easiest way to get id is [described here](https://stackoverflow.com/a/39943226/3160483).
+User following timeline needs Twitter token corresponding id, so this route is only for self-hosted, see Install - Route-specific Configurations for details
 
 :::
 
+</Route>
+
+#### List timeline
+
+<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']"/>
+
+#### User likes
+
+<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']"/>
+
+### Instagram
+
+#### User
+
+<RouteEn path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" />
+
+#### Hashtag
+
+<RouteEn author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']" />
+
+### Youtube
+
+#### User
+
+<RouteEn path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" />
+
+#### Channel
+
+<RouteEn path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" />
+
+#### Playlist
+
+<RouteEn path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" />
+
+### Telegram
+
+#### Channel
+
+<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" />
+
+#### Sticker Pack
+
+<RouteEn author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
+
+## Gaming
+
+### Steam
+
+#### Steam search
+
+<RouteEn author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['search parameters']">
+
+Get serach parameters from the URL.
+
+For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier`, the parameters are `specials=1&term=atelier`.
+
 </RouteEn>
 
-<RouteEn name="Sticker Pack" author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
+#### Steam news
+
+<RouteEn author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['game id']"/>
+
+### SteamGifts
+
+#### Discussions
+
+<RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['category name, default to All']"/>
+
+### Nintendo
+
+#### eShop New Game Releases
+
+<RouteEn author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']"/>
+
+#### Nintendo Direct
+
+<RouteEn author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
+
+#### News（Hong Kong only）
+
+<Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+
+## PlayStation Store
+
+### Game List（Hong Kong only）
+
+<RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['gridName from the list']">
+
+Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
+
+</RouteEn>
+
+## Metacritic
+
+### Game Releases
+
+<RouteEn author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['console platform', 'release type, default to `new`', 'sorting type, default to `date`']">
+
+Platforms supported:
+
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+
+Release types, default to `new`:
+
+| New | Coming Soon | All |
+| --- | ----------- | --- |
+| new | coming      | all |
+
+Sorting types, default to `date`:
+
+| Date | Metacritic Score | User Score |
+| ---- | ---------------- | ---------- |
+| date | metascore        | userscore  |
+
+</RouteEn>
 
 ## ACG
 
 ### Vol.moe
 
-<RouteEn name="vol" author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
+#### vol
+
+<RouteEn author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
 
 | Comics are serialized | Comics is finshed |
 | --------------------- | ----------------- |
@@ -265,7 +421,9 @@ For private channels, pass the channel `id` (such as `-1001001234567`) intstead 
 
 ### All the Flight Deals
 
-<RouteEn name="Flight Deals" author="HenryQW" path="/atfd/:locations/:nearby?" example="/atfd/us+new%20york,gb+london/1" :paramsDesc="['the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」.  Origin\'s ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york). Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/).', 'whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)']" >
+#### Flight Deals
+
+<RouteEn author="HenryQW" path="/atfd/:locations/:nearby?" example="/atfd/us+new%20york,gb+london/1" :paramsDesc="['the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」.  Origin\'s ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york). Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/).', 'whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)']" >
 
 For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
@@ -279,7 +437,9 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
 
 ### Hopper
 
-<RouteEn name="Flight Deals" author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+#### Flight Deals
+
+<RouteEn author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
 
 This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 
@@ -291,7 +451,9 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 ### BBC
 
-<RouteEn name="BBC" author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+#### BBC
+
+<RouteEn author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
 Provides a better reading experience (full text articles) over the official ones.
 
@@ -318,19 +480,31 @@ GitHub provides some official RSS feeds:
 
 :::
 
-<RouteEn name="User Repo" author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" :paramsDesc="['GitHub username']" />
+#### User Repo
 
-<RouteEn name="Trending" path="/github/trending/:since/:language?" example="/github/trending/daily/javascript" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: daily, weekly or monthly', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" />
+<RouteEn author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" :paramsDesc="['GitHub username']" />
 
-<RouteEn name="Issue" author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+#### Trending
 
-<RouteEn name="Follower" author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" />
+<RouteEn path="/github/trending/:since/:language?" example="/github/trending/daily/javascript" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: daily, weekly or monthly', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" />
 
-<RouteEn name="Star" author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+#### Issue
+
+<RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+
+#### Follower
+
+<RouteEn author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" />
+
+#### Star
+
+<RouteEn author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
 
 ### GitLab
 
-<RouteEn name="Explore" author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">
+#### Explore
+
+<RouteEn author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
@@ -342,7 +516,9 @@ GitHub provides some official RSS feeds:
 
 ### Hermes
 
-<RouteEn name="Hermes UK" author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+#### Hermes UK
+
+<RouteEn author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
 
 ## Uncategorized
 
@@ -354,17 +530,25 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 :::
 
-<RouteEn name="Torrent Lookup by IMDB ID" author="Songkeys" path="/eztv/torrents/:imdb_id" example="/eztv/torrents/6048596" :paramsDesc="['search for the IMDB ID of the desired show, available at [IMDB](https://www.imdb.com)']" />
+#### Torrent Lookup by IMDB ID
+
+<RouteEn author="Songkeys" path="/eztv/torrents/:imdb_id" example="/eztv/torrents/6048596" :paramsDesc="['search for the IMDB ID of the desired show, available at [IMDB](https://www.imdb.com)']" />
 
 ### Hexo Blog
 
-<RouteEn name="Blog using Next theme" author="fengkx" path="/hexo/next/:url" example="/hexo/next/fengkx.top" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+#### Blog using Next theme
 
-<RouteEn name="Blog using Yilia theme" author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+<RouteEn author="fengkx" path="/hexo/next/:url" example="/hexo/next/fengkx.top" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+
+#### Blog using Yilia theme
+
+<RouteEn author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
 ### Google
 
-<RouteEn name="Google Scholar Keywords Monitoring" author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" :paramsDesc="['query statement which supports「Basic」and「Advanced」modes']" >
+#### Google Scholar Keywords Monitoring
+
+<RouteEn author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" :paramsDesc="['query statement which supports「Basic」and「Advanced」modes']" >
 
 ::: warning
 
@@ -380,19 +564,27 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 
 ### Dribbble
 
-<RouteEn name="Popular" path="/dribbble/popular/:timeframe?" example="/dribbble/popular" :paramsDesc="['support the following values: week, month, year and ever']" />
+#### Popular
 
-<RouteEn name="User (or team)" path="/dribbble/user/:name" example="/dribbble/user/google" :paramsDesc="['username, available in user\'s homepage URL']" />
+<RouteEn path="/dribbble/popular/:timeframe?" example="/dribbble/popular" :paramsDesc="['support the following values: week, month, year and ever']" />
 
-<RouteEn name="Keyword" path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" :paramsDesc="['desired keyword']" />
+#### User (or team)
+
+<RouteEn path="/dribbble/user/:name" example="/dribbble/user/google" :paramsDesc="['username, available in user\'s homepage URL']" />
+
+#### Keyword
+
+<RouteEn path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" :paramsDesc="['desired keyword']" />
 
 ### Apple
 
-<RouteEn name="Exchange and Repair Extension Programs" author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />
+#### Exchange and Repair Extension Programs
+
+<RouteEn author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />
 
 ### The Verge
 
-<RouteEn name="The Verge" author="HenryQW" example="/verge" path="/verge">
+<RouteEn author="HenryQW" example="/verge" path="/verge">
 
 Provides a better reading experience (full text articles) over the official one.
 
@@ -400,11 +592,15 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### 99% Invisible
 
-<RouteEn name="Transcript" author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+#### Transcript
+
+<RouteEn author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
 
 ### AutoTrader
 
-<RouteEn name="Search" author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['the search query']">
+#### Search
+
+<RouteEn author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['the search query']">
 
 1. Conduct a search with desired filters on AutoTrader
 1. Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
@@ -413,11 +609,15 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### United Nations
 
-<RouteEn name="Security Council Vetoed a Resolution" author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+#### Security Council Vetoed a Resolution
+
+<RouteEn author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
 ### The Guardian
 
-<RouteEn name="Editorial" author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+#### Editorial
+
+<RouteEn author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
 
 Provides a better reading experience (full text articles) over the official one.
 
@@ -425,7 +625,9 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### iDownloadBlog
 
-<RouteEn name="iDownloadBlog" author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
+#### iDownloadBlog
+
+<RouteEn author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
 
 Provides a better reading experience (full text articles) over the official one.
 
@@ -433,7 +635,9 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### 9To5
 
-<RouteEn name="9To5 Sub-site" author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
+#### 9To5 Sub-site
+
+<RouteEn author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
 
 Supported sub-sites：
 | Mac | Google | Toys |
@@ -444,4 +648,12 @@ Supported sub-sites：
 
 ### All Poetry
 
-<RouteEn name="Poems" author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
+#### Poems
+
+<RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
+
+## aptonic
+
+### New Dropzone Actions
+
+<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>

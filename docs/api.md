@@ -18,7 +18,7 @@ RSSHub 提供下列 API 接口:
 
 参数:
 
--   name, 路由一级名称, 对应 [https://github.com/DIYgod/RSSHub/tree/master/routes](https://github.com/DIYgod/RSSHub/tree/master/routes) 中的文件夹名称. 可选, **缺省则返回所有可用路由**.
+-   name, 路由一级名称, 对应 [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的文件夹名称. 可选, **缺省则返回所有可用路由**.
 
 成功请求将会返回 HTTP 状态码 `200 OK` 与 JSON 结果, 格式如下:
 

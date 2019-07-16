@@ -1,4 +1,46 @@
+---
+pageClass: routes
+---
+
 # 购物
+
+## Westore
+
+### 新品
+
+<Route author="xyqfer" example="/westore/new" path="/westore/new"/>
+
+## 多抓鱼
+
+### 搜索结果
+
+<Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
+
+## 京东众筹
+
+### 众筹项目
+
+<Route author="LogicJake" example="/jingdong/zhongchou/all/zcz/zhtj" path="/jingdong/zhongchou/:type/:status/:sort" :paramsDesc="['类型','状态','排序方式']">
+
+类型
+
+| 全部 | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| all  | kj   | ms   | jd   | sj   | yl   | wh   | gy   | qt   |
+
+状态
+
+| 全部 | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
+| ---- | ------ | ------ | -------- | -------- |
+| all  | yrz    | zcz    | zccg     | xmcg     |
+
+排序方式
+
+| 综合推荐 | 最新上线 | 金额最多 | 支持最多 | 即将结束 |
+| -------- | -------- | -------- | -------- | -------- |
+| zhtj     | zxsx     | jezg     | zczd     | jjjs     |
+
+</Route>
 
 ## 什么值得买
 
@@ -8,9 +50,13 @@
 
 :::
 
-<Route name="关键词" author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']"/>
+### 关键词
 
-<Route name="排行榜" author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
+<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']"/>
+
+### 排行榜
+
+<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
 
 -   榜单类型
 
@@ -52,19 +98,25 @@
 
 </Route>
 
-<Route name="好文" author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为all，其余可以选择1，7，30，365']"/>
+### 好文
 
-## 小米
+<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为all，其余可以选择1，7，30，365']"/>
 
-<Route name="小米众筹" author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
+### 好文分类
 
-<Route name="小米有品众筹" author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+<Route author="LogicJake" example="/smzdm/haowen/fenlei/shenghuodianqi" path="/smzdm/haowen/fenlei/:name/:sort?" :paramsDesc="['分类名，可在 URL 中查看','排序方式，默认为最新']">
 
-<Route name="小米有品每日上新" author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+| 最新 | 周排行 | 月排行 |
+| ---- | ------ | ------ |
+| 0    | 7      | 30     |
+
+</Route>
 
 ## 甩甩尾巴
 
-<Route name="分类" author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
+### 分类
+
+<Route author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
 
 | 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -72,41 +124,11 @@
 
 </Route>
 
-## Westore
-
-<Route name="新品" author="xyqfer" example="/westore/new" path="/westore/new"/>
-
-## 玩物志
-
-<Route name="最新" author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
-
-## 京东众筹
-
-<Route name="众筹项目" author="LogicJake" example="/jingdong/zhongchou/all/zcz/zhtj" path="/jingdong/zhongchou/:type/:status/:sort" :paramsDesc="['类型','状态','排序方式']">
-
-类型
-
-| 全部 | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| all  | kj   | ms   | jd   | sj   | yl   | wh   | gy   | qt   |
-
-状态
-
-| 全部 | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
-| ---- | ------ | ------ | -------- | -------- |
-| all  | yrz    | zcz    | zccg     | xmcg     |
-
-排序方式
-
-| 综合推荐 | 最新上线 | 金额最多 | 支持最多 | 即将结束 |
-| -------- | -------- | -------- | -------- | -------- |
-| zhtj     | zxsx     | jezg     | zczd     | jjjs     |
-
-</Route>
-
 ## 淘宝众筹
 
-<Route name="众筹项目" author="xyqfer" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
+### 众筹项目
+
+<Route author="xyqfer" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
 
 | 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
 | ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
@@ -114,6 +136,22 @@
 
 </Route>
 
-## 多抓鱼
+## 玩物志
 
-<Route name="搜索结果" author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
+### 最新
+
+<Route author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
+
+## 小米
+
+### 小米众筹
+
+<Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
+
+### 小米有品众筹
+
+<Route author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+
+### 小米有品每日上新
+
+<Route author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
