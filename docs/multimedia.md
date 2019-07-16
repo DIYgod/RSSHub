@@ -17,6 +17,10 @@ pageClass: routes
 
 :::
 
+### 用户投稿
+
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
