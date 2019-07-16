@@ -548,6 +548,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/whalegogo/home" path="/whalegogo/home"/>
 
+## 巨潮资讯
+
+### 公司公告
+
+<Route author="LogicJake" example="/cninfo/stock_announcement/000410" path="/cninfo/stock_announcement/:code" :paramsDesc="['股票代码']"/>
+
 ## 决胜网
 
 ### 最新资讯
@@ -898,6 +904,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 | hot      | pop         | week         | rising   | monthhonor |
 
 </Route>
+
+## 香水时代
+
+### 首页
+
+<Route author="kt286" example="/nosetime/home" path="/nosetime/home"/>
+
+### 香评
+
+<Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" :paramsDesc="['用户id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']"/>
 
 ## 新浪专栏
 
