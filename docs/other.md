@@ -606,6 +606,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="junfengP" example="/mlhang" path="/mlhang" />
 
+## 镁客网 im2maker
+
+### 镁客网频道
+
+<Route author="jin12180000" example="/im2maker/" path="/ifanr/:channel?" :paramsDesc="['默认不填为 最新文章 ，频道如下']">
+
+| 最新文章 | 行业快讯 | 行业观察 | 镁客请讲 | 硬科技 100 人 | 投融界   | 万象       |
+| -------- | -------- | -------- | -------- | ------------- | -------- | ---------- |
+| 默认空   | fresh    | industry | talk     | intech        | investor | everything |
+
+</Route>
+
 ## 每日安全
 
 ### 推送
