@@ -522,11 +522,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类
 
-<Route author="MoguCloud" example="/gcores/category/1" path="/gcores/category/:category" :paramsDesc="['分类名']">
+<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']">
 
-| 文章 | 新闻 | 电台 |
-| ---- | ---- | ---- |
-| 1    | 2    | 9    |
+| 资讯 | 视频   | 电台   | 文章     |
+| ---- | ------ | ------ | -------- |
+| news | videos | radios | articles |
 
 </Route>
 
