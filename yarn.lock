@@ -6386,6 +6386,11 @@ lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.3, lodash@^4.17.5:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
+lodash@^4.17.13:
+  version "4.17.14"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
+  integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
+
 logform@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/logform/-/logform-2.1.2.tgz#957155ebeb67a13164069825ce67ddb5bb2dd360"
@@ -6910,16 +6915,16 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@11.0.0-beta.26:
-  version "11.0.0-beta.26"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.26.tgz#70c39409262da020ae9ec9218d7fd37782bd097f"
-  integrity sha512-0nwr5RrkQh9CblGk/9NCihmh+mbCUSDwMss+v/RgpHafM3/Eo3UQZe+Z8vrDfjcf1Lv8/4OFdgfpl2qhufAI7g==
+nock@11.0.0-beta.27:
+  version "11.0.0-beta.27"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-11.0.0-beta.27.tgz#5e7dca8b74c794db1e7dafed7dfe1a97189c2420"
+  integrity sha512-zhKQHORiqlwew8Bufthfil1kYzSeCthDvDSBb8mePllftt72jmmpW5vxxJyiYlxOINx9+AJ5EkCps7XVl7O1KQ==
   dependencies:
     chai "^4.1.2"
     debug "^4.1.0"
     deep-equal "^1.0.0"
     json-stringify-safe "^5.0.1"
-    lodash "^4.17.5"
+    lodash "^4.17.13"
     mkdirp "^0.5.0"
     propagate "^2.0.0"
     qs "^6.5.1"
