@@ -524,8 +524,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']">
 
-| 资讯 | 视频 | 电台 | 文章 |
-| ---- | ---- | ---- | ---- |
+| 资讯 | 视频   | 电台   | 文章     |
+| ---- | ------ | ------ | -------- |
 | news | videos | radios | articles |
 
 </Route>
