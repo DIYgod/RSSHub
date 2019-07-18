@@ -335,16 +335,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
 
-## 个人博客
-
-### 敬维
-
-<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
-
-### 王垠-当然我在扯淡
-
-<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
-
 ## 财新博客
 
 ### 用户博客
@@ -376,6 +366,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 标签
 
 <Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
+
+## 大侠阿木
+
+### 首页
+
+<Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
 ## 大众点评
 
@@ -451,6 +447,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 福利资源-met.red
 
 <Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
+
+## 个人博客
+
+### 敬维
+
+<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
+
+### 王垠-当然我在扯淡
+
+<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
 
 ## 古诗文网
 
