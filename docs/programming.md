@@ -417,7 +417,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分类
 
-<Route author="kt286" example="/codeceo/category/java" path="/codeceo/:type/:category?">
+<Route author="kt286" example="/codeceo/category/java" path="/codeceo/category/:category?" :paramsDesc="['category']">
 
 | category        | 名称              |
 | --------------- | ----------------- |
@@ -442,7 +442,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 标签
 
-<Route author="kt286" example="/codeceo/tag/node.js" path="/codeceo/:type/:category?">
+<Route author="kt286" example="/codeceo/tag/node.js" path="/codeceo/tag/:category?" :paramsDesc="['tag']">
 
 | tag        | 名称       |
 | ---------- | ---------- |
