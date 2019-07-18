@@ -335,16 +335,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
 
-## 个人博客
-
-### 敬维
-
-<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
-
-### 王垠-当然我在扯淡
-
-<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
-
 ## 财新博客
 
 ### 用户博客
@@ -451,6 +441,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 福利资源-met.red
 
 <Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
+
+## 个人博客
+
+### 敬维
+
+<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
+
+### 王垠-当然我在扯淡
+
+<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
 
 ## 古诗文网
 
