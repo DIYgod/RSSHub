@@ -682,6 +682,10 @@ pageClass: routes
 
 <Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
 
+### 公众号 (二十次幂来源)
+
+<Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
+
 ### 公众平台系统公告栏目
 
 <Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
