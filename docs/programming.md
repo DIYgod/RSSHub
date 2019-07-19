@@ -409,6 +409,12 @@ GitHub 官方也提供了一些 RSS:
 | 最新主题 | latest |
 | 精华主题 | digest |
 
+## 美团技术团队
+
+### 最近更新
+
+<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
+
 ## 牛客网
 
 ### 讨论区

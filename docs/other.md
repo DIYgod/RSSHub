@@ -335,12 +335,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
 
-## 博客: 敬维
-
-### 博客: 敬维
-
-<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
-
 ## 财新博客
 
 ### 用户博客
@@ -372,6 +366,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 标签
 
 <Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
+
+## 大侠阿木
+
+### 首页
+
+<Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
 ## 大众点评
 
@@ -448,6 +448,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
 
+## 个人博客
+
+### 敬维
+
+<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
+
+### 王垠-当然我在扯淡
+
+<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
 ## 古诗文网
 
 ### 首页推荐
@@ -522,11 +532,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类
 
-<Route author="MoguCloud" example="/gcores/category/1" path="/gcores/category/:category" :paramsDesc="['分类名']">
+<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']">
 
-| 文章 | 新闻 | 电台 |
-| ---- | ---- | ---- |
-| 1    | 2    | 9    |
+| 资讯 | 视频   | 电台   | 文章     |
+| ---- | ------ | ------ | -------- |
+| news | videos | radios | articles |
 
 </Route>
 
