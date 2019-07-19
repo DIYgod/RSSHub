@@ -185,6 +185,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 最终幻想14
+
+### 最终幻想14国服
+
+<Route author="Kiotlin" example="/ff14/ff14_zh" path="/ff14/ff14_zh"/>
+
 ## 小黑盒
 
 ### 用户动态
