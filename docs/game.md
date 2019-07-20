@@ -189,7 +189,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 最终幻想14国服
 
-<Route author="Kiotlin" example="/ff14/ff14_zh" path="/ff14/ff14_zh"/>
+<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type :paramsDesc="['分类名']""/>
+
+| 新闻 |   公告   |   活动  |    广告   |  所有  |
+| ---- | -------- | ------ | --------- | ------ |
+| news | announce | events | advertise | all    |
 
 ## 小黑盒
 
