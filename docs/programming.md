@@ -220,6 +220,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
 
+### 帖子
+
+<Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
+
 ## 安全客
 
 ::: tip 提示
