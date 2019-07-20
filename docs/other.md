@@ -56,6 +56,12 @@ pageClass: routes
 
 </Route>
 
+## BOF
+
+### 首页
+
+<Route author="kt286" example="/bof/home" path="/bof/home" />
+
 ## checkee.info
 
 ### 美国签证 check 动态
