@@ -409,6 +409,58 @@ GitHub 官方也提供了一些 RSS:
 | 最新主题 | latest |
 | 精华主题 | digest |
 
+## 码农网
+
+### 最新
+
+<Route author="kt286" example="/codeceo/home" path="/codeceo/home"/>
+
+### 分类
+
+<Route author="kt286" example="/codeceo/category/java" path="/codeceo/category/:category?" :paramsDesc="['category']">
+
+| category        | 名称              |
+| --------------- | ----------------- |
+| news            | 资讯              |
+| java            | JAVA 开发         |
+| cpp             | C/C++开发         |
+| donet           | .NET 开发         |
+| web             | WEB 开发          |
+| android         | Android 开发      |
+| ios             | iOS 开发          |
+| cloud           | 云计算/大数据     |
+| os              | 操作系统          |
+| database        | 数据库            |
+| machine         | 机器学习/人工智能 |
+| algorithm       | 算法设计          |
+| design-patterns | 设计模式          |
+| programmer      | 程序员人生        |
+| weekly          | 《快乐码农》      |
+| project         | 开源软件          |
+
+</Route>
+
+### 标签
+
+<Route author="kt286" example="/codeceo/tag/node.js" path="/codeceo/tag/:category?" :paramsDesc="['tag']">
+
+| tag        | 名称       |
+| ---------- | ---------- |
+| java       | java       |
+| javascript | javascript |
+| php        | php        |
+| ios        | ios        |
+| android    | android    |
+| html5      | html5      |
+| css3       | css3       |
+| linux      | linux      |
+| c          | c++        |
+| python     | python     |
+| csharp     | c#         |
+| nodejs     | nodejs     |
+
+</Route>
+
 ## 美团技术团队
 
 ### 最近更新
