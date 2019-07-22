@@ -57,35 +57,35 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户仓库
 
-<Route author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" :paramsDesc="['用户名']"/>
+<Route author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" :paramsDesc="['用户名']" radar="1"/>
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1"/>
 
 ### 仓库 Issue
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
 
 ### 仓库 Pull Requests
 
-<Route author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+<Route author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
 
-### 用户
+### 用户 Followers
 
-<Route author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" :paramsDesc="['用户名']"/>
+<Route author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" :paramsDesc="['用户名']" radar="1"/>
 
 ### 仓库 Stars
 
-<Route author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+<Route author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
 
 ### 仓库 Branches
 
-<Route author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+<Route author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
 
 ### 文件 Commits
 
-<Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['用户名', '仓库名', '分支名', '文件路径']">
+<Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['用户名', '仓库名', '分支名', '文件路径']" radar="1">
 
 | 用户名   | 仓库名   | 分支名   | 文件路径        |
 | -------- | -------- | -------- | --------------- |
@@ -219,6 +219,10 @@ GitHub 官方也提供了一些 RSS:
 ### 最热/最新主题
 
 <Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
+
+### 帖子
+
+<Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
 
 ## 安全客
 
@@ -408,6 +412,64 @@ GitHub 官方也提供了一些 RSS:
 | -------- | ------ |
 | 最新主题 | latest |
 | 精华主题 | digest |
+
+## 码农网
+
+### 最新
+
+<Route author="kt286" example="/codeceo/home" path="/codeceo/home"/>
+
+### 分类
+
+<Route author="kt286" example="/codeceo/category/java" path="/codeceo/category/:category?" :paramsDesc="['category']">
+
+| category        | 名称              |
+| --------------- | ----------------- |
+| news            | 资讯              |
+| java            | JAVA 开发         |
+| cpp             | C/C++开发         |
+| donet           | .NET 开发         |
+| web             | WEB 开发          |
+| android         | Android 开发      |
+| ios             | iOS 开发          |
+| cloud           | 云计算/大数据     |
+| os              | 操作系统          |
+| database        | 数据库            |
+| machine         | 机器学习/人工智能 |
+| algorithm       | 算法设计          |
+| design-patterns | 设计模式          |
+| programmer      | 程序员人生        |
+| weekly          | 《快乐码农》      |
+| project         | 开源软件          |
+
+</Route>
+
+### 标签
+
+<Route author="kt286" example="/codeceo/tag/node.js" path="/codeceo/tag/:category?" :paramsDesc="['tag']">
+
+| tag        | 名称       |
+| ---------- | ---------- |
+| java       | java       |
+| javascript | javascript |
+| php        | php        |
+| ios        | ios        |
+| android    | android    |
+| html5      | html5      |
+| css3       | css3       |
+| linux      | linux      |
+| c          | c++        |
+| python     | python     |
+| csharp     | c#         |
+| nodejs     | nodejs     |
+
+</Route>
+
+## 美团技术团队
+
+### 最近更新
+
+<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
 
 ## 牛客网
 

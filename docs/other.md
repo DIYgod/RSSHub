@@ -335,16 +335,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
 
-## 个人博客
-
-### 敬维
-
-<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
-
-### 王垠-当然我在扯淡
-
-<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
-
 ## 财新博客
 
 ### 用户博客
@@ -376,6 +366,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 标签
 
 <Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
+
+## 大侠阿木
+
+### 首页
+
+<Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
 ## 大众点评
 
@@ -451,6 +447,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 福利资源-met.red
 
 <Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
+
+## 个人博客
+
+### 敬维
+
+<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
+
+### 王垠-当然我在扯淡
+
+<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
 
 ## 古诗文网
 
@@ -614,7 +620,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 镁客网频道
 
-<Route author="jin12180000" example="/im2maker/" path="/ifanr/:channel?" :paramsDesc="['默认不填为 最新文章 ，频道如下']">
+<Route author="jin12180000" example="/im2maker/" path="/im2maker/:channel?" :paramsDesc="['默认不填为 最新文章 ，频道如下']">
 
 | 最新文章 | 行业快讯 | 行业观察 | 镁客请讲 | 硬科技 100 人 | 投融界   | 万象       |
 | -------- | -------- | -------- | -------- | ------------- | -------- | ---------- |
