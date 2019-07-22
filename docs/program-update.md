@@ -120,7 +120,7 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss"/>
+<Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss" radar="1"/>
 
 ## Thunderbird
 
