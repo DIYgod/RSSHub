@@ -1,7 +1,7 @@
 <template>
 <div class="routeBlock" :id="path">
   <p class="badge">
-    <Badge text="支持 BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="支持播客" type="tip" vertical="middle" v-if="supportPodcast"/> <Badge text="反爬严格" vertical="middle" type="warn" v-if="crawlerBadge"/>
+    <Badge text="支持 BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="支持播客" type="tip" vertical="middle" v-if="supportPodcast"/> <Badge text="反爬严格" vertical="middle" type="warn" v-if="crawlerBadge"/> <Badge text="支持播客" type="tip" vertical="middle" v-if="supportPodcast"/> <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="支持浏览器扩展" vertical="middle" type="tip"/></a>
   </p>
   <p class="author">
     作者: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
@@ -51,7 +51,11 @@ export default {
     supportPodcast: {
       type: String,
       default: null
-    }
+    },
+    radar: {
+      type: String,
+      default: null
+    },
   },
   methods: {
     renderMarkdown(item) {
