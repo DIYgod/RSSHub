@@ -79,6 +79,8 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 ## 相关项目
 
+-   [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar): 探测当前页面可用的 RSS 和 RSSHub 的浏览器扩展
+
 -   [Easy to RSS](https://github.com/idealclover/Easy-to-RSS): 一个一键式发现当前网页 RSS 的 chrome 扩展，与 RSSHub 联动支持更多网页
 
 -   [rsshub.js](https://github.com/SevenOutman/rsshub.js): JavaScript library for RSSHub
