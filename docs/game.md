@@ -141,12 +141,6 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
 
-## 明日方舟
-
-### 游戏公告与新闻
-
-<Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
-
 ## 怪物猎人
 
 ### 更新
@@ -190,6 +184,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | latest | notice | news | activity | strategy |
 
 </Route>
+
+## 明日方舟
+
+### 游戏公告与新闻
+
+<Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
 ## 小黑盒
 
