@@ -185,6 +185,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 明日方舟
+
+### 游戏公告与新闻
+
+<Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
+
 ## 小黑盒
 
 ### 用户动态
