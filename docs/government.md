@@ -85,7 +85,7 @@ pageClass: routes
 
 ### 证监会消息
 
-<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如 http://www.csrc.gov.cn/pub/newsite/*/* 的网站，将 newsite 后面的两段网址后缀以"-"连接']" />
+<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
 
 ## 中国驻外使领馆
 
