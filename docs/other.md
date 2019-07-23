@@ -778,7 +778,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 专题
 
 <Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
+
 此为专题广场更新提示=>集合型而非单篇文章.与下方"专题内文章更新"存在明显区别!
+
 </Route>
 
 ### 专题内文章更新
@@ -956,6 +958,19 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xapool" example="/sina/csj" path="/sina/csj"/>
 
+## 学堂在线
+
+### 课程信息
+
+<Route author="sanmmm" example="/xuetangx/course/course-v1:TsinghuaX+20240103X+2019_T1/status" path="/xuetangx/course/:cid/:type" :paramsDesc="['课程id, 从课程页URL中可得到', '课程信息类型']">
+
+课程信息类型
+
+| 课程开始时间 | 课程结束时间 | 课程进度 |
+| ------------ | ------------ | -------- |
+| start        | end          | status   |
+
+</Route>
 ## 异次元软件世界
 
 ### 首页
