@@ -299,6 +299,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+### 用户动态
+
+<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
+
 ## 爱范儿 ifanr
 
 ### 爱范儿频道
