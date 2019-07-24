@@ -955,8 +955,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
 
-
-
 ## 南京工业大学
 
 ### 南京工业大学教务处
