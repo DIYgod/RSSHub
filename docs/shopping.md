@@ -10,10 +10,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/westore/new" path="/westore/new"/>
 
-### 用户动态
-
-<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
-
 ## 多抓鱼
 
 ### 搜索结果
