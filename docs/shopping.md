@@ -159,3 +159,9 @@ pageClass: routes
 ### 小米有品每日上新
 
 <Route author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+## Artand
+
+### 用户新作
+
+<Route author="junbaor" example="/artand/user/work/672" path="/artand/user/work/:uid" :paramsDesc="['用户ID, 不太好找, 自行抓包研究吧']"/>
