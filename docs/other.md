@@ -270,6 +270,26 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## wikiHow
+
+### 首页
+
+<Route author="sanmmm" example="/wikihow/index" path="/wikihow/index"/>
+
+### 分类目录
+
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/" path="/wikihow/category/:category/:type" :paramsDesc="['目录分类', '类型']">
+
+顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
+
+类型
+
+| 所有 | 推荐 |
+| ---- | ---- |
+| all  | rec  |
+
+</Route>
+
 ## ZAKER
 
 ### source
@@ -954,6 +974,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" :paramsDesc="['用户id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']"/>
 
+## 小众软件
+
+### 首页
+
+<Route author="sanmmm" example="/appinn/index" path="/appinn/index"/>
 ## 新浪专栏
 
 ### 创事记
@@ -994,6 +1019,24 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 75258        | 102804         | 75257        |
 
 </Route>
+
+## 正版中国
+
+### 分类列表
+
+<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/category?" :paramsDesc="['内容类型, 默认为`全部`']">
+
+类型
+
+| 全部文章 | 永久免费 | 限时折扣 | 限时免费 | PC  | Mac | Android | UWP |
+| -------- | -------- | -------- | -------- | --- | --- | ------- | --- |
+| all      | 311      | 309      | 310      | 8   | 50  | 17      | 312 |
+
+</Route>
+
+### 搜索
+
+<Route author="sanmmm" example="/getitfree/search/windows" path="/getitfree/search/:keyword" :paramsDesc="['搜索关键词']"/>
 
 ## 中国大学 MOOC(慕课)
 
