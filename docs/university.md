@@ -960,3 +960,9 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 南京工业大学教务处
 
 <Route author="TrumanGu" example="/njtech/jwc" path="/njtech/jwc" />
+
+## 四川大学
+
+### 教务处通知公告
+
+<Route author="KXXH" example="/scu/jwc/notice" path="/scu/jwc/notice" />
