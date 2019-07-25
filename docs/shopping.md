@@ -52,11 +52,11 @@ pageClass: routes
 
 ### 关键词
 
-<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']"/>
+<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']" radar="1"/>
 
 ### 排行榜
 
-<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
+<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1">
 
 -   榜单类型
 
@@ -124,6 +124,10 @@ pageClass: routes
 
 </Route>
 
+### 关键词
+
+<Route author="gaoliang" example="/dgtle/trade/search/ipad" path="/dgtle/trade/search/:keyword" :paramsDesc="['搜索关键词']"/>
+
 ## 淘宝众筹
 
 ### 众筹项目
@@ -155,3 +159,9 @@ pageClass: routes
 ### 小米有品每日上新
 
 <Route author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+## Artand
+
+### 用户新作
+
+<Route author="junbaor" example="/artand/user/work/672" path="/artand/user/work/:uid" :paramsDesc="['用户ID, 不太好找, 自行抓包研究吧']"/>

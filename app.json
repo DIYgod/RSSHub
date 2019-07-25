@@ -29,12 +29,6 @@
         "TWITTER_CONSUMER_SECRET": {
             "required": false
         },
-        "TWITTER_ACCESS_TOKEN": {
-            "required": false
-        },
-        "TWITTER_ACCESS_TOKEN_SECRET": {
-            "required": false
-        },
         "YOUTUBE_KEY": {
             "required": false
         }

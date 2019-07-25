@@ -17,6 +17,10 @@ pageClass: routes
 
 :::
 
+### 用户投稿
+
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
@@ -268,7 +272,7 @@ pageClass: routes
 
 ### 专辑
 
-<Route author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1">
+<Route author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1">
 
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
@@ -299,6 +303,12 @@ pageClass: routes
 | 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
 | ---- | ------ | ----- | ---- | --- | ------ |
 | 留空 | bluray | 1080p | 720p | 3d  | webdl  |
+
+## 中国广播
+
+### 电台节目
+
+<Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
 
 ## 字幕组（ZiMuZu.tv）
 
