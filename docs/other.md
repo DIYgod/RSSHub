@@ -1131,3 +1131,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | all      | home     | edit     |
 | -------- | -------- | -------- |
 | 全部推荐 | 首页推荐 | 编辑推荐 |
+
+### 作品总榜单
+
+<Route author="junbaor" example="/zcool/top" path="/zcool/top"/>
