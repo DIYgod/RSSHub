@@ -1119,3 +1119,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 站酷
+
+### 推荐
+
+<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']"/>
+
+推荐类型
+
+| all      | home     | edit     |
+| -------- | -------- | -------- |
+| 全部推荐 | 首页推荐 | 编辑推荐 |
