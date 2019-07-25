@@ -928,6 +928,17 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 万联网
+
+### 资讯
+
+<Route author="kt286" example="/10000link/news/My01" path="/10000link/news/:category?" :paramsDesc="['栏目代码, 默认为全部']">
+
+| 全部 | 天下大势 | 企业动态 | 专家观点 | 研究报告 |
+| ---- | -------- | -------- | -------- | -------- |
+| (空) | My01     | My02     | My03     | My04     |
+
+</Route>
 ## 维基百科
 
 ### 中国大陆新闻动态
