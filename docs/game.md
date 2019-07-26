@@ -42,7 +42,7 @@ pageClass: routes
 
 ### indienova 文章
 
-<Route author="GensouSakuya" example="/indienova/article" path="indienova/article"/>
+<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
 ## Maxjia News
 
@@ -185,6 +185,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 明日方舟
+
+### 游戏公告与新闻
+
+<Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
+
 ## 小黑盒
 
 ### 用户动态
@@ -252,6 +258,22 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | recommend | history | big    | culture | news | retro    |
 
 </Route>
+
+## 掌上英雄联盟
+
+### 推荐
+
+<Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend"/>
+
+## 最终幻想 14
+
+### 最终幻想 14 国服
+
+<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']"/>
+
+| 新闻 | 公告     | 活动   | 广告      | 所有 |
+| ---- | -------- | ------ | --------- | ---- |
+| news | announce | events | advertise | all  |
 
 ## きららファンタジア｜奇拉拉幻想曲
 

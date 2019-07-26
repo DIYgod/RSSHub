@@ -12,6 +12,8 @@ We are flooded with feature requests and short-handed, please try to make it you
 
 ### Website URL
 
+### Website description
+
 ### What content should be included?
 
 - [ ] content one

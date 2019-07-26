@@ -124,11 +124,11 @@ pageClass: routes
 
 ### 首页（最新）
 
-<Route author="gee1k xyqfer" example="/mzitu/home" path="/mzitu/home/:type?" :paramsDesc="['类型，默认最新，可选`hot`最热']"/>
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/home" path="/mzitu/home/:type?" :paramsDesc="['类型，默认最新，可选`hot`最热或`best`推荐']" crawlerBadge="1"/>
 
 ### 分类
 
-<Route author="gee1k xyqfer" example="/mzitu/category/xinggan" path="/mzitu/category/:category" :paramsDesc="['分类名']">
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/category/xinggan" path="/mzitu/category/:category" :paramsDesc="['分类名']" crawlerBadge="1">
 
 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
 | -------- | -------- | -------- | -------- |
@@ -138,15 +138,15 @@ pageClass: routes
 
 ### 所有专题
 
-<Route author="gee1k xyqfer" example="/mzitu/tags" path="/mzitu/tags"/>
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/tags" path="/mzitu/tags" crawlerBadge="1"/>
 
 ### 专题详情
 
-<Route author="gee1k xyqfer" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']"/>
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']" crawlerBadge="1"/>
 
 ### 详情
 
-<Route author="gee1k xyqfer" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']"/>
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']" crawlerBadge="1"/>
 
 ## 喷嚏
 
@@ -157,3 +157,9 @@ pageClass: routes
 ### 主题
 
 <Route author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" :paramsDesc="['主题 id']"/>
+
+## 涂鸦王国
+
+### 用户上传作品和用户喜欢作品
+
+<Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" :paramsDesc="['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']"/>

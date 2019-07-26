@@ -41,6 +41,9 @@ describe('debug', () => {
                     expect(value).toBe('6');
                     break;
                 case '热门路由:':
+                    expect(value).toBe(`5&nbsp;&nbsp;/test/:id<br>`);
+                    break;
+                case '热门路径:':
                     expect(value).toBe(`3&nbsp;&nbsp;/test/1<br>2&nbsp;&nbsp;/test/2<br>1&nbsp;&nbsp;/<br>`);
                     break;
                 case '热门IP:':
