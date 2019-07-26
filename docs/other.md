@@ -928,6 +928,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 万联网
+
+### 资讯
+
+<Route author="kt286" example="/10000link/news/My01" path="/10000link/news/:category?" :paramsDesc="['栏目代码, 默认为全部']">
+
+| 全部 | 天下大势 | 企业动态 | 专家观点 | 研究报告 |
+| ---- | -------- | -------- | -------- | -------- |
+| (空) | My01     | My02     | My03     | My04     |
+
+</Route>
+
 ## 维基百科
 
 ### 中国大陆新闻动态
@@ -1043,6 +1055,31 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="zhuan-zhu" example="/mpaypass/main/policy" path="mpaypass/main/:type?"
 :paramsDesc="['新闻类型,类型可在URL中找到，类似policy，eye等，空或其他任意值展示最新新闻']"/>
 
+## 一兜糖
+
+### 首页精选
+
+<Route author="sanmmm" example="/yidoutang/index" path="/yidoutang/index"/>
+
+### 文章
+
+<Route author="sanmmm" example="/yidoutang/guide" path="/yidoutang/guide"/>
+
+### 众测
+
+<Route author="sanmmm" example="/yidoutang/mtest" path="/yidoutang/mtest"/>
+
+### 全屋记
+
+<Route author="sanmmm" example="/yidoutang/case/:type?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
+
+类型
+
+| 默认    | 最热 | 最新 |
+| ------- | ---- | ---- |
+| default | hot  | new  |
+
+</Route>
 ## 油价
 
 ### 今日油价
@@ -1108,3 +1145,29 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 站酷
+
+### 推荐
+
+<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']">
+
+推荐类型
+
+| all      | home     | edit     |
+| -------- | -------- | -------- |
+| 全部推荐 | 首页推荐 | 编辑推荐 |
+
+</Route>
+
+### 作品总榜单
+
+<Route author="junbaor" example="/zcool/top" path="/zcool/top"/>
+
+### 用户作品
+
+<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uname" :paramsDesc="['个性域名前缀']">
+
+例如: 站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`
+
+</Route>

@@ -404,6 +404,12 @@ category 列表：
 
 </Route>
 
+## 南京工业大学
+
+### 南京工业大学教务处
+
+<Route author="TrumanGu" example="/njtech/jwc" path="/njtech/jwc" />
+
 ## 南京航空航天大学
 
 ### 教务通知
@@ -725,6 +731,12 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 1      | 2      |
 
 </Route>
+
+## 四川大学
+
+### 教务处通知公告
+
+<Route author="KXXH" example="/scu/jwc/notice" path="/scu/jwc/notice" />
 
 ## 四川旅游学院
 
