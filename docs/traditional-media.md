@@ -124,6 +124,12 @@ Category 列表:
 
 <Route author="EsuRt"  example="/caixin/article" path="/caixin/article"/>
 
+## 第一财经
+
+### 直播区
+
+<Route author="sanmmm" example="/yicai/brief" path="/yicai/brief" />
+
 ## 东方网
 
 ### 上海新闻
