@@ -356,14 +356,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
 
-### 百度招聘
-
-<Route author="SunShinenny" example="/baidu/zhaopin/:city/:keyword" path="/baidu/zhaopin" :paramsDesc="['查询城市','查询关键词']" crawlerBadge="1">
-
-建议打开网页搜索，确认有数据后订阅。
-
-</Route>
-
 ### 搜索风云榜
 
 <Route author="xyqfer" example="/baidu/topwords/1" path="/baidu/topwords/:boardId?" :paramsDesc="['榜单 id, 默认为`1`']">
@@ -1106,6 +1098,32 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 站酷
+
+### 推荐
+
+<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']">
+
+推荐类型
+
+| all      | home     | edit     |
+| -------- | -------- | -------- |
+| 全部推荐 | 首页推荐 | 编辑推荐 |
+
+</Route>
+
+### 作品总榜单
+
+<Route author="junbaor" example="/zcool/top" path="/zcool/top"/>
+
+### 用户作品
+
+<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uname" :paramsDesc="['个性域名前缀']">
+
+例如: 站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`
+
+</Route>
+
 ## 正版中国
 
 ### 分类列表
@@ -1153,29 +1171,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## 站酷
-
-### 推荐
-
-<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']">
-
-推荐类型
-
-| all      | home     | edit     |
-| -------- | -------- | -------- |
-| 全部推荐 | 首页推荐 | 编辑推荐 |
-
-</Route>
-
-### 作品总榜单
-
-<Route author="junbaor" example="/zcool/top" path="/zcool/top"/>
-
-### 用户作品
-
-<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uname" :paramsDesc="['个性域名前缀']">
-
-例如: 站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`
-
-</Route>
