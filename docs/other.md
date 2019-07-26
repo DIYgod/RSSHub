@@ -1124,7 +1124,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 推荐
 
-<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']"/>
+<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']">
 
 推荐类型
 
@@ -1132,12 +1132,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 | -------- | -------- | -------- |
 | 全部推荐 | 首页推荐 | 编辑推荐 |
 
+</Route>
+
 ### 作品总榜单
 
 <Route author="junbaor" example="/zcool/top" path="/zcool/top"/>
 
 ### 用户作品
 
-<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uname" :paramsDesc="['个性域名前缀']"/>
+<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uname" :paramsDesc="['个性域名前缀']">
 
 例如: 站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`
+
+</Route>
