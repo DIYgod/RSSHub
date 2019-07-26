@@ -939,6 +939,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | (空) | My01     | My02     | My03     | My04     |
 
 </Route>
+
 ## 维基百科
 
 ### 中国大陆新闻动态
@@ -1054,6 +1055,31 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="zhuan-zhu" example="/mpaypass/main/policy" path="mpaypass/main/:type?"
 :paramsDesc="['新闻类型,类型可在URL中找到，类似policy，eye等，空或其他任意值展示最新新闻']"/>
 
+## 一兜糖
+
+### 首页精选
+
+<Route author="sanmmm" example="/yidoutang/index" path="/yidoutang/index"/>
+
+### 文章
+
+<Route author="sanmmm" example="/yidoutang/guide" path="/yidoutang/guide"/>
+
+### 众测
+
+<Route author="sanmmm" example="/yidoutang/mtest" path="/yidoutang/mtest"/>
+
+### 全屋记
+
+<Route author="sanmmm" example="/yidoutang/case/:type?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
+
+类型
+
+| 默认    | 最热 | 最新 |
+| ------- | ---- | ---- |
+| default | hot  | new  |
+
+</Route>
 ## 油价
 
 ### 今日油价
