@@ -20,6 +20,35 @@ pageClass: routes
 
 <Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
 
+### 信息稿件
+
+<Route author="ciaranchen" example="/gov/zhengce/govall/orpro=555&notpro=2&search_field=title" path="/gov/zhengce/govall/:advance?" :paramsDesc="['高级搜索选项，将作为请求参数直接添加到url后。目前已知的选项及其意义如下。' ]" >
+
+|              选项               |                       意义                       |              备注              |
+| :-----------------------------: | :----------------------------------------------: | :----------------------------: |
+|              orpro              |             包含以下任意一个关键词。             |          用空格分隔。          |
+|             allpro              |                包含以下全部关键词                |                                |
+|             notpro              |                 不包含以下关键词                 |                                |
+|              inpro              |                完整不拆分的关键词                |                                |
+|           searchfield           | title: 搜索词在标题中; content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
+| pubmintimeYear, pubmintimeMonth |                    从某年某月                    | 单独使用月份参数无法只筛选月份 |
+| pubmaxtimeYear, pubmaxtimeMonth |                    到某年某月                    | 单独使用月份参数无法只筛选月份 |
+|              colid              |                       栏目                       |      比较复杂，不建议使用      |
+
+</Route>
+
+### 滚动新闻
+
+<Route author="EsuRt" example="/gov/xinwen/gundong" path="/gov/xinwen/gundong"/>
+
+### 新闻要闻
+
+<Route author="EsuRt" example="/gov/xinwen/yaowen" path="/gov/xinwen/yaowen"/>
+
+### 国务院信息
+
+<Route author="EsuRt" example="/gov/statecouncil/news" path="/gov/statecouncil/news"/>
+
 ### 江苏省人民政府
 
 <Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
@@ -47,6 +76,16 @@ pageClass: routes
 |   news   | department | district | livelihood |
 
 </Route>
+
+## 中国证券监督管理委员会
+
+### 发审委公告
+
+<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
+
+### 证监会消息
+
+<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
 
 ## 中国驻外使领馆
 
@@ -168,3 +207,15 @@ pageClass: routes
 ### 首页信息
 
 <Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
+
+## 中华人民共和国外交部
+
+### 发言人表态
+
+<Route author="nicolaszf" example="/gov/fmprc/fyrbt" path="/gov/fmprc/fyrbt"/>
+
+## 中央纪委国家监委
+
+### 审查调查
+
+<Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
