@@ -206,6 +206,12 @@ pageClass: routes
 
 <Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
 
+## 开眼
+
+### 每日精选
+
+<Route author="SunShinenny" example="/kaiyan/index" path="/kaiyan/index"/>
+
 ## 猫眼电影
 
 ### 正在热映
