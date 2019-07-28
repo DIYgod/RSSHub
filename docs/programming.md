@@ -224,6 +224,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
 
+## 阿里云
+
+### 数据库内核月报
+
+<Route author="junbaor" example="/aliyun/database_month" path="/aliyun/database_month"/>
+
 ## 安全客
 
 ::: tip 提示
