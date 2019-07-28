@@ -689,6 +689,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
 
+## 乃木坂 46 官网
+
+### 新闻
+
+<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
+
 ## 派代
 
 ### 首页
