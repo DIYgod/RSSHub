@@ -11,7 +11,7 @@ sidebar: auto
 1.  [Telegram 群](https://t.me/rsshub)
 2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
 
-## 提交新的 RSS 内容
+## 提交新的 RSSHub 规则
 
 开始编写 RSS 源前请确认源站没有提供 RSS，部分网页会在 HTML 头部包含 type 为 `application/atom+xml` 或 `application/rss+xml` 的 link 元素来指明 RSS 链接
 
@@ -429,9 +429,29 @@ ctx.state.data = {
             1. 不必在说明中标注`可选/必选`，组件会根据路由`?`自动判断
     -   文档样例：
 
-        1. 多参数：
+        1. 无参数:
 
         ```vue
+        ### 最新上架付费专栏
+
+        <Route author="HenryQW" example="/sspai/series" path="/sspai/series" />
+        ```
+
+        结果预览：
+
+        ***
+
+        ### 最新上架付费专栏
+
+        <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+
+        ***
+
+        2. 多参数：
+
+        ```vue
+        ### 仓库 Issue
+
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
         ```
 
@@ -439,22 +459,9 @@ ctx.state.data = {
 
         ***
 
+        ### 仓库 Issue
+
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
-
-        ***
-
-
-        2. 无参数:
-
-        ```vue
-        <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
-        ```
-
-        结果预览：
-
-        ***
-
-        <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
         ***
 
@@ -462,6 +469,8 @@ ctx.state.data = {
         3. 复杂说明支持 slot:
 
         ```vue
+        ### 分类
+
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
@@ -474,6 +483,8 @@ ctx.state.data = {
         结果预览：
 
         ***
+
+        ### 分类
 
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
@@ -488,6 +499,126 @@ ctx.state.data = {
 1.  请一定要注意把`<Route>`的标签关闭！
 
 1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
+
+## 提交新的 RSSHub Radar 规则
+
+切换至 [RSSHub Radar 项目](https://github.com/DIYgod/RSSHub-Radar)
+
+在 [/src/js/common/rules.js](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/common/rules.js) 里添加规则
+
+下面说明中会用到的简化的规则：
+
+```js
+{
+    'bilibili.com': {
+        _name: 'bilibili',
+        www: [{
+            title: '分区视频',
+            description: 'https://docs.rsshub.app/social-media.html#bilibili',
+            source: '/v/*tpath',
+            target: (params) => {
+                let tid;
+                switch (params.tpath) {
+                    case 'douga/mad':
+                        tid = '24';
+                        break;
+                    default:
+                        return false;
+                }
+                return `/bilibili/partion/${tid}`;
+            },
+        }],
+    },
+    'twitter.com': {
+        _name: 'Twitter',
+        '.': [{  // for twitter.com
+            title: '用户时间线',
+            description: 'https://docs.rsshub.app/social-media.html#twitter',
+            source: '/:id',
+            target: '/twitter/user/:id',
+            verification: (params) => (params.id !== 'home'),
+        }],
+    },
+    'pixiv.net': {
+        _name: 'Pixiv',
+        'www': [{
+            title: '用户收藏',
+            description: 'https://docs.rsshub.app/social-media.html#pixiv',
+            source: '/bookmark.php',
+            target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+        }],
+    },
+    'weibo.com': {
+        _name: '微博',
+        '.': [{
+            title: '博主',
+            description: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+            source: ['/u/:id', '/:id'],
+            target: '/weibo/user/:uid',
+            script: '({uid: document.querySelector(\'head\').innerHTML.match(/\\$CONFIG\\[\'uid\']=\'(\\d+)\'/)[1]})',
+            verification: (params) => params.uid,
+        }],
+    },
+}
+```
+
+下面详细说明这些字段的含义及用法
+
+### title
+
+必填，路由名称
+
+对应 RSSHub 文档中的名称，如 `Twitter 用户时间线` 规则的 `title` 为 `用户时间线`
+
+### docs
+
+必填，文档地址
+
+如 `Twitter 用户时间线` 规则的 `docs` 为 `https://docs.rsshub.app/social-media.html#twitter`
+
+而不是 `https://docs.rsshub.app/social-media.html#用户时间线`，因为 `#用户时间线` 不唯一而 `#twitter` 唯一
+
+### source
+
+可选，源站路径，留空则永远不会匹配成功，只会在 `当前网站适用的 RSSHub 中出现`
+
+如 `Twitter 用户时间线` 规则的 `source` 为 `/:id`
+
+比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` `script` `verification` 字段生成 RSSHub 地址
+
+### target
+
+可选，RSSHub 路径，留空则不会生成 RSSHub 路径
+
+对应 RSSHub 文档中的 path，如 `Twitter 用户时间线` 规则的 `target` 为 `/twitter/user/:id`
+
+上一步中源站路径匹配出 `id` 为 `DIYgod`，则 RSSHub 路径中的 `:id` 会被替换成 `DIYgod`，匹配结果为 `/twitter/user/DIYgod`，就是我们想要的结果
+
+进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 params 和 url 两个参数
+
+如 `bilibili 分区视频` 规则，把 `https://www.bilibili.com/v/douga/mad/` 匹配为 `/bilibili/partion/24`
+
+又如 `Pixiv 用户收藏` 规则，把 `https://www.pixiv.net/bookmark.php?id=15288095` 匹配为 `/pixiv/user/bookmarks/15288095`
+
+### script
+
+可选，执行脚本
+
+有时候我们需要的参数不在 URL 中，无法通过上述方法获取，这时可以通过这个参数在页面执行脚本
+
+请注意，由于插件权限限制，无法访问页面的 window 对象
+
+如 `微博博主` 规则
+
+### verification
+
+可选，验证源站路径
+
+`verification` 为一个函数，函数有 params 参数
+
+这个参数用于解决 `source` 匹配成功了，但不是我们想要的页面 的问题
+
+比如 `twitter.com/:id` 可以匹配 `https://twitter.com/DIYgod`，也可以匹配 Twitter 主页 `https://twitter.com/home`，后者显然不是我们想匹配的，就用 `verification` 把 `id` 为 `home` 时排除掉
 
 ## 一些开发 tips
 
