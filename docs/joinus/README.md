@@ -432,16 +432,12 @@ ctx.state.data = {
         1. 无参数:
 
         ```vue
-        ### 最新上架付费专栏
-
         <Route author="HenryQW" example="/sspai/series" path="/sspai/series" />
         ```
 
         结果预览：
 
         ***
-
-        ### 最新上架付费专栏
 
         <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
@@ -450,16 +446,12 @@ ctx.state.data = {
         2. 多参数：
 
         ```vue
-        ### 仓库 Issue
-
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
         ```
 
         结果预览：
 
         ***
-
-        ### 仓库 Issue
 
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
@@ -469,8 +461,6 @@ ctx.state.data = {
         3. 复杂说明支持 slot:
 
         ```vue
-        ### 分类
-
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
         | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
@@ -483,8 +473,6 @@ ctx.state.data = {
         结果预览：
 
         ***
-
-        ### 分类
 
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
