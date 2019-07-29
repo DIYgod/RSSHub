@@ -1177,3 +1177,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 飞地
+
+### 用户创作
+
+<Route author="junbaor" example="/feidi/user/103702" path="/feidi/user/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
+
+### 用户收藏
+
+<Route author="junbaor" example="/feidi/collection/103702" path="/feidi/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
