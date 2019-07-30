@@ -42,6 +42,12 @@ pageClass: routes
 
 </Route>
 
+## 礼物说
+
+### 礼物说
+
+<Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
+
 ## 什么值得买
 
 ::: tip 提示
