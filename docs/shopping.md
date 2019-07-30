@@ -4,12 +4,6 @@ pageClass: routes
 
 # 购物
 
-## Artand
-
-### 用户新作
-
-<Route author="junbaor" example="/artand/user/work/672" path="/artand/user/work/:uid" :paramsDesc="['用户ID, 不太好找, 自行抓包研究吧']"/>
-
 ## Westore
 
 ### 新品
