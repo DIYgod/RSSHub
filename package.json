@@ -74,7 +74,7 @@
     "lru-cache": "5.1.1",
     "lz-string": "1.4.4",
     "markdown-it": "9.0.1",
-    "module-alias": "2.2.0",
+    "module-alias": "2.2.1",
     "node-fetch": "2.6.0",
     "path-to-regexp": "3.0.0",
     "pidusage": "2.0.17",
