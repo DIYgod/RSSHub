@@ -1077,7 +1077,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 全屋记
 
-<Route author="sanmmm" example="/yidoutang/case/:type?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
+<Route author="sanmmm" example="/yidoutang/case/hot?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
 
 类型
 
@@ -1086,6 +1086,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | default | hot  | new  |
 
 </Route>
+
 ## 油价
 
 ### 今日油价
