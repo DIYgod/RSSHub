@@ -10,6 +10,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/bilibili/bangumi/media/9192" path="/bilibili/bangumi/media/:mediaid" :paramsDesc="['番剧媒体 id, 番剧主页 URL 中获取']"/>
 
+### 用户追番列表
+
+<Route author="wdssmq" example="/bilibili/user/bangumi/208259" path="/bilibili/user/bangumi/:uid" :paramsDesc="['用户 id']"/>
+
 ### UP 主投稿
 
 <Route author="DIYgod" example="/bilibili/user/video/2267573" path="/bilibili/user/video/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" radar="1"/>
