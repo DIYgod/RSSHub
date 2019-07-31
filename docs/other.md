@@ -307,9 +307,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
 分类
 
-| 最新 | 推荐 | 最热 |
-| ---- | ---- | ---- |
-| new  | rec  | hot  |
+| 推荐 | 最热 |
+| ---- | ---- |
+| rec  | hot  |
 
 目录类型
 
