@@ -138,12 +138,7 @@ describe('wrong_path', () => {
 
 describe('fulltext_mode', () => {
     it(`fulltext`, async () => {
-        // ignore iconv-lite's warning
-        const originalError = console.error;
-        console.error = (e) => console.log(e);
         const response = await request.get('/test/1?mode=fulltext');
-        console.error = originalError;
-
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).not.toBe(undefined);
