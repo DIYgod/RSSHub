@@ -278,7 +278,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类目录
 
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type" :paramsDesc="['目录分类', '类型']">
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['目录分类', '类型, 默认为`all`']">
 
 顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
 
@@ -1077,7 +1077,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 全屋记
 
-<Route author="sanmmm" example="/yidoutang/case/hot?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
+<Route author="sanmmm" example="/yidoutang/case/hot" path="/yidoutang/:case?" :paramsDesc="['类型, 默认为`default`']">
 
 类型
 
