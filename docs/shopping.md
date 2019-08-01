@@ -4,12 +4,6 @@ pageClass: routes
 
 # 购物
 
-## Artand
-
-### 用户新作
-
-<Route author="junbaor" example="/artand/user/work/672" path="/artand/user/work/:uid" :paramsDesc="['用户ID, 不太好找, 自行抓包研究吧']"/>
-
 ## Westore
 
 ### 新品
@@ -47,6 +41,12 @@ pageClass: routes
 | zhtj     | zxsx     | jezg     | zczd     | jjjs     |
 
 </Route>
+
+## 礼物说
+
+### 礼物说
+
+<Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
 
 ## 什么值得买
 
