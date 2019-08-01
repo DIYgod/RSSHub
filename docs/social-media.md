@@ -598,6 +598,16 @@ pageClass: routes
 
 <Route author="DIYgod HenryQW" example="/jianshu/user/yZq3ZV" path="/jianshu/user/:id" :paramsDesc="['作者 id, 可在作者主页 URL 中找到']"/>
 
+## 龙空
+
+### 分区
+
+<Route author="ma6254" example="/lkong/forum/60" path="/lkong/forum/:id?" :paramsDesc="['分区 id, 可在分区的URL里找到']">
+
+### 帖子
+
+<Route author="ma6254" example="/lkong/thread/2356933" path="/lkong/thread/:id?" :paramsDesc="['帖子 id, 可在帖子的URL里找到']">
+
 ## 龙腾网
 
 ### 转译网贴
