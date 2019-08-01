@@ -74,6 +74,12 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## DHL
+
+### DHL 国际快递包裹追踪
+
+<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
+
 ## Dilbert Comic Strip
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
