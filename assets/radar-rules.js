@@ -330,4 +330,27 @@
             },
         ],
     },
-});
+    'qq.com': {
+        _name: '腾讯大家',
+        dajia: [
+            {
+                title: '首页',
+                docs: 'https://docs.rsshub.app/other.html#腾讯大家',
+                source: '',
+                target: '/dajia',
+            },
+			{
+                title: '作者作品',
+                docs: 'https://docs.rsshub.app/other.html#腾讯大家',
+                source: '/author_personal.htm#!/:uid',
+                target: '/dajia/author/:uid',
+            },
+			{
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/other.html#腾讯大家',
+                source: '/tanzi_diceng.htm#!/:uid',
+                target: '/dajia/zhuanlan/:uid',
+            },			
+        ],
+    },
+	});
