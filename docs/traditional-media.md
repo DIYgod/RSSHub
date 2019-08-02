@@ -376,3 +376,17 @@ category 对应的关键词有
 | 资讯 | 风景    | 体验  | 交通 |
 
 </Route>
+
+## 中国日报
+
+### 英语点津
+
+<Route author="sanmmm" example="/chinadaily/english/thelatest" path="/chinadaily/english/:category" :paramsDesc="['目录分类']">
+
+目录分类
+
+| 最新      | 双语           | 热词          | 口语            | 译词          | 视频        | 听力     | 专栏      | 文件                     | 考试         |
+| --------- | -------------- | ------------- | --------------- | ------------- | ----------- | -------- | --------- | ------------------------ | ------------ |
+| thelatest | news_bilingual | news_hotwords | practice_tongue | trans_collect | video_links | audio_cd | columnist | 5af95d44a3103f6866ee845c | englishexams |
+
+</Route>

@@ -284,7 +284,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类目录
 
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/" path="/wikihow/category/:category/:type" :paramsDesc="['目录分类', '类型']">
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['目录分类', '类型, 默认为`all`']">
 
 顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
 
@@ -313,9 +313,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
 分类
 
-| 最新 | 推荐 | 最热 |
-| ---- | ---- | ---- |
-| new  | rec  | hot  |
+| 推荐 | 最热 |
+| ---- | ---- |
+| rec  | hot  |
 
 目录类型
 
@@ -1091,7 +1091,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 全屋记
 
-<Route author="sanmmm" example="/yidoutang/case/:type?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
+<Route author="sanmmm" example="/yidoutang/case/hot" path="/yidoutang/:type?" :paramsDesc="['类型, 默认为`default`']">
 
 类型
 
@@ -1100,6 +1100,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | default | hot  | new  |
 
 </Route>
+
 ## 油价
 
 ### 今日油价
