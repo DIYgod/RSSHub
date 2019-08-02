@@ -1181,6 +1181,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 字幕库
+
+### 字幕列表
+
+<Route author="sanmmm" example="/zimuzu/mv" path="/zimuzu/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+
+类型
+
+| 最新电影 | 最新美剧 |
+| -------- | -------- |
+| mv       | tv       |
+
+</Route>
+
 ## 自如
 
 ### 房源
