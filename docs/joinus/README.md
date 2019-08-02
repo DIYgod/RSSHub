@@ -490,9 +490,7 @@ ctx.state.data = {
 
 ## 提交新的 RSSHub Radar 规则
 
-切换至 [RSSHub Radar 项目](https://github.com/DIYgod/RSSHub-Radar)
-
-在 [/src/js/common/rules.js](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/common/rules.js) 里添加规则
+在 [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 里添加规则
 
 下面说明中会用到的简化的规则：
 
