@@ -87,6 +87,18 @@ pageClass: routes
 
 ## Hpoi 手办维基
 
+### 情报
+
+<Route author="sanmmm" path="/hpoi/info/:type?" example="/hpoi/info/all" :paramsDesc="['分类, 见下表, 默认为`all`']">
+
+分类
+
+| 全部 | 手办  | 模型  |
+| ---- | ----- | ----- |
+| all  | hobby | model |
+
+</Route>
+
 ### 浏览周边
 
 <Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '角色/作品 ID']">
