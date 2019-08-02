@@ -188,6 +188,12 @@ pageClass: routes
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
+## 中华人民共和国商务部
+
+### 政务公开
+
+<Route author="LogicJake" example="/mofcom/article/b" path="/mofcom/article/:suffix" :paramsDesc="['支持形如`http://www.mofcom.gov.cn/article/*`的网站，传入 article 之后的后缀']" />
+
 ## 中华人民共和国生态环境部
 
 ### 公示

@@ -206,6 +206,12 @@ pageClass: routes
 
 <Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
 
+## 故事 FM
+
+### 首页
+
+<Route author="sanmmm" example="/storyfm/index" path="/storyfm/index"/>
+
 ## 开眼
 
 ### 每日精选

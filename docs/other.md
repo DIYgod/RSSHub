@@ -33,7 +33,7 @@ pageClass: routes
 
 ### 更换和维修扩展计划
 
-<Route author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认中国 `cn`']"/>
+<Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']"/>
 
 ### App Store/Mac App Store
 
@@ -73,6 +73,12 @@ pageClass: routes
 ### 最新
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
+
+## DHL
+
+### DHL 国际快递包裹追踪
+
+<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
 ## Dilbert Comic Strip
 
@@ -278,7 +284,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类目录
 
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/" path="/wikihow/category/:category/:type" :paramsDesc="['目录分类', '类型']">
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['目录分类', '类型, 默认为`all`']">
 
 顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
 
@@ -307,9 +313,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
 分类
 
-| 最新 | 推荐 | 最热 |
-| ---- | ---- | ---- |
-| new  | rec  | hot  |
+| 推荐 | 最热 |
+| ---- | ---- |
+| rec  | hot  |
 
 目录类型
 
@@ -490,6 +496,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 分类
 
 <Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
+
+### 用户创作
+
+<Route author="junbaor" example="/enclavebooks/user/103702" path="/enclavebooks/user/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
+
+### 用户收藏
+
+<Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
 ## 福利资源-met.red
 
@@ -688,6 +702,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 新闻
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+## 乃木坂 46 官网
+
+### 新闻
+
+<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
 ## 派代
 
@@ -1071,7 +1091,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 全屋记
 
-<Route author="sanmmm" example="/yidoutang/case/:type?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
+<Route author="sanmmm" example="/yidoutang/case/hot" path="/yidoutang/:type?" :paramsDesc="['类型, 默认为`default`']">
 
 类型
 
@@ -1080,6 +1100,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | default | hot  | new  |
 
 </Route>
+
 ## 油价
 
 ### 今日油价
