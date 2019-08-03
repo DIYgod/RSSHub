@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 中国地震局
 
-<Route author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']" crawlerBadge="1">
+<Route author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']" anticrawler="1">
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
