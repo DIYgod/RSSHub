@@ -1149,7 +1149,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类列表
 
-<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/category?" :paramsDesc="['内容类型, 默认为`全部`']">
+<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/:category?" :paramsDesc="['内容类型, 默认为`全部`']">
 
 类型
 
@@ -1178,6 +1178,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
 | ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
+
+</Route>
+
+## 字幕库
+
+### 字幕列表
+
+<Route author="sanmmm" example="/zimuzu/mv" path="/zimuzu/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+
+类型
+
+| 最新电影 | 最新美剧 |
+| -------- | -------- |
+| mv       | tv       |
 
 </Route>
 
