@@ -539,6 +539,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
 
+### 物种日历
+
+<Route author="DHPO" example="/guokr/calendar" path="/guokr/calendar"/>
+
 ## 后续
 
 ### Live
