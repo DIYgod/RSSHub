@@ -190,3 +190,9 @@ pageClass: routes
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## Hanime.tv
+
+### 最近更新
+
+<Route author="EsuRt" example="/hanime/video" path="/hanime/video"/>
