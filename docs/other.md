@@ -539,6 +539,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
 
+### 果壳网专栏
+
+<Route author="DHPO" example="/guokr/calendar" path="/guokr/:category" :paramsDesc="['专栏类别']">
+| 物种日历 | 吃货研究所 | 美丽也是技术活 |
+| ------- | ---------| ------------ |
+| calendar | institute | beauty |
+</Route>
+
 ## 后续
 
 ### Live
