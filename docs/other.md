@@ -519,7 +519,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 王垠-当然我在扯淡
 
-<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
+<Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
 
 ## 古诗文网
 
