@@ -729,6 +729,36 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="qiwihui" example="/paidai/news" path="/paidao/news" />
 
+## 品玩
+
+### 实时要闻
+
+<Route author="sanmmm" example="/pingwest/status" path="/pingwest/status"/>
+
+### 话题动态
+
+<Route author="sanmmm" path="/pingwest/tag/:tag/:type" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题id, 可从话题页url中得到', '内容类型']">
+
+内容类型
+
+| 最新 | 最热 |
+| ---- | ---- |
+| 1    | 2    |
+
+</Route>
+
+### 用户
+
+<Route author="sanmmm" path="/pingwest/user/:uid/:type?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`']">
+
+内容类型
+
+| 文章    | 动态  |
+| ------- | ----- |
+| article | state |
+
+</Route>
+
 ## 且听风吟福利
 
 ### 分类
