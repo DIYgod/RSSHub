@@ -37,17 +37,17 @@ pageClass: routes
 
 </Route>
 
-### 滚动新闻
+### 政府新闻
 
-<Route author="EsuRt" example="/gov/xinwen/gundong" path="/gov/xinwen/gundong"/>
+<Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" :paramsDesc="['分类名']">
 
-### 新闻要闻
+| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 |
+| :------: | :------: | :------: | :--------: |
+|    bm    |    gd    |    yw    |    gwy     |
 
-<Route author="EsuRt" example="/gov/xinwen/yaowen" path="/gov/xinwen/yaowen"/>
+### 吹风会
 
-### 国务院信息
-
-<Route author="EsuRt" example="/gov/statecouncil/news" path="/gov/statecouncil/news"/>
+<Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
 
 ### 江苏省人民政府
 
@@ -76,6 +76,22 @@ pageClass: routes
 |   news   | department | district | livelihood |
 
 </Route>
+
+### 苏州市人民政府
+
+#### 政府新闻
+
+<Route author="EsuRt" example="/gov/suzhou/news/:uid" path="/gov/suzhou/news" :paramsDesc="['分类名']">
+
+| 政务要闻 | 区县快讯 |
+| :------: | :------: |
+|   news   | district |
+
+</Route>
+
+#### 政府信息公开文件
+
+<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
 ## 中国证券监督管理委员会
 
