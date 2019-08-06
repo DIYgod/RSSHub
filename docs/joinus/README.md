@@ -572,6 +572,8 @@ ctx.state.data = {
 
 比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` `script` `verification` 字段生成 RSSHub 地址
 
+请注意 `source` 只可以匹配 URL Path，如果参数在 URL Param 和 URL Hash 里请使用 `target`
+
 ### target
 
 可选，RSSHub 路径，留空则不会生成 RSSHub 路径
