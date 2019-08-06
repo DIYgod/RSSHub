@@ -85,6 +85,12 @@ pageClass: routes
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
 
+## Hanime.tv
+
+### 最近更新
+
+<Route author="EsuRt" example="/hanime/video" path="/hanime/video"/>
+
 ## Hpoi 手办维基
 
 ### 情报
