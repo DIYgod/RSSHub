@@ -45,6 +45,8 @@ pageClass: routes
 | :------: | :------: | :------: | :--------: |
 |    bm    |    gd    |    yw    |    gwy     |
 
+</Route>
+
 ### 吹风会
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
