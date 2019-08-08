@@ -152,6 +152,10 @@ pageClass: routes
 
 ## 爱奇艺
 
+### 用户视频
+
+<Route author="talengu" example="/iqiyi/user/video/2289191062" path="/iqiyi/user/video/:uid" :paramsDesc="['用户名']" />
+
 ### 动漫
 
 <Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
