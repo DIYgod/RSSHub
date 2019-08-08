@@ -45,10 +45,15 @@ pageClass: routes
 | :------: | :------: | :------: | :--------: |
 |    bm    |    gd    |    yw    |    gwy     |
 
+<<<<<<< HEAD
+### 吹风会
+
+=======
 </Route>
 
 ### 吹风会
 
+>>>>>>> 091f006553bb35e39f0503f851228206f8296ef9
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
 
 ### 江苏省人民政府
