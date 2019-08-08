@@ -69,6 +69,18 @@ pageClass: routes
 
 </Route>
 
+### 山西省人民政府
+
+#### 山西省人社厅
+
+<Route author="wolfyu1991" example="/gov/shanxi/rst/rsks-tzgg" path="/gov/shanxi/rst/:category" :paramsDesc="['分类名']">
+
+| 通知公告  | 公务员考试 | 事业单位考试 | 专业技术人员资格考试 | 其他考试  |
+| :-------: | :--------: | :----------: | :------------------: | :-------: |
+| rsks-tzgg | rsks-gwyks | rsks-sydwks  |   rsks-zyjsryzgks    | rsks-qtks |
+
+</Route>
+
 ### 南京市人民政府
 
 <Route author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
