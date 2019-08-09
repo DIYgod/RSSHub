@@ -1,0 +1,35 @@
+const got = require('@/utils/got');
+const cheerio = require('cheerio');
+
+module.exports = async (ctx) => {
+    const response = await got({
+        method: 'get',
+        url: 'https://36kr.com',
+    });
+
+    const data = response.data;
+
+    const $ = cheerio.load(data);
+    const list = $('div[data-item_id]');
+    let itemPicUrl;
+
+    ctx.state.data = {
+        title: '36氪',
+        link: 'https://36kr.com',
+        item:
+            list &&
+            list
+                .map((index, item) => {
+                    item = $(item);
+                    return {
+                        title: item
+                            .find('.title-wrapper a')
+                            .first()
+                            .text(),
+                        description: `描述：${item.find('a .article-item-description').text()}`,
+                        link: item.find('.title-wrapper a').attr('href'),
+                    };
+                })
+                .get(),
+    };
+};
