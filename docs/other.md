@@ -74,6 +74,12 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## 单向空间
+
+### 单读
+
+<Route author="KeNorizon" example="/owspace/read" path="/owspace/read" />
+
 ## DHL
 
 ### DHL 国际快递包裹追踪
