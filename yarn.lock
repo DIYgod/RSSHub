@@ -6930,10 +6930,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
   dependencies:
     minimist "0.0.8"
 
-mockdate@2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-2.0.4.tgz#105459332b3b7ea13993b690856f221906f59f33"
-  integrity sha512-rQ1mgf9rQU3fh5NtHZGmGwua4A51Jz1LSoJNc21Y9B4KX2AYGx8RMPUbB6E1Fq6uZMS2bioqlHA+26vt4qBiOw==
+mockdate@2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-2.0.5.tgz#70c6abf9ed4b2dae65c81dfc170dd1a5cec53620"
+  integrity sha512-ST0PnThzWKcgSLyc+ugLVql45PvESt3Ul/wrdV/OPc/6Pr8dbLAIJsN1cIp41FLzbN+srVTNIRn+5Cju0nyV6A==
 
 module-alias@2.2.1:
   version "2.2.1"
