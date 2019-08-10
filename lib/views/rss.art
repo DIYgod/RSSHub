@@ -2,14 +2,15 @@
 {{ if itunes_author }}
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
 {{else}}
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 {{ /if }}
     <channel>
         <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
         <link>{{ link || 'https://github.com/DIYgod/RSSHub' }}</link>
+        <atom:link href="{{ atomlink }}" rel="self" type="application/rss+xml" />
         <description><![CDATA[{{@ description || title }} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)]]></description>
         <generator>RSSHub</generator>
-        <webMaster>i@diygod.me</webMaster>
+        <webMaster>i@diygod.me (DIYgod)</webMaster>
         {{ if itunes_author }}<itunes:author>{{ itunes_author}}</itunes:author>{{ /if }}
         {{ if itunes_category }}<itunes:category text="{{ itunes_category }}"/>{{ /if }}
         <language>{{ language || 'zh-cn' }}</language>
