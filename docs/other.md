@@ -438,7 +438,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 单读
 
-<Route author="KeNorizon" example="/owspace/read" path="/owspace/read" />
+<Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
+
+| 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
+| ---- | ---- | ---- | ---- | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4      | 6    |
+
+</Route>
 
 ## 电商在线
 
