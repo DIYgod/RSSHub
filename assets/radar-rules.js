@@ -341,4 +341,13 @@
             },
         ],
     },
+    'soulapp.cn': {
+        _name: 'Soul',
+        '.': [
+            {
+                title: '瞬间更新',
+                docs: 'https://docs.rsshub.app/social-media.html#soul',
+            },
+        ],
+    },
 });
