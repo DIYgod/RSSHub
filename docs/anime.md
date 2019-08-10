@@ -4,6 +4,11 @@ pageClass: routes
 
 # 二次元
 
+## 005.tv
+
+### 二次元资讯
+
+<Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
 ## Anime1
 
 ### 動畫
@@ -80,7 +85,25 @@ pageClass: routes
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
 
+## Hanime.tv
+
+### 最近更新
+
+<Route author="EsuRt" example="/hanime/video" path="/hanime/video"/>
+
 ## Hpoi 手办维基
+
+### 情报
+
+<Route author="sanmmm" path="/hpoi/info/:type?" example="/hpoi/info/all" :paramsDesc="['分类, 见下表, 默认为`all`']">
+
+分类
+
+| 全部 | 手办  | 模型  |
+| ---- | ----- | ----- |
+| all  | hobby | model |
+
+</Route>
 
 ### 浏览周边
 

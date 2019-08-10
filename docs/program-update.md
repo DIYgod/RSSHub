@@ -14,15 +14,15 @@ pageClass: routes
 
 ### 应用更新
 
-<Route author="HenryQW" example="/appstore/update/cn/id444934666" path="/appstore/update/:country/:id" :paramsDesc="['App Store 国家, 如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8, 则 country 为 `cn`', 'App Store app id, 如 QQ 的链接为 https://itunes.apple.com/cn/app/qq/id444934666?mt=8, 则 id 为 `id444934666`']"/>
+<Route author="HenryQW" example="/appstore/update/cn/id444934666" path="/appstore/update/:country/:id" :paramsDesc="['App Store 国家, 如 QQ 的链接为 https://apps.apple.com/cn/app/qq/id444934666?mt=8, 则 country 为 `cn`', 'App Store app id, 如 QQ 的链接为 https://apps.apple.com/cn/app/qq/id444934666?mt=8, 则 id 为 `id444934666`']"/>
 
 ### 价格更新（限免）
 
-<Route author="HenryQW" example="/appstore/price/cn/mac/id1152443474" path="/appstore/price/:country/:type/:id" :paramsDesc="['App Store 国家, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 country 为 `cn`', 'App 类型, `iOS` 或 `mac`', 'App Store app id, 必选, 如 Squash 的链接为 https://itunes.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`']"/>
+<Route author="HenryQW" example="/appstore/price/cn/mac/id1152443474" path="/appstore/price/:country/:type/:id" :paramsDesc="['App Store 国家, 如 Squash 的链接为 https://apps.apple.com/cn/app/id1152443474, 则 country 为 `cn`', 'App 类型, `iOS` 或 `mac`', 'App Store app id, 必选, 如 Squash 的链接为 https://apps.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`']"/>
 
 ### 内购价格更新（限免）
 
-<Route author="HenryQW" example="/appstore/iap/cn/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 country 为 `cn`', 'App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://itunes.apple.com/cn/app/id953286746, 则 id 为 `id953286746`']"/>
+<Route author="HenryQW" example="/appstore/iap/cn/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://apps.apple.com/cn/app/id953286746, 则 country 为 `cn`', 'App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://apps.apple.com/cn/app/id953286746, 则 id 为 `id953286746`']"/>
 
 ### 每日精品限免 / 促销应用（鲜面连线 by AppSo）
 
@@ -31,6 +31,12 @@ pageClass: routes
 ### 最新限免（GoFans）
 
 <Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans"/>
+
+## aptonic
+
+### 新的 Dropzone 动作
+
+<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
 
 ## Bugly SDK
 
@@ -114,7 +120,7 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss"/>
+<Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss" radar="1"/>
 
 ## Thunderbird
 
@@ -139,6 +145,12 @@ pageClass: routes
 ### ROM Releases
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+
+## 怪物猎人
+
+### 更新
+
+见 [#怪物猎人](/game.html#怪物猎人)
 
 ## 腾讯云移动直播 SDK
 

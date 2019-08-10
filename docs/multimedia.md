@@ -17,6 +17,10 @@ pageClass: routes
 
 :::
 
+### 用户投稿
+
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
@@ -85,22 +89,30 @@ pageClass: routes
 
 ## Mp4Ba
 
+### 影视分类
+
+<Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" :paramsDesc="['类型']" supportBT="1"/>
+
 **类型参考这里**
-| 1 | 2 | 3 | 4 |
-| - | - | - | - |
-| 电影 | 连续剧 | 综艺 | 动画 |
+| 电影 | 连续剧 | 动画 | 综艺 | 纪录片 |
+| - | - | - | - | - |
+| 6 | 7 | 15 | 20 | 24 |
 
-| 5      | 6      | 7      | 8      | 9      |
-| ------ | ------ | ------ | ------ | ------ |
 | 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
+| ------ | ------ | ------ | ------ | ------ |
+| 8      | 9      | 10     | 11     | 12     |
 
-| 10     | 11     | 12     | 13     | 14     | 15     |
-| ------ | ------ | ------ | ------ | ------ | ------ |
 | 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
+| ------ | ------ | ------ | ------ | ------ | ------ |
+| 13     | 14     | 16     | 17     | 18     | 19     |
 
-### 资源
+</Route>
 
-<Route author="SettingDust"  example="/mp4ba/1" path="/mp4ba/:param" :paramsDesc="['类型/关键字']" supportBT="1"/>
+### 影视搜索
+
+<Route author="wolfyu1991"  example="/mp4ba/复仇者联盟" path="/mp4ba/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
+
+</Route>
 
 ## rs05 人生 05 电影
 
@@ -139,6 +151,10 @@ pageClass: routes
 见 [#youtube](/social-media.html#youtube)
 
 ## 爱奇艺
+
+### 用户视频
+
+<Route author="talengu" example="/iqiyi/user/video/2289191062" path="/iqiyi/user/video/:uid" :paramsDesc="['用户名']" />
 
 ### 动漫
 
@@ -202,6 +218,18 @@ pageClass: routes
 
 <Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
 
+## 故事 FM
+
+### 首页
+
+<Route author="sanmmm" example="/storyfm/index" path="/storyfm/index"/>
+
+## 开眼
+
+### 每日精选
+
+<Route author="SunShinenny" example="/kaiyan/index" path="/kaiyan/index"/>
+
 ## 猫眼电影
 
 ### 正在热映
@@ -227,6 +255,16 @@ pageClass: routes
 | 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV |
 | -------- | -------- | ------------ | ------------ | ------------ | -------- | ------------ | ------- | -------- | -------- | ----------- | ------------ |
 | mrhj     | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | yzmzym       | vr      | omwm     | dmyc     | ai          | ydsc         |
+
+</Route>
+
+### 色花图片
+
+<Route author="junfengP" example="/dsndsht23/picture/hrxazp" path="/dsndsht23/picture/:subforumid" :paramsDesc="['子版块 id']">
+
+| 华人性爱自拍 | 华人街拍区 | 亚洲性爱 | 欧美性爱 | 卡通动漫 |
+| ------------ | ---------- | -------- | -------- | -------- |
+| hrxazp       | hrjpq      | yzxa     | omxa     | ktdm     |
 
 </Route>
 
@@ -258,7 +296,7 @@ pageClass: routes
 
 ### 专辑
 
-<Route author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1">
+<Route author="lengthmin jjeejj" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1">
 
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
@@ -289,6 +327,12 @@ pageClass: routes
 | 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
 | ---- | ------ | ----- | ---- | --- | ------ |
 | 留空 | bluray | 1080p | 720p | 3d  | webdl  |
+
+## 中国广播
+
+### 电台节目
+
+<Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
 
 ## 字幕组（ZiMuZu.tv）
 
