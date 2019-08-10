@@ -330,4 +330,15 @@
             },
         ],
     },
+    'algocasts.com': {
+        _name: 'AlgoCasts',
+        '.': [
+            {
+                title: '视频更新',
+                docs: 'https://docs.rsshub.app/programming.html#algocasts',
+                source: '/episodes',
+                target: '/algocasts',
+            },
+        ],
+    },
 });
