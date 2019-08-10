@@ -74,12 +74,6 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
-## 单向空间
-
-### 单读
-
-<Route author="KeNorizon" example="/owspace/read" path="/owspace/read" />
-
 ## DHL
 
 ### DHL 国际快递包裹追踪
@@ -439,6 +433,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 用户
 
 <Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
+
+## 单向空间
+
+### 单读
+
+<Route author="KeNorizon" example="/owspace/read" path="/owspace/read" />
 
 ## 电商在线
 
