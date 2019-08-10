@@ -330,7 +330,7 @@
             },
         ],
     },
-    'algocasts.com': {
+    'algocasts.io': {
         _name: 'AlgoCasts',
         '.': [
             {
