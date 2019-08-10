@@ -167,6 +167,40 @@ pageClass: routes
 
 </Route>
 
+### 计算机科学与工程学院
+
+<Route author="talengu" example="/uestc/cs/ztlj*xskb" path="/universities/uestc/cs/:type?" :paramsDesc="['默认为 `ztlj*xskb`']">
+
+| 学院新闻   | 学生科    | 教务科    | 研管科    | 学术看板   |
+| ---------- | --------- | --------- | --------- | ---------- |
+| xwzx\*xyxw | tzgg\*xsk | tzgg\*jwk | tzgg\*ygk | ztlj\*xskb |
+
+注 1: xwzx\*xyxw 对应 http://www.scse.uestc.edu.cn/xwzx/xyxw.htm ;
+tzgg\*xsk 对应 http://www.scse.uestc.edu.cn/tzgg/xsk.htm
+
+可自定义设置
+
+注 2; 用+号来叠加 学生科+教务科 `/uestc/cs/ztlj*xskb+tzgg*jwk`
+
+</Route>
+
+### 自动化工程学院
+
+<Route author="talengu" example="/uestc/auto/tzgg1" path="/universities/uestc/news/:type?" :paramsDesc="['默认为 `tzgg1`']">
+
+| 通知公告 | 学术看板 | 焦点新闻 | 综合新闻 |
+| -------- | -------- | -------- | -------- |
+| tzgg1    | xskb1    | jdxw     | zhxw1    |
+
+注 1: tzgg1 对应 http://www.auto.uestc.edu.cn/index/tzgg1.htm ;
+xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
+
+可自定义设置
+
+注 2: 用+号来叠加，通知公告+学术看板 `/uestc/auto/tzgg1+xskb1`
+
+</Route>
+
 ## 东莞理工学院
 
 ### 教务处通知
