@@ -503,12 +503,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="WenryXu" example="/duozhi" path="/duozhi"/>
 
-## 饿了么
-
-### 商家开放平台公告
-
-<Route author="phantomk" example="/eleme/open/announce" path="/eleme/open/announce"/>
-
 ## 飞地
 
 ### 分类
