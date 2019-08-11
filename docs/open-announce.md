@@ -27,3 +27,7 @@ pageClass: routes
 ### 微信开放社区-微信支付公告
 
 <Route author="phantomk" example="wechat-open/community/pay-announce" path="wechat-open/community/pay-announce"/>
+
+### 微信支付-商户平台公告
+
+<Route author="phantomk" example="wechat-open/pay/announce" path="wechat-open/pay/announce"/>
