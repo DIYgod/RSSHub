@@ -91,7 +91,6 @@ module.exports = {
                                 'game',
                                 'reading',
                                 'government',
-                                'open-announce',
                                 'other',
                             ],
                         },
