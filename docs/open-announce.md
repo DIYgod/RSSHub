@@ -23,3 +23,7 @@ pageClass: routes
 ### 微信开放社区-小游戏公告
 
 <Route author="phantomk" example="wechat-open/community/xyx-announce" path="wechat-open/community/xyx-announce"/>
+
+### 微信开放社区-微信支付公告
+
+<Route author="phantomk" example="wechat-open/community/pay-announce" path="wechat-open/community/pay-announce"/>
