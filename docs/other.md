@@ -575,9 +575,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型']">
 
-| Live 实时（往事进展） | 最近 Live（最新关注） |
-| --------------------- | --------------------- |
-| realtime              | new                   |
+| 往事进展 | 最新添加 |
+| -------- | -------- |
+| realtime | new      |
 
 </Route>
 
