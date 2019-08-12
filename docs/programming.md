@@ -521,19 +521,19 @@ GitHub 官方也提供了一些 RSS:
 
 ### 微信开放社区-小程序公告
 
-<Route author="phantomk" example="wechat-open/community/xcx-announce" path="wechat-open/community/xcx-announce"/>
+<Route author="phantomk" example="/wechat-open/community/xcx-announce" path="/wechat-open/community/xcx-announce"/>
 
 ### 微信开放社区-小游戏公告
 
-<Route author="phantomk" example="wechat-open/community/xyx-announce" path="wechat-open/community/xyx-announce"/>
+<Route author="phantomk" example="/wechat-open/community/xyx-announce" path="/wechat-open/community/xyx-announce"/>
 
 ### 微信开放社区-微信支付公告
 
-<Route author="phantomk" example="wechat-open/community/pay-announce" path="wechat-open/community/pay-announce"/>
+<Route author="phantomk" example="/wechat-open/community/pay-announce" path="/wechat-open/community/pay-announce"/>
 
 ### 微信支付-商户平台公告
 
-<Route author="phantomk" example="wechat-open/pay/announce" path="wechat-open/pay/announce"/>
+<Route author="phantomk" example="/wechat-open/pay/announce" path="/wechat-open/pay/announce"/>
 
 ## 印记中文周刊
 
