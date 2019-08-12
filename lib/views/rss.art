@@ -28,7 +28,7 @@
             <title><![CDATA[{{@ $value.title }}]]></title>
             <description><![CDATA[{{@ $value.description || $value.title }}]]></description>
             {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
-            <guid>{{ $value.guid || $value.link }}</guid>
+            <guid isPermaLink="false">{{ $value.guid || $value.link }}</guid>
             <link>{{ $value.link }}</link>
             {{ if $value.itunes_item_image }}<itunes:image href="{{ $value.itunes_item_image }}"/>{{ /if }}
             {{ if $value.enclosure_url }}<enclosure url="{{ $value.enclosure_url }}" {{ if $value.enclosure_length }}length="{{ $value.enclosure_length }}"{{ /if }} {{ if $value.enclosure_type }}type="{{ $value.enclosure_type }}"{{ /if }} />{{ /if }}
