@@ -1235,7 +1235,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 字幕列表
 
-<Route author="sanmmm" example="/zimuzu/mv" path="/zimuzu/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
 
 类型
 
