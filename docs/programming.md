@@ -252,6 +252,16 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 饿了么开放平台
+
+### 商家开放平台公告
+
+<Route author="phantomk" example="/eleme/open/announce" path="/eleme/open/announce"/>
+
+### 饿百零售开放平台公告
+
+<Route author="phantomk" example="/eleme/open-be/announce" path="/eleme/open-be/announce"/>
+
 ## 极客时间
 
 ### 专栏文章
@@ -506,6 +516,24 @@ GitHub 官方也提供了一些 RSS:
 | hot  | plan | program | tech     | audio | project  | yunying  | test     |
 
 </Route>
+
+## 微信开放平台
+
+### 微信开放社区-小程序公告
+
+<Route author="phantomk" example="wechat-open/community/xcx-announce" path="wechat-open/community/xcx-announce"/>
+
+### 微信开放社区-小游戏公告
+
+<Route author="phantomk" example="wechat-open/community/xyx-announce" path="wechat-open/community/xyx-announce"/>
+
+### 微信开放社区-微信支付公告
+
+<Route author="phantomk" example="wechat-open/community/pay-announce" path="wechat-open/community/pay-announce"/>
+
+### 微信支付-商户平台公告
+
+<Route author="phantomk" example="wechat-open/pay/announce" path="wechat-open/pay/announce"/>
 
 ## 印记中文周刊
 
