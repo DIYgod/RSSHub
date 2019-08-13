@@ -384,6 +384,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 币世界
+
+### 快讯
+
+<Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
+
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
 ### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
