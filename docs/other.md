@@ -74,12 +74,6 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
-## 单向空间
-
-### 单读
-
-<Route author="KeNorizon" example="/owspace/read" path="/owspace/read" />
-
 ## DHL
 
 ### DHL 国际快递包裹追踪
@@ -440,6 +434,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
 
+## 单向空间
+
+### 单读
+
+<Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
+
+| 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
+| ---- | ---- | ---- | ---- | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4      | 6    |
+
+</Route>
+
 ## 电商在线
 
 ### 电商在线
@@ -569,9 +575,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型']">
 
-| Live 实时（往事进展） | 最近 Live（最新关注） |
-| --------------------- | --------------------- |
-| realtime              | new                   |
+| 往事进展 | 最新添加 |
+| -------- | -------- |
+| realtime | new      |
 
 </Route>
 
@@ -1229,7 +1235,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 字幕列表
 
-<Route author="sanmmm" example="/zimuzu/mv" path="/zimuzu/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
 
 类型
 

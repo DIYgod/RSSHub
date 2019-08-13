@@ -350,6 +350,12 @@ pageClass: routes
 
 </Route>
 
+## Soul
+
+### 瞬间更新
+
+<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']"></Route>
+
 ## Telegram
 
 ### 频道

@@ -330,4 +330,24 @@
             },
         ],
     },
+    'algocasts.io': {
+        _name: 'AlgoCasts',
+        '.': [
+            {
+                title: '视频更新',
+                docs: 'https://docs.rsshub.app/programming.html#algocasts',
+                source: '/episodes',
+                target: '/algocasts',
+            },
+        ],
+    },
+    'soulapp.cn': {
+        _name: 'Soul',
+        '.': [
+            {
+                title: '瞬间更新',
+                docs: 'https://docs.rsshub.app/social-media.html#soul',
+            },
+        ],
+    },
 });
