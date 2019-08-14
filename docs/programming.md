@@ -499,6 +499,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 顺丰
+
+### 顺丰丰桥开放平台公告
+
+<Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
+
 ## 腾讯游戏开发者社区
 
 ::: warning 注意
