@@ -152,6 +152,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
 
+## 微店
+
+### 商品上新
+
+<Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" :paramsDesc="['商铺 id']"/>
+
 ## 小米
 
 ### 小米众筹
