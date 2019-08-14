@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 {{ if itunes_author }}
-<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
 {{else}}
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 {{ /if }}
