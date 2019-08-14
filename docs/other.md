@@ -384,6 +384,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 币世界
+
+### 快讯
+
+<Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
+
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
 ### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
@@ -816,6 +822,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
 
 </Route>
+
+## 缺书网
+
+### 促销
+
+<Route author="kt286" example="/queshu/sale" path="/queshu/sale"/>
+
+### 单品活动信息
+
+<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
 
 ## 人人都是产品经理
 
