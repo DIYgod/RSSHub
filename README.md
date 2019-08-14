@@ -13,11 +13,9 @@
 
 RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源，配合浏览器扩展 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 食用效果更佳哟
 
-[Telegram 群](https://t.me/rsshub)
+[Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
 
-[使用文档](https://docs.rsshub.app/)
-
-[English docs](https://docs.rsshub.app/en)
+[使用文档](https://docs.rsshub.app/) | [English docs](https://docs.rsshub.app/en)
 
 ## 鸣谢
 

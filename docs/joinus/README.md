@@ -490,7 +490,7 @@ ctx.state.data = {
 
 ## 提交新的 RSSHub Radar 规则
 
-在 [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 里添加规则
+在 [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 里添加规则，然后在 RSSHub 文档里给对应路径加上 `radar="1"`，这样会显示一个 `支持浏览器扩展` 标记
 
 下面说明中会用到的简化的规则：
 
