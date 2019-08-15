@@ -144,3 +144,11 @@ describe('fulltext_mode', () => {
         expect(parsed.items[0].content).not.toBe(undefined);
     });
 });
+
+describe('lost_token', () => {
+    it(`lost_token`, async () => {
+        const response = await request.get('/test/lost_token');
+        expect(response.status).toBe(404);
+        expect(response.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: the token is not configured/);
+    });
+});
