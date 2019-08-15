@@ -1,3 +1,5 @@
+process.env.NODE_NAME = 'mock';
+
 const supertest = require('supertest');
 const { server } = require('../../lib/index');
 const request = supertest(server);
@@ -34,6 +36,9 @@ describe('debug', () => {
                 .html()
                 .trim();
             switch (key) {
+                case '节点名:':
+                    expect(value).toBe('mock');
+                    break;
                 case 'git hash:':
                     expect(value).toBe(gitHash);
                     break;

@@ -298,6 +298,8 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
 
+`NODE_NAME`: node name, used for load balancing, identify current node
+
 ### User Authentication
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.

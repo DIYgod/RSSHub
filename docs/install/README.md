@@ -370,6 +370,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
+`NODE_NAME`: 节点名，用于负载均衡，识别当前节点
+
 ### 部分 RSS 模块配置
 
 -   pixiv 全部路由: [注册地址](https://accounts.pixiv.net/signup)
