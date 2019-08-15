@@ -61,6 +61,16 @@
                 verification: (params) => params.uid,
             },
         ],
+        www: [
+            {
+                title: '博主',
+                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+                source: ['/u/:id', '/:id'],
+                target: '/weibo/user/:uid',
+                script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
+                verification: (params) => params.uid,
+            },
+        ],
     },
     'pixiv.net': {
         _name: 'Pixiv',
