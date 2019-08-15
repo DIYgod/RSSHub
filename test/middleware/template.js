@@ -33,6 +33,8 @@ describe('template', () => {
         const parsed2 = await parser.parseString(response2.text);
         delete parsed1.lastBuildDate;
         delete parsed2.lastBuildDate;
+        delete parsed1.feedUrl;
+        delete parsed2.feedUrl;
         expect(parsed2).toMatchObject(parsed1);
     });
 
