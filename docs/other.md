@@ -823,16 +823,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 缺书网
-
-### 促销
-
-<Route author="kt286" example="/queshu/sale" path="/queshu/sale"/>
-
-### 单品活动信息
-
-<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
-
 ## 人人都是产品经理
 
 ### 热门文章
