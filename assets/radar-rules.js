@@ -365,7 +365,7 @@
         '.': [
             {
                 title: '专栏',
-                docs: 'https://docs.rsshub.app/programming.html#%E4%B8%93%E6%A0%8F',
+                docs: 'https://docs.rsshub.app/programming.html#%E6%8E%98%E9%87%91',
                 source: '/user/:id/posts',
                 target: '/juejin/posts/:id',
             },
