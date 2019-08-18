@@ -185,6 +185,12 @@ pageClass: routes
 
 <Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
 
+## LaTeX 开源小屋
+
+### 首页
+
+<Route author="kt286" example="/latexstudio/home" path="/latexstudio/home"/>
+
 ## MobData
 
 ### 分析报告
