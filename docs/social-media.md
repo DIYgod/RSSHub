@@ -646,17 +646,13 @@ pageClass: routes
 
 ::: tip 提示
 
-公众号直接抓取困难, 故目前提供即刻和瓦斯两种间接抓取方案, 请自行选择
+公众号直接抓取困难, 故目前提供几种间接抓取方案, 请自行选择
 
 :::
 
-### 公众号（即刻来源）
-
-<Route author="DIYgod" example="/jike/topic/584b8ac671a288001154a115" path="/jike/topic/:id" :paramsDesc="['参考 [即刻-圈子-精选](#/jike/topic/:id)']" anticrawler="1"/>
-
 ### 公众号（ wemp.app 来源）
 
-<Route author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']"/>
+<Route author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']" anticrawler="1"/>
 
 ### 公众号（传送门来源）
 
