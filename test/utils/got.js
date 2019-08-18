@@ -75,13 +75,15 @@ describe('got', () => {
         nock('http://rsshub.test')
             .get(/^\/query/)
             .reply(function() {
-                expect(this.req.path).toBe('/query?test=1');
+                expect(this.req.path).toBe('/query?test=1&teststr=2&testchinese=%E4%B8%AD%E6%96%87');
                 return [200, ''];
             });
 
         await got.get('http://rsshub.test/query', {
             query: {
                 test: 1,
+                teststr: '2',
+                testchinese: '中文',
             },
         });
     });
