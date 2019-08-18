@@ -376,17 +376,35 @@
         '.': [
             {
                 title: '動畫',
-                docs: 'https://docs.rsshub.app/anime.html#%E5%8B%95%E7%95%AB',
+                docs: 'https://docs.rsshub.app/anime.html#anime1',
                 source: '/category/:time/:name',
                 target: '/anime1/anime/:time/:name',
             },
             {
                 title: '搜尋',
-                docs: 'https://docs.rsshub.app/anime.html#%25E6%2590%259C%25E5%25B0%258B',
+                docs: 'https://docs.rsshub.app/anime.html#anime1',
                 source: '/',
                 script: "({keyword: new URLSearchParams(location.search).get('s')})",
                 target: '/anime1/search/:keyword',
                 verification: (params) => params.keyword,
+            },
+        ],
+    },
+    'instagram.com': {
+        _name: 'Instagram',
+        www: [
+            {
+                title: '用户',
+                docs: 'https://docs.rsshub.app/social-media.html#instagram',
+                source: '/:id',
+                target: '/instagram/user/:id',
+                verification: (params) => params.id !== 'explore' && params.id !== 'developer',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/social-media.html#instagram',
+                source: '/explore/tags/:tag',
+                target: '/instagram/tag/:tag',
             },
         ],
     },
