@@ -371,4 +371,23 @@
             },
         ],
     },
+    'anime1.me': {
+        _name: 'Anime1',
+        '.': [
+            {
+                title: '動畫',
+                docs: 'https://docs.rsshub.app/anime.html#%E5%8B%95%E7%95%AB',
+                source: '/category/:time/:name',
+                target: '/anime1/anime/:time/:name',
+            },
+            {
+                title: '搜尋',
+                docs: 'https://docs.rsshub.app/anime.html#%25E6%2590%259C%25E5%25B0%258B',
+                source: '/',
+                script: "({keyword: new URLSearchParams(location.search).get('s')})",
+                target: '/anime1/search/:keyword',
+                verification: (params) => params.keyword,
+            },
+        ],
+    },
 });
