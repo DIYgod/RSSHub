@@ -6,7 +6,7 @@ describe('got', () => {
     it('headers', async () => {
         nock('http://rsshub.test')
             .get('/test')
-            .reply(() => {
+            .reply(function() {
                 expect(this.req.headers['user-agent']).toBe(config.ua);
                 return [200, ''];
             });
@@ -20,7 +20,7 @@ describe('got', () => {
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
-            .reply(() => {
+            .reply(function() {
                 requestRun();
                 const now = new Date();
                 if (requestTime) {
@@ -41,10 +41,12 @@ describe('got', () => {
         expect(requestRun).toHaveBeenCalledTimes(config.requestRetry);
     });
 
-    it('axios', async () => {
+    it('got', async () => {
         nock('http://rsshub.test')
             .post('/post')
-            .reply(() => [200, '{"code": 0}']);
+            .reply(function() {
+                return [200, '{"code": 0}'];
+            });
 
         const response1 = await got.post('http://rsshub.test/post', {
             form: true,
@@ -59,7 +61,7 @@ describe('got', () => {
 
         nock('http://rsshub.test')
             .get(/^\/params/)
-            .reply(() => {
+            .reply(function() {
                 expect(this.req.path).toBe('/params?test=1');
                 return [200, ''];
             });
@@ -72,7 +74,7 @@ describe('got', () => {
 
         nock('http://rsshub.test')
             .get(/^\/query/)
-            .reply(() => {
+            .reply(function() {
                 expect(this.req.path).toBe('/query?test=1');
                 return [200, ''];
             });
