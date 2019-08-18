@@ -23,6 +23,7 @@ describe('index', () => {
             title: 'RSSHub',
         };
         expect(configUtils.getProp(data, ['title'], $)).toBe('RSSHub');
+        expect(configUtils.getProp(data, 'title', $)).toBe('RSSHub');
     });
 
     it('all', async () => {
