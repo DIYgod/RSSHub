@@ -57,7 +57,7 @@
     "co-redis": "2.1.1",
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.8.15",
-    "dotenv": "8.0.0",
+    "dotenv": "8.1.0",
     "etag": "1.8.1",
     "form-data": "2.5.0",
     "git-rev-sync": "1.12.0",
