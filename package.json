@@ -35,7 +35,7 @@
     "@vuepress/plugin-google-analytics": "1.0.3",
     "@vuepress/plugin-pwa": "1.0.3",
     "cross-env": "5.2.0",
-    "eslint": "6.1.0",
+    "eslint": "6.2.0",
     "eslint-config-prettier": "6.0.0",
     "eslint-plugin-prettier": "3.1.0",
     "jest": "24.9.0",
