@@ -73,8 +73,25 @@ describe('index', () => {
             },
         });
 
-        expect(data.item.length).toBe(2);
-        expect(data.item[1].title).toBe('2 - buildData');
-        expect(data.item[1].description).toBe('RSSHub2');
+        expect(data).toMatchObject({
+            link: 'http://rsshub.test/buildData',
+            title: 'buildData',
+            item: [
+                {
+                    description: 'RSSHub1',
+                    guid: undefined,
+                    link: '/1',
+                    pubDate: undefined,
+                    title: '1 - buildData',
+                },
+                {
+                    description: 'RSSHub2',
+                    guid: undefined,
+                    link: '/2',
+                    pubDate: undefined,
+                    title: '2 - buildData',
+                },
+            ],
+        });
     });
 });
