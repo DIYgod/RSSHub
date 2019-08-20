@@ -855,6 +855,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" :paramsDesc="['用户 id']" />
 
+## 上证债券信息网
+
+### 可转换公司债券公告
+
+<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
+
 ## 少数派 sspai
 
 ### 最新上架付费专栏
