@@ -384,6 +384,16 @@ category 列表：
 
 <Route author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
 
+## 湖南科技大学
+### 湖南科技大学教务处通知
+<Route author="Yume" example="/hnust/jwc/jxyx" path="/hnust/jwc/:type?" :paramsDesc="['分类名']">
+
+| 教学运行     | 教学动态 | 全部（默认）|
+| -------- | ------- | ------- |
+| jxyx | jxdt |   all |
+
+</Route>
+
 ## 江南大学
 
 ### 教务处通知
