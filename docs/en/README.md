@@ -664,6 +664,12 @@ Supported sub-sites：
 
 <RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
 
+### Japanpost
+
+#### Track & Trace Service
+
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['Package Number']"/>
+
 ## aptonic
 
 ### New Dropzone Actions
