@@ -499,6 +499,18 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 前端艺术家&&飞冰早报
+
+### 列表
+
+<Route author="kouchao" example="/jskou/0" path="/jskou/:type?" :paramsDesc="['分类']">
+
+| 前端艺术家 | 飞冰早报 |
+| ---------- | -------- |
+| 0          | 1        |
+
+</Route>
+
 ## 顺丰
 
 ### 顺丰丰桥开放平台公告
