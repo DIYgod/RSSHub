@@ -849,6 +849,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Andiedie" example="/d2/daily" path="/d2/daily"/>
 
+## 日本郵便
+
+### 郵便追跡サービス
+
+<Route author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['运单号']"/>
+
 ## 扇贝
 
 ### 打卡
