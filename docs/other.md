@@ -473,18 +473,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 :::
 
-## 多知网
-
-### 首页
-
-<Route author="WenryXu" example="/duozhi" path="/duozhi"/>
-
-## 法律白話文運動
-
-### 最新文章
-
-<Route author="emdoe" example=“/plainlaw/archives“ path="/plainlaw/archives"/>
-
 ### 头条新闻
 
 <Route author="dxmpalb" example="/dongqiudi/top_news" path="/dongqiudi/top_news"/>
@@ -520,6 +508,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 球员新闻
 
 <Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
+
+## 多知网
+
+### 首页
+
+<Route author="WenryXu" example="/duozhi" path="/duozhi"/>
+
+## 法律白話文運動
+
+### 最新文章
+
+<Route author="emdoe" example=“/plainlaw/archives“ path="/plainlaw/archives"/>
 
 ## 飞地
 
