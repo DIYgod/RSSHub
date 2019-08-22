@@ -3629,6 +3629,61 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+emailjs-addressparser@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/emailjs-addressparser/download/emailjs-addressparser-2.0.2.tgz#fa8e6ff989667da8ae41d7316a7dfe6abe3c9d51"
+  integrity sha1-+o5v+YlmfaiuQdcxan3+ar48nVE=
+
+emailjs-base64@^1.1.2, emailjs-base64@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.npm.taobao.org/emailjs-base64/download/emailjs-base64-1.1.4.tgz#392fa38cb6aa35dccd3af3637ffc14c1c7ce9612"
+  integrity sha1-OS+jjLaqNdzNOvNjf/wUwcfOlhI=
+
+emailjs-imap-client@3.0.7:
+  version "3.0.7"
+  resolved "https://registry.npm.taobao.org/emailjs-imap-client/download/emailjs-imap-client-3.0.7.tgz#d76f1e7279c8d0d519d82fde1f5e3dc06b1a2a95"
+  integrity sha1-128ecnnI0NUZ2C/eH149wGsaKpU=
+  dependencies:
+    emailjs-addressparser "^2.0.2"
+    emailjs-base64 "^1.1.2"
+    emailjs-imap-handler "^3.0.2"
+    emailjs-mime-codec "^2.0.7"
+    emailjs-tcp-socket "^2.0.0"
+    emailjs-utf7 "^4.0.1"
+    pako "^1.0.6"
+    ramda "^0.25.0"
+
+emailjs-imap-handler@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/emailjs-imap-handler/download/emailjs-imap-handler-3.0.2.tgz#ab4e6d58ffa46b1cc0f20e14ca8b093b69cda136"
+  integrity sha1-q05tWP+kaxzA8g4UyosJO2nNoTY=
+  dependencies:
+    ramda "^0.25.0"
+
+emailjs-mime-codec@^2.0.7:
+  version "2.0.9"
+  resolved "https://registry.npm.taobao.org/emailjs-mime-codec/download/emailjs-mime-codec-2.0.9.tgz#d184451b6f2e55c5868b0f0a82d18fe2b82f0c97"
+  integrity sha1-0YRFG28uVcWGiw8KgtGP4rgvDJc=
+  dependencies:
+    emailjs-base64 "^1.1.4"
+    ramda "^0.26.1"
+    text-encoding "^0.7.0"
+
+emailjs-tcp-socket@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.npm.taobao.org/emailjs-tcp-socket/download/emailjs-tcp-socket-2.0.2.tgz#e89be8d331b5ab5dddca47428e5f64c1ac5154f4"
+  integrity sha1-6Jvo0zG1q13dykdCjl9kwaxRVPQ=
+  dependencies:
+    node-forge "^0.7.5"
+    ramda "^0.25.0"
+
+emailjs-utf7@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/emailjs-utf7/download/emailjs-utf7-4.0.1.tgz#ca6bad6b409605d11b4108d8785c70e42644f4b9"
+  integrity sha1-ymuta0CWBdEbQQjYeFxw5CZE9Lk=
+  dependencies:
+    emailjs-base64 "^1.1.2"
+
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
@@ -7186,6 +7241,11 @@ node-forge@0.7.5:
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
   integrity sha512-MmbQJ2MTESTjt3Gi/3yG1wGpIMhUfcIypUCGtTizFR9IiccFwxSpfp0vtIZlkFclEqERemxfnSdZEMR9VqqEFQ==
 
+node-forge@^0.7.5:
+  version "0.7.6"
+  resolved "https://registry.npm.taobao.org/node-forge/download/node-forge-0.7.6.tgz#fdf3b418aee1f94f0ef642cd63486c77ca9724ac"
+  integrity sha1-/fO0GK7h+U8O9kLNY0hsd8qXJKw=
+
 node-forge@^0.8.0:
   version "0.8.4"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.8.4.tgz#d6738662b661be19e2711ef01aa3b18212f13030"
@@ -7681,7 +7741,7 @@ package-json@^4.0.0:
     registry-url "^3.0.3"
     semver "^5.1.0"
 
-pako@~1.0.5:
+pako@^1.0.6, pako@~1.0.5:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
   integrity sha512-0DTvPVU3ed8+HNXOu5Bs+o//Mbdj9VNQMUOe9oKCwh8l0GNwpTDMKCWbRjgtD291AWnkAgkqA/LOnQS8AmS1tw==
@@ -8613,6 +8673,16 @@ querystringify@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
+
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.npm.taobao.org/ramda/download/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha1-j99oIxz/qQvC+UYDkKDLdKKbKak=
+
+ramda@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.npm.taobao.org/ramda/download/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha1-jUE1HrgRHFU1Nhf8O7/62OTTXQY=
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"
@@ -9998,6 +10068,11 @@ test-exclude@^5.2.3:
     minimatch "^3.0.4"
     read-pkg-up "^4.0.0"
     require-main-filename "^2.0.0"
+
+text-encoding@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npm.taobao.org/text-encoding/download/text-encoding-0.7.0.tgz#f895e836e45990624086601798ea98e8f36ee643"
+  integrity sha1-+JXoNuRZkGJAhmAXmOqY6PNu5kM=
 
 text-hex@1.0.x:
   version "1.0.0"
