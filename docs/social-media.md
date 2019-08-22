@@ -676,6 +676,10 @@ pageClass: routes
 
 <Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
 
+### 公众号（今天看啥来源）
+
+<Route author="alienmao" example="/wechat/jintiankansha/hLvcyMGnFh" path="/wechat/jintiankansha/:id" :paramsDesc="['专栏id, 在今天看啥中搜索公众号, 在 详情页 URL 中找到 专栏id']"/>
+
 ### 公众平台系统公告栏目
 
 <Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
