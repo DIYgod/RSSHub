@@ -519,7 +519,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 最新文章
 
-<Route author="emdoe" example=“/plainlaw/archives“ path="/plainlaw/archives"/>
+<Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
 ## 飞地
 
