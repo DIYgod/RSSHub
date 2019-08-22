@@ -7157,10 +7157,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@11.3.0:
-  version "11.3.0"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-11.3.0.tgz#a9ddc8271c7f74c4a815bc11eee0ef21e6d3be08"
-  integrity sha512-j5KXO096ov2XLvISUJQwl3UYJZy5dvArbK8Gt7+r0+gjtTU2uYiWJwhU4yIMXbtlHoX0od2LQgShAKXUObVbrA==
+nock@11.3.1:
+  version "11.3.1"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-11.3.1.tgz#3bafe0820a60f0900b948d31ab92b38ea6917b06"
+  integrity sha512-fsFRKNoH6R6hQuaasbAS5vmy4ujVaqKOb/9NCFP0TkhwbH1e5bPN8bn37FCIF9/0ZhayBrClUmSbN6Rm61+WSg==
   dependencies:
     chai "^4.1.2"
     debug "^4.1.0"
