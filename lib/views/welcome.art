@@ -91,7 +91,7 @@
         <details>
             <summary>debug</summary>
             {{ each debug }}
-            {{ if $value }}
+            {{ if $value && $value.value }}
             <div class="debug-item">
                 <span class="debug-key">{{ $value.name }}: </span>
                 <span class="debug-value">{{@ $value.value }}</span>
