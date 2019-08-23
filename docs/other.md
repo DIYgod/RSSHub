@@ -1193,7 +1193,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 > 仅支持 IMAP 协议
 
-<Route author="kt286" example="/mail/imap/xx@qq.com/password=xxx&host=imap.qq.com&port=993" path="/mail/imap/:email/:config?" :paramsDesc="['邮箱账号','设置, 自建也可以在.env文件中添加 `EMAIL_CONFIG_邮箱账号`，格式为 `password=密码&host=服务器&port=端口`']" />
+<Route author="kt286" example="/mail/imap/xx@qq.com" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
 ## 语雀
 
