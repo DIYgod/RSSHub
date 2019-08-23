@@ -411,3 +411,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 -   语雀 全部路由: [注册地址](https://www.yuque.com/register)
 
     -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见[语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
+
+-   邮箱 邮件列表路由:
+
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 {email} 为 邮箱账号，例如 `EMAIL_CONFIG_xxx@qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如 `password=123456&host=imap.qq.com&port=993`。

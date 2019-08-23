@@ -1187,6 +1187,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
+## 邮箱
+
+### 邮件列表
+
+> 仅支持 IMAP 协议
+
+<Route author="kt286" example="/mail/imap/xx@qq.com" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+
 ## 语雀
 
 ### 知识库

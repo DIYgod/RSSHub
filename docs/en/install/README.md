@@ -338,6 +338,10 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
+-   `mail`:
+
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with email account, like `EMAIL_CONFIG_xxx@qq.com`. the value format is `password=password&host=server&port=port`, like `password=123456&host=imap.qq.com&port=993`
+
 ### Access Control
 
 Access control includes a whitelist and a blacklist, which is configured via `middleware/access-control.js` or environment variables.
