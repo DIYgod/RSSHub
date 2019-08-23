@@ -515,6 +515,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="WenryXu" example="/duozhi" path="/duozhi"/>
 
+## 法律白話文運動
+
+### 最新文章
+
+<Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
+
 ## 飞地
 
 ### 分类
