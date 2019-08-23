@@ -1181,6 +1181,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
+## 邮箱
+
+### 邮件列表
+
+> 仅支持 IMAP 协议
+
+<Route author="kt286" example="/mail/imap/xx@qq.com/password=xxx&host=imap.qq.com&port=993" path="/mail/imap/:email/:config?" :paramsDesc="['邮箱账号','设置, 自建也可以在.env文件中添加 `EMAIL_CONFIG_邮箱账号`，格式为 `password=密码&host=服务器&port=端口`']" />
+
 ## 语雀
 
 ### 知识库

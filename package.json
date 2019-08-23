@@ -75,6 +75,7 @@
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "lz-string": "1.4.4",
+    "mailparser": "2.7.1",
     "markdown-it": "9.1.0",
     "module-alias": "2.2.1",
     "node-fetch": "2.6.0",
