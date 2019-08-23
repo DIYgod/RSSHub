@@ -37,8 +37,8 @@ describe('config', () => {
 
         const config = require('../lib/config');
         expect(config.email.config).toMatchObject({
-            'xx@qq.com': 'token1',
-            'oo@qq.com': 'token2',
+            'xx.qq.com': 'token1',
+            'oo.qq.com': 'token2',
         });
 
         delete process.env['EMAIL_CONFIG_xx.qq.com'];
