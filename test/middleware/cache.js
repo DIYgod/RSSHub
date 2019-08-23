@@ -55,13 +55,12 @@ describe('cache', () => {
         expect(parsed4.items[0].content).toBe('Cache2');
 
         const app = require('../../lib/index').app;
-        app.context.cache.set('mock', undefined);
-        app.context.cache.set('mock', undefined);
+        await app.context.cache.set('mock', undefined);
         expect(await app.context.cache.get('mock')).toBe('');
 
-        app.context.cache.globalCache.set('mock', undefined);
+        await app.context.cache.globalCache.set('mock', undefined);
         expect(await app.context.cache.globalCache.get('mock')).toBe('');
-        app.context.cache.globalCache.set('mock', {
+        await app.context.cache.globalCache.set('mock', {
             mock: 1,
         });
         expect(await app.context.cache.globalCache.get('mock')).toBe('{"mock":1}');
@@ -102,9 +101,11 @@ describe('cache', () => {
         expect(parsed4.items[0].content).toBe('Cache2');
 
         const app = require('../../lib/index').app;
-        app.context.cache.set('mock', undefined);
-        app.context.cache.set('mock', undefined);
-        expect(await app.context.cache.get('mock')).toBe(null);
+        await app.context.cache.set('mock1', undefined);
+        expect(await app.context.cache.get('mock1')).toBe('');
+        await app.context.cache.set('mock2', '2');
+        await app.context.cache.set('mock2', '2');
+        expect(await app.context.cache.get('mock2')).toBe('2');
     });
 
     it('redis with quit', async () => {
