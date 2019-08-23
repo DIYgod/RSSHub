@@ -36,7 +36,7 @@ describe('config', () => {
         process.env['EMAIL_CONFIG_oo@qq.com'] = 'token2';
 
         const config = require('../lib/config');
-        expect(config.twitter.tokens).toMatchObject({
+        expect(config.email.config).toMatchObject({
             'xx@qq.com': 'token1',
             'oo@qq.com': 'token2',
         });
