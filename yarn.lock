@@ -3631,17 +3631,17 @@ elliptic@^6.0.0:
 
 emailjs-addressparser@^2.0.2:
   version "2.0.2"
-  resolved "https://registry.yarnpkg.com/emailjs-addressparser/download/emailjs-addressparser-2.0.2.tgz#fa8e6ff989667da8ae41d7316a7dfe6abe3c9d51"
+  resolved "https://registry.yarnpkg.com/emailjs-addressparser/-/emailjs-addressparser-2.0.2.tgz#fa8e6ff989667da8ae41d7316a7dfe6abe3c9d51"
   integrity sha1-+o5v+YlmfaiuQdcxan3+ar48nVE=
 
 emailjs-base64@^1.1.2, emailjs-base64@^1.1.4:
   version "1.1.4"
-  resolved "https://registry.yarnpkg.com/emailjs-base64/download/emailjs-base64-1.1.4.tgz#392fa38cb6aa35dccd3af3637ffc14c1c7ce9612"
+  resolved "https://registry.yarnpkg.com/emailjs-base64/-/emailjs-base64-1.1.4.tgz#392fa38cb6aa35dccd3af3637ffc14c1c7ce9612"
   integrity sha1-OS+jjLaqNdzNOvNjf/wUwcfOlhI=
 
 emailjs-imap-client@3.0.7:
   version "3.0.7"
-  resolved "https://registry.yarnpkg.com/emailjs-imap-client/download/emailjs-imap-client-3.0.7.tgz#d76f1e7279c8d0d519d82fde1f5e3dc06b1a2a95"
+  resolved "https://registry.yarnpkg.com/emailjs-imap-client/-/emailjs-imap-client-3.0.7.tgz#d76f1e7279c8d0d519d82fde1f5e3dc06b1a2a95"
   integrity sha1-128ecnnI0NUZ2C/eH149wGsaKpU=
   dependencies:
     emailjs-addressparser "^2.0.2"
@@ -3655,14 +3655,14 @@ emailjs-imap-client@3.0.7:
 
 emailjs-imap-handler@^3.0.2:
   version "3.0.2"
-  resolved "https://registry.yarnpkg.com/emailjs-imap-handler/download/emailjs-imap-handler-3.0.2.tgz#ab4e6d58ffa46b1cc0f20e14ca8b093b69cda136"
+  resolved "https://registry.yarnpkg.com/emailjs-imap-handler/-/emailjs-imap-handler-3.0.2.tgz#ab4e6d58ffa46b1cc0f20e14ca8b093b69cda136"
   integrity sha1-q05tWP+kaxzA8g4UyosJO2nNoTY=
   dependencies:
     ramda "^0.25.0"
 
 emailjs-mime-codec@^2.0.7:
   version "2.0.9"
-  resolved "https://registry.yarnpkg.com/emailjs-mime-codec/download/emailjs-mime-codec-2.0.9.tgz#d184451b6f2e55c5868b0f0a82d18fe2b82f0c97"
+  resolved "https://registry.yarnpkg.com/emailjs-mime-codec/-/emailjs-mime-codec-2.0.9.tgz#d184451b6f2e55c5868b0f0a82d18fe2b82f0c97"
   integrity sha1-0YRFG28uVcWGiw8KgtGP4rgvDJc=
   dependencies:
     emailjs-base64 "^1.1.4"
@@ -3671,7 +3671,7 @@ emailjs-mime-codec@^2.0.7:
 
 emailjs-tcp-socket@^2.0.0:
   version "2.0.2"
-  resolved "https://registry.yarnpkg.com/emailjs-tcp-socket/download/emailjs-tcp-socket-2.0.2.tgz#e89be8d331b5ab5dddca47428e5f64c1ac5154f4"
+  resolved "https://registry.yarnpkg.com/emailjs-tcp-socket/-/emailjs-tcp-socket-2.0.2.tgz#e89be8d331b5ab5dddca47428e5f64c1ac5154f4"
   integrity sha1-6Jvo0zG1q13dykdCjl9kwaxRVPQ=
   dependencies:
     node-forge "^0.7.5"
@@ -3679,7 +3679,7 @@ emailjs-tcp-socket@^2.0.0:
 
 emailjs-utf7@^4.0.1:
   version "4.0.1"
-  resolved "https://registry.yarnpkg.com/emailjs-utf7/download/emailjs-utf7-4.0.1.tgz#ca6bad6b409605d11b4108d8785c70e42644f4b9"
+  resolved "https://registry.yarnpkg.com/emailjs-utf7/-/emailjs-utf7-4.0.1.tgz#ca6bad6b409605d11b4108d8785c70e42644f4b9"
   integrity sha1-ymuta0CWBdEbQQjYeFxw5CZE9Lk=
   dependencies:
     emailjs-base64 "^1.1.2"
@@ -5026,7 +5026,7 @@ html-tags@^2.0.0:
 
 html-to-text@5.1.1:
   version "5.1.1"
-  resolved "https://registry.yarnpkg.com/html-to-text/download/html-to-text-5.1.1.tgz#2d89db7bf34bc7bcb7d546b1b228991a16926e87"
+  resolved "https://registry.yarnpkg.com/html-to-text/-/html-to-text-5.1.1.tgz#2d89db7bf34bc7bcb7d546b1b228991a16926e87"
   integrity sha1-LYnbe/NLx7y31UaxsiiZGhaSboc=
   dependencies:
     he "^1.2.0"
@@ -6471,12 +6471,12 @@ levn@^0.3.0, levn@~0.3.0:
 
 libbase64@1.0.3:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/libbase64/download/libbase64-1.0.3.tgz#de3023234abeefeb9d49378804c8a94404f5c98c"
+  resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.0.3.tgz#de3023234abeefeb9d49378804c8a94404f5c98c"
   integrity sha1-3jAjI0q+7+udSTeIBMipRAT1yYw=
 
 libmime@4.1.1:
   version "4.1.1"
-  resolved "https://registry.yarnpkg.com/libmime/download/libmime-4.1.1.tgz#eb7a60c775ba78c3715ddaec5cd52596a047f8d1"
+  resolved "https://registry.yarnpkg.com/libmime/-/libmime-4.1.1.tgz#eb7a60c775ba78c3715ddaec5cd52596a047f8d1"
   integrity sha1-63pgx3W6eMNxXdrsXNUllqBH+NE=
   dependencies:
     iconv-lite "0.4.24"
@@ -6485,7 +6485,7 @@ libmime@4.1.1:
 
 libqp@1.1.0:
   version "1.1.0"
-  resolved "https://registry.yarnpkg.com/libqp/download/libqp-1.1.0.tgz#f5e6e06ad74b794fb5b5b66988bf728ef1dedbe8"
+  resolved "https://registry.yarnpkg.com/libqp/-/libqp-1.1.0.tgz#f5e6e06ad74b794fb5b5b66988bf728ef1dedbe8"
   integrity sha1-9ebgatdLeU+1tbZpiL9yjvHe2+g=
 
 linkify-it@2.1.0, linkify-it@^2.0.0:
@@ -6745,7 +6745,7 @@ lz-string@1.4.4:
 
 mailparser@2.7.1:
   version "2.7.1"
-  resolved "https://registry.yarnpkg.com/mailparser/download/mailparser-2.7.1.tgz#c83d1880cf2300d19eccd8c529bf978b04a0fc97"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.1.tgz#c83d1880cf2300d19eccd8c529bf978b04a0fc97"
   integrity sha1-yD0YgM8jANGezNjFKb+XiwSg/Jc=
   dependencies:
     he "1.2.0"
@@ -6759,7 +6759,7 @@ mailparser@2.7.1:
 
 mailsplit@4.4.1:
   version "4.4.1"
-  resolved "https://registry.yarnpkg.com/mailsplit/download/mailsplit-4.4.1.tgz#838603af3c1561e27aedd8599cec2a59c097faa6"
+  resolved "https://registry.yarnpkg.com/mailsplit/-/mailsplit-4.4.1.tgz#838603af3c1561e27aedd8599cec2a59c097faa6"
   integrity sha1-g4YDrzwVYeJ67dhZnOwqWcCX+qY=
   dependencies:
     libbase64 "1.0.3"
@@ -7295,7 +7295,7 @@ node-forge@0.7.5:
 
 node-forge@^0.7.5:
   version "0.7.6"
-  resolved "https://registry.yarnpkg.com/node-forge/download/node-forge-0.7.6.tgz#fdf3b418aee1f94f0ef642cd63486c77ca9724ac"
+  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.6.tgz#fdf3b418aee1f94f0ef642cd63486c77ca9724ac"
   integrity sha1-/fO0GK7h+U8O9kLNY0hsd8qXJKw=
 
 node-forge@^0.8.0:
@@ -7385,7 +7385,7 @@ nodejieba@^2.2.1:
 
 nodemailer@6.1.1:
   version "6.1.1"
-  resolved "https://registry.yarnpkg.com/nodemailer/download/nodemailer-6.1.1.tgz#09e88ef4b3646f01089c5d84d007b872141fb575"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.1.1.tgz#09e88ef4b3646f01089c5d84d007b872141fb575"
   integrity sha1-CeiO9LNkbwEInF2E0Ae4chQftXU=
 
 nodemon@1.19.1:
@@ -8733,12 +8733,12 @@ querystringify@^2.1.1:
 
 ramda@^0.25.0:
   version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ramda/download/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
   integrity sha1-j99oIxz/qQvC+UYDkKDLdKKbKak=
 
 ramda@^0.26.1:
   version "0.26.1"
-  resolved "https://registry.yarnpkg.com/ramda/download/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha1-jUE1HrgRHFU1Nhf8O7/62OTTXQY=
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
@@ -10128,7 +10128,7 @@ test-exclude@^5.2.3:
 
 text-encoding@^0.7.0:
   version "0.7.0"
-  resolved "https://registry.yarnpkg.com/text-encoding/download/text-encoding-0.7.0.tgz#f895e836e45990624086601798ea98e8f36ee643"
+  resolved "https://registry.yarnpkg.com/text-encoding/-/text-encoding-0.7.0.tgz#f895e836e45990624086601798ea98e8f36ee643"
   integrity sha1-+JXoNuRZkGJAhmAXmOqY6PNu5kM=
 
 text-hex@1.0.x:
@@ -10202,7 +10202,7 @@ tiny-emitter@^2.0.0:
 
 tlds@1.203.1:
   version "1.203.1"
-  resolved "https://registry.yarnpkg.com/tlds/download/tlds-1.203.1.tgz#4dc9b02f53de3315bc98b80665e13de3edfc1dfc"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.203.1.tgz#4dc9b02f53de3315bc98b80665e13de3edfc1dfc"
   integrity sha1-TcmwL1PeMxW8mLgGZeE94+38Hfw=
 
 tmp@^0.0.33:
