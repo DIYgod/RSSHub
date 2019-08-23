@@ -53,6 +53,18 @@ describe('cache', () => {
         expect(parsed2.items[0].content).toBe('Cache1');
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
+
+        const app = require('../../lib/index').app;
+        app.context.cache.set('mock', undefined);
+        app.context.cache.set('mock', undefined);
+        expect(await app.context.cache.get('mock')).toBe('');
+
+        app.context.cache.globalCache.set('mock', undefined);
+        expect(await app.context.cache.globalCache.get('mock')).toBe('');
+        app.context.cache.globalCache.set('mock', {
+            mock: 1,
+        });
+        expect(await app.context.cache.globalCache.get('mock')).toBe('{"mock":1}');
     });
 
     it('redis', async () => {
@@ -88,6 +100,11 @@ describe('cache', () => {
         expect(parsed2.items[0].content).toBe('Cache1');
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
+
+        const app = require('../../lib/index').app;
+        app.context.cache.set('mock', undefined);
+        app.context.cache.set('mock', undefined);
+        expect(await app.context.cache.get('mock')).toBe(null);
     });
 
     it('redis with quit', async () => {
