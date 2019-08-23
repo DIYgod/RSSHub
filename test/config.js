@@ -32,8 +32,8 @@ describe('config', () => {
     });
 
     it('email config', async () => {
-        process.env['EMAIL_CONFIG_xx@qq.com'] = 'token1';
-        process.env['EMAIL_CONFIG_oo@qq.com'] = 'token2';
+        process.env['EMAIL_CONFIG_xx.qq.com'] = 'token1';
+        process.env['EMAIL_CONFIG_oo.qq.com'] = 'token2';
 
         const config = require('../lib/config');
         expect(config.email.config).toMatchObject({
@@ -41,7 +41,7 @@ describe('config', () => {
             'oo@qq.com': 'token2',
         });
 
-        delete process.env['EMAIL_CONFIG_xx@qq.com'];
-        delete process.env['EMAIL_CONFIG_oo@qq.com'];
+        delete process.env['EMAIL_CONFIG_xx.qq.com'];
+        delete process.env['EMAIL_CONFIG_oo.qq.com'];
     });
 });
