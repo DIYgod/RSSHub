@@ -289,10 +289,6 @@ $ cd RSSHub
 $ docker build -f ./Dockerfile.arm32v7 -t rsshub:arm32v7 .
 ```
 
-puppeteer 本身不会下载 chrome-arm，需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址，以启用相应路由
-
-TO DO: 暂时还没有找到合适的 `chrome websocket` arm32v7 镜像
-
 运行 RSSHub
 
 ```bash
@@ -371,6 +367,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
+
+`PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 ### 部分 RSS 模块配置
 
