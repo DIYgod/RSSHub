@@ -1193,7 +1193,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 > 仅支持 IMAP 协议
 
-<Route author="kt286" example="/mail/imap/xx@qq.com" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+<Route author="kt286" example="/mail/imap/rss.rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
 ## 语雀
 

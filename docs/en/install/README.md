@@ -342,7 +342,7 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
 -   `mail`:
 
-    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with email account, like `EMAIL_CONFIG_xxx@qq.com`. the value format is `password=password&host=server&port=port`, like `password=123456&host=imap.qq.com&port=993`
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with email account, replace `@` in email account with `.`, like `EMAIL_CONFIG_xxx.qq.com`. the value format is `password=password&host=server&port=port`, like `password=123456&host=imap.qq.com&port=993`
 
 ### Access Control
 
