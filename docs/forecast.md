@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 中国地震局
 
-<Route author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']" crawlerBadge="1">
+<Route author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']" anticrawler="1">
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
@@ -21,6 +21,16 @@ pageClass: routes
 可通过全局过滤参数订阅您感兴趣的地区.
 
 </Route>
+
+## 国家应急广播网
+
+### 预警信息
+
+<Route author="muzea" example="/cneb/yjxx" path="/cneb/yjxx"/>
+
+### 国内新闻
+
+<Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
 
 ## 停电通知
 

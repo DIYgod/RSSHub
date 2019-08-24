@@ -1,3 +1,5 @@
+process.env.NODE_NAME = 'mock';
+
 const supertest = require('supertest');
 const { server } = require('../../lib/index');
 const request = supertest(server);
@@ -20,6 +22,8 @@ describe('debug', () => {
         await request.get('/test/1').set('X-Forwarded-For', '233.233.233.234');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.234');
+        await request.get('/test/empty').set('X-Forwarded-For', '233.233.233.233');
+        await request.get('/test/empty').set('X-Forwarded-For', '233.233.233.234');
 
         const response = await request.get('/').set('X-Forwarded-For', '233.233.233.233');
 
@@ -34,6 +38,9 @@ describe('debug', () => {
                 .html()
                 .trim();
             switch (key) {
+                case '节点名:':
+                    expect(value).toBe('mock');
+                    break;
                 case 'git hash:':
                     expect(value).toBe(gitHash);
                     break;
@@ -41,13 +48,19 @@ describe('debug', () => {
                     expect(value).toBe('6');
                     break;
                 case '热门路由:':
-                    expect(value).toBe(`5&nbsp;&nbsp;/test/:id<br>`);
+                    expect(value).toBe(`7&nbsp;&nbsp;/test/:id<br>`);
                     break;
                 case '热门路径:':
-                    expect(value).toBe(`3&nbsp;&nbsp;/test/1<br>2&nbsp;&nbsp;/test/2<br>1&nbsp;&nbsp;/<br>`);
+                    expect(value).toBe(`3&nbsp;&nbsp;/test/1<br>2&nbsp;&nbsp;/test/2<br>2&nbsp;&nbsp;/test/empty<br>1&nbsp;&nbsp;/<br>`);
                     break;
                 case '热门IP:':
-                    expect(value).toBe(`4&nbsp;&nbsp;233.233.233.233<br>2&nbsp;&nbsp;233.233.233.234<br>`);
+                    expect(value).toBe(`5&nbsp;&nbsp;233.233.233.233<br>3&nbsp;&nbsp;233.233.233.234<br>`);
+                    break;
+                case '报错路由:':
+                    expect(value).toBe(`2&nbsp;&nbsp;/test/:id<br>`);
+                    break;
+                case '报错路径:':
+                    expect(value).toBe(`2&nbsp;&nbsp;/test/empty<br>`);
                     break;
             }
         });

@@ -76,6 +76,10 @@ Solidot 提供的 feed:
 
 ## The Economist
 
+### 全文输出
+
+<Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
+
 ### GRE Vocabulary
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
@@ -374,5 +378,19 @@ category 对应的关键词有
 | news | scenery | topic | move |
 | ---- | ------- | ----- | ---- |
 | 资讯 | 风景    | 体验  | 交通 |
+
+</Route>
+
+## 中国日报
+
+### 英语点津
+
+<Route author="sanmmm" example="/chinadaily/english/thelatest" path="/chinadaily/english/:category" :paramsDesc="['目录分类']">
+
+目录分类
+
+| 最新      | 双语           | 热词          | 口语            | 译词          | 视频        | 听力     | 专栏      | 文件                     | 考试         |
+| --------- | -------------- | ------------- | --------------- | ------------- | ----------- | -------- | --------- | ------------------------ | ------------ |
+| thelatest | news_bilingual | news_hotwords | practice_tongue | trans_collect | video_links | audio_cd | columnist | 5af95d44a3103f6866ee845c | englishexams |
 
 </Route>
