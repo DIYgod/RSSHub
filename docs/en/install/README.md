@@ -300,6 +300,8 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `NODE_NAME`: node name, used for load balancing, identify current node
 
+`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+
 ### User Authentication
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
@@ -337,6 +339,10 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 -   `github`: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+
+-   `mail`:
+
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with email account, replace `@` in email account with `.`, like `EMAIL_CONFIG_xxx.qq.com`. the value format is `password=password&host=server&port=port`, like `password=123456&host=imap.qq.com&port=993`
 
 ### Access Control
 

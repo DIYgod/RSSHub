@@ -22,6 +22,16 @@ pageClass: routes
 
 </Route>
 
+## 国家应急广播网
+
+### 预警信息
+
+<Route author="muzea" example="/cneb/yjxx" path="/cneb/yjxx"/>
+
+### 国内新闻
+
+<Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
+
 ## 停电通知
 
 获取未来一天的停电通知

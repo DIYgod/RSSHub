@@ -289,10 +289,6 @@ $ cd RSSHub
 $ docker build -f ./Dockerfile.arm32v7 -t rsshub:arm32v7 .
 ```
 
-puppeteer 本身不会下载 chrome-arm，需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址，以启用相应路由
-
-TO DO: 暂时还没有找到合适的 `chrome websocket` arm32v7 镜像
-
 运行 RSSHub
 
 ```bash
@@ -372,6 +368,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
 
+`PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+
 ### 部分 RSS 模块配置
 
 -   pixiv 全部路由: [注册地址](https://accounts.pixiv.net/signup)
@@ -411,3 +409,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 -   语雀 全部路由: [注册地址](https://www.yuque.com/register)
 
     -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见[语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
+
+-   邮箱 邮件列表路由:
+
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 {email} 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如 `password=123456&host=imap.qq.com&port=993`。
