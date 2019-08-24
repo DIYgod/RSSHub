@@ -11,9 +11,9 @@
 [![build status](https://img.shields.io/travis/DIYgod/RSSHub/master.svg?style=flat-square)](https://travis-ci.org/DIYgod/RSSHub)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square)](https://codecov.io/github/DIYgod/RSSHub?branch=master)
 
-RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪怪的内容生成 RSS 订阅源
+RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源，配合浏览器扩展 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 食用效果更佳哟
 
-[Telegram 群](https://t.me/rsshub)
+[Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
 
 ## 鸣谢
 
@@ -23,8 +23,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器, 可以给任何奇奇怪
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) |
+| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -44,6 +44,10 @@ Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 **Q: RSSHub 是如何工作的？**
 
 **A:** 请求路由时，RSSHub 会按照给定规则请求源站数据，然后以 RSS 格式输出；如果在设定缓存时间内重新请求路由，则会直接返回缓存内容，不请求源站；再加一点点魔法。
+
+**Q: RSSHub Radar 是如何工作的？**
+
+**A:** 进入新页面时， RSSHub Radar 先根据页面 link 标签[寻找](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/content/utils.js#L14)页面自带 RSS，再根据远程更新的[规则](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)寻找适用当前页面和当前网站的 RSSHub 路由；再加一点点魔法。
 
 **Q: 演示地址可以用么？**
 

@@ -19,8 +19,8 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :-------: | :----------------------------------: |
+| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) |
+| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :-------: | :----------------------------------: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/support/)
@@ -520,6 +520,18 @@ GitHub provides some official RSS feeds:
 
 <RouteEn author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
 
+## E-commerce
+
+### leboncoin
+
+Transform any search into a feed.
+
+<RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
+
+For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
+
+</RouteEn>
+
 ## Uncategorized
 
 ### EZTV
@@ -651,6 +663,12 @@ Supported sub-sites：
 #### Poems
 
 <RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
+
+### Japanpost
+
+#### Track & Trace Service
+
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['Package Number']"/>
 
 ## aptonic
 

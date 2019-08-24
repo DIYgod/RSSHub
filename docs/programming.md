@@ -14,7 +14,7 @@ pageClass: routes
 
 ### 视频更新
 
-<Route author="ImSingee" example="/algocasts" path="/algocasts"></Route>
+<Route author="ImSingee" example="/algocasts" path="/algocasts" radar="1"></Route>
 
 > AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
@@ -224,6 +224,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
 
+## 阿里云
+
+### 数据库内核月报
+
+<Route author="junbaor" example="/aliyun/database_month" path="/aliyun/database_month"/>
+
 ## 安全客
 
 ::: tip 提示
@@ -245,6 +251,16 @@ GitHub 官方也提供了一些 RSS:
 | week             | activity | knowledge | news | job  |
 
 </Route>
+
+## 饿了么开放平台
+
+### 商家开放平台公告
+
+<Route author="phantomk" example="/eleme/open/announce" path="/eleme/open/announce"/>
+
+### 饿百零售开放平台公告
+
+<Route author="phantomk" example="/eleme/open-be/announce" path="/eleme/open-be/announce"/>
 
 ## 极客时间
 
@@ -270,9 +286,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
-| 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
-| -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
-| frontend | android | ios | backend | design | product | freebie  | article | ai       |
+| 后端    | 前端     | Android | iOS | 人工智能 | 开发工具 | 代码人生 | 阅读    |
+| ------- | -------- | ------- | --- | -------- | -------- | -------- | ------- |
+| backend | frontend | android | ios | ai       | freebie  | career   | article |
 
 </Route>
 
@@ -318,7 +334,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 专栏
 
-<Route author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
+<Route author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']" radar="1"/>
 
 ### 收藏集
 
@@ -483,6 +499,24 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 前端艺术家&&飞冰早报
+
+### 列表
+
+<Route author="kouchao" example="/jskou/0" path="/jskou/:type?" :paramsDesc="['分类']">
+
+| 前端艺术家 | 飞冰早报 |
+| ---------- | -------- |
+| 0          | 1        |
+
+</Route>
+
+## 顺丰
+
+### 顺丰丰桥开放平台公告
+
+<Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
+
 ## 腾讯游戏开发者社区
 
 ::: warning 注意
@@ -500,6 +534,24 @@ GitHub 官方也提供了一些 RSS:
 | hot  | plan | program | tech     | audio | project  | yunying  | test     |
 
 </Route>
+
+## 微信开放平台
+
+### 微信开放社区-小程序公告
+
+<Route author="phantomk" example="/wechat-open/community/xcx-announce" path="/wechat-open/community/xcx-announce"/>
+
+### 微信开放社区-小游戏公告
+
+<Route author="phantomk" example="/wechat-open/community/xyx-announce" path="/wechat-open/community/xyx-announce"/>
+
+### 微信开放社区-微信支付公告
+
+<Route author="phantomk" example="/wechat-open/community/pay-announce" path="/wechat-open/community/pay-announce"/>
+
+### 微信支付-商户平台公告
+
+<Route author="phantomk" example="/wechat-open/pay/announce" path="/wechat-open/pay/announce"/>
 
 ## 印记中文周刊
 

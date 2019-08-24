@@ -33,7 +33,7 @@ pageClass: routes
 
 ### 更换和维修扩展计划
 
-<Route author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认中国 `cn`']"/>
+<Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']"/>
 
 ### App Store/Mac App Store
 
@@ -74,6 +74,12 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## DHL
+
+### DHL 国际快递包裹追踪
+
+<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
+
 ## Dilbert Comic Strip
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
@@ -98,7 +104,7 @@ pageClass: routes
 
 ### 谷歌学术关键词更新
 
-<Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" crawlerBadge="1">
+<Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" anticrawler="1">
 
 1. 简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
 2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
@@ -107,7 +113,7 @@ pageClass: routes
 
 ### 谷歌学术作者引用更新
 
-<Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" crawlerBadge="1">
+<Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
 路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ 中 user= 后的 mlmE4JMAAAAJ。
 
@@ -178,6 +184,12 @@ pageClass: routes
 ### 运动日记
 
 <Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
+
+## LaTeX 开源小屋
+
+### 首页
+
+<Route author="kt286" example="/latexstudio/home" path="/latexstudio/home"/>
 
 ## MobData
 
@@ -278,7 +290,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类目录
 
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/" path="/wikihow/category/:category/:type" :paramsDesc="['目录分类', '类型']">
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['目录分类', '类型, 默认为`all`']">
 
 顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
 
@@ -307,9 +319,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
 分类
 
-| 最新 | 推荐 | 最热 |
-| ---- | ---- | ---- |
-| new  | rec  | hot  |
+| 推荐 | 最热 |
+| ---- | ---- |
+| rec  | hot  |
 
 目录类型
 
@@ -378,6 +390,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 币世界
+
+### 快讯
+
+<Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
+
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
 ### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
@@ -427,6 +445,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 用户
 
 <Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
+
+## 单向空间
+
+### 单读
+
+<Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
+
+| 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
+| ---- | ---- | ---- | ---- | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4      | 6    |
+
+</Route>
 
 ## 电商在线
 
@@ -485,11 +515,25 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="WenryXu" example="/duozhi" path="/duozhi"/>
 
+## 法律白話文運動
+
+### 最新文章
+
+<Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
+
 ## 飞地
 
 ### 分类
 
 <Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
+
+### 用户创作
+
+<Route author="junbaor" example="/enclavebooks/user/103702" path="/enclavebooks/user/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
+
+### 用户收藏
+
+<Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
 ## 福利资源-met.red
 
@@ -505,7 +549,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 王垠-当然我在扯淡
 
-<Route author="junbaor" example="/blogs/wangyin" path="/blogs/wangyin"/>
+<Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
 
 ## 古诗文网
 
@@ -525,6 +569,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
 
+### 果壳网专栏
+
+<Route author="DHPO" example="/guokr/calendar" path="/guokr/:category" :paramsDesc="['专栏类别']">
+| 物种日历 | 吃货研究所 | 美丽也是技术活 |
+| ------- | ---------| ------------ |
+| calendar | institute | beauty |
+</Route>
+
 ## 后续
 
 ### Live
@@ -541,9 +593,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型']">
 
-| Live 实时（往事进展） | 最近 Live（最新关注） |
-| --------------------- | --------------------- |
-| realtime              | new                   |
+| 往事进展 | 最新添加 |
+| -------- | -------- |
+| realtime | new      |
 
 </Route>
 
@@ -689,6 +741,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
 
+## 乃木坂 46 官网
+
+### 新闻
+
+<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
+
 ## 派代
 
 ### 首页
@@ -700,6 +758,36 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 商道
 
 <Route author="qiwihui" example="/paidai/news" path="/paidao/news" />
+
+## 品玩
+
+### 实时要闻
+
+<Route author="sanmmm" example="/pingwest/status" path="/pingwest/status"/>
+
+### 话题动态
+
+<Route author="sanmmm" path="/pingwest/tag/:tag/:type" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题id, 可从话题页url中得到', '内容类型']">
+
+内容类型
+
+| 最新 | 最热 |
+| ---- | ---- |
+| 1    | 2    |
+
+</Route>
+
+### 用户
+
+<Route author="sanmmm" path="/pingwest/user/:uid/:type?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`']">
+
+内容类型
+
+| 文章    | 动态  |
+| ------- | ----- |
+| article | state |
+
+</Route>
 
 ## 且听风吟福利
 
@@ -767,11 +855,23 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Andiedie" example="/d2/daily" path="/d2/daily"/>
 
+## 日本郵便
+
+### 郵便追跡サービス
+
+<Route author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['运单号']"/>
+
 ## 扇贝
 
 ### 打卡
 
 <Route author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" :paramsDesc="['用户 id']" />
+
+## 上证债券信息网
+
+### 可转换公司债券公告
+
+<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
 
 ## 少数派 sspai
 
@@ -1071,7 +1171,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 全屋记
 
-<Route author="sanmmm" example="/yidoutang/case/:type?" path="/yidoutang/case/hot" :paramsDesc="['类型, 默认为`default`']">
+<Route author="sanmmm" example="/yidoutang/case/hot" path="/yidoutang/:type?" :paramsDesc="['类型, 默认为`default`']">
 
 类型
 
@@ -1080,11 +1180,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 | default | hot  | new  |
 
 </Route>
+
 ## 油价
 
 ### 今日油价
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
+
+## 邮箱
+
+### 邮件列表
+
+> 仅支持 IMAP 协议
+
+<Route author="kt286" example="/mail/imap/rss.rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
 ## 语雀
 
@@ -1128,7 +1237,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类列表
 
-<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/category?" :paramsDesc="['内容类型, 默认为`全部`']">
+<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/:category?" :paramsDesc="['内容类型, 默认为`全部`']">
 
 类型
 
@@ -1157,6 +1266,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
 | ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
+
+</Route>
+
+## 字幕库
+
+### 字幕列表
+
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+
+类型
+
+| 最新电影 | 最新美剧 |
+| -------- | -------- |
+| mv       | tv       |
 
 </Route>
 

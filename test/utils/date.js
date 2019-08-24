@@ -82,8 +82,8 @@ describe('date', () => {
         expect(+new Date(parseDate('4-2'))).toBe(+new Date('2019-4-2'));
     });
 
-    it('M-D', async () => {
-        expect(+new Date(parseDate('4-2'))).toBe(+new Date('2019-4-2'));
+    it('H:m', async () => {
+        expect(+new Date(parseDate('4:2'))).toBe(+new Date('2019-1-1 04:02'));
     });
 
     it('刚刚', async () => {
