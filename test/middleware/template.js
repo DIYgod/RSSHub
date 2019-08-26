@@ -68,4 +68,13 @@ describe('template', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title.length).toBe(103);
     });
+
+    it(`enclosure`, async () => {
+        const response = await request.get('/test/enclosure');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.itunes.author).toBe('DIYgod');
+        expect(parsed.items[0].enclosure.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
+        expect(parsed.items[0].enclosure.length).toBe('3661');
+        expect(parsed.items[0].itunes.duration).toBe('1:01:01');
+    });
 });

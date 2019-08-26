@@ -24,6 +24,20 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## 北华航天工业学院
+
+### 新闻
+
+<Route author="SunShinenny" example="/nciae/news" path="/universities/nciae/news" />
+
+### 学术信息
+
+<Route author="SunShinenny" example="/nciae/xsxx" path="/universities/nciae/xsxx" />
+
+### 通知公告
+
+<Route author="SunShinenny" example="/nciae/tzgg" path="/universities/nciae/tzgg" />
+
 ## 北京大学
 
 ### 信科公告通知
@@ -1009,4 +1023,4 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 数据科学与计算机学院动态
 
-<Route author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+<Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
