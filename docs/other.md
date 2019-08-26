@@ -1257,6 +1257,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="sanmmm" example="/getitfree/search/windows" path="/getitfree/search/:keyword" :paramsDesc="['搜索关键词']"/>
 
+## 智联招聘
+
+### 搜索
+
+<Route author="SunShinenny" example="/zhilian/台州/JavaScript" path="/zhilian/:city/:keyword" :paramsDesc="['城市「如若无该城市数据，将会报错」','搜索关键词']"/>
+
 ## 中国大学 MOOC(慕课)
 
 ### 最新
