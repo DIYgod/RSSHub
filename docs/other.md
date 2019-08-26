@@ -62,6 +62,12 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## cfan
+
+### 新闻
+
+<Route author="kt286" example="/cfan/news" path="/cfan/news"/>
+
 ## checkee.info
 
 ### 美国签证 check 动态
