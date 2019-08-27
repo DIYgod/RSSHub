@@ -667,7 +667,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 基金公告
 
-<Route author="hillerliao" example="/cninfo/fund_announcement/515000/jjzm/基金合同" path="/cninfo/fund_announcement/:code/:category/:keyword" :paramsDesc="['基金代码，可以不填','公告类别，如 jjzm 基金招募','过滤关键词']"/>
+<Route author="hillerliao" example="/cninfo/fund_announcement/159977/基金合同" path="/cninfo/fund_announcement/:code/:searchkey" :paramsDesc="['基金代码, 若不指定则填 all', '过滤词，若不指定则填all']"/>
 
 ## 决胜网
 
