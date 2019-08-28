@@ -1197,7 +1197,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 邮件列表
 
-> 仅支持 IMAP 协议
+> 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
