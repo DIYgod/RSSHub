@@ -144,3 +144,19 @@ describe('fulltext_mode', () => {
         expect(parsed.items[0].content).not.toBe(undefined);
     });
 });
+
+describe('complicated_description', () => {
+    it(`complicated_description`, async () => {
+        const response = await request.get('/test/complicated');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].content).toBe(`<a href="https://github.com/DIYgod/RSSHub/issues/0"></a>
+<a href="https://github.com/DIYgod/RSSHub/issues/0"></a>
+<img src="https://github.com/DIYgod/RSSHub.jpg" data-src="/DIYgod/RSSHub0.jpg" referrerpolicy="no-referrer">
+<img data-src="/DIYgod/RSSHub.jpg" src="https://github.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<img data-mock="/DIYgod/RSSHub.png" src="https://github.com/DIYgod/RSSHub.png" referrerpolicy="no-referrer">
+<img mock="/DIYgod/RSSHub.gif" src="https://github.com/DIYgod/RSSHub.gif" referrerpolicy="no-referrer">
+<img src="https://github.com/DIYgod/DIYgod/RSSHub" referrerpolicy="no-referrer">
+<img src="https://github.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
+    });
+});
