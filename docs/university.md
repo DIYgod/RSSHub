@@ -440,6 +440,12 @@ category 列表：
 
 <Route author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
 
+## 洛阳理工学院
+
+### 教务处
+
+<Route author="AngUOI" example="/lit/jwc" path="/universities/lit/jwc" />
+
 ## 南昌航空大学
 
 ### 教务处公告与新闻
