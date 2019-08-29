@@ -50,6 +50,10 @@ pageClass: routes
 
 </Route>
 
+### 每周一推 - 中国政治学研究中心
+
+<Route author="AngUOI" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
@@ -445,6 +449,26 @@ category 列表：
 ### 教务处
 
 <Route author="AngUOI" example="/lit/jwc" path="/universities/lit/jwc" />
+
+### 新闻中心
+
+<Route author="AngUOI" example="/lit/xwzx/ggtz" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `ggtz`']">
+
+| 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
+| -------- | -------- | -------- | -------- |
+| ggtz     | xwkx     | xsxx     | mtxw     |
+
+</Route>
+
+### 团委
+
+<Route author="AngUOI" example="/lit/tw/tntz" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `tntz`']">
+
+| 团内通知 | 青年快讯 | 理论学习 |
+| -------- | -------- | -------- |
+| tntz     | qnkx     | llxx     |
+
+</Route>
 
 ## 南昌航空大学
 
