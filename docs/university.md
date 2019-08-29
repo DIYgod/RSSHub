@@ -50,6 +50,10 @@ pageClass: routes
 
 </Route>
 
+### 每周一推 - 中国政治学研究中心
+
+<Route author="AngUOI" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
