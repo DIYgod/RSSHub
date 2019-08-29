@@ -82,7 +82,7 @@ sidebar: auto
             // 文章标题
             title: item.title,
             // 文章正文
-            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+            description: `${item.desc}<br><img src="${item.pic}">`,
             // 文章发布时间
             pubDate: new Date(item.time * 1000).toUTCString(),
             // 文章链接
@@ -141,7 +141,7 @@ sidebar: auto
                         description: `作者：${item
                             .find('.usr-pic a')
                             .last()
-                            .text()}<br>描述：${item.find('.content p').text()}<br><img referrerpolicy="no-referrer" src="${itemPicUrl}">`,
+                            .text()}<br>描述：${item.find('.content p').text()}<br><img src="${itemPicUrl}">`,
                         link: item.find('.title a').attr('href'),
                     };
                 })

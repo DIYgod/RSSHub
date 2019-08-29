@@ -671,6 +671,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/cninfo/stock_announcement/000410" path="/cninfo/stock_announcement/:code" :paramsDesc="['股票代码']"/>
 
+### 基金公告
+
+<Route author="hillerliao" example="/cninfo/fund_announcement/159977/基金合同" path="/cninfo/fund_announcement/:code/:searchkey" :paramsDesc="['基金代码, 若不指定则填 all', '过滤词，若不指定则填all']"/>
+
 ## 决胜网
 
 ### 最新资讯
@@ -1197,7 +1201,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 邮件列表
 
-> 仅支持 IMAP 协议
+> 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
