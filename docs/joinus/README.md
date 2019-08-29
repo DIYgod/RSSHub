@@ -313,6 +313,7 @@ ctx.state.data = {
     link: '', // 指向项目的链接
     description: '', // 描述项目
     language: '', // 频道语言
+    allowEmpty: false, // 默认 false，设为 true 可以允许 item 为空
     item: [
         // 其中一篇文章或一项内容
         {
@@ -365,10 +366,9 @@ ctx.state.data = {
 };
 ```
 
-### 媒体 RSS
+##### 媒体源
 
-用于支持 Media RSS 的软件，可以额外附加媒体信息到 RSS。
-media 节点下的 key 都是动态的，如何填写请参考 Media RSS[文档](http://www.rssboard.org/media-rss)
+**额外**添加这些字段能使你的 RSS 被支持 [Media RSS](http://www.rssboard.org/media-rss) 的软件订阅：
 
 示例：
 
