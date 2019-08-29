@@ -90,15 +90,19 @@ pageClass: routes
 
 <Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
-## PlayStation Store
+## PlayStation
 
-### 游戏列表
+### PlayStation Store 游戏列表
 
 <Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']">
 
 适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
 
 </Route>
+
+### PlayStation Network 用户奖杯
+
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']"/>
 
 ## psnine
 
