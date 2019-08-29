@@ -365,6 +365,31 @@ ctx.state.data = {
 };
 ```
 
+### 媒体 RSS
+
+用于支持 Media RSS 的软件，可以额外附加媒体信息到 RSS。
+media 节点下的 key 都是动态的，如何填写请参考 Media RSS[文档](http://www.rssboard.org/media-rss)
+
+示例：
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            media: {
+                content: {
+                    url: post.file_url,
+                    type: `image/${mime[post.file_ext]}`,
+                },
+                thumbnail: {
+                    url: post.preview_url,
+                },
+            },
+        },
+    ],
+};
+```
+
 ---
 
 ### 步骤 2: 添加脚本路由
