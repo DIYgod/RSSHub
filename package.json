@@ -60,7 +60,7 @@
     "dotenv": "8.1.0",
     "emailjs-imap-client": "3.0.7",
     "etag": "1.8.1",
-    "form-data": "2.5.0",
+    "form-data": "2.5.1",
     "git-rev-sync": "1.12.0",
     "googleapis": "42.0.0",
     "got": "9.6.0",
