@@ -617,6 +617,12 @@ pageClass: routes
 
 </Route>
 
+## 腾讯
+
+### 企鹅号
+
+<Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
+
 ## 贴吧
 
 ### 帖子列表
