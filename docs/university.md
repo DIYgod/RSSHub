@@ -362,15 +362,19 @@ category 列表：
 
 ## 华南理工大学
 
-### 教务处新闻动态
+### 教务处通知公告
 
-<Route author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 默认为 `1`']">
+<Route author="KeNorizon" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
 
-| 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
-| -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        | 5        |
+| 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
+| ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
+| all  | course | exam | practice | communication | teacher | info |
 
 </Route>
+
+### 教务处新闻动态
+
+<Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
 
 ## 华南师范大学
 
