@@ -499,6 +499,16 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 奇舞周刊
+
+### 周刊列表
+
+<Route author="echosoar" example="/75team/list" path="/75team/list" />
+
+### 周刊内容
+
+<Route author="echosoar" example="/75team/issue/319" path="/75team/issue/:id" :paramsDesc="['周刊ID']" />
+
 ## 前端艺术家&&飞冰早报
 
 ### 列表
