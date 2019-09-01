@@ -606,6 +606,35 @@ pageClass: routes
 
 <Route author="ihewro" example="/meipai/user/56537299" path="/meipai/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+## 书友社区
+
+### 导读
+
+<Route author="AngUOI" example="/andyt/newthread" path="/andyt/:view?" :paramsDesc="['子版块 view, 为空默认最新发表']">
+
+| 最新发表  | 最新热门 | 最新精华 | 最新回复 |
+| --------- | -------- | -------- | -------- |
+| newthread | hot      | digest   | new      |
+
+</Route>
+
+## 搜狐
+
+### 搜狐号
+
+<Route author="HenryQW" example="/sohu/mp/119097" path="/sohu/mp/:id" :paramsDesc="['搜狐号 ID', '见如下说明']">
+
+1. 通过浏览器搜索相关搜狐号 `果壳 site: mp.sohu.com`。
+1. 通过浏览器控制台执行 `cfgs.author_id`，返回的即为搜狐号 ID。
+
+</Route>
+
+## 腾讯
+
+### 企鹅号
+
+<Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
+
 ## 贴吧
 
 ### 帖子列表

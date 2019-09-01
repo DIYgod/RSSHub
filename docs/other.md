@@ -67,6 +67,12 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## cfan
+
+### 新闻
+
+<Route author="kt286" example="/cfan/news" path="/cfan/news"/>
+
 ## checkee.info
 
 ### 美国签证 check 动态
@@ -1200,9 +1206,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 邮件列表
 
-> 仅支持 IMAP 协议
+> 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
-<Route author="kt286" example="/mail/imap/rss.rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
 ## 语雀
 
@@ -1259,6 +1265,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 搜索
 
 <Route author="sanmmm" example="/getitfree/search/windows" path="/getitfree/search/:keyword" :paramsDesc="['搜索关键词']"/>
+
+## 智联招聘
+
+### 搜索
+
+<Route author="SunShinenny" example="/zhilian/台州/JavaScript" path="/zhilian/:city/:keyword" :paramsDesc="['城市「如若无该城市数据，将会报错」','搜索关键词']"/>
 
 ## 中国大学 MOOC(慕课)
 
