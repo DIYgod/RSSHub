@@ -95,7 +95,7 @@ pageClass: routes
 
 **类型参考这里**
 | 电影 | 连续剧 | 动画 | 综艺 | 纪录片 |
-| - | - | - | - | - |
+| ---- | ------ | ---- | ---- | ------ |
 | 6 | 7 | 15 | 20 | 24 |
 
 | 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
@@ -239,6 +239,18 @@ pageClass: routes
 ### 即将上映
 
 <Route author="HenryQW" example="/maoyan/upcoming" path="/maoyan/upcoming" />
+
+## 奈菲影视
+
+### 分区
+
+<Route author="AngUOI" example="/nfmovies/0" path="/nfmovies/:id?" :paramsDesc="['子版块 id, 为空默认首页']">
+
+| 首页 | 电影 | 电视剧 | 综艺 | 动漫 | 奈菲独家 |
+| ---- | ---- | ------ | ---- | ---- | -------- |
+| 0    | 1    | 2      | 3    | 4    | 5        |
+
+</Route>
 
 ## 柠檬 私房歌 (ningmeng.name)
 

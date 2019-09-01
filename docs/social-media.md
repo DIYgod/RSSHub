@@ -606,6 +606,18 @@ pageClass: routes
 
 <Route author="ihewro" example="/meipai/user/56537299" path="/meipai/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+## 书友社区
+
+### 导读
+
+<Route author="AngUOI" example="/andyt/newthread" path="/andyt/:view?" :paramsDesc="['子版块 view, 为空默认最新发表']">
+
+| 最新发表  | 最新热门 | 最新精华 | 最新回复 |
+| --------- | -------- | -------- | -------- |
+| newthread | hot      | digest   | new      |
+
+</Route>
+
 ## 搜狐
 
 ### 搜狐号
