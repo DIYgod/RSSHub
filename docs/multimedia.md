@@ -244,11 +244,11 @@ pageClass: routes
 
 ### 分区
 
-<Route author="AngUOI" example="/nfmovies/0" path="/nfmovies/:id?" :paramsDesc="['子版块 id']">
+<Route author="AngUOI" example="/nfmovies/0" path="/nfmovies/:id?" :paramsDesc="['子版块 id, 为空默认首页']">
 
-| 首页   | 电影 | 电视剧 | 综艺 | 动漫 |
-| ------ | ---- | ------ | ---- | ---- |
-| 留空/0 | 1    | 2      | 3    | 4    |
+| 首页 | 电影 | 电视剧 | 综艺 | 动漫 |
+| ---- | ---- | ------ | ---- | ---- |
+| 0    | 1    | 2      | 3    | 4    |
 
 </Route>
 
