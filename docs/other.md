@@ -10,6 +10,11 @@ pageClass: routes
 
 <Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
+### 快讯
+
+<Route author="hillerliao" example="/36kr/newsflashes" path="/36kr/newsflashes" />
+
+
 ## 99% Invisible
 
 ### Transcript
