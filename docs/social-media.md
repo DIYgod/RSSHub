@@ -751,6 +751,10 @@ pageClass: routes
 
 </Route>
 
+### 热帖
+
+<Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
+
 ## 一亩三分地
 
 ### 主题帖
