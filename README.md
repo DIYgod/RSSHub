@@ -25,8 +25,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
+| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) |
+| :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -74,6 +74,10 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 -   [微信支付](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
 -   [支付宝](https://i.loli.net/2019/03/23/5c950ebbc980e.png)
+
+## 周边产品
+
+也可以购买我们[官方授权的周边产品](https://telegra.ph/RSSHub-周边-08-20-2)，每售出一件周边，我们将获得售价 10% 的捐赠。
 
 ## 相关项目
 

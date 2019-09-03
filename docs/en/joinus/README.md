@@ -73,7 +73,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
             // the article title
             title: item.title,
             // the article content
-            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+            description: `${item.desc}<br><img src="${item.pic}">`,
             // the article publish time
             pubDate: new Date(item.time * 1000).toUTCString(),
             // the article link
@@ -314,6 +314,7 @@ ctx.state.data = {
     link: '', // The feed link
     description: '', // The feed description
     language: '', // The language of the channel
+    allowEmpty: false, // default to false, set to true to allow empty item
     item: [
         // An article of the feed
         {
@@ -366,7 +367,29 @@ ctx.state.data = {
 };
 ```
 
-</details>
+##### Media RSS
+
+these **additional** data are in accordance with many [Media RSS](http://www.rssboard.org/media-rss) softwares' subscription format:
+
+For example:
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            media: {
+                content: {
+                    url: post.file_url,
+                    type: `image/${mime[post.file_ext]}`,
+                },
+                thumbnail: {
+                    url: post.preview_url,
+                },
+            },
+        },
+    ],
+};
+```
 
 ---
 
