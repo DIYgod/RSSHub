@@ -19,8 +19,8 @@ RSSHub is a lightweight and extensible RSS feed aggregator, it's able to generat
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :-------: | :----------------------------------: |
+| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) |
+| :--------------------------------------: | :----------------------------------------: | :-------: | :----------------------------------: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/support/)
@@ -663,6 +663,12 @@ Supported sub-sites：
 #### Poems
 
 <RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
+
+### Japanpost
+
+#### Track & Trace Service
+
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['Package Number']"/>
 
 ## aptonic
 

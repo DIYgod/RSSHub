@@ -48,6 +48,16 @@ pageClass: routes
 
 <Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
 
+## 缺书网
+
+### 促销
+
+<Route author="kt286" example="/queshu/sale" path="/queshu/sale"/>
+
+### 单品活动信息
+
+<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
+
 ## 什么值得买
 
 ::: tip 提示

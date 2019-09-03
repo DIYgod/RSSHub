@@ -82,7 +82,7 @@ sidebar: auto
             // 文章标题
             title: item.title,
             // 文章正文
-            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+            description: `${item.desc}<br><img src="${item.pic}">`,
             // 文章发布时间
             pubDate: new Date(item.time * 1000).toUTCString(),
             // 文章链接
@@ -141,7 +141,7 @@ sidebar: auto
                         description: `作者：${item
                             .find('.usr-pic a')
                             .last()
-                            .text()}<br>描述：${item.find('.content p').text()}<br><img referrerpolicy="no-referrer" src="${itemPicUrl}">`,
+                            .text()}<br>描述：${item.find('.content p').text()}<br><img src="${itemPicUrl}">`,
                         link: item.find('.title a').attr('href'),
                     };
                 })
@@ -313,6 +313,7 @@ ctx.state.data = {
     link: '', // 指向项目的链接
     description: '', // 描述项目
     language: '', // 频道语言
+    allowEmpty: false, // 默认 false，设为 true 可以允许 item 为空
     item: [
         // 其中一篇文章或一项内容
         {
@@ -360,6 +361,30 @@ ctx.state.data = {
             enclosure_url: '', // 磁力链接
             enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
             enclosure_type: 'application/x-bittorrent', // 固定为 'application/x-bittorrent'
+        },
+    ],
+};
+```
+
+##### 媒体源
+
+**额外**添加这些字段能使你的 RSS 被支持 [Media RSS](http://www.rssboard.org/media-rss) 的软件订阅：
+
+示例：
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            media: {
+                content: {
+                    url: post.file_url,
+                    type: `image/${mime[post.file_ext]}`,
+                },
+                thumbnail: {
+                    url: post.preview_url,
+                },
+            },
         },
     ],
 };
@@ -416,7 +441,7 @@ ctx.state.data = {
 
 ### 步骤 3: 添加脚本文档
 
-1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+1.  更新 [文档 (/docs/) ](https://github.com/DIYgod/RSSHub/blob/master/docs/) 目录内对应的文档, 可以执行 `npm run docs:dev` 查看文档效果
 
     -   文档采用 vue 组件形式，格式如下：
         -   `author`: 路由作者，多位作者使用单个空格分隔

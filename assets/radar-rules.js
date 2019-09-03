@@ -61,6 +61,16 @@
                 verification: (params) => params.uid,
             },
         ],
+        www: [
+            {
+                title: '博主',
+                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+                source: ['/u/:id', '/:id'],
+                target: '/weibo/user/:uid',
+                script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
+                verification: (params) => params.uid,
+            },
+        ],
     },
     'pixiv.net': {
         _name: 'Pixiv',
@@ -347,6 +357,54 @@
             {
                 title: '瞬间更新',
                 docs: 'https://docs.rsshub.app/social-media.html#soul',
+            },
+        ],
+    },
+    'juejin.im': {
+        _name: '掘金',
+        '.': [
+            {
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/programming.html#%E6%8E%98%E9%87%91',
+                source: '/user/:id/posts',
+                target: '/juejin/posts/:id',
+            },
+        ],
+    },
+    'anime1.me': {
+        _name: 'Anime1',
+        '.': [
+            {
+                title: '動畫',
+                docs: 'https://docs.rsshub.app/anime.html#anime1',
+                source: '/category/:time/:name',
+                target: '/anime1/anime/:time/:name',
+            },
+            {
+                title: '搜尋',
+                docs: 'https://docs.rsshub.app/anime.html#anime1',
+                source: '/',
+                script: "({keyword: new URLSearchParams(location.search).get('s')})",
+                target: '/anime1/search/:keyword',
+                verification: (params) => params.keyword,
+            },
+        ],
+    },
+    'instagram.com': {
+        _name: 'Instagram',
+        www: [
+            {
+                title: '用户',
+                docs: 'https://docs.rsshub.app/social-media.html#instagram',
+                source: '/:id',
+                target: '/instagram/user/:id',
+                verification: (params) => params.id !== 'explore' && params.id !== 'developer',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/social-media.html#instagram',
+                source: '/explore/tags/:tag',
+                target: '/instagram/tag/:tag',
             },
         ],
     },

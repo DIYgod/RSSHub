@@ -334,7 +334,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 专栏
 
-<Route author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
+<Route author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']" radar="1"/>
 
 ### 收藏集
 
@@ -498,6 +498,24 @@ GitHub 官方也提供了一些 RSS:
 | 0        | 3        | 1    | 4    |
 
 </Route>
+
+## 前端艺术家&&飞冰早报
+
+### 列表
+
+<Route author="kouchao" example="/jskou/0" path="/jskou/:type?" :paramsDesc="['分类']">
+
+| 前端艺术家 | 飞冰早报 |
+| ---------- | -------- |
+| 0          | 1        |
+
+</Route>
+
+## 顺丰
+
+### 顺丰丰桥开放平台公告
+
+<Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
 
 ## 腾讯游戏开发者社区
 

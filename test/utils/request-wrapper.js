@@ -38,7 +38,7 @@ describe('got', () => {
             .get('/test')
             .times(2)
             .reply(function() {
-                expect(this.req.headers['x-app']).toBe('RSSHub');
+                expect(this.req.headers.server).toBe('RSSHub');
                 return [200, simpleResponse];
             });
 

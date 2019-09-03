@@ -24,6 +24,20 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## 北华航天工业学院
+
+### 新闻
+
+<Route author="SunShinenny" example="/nciae/news" path="/universities/nciae/news" />
+
+### 学术信息
+
+<Route author="SunShinenny" example="/nciae/xsxx" path="/universities/nciae/xsxx" />
+
+### 通知公告
+
+<Route author="SunShinenny" example="/nciae/tzgg" path="/universities/nciae/tzgg" />
+
 ## 北京大学
 
 ### 信科公告通知
@@ -35,6 +49,10 @@ pageClass: routes
 | 0    | 1        | 2        | 6        | 8        | 7        | 5        | 3        | 4        |
 
 </Route>
+
+### 每周一推 - 中国政治学研究中心
+
+<Route author="AngUOI" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
 
 ## 北京航空航天大学
 
@@ -344,15 +362,19 @@ category 列表：
 
 ## 华南理工大学
 
-### 教务处新闻动态
+### 教务处通知公告
 
-<Route author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 默认为 `1`']">
+<Route author="KeNorizon" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
 
-| 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
-| -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        | 5        |
+| 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
+| ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
+| all  | course | exam | practice | communication | teacher | info |
 
 </Route>
+
+### 教务处新闻动态
+
+<Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
 
 ## 华南师范大学
 
@@ -425,6 +447,32 @@ category 列表：
 ### 双选会
 
 <Route author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
+
+## 洛阳理工学院
+
+### 教务处
+
+<Route author="AngUOI" example="/lit/jwc" path="/universities/lit/jwc" />
+
+### 新闻中心
+
+<Route author="AngUOI" example="/lit/xwzx/ggtz" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `ggtz`']">
+
+| 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
+| -------- | -------- | -------- | -------- |
+| ggtz     | xwkx     | xsxx     | mtxw     |
+
+</Route>
+
+### 团委
+
+<Route author="AngUOI" example="/lit/tw/tntz" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `tntz`']">
+
+| 团内通知 | 青年快讯 | 理论学习 |
+| -------- | -------- | -------- |
+| tntz     | qnkx     | llxx     |
+
+</Route>
 
 ## 南昌航空大学
 
@@ -748,6 +796,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 教务处通知公告（全文输出）
+
+<Route author="SeanChao" example="/sjtu/jwc/students" path="/universities/sjtu/jwc/:type?" :paramsDesc="['默认为 students ']">
+
+| 面向学生的通知 | 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 工会与支部 |
+| -------------- | -------- | -------- | --------- | -------- | ------ | ------ | ------ | ---------- |
+| students       | news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | party      |
+
+</Route>
+
 ## 上海科技大学
 
 ### 信息科技与技术学院活动
@@ -999,4 +1057,4 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 数据科学与计算机学院动态
 
-<Route author="MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+<Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
