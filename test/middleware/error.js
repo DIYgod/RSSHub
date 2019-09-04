@@ -8,8 +8,18 @@ afterAll(() => {
 
 describe('error', () => {
     it(`error`, async () => {
-        const response = await request.get('/test/0');
+        const response = await request.get('/test/error');
         expect(response.status).toBe(404);
-        expect(response.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: Error test/);
+        expect(response.text).toMatch(/Looks like something went wrong in RSSHub: <pre>Error: Error test/);
+    });
+});
+
+describe('httperror', () => {
+    it(`httperror`, async () => {
+        const response = await request.get('/test/httperror');
+        expect(response.status).toBe(404);
+        expect(response.text).toMatch(
+            /Looks like something went wrong in RSSHub: <pre>Response code 404 \(Not Found\): target website might be blocking our access, you can <a href="https:\/\/docs\.rsshub\.app\/install\/">host your own RSSHub instance<\/a> for a better usability\./
+        );
     });
 });
