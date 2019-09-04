@@ -45,7 +45,7 @@ describe('debug', () => {
                     expect(value).toBe(gitHash);
                     break;
                 case 'request amount:':
-                    expect(value).toBe('6');
+                    expect(value).toBe('8');
                     break;
                 case 'hot routes:':
                     expect(value).toBe(`7&nbsp;&nbsp;/test/:id<br>`);
