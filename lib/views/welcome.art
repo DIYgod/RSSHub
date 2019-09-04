@@ -50,7 +50,7 @@
         }
 
         .debug-key {
-            width: 100px;
+            width: 120px;
             text-align: right;
             display: inline-block;
             margin-right: 10px;
