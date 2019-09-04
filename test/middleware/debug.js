@@ -38,28 +38,28 @@ describe('debug', () => {
                 .html()
                 .trim();
             switch (key) {
-                case '节点名:':
+                case 'node name:':
                     expect(value).toBe('mock');
                     break;
                 case 'git hash:':
                     expect(value).toBe(gitHash);
                     break;
-                case '请求数:':
+                case 'request amount:':
                     expect(value).toBe('6');
                     break;
-                case '热门路由:':
+                case 'hot routes:':
                     expect(value).toBe(`7&nbsp;&nbsp;/test/:id<br>`);
                     break;
-                case '热门路径:':
+                case 'hot paths:':
                     expect(value).toBe(`3&nbsp;&nbsp;/test/1<br>2&nbsp;&nbsp;/test/2<br>2&nbsp;&nbsp;/test/empty<br>1&nbsp;&nbsp;/<br>`);
                     break;
-                case '热门IP:':
+                case 'hot IP:':
                     expect(value).toBe(`5&nbsp;&nbsp;233.233.233.233<br>3&nbsp;&nbsp;233.233.233.234<br>`);
                     break;
-                case '报错路由:':
+                case 'hot error routes:':
                     expect(value).toBe(`2&nbsp;&nbsp;/test/:id<br>`);
                     break;
-                case '报错路径:':
+                case 'hot error paths:':
                     expect(value).toBe(`2&nbsp;&nbsp;/test/empty<br>`);
                     break;
             }
