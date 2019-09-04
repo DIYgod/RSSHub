@@ -65,6 +65,7 @@
         .debug-value {
             display: inline-block;
             vertical-align: top;
+            white-space: pre;
         }
     </style>
 </head>
