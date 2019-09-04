@@ -5,18 +5,7 @@
             {
                 title: '分区视频',
                 docs: 'https://docs.rsshub.app/social-media.html#bilibili',
-                source: '/v/*tpath',
-                target: (params) => {
-                    let tid;
-                    switch (params.tpath) {
-                        case 'douga/mad':
-                            tid = '24';
-                            break;
-                        default:
-                            return false;
-                    }
-                    return `/bilibili/partion/${tid}`;
-                },
+                source: ['/v/*tpath', '/documentary', '/movie', '/tv'],
             },
             {
                 title: '视频评论',
