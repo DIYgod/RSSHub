@@ -110,7 +110,7 @@ describe('empty', () => {
     it(`empty`, async () => {
         const response1 = await request.get('/test/empty');
         expect(response1.status).toBe(404);
-        expect(response1.text).toMatch(/Looks like something went wrong in RSSHub: <pre>Error: this route is empty/);
+        expect(response1.text).toMatch(/Error: this route is empty/);
 
         const response2 = await request.get('/test/1?limit=0');
         expect(response2.status).toBe(200);
@@ -132,7 +132,7 @@ describe('wrong_path', () => {
     it(`wrong_path`, async () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
-        expect(response.text).toMatch(/Looks like something went wrong in RSSHub: <pre>Error: wrong path/);
+        expect(response.text).toMatch(/Error: wrong path/);
     });
 });
 
