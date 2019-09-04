@@ -4,6 +4,22 @@ pageClass: routes
 
 # Social Media
 
+## Disqus
+
+### Comment
+
+<RouteEn path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
+
+## Instagram
+
+### User
+
+<RouteEn path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" anticrawler="1"/>
+
+### Hashtag
+
+<RouteEn author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']"  anticrawler="1"/>
+
 ## pixiv
 
 ### User Bookmark
@@ -28,11 +44,15 @@ pageClass: routes
 
 </RouteEn>
 
-## Disqus
+## Telegram
 
-### Comment
+### Channel
 
-<RouteEn path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
+<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" />
+
+### Sticker Pack
+
+<RouteEn author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
 
 ## Twitter
 
@@ -60,16 +80,6 @@ User following timeline needs Twitter token corresponding id, so this route is o
 
 <Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']"/>
 
-## Instagram
-
-### User
-
-<RouteEn path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" anticrawler="1"/>
-
-### Hashtag
-
-<RouteEn author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']"  anticrawler="1"/>
-
 ## Youtube
 
 ### User
@@ -83,13 +93,3 @@ User following timeline needs Twitter token corresponding id, so this route is o
 ### Playlist
 
 <RouteEn path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" />
-
-## Telegram
-
-### Channel
-
-<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" />
-
-### Sticker Pack
-
-<RouteEn author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>

@@ -4,42 +4,6 @@ pageClass: routes
 
 # Application Updates
 
-## RSSHub
-
-### Update
-
-<RouteEn path="/rsshub/rss" example="/rsshub/rss" />
-
-## MIUI
-
-### New firmware
-
-<RouteEn author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?" :paramsDesc="['the device `codename` eg. `aries` for Mi 2S','type']" >
-
-| stable  | development |
-| ------- | ----------- |
-| release | dev         |
-
-</RouteEn>
-
-## Firefox
-
-### New Release
-
-<RouteEn author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['the platform']" >
-
-| Desktop | Android | Beta | Nightly | Android Beta | ESR           |
-| ------- | ------- | ---- | ------- | ------------ | ------------- |
-| desktop | android | beta | nightly | android-beta | organizations |
-
-</RouteEn>
-
-## Thunderbird
-
-### Update
-
-<RouteEn author="garywill" path="/thunderbird/release" example="/thunderbird/release" />
-
 ## App Store/Mac App Store
 
 ### App Update
@@ -54,11 +18,29 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" :paramsDesc="['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']" />
 
+## Docker Hub
+
+### Image New Build
+
+<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
+
 ## F-Droid
 
 ### App Update
 
 <RouteEn author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" :paramsDesc="['App\'s package name']" />
+
+## Firefox
+
+### New Release
+
+<RouteEn author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['the platform']" >
+
+| Desktop | Android | Beta | Nightly | Android Beta | ESR           |
+| ------- | ------- | ---- | ------- | ------------ | ------------- |
+| desktop | android | beta | nightly | android-beta | organizations |
+
+</RouteEn>
 
 ## Greasy Fork
 
@@ -66,11 +48,17 @@ pageClass: routes
 
 <RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
 
-## Thunderbird
+## MIUI
 
-### Changelog
+### New firmware
 
-<RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
+<RouteEn author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?" :paramsDesc="['the device `codename` eg. `aries` for Mi 2S','type']" >
+
+| stable  | development |
+| ------- | ----------- |
+| release | dev         |
+
+</RouteEn>
 
 ## Nvidia Web Driver
 
@@ -78,8 +66,20 @@ pageClass: routes
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-## Docker Hub
+## RSSHub
 
-### Image New Build
+### Update
 
-<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
+<RouteEn path="/rsshub/rss" example="/rsshub/rss" />
+
+## Thunderbird
+
+### Update
+
+<RouteEn author="garywill" path="/thunderbird/release" example="/thunderbird/release" />
+
+## Thunderbird
+
+### Changelog
+
+<RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
