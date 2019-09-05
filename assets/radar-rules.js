@@ -197,6 +197,12 @@
                 source: '/:user/:repo/blob/:branch/*filepath',
                 target: '/github/file/:user/:repo/:branch/:filepath',
             },
+            {
+                title: '用户 Starred Repositories',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: '/:user',
+                target: '/github/starred_repos/:user',
+            },
         ],
     },
     'zhihu.com': {

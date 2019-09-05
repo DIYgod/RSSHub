@@ -113,7 +113,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户 Starred Repositories
 
-<Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['用户名']"/>
+<Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['用户名']" radar="1"/>
 
 ## GitLab
 
