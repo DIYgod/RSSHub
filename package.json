@@ -76,7 +76,6 @@
     "koa-mount": "4.0.0",
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
-    "luxon": "1.17.2",
     "lz-string": "1.4.4",
     "mailparser": "2.7.1",
     "markdown-it": "9.1.0",
