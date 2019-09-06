@@ -30,7 +30,15 @@ module.exports = {
             description: '🍰 Everything is RSSible',
         },
     },
-    head: [['link', { rel: 'icon', href: `/logo.png` }]],
+    head: [
+        ['link', { rel: 'icon', href: '/logo.png' }],
+        ['link', { rel: 'manifest', href: '/manifest.json' }],
+        ['meta', { name: 'theme-color', content: '#fff' }],
+        ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+        ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }],
+        ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
+        ['link', { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#ff8549' }],
+    ],
     themeConfig: {
         repo: 'DIYgod/RSSHub',
         editLinks: true,
