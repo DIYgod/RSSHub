@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "RSSHub",
+    "short_name": "RSSHub",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
