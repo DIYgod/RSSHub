@@ -2,7 +2,14 @@ const supertest = require('supertest');
 const { server } = require('../../lib/index');
 const request = supertest(server);
 
+beforeAll(() => {
+    process.env.SENTRY = 'test';
+    process.env.NODE_NAME = 'test';
+});
+
 afterAll(() => {
+    delete process.env.SENTRY;
+    delete process.env.NODE_NAME;
     server.close();
 });
 
