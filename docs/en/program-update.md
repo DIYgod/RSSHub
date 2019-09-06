@@ -74,12 +74,6 @@ pageClass: routes
 
 ## Thunderbird
 
-### Update
-
-<RouteEn author="garywill" path="/thunderbird/release" example="/thunderbird/release" />
-
-## Thunderbird
-
 ### Changelog
 
 <RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
