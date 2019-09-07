@@ -5,18 +5,7 @@
             {
                 title: '分区视频',
                 docs: 'https://docs.rsshub.app/social-media.html#bilibili',
-                source: '/v/*tpath',
-                target: (params) => {
-                    let tid;
-                    switch (params.tpath) {
-                        case 'douga/mad':
-                            tid = '24';
-                            break;
-                        default:
-                            return false;
-                    }
-                    return `/bilibili/partion/${tid}`;
-                },
+                source: ['/v/*tpath', '/documentary', '/movie', '/tv'],
             },
             {
                 title: '视频评论',
@@ -207,6 +196,12 @@
                 docs: 'https://docs.rsshub.app/programming.html#github',
                 source: '/:user/:repo/blob/:branch/*filepath',
                 target: '/github/file/:user/:repo/:branch/:filepath',
+            },
+            {
+                title: '用户 Starred Repositories',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: '/:user',
+                target: '/github/starred_repos/:user',
             },
         ],
     },
