@@ -284,6 +284,10 @@ pageClass: routes
 
 <Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" anticrawler="1"/>
 
+### 快拍 Stories
+
+<Route author="Maecenas" path="/instagram/story/:username" example="/instagram/story/instagram" :paramsDesc="['用户名']"/>
+
 ## Matters
 
 ### 最新排序
