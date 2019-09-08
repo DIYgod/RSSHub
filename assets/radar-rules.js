@@ -403,4 +403,21 @@
             },
         ],
     },
+    'swufe.edu.cn': {
+        _name: '西南财经大学',
+        it: [
+            {
+                title: '经济信息工程学院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#%E7%BB%8F%E6%B5%8E%E4%BF%A1%E6%81%AF%E5%B7%A5%E7%A8%8B%E5%AD%A6%E9%99%A2',
+                source: '/index/tzgg.htm',
+                target: '/universities/swufe/seie/tzgg',
+            },
+            {
+                title: '经济信息工程学院 - 学院新闻',
+                docs: 'https://docs.rsshub.app/university.html#%E7%BB%8F%E6%B5%8E%E4%BF%A1%E6%81%AF%E5%B7%A5%E7%A8%8B%E5%AD%A6%E9%99%A2',
+                source: '/index/xyxw.htm',
+                target: '/universities/swufe/seie/xyxw',
+            },
+        ],
+    },
 });
