@@ -315,6 +315,12 @@ category 对应的关键词有
 
 ## 央视新闻
 
+### 新闻联播
+
+<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
+新闻联播内容摘要。
+</Route>
+
 ### 专题
 
 <Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
