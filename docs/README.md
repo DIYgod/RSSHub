@@ -23,8 +23,8 @@ RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇�
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: |
+| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) |
+| :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -47,7 +47,7 @@ Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 **Q: RSSHub Radar 是如何工作的？**
 
-**A:** 进入新页面时， RSSHub Radar 先根据页面 link 标签[寻找](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/content/utils.js#L14)页面自带 RSS，再根据远程更新的[规则](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)寻找适用当前页面和当前网站的 RSSHub 路由；再加一点点魔法。
+**A:** 进入新页面时， RSSHub Radar 先根据页面 link 标签[寻找](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/content/utils.js#L25)页面自带 RSS，再根据远程更新的[规则](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)寻找适用当前页面和当前网站的 RSSHub 路由；再加一点点魔法。
 
 **Q: 演示地址可以用么？**
 

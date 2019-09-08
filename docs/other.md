@@ -231,6 +231,12 @@ pageClass: routes
 
 </Route>
 
+## SANS Institute
+
+### 最新会议材料
+
+<Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
+
 ## sixthtone
 
 ### 最新文章
