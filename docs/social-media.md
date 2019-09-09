@@ -254,20 +254,6 @@ pageClass: routes
 
 <Route author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" :paramsDesc="['网站的 disqus name']"/>
 
-## Dribbble
-
-### 流行
-
-<Route author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" :paramsDesc="['时间维度, 支持 week month year ever']"/>
-
-### 用户（团队
-
-<Route author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" :paramsDesc="['用户名, 可在该用户主页 URL 中找到']"/>
-
-### 关键词
-
-<Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
-
 ## Facebook
 
 ### 粉絲專頁
@@ -832,3 +818,29 @@ pageClass: routes
 ### 知乎书店-知乎周刊
 
 <Route author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" anticrawler="1" radar="1"/>
+
+## Keep
+
+### 运动日记
+
+<Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
+
+## 大众点评
+
+### 用户
+
+<Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
+
+## 刷屏
+
+### 最新
+
+<Route author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
+
+### 最新（无中间页）
+
+<Route author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct"/>
+
+### 朋友圈
+
+<Route author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>

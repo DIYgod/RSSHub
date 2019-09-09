@@ -600,3 +600,9 @@ GitHub 官方也提供了一些 RSS:
 ### 热门
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+
+## 日报 | D2 资源库
+
+### 日报 | D2 资源库
+
+<Route author="Andiedie" example="/d2/daily" path="/d2/daily"/>

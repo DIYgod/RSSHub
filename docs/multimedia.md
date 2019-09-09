@@ -4,6 +4,12 @@ pageClass: routes
 
 # 音视频
 
+## 99% Invisible
+
+### Transcript
+
+<Route author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+
 ## AcFun
 
 ### 番剧
@@ -357,3 +363,23 @@ pageClass: routes
 ### 影视
 
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
+
+## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+<Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
+
+## 字幕库
+
+### 字幕列表
+
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+
+类型
+
+| 最新电影 | 最新美剧 |
+| -------- | -------- |
+| mv       | tv       |
+
+</Route>

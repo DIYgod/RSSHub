@@ -139,3 +139,29 @@ pageClass: routes
 ### 主页
 
 <Route author="kt286" example="/zreading" path="/zreading" />
+
+## 单向空间
+
+### 单读
+
+<Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
+
+| 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
+| ---- | ---- | ---- | ---- | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4      | 6    |
+
+</Route>
+
+## 飞地
+
+### 分类
+
+<Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
+
+### 用户创作
+
+<Route author="junbaor" example="/enclavebooks/user/103702" path="/enclavebooks/user/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
+
+### 用户收藏
+
+<Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>

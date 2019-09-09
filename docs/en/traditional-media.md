@@ -19,3 +19,13 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 -   Exemption: use `/bbc/chinese` for BBC News Chinese.
 
 </RouteEn>
+
+## The Guardian
+
+### Editorial
+
+<RouteEn author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+
+Provides a better reading experience (full text articles) over the official one.
+
+</RouteEn>
