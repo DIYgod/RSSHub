@@ -274,6 +274,12 @@ pageClass: routes
 
 <Route author="Maecenas" path="/instagram/story/:username" example="/instagram/story/instagram" :paramsDesc="['用户名']"/>
 
+## Keep
+
+### 运动日记
+
+<Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
+
 ## Matters
 
 ### 最新排序
@@ -413,6 +419,12 @@ pageClass: routes
 ### 用户
 
 <Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" supportPodcast="1"/>
+
+## 大众点评
+
+### 用户
+
+<Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
 
 ## 豆瓣
 
@@ -607,6 +619,20 @@ pageClass: routes
 | newthread | hot      | digest   | new      |
 
 </Route>
+
+## 刷屏
+
+### 最新
+
+<Route author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
+
+### 最新（无中间页）
+
+<Route author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct"/>
+
+### 朋友圈
+
+<Route author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>
 
 ## 搜狐
 
@@ -818,29 +844,3 @@ pageClass: routes
 ### 知乎书店-知乎周刊
 
 <Route author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" anticrawler="1" radar="1"/>
-
-## Keep
-
-### 运动日记
-
-<Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
-
-## 大众点评
-
-### 用户
-
-<Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
-
-## 刷屏
-
-### 最新
-
-<Route author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
-
-### 最新（无中间页）
-
-<Route author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct"/>
-
-### 朋友圈
-
-<Route author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>

@@ -48,14 +48,14 @@ pageClass: routes
 
 <Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
 
-## 王垠博客
-
-### 文章
-
-<Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
-
 ## 每日安全
 
 ### 推送
 
 <Route author="LogicJake" example="/security/pulses" path="/security/pulses"/>
+
+## 王垠博客
+
+### 文章
+
+<Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>

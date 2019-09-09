@@ -87,12 +87,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
-## 腾讯 NBA
-
-### 头条新闻
-
-<Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
-
 ## Readhub
 
 ### 分类
@@ -415,6 +409,20 @@ pageClass: routes
 
 <Route author="qiwihui" example="/paidai/news" path="/paidao/news" />
 
+## 品途商业评论
+
+### 文章
+
+<Route author="DIYgod" example="/pintu360/0" path="/pintu360/:type?" :paramsDesc="['类型, 默认为 `0` 推荐']">
+
+类型
+
+| 推荐 | 零售前沿 | 智能科技 | 泛文娱 | 教育 | 大健康 | 新消费 | 创业投资 |
+| ---- | -------- | -------- | ------ | ---- | ------ | ------ | -------- |
+| 0    | 7        | 10       | 9      | 98   | 70     | 8      | 72       |
+
+</Route>
+
 ## 品玩
 
 ### 实时要闻
@@ -551,6 +559,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>
 
+## 腾讯 NBA
+
+### 头条新闻
+
+<Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
+
 ## 腾讯大家
 
 ### 首页
@@ -677,17 +691,3 @@ pageClass: routes
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## 品途商业评论
-
-### 文章
-
-<Route author="DIYgod" example="/pintu360/0" path="/pintu360/:type?" :paramsDesc="['类型, 默认为 `0` 推荐']">
-
-类型
-
-| 推荐 | 零售前沿 | 智能科技 | 泛文娱 | 教育 | 大健康 | 新消费 | 创业投资 |
-| ---- | -------- | -------- | ------ | ---- | ------ | ------ | -------- |
-| 0    | 7        | 10       | 9      | 98   | 70     | 8      | 72       |
-
-</Route>

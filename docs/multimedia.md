@@ -166,6 +166,12 @@ pageClass: routes
 
 <Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
 
+## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+<Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
+
 ## 草榴社区
 
 ### 分区帖子
@@ -352,24 +358,6 @@ pageClass: routes
 
 <Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
 
-## 字幕组（ZiMuZu.tv）
-
-::: tip 提示
-
-跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
-
-:::
-
-### 影视
-
-<Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
-
-## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
-
-### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
-
-<Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
-
 ## 字幕库
 
 ### 字幕列表
@@ -383,3 +371,15 @@ pageClass: routes
 | mv       | tv       |
 
 </Route>
+
+## 字幕组（ZiMuZu.tv）
+
+::: tip 提示
+
+跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
+
+:::
+
+### 影视
+
+<Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>

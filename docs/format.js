@@ -72,7 +72,7 @@ const sortByHeading = async (filePath) => {
             const locale = config.themeConfig.locales[key];
             if (locale.hasOwnProperty('sidebar')) {
                 if (locale.sidebar['/']) {
-                    // return locale.sidebar['/'][1].children.map((x) => path.resolve(__dirname, `./${x}.md`));
+                    return locale.sidebar['/'][1].children.map((x) => path.resolve(__dirname, `./${x}.md`));
                 } else if (locale.sidebar['/en/']) {
                     return locale.sidebar['/en/'][1].children.map((x) => path.resolve(__dirname, `./en/${x}.md`));
                 }
