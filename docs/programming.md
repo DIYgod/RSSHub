@@ -234,6 +234,18 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="junbaor" example="/aliyun/database_month" path="/aliyun/database_month"/>
 
+### 公告
+
+<Route author="muzea" example="/aliyun/notice" path="/aliyun/notice/:type?"/>
+
+| 类型     | type |
+| -------- | ---- |
+| 全部     |      |
+| 升级公告 | 1    |
+| 安全公告 | 2    |
+| 备案公告 | 3    |
+| 其他     | 4    |
+
 ## 安全客
 
 ::: tip 提示
