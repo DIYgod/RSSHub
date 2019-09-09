@@ -1324,3 +1324,17 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 品途商业评论
+
+### 文章
+
+<Route author="DIYgod" example="/pintu360/0" path="/pintu360/:type?" :paramsDesc="['类型, 默认为 `0` 推荐']">
+
+类型
+
+| 推荐 | 零售前沿 | 智能科技 | 泛文娱 | 教育 | 大健康 | 新消费 | 创业投资 |
+| ---- | -------- | -------- | ------ | ---- | ------ | ------ | -------- |
+| 0    | 7        | 10       | 9      | 98   | 70     | 8      | 72       |
+
+</Route>
