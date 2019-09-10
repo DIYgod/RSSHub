@@ -57,6 +57,12 @@ pageClass: routes
 
 </Route>
 
+## Engadget 瘾科技
+
+### 中文全文
+
+<Route author="JamesWDGu" example="/engadget-cn" path="/engadget-cn"/>
+
 ## iDownloadBlog
 
 ### blog
