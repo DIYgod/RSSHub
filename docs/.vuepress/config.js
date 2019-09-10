@@ -82,7 +82,7 @@ module.exports = {
                         {
                             title: '路由',
                             collapsable: false,
-                            sidebarDepth: 3,
+                            sidebarDepth: 1,
                             children: [
                                 'social-media',
                                 'new-media',
@@ -143,7 +143,7 @@ module.exports = {
                         {
                             title: 'Routes',
                             collapsable: false,
-                            sidebarDepth: 3,
+                            sidebarDepth: 1,
                             children: [
                                 'social-media',
                                 'new-media',
