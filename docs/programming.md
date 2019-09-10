@@ -218,16 +218,6 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
-## V2EX
-
-### 最热/最新主题
-
-<Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
-
-### 帖子
-
-<Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
-
 ## 阿里云
 
 ### 数据库内核月报
@@ -418,33 +408,6 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
 
-## 看雪
-
-### 论坛
-
-<Route author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
-
-| 版块         | category   |
-| ------------ | ---------- |
-| 智能设备     | iot        |
-| 区块链安全   | blockchain |
-| Android 安全 | android    |
-| iOS 安全     | ios        |
-| 软件逆向     | re         |
-| 编程技术     | coding     |
-| 加壳脱壳     | unpack     |
-| 密码算法     | crypto     |
-| 二进制漏洞   | vuln       |
-| CrackMe      | crackme    |
-| Pwn          | pwn        |
-| WEB 安全     | web        |
-| 全站         | all        |
-
-| 类型     | type   |
-| -------- | ------ |
-| 最新主题 | latest |
-| 精华主题 | digest |
-
 ## 码农网
 
 ### 最新
@@ -494,24 +457,6 @@ GitHub 官方也提供了一些 RSS:
 | python     | python     |
 | csharp     | c#         |
 | nodejs     | nodejs     |
-
-</Route>
-
-## 美团技术团队
-
-### 最近更新
-
-<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
-
-## 牛客网
-
-### 讨论区
-
-<Route author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
-
-| 最新回复 | 最新发表 | 最新 | 精华 |
-| -------- | -------- | ---- | ---- |
-| 0        | 3        | 1    | 4    |
 
 </Route>
 

@@ -59,3 +59,9 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 美团技术团队
+
+### 最近更新
+
+<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>

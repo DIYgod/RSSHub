@@ -691,3 +691,102 @@ pageClass: routes
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## Matters
+
+### 最新排序
+
+<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
+
+### 熱門文章
+
+<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" />
+
+### 标签
+
+<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
+
+### 作者
+
+<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
+
+## 好奇怪
+
+### 首页
+
+<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
+
+### 探索
+
+<Route author="HenryQW" example="/qdaily/notch/explore/1" path="/qdaily/explore/:id" :paramsDesc="['探索 id，可通过好奇怪 APP 复制分享链接找到']"/>
+
+## 好奇心日报
+
+### 标签，栏目，分类
+
+<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']">
+
+| 标签 | 栏目   | 分类       |
+| ---- | ------ | ---------- |
+| tag  | column | researcach |
+
+</Route>
+
+## 搜狐号
+
+### 更新
+
+<Route author="HenryQW" example="/sohu/mp/119097" path="/sohu/mp/:id" :paramsDesc="['搜狐号 ID', '见如下说明']">
+
+1. 通过浏览器搜索相关搜狐号 `果壳 site: mp.sohu.com`。
+1. 通过浏览器控制台执行 `cfgs.author_id`，返回的即为搜狐号 ID。
+
+</Route>
+
+## 腾讯企鹅号
+
+### 更新
+
+<Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
+
+## 微信
+
+::: tip 提示
+
+公众号直接抓取困难, 故目前提供几种间接抓取方案, 请自行选择
+
+:::
+
+### 公众号（ wemp.app 来源）
+
+<Route author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']" anticrawler="1"/>
+
+### 公众号（传送门来源）
+
+<Route author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众号（Telegram 频道来源）
+
+<Route author="LogicJake" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id" :paramsDesc="['公众号绑定频道 id']">
+
+::: warning 注意
+
+该方法需要通过 efb 进行频道绑定，具体操作见[https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
+:::
+</Route>
+
+### 公众号 (优读来源)
+
+<Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
+
+### 公众号 (二十次幂来源)
+
+<Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众平台系统公告栏目
+
+<Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
+
+### 小程序插件
+
+<Route author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
