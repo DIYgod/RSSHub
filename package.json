@@ -39,7 +39,7 @@
     "@vuepress/plugin-pwa": "1.0.4",
     "cross-env": "5.2.1",
     "eslint": "6.3.0",
-    "eslint-config-prettier": "6.2.0",
+    "eslint-config-prettier": "6.3.0",
     "eslint-plugin-prettier": "3.1.0",
     "jest": "24.9.0",
     "mockdate": "2.0.5",
