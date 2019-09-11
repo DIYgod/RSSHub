@@ -888,10 +888,10 @@
     dotenv "^6.2.0"
     node-fetch "^2.3.0"
 
-"@postlight/mercury-parser@2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@postlight/mercury-parser/-/mercury-parser-2.1.1.tgz#34ea9f073037e3fb1564b9f85394b19086971feb"
-  integrity sha512-NCVB4oC5CxMl0dAgek8awLTCdhLzVovNMq4MDUcSdnw/PB/KVxxREsFV4GNfINqgSNp9fbv5XBEYRs1cMnUWmQ==
+"@postlight/mercury-parser@2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@postlight/mercury-parser/-/mercury-parser-2.2.0.tgz#eec9043a6f1047c95e2f1f9e3e20fcc870df327a"
+  integrity sha512-nz6dIvCAaiv74o1vhhp0BRsUe+ysPbZG5mVNpJmgLoI/goOBqRMM3Yg8uXtnv++e7tzKFSXdls8b2/zKk1qL0Q==
   dependencies:
     "@babel/runtime-corejs2" "^7.2.0"
     "@postlight/ci-failed-test-reporter" "^1.0"
@@ -899,18 +899,18 @@
     cheerio "^0.22.0"
     difflib "github:postlight/difflib.js"
     ellipsize "0.1.0"
-    iconv-lite "0.4.24"
+    iconv-lite "0.5.0"
     jquery "^3.4.1"
     moment "^2.23.0"
     moment-parseformat "3.0.0"
-    moment-timezone "0.5.24"
+    moment-timezone "0.5.26"
     postman-request "^2.88.1-postman.7.1"
     request-promise "^4.2.2"
     string-direction "^0.1.2"
     turndown "^5.0.3"
     url "^0.11.0"
     valid-url "^1.0.9"
-    wuzzy "^0.1.3"
+    wuzzy "^0.1.4"
     yargs-parser "^13.0.0"
 
 "@postman/tunnel-agent@^0.6.2":
@@ -7302,10 +7302,10 @@ moment-parseformat@3.0.0:
   resolved "https://registry.yarnpkg.com/moment-parseformat/-/moment-parseformat-3.0.0.tgz#3a1dc438b4bc073b7e93cc298cfb6c5daac26dba"
   integrity sha512-dVgXe6b6DLnv4CHG7a1zUe5mSXaIZ3c6lSHm/EKeVeQI2/4pwe0VRde8OyoCE1Ro2lKT5P6uT9JElF7KDLV+jw==
 
-moment-timezone@0.5.24:
-  version "0.5.24"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.24.tgz#59e14e210a6f2410ec71e01c01d324c45f7f0a7e"
-  integrity sha512-oxg1YswuqzOBzGWs3i3TnNqbvHMGK7qY7zcg9SJfZ09K+FiNtSPKmFfqGuxN1oMyusGisvYZEc4un//j3wwAKw==
+moment-timezone@0.5.26:
+  version "0.5.26"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.26.tgz#c0267ca09ae84631aa3dc33f65bedbe6e8e0d772"
+  integrity sha512-sFP4cgEKTCymBBKgoxZjYzlSovC20Y6J7y3nanDc5RoBIXKlZhoYwBoZGe3flwU6A372AcRwScH8KiwV6zjy1g==
   dependencies:
     moment ">= 2.9.0"
 
@@ -11444,7 +11444,7 @@ ws@^6.1.0:
   dependencies:
     async-limiter "~1.0.0"
 
-wuzzy@^0.1.3:
+wuzzy@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/wuzzy/-/wuzzy-0.1.4.tgz#f2ea42c5c5a216ef7dc68158356a7d5f84432102"
   integrity sha512-0I20vx7xWb+fZ1XKw54EhZukVsH3rRKnwtdu+MCb2nHITeypPZRr9Y1VOFdeZu48YvzxO33ReKoyIP5IG+WaOw==
