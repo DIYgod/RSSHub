@@ -107,3 +107,11 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | announcement | news | media    | exhibition | specials |
 
 </Route>
+
+## 穷游网
+
+### 穷游专栏
+
+<Route author="Vanson" example="/qyer/zhuanlan" path="/qyer/zhuanlan" :paramsDesc="暂无"/>
+
+</Route>
