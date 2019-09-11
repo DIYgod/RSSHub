@@ -381,7 +381,13 @@ pageClass: routes
 
 ### 公司公告-A 股港股
 
-<Route author="LogicJake hillerliao" example="/cninfo/announcement/002024/gqjl" path="/cninfo/announcement/:code/:category?" :paramsDesc="['股票代码, 若不指定公司则填 all', '公告分类，对A股有效如 gqjl 表示 股权激励 分类']"/>
+<Route author="LogicJake hillerliao" example="/cninfo/announcement/002024/gqjl" path="/cninfo/announcement/:code/:category?" :paramsDesc="['股票代码, 若不指定公司则填 all', '公告分类，对A股有效如 gqjl 表示 股权激励 分类']">
+
+| 年报 | 半年报 | 一季报 | 三季报 | 业绩预告 | 权益分派 | 董事会 | 监事会 | 股东大会 | 日常经营 | 公司治理 | 中介报告 | 首发 | 增发 | 股权激励 | 配股 | 解禁 | 债券 | 其他融资 | 股权变动 | 补充更正 | 澄清致歉 | 风险提示 | 特别处理和退市 |
+| ---- | ------ | ------ | ------ | -------- | -------- | ------ | ------ | -------- | -------- | -------- | -------- | ---- | ---- | -------- | ---- | ---- | ---- | -------- | -------- | -------- | -------- | -------- | -------------- |
+| ndbg | bndbg  | yjdbg  | sjdbg  | yjygjxz  | qyfpxzcs | dshgg  | jshgg  | gddh     | rcjy     | gszl     | zj       | sf   | zf   | gqjl     | pg   | jj   | zq   | qtrz     | gqbd     | bcgz     | cqdq     | fxts     | tbclts         |
+
+</Route>
 
 ### 基金公告
 
