@@ -96,6 +96,13 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 
 <Route author="sinchang" example="/mafengwo/note/hot" path="/mafengwo/note/:type" :paramsDesc="['目前支持两种, `hot` 代表热门游记, `latest` 代表最新游记']"/>
 
+## 穷游网
+
+### 穷游专栏
+
+<Route author="Vanson" example="/qyer/zhuanlan" path="/qyer/zhuanlan" :paramsDesc="暂无"/>
+
+</Route>
 ## 中国美术馆
 
 ### 美术馆新闻
@@ -105,13 +112,5 @@ IATA 国际航空运输协会机场代码, 参见[维基百科 国际航空运�
 | 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
 | ------------ | ---- | -------- | ---------- | -------- |
 | announcement | news | media    | exhibition | specials |
-
-</Route>
-
-## 穷游网
-
-### 穷游专栏
-
-<Route author="Vanson" example="/qyer/zhuanlan" path="/qyer/zhuanlan" :paramsDesc="暂无"/>
 
 </Route>
