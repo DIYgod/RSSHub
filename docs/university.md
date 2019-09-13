@@ -830,6 +830,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="KXXH" example="/scu/jwc/notice" path="/scu/jwc/notice" />
 
+### 学工部通知公告
+
+<Route author="stevelee477" example="/scu/xg/notice" path="/scu/xg/notice" />
+
 ## 四川旅游学院
 
 ### 信息与工程学院动态公告列表
