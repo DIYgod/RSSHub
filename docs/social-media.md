@@ -298,6 +298,16 @@ pageClass: routes
 
 <Route author="DIYgod" example="/pixiv/search/麻衣/popular" path="/pixiv/search/:keyword/:order?" :paramsDesc="['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序']" radar="1"/>
 
+### 关注的新作品
+
+<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1"/>
+::: warning 注意
+
+因为每个人关注的画师不同，所以只能自建。请不要将画师设为“悄悄关注”，这样子画师的作品就不会出现在订阅里了。
+
+:::
+</Route>
+
 ## Soul
 
 ### 瞬间更新
