@@ -207,9 +207,13 @@ pageClass: routes
 
 :::
 
-### 头条新闻
+### 新闻
 
-<Route author="dxmpalb" example="/dongqiudi/top_news" path="/dongqiudi/top_news"/>
+<Route author="HendricksZheng" example="/dongqiudi/top_news/1" path="/dongqiudi/top_news/:id?" :paramsDesc="['类别 id，不填默认头条新闻" />
+
+| 头条 | 深度 | 闲情 | D 站 | 中超 | 国际 | 英超 | 西甲 | 意甲 | 德甲 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 55   | 37   | 219  | 56   | 120  | 3    | 5    | 4    | 6    |
 
 ### 专题
 
