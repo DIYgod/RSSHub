@@ -830,6 +830,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="KXXH" example="/scu/jwc/notice" path="/scu/jwc/notice" />
 
+### 学工部通知公告
+
+<Route author="stevelee477" example="/scu/xg/notice" path="/scu/xg/notice" />
+
 ## 四川旅游学院
 
 ### 信息与工程学院动态公告列表
@@ -990,6 +994,12 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 中国传媒大学研究生招生网
 
 <Route author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
+
+## 中国地质大学(武汉)
+
+### 研究生院综合通知公告
+
+<Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
 
 ## 中国科学院
 
