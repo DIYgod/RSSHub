@@ -50,6 +50,10 @@ pageClass: routes
 
 </Route>
 
+### 每周一推 - 中国政治学研究中心
+
+<Route author="AngUOI" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
@@ -358,15 +362,19 @@ category 列表：
 
 ## 华南理工大学
 
-### 教务处新闻动态
+### 教务处通知公告
 
-<Route author="KeNorizon" example="/scut/jwc/1" path="/scut/jwc/:category?" :paramsDesc="['新闻动态分类, 默认为 `1`']">
+<Route author="KeNorizon" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
 
-| 教务通知 | 交流交换 | 新闻动态 | 媒体关注 | 学院通知 |
-| -------- | -------- | -------- | -------- | -------- |
-| 1        | 2        | 3        | 4        | 5        |
+| 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
+| ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
+| all  | course | exam | practice | communication | teacher | info |
 
 </Route>
+
+### 教务处新闻动态
+
+<Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
 
 ## 华南师范大学
 
@@ -439,6 +447,32 @@ category 列表：
 ### 双选会
 
 <Route author="geekrainy" example="/kmust/job/jobfairs" path="/universities/kmust/job/jobfairs" />
+
+## 洛阳理工学院
+
+### 教务处
+
+<Route author="AngUOI" example="/lit/jwc" path="/universities/lit/jwc" />
+
+### 新闻中心
+
+<Route author="AngUOI" example="/lit/xwzx/ggtz" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `ggtz`']">
+
+| 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
+| -------- | -------- | -------- | -------- |
+| ggtz     | xwkx     | xsxx     | mtxw     |
+
+</Route>
+
+### 团委
+
+<Route author="AngUOI" example="/lit/tw/tntz" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `tntz`']">
+
+| 团内通知 | 青年快讯 | 理论学习 |
+| -------- | -------- | -------- |
+| tntz     | qnkx     | llxx     |
+
+</Route>
 
 ## 南昌航空大学
 
@@ -796,6 +830,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="KXXH" example="/scu/jwc/notice" path="/scu/jwc/notice" />
 
+### 学工部通知公告
+
+<Route author="stevelee477" example="/scu/xg/notice" path="/scu/xg/notice" />
+
 ## 四川旅游学院
 
 ### 信息与工程学院动态公告列表
@@ -956,6 +994,12 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 中国传媒大学研究生招生网
 
 <Route author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
+
+## 中国地质大学(武汉)
+
+### 研究生院综合通知公告
+
+<Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
 
 ## 中国科学院
 

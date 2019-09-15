@@ -52,11 +52,49 @@ pageClass: routes
 
 </Route>
 
+## 吹牛部落
+
+### 栏目
+
+<Route author="LogicJake" example="/chuiniu/column/0b1c4cf6e7f24e8da11e37882de73704" path="/chuiniu/column/:id" :paramsDesc="['栏目 id, 可在对应栏目页 URL 中找到']">
+
+::: warning 注意
+
+正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
+:::
+</Route>
+
 ## 刺猬猫
 
 ### 章节
 
 <Route author="Netrvin" example="/ciweimao/chapter/100045750" path="/ciweimao/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+## 单向空间
+
+### 单读
+
+<Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
+
+| 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
+| ---- | ---- | ---- | ---- | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4      | 6    |
+
+</Route>
+
+## 飞地
+
+### 分类
+
+<Route author="LogicJake" example="/enclavebooks/category/1" path="/enclavebooks/category/:id" :paramsDesc="['类别 id，可在[分类api](https://app.enclavebooks.cn/v2/discovery)返回数据中的category查看']"/>
+
+### 用户创作
+
+<Route author="junbaor" example="/enclavebooks/user/103702" path="/enclavebooks/user/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
+
+### 用户收藏
+
+<Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
 ## 观止（每日一文）
 

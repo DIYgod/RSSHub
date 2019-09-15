@@ -7,3 +7,8 @@ docker-compose*
 README.md
 LICENSE
 .vscode
+.github
+assets
+coverage
+docs
+test
