@@ -397,10 +397,6 @@ pageClass: routes
 
 <Route author="hillerliao" example="/cninfo/fund_announcement/159977/基金合同" path="/cninfo/fund_announcement/:code/:searchkey" :paramsDesc="['基金代码, 若不指定则填 all', '过滤词，若不指定则填all']"/>
 
-## 选股宝
-
-<Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']" />
-
 ## 决胜网
 
 ### 最新资讯
@@ -761,6 +757,10 @@ pageClass: routes
 ### 创事记
 
 <Route author="xapool" example="/sina/csj" path="/sina/csj"/>
+
+## 选股宝
+
+<Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']" />
 
 ## 异次元软件世界
 
