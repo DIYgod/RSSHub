@@ -758,9 +758,9 @@ pageClass: routes
 
 ## 选股宝
 
-### 最新动态
+### 主题
 
-<Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']" />
+<Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']"/>
 
 ## 异次元软件世界
 
