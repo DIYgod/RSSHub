@@ -176,6 +176,10 @@ pageClass: routes
 
 <Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
 
+### 快讯
+
+<Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
+
 ## 币世界
 
 ### 快讯
@@ -390,6 +394,10 @@ pageClass: routes
 ### 基金公告
 
 <Route author="hillerliao" example="/cninfo/fund_announcement/159977/基金合同" path="/cninfo/fund_announcement/:code/:searchkey" :paramsDesc="['基金代码, 若不指定则填 all', '过滤词，若不指定则填all']"/>
+
+## 选股宝
+
+<Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']" />
 
 ## 决胜网
 
