@@ -272,6 +272,10 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
 
+`REQUEST_RETRY`: retries allowed for failed requests, default to `2`
+
+`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
+
 `TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `100`
 
 `REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
@@ -293,6 +297,12 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 `PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
+
+`NODE_NAME`: node name, used for load balancing, identify current node
+
+`PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+
+`SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
 ### User Authentication
 
@@ -331,6 +341,10 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 -   `github`: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+
+-   `mail`:
+
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with email account, replace `@` in email account with `.`, like `EMAIL_CONFIG_xxx.qq.com`. the value format is `password=password&host=server&port=port`, like `password=123456&host=imap.qq.com&port=993`
 
 ### Access Control
 

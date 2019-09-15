@@ -73,7 +73,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
             // the article title
             title: item.title,
             // the article content
-            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+            description: `${item.desc}<br><img src="${item.pic}">`,
             // the article publish time
             pubDate: new Date(item.time * 1000).toUTCString(),
             // the article link
@@ -314,6 +314,7 @@ ctx.state.data = {
     link: '', // The feed link
     description: '', // The feed description
     language: '', // The language of the channel
+    allowEmpty: false, // default to false, set to true to allow empty item
     item: [
         // An article of the feed
         {
@@ -366,7 +367,29 @@ ctx.state.data = {
 };
 ```
 
-</details>
+##### Media RSS
+
+these **additional** data are in accordance with many [Media RSS](http://www.rssboard.org/media-rss) softwares' subscription format:
+
+For example:
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            media: {
+                content: {
+                    url: post.file_url,
+                    type: `image/${mime[post.file_ext]}`,
+                },
+                thumbnail: {
+                    url: post.preview_url,
+                },
+            },
+        },
+    ],
+};
+```
 
 ---
 
@@ -474,3 +497,46 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
 
 1.  [Telegram Group](https://t.me/rsshub)
 2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
+
+## Some Tips for Development
+
+### VS Code debug configuration
+
+`.vscode/launch.js`
+
+#### Debugging with nodemon
+
+In terminal, run `npm run dev` or `yarn dev` to start debugging.
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Node: Nodemon",
+            "processId": "${command:PickProcess}",
+            "restart": true,
+            "protocol": "inspector"
+        }
+    ]
+}
+```
+
+#### Debugging without nodemon
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/lib/index.js",
+            "env": { "NODE_ENV": "dev" }
+        }
+    ]
+}
+```

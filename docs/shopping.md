@@ -42,6 +42,22 @@ pageClass: routes
 
 </Route>
 
+## 礼物说
+
+### 礼物说
+
+<Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
+
+## 缺书网
+
+### 促销
+
+<Route author="kt286" example="/queshu/sale" path="/queshu/sale"/>
+
+### 单品活动信息
+
+<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
+
 ## 什么值得买
 
 ::: tip 提示
@@ -52,11 +68,11 @@ pageClass: routes
 
 ### 关键词
 
-<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']"/>
+<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']" radar="1"/>
 
 ### 排行榜
 
-<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']">
+<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1">
 
 -   榜单类型
 
@@ -124,6 +140,10 @@ pageClass: routes
 
 </Route>
 
+### 关键词
+
+<Route author="gaoliang" example="/dgtle/trade/search/ipad" path="/dgtle/trade/search/:keyword" :paramsDesc="['搜索关键词']"/>
+
 ## 淘宝众筹
 
 ### 众筹项目
@@ -142,6 +162,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
 
+## 微店
+
+### 商品上新
+
+<Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" :paramsDesc="['商铺 id']"/>
+
 ## 小米
 
 ### 小米众筹
@@ -155,3 +181,9 @@ pageClass: routes
 ### 小米有品每日上新
 
 <Route author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+## 有赞
+
+### 商品上新
+
+<Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺id']"/>

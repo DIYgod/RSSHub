@@ -1,9 +1,11 @@
 FROM node:10.15-slim
 LABEL MAINTAINER https://github.com/DIYgod/RSSHub/
 
-RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https
+RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git --no-install-recommends && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV production
+ENV TZ Asia/Shanghai
 
 WORKDIR /app
 
@@ -24,6 +26,7 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   && apt-get update \
   && apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst ttf-freefont \
   --no-install-recommends \
+  && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get purge --auto-remove -y curl \
   && rm -rf /src/*.deb \

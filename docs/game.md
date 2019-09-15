@@ -90,15 +90,19 @@ pageClass: routes
 
 <Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
-## PlayStation Store
+## PlayStation
 
-### 游戏列表
+### PlayStation Store 游戏列表
 
 <Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']">
 
 适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
 
 </Route>
+
+### PlayStation Network 用户奖杯
+
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']"/>
 
 ## psnine
 
@@ -140,6 +144,22 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### Discussions
 
 <Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
+
+## 篝火营地
+
+### 游戏资讯
+
+<Route author="sintak" example="/gouhuo/news/switch" path="/gouhuo/news/:category" :paramsDesc="['资讯类型']">
+
+| 精选       | 海外     | 原创    | PS4 | Xboxone | PC  | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
+| ---------- | -------- | ------- | --- | ------- | --- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
+| choiceness | overseas | orignal | ps4 | xboxone | pc  | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
+
+</Route>
+
+### 游戏攻略
+
+<Route author="sintak" example="/gouhuo/strategy" path="/gouhuo/strategy"/>
 
 ## 怪物猎人
 
@@ -184,6 +204,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | latest | notice | news | activity | strategy |
 
 </Route>
+
+## 明日方舟
+
+### 游戏公告与新闻
+
+<Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
 ## 小黑盒
 
@@ -252,6 +278,22 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | recommend | history | big    | culture | news | retro    |
 
 </Route>
+
+## 掌上英雄联盟
+
+### 推荐
+
+<Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend"/>
+
+## 最终幻想 14
+
+### 最终幻想 14 国服
+
+<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']"/>
+
+| 新闻 | 公告     | 活动   | 广告      | 所有 |
+| ---- | -------- | ------ | --------- | ---- |
+| news | announce | events | advertise | all  |
 
 ## きららファンタジア｜奇拉拉幻想曲
 

@@ -13,7 +13,7 @@ pageClass: routes
 
 ### 動畫
 
-<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
+<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
 
 时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
 
@@ -21,7 +21,7 @@ pageClass: routes
 
 ### 搜尋
 
-<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
+<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']" radar="1"/>
 
 ## Animen 动漫平台
 
@@ -85,7 +85,25 @@ pageClass: routes
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
 
+## Hanime.tv
+
+### 最近更新
+
+<Route author="EsuRt" example="/hanime/video" path="/hanime/video"/>
+
 ## Hpoi 手办维基
+
+### 情报
+
+<Route author="sanmmm" path="/hpoi/info/:type?" example="/hpoi/info/all" :paramsDesc="['分类, 见下表, 默认为`all`']">
+
+分类
+
+| 全部 | 手办  | 模型  |
+| ---- | ----- | ----- |
+| all  | hobby | model |
+
+</Route>
 
 ### 浏览周边
 
