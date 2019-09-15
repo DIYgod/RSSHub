@@ -52,6 +52,18 @@ pageClass: routes
 
 </Route>
 
+## 吹牛部落
+
+### 栏目
+
+<Route author="LogicJake" example="/chuiniu/column/0b1c4cf6e7f24e8da11e37882de73704" path="/chuiniu/column/:id" :paramsDesc="['栏目 id, 可在对应栏目页 URL 中找到']">
+
+::: warning 注意
+
+正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
+:::
+</Route>
+
 ## 刺猬猫
 
 ### 章节

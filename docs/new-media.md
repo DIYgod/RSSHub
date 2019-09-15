@@ -211,9 +211,13 @@ pageClass: routes
 
 :::
 
-### 头条新闻
+### 新闻
 
-<Route author="dxmpalb" example="/dongqiudi/top_news" path="/dongqiudi/top_news"/>
+<Route author="HendricksZheng" example="/dongqiudi/top_news/1" path="/dongqiudi/top_news/:id?" :paramsDesc="['类别 id，不填默认头条新闻']" />
+
+| 头条 | 深度 | 闲情 | D 站 | 中超 | 国际 | 英超 | 西甲 | 意甲 | 德甲 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 55   | 37   | 219  | 56   | 120  | 3    | 5    | 4    | 6    |
 
 ### 专题
 
@@ -305,13 +309,7 @@ pageClass: routes
 
 ### Live
 
-<Route author="ciaranchen" example="/houxu/live/5/original" path="/houxu/live/:id/:timeline?" :paramsDesc="['Live ID', '时间线筛选条件。默认为all。']">
-
-| 全部 | 原创     | 精选     |
-| ---- | -------- | -------- |
-| all  | original | featured |
-
-</Route>
+<Route author="ciaranchen sanmmm" example="/houxu/live/5" path="/houxu/live/:id" :paramsDesc="['Live ID']" />
 
 ### 最新 Live
 
@@ -759,6 +757,8 @@ pageClass: routes
 <Route author="xapool" example="/sina/csj" path="/sina/csj"/>
 
 ## 选股宝
+
+### 主题
 
 <Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']" />
 
