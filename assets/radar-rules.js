@@ -88,6 +88,12 @@
                 source: '/search.php',
                 target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
             },
+            {
+                title: '关注的新作品',
+                docs: 'https://docs.rsshub.app/social-media.html#pixiv',
+                source: '/bookmark_new_illust.php',
+                target: '/pixiv/user/illustfollows',
+            },
         ],
     },
     'twitter.com': {

@@ -327,9 +327,9 @@ category 对应的关键词有
 
 <Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 | 每周质量报告 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- | ------------ |
-| china | world | video | tech | society | law  | ent  | mzzlbg       |
+| 新闻 | 国内  | 国际  | 社会    | 法治 | 文娱 | 科技 | 生活 | 教育 | 每周质量报告 |
+| ---- | ----- | ----- | ------- | ---- | ---- | ---- | ---- | ---- | ------------ |
+| news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
 
 </Route>
 
