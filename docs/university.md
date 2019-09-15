@@ -995,6 +995,12 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
 
+## 中国地质大学(武汉)
+
+### 研究生院综合通知公告
+
+<Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
+
 ## 中国科学院
 
 ### 上海微系统与信息技术研究所学术活动

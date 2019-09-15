@@ -301,13 +301,7 @@ pageClass: routes
 
 ### Live
 
-<Route author="ciaranchen" example="/houxu/live/5/original" path="/houxu/live/:id/:timeline?" :paramsDesc="['Live ID', '时间线筛选条件。默认为all。']">
-
-| 全部 | 原创     | 精选     |
-| ---- | -------- | -------- |
-| all  | original | featured |
-
-</Route>
+<Route author="ciaranchen sanmmm" example="/houxu/live/5" path="/houxu/live/:id" :paramsDesc="['Live ID']" />
 
 ### 最新 Live
 
