@@ -196,3 +196,9 @@ pageClass: routes
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## 海猫吧
+
+### 漫画更新
+
+<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']"/>
