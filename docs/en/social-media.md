@@ -62,15 +62,15 @@ pageClass: routes
 
 ## User following timeline
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['user id']">
+<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['user id']">
 
 ::: warning
 
-User following timeline needs Twitter token corresponding id, so this route is only for self-hosted, see Install - Route-specific Configurations for details
+This route requires Twitter token's corresponding id, therefore it's only availble when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
-</Route>
+</RouteEn>
 
 ### List timeline
 
@@ -78,7 +78,7 @@ User following timeline needs Twitter token corresponding id, so this route is o
 
 ### User likes
 
-<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']"/>
+<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']"/>
 
 ## Youtube
 
