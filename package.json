@@ -1,8 +1,8 @@
 {
   "name": "rsshub",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Make RSS Great Again!",
-  "main": "lib/index.js",
+  "main": "lib/pkg.js",
   "scripts": {
     "start": "node lib/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",

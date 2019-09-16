@@ -21,7 +21,7 @@ afterEach(() => {
 describe('access-control', () => {
     it(`blacklist`, async () => {
         process.env.BLACKLIST = '/test/1,233.233.233.233';
-        server = require('../../lib/index').server;
+        server = require('../../lib/index');
         const request = supertest(server);
 
         const response11 = await request.get('/test/1');
@@ -39,7 +39,7 @@ describe('access-control', () => {
 
     it(`whitelist`, async () => {
         process.env.WHITELIST = '/test/1,233.233.233.233';
-        server = require('../../lib/index').server;
+        server = require('../../lib/index');
         const request = supertest(server);
 
         const response11 = await request.get('/test/1');
