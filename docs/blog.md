@@ -26,6 +26,12 @@ pageClass: routes
 
 <Route author="kt286" example="/latexstudio/home" path="/latexstudio/home"/>
 
+## LeeMeng
+
+### blog
+
+<Route author="xyqfer" example="/leemeng" path="/leemeng"/>
+
 ## 财新博客
 
 ### 用户博客
