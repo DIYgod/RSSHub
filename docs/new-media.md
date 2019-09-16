@@ -176,6 +176,10 @@ pageClass: routes
 
 <Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
 
+### 快讯
+
+<Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
+
 ## 币世界
 
 ### 快讯
@@ -207,9 +211,13 @@ pageClass: routes
 
 :::
 
-### 头条新闻
+### 新闻
 
-<Route author="dxmpalb" example="/dongqiudi/top_news" path="/dongqiudi/top_news"/>
+<Route author="HendricksZheng" example="/dongqiudi/top_news/1" path="/dongqiudi/top_news/:id?" :paramsDesc="['类别 id，不填默认头条新闻']" />
+
+| 头条 | 深度 | 闲情 | D 站 | 中超 | 国际 | 英超 | 西甲 | 意甲 | 德甲 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 55   | 37   | 219  | 56   | 120  | 3    | 5    | 4    | 6    |
 
 ### 专题
 
@@ -301,13 +309,7 @@ pageClass: routes
 
 ### Live
 
-<Route author="ciaranchen" example="/houxu/live/5/original" path="/houxu/live/:id/:timeline?" :paramsDesc="['Live ID', '时间线筛选条件。默认为all。']">
-
-| 全部 | 原创     | 精选     |
-| ---- | -------- | -------- |
-| all  | original | featured |
-
-</Route>
+<Route author="ciaranchen sanmmm" example="/houxu/live/5" path="/houxu/live/:id" :paramsDesc="['Live ID']" />
 
 ### 最新 Live
 
@@ -612,7 +614,7 @@ pageClass: routes
 <Route author="HenryQW" example="/sohu/mp/119097" path="/sohu/mp/:id" :paramsDesc="['搜狐号 ID', '见如下说明']">
 
 1. 通过浏览器搜索相关搜狐号 `果壳 site: mp.sohu.com`。
-1. 通过浏览器控制台执行 `cfgs.author_id`，返回的即为搜狐号 ID。
+2. 通过浏览器控制台执行 `cfgs.author_id`，返回的即为搜狐号 ID。
 
 </Route>
 
@@ -675,6 +677,18 @@ pageClass: routes
 | 全部 | 天下大势 | 企业动态 | 专家观点 | 研究报告 |
 | ---- | -------- | -------- | -------- | -------- |
 | (空) | My01     | My02     | My03     | My04     |
+
+</Route>
+
+## 网易号
+
+### 更新
+
+<Route author="HendricksZheng" example="/netease/dy/W4983108759592548559" path="/netease/dy/:id" :paramsDesc="['网易号 ID', '见如下说明']">
+
+1. 在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
+2. 打开网易号文章页面。
+3. 通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
 
 </Route>
 
@@ -753,6 +767,12 @@ pageClass: routes
 ### 创事记
 
 <Route author="xapool" example="/sina/csj" path="/sina/csj"/>
+
+## 选股宝
+
+### 主题
+
+<Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']"/>
 
 ## 异次元软件世界
 

@@ -77,7 +77,7 @@ module.exports = {
                         {
                             title: '指南',
                             collapsable: true,
-                            children: ['', 'parameter', 'api'],
+                            children: ['', 'faq', 'parameter', 'api'],
                         },
                         {
                             title: '路由',
@@ -139,7 +139,7 @@ module.exports = {
                         {
                             title: 'Guide',
                             collapsable: true,
-                            children: ['', 'parameter', 'api'],
+                            children: ['', 'faq', 'parameter', 'api'],
                         },
                         {
                             title: 'Routes',
