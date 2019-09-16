@@ -50,16 +50,6 @@
                 verification: (params) => params.uid,
             },
         ],
-        www: [
-            {
-                title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
-                source: ['/u/:id', '/:id'],
-                target: '/weibo/user/:uid',
-                script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
-                verification: (params) => params.uid,
-            },
-        ],
     },
     'pixiv.net': {
         _name: 'Pixiv',
@@ -74,19 +64,17 @@
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/member.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+                target: (params, url) => `/pixiv/user/${new URL(url).searchParams.get('id')}`,
             },
             {
                 title: '排行榜',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/ranking.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
             },
             {
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/search.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
             },
             {
                 title: '关注的新作品',
