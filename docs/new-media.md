@@ -618,18 +618,6 @@ pageClass: routes
 
 </Route>
 
-## 网易号
-
-### 更新
-
-<Route author="HendricksZheng" example="/netease/dy/W4983108759592548559" path="/netease/dy/:id" :paramsDesc="['网易号 ID', '见如下说明']">
-
-1. 在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
-2. 打开网易号文章页面。
-3. 通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
-
-</Route>
-
 ## 探物
 
 ### 产品
@@ -689,6 +677,18 @@ pageClass: routes
 | 全部 | 天下大势 | 企业动态 | 专家观点 | 研究报告 |
 | ---- | -------- | -------- | -------- | -------- |
 | (空) | My01     | My02     | My03     | My04     |
+
+</Route>
+
+## 网易号
+
+### 更新
+
+<Route author="HendricksZheng" example="/netease/dy/W4983108759592548559" path="/netease/dy/:id" :paramsDesc="['网易号 ID', '见如下说明']">
+
+1. 在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
+2. 打开网易号文章页面。
+3. 通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
 
 </Route>
 
