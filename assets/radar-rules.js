@@ -414,4 +414,15 @@
             },
         ],
     },
+    'ishuhui.com': {
+        _name: '鼠绘漫画',
+        www: [
+            {
+                title: '更新',
+                docs: 'https://docs.rsshub.app/anime.html#%E9%BC%A0%E7%BB%98%E6%BC%AB%E7%94%BB',
+                source: '/comics/anime/:id',
+                target: '/shuhui/comics/:id',
+            },
+        ],
+    },
 });
