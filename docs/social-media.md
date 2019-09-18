@@ -552,6 +552,12 @@ pageClass: routes
 
 <Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1"/>
 
+## 微博绿洲
+
+### 用户
+
+<Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" anticrawler="1"/>
+
 ## 雪球
 
 ### 用户动态
