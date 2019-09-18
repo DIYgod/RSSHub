@@ -328,7 +328,7 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret, support multiple keys, split them with `,`
 
-    -   `TWITTER_TOKEN_{id}`: Twitter token corresponding id, replace `{id}` with id, the value is splitting consumer_key consumer_secret access_token access_token_secret with `,`, `{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
+    -   `TWITTER_TOKEN_{id}`: Twitter token's corresponding id, replace `{id}` with the id, the value is a combination of `consumer_key consumer_secret access_token access_token_secret` by a comma `,`. Eg. `{consumer_key},{consumer_secret},{access_token},{access_token_secret}`.
 
 -   `youtube`: [API Key application](https://console.developers.google.com/)
 
@@ -344,7 +344,7 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
 -   `mail`:
 
-    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with email account, replace `@` in email account with `.`, like `EMAIL_CONFIG_xxx.qq.com`. the value format is `password=password&host=server&port=port`, like `password=123456&host=imap.qq.com&port=993`
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. the value is in the format of `password=password&host=server&port=port`, eg. `password=123456&host=imap.gmail.com&port=993`
 
 ### Access Control
 
