@@ -3,7 +3,7 @@ process.env.NODE_NAME = 'mock';
 const supertest = require('supertest');
 const { server } = require('../../lib/index');
 const request = supertest(server);
-const config = require('../../lib/config');
+const config = require('../../lib/config').value;
 
 afterAll(() => {
     server.close();
