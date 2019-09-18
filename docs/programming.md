@@ -524,6 +524,14 @@ GitHub 官方也提供了一些 RSS:
 | ---- | -------- | ---- | ----- | ---- | -------- | ---------- | ---- | -------- | ---------- | ------ | ---- | ------ | -------- | ---- |
 | 0    | 4096     | 8192 | 16384 | 2048 | 1        | 2          | 64   | 4        | 8          | 16     | 256  | 1024   | 128      | 32   |
 
+### 微信开放社区-小程序问答
+
+<Route author="bestony" example="/wechat-open/community/xcx-question/new" path="/wechat-open/community/xcx-question/:tag" :paramsDesc="['new','hot','topic']">
+
+| 最新 | 最热 | 热门话题 |
+| ---- | ---- | -------- |
+| new  | hot  | topic    |
+
 </Route>
 
 ### 微信支付-商户平台公告
