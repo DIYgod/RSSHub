@@ -1,14 +1,9 @@
 const supertest = require('supertest');
-const Parser = require('rss-parser');
-const parser = new Parser();
 let server;
 
 async function checkBlock(response) {
     expect(response.status).toBe(403);
-    expect(await parser.parseString(response.text)).toMatchObject({
-        items: [],
-        title: '没有访问权限. Access denied.',
-    });
+    expect(response.text).toMatch(/Access denied\./);
 }
 
 afterEach(() => {
