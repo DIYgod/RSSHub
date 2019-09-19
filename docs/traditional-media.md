@@ -240,7 +240,7 @@ category 对应的关键词有
 
 ### 官方 RSS
 
-<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/index/:lang?" :paramsDesc="['语言, 缺省中文']">
+<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言, 缺省中文']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
@@ -315,13 +315,21 @@ category 对应的关键词有
 
 ## 央视新闻
 
+### 新闻联播
+
+<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
+
+新闻联播内容摘要。
+
+</Route>
+
 ### 专题
 
 <Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 | 每周质量报告 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- | ------------ |
-| china | world | video | tech | society | law  | ent  | mzzlbg       |
+| 新闻 | 国内  | 国际  | 社会    | 法治 | 文娱 | 科技 | 生活 | 教育 | 每周质量报告 |
+| ---- | ----- | ----- | ------- | ---- | ---- | ---- | ---- | ---- | ------------ |
+| news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
 
 </Route>
 

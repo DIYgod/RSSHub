@@ -5,18 +5,7 @@
             {
                 title: '分区视频',
                 docs: 'https://docs.rsshub.app/social-media.html#bilibili',
-                source: '/v/*tpath',
-                target: (params) => {
-                    let tid;
-                    switch (params.tpath) {
-                        case 'douga/mad':
-                            tid = '24';
-                            break;
-                        default:
-                            return false;
-                    }
-                    return `/bilibili/partion/${tid}`;
-                },
+                source: ['/v/*tpath', '/documentary', '/movie', '/tv'],
             },
             {
                 title: '视频评论',
@@ -61,16 +50,6 @@
                 verification: (params) => params.uid,
             },
         ],
-        www: [
-            {
-                title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
-                source: ['/u/:id', '/:id'],
-                target: '/weibo/user/:uid',
-                script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
-                verification: (params) => params.uid,
-            },
-        ],
     },
     'pixiv.net': {
         _name: 'Pixiv',
@@ -85,19 +64,23 @@
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/member.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+                target: (params, url) => `/pixiv/user/${new URL(url).searchParams.get('id')}`,
             },
             {
                 title: '排行榜',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/ranking.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
             },
             {
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/search.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '关注的新作品',
+                docs: 'https://docs.rsshub.app/social-media.html#pixiv',
+                source: '/bookmark_new_illust.php',
+                target: '/pixiv/user/illustfollows',
             },
         ],
     },
@@ -207,6 +190,12 @@
                 docs: 'https://docs.rsshub.app/programming.html#github',
                 source: '/:user/:repo/blob/:branch/*filepath',
                 target: '/github/file/:user/:repo/:branch/:filepath',
+            },
+            {
+                title: '用户 Starred Repositories',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: '/:user',
+                target: '/github/starred_repos/:user',
             },
         ],
     },
@@ -405,6 +394,45 @@
                 docs: 'https://docs.rsshub.app/social-media.html#instagram',
                 source: '/explore/tags/:tag',
                 target: '/instagram/tag/:tag',
+            },
+        ],
+    },
+    'swufe.edu.cn': {
+        _name: '西南财经大学',
+        it: [
+            {
+                title: '经济信息工程学院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#%E7%BB%8F%E6%B5%8E%E4%BF%A1%E6%81%AF%E5%B7%A5%E7%A8%8B%E5%AD%A6%E9%99%A2',
+                source: '/index/tzgg.htm',
+                target: '/universities/swufe/seie/tzgg',
+            },
+            {
+                title: '经济信息工程学院 - 学院新闻',
+                docs: 'https://docs.rsshub.app/university.html#%E7%BB%8F%E6%B5%8E%E4%BF%A1%E6%81%AF%E5%B7%A5%E7%A8%8B%E5%AD%A6%E9%99%A2',
+                source: '/index/xyxw.htm',
+                target: '/universities/swufe/seie/xyxw',
+            },
+        ],
+    },
+    'ishuhui.com': {
+        _name: '鼠绘漫画',
+        www: [
+            {
+                title: '鼠绘漫画',
+                docs: 'https://docs.rsshub.app/anime.html#%E9%BC%A0%E7%BB%98%E6%BC%AB%E7%94%BB',
+                source: '/comics/anime/:id',
+                target: '/shuhui/comics/:id',
+            },
+        ],
+    },
+    'haimaoba.com': {
+        _name: '海猫吧',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#%E6%B5%B7%E7%8C%AB%E5%90%A7',
+                source: '/catalog/:id',
+                target: '/haimaoba/:id',
             },
         ],
     },

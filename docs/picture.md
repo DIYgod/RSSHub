@@ -16,6 +16,14 @@ pageClass: routes
 
 <Route author="FHYunCai" example="/bing" path="/bing"/>
 
+## Dilbert Comic Strip
+
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+
+通过提取漫画，提供比官方源更佳的阅读体验。
+
+</Route>
+
 ## Konachan Anime Wallpapers
 
 ::: tip 提示
@@ -84,6 +92,18 @@ pageClass: routes
 -   过去一年:<https://rsshub.app/yande.re/post/popular_recent/1y>
 
 </Route>
+
+## 百度趣画
+
+### 更新
+
+<Route author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
+
+## 北京天文馆
+
+### 每日一图
+
+<Route author="HenryQW" example="/bjp/apod" path="/bjp/apod"/>
 
 ## 不羞涩
 
