@@ -6,7 +6,7 @@
 
 **Q: Can I use the demo instance？**
 
-**A:** [rsshub.app](https://rsshub.app) is the demo instance provided, running the latest build of RSSHub from master branch, the cache is set 20 minutes and it's free to use. However, if you see an icon `strict anti-crawler policy`, this means popular websites such as Instagram and YouTube etc. may pose a request quota on individual IP address, which means it can get unreliable from time to time for the demo instance. You are encouraged to [host your own RSSHub instance](/en/install/) to get a better usability.
+**A:** [rsshub.app](https://rsshub.app) is the demo instance provided, running the latest build of RSSHub from master branch, the cache is set 20 minutes and it's free to use. However, if you see an badge <Badge text="strict anti-crawler policy" vertical="middle" type="warn"/> for route, this means popular websites such as Instagram etc. may pose a request quota on individual IP address, which means it can get unreliable from time to time for the demo instance. You are encouraged to [host your own RSSHub instance](/en/install/) to get a better usability.
 
 **Q: Why are images not loading in some RSSHub routes？**
 
@@ -14,7 +14,7 @@
 
 **Q: The website I want is not supported QAQ**
 
-**A:** If you are a JavaScript developer, please follow [this guide](/joinus) for submitting a pull request, otherwise, follow the issue template to [submit a new issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_en.md), and patiently wait for Santa Claus. For priority responses, consider [sponsoring us](/support).
+**A:** If you are a JavaScript developer, please follow [this guide](/en/joinus) for submitting a pull request, otherwise, follow the issue template to [submit a new issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_en.md), and patiently wait for Santa Claus. For priority responses, consider [sponsoring us](/en/support).
 
 **Q: Where do I get the changelog for RSSHub？**
 
