@@ -6,7 +6,6 @@
   xmlns:media="http://search.yahoo.com/mrss/"
 {{ /if }}
 >
-{{ if xml-stylesheet }}<?xml-stylesheet type="text/css" href="{{ cssUrl }}}" ?> {{ /if }}
     <channel>
         <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
         <link>{{ link || 'https://github.com/DIYgod/RSSHub' }}</link>

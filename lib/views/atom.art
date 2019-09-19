@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-{{ if xml-stylesheet }}<?xml-stylesheet type="text/css" href="{{ cssUrl }}}" ?> {{ /if }}
 <feed xmlns="http://www.w3.org/2005/Atom">
     <generator>RSSHub</generator>
     <webMaster>i@diygod.me (DIYgod)</webMaster>
