@@ -175,3 +175,9 @@ pageClass: routes
 ### 更新日志
 
 <Route author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
+
+## 蒲公英应用分发
+
+### app 更新
+
+<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1"/>
