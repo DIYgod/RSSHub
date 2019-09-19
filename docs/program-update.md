@@ -128,6 +128,10 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/sketch/beta" path="/sketch/beta"  />
 
+### Release 更新
+
+<Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
+
 ## Thunderbird
 
 ### 更新日志
