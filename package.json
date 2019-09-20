@@ -1,6 +1,6 @@
 {
   "name": "rsshub",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Make RSS Great Again!",
   "main": "lib/pkg.js",
   "files": [
@@ -123,8 +123,5 @@
     "moduleNameMapper": {
       "@/(.*)": "<rootDir>/lib/$1"
     }
-  },
-  "_moduleAliases": {
-    "@": "./lib"
   }
 }
