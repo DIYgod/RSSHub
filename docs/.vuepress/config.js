@@ -46,6 +46,9 @@ module.exports = {
         algolia: {
             apiKey: '6247bc0db93150fd9e531b93a3fa4046',
             indexName: 'rsshub',
+            algoliaOptions: {
+                hitsPerPage: 14,
+            },
         },
         locales: {
             '/': {
@@ -77,7 +80,7 @@ module.exports = {
                         {
                             title: '指南',
                             collapsable: true,
-                            children: ['', 'faq', 'parameter', 'api'],
+                            children: ['', 'usage', 'faq', 'parameter', 'api'],
                         },
                         {
                             title: '路由',
@@ -139,7 +142,7 @@ module.exports = {
                         {
                             title: 'Guide',
                             collapsable: true,
-                            children: ['', 'faq', 'parameter', 'api'],
+                            children: ['', 'usage', 'faq', 'parameter', 'api'],
                         },
                         {
                             title: 'Routes',

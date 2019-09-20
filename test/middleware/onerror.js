@@ -1,7 +1,7 @@
 process.env.SENTRY = 'https://mock@mock.com/1';
 
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+const server = require('../../lib/index');
 const request = supertest(server);
 
 afterAll(() => {

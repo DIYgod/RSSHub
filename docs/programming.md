@@ -524,6 +524,8 @@ GitHub 官方也提供了一些 RSS:
 | ---- | -------- | ---- | ----- | ---- | -------- | ---------- | ---- | -------- | ---------- | ------ | ---- | ------ | -------- | ---- |
 | 0    | 4096     | 8192 | 16384 | 2048 | 1        | 2          | 64   | 4        | 8          | 16     | 256  | 1024   | 128      | 32   |
 
+</Route>
+
 ### 微信开放社区-小程序问答
 
 <Route author="bestony" example="/wechat-open/community/xcx-question/new" path="/wechat-open/community/xcx-question/:tag" :paramsDesc="['new','hot','topic']">
