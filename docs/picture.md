@@ -72,6 +72,10 @@ pageClass: routes
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
+## Y 图
+
+<Route author="machsix" example="/yimg/category_sex" path="/yimg/:path" :paramsDesc="['网页路径。比如原网页路径为[https://www.yimg.net/category/sex/](https://www.yimg.net/category/sex/)，这里的参数就该是category_sex']"/>
+
 ## yande.re
 
 ::: tip 提示
