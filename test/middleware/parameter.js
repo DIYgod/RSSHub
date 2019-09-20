@@ -3,6 +3,7 @@ const server = require('../../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
+const config = require('../../lib/config').value;
 
 afterAll(() => {
     server.close();
@@ -132,6 +133,7 @@ describe('wrong_path', () => {
     it(`wrong_path`, async () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
+        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire * 100}`);
         expect(response.text).toMatch(/Error: wrong path/);
     });
 });
