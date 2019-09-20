@@ -1,6 +1,6 @@
 {
     "extends": ["eslint:recommended", "plugin:prettier/recommended"],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "sort-keys-fix"],
     "parserOptions": {
         "ecmaVersion": 2018,
         "sourceType": "module"
@@ -9,6 +9,14 @@
         "node": true,
         "es6": true
     },
+    "overrides": [
+        {
+            "files": ["assets/radar-rules.js"],
+            "rules": {
+                "sort-keys-fix/sort-keys-fix": [1, "asc", {"natural": true}]
+            }
+        }
+    ],
     "rules": {
         "no-console": 1,
         "block-scoped-var": 1,
