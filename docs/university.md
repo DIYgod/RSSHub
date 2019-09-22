@@ -100,6 +100,10 @@ pageClass: routes
 
 </Route>
 
+### 研究生院通知
+
+<Route author="RicardoMing" example="/bupt/grs" path="/bupt/grs" />
+
 ## 常州大学
 
 ### 教务处
