@@ -1,8 +1,9 @@
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+const server = require('../../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
+const config = require('../../lib/config').value;
 
 afterAll(() => {
     server.close();
@@ -40,7 +41,7 @@ describe('filter', () => {
     });
 
     it(`filter_time`, async () => {
-        const response = await request.get('/test/1?filter_time=25');
+        const response = await request.get('/test/current_time?filter_time=25');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(2);
         expect(parsed.items[0].title).toBe('Title1');
@@ -132,6 +133,7 @@ describe('wrong_path', () => {
     it(`wrong_path`, async () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
+        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire * 100}`);
         expect(response.text).toMatch(/Error: wrong path/);
     });
 });
