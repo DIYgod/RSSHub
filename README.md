@@ -23,7 +23,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Special Sponsors
 
-<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://apps.apple.com/cn/app/%E5%BF%AB%E7%9F%A5-%E8%AE%A9%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%9B%B4%E9%AB%98%E6%95%88/id1465578855" target="_blank"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://partner.lizhi.io/rsshub/office_365_share" target="_blank"><img height="60px" src="https://i.imgur.com/GyYi9MI.png"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://kzfeed.com/?from=rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://partner.lizhi.io/rsshub/office_365_share" target="_blank"><img height="60px" src="https://i.imgur.com/GyYi9MI.png"></a>
 
 ### Sponsors
 
