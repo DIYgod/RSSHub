@@ -43,6 +43,7 @@ module.exports = {
         repo: 'DIYgod/RSSHub',
         editLinks: true,
         docsDir: 'docs',
+        smoothScroll: true,
         algolia: {
             apiKey: '6247bc0db93150fd9e531b93a3fa4046',
             indexName: 'rsshub',
