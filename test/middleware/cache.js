@@ -22,7 +22,7 @@ afterAll(() => {
 describe('cache', () => {
     it('memory', async () => {
         process.env.CACHE_TYPE = 'memory';
-        server = require('../../lib/index').server;
+        server = require('../../lib/index');
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -54,7 +54,7 @@ describe('cache', () => {
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
 
-        const app = require('../../lib/index').app;
+        const app = require('../../lib/app');
         await app.context.cache.set('mock', undefined);
         expect(await app.context.cache.get('mock')).toBe('');
 
@@ -68,7 +68,7 @@ describe('cache', () => {
 
     it('redis', async () => {
         process.env.CACHE_TYPE = 'redis';
-        server = require('../../lib/index').server;
+        server = require('../../lib/index');
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -100,7 +100,7 @@ describe('cache', () => {
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
 
-        const app = require('../../lib/index').app;
+        const app = require('../../lib/app');
         await app.context.cache.set('mock1', undefined);
         expect(await app.context.cache.get('mock1')).toBe('');
         await app.context.cache.set('mock2', '2');
@@ -110,8 +110,8 @@ describe('cache', () => {
 
     it('redis with quit', async () => {
         process.env.CACHE_TYPE = 'redis';
-        server = require('../../lib/index').server;
-        const client = require('../../lib/index').cache;
+        server = require('../../lib/index');
+        const client = require('../../lib/app').context.cache.client;
         await client.quit();
         const request = supertest(server);
 
@@ -132,7 +132,7 @@ describe('cache', () => {
     it('redis with error', async () => {
         process.env.CACHE_TYPE = 'redis';
         process.env.REDIS_URL = 'redis://wrongpath:6379';
-        server = require('../../lib/index').server;
+        server = require('../../lib/index');
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -151,7 +151,7 @@ describe('cache', () => {
 
     it('no cache', async () => {
         process.env.CACHE_TYPE = '';
-        server = require('../../lib/index').server;
+        server = require('../../lib/index');
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');

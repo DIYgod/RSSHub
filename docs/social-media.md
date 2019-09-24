@@ -328,11 +328,11 @@ pageClass: routes
 
 ### 用户时间线
 
-<Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户 twitter 名']" radar="1"/>
+<Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户名']" radar="1"/>
 
 ### 用户关注时间线
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['用户 twitter 名']" radar="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['用户名']" radar="1">
 
 ::: warning 注意
 
@@ -344,11 +344,11 @@ pageClass: routes
 
 ### 列表时间线
 
-<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户 twitter 名', 'list 名称']" radar="1"/>
+<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户名', 'list 名称']" radar="1"/>
 
 ### 用户喜欢列表
 
-<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['用户 twitter 名']" radar="1"/>
+<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['用户名']" radar="1"/>
 
 ## VueVlog
 

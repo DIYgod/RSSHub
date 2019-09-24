@@ -174,6 +174,12 @@ pageClass: routes
 
 </Route>
 
+## 蒲公英应用分发
+
+### app 更新
+
+<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1"/>
+
 ## 腾讯云移动直播 SDK
 
 ### 更新日志

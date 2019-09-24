@@ -1,7 +1,7 @@
 process.env.NODE_NAME = 'mock';
 
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+const server = require('../../lib/index');
 const request = supertest(server);
 const cheerio = require('cheerio');
 let gitHash;
