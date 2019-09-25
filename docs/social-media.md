@@ -198,15 +198,15 @@ pageClass: routes
 
 ### 直播开播
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
 
 ### 直播搜索
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
 
 ### 直播分区
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
 
 ### 主站话题列表
 

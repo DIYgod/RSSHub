@@ -7552,6 +7552,13 @@ node-releases@^1.1.21:
   dependencies:
     semver "^5.3.0"
 
+nodejieba@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.3.2.tgz#0bad72e1344c7156d99368192c5a55aaee1ce35a"
+  integrity sha512-Dp3qb54D8QlpyaKYGOpkB0E/hAHB0oWWzE9RIkAGglY6KTQMeOUsM8NZ8Af9eirRZvpdXH9v6zDVpHRq04a7SA==
+  dependencies:
+    nan "^2.14.0"
+
 nodejieba@^2.2.1:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.3.0.tgz#ba6934b949ce486c6a57e4cb7df9f4a5fb3336c4"
