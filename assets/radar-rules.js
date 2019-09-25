@@ -528,5 +528,5 @@
                 target: '/tieba/post/lz/:id',
             },
         ],
-	},	
+    },	
 });
