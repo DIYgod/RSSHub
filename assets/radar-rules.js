@@ -496,4 +496,37 @@
             },
         ],
     },
+	'baidu.com': {
+        _name: '百度',
+        tieba: [
+            {
+                title: '帖子列表',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-zi-lie-biao',
+                source: 'f',
+                target: (params, url) => `/tieba/forum/${new URL(url).searchParams.get('kw')}`,
+				script: "({type: new URLSearchParams(location.search).get('tab')})",
+				verification: (params) => params.type !== 'album' && params.type !== 'good' && params.type !== 'video' && params.type !== 'group',
+            },
+			{
+                title: '精品帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#jing-pin-tie-zi',
+                source: 'f',
+                target: (params, url) => `/tieba/forum/good/${new URL(url).searchParams.get('kw')}`,
+				script: "({type: new URLSearchParams(location.search).get('tab')})",
+				verification: (params) => params.type == 'good',
+            },			
+			{
+                title: '帖子动态',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-zi-dong-tai',
+                source: '/p/:id',
+                target: '/tieba/post/:id',
+            },
+			{
+                title: '只看楼主',
+                docs: 'https://docs.rsshub.app/bbs.html#lou-zhu-dong-tai',
+                source: '/p/:id',
+                target: '/tieba/post/lz/:id',
+            },
+        ],
+	},	
 });
