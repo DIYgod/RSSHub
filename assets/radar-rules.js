@@ -447,4 +447,53 @@
             },
         ],
     },
+	'sspai.com': {
+        _name: '少数派',
+        '.': [
+            {
+                title: '最新上架付费专栏',
+                docs: 'https://docs.rsshub.app/new-media.html#zui-xin-shang-jia-fu-fei-zhuan-lan',
+                source: '/series',
+                target: '/sspai/series',
+            },
+            {
+                title: 'Matrix',
+                docs: 'https://docs.rsshub.app/new-media.html#matrix',
+                source: '/matrix',
+                target: '/sspai/matrix',
+            },
+			{
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/new-media.html#zhuan-lan',
+                source: '/column/:id',
+                target: '/sspai/column/:id',
+            },
+			{
+                title: '作者已发布文章',
+                docs: 'https://docs.rsshub.app/new-media.html#zuo-zhe-4',
+                source: ['/user/:id/posts' ,'/user/:id/updates'],
+                target: '/sspai/author/:id',
+            },
+			{
+                title: '专题',
+                docs: 'https://docs.rsshub.app/new-media.html#zhuan-ti-2',
+                source: '/topics',
+                target: '/sspai/topics',
+            },
+			{
+                title: '专题内文章更新',
+                docs: 'https://docs.rsshub.app/new-media.html#zhuan-ti-nei-wen-zhang-geng-xin',
+                source: '/topic/:id',
+                target: '/sspai/topic/:id',
+            },
+        ],
+        shortcuts: [
+            {
+                title: 'Shortcuts Gallery',
+                docs: 'https://docs.rsshub.app/new-media.html#shortcuts-gallery',
+                source: ['', '*tpath'],
+                target: '/sspai/shortcuts',
+            },
+        ],
+    },
 });
