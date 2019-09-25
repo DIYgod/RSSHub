@@ -491,7 +491,7 @@
             {
                 title: 'Shortcuts Gallery',
                 docs: 'https://docs.rsshub.app/new-media.html#shortcuts-gallery',
-                source: ['', '*tpath'],
+                source: ['', '/*tpath'],
                 target: '/sspai/shortcuts',
             },
         ],
