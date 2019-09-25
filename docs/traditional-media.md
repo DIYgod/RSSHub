@@ -134,6 +134,12 @@ Category 列表:
 
 <Route author="sanmmm" example="/yicai/brief" path="/yicai/brief" />
 
+## e 公司
+
+### 快讯
+
+<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
+
 ## 东方网
 
 ### 上海新闻
