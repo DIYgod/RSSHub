@@ -26,6 +26,12 @@ pageClass: routes
 
 </Route>
 
+## e 公司
+
+### 快讯
+
+<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
+
 ## FT 中文网
 
 ### FT 中文网
@@ -133,12 +139,6 @@ Category 列表:
 ### 直播区
 
 <Route author="sanmmm" example="/yicai/brief" path="/yicai/brief" />
-
-## e 公司
-
-### 快讯
-
-<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
 
 ## 东方网
 
