@@ -280,7 +280,7 @@ pageClass: routes
 
 ### 话题(标签)
 
-<Route author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['话题名(标签名) 例如 `名侦探柯南`', '排行类型，取值如下']"/>
+<Route author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['话题名(标签名) 例如 `名侦探柯南`', '排行类型, 默认显示最新话题, 取值如下']"/>
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
