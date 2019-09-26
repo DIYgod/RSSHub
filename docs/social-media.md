@@ -270,6 +270,22 @@ pageClass: routes
 
 <Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
 
+## Lofter
+
+::: tip 提示
+
+官方提供了用户主页 RSS: http://**:username**.lofter.com/rss
+
+:::
+
+### 话题(标签)
+
+<Route author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['话题名(标签名) 例如 `名侦探柯南`', '排行类型, 默认显示最新话题, 取值如下']"/>
+
+| new  | date | week | month | total |
+| ---- | ---- | ---- | ----- | ----- |
+| 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
+
 ## pixiv
 
 ### 用户收藏
