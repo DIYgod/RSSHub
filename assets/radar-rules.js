@@ -447,4 +447,86 @@
             },
         ],
     },
+    'sspai.com': {
+        _name: '少数派',
+        '.': [
+            {
+                title: '最新上架付费专栏',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/series',
+                target: '/sspai/series',
+            },
+            {
+                title: 'Matrix',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/matrix',
+                target: '/sspai/matrix',
+            },
+            {
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/column/:id',
+                target: '/sspai/column/:id',
+            },
+            {
+                title: '作者已发布文章',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: ['/user/:id/posts', '/user/:id/updates'],
+                target: '/sspai/author/:id',
+            },
+            {
+                title: '专题',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/topics',
+                target: '/sspai/topics',
+            },
+            {
+                title: '专题内文章更新',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/topic/:id',
+                target: '/sspai/topic/:id',
+            },
+        ],
+        shortcuts: [
+            {
+                title: 'Shortcuts Gallery',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: ['', '/*tpath'],
+                target: '/sspai/shortcuts',
+            },
+        ],
+    },
+    'baidu.com': {
+        _name: '贴吧',
+        tieba: [
+            {
+                title: '帖子列表',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: 'f',
+                target: (params, url) => `/tieba/forum/${new URL(url).searchParams.get('kw')}`,
+                script: "({type: new URLSearchParams(location.search).get('tab')})",
+                verification: (params) => !params.type || params.type === 'main',
+            },
+            {
+                title: '精品帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: 'f',
+                target: (params, url) => `/tieba/forum/good/${new URL(url).searchParams.get('kw')}`,
+                script: "({type: new URLSearchParams(location.search).get('tab')})",
+                verification: (params) => params.type === 'good',
+            },
+            {
+                title: '帖子动态',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: '/p/:id',
+                target: '/tieba/post/:id',
+            },
+            {
+                title: '只看楼主',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: '/p/:id',
+                target: '/tieba/post/lz/:id',
+            },
+        ],
+    },
 });
