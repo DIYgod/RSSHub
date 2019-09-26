@@ -145,6 +145,20 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
 
+## TapTap
+
+### 论坛
+
+<Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '论坛版块ID, 默认显示所有帖子, 论坛版块URL中`group_label_id`参数，特别的有']"/>
+
+| 全部 | 精华  | 官方     |
+| ---- | ----- | -------- |
+| all  | elite | official |
+
+### 游戏更新
+
+<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏ID, 游戏主页URL中获取']"/>
+
 ## 篝火营地
 
 ### 游戏资讯
