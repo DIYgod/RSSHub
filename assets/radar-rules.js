@@ -43,7 +43,7 @@
         '.': [
             {
                 title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
                 source: ['/u/:id', '/:id'],
                 target: '/weibo/user/:uid',
                 script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
@@ -204,66 +204,66 @@
         www: [
             {
                 title: '收藏夹',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/collection/:id',
                 target: '/zhihu/collection/:id',
             },
             {
                 title: '用户动态',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/people/:id/activities',
                 target: '/zhihu/people/activities/:id',
             },
             {
                 title: '用户回答',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/people/:id/answers',
                 target: '/zhihu/people/answers/:id',
             },
             {
                 title: '用户想法',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/people/:id/pins',
                 target: '/zhihu/people/pins/:id',
             },
             {
                 title: '热榜',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/hot',
                 target: '/zhihu/hotlist',
             },
             {
                 title: '想法热榜',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 target: '/zhihu/pin/hotlist',
             },
             {
                 title: '问题',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/question/:questionId',
                 target: '/zhihu/question/:questionId',
             },
             {
                 title: '话题',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/topic/:topicId/:type',
                 target: '/zhihu/topic/:topicId',
             },
             {
                 title: '新书',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/zhihu/bookstore/newest',
                 target: '/zhihu/pin/hotlist',
             },
             {
                 title: '想法-24 小时新闻汇总',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/pin/special/972884951192113152',
                 target: '/zhihu/pin/daily',
             },
             {
                 title: '书店-周刊',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/pub/weekly',
                 target: '/zhihu/weekly',
             },
@@ -271,7 +271,7 @@
         zhuanlan: [
             {
                 title: '专栏',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/:id',
                 target: '/zhihu/zhuanlan/:id',
             },
@@ -279,13 +279,13 @@
         daily: [
             {
                 title: '日报',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '',
                 target: '/zhihu/daily',
             },
             {
                 title: '日报',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/*tpath',
                 target: '/zhihu/daily',
             },
@@ -296,12 +296,12 @@
         www: [
             {
                 title: '关键词',
-                docs: 'https://docs.rsshub.app/shopping.html#%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E4%B9%B0',
+                docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
                 target: '/smzdm/keyword/:keyword',
             },
             {
                 title: '排行榜',
-                docs: 'https://docs.rsshub.app/shopping.html#%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E4%B9%B0',
+                docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
                 source: '/top',
             },
         ],
@@ -322,7 +322,7 @@
         www: [
             {
                 title: '专辑',
-                docs: 'https://docs.rsshub.app/multimedia.html#%E5%96%9C%E9%A9%AC%E6%8B%89%E9%9B%85',
+                docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
                 source: '/:type/:id',
                 target: '/ximalaya/album/:id/',
                 verification: (params) => parseInt(params.id) + '' === params.id,
@@ -354,7 +354,7 @@
         '.': [
             {
                 title: '专栏',
-                docs: 'https://docs.rsshub.app/programming.html#%E6%8E%98%E9%87%91',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin',
                 source: '/user/:id/posts',
                 target: '/juejin/posts/:id',
             },
@@ -402,15 +402,48 @@
         it: [
             {
                 title: '经济信息工程学院 - 通知公告',
-                docs: 'https://docs.rsshub.app/university.html#%E7%BB%8F%E6%B5%8E%E4%BF%A1%E6%81%AF%E5%B7%A5%E7%A8%8B%E5%AD%A6%E9%99%A2',
+                docs: 'https://docs.rsshub.app/university.html#xi-nan-cai-jing-da-xue',
                 source: '/index/tzgg.htm',
                 target: '/universities/swufe/seie/tzgg',
             },
             {
                 title: '经济信息工程学院 - 学院新闻',
-                docs: 'https://docs.rsshub.app/university.html#%E7%BB%8F%E6%B5%8E%E4%BF%A1%E6%81%AF%E5%B7%A5%E7%A8%8B%E5%AD%A6%E9%99%A2',
+                docs: 'https://docs.rsshub.app/university.html#xi-nan-cai-jing-da-xue',
                 source: '/index/xyxw.htm',
                 target: '/universities/swufe/seie/xyxw',
+            },
+        ],
+    },
+    'ishuhui.com': {
+        _name: '鼠绘漫画',
+        www: [
+            {
+                title: '鼠绘漫画',
+                docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua',
+                source: '/comics/anime/:id',
+                target: '/shuhui/comics/:id',
+            },
+        ],
+    },
+    'haimaoba.com': {
+        _name: '海猫吧',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba',
+                source: '/catalog/:id',
+                target: '/haimaoba/:id',
+            },
+        ],
+    },
+    'pgyer.com': {
+        _name: '蒲公英应用分发',
+        www: [
+            {
+                title: 'app更新',
+                docs: 'https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa',
+                source: '/:app',
+                target: '/pgyer/:app',
             },
         ],
     },

@@ -1,5 +1,5 @@
 const got = require('../../lib/utils/got');
-const config = require('../../lib/config');
+const config = require('../../lib/config').value;
 const nock = require('nock');
 
 describe('got', () => {

@@ -128,6 +128,10 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/sketch/beta" path="/sketch/beta"  />
 
+### Release 更新
+
+<Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
+
 ## Thunderbird
 
 ### 更新日志
@@ -156,7 +160,7 @@ pageClass: routes
 
 ### 更新
 
-见 [#怪物猎人](/game.html#怪物猎人)
+见 [#怪物猎人](/game.html#guai-wu-lie-ren)
 
 ## 厚墨
 
@@ -169,6 +173,12 @@ pageClass: routes
 | 沚水 | 楚观 | 纯二 | 张小晚 | 归谜 | 旧人 |
 
 </Route>
+
+## 蒲公英应用分发
+
+### app 更新
+
+<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1"/>
 
 ## 腾讯云移动直播 SDK
 
