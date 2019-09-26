@@ -151,6 +151,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## TapTap
 
+::: warning 注意
+
+由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS
+
+:::
+
 ### 游戏论坛
 
 <Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '论坛版块ID, 默认显示所有帖子, 论坛版块URL中`group_label_id`参数，特别的有']"/>
