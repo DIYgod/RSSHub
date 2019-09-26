@@ -1,5 +1,7 @@
+process.env.NODE_NAME = 'mock';
+
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+const server = require('../../lib/index');
 const request = supertest(server);
 const cheerio = require('cheerio');
 let gitHash;
@@ -14,12 +16,14 @@ afterAll(() => {
 });
 
 describe('debug', () => {
-    it(`debug`, async () => {
+    it('debug', async () => {
         await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/1').set('X-Forwarded-For', '233.233.233.234');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.234');
+        await request.get('/test/empty').set('X-Forwarded-For', '233.233.233.233');
+        await request.get('/test/empty').set('X-Forwarded-For', '233.233.233.234');
 
         const response = await request.get('/').set('X-Forwarded-For', '233.233.233.233');
 
@@ -34,20 +38,29 @@ describe('debug', () => {
                 .html()
                 .trim();
             switch (key) {
+                case 'node name:':
+                    expect(value).toBe('mock');
+                    break;
                 case 'git hash:':
                     expect(value).toBe(gitHash);
                     break;
-                case '请求数:':
-                    expect(value).toBe('6');
+                case 'request amount:':
+                    expect(value).toBe('8');
                     break;
-                case '热门路由:':
-                    expect(value).toBe(`5&nbsp;&nbsp;/test/:id<br>`);
+                case 'hot routes:':
+                    expect(value).toBe('4  undefined<br>3  /test/:id<br>');
                     break;
-                case '热门路径:':
-                    expect(value).toBe(`3&nbsp;&nbsp;/test/1<br>2&nbsp;&nbsp;/test/2<br>1&nbsp;&nbsp;/<br>`);
+                case 'hot paths:':
+                    expect(value).toBe('3  /test/1<br>2  /test/2<br>2  /test/empty<br>1  /<br>');
                     break;
-                case '热门IP:':
-                    expect(value).toBe(`4&nbsp;&nbsp;233.233.233.233<br>2&nbsp;&nbsp;233.233.233.234<br>`);
+                case 'hot IP:':
+                    expect(value).toBe('5  233.233.233.233<br>3  233.233.233.234<br>');
+                    break;
+                case 'hot error routes:':
+                    expect(value).toBe('1  /test/:id<br>1  undefined<br>');
+                    break;
+                case 'hot error paths:':
+                    expect(value).toBe('2  /test/empty<br>');
                     break;
             }
         });

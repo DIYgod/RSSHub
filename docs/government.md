@@ -51,6 +51,16 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
 
+### 河北省退役军人事务厅
+
+<Route author="SunShinenny" example="/gov/veterans/hebei/sxxx" path="/gov/veterans/hebei/:type" :paramsDesc="['分类名']">
+
+| 省内信息 | 厅内信息 | 市县信息 |
+| :------: | :------: | :------: |
+|   ywgz   |   tnxx   |   sxxx   |
+
+</Route>
+
 ### 江苏省人民政府
 
 <Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
@@ -116,6 +126,10 @@ pageClass: routes
 ### 证监会消息
 
 <Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+
+### 申请事项进度
+
+<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国驻外使领馆
 
@@ -232,17 +246,15 @@ pageClass: routes
 
 ## 中华人民共和国退役军人事务部
 
-### 部内信息
+### 中华人民共和国退役军人事务部
 
-<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/bnxx"/>
+<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/:type" :paramsDesc="['分类名']">
 
-### 政策解读
+| 部内信息 | 政策解读 | 首页信息 |
+| :------: | :------: | :------: |
+|   bnxx   |   zcjd   |  index   |
 
-<Route author="SunShinenny" example="/gov/veterans/zcjd" path="/gov/veterans/zcjd"/>
-
-### 首页信息
-
-<Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
+</Route>
 
 ## 中华人民共和国外交部
 

@@ -48,6 +48,16 @@ pageClass: routes
 
 <Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
 
+## 缺书网
+
+### 促销
+
+<Route author="kt286" example="/queshu/sale" path="/queshu/sale"/>
+
+### 单品活动信息
+
+<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
+
 ## 什么值得买
 
 ::: tip 提示
@@ -152,6 +162,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
 
+## 微店
+
+### 商品上新
+
+<Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" :paramsDesc="['商铺 id']"/>
+
 ## 小米
 
 ### 小米众筹
@@ -165,3 +181,9 @@ pageClass: routes
 ### 小米有品每日上新
 
 <Route author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+
+## 有赞
+
+### 商品上新
+
+<Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺id']"/>

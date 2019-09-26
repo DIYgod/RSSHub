@@ -122,6 +122,16 @@ pageClass: routes
 
 <Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss" radar="1"/>
 
+## sketch.com
+
+### beta 更新
+
+<Route author="Jeason0228" example="/sketch/beta" path="/sketch/beta"  />
+
+### Release 更新
+
+<Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
+
 ## Thunderbird
 
 ### 更新日志
@@ -150,7 +160,25 @@ pageClass: routes
 
 ### 更新
 
-见 [#怪物猎人](/game.html#怪物猎人)
+见 [#怪物猎人](/game.html#guai-wu-lie-ren)
+
+## 厚墨
+
+### 书源更新
+
+<Route author="AngUOI" example="/houmo/9251" path="/houmo/:code?" :paramsDesc="['不填则默认获取全部']">
+
+| 1212 | 2000 | 2333 | 6666   | 9251 | 9713 |
+| ---- | ---- | ---- | ------ | ---- | ---- |
+| 沚水 | 楚观 | 纯二 | 张小晚 | 归谜 | 旧人 |
+
+</Route>
+
+## 蒲公英应用分发
+
+### app 更新
+
+<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1"/>
 
 ## 腾讯云移动直播 SDK
 
