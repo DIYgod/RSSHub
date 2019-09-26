@@ -246,17 +246,15 @@ pageClass: routes
 
 ## 中华人民共和国退役军人事务部
 
-### 部内信息
+### 中华人民共和国退役军人事务部
 
-<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/bnxx"/>
+<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/:type" :paramsDesc="['分类名']">
 
-### 政策解读
+| 部内信息 | 政策解读 | 首页信息 |
+| :------: | :------: | :------: |
+|   bnxx   |   zcjd   |  index   |
 
-<Route author="SunShinenny" example="/gov/veterans/zcjd" path="/gov/veterans/zcjd"/>
-
-### 首页信息
-
-<Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
+</Route>
 
 ## 中华人民共和国外交部
 
