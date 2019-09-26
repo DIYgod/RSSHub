@@ -560,6 +560,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
 
+## 天涯
+
+### 天涯 BBS 论坛
+
+<Route author="a14907" example="https://rsshub.app/tianya/index" path="/tianya/index" :paramsDesc="无"/>
+
 ## 即刻
 
 ### 圈子-精选
