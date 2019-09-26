@@ -104,6 +104,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']"/>
 
+### PlayStation 4 系统更新纪录
+
+<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" />
+
 ## psnine
 
 ### 首页-白金攻略/游戏开箱
