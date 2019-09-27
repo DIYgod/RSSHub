@@ -375,6 +375,16 @@ pageClass: routes
 
 <Route author="LogicJake" example="/whalegogo/home" path="/whalegogo/home"/>
 
+### 其他栏目
+
+<Route author="Jeason0228" example="/whalegogo/portal" path="/whalegogo/portal/:type_id/:tagid?/" :paramsDesc="['type_id,栏目id','tagid,标签id']">
+
+| 快讯                 | 文章                 | 活动                 | 评测                 | 视频               | 访谈               |
+| -------------------- | -------------------- | -------------------- | -------------------- | ------------------ | ------------------ |
+| type_id=2,tagid 不填 | type_id=1,tagid 不填 | type_id=7,tagid 不填 | type_id=8,tagid 不填 | type_id=1,tagid=70 | type_id=1,tagid=73 |
+
+</Route>
+
 ## 巨潮资讯
 
 ### 公司公告
