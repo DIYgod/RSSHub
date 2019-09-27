@@ -26,6 +26,12 @@ pageClass: routes
 
 </Route>
 
+## e 公司
+
+### 快讯
+
+<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
+
 ## FT 中文网
 
 ### FT 中文网

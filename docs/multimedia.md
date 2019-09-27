@@ -222,7 +222,7 @@ pageClass: routes
 
 ## 抖音
 
-见 [#抖音](/social-media.html#抖音)
+见 [#抖音](/social-media.html#dou-yin)
 
 ## 高清电台
 
