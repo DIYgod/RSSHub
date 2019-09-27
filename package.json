@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "start": "node lib/index.js",
+    "start_watch":"node --inspect lib/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
