@@ -160,7 +160,7 @@ pageClass: routes
 
 ### 更新
 
-见 [#怪物猎人](/game.html#怪物猎人)
+见 [#怪物猎人](/game.html#guai-wu-lie-ren)
 
 ## 厚墨
 

@@ -15,7 +15,11 @@ sidebarDepth: 0
 [![build status](https://img.shields.io/travis/DIYgod/RSSHub/master.svg?style=flat-square)](https://travis-ci.org/DIYgod/RSSHub)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square)](https://codecov.io/github/DIYgod/RSSHub?branch=master)
 
-RSSHub is an open source, easy to use, and extensible RSS feed aggregator, it's able to generate feeds from pretty much everything. With the help of the power of the open source community, RSSHub is developing rapidly, thousands of content on hundreds of websites have been adapted.
+RSSHub is an open source, easy to use, and extensible RSS feed aggregator, it's capable of generating RSS feeds from pretty much everything.
+
+Our vibrant open source community ensures the deliver of RSSHub's new routes, new features and bug fixes.
+
+RSSHub delivers millions of contents aggregated from all kinds of sources.
 
 ## Special Thanks
 
