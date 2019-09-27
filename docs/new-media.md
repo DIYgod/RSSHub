@@ -377,7 +377,7 @@ pageClass: routes
 
 ### 其他栏目
 
-<Route author="Jeason0228" example="/whalegogo/portal" path="/whalegogo/portal/:type_id/:tagid?/" :paramsDesc="['type_id,栏目id','tagid,标签id']">
+<Route author="Jeason0228" example="/whalegogo/portal/2" path="/whalegogo/portal/:type_id/:tagid?/" :paramsDesc="['type_id,栏目id','tagid,标签id']">
 
 | 快讯                 | 文章                 | 活动                 | 评测                 | 视频               | 访谈               |
 | -------------------- | -------------------- | -------------------- | -------------------- | ------------------ | ------------------ |
