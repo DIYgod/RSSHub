@@ -26,6 +26,12 @@ pageClass: routes
 
 </Route>
 
+## e 公司
+
+### 快讯
+
+<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
+
 ## FT 中文网
 
 ### FT 中文网
@@ -76,6 +82,10 @@ Solidot 提供的 feed:
 
 ## The Economist
 
+### 全文输出
+
+<Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
+
 ### GRE Vocabulary
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
@@ -123,6 +133,12 @@ Category 列表:
 ### 首页新闻
 
 <Route author="EsuRt"  example="/caixin/article" path="/caixin/article"/>
+
+## 第一财经
+
+### 直播区
+
+<Route author="sanmmm" example="/yicai/brief" path="/yicai/brief" />
 
 ## 东方网
 
@@ -230,7 +246,7 @@ category 对应的关键词有
 
 ### 官方 RSS
 
-<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/index/:lang?" :paramsDesc="['语言, 缺省中文']">
+<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言, 缺省中文']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
@@ -305,13 +321,21 @@ category 对应的关键词有
 
 ## 央视新闻
 
+### 新闻联播
+
+<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
+
+新闻联播内容摘要。
+
+</Route>
+
 ### 专题
 
 <Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 国内  | 国际  | 视频  | 科技 | 社会    | 法律 | 娱乐 | 每周质量报告 |
-| ----- | ----- | ----- | ---- | ------- | ---- | ---- | ------------ |
-| china | world | video | tech | society | law  | ent  | mzzlbg       |
+| 新闻 | 国内  | 国际  | 社会    | 法治 | 文娱 | 科技 | 生活 | 教育 | 每周质量报告 |
+| ---- | ----- | ----- | ------- | ---- | ---- | ---- | ---- | ---- | ------------ |
+| news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
 
 </Route>
 
@@ -368,5 +392,19 @@ category 对应的关键词有
 | news | scenery | topic | move |
 | ---- | ------- | ----- | ---- |
 | 资讯 | 风景    | 体验  | 交通 |
+
+</Route>
+
+## 中国日报
+
+### 英语点津
+
+<Route author="sanmmm" example="/chinadaily/english/thelatest" path="/chinadaily/english/:category" :paramsDesc="['目录分类']">
+
+目录分类
+
+| 最新      | 双语           | 热词          | 口语            | 译词          | 视频        | 听力     | 专栏      | 文件                     | 考试         |
+| --------- | -------------- | ------------- | --------------- | ------------- | ----------- | -------- | --------- | ------------------------ | ------------ |
+| thelatest | news_bilingual | news_hotwords | practice_tongue | trans_collect | video_links | audio_cd | columnist | 5af95d44a3103f6866ee845c | englishexams |
 
 </Route>

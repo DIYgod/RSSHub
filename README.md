@@ -11,24 +11,24 @@
 
 ## 介绍
 
-RSSHub 是一个轻量、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源
+RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源。RSSHub 借助于开源社区的力量快速发展中，目前已适配数百家网站的上千项内容
 
-[Telegram 群](https://t.me/rsshub)
+可以配合浏览器扩展 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 食用
 
-[使用文档](https://docs.rsshub.app/)
+[Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
 
-[English docs](https://docs.rsshub.app/en)
+[使用文档](https://docs.rsshub.app/) | [English docs](https://docs.rsshub.app/en)
 
 ## 鸣谢
 
 ### Special Sponsors
 
-<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://apps.apple.com/cn/app/%E5%BF%AB%E7%9F%A5-%E8%AE%A9%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E6%9B%B4%E9%AB%98%E6%95%88/id1465578855" target="_blank"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://partner.lizhi.io/rsshub/office_365_share" target="_blank"><img height="60px" src="https://i.imgur.com/GyYi9MI.png"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://kzfeed.com/?from=rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://partner.lizhi.io/rsshub/office_365_share" target="_blank"><img height="60px" src="https://i.imgur.com/GyYi9MI.png"></a>
 
 ### Sponsors
 
-| [Eternal Proxy](https://proxy.eternalstudio.cn/?from=rsshub) | [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) |
-| :----------------------------------------------------------: | :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: |
+| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) |
+| :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -76,6 +76,10 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着�
 
 -   [微信支付](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
 -   [支付宝](https://i.loli.net/2019/03/23/5c950ebbc980e.png)
+
+## 周边产品
+
+也可以购买我们[官方授权的周边产品](https://telegra.ph/RSSHub-周边-08-20-2)，每售出一件周边，我们将获得售价 10% 的捐赠。
 
 ## 相关项目
 

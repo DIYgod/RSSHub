@@ -13,7 +13,7 @@ pageClass: routes
 
 ### 動畫
 
-<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']">
+<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
 
 时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
 
@@ -21,7 +21,7 @@ pageClass: routes
 
 ### 搜尋
 
-<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']"/>
+<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']" radar="1"/>
 
 ## Animen 动漫平台
 
@@ -85,7 +85,25 @@ pageClass: routes
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
 
+## Hanime.tv
+
+### 最近更新
+
+<Route author="EsuRt" example="/hanime/video" path="/hanime/video"/>
+
 ## Hpoi 手办维基
+
+### 情报
+
+<Route author="sanmmm" path="/hpoi/info/:type?" example="/hpoi/info/all" :paramsDesc="['分类, 见下表, 默认为`all`']">
+
+分类
+
+| 全部 | 手办  | 模型  |
+| ---- | ----- | ----- |
+| all  | hobby | model |
+
+</Route>
 
 ### 浏览周边
 
@@ -149,6 +167,12 @@ pageClass: routes
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
+## 海猫吧
+
+### 漫画更新
+
+<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
+
 ## 看漫画
 
 ### 漫画更新
@@ -165,7 +189,7 @@ pageClass: routes
 
 ### 鼠绘漫画
 
-<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']"/>
+<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
 
 ## 忧郁的 loli
 

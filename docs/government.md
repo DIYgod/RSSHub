@@ -37,17 +37,29 @@ pageClass: routes
 
 </Route>
 
-### 滚动新闻
+### 政府新闻
 
-<Route author="EsuRt" example="/gov/xinwen/gundong" path="/gov/xinwen/gundong"/>
+<Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" :paramsDesc="['分类名']">
 
-### 新闻要闻
+| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 |
+| :------: | :------: | :------: | :--------: |
+|    bm    |    gd    |    yw    |    gwy     |
 
-<Route author="EsuRt" example="/gov/xinwen/yaowen" path="/gov/xinwen/yaowen"/>
+</Route>
 
-### 国务院信息
+### 吹风会
 
-<Route author="EsuRt" example="/gov/statecouncil/news" path="/gov/statecouncil/news"/>
+<Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
+
+### 河北省退役军人事务厅
+
+<Route author="SunShinenny" example="/gov/veterans/hebei/sxxx" path="/gov/veterans/hebei/:type" :paramsDesc="['分类名']">
+
+| 省内信息 | 厅内信息 | 市县信息 |
+| :------: | :------: | :------: |
+|   ywgz   |   tnxx   |   sxxx   |
+
+</Route>
 
 ### 江苏省人民政府
 
@@ -67,6 +79,18 @@ pageClass: routes
 
 </Route>
 
+### 山西省人民政府
+
+#### 山西省人社厅
+
+<Route author="wolfyu1991" example="/gov/shanxi/rst/rsks-tzgg" path="/gov/shanxi/rst/:category" :paramsDesc="['分类名']">
+
+| 通知公告  | 公务员考试 | 事业单位考试 | 专业技术人员资格考试 | 其他考试  |
+| :-------: | :--------: | :----------: | :------------------: | :-------: |
+| rsks-tzgg | rsks-gwyks | rsks-sydwks  |   rsks-zyjsryzgks    | rsks-qtks |
+
+</Route>
+
 ### 南京市人民政府
 
 <Route author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
@@ -77,6 +101,22 @@ pageClass: routes
 
 </Route>
 
+### 苏州市人民政府
+
+#### 政府新闻
+
+<Route author="EsuRt" example="/gov/suzhou/news/:uid" path="/gov/suzhou/news" :paramsDesc="['分类名']">
+
+| 政务要闻 | 区县快讯 |
+| :------: | :------: |
+|   news   | district |
+
+</Route>
+
+#### 政府信息公开文件
+
+<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
+
 ## 中国证券监督管理委员会
 
 ### 发审委公告
@@ -86,6 +126,10 @@ pageClass: routes
 ### 证监会消息
 
 <Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+
+### 申请事项进度
+
+<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国驻外使领馆
 
@@ -188,6 +232,12 @@ pageClass: routes
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
+## 中华人民共和国商务部
+
+### 政务公开
+
+<Route author="LogicJake" example="/mofcom/article/b" path="/mofcom/article/:suffix" :paramsDesc="['支持形如`http://www.mofcom.gov.cn/article/*`的网站，传入 article 之后的后缀']" />
+
 ## 中华人民共和国生态环境部
 
 ### 公示
@@ -196,17 +246,15 @@ pageClass: routes
 
 ## 中华人民共和国退役军人事务部
 
-### 部内信息
+### 中华人民共和国退役军人事务部
 
-<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/bnxx"/>
+<Route author="SunShinenny" example="/gov/veterans/bnxx" path="/gov/veterans/:type" :paramsDesc="['分类名']">
 
-### 政策解读
+| 部内信息 | 政策解读 | 首页信息 |
+| :------: | :------: | :------: |
+|   bnxx   |   zcjd   |  index   |
 
-<Route author="SunShinenny" example="/gov/veterans/zcjd" path="/gov/veterans/zcjd"/>
-
-### 首页信息
-
-<Route author="SunShinenny" example="/gov/veterans/index" path="/gov/veterans/index"/>
+</Route>
 
 ## 中华人民共和国外交部
 
