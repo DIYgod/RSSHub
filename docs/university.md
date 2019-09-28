@@ -981,6 +981,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 浙大软件学院
+
+<Route author="yonvenne" example="/zju/cst/1" path="/universities/zju/cst/:type" :paramsDesc="['1 招生信息, 2 教学管理, 3 思政工作, 4 实习就业, 5 合作科研']">
+
+| 招生信息 | 教学管理 | 思政工作 | 实习就业 | 合作科研 |
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |
+
+</Route>
+
 ## 浙江工商大学
 
 ### 浙江工商大学
