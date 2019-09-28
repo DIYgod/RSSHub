@@ -3881,7 +3881,7 @@ enabled@1.0.x:
   dependencies:
     env-variable "0.0.x"
 
-encodeurl@~1.0.2:
+encodeurl@^1.0.2, encodeurl@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
@@ -6578,10 +6578,10 @@ koa-router@7.4.0:
     path-to-regexp "^1.1.1"
     urijs "^1.19.0"
 
-koa@2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/koa/-/koa-2.8.1.tgz#98e13b267ab8a1868f015a4b41b5a52e31457ce5"
-  integrity sha512-iCgjRkntcVud5amnioi+79r7TPVhKPfCY8UzL9GjyU+nIWTE9xsqyrJ6kib3InT9JYRyUu9Y67i5apCjf997TQ==
+koa@2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/koa/-/koa-2.8.2.tgz#dfba771a69c1a98e014826804e95132c00af6615"
+  integrity sha512-q1uZOgpl3wjr5FS/tjbABJ8lA5+NeKa9eq7QyBP5xxgOBwJN4iBrMEgO3LroE51lrIw3BsO0WZZ0Yi6giSiMDw==
   dependencies:
     accepts "^1.3.5"
     cache-content-type "^1.0.0"
@@ -6592,6 +6592,7 @@ koa@2.8.1:
     delegates "^1.0.0"
     depd "^1.1.2"
     destroy "^1.0.4"
+    encodeurl "^1.0.2"
     error-inject "^1.0.0"
     escape-html "^1.0.3"
     fresh "~0.5.2"
