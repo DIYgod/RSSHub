@@ -1,5 +1,5 @@
 const got = require('../../lib/utils/got');
-const config = require('../../lib/config');
+const config = require('../../lib/config').value;
 const nock = require('nock');
 
 describe('got', () => {
@@ -48,7 +48,8 @@ describe('got', () => {
                 return [200, '{"code": 0}'];
             });
 
-        const response1 = await got.post('http://rsshub.test/post', {
+        const response1 = await got.post('post', {
+            baseUrl: 'http://rsshub.test/',
             form: true,
             data: {
                 test: 1,

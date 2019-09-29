@@ -16,6 +16,28 @@ pageClass: routes
 
 <Route author="FHYunCai" example="/bing" path="/bing"/>
 
+## CNU 视觉联盟
+
+### 每日精选
+
+<Route author="hoilc" example="/cnu/selected" path="/cnu/selected" />
+
+### 发现
+
+<Route author="hoilc" example="/cnu/discovery/hot/自然" path="/cnu/discovery/:type?/:category?" :paramsDesc="['板块类型, 默认为`热门`, 具体参见下表', '图片类别, 默认为`0`代表全部, 可参见[这里](http://www.cnu.cc/discoveryPage/hot-0)']"/>
+
+| 热门 | 推荐      | 最新   |
+| ---- | --------- | ------ |
+| hot  | recommend | recent |
+
+## Dilbert Comic Strip
+
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+
+通过提取漫画，提供比官方源更佳的阅读体验。
+
+</Route>
+
 ## Konachan Anime Wallpapers
 
 ::: tip 提示
@@ -74,7 +96,7 @@ pageClass: routes
 
 ### Popular Recent Posts
 
-<Route author="magic-akari" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
+<Route author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
 
 举例:
 
@@ -84,6 +106,18 @@ pageClass: routes
 -   过去一年:<https://rsshub.app/yande.re/post/popular_recent/1y>
 
 </Route>
+
+## 百度趣画
+
+### 更新
+
+<Route author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
+
+## 北京天文馆
+
+### 每日一图
+
+<Route author="HenryQW" example="/bjp/apod" path="/bjp/apod"/>
 
 ## 不羞涩
 

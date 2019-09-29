@@ -10,7 +10,7 @@
         "es6": true
     },
     "rules": {
-        "no-console": 0,
+        "no-console": 1,
         "block-scoped-var": 1,
         "curly": 1,
         "eqeqeq": 1,

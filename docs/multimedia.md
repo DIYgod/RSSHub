@@ -4,6 +4,12 @@ pageClass: routes
 
 # 音视频
 
+## 99% Invisible
+
+### Transcript
+
+<Route author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
+
 ## AcFun
 
 ### 番剧
@@ -95,7 +101,7 @@ pageClass: routes
 
 **类型参考这里**
 | 电影 | 连续剧 | 动画 | 综艺 | 纪录片 |
-| - | - | - | - | - |
+| ---- | ------ | ---- | ---- | ------ |
 | 6 | 7 | 15 | 20 | 24 |
 
 | 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
@@ -160,6 +166,12 @@ pageClass: routes
 
 <Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
 
+## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
+
+<Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
+
 ## 草榴社区
 
 ### 分区帖子
@@ -210,7 +222,7 @@ pageClass: routes
 
 ## 抖音
 
-见 [#抖音](/social-media.html#抖音)
+见 [#抖音](/social-media.html#dou-yin)
 
 ## 高清电台
 
@@ -239,6 +251,18 @@ pageClass: routes
 ### 即将上映
 
 <Route author="HenryQW" example="/maoyan/upcoming" path="/maoyan/upcoming" />
+
+## 奈菲影视
+
+### 分区
+
+<Route author="AngUOI" example="/nfmovies/0" path="/nfmovies/:id?" :paramsDesc="['子版块 id, 为空默认首页']">
+
+| 首页 | 电影 | 电视剧 | 综艺 | 动漫 | 奈菲独家 |
+| ---- | ---- | ------ | ---- | ---- | -------- |
+| 0    | 1    | 2      | 3    | 4    | 5        |
+
+</Route>
 
 ## 柠檬 私房歌 (ningmeng.name)
 
@@ -333,6 +357,20 @@ pageClass: routes
 ### 电台节目
 
 <Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
+
+## 字幕库
+
+### 字幕列表
+
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+
+类型
+
+| 最新电影 | 最新美剧 |
+| -------- | -------- |
+| mv       | tv       |
+
+</Route>
 
 ## 字幕组（ZiMuZu.tv）
 

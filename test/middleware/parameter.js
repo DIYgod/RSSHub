@@ -1,8 +1,9 @@
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+const server = require('../../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
+const config = require('../../lib/config').value;
 
 afterAll(() => {
     server.close();
@@ -40,7 +41,7 @@ describe('filter', () => {
     });
 
     it(`filter_time`, async () => {
-        const response = await request.get('/test/1?filter_time=25');
+        const response = await request.get('/test/current_time?filter_time=25');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(2);
         expect(parsed.items[0].title).toBe('Title1');
@@ -110,7 +111,7 @@ describe('empty', () => {
     it(`empty`, async () => {
         const response1 = await request.get('/test/empty');
         expect(response1.status).toBe(404);
-        expect(response1.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: this route is empty/);
+        expect(response1.text).toMatch(/Error: this route is empty/);
 
         const response2 = await request.get('/test/1?limit=0');
         expect(response2.status).toBe(200);
@@ -132,7 +133,8 @@ describe('wrong_path', () => {
     it(`wrong_path`, async () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
-        expect(response.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: wrong path/);
+        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire * 100}`);
+        expect(response.text).toMatch(/Error: wrong path/);
     });
 });
 
@@ -142,5 +144,27 @@ describe('fulltext_mode', () => {
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).not.toBe(undefined);
+    });
+});
+
+describe('complicated_description', () => {
+    it(`complicated_description`, async () => {
+        const response = await request.get('/test/complicated');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].content).toBe(`<a href="http://mock.com/DIYgod/RSSHub"></a>
+<img src="http://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+
+<a href="http://mock.com/DIYgod/RSSHub"></a>
+<img src="http://mock.com/DIYgod/RSSHub.jpg" data-src="/DIYgod/RSSHub0.jpg" referrerpolicy="no-referrer">
+<img data-src="/DIYgod/RSSHub.jpg" src="http://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<img data-mock="/DIYgod/RSSHub.png" src="http://mock.com/DIYgod/RSSHub.png" referrerpolicy="no-referrer">
+<img mock="/DIYgod/RSSHub.gif" src="http://mock.com/DIYgod/RSSHub.gif" referrerpolicy="no-referrer">
+<img src="http://mock.com/DIYgod/DIYgod/RSSHub" referrerpolicy="no-referrer">
+<img src="http://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
+        expect(parsed.items[1].content).toBe(`<a href="http://mock.com/DIYgod/RSSHub"></a>
+<img src="http://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
+        expect(parsed.items[2].content).toBe(`<a href="https://mock.com/DIYgod/RSSHub"></a>
+<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
     });
 });

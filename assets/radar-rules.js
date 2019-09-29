@@ -5,18 +5,7 @@
             {
                 title: '分区视频',
                 docs: 'https://docs.rsshub.app/social-media.html#bilibili',
-                source: '/v/*tpath',
-                target: (params) => {
-                    let tid;
-                    switch (params.tpath) {
-                        case 'douga/mad':
-                            tid = '24';
-                            break;
-                        default:
-                            return false;
-                    }
-                    return `/bilibili/partion/${tid}`;
-                },
+                source: ['/v/*tpath', '/documentary', '/movie', '/tv'],
             },
             {
                 title: '视频评论',
@@ -54,17 +43,7 @@
         '.': [
             {
                 title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
-                source: ['/u/:id', '/:id'],
-                target: '/weibo/user/:uid',
-                script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
-                verification: (params) => params.uid,
-            },
-        ],
-        www: [
-            {
-                title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
                 source: ['/u/:id', '/:id'],
                 target: '/weibo/user/:uid',
                 script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
@@ -85,19 +64,23 @@
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/member.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+                target: (params, url) => `/pixiv/user/${new URL(url).searchParams.get('id')}`,
             },
             {
                 title: '排行榜',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/ranking.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
             },
             {
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/search.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '关注的新作品',
+                docs: 'https://docs.rsshub.app/social-media.html#pixiv',
+                source: '/bookmark_new_illust.php',
+                target: '/pixiv/user/illustfollows',
             },
         ],
     },
@@ -208,6 +191,12 @@
                 source: '/:user/:repo/blob/:branch/*filepath',
                 target: '/github/file/:user/:repo/:branch/:filepath',
             },
+            {
+                title: '用户 Starred Repositories',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: '/:user',
+                target: '/github/starred_repos/:user',
+            },
         ],
     },
     'zhihu.com': {
@@ -215,66 +204,72 @@
         www: [
             {
                 title: '收藏夹',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/collection/:id',
                 target: '/zhihu/collection/:id',
             },
             {
                 title: '用户动态',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/people/:id/activities',
                 target: '/zhihu/people/activities/:id',
             },
             {
                 title: '用户回答',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/people/:id/answers',
                 target: '/zhihu/people/answers/:id',
             },
             {
                 title: '用户想法',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/people/:id/pins',
                 target: '/zhihu/people/pins/:id',
             },
             {
+                title: '用户文章',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
+                source: '/people/:id/posts',
+                target: '/zhihu/people/posts/:id',
+            },
+            {
                 title: '热榜',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/hot',
                 target: '/zhihu/hotlist',
             },
             {
                 title: '想法热榜',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 target: '/zhihu/pin/hotlist',
             },
             {
                 title: '问题',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/question/:questionId',
                 target: '/zhihu/question/:questionId',
             },
             {
                 title: '话题',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/topic/:topicId/:type',
                 target: '/zhihu/topic/:topicId',
             },
             {
                 title: '新书',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/zhihu/bookstore/newest',
                 target: '/zhihu/pin/hotlist',
             },
             {
                 title: '想法-24 小时新闻汇总',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/pin/special/972884951192113152',
                 target: '/zhihu/pin/daily',
             },
             {
                 title: '书店-周刊',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/pub/weekly',
                 target: '/zhihu/weekly',
             },
@@ -282,7 +277,7 @@
         zhuanlan: [
             {
                 title: '专栏',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/:id',
                 target: '/zhihu/zhuanlan/:id',
             },
@@ -290,13 +285,13 @@
         daily: [
             {
                 title: '日报',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '',
                 target: '/zhihu/daily',
             },
             {
                 title: '日报',
-                docs: 'https://docs.rsshub.app/social-media.html#%E7%9F%A5%E4%B9%8E',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/*tpath',
                 target: '/zhihu/daily',
             },
@@ -307,12 +302,12 @@
         www: [
             {
                 title: '关键词',
-                docs: 'https://docs.rsshub.app/shopping.html#%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E4%B9%B0',
+                docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
                 target: '/smzdm/keyword/:keyword',
             },
             {
                 title: '排行榜',
-                docs: 'https://docs.rsshub.app/shopping.html#%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E4%B9%B0',
+                docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
                 source: '/top',
             },
         ],
@@ -333,7 +328,7 @@
         www: [
             {
                 title: '专辑',
-                docs: 'https://docs.rsshub.app/multimedia.html#%E5%96%9C%E9%A9%AC%E6%8B%89%E9%9B%85',
+                docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
                 source: '/:type/:id',
                 target: '/ximalaya/album/:id/',
                 verification: (params) => parseInt(params.id) + '' === params.id,
@@ -365,7 +360,7 @@
         '.': [
             {
                 title: '专栏',
-                docs: 'https://docs.rsshub.app/programming.html#%E6%8E%98%E9%87%91',
+                docs: 'https://docs.rsshub.app/programming.html#jue-jin',
                 source: '/user/:id/posts',
                 target: '/juejin/posts/:id',
             },
@@ -405,6 +400,138 @@
                 docs: 'https://docs.rsshub.app/social-media.html#instagram',
                 source: '/explore/tags/:tag',
                 target: '/instagram/tag/:tag',
+            },
+        ],
+    },
+    'swufe.edu.cn': {
+        _name: '西南财经大学',
+        it: [
+            {
+                title: '经济信息工程学院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#xi-nan-cai-jing-da-xue',
+                source: '/index/tzgg.htm',
+                target: '/universities/swufe/seie/tzgg',
+            },
+            {
+                title: '经济信息工程学院 - 学院新闻',
+                docs: 'https://docs.rsshub.app/university.html#xi-nan-cai-jing-da-xue',
+                source: '/index/xyxw.htm',
+                target: '/universities/swufe/seie/xyxw',
+            },
+        ],
+    },
+    'ishuhui.com': {
+        _name: '鼠绘漫画',
+        www: [
+            {
+                title: '鼠绘漫画',
+                docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua',
+                source: '/comics/anime/:id',
+                target: '/shuhui/comics/:id',
+            },
+        ],
+    },
+    'haimaoba.com': {
+        _name: '海猫吧',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba',
+                source: '/catalog/:id',
+                target: '/haimaoba/:id',
+            },
+        ],
+    },
+    'pgyer.com': {
+        _name: '蒲公英应用分发',
+        www: [
+            {
+                title: 'app更新',
+                docs: 'https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa',
+                source: '/:app',
+                target: '/pgyer/:app',
+            },
+        ],
+    },
+    'sspai.com': {
+        _name: '少数派',
+        '.': [
+            {
+                title: '最新上架付费专栏',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/series',
+                target: '/sspai/series',
+            },
+            {
+                title: 'Matrix',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/matrix',
+                target: '/sspai/matrix',
+            },
+            {
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/column/:id',
+                target: '/sspai/column/:id',
+            },
+            {
+                title: '作者已发布文章',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: ['/user/:id/posts', '/user/:id/updates'],
+                target: '/sspai/author/:id',
+            },
+            {
+                title: '专题',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/topics',
+                target: '/sspai/topics',
+            },
+            {
+                title: '专题内文章更新',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/topic/:id',
+                target: '/sspai/topic/:id',
+            },
+        ],
+        shortcuts: [
+            {
+                title: 'Shortcuts Gallery',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: ['', '/*tpath'],
+                target: '/sspai/shortcuts',
+            },
+        ],
+    },
+    'baidu.com': {
+        _name: '贴吧',
+        tieba: [
+            {
+                title: '帖子列表',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: 'f',
+                target: (params, url) => `/tieba/forum/${new URL(url).searchParams.get('kw')}`,
+                script: "({type: new URLSearchParams(location.search).get('tab')})",
+                verification: (params) => !params.type || params.type === 'main',
+            },
+            {
+                title: '精品帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: 'f',
+                target: (params, url) => `/tieba/forum/good/${new URL(url).searchParams.get('kw')}`,
+                script: "({type: new URLSearchParams(location.search).get('tab')})",
+                verification: (params) => params.type === 'good',
+            },
+            {
+                title: '帖子动态',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: '/p/:id',
+                target: '/tieba/post/:id',
+            },
+            {
+                title: '只看楼主',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: '/p/:id',
+                target: '/tieba/post/lz/:id',
             },
         ],
     },

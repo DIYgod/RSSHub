@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+const server = require('../../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
@@ -60,7 +60,7 @@ describe('template', () => {
     it(`.json`, async () => {
         const response = await request.get('/test/1.json');
         expect(response.status).toBe(404);
-        expect(response.text).toMatch(/RSSHub 发生了一些意外: <pre>Error: <b>JSON output had been removed/);
+        expect(response.text).toMatch(/Error: <b>JSON output had been removed/);
     });
 
     it(`long title`, async () => {
