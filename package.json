@@ -48,7 +48,7 @@
     "mockdate": "2.0.5",
     "nock": "11.3.5",
     "nodejieba": "2.3.2",
-    "nodemon": "1.19.2",
+    "nodemon": "1.19.3",
     "pinyin": "2.9.0",
     "prettier": "1.18.2",
     "prettier-check": "2.0.0",
