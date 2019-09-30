@@ -289,6 +289,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
 
+## 深圳证券交易所
+
+### 上市公告-可转换债券
+
+<Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
+
 ## 搜狗
 
 ### 搜狗特色 LOGO
