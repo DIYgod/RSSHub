@@ -193,11 +193,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="sintak" example="/gouhuo/strategy" path="/gouhuo/strategy"/>
 
-## 怪物猎人
+## 怪物猎人世界
 
-### 更新
+### 更新情报
 
-<Route author="DIYgod" example="/monsterhunter/update" path="/monsterhunter/update"/>
+<Route author="DIYgod" example="/mhw/update" path="/mhw/update"/>
 
 ## 旅法师营地
 

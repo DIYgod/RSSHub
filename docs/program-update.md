@@ -156,11 +156,11 @@ pageClass: routes
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
 
-## 怪物猎人
+## 怪物猎人世界
 
 ### 更新
 
-见 [#怪物猎人](/game.html#guai-wu-lie-ren)
+见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
 
 ## 厚墨
 
