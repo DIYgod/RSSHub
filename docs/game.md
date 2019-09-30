@@ -199,6 +199,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="DIYgod" example="/mhw/update" path="/mhw/update"/>
 
+### 最新消息
+
+<Route author="DIYgod" example="/mhw/news" path="/mhw/news"/>
+
 ## 旅法师营地
 
 ### 旅法师营地
