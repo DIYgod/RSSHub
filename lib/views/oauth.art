@@ -88,7 +88,7 @@
     <div class="content">
         {{ if token}}
             <div class="token">
-                <b>Token:{{token}}</b>
+                <b>授权完成。请重新访问需要添加的路由！</b>
             </div>
         {{ else }}
             <p> 
