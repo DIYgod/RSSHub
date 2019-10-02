@@ -417,6 +417,12 @@ pageClass: routes
 
 <Route author="kt286" example="/kkj/news" path="/kkj/news"/>
 
+## 快知
+
+### 话题
+
+<Route author="hoilc" example="/kzfeed/topic/KklZRd9a04OgA" path="/kzfeed/topic/:id" :paramsDesc="['话题ID, 可以从话题URL中获得']"/>
+
 ## 老司机
 
 ### 首页
