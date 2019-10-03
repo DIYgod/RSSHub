@@ -234,11 +234,7 @@ pageClass: routes
 
 ## 中华人民共和国海关总署
 
-### 拍卖信息
-
-<Route author="Jeason0228" example="/customs/paimai" path="/customs/paimai"/>
-
-### 海关法规
+### 拍卖信息/海关法规
 
 <Route author="Jeason0228" example="/customs/list/paimai" path="/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
 
