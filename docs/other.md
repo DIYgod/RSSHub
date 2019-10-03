@@ -225,6 +225,26 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="junfengP" example="/mlhang" path="/mlhang" />
 
+## 米坛社区
+
+### 表盘更新
+
+<Route author="hoilc" example="/watchface/mi4/" path="/watchface/:watch_type?/:list_type?" :paramsDesc="['手环型号, 默认为`小米手环4`', '列表类型, 默认为`最新上传`']">
+
+表盘型号
+
+| 小米手环 4 | 华米 GTR 47mm | 华米智能手表青春版 |
+| ---------- | ------------- | ------------------ |
+| mi4        | gtr47         | gvlite             |
+
+列表类型
+
+| 最新上传 | 最多下载 | 编辑推荐   |
+| -------- | -------- | ---------- |
+| 0        | 1        | recommends |
+
+</Route>
+
 ## 且听风吟福利
 
 ### 分类

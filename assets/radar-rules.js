@@ -227,6 +227,12 @@
                 target: '/zhihu/people/pins/:id',
             },
             {
+                title: '用户文章',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
+                source: '/people/:id/posts',
+                target: '/zhihu/people/posts/:id',
+            },
+            {
                 title: '热榜',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/hot',
