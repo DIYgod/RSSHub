@@ -15,7 +15,9 @@
     "format:staged": "eslint \"**/*.js\" --fix && node docs/format.js && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
     "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
-    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit"
+    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -98,7 +100,8 @@
     "socks-proxy-agent": "4.0.2",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
-    "winston": "3.2.1"
+    "winston": "3.2.1",
+    "snyk": "^1.230.5"
   },
   "engines": {
     "node": ">=8.0.0"
@@ -124,5 +127,6 @@
     "moduleNameMapper": {
       "@/(.*)": "<rootDir>/lib/$1"
     }
-  }
+  },
+  "snyk": true
 }
