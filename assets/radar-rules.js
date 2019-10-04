@@ -1,8 +1,7 @@
 ({
     'bilibili.com': {
         _name: 'bilibili',
-        www: [
-            {
+        www: [{
                 title: '分区视频',
                 docs: 'https://docs.rsshub.app/social-media.html#bilibili',
                 source: ['/v/*tpath', '/documentary', '/movie', '/tv'],
@@ -23,8 +22,7 @@
                 },
             },
         ],
-        space: [
-            {
+        space: [{
                 title: 'UP 主动态',
                 docs: 'https://docs.rsshub.app/social-media.html#bilibili',
                 source: '/:uid',
@@ -40,21 +38,18 @@
     },
     'weibo.com': {
         _name: '微博',
-        '.': [
-            {
-                title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
-                source: ['/u/:id', '/:id'],
-                target: '/weibo/user/:uid',
-                script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
-                verification: (params) => params.uid,
-            },
-        ],
+        '.': [{
+            title: '博主',
+            docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
+            source: ['/u/:id', '/:id'],
+            target: '/weibo/user/:uid',
+            script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
+            verification: (params) => params.uid,
+        }, ],
     },
     'pixiv.net': {
         _name: 'Pixiv',
-        www: [
-            {
+        www: [{
                 title: '用户收藏',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/bookmark.php',
@@ -86,8 +81,7 @@
     },
     'twitter.com': {
         _name: 'Twitter',
-        '.': [
-            {
+        '.': [{
                 title: '用户时间线',
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
@@ -119,8 +113,7 @@
     },
     'youtube.com': {
         _name: 'Youtube',
-        www: [
-            {
+        www: [{
                 title: '用户',
                 docs: 'https://docs.rsshub.app/social-media.html#youtube',
                 source: '/user/:username',
@@ -142,8 +135,7 @@
     },
     'github.com': {
         _name: 'GitHub',
-        '.': [
-            {
+        '.': [{
                 title: '用户仓库',
                 docs: 'https://docs.rsshub.app/programming.html#github',
                 source: '/:user',
@@ -201,8 +193,7 @@
     },
     'zhihu.com': {
         _name: '知乎',
-        www: [
-            {
+        www: [{
                 title: '收藏夹',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '/collection/:id',
@@ -274,16 +265,13 @@
                 target: '/zhihu/weekly',
             },
         ],
-        zhuanlan: [
-            {
-                title: '专栏',
-                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/:id',
-                target: '/zhihu/zhuanlan/:id',
-            },
-        ],
-        daily: [
-            {
+        zhuanlan: [{
+            title: '专栏',
+            docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
+            source: '/:id',
+            target: '/zhihu/zhuanlan/:id',
+        }, ],
+        daily: [{
                 title: '日报',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
                 source: '',
@@ -299,8 +287,7 @@
     },
     'smzdm.com': {
         _name: '什么值得买',
-        www: [
-            {
+        www: [{
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
                 target: '/smzdm/keyword/:keyword',
@@ -314,62 +301,51 @@
     },
     'rsshub.app': {
         _name: 'RSSHub',
-        docs: [
-            {
-                title: '有新路由啦',
-                docs: 'https://docs.rsshub.app/program-update.html#rsshub',
-                source: ['', '/*tpath'],
-                target: '/rsshub/rss',
-            },
-        ],
+        docs: [{
+            title: '有新路由啦',
+            docs: 'https://docs.rsshub.app/program-update.html#rsshub',
+            source: ['', '/*tpath'],
+            target: '/rsshub/rss',
+        }, ],
     },
     'ximalaya.com': {
         _name: '喜马拉雅',
-        www: [
-            {
-                title: '专辑',
-                docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
-                source: '/:type/:id',
-                target: '/ximalaya/album/:id/',
-                verification: (params) => parseInt(params.id) + '' === params.id,
-            },
-        ],
+        www: [{
+            title: '专辑',
+            docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
+            source: '/:type/:id',
+            target: '/ximalaya/album/:id/',
+            verification: (params) => parseInt(params.id) + '' === params.id,
+        }, ],
     },
     'algocasts.io': {
         _name: 'AlgoCasts',
-        '.': [
-            {
-                title: '视频更新',
-                docs: 'https://docs.rsshub.app/programming.html#algocasts',
-                source: '/episodes',
-                target: '/algocasts',
-            },
-        ],
+        '.': [{
+            title: '视频更新',
+            docs: 'https://docs.rsshub.app/programming.html#algocasts',
+            source: '/episodes',
+            target: '/algocasts',
+        }, ],
     },
     'soulapp.cn': {
         _name: 'Soul',
-        '.': [
-            {
-                title: '瞬间更新',
-                docs: 'https://docs.rsshub.app/social-media.html#soul',
-            },
-        ],
+        '.': [{
+            title: '瞬间更新',
+            docs: 'https://docs.rsshub.app/social-media.html#soul',
+        }, ],
     },
     'juejin.im': {
         _name: '掘金',
-        '.': [
-            {
-                title: '专栏',
-                docs: 'https://docs.rsshub.app/programming.html#jue-jin',
-                source: '/user/:id/posts',
-                target: '/juejin/posts/:id',
-            },
-        ],
+        '.': [{
+            title: '专栏',
+            docs: 'https://docs.rsshub.app/programming.html#jue-jin',
+            source: '/user/:id/posts',
+            target: '/juejin/posts/:id',
+        }, ],
     },
     'anime1.me': {
         _name: 'Anime1',
-        '.': [
-            {
+        '.': [{
                 title: '動畫',
                 docs: 'https://docs.rsshub.app/anime.html#anime1',
                 source: '/category/:time/:name',
@@ -387,8 +363,7 @@
     },
     'instagram.com': {
         _name: 'Instagram',
-        www: [
-            {
+        www: [{
                 title: '用户',
                 docs: 'https://docs.rsshub.app/social-media.html#instagram',
                 source: '/:id',
@@ -405,8 +380,7 @@
     },
     'swufe.edu.cn': {
         _name: '西南财经大学',
-        it: [
-            {
+        it: [{
                 title: '经济信息工程学院 - 通知公告',
                 docs: 'https://docs.rsshub.app/university.html#xi-nan-cai-jing-da-xue',
                 source: '/index/tzgg.htm',
@@ -422,41 +396,34 @@
     },
     'ishuhui.com': {
         _name: '鼠绘漫画',
-        www: [
-            {
-                title: '鼠绘漫画',
-                docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua',
-                source: '/comics/anime/:id',
-                target: '/shuhui/comics/:id',
-            },
-        ],
+        www: [{
+            title: '鼠绘漫画',
+            docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua',
+            source: '/comics/anime/:id',
+            target: '/shuhui/comics/:id',
+        }, ],
     },
     'haimaoba.com': {
         _name: '海猫吧',
-        www: [
-            {
-                title: '漫画更新',
-                docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba',
-                source: '/catalog/:id',
-                target: '/haimaoba/:id',
-            },
-        ],
+        www: [{
+            title: '漫画更新',
+            docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba',
+            source: '/catalog/:id',
+            target: '/haimaoba/:id',
+        }, ],
     },
     'pgyer.com': {
         _name: '蒲公英应用分发',
-        www: [
-            {
-                title: 'app更新',
-                docs: 'https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa',
-                source: '/:app',
-                target: '/pgyer/:app',
-            },
-        ],
+        www: [{
+            title: 'app更新',
+            docs: 'https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa',
+            source: '/:app',
+            target: '/pgyer/:app',
+        }, ],
     },
     'sspai.com': {
         _name: '少数派',
-        '.': [
-            {
+        '.': [{
                 title: '最新上架付费专栏',
                 docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
                 source: '/series',
@@ -493,19 +460,16 @@
                 target: '/sspai/topic/:id',
             },
         ],
-        shortcuts: [
-            {
-                title: 'Shortcuts Gallery',
-                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
-                source: ['', '/*tpath'],
-                target: '/sspai/shortcuts',
-            },
-        ],
+        shortcuts: [{
+            title: 'Shortcuts Gallery',
+            docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+            source: ['', '/*tpath'],
+            target: '/sspai/shortcuts',
+        }, ],
     },
     'baidu.com': {
         _name: '贴吧',
-        tieba: [
-            {
+        tieba: [{
                 title: '帖子列表',
                 docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
                 source: 'f',
@@ -534,5 +498,14 @@
                 target: '/tieba/post/lz/:id',
             },
         ],
+    },
+    'epicgames.com': {
+        _name: 'Epic Games',
+        www: [{
+            title: '每周免费游戏',
+            docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
+            source: '/:collection',
+            target: '/epicgames/:collection',
+        }, ],
     },
 });
