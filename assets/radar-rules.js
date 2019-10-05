@@ -535,4 +535,15 @@
             },
         ],
     },
+    'wineyun.com': {
+        _name: '酒云网',
+        www: [
+            {
+                title: '最新商品',
+                description: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
+                source: ['/:category'],
+                target: '/wineyun/:category',
+            },
+        ],
+    },
 });
