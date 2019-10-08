@@ -187,3 +187,14 @@ pageClass: routes
 ### 商品上新
 
 <Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺id']"/>
+
+## 酒云网
+
+### 最新商品
+
+<Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" :paramsDesc="['分类名']" >
+| 全部     | 闪购 | 秒发 | 跨境    | 
+| -------- | ------- | --- | ------- | 
+| home | shangou | miaofa | csborder |
+
+</Route>
