@@ -232,6 +232,12 @@ pageClass: routes
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
+## 中华人民共和国海关总署
+
+### 拍卖信息/海关法规
+
+<Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
+
 ## 中华人民共和国商务部
 
 ### 政务公开

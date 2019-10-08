@@ -951,6 +951,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 浙江大学
 
+### 普通栏目 如学术/图片/新闻等
+
+<Route author="Jeason0228" example="/zju/list/xs" path="/universities/zju/list/:type" :paramsDesc="['xs为学术,xw为新闻,5461是图片新闻,578是浙大报道,具体参数参考左侧的菜单']"/>
+
 ### 浙大研究生院
 
 <Route author="Caicailiushui" example="/zju/grs/1" path="/universities/zju/grs/:type" :paramsDesc="['1 为 全部公告, 2 为教学管理, 3 为各类资助,4 为学科建设, 5 为海外交流']">
