@@ -236,7 +236,7 @@ pageClass: routes
 
 ### 拍卖信息/海关法规
 
-<Route author="Jeason0228" example="/customs/list/paimai" path="/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
+<Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
 
 ## 中华人民共和国商务部
 
