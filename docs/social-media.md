@@ -642,6 +642,10 @@ pageClass: routes
 
 <Route author="DHPO" example="/zhihu/daily" path="/zhihu/daily" anticrawler="1" radar="1"/>
 
+### 知乎日报 - 合集
+
+<Route author="ccbikai" example="/zhihu/daily/section/2" path="/zhihu/daily/section/:sectionId" :paramsDesc="['合集 id, 可在 https://news-at.zhihu.com/api/7/sections 找到']" anticrawler="1"/>
+
 ### 知乎热榜
 
 <Route author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" anticrawler="1" radar="1"/>
