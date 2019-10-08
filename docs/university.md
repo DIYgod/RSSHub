@@ -986,8 +986,8 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 <Route author="yonvenne" example="/zju/cst/1" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']">
 
 | 全部通知 | 招生信息 | 教学管理 | 思政工作 | 实习就业 | 合作科研 |
-| ------- | ------- | ------- | ------- | ------- | ------- |
-| 0       | 1       | 2       | 3       | 4       | 5       |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 0        | 1        | 2        | 3        | 4        | 5        |
 
 </Route>
 
