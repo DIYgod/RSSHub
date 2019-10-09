@@ -27,6 +27,20 @@ pageClass: routes
 
 </Route>
 
+## AEON
+
+<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']"></Route>
+
+支持以文体分类：
+| Ideas | Essays | Videos |
+| ----- | ------ | ------ |
+| ideas | essays | videos |
+
+同样支持以话题分类：
+| Culture | Philosophy | Psychology | Society | Science |
+| ------- | ---------- | ---------- | ------- | ------- |
+| culture | philosophy | psychology | society | science |
+
 ## BOF
 
 ### 首页
@@ -416,6 +430,12 @@ pageClass: routes
 ### 最新新闻
 
 <Route author="kt286" example="/kkj/news" path="/kkj/news"/>
+
+## 快知
+
+### 话题
+
+<Route author="hoilc" example="/kzfeed/topic/KklZRd9a04OgA" path="/kzfeed/topic/:id" :paramsDesc="['话题ID, 可以从话题URL中获得']"/>
 
 ## 老司机
 
