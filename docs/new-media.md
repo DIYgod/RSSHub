@@ -603,6 +603,10 @@ pageClass: routes
 
 <Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
 
+### 标签订阅
+
+<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
+
 ## 世界卫生组织
 
 ### 媒体中心
