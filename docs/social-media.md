@@ -360,6 +360,10 @@ pageClass: routes
 
 :::
 
+### Telegram Blog
+
+<Route author="fengkx" example="/telegram/blog" path="/telegram/blog" />
+
 </Route>
 
 ### 列表时间线
