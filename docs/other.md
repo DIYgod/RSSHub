@@ -317,6 +317,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Qixingchen" example="/tucaoqq/post/28564/CdRI0728" path="/tucaoqq/post/:project/:key" :paramsDesc="['产品 ID', '产品密钥']"/>
 
+## 腾讯新闻较真查证平台
+
+### 最新辟谣
+
+<Route author="hoilc" example="/factcheck" path="/factcheck"/>
+
 ## 天津产权交易中心
 
 ### 产权转让
