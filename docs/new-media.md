@@ -479,6 +479,12 @@ pageClass: routes
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
+## Nautilus
+
+### 话题
+
+<Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+
 ## 派代
 
 ### 首页
