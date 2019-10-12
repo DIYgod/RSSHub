@@ -4,6 +4,12 @@ pageClass: routes
 
 # Multimedia
 
+## 60-Second Science - Scientific American
+
+### Transcript
+
+<Route author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+
 ## 99% Invisible
 
 ### Transcript
