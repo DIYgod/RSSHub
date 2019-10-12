@@ -77,7 +77,7 @@
     "iconv-lite": "0.5.0",
     "imgur": "0.3.1",
     "json-bigint": "0.3.0",
-    "koa": "2.8.2",
+    "koa": "2.9.0",
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.0.1",
     "koa-mount": "4.0.0",
