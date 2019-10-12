@@ -39,7 +39,7 @@
     "@types/koa": "2.0.50",
     "@vuepress/plugin-back-to-top": "1.1.0",
     "@vuepress/plugin-google-analytics": "1.2.0",
-    "@vuepress/plugin-pwa": "1.1.0",
+    "@vuepress/plugin-pwa": "1.2.0",
     "cross-env": "6.0.3",
     "eslint": "6.5.1",
     "eslint-config-prettier": "6.4.0",
