@@ -344,6 +344,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['贴纸包 id, 可在分享贴纸获得的 URL 中找到']"/>
 
+### Telegram Blog
+
+<Route author="fengkx" example="/telegram/blog" path="/telegram/blog" />
+
 ## Twitter
 
 ### 用户时间线
