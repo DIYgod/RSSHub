@@ -93,7 +93,7 @@
     "puppeteer": "1.20.0",
     "query-string": "6.8.3",
     "redis": "2.8.0",
-    "require-all": "^3.0.0",
+    "require-all": "3.0.0",
     "rss-parser": "3.7.2",
     "sharp": "0.23.1",
     "socks-proxy-agent": "4.0.2",
