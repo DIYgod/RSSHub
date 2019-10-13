@@ -52,7 +52,7 @@
     "pinyin": "2.9.0",
     "prettier": "1.18.2",
     "prettier-check": "2.0.0",
-    "pretty-quick": "1.11.1",
+    "pretty-quick": "2.0.0",
     "supertest": "4.0.2",
     "vuepress": "1.2.0",
     "yorkie": "2.0.0"
