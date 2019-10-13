@@ -283,6 +283,10 @@ pageClass: routes
 
 <Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
 
+### 个人主页文章
+
+<Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
 ## 果壳网
 
 ### 科学人
