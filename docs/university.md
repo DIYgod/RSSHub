@@ -410,6 +410,18 @@ category 列表：
 
 <Route author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
 
+## 华中师范大学
+
+### 就业信息
+
+<Route author="jackyu1996" example="/ccnu/career/0" path="/universities/ccnu/career/:type" :paramsDesc="['对应以下不同类别']">
+
+| 校内专场 | 校外专场 | 大型招聘会 | 综合信息 | 周五双选会 |
+| -------- | -------- | ---------- | -------- | ---------- |
+| 0        | 1        | 2          | 3        | 4          |
+
+</Route>
+
 ## 江南大学
 
 ### 教务处通知
