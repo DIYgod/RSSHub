@@ -66,7 +66,7 @@
     "co-redis": "2.1.1",
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.8.16",
-    "dotenv": "8.1.0",
+    "dotenv": "8.2.0",
     "emailjs-imap-client": "3.0.7",
     "etag": "1.8.1",
     "form-data": "2.5.1",
