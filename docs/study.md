@@ -111,7 +111,7 @@ pageClass: routes
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
-## X-MOL平台
+## X-MOL 平台
 
 ### 新闻
 
