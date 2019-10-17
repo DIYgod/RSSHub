@@ -54,6 +54,10 @@ pageClass: routes
 
 <RouteEn author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
 
+### Telegram Blog
+
+<RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
+
 ## Twitter
 
 ### User timeline
