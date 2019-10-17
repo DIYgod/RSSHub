@@ -104,7 +104,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
-更多配置项请看 [#配置](#配置)
+更多配置项请看 [#配置](#pei-zhi)
 
 ## 手动部署
 
@@ -172,7 +172,7 @@ CACHE_EXPIRE=600
 
 该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
-更多配置项请看 [#配置](#配置)
+更多配置项请看 [#配置](#pei-zhi)
 
 ### 更新
 
@@ -298,7 +298,7 @@ $ docker run -d --name rsshub -p 1200:1200 pjf1996/rsshub:arm32v7
 $ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
 ```
 
-其余参数见[使用 Docker 部署](#使用-Docker-部署)
+其余参数见[使用 Docker 部署](#docker-bu-shu)
 
 ## 配置
 

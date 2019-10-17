@@ -479,6 +479,12 @@ pageClass: routes
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
+## Nautilus
+
+### 话题
+
+<Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+
 ## 派代
 
 ### 首页
@@ -602,6 +608,10 @@ pageClass: routes
 ### 专题内文章更新
 
 <Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
+
+### 标签订阅
+
+<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
 
 ## 世界卫生组织
 
