@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/cheerio": "0.22.13",
     "@types/got": "9.6.7",
-    "@types/koa": "2.0.50",
+    "@types/koa": "2.0.51",
     "@vuepress/plugin-back-to-top": "1.2.0",
     "@vuepress/plugin-google-analytics": "1.2.0",
     "@vuepress/plugin-pwa": "1.2.0",
