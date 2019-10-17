@@ -20,6 +20,16 @@ pageClass: routes
 
 </Route>
 
+## 4Gamers 新闻
+
+### 分类
+
+<Route author="hoilc" example="/4gamers/category/352" path="/4gamers/category/:category" :paramsDesc="['分类 ID, 可从分类 URL 中找到']"/>
+
+### 标签
+
+<Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" :paramsDesc="['标签名, 可在标签 URL 中找到']"/>
+
 ## a9vgNews 游戏新闻
 
 ### a9vgNews 游戏新闻

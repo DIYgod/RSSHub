@@ -238,6 +238,10 @@ pageClass: routes
 
 <Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
 
+### 专栏文集
+
+<Route author="hoilc" example="/bilibili/readlist/25611" path="/bilibili/readlist/:listid" :paramsDesc="['文集 id, 可在专栏文集 URL 中找到']"/>
+
 ## Disqus
 
 ### 评论
@@ -339,6 +343,10 @@ pageClass: routes
 ### 贴纸包
 
 <Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['贴纸包 id, 可在分享贴纸获得的 URL 中找到']"/>
+
+### Telegram Blog
+
+<Route author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
 ## Twitter
 
