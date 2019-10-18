@@ -210,3 +210,15 @@ pageClass: routes
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## 電撃オンライン
+
+### 最新記事
+
+<Route author="cssxsh" path="/dengekionline/:type?" example="/dengekionline/dps" :paramsDesc="['新闻类别，如下表']">
+
+| All | PlayStation | Nintendo | Xbox      | PC  | Girl’sStyle | Arcade Web | App | Anime | Review | Rank |
+| --- | ----------- | -------- | --------- | --- | ----------- | ---------- | --- | ----- | ------ | ---- |
+|     | dps         | nintendo | microsoft | dpc | gstyle      | arcade     | app | anime | review | rank |
+
+</Route>

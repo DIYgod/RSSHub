@@ -289,6 +289,10 @@ pageClass: routes
 
 <Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
 
+### 个人主页文章
+
+<Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
 ## 果壳网
 
 ### 科学人
@@ -430,6 +434,12 @@ pageClass: routes
 ### 最新资讯
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
+
+## 装备前线
+
+### 首页最新帖子
+
+<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 快科技（原驱动之家）
 
