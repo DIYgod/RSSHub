@@ -288,6 +288,7 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 注 1: 不要吐槽拼音缩写，缩写原本的 URL 构成就这样。
 
 </Route>
+
 ## 哈尔滨工程大学
 
 ### 本科生院工作通知
