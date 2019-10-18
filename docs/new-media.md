@@ -435,12 +435,6 @@ pageClass: routes
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
 
-## 装备前线
-
-### 首页最新帖子
-
-<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
-
 ## 快科技（原驱动之家）
 
 ### 最新新闻
@@ -866,6 +860,12 @@ pageClass: routes
 | default | hot  | new  |
 
 </Route>
+
+## 装备前线
+
+### 首页最新帖子
+
+<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 紫竹张先生
 
