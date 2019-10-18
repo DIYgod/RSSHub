@@ -43,3 +43,9 @@ pageClass: routes
 ### 直播间开播
 
 <Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+
+## 战旗直播
+
+### 直播间开播
+
+<Route author="cssxsh" example="/zhanqi/room/anime" path="/zhanqi/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
