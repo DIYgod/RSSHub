@@ -275,6 +275,19 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 桂林电子科技大学
+
+### 新闻资讯
+
+<Route author="cssxsh" example="/guet/xwzx/xykx" path="/guet/xwzx/:type" :paramsDesc="['资讯类型，如下表']">
+
+| 桂电要闻 | 文明校园建设 | 桂电新闻 | 校园快讯 | 学院动态 | 媒体桂电 | 通知公告 | 招标公示 | 学术活动 |
+| -------- | ------------ | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| gdyw     | wmxyjs       | gdxw     | xykx     | xydt     | mtgd     | tzgg     | zbgs     | xshd     |
+
+注 1: 不要吐槽拼音缩写，缩写原本的 URL 构成就这样。
+
+</Route>
 ## 哈尔滨工程大学
 
 ### 本科生院工作通知
