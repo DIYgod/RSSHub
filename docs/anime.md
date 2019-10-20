@@ -81,7 +81,7 @@ pageClass: routes
 
 ## DLsite
 
-### 发售
+### 当前日期发售产品
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
