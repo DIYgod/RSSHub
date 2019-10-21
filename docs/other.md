@@ -71,6 +71,12 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## Pocket
+
+### Trending
+
+<Route author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
+
 ## SANS Institute
 
 ### 最新会议材料
