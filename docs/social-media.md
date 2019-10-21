@@ -578,7 +578,7 @@ pageClass: routes
 
 ### 个人时间线
 
-<Route author="zytomorrow" example="/weibo/home_timeline/12345678" path="/weibo/home_timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']" anticra>
+<Route author="zytomorrow DIYgod" example="/weibo/timeline/12345678" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']" anticra>
 ::: warning 注意
 
 用户需要进入/aouth/weibo 进行授权生成 token。前提是`.env`里已经配置了微博 API 的相关参数。

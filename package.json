@@ -119,8 +119,7 @@
     ],
     "collectCoverageFrom": [
       "lib/**/*.js",
-      "!lib/routes/**/*.js",
-      "!lib/oauth/*.js"
+      "!lib/routes/**/*.js"
     ],
     "bail": true,
     "testEnvironment": "node",
