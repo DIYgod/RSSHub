@@ -4,6 +4,12 @@ pageClass: routes
 
 # 学习
 
+## nature machine intelligence
+
+### latest research
+
+<Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+
 ## X-MOL 平台
 
 ### 新闻
