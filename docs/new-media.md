@@ -283,7 +283,11 @@ pageClass: routes
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
-## 观察者风闻话题
+## 观察者网-中国关怀 全球视野
+
+### 观察者首页
+
+<Route author="Jeason0228" example="/guanchazhe/index/all" path="/guanchazhe/index/:type" :paramsDesc="['新闻汇总:默认home输出头条+3列新闻,others则为滚动新闻+热点+观察者付费,all则包括以上']" />
 
 ### 观察者风闻话题
 
@@ -434,12 +438,6 @@ pageClass: routes
 ### 最新资讯
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
-
-## 装备前线
-
-### 首页最新帖子
-
-<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 快科技（原驱动之家）
 
@@ -866,6 +864,12 @@ pageClass: routes
 | default | hot  | new  |
 
 </Route>
+
+## 装备前线
+
+### 首页最新帖子
+
+<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 装备前线
 
