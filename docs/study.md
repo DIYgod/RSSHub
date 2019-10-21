@@ -4,6 +4,12 @@ pageClass: routes
 
 # 学习
 
+## nature machine intelligence
+
+### latest research
+
+<Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+
 ## X-MOL 平台
 
 ### 新闻
@@ -32,6 +38,12 @@ pageClass: routes
 路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ 中 user= 后的 mlmE4JMAAAAJ。
 
 </Route>
+
+## 码农周刊
+
+### issues
+
+<Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
 ## 扇贝
 
