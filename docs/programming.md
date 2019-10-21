@@ -582,3 +582,9 @@ GitHub 官方也提供了一些 RSS:
 ### 热门
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+
+## 码农周刊
+
+### issues
+
+<Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
