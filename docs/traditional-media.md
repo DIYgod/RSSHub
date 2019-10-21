@@ -302,6 +302,28 @@ category 对应的关键词有
 
 <Route author="Polynomia" example="/guardian/china" path="/guardian/china"/>
 
+## 香港 01
+
+### 热门
+
+<Route author="hoilc" example="/hk01/hot" path="/hk01/hot" />
+
+### 栏目
+
+<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目id, 可在URL中找到']"/>
+
+### 子栏目
+
+<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目id, 可在URL中找到']"/>
+
+### 专题
+
+<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题id, 可在URL中找到']"/>
+
+### 标签
+
+<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']"/>
+
 ## 新京报
 
 ### 栏目
