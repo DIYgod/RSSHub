@@ -438,13 +438,7 @@ category 列表：
 
 ### 就业信息
 
-<Route author="jackyu1996" example="/ccnu/career/0" path="/universities/ccnu/career/:type" :paramsDesc="['对应以下不同类别']">
-
-| 校内专场 | 校外专场 | 大型招聘会 | 综合信息 | 周五双选会 |
-| -------- | -------- | ---------- | -------- | ---------- |
-| 0        | 1        | 2          | 3        | 4          |
-
-</Route>
+<Route author="jackyu1996" example="/ccnu/career" path="/universities/ccnu/career" />
 
 ## 江南大学
 
