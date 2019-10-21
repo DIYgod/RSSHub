@@ -125,6 +125,12 @@ pageClass: routes
 
 <Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
 
+## Nautilus
+
+### 话题
+
+<Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+
 ## Readhub
 
 ### 分类
@@ -488,12 +494,6 @@ pageClass: routes
 ### 新闻
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
-
-## Nautilus
-
-### 话题
-
-<Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
 ## 派代
 
@@ -866,6 +866,12 @@ pageClass: routes
 | default | hot  | new  |
 
 </Route>
+
+## 装备前线
+
+### 首页最新帖子
+
+<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 紫竹张先生
 

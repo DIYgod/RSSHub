@@ -546,4 +546,26 @@
             },
         ],
     },
+    'epicgames.com': {
+        _name: 'Epic Games',
+        www: [
+            {
+                title: '每周免费游戏',
+                docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
+                source: '/:collection',
+                target: '/epicgames/:collection',
+            },
+        ],
+    },
+    'docker.com': {
+        _name: 'Docker',
+        hub: [
+            {
+                title: '镜像有新 Build',
+                docs: 'https://docs.rsshub.app/program-update.html#docker-hub',
+                source: ['/r/:owner/:image', '/r/:owner/:image/tags', '/_/:image'],
+                target: (params) => `/dockerhub/build/${params.owner ? params.owner : 'library'}/${params.image}`,
+            },
+        ],
+    },
 });
