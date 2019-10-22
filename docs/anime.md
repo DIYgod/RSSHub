@@ -9,6 +9,13 @@ pageClass: routes
 ### 二次元资讯
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
+
+## 1draw #深夜の真剣お絵描き 60 分一本勝負
+
+### 投稿一览
+
+<Route author="jackyu1996" path="/1draw/:day" example="/1draw/1" :paramsDesc="['距今天数，网址中最后一个数字，0 - 6之间，订阅 0 可能显示空']" />
+
 ## Anime1
 
 ### 動畫
