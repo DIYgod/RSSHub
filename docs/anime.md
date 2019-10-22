@@ -14,7 +14,7 @@ pageClass: routes
 
 ### 投稿一览
 
-<Route author="jackyu1996" path="/1draw/:day" example="/1draw/1" :paramsDesc="['距今天数，网址中最后一个数字，0 - 6之间，订阅 0 可能显示空']" />
+<Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
 ## Anime1
 
