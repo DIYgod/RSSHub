@@ -35,14 +35,26 @@ afterEach(() => {
 describe('got', () => {
     it('headers', async () => {
         nock('http://rsshub.test')
-            .get('/test')
-            .times(2)
+            .get(/.*/)
+            .times(3)
             .reply(function() {
                 expect(this.req.headers.server).toBe('RSSHub');
+                expect(this.req.headers.referer).toBe('http://www.rsshub.test');
+                return [200, simpleResponse];
+            });
+        nock(/rsshub\.test/)
+            .get(/.*/)
+            .times(2)
+            .reply(function() {
+                expect(this.req.headers.referer).toBe('https://www.rsshub.test');
                 return [200, simpleResponse];
             });
 
         await got.get('http://rsshub.test/test');
+        await got.get('http://rsshub.test');
+        await got.get('rsshub.test/test');
+        await got.get('api.rsshub.test/test');
+
         await parser.parseURL('http://rsshub.test/test');
     });
 
