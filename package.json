@@ -102,9 +102,6 @@
     "twit": "2.2.11",
     "winston": "3.2.1"
   },
-  "engines": {
-    "node": ">=8.0.0"
-  },
   "jest": {
     "testMatch": [
       "**/test/**/*.js"
