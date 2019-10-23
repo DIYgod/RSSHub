@@ -235,7 +235,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 每日生猪价格更新
 
-<Route author="importcjj" example="/pigprice" path="/pigprice">
+<Route author="importcjj" example="/pork-price" path="/pork-price" />
+
 ## 米坛社区
 
 ### 表盘更新
