@@ -231,6 +231,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="junfengP" example="/mlhang" path="/mlhang" />
 
+## 每日生猪价格
+
+### 每日生猪价格更新
+
+<Route author="importcjj" example="/pork-price" path="/pork-price" />
+
 ## 米坛社区
 
 ### 表盘更新
