@@ -355,6 +355,10 @@ pageClass: routes
 
 ## 虎嗅
 
+### 首页资讯
+
+<Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
+
 ### 标签
 
 <Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" :paramsDesc="['标签 id']" />
