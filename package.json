@@ -91,7 +91,7 @@
     "path-to-regexp": "3.1.0",
     "pidusage": "2.0.17",
     "plist": "3.0.1",
-    "puppeteer": "1.20.0",
+    "puppeteer": "2.0.0",
     "query-string": "6.8.3",
     "redis": "2.8.0",
     "require-all": "3.0.0",
