@@ -1128,6 +1128,8 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | -------- | -------- |
 | notice   | scholar  |
 
+</Route>
+
 ### 计算机科学与技术学院
 
 <Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类, 见下表']">
@@ -1135,3 +1137,5 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
 | -------- | -------- | -------- | -------- |
 | news     | scholar  | states   | notice   |
+
+</Route>
