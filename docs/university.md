@@ -530,11 +530,11 @@ category 列表：
 
 ### 教务通知
 
-<Route author="arcosx" example="/nuaa/jwc/all" path="/universities/nuaa/jwc/:type" :paramsDesc="['分类名']">
+<Route author="arcosx seiry" example="/nuaa/jwc/default" path="/universities/nuaa/jwc/:type" :paramsDesc="['分类名']">
 
-| 全部 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
-| ---- | -------- | -------- | -------- | -------- |
-| all  | jxfw     | jxjs     | xspy     | jxzy     |
+| 教学服务      | 教学建设 | 学生培养 | 教学资源 |
+| ------------- | -------- | -------- | -------- |
+| jxfw(default) | jxjs     | xspy     | jxzy     |
 
 </Route>
 
