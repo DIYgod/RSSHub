@@ -267,7 +267,7 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 ### 东南大学计算机技术与工程学院
 
-<Route author="LogicJake" example="/seu/cse/xyxw" path="/universities/seu/cse/:type?" :paramsDesc="['分类名(默认为xyxw)']"/>
+<Route author="LogicJake" example="/seu/cse/xyxw" path="/universities/seu/cse/:type?" :paramsDesc="['分类名(默认为xyxw)']">
 
 | 学院新闻 | 通知公告 | 教务信息 | 就业信息 | 学工事务 |
 | -------- | -------- | -------- | -------- | -------- |
