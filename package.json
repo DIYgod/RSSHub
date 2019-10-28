@@ -85,7 +85,7 @@
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "lz-string": "1.4.4",
-    "mailparser": "2.7.2",
+    "mailparser": "2.7.3",
     "markdown-it": "10.0.0",
     "module-alias": "2.2.2",
     "path-to-regexp": "3.1.0",

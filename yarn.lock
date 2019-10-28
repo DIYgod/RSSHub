@@ -7003,10 +7003,10 @@ lz-string@1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
-mailparser@2.7.2:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.2.tgz#41eb7df71452bcc7d6ccb28529cbef6effec88d9"
-  integrity sha512-Zt9gcmDsh765Iw057veE0cpSD10XcJupO1YppfXPesN3kc7i2DJd5Mjt8J84yqz6PiBpI3becmWXI9kMaJ0/nA==
+mailparser@2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.3.tgz#ffecb5c6f4b52a2e1b4ef21d970521585a23e472"
+  integrity sha512-HaWtD4vfbxorRucJCcM4SGqYZoO5QDNrGV18wHHl8tviIvXxBhksDYYFml4zFAS/tECWbx8gMolmv/K01oi1NA==
   dependencies:
     he "1.2.0"
     html-to-text "5.1.1"
