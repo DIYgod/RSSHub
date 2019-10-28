@@ -97,10 +97,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 最近更新
 
-<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest"/>
+<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1"/>
 ### 栏目
 
-<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']">
+<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']" radar="1">
 
 :::
 type 为 all 时，category 参数不支持 cost 和 free
