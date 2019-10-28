@@ -406,6 +406,12 @@ category 列表：
 
 <Route author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
 
+## 井冈山大学
+
+### 教务处通知
+
+<Route author="Bernard" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
+
 ## 江南大学
 
 ### 教务处通知
