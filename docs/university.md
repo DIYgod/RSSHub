@@ -542,7 +542,7 @@ category 列表：
 
 ### 计算机科学与技术学院
 
-<Route author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+<Route author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']">
 
 | 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -552,7 +552,7 @@ category 列表：
 
 ### 研究生院
 
-<Route author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
+<Route author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']">
 
 | 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
 | -------- | -------- | -------- | -------- | -------- |
