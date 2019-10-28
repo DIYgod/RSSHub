@@ -3911,6 +3911,11 @@ encodeurl@^1.0.2, encodeurl@~1.0.2:
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
   integrity sha1-rT/0yG7C0CkyL1oCw6mmBslbP1k=
 
+encoding-japanese@1.0.30:
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/encoding-japanese/-/encoding-japanese-1.0.30.tgz#537c4d62881767925d601acb4c79fb14db81703a"
+  integrity sha512-bd/DFLAoJetvv7ar/KIpE3CNO8wEuyrt9Xuw6nSMiZ+Vrz/Q21BPsMHvARL2Wz6IKHKXgb+DWZqtRg1vql9cBg==
+
 end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/end-of-stream/-/end-of-stream-1.4.1.tgz#ed29634d19baba463b6ce6b80a37213eab71ec43"
@@ -6747,11 +6752,12 @@ libmime@4.1.1:
     libbase64 "1.0.3"
     libqp "1.1.0"
 
-libmime@4.1.4:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/libmime/-/libmime-4.1.4.tgz#0c5f84b2e7ac92bb9c4c53bc07c53341e35767a1"
-  integrity sha512-t/K89GTNSToxAjzM4LjchkahTJUXvpmxPTnyNZJdNeEv+JNzx5FYmakJvAfBfrF3u2Fz2OnMc/WROMO0MhZanA==
+libmime@4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/libmime/-/libmime-4.2.1.tgz#d21aa5db88b131af18bf5a3caa1013da2c21a9dd"
+  integrity sha512-09y7zjSc5im1aNsq815zgo4/G3DnIzym3aDOHsGq4Ee5vrX4PdgQRybAsztz9Rv0NhO+J5C0llEUloa3sUmjmA==
   dependencies:
+    encoding-japanese "1.0.30"
     iconv-lite "0.5.0"
     libbase64 "1.2.1"
     libqp "1.1.0"
@@ -7003,15 +7009,16 @@ lz-string@1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
-mailparser@2.7.3:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.3.tgz#ffecb5c6f4b52a2e1b4ef21d970521585a23e472"
-  integrity sha512-HaWtD4vfbxorRucJCcM4SGqYZoO5QDNrGV18wHHl8tviIvXxBhksDYYFml4zFAS/tECWbx8gMolmv/K01oi1NA==
+mailparser@2.7.4:
+  version "2.7.4"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.4.tgz#8ee1da9efc758d85465c520ab11be3ae85669696"
+  integrity sha512-qfCqFkyeRGFyLjP4wFeeN8yVfyiqUqrwSAXgDb/RAIIRbd+6dxNlP9mAsttmN35IBwP1lZ5cGaU7Zg7OpCS79w==
   dependencies:
+    encoding-japanese "1.0.30"
     he "1.2.0"
     html-to-text "5.1.1"
     iconv-lite "0.5.0"
-    libmime "4.1.4"
+    libmime "4.2.1"
     linkify-it "2.2.0"
     mailsplit "4.4.1"
     nodemailer "6.3.1"
