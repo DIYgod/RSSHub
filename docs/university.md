@@ -267,11 +267,13 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 ### 东南大学计算机技术与工程学院
 
-<Route author="LogicJake" example="/seu/cse/xyxw" path="/universities/seu/cse/:type?" :paramsDesc="['分类名(默认为xyxw)']"/>
+<Route author="LogicJake" example="/seu/cse/xyxw" path="/universities/seu/cse/:type?" :paramsDesc="['分类名(默认为xyxw)']">
 
 | 学院新闻 | 通知公告 | 教务信息 | 就业信息 | 学工事务 |
 | -------- | -------- | -------- | -------- | -------- |
 | xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |
+
+</Route>
 
 ## 广东工业大学
 
@@ -540,19 +542,23 @@ category 列表：
 
 ### 计算机科学与技术学院
 
-<Route author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+<Route author="LogicJake" example="/nuaa/cs/kydt" path="/universities/nuaa/cs/:type?" :paramsDesc="['分类名']">
 
 | 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
 
+</Route>
+
 ### 研究生院
 
-<Route author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
+<Route author="junfengP" example="/nuaa/yjsy/latest" path="/universities/nuaa/yjsy/:type?" :paramsDesc="['分类名']">
 
 | 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
 | -------- | -------- | -------- | -------- | -------- |
 | latest   | yyxw     | sjwj     | glwj     | xxfw     |
+
+</Route>
 
 ## 南京理工大学
 
@@ -1116,3 +1122,25 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+
+## 中国石油大学（华东）
+
+### 主页
+
+<Route author="Veagau" example="/upc/main" path="/upc/main/:type" :paramsDesc="['分类, 见下表']">
+
+| 通知公告 | 学术动态 |
+| -------- | -------- |
+| notice   | scholar  |
+
+</Route>
+
+### 计算机科学与技术学院
+
+<Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类, 见下表']">
+
+| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
+| -------- | -------- | -------- | -------- |
+| news     | scholar  | states   | notice   |
+
+</Route>
