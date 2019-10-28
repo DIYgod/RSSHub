@@ -88,7 +88,7 @@ pageClass: routes
 
 ## DLsite
 
-### 当前日期发售产品
+### 当前日期发售的新产品
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
@@ -96,6 +96,11 @@ pageClass: routes
 | ---- | ----- | ---- | --------- | --------- | ---------- | ----- | --- |
 | home | comic | soft | maniax    | books     | pro        | girls | bl  |
 
+</Route>
+
+### 产品打折信息
+
+<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']">
 </Route>
 
 ## ebb.io
