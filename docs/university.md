@@ -1067,6 +1067,28 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>
 
+## 中国石油大学（华东）
+
+### 主页
+
+<Route author="Veagau" example="/upc/main" path="/upc/main/:type" :paramsDesc="['分类, 见下表']">
+
+| 通知公告 | 学术动态 |
+| -------- | -------- |
+| notice   | scholar  |
+
+</Route>
+
+### 计算机科学与技术学院
+
+<Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类, 见下表']">
+
+| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
+| -------- | -------- | -------- | -------- |
+| news     | scholar  | states   | notice   |
+
+</Route>
+
 ## 中国药科大学
 
 ### 中国药科大学
@@ -1128,25 +1150,3 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
-
-## 中国石油大学（华东）
-
-### 主页
-
-<Route author="Veagau" example="/upc/main" path="/upc/main/:type" :paramsDesc="['分类, 见下表']">
-
-| 通知公告 | 学术动态 |
-| -------- | -------- |
-| notice   | scholar  |
-
-</Route>
-
-### 计算机科学与技术学院
-
-<Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类, 见下表']">
-
-| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
-| -------- | -------- | -------- | -------- |
-| news     | scholar  | states   | notice   |
-
-</Route>
