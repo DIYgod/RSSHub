@@ -4,13 +4,13 @@ sidebar: auto
 
 # Deployment
 
-RSSHub provides a painless deployment process if you are equipped with basic programming knowledge, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
+RSSHub provides a painless deployment process if you are equipped with basic programming knowledge, you may open an [issue](https://github.com/DIYgod/RSSHub/issues/new/choose) if you believe you have encountered a problem not listed [here](https://github.com/DIYgod/RSSHub/issues), the community will try to sort it out asap.
 
 The deployment may involve the followings:
 
 1. Command line interface
 1. [Git](https://git-scm.com/)
-1. [Node.js >= 8.0.0](https://nodejs.org/)
+1. [Node.js](https://nodejs.org/)
 1. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 Deploy for public access may require:
@@ -82,17 +82,16 @@ $ git pull
 
 `RSSHub` reads its configurations from `lib/config.js` or system environment variables.
 
-**How to set system environment variables**
+Create a `.env` file in the root directory of your project. Add environment-specific variables on new lines in the form of `NAME=VALUE`. For example:
 
-Under Windows, enter `$ set PORT=1000` in cmd
+```
+CACHE_TYPE=redis
+CACHE_EXPIRE=600
+```
 
-Under UNIX-based OS, enter `$ PORT=1000` in terminal
+Please notice that it will not override already existed environment variables, more rules please refer to [dotenv](https://github.com/motdotla/dotenv)
 
-Enter `$ npm start` to start a `RSSHub` install with port `1000`.
-
-System environment variables set here will be purged after closing cmd/terminal, if you want persist the variables, you can create a simple [batch script](https://en.wikipedia.org/wiki/Batch_file) or [shell script](https://en.wikipedia.org/wiki/Shell_script).
-
-To configure more options please refer to [Settings](#Settings).
+To configure more options please refer to [Configuration](#configuration-3).
 
 ### Use Redis for caching
 
@@ -104,7 +103,7 @@ Unless you are expecting high traffic or deploying in cluster-mode, Redis is not
 
 :::
 
-Change `CACHE_TYPE` to `redis`, RSSHub will try to connect to `redis://localhost:6379/`. For changing the target address, please refer to [Settings](#Settings).
+Change `CACHE_TYPE` to `redis`, RSSHub will try to connect to `redis://localhost:6379/`. For changing the target address, please refer to [Configuration](#configuration-3).
 
 ## Docker Deployment
 
@@ -138,7 +137,7 @@ For example, adding `-e CACHE_EXPIRE=3600` will set the cache time to 1 hour.
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
-To configure more options please refer to [Settings](#Settings).
+To configure more options please refer to [Configuration](#configuration-3).
 
 ### docker-compose Deployment
 
@@ -148,22 +147,25 @@ To configure more options please refer to [Settings](#Settings).
 $ docker volume create redis-data
 ```
 
-2.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
+1.  Copy `lib/config.js` to `lib/config/config.js`, to avoid conflicts with master branch. Git will ignore this file as it contains sensitive information.
+
+1.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
 
     -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `lib/config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
     -   `USE_CHINA_NPM_REGISTRY=1` avoids GFW npm registry interference in mainland China. Default to 0.
 
-3.  Deploy
+1.  Deploy
 
 ```bash
-$ docker-compose up
+$ docker-compose up -d
 ```
 
-4.  Update
+1.  Update
 
 ```bash
+$ git pull
 $ docker-compose build
-$ docker-compose up
+$ docker-compose up -d
 ```
 
 ## Heroku Deployment
@@ -246,9 +248,9 @@ For changing the deployment project id or version id, please refer to `Deploying
 
 You can access your `Google App Engine URL` to check the deployment status
 
-## Setting
+## Configuration
 
-### Application Settings
+### Application Configurations
 
 `RSSHub` reads its configurations from `lib/config.js` or environment variables.
 
@@ -264,9 +266,15 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `CACHE_TYPE`: cache type, `memory` or `redis`, empty this value will disable caching, default to `memory`
 
-`CACHE_EXPIRE`: cache expiry time in seconds, default to `300`
+`CACHE_EXPIRE`: route cache expiry time in seconds, default to `5 * 60`
+
+`CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, it will be recalculated when it is accessed, default to `1 * 60 * 60`
 
 `LISTEN_INADDR_ANY`: open up for external access, default to `1`
+
+`REQUEST_RETRY`: retries allowed for failed requests, default to `2`
+
+`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
 
 `TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `100`
 
@@ -280,11 +288,21 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
-`PROXY_PROTOCOL`: Using proxy of such protocol, Supports socks, socks4,socks4a,socks5,socks5h
+`PROXY_PROTOCOL`: Using proxy, Supports socks, http, https
 
-`PROXY_HOST`: host of the proxy
+`PROXY_HOST`: host or IP of the proxy
 
 `PROXY_PORT`: port of the proxy
+
+`PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
+
+`PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
+
+`NODE_NAME`: node name, used for load balancing, identify current node
+
+`PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+
+`SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
 ### User Authentication
 
@@ -294,7 +312,7 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
 ### Route-specific Configurations
 
--   `pixiv`: [registration](https://accounts.pixiv.net/signup)
+-   `pixiv`: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
@@ -304,15 +322,13 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   `twitter`: [application creation](https://apps.twitter.com)
+-   `twitter`: [Application creation](https://apps.twitter.com)
 
-    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key
+    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key, support multiple keys, split them with `,`
 
-    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret
+    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret, support multiple keys, split them with `,`
 
-    -   `TWITTER_ACCESS_TOKEN`: Twitter Access Token
-
-    -   `TWITTER_ACCESS_TOKEN_SECRET`: Twitter Access Token Secret
+    -   `TWITTER_TOKEN_{id}`: Twitter token's corresponding id, replace `{id}` with the id, the value is a combination of `consumer_key consumer_secret access_token access_token_secret` by a comma `,`. Eg. `{consumer_key},{consumer_secret},{access_token},{access_token_secret}`.
 
 -   `youtube`: [API Key application](https://console.developers.google.com/)
 
@@ -325,6 +341,10 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 -   `github`: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+
+-   `mail`:
+
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. the value is in the format of `password=password&host=server&port=port`, eg. `password=123456&host=imap.gmail.com&port=993`
 
 ### Access Control
 

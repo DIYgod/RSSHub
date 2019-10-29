@@ -6,6 +6,7 @@ about: 早起的小可爱有虫抓
 <!--
 请确保已阅读 [文档](https://docs.rsshub.app) 内相关部分，并按照模版提供信息
 否则 issue 将被立即关闭
+由于源网站反爬缘故，演示地址一些rss会返回status code 403，请勿重复提issue
 -->
 
 ### 路由地址
