@@ -11129,11 +11129,6 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vm@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vm/-/vm-0.1.0.tgz#0060d485e8b89858946c40b01a6ba07945db70a8"
-  integrity sha1-AGDUhei4mFiUbECwGmugeUXbcKg=
-
 vue-hot-reload-api@^2.3.0:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"

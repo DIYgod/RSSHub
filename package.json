@@ -101,7 +101,6 @@
     "socks-proxy-agent": "4.0.2",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
-    "vm": "0.1.0",
     "winston": "3.2.1"
   },
   "jest": {
