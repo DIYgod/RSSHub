@@ -1,3 +1,6 @@
+const pinyin = require('pinyin');
+const { slugify: _slugify } = require('@vuepress/shared-utils');
+
 module.exports = {
     plugins: {
         '@vuepress/google-analytics': {
@@ -30,6 +33,24 @@ module.exports = {
             description: '🍰 Everything is RSSible',
         },
     },
+    markdown: {
+        slugify: function(s) {
+            return _slugify(
+                pinyin(s, {
+                    style: pinyin.STYLE_NORMAL,
+                    heteronym: true,
+                    segment: true,
+                })
+                    .map((item) => item[0])
+                    .join('-')
+            );
+        },
+        anchor: {
+            permalink: true,
+            permalinkBefore: true,
+            permalinkSymbol: '#',
+        },
+    },
     head: [
         ['link', { rel: 'icon', href: '/logo.png' }],
         ['link', { rel: 'manifest', href: '/manifest.json' }],
@@ -43,6 +64,7 @@ module.exports = {
         repo: 'DIYgod/RSSHub',
         editLinks: true,
         docsDir: 'docs',
+        smoothScroll: true,
         algolia: {
             apiKey: '6247bc0db93150fd9e531b93a3fa4046',
             indexName: 'rsshub',

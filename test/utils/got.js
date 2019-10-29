@@ -71,6 +71,7 @@ describe('got', () => {
             params: {
                 test: 1,
             },
+            responseType: 'buffer',
         });
     });
 });

@@ -54,7 +54,13 @@ pageClass: routes
 
 ### 镜像有新 Build
 
-<Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']"/>
+<Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']" radar="1"/>
+
+::: warning 注意
+
+官方镜像的 owner 填写 library, 如: https://rsshub.app/dockerhub/build/library/mysql
+
+:::
 
 ## F-Droid
 
@@ -85,6 +91,12 @@ pageClass: routes
 ### 脚本更新
 
 <Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']"/>
+
+## IPSW.me
+
+### 苹果固件更新-IPSWs/OTAs 版本
+
+<Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
 
 ## Minecraft CurseForge
 
@@ -156,11 +168,11 @@ pageClass: routes
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
 
-## 怪物猎人
+## 怪物猎人世界
 
 ### 更新
 
-见 [#怪物猎人](/game.html#怪物猎人)
+见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
 
 ## 厚墨
 

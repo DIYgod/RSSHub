@@ -14,7 +14,21 @@ pageClass: routes
 
 ### 每日壁纸
 
-<Route author="FHYunCai" example="/bing" path="/bing"/>
+<Route author="FHYunCai" example="/bing" path="/bing" radar="1"/>
+
+## CNU 视觉联盟
+
+### 每日精选
+
+<Route author="hoilc" example="/cnu/selected" path="/cnu/selected" />
+
+### 发现
+
+<Route author="hoilc" example="/cnu/discovery/hot/自然" path="/cnu/discovery/:type?/:category?" :paramsDesc="['板块类型, 默认为`热门`, 具体参见下表', '图片类别, 默认为`0`代表全部, 可参见[这里](http://www.cnu.cc/discoveryPage/hot-0)']"/>
+
+| 热门 | 推荐      | 最新   |
+| ---- | --------- | ------ |
+| hot  | recommend | recent |
 
 ## Dilbert Comic Strip
 

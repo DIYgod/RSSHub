@@ -4,6 +4,12 @@ pageClass: routes
 
 # 音视频
 
+## 60-Second Science - Scientific American
+
+### Transcript
+
+<Route author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+
 ## 99% Invisible
 
 ### Transcript
@@ -222,7 +228,7 @@ pageClass: routes
 
 ## 抖音
 
-见 [#抖音](/social-media.html#抖音)
+见 [#抖音](/social-media.html#dou-yin)
 
 ## 高清电台
 

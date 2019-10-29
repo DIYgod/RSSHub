@@ -15,7 +15,58 @@ sidebar: auto
 
 开始编写 RSS 源前请确认源站没有提供 RSS，部分网页会在 HTML 头部包含 type 为 `application/atom+xml` 或 `application/rss+xml` 的 link 元素来指明 RSS 链接
 
-### 步骤 1: 编写脚本
+### 调试
+
+首先 `yarn` 或者 `npm install` 安装依赖，然后执行 `yarn dev` 或者 `npm run dev`，打开 `http://localhost:1200` 就可以看到效果，修改文件也会自动刷新
+
+### 添加脚本路由
+
+在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
+
+#### 举例
+
+1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
+
+| 名称                       | 说明                                                                               |
+| -------------------------- | ---------------------------------------------------------------------------------- |
+| 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
+| 数据来源                   | bilibili                                                                           |
+| 路由名称                   | bangumi                                                                            |
+| 参数 1                     | :seasonid 必选                                                                     |
+| 参数 2                     | 无                                                                                 |
+| 参数 3                     | 无                                                                                 |
+| 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
+| lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
+
+2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
+
+| 名称                       | 说明                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| 路由                       | `/github/issue/:user/:repo`                                                  |
+| 数据来源                   | github                                                                       |
+| 路由名称                   | issue                                                                        |
+| 参数 1                     | :user 必选                                                                   |
+| 参数 2                     | :repo 必选                                                                   |
+| 参数 3                     | 无                                                                           |
+| 脚本路径                   | `./routes/github/issue`                                                      |
+| lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
+
+3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
+
+| 名称                       | 说明                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| 路由                       | `/embassy/:country/:city?`                                                   |
+| 数据来源                   | embassy                                                                      |
+| 路由名称                   | 无                                                                           |
+| 参数 1                     | :country 必选                                                                |
+| 参数 2                     | ?city 可选                                                                   |
+| 参数 3                     | 无                                                                           |
+| 脚本路径                   | `./routes/embassy/index`                                                     |
+| lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
+
+---
+
+### 编写脚本
 
 在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
 
@@ -392,54 +443,7 @@ ctx.state.data = {
 
 ---
 
-### 步骤 2: 添加脚本路由
-
-在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
-
-#### 举例
-
-1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
-
-| 名称                       | 说明                                                                               |
-| -------------------------- | ---------------------------------------------------------------------------------- |
-| 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
-| 数据来源                   | bilibili                                                                           |
-| 路由名称                   | bangumi                                                                            |
-| 参数 1                     | :seasonid 必选                                                                     |
-| 参数 2                     | 无                                                                                 |
-| 参数 3                     | 无                                                                                 |
-| 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
-| lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
-
-2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/github/issue/:user/:repo`                                                  |
-| 数据来源                   | github                                                                       |
-| 路由名称                   | issue                                                                        |
-| 参数 1                     | :user 必选                                                                   |
-| 参数 2                     | :repo 必选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/github/issue`                                                      |
-| lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
-
-3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/embassy/:country/:city?`                                                   |
-| 数据来源                   | embassy                                                                      |
-| 路由名称                   | 无                                                                           |
-| 参数 1                     | :country 必选                                                                |
-| 参数 2                     | ?city 可选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/embassy/index`                                                     |
-| lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
-
----
-
-### 步骤 3: 添加脚本文档
+### 添加脚本文档
 
 1.  更新 [文档 (/docs/) ](https://github.com/DIYgod/RSSHub/blob/master/docs/) 目录内对应的文档, 可以执行 `npm run docs:dev` 查看文档效果
 
@@ -515,7 +519,13 @@ ctx.state.data = {
 
 ## 提交新的 RSSHub Radar 规则
 
-在 [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 里添加规则，然后在 RSSHub 文档里给对应路径加上 `radar="1"`，这样会显示一个 `支持浏览器扩展` 标记
+### 调试
+
+打开浏览器扩展设置页，切换到规则列表页，下拉页面可以看到一个文本框，把新规则复制到文本框里就可以用来调试
+
+### 编写规则
+
+在 [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 里添加规则
 
 下面说明中会用到的简化的规则：
 
@@ -575,21 +585,21 @@ ctx.state.data = {
 
 下面详细说明这些字段的含义及用法
 
-### title
+#### title
 
 必填，路由名称
 
 对应 RSSHub 文档中的名称，如 `Twitter 用户时间线` 规则的 `title` 为 `用户时间线`
 
-### docs
+#### docs
 
 必填，文档地址
 
 如 `Twitter 用户时间线` 规则的 `docs` 为 `https://docs.rsshub.app/social-media.html#twitter`
 
-而不是 `https://docs.rsshub.app/social-media.html#用户时间线`，因为 `#用户时间线` 不唯一而 `#twitter` 唯一
+注意不是 `https://docs.rsshub.app/social-media.html#yong-hu-shi-jian-xian`，hash 应该定位到一级标题
 
-### source
+#### source
 
 可选，源站路径，留空则永远不会匹配成功，只会在 `当前网站适用的 RSSHub 中出现`
 
@@ -599,7 +609,7 @@ ctx.state.data = {
 
 请注意 `source` 只可以匹配 URL Path，如果参数在 URL Param 和 URL Hash 里请使用 `target`
 
-### target
+#### target
 
 可选，RSSHub 路径，留空则不会生成 RSSHub 路径
 
@@ -613,7 +623,7 @@ ctx.state.data = {
 
 又如 `Pixiv 用户收藏` 规则，把 `https://www.pixiv.net/bookmark.php?id=15288095` 匹配为 `/pixiv/user/bookmarks/15288095`
 
-### script
+#### script
 
 可选，执行脚本
 
@@ -623,7 +633,7 @@ ctx.state.data = {
 
 如 `微博博主` 规则
 
-### verification
+#### verification
 
 可选，验证源站路径
 
@@ -633,45 +643,6 @@ ctx.state.data = {
 
 比如 `twitter.com/:id` 可以匹配 `https://twitter.com/DIYgod`，也可以匹配 Twitter 主页 `https://twitter.com/home`，后者显然不是我们想匹配的，就用 `verification` 把 `id` 为 `home` 时排除掉
 
-## 一些开发 tips
+### 补充文档
 
-### VS Code 调试配置
-
-`.vscode/launch.js`
-
-#### 使用 nodemon 调试
-
-在终端使用 `npm run dev` 或 `yarn dev` 开始调试。
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "attach",
-            "name": "Node: Nodemon",
-            "processId": "${command:PickProcess}",
-            "restart": true,
-            "protocol": "inspector"
-        }
-    ]
-}
-```
-
-#### 不使用 nodemon 调试
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/lib/index.js",
-            "env": { "NODE_ENV": "dev" }
-        }
-    ]
-}
-```
+在 RSSHub 文档里给对应路径加上 `radar="1"`，这样就会显示一个 `支持浏览器扩展` 标记

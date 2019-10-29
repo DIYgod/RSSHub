@@ -198,15 +198,15 @@ pageClass: routes
 
 ### 直播开播
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
 
 ### 直播搜索
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
 
 ### 直播分区
 
-见 [#哔哩哔哩直播](/live.html#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
 
 ### 主站话题列表
 
@@ -237,6 +237,10 @@ pageClass: routes
 ### 歌单
 
 <Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
+
+### 专栏文集
+
+<Route author="hoilc" example="/bilibili/readlist/25611" path="/bilibili/readlist/:listid" :paramsDesc="['文集 id, 可在专栏文集 URL 中找到']"/>
 
 ## Disqus
 
@@ -269,6 +273,22 @@ pageClass: routes
 ### 运动日记
 
 <Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" :paramsDesc="['Keep 用户 id']"/>
+
+## Lofter
+
+::: tip 提示
+
+官方提供了用户主页 RSS: http://**:username**.lofter.com/rss
+
+:::
+
+### 话题(标签)
+
+<Route author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['话题名(标签名) 例如 `名侦探柯南`', '排行类型, 默认显示最新话题, 取值如下']"/>
+
+| new  | date | week | month | total |
+| ---- | ---- | ---- | ----- | ----- |
+| 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
 
 ## pixiv
 
@@ -323,6 +343,10 @@ pageClass: routes
 ### 贴纸包
 
 <Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['贴纸包 id, 可在分享贴纸获得的 URL 中找到']"/>
+
+### Telegram Blog
+
+<Route author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
 ## Twitter
 
@@ -542,15 +566,15 @@ pageClass: routes
 
 ### 关键词
 
-<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1"/>
+<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1" radar="1"/>
 
 ### 热搜榜
 
-<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1"/>
+<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1" radar="1"/>
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1" radar="1"/>
 
 ## 微博绿洲
 
@@ -614,6 +638,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
 
+### 用户文章
+
+<Route author="whtsky" example="/zhihu/people/posts/dcjanus" path="/zhihu/people/posts/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
+
 ### 专栏
 
 <Route author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']" anticrawler="1" radar="1"/>
@@ -621,6 +649,10 @@ pageClass: routes
 ### 知乎日报
 
 <Route author="DHPO" example="/zhihu/daily" path="/zhihu/daily" anticrawler="1" radar="1"/>
+
+### 知乎日报 - 合集
+
+<Route author="ccbikai" example="/zhihu/daily/section/2" path="/zhihu/daily/section/:sectionId" :paramsDesc="['合集 id, 可在 https://news-at.zhihu.com/api/7/sections 找到']" anticrawler="1"/>
 
 ### 知乎热榜
 

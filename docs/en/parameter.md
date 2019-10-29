@@ -2,13 +2,13 @@
 
 ::: tip
 
-All parameters can be linked with `&` to used together to generate a complex feed
+All parameters can be linked with `&` to used together to generate a complex feed.
 
 :::
 
 ## Filtering
 
-The following URL query parameters are supported, Regex support is built-in
+The following URL query parameters are supported, Regex support is built-in.
 
 Set `filter` to include the content
 
@@ -24,7 +24,7 @@ Set `filter` to include the content
 
 For example: [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
 
-Set `filterout` to exclude unwanted content
+Set `filterout` to exclude unwanted content.
 
 -   filterout: filter title and description
 
@@ -38,29 +38,29 @@ For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](h
 
 ### Limit Entries
 
-Set `limit` to limit the number of articles in the feed,
+Set `limit` to limit the number of articles in the feed.
 
 Eg: Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https://rsshub.app/dribbble/popular?limit=10)
 
 ## Fulltext
 
-Enable fulltext via `mode` parameter
+Enable fulltext via `mode` parameter.
 
 Eg: bilibili article <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
 
-## Telegram instantview
+## Telegram Instant View
 
-Replace website link with Telegram instantview link
+Replace website link with Telegram's Instant View link.
 
-Eable Telegram instantview needs making page template, refer to [official website](https://instantview.telegram.org/)
+Enable Telegram Instant View requires a page template, it can be obtained from Telegram's [Instant View page](https://instantview.telegram.org/)
 
--   tgiv: template hash, getting form link of making template page（the string after `&rhash=`）
+-   tgiv: template hash, obtained from the link of template page generated（the string after `&rhash=`）
 
 Eg: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
 
 ### Output Formats
 
-RSSHub supports RSS 2.0 and Atom as the output formats, simply append `.rss` `.atom` to the end of the feed address, default to RSS 2.0
+RSSHub conforms to RSS 2.0 and Atom Standard, simply append `.rss` `.atom` to the end of the feed address to obtain the feed in corresponding format, default to RSS 2.0.
 
 For example:
 

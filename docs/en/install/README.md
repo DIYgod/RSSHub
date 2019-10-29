@@ -91,7 +91,7 @@ CACHE_EXPIRE=600
 
 Please notice that it will not override already existed environment variables, more rules please refer to [dotenv](https://github.com/motdotla/dotenv)
 
-To configure more options please refer to [Settings](#Settings).
+To configure more options please refer to [Configuration](#configuration-3).
 
 ### Use Redis for caching
 
@@ -103,7 +103,7 @@ Unless you are expecting high traffic or deploying in cluster-mode, Redis is not
 
 :::
 
-Change `CACHE_TYPE` to `redis`, RSSHub will try to connect to `redis://localhost:6379/`. For changing the target address, please refer to [Settings](#Settings).
+Change `CACHE_TYPE` to `redis`, RSSHub will try to connect to `redis://localhost:6379/`. For changing the target address, please refer to [Configuration](#configuration-3).
 
 ## Docker Deployment
 
@@ -137,7 +137,7 @@ For example, adding `-e CACHE_EXPIRE=3600` will set the cache time to 1 hour.
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
-To configure more options please refer to [Settings](#Settings).
+To configure more options please refer to [Configuration](#configuration-3).
 
 ### docker-compose Deployment
 
@@ -248,9 +248,9 @@ For changing the deployment project id or version id, please refer to `Deploying
 
 You can access your `Google App Engine URL` to check the deployment status
 
-## Setting
+## Configuration
 
-### Application Settings
+### Application Configurations
 
 `RSSHub` reads its configurations from `lib/config.js` or environment variables.
 
