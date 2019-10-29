@@ -151,8 +151,8 @@ pageClass: routes
 
 <Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" :paramsDesc="['模式']">
 
-| 连载   | 完结  |
-| ------ | ----- |
+| 连载   | 完结   |
+| ------ | ------ |
 | serial | finish |
 
 </Route>
