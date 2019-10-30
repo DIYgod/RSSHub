@@ -440,7 +440,7 @@ category 列表：
 
 ### 教务处通知
 
-<Route author="butten42" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
+<Route author="d42" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
 
 ## 华中师范大学
 
