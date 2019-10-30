@@ -106,13 +106,11 @@ pageClass: routes
 
 ### 信息门户
 
-<Route author="RicardoMing" example="/bupt/portal" path="/bupt/portal" />
+<Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
-::: warning 注意
-信息门户的通知需要通过统一身份认证后才能获取，因此需要在校园网或校园 VPN 环境下自建。
+### 校园新闻
 
-设置环境变量: `BUPT_USERNAME` 用户名为学号， `BUPT_PASSWORD` 统一身份认证的密码。
-:::
+<Route author="wzekin" example="/bupt/news" path="/bupt/news" />
 
 ## 常州大学
 
