@@ -97,10 +97,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 最近更新
 
-<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest"/>
+<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1"/>
 ### 栏目
 
-<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']">
+<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']" radar="1">
 
 :::
 type 为 all 时，category 参数不支持 cost 和 free
@@ -310,6 +310,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 上市公告-可转换债券
 
 <Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
+
+### 问询函件(全部/主板/中小企业板/创业板)
+
+<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
 
 ## 搜狗
 
