@@ -879,3 +879,10 @@ pageClass: routes
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 白鲸出海
+
+### 首页最新帖子
+
+<Route author="jeffcottLu" example="/baijing" path="/baijing">
+
