@@ -6666,6 +6666,7 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
+
 nock@11.6.0:
   version "11.6.0"
   resolved "https://registry.yarnpkg.com/nock/-/nock-11.6.0.tgz#481961e0cf78794f200ea71e25d948d668446717"
