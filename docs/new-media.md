@@ -200,6 +200,12 @@ pageClass: routes
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
+## 白鲸出海
+
+### 首页最新帖子
+
+<Route author="jeffcottLu" example="/baijing" path="/baijing">
+
 ## 币世界
 
 ### 快讯
@@ -879,10 +885,3 @@ pageClass: routes
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## 白鲸出海
-
-### 首页最新帖子
-
-<Route author="jeffcottLu" example="/baijing" path="/baijing">
-
