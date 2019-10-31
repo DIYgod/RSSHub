@@ -200,7 +200,7 @@ category 对应的关键词有
 
 ### 即时新闻
 
-<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为中港台']">
+<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为 china']">
 
 | 中国  | 新加坡    | 国际  | 财经     |
 | ----- | --------- | ----- | -------- |
@@ -210,7 +210,7 @@ category 对应的关键词有
 
 ### 新闻
 
-<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为中港台']">
+<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为 china']">
 
 | 中国  | 新加坡    | 东南亚 | 国际  | 体育   | 早报现在 |
 | ----- | --------- | ------ | ----- | ------ | -------- |
@@ -220,9 +220,9 @@ category 对应的关键词有
 
 ### 其他栏目
 
-<Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type/:section" :paramsDesc="['除了上面两个兼容规则之外，所有页面形如 https://www.zaobao.com/wencui/politic 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。']">
+除了上面两个兼容规则之外，联合早报网站里所有页面形如 <https://www.zaobao.com/wencui/politic> 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
 
-</Route>
+<Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type/:section" :paramsDesc="['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']" />
 
 ## 连线 Wired
 
