@@ -434,12 +434,6 @@ category 列表：
 
 <Route author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
 
-## 井冈山大学
-
-### 教务处通知
-
-<Route author="butten42" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
-
 ## 华中师范大学
 
 ### 就业信息
@@ -466,7 +460,7 @@ category 列表：
 
 ### 教务处通知
 
-<Route author="Bernard" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
+<Route author="butten42" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
 
 ## 昆明理工大学
 
