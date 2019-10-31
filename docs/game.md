@@ -104,7 +104,7 @@ pageClass: routes
 
 ### PlayStation Store 游戏列表
 
-<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']">
+<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']" radar="1">
 
 适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
 
@@ -112,11 +112,11 @@ pageClass: routes
 
 ### PlayStation Network 用户奖杯
 
-<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']"/>
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']" radar="1"/>
 
 ### PlayStation 4 系统更新纪录
 
-<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" />
+<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1"/>
 
 ## psnine
 
@@ -207,11 +207,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 更新情报
 
-<Route author="DIYgod" example="/mhw/update" path="/mhw/update"/>
+<Route author="DIYgod" example="/mhw/update" path="/mhw/update" radar="1"/>
 
 ### 最新消息
 
-<Route author="DIYgod" example="/mhw/news" path="/mhw/news"/>
+<Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1"/>
 
 ## 旅法师营地
 
@@ -303,15 +303,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏时光新闻
 
-<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news"/>
+<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news" radar="1"/>
 
 ### 游戏时光游戏发售表
 
-<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release"/>
+<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release" radar="1"/>
 
 ### 关键词资讯
 
-<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword"/>
+<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1"/>
 
 ## 游研社
 

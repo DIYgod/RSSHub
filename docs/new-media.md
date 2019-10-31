@@ -227,7 +227,6 @@ pageClass: routes
 ::: tip 提示
 
 -   可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
--   不支持 gif 集锦播放
 
 :::
 
@@ -283,7 +282,11 @@ pageClass: routes
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
-## 观察者风闻话题
+## 观察者网-中国关怀 全球视野
+
+### 观察者首页
+
+<Route author="Jeason0228" example="/guanchazhe/index/all" path="/guanchazhe/index/:type" :paramsDesc="['新闻汇总:默认home输出头条+3列新闻,others则为滚动新闻+热点+观察者付费,all则包括以上']" />
 
 ### 观察者风闻话题
 
@@ -321,7 +324,7 @@ pageClass: routes
 
 ### 标签，栏目，分类
 
-<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']">
+<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']" radar="1">
 
 | 标签 | 栏目   | 分类       |
 | ---- | ------ | ---------- |
@@ -350,6 +353,10 @@ pageClass: routes
 <Route author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
 
 ## 虎嗅
+
+### 首页资讯
+
+<Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
 
 ### 标签
 
@@ -434,12 +441,6 @@ pageClass: routes
 ### 最新资讯
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
-
-## 装备前线
-
-### 首页最新帖子
-
-<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 快科技（原驱动之家）
 
@@ -866,6 +867,12 @@ pageClass: routes
 | default | hot  | new  |
 
 </Route>
+
+## 装备前线
+
+### 首页最新帖子
+
+<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 紫竹张先生
 
