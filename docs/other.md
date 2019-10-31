@@ -313,7 +313,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 问询函件(全部/主板/中小企业板/创业板)
 
-<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
 
 ## 搜狗
 

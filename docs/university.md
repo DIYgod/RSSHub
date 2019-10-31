@@ -462,11 +462,6 @@ category 列表：
 
 <Route author="butten42" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
 
-## 井冈山大学
-
-### 教务处通知
-
-<Route author="Bernard" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
 
 ## 昆明理工大学
 
