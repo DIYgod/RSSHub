@@ -1655,13 +1655,8 @@ acorn-globals@^4.3.2:
 
 acorn-jsx@^5.1.0:
   version "5.1.0"
-<<<<<<< HEAD
-  resolved "https://registry.npm.taobao.org/acorn-jsx/download/acorn-jsx-5.1.0.tgz?cache=0&sync_timestamp=1570991459312&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Facorn-jsx%2Fdownload%2Facorn-jsx-5.1.0.tgz#294adb71b57398b0680015f0a38c563ee1db5384"
-  integrity sha1-KUrbcbVzmLBoABXwo4xWPuHbU4Q=
-=======
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.1.0.tgz#294adb71b57398b0680015f0a38c563ee1db5384"
   integrity sha512-tMUqwBWfLFbJbizRmEcWSLw6HnFzfdJs2sOJEOwwtVPMoH/0Ay+E703oZz78VSXZiiDcZrQ5XKjPIUQixhmgVw==
->>>>>>> 94357fc2d6282f96e8a2351af7eaf4800c06770c
 
 acorn-walk@^6.0.1:
   version "6.1.1"
