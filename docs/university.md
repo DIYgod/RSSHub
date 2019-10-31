@@ -106,13 +106,11 @@ pageClass: routes
 
 ### 信息门户
 
-<Route author="RicardoMing" example="/bupt/portal" path="/bupt/portal" />
+<Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
-::: warning 注意
-信息门户的通知需要通过统一身份认证后才能获取，因此需要在校园网或校园 VPN 环境下自建。
+### 校园新闻
 
-设置环境变量: `BUPT_USERNAME` 用户名为学号， `BUPT_PASSWORD` 统一身份认证的密码。
-:::
+<Route author="wzekin" example="/bupt/news" path="/bupt/news" />
 
 ## 常州大学
 
@@ -436,6 +434,12 @@ category 列表：
 
 <Route author="RayHY" example="/hust/aia/news" path="/universities/hust/aia/news" />
 
+## 井冈山大学
+
+### 教务处通知
+
+<Route author="butten42" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
+
 ## 华中师范大学
 
 ### 就业信息
@@ -457,6 +461,12 @@ category 列表：
 | 实践创新 | 学科竞赛 | 研究生助教 | 教学改革 | 专业建设 | 课程建设 | 教材建设 | 教学成果 | 学术报告 |
 
 </Route>
+
+## 井冈山大学
+
+### 教务处通知
+
+<Route author="Bernard" example="/jgsu/jwc" path="/universities/jgsu/jwc" />
 
 ## 昆明理工大学
 
@@ -1061,6 +1071,28 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="HenryQW" example="/cas/sim/academic" path="/universities/cas/sim/academic"/>
 
+## 中国石油大学（华东）
+
+### 主页
+
+<Route author="Veagau" example="/upc/main" path="/upc/main/:type" :paramsDesc="['分类, 见下表']">
+
+| 通知公告 | 学术动态 |
+| -------- | -------- |
+| notice   | scholar  |
+
+</Route>
+
+### 计算机科学与技术学院
+
+<Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类, 见下表']">
+
+| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
+| -------- | -------- | -------- | -------- |
+| news     | scholar  | states   | notice   |
+
+</Route>
+
 ## 中国药科大学
 
 ### 中国药科大学
@@ -1122,25 +1154,3 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
-
-## 中国石油大学（华东）
-
-### 主页
-
-<Route author="Veagau" example="/upc/main" path="/upc/main/:type" :paramsDesc="['分类, 见下表']">
-
-| 通知公告 | 学术动态 |
-| -------- | -------- |
-| notice   | scholar  |
-
-</Route>
-
-### 计算机科学与技术学院
-
-<Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类, 见下表']">
-
-| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
-| -------- | -------- | -------- | -------- |
-| news     | scholar  | states   | notice   |
-
-</Route>

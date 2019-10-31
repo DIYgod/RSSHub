@@ -149,11 +149,11 @@ pageClass: routes
 
 ### vol
 
-<Route author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['模式']">
+<Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" :paramsDesc="['模式']">
 
-| 连载   | 完结  |
-| ------ | ----- |
-| serial | finsh |
+| 连载   | 完结   |
+| ------ | ------ |
+| serial | finish |
 
 </Route>
 
