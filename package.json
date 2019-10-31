@@ -47,7 +47,7 @@
     "eslint-plugin-prettier": "3.1.1",
     "jest": "24.9.0",
     "mockdate": "2.0.5",
-    "nock": "11.6.0",
+    "nock": "11.7.0",
     "nodejieba": "2.3.3",
     "nodemon": "1.19.4",
     "pinyin": "2.9.0",
