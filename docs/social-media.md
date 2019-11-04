@@ -576,6 +576,20 @@ pageClass: routes
 
 <Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1" radar="1"/>
 
+### 个人时间线
+
+<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']">
+
+::: warning 注意
+
+需要对应用户打开页面进行授权生成 token 才能生成内容
+
+自部署需要申请并配置微博 key，具体见部署文档
+
+:::
+
+</Route>
+
 ## 微博绿洲
 
 ### 用户
