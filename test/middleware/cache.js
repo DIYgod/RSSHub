@@ -64,7 +64,18 @@ describe('cache', () => {
             mock: 1,
         });
         expect(await app.context.cache.globalCache.get('mock')).toBe('{"mock":1}');
-    });
+
+        await request.get('/test/refreshCache');
+        await wait(1 * 1000 + 100);
+        const response5 = await request.get('/test/refreshCache');
+        const parsed5 = await parser.parseString(response5.text);
+        await wait(2 * 1000 + 100);
+        const response6 = await request.get('/test/refreshCache');
+        const parsed6 = await parser.parseString(response6.text);
+
+        expect(parsed5.items[0].content).toBe('1 1');
+        expect(parsed6.items[0].content).toBe('1 0');
+    }, 10000);
 
     it('redis', async () => {
         process.env.CACHE_TYPE = 'redis';
@@ -106,7 +117,18 @@ describe('cache', () => {
         await app.context.cache.set('mock2', '2');
         await app.context.cache.set('mock2', '2');
         expect(await app.context.cache.get('mock2')).toBe('2');
-    });
+
+        await request.get('/test/refreshCache');
+        await wait(1 * 1000 + 100);
+        const response5 = await request.get('/test/refreshCache');
+        const parsed5 = await parser.parseString(response5.text);
+        await wait(2 * 1000 + 100);
+        const response6 = await request.get('/test/refreshCache');
+        const parsed6 = await parser.parseString(response6.text);
+
+        expect(parsed5.items[0].content).toBe('1 1');
+        expect(parsed6.items[0].content).toBe('1 0');
+    }, 10000);
 
     it('redis with quit', async () => {
         process.env.CACHE_TYPE = 'redis';

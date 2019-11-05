@@ -65,11 +65,23 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## NOI 全国青少年信息学奥林匹克竞赛
+
+### 新闻
+
+<Route author="WenryXu" example="/noi" path="/noi"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
 
 <Route author="fengkx" example="/one" path="/one"/>
+
+## Pocket
+
+### Trending
+
+<Route author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
 
 ## SANS Institute
 
@@ -91,10 +103,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 最近更新
 
-<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest"/>
+<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1"/>
 ### 栏目
 
-<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']">
+<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']" radar="1">
 
 :::
 type 为 all 时，category 参数不支持 cost 和 free
@@ -225,6 +237,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="junfengP" example="/mlhang" path="/mlhang" />
 
+## 每日生猪价格
+
+### 每日生猪价格更新
+
+<Route author="importcjj" example="/pork-price" path="/pork-price" />
+
 ## 米坛社区
 
 ### 表盘更新
@@ -289,6 +307,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
 
+### 科创板项目动态
+
+<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
+
+## 深圳证券交易所
+
+### 上市公告-可转换债券
+
+<Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
+
+### 问询函件(全部/主板/中小企业板/创业板)
+
+<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+
 ## 搜狗
 
 ### 搜狗特色 LOGO
@@ -310,6 +342,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 吐槽新帖
 
 <Route author="Qixingchen" example="/tucaoqq/post/28564/CdRI0728" path="/tucaoqq/post/:project/:key" :paramsDesc="['产品 ID', '产品密钥']"/>
+
+## 腾讯新闻较真查证平台
+
+### 最新辟谣
+
+<Route author="hoilc" example="/factcheck" path="/factcheck"/>
 
 ## 天津产权交易中心
 
@@ -380,3 +418,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 房源
 
 <Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
+
+## はてな
+
+### はてな匿名ダイアリー - 人気記事アーカイブ
+
+<Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>

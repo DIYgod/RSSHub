@@ -49,6 +49,24 @@
                 script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
                 verification: (params) => params.uid,
             },
+            {
+                title: '关键词',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
+            },
+            {
+                title: '超话',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
+                source: '/p/:id/super_index',
+                target: '/weibo/super_index/:id',
+            },
+        ],
+        s: [
+            {
+                title: '热搜榜',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
+                source: '/top/summary',
+                target: '/weibo/search/hot',
+            },
         ],
     },
     'pixiv.net': {
@@ -301,14 +319,17 @@
         _name: '什么值得买',
         www: [
             {
-                title: '关键词',
-                docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
-                target: '/smzdm/keyword/:keyword',
-            },
-            {
                 title: '排行榜',
                 docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
                 source: '/top',
+            },
+        ],
+        search: [
+            {
+                title: '关键词',
+                docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
+                source: '/',
+                target: (params, url) => `/smzdm/keyword/${new URL(url).searchParams.get('s')}`,
             },
         ],
     },
@@ -532,6 +553,197 @@
                 docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
                 source: '/p/:id',
                 target: '/tieba/post/lz/:id',
+            },
+        ],
+    },
+    'wineyun.com': {
+        _name: '酒云网',
+        www: [
+            {
+                title: '最新商品',
+                description: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
+                source: ['/:category'],
+                target: '/wineyun/:category',
+            },
+        ],
+    },
+    'epicgames.com': {
+        _name: 'Epic Games',
+        www: [
+            {
+                title: '每周免费游戏',
+                docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
+                source: '/:collection',
+                target: '/epicgames/:collection',
+            },
+        ],
+    },
+    'docker.com': {
+        _name: 'Docker',
+        hub: [
+            {
+                title: '镜像有新 Build',
+                docs: 'https://docs.rsshub.app/program-update.html#docker-hub',
+                source: ['/r/:owner/:image', '/r/:owner/:image/tags', '/_/:image'],
+                target: (params) => `/dockerhub/build/${params.owner ? params.owner : 'library'}/${params.image}`,
+            },
+        ],
+    },
+    'nga.cn': {
+        _name: 'NGA',
+        bbs: [
+            {
+                title: '分区帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#nga',
+                source: '/thread.php',
+                target: (params, url) => new URL(url).searchParams.get('fid') && `/nga/forum/${new URL(url).searchParams.get('fid')}`,
+            },
+            {
+                title: '帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#nga',
+                source: '/read.php',
+                target: (params, url) => new URL(url).searchParams.get('tid') && `/nga/post/${new URL(url).searchParams.get('tid')}`,
+            },
+        ],
+    },
+    'playstation.com': {
+        _name: 'PlayStation',
+        store: [
+            {
+                title: '游戏列表',
+                docs: 'https://docs.rsshub.app/game.html#playstation',
+                source: '/zh-hans-hk/grid/:id/:page',
+                target: '/ps/list/:id',
+            },
+        ],
+        www: [
+            {
+                title: '用户奖杯',
+                docs: 'https://docs.rsshub.app/game.html#playstation',
+            },
+            {
+                title: '系统更新纪录',
+                docs: 'https://docs.rsshub.app/game.html#playstation',
+            },
+        ],
+    },
+    'monsterhunter.com': {
+        _name: '怪物猎人世界',
+        www: [
+            {
+                title: '更新情报',
+                docs: 'https://docs.rsshub.app/game.html#guai-wu-lie-ren-shi-jie',
+                source: ['', '/*tpath'],
+                target: '/mhw/update',
+            },
+            {
+                title: '最新消息',
+                docs: 'https://docs.rsshub.app/game.html#guai-wu-lie-ren-shi-jie',
+                source: ['', '/*tpath'],
+                target: '/mhw/news',
+            },
+        ],
+    },
+    'vgtime.com': {
+        _name: '游戏时光',
+        www: [
+            {
+                title: '新闻',
+                docs: 'https://docs.rsshub.app/game.html#you-xi-shi-guang',
+                source: '/topic/index.jhtml',
+                target: '/vgtime/news',
+            },
+            {
+                title: '游戏发售表',
+                docs: 'https://docs.rsshub.app/game.html#you-xi-shi-guang',
+                source: '/game/release.jhtml',
+                target: '/vgtime/release',
+            },
+            {
+                title: '关键词资讯',
+                docs: 'https://docs.rsshub.app/game.html#you-xi-shi-guang',
+                source: '/search/list.jhtml',
+                target: (params, url) => `/vgtime/keyword/${new URL(url).searchParams.get('keyword')}`,
+            },
+        ],
+    },
+    'bing.com': {
+        _name: 'Bing',
+        www: [
+            {
+                title: '每日壁纸',
+                docs: 'https://docs.rsshub.app/picture.html#bing-bi-zhi',
+                source: '',
+                target: '/bing',
+            },
+        ],
+    },
+    'dcard.tw': {
+        _name: 'Dcard',
+        www: [
+            {
+                title: '首頁帖子-最新',
+                docs: 'https://docs.rsshub.app/bbs.html#dcard',
+                source: '/f',
+                target: '/dcard/posts/latest',
+            },
+            {
+                title: '首頁帖子-熱門',
+                docs: 'https://docs.rsshub.app/bbs.html#dcard',
+                source: '/f',
+                target: '/dcard/posts/popular',
+            },
+            {
+                title: '板塊帖子-最新',
+                docs: 'https://docs.rsshub.app/bbs.html#dcard',
+                source: '/f/:section',
+                target: '/dcard/:section/latest',
+            },
+            {
+                title: '板塊帖子-熱門',
+                docs: 'https://docs.rsshub.app/bbs.html#dcard',
+                source: '/f/:section',
+                target: '/dcard/:section/popular',
+            },
+        ],
+    },
+    'wegene.com': {
+        _name: 'WeGene',
+        www: [
+            {
+                title: '最近更新',
+                docs: 'https://docs.rsshub.app/other.html#wegene',
+                source: '',
+                target: '/wegene/newest',
+            },
+            {
+                title: '栏目',
+                docs: 'https://docs.rsshub.app/other.html#wegene',
+                source: '/crowdsourcing',
+                target: '/wegene/column/all/all',
+            },
+        ],
+    },
+    'qdaily.com': {
+        _name: '好奇心日报',
+        www: [
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao',
+                source: '/tags/:idd',
+                target: (params) => `/qdaily/tag/${params.idd.replace('.html', '')}`,
+            },
+            {
+                title: '栏目',
+                docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao',
+                source: '/special_columns/:idd',
+                target: (params) => `/qdaily/column/${params.idd.replace('.html', '')}`,
+            },
+            {
+                title: '分类',
+                docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao',
+                source: '/categories/:idd',
+                target: (params) => `/qdaily/researcach/${params.idd.replace('.html', '')}`,
             },
         ],
     },

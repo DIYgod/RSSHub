@@ -8,7 +8,7 @@ pageClass: routes
 
 ### vol
 
-<RouteEn author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['mode type']">
+<RouteEn author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" :paramsDesc="['mode type']">
 
 | Comics are serialized | Comics is finshed |
 | --------------------- | ----------------- |
