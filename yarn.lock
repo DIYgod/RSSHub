@@ -7012,10 +7012,10 @@ lz-string@1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
-mailparser@2.7.5:
-  version "2.7.5"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.5.tgz#5b7779942afaa24c7e23cad1abbfa5981a8e7310"
-  integrity sha512-kcxReLJAemn4ie1qubjPtRx2PRq9xjWjM004FWzQ9A5gq2aVlfgCBvBuZSGaPM/vtq77h5N5Ts2Ae5fKPMqjAg==
+mailparser@2.7.6:
+  version "2.7.6"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.6.tgz#308db2d3d52289d0927e664a064a58e7e1be274b"
+  integrity sha512-TzxHIZiQW/BVsvqmQEjFFMqOJQg5nn9coX67j2YMN9rOVo8xK7rhAS3Y7RGhGEXNwJE3OLI+j4IxyOe+r2puVQ==
   dependencies:
     encoding-japanese "1.0.30"
     he "1.2.0"
