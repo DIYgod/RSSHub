@@ -200,23 +200,29 @@ category 对应的关键词有
 
 ### 即时新闻
 
-<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为中港台']">
+<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为 china']">
 
-| 中港台 | 新加坡    | 国际  | 财经     |
-| ------ | --------- | ----- | -------- |
-| china  | singapore | world | zfinance |
+| 中国  | 新加坡    | 国际  | 财经     |
+| ----- | --------- | ----- | -------- |
+| china | singapore | world | zfinance |
 
 </Route>
 
 ### 新闻
 
-<Route author="lengthmin" example="/zaobao/znews/greater-china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为中港台']">
+<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为 china']">
 
-| 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
-| ------------- | --------- | ------ | ------------- | ------ |
-| greater-china | singapore | sea    | international | sports |
+| 中国  | 新加坡    | 东南亚 | 国际  | 体育   | 早报现在 |
+| ----- | --------- | ------ | ----- | ------ | -------- |
+| china | singapore | sea    | world | sports | fukan    |
 
 </Route>
+
+### 其他栏目
+
+除了上面两个兼容规则之外，联合早报网站里所有页面形如 <https://www.zaobao.com/wencui/politic> 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
+
+<Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type/:section" :paramsDesc="['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']" />
 
 ## 连线 Wired
 
@@ -227,6 +233,12 @@ category 对应的关键词有
 <Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']">
 
 </Route>
+
+## 每经网
+
+### 重磅原创
+
+<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily" />
 
 ## 南方周末
 
@@ -295,6 +307,28 @@ category 对应的关键词有
 ### China
 
 <Route author="Polynomia" example="/guardian/china" path="/guardian/china"/>
+
+## 香港 01
+
+### 热门
+
+<Route author="hoilc" example="/hk01/hot" path="/hk01/hot" />
+
+### 栏目
+
+<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目id, 可在URL中找到']"/>
+
+### 子栏目
+
+<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目id, 可在URL中找到']"/>
+
+### 专题
+
+<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题id, 可在URL中找到']"/>
+
+### 标签
+
+<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']"/>
 
 ## 新京报
 

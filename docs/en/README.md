@@ -25,7 +25,7 @@ RSSHub delivers millions of contents aggregated from all kinds of sources.
 
 ### Special Sponsors
 
-<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a href="https://kzfeed.com/?from=rsshub" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a><a href="https://partner.lizhi.io/rsshub/office_365_share" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://i.imgur.com/GyYi9MI.png"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a href="https://kzfeed.com/?from=rsshub" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a><a href="https://lizhi.io/store" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://i.imgur.com/1u6jJ6L.jpg"></a>
 
 ### Sponsors
 

@@ -154,6 +154,17 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## kaggle
+
+### Discussion
+
+<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['讨论区 id, 打开网页请求, 搜索 forumId', '排序方式见下表, 默认为 hot']">
+
+| hot     | recent          | new             | top        | active        |
+| ------- | --------------- | --------------- | ---------- | ------------- |
+| Hotness | Recent Comments | Recently Posted | Most Votes | Most Comments |
+
+</Route>
 ## LeetCode
 
 ### 文章
@@ -459,6 +470,12 @@ GitHub 官方也提供了一些 RSS:
 | nodejs     | nodejs     |
 
 </Route>
+
+## 码农周刊
+
+### issues
+
+<Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
 ## 前端艺术家&&飞冰早报
 

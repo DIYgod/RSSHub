@@ -238,6 +238,10 @@ pageClass: routes
 
 <Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
 
+### 专栏文集
+
+<Route author="hoilc" example="/bilibili/readlist/25611" path="/bilibili/readlist/:listid" :paramsDesc="['文集 id, 可在专栏文集 URL 中找到']"/>
+
 ## Disqus
 
 ### 评论
@@ -339,6 +343,10 @@ pageClass: routes
 ### 贴纸包
 
 <Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['贴纸包 id, 可在分享贴纸获得的 URL 中找到']"/>
+
+### Telegram Blog
+
+<Route author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
 ## Twitter
 
@@ -558,15 +566,29 @@ pageClass: routes
 
 ### 关键词
 
-<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1"/>
+<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1" radar="1"/>
 
 ### 热搜榜
 
-<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1"/>
+<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1" radar="1"/>
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1" radar="1"/>
+
+### 个人时间线
+
+<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']">
+
+::: warning 注意
+
+需要对应用户打开页面进行授权生成 token 才能生成内容
+
+自部署需要申请并配置微博 key，具体见部署文档
+
+:::
+
+</Route>
 
 ## 微博绿洲
 
@@ -641,6 +663,10 @@ pageClass: routes
 ### 知乎日报
 
 <Route author="DHPO" example="/zhihu/daily" path="/zhihu/daily" anticrawler="1" radar="1"/>
+
+### 知乎日报 - 合集
+
+<Route author="ccbikai" example="/zhihu/daily/section/2" path="/zhihu/daily/section/:sectionId" :paramsDesc="['合集 id, 可在 https://news-at.zhihu.com/api/7/sections 找到']" anticrawler="1"/>
 
 ### 知乎热榜
 
