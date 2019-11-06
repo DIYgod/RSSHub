@@ -10,6 +10,11 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 中国工业和信息化部
+
+### 政策解读
+
+<Route author="Yoge-Code" example="/miit.gov/" path="/miit.gov"/>
 ## 中国政府
 
 ### 最新政策
