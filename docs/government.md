@@ -15,6 +15,21 @@ pageClass: routes
 ### 政策解读
 
 <Route author="Yoge-Code" example="/miit.gov/" path="/miit.gov"/>
+
+## 中国国家认证认可监管管理员会
+
+### 监管动态
+
+<Route author="Yoge-Code" example="/gov/cnca/jgdt" path="/gov/cnca/jgdt"/>
+
+### 行业动态
+
+<Route author="Yoge-Code" example="/gov/cnca/hydt" path="/gov/cnca/hydt"/>
+
+### 最新通知
+
+<Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
+
 ## 中国政府
 
 ### 最新政策
