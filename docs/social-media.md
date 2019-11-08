@@ -522,7 +522,7 @@ pageClass: routes
 
 ## 数字尾巴
 
-### 闲置
+### 闲置（分类）
 
 <Route author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
 
@@ -532,7 +532,11 @@ pageClass: routes
 
 </Route>
 
-### 鲸图
+### 闲置（关键词）
+
+<Route author="gaoliang" example="/dgtle/trade/search/ipad" path="/dgtle/trade/search/:keyword" :paramsDesc="['搜索关键词']"/>
+
+### 鲸图（分类）
 
 <Route author="Erriy" example="/dgtle/whale/category/0" path="/dgtle/whale/category/:category" :paramsDesc="['分类 id']">
 
@@ -542,7 +546,7 @@ pageClass: routes
 
 </Route>
 
-### 鲸图排行榜
+### 鲸图（排行榜）
 
 <Route author="Erriy" example="/dgtle/whale/rank/download/day" path="/dgtle/whale/rank/:type/:rule" :paramsDesc="['排行榜类型', '排行榜周期']">
 

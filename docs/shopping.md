@@ -128,10 +128,6 @@ pageClass: routes
 
 </Route>
 
-### 关键词
-
-<Route author="gaoliang" example="/dgtle/trade/search/ipad" path="/dgtle/trade/search/:keyword" :paramsDesc="['搜索关键词']"/>
-
 ## 淘宝众筹
 
 ### 众筹项目
