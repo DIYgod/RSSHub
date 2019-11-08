@@ -522,6 +522,10 @@ pageClass: routes
 
 ## 数字尾巴
 
+### 首页
+
+<Route author="Erriy" example="/dgtle" path="/dgtle" />
+
 ### 闲置（分类）
 
 <Route author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
