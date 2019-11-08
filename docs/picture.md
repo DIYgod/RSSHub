@@ -14,7 +14,7 @@ pageClass: routes
 
 ### 每日壁纸
 
-<Route author="FHYunCai" example="/bing" path="/bing"/>
+<Route author="FHYunCai" example="/bing" path="/bing" radar="1"/>
 
 ## CNU 视觉联盟
 

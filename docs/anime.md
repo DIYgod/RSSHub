@@ -9,6 +9,13 @@ pageClass: routes
 ### 二次元资讯
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
+
+## 1draw #深夜の真剣お絵描き 60 分一本勝負
+
+### 投稿一览
+
+<Route author="jackyu1996" path="/1draw/" example="/1draw/" />
+
 ## Anime1
 
 ### 動畫
@@ -79,6 +86,23 @@ pageClass: routes
 
 见 [#bilibili](/social-media.html#bilibili)
 
+## DLsite
+
+### 当前日期发售的新产品
+
+<Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
+
+| 同人 | 漫画  | 软件 | 同人(R18) | 漫画(R18) | 美少女游戏 | 乙女  | BL  |
+| ---- | ----- | ---- | --------- | --------- | ---------- | ----- | --- |
+| home | comic | soft | maniax    | books     | pro        | girls | bl  |
+
+</Route>
+
+### 产品打折信息
+
+<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']">
+</Route>
+
 ## ebb.io
 
 ### ebb
@@ -125,11 +149,11 @@ pageClass: routes
 
 ### vol
 
-<Route author="CoderTonyChan" example="/vol/finsh" path="/vol/:mode?" :paramsDesc="['模式']">
+<Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" :paramsDesc="['模式']">
 
-| 连载   | 完结  |
-| ------ | ----- |
-| serial | finsh |
+| 连载   | 完结   |
+| ------ | ------ |
+| serial | finish |
 
 </Route>
 
@@ -150,6 +174,18 @@ pageClass: routes
 请打开对应番剧的纵览页(非具体某集),从 url 中最后一位查看番剧 id.(一般为英文)
 除去'海贼'此类具有特殊页面的超长番剧,绝大多数页面都可以解析.
 最适合用来追新番
+
+</Route>
+
+## 電撃オンライン
+
+### 最新記事
+
+<Route author="cssxsh" path="/dengekionline/:type?" example="/dengekionline/dps" :paramsDesc="['新闻类别，如下表']">
+
+| All | PlayStation | Nintendo | Xbox      | PC  | Girl’sStyle | Arcade Web | App | Anime | Review | Rank |
+| --- | ----------- | -------- | --------- | --- | ----------- | ---------- | --- | ----- | ------ | ---- |
+|     | dps         | nintendo | microsoft | dpc | gstyle      | arcade     | app | anime | review | rank |
 
 </Route>
 
@@ -210,15 +246,3 @@ pageClass: routes
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
-
-## 電撃オンライン
-
-### 最新記事
-
-<Route author="cssxsh" path="/dengekionline/:type?" example="/dengekionline/dps" :paramsDesc="['新闻类别，如下表']">
-
-| All | PlayStation | Nintendo | Xbox      | PC  | Girl’sStyle | Arcade Web | App | Anime | Review | Rank |
-| --- | ----------- | -------- | --------- | --- | ----------- | ---------- | --- | ----- | ------ | ---- |
-|     | dps         | nintendo | microsoft | dpc | gstyle      | arcade     | app | anime | review | rank |
-
-</Route>
