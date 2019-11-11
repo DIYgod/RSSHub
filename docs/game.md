@@ -277,6 +277,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="MyFaith" example="/xiaoheihe/discount" path="xiaoheihe/discount"/>
 
+## 英雄联盟
+
+### 新闻中心
+
+<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类,all=全部,zh=综合,gg=公告,ss=赛事,gl=攻略,sq=社区']"/>
+
 ## 游民星空
 
 ### 游民星空今日推荐
