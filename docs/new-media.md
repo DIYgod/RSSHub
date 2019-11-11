@@ -131,6 +131,12 @@ pageClass: routes
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## PMCAFF
+
+### 今日推荐/精选
+
+<Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
+
 ## Readhub
 
 ### 分类
@@ -441,12 +447,6 @@ pageClass: routes
 ### 最新资讯
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
-
-## 装备前线
-
-### 首页最新帖子
-
-<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
 
 ## 快科技（原驱动之家）
 
