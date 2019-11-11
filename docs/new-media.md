@@ -131,6 +131,12 @@ pageClass: routes
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## PMCAFF
+
+### 今日推荐/精选
+
+<Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
+
 ## Readhub
 
 ### 分类
