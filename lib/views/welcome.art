@@ -5,8 +5,6 @@
     <title>Welcome to RSSHub!</title>
     <style>
         body {
-            width: 35em;
-            margin: 0 auto;
             font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -16,11 +14,14 @@
 
         .content {
             position: absolute;
-            top: 40%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 100px);
             min-width: 400px;
             text-align: center;
+        }
+
+        a {
+            color: #F5712C;
         }
 
         details {
@@ -49,7 +50,7 @@
         }
 
         .debug-key {
-            width: 100px;
+            width: 120px;
             text-align: right;
             display: inline-block;
             margin-right: 10px;
@@ -64,6 +65,7 @@
         .debug-value {
             display: inline-block;
             vertical-align: top;
+            white-space: pre;
         }
     </style>
 </head>
