@@ -104,7 +104,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
-更多配置项请看 [#配置](#配置)
+更多配置项请看 [#配置](#pei-zhi)
 
 ## 手动部署
 
@@ -172,7 +172,7 @@ CACHE_EXPIRE=600
 
 该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
-更多配置项请看 [#配置](#配置)
+更多配置项请看 [#配置](#pei-zhi)
 
 ### 更新
 
@@ -298,7 +298,7 @@ $ docker run -d --name rsshub -p 1200:1200 pjf1996/rsshub:arm32v7
 $ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
 ```
 
-其余参数见[使用 Docker 部署](#使用-Docker-部署)
+其余参数见[使用 Docker 部署](#docker-bu-shu)
 
 ## 配置
 
@@ -419,3 +419,9 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 -   吹牛部落 栏目更新
 
     -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式：1. 登陆后点开文章正文 2. 打开控制台 3. 刷新 4. 找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求 5. 找到请求头中的 x-member
+
+-   微博 个人时间线路由: [申请地址](https://open.weibo.com/connect)
+
+    -   `WEIBO_APP_KEY`: 微博 App Key
+    -   `WEIBO_APP_SECRET`: 微博 App Secret
+    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub地址/weibo/timeline/0?code=xxx`

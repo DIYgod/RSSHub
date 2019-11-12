@@ -17,7 +17,7 @@ sidebar: auto
 
 ### 调试
 
-首先 `yarn` 或者 `npm install` 安装依赖，然后执行 `npm run dev`，打开 `http://localhost:1200` 就可以看到效果，修改文件也会自动刷新
+首先 `yarn` 或者 `npm install` 安装依赖，然后执行 `yarn dev` 或者 `npm run dev`，打开 `http://localhost:1200` 就可以看到效果，修改文件也会自动刷新
 
 ### 添加脚本路由
 
