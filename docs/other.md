@@ -71,6 +71,14 @@ pageClass: routes
 
 <Route author="WenryXu" example="/noi" path="/noi"/>
 
+### 获奖名单
+
+<Route author="WenryXu" example="/noi/winners-list" path="/noi/winners-list"/>
+
+### 各省新闻
+
+<Route author="WenryXu" example="/noi/province-news" path="/noi/province-news"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
