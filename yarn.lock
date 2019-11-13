@@ -949,10 +949,10 @@
     "@sentry/types" "5.7.1"
     tslib "^1.9.3"
 
-"@sentry/node@5.8.0":
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-5.8.0.tgz#68ec032b0e7fb840cc8ccc1b39c09ac6febc1046"
-  integrity sha512-hIzt1BysyQJez8ChgWpFkLcGq3t/HaLMqzrXF5vu+Uuekl5OfwsvzZ+8Dlv78rI4CvlL9a2EuI/94iqUNwhOSQ==
+"@sentry/node@5.9.0":
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-5.9.0.tgz#9a8da70990e64c88a391ef86dcf29f43e0a52e59"
+  integrity sha512-1CWwSGhRfMr4Bvt1i0vIms+BBZd4dBzlDyWpyCboodCXF1rTJRci9roQ+Wh9XWwFEWvgDD2PzuKzfvu638v2Wg==
   dependencies:
     "@sentry/core" "5.8.0"
     "@sentry/hub" "5.8.0"
