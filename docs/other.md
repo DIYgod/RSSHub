@@ -79,6 +79,10 @@ pageClass: routes
 
 <Route author="WenryXu" example="/noi/province-news" path="/noi/province-news"/>
 
+### 报名新闻
+
+<Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
