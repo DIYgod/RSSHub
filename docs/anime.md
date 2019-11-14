@@ -211,6 +211,16 @@ pageClass: routes
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
+## 动漫之家
+
+### 漫画更新
+
+<Route author="dev-techmoe" path="/dmzj/comics/:name" example="/dmzj/comics/xingyunxing" :paramsDesc="['原站链接中的漫画拼音部分']"/>
+
+例：漫画地址为`http://manhua.dmzj.com/xingyunxing`，则对应的`name`值为`xingyunxing`。
+
+仅能够抓取**未登录用户可见**的漫画条目。
+
 ## 海猫吧
 
 ### 漫画更新
