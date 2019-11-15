@@ -34,6 +34,10 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/hydt" path="/gov/cnca/hydt"/>
 
+### 公告信息
+
+<Route author="Yoge-Code" example="/gov/cnca/ggxx" path="/gov/cnca/ggxx"/>
+
 ### 最新通知
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
