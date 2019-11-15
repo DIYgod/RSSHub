@@ -544,6 +544,54 @@ pageClass: routes
 
 <Route author="ihewro" example="/meipai/user/56537299" path="/meipai/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+## 数字尾巴
+
+### 首页
+
+<Route author="Erriy" example="/dgtle" path="/dgtle" />
+
+### 闲置（分类）
+
+<Route author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
+
+| 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
+
+</Route>
+
+### 闲置（关键词）
+
+<Route author="gaoliang" example="/dgtle/trade/search/ipad" path="/dgtle/trade/search/:keyword" :paramsDesc="['搜索关键词']"/>
+
+### 鲸图（分类）
+
+<Route author="Erriy" example="/dgtle/whale/category/0" path="/dgtle/whale/category/:category" :paramsDesc="['分类 id']">
+
+| 精选 | 人物 | 静物 | 二次元 | 黑白 | 自然 | 美食 | 电影与游戏 | 科技与艺术 | 城市与建筑 | 萌物 | 美女 |
+| ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---------- | ---------- | ---------- | ---- | ---- |
+| 0    | 1    | 2    | 3      | 4    | 5    | 6    | 7          | 8          | 9          | 10   | 11   |
+
+</Route>
+
+### 鲸图（排行榜）
+
+<Route author="Erriy" example="/dgtle/whale/rank/download/day" path="/dgtle/whale/rank/:type/:rule" :paramsDesc="['排行榜类型', '排行榜周期']">
+
+type
+
+| 下载排行榜 | 点赞排行榜 |
+| ---------- | ---------- |
+| download   | like       |
+
+rule
+
+| 日排行 | 周排行 | 月排行 | 总排行 |
+| ------ | ------ | ------ | ------ |
+| day    | week   | month  | amount |
+
+</Route>
+
 ## 刷屏
 
 ### 最新
@@ -566,15 +614,29 @@ pageClass: routes
 
 ### 关键词
 
-<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1"/>
+<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1" radar="1"/>
 
 ### 热搜榜
 
-<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1"/>
+<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1" radar="1"/>
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1" radar="1"/>
+
+### 个人时间线
+
+<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']">
+
+::: warning 注意
+
+需要对应用户打开页面进行授权生成 token 才能生成内容
+
+自部署需要申请并配置微博 key，具体见部署文档
+
+:::
+
+</Route>
 
 ## 微博绿洲
 

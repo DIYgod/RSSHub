@@ -131,6 +131,12 @@ pageClass: routes
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## PMCAFF
+
+### 今日推荐/精选
+
+<Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
+
 ## Readhub
 
 ### 分类
@@ -227,7 +233,6 @@ pageClass: routes
 ::: tip 提示
 
 -   可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
--   不支持 gif 集锦播放
 
 :::
 
@@ -325,7 +330,7 @@ pageClass: routes
 
 ### 标签，栏目，分类
 
-<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']">
+<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']" radar="1">
 
 | 标签 | 栏目   | 分类       |
 | ---- | ------ | ---------- |
@@ -354,6 +359,10 @@ pageClass: routes
 <Route author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
 
 ## 虎嗅
+
+### 首页资讯
+
+<Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
 
 ### 标签
 
