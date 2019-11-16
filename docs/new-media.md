@@ -149,12 +149,6 @@ pageClass: routes
 
 </Route>
 
-## sixthtone
-
-### 最新文章
-
-<Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
-
 ## Simons Foundation
 
 ### 文章
@@ -164,6 +158,12 @@ pageClass: routes
 ### 推荐
 
 <Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
+
+## sixthtone
+
+### 最新文章
+
+<Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
 ## The Verge
 
