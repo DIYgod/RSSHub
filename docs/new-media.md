@@ -155,6 +155,16 @@ pageClass: routes
 
 <Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
+## Simons Foundation
+
+### 文章
+
+<Route author="emdoe" example="/simonsfoundation/articles" path="/simonsfoundation/articles"/>
+
+### 推荐
+
+<Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
+
 ## The Verge
 
 ### The Verge

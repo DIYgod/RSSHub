@@ -51,6 +51,16 @@ Provides a better reading experience (full text articles) over the official one.
 
 This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](http://nautil.us) and click `Topics` to acquire whole topic list.
 
+## Simons Foundation
+
+### Articles
+
+<RouteEn author="emdoe" example="/simonsfoundation/articles" path="/simonsfoundation/articles"/>
+
+### What We’re Reading
+
+<RouteEn author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
+
 ## The Verge
 
 <RouteEn author="HenryQW" example="/verge" path="/verge">
