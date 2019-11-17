@@ -4,11 +4,21 @@ pageClass: routes
 
 # 学习
 
-## nature machine intelligence
+## Nature
 
-### latest research
+### Latest Research
+
+#### Nature
+
+<Route author="emdoe" example="/nature/research" path="/nature/research" />
+
+#### Nature Machine Intelligence
 
 <Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+
+#### Nature Neuroscience
+
+<Route author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
 
 ## X-MOL 平台
 
