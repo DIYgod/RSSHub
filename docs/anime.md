@@ -229,6 +229,12 @@ pageClass: routes
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
 
+## 三界异次元
+
+### 三界异次元
+
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home"/>
+
 ## 鼠绘漫画
 
 ### 鼠绘漫画
