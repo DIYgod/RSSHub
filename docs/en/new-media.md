@@ -55,6 +55,19 @@ This route provides a flexible plan with full text content to subscribe specific
 
 </RouteEn>
 
+## Quanta Magazine
+
+### Archive
+
+<RouteEn author="emdoe" example="/quantamagazine/archive" path="/quantamagazine/archive">
+
+Compared to the official one, this feed:
+
+1. supports LaTeX formulas, and
+2. displays all pictures in the article (except those print-hidden multimedia materials).
+
+</RouteEn>
+
 ## Simons Foundation
 
 ### Articles

@@ -139,6 +139,12 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
 
+## Quanta Magazine
+
+### 全部
+
+<Route author="emdoe" example="/quantamagazine/archive" path="/quantamagazine/archive"/>
+
 ## Readhub
 
 ### 分类
