@@ -4,6 +4,18 @@ pageClass: routes
 
 # 学习
 
+## eLife
+
+### 最新成果
+
+#### 综合
+
+<Route author="emdoe" example="/elife/latest" path="/elife/latest" />
+
+#### 细分领域
+
+<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
+
 ## Nature
 
 ### Latest Research

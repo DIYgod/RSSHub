@@ -4,6 +4,18 @@ pageClass: routes
 
 # Study
 
+## eLife
+
+### Latest Research
+
+#### ALL
+
+<RouteEn author="emdoe" example="/elife/latest" path="/elife/latest" />
+
+#### Research by Subject
+
+<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage']" />
+
 ## Google Scholar
 
 ### Keywords Monitoring
