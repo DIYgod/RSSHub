@@ -37,3 +37,15 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 #### Nature Neuroscience
 
 <RouteEn author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
+
+## Proceedings of The National Academy of Sciences
+
+### Latest Articles
+
+#### ALL
+
+<RouteEn author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+
+#### Articles by Topic
+
+<RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />

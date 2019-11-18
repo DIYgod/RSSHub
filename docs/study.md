@@ -20,6 +20,18 @@ pageClass: routes
 
 <Route author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
 
+## Proceedings of The National Academy of Sciences
+
+### 最新文章
+
+#### 全部
+
+<Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+
+#### 根据领域分类
+
+<Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+
 ## X-MOL 平台
 
 ### 新闻
