@@ -747,4 +747,46 @@
             },
         ],
     },
+
+    '3ycy.com': {
+        _name: '三界异次元',
+        www: [
+            {
+                title: '最近更新',
+                docs: 'https://docs.rsshub.app/anime.html#san-jie-yi-ci-yuan',
+                source: '/',
+                target: '/3ycy/home',
+            },
+        ],
+    },
+
+    'emi-nitta.net': {
+        _name: 'Emi Nitta',
+        '.': [
+            {
+                title: '最近更新',
+                docs: 'https://docs.rsshub.app/other.html#xin-tian-hui-hai-guan-fang-wang-zhan',
+                source: '/updates',
+                target: '/emi-nitta/updates',
+            },
+            {
+                title: '新闻',
+                docs: 'https://docs.rsshub.app/other.html#xin-tian-hui-hai-guan-fang-wang-zhan',
+                source: '/contents/news',
+                target: '/emi-nitta/news',
+            },
+        ],
+    },
+
+    'alter-shanghai.cn': {
+        _name: 'Alter',
+        '.': [
+            {
+                title: '新闻',
+                docs: 'https://docs.rsshub.app/shopping.html#alter-zhong-guo',
+                source: '/cn/news.html',
+                target: '/alter-cn/news',
+            },
+        ],
+    },
 });
