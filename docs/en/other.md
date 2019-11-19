@@ -45,6 +45,16 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 </RouteEn>
 
+## Emi Nitta official website
+
+### Recent update
+
+<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
+
+### News
+
+<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+
 ## EZTV
 
 ::: tip

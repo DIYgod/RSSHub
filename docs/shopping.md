@@ -4,6 +4,12 @@ pageClass: routes
 
 # 购物
 
+## Alter 中国
+
+### 新闻
+
+<Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
+
 ## Westore
 
 ### 新品
