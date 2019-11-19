@@ -308,6 +308,12 @@ category 对应的关键词有
 
 <Route author="Polynomia" example="/guardian/china" path="/guardian/china"/>
 
+## 文汇报
+
+### 分类
+
+<Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名, 可在该分类的 URL 中找到(即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
+
 ## 香港 01
 
 ### 热门
