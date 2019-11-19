@@ -375,6 +375,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
+## 新田惠海官方网站
+
+### 最近的更新
+
+<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
+
+### 新闻
+
+<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+
 ## 油价
 
 ### 今日油价
