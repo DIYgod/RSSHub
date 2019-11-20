@@ -528,6 +528,14 @@ pageClass: routes
 
 <Route author="junbaor" example="/fanfou/favorites/wangxing" path="/fanfou/favorites/:uid" :paramsDesc="['用户的uid']" anticrawler="1"/>
 
+### 热门话题
+
+<Route author="junbaor" example="/fanfou/trends" path="/fanfou/trends" anticrawler="1"/>
+
+### 饭否搜索
+
+<Route author="junbaor" example="/fanfou/public_timeline/冬天" path="/fanfou/favorites/:keyword" :paramsDesc="['关键字']" anticrawler="1"/>
+
 ## 方格子
 
 ### 出版專題
