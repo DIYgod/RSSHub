@@ -240,6 +240,18 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
+## Visual Studio Code Marketplace
+
+### Visual Studio Code 插件
+
+<Route author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['分类']">
+
+| Featured | Trending Weekly | Trending Monthly | Trending Daily | Most Popular | Recently Added |
+| -------- | --------------- | ---------------- | -------------- | ------------ | -------------- |
+| featured | trending        | trending_m       | trending_d     | popular      | new            |
+
+</Route>
+
 ## 阿里云
 
 ### 数据库内核月报
