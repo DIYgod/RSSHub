@@ -524,6 +524,10 @@ pageClass: routes
 
 <Route author="junbaor" example="/fanfou/home_timeline" path="/fanfou/home_timeline" anticrawler="1"/>
 
+### 用户收藏
+
+<Route author="junbaor" example="/fanfou/favorites/wangxing" path="/fanfou/favorites/:uid" :paramsDesc="['用户的uid']" anticrawler="1"/>
+
 ## 方格子
 
 ### 出版專題
