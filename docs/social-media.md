@@ -534,7 +534,7 @@ pageClass: routes
 
 ### 饭否搜索
 
-<Route author="junbaor" example="/fanfou/public_timeline/冬天" path="/fanfou/favorites/:keyword" :paramsDesc="['关键字']" anticrawler="1"/>
+<Route author="junbaor" example="/fanfou/public_timeline/冬天" path="/fanfou/public_timeline/:keyword" :paramsDesc="['关键字']" anticrawler="1"/>
 
 ## 方格子
 
