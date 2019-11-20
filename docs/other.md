@@ -215,6 +215,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 电鸭社区
+
+### 工作机会
+
+<Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 ## 福利资源-met.red
 
 ### 福利资源-met.red
