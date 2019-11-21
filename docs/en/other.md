@@ -33,17 +33,15 @@ pageClass: routes
 
 </RouteEn>
 
-## E-commerce
+## Emi Nitta official website
 
-### leboncoin
+### Recent update
 
-Transform any search into a feed.
+<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
 
-<RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
+### News
 
-For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
-
-</RouteEn>
+<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
 ## Emi Nitta official website
 

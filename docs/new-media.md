@@ -29,7 +29,7 @@ pageClass: routes
 
 ## AEON
 
-<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']"></Route>
+<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']">
 
 支持以文体分类：
 | Ideas | Essays | Videos |
@@ -40,6 +40,8 @@ pageClass: routes
 | Culture | Philosophy | Psychology | Society | Science |
 | ------- | ---------- | ---------- | ------- | ------- |
 | culture | philosophy | psychology | society | science |
+
+</Route>
 
 ## BOF
 
@@ -137,6 +139,12 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
 
+## Quanta Magazine
+
+### 全部
+
+<Route author="emdoe" example="/quantamagazine/archive" path="/quantamagazine/archive"/>
+
 ## Readhub
 
 ### 分类
@@ -148,6 +156,16 @@ pageClass: routes
 | topic    | news     | technews   | blockchain | daily    |
 
 </Route>
+
+## Simons Foundation
+
+### 文章
+
+<Route author="emdoe" example="/simonsfoundation/articles" path="/simonsfoundation/articles"/>
+
+### 推荐
+
+<Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
 ## sixthtone
 

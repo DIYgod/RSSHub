@@ -789,4 +789,16 @@
             },
         ],
     },
+
+    'leboncoin.fr': {
+        _name: 'leboncoin',
+        www: [
+            {
+                title: 'ads',
+                docs: 'https://docs.rsshub.app/en/shopping.html#leboncoin',
+                source: '/recherche',
+                target: (params, url) => '/leboncoin/ad/' + url.split('?')[1],
+            },
+        ],
+    },
 });

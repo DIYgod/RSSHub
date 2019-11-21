@@ -31,6 +31,12 @@ pageClass: routes
 
 <Route author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
 
+## ClickMe
+
+### 文章
+
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
+
 ## DHL
 
 ### DHL 国际快递包裹追踪
@@ -209,11 +215,22 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 电鸭社区
+
+### 工作机会
+
+<Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 ## 福利资源-met.red
 
 ### 福利资源-met.red
 
 <Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
+
+## 好队友
+
+### 工作机会
+
+<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs"/>
 
 ## 古诗文网
 
@@ -322,6 +339,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 科创板项目动态
 
 <Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
+
+### 监管问询
+
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
 
 ## 深圳证券交易所
 
