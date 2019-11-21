@@ -226,17 +226,17 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
 
-## 好队友
-
-### 工作机会
-
-<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs"/>
-
 ## 古诗文网
 
 ### 首页推荐
 
 <Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+
+## 好队友
+
+### 工作机会
+
+<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs"/>
 
 ## 惠誉评级
 
