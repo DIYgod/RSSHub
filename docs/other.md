@@ -340,6 +340,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
 
+### 监管问询
+
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+
 ## 深圳证券交易所
 
 ### 上市公告-可转换债券
