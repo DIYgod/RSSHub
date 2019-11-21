@@ -3,30 +3,33 @@ name: test
 on: [push, pull_request]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        services:
-            redis:
-                image: redis
-                ports:
-                    - 6379/tcp
-        strategy:
-            matrix:
-                node-version: [8.x, 10.x, 12.x]
-        steps:
-            - uses: actions/checkout@v1
-            - name: Use Node.js ${{ matrix.node-version }}
-                uses: actions/setup-node@v1
-                with:
-                    node-version: ${{ matrix.node-version }}
-            - name: yarn install
-                uses: borales/actions-yarn@v2.0.0
-                with:
-                    cmd: install
-            - name: npm test
-                run: |
-                    npm run test
-            - name: codecov
-                run: |
-                    npm install codecov
-                    ./node_modules/.bin/codecov
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379/tcp
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: yarn install
+      uses: borales/actions-yarn@v2.0.0
+      with:
+        cmd: install
+    - name: npm test
+      run: npm run test
+    - name: codecov
+      run: |
+        npm install codecov
+        ./node_modules/.bin/codecov
