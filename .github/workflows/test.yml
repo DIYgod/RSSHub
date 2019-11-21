@@ -12,10 +12,11 @@ jobs:
         image: redis
         ports:
           - 6379/tcp
+        options: --entrypoint redis-server
 
     strategy:
       matrix:
-        node-version: [8.x, 10.x, 12.x]
+        node-version: [10.x, 12.x]
 
     steps:
     - uses: actions/checkout@v1
@@ -25,6 +26,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run : yarn install
     - run: npm run test
+      env:
+        REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
