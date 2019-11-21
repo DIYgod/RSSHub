@@ -20,17 +20,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
-    - run: python --version
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: yarn install
-      uses: borales/actions-yarn@v2.0.0
-      with:
-        cmd: install
-    - name: npm test
-      run: npm run test
-    - name: codecov
+    - run : install
+    - run: npm run test
+    - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
          token: ${{ secrets.CODECOV_TOKEN }}
