@@ -420,6 +420,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
+## 远程.work
+
+### 远程.work 招聘信息
+
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
+
+| 所有职位 |    技术     |  设计  |   运营    |  产品   | 其他  |   市场    | 销售  |
+| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
+|   all    | development | design | operation | product | other | marketing | sales |
+
+</Route>
+
 ## 正版中国
 
 ### 分类列表
