@@ -8,7 +8,7 @@ pageClass: routes
 
 ### Transcript
 
-<Route author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+<RouteEn author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
 
 ## 99% Invisible
 
