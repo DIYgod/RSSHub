@@ -801,4 +801,21 @@
             },
         ],
     },
+
+    'yuancheng.work': {
+        _name: '远程.work',
+        '.': [
+            {
+                title: '招聘信息',
+                docs: 'https://docs.rsshub.app/other.html#yuan-cheng-work',
+                source: '/:caty',
+                target: (params, url) => {
+                    if (!url) {
+                        return '/remote-work';
+                    }
+                    return '/remote-work/' + /\w+-(\w+)-\w+/.exec(url)[1];
+                },
+            },
+        ],
+    },
 });
