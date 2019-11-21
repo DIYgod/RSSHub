@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
-      run: python --version
+    - run: python --version
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
