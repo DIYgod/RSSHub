@@ -9,10 +9,10 @@ jobs:
             redis:
                 image: redis
                 ports:
-                - 6379/tcp
+                    - 6379/tcp
         strategy:
             matrix:
-            node-version: [8.x, 10.x, 12.x]
+                node-version: [8.x, 10.x, 12.x]
         steps:
             - uses: actions/checkout@v1
             - name: Use Node.js ${{ matrix.node-version }}
@@ -25,8 +25,8 @@ jobs:
                     cmd: install
             - name: npm test
                 run: |
-                npm run test
+                    npm run test
             - name: codecov
                 run: |
-                npm install codecov
-                ./node_modules/.bin/codecov
+                    npm install codecov
+                    ./node_modules/.bin/codecov
