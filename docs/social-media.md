@@ -510,6 +510,32 @@ pageClass: routes
 
 <Route author="xyqfer" example="/douyin/like/93610979153" path="/douyin/like/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
 
+## 饭否
+
+::: warning 注意
+部署时需要申请并配置饭否 Consumer Key、Consumer Secret、用户名和密码，具体见部署文档
+:::
+
+### 用户动态
+
+<Route author="junbaor" example="/fanfou/user_timeline/wangxing" path="/fanfou/user_timeline/:uid" :paramsDesc="['用户的uid']" anticrawler="1"/>
+
+### 当前登录用户的时间线
+
+<Route author="junbaor" example="/fanfou/home_timeline" path="/fanfou/home_timeline" anticrawler="1"/>
+
+### 用户收藏
+
+<Route author="junbaor" example="/fanfou/favorites/wangxing" path="/fanfou/favorites/:uid" :paramsDesc="['用户的uid']" anticrawler="1"/>
+
+### 热门话题
+
+<Route author="junbaor" example="/fanfou/trends" path="/fanfou/trends" anticrawler="1"/>
+
+### 饭否搜索
+
+<Route author="junbaor" example="/fanfou/public_timeline/冬天" path="/fanfou/public_timeline/:keyword" :paramsDesc="['关键字']" anticrawler="1"/>
+
 ## 方格子
 
 ### 出版專題
