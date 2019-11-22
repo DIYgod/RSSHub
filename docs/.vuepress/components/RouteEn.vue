@@ -7,7 +7,7 @@
     Author: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
   </p>
   <p  class="example">
-    Example: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
+    Example: <a :href="exampleWebsite + example " target="_blank">{{exampleWebsite}}{{example}}</a>
   </p>
   <p class="path">
     Route: <code>{{ path }}</code>
@@ -56,6 +56,18 @@ export default {
       type: String,
       default: null
     },
+  },
+  computed: {
+    exampleWebsite () {
+      const re = /^(.*)\/$/
+      const value = process.env.DOCS_EXAMPLE_WEBSITE
+      if (value) {
+        // https://rsshub.app/  =>  https://rsshub.app
+        return value.replace(re, '$1')
+      } else {
+        return 'https://rsshub.app'
+      }
+    }
   },
   methods: {
     renderMarkdown(item) {

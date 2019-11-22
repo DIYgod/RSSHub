@@ -7,7 +7,7 @@
     作者: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
   </p>
   <p class="example">
-    举例: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
+    举例: <a :href="exampleWebsite + example " target="_blank">{{exampleWebsite}}{{example}}</a>
   </p>
   <p class="path">
     路由: <code>{{ path }}</code>
@@ -56,6 +56,18 @@ export default {
       type: String,
       default: null
     },
+  },
+  computed: {
+    exampleWebsite () {
+      const re = /^(.*)\/$/
+      const value = process.env.DOCS_EXAMPLE_WEBSITE
+      if (value) {
+        // https://rsshub.app/  =>  https://rsshub.app
+        return value.replace(re, '$1')
+      } else {
+        return 'https://rsshub.app'
+      }
+    }
   },
   methods: {
     renderMarkdown(item) {

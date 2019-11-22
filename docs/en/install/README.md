@@ -304,6 +304,8 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
+`DOCS_EXAMPLE_WEBSITE`: website of example, default to `https://rsshub.app`
+
 ### User Authentication
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.

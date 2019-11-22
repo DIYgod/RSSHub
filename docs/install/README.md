@@ -372,6 +372,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
+`DOCS_EXAMPLE_WEBSITE`: 文档中的举例的网站，默认 `https://rsshub.app`
+
 ### 部分 RSS 模块配置
 
 -   pixiv 全部路由: [注册地址](https://accounts.pixiv.net/signup)

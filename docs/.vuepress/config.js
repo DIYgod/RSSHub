@@ -1,3 +1,6 @@
+var webpack = require('webpack');
+require('dotenv').config();
+const envs = process.env;
 const pinyin = require('pinyin');
 const { slugify: _slugify } = require('@vuepress/shared-utils');
 
@@ -198,5 +201,14 @@ module.exports = {
                 },
             },
         },
+    },
+    configureWebpack: (config, isServer) => {
+        return {
+            plugins: [
+                new webpack.DefinePlugin({
+                    'process.env.DOCS_EXAMPLE_WEBSITE': envs.DOCS_EXAMPLE_WEBSITE ? '"' + envs.DOCS_EXAMPLE_WEBSITE + '"' : undefined,
+                }),
+            ],
+        };
     },
 };
