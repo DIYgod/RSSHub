@@ -818,4 +818,16 @@
             },
         ],
     },
+
+    'chinatimes.com': {
+        _name: '中時電子報',
+        www: [
+            {
+                title: '新聞',
+                docs: 'https://docs.rsshub.app/traditional-media.html#zhong-shi-dian-zi-bao',
+                source: '/:caty',
+                target: (params) => '/chinatimes/' + params.caty,
+            },
+        ],
+    },
 });
