@@ -9528,10 +9528,10 @@ rss-parser@3.7.3:
     entities "^1.1.1"
     xml2js "^0.4.19"
 
-rsshub-fanfou-sdk@4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/rsshub-fanfou-sdk/-/rsshub-fanfou-sdk-4.1.5.tgz#d4929dab4c11b6aba6e52ae4ab5ccd9855be7cc5"
-  integrity sha512-EsDlW5Movju85j+4whZ9PMDQwihWjyYrdO0jGYxpFyKqz/MjWW9Ja3qgqSg88+zYEc8oTCc5wg2EchS2Qhpn9Q==
+rsshub-fanfou-sdk@4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/rsshub-fanfou-sdk/-/rsshub-fanfou-sdk-4.1.6.tgz#1a108c16a1d8d6510553c004b42d46df31155b4b"
+  integrity sha512-QR6iGsUPKiRG/3E1g7YNIz/U8K5PCGI4bjjv2yvDrFJ8htbIdwFbtji5pgNOsu3WiB0aTFpDBavasaV/j139VA==
   dependencies:
     form-data "^3.0.0"
     got "^9.5.1"
