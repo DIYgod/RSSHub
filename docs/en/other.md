@@ -71,10 +71,20 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 ### Remote.work Job Information
 
-<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default all']" radar="1">
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
 |   all    | development | design | operation | product | other | marketing | sales |
 
 </Route>
+
+## TransferWise
+
+### FX Pair Yesterday
+
+<RouteEn author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']">
+
+See [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
+
+</RouteEn>

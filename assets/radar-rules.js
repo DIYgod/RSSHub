@@ -790,6 +790,18 @@
         ],
     },
 
+    'itslide.com': {
+        _name: 'ITSlide',
+        www: [
+            {
+                title: '最新',
+                docs: 'https://docs.rsshub.app/programming.html#itslide',
+                source: '/*',
+                target: '/itslide/new',
+            },
+        ],
+    },
+
     'leboncoin.fr': {
         _name: 'leboncoin',
         www: [
