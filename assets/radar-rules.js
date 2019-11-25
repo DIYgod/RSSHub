@@ -790,6 +790,18 @@
         ],
     },
 
+    'itslide.com': {
+        _name: 'ITSlide',
+        www: [
+            {
+                title: '最新',
+                docs: 'https://docs.rsshub.app/programming.html#itslide',
+                source: '/*',
+                target: '/itslide/new',
+            },
+        ],
+    },
+
     'leboncoin.fr': {
         _name: 'leboncoin',
         www: [
@@ -815,6 +827,18 @@
                     }
                     return '/remote-work/' + /\w+-(\w+)-\w+/.exec(url)[1];
                 },
+            },
+        ],
+    },
+
+    'chinatimes.com': {
+        _name: '中時電子報',
+        www: [
+            {
+                title: '新聞',
+                docs: 'https://docs.rsshub.app/traditional-media.html#zhong-shi-dian-zi-bao',
+                source: '/:caty',
+                target: (params) => '/chinatimes/' + params.caty,
             },
         ],
     },
