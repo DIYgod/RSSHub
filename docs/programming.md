@@ -154,6 +154,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## ITSlide
+
+### 最新
+
+<Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1"/>
+
 ## kaggle
 
 ### Discussion
