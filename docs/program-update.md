@@ -44,6 +44,12 @@ pageClass: routes
 
 <Route author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
 
+## Chocolatey
+
+### 软件更新
+
+<Route author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
+
 ## CurseForge
 
 ### 文件更新
