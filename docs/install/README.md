@@ -425,3 +425,10 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
     -   `WEIBO_APP_KEY`: 微博 App Key
     -   `WEIBO_APP_SECRET`: 微博 App Secret
     -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub地址/weibo/timeline/0?code=xxx`
+
+-   饭否 全部路由: [申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
+
+    -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
+    -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
+    -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
+    -   `FANFOU_PASSWORD`: 饭否密码

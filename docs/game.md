@@ -100,6 +100,10 @@ pageClass: routes
 
 <Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
+### Switch 本体更新情报（日本）
+
+<Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
+
 ## PlayStation
 
 ### PlayStation Store 游戏列表

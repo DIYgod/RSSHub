@@ -14,7 +14,7 @@ describe('puppeteer', () => {
         expect(html.length).toBeGreaterThan(0);
 
         expect((await browser.process()).exitCode).toBe(null);
-        await wait(10 * 1000);
+        await wait(11 * 1000);
         expect((await browser.process()).exitCode).toBe(0);
     }, 20000);
 });

@@ -33,18 +33,6 @@ pageClass: routes
 
 </RouteEn>
 
-## E-commerce
-
-### leboncoin
-
-Transform any search into a feed.
-
-<RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
-
-For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
-
-</RouteEn>
-
 ## Emi Nitta official website
 
 ### Recent update
@@ -78,3 +66,25 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 ### Hermes UK
 
 <RouteEn author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+
+## Remote.work
+
+### Remote.work Job Information
+
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1">
+
+| All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
+| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
+|   all    | development | design | operation | product | other | marketing | sales |
+
+</Route>
+
+## TransferWise
+
+### FX Pair Yesterday
+
+<RouteEn author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']">
+
+See [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
+
+</RouteEn>

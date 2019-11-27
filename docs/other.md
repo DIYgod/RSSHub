@@ -107,6 +107,16 @@ pageClass: routes
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
+## TransferWise
+
+### 昨日汇率变动
+
+<Route author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']">
+
+参见支持的[货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
+
+</Route>
+
 ## TSSstatus（iOS 降级通道）
 
 ### Status
@@ -232,6 +242,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
 
+## 好队友
+
+### 工作机会
+
+<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs"/>
+
 ## 惠誉评级
 
 ### 板块信息
@@ -334,6 +350,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
 
+### 监管问询
+
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+
 ## 深圳证券交易所
 
 ### 上市公告-可转换债券
@@ -409,6 +429,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+
+## 远程.work
+
+### 远程.work 招聘信息
+
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
+
+| 所有职位 |    技术     |  设计  |   运营    |  产品   | 其他  |   市场    | 销售  |
+| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
+|   all    | development | design | operation | product | other | marketing | sales |
+
+</Route>
 
 ## 正版中国
 

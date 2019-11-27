@@ -154,11 +154,17 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## ITSlide
+
+### 最新
+
+<Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1"/>
+
 ## kaggle
 
 ### Discussion
 
-<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['讨论区 id, 打开网页请求, 搜索 forumId', '排序方式见下表, 默认为 hot']">
+<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['讨论区 id, 打开网页请求, 搜索 forumId；填 all 可以订阅全站讨论区', '排序方式见下表, 默认为 hot']">
 
 | hot     | recent          | new             | top        | active        |
 | ------- | --------------- | --------------- | ---------- | ------------- |

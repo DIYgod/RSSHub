@@ -789,4 +789,57 @@
             },
         ],
     },
+
+    'itslide.com': {
+        _name: 'ITSlide',
+        www: [
+            {
+                title: '最新',
+                docs: 'https://docs.rsshub.app/programming.html#itslide',
+                source: '/*',
+                target: '/itslide/new',
+            },
+        ],
+    },
+
+    'leboncoin.fr': {
+        _name: 'leboncoin',
+        www: [
+            {
+                title: 'ads',
+                docs: 'https://docs.rsshub.app/en/shopping.html#leboncoin',
+                source: '/recherche',
+                target: (params, url) => '/leboncoin/ad/' + url.split('?')[1],
+            },
+        ],
+    },
+
+    'yuancheng.work': {
+        _name: '远程.work',
+        '.': [
+            {
+                title: '招聘信息',
+                docs: 'https://docs.rsshub.app/other.html#yuan-cheng-work',
+                source: '/:caty',
+                target: (params, url) => {
+                    if (!url) {
+                        return '/remote-work';
+                    }
+                    return '/remote-work/' + /\w+-(\w+)-\w+/.exec(url)[1];
+                },
+            },
+        ],
+    },
+
+    'chinatimes.com': {
+        _name: '中時電子報',
+        www: [
+            {
+                title: '新聞',
+                docs: 'https://docs.rsshub.app/traditional-media.html#zhong-shi-dian-zi-bao',
+                source: '/:caty',
+                target: (params) => '/chinatimes/' + params.caty,
+            },
+        ],
+    },
 });
