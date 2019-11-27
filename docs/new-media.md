@@ -514,11 +514,19 @@ pageClass: routes
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
 
-## 乃木坂 46 官网
+## 坂道系列官网新闻
 
-### 新闻
+### 乃木坂46
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
+
+### 欅坂46
+
+<Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
+
+### 日向坂46
+
+<Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
 
 ## 派代
 
