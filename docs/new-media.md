@@ -224,6 +224,20 @@ pageClass: routes
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
+## 坂道系列官网新闻
+
+### 乃木坂 46
+
+<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
+
+### 欅坂 46
+
+<Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
+
+### 日向坂 46
+
+<Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+
 ## 币世界
 
 ### 快讯
@@ -513,12 +527,6 @@ pageClass: routes
 ### 新闻
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
-
-## 乃木坂 46 官网
-
-### 新闻
-
-<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
 ## 派代
 
