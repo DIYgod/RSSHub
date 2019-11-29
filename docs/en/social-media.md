@@ -88,6 +88,10 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 
 <RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']"/>
 
+### Keyword
+
+<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['keyword']" radar="1"/>
+
 ## Youtube
 
 ### User

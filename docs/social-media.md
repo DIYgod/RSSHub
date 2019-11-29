@@ -380,6 +380,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['用户名']" radar="1"/>
 
+### 关键词
+
+<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['关键词']" radar="1"/>
+
 ## VueVlog
 
 ### 用户
