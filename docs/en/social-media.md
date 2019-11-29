@@ -44,6 +44,10 @@ pageClass: routes
 
 </RouteEn>
 
+### Keyword
+
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:r18?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content, 0 to no filter, 1 to only not R18, 2 to only R18, default to 0']" radar="1"/>
+
 ## Telegram
 
 ### Channel
