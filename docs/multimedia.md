@@ -220,6 +220,12 @@ pageClass: routes
 
 <Route author="epirus" example="/dysfz" path="/dysfz"/>
 
+## 片源网
+
+### 最新资源
+
+<Route author="greatcodeeer" example="/mv" path="/mv" supportBT="1"/>
+
 ## 电影天堂
 
 ### 新片精品
