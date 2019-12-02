@@ -286,7 +286,7 @@ pageClass: routes
 
 ### 最新资源
 
-<Route author="greatcodeeer" example="/mv" path="/mv" radar="1"/>
+<Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1"/>
 
 ## 色花堂中文论坛
 
