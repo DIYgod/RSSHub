@@ -126,6 +126,12 @@ pageClass: routes
 
 </Route>
 
+## Nyaa
+
+### 搜索结果
+
+<Route author="Lava-Swimmer" example="/nyaa/search/psycho-pass" path="/nyaa/search/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
+
 ## rs05 人生 05 电影
 
 ### rs05 电影列表
@@ -280,7 +286,7 @@ pageClass: routes
 
 ### 最新资源
 
-<Route author="greatcodeeer" example="/pianyuan" path="/mv" supportBT="1"/>
+<Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1"/>
 
 ## 色花堂中文论坛
 
