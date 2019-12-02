@@ -480,6 +480,16 @@
             },
         ],
     },
+    'pianyuan.la': {
+        _name: '片源网',
+        '.': [
+            {
+                title: '电影和剧集',
+                description: 'https://docs.rsshub.app/multimedia.html#pian-yuan',
+                source: '/',
+            },
+        ],
+    },
     'sspai.com': {
         _name: '少数派',
         '.': [

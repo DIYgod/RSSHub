@@ -276,6 +276,12 @@ pageClass: routes
 
 <Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" />
 
+## 片源网
+
+### 最新资源
+
+<Route author="greatcodeeer" example="/mv" path="/mv" supportBT="1"/>
+
 ## 色花堂中文论坛
 
 ### 原创 BT 电影
