@@ -280,7 +280,7 @@ pageClass: routes
 
 ### 最新资源
 
-<Route author="greatcodeeer" example="/mv" path="/mv" supportBT="1"/>
+<Route author="greatcodeeer" example="/mv" path="/mv" radar="1"/>
 
 ## 色花堂中文论坛
 
