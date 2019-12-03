@@ -20,6 +20,18 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </RouteEn>
 
+## China Times
+
+### News
+
+<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['category']" radar="1">
+
+| realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
+| -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
+| Real Time News | Politic | Opinion | Life | Showbiz | Finance | Society | Hot Topics | Videos | World | Military | Mainland & Taiwan | Fashion | Sports | Technology News | Travel | Columns |
+
+</RouteEn>
+
 ## The Guardian
 
 ### Editorial
