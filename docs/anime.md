@@ -233,7 +233,7 @@ pageClass: routes
 
 ### 三界异次元
 
-<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home"/>
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
 
 ## 鼠绘漫画
 
