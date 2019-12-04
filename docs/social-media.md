@@ -410,6 +410,32 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
 
+## 巴哈姆特
+
+### 个人小屋
+
+<Route author="hoilc" example="/bahamut/creation/tpesamguo/338592" path="/bahamut/creation/:author/:category?" :paramsDesc="['作者 ID, 即为个人小屋 URL 中 `owner` 参数','分类ID, 即为创作分类 URL 中 `c` 参数']"/>
+
+### 创作大厅
+
+<Route author="hoilc" example="/bahamut/creation_index/4/0/2" path="/bahamut/creation_index/:category?/:subcategory?/:type?" :paramsDesc="['分类 ID, 即为 URL 中 `k1` 参数, 0 或置空为不限','子分类 ID, 即为 URL 中 `k2` 参数, 0或置空为不限', '排行类型, 即为 URL 中 `vt` 参数, 0或置空为達人專欄']">
+
+分类 ID 参考如下
+
+| 不限 | 日誌 | 小說 | 繪圖 | Cosplay | 同人商品 |
+| ---- | ---- | ---- | ---- | ------- | -------- |
+| 0    | 1    | 2    | 3    | 4       | 5        |
+
+子分类 ID 比较多不作列举
+
+排行类型参考如下
+
+| 達人專欄 | 最新創作 | 最新推薦 | 熱門創作 | 精選閣樓 |
+| -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        | 5        |
+
+</Route>
+
 ## 币乎
 
 ### 用户动态
