@@ -31,6 +31,12 @@ pageClass: routes
 
 <Route author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
 
+## ClickMe
+
+### 文章
+
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
+
 ## DHL
 
 ### DHL 国际快递包裹追踪
@@ -71,6 +77,18 @@ pageClass: routes
 
 <Route author="WenryXu" example="/noi" path="/noi"/>
 
+### 获奖名单
+
+<Route author="WenryXu" example="/noi/winners-list" path="/noi/winners-list"/>
+
+### 各省新闻
+
+<Route author="WenryXu" example="/noi/province-news" path="/noi/province-news"/>
+
+### 报名新闻
+
+<Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
@@ -88,6 +106,16 @@ pageClass: routes
 ### 最新会议材料
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
+
+## TransferWise
+
+### 昨日汇率变动
+
+<Route author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']">
+
+参见支持的[货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
+
+</Route>
 
 ## TSSstatus（iOS 降级通道）
 
@@ -197,6 +225,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 电鸭社区
+
+### 工作机会
+
+<Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 ## 福利资源-met.red
 
 ### 福利资源-met.red
@@ -208,6 +241,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 首页推荐
 
 <Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+
+## 好队友
+
+### 工作机会
+
+<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs"/>
 
 ## 惠誉评级
 
@@ -311,6 +350,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
 
+### 监管问询
+
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+
 ## 深圳证券交易所
 
 ### 上市公告-可转换债券
@@ -363,6 +406,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
+## 新田惠海官方网站
+
+### 最近的更新
+
+<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
+
+### 新闻
+
+<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+
 ## 油价
 
 ### 今日油价
@@ -376,6 +429,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+
+## 远程.work
+
+### 远程.work 招聘信息
+
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
+
+| 所有职位 |    技术     |  设计  |   运营    |  产品   | 其他  |   市场    | 销售  |
+| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
+|   all    | development | design | operation | product | other | marketing | sales |
+
+</Route>
 
 ## 正版中国
 

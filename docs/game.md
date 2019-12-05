@@ -100,6 +100,10 @@ pageClass: routes
 
 <Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
+### Switch 本体更新情报（日本）
+
+<Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
+
 ## PlayStation
 
 ### PlayStation Store 游戏列表
@@ -257,6 +261,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+## 王者荣耀
+
+### 新闻中心
+
+<Route author="Jeason0228" example="/pvp/newsindex/all" path="/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
+
 ## 小黑盒
 
 ### 用户动态
@@ -270,6 +280,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 游戏打折情况
 
 <Route author="MyFaith" example="/xiaoheihe/discount" path="xiaoheihe/discount"/>
+
+## 英雄联盟
+
+### 新闻中心
+
+<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类,all=全部,zh=综合,gg=公告,ss=赛事,gl=攻略,sq=社区']"/>
 
 ## 游民星空
 

@@ -29,7 +29,7 @@ pageClass: routes
 
 ## AEON
 
-<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']"></Route>
+<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']">
 
 支持以文体分类：
 | Ideas | Essays | Videos |
@@ -40,6 +40,8 @@ pageClass: routes
 | Culture | Philosophy | Psychology | Society | Science |
 | ------- | ---------- | ---------- | ------- | ------- |
 | culture | philosophy | psychology | society | science |
+
+</Route>
 
 ## BOF
 
@@ -131,6 +133,18 @@ pageClass: routes
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## PMCAFF
+
+### 今日推荐/精选
+
+<Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
+
+## Quanta Magazine
+
+### 全部
+
+<Route author="emdoe" example="/quantamagazine/archive" path="/quantamagazine/archive"/>
+
 ## Readhub
 
 ### 分类
@@ -142,6 +156,16 @@ pageClass: routes
 | topic    | news     | technews   | blockchain | daily    |
 
 </Route>
+
+## Simons Foundation
+
+### 文章
+
+<Route author="emdoe" example="/simonsfoundation/articles" path="/simonsfoundation/articles"/>
+
+### 推荐
+
+<Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
 ## sixthtone
 
@@ -199,6 +223,20 @@ pageClass: routes
 ### 快讯
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
+
+## 坂道系列官网新闻
+
+### 乃木坂 46
+
+<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
+
+### 欅坂 46
+
+<Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
+
+### 日向坂 46
+
+<Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
 
 ## 币世界
 
@@ -489,12 +527,6 @@ pageClass: routes
 ### 新闻
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
-
-## 乃木坂 46 官网
-
-### 新闻
-
-<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
 ## 派代
 

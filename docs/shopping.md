@@ -4,6 +4,12 @@ pageClass: routes
 
 # 购物
 
+## Alter 中国
+
+### 新闻
+
+<Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
+
 ## Westore
 
 ### 新品
@@ -146,22 +152,6 @@ pageClass: routes
 | 0    | 7      | 30     |
 
 </Route>
-
-## 甩甩尾巴
-
-### 分类
-
-<Route author="xyqfer" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" :paramsDesc="['分类 id，默认为全部']">
-
-| 全部 | 电脑 | 手机 | 平板 | 相机 | 影音 | 外设 | 生活 | 公告 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 0    | 111  | 109  | 110  | 113  | 114  | 115  | 112  | 116  |
-
-</Route>
-
-### 关键词
-
-<Route author="gaoliang" example="/dgtle/trade/search/ipad" path="/dgtle/trade/search/:keyword" :paramsDesc="['搜索关键词']"/>
 
 ## 淘宝众筹
 

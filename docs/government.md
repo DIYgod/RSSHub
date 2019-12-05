@@ -10,6 +10,34 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 中国工业和信息化部
+
+### 政策解读
+
+<Route author="Yoge-Code" example="/gov/miit/zcjd" path="/gov/miit/zcjd"/>
+
+### 文件公示
+
+<Route author="Yoge-Code" example="/gov/miit/wjgs" path="/gov/miit/wjgs"/>
+
+### 政策文件
+
+<Route author="Yoge-Code" example="/gov/miit/zcwj" path="/gov/miit/zcwj"/>
+
+## 中国国家认证认可监管管理员会
+
+### 监管动态
+
+<Route author="Yoge-Code" example="/gov/cnca/jgdt" path="/gov/cnca/jgdt"/>
+
+### 行业动态
+
+<Route author="Yoge-Code" example="/gov/cnca/hydt" path="/gov/cnca/hydt"/>
+
+### 最新通知
+
+<Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
+
 ## 中国政府
 
 ### 最新政策
@@ -60,6 +88,10 @@ pageClass: routes
 |   ywgz   |   tnxx   |   sxxx   |
 
 </Route>
+
+### 湖南省政府采购网-公告
+
+<Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
 
 ### 江苏省人民政府
 

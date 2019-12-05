@@ -4,11 +4,45 @@ pageClass: routes
 
 # 学习
 
-## nature machine intelligence
+## eLife
 
-### latest research
+### 最新成果
+
+#### 综合
+
+<Route author="emdoe" example="/elife/latest" path="/elife/latest" />
+
+#### 细分领域
+
+<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
+
+## Nature
+
+### Latest Research
+
+#### Nature
+
+<Route author="emdoe" example="/nature/research" path="/nature/research" />
+
+#### Nature Machine Intelligence
 
 <Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+
+#### Nature Neuroscience
+
+<Route author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
+
+## Proceedings of The National Academy of Sciences
+
+### 最新文章
+
+#### 全部
+
+<Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+
+#### 根据领域分类
+
+<Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
 
 ## X-MOL 平台
 
