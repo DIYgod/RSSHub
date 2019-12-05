@@ -44,6 +44,12 @@ pageClass: routes
 
 <Route author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" :paramsDesc="['平台类型, 必选, 1 为 Android, 2 为 iOS']"/>
 
+## Cent Browser
+
+### 更新日志
+
+<Route author="hoilc" example="/centbrowser/history" path="/centbrowser/history"/>
+
 ## Chocolatey
 
 ### 软件更新
