@@ -357,6 +357,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | ---- | -------- | ------ | --------- | ---- |
 | news | announce | events | advertise | all  |
 
+## 公主连接 Re:dive
+
+日服官网自带RSS，可直接使用[官方RSS](http://priconne-redive.jp/news/feed)
+
+### 公主连结 Re:dive 国服官网新闻
+
+<Route author="Yuudi" example="/pcr/news_cn_official" path="/pcr/news_cn_official"/>
+
+### 超异域公主连结 Re:dive 台服官网新闻
+
+<Route author="Yuudi" example="/pcr/news_tw_official" path="/pcr/news_tw_official"/>
+
 ## きららファンタジア｜奇拉拉幻想曲
 
 ### 公告
