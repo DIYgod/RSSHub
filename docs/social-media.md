@@ -4,6 +4,12 @@ pageClass: routes
 
 # 社交媒体
 
+## 755
+
+### 用户时间线
+
+<Route author="hoilc" example="/755/user/akimoto-manatsu" path="/755/user/:username" :paramsDesc="['用户名, 可在 URL 中找到']"/>
+
 ## bilibili
 
 ::: tip Tiny Tiny RSS 用户请注意
