@@ -6845,24 +6845,10 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-libbase64@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.0.3.tgz#de3023234abeefeb9d49378804c8a94404f5c98c"
-  integrity sha1-3jAjI0q+7+udSTeIBMipRAT1yYw=
-
 libbase64@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.2.1.tgz#fb93bf4cb6d730f29b92155b6408d1bd2176a8c8"
   integrity sha512-l+nePcPbIG1fNlqMzrh68MLkX/gTxk/+vdvAb388Ssi7UuUN31MI44w4Yf33mM3Cm4xDfw48mdf3rkdHszLNew==
-
-libmime@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/libmime/-/libmime-4.1.1.tgz#eb7a60c775ba78c3715ddaec5cd52596a047f8d1"
-  integrity sha1-63pgx3W6eMNxXdrsXNUllqBH+NE=
-  dependencies:
-    iconv-lite "0.4.24"
-    libbase64 "1.0.3"
-    libqp "1.1.0"
 
 libmime@4.2.1:
   version "4.2.1"
@@ -7121,10 +7107,10 @@ lz-string@1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
-mailparser@2.7.6:
-  version "2.7.6"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.6.tgz#308db2d3d52289d0927e664a064a58e7e1be274b"
-  integrity sha512-TzxHIZiQW/BVsvqmQEjFFMqOJQg5nn9coX67j2YMN9rOVo8xK7rhAS3Y7RGhGEXNwJE3OLI+j4IxyOe+r2puVQ==
+mailparser@2.7.7:
+  version "2.7.7"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.7.7.tgz#7d3fe616797427629c59992a34d84820d550676b"
+  integrity sha512-FcVkXYm+zIg59HNPINGQw99eMTvcAkmQZHmabF8aSeMZ6/vWkx0HdT6FpXApelfe5IKRk6nWEg+YAuuXZl9+Fg==
   dependencies:
     encoding-japanese "1.0.30"
     he "1.2.0"
@@ -7132,17 +7118,17 @@ mailparser@2.7.6:
     iconv-lite "0.5.0"
     libmime "4.2.1"
     linkify-it "2.2.0"
-    mailsplit "4.4.1"
-    nodemailer "6.3.1"
-    tlds "1.203.1"
+    mailsplit "4.6.2"
+    nodemailer "6.4.0"
+    tlds "1.207.0"
 
-mailsplit@4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/mailsplit/-/mailsplit-4.4.1.tgz#838603af3c1561e27aedd8599cec2a59c097faa6"
-  integrity sha1-g4YDrzwVYeJ67dhZnOwqWcCX+qY=
+mailsplit@4.6.2:
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/mailsplit/-/mailsplit-4.6.2.tgz#ce622cea460406035ff9f7d493ed00ea52a27aaa"
+  integrity sha512-7Bw2R0QfORXexGGQCEK64EeShHacUNyU5kV5F5sj4jPQB3ITe2v9KRqxD40wpuue6W/sBJlSNBZ0AypIeTGQMQ==
   dependencies:
-    libbase64 "1.0.3"
-    libmime "4.1.1"
+    libbase64 "1.2.1"
+    libmime "4.2.1"
     libqp "1.1.0"
 
 make-dir@^1.0.0:
@@ -7754,10 +7740,10 @@ nodejieba@2.3.3, nodejieba@^2.2.1:
   dependencies:
     nan "^2.14.0"
 
-nodemailer@6.3.1:
-  version "6.3.1"
-  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.3.1.tgz#2784beebac6b9f014c424c54dbdcc5c4d1221346"
-  integrity sha512-j0BsSyaMlyadEDEypK/F+xlne2K5m6wzPYMXS/yxKI0s7jmT1kBx6GEKRVbZmyYfKOsjkeC/TiMVDJBI/w5gMQ==
+nodemailer@6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.4.0.tgz#91482ebc09d39156d933eb9e6159642cd27bf02c"
+  integrity sha512-UBqPOfQGD1cM3HnjhuQe+0u3DWx47WWK7lBjG5UtPnGOysr7oDK5lNCzcjK6zzeBSdTk4m1tGx1xNbWFZQmMNA==
 
 nodemon@2.0.1:
   version "2.0.1"
@@ -10528,10 +10514,10 @@ tiny-emitter@^2.0.0:
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
   integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
-tlds@1.203.1:
-  version "1.203.1"
-  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.203.1.tgz#4dc9b02f53de3315bc98b80665e13de3edfc1dfc"
-  integrity sha1-TcmwL1PeMxW8mLgGZeE94+38Hfw=
+tlds@1.207.0:
+  version "1.207.0"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.207.0.tgz#459264e644cf63ddc0965fece3898913286b1afd"
+  integrity sha512-k7d7Q1LqjtAvhtEOs3yN14EabsNO8ZCoY6RESSJDB9lst3bTx3as/m1UuAeCKzYxiyhR1qq72ZPhpSf+qlqiwg==
 
 tmp@^0.0.33:
   version "0.0.33"
