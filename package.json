@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@postlight/mercury-parser": "2.2.0",
-    "@sentry/node": "5.9.0",
+    "@sentry/node": "5.10.1",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "cheerio": "1.0.0-rc.3",
@@ -86,7 +86,7 @@
     "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "lz-string": "1.4.4",
-    "mailparser": "2.7.6",
+    "mailparser": "2.7.7",
     "markdown-it": "10.0.0",
     "module-alias": "2.2.2",
     "pidusage": "2.0.17",
