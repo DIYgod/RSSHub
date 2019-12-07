@@ -15,3 +15,9 @@ pageClass: routes
 | serial                | finish            |
 
 </RouteEn>
+
+## Webtoons
+
+### [Naver](https://comic.naver.com)
+
+<RouteEn author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId of naver webtoon']" />
