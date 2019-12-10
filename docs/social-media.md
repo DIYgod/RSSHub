@@ -272,6 +272,15 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']" anticrawler="1"/>
 
+::: tips 自建的同学请注意
+
+1、同一个IP，24小时之内，只能访问300次（不限账号）。24小时之内超过300次，官方会禁止访问30小时（从停止访问开始算起）。<br>
+2、官方封禁的账号，如果频繁访问也将禁止访问30小时。<br>
+3、可以调整缓存过期时间及订阅数量。例如：30个账号，那么设置缓存过期时间=24/(300/30)=2.4小时。如果使用IFTTT访问RSS，缓存过期时间可以再设置的小一点，比如：2小时，因为IFTTT是随机访问，实际24小时访问量会小于300。<br>
+4、更新频繁的账号，可以设置缓存时间短一点；更新不平凡的和实时性要求不高的，缓存时间可以设置长一点12小时。用不同的容器，不同的配置，访问不同的域名或端口。<br>
+
+:::
+
 ### 标签
 
 <Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" anticrawler="1"/>
