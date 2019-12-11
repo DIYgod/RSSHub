@@ -617,3 +617,11 @@ GitHub 官方也提供了一些 RSS:
 ### 热门
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+
+## 阿里云系统组技术博客
+
+### 首页
+
+<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index"/>
+
+
