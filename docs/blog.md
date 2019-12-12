@@ -32,6 +32,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## 阿里云系统组技术博客
+
+### 首页
+
+<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index"/>
+
 ## 财新博客
 
 ### 用户博客
