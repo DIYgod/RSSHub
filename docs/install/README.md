@@ -396,7 +396,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `YOUTUBE_KEY`: YouTube API Key
 
--   telegram 全部路由: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+-   telegram - 贴纸包路由: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
