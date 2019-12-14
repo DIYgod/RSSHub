@@ -858,4 +858,72 @@
             },
         ],
     },
+
+    'ithome.com': {
+        _name: 'IT 之家',
+        it: [
+            {
+                title: 'IT 资讯',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/it',
+            },
+        ],
+        soft: [
+            {
+                title: '软件之家',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/soft',
+            },
+        ],
+        win10: [
+            {
+                title: 'win10 之家',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/win10',
+            },
+        ],
+        iphone: [
+            {
+                title: 'iphone 之家',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/iphone',
+            },
+        ],
+        ipad: [
+            {
+                title: 'ipad 之家',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/ipad',
+            },
+        ],
+        android: [
+            {
+                title: 'android 之家',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/android',
+            },
+        ],
+        digi: [
+            {
+                title: '数码之家',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/digi',
+            },
+        ],
+        next: [
+            {
+                title: '智能时代',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: '/',
+                target: '/ithome/next',
+            },
+        ],
+    },
 });
