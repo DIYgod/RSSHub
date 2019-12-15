@@ -77,3 +77,11 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## Paul Graham
+
+通过提取文章全文，提供比官方源更佳的阅读体验。
+
+### Essays
+
+<Route author="Maecenas" example="/paulgraham/essay" path="/paulgraham/essay"/>
