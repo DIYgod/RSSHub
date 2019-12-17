@@ -85,3 +85,14 @@ Compared to the official one, this feed:
 Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
+
+## Vulture
+
+<RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:type" :paramsDesc="['The sub-site name']">
+
+Supported sub-sites：
+| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+| ----- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| tv | movies | comedy | music | tvrecaps | books | theater | art | awards | video |
+
+</RouteEn>
