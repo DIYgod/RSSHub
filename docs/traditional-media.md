@@ -359,6 +359,12 @@ category 对应的关键词有
 
 <Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
 
+## 新闻联播文字版
+
+### 新闻联播文字版
+
+<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
+
 ## 央视新闻
 
 ### 新闻联播

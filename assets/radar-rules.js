@@ -926,4 +926,16 @@
             },
         ],
     },
+
+    'govopendata.com': {
+        _name: '新闻联播文字版',
+        cn: [
+            {
+                title: '新闻联播文字版',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xin-wen-lian-bo-wen-zi-ban',
+                source: '/xinwenlianbo',
+                target: '/xinwenlianbo/index',
+            },
+        ],
+    },
 });
