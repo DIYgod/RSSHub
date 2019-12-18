@@ -618,6 +618,10 @@ pageClass: routes
 
 <Route author="WenryXu" example="/woshipm/popular" path="/woshipm/popular"/>
 
+### 天天问
+
+<Route author="WenryXu" example="/woshipm/wen" path="/woshipm/wen"/>
+
 ### 用户收藏
 
 <Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']"/>
