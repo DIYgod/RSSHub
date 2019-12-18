@@ -1047,6 +1047,17 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 郑州大学
+
+### 郑州大学新闻网
+
+<Route author="niayyy-S" example="/zzu/news/zh" path="zzu/news/:type?"  :paramsDesc="['可选, 默认为 `zh`']">
+
+| 参数名称 | 综合新闻 | 学术动态 | 媒体郑大 | 院系风采 | 教学科研 | 学生信息 | 外事信息 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 参数     | zh       | xs       | mt       | yx       | ky       | stu      | ws       |
+
+</Route>
 ## 中国传媒大学
 
 ### 中国传媒大学研究生招生网
