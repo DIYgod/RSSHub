@@ -276,7 +276,7 @@ sidebar: auto
     4. **使用通用配置型路由**
 
     很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
-    通用配置即通过 cherrio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
+    通用配置即通过 cheerio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
 
     首先我们需要几个数据：
 
