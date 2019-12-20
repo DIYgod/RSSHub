@@ -3,10 +3,10 @@ name: '[docker] CI for releases'
 on:
     push:
         branches: master
-    paths:
-        - 'lib/**'
-        - 'Dockerfile'
-        - 'package.json'
+        paths:
+            - 'lib/**'
+            - 'Dockerfile'
+            - 'package.json'
 
 jobs:
     release:

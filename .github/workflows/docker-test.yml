@@ -8,7 +8,7 @@ on:
             - 'Dockerfile'
             - 'package.json'
     push:
-        branches: *
+        branches: '*'
         paths:
             - 'lib/**'
             - 'Dockerfile'
