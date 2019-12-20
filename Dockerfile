@@ -29,7 +29,7 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   --no-install-recommends \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
-  && apt-get purge --auto-remove -y curl \
+  && apt-get purge --auto-remove -y wget\
   && rm -rf /src/*.deb \
   && npm install --production; \
   else \
