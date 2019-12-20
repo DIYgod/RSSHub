@@ -6,11 +6,13 @@ on:
         paths:
             - 'lib/**'
             - 'Dockerfile'
+            - 'package.json'
     push:
-        branches: master
+        branches: *
         paths:
             - 'lib/**'
             - 'Dockerfile'
+            - 'package.json'
 
 jobs:
     test:
