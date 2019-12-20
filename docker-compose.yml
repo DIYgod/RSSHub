@@ -21,7 +21,7 @@ services:
     restart: always
 
   db.redis:
-    image: redis
+    image: redis:alpine
     restart: always
     volumes:
         - redis-data:/data
