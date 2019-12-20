@@ -151,6 +151,14 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
 
+### 社区
+
+<Route author="WenryXu" example="/pmcaff/feed/1" path="/pmcaff/feed/:typeid" :paramsDesc="['分类 id']"/>
+
+| 发现 | 待回答 | 最热 | 问答专场 | 投稿 | 深度 | 专栏 |
+| ---- | ------ | ---- | -------- | ---- | ---- | ---- |
+| 1    | 2      | 3    | 4        | 5    | 6    | 7    |
+
 ## Quanta Magazine
 
 ### 全部
