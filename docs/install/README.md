@@ -264,42 +264,6 @@ gcloud app deploy
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
-## 部署到 arm32v7 设备（树莓派）
-
-### 使用现成镜像
-
-运行下面的命令下载 rsshub:arm32v7 镜像（镜像更新可能会有较长延迟）
-
-```
-docker pull pjf1996/rsshub:arm32v7
-```
-
-### 自行构建镜像
-
-首先下载 `RSSHub` 源码
-
-```
-$ git clone https://github.com/DIYgod/RSSHub.git
-$ cd RSSHub
-```
-
-运行下列命令构建 `rsshub:arm32v7`镜像
-
-```
-$ docker build -f ./Dockerfile.arm32v7 -t rsshub:arm32v7 .
-```
-
-运行 RSSHub
-
-```bash
-# 使用现成镜像方式
-$ docker run -d --name rsshub -p 1200:1200 pjf1996/rsshub:arm32v7
-# 自行构建镜像方式
-$ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
-```
-
-其余参数见[使用 Docker 部署](#docker-bu-shu)
-
 ## 配置
 
 通过设置环境变量来配置 RSSHub
