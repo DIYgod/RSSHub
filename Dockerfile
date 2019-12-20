@@ -1,7 +1,7 @@
-FROM node:10.15-slim
+FROM node:10-slim
 LABEL MAINTAINER https://github.com/DIYgod/RSSHub/
 
-RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git --no-install-recommends && apt-get clean \
+RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init --no-install-recommends && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV production
@@ -35,9 +35,6 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && \
   npm install --production; \
   fi;
-
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64 /usr/local/bin/dumb-init
-RUN chmod +x /usr/local/bin/dumb-init
 
 COPY . /app
 
