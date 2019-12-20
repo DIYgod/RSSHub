@@ -7,7 +7,7 @@ on:
             - 'lib/**'
             - 'Dockerfile'
     push:
-        branches: [master,docker]
+        branches: master
         paths:
             - 'lib/**'
             - 'Dockerfile'
