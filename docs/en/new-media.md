@@ -8,10 +8,10 @@ pageClass: routes
 
 ### 9To5 Sub-site
 
-<RouteEn author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
+<RouteEn author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:category?" :paramsDesc="['Required - Subsite name', 'Optional - Tag name inside the url of the tag page']">
 
 Supported sub-sites：
-| Mac | Google | Toys |
+| 9To5Mac | 9To5Google | 9To5Toys |
 | --- | ------ | ---- |
 | Mac | Google | Toys |
 
