@@ -4470,12 +4470,12 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-fanfou-sdk@4.0.5:
-  version "4.0.5"
-  resolved "https://registry.yarnpkg.com/fanfou-sdk/-/fanfou-sdk-4.0.5.tgz#5b3f2ab5ee8a383fc21ab58bc6c1ed97cbce7113"
-  integrity sha512-s3Ec5D3Am5daLQtu9IwkVWPSV40Tg//jPJVAYbLVMITLvCgq58H2ufJ5bgfsQAJrQXVL0ZhkN+mwhgp/4BJzXA==
+fanfou-sdk@4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/fanfou-sdk/-/fanfou-sdk-4.1.0.tgz#f4eca680c900862624888b1c5ad42ce033cba91e"
+  integrity sha512-AFfuT9vsvGGmZHc/VkvDLezXnNsq52tpkVQRYLqyaVk4nwGGT0+dnBMcjdLzQTeTi8BHQYuIAW4aLcX8r4tfYw==
   dependencies:
-    form-data "^2.3.3"
+    form-data "^3.0.0"
     got "^9.5.1"
     he "^1.1.1"
     hmacsha1 "^1.0.0"
@@ -4697,7 +4697,7 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
-form-data@3.0.0:
+form-data@3.0.0, form-data@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
   integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
@@ -4706,7 +4706,7 @@ form-data@3.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-form-data@^2.3.1, form-data@^2.3.3, form-data@^2.5.0:
+form-data@^2.3.1, form-data@^2.5.0:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.5.1.tgz#f2cbec57b5e59e23716e128fe44d4e5dd23895f4"
   integrity sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==

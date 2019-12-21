@@ -70,7 +70,7 @@
     "dotenv": "8.2.0",
     "emailjs-imap-client": "3.0.7",
     "etag": "1.8.1",
-    "fanfou-sdk": "4.0.5",
+    "fanfou-sdk": "4.1.0",
     "form-data": "3.0.0",
     "git-rev-sync": "2.0.0",
     "googleapis": "46.0.0",
