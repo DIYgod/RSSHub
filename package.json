@@ -74,7 +74,7 @@
     "form-data": "3.0.0",
     "git-rev-sync": "2.0.0",
     "googleapis": "46.0.0",
-    "got": "9.6.0",
+    "got": "10.1.0",
     "he": "1.2.0",
     "iconv-lite": "0.5.0",
     "jsdom": "15.2.1",
