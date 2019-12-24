@@ -191,6 +191,16 @@ pageClass: routes
 
 <Route author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
 
+## 宜家 IKEA
+
+### 宜家 IKEA（英国）- 商品上新
+
+<RouteEn author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
+
+### 宜家 IKEA（英国）- 促销
+
+<RouteEn author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+
 ## 有赞
 
 ### 商品上新

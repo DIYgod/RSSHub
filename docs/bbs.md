@@ -175,6 +175,21 @@ pageClass: routes
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
 
+### 录取结果
+
+<Route author="NavePnow" example="/1point3acres/offer/12/1/CMU" path="/1point3acres/offer/:year?/:major?/:school?" :paramsDesc="['录取年份  id ', '录取专业 id', '录取学校 id']">
+::: warning 三个 id 获取方式
+
+1. 打开 https://offer.1point3acres.com
+2. 打开控制台
+3. 切换到 Network 面板
+4. 点击 搜索 按钮
+5. 点击 results?ps=15&pg=1 POST 请求
+6. 找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
+
+:::
+</Route>
+
 ## 直播吧
 
 ### 子论坛

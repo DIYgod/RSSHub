@@ -8,7 +8,17 @@ pageClass: routes
 
 ### News
 
-<Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
+<RouteEn author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
+
+## IKEA
+
+### UK - New Product Release
+
+<RouteEn author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
+
+### UK - Offers
+
+<RouteEn author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
 
 ## LeBonCoin
 

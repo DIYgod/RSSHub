@@ -18,10 +18,10 @@ pageClass: routes
 
 ### 9To5 分站
 
-<Route author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['分站名字']">
+<Route author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:tag?" :paramsDesc="['分站名字','标签，可在文章标签 URL 中找到']">
 
 支持分站：
-| Mac | Google | Toys |
+| 9To5Mac | 9To5Google | 9To5Toys |
 | --- | ------ | ---- |
 | Mac | Google | Toys |
 
@@ -98,6 +98,18 @@ pageClass: routes
 ### 话题
 
 <Route author="brilon" example="/infoq/topic/1" path="/infoq/topic/:id" :paramsDesc="['话题id，可在[InfoQ全部话题](https://www.infoq.cn/topics)页面找到URL里的话题id']" />
+
+## IT 之家
+
+### 分类资讯
+
+<Route author="luyuhuang" example="/ithome/it" path="/ithome/:caty" :paramsDesc="['类别']" radar="1">
+
+| it      | soft     | win10      | iphone      | ipad      | android      | digi     | next     |
+| ------- | -------- | ---------- | ----------- | --------- | ------------ | -------- | -------- |
+| IT 资讯 | 软件之家 | win10 之家 | iphone 之家 | ipad 之家 | android 之家 | 数码之家 | 智能时代 |
+
+</Route>
 
 ## IT 桔子
 
@@ -605,6 +617,10 @@ pageClass: routes
 ### 热门文章
 
 <Route author="WenryXu" example="/woshipm/popular" path="/woshipm/popular"/>
+
+### 天天问
+
+<Route author="WenryXu" example="/woshipm/wen" path="/woshipm/wen"/>
 
 ### 用户收藏
 

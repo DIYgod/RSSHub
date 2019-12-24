@@ -71,13 +71,13 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 ### Remote.work Job Information
 
-<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1">
+<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
 |   all    | development | design | operation | product | other | marketing | sales |
 
-</Route>
+</RouteEn>
 
 ## TransferWise
 

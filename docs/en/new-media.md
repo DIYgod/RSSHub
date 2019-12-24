@@ -8,10 +8,10 @@ pageClass: routes
 
 ### 9To5 Sub-site
 
-<RouteEn author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['The sub-site name']">
+<RouteEn author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:category?" :paramsDesc="['Subsite name', 'Tag name inside the url of the tag page']">
 
 Supported sub-sites：
-| Mac | Google | Toys |
+| 9To5Mac | 9To5Google | 9To5Toys |
 | --- | ------ | ---- |
 | Mac | Google | Toys |
 
@@ -83,5 +83,16 @@ Compared to the official one, this feed:
 <RouteEn author="HenryQW" example="/verge" path="/verge">
 
 Provides a better reading experience (full text articles) over the official one.
+
+</RouteEn>
+
+## Vulture
+
+<RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:type" :paramsDesc="['The sub-site name']">
+
+Supported sub-sites：
+| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+| ----- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| tv | movies | comedy | music | tvrecaps | books | theater | art | awards | video |
 
 </RouteEn>
