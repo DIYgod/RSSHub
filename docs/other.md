@@ -213,23 +213,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
-## 抽屉
-
-### 新热榜
-
-<Route author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
-
-| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
-| ---- | ----- | ----- | ---- | --------- | -------- |
-| hot  | news  | scoff | pic  | tec       | ask      |
-
-</Route>
-
 ## 电鸭社区
 
 ### 工作机会
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
+
 ## 福利资源-met.red
 
 ### 福利资源-met.red

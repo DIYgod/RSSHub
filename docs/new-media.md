@@ -256,6 +256,22 @@ pageClass: routes
 
 <Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
 
+## 抽屉新热榜
+
+### 最新
+
+<Route author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
+
+| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
+| ---- | ----- | ----- | ---- | --------- | -------- |
+| hot  | news  | scoff | pic  | tec       | ask      |
+
+</Route>
+
+### 最热榜 TOP10
+
+<Route author="DIYgod" example="/chouti/top/24" path="/chouti/top/:hour?" :paramsDesc="['排行榜周期，可选 24 72 168 三种，默认 24']" />
+
 ## 创业邦
 
 ### 作者
