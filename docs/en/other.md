@@ -37,11 +37,11 @@ pageClass: routes
 
 ### Recent update
 
-<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
+<RouteEn author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
 
 ### News
 
-<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+<RouteEn author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
 ## EZTV
 

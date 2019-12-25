@@ -359,12 +359,6 @@ category 对应的关键词有
 
 <Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
 
-## 新闻联播文字版
-
-### 新闻联播文字版
-
-<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
-
 ## 央视新闻
 
 ### 新闻联播
@@ -384,6 +378,10 @@ category 对应的关键词有
 | news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
 
 </Route>
+
+### 新闻联播文字版
+
+<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
 
 ## 朝日新聞中文網（繁體中文版）
 

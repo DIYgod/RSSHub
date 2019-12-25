@@ -50,7 +50,7 @@ Sorting types, default to `date`:
 
 ### News（Hong Kong only）
 
-<Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+<RouteEn author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
 
 # PlayStation Store
 
