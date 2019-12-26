@@ -98,7 +98,7 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 ### New firmware
 
-<RouteEn author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?/:region?" :paramsDesc="['the device `codename` eg. `aries` for Mi 2S','type', 'Region, default to `cn`]" >
+<RouteEn author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?/:region?" :paramsDesc="['the device `codename` eg. `aries` for Mi 2S','type', 'Region, default to `cn`']" >
 
 | stable  | development |
 | ------- | ----------- |

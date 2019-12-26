@@ -103,7 +103,7 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']">
 
-See [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
+Refer to [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
 
 </RouteEn>
 
