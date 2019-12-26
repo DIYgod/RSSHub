@@ -63,7 +63,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1"/>
 
-### 仓库 Issue
+### 仓库 Issues
 
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
 
@@ -111,7 +111,7 @@ GitHub 官方也提供了一些 RSS:
 | 根据 fork 数量排序 | forks     |
 | 根据更新时间排序   | updated   |
 
-### 用户 Starred Repositories
+### 用户 Star 的仓库
 
 <Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['用户名']" radar="1"/>
 
@@ -160,7 +160,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1"/>
 
-## kaggle
+## Kaggle
 
 ### Discussion
 

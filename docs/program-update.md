@@ -62,6 +62,10 @@ pageClass: routes
 
 <Route author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['游戏名，以`https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files`为例，`sc2`代表星际2', '分类名，紧跟在游戏名后，如示例中`assets`', '项目名，紧跟在分类名后，如示例中`taylor-mouses-stuff`']"/>
 
+例如：`https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` 对应 `/curseforge/sc2/assets/taylor-mouses-stuff/files`
+
+</Route>
+
 ## Docker Hub
 
 ### 镜像有新 Build
@@ -120,7 +124,7 @@ pageClass: routes
 
 ### MIUI 新版本发布
 
-<Route author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型, 可选参数', '地区, 默认为 `cn`']">
+<Route author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型', '地区, 默认为 `cn`']">
 
 | 类型   | type    |
 | ------ | ------- |
@@ -134,11 +138,23 @@ pageClass: routes
 
 </Route>
 
+## Nintendo Switch
+
+### Switch 本体更新情报（日本）
+
+见 [#nintendo](/game.html#nintendo)
+
 ## Nvidia Web Driver
 
 ### 更新日志
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+
+## PlayStation
+
+### PlayStation 4 系统更新纪录
+
+见 [#playstation](/game.html#playstation)
 
 ## RSSHub
 

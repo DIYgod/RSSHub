@@ -82,7 +82,7 @@ Solidot 提供的 feed:
 
 ## The Economist
 
-### 全文输出
+### 分类
 
 <Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
 
@@ -256,7 +256,7 @@ category 对应的关键词有
 
 ## 纽约时报
 
-### 官方 RSS
+### 新闻
 
 <Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言, 缺省中文']">
 

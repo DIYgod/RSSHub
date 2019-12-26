@@ -32,6 +32,22 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </RouteEn>
 
+## NHK
+
+### News Web Easy
+
+<RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+## The Economist
+
+### Category
+
+<RouteEn author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']"/>
+
+### GRE Vocabulary
+
+<RouteEn author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+
 ## The Guardian
 
 ### Editorial
@@ -39,5 +55,23 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 <RouteEn author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
 
 Provides a better reading experience (full text articles) over the official one.
+
+</RouteEn>
+
+### China
+
+<RouteEn author="Polynomia" example="/guardian/china" path="/guardian/china"/>
+
+## The New York Times
+
+### News
+
+<RouteEn author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['language, default to Chinese']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+| Default to Chinese | Chinese-English | English |
+| ------------------ | --------------- | ------- |
+| (空)               | dual            | en      |
 
 </RouteEn>

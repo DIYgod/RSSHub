@@ -54,6 +54,12 @@ pageClass: routes
 
 <Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
 
+## 电鸭社区
+
+### 工作机会
+
+<Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
+
 ## 虎扑
 
 ### 虎扑 BBS 论坛

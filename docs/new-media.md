@@ -179,7 +179,7 @@ pageClass: routes
 
 <Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
-## sixthtone
+## Sixth Tone
 
 ### 最新文章
 
@@ -699,7 +699,7 @@ Supported sub-sites：
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
 
-## 世界卫生组织
+## 世界卫生组织 WHO
 
 ### 媒体中心
 

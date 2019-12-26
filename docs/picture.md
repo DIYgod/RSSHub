@@ -44,11 +44,17 @@ pageClass: routes
 
 </Route>
 
+## Google Doodles
+
+### 更新
+
+<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']" />
+
 ## Konachan Anime Wallpapers
 
 ::: tip 提示
 
--   tags 可以在 [konachan](https://konachan.com/post) 选好后, 复制其 URL 中 tags= 后的参数
+-   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
 -   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
 -   网站提供了 Posts 订阅: https://konachan.com/post/piclens?tags=[tags]
 
@@ -75,7 +81,7 @@ pageClass: routes
 
 ### 高级搜索
 
-<Route author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入，但空格等特殊符号是否会转换取决于浏览器和阅读器的实现。用法详见[官网](https://nhentai.net/info/)', '模式，`simple`为仅封面，`detail`会包括本子每一页，但对服务器负载大。默认为`simple`']" anticrawler="1"/>
+<Route author="MegrezZhu" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入。用法详见[官网](https://nhentai.net/info/)', '模式，`simple`为仅封面，`detail`会包括本子每一页，但对服务器负载大。默认为`simple`']" anticrawler="1"/>
 
 ## Tits Guru
 

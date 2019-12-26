@@ -6,41 +6,45 @@ pageClass: routes
 
 ## eLife
 
-### 最新成果
-
-#### 综合
+### 最新成果-综合
 
 <Route author="emdoe" example="/elife/latest" path="/elife/latest" />
 
-#### 细分领域
+### 最新成果-细分领域
 
-<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
+<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
+
+## gradCafe
+
+### gradCafe result
+
+<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
+
+### gradCafe result by key words
+
+<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
 ## Nature
 
-### Latest Research
-
-#### Nature
+### Nature
 
 <Route author="emdoe" example="/nature/research" path="/nature/research" />
 
-#### Nature Machine Intelligence
+### Nature Machine Intelligence
 
 <Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
 
-#### Nature Neuroscience
+### Nature Neuroscience
 
 <Route author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
 
 ## Proceedings of The National Academy of Sciences
 
-### 最新文章
-
-#### 全部
+### 最新文章-全部
 
 <Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
 
-#### 根据领域分类
+### 最新文章-根据领域分类
 
 <Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
 

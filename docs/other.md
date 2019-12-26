@@ -43,22 +43,6 @@ pageClass: routes
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
-## Google Doodles
-
-### 更新
-
-<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']" />
-
-## gradCafe
-
-### gradCafe result
-
-<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
-
-### gradCafe result by key words
-
-<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
-
 ## Instapaper
 
 ### 个人分享
@@ -94,6 +78,12 @@ pageClass: routes
 ### 图片文字问答
 
 <Route author="fengkx" example="/one" path="/one"/>
+
+## Parcel Tracking
+
+### Hermes UK
+
+<Route author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
 
 ## Pocket
 
@@ -212,12 +202,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 洞察
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
-
-## 电鸭社区
-
-### 工作机会
-
-<Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 
 ## 福利资源-met.red
 

@@ -4,17 +4,15 @@ pageClass: routes
 
 # Gaming
 
-## Game List（Hong Kong only）
+## dekudeals
 
-<RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['gridName from the list']">
+### Category
 
-Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
+<RouteEn author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['Category name']"/>
 
-</RouteEn>
+## Metacritic
 
-# Metacritic
-
-## Game Releases
+### Game Releases
 
 <RouteEn author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['console platform', 'release type, default to `new`', 'sorting type, default to `date`']">
 
@@ -52,7 +50,27 @@ Sorting types, default to `date`:
 
 <RouteEn author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
 
-# PlayStation Store
+### Switch System Update（Japan）
+
+<RouteEn author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
+
+## PlayStation Store
+
+### Game List（Hong Kong）
+
+<RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['gridName from the list']">
+
+Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
+
+</RouteEn>
+
+### PlayStation Network user trophy
+
+<RouteEn author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['User ID']" radar="1"/>
+
+### PlayStation 4 System Update
+
+<RouteEn author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1"/>
 
 ## Steam
 

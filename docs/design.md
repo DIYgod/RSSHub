@@ -10,7 +10,7 @@ pageClass: routes
 
 <Route author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" :paramsDesc="['时间维度, 支持 week month year ever']"/>
 
-### 用户（团队
+### 用户（团队）
 
 <Route author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" :paramsDesc="['用户名, 可在该用户主页 URL 中找到']"/>
 
