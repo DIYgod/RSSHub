@@ -79,6 +79,15 @@ pageClass: routes
 
 <RouteEn author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
 
+## Product Hunt
+
+> The official feed: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+
+### Today Popular
+
+<RouteEn author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+</RouteEn>
+
 ## Remote.work
 
 ### Remote.work Job Information

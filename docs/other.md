@@ -91,6 +91,15 @@ pageClass: routes
 
 <Route author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
 
+## Product Hunt
+
+> 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+
+### Today Popular
+
+<Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+</Route>
+
 ## SANS Institute
 
 ### 最新会议材料
