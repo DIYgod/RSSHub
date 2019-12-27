@@ -18,6 +18,13 @@ pageClass: routes
 
 <Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
 
+## Inside Design
+
+### Recent Stories
+
+<Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
+</Route>
+
 ## UI 中国
 
 ### 推荐文章
