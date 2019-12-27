@@ -144,7 +144,7 @@ pageClass: routes
 
 ### 小说更新
 
-<Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']">
+<Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id/:count?" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`.', '指定获取小说倒序章节数量，默认为10章.']">
 
 举例网址：http://www.shuquge.com/txt/8659/index.html
 
