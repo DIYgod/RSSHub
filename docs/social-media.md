@@ -254,6 +254,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="hoilc" example="/bilibili/readlist/25611" path="/bilibili/readlist/:listid" :paramsDesc="['文集 id, 可在专栏文集 URL 中找到']"/>
 
+### B 站每周必看
+
+<Route author="ttttmr" example="/bilibili/weekly" path="/bilibili/weekly/:disableEmbed?" :paramsDesc="['默认为开启内嵌视频, 任意值为关闭']"/>
+
 ## Disqus
 
 ### 评论
