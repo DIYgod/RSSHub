@@ -1052,7 +1052,12 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 新闻通知
 
+<<<<<<< Updated upstream
 <Route author="zhang-wangz" example="/zucc/news/latest" path="/zucc/news/latest"/>
+=======
+<Route author="zhang-wangz" example="/zucc/news/latest" path="/zucc/news/latest"></Route>
+
+> > > > > > > Stashed changes
 
 ## 浙江工商大学
 
