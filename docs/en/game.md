@@ -76,7 +76,7 @@ Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk
 
 ### Steam search
 
-<RouteEn author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['search parameters']">
+<RouteEn author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1">
 
 Get serach parameters from the URL.
 
@@ -86,7 +86,7 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 
 ### Steam news
 
-<RouteEn author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['game id']"/>
+<RouteEn author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['game id']" radar="1"/>
 
 ## SteamGifts
 
