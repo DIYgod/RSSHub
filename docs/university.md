@@ -388,6 +388,12 @@ category 列表：
 
 </Route>
 
+## 华北水利水电大学
+
+### 学校通知
+
+<Route author="vuhe" example="/ncwu/notice" path="/universities/ncwu/notice" />
+
 ## 华南理工大学
 
 ### 教务处通知公告
