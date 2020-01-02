@@ -1054,6 +1054,12 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 浙江大学城市学院
+
+### 新闻通知
+
+<Route author="zhang-wangz" example="/zucc/news/latest" path="/zucc/news/latest"></Route>
+
 ## 浙江工商大学
 
 ### 浙江工商大学
