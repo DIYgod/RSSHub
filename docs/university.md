@@ -1052,7 +1052,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 新闻通知
 
-<Route author="zhang-wangz" example="/zucc/news/latest" path="/zucc/news/latest"></Route>
+<Route author="zhang-wangz" example="/zucc/news/latest" path="/zucc/news/latest">
+</Route>
+
+### 计算分院全站搜索
+
+<Route author="zhang-wangz" example="/zucc/cssearch/1/xx/1" path="/zucc/cssearch/:webVpn?/:key?/:pageNum?" :paramsDesc="['见下表(默认为0)','关键词(默认为白卡)','页数(默认为1)']">
+
+| 0                  | 1                    |
+| ------------------ | -------------------- |
+| 文章地址为正常地址 | 获取的是 webvpn 地址 |
+
+</Route>
 
 ## 浙江工商大学
 
