@@ -232,6 +232,12 @@ pageClass: routes
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
+# BT 之家
+
+### 最新种子
+
+<Route author="zhang-wangz" example="/btzj/latest" path="/btzj/latest"/>
+
 ## 抖音
 
 见 [#抖音](/social-media.html#dou-yin)
