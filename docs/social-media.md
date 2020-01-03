@@ -362,6 +362,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']"/>
 
+::: warning 注意
+
+由于 Tg 抓取原理所限，部分涉及色情或知识产权问题的频道无法订阅，可通过访问 https://t.me/s/:username 确认。
+另外，请确认你想要订阅的是频道 (Channel) 而非群组 (Group).
+
+:::
+
 ### 贴纸包
 
 <Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['贴纸包 id, 可在分享贴纸获得的 URL 中找到']"/>
