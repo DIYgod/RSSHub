@@ -1,0 +1,11 @@
+const buildData = require('@/utils/common-config');
+module.exports = async (ctx) => {
+    ctx.state.data = await buildData({
+        link: 'https://1337x.to/popular-movies',
+        url: 'https://1337x.to',
+        title: '%title%', // 这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
+        params: {
+            title: 'Download Most Popular Movie Torrents Last 24 Hours', // RSS标题
+        },
+    });
+};
