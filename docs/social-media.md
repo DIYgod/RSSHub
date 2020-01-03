@@ -488,6 +488,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="DIYgod" example="/douban/movie/ustop" path="/douban/movie/ustop"/>
 
+### 一周口碑榜
+
+<Route author="umm233" example="/douban/movie/weekly" path="/douban/movie/weekly"/>
+
 ### 豆瓣小组
 
 <Route author="DIYgod" example="/douban/group/camera" path="/douban/group/:groupid" :paramsDesc="['豆瓣小组的 id']"/>
