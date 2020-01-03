@@ -96,6 +96,13 @@ Only for self-hosted
 
 <RouteEn author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" :paramsDesc="['Sticker Pack name, available in the sharing URL']"/>
 
+::: Tips 
+
+Some channels involving pornography or intellectual property issues cannot be subscribed, you can confirm by visiting https://t.me/s/:username.
+Also, make sure that you want to subscribe to a Channel， not a Group.
+
+:::
+
 ### Telegram Blog
 
 <RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
