@@ -392,7 +392,13 @@ category 列表：
 
 ### 学校通知
 
-<Route author="vuhe" example="/ncwu/notice" path="/universities/ncwu/notice" />
+<Route author="vuhe" example="/ncwu/notice" path="/universities/ncwu/:category" :paramsDesc="['分类']" >
+
+| 学校新闻 | 学校通知 | 学校文件 | 学术动态    |
+| -------- | -------- | -------- | ----------- |
+| news     | notice   | file     | scholarship |
+
+</Route>
 
 ## 华南理工大学
 
