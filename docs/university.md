@@ -1063,7 +1063,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 计算分院全站搜索
 
-<Route author="zhang-wangz" example="/zucc/cssearch/1/xx/1" path="/zucc/cssearch/:webVpn?/:key?/:pageNum?" :paramsDesc="['见下表(默认为0)','关键词(默认为白卡)','页数(默认为1)']">
+<Route author="zhang-wangz" example="/zucc/cssearch/latest/0/白卡" path="/zucc/cssearch/latest/:webVpn?/:key?" :paramsDesc="['见下表(默认为0)','关键词(默认为白卡)']">
 
 | 0                  | 1                    |
 | ------------------ | -------------------- |
