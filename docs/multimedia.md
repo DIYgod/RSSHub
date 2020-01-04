@@ -236,11 +236,18 @@ pageClass: routes
 
 ### 最新种子
 
-<Route author="zhang-wangz" example="/btzj/latest" path="/btzj/latest" anticrawler="1"/>
+<Route author="zhang-wangz" example="/btzj/xxxx/latest" path="/btzj/:type?/latest" anticrawler="1" :paramsDesc="['type,见下表']">
+
+| base                     | govern                 |
+| ------------------------ | ---------------------- |
+| https://www.88btbtt.com/ | http://www.1btjia.com/ |
+
+</Route>
 
 ::: tip 提示
 
-由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名.
+由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.1btjia.com/`](http://www.1btjia.com/)域名.
+默认为 base
 
 :::
 
