@@ -570,6 +570,8 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | ------- | ---- | ---- |
 | default | hot  | new  |
 
+</Route>
+
 ### 频道书影音
 
 <Route author="umm233" example="/douban/channel/30168934/subject/0" path="/douban/channel/:id/subject/:nav" :paramsDesc="['频道id','书影音分类']">
