@@ -111,6 +111,21 @@ pageClass: routes
 
 </Route>
 
+#### 江苏省教育考试院
+
+<Route author="schen1024" example="/gov/jiangsu/eea/zcgd" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
+注意: 其他栏目的内容格式不兼容, 且不便统一, 此处只做了下标的栏目
+
+| 具体栏目 | 参数 |
+| :------: | :--: |
+| 招考要闻 | zkyw |
+| 政策规定 | zcgd |
+| 招考信息 | zkxx |
+| 招考资料 | zkzl |
+| 学习交流 | xxjl |
+
+</Route>
+
 ### 山西省人民政府
 
 #### 山西省人社厅
