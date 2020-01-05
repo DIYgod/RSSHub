@@ -759,7 +759,7 @@
                 title: '分类',
                 docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao',
                 source: '/categories/:idd',
-                target: (params) => `/qdaily/researcach/${params.idd.replace('.html', '')}`,
+                target: (params) => `/qdaily/category/${params.idd.replace('.html', '')}`,
             },
         ],
     },
