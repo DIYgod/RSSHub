@@ -56,7 +56,7 @@ pageClass: routes
 
 ### 生命科学学院近期讲座
 
-<Route author="TPOB" example="/pku/cls/lecture" path="/universities/pku/cls/lecture">
+<Route author="TPOB" example="/pku/cls/lecture" path="/universities/pku/cls/lecture" />
 
 ## 北京航空航天大学
 
