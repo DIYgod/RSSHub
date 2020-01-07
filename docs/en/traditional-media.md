@@ -16,7 +16,7 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 -   Channel with a single path, such as `https://feeds.bbci.co.uk/news/business/rss.xml`, use `/bbc/business`.
 -   Channel contains multiple paths, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
--   Exemption: use `/bbc/chinese` for BBC News Chinese.
+-   Exemption: use `/bbc/chinese` for BBC News Chinese, `/bbc/traditionalchinese` for Traditional Chinese.
 
 </RouteEn>
 
