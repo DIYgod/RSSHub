@@ -562,6 +562,26 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="LogicJake" example="/douban/topic/48823" path="/douban/topic/:id/:sort?" :paramsDesc="['话题id','排序方式，hot或new，默认为new']"/>
 
+### 频道专题
+
+<Route author="umm233" example="/douban/channel/30168934/hot" path="/douban/channel/:id/:nav?" :paramsDesc="['频道id','专题分类，可选，默认为 default']">
+
+| 默认    | 热门 | 最新 |
+| ------- | ---- | ---- |
+| default | hot  | new  |
+
+</Route>
+
+### 频道书影音
+
+<Route author="umm233" example="/douban/channel/30168934/subject/0" path="/douban/channel/:id/subject/:nav" :paramsDesc="['频道id','书影音分类']">
+
+| 电影 | 电视剧 | 图书 | 唱片 |
+| ---- | ------ | ---- | ---- |
+| 0    | 1      | 2    | 3    |
+
+</Route>
+
 ## 抖音
 
 ### 用户动态
