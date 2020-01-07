@@ -69,9 +69,9 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" :paramsDesc="['分类名']">
 
-| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 |
-| :------: | :------: | :------: | :--------: |
-|    bm    |    gd    |    yw    |    gwy     |
+| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
+| :------: | :------: | :------: | :--------: | :------: |
+|    bm    |    gd    |    yw    |    gwy     | zhengce  |
 
 </Route>
 

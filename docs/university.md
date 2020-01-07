@@ -54,6 +54,10 @@ pageClass: routes
 
 <Route author="AngUOI" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
 
+### 生命科学学院近期讲座
+
+<Route author="TPOB" example="/pku/cls/lecture" path="/universities/pku/cls/lecture" />
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
