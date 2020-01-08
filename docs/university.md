@@ -963,6 +963,34 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 武汉大学新闻网
+
+<Route author="SChen1024" example="/whu/news/wdyw" path="/whu/news/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
+
+注意: 除了 `kydt` 代表学术动态,其余页面均是拼音首字母小写.
+
+| **内容** | **参数** |
+| :------: | :------: |
+| 武大要闻 |   wdyw   |
+| 媒体武大 |   mtwd   |
+| 专题报道 |   ztbd   |
+| 珞珈人物 |   ljrw   |
+| 国际交流 |   gjjl   |
+| 缤纷校园 |   bfxy   |
+| 校友之声 |   xyzs   |
+| 珞珈论坛 |   ljlt   |
+| 新闻热线 |   xwrx   |
+| 头条新闻 |   ttxw   |
+| 综合新闻 |   zhxw   |
+| 珞珈影像 |   ljyx   |
+| 学术动态 |   kydt   |
+| 点击排行 |   djpx   |
+| 珞珈副刊 |   ljfk   |
+| 校史钩沉 |   xsgc   |
+| 来稿选登 |   lgxd   |
+
+</Route>
+
 ## 西安电子科技大学
 
 ### 教务处
