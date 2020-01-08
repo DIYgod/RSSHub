@@ -36,6 +36,12 @@ pageClass: routes
 
 <RouteEn author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
 
+## Chrome Web Store
+
+### Extensions Update
+
+<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']/>
+
 ## CurseForge
 
 ### File Update
