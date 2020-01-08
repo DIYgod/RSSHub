@@ -56,6 +56,12 @@ pageClass: routes
 
 <Route author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
 
+## Chrome 网上应用店
+
+### 扩展程序更新
+
+<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['应用 id, 可在应用页 URL 中找到']/>
+
 ## CurseForge
 
 ### 文件更新

@@ -69,9 +69,9 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" :paramsDesc="['分类名']">
 
-| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 |
-| :------: | :------: | :------: | :--------: |
-|    bm    |    gd    |    yw    |    gwy     |
+| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
+| :------: | :------: | :------: | :--------: | :------: |
+|    bm    |    gd    |    yw    |    gwy     | zhengce  |
 
 </Route>
 
@@ -108,6 +108,21 @@ pageClass: routes
 |          立法意见征集          |      意见征集      |
 | :----------------------------: | :----------------: |
 | legislative-opinion-collection | opinion-collection |
+
+</Route>
+
+#### 江苏省教育考试院
+
+<Route author="schen1024" example="/gov/jiangsu/eea/zcgd" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
+注意: 其他栏目的内容格式不兼容, 且不便统一, 此处只做了下标的栏目
+
+| 具体栏目 | 参数 |
+| :------: | :--: |
+| 招考要闻 | zkyw |
+| 政策规定 | zcgd |
+| 招考信息 | zkxx |
+| 招考资料 | zkzl |
+| 学习交流 | xxjl |
 
 </Route>
 
