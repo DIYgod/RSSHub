@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
 
+## AP News
+
+### 话题
+
+<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']"/>
+
 ## BBC
 
 ### BBC
