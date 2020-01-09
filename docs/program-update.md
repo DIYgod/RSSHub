@@ -56,6 +56,12 @@ pageClass: routes
 
 <Route author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
 
+## Chrome 网上应用店
+
+### 扩展程序更新
+
+<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']/>
+
 ## CurseForge
 
 ### 文件更新
@@ -101,6 +107,10 @@ pageClass: routes
 | desktop | android | beta | nightly | android-beta | organizations |
 
 </Route>
+
+### 附加组件(Add-ons)更新
+
+<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']/>
 
 ## Greasy Fork
 

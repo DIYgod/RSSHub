@@ -54,6 +54,10 @@ pageClass: routes
 
 <Route author="AngUOI" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
 
+### 生命科学学院近期讲座
+
+<Route author="TPOB" example="/pku/cls/lecture" path="/universities/pku/cls/lecture" />
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
@@ -959,6 +963,34 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 武汉大学新闻网
+
+<Route author="SChen1024" example="/whu/news/wdyw" path="/whu/news/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
+
+注意: 除了 `kydt` 代表学术动态,其余页面均是拼音首字母小写.
+
+| **内容** | **参数** |
+| :------: | :------: |
+| 武大要闻 |   wdyw   |
+| 媒体武大 |   mtwd   |
+| 专题报道 |   ztbd   |
+| 珞珈人物 |   ljrw   |
+| 国际交流 |   gjjl   |
+| 缤纷校园 |   bfxy   |
+| 校友之声 |   xyzs   |
+| 珞珈论坛 |   ljlt   |
+| 新闻热线 |   xwrx   |
+| 头条新闻 |   ttxw   |
+| 综合新闻 |   zhxw   |
+| 珞珈影像 |   ljyx   |
+| 学术动态 |   kydt   |
+| 点击排行 |   djpx   |
+| 珞珈副刊 |   ljfk   |
+| 校史钩沉 |   xsgc   |
+| 来稿选登 |   lgxd   |
+
+</Route>
+
 ## 西安电子科技大学
 
 ### 教务处
@@ -1064,7 +1096,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 新闻通知
 
-<Route author="zhang-wangz" example="/zucc/news/latest" path="/zucc/news/latest"></Route>
+<Route author="zhang-wangz" example="/zucc/news/latest" path="/zucc/news/latest">
+</Route>
+
+### 计算分院全站搜索
+
+<Route author="zhang-wangz" example="/zucc/cssearch/latest/0/白卡" path="/zucc/cssearch/latest/:webVpn?/:key?" :paramsDesc="['见下表(默认为0)','关键词(默认为白卡)']">
+
+| 0                  | 1                    |
+| ------------------ | -------------------- |
+| 文章地址为正常地址 | 获取的是 webvpn 地址 |
+
+</Route>
 
 ## 浙江工商大学
 
