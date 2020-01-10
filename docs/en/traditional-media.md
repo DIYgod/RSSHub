@@ -78,7 +78,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ## Yahoo
 
-### 新聞
+### News
 
 <Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
 
