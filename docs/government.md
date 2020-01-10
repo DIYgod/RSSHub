@@ -10,6 +10,34 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 中国工业和信息化部
+
+### 政策解读
+
+<Route author="Yoge-Code" example="/gov/miit/zcjd" path="/gov/miit/zcjd"/>
+
+### 文件公示
+
+<Route author="Yoge-Code" example="/gov/miit/wjgs" path="/gov/miit/wjgs"/>
+
+### 政策文件
+
+<Route author="Yoge-Code" example="/gov/miit/zcwj" path="/gov/miit/zcwj"/>
+
+## 中国国家认证认可监管管理员会
+
+### 监管动态
+
+<Route author="Yoge-Code" example="/gov/cnca/jgdt" path="/gov/cnca/jgdt"/>
+
+### 行业动态
+
+<Route author="Yoge-Code" example="/gov/cnca/hydt" path="/gov/cnca/hydt"/>
+
+### 最新通知
+
+<Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
+
 ## 中国政府
 
 ### 最新政策
@@ -41,9 +69,9 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" :paramsDesc="['分类名']">
 
-| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 |
-| :------: | :------: | :------: | :--------: |
-|    bm    |    gd    |    yw    |    gwy     |
+| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
+| :------: | :------: | :------: | :--------: | :------: |
+|    bm    |    gd    |    yw    |    gwy     | zhengce  |
 
 </Route>
 
@@ -61,6 +89,10 @@ pageClass: routes
 
 </Route>
 
+### 湖南省政府采购网-公告
+
+<Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
+
 ### 江苏省人民政府
 
 <Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
@@ -76,6 +108,21 @@ pageClass: routes
 |          立法意见征集          |      意见征集      |
 | :----------------------------: | :----------------: |
 | legislative-opinion-collection | opinion-collection |
+
+</Route>
+
+#### 江苏省教育考试院
+
+<Route author="schen1024" example="/gov/jiangsu/eea/zcgd" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
+注意: 其他栏目的内容格式不兼容, 且不便统一, 此处只做了下标的栏目
+
+| 具体栏目 | 参数 |
+| :------: | :--: |
+| 招考要闻 | zkyw |
+| 政策规定 | zcgd |
+| 招考信息 | zkxx |
+| 招考资料 | zkzl |
+| 学习交流 | xxjl |
 
 </Route>
 
@@ -231,6 +278,12 @@ pageClass: routes
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+## 中华人民共和国海关总署
+
+### 拍卖信息/海关法规
+
+<Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
 
 ## 中华人民共和国商务部
 

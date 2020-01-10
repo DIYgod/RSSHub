@@ -6,11 +6,26 @@ sidebar: auto
 
 We welcome all pull requests. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
 
-## Submit new RSS source
+## Join the discussion
 
-### Step 1: Code the script
+1.  [Telegram Group](https://t.me/rsshub)
+2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
 
-Firstly, add a .js file for the new route in [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js)
+## Submit new RSS rule
+
+Before you start writing RSS rule, please make sure that the source site does not provide RSS. Some web pages will include a link element with type `application/atom+xml` or `application/rss+xml` in the HTML header to indicate the RSS link.
+
+### Debug
+
+First `yarn` or`npm install` to install dependencies, then execute `yarn dev` or`npm run dev`, open `http://localhost:1200` to see the effect, and the page will refresh automatically if files modified.
+
+### Add route
+
+Firstly, add a route in [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js)
+
+### Code the script
+
+Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) corresponding to route path
 
 #### Acquiring Data
 
@@ -21,7 +36,6 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 -   For HTML format, [cheerio](https://github.com/cheeriojs/cheerio) is used for further processing
 
 -   Below is a list of data acquisition methods, ordered by the **「level of recommendation」**
-
 
     1. **Acquire data via API using got**
 
@@ -34,6 +48,9 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/space/coin/video?vmid=${uid}&jsonp=jsonp`,
+        headers: {
+            Referer: `https://space.bilibili.com/${uid}/`,
+        },
     });
 
     const data = response.data.data; // response.data is the data object returned from the previous request
@@ -86,7 +103,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
     2. **Acquire data via HTML webpage using got**
 
-    Data have to be acquired via HTML webpage if **no API was provided**, for example: [/lib/routes/jianshu/home.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/jianshu/home.js)。
+    Data have to be acquired via HTML webpage if **no API was provided**, for example: [/lib/routes/douban/explore.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)
 
     Acquiring data by scrapping the HTML using got:
 
@@ -94,7 +111,7 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // Initiate a HTTP GET request
     const response = await got({
         method: 'get',
-        url: 'https://www.jianshu.com',
+        url: 'https://www.douban.com/explore',
     });
 
     const data = response.data; // response.data is the entire HTML source of the target page, returned from the previous request
@@ -104,8 +121,8 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
 
     ```js
     const $ = cheerio.load(data); // Load the HTML returned into cheerio
-    const list = $('.note-list li').get();
-    // use cheerio selector, select all 'li' elements with 'class="note-list"', the result is an array of cheerio node objects
+    const list = $('div[data-item_id]');
+    // use cheerio selector, select all 'div' elements with 'data-item_id' attribute, the result is an array of cheerio node objects
     // use cheerio get() method to transform a cheerio node object array into a node array
 
     // PS：every cheerio node is a HTML DOM
@@ -113,78 +130,31 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // Refer to cheerio docs：https://cheerio.js.org/
     ```
 
-    Use /jianshu/utils.js class to extract full-text:
-
-    ```js
-    const result = await util.ProcessFeed(list, ctx.cache);
-    ```
-
-    The logic for full-text extraction in /jianshu/utils.js class：
-
-    ```js
-    // define a function to load the article content
-    async function load(link) {
-        // get the article asynchronously
-        const response = await got.get(link);
-        // load the article content
-        const $ = cheerio.load(response.data);
-
-        // parse the date
-        const date = new Date(
-            $('.publish-time')
-                .text()
-                .match(/\d{4}.\d{2}.\d{2} \d{2}:\d{2}/)
-        );
-
-        // handle the timezone
-        const timeZone = 8;
-        const serverOffset = date.getTimezoneOffset() / 60;
-        const pubDate = new Date(date.getTime() - 60 * 60 * 1000 * (timeZone + serverOffset)).toUTCString();
-
-        // extract the full-text
-        const description = $('.show-content-free').html();
-
-        // return the parsed result
-        return { description, pubDate };
-    }
-
-    // use Promise.all() to initiate requests in parallel
-    const result = await Promise.all(
-        // loop through every article
-        list.map(async (item) => {
-            const $ = cheerio.load(item);
-
-            const $title = $('.title');
-            // resolve the absolute URL
-            const itemUrl = url.resolve(host, $title.attr('href'));
-
-            // form a new object to hold the data
-            const single = {
-                title: $title.text(),
-                link: itemUrl,
-                author: $('.nickname').text(),
-                guid: itemUrl,
-            };
-
-            // use tryGet() to query the cache
-            // if the query returns no result, query the data source via load() to get article content
-            const other = await caches.tryGet(itemUrl, async () => await load(itemUrl));
-
-            // merge two objects to form the final output
-            return Promise.resolve(Object.assign({}, single, other));
-        })
-    );
-    ```
-
-    Assign the value of `result` to `ctx.state.data`
+    Use map to traverse the array and parse out the result of each item
 
     ```js
     ctx.state.data = {
-        title: '简书首页',
-        link: 'https://www.jianshu.com',
-        // select "content" property of <meta name="description">
-        description: $('meta[name="description"]').attr('content'),
-        item: result,
+        title: '豆瓣-浏览发现',
+        link: 'https://www.douban.com/explore',
+        item:
+            list &&
+            list
+                .map((index, item) => {
+                    item = $(item);
+                    itemPicUrl = `${item.find('a.cover').attr('style')}`.replace('background-image:url(', '').replace(')', '');
+                    return {
+                        title: item
+                            .find('.title a')
+                            .first()
+                            .text(),
+                        description: `作者：${item
+                            .find('.usr-pic a')
+                            .last()
+                            .text()}<br>描述：${item.find('.content p').text()}<br><img src="${itemPicUrl}">`,
+                        link: item.find('.title a').attr('href'),
+                    };
+                })
+                .get(),
     };
 
     // the route is now done
@@ -223,7 +193,6 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     ```js
     const $ = cheerio.load(html); // Load the HTML returned into cheerio
     const list = $('div.item'); //  // use cheerio selector, select all 'div class="item"' elements, the result is an array of cheerio node objects
-
     ```
 
     Assign the value to `ctx.state.data`
@@ -261,46 +230,85 @@ Firstly, add a .js file for the new route in [/lib/router.js](https://github.com
     // PS: the route acts as a notifier of new articles, it does not provide access to the content behind the paywall, thus not content were fetched
     ```
 
+    4. **Use general configuration routing**
+
+    A large number of websites can generate RSS through a configuration paradigm.
+
+    The general configuration is to easily generate RSS by reading json data through cheerio (**CSS selector, jQuery function**)
+
+    First we need a few data:
+
+    1. RSS source link
+    2. Data source link
+    3. RSS title (not item title)
+
+    ```js
+    const buildData = require('@/utils/common-config');
+    module.exports = async (ctx) => {
+        ctx.state.data = await buildData({
+            link: '', // RSS source link
+            url: '', // Data source link
+            title: '%title%', // Variables are used here, such as **% xxx%** will be parsed into variables with values of the same name under **params**
+            params: {
+                title: '', // RSS title
+            },
+        });
+    };
+    ```
+
+    Our RSS does not have any content for now, the content needs to be completed by `item`
+    Here is an example
+
+    ```js
+    const buildData = require('@/utils/common-config');
+
+    module.exports = async (ctx) => {
+        const link = `https://www.uraaka-joshi.com/`;
+        ctx.state.data = await buildData({
+            link,
+            url: link,
+            title: `%title%`,
+            params: {
+                title: '裏垢女子まとめ',
+            },
+            item: {
+                item: '.content-main .stream .stream-item',
+                title: `$('.post-account-group').text() + ' - %title%'`, // Only supports js statements like $().xxx()
+                link: `$('.post-account-group').attr('href')`, // .text() means get the text of the element, .attr() means get the specified attribute
+                description: `$('.post .context').html()`, // .text() means get the text of the the html code
+                pubDate: `new Date($('.post-time').attr('datetime')).toUTCString()`,
+                guid: `new Date($('.post-time').attr('datetime')).getTime()`,
+            },
+        });
+    };
+    ```
+
+    So far we have completed a simplest route
+
 ---
 
-#### Enable Caching
+#### Use Cache
 
-By default there is a global caching period set in `lib/config.js`, some sources might have a low update frequency, a longer caching period should be set.
+All routes have a cache, the global cache time is set in `lib/config.js`, but the content returned by some interfaces is updated less frequently. At this time, you should set a longer cache time for these data.
 
--   Save to cache:
+For example, the bilibili column needs to get the full text of the article：[/lib/routes/bilibili/followings_article.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/followings_article.js)
 
-```js
-ctx.cache.set((key: string), (value: string)); // time is the caching period in seconds.
-```
-
--   Access the cache:
+Since the full text of all articles cannot be got from one API, each article needs to be requested once, and these data are generally unchanged, so these data should be stored in the cache to avoid requesting repeatedly
 
 ```js
-const value = await ctx.cache.get((key: string));
+const description = await ctx.cache.tryGet(link, async () => {
+    const result = await got.get(link);
+
+    const $ = cheerio.load(result.data);
+    $('img').each(function(i, e) {
+        $(e).attr('src', $(e).attr('data-src'));
+    });
+
+    return $('.article-holder').html();
+});
 ```
 
-For example: [/lib/routes/zhihu/daily.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/zhihu/daily.js), the full-text extraction will be triggered even when the article was not updated.
-
-Given the update frequency is known, set the appropriate caching period to reuse the cache, will save resources and improve performance.
-
-```js
-const key = 'daily' + story.id; // story.id is the unique identifier of each article
-ctx.cache.set(key, item.description); // set cache
-```
-
-When the identical requests come in, reuse the cache：
-
-```js
-const key = 'daily' + story.id;
-const value = await ctx.cache.get(key); // query the cache to find the unique identifier
-if (value) {
-    // return the cached data
-    item.description = value; // assign the cached data
-} else {
-    // no cache found
-    // initiate request to the data source
-}
-```
+The implementation of tryGet can be seen [here](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache.js#L128). The first parameter is the cache key, the second parameter is the cache data acquisition method, and the third parameter is the cache time, it should not be passed in normally. The cache time defaults to [CACHE_CONTENT_EXPIRE](/en/install/#cache-configurations), and each time accessing the cache will recalculate the expiration time
 
 ---
 
@@ -393,54 +401,7 @@ ctx.state.data = {
 
 ---
 
-### Step 2: Add the script into router
-
-Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js)
-
-#### Example
-
-1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
-
-| Name                               | Description                                                                        |
-| ---------------------------------- | ---------------------------------------------------------------------------------- |
-| Route                              | `/bilibili/bangumi/:seasonid`                                                      |
-| Data Source                        | bilibili                                                                           |
-| Route Name                         | bangumi                                                                            |
-| Parameter 1                        | :seasonid required                                                                 |
-| Parameter 2                        | n/a                                                                                |
-| Parameter 3                        | n/a                                                                                |
-| Route Path                         | `./routes/bilibili/bangumi`                                                        |
-| the complete code in lib/router.js | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
-
-2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
-
-| Name                               | Description                                                                  |
-| ---------------------------------- | ---------------------------------------------------------------------------- |
-| Route                              | `/github/issue/:user/:repo`                                                  |
-| Data Source                        | github                                                                       |
-| Route Name                         | issue                                                                        |
-| Parameter 1                        | :user, required                                                              |
-| Parameter 2                        | :repo, required                                                              |
-| Parameter 3                        | n/a                                                                          |
-| Route Path                         | `./routes/github/issue`                                                      |
-| the complete code in lib/router.js | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
-
-3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
-
-| Name                               | Description                                                                  |
-| ---------------------------------- | ---------------------------------------------------------------------------- |
-| Route                              | `/embassy/:country/:city?`                                                   |
-| Data Source                        | embassy                                                                      |
-| Route Name                         | n/a                                                                          |
-| Parameter 1                        | :country, required                                                           |
-| Parameter 2                        | ?city, optional                                                              |
-| Parameter 3                        | n/a                                                                          |
-| Route Path                         | `./routes/embassy/index`                                                     |
-| the complete code in lib/router.js | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
-
----
-
-### Step 3: Add the documentation
+### Add the documentation
 
 1.  Update [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
 
@@ -455,88 +416,64 @@ Add the script into [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/maste
             1. it's redundant to indicate `optional/required` as the component will prepend based on `?`
     -   Documentation examples:
 
-        -   Multiple parameters:
+        1. No parameter:
 
         ```vue
-        <RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        <RouteEn author="HenryQW" example="/sspai/series" path="/sspai/series" />
         ```
 
-        <RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" />
+        Preview:
 
-        -   Use component slot for complicated description:
+        ***
+
+        <RouteEn author="HenryQW" example="/sspai/series" path="/sspai/series"/>
+
+        ***
+
+        2. Multiple parameters:
 
         ```vue
-        <RouteEn
-            author="HenryQW"
-            path="/hopper/:lowestOnly/:from/:to?"
-            example="/hopper/1/LHR/PEK"
-            :paramsDesc="[
-                'set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed',
-                'origin airport IATA code',
-                'destination airport IATA code, if unset the destination will be set to `anywhere`',
-            ]"
-        >
-            This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now). For
-            airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
+        <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
+        ```
+
+        Preview:
+
+        ***
+
+        <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+
+        ***
+
+        3. Use component slot for complicated description:
+
+        ```vue
+        <RouteEn author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+        
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+        
         </RouteEn>
         ```
 
-        <RouteEn author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" :paramsDesc="['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']" >
+        Preview:
 
-        This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
+        ***
 
-        For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
+        <RouteEn author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
+
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
         </RouteEn>
+
+        ***
+
+1.  Please be sure to close the tag of `<Route>`!
 
 1.  Execute `npm run format` to lint the code before you commit and open a pull request
 
----
+## ## Submit new RSSHub Radar rule
 
-## Join the discussion
-
-1.  [Telegram Group](https://t.me/rsshub)
-2.  [GitHub Issues](https://github.com/DIYgod/RSSHub/issues)
-
-## Some Tips for Development
-
-### VS Code debug configuration
-
-`.vscode/launch.js`
-
-#### Debugging with nodemon
-
-In terminal, run `npm run dev` or `yarn dev` to start debugging.
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "attach",
-            "name": "Node: Nodemon",
-            "processId": "${command:PickProcess}",
-            "restart": true,
-            "protocol": "inspector"
-        }
-    ]
-}
-```
-
-#### Debugging without nodemon
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/lib/index.js",
-            "env": { "NODE_ENV": "dev" }
-        }
-    ]
-}
-```
+TODO

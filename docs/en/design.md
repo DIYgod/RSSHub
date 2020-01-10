@@ -17,3 +17,10 @@ pageClass: routes
 ### Keyword
 
 <RouteEn path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" :paramsDesc="['desired keyword']" />
+
+## Inside Design
+
+### Recent Stories
+
+<RouteEn author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
+</RouteEn>

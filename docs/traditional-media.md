@@ -22,7 +22,7 @@ pageClass: routes
 
 -   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
 -   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
--   例外: BBC 中文网为 `/bbc/chinese`.
+-   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
 
 </Route>
 
@@ -82,7 +82,7 @@ Solidot 提供的 feed:
 
 ## The Economist
 
-### 全文输出
+### 分类
 
 <Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
 
@@ -200,23 +200,29 @@ category 对应的关键词有
 
 ### 即时新闻
 
-<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为中港台']">
+<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为 china']">
 
-| 中港台 | 新加坡    | 国际  | 财经     |
-| ------ | --------- | ----- | -------- |
-| china  | singapore | world | zfinance |
+| 中国  | 新加坡    | 国际  | 财经     |
+| ----- | --------- | ----- | -------- |
+| china | singapore | world | zfinance |
 
 </Route>
 
 ### 新闻
 
-<Route author="lengthmin" example="/zaobao/znews/greater-china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为中港台']">
+<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为 china']">
 
-| 中港台        | 新加坡    | 东南亚 | 国际          | 体育   |
-| ------------- | --------- | ------ | ------------- | ------ |
-| greater-china | singapore | sea    | international | sports |
+| 中国  | 新加坡    | 东南亚 | 国际  | 体育   | 早报现在 |
+| ----- | --------- | ------ | ----- | ------ | -------- |
+| china | singapore | sea    | world | sports | fukan    |
 
 </Route>
+
+### 其他栏目
+
+除了上面两个兼容规则之外，联合早报网站里所有页面形如 <https://www.zaobao.com/wencui/politic> 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
+
+<Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type/:section" :paramsDesc="['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']" />
 
 ## 连线 Wired
 
@@ -227,6 +233,12 @@ category 对应的关键词有
 <Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']">
 
 </Route>
+
+## 每经网
+
+### 重磅原创
+
+<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily" />
 
 ## 南方周末
 
@@ -244,7 +256,7 @@ category 对应的关键词有
 
 ## 纽约时报
 
-### 官方 RSS
+### 新闻
 
 <Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言, 缺省中文']">
 
@@ -296,6 +308,34 @@ category 对应的关键词有
 
 <Route author="Polynomia" example="/guardian/china" path="/guardian/china"/>
 
+## 文汇报
+
+### 分类
+
+<Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名, 可在该分类的 URL 中找到(即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
+
+## 香港 01
+
+### 热门
+
+<Route author="hoilc" example="/hk01/hot" path="/hk01/hot" />
+
+### 栏目
+
+<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目id, 可在URL中找到']"/>
+
+### 子栏目
+
+<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目id, 可在URL中找到']"/>
+
+### 专题
+
+<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题id, 可在URL中找到']"/>
+
+### 标签
+
+<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']"/>
+
 ## 新京报
 
 ### 栏目
@@ -338,6 +378,10 @@ category 对应的关键词有
 | news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
 
 </Route>
+
+### 新闻联播文字版
+
+<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
 
 ## 朝日新聞中文網（繁體中文版）
 
@@ -406,5 +450,17 @@ category 对应的关键词有
 | 最新      | 双语           | 热词          | 口语            | 译词          | 视频        | 听力     | 专栏      | 文件                     | 考试         |
 | --------- | -------------- | ------------- | --------------- | ------------- | ----------- | -------- | --------- | ------------------------ | ------------ |
 | thelatest | news_bilingual | news_hotwords | practice_tongue | trans_collect | video_links | audio_cd | columnist | 5af95d44a3103f6866ee845c | englishexams |
+
+</Route>
+
+## 中時電子報
+
+### 新聞
+
+<Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['类别']" radar="1">
+
+| realtimenews | politic | opinion | life | star | money | society | hottopic | tube    | world | armament | chinese | fashion | sports | technologynews | travel | album |
+| ------------ | ------- | ------- | ---- | ---- | ----- | ------- | -------- | ------- | ----- | -------- | ------- | ------- | ------ | -------------- | ------ | ----- |
+| 即時         | 政治    | 言論    | 生活 | 娛樂 | 財經  | 社會    | 話題     | 快點 TV | 國際  | 軍事     | 兩岸    | 時尚    | 體育   | 科技           | 玩食   | 專輯  |
 
 </Route>

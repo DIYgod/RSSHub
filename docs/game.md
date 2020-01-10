@@ -20,6 +20,16 @@ pageClass: routes
 
 </Route>
 
+## 4Gamers 新闻
+
+### 分类
+
+<Route author="hoilc" example="/4gamers/category/352" path="/4gamers/category/:category" :paramsDesc="['分类 ID, 可从分类 URL 中找到']"/>
+
+### 标签
+
+<Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" :paramsDesc="['标签名, 可在标签 URL 中找到']"/>
+
 ## a9vgNews 游戏新闻
 
 ### a9vgNews 游戏新闻
@@ -90,11 +100,15 @@ pageClass: routes
 
 <Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
+### Switch 本体更新情报（日本）
+
+<Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
+
 ## PlayStation
 
 ### PlayStation Store 游戏列表
 
-<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']">
+<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']" radar="1">
 
 适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
 
@@ -102,11 +116,11 @@ pageClass: routes
 
 ### PlayStation Network 用户奖杯
 
-<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']"/>
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']" radar="1"/>
 
 ### PlayStation 4 系统更新纪录
 
-<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" />
+<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1"/>
 
 ## psnine
 
@@ -131,7 +145,7 @@ pageClass: routes
 
 ### Steam search
 
-<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']">
+<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1">
 
 参数 params 请从 Steam 的 URL 取得
 
@@ -141,7 +155,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### Steam news
 
-<Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']"/>
+<Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1"/>
 
 ## SteamGifts
 
@@ -193,11 +207,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="sintak" example="/gouhuo/strategy" path="/gouhuo/strategy"/>
 
-## 怪物猎人
+## 怪物猎人世界
 
-### 更新
+### 更新情报
 
-<Route author="DIYgod" example="/monsterhunter/update" path="/monsterhunter/update"/>
+<Route author="DIYgod" example="/mhw/update" path="/mhw/update" radar="1"/>
+
+### 最新消息
+
+<Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1"/>
 
 ## 旅法师营地
 
@@ -243,6 +261,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+## 王者荣耀
+
+### 新闻中心
+
+<Route author="Jeason0228" example="/pvp/newsindex/all" path="/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
+
 ## 小黑盒
 
 ### 用户动态
@@ -256,6 +280,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 游戏打折情况
 
 <Route author="MyFaith" example="/xiaoheihe/discount" path="xiaoheihe/discount"/>
+
+## 英雄联盟
+
+### 新闻中心
+
+<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类,all=全部,zh=综合,gg=公告,ss=赛事,gl=攻略,sq=社区']"/>
 
 ## 游民星空
 
@@ -289,15 +319,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏时光新闻
 
-<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news"/>
+<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news" radar="1"/>
 
 ### 游戏时光游戏发售表
 
-<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release"/>
+<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release" radar="1"/>
 
 ### 关键词资讯
 
-<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword"/>
+<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1"/>
 
 ## 游研社
 

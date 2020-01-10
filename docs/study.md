@@ -4,6 +4,60 @@ pageClass: routes
 
 # 学习
 
+## eLife
+
+### 最新成果-综合
+
+<Route author="emdoe" example="/elife/latest" path="/elife/latest" />
+
+### 最新成果-细分领域
+
+<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
+
+## gradCafe
+
+### gradCafe result
+
+<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
+
+### gradCafe result by key words
+
+<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+
+## Nature
+
+### Nature
+
+<Route author="emdoe" example="/nature/research" path="/nature/research" />
+
+### Nature Machine Intelligence
+
+<Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+
+### Nature Neuroscience
+
+<Route author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
+
+## Proceedings of The National Academy of Sciences
+
+### 最新文章-全部
+
+<Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+
+### 最新文章-根据领域分类
+
+<Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+
+## X-MOL 平台
+
+### 新闻
+
+<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
+### 期刊
+
+<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
+
 ## 谷歌学术
 
 ### 谷歌学术关键词更新
@@ -23,11 +77,31 @@ pageClass: routes
 
 </Route>
 
+## 码农周刊
+
+### issues
+
+<Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
+
 ## 扇贝
 
 ### 用户打卡
 
 <Route author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" :paramsDesc="['用户 id']" />
+
+### 精选文章
+
+<Route author="qiwihui" example="/shanbay/footprints" path="/shanbay/footprints/:category?" :paramsDesc="['分类 id']">
+
+| 用户故事 | 地道表达法 | 实用口语 | 语法教室 | 读新闻学英语 | 单词鸡汤 | 扇贝理念 | 英语知识 | 原汁英文 |
+| -------- | ---------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- |
+| 1        | 31         | 46       | 34       | 40           | 43       | 16       | 7        | 10       |
+
+| 学习方法 | 影视剧讲义 | 产品更新 | 精读文章 | 他山之石 | Quora 翻译 | TED 推荐 | 大耳狐小课堂 | 互动话题 |
+| -------- | ---------- | -------- | -------- | -------- | ---------- | -------- | ------------ | -------- |
+| 13       | 22         | 28       | 4        | 19       | 25         | 37       | 49           | 52       |
+
+</Route>
 
 ## 下厨房
 

@@ -31,27 +31,17 @@ pageClass: routes
 
 <Route author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
 
+## ClickMe
+
+### 文章
+
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
+
 ## DHL
 
 ### DHL 国际快递包裹追踪
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
-
-## Google Doodles
-
-### 更新
-
-<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']" />
-
-## gradCafe
-
-### gradCafe result
-
-<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
-
-### gradCafe result by key words
-
-<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
 ## Instapaper
 
@@ -65,17 +55,66 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## NOI 全国青少年信息学奥林匹克竞赛
+
+### 新闻
+
+<Route author="WenryXu" example="/noi" path="/noi"/>
+
+### 获奖名单
+
+<Route author="WenryXu" example="/noi/winners-list" path="/noi/winners-list"/>
+
+### 各省新闻
+
+<Route author="WenryXu" example="/noi/province-news" path="/noi/province-news"/>
+
+### 报名新闻
+
+<Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
+
 ## ONE · 一个
 
 ### 图片文字问答
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## Parcel Tracking
+
+### Hermes UK
+
+<Route author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+
+## Pocket
+
+### Trending
+
+<Route author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
+
+## Product Hunt
+
+> 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+
+### Today Popular
+
+<Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+</Route>
+
 ## SANS Institute
 
 ### 最新会议材料
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
+
+## TransferWise
+
+### 昨日汇率变动
+
+<Route author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']">
+
+参见支持的[货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
+
+</Route>
 
 ## TSSstatus（iOS 降级通道）
 
@@ -91,10 +130,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 最近更新
 
-<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest"/>
+<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1"/>
 ### 栏目
 
-<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']">
+<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']" radar="1">
 
 :::
 type 为 all 时，category 参数不支持 cost 和 free
@@ -173,18 +212,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
-## 抽屉
-
-### 新热榜
-
-<Route author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
-
-| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
-| ---- | ----- | ----- | ---- | --------- | -------- |
-| hot  | news  | scoff | pic  | tec       | ask      |
-
-</Route>
-
 ## 福利资源-met.red
 
 ### 福利资源-met.red
@@ -196,6 +223,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 首页推荐
 
 <Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+
+## 好队友
+
+### 工作机会
+
+<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs"/>
 
 ## 惠誉评级
 
@@ -224,6 +257,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 产品更新
 
 <Route author="junfengP" example="/mlhang" path="/mlhang" />
+
+## 每日生猪价格
+
+### 每日生猪价格更新
+
+<Route author="importcjj" example="/pork-price" path="/pork-price" />
 
 ## 米坛社区
 
@@ -289,6 +328,24 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
 
+### 科创板项目动态
+
+<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
+
+### 监管问询
+
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+
+## 深圳证券交易所
+
+### 上市公告-可转换债券
+
+<Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
+
+### 问询函件(全部/主板/中小企业板/创业板)
+
+<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+
 ## 搜狗
 
 ### 搜狗特色 LOGO
@@ -311,6 +368,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Qixingchen" example="/tucaoqq/post/28564/CdRI0728" path="/tucaoqq/post/:project/:key" :paramsDesc="['产品 ID', '产品密钥']"/>
 
+## 腾讯新闻较真查证平台
+
+### 最新辟谣
+
+<Route author="hoilc" example="/factcheck" path="/factcheck"/>
+
 ## 天津产权交易中心
 
 ### 产权转让
@@ -325,6 +388,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
+## 新田惠海官方网站
+
+### 最近的更新
+
+<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
+
+### 新闻
+
+<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+
 ## 油价
 
 ### 今日油价
@@ -338,6 +411,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+
+## 远程.work
+
+### 远程.work 招聘信息
+
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
+
+| 所有职位 |    技术     |  设计  |   运营    |  产品   | 其他  |   市场    | 销售  |
+| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
+|   all    | development | design | operation | product | other | marketing | sales |
+
+</Route>
 
 ## 正版中国
 
@@ -380,3 +465,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 房源
 
 <Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
+
+## はてな
+
+### はてな匿名ダイアリー - 人気記事アーカイブ
+
+<Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
