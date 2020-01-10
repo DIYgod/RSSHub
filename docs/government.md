@@ -320,3 +320,22 @@ pageClass: routes
 ### 审查调查
 
 <Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
+
+## 国家新闻出版广电总局
+
+### 游戏审批结果
+
+<Route author="y2361547758" example="/gov/sapprft/approval/importednetgame" path="/gov/sapprft/approval/:channel" :paramsDesc="['分类名']">
+
+| 分类 | channelId | 参数 |
+| :-------------: | :--: | :-------------: |
+| 进口网络游戏审批信息 | 7027 | importednetgame |
+| 进口电子游戏审批信息 | 7028 | importedvideogame |
+| 国产网络游戏审批信息 | 7029 | domesticnetgame |
+| 游戏审批变更信息 | 11083 | gamechange |
+
+</Route>
+
+### 进口网络游戏审批
+
+<Route author="y2361547758" example="/gov/sapprft/importednetgame" path="/gov/sapprft/importednetgame"/>
