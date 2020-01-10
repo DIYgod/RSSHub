@@ -340,7 +340,7 @@ category 对应的关键词有
 
 ### 新聞
 
-香港電台官方已有提供全文 RSS，詳細可前往官方網站： <https://news.rthk.hk/rthk/en/rss.htm>
+香港電台官方已有提供全文 RSS，詳細可前往官方網站： <https://news.rthk.hk/rthk/ch/rss.htm>
 
 此路由主要補回官方 RSS 缺少的圖片以及 Link 元素。（官方 RSS 沒有 Link 元素可能導致某些 RSS 客戶端出現問題）
 

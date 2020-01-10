@@ -42,7 +42,7 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 ### News
 
-RTHK offical provides full text RSS, check the offical website for detail information: <https://news.rthk.hk/rthk/ch/rss.htm>
+RTHK offical provides full text RSS, check the offical website for detail information: <https://news.rthk.hk/rthk/en/rss.htm>
 
 This route adds the missing photo and Link element. (Offical RSS doesn't have Link element may cause issue on some RSS client)
 
