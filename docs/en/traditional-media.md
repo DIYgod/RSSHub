@@ -75,3 +75,21 @@ Provides a better reading experience (full text articles) over the official one.
 | (空)               | dual            | en      |
 
 </RouteEn>
+
+## Yahoo
+
+### 新聞
+
+<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+
+`Region`
+| Hong Kong | Taiwan | US |
+| -- | -- | -- |
+| hk | tw | en |
+
+`Category`
+| All | World | Business | Entertainment | Sports | Health |
+| -- | -- | -- | -- | -- | -- |
+| (Empty) | world | business | entertainment | sports | health |
+
+</Route>
