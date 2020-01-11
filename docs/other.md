@@ -100,6 +100,20 @@ pageClass: routes
 <Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
 </Route>
 
+## 新趣集
+
+> 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
+
+### 今日最佳
+
+<Route author="kiddyuchina" example="/xinquji/today" path="/xinquji/today">
+</Route>
+
+### 今日国内
+
+<Route author="kiddyuchina" example="/xinquji/today/internal" path="/xinquji/today/internal">
+</Route>
+
 ## SANS Institute
 
 ### 最新会议材料
