@@ -238,7 +238,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Posts
 
-<Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind" :paramsDesc="['对应文章分类']">
+<Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind?" :paramsDesc="['对应文章分类']">
 
 | 分类     | 标识       |
 | :------- | :--------- |
