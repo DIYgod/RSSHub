@@ -1,0 +1,36 @@
+name: '[docker] CI for build tests'
+
+on:
+    pull_request:
+        branches: master
+        paths:
+            - 'lib/**'
+            - 'Dockerfile'
+            - 'package.json'
+    push:
+        branches: '*'
+        paths:
+            - 'lib/**'
+            - 'Dockerfile'
+            - 'package.json'
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+        -
+            name: Checkout
+            uses: actions/checkout@v1
+        -
+            name: Set up Docker Buildx
+            id: buildx
+            uses: crazy-max/ghaction-docker-buildx@v1
+            with:
+                version: latest
+        -
+            name: Build dockerfile (without push)
+            run: |
+                docker buildx build \
+                --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+                --output "type=image,push=false" \
+                --file ./Dockerfile .

@@ -43,22 +43,6 @@ pageClass: routes
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
-## Google Doodles
-
-### 更新
-
-<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']" />
-
-## gradCafe
-
-### gradCafe result
-
-<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
-
-### gradCafe result by key words
-
-<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
-
 ## Instapaper
 
 ### 个人分享
@@ -95,11 +79,26 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## Parcel Tracking
+
+### Hermes UK
+
+<Route author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+
 ## Pocket
 
 ### Trending
 
 <Route author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
+
+## Product Hunt
+
+> 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+
+### Today Popular
+
+<Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+</Route>
 
 ## SANS Institute
 
@@ -213,23 +212,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
-## 抽屉
-
-### 新热榜
-
-<Route author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
-
-| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
-| ---- | ----- | ----- | ---- | --------- | -------- |
-| hot  | news  | scoff | pic  | tec       | ask      |
-
-</Route>
-
-## 电鸭社区
-
-### 工作机会
-
-<Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 ## 福利资源-met.red
 
 ### 福利资源-met.red

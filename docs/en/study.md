@@ -6,13 +6,11 @@ pageClass: routes
 
 ## eLife
 
-### Latest Research
-
-#### ALL
+### Latest Research-ALL
 
 <RouteEn author="emdoe" example="/elife/latest" path="/elife/latest" />
 
-#### Research by Subject
+### Latest Research-Research by Subject
 
 <RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage']" />
 
@@ -34,30 +32,44 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 
 </RouteEn>
 
+### Author citations
+
+<RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
+
+The parameter id in the route is the id in the URL of the user ’s Google Scholar reference page，for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+
+</RouteEn>
+
+## gradCafe
+
+### gradCafe result
+
+<RouteEn author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
+
+### gradCafe result by key words
+
+<RouteEn author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['Keyword']"/>
+
 ## Nature
 
-### Latest Research
-
-#### Nature
+### Nature
 
 <RouteEn author="emdoe" example="/nature/research" path="/nature/research" />
 
-#### Nature Machine Intelligence
+### Nature Machine Intelligence
 
 <RouteEn author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
 
-#### Nature Neuroscience
+### Nature Neuroscience
 
 <RouteEn author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
 
 ## Proceedings of The National Academy of Sciences
 
-### Latest Articles
-
-#### ALL
+### Latest Articles-ALL
 
 <RouteEn author="emdoe" example="/pnas/latest" path="/pnas/latest" />
 
-#### Articles by Topic
+### Latest Articles-Articles by Topic
 
 <RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />

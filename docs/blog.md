@@ -32,6 +32,14 @@ pageClass: routes
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## Paul Graham 博客
+
+通过提取文章全文，提供比官方源更佳的阅读体验。
+
+### Essays
+
+<Route author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
+
 ## 阿里云系统组技术博客
 
 ### 首页

@@ -759,7 +759,7 @@
                 title: '分类',
                 docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao',
                 source: '/categories/:idd',
-                target: (params) => `/qdaily/researcach/${params.idd.replace('.html', '')}`,
+                target: (params) => `/qdaily/category/${params.idd.replace('.html', '')}`,
             },
         ],
     },
@@ -923,6 +923,36 @@
                 docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
                 source: '/',
                 target: '/ithome/next',
+            },
+        ],
+    },
+
+    'govopendata.com': {
+        _name: '新闻联播文字版',
+        cn: [
+            {
+                title: '新闻联播文字版',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xin-wen-lian-bo-wen-zi-ban',
+                source: '/xinwenlianbo',
+                target: '/xinwenlianbo/index',
+            },
+        ],
+    },
+
+    'steampowered.com': {
+        _name: 'Steam',
+        store: [
+            {
+                title: 'search',
+                docs: 'https://docs.rsshub.app/game.html#steam',
+                source: '/search/',
+                target: (params, url) => `/steam/search/${new URL(url).searchParams}`,
+            },
+            {
+                title: 'news',
+                docs: 'https://docs.rsshub.app/game.html#steam',
+                source: '/news/',
+                target: (params, url) => `/steam/news/${new URL(url).searchParams.get('appids')}`,
             },
         ],
     },

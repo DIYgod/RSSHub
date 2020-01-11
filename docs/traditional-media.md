@@ -22,7 +22,7 @@ pageClass: routes
 
 -   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
 -   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
--   例外: BBC 中文网为 `/bbc/chinese`.
+-   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
 
 </Route>
 
@@ -82,7 +82,7 @@ Solidot 提供的 feed:
 
 ## The Economist
 
-### 全文输出
+### 分类
 
 <Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
 
@@ -256,7 +256,7 @@ category 对应的关键词有
 
 ## 纽约时报
 
-### 官方 RSS
+### 新闻
 
 <Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言, 缺省中文']">
 
@@ -378,6 +378,10 @@ category 对应的关键词有
 | news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
 
 </Route>
+
+### 新闻联播文字版
+
+<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
 
 ## 朝日新聞中文網（繁體中文版）
 

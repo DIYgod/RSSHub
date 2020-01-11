@@ -75,7 +75,7 @@ module.exports = {
         locales: {
             '/': {
                 lang: 'zh-CN',
-                selectText: '选择语言',
+                selectText: 'Languages',
                 label: '简体中文',
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
@@ -137,7 +137,7 @@ module.exports = {
             },
             '/en/': {
                 lang: 'en-US',
-                selectText: 'Languages',
+                selectText: '选择语言',
                 label: 'English',
                 editLinkText: 'Edit this page on GitHub',
                 lastUpdated: 'Last Updated',

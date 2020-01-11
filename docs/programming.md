@@ -63,7 +63,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1"/>
 
-### 仓库 Issue
+### 仓库 Issues
 
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
 
@@ -111,7 +111,7 @@ GitHub 官方也提供了一些 RSS:
 | 根据 fork 数量排序 | forks     |
 | 根据更新时间排序   | updated   |
 
-### 用户 Starred Repositories
+### 用户 Star 的仓库
 
 <Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['用户名']" radar="1"/>
 
@@ -160,7 +160,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1"/>
 
-## kaggle
+## Kaggle
 
 ### Discussion
 
@@ -447,6 +447,27 @@ GitHub 官方也提供了一些 RSS:
 ### 问答主题
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
+
+## 码农俱乐部
+
+### 话题
+
+<Route author="mlogclub" example="/mlog-club/topics/newest" path="/mlog-club/topics/:node" :paramsDesc="['node']">
+
+| node      | 名称     |
+| --------- | -------- |
+| newest    | 最新话题 |
+| recommend | 热门话题 |
+| 1         | 交流     |
+| 2         | 开源     |
+| 3         | 提问     |
+
+</Route>
+
+### 开源项目
+
+<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects">
+</Route>
 
 ## 码农网
 

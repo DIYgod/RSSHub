@@ -25,16 +25,12 @@ RSSHub delivers millions of contents aggregated from all kinds of sources.
 
 ### Special Sponsors
 
-<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a href="https://kzfeed.com/?from=rsshub" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a>
-<br>
-<a href="https://angelia.codeeer.com" target="_blank" style="margin-top: 15px;"><img height="60px" src="https://i.imgur.com/oQf2WJl.png"></a><a href="https://mianbaoduo.com" target="_blank" style="margin-top: 15px; margin-left: 20px;"><img height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/mianbaoduo.jpg"></a>
-<br>
-<a href="https://lizhi.io/store" target="_blank" style="margin-top: 15px;"><img height="60px" src="https://i.imgur.com/1u6jJ6L.jpg"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a href="https://angelia.codeeer.com" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://i.imgur.com/oQf2WJl.png"></a><a href="https://lizhi.io/store" target="_blank" style="margin-top: 15px;"><img height="60px" src="https://i.imgur.com/1u6jJ6L.jpg"></a>
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS Reader](https://www.coolapk.com/apk/239500) |
-| :--------------------------------------: | :----------------------------------------: | :-------: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: |
+| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS Reader](https://www.coolapk.com/apk/239500) | [mokeyjay](https://www.mokeyjay.com/) |
+| :--------------------------------------: | :----------------------------------------: | :-------: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: | :-----------------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/en/support/)
