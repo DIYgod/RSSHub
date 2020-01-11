@@ -154,6 +154,13 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Hex-Rays
+
+### Hex-Rays News
+
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</Route>
+
 ## ITSlide
 
 ### 最新
