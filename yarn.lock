@@ -7715,6 +7715,22 @@ node-pre-gyp@^0.12.0:
     semver "^5.3.0"
     tar "^4"
 
+node-pre-gyp@^0.14.0:
+  version "0.14.0"
+  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
+  integrity sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
+  dependencies:
+    detect-libc "^1.0.2"
+    mkdirp "^0.5.1"
+    needle "^2.2.1"
+    nopt "^4.0.1"
+    npm-packlist "^1.1.6"
+    npmlog "^4.0.2"
+    rc "^1.2.7"
+    rimraf "^2.6.1"
+    semver "^5.3.0"
+    tar "^4.4.2"
+
 node-releases@^1.1.21:
   version "1.1.22"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.22.tgz#d90cd5adc59ab9b0f377d4f532b09656399c88bf"
@@ -7722,12 +7738,13 @@ node-releases@^1.1.21:
   dependencies:
     semver "^5.3.0"
 
-nodejieba@2.3.3, nodejieba@^2.2.1:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.3.3.tgz#743fc196875b875822e22a299353cac8e0d04777"
-  integrity sha512-HHLydPGYQawaA2kQnrx/wSM/suvd4efe/7XrVwYhXL2b2SEqO8O7ks0On5Xhc/wQKUp1OTwxKy7BYOwkt3CMgw==
+nodejieba@2.3.5, nodejieba@^2.2.1:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.3.5.tgz#c5129dc178cebb1e2eee1f48ae71eabfade015cd"
+  integrity sha512-vaXcSQFfv6ewHSA9fWIdZf7evUOGR+QGFcxdNKl6Rg1DSRvlQDF4o4cI5Xu0XYHX7MmEf/VXn1PmW6yg8z5QYw==
   dependencies:
     nan "^2.14.0"
+    node-pre-gyp "^0.14.0"
 
 nodemailer@6.4.0:
   version "6.4.0"
@@ -10369,7 +10386,7 @@ tapable@^1.0.0, tapable@^1.1.0:
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.1.3.tgz#a1fccc06b58db61fd7a45da2da44f5f3a3e67ba2"
   integrity sha512-4WK/bYZmj8xLr+HUCODHGF1ZFzsYffasLUgEiMBY4fgtltdO6B4WJtlSbPaDTLpYTcGVwM2qLnFTICEcNxs3kA==
 
-tar@^4:
+tar@^4, tar@^4.4.2:
   version "4.4.13"
   resolved "https://registry.yarnpkg.com/tar/-/tar-4.4.13.tgz#43b364bc52888d555298637b10d60790254ab525"
   integrity sha512-w2VwSrBoHa5BsSyH+KxEqeQBAllHhccyMFVHtGtdMpF4W7IRWfZjFiQceJPChOeTsSDVUpER2T8FA93pr0L+QA==
