@@ -327,23 +327,23 @@ pageClass: routes
 
 <Route author="y2361547758" example="/gov/sapprft/approval/importednetgame" path="/gov/sapprft/approval/:channel" :paramsDesc="['栏目名']">
 
-| 栏目 | channelId | 参数 |
-| :-------------: | :--: | :-------------: |
-| 进口网络游戏审批信息 | 7027 | importednetgame |
-| 进口电子游戏审批信息 | 7028 | importedvideogame |
-| 国产网络游戏审批信息 | 7029 | domesticnetgame |
-| 游戏审批变更信息 | 11083 | gamechange |
+|         栏目         | channelId |       参数        |
+| :------------------: | :-------: | :---------------: |
+| 进口网络游戏审批信息 |   7027    |  importednetgame  |
+| 进口电子游戏审批信息 |   7028    | importedvideogame |
+| 国产网络游戏审批信息 |   7029    |  domesticnetgame  |
+|   游戏审批变更信息   |   11083   |    gamechange     |
 
 </Route>
 
 <Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020年1月" path="/gov/sapprft/approval/:channel/:detail" :paramsDesc="['栏目名', '标题关键字']">
 
-| 参数 | 描述 | 样例 |
-| :-----: | :-------: | :-------------: |
-| channel | 见上条路由 | importednetgame |
-| detail | 某个页面标题的一部分 | new |
+|  参数   |         描述         |      样例       |
+| :-----: | :------------------: | :-------------: |
+| channel |      见上条路由      | importednetgame |
+| detail  | 某个页面标题的一部分 |       new       |
 
-返回首个匹配detail的标题的文章内容。特别地当detail为new时尝试读取第一篇（最新）的文章。
+返回首个匹配 detail 的标题的文章内容。特别地当 detail 为 new 时尝试读取第一篇（最新）的文章。
 
 考虑到部分页面（如进口游戏）同一年内不同月份更新在同一篇文章内，文内又是一张表格，故作此接口。
 
