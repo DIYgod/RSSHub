@@ -77,7 +77,7 @@
     "got": "9.6.0",
     "he": "1.2.0",
     "iconv-lite": "0.5.0",
-    "jsdom": "15.2.1",
+    "jsdom": "16.0.0",
     "json-bigint": "0.3.0",
     "koa": "2.11.0",
     "koa-basic-auth": "4.0.0",
