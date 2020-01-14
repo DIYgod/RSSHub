@@ -957,12 +957,13 @@
         ],
     },
 
-    'bbs.gfan.com': {
+    'gfan.com': {
         _name: '机锋论坛',
-        software: [
+        bbs: [
             {
                 title: '安卓软件下载',
                 docs: 'https://docs.rsshub.app/bbs.html#ji-feng-lun-tan',
+                source: '/',
                 target: '/gfan/android/software',
             },
         ],
