@@ -4,6 +4,27 @@ pageClass: routes
 
 # 政务消息
 
+## 国家新闻出版广电总局
+
+### 游戏审批结果
+
+<Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020年1月" path="/gov/sapprft/approval/:channel/:detail?" :paramsDesc="['栏目名', '标题关键字']">
+
+|         栏目         |      channel      |
+| :------------------: | :---------------: |
+| 进口网络游戏审批信息 |  importednetgame  |
+| 进口电子游戏审批信息 | importedvideogame |
+| 国产网络游戏审批信息 |  domesticnetgame  |
+|   游戏审批变更信息   |    gamechange     |
+
+|                  描述                  |      detail      |
+| :------------------------------------: | :--------------: |
+|         留空，返回栏目所有文章         |                  |
+|      new，返回栏目第一篇文章内容       |       new        |
+| 某个文章标题的一部分，返回这篇文章内容 | 例：2020 年 1 月 |
+
+</Route>
+
 ## 联合国
 
 ### 安理会否决了决议
@@ -320,31 +341,3 @@ pageClass: routes
 ### 审查调查
 
 <Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
-
-## 国家新闻出版广电总局
-
-### 游戏审批结果
-
-<Route author="y2361547758" example="/gov/sapprft/approval/importednetgame" path="/gov/sapprft/approval/:channel" :paramsDesc="['栏目名']">
-
-|         栏目         | channelId |       参数        |
-| :------------------: | :-------: | :---------------: |
-| 进口网络游戏审批信息 |   7027    |  importednetgame  |
-| 进口电子游戏审批信息 |   7028    | importedvideogame |
-| 国产网络游戏审批信息 |   7029    |  domesticnetgame  |
-|   游戏审批变更信息   |   11083   |    gamechange     |
-
-</Route>
-
-<Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020年1月" path="/gov/sapprft/approval/:channel/:detail" :paramsDesc="['栏目名', '标题关键字']">
-
-|  参数   |         描述         |      样例       |
-| :-----: | :------------------: | :-------------: |
-| channel |      见上条路由      | importednetgame |
-| detail  | 某个页面标题的一部分 |       new       |
-
-返回首个匹配 detail 的标题的文章内容。特别地当 detail 为 new 时尝试读取第一篇（最新）的文章。
-
-考虑到部分页面（如进口游戏）同一年内不同月份更新在同一篇文章内，文内又是一张表格，故作此接口。
-
-</Route>
