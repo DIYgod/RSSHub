@@ -55,6 +55,7 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 ### Educational Trust
 
 <RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
 ## Nature
 
 ### Nature
