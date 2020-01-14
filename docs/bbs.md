@@ -72,12 +72,6 @@ pageClass: routes
 
 <Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
 
-## 机锋论坛
-
-### 安卓软件下载
-
-<Route author="junfengP" example="/gfan/android/software" path="/gfan/android/software" radar="1"/>
-
 ## 看雪
 
 ### 论坛
