@@ -185,6 +185,12 @@ Website: https://news.ycombinator.com/
 
 </RouteEn>
 
+## project-zero issues
+
+### issues
+
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
+
 ## Visual Studio Code Marketplace
 
 ### Visual Studio Code Plugins Marketplace
