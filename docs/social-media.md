@@ -360,7 +360,15 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 频道
 
-<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']"/>
+<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']">
+
+::: tip 提示
+
+由于 Telegram 限制，部分涉及色情、版权、政治的频道无法订阅，可通过访问 https://t.me/s/:username 确认。
+
+:::
+
+</Route>
 
 ### 贴纸包
 

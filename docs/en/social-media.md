@@ -90,7 +90,15 @@ Only for self-hosted
 
 ### Channel
 
-<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" />
+<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']">
+
+::: tip
+
+Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting https://t.me/s/:username.
+
+:::
+
+</RouteEn>
 
 ### Sticker Pack
 
