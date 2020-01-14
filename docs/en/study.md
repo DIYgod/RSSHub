@@ -50,6 +50,11 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 <RouteEn author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['Keyword']"/>
 
+## Great Britain China Centre
+
+### Educational Trust
+
+<RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 ## Nature
 
 ### Nature
