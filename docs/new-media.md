@@ -255,6 +255,12 @@ Supported sub-sites：
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
+## 白鲸出海
+
+### 首页最新帖子
+
+<Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
+
 ## 坂道系列官网新闻
 
 ### 乃木坂 46

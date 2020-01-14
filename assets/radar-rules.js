@@ -956,4 +956,15 @@
             },
         ],
     },
+    'baijingapp.com': {
+        _name: '白鲸出海',
+        www: [
+            {
+                title: '文章',
+                docs: 'https://docs.rsshub.app/new-media.html#bai-jing-chu-hai',
+                source: '',
+                target: '/baijing',
+            },
+        ],
+    },
 });
