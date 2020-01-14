@@ -956,15 +956,14 @@
             },
         ],
     },
-
-    'gfan.com': {
-        _name: '机锋论坛',
-        bbs: [
+    'baijingapp.com': {
+        _name: '白鲸出海',
+        www: [
             {
-                title: '安卓软件下载',
-                docs: 'https://docs.rsshub.app/bbs.html#ji-feng-lun-tan',
-                source: '/',
-                target: '/gfan/android/software',
+                title: '文章',
+                docs: 'https://docs.rsshub.app/new-media.html#bai-jing-chu-hai',
+                source: '',
+                target: '/baijing',
             },
         ],
     },

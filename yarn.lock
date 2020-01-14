@@ -7769,10 +7769,10 @@ node-releases@^1.1.21:
   dependencies:
     semver "^5.3.0"
 
-nodejieba@2.3.5, nodejieba@^2.2.1:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.3.5.tgz#c5129dc178cebb1e2eee1f48ae71eabfade015cd"
-  integrity sha512-vaXcSQFfv6ewHSA9fWIdZf7evUOGR+QGFcxdNKl6Rg1DSRvlQDF4o4cI5Xu0XYHX7MmEf/VXn1PmW6yg8z5QYw==
+nodejieba@2.4.0, nodejieba@^2.2.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.4.0.tgz#934b394d1650a1bce24beed7c252ce49bb997328"
+  integrity sha512-MpzLxgwwRlgDflwX7osfZgm3+/78bI3rIA7/ECe96AzevbMTqQdnFx74pRdaivf6TtfWPceCQAzODG80WMgQZA==
   dependencies:
     nan "^2.14.0"
     node-pre-gyp "^0.14.0"
