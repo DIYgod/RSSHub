@@ -191,6 +191,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | ------ | ---- | -------- |
 | update | hot  | spent    |
 
+## 公主链接
+
+### 日服公告
+
+<Route author="SayaSS" example="/pcr/news" path="/pcr/news"/>
+
 ## 篝火营地
 
 ### 游戏资讯
@@ -362,9 +368,3 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 公告
 
 <Route author="magic-akari" example="/kirara/news" path="/kirara/news"/>
-
-## 公主链接
-
-### 日服公告
-
-<Route author="SayaSS" example="/pcr/news" path="/pcr/news"/>
