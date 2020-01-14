@@ -552,6 +552,13 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
+## 平安银河实验室
+
+### posts
+
+<Route author="hellodword" example="/galaxylab" path="/galaxylab">
+</Route>
+
 ## 前端艺术家&&飞冰早报
 
 ### 列表
