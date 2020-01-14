@@ -116,6 +116,13 @@ Website: https://news.ycombinator.com/
 
 </RouteEn>
 
+## Hex-Rays
+
+### Hex-Rays News
+
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</Route>
+
 ## Kaggle
 
 ### Discussion
