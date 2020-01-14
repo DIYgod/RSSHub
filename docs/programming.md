@@ -241,6 +241,24 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## NOSEC.org
+
+### Posts
+
+<Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind?" :paramsDesc="['对应文章分类']">
+
+| 分类     | 标识       |
+| :------- | :--------- |
+| 威胁情报 | `threaten` |
+| 安全动态 | `security` |
+| 漏洞预警 | `hole`     |
+| 数据泄露 | `leakage`  |
+| 专题报告 | `speech`   |
+| 技术分析 | `skill`    |
+| 安全工具 | `tool`     |
+
+</Route>
+
 ## segmentfault
 
 ### 频道
