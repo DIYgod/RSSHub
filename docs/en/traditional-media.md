@@ -76,8 +76,8 @@ Provides a better reading experience (full text articles) over the official one.
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| Default to Chinese | Chinese-English | English |
-| ------------------ | --------------- | ------- |
-| (空)               | dual            | en      |
+| Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
+| ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
+| (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
 
 </RouteEn>
