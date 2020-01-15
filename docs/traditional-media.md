@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
 
+## AP News
+
+### 话题
+
+<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']"/>
+
 ## BBC
 
 ### BBC
@@ -22,7 +28,7 @@ pageClass: routes
 
 -   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
 -   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
--   例外: BBC 中文网为 `/bbc/chinese`.
+-   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
 
 </Route>
 
@@ -82,7 +88,7 @@ Solidot 提供的 feed:
 
 ## The Economist
 
-### 全文输出
+### 分类
 
 <Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
 
@@ -256,15 +262,15 @@ category 对应的关键词有
 
 ## 纽约时报
 
-### 官方 RSS
+### 新闻
 
 <Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言, 缺省中文']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| 默认中文 | 中英对照 | 英文 |
-| -------- | -------- | ---- |
-| (空)     | dual     | en   |
+| 默认中文 | 中英对照 | 英文 | 中英对照 (繁体中文)     | 繁体中文           |
+| -------- | -------- | ---- | ----------------------- | ------------------ |
+| (空)     | dual     | en   | dual-traditionalchinese | traditionalchinese |
 
 </Route>
 
@@ -307,6 +313,12 @@ category 对应的关键词有
 ### China
 
 <Route author="Polynomia" example="/guardian/china" path="/guardian/china"/>
+
+## 文汇报
+
+### 分类
+
+<Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名, 可在该分类的 URL 中找到(即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
 
 ## 香港 01
 
@@ -372,6 +384,10 @@ category 对应的关键词有
 | news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
 
 </Route>
+
+### 新闻联播文字版
+
+<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
 
 ## 朝日新聞中文網（繁體中文版）
 
@@ -440,5 +456,17 @@ category 对应的关键词有
 | 最新      | 双语           | 热词          | 口语            | 译词          | 视频        | 听力     | 专栏      | 文件                     | 考试         |
 | --------- | -------------- | ------------- | --------------- | ------------- | ----------- | -------- | --------- | ------------------------ | ------------ |
 | thelatest | news_bilingual | news_hotwords | practice_tongue | trans_collect | video_links | audio_cd | columnist | 5af95d44a3103f6866ee845c | englishexams |
+
+</Route>
+
+## 中時電子報
+
+### 新聞
+
+<Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['类别']" radar="1">
+
+| realtimenews | politic | opinion | life | star | money | society | hottopic | tube    | world | armament | chinese | fashion | sports | technologynews | travel | album |
+| ------------ | ------- | ------- | ---- | ---- | ----- | ------- | -------- | ------- | ----- | -------- | ------- | ------- | ------ | -------------- | ------ | ----- |
+| 即時         | 政治    | 言論    | 生活 | 娛樂 | 財經  | 社會    | 話題     | 快點 TV | 國際  | 軍事     | 兩岸    | 時尚    | 體育   | 科技           | 玩食   | 專輯  |
 
 </Route>

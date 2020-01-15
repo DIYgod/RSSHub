@@ -23,49 +23,6 @@ sidebar: auto
 
 在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
 
-#### 举例
-
-1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
-
-| 名称                       | 说明                                                                               |
-| -------------------------- | ---------------------------------------------------------------------------------- |
-| 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
-| 数据来源                   | bilibili                                                                           |
-| 路由名称                   | bangumi                                                                            |
-| 参数 1                     | :seasonid 必选                                                                     |
-| 参数 2                     | 无                                                                                 |
-| 参数 3                     | 无                                                                                 |
-| 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
-| lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
-
-2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/github/issue/:user/:repo`                                                  |
-| 数据来源                   | github                                                                       |
-| 路由名称                   | issue                                                                        |
-| 参数 1                     | :user 必选                                                                   |
-| 参数 2                     | :repo 必选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/github/issue`                                                      |
-| lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
-
-3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/embassy/:country/:city?`                                                   |
-| 数据来源                   | embassy                                                                      |
-| 路由名称                   | 无                                                                           |
-| 参数 1                     | :country 必选                                                                |
-| 参数 2                     | ?city 可选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/embassy/index`                                                     |
-| lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
-
----
-
 ### 编写脚本
 
 在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
@@ -165,7 +122,7 @@ sidebar: auto
     ```js
     const $ = cheerio.load(data); // 使用 cheerio 加载返回的 HTML
     const list = $('div[data-item_id]');
-    // 使用 cheerio 选择器，选择 class="list-item" 的所有元素，返回 cheerio node 对象数组
+    // 使用 cheerio 选择器，选择带有 data-item_id 属性的所有 div 元素，返回 cheerio node 对象数组
 
     // 注：每一个 cheerio node 对应一个 HTML DOM
     // 注：cheerio 选择器与 jquery 选择器几乎相同
@@ -276,7 +233,7 @@ sidebar: auto
     4. **使用通用配置型路由**
 
     很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
-    通用配置即通过 cherrio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
+    通用配置即通过 cheerio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
 
     首先我们需要几个数据：
 
@@ -288,11 +245,11 @@ sidebar: auto
     const buildData = require('@/utils/common-config');
     module.exports = async (ctx) => {
         ctx.state.data = await buildData({
-            link: RSS来源链接,
-            url: 数据来源链接,
-            title: '%title%', //这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
+            link: '', // RSS来源链接
+            url: '', // 数据来源链接
+            title: '%title%', // 这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
             params: {
-                title: RSS标题,
+                title: '', // RSS标题
             },
         });
     };
@@ -315,8 +272,8 @@ sidebar: auto
             },
             item: {
                 item: '.content-main .stream .stream-item',
-                title: `$('.post-account-group').text() + ' - %title%'`, //只支持$().xxx()这样的js语句，也足够使用
-                link: `$('.post-account-group').attr('href')`, //.text()代表获取元素的文本，attr()表示获取指定属性
+                title: `$('.post-account-group').text() + ' - %title%'`, // 只支持$().xxx()这样的js语句，也足够使用
+                link: `$('.post-account-group').attr('href')`, // .text()代表获取元素的文本，.attr()表示获取指定属性
                 description: `$('.post .context').html()`, // .html()代表获取元素的html代码
                 pubDate: `new Date($('.post-time').attr('datetime')).toUTCString()`, // 日期的格式多种多样，可以尝试使用**/utils/date**
                 guid: `new Date($('.post-time').attr('datetime')).getTime()`, // guid必须唯一，这是RSS的不同item的标志

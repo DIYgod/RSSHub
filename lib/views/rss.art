@@ -8,7 +8,7 @@
 >
     <channel>
         <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
-        <link>{{ link || 'https://github.com/DIYgod/RSSHub' }}</link>
+        <link>{{ link || 'https://docs.rsshub.app' }}</link>
         <atom:link href="{{ atomlink }}" rel="self" type="application/rss+xml" />
         <description><![CDATA[{{@ description || title }} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)]]></description>
         <generator>RSSHub</generator>
@@ -30,7 +30,7 @@
             <title><![CDATA[{{@ $value.title }}]]></title>
             <description><![CDATA[{{@ $value.description || $value.title }}]]></description>
             {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
-            <guid isPermaLink="false">{{ $value.guid || $value.link }}</guid>
+            <guid isPermaLink="false">{{ $value.guid || $value.link || $value.title }}</guid>
             <link>{{ $value.link }}</link>
             {{ if $value.itunes_item_image }}<itunes:image href="{{ $value.itunes_item_image }}"/>{{ /if }}
             {{ if $value.enclosure_url }}<enclosure url="{{ $value.enclosure_url }}" {{ if $value.enclosure_length }}length="{{ $value.enclosure_length }}"{{ /if }} {{ if $value.enclosure_type }}type="{{ $value.enclosure_type }}"{{ /if }} />{{ /if }}

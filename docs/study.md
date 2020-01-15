@@ -4,11 +4,49 @@ pageClass: routes
 
 # 学习
 
-## nature machine intelligence
+## eLife
 
-### latest research
+### 最新成果-综合
+
+<Route author="emdoe" example="/elife/latest" path="/elife/latest" />
+
+### 最新成果-细分领域
+
+<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
+
+## gradCafe
+
+### gradCafe result
+
+<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
+
+### gradCafe result by key words
+
+<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+
+## Nature
+
+### Nature
+
+<Route author="emdoe" example="/nature/research" path="/nature/research" />
+
+### Nature Machine Intelligence
 
 <Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+
+### Nature Neuroscience
+
+<Route author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
+
+## Proceedings of The National Academy of Sciences
+
+### 最新文章-全部
+
+<Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+
+### 最新文章-根据领域分类
+
+<Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
 
 ## X-MOL 平台
 
@@ -128,6 +166,12 @@ pageClass: routes
 | -1   | 117    | 118       | 119  | 120  | 121  | 122       | 123       | 124      | 125  | 126  | 127  | 128       | 129  | 130  | 131  | 132       | 133  | 134  | 135  | 201        | 2550     | 2783 | 2952 | 6200       |
 
 </Route>
+
+## 英中协会
+
+### 奖学金
+
+<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
 ## 语雀
 

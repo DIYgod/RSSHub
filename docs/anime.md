@@ -165,6 +165,10 @@ pageClass: routes
 
 比如漫画公主彻夜未眠的网址为https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
 
+### [Naver](https://comic.naver.com)
+
+<Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
+
 ## 嘀哩嘀哩 - dilidili
 
 ### 嘀哩嘀哩番剧更新
@@ -228,6 +232,12 @@ pageClass: routes
 ### 漫画 DB
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
+
+## 三界异次元
+
+### 三界异次元
+
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
 
 ## 鼠绘漫画
 

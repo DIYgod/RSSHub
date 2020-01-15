@@ -37,6 +37,25 @@ pageClass: routes
 
 见 [#bilibili](/social-media.html#bilibili)
 
+## BT 之家
+
+### 最新种子
+
+<Route author="zhang-wangz" example="/btzj/base" path="/btzj/:type?" anticrawler="1" :paramsDesc="['type,见下表']">
+
+| base                     | govern                 |
+| ------------------------ | ---------------------- |
+| https://www.88btbtt.com/ | http://www.1btjia.com/ |
+
+</Route>
+
+::: tip 提示
+
+由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.1btjia.com/`](http://www.1btjia.com/)域名.
+可空，默认为 base
+
+:::
+
 ## EZTV
 
 ::: tip 提示
@@ -125,6 +144,12 @@ pageClass: routes
 <Route author="wolfyu1991"  example="/mp4ba/复仇者联盟" path="/mp4ba/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
 
 </Route>
+
+## Nyaa
+
+### 搜索结果
+
+<Route author="Lava-Swimmer" example="/nyaa/search/psycho-pass" path="/nyaa/search/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
 
 ## rs05 人生 05 电影
 
@@ -276,11 +301,17 @@ pageClass: routes
 
 <Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" />
 
+## 片源网
+
+### 最新资源
+
+<Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1"/>
+
 ## 色花堂中文论坛
 
 ### 原创 BT 电影
 
-<Route author="qiwihui junfengP" example="/dsndsht23" path="/dsndsht23/:subforumid?" supportBT="1" :paramsDesc="['版块 id, 为空默认高清中文字幕']">
+<Route author="qiwihui junfengP" example="/dsndsht23/36/368" path="/dsndsht23/:subforumid?/:type?" supportBT="1" :paramsDesc="['版块 id 或板块名称（见下表）, 为空默认高清中文字幕', '类型 id, 可在分区类型过滤后的 URL 中找到']">
 
 | 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV |
 | -------- | -------- | ------------ | ------------ | ------------ | -------- | ------------ | ------- | -------- | -------- | ----------- | ------------ |
@@ -389,3 +420,9 @@ pageClass: routes
 ### 影视
 
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
+
+## 低端影视
+
+### 影视剧集
+
+<Route author="saintwinkle" example="/ddrk/silicon-valley/6" path="/ddrk/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容，']" />
