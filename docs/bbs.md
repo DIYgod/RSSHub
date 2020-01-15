@@ -171,6 +171,12 @@ pageClass: routes
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
 
+## 言屋
+
+### 首页
+
+<Route author="luyuhuang" example="/yan5/home" path="/yan5/home" radar="1"/>
+
 ## 一亩三分地
 
 ### 主题帖

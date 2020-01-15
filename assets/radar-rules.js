@@ -967,4 +967,15 @@
             },
         ],
     },
+    'yan5.top': {
+        _name: '言屋',
+        www: [
+            {
+                title: '首页',
+                docs: 'https://docs.rsshub.app/bbs.html#yan-wu',
+                source: '',
+                target: '/yan5/home',
+            },
+        ],
+    },
 });
