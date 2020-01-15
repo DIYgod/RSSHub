@@ -116,13 +116,6 @@ Website: https://news.ycombinator.com/
 
 </RouteEn>
 
-## Hex-Rays
-
-### Hex-Rays News
-
-<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
-</Route>
-
 ## Kaggle
 
 ### Discussion
@@ -184,12 +177,6 @@ Website: https://news.ycombinator.com/
 | Ubuntu           | `Ubuntu`           |
 
 </RouteEn>
-
-## project-zero issues
-
-### issues
-
-<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
 
 ## Visual Studio Code Marketplace
 

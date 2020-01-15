@@ -167,12 +167,6 @@ pageClass: routes
 
 </Route>
 
-## 英中协会
-
-### 奖学金
-
-<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
-
 ## 语雀
 
 ### 知识库

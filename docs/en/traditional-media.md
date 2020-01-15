@@ -4,12 +4,6 @@ pageClass: routes
 
 # News
 
-## AP News
-
-### Topics
-
-<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']"/>
-
 ## BBC
 
 ### BBC
@@ -76,8 +70,8 @@ Provides a better reading experience (full text articles) over the official one.
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
-| ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
-| (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+| Default to Chinese | Chinese-English | English |
+| ------------------ | --------------- | ------- |
+| (空)               | dual            | en      |
 
 </RouteEn>
