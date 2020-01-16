@@ -4,6 +4,27 @@ pageClass: routes
 
 # 政务消息
 
+## 国家新闻出版广电总局
+
+### 游戏审批结果
+
+<Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020年1月" path="/gov/sapprft/approval/:channel/:detail?" :paramsDesc="['栏目名', '标题关键字']">
+
+|         栏目         |      channel      |
+| :------------------: | :---------------: |
+| 进口网络游戏审批信息 |  importednetgame  |
+| 进口电子游戏审批信息 | importedvideogame |
+| 国产网络游戏审批信息 |  domesticnetgame  |
+|   游戏审批变更信息   |    gamechange     |
+
+|                  描述                  |      detail      |
+| :------------------------------------: | :--------------: |
+|         留空，返回栏目所有文章         |                  |
+|      new，返回栏目第一篇文章内容       |       new        |
+| 某个文章标题的一部分，返回这篇文章内容 | 例：2020 年 1 月 |
+
+</Route>
+
 ## 联合国
 
 ### 安理会否决了决议
