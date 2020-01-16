@@ -866,6 +866,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 同去网最新活动
+
+<Route author="SeanChao" example="/sjtu/tongqu" path="/universities/sjtu/tongqu"/>
+
 ## 上海科技大学
 
 ### 信息科技与技术学院活动
