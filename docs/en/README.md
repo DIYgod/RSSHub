@@ -39,4 +39,8 @@ RSSHub delivers millions of contents aggregated from all kinds of sources.
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=740)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
-Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
+Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
+
+### Backers
+
+<a href="https://www.cloudflare.com" target="_blank"><img height="50px" src="https://i.imgur.com/7Ph27Fq.png"></a><a href="https://www.netlify.com" target="_blank" style="margin-left: 60px;"><img height="40px" src="https://i.imgur.com/cU01915.png"></a>
