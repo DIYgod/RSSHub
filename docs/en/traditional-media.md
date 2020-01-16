@@ -81,3 +81,21 @@ Provides a better reading experience (full text articles) over the official one.
 | (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
 
 </RouteEn>
+
+## Yahoo
+
+### News
+
+<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+
+`Region`
+| Hong Kong | Taiwan | US |
+| -- | -- | -- |
+| hk | tw | en |
+
+`Category`
+| All | World | Business | Entertainment | Sports | Health |
+| -- | -- | -- | -- | -- | -- |
+| (Empty) | world | business | entertainment | sports | health |
+
+</Route>

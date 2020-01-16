@@ -96,6 +96,24 @@ Solidot 提供的 feed:
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
 
+## Yahoo
+
+### 新聞
+
+<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['地区','类别']">
+
+`地区`
+| 香港 | 台灣 | 美國 |
+| -- | -- | -- |
+| hk | tw | en |
+
+`类別`
+| 新聞總集 | 兩岸國際 | 財經 | 娛樂 | 體育 | 健康 |
+| -- | -- | -- | -- | -- | -- |
+| (空) | world | business | entertainment | sports | health |
+
+</Route>
+
 ## 半月谈
 
 ### 板块
