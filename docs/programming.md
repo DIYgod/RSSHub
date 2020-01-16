@@ -154,6 +154,13 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Hex-Rays
+
+### Hex-Rays News
+
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</Route>
+
 ## ITSlide
 
 ### 最新
@@ -233,6 +240,30 @@ GitHub 官方也提供了一些 RSS:
 :::
 
 </Route>
+
+## NOSEC.org
+
+### Posts
+
+<Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind?" :paramsDesc="['对应文章分类']">
+
+| 分类     | 标识       |
+| :------- | :--------- |
+| 威胁情报 | `threaten` |
+| 安全动态 | `security` |
+| 漏洞预警 | `hole`     |
+| 数据泄露 | `leakage`  |
+| 专题报告 | `speech`   |
+| 技术分析 | `skill`    |
+| 安全工具 | `tool`     |
+
+</Route>
+
+## project-zero issues
+
+### issues
+
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
 
 ## segmentfault
 
@@ -526,6 +557,13 @@ GitHub 官方也提供了一些 RSS:
 ### issues
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
+
+## 平安银河实验室
+
+### posts
+
+<Route author="hellodword" example="/galaxylab" path="/galaxylab">
+</Route>
 
 ## 前端艺术家&&飞冰早报
 

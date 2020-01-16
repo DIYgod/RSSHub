@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
 
+## AP News
+
+### 话题
+
+<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']"/>
+
 ## BBC
 
 ### BBC
@@ -89,6 +95,24 @@ Solidot 提供的 feed:
 ### GRE Vocabulary
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+
+## Yahoo
+
+### 新聞
+
+<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['地区','类别']">
+
+`地区`
+| 香港 | 台灣 | 美國 |
+| -- | -- | -- |
+| hk | tw | en |
+
+`类別`
+| 新聞總集 | 兩岸國際 | 財經 | 娛樂 | 體育 | 健康 |
+| -- | -- | -- | -- | -- | -- |
+| (空) | world | business | entertainment | sports | health |
+
+</Route>
 
 ## 半月谈
 
@@ -262,9 +286,9 @@ category 对应的关键词有
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| 默认中文 | 中英对照 | 英文 |
-| -------- | -------- | ---- |
-| (空)     | dual     | en   |
+| 默认中文 | 中英对照 | 英文 | 中英对照 (繁体中文)     | 繁体中文           |
+| -------- | -------- | ---- | ----------------------- | ------------------ |
+| (空)     | dual     | en   | dual-traditionalchinese | traditionalchinese |
 
 </Route>
 
