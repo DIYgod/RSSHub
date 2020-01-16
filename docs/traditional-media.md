@@ -360,6 +360,22 @@ category 对应的关键词有
 
 <Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']"/>
 
+## 香港電台
+
+### 新聞
+
+香港電台官方已有提供全文 RSS，詳細可前往官方網站： <https://news.rthk.hk/rthk/ch/rss.htm>
+
+此路由主要補回官方 RSS 缺少的圖片以及 Link 元素。（官方 RSS 沒有 Link 元素可能導致某些 RSS 客戶端出現問題）
+
+<Route author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" :paramsDesc="['语言，繁体`hk`，英文`en`','类别']">
+
+| local    | greaterchina | international | finance  | sport    |
+| -------- | ------------ | ------------- | -------- | -------- |
+| 本地新聞 | 大中華新聞   | 國際新聞      | 財經新聞 | 體育新聞 |
+
+</Route>
+
 ## 新京报
 
 ### 栏目
