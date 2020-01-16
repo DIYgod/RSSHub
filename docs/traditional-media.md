@@ -483,18 +483,12 @@ category 对应的关键词有
 
 </Route>
 
-### 文章
+### 栏目
 
-<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/article"/>
+<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
 
-### 博客
+| 文章    | 博客 | 文化    | 报告    |
+| ------- | ---- | ------- | ------- |
+| article | blog | culture | reports |
 
-<Route author="zoenglinghou" example="/chinadialogue/blog" path="/chinadialogue/blog"/>
-
-### 文化
-
-<Route author="zoenglinghou" example="/chinadialogue/culture" path="/chinadialogue/culture"/>
-
-### 报告
-
-<Route author="zoenglinghou" example="/chinadialogue/reports" path="/chinadialogue/reports"/>
+</Route>

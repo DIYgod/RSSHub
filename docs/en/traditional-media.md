@@ -38,21 +38,15 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </Route>
 
-### Articles
+### Columns
 
-<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/article"/>
+<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
 
-### Blog
+| Articles | Blogs | Culture | Reports |
+| -------- | ----- | ------- | ------- |
+| article  | blog  | culture | reports |
 
-<Route author="zoenglinghou" example="/chinadialogue/blog" path="/chinadialogue/blog"/>
-
-### Culture
-
-<Route author="zoenglinghou" example="/chinadialogue/culture" path="/chinadialogue/culture"/>
-
-### Reports
-
-<Route author="zoenglinghou" example="/chinadialogue/reports" path="/chinadialogue/reports"/>
+</Route>
 
 ## China Times
 
