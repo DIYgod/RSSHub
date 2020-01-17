@@ -189,7 +189,7 @@ Website: https://news.ycombinator.com/
 
 ### issues
 
-<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
 ## Visual Studio Code Marketplace
 
