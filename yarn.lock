@@ -9102,10 +9102,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-query-string@6.10.0, query-string@^6.2.0:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.10.0.tgz#a89b2cd8e751d23f58334c28fa614178ffbc0650"
-  integrity sha512-hUUAps/SKS+uXzSGHUXirzGF+ymxrtxb+F1C3fgfwmvKSVsIop5GTYNkbgi12Md2laVz4LUjrCyrGZ1y5ct5eA==
+query-string@6.10.1, query-string@^6.2.0:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.10.1.tgz#30b3505f6fca741d5ae541964d1b3ae9dc2a0de8"
+  integrity sha512-SHTUV6gDlgMXg/AQUuLpTiBtW/etZ9JT6k6RCtCyqADquApLX0Aq5oK/s5UeTUAWBG50IExjIr587GqfXRfM4A==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
