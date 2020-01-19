@@ -27,7 +27,7 @@ GitHub provides some official RSS feeds:
 
 ### Repo Issues
 
-<RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" radar="1" />
+<RouteEn author="HenryQW" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/bug" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" />
 
 ### Repo Pull Requests
 
@@ -189,7 +189,7 @@ Website: https://news.ycombinator.com/
 
 ### issues
 
-<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
 ## Visual Studio Code Marketplace
 
