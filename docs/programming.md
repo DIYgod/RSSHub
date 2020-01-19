@@ -265,7 +265,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
 
-## Scala Blog
+## Scala
+
+### Scala Blog
 
 <Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分']" >
 默认为All part参数可在url中获得
