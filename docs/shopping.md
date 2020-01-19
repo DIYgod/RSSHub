@@ -73,9 +73,9 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 最新商品
 
 <Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" :paramsDesc="['分类名']" >
-| 全部     | 闪购 | 秒发 | 跨境    | 
-| -------- | ------- | --- | ------- | 
-| home | shangou | miaofa | csborder |
+| 全部     | 闪购 | 秒发 | 跨境    | 尾货专场 |
+| -------- | ------- | --- | ------- | ------ |
+| home | shangou | miaofa | csborder | weihuo |
 
 </Route>
 

@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
 
+## AP News
+
+### 话题
+
+<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']"/>
+
 ## BBC
 
 ### BBC
@@ -22,7 +28,7 @@ pageClass: routes
 
 -   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
 -   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
--   例外: BBC 中文网为 `/bbc/chinese`.
+-   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
 
 </Route>
 
@@ -89,6 +95,24 @@ Solidot 提供的 feed:
 ### GRE Vocabulary
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+
+## Yahoo
+
+### 新聞
+
+<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['地区','类别']">
+
+`地区`
+| 香港 | 台灣 | 美國 |
+| -- | -- | -- |
+| hk | tw | en |
+
+`类別`
+| 新聞總集 | 兩岸國際 | 財經 | 娛樂 | 體育 | 健康 |
+| -- | -- | -- | -- | -- | -- |
+| (空) | world | business | entertainment | sports | health |
+
+</Route>
 
 ## 半月谈
 
@@ -262,9 +286,9 @@ category 对应的关键词有
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| 默认中文 | 中英对照 | 英文 |
-| -------- | -------- | ---- |
-| (空)     | dual     | en   |
+| 默认中文 | 中英对照 | 英文 | 中英对照 (繁体中文)     | 繁体中文           |
+| -------- | -------- | ---- | ----------------------- | ------------------ |
+| (空)     | dual     | en   | dual-traditionalchinese | traditionalchinese |
 
 </Route>
 
@@ -336,6 +360,22 @@ category 对应的关键词有
 
 <Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']"/>
 
+## 香港電台
+
+### 新聞
+
+香港電台官方已有提供全文 RSS，詳細可前往官方網站： <https://news.rthk.hk/rthk/ch/rss.htm>
+
+此路由主要補回官方 RSS 缺少的圖片以及 Link 元素。（官方 RSS 沒有 Link 元素可能導致某些 RSS 客戶端出現問題）
+
+<Route author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" :paramsDesc="['语言，繁体`hk`，英文`en`','类别']">
+
+| local    | greaterchina | international | finance  | sport    |
+| -------- | ------------ | ------------- | -------- | -------- |
+| 本地新聞 | 大中華新聞   | 國際新聞      | 財經新聞 | 體育新聞 |
+
+</Route>
+
 ## 新京报
 
 ### 栏目
@@ -350,7 +390,7 @@ category 对应的关键词有
 
 分类：
 | zx | twhk | dwzw | zrdl | lskg | smyx | shbk | kjqy |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
 
 </Route>
@@ -462,5 +502,27 @@ category 对应的关键词有
 | realtimenews | politic | opinion | life | star | money | society | hottopic | tube    | world | armament | chinese | fashion | sports | technologynews | travel | album |
 | ------------ | ------- | ------- | ---- | ---- | ----- | ------- | -------- | ------- | ----- | -------- | ------- | ------- | ------ | -------------- | ------ | ----- |
 | 即時         | 政治    | 言論    | 生活 | 娛樂 | 財經  | 社會    | 話題     | 快點 TV | 國際  | 軍事     | 兩岸    | 時尚    | 體育   | 科技           | 玩食   | 專輯  |
+
+</Route>
+
+## 中外对话
+
+### 主题
+
+<Route author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" :paramsDesc="['主题分类']">
+
+| 商业     | 城市化 | 气候变化与能源            | 自然保护     | 管制与法律         | 健康与食品      | 自然灾害          | 污染      | 科学与技术       | 安全     | 水    |
+| -------- | ------ | ------------------------- | ------------ | ------------------ | --------------- | ----------------- | --------- | ---------------- | -------- | ----- |
+| business | cities | climate-change-and-energy | conservation | governance-and-law | health-and-food | natural-disasters | pollution | science-and-tech | security | water |
+
+</Route>
+
+### 栏目
+
+<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
+
+| 文章    | 博客 | 文化    | 报告    |
+| ------- | ---- | ------- | ------- |
+| article | blog | culture | reports |
 
 </Route>

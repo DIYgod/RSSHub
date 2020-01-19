@@ -37,6 +37,25 @@ pageClass: routes
 
 见 [#bilibili](/social-media.html#bilibili)
 
+## BT 之家
+
+### 最新种子
+
+<Route author="zhang-wangz" example="/btzj/base" path="/btzj/:type?" anticrawler="1" :paramsDesc="['type,见下表']">
+
+| base                     | govern                 |
+| ------------------------ | ---------------------- |
+| https://www.88btbtt.com/ | http://www.1btjia.com/ |
+
+</Route>
+
+::: tip 提示
+
+由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.1btjia.com/`](http://www.1btjia.com/)域名.
+可空，默认为 base
+
+:::
+
 ## EZTV
 
 ::: tip 提示
@@ -219,6 +238,12 @@ pageClass: routes
 :::
 
 </Route>
+
+## 低端影视
+
+### 影视剧集
+
+<Route author="saintwinkle" example="/ddrk/silicon-valley/6" path="/ddrk/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容，']" />
 
 ## 电影首发站
 

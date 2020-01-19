@@ -759,7 +759,7 @@
                 title: '分类',
                 docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao',
                 source: '/categories/:idd',
-                target: (params) => `/qdaily/researcach/${params.idd.replace('.html', '')}`,
+                target: (params) => `/qdaily/category/${params.idd.replace('.html', '')}`,
             },
         ],
     },
@@ -953,6 +953,17 @@
                 docs: 'https://docs.rsshub.app/game.html#steam',
                 source: '/news/',
                 target: (params, url) => `/steam/news/${new URL(url).searchParams.get('appids')}`,
+            },
+        ],
+    },
+    'baijingapp.com': {
+        _name: '白鲸出海',
+        www: [
+            {
+                title: '文章',
+                docs: 'https://docs.rsshub.app/new-media.html#bai-jing-chu-hai',
+                source: '',
+                target: '/baijing',
             },
         ],
     },

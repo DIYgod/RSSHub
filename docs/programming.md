@@ -154,6 +154,13 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Hex-Rays
+
+### Hex-Rays News
+
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</Route>
+
 ## ITSlide
 
 ### 最新
@@ -233,6 +240,30 @@ GitHub 官方也提供了一些 RSS:
 :::
 
 </Route>
+
+## NOSEC.org
+
+### Posts
+
+<Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind?" :paramsDesc="['对应文章分类']">
+
+| 分类     | 标识       |
+| :------- | :--------- |
+| 威胁情报 | `threaten` |
+| 安全动态 | `security` |
+| 漏洞预警 | `hole`     |
+| 数据泄露 | `leakage`  |
+| 专题报告 | `speech`   |
+| 技术分析 | `skill`    |
+| 安全工具 | `tool`     |
+
+</Route>
+
+## project-zero issues
+
+### issues
+
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
 
 ## segmentfault
 
@@ -448,6 +479,27 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
 
+## 码农俱乐部
+
+### 话题
+
+<Route author="mlogclub" example="/mlog-club/topics/newest" path="/mlog-club/topics/:node" :paramsDesc="['node']">
+
+| node      | 名称     |
+| --------- | -------- |
+| newest    | 最新话题 |
+| recommend | 热门话题 |
+| 1         | 交流     |
+| 2         | 开源     |
+| 3         | 提问     |
+
+</Route>
+
+### 开源项目
+
+<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects">
+</Route>
+
 ## 码农网
 
 ### 最新
@@ -505,6 +557,13 @@ GitHub 官方也提供了一些 RSS:
 ### issues
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
+
+## 平安银河实验室
+
+### posts
+
+<Route author="hellodword" example="/galaxylab" path="/galaxylab">
+</Route>
 
 ## 前端艺术家&&飞冰早报
 

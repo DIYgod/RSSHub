@@ -255,6 +255,12 @@ Supported sub-sites：
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
+## 白鲸出海
+
+### 首页最新帖子
+
+<Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
+
 ## 坂道系列官网新闻
 
 ### 乃木坂 46
@@ -411,9 +417,9 @@ Supported sub-sites：
 
 <Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']" radar="1">
 
-| 标签 | 栏目   | 分类       |
-| ---- | ------ | ---------- |
-| tag  | column | researcach |
+| 标签 | 栏目   | 分类     |
+| ---- | ------ | -------- |
+| tag  | column | category |
 
 </Route>
 
