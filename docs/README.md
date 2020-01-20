@@ -29,8 +29,8 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) | [mokeyjay](https://www.mokeyjay.com/) | [tkaray](https://rayray.moe/) |
-| :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: | :-----------------------------------: | :---------------------------: |
+| [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) | [mokeyjay](https://www.mokeyjay.com/) | [tkaray](https://rayray.moe/) |
+| :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: | :-----------------------------------: | :---------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/support/)
