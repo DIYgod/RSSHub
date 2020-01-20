@@ -648,7 +648,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 基础库更新日志
 
-<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixinMiniprogram/release"/>
+<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixin/miniprogram/release"/>
 
 ## 印记中文周刊
 
