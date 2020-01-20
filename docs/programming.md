@@ -158,8 +158,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Hex-Rays News
 
-<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
-</Route>
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
 
 ## ITSlide
 
@@ -263,7 +262,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### issues
 
-<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues">
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
 ## segmentfault
 
@@ -644,6 +643,12 @@ GitHub 官方也提供了一些 RSS:
 ### 微信支付-商户平台公告
 
 <Route author="phantomk" example="/wechat-open/pay/announce" path="/wechat-open/pay/announce"/>
+
+## 微信小程序
+
+### 基础库更新日志
+
+<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixinMiniprogram/release"/>
 
 ## 印记中文周刊
 
