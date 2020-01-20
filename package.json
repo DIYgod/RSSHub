@@ -59,6 +59,7 @@
     "yorkie": "2.0.0"
   },
   "dependencies": {
+    "@koa/router": "8.0.5",
     "@postlight/mercury-parser": "2.2.0",
     "@sentry/node": "5.11.1",
     "aes-js": "3.1.2",
@@ -84,7 +85,6 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.0.1",
     "koa-mount": "4.0.0",
-    "koa-router": "7.4.0",
     "lru-cache": "5.1.1",
     "lz-string": "1.4.4",
     "mailparser": "2.7.7",
