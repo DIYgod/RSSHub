@@ -36,6 +36,16 @@ Sorting types, default to `date`:
 
 </RouteEn>
 
+## Minecraft
+
+### Java Game Update
+
+<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+
+### CurseForge Mod Update
+
+<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for exmaple `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
+
 ## Nintendo
 
 ### eShop New Game Releases

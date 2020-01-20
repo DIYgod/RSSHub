@@ -92,6 +92,10 @@ pageClass: routes
 
 <Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
 
+### CurseForge Mod 更新
+
+<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
+
 ## Nintendo
 
 ### eShop 新发售游戏
