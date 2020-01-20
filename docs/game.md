@@ -86,6 +86,12 @@ pageClass: routes
 
 </Route>
 
+## Minecraft
+
+### Java 版游戏更新
+
+<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+
 ## Nintendo
 
 ### eShop 新发售游戏
