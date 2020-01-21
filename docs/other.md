@@ -388,6 +388,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
+## 武汉肺炎疫情新闻动态
+
+### 财新网 - 武汉肺炎防疫全纪录
+
+<Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
+
+### 丁香园 - 全国新型肺炎疫情实时动态
+
+<Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
+
+### South China Morning Post - China coronavirus outbreak
+
+<Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
 ## 新趣集
 
 > 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
