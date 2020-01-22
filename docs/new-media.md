@@ -968,3 +968,9 @@ Supported sub-sites：
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 累牍
+
+### 首页最新文章
+
+<Route author="WendellSun" example="/chinanonfiction/articles" path="/chinanonfiction/articles"/>
