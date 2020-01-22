@@ -956,4 +956,26 @@
             },
         ],
     },
+    'baijingapp.com': {
+        _name: '白鲸出海',
+        www: [
+            {
+                title: '文章',
+                docs: 'https://docs.rsshub.app/new-media.html#bai-jing-chu-hai',
+                source: '',
+                target: '/baijing',
+            },
+        ],
+    },
+    'xiaomi.cn': {
+        _name: '小米社区',
+        www: [
+            {
+                title: '圈子',
+                docs: 'https://docs.rsshub.app/bbs.html#xiao-mi-she-qu',
+                source: '/board/:boardId',
+                target: '/mi/bbs/board/:boardId',
+            },
+        ],
+    },
 });

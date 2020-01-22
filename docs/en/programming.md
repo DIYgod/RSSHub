@@ -27,7 +27,7 @@ GitHub provides some official RSS feeds:
 
 ### Repo Issues
 
-<RouteEn author="HenryQW" path="/github/issue/:user/:repo" example="/github/issue/DIYgod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" radar="1" />
+<RouteEn author="HenryQW" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/bug" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" />
 
 ### Repo Pull Requests
 
@@ -116,6 +116,13 @@ Website: https://news.ycombinator.com/
 
 </RouteEn>
 
+## Hex-Rays
+
+### Hex-Rays News
+
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</Route>
+
 ## Kaggle
 
 ### Discussion
@@ -176,6 +183,20 @@ Website: https://news.ycombinator.com/
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
 
+</RouteEn>
+
+## project-zero issues
+
+### issues
+
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+
+## Scala
+
+### Scala Blog
+
+<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part']" >
+part parmater can be found in the url of blog
 </RouteEn>
 
 ## Visual Studio Code Marketplace

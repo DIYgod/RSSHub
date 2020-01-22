@@ -14,6 +14,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']" radar="1"/>
 
+## Discuz
+
+### 通用子版块
+
+<Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" :paramsDesc="['子版块链接， 需要手动Url编码']"/>
+
 ## MCBBS
 
 ### 版块
@@ -28,7 +34,7 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid"  :paramsDesc="['分区 id, 可在分区主页 URL 找到']" radar="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
 
 ### 帖子
 
@@ -170,6 +176,12 @@ pageClass: routes
 ### 楼主动态
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
+
+## 小米社区
+
+### 圈子
+
+<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" :paramsDesc="['圈子 id，可在圈子 URL 找到']" radar="1"/>
 
 ## 一亩三分地
 

@@ -106,6 +106,16 @@ pageClass: routes
 
 </Route>
 
+## 飘天文学
+
+### 章节
+
+<Route author="LJason77" example="/novel/ptwxz/10/10272" path="/novel/ptwxz/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `10`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `10272`']" >
+
+举例网址：https://www.ptwxz.com/bookinfo/10/10272.html
+
+</Route>
+
 ## 起点
 
 ### 章节
