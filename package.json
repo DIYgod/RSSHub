@@ -45,7 +45,7 @@
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.9.0",
     "eslint-plugin-prettier": "3.1.2",
-    "jest": "24.9.0",
+    "jest": "25.1.0",
     "mockdate": "2.0.5",
     "nock": "11.7.2",
     "nodejieba": "2.4.0",
