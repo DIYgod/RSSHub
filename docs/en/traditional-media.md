@@ -26,6 +26,28 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </RouteEn>
 
+## China Dialogue
+
+### Topics
+
+<Route author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" :paramsDesc="['Topics']">
+
+| Business | Cities | Climate Change            | Conservation | Governance & Law   | Health and Food | Natural Disasters | Pollution | Science & Tech   | Security | Water |
+| -------- | ------ | ------------------------- | ------------ | ------------------ | --------------- | ----------------- | --------- | ---------------- | -------- | ----- |
+| business | cities | climate-change-and-energy | conservation | governance-and-law | health-and-food | natural-disasters | pollution | science-and-tech | security | water |
+
+</Route>
+
+### Columns
+
+<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
+
+| Articles | Blogs | Culture | Reports |
+| -------- | ----- | ------- | ------- |
+| article  | blog  | culture | reports |
+
+</Route>
+
 ## China Times
 
 ### News
@@ -43,6 +65,22 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 ### News Web Easy
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+## RTHK
+
+### News
+
+RTHK offical provides full text RSS, check the offical website for detail information: <https://news.rthk.hk/rthk/en/rss.htm>
+
+This route adds the missing photo and Link element. (Offical RSS doesn't have Link element may cause issue on some RSS client)
+
+<Route author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" :paramsDesc="['Language，Traditional Chinese`hk`，English`en`','Category']">
+
+| local      | greaterchina       | international | finance      | sport      |
+| ---------- | ------------------ | ------------- | ------------ | ---------- |
+| Local News | Greater China News | World News    | Finance News | Sport News |
+
+</Route>
 
 ## The Economist
 
@@ -81,3 +119,21 @@ Provides a better reading experience (full text articles) over the official one.
 | (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
 
 </RouteEn>
+
+## Yahoo
+
+### News
+
+<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+
+`Region`
+| Hong Kong | Taiwan | US |
+| -- | -- | -- |
+| hk | tw | en |
+
+`Category`
+| All | World | Business | Entertainment | Sports | Health |
+| -- | -- | -- | -- | -- | -- |
+| (Empty) | world | business | entertainment | sports | health |
+
+</Route>

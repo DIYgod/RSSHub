@@ -967,4 +967,15 @@
             },
         ],
     },
+    'xiaomi.cn': {
+        _name: '小米社区',
+        www: [
+            {
+                title: '圈子',
+                docs: 'https://docs.rsshub.app/bbs.html#xiao-mi-she-qu',
+                source: '/board/:boardId',
+                target: '/mi/bbs/board/:boardId',
+            },
+        ],
+    },
 });

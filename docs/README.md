@@ -29,8 +29,8 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) | [mokeyjay](https://www.mokeyjay.com/) |
-| :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: | :-----------------------------------: |
+| [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) | [mokeyjay](https://www.mokeyjay.com/) | [tkaray](https://rayray.moe/) |
+| :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: | :-----------------------------------: | :---------------------------: |
 
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/support/)
@@ -39,4 +39,8 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=740)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
-Logo designed by [sheldonrrr](https://dribbble.com/sheldonrrr)
+Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
+
+### Backers
+
+<a href="https://www.cloudflare.com" target="_blank"><img height="50px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/cloudflare.png"></a><a href="https://www.netlify.com" target="_blank" style="margin-left: 60px;"><img height="40px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/netlify.png"></a>
