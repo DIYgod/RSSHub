@@ -320,6 +320,15 @@ category 对应的关键词有
 
 <Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>
 
+## 日本経済新聞
+
+### ホームページ
+
+<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1">
+
+日文版首页
+
+</Route>
 ## 卫报 The Guardian
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
