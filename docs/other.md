@@ -403,6 +403,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 <Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
 
 ### 新型冠状病毒疫情概况(数据源:丁香医生)
+
 <Route author="KotoriK" example="/coronavirus/virus/湖北|香港" path="/coronavirus/virus/:province?" :paramsDesc="省份名称简写，如 新疆维吾尔自治区 简写为 新疆。"/>
 
 ## 新趣集
