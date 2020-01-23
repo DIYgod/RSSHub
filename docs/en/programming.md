@@ -191,6 +191,14 @@ Website: https://news.ycombinator.com/
 
 <Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
+## Scala
+
+### Scala Blog
+
+<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part']" >
+part parmater can be found in the url of blog
+</RouteEn>
+
 ## Visual Studio Code Marketplace
 
 ### Visual Studio Code Plugins Marketplace
