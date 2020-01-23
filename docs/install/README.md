@@ -396,3 +396,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
     -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
     -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
     -   `FANFOU_PASSWORD`: 饭否密码
+
+-   Last.fm 全部路由: [申请地址](https://www.last.fm/api/)
+
+    -   `LASTFM_API_KEY`: Last.fm API Key，默认使用了第三方项目中的 Key，如果失效，需要手动配置
