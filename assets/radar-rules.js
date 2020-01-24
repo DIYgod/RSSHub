@@ -978,4 +978,33 @@
             },
         ],
     },
+    'mqube.net': {
+        _name: 'MQube',
+        www: [
+            {
+                title: '全站最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/latest',
+            },
+            {
+                title: '全站每日排行',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/top',
+            },
+            {
+                title: '个人最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/user/:user',
+                target: '/mqube/user/:user',
+            },
+            {
+                title: '标签最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/search/tag/:tag',
+                target: '/mqube/tag/:tag',
+            },
+        ],
+    },
 });
