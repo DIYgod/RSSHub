@@ -79,6 +79,16 @@ pageClass: routes
 
 <Route author="JamesWDGu" example="/engadget-cn" path="/engadget-cn"/>
 
+### 多語言
+
+<Route author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['語言']">
+
+| 繁體中文 | 簡體中文 | US  | 日文     |
+| -------- | -------- | --- | -------- |
+| chinese  | cn       | us  | japanese |
+
+</Route>
+
 ## iDownloadBlog
 
 ### blog
