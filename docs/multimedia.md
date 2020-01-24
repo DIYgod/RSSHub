@@ -118,6 +118,12 @@ pageClass: routes
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/western/series/20" path="/javbus/western/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
 
+## JavLibrary
+
+### 用户文章
+
+<Route author="junfengP" example="/javlibrary/posts/siccalol" path="/javlibrary/posts/:uid" :paramsDesc="['用户 id，即用户名称']" />
+
 ## Mp4Ba
 
 ### 影视分类

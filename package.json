@@ -65,6 +65,7 @@
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "cheerio": "1.0.0-rc.3",
+    "cloudscraper": "4.5.0",
     "co-redis": "2.1.1",
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.8.19",
