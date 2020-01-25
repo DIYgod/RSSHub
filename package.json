@@ -40,7 +40,7 @@
     "@vuepress/plugin-back-to-top": "1.2.0",
     "@vuepress/plugin-google-analytics": "1.2.0",
     "@vuepress/plugin-pwa": "1.2.0",
-    "cross-env": "6.0.3",
+    "cross-env": "7.0.0",
     "entities": "2.0.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.9.0",
