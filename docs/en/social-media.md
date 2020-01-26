@@ -112,7 +112,7 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 ### User timeline
 
-<RouteEn path="/twitter/user/:id/:type?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'Extra options `include_replies` Include replies,`include_rts` Include retweets,`include_rts_replies` Include replies and retweets，for default `include_replies` include replies']" radar="1" />
+<RouteEn path="/twitter/user/:id/:type?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'Extra options `exclude_replies` exclude replies,`exclude_rts` exclude retweets,`exclude_rts_replies` exclude replies and retweets, for default include all.']" radar="1" />
 
 ## User following timeline
 
