@@ -92,7 +92,7 @@
     "module-alias": "2.2.2",
     "pidusage": "2.0.17",
     "plist": "3.0.1",
-    "puppeteer": "2.0.0",
+    "puppeteer": "2.1.0",
     "query-string": "6.10.1",
     "redis": "2.8.0",
     "require-all": "3.0.0",
