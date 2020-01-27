@@ -394,9 +394,17 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
 
-### 丁香园 - 全国新型肺炎疫情实时动态
+### 丁香园 - 全国新型肺炎疫情实时播报
 
 <Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
+
+### 丁香园 - 全国新型肺炎疫情数据统计（全国）
+
+<Route author="DIYgod" example="/coronavirus/dxy/data" path="/coronavirus/dxy/data"/>
+
+### 丁香园 - 全国新型肺炎疫情数据统计（各省份）
+
+<Route author="DIYgod" example="/coronavirus/dxy/data/湖北" path="/coronavirus/dxy/data/:province"/>
 
 ### South China Morning Post - China coronavirus outbreak
 
