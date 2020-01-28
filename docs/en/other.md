@@ -145,3 +145,7 @@ Type
 | all | rec       |
 
 </RouteEn>
+
+### South China Morning Post - China coronavirus outbreak
+
+<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
