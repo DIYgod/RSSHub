@@ -406,6 +406,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北" path="/coronavirus/dxy/data/:province?" :paramsDesc="['省份，缺省为全国']"/>
 
+### South China Morning Post - China coronavirus outbreak
+
+<Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
 ## 新趣集
 
 > 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
