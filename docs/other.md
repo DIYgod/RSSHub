@@ -390,6 +390,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 武汉肺炎疫情新闻动态
 
+### 国家卫健委 - 疫情通报
+
+<Route author="Cielpy" example="/nhc/list_gzbd" path="/nhc/list_gzbd"/>
+
 ### 财新网 - 武汉肺炎防疫全纪录
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
