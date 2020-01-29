@@ -392,7 +392,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 国家卫健委 - 疫情通报
 
-<Route author="Cielpy" example="/nhc/list_gzbd" path="/nhc/list_gzbd"/>
+<Route author="Cielpy" example="coronavirus/nhc" path="/coronavirus/nhc"/>
 
 ### 财新网 - 武汉肺炎防疫全纪录
 
