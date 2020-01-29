@@ -1220,10 +1220,10 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/cheerio@0.22.15":
-  version "0.22.15"
-  resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.15.tgz#69040ffa92c309beeeeb7e92db66ac3f80700c0b"
-  integrity sha512-UGiiVtJK5niCqMKYmLEFz1Wl/3L5zF/u78lu8CwoUywWXRr9LDimeYuOzXVLXBMO758fcTdFtgjvqlztMH90MA==
+"@types/cheerio@0.22.16":
+  version "0.22.16"
+  resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.16.tgz#c748a97b8a6f781b04bbda4a552e11b35bcc77e4"
+  integrity sha512-bSbnU/D4yzFdzLpp3+rcDj0aQQMIRUBNJU7azPxdqMpnexjUSvGJyDuOBQBHeOZh1mMKgsJm6Dy+LLh80Ew4tQ==
   dependencies:
     "@types/node" "*"
 
