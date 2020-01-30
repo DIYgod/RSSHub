@@ -55,7 +55,7 @@
     "prettier-check": "2.0.0",
     "pretty-quick": "2.0.1",
     "supertest": "4.0.2",
-    "vuepress": "1.2.0",
+    "vuepress": "1.3.0",
     "yorkie": "2.0.0"
   },
   "dependencies": {
