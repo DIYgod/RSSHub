@@ -145,6 +145,24 @@ pageClass: routes
 
 </Route>
 
+## MQube
+
+### 全站最近更新
+
+<Route author="hoilc" example="/mqube/latest" path="/mqube/latest" radar="1" />
+
+### 全站每日排行
+
+<Route author="hoilc" example="/mqube/top" path="/mqube/top" radar="1" />
+
+### 个人最近更新
+
+<Route author="hoilc" example="/mqube/user/mukamui_v_p" path="/mqube/user/:user" :paramsDesc="['用户 ID, 可以在个人资料页的 URL 中找到']" radar="1" />
+
+### 标签最近更新
+
+<Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" :paramsDesc="['标签名称, 可参考`https://mqube.net/search/tag`']" radar="1" />
+
 ## Nyaa
 
 ### 搜索结果
