@@ -1007,4 +1007,15 @@
             },
         ],
     },
+    'nikkei.com': {
+        _name: '日本経済新聞',
+        www: [
+            {
+                title: 'ホームページ',
+                docs: 'https://docs.rsshub.app/traditional-media.html#ri-ben-jing-ji-xin-wen',
+                source: '/',
+                target: '/nikkei/index',
+            },
+        ],
+    },
 });
