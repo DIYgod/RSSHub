@@ -1,3 +1,4 @@
+jest.mock('request-promise-native');
 const RSSHub = require('../lib/pkg');
 
 describe('pkg', () => {
