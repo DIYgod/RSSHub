@@ -9,6 +9,8 @@ ENV TZ Asia/Shanghai
 ARG USE_CHINA_NPM_REGISTRY=0;
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
 
+RUN ln -sf /bin/bash /bin/sh
+
 RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init --no-install-recommends && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
