@@ -978,6 +978,17 @@
             },
         ],
     },
+    'suzhou.gov.cn': {
+        _name: '苏州市政府',
+        www: [
+            {
+                title: '政府新闻',
+                docs: 'https://docs.rsshub.app/government.html#su-zhou-shi-ren-min-zheng-fu',
+                source: '/szsrmzf/:uid/nav_list.shtml',
+                target: '/gov/suzhou/news/:uid',
+            },
+        ],
+    },
     'mqube.net': {
         _name: 'MQube',
         www: [
