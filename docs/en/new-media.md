@@ -75,7 +75,10 @@ Provides a better reading experience (full text articles) over the official one.
 
 ## Letterboxd
 
+### User diary
+
 <RouteEn author="loganrockmore" example="/letterboxd/user/diary/demiadejuyigbe" path="/letterboxd/user/diary/:username" :paramsDesc="['username']" />
+
 ## Nautilus
 
 ### Topics

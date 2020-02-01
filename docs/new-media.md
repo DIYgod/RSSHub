@@ -131,6 +131,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
+## Letterboxd
+
+### User diary
+
+<RouteEn author="loganrockmore" example="/letterboxd/user/diary/demiadejuyigbe" path="/letterboxd/user/diary/:username" :paramsDesc="['username']" />
+
 ## Matters
 
 ### 最新排序
