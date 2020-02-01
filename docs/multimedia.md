@@ -122,7 +122,7 @@ pageClass: routes
 
 ### 用户文章
 
-<Route author="junfengP" example="/javlibrary/posts/siccalol" path="/javlibrary/posts/:uid" :paramsDesc="['用户 id，即用户名称']" />
+<Route author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['用户 id，即用户名称']" />
 
 ## Mp4Ba
 
