@@ -404,7 +404,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 丁香园 - 全国新型肺炎疫情数据统计
 
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北" path="/coronavirus/dxy/data/:province?" :paramsDesc="['省份，缺省为全国']"/>
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回全国数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
 
 ### South China Morning Post - China coronavirus outbreak
 
