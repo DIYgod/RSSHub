@@ -1,6 +1,7 @@
 process.env.SENTRY = 'https://mock@mock.com/1';
 
 const supertest = require('supertest');
+jest.mock('request-promise-native');
 const server = require('../../lib/index');
 const request = supertest(server);
 

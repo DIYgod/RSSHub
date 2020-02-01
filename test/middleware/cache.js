@@ -3,6 +3,7 @@ const Parser = require('rss-parser');
 const parser = new Parser();
 const wait = require('../../lib/utils/wait');
 let server;
+jest.mock('request-promise-native');
 
 beforeAll(() => {
     process.env.CACHE_EXPIRE = 1;

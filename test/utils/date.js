@@ -74,6 +74,10 @@ describe('date', () => {
         expect(+new Date(parseDate('2月3日'))).toBe(+new Date('2019-2-3 00:00'));
     });
 
+    it('M/D', async () => {
+        expect(+new Date(parseDate('2/3'))).toBe(+new Date('2019-2-3 00:00'));
+    });
+
     it('Y-M-D', async () => {
         expect(+new Date(parseDate('2018-4-2'))).toBe(+new Date('2018-4-2'));
     });
