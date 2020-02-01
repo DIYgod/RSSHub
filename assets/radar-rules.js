@@ -978,6 +978,17 @@
             },
         ],
     },
+    '163.com': {
+        _name: '网易',
+        ds: [
+            {
+                title: '网易大神',
+                docs: 'https://docs.rsshub.app/game.html#wang-yi-da-shen',
+                source: '/user/:id',
+                target: '/netease/ds/:id',
+            },
+        ],
+    },
     'suzhou.gov.cn': {
         _name: '苏州市政府',
         www: [
