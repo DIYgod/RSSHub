@@ -178,15 +178,15 @@ Category 列表:
 
 <Route author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
 
-| 全部   | 国际   | 中国  | 香港     | 台湾   |
-| ------ | ------ | ----- | -------- | ------ |
-| yaowen | global | china | hongkong | taiwan |
+| 全部   | 国际   | 中国  | 香港     | 台湾   | 经济   |
+| ------ | ------ | ----- | -------- | ------ | ------ |
+| yaowen | global | china | hongkong | taiwan | jingji |
 
 </Route>
 
-### 新闻排行榜
+### 24 小时新闻排行榜
 
-<Route author="HenryQW" example="/dwnews/rank/photo/7" path="/dwnews/rank/:type/:range" :paramsDesc="['榜单类型，`news`为普通新闻，`photo`为图集新闻','榜单范围（天），`1` 或 `7`']"/>
+<Route author="HenryQW" example="/dwnews/rank" path="/dwnews/rank"/>
 
 ## 华尔街见闻
 
