@@ -49,7 +49,7 @@ describe('got', () => {
             });
 
         const response1 = await got.post('post', {
-            baseUrl: 'http://rsshub.test/',
+            url: 'http://rsshub.test/',
             form: true,
             data: {
                 test: 1,
