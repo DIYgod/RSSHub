@@ -355,7 +355,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游研社
 
-<Route author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
+<Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
 | --------- | ------- | ------ | ------- | ---- | -------- |
