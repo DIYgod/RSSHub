@@ -264,6 +264,14 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
+## Scala
+
+### Scala Blog
+
+<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分']" >
+默认为All part参数可在url中获得
+</Route>
+
 ## segmentfault
 
 ### 频道
@@ -648,7 +656,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 基础库更新日志
 
-<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixinMiniprogram/release"/>
+<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixin/miniprogram/release"/>
 
 ## 印记中文周刊
 

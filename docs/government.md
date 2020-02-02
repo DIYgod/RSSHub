@@ -31,6 +31,22 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 苏州市人民政府
+
+### 政府新闻
+
+<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" :paramsDesc="['分类名']">
+
+| 政务要闻 | 区县快讯 | 部门动态 | 新闻视频 | 热点专题 | 市本级专题 | 最新热点专题 | 往期专题 | 区县专题 | 政务公告 | 便民资讯 |
+| :------: | :------: | :------: | :------: | :------: | :--------: | :----------: | :------: | :------: | :------: | :------: |
+|   news   | district |   bmdt   |   xwsp   |   rdzt   |   sbjzt    |    zxrdzt    |   wqzt   |   qxzt   |   zwgg   |   bmzx   |
+
+</Route>
+
+### 政府信息公开文件
+
+<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
+
 ## 中国工业和信息化部
 
 ### 政策解读
@@ -168,22 +184,6 @@ pageClass: routes
 |   news   | department | district | livelihood |
 
 </Route>
-
-### 苏州市人民政府
-
-#### 政府新闻
-
-<Route author="EsuRt" example="/gov/suzhou/news/:uid" path="/gov/suzhou/news" :paramsDesc="['分类名']">
-
-| 政务要闻 | 区县快讯 |
-| :------: | :------: |
-|   news   | district |
-
-</Route>
-
-#### 政府信息公开文件
-
-<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
 ## 中国证券监督管理委员会
 

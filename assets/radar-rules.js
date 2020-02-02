@@ -967,4 +967,77 @@
             },
         ],
     },
+    'xiaomi.cn': {
+        _name: '小米社区',
+        www: [
+            {
+                title: '圈子',
+                docs: 'https://docs.rsshub.app/bbs.html#xiao-mi-she-qu',
+                source: '/board/:boardId',
+                target: '/mi/bbs/board/:boardId',
+            },
+        ],
+    },
+    '163.com': {
+        _name: '网易',
+        ds: [
+            {
+                title: '网易大神',
+                docs: 'https://docs.rsshub.app/game.html#wang-yi-da-shen',
+                source: '/user/:id',
+                target: '/netease/ds/:id',
+            },
+        ],
+    },
+    'suzhou.gov.cn': {
+        _name: '苏州市政府',
+        www: [
+            {
+                title: '政府新闻',
+                docs: 'https://docs.rsshub.app/government.html#su-zhou-shi-ren-min-zheng-fu',
+                source: '/szsrmzf/:uid/nav_list.shtml',
+                target: '/gov/suzhou/news/:uid',
+            },
+        ],
+    },
+    'mqube.net': {
+        _name: 'MQube',
+        www: [
+            {
+                title: '全站最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/latest',
+            },
+            {
+                title: '全站每日排行',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/top',
+            },
+            {
+                title: '个人最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/user/:user',
+                target: '/mqube/user/:user',
+            },
+            {
+                title: '标签最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/search/tag/:tag',
+                target: '/mqube/tag/:tag',
+            },
+        ],
+    },
+    'nikkei.com': {
+        _name: '日本経済新聞',
+        www: [
+            {
+                title: 'ホームページ',
+                docs: 'https://docs.rsshub.app/traditional-media.html#ri-ben-jing-ji-xin-wen',
+                source: '/',
+                target: '/nikkei/index',
+            },
+        ],
+    },
 });
