@@ -96,7 +96,7 @@
     "query-string": "6.10.1",
     "redis": "2.8.0",
     "require-all": "3.0.0",
-    "rss-parser": "3.7.4",
+    "rss-parser": "3.7.5",
     "socks-proxy-agent": "TooTallNate/node-socks-proxy-agent#master",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
