@@ -27,11 +27,11 @@ describe('got', () => {
         try {
             await got.get('http://rsshub.test/testRerty');
         } catch (error) {
-            expect(error.name).toBe('RequestError');
+            expect(error.name).toBe('HTTPError');
         }
 
         // retries
-        expect(requestRun).toHaveBeenCalledTimes(config.requestRetry);
+        expect(requestRun).toHaveBeenCalledTimes(config.requestRetry + 1);
     });
 
     it('axios', async () => {
@@ -41,9 +41,7 @@ describe('got', () => {
                 return [200, '{"code": 0}'];
             });
 
-        const response1 = await got({
-            method: 'post',
-            url: 'http://rsshub.test/',
+        const response1 = await got.post('http://rsshub.test/post', {
             form: {
                 test: 1,
             },
