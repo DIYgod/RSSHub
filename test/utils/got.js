@@ -59,19 +59,5 @@ describe('got', () => {
         expect(response1.status).toBe(200);
         expect(response1.body).toBe('{"code": 0}');
         expect(response1.data.code).toBe(0);
-
-        nock('http://rsshub.test')
-            .get(/^\/params/)
-            .reply(function() {
-                expect(this.req.path).toBe('/params?test=1');
-                return [200, ''];
-            });
-
-        await got.get('http://rsshub.test/params', {
-            params: {
-                test: 1,
-            },
-            responseType: 'buffer',
-        });
     });
 });
