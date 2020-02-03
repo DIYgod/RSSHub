@@ -16,18 +16,11 @@ describe('got', () => {
 
     it('retry', async () => {
         const requestRun = jest.fn();
-        let requestTime;
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
             .reply(function() {
                 requestRun();
-                const now = new Date();
-                if (requestTime) {
-                    expect(now - requestTime).toBeGreaterThanOrEqual(100);
-                    expect(now - requestTime).toBeLessThan(120);
-                }
-                requestTime = new Date();
                 return [404, '0'];
             });
 
@@ -51,8 +44,7 @@ describe('got', () => {
         const response1 = await got({
             method: 'post',
             url: 'http://rsshub.test/',
-            form: true,
-            data: {
+            form: {
                 test: 1,
             },
         });
