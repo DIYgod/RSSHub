@@ -58,6 +58,10 @@ pageClass: routes
 
 <Route author="TPOB" example="/pku/cls/lecture" path="/universities/pku/cls/lecture" />
 
+### 北大未名 BBS 全站十大
+
+<Route author="wooddance" example="/pku/bbs/hot" path="/universities/pku/bbs/hot" />
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
