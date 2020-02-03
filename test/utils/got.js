@@ -48,7 +48,8 @@ describe('got', () => {
                 return [200, '{"code": 0}'];
             });
 
-        const response1 = await got.post('post', {
+        const response1 = await got({
+            method: 'post',
             url: 'http://rsshub.test/',
             form: true,
             data: {
