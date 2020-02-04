@@ -124,6 +124,20 @@ pageClass: routes
 
 <Route author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['用户 id，即用户名称']" />
 
+## Last.fm
+
+### 用户播放记录
+
+<Route author="hoilc" example="/lastfm/recent/yeFoenix" path="/lastfm/recent/:user" :paramsDesc="['Last.fm 用户名']" radar="1" />
+
+### 用户 Love 记录
+
+<Route author="hoilc" example="/lastfm/loved/yeFoenix" path="/lastfm/loved/:user" :paramsDesc="['Last.fm 用户名']" radar="1" />
+
+### 站内 Top 榜单
+
+<Route author="hoilc" example="/lastfm/top/spain" path="/lastfm/top/:country?" :paramsDesc="['国家或地区, 需要符合`ISO 3166-1`的英文全称, 可参考`https://zh.wikipedia.org/wiki/ISO_3166-1二位字母代码#正式分配代码`']" radar="1" />
+
 ## Mp4Ba
 
 ### 影视分类
