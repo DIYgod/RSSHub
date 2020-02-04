@@ -60,7 +60,15 @@ pageClass: routes
 
 ### 北大未名 BBS 全站十大
 
-<Route author="wooddance" example="/pku/bbs/hot" path="/universities/pku/bbs/hot" />
+<Route author="wooddance" example="/pku/bbs/hot" path="/universities/pku/bbs/hot">
+
+::: warning 注意
+
+论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
+
+:::
+
+</Route>
 
 ## 北京航空航天大学
 
