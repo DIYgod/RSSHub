@@ -68,7 +68,7 @@
     "cloudscraper": "4.5.0",
     "co-redis": "2.1.1",
     "currency-symbol-map": "4.0.4",
-    "dayjs": "1.8.19",
+    "dayjs": "1.8.20",
     "dotenv": "8.2.0",
     "emailjs-imap-client": "3.0.7",
     "etag": "1.8.1",
