@@ -277,6 +277,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+## 网易大神
+
+### 用户发帖
+
+<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
+
 ## 王者荣耀
 
 ### 新闻中心
@@ -349,7 +355,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游研社
 
-<Route author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
+<Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
 | --------- | ------- | ------ | ------- | ---- | -------- |

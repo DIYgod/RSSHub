@@ -145,3 +145,19 @@ Type
 | all | rec       |
 
 </RouteEn>
+
+## Wuhan coronavirus
+
+### South China Morning Post - China coronavirus outbreak
+
+<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
+
+Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
+
+<Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
+
+| Chinese | English | Portuguese |
+| ------- | ------- | ---------- |
+| ch      | en      | pt         |
