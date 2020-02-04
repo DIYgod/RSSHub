@@ -1074,22 +1074,22 @@
   dependencies:
     safe-buffer "^5.0.1"
 
-"@sentry/apm@5.12.0":
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/@sentry/apm/-/apm-5.12.0.tgz#6ec9c11d2754ab597bd0752b55fbbf2537f1d96b"
-  integrity sha512-tpD6c0dVKkG+QPEubTTr54TDFdR/FWldnHwkhq4CST2uwkEm26o95iuNhMx9WE7EJhpXjaFKpZB0TB8frFIqkg==
+"@sentry/apm@5.12.1":
+  version "5.12.1"
+  resolved "https://registry.yarnpkg.com/@sentry/apm/-/apm-5.12.1.tgz#9fbaa5ee7a296fd53e4629cdb59e7c0031d2337b"
+  integrity sha512-HlCUAUET8vvCYh/gl5FdodyYURtj65oYa7xp8o9H9YldjOFZMxDQgPmRd6pQygKsZvl7FiovXZIju1/rWG00Wg==
   dependencies:
-    "@sentry/browser" "5.12.0"
+    "@sentry/browser" "5.12.1"
     "@sentry/hub" "5.12.0"
     "@sentry/minimal" "5.12.0"
     "@sentry/types" "5.12.0"
     "@sentry/utils" "5.12.0"
     tslib "^1.9.3"
 
-"@sentry/browser@5.12.0":
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.12.0.tgz#d2c5b683eca6d5489a2c5b237712a8c9de9d4427"
-  integrity sha512-e8uQML/1Wz2A6610yEvTdICf7L2IH15z6kcjwEqTsaD5uBCmpCiebGZABb45OSe9u8J0xccqi5G7M8lcxj1L7w==
+"@sentry/browser@5.12.1":
+  version "5.12.1"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.12.1.tgz#dc1f268595269fb7277f55eb625c7e92d76dc01b"
+  integrity sha512-Zl7VdppUxctyaoqMSEhnDJp2rrupx8n8N2n3PSooH74yhB2Z91nt84mouczprBsw3JU1iggGyUw9seRFzDI1hw==
   dependencies:
     "@sentry/core" "5.12.0"
     "@sentry/types" "5.12.0"
@@ -1125,12 +1125,12 @@
     "@sentry/types" "5.12.0"
     tslib "^1.9.3"
 
-"@sentry/node@5.12.0":
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-5.12.0.tgz#9781d3cf4d7f664acacb9775912f67a3a465c259"
-  integrity sha512-Q059wrvv7JDTfdlnI4GCAOW9BLeRxxx8P+TYK/t41ZgEbwTob/VU+rn+p7zQm8beHMM3IBtUKE54AmpHYnhJ/A==
+"@sentry/node@5.12.1":
+  version "5.12.1"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-5.12.1.tgz#033c4ccabe21bd87a9b63f1d3b35303ef7c82ad0"
+  integrity sha512-J28Ru190+s3bCoM8I594VQrWC715fiBQSzvP0JGSjeVuEgF6rj/xRpoR2b3QRmXFRP+MPz8Vlkl4NmK0Wl5/ZA==
   dependencies:
-    "@sentry/apm" "5.12.0"
+    "@sentry/apm" "5.12.1"
     "@sentry/core" "5.12.0"
     "@sentry/hub" "5.12.0"
     "@sentry/types" "5.12.0"
