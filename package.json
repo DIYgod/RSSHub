@@ -97,7 +97,7 @@
     "redis": "2.8.0",
     "require-all": "3.0.0",
     "rss-parser": "3.7.5",
-    "socks-proxy-agent": "TooTallNate/node-socks-proxy-agent#master",
+    "socks-proxy-agent": "5.0.0",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
     "winston": "3.2.1"
