@@ -1046,13 +1046,13 @@
             {
                 title: '用户播放记录',
                 docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
-                source: '/user/:user/*',
+                source: ['/user/:user', '/user/:user/*'],
                 target: '/lastfm/recent/:user',
             },
             {
                 title: '用户 Love 记录',
                 docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
-                source: '/user/:user/*',
+                source: ['/user/:user', '/user/:user/*'],
                 target: '/lastfm/loved/:user',
             },
             {
