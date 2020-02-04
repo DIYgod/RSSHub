@@ -28,6 +28,16 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['The IMDB ID corresponding to the seed of show you want to search can be found on the official website [IMDB](https://www.imdb.com)']" supportBT="1"/>
 
+## JavLibrary
+
+### Best rated videos
+
+<RouteEn author="DIYgod" example="/javlibrary/bestrated" path="/javlibrary/bestrated"/>
+
+### User posts
+
+<RouteEn author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['User id']" />
+
 ## Nyaa
 
 ### Seatch Result

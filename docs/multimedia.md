@@ -120,6 +120,10 @@ pageClass: routes
 
 ## JavLibrary
 
+### 评价最高的影片
+
+<Route author="DIYgod" example="/javlibrary/bestrated" path="/javlibrary/bestrated"/>
+
 ### 用户文章
 
 <Route author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['用户 id，即用户名称']" />
