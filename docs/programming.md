@@ -28,7 +28,7 @@ pageClass: routes
 
 ### 最新
 
-<Route author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
+<Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" :paramsDesc="['分类 ID, 置空或`all`代表全部, 具体值需要抓取前端请求, 以下列出可能有变动, 仅供参考','是否只显示严选文章, 任意值为是, 置空为否']" />
 
 > GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
