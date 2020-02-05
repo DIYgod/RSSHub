@@ -128,6 +128,18 @@ pageClass: routes
 
 <Route author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['用户 id，即用户名称']" />
 
+### 用户想要的
+
+<Route author="DIYgod junfengP" example="/javlibrary/userwanted/siccalol" path="/javlibrary/userwanted/:uid" :paramsDesc="['用户 id，即用户名称']" />
+
+### 用户看过的
+
+<Route author="DIYgod junfengP" example="/javlibrary/userwatched/siccalol" path="/javlibrary/userwatched/:uid" :paramsDesc="['用户 id，即用户名称']" />
+
+### 用户拥有的
+
+<Route author="DIYgod junfengP" example="/javlibrary/userowned/siccalol" path="/javlibrary/userowned/:uid" :paramsDesc="['用户 id，即用户名称']" />
+
 ## Last.fm
 
 ### 用户播放记录
