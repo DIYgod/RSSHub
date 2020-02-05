@@ -120,13 +120,25 @@ pageClass: routes
 
 ## JavLibrary
 
-### 评价最高的影片
+### 影片
 
-<Route author="DIYgod" example="/javlibrary/bestrated" path="/javlibrary/bestrated"/>
+<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['影片类型']" >
+|新话题|新发行|新加入|最想要|高评价|
+|-----|------|------|-----|------|
+|update|newrelease|newentries|mostwanted|bestrated|
+</Route>
 
-### 用户文章
+### 影星
 
-<Route author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['用户 id，即用户名称']" />
+<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星id，从链接上获取']" />
+
+### 用户
+
+<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" >
+|想要的|看过的|拥有的|发表的文章|
+|-----|------|------|-----|
+|userwanted|userwatched|userowned|userposts|
+</Route>
 
 ## Last.fm
 
