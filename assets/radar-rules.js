@@ -1040,4 +1040,27 @@
             },
         ],
     },
+    'last.fm': {
+        _name: 'Last.fm',
+        www: [
+            {
+                title: '用户播放记录',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: ['/user/:user', '/user/:user/*'],
+                target: '/lastfm/recent/:user',
+            },
+            {
+                title: '用户 Love 记录',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: ['/user/:user', '/user/:user/*'],
+                target: '/lastfm/loved/:user',
+            },
+            {
+                title: '站内 Top 榜单',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: '/charts',
+                target: '/lastfm/top',
+            },
+        ],
+    },
 });

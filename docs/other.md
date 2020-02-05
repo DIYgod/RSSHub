@@ -406,6 +406,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回全国数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
 
+### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
+
+<Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
+
 ### South China Morning Post - China coronavirus outbreak
 
 <Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>

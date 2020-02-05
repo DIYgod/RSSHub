@@ -28,6 +28,28 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['The IMDB ID corresponding to the seed of show you want to search can be found on the official website [IMDB](https://www.imdb.com)']" supportBT="1"/>
 
+## JavLibrary
+
+### Videos
+
+<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['video type']" >
+|New Comments|New Release|New Entries|Most Wanted|Best Rated|
+|-----|------|------|-----|------|
+|update|newrelease|newentries|mostwanted|bestrated|
+</Route>
+
+### Stars
+
+<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['star id, find it from link']" />
+
+### Users
+
+<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" >
+|User wanted|User watched|User owned|User posts|
+|-----|------|------|-----|
+|userwanted|userwatched|userowned|userposts|
+</Route>
+
 ## Nyaa
 
 ### Seatch Result

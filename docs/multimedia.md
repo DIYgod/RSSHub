@@ -120,9 +120,39 @@ pageClass: routes
 
 ## JavLibrary
 
-### 用户文章
+### 影片
 
-<Route author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['用户 id，即用户名称']" />
+<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['影片类型']" >
+|新话题|新发行|新加入|最想要|高评价|
+|-----|------|------|-----|------|
+|update|newrelease|newentries|mostwanted|bestrated|
+</Route>
+
+### 影星
+
+<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星id，从链接上获取']" />
+
+### 用户
+
+<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" >
+|想要的|看过的|拥有的|发表的文章|
+|-----|------|------|-----|
+|userwanted|userwatched|userowned|userposts|
+</Route>
+
+## Last.fm
+
+### 用户播放记录
+
+<Route author="hoilc" example="/lastfm/recent/yeFoenix" path="/lastfm/recent/:user" :paramsDesc="['Last.fm 用户名']" radar="1" />
+
+### 用户 Love 记录
+
+<Route author="hoilc" example="/lastfm/loved/yeFoenix" path="/lastfm/loved/:user" :paramsDesc="['Last.fm 用户名']" radar="1" />
+
+### 站内 Top 榜单
+
+<Route author="hoilc" example="/lastfm/top/spain" path="/lastfm/top/:country?" :paramsDesc="['国家或地区, 需要符合`ISO 3166-1`的英文全称, 可参考`https://zh.wikipedia.org/wiki/ISO_3166-1二位字母代码#正式分配代码`']" radar="1" />
 
 ## Mp4Ba
 
