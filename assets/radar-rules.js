@@ -982,10 +982,24 @@
         _name: '网易',
         ds: [
             {
-                title: '网易大神',
+                title: '大神',
                 docs: 'https://docs.rsshub.app/game.html#wang-yi-da-shen',
                 source: '/user/:id',
                 target: '/netease/ds/:id',
+            },
+        ],
+        open: [
+            {
+                title: '公开课 - 精品课程',
+                docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke',
+                source: '/',
+                target: '/open163/vip',
+            },
+            {
+                title: '公开课 - 最新课程',
+                docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke',
+                source: '/',
+                target: '/open163/latest',
             },
         ],
     },
