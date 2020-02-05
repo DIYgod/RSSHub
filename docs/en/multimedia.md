@@ -52,15 +52,11 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### User wanted
 
-<Route author="DIYgod junfengP" example="/javlibrary/userwanted/siccalol" path="/javlibrary/userwanted/:uid" :paramsDesc="['User id']" />
-
-### User watched
-
-<Route author="DIYgod junfengP" example="/javlibrary/userwatched/siccalol" path="/javlibrary/userwatched/:uid" :paramsDesc="['User id']" />
-
-### User owned
-
-<Route author="DIYgod junfengP" example="/javlibrary/userowned/siccalol" path="/javlibrary/userowned/:uid" :paramsDesc="['User id']" />
+<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" >
+|User wanted|User watched|User owned|User posts|
+|-----|------|------|-----|
+|userwanted|userwatched|userowned|userposts|
+</Route>
 
 ## Nyaa
 
