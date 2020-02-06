@@ -1088,7 +1088,7 @@
                 title: '影视剧集更新',
                 docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
                 source: ['/:name', '/:name/:season'],
-                target: '/ddrk/update/:name',
+                target: (params) => `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`,
                 verification: (params) => params.name !== 'category' && params.name !== 'tag',
             },
         ],
