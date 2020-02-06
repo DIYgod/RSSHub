@@ -50,14 +50,6 @@ Official RSS: https://eztv.io/ezrss.xml
 |userwanted|userwatched|userowned|userposts|
 </Route>
 
-### User wanted
-
-<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" >
-|User wanted|User watched|User owned|User posts|
-|-----|------|------|-----|
-|userwanted|userwatched|userowned|userposts|
-</Route>
-
 ## Nyaa
 
 ### Seatch Result
