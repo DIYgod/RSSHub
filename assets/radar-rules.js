@@ -1089,7 +1089,7 @@
                 docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
                 source: ['/:name', '/:name/:season'],
                 target: (params) => `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`,
-                verification: (params) => params.name !== 'category' && params.name !== 'tag',
+                verification: (params) => params.name !== 'category' && params.name !== 'tag' && params.name !== 'ddrklogin' && params.name !== 'about' && params.name !== 'deleted',
             },
         ],
     },
