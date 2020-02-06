@@ -1077,4 +1077,34 @@
             },
         ],
     },
+    'ddrk.me': {
+        _name: '低端影视',
+        www: [
+            {
+                title: '首页',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: '/',
+                target: '/ddrk/index',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: '/tag/:tag',
+                target: '/ddrk/tag/:tag',
+            },
+            {
+                title: '分类',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: ['/category/:category', '/category/:uplevel/:category'],
+                target: '/ddrk/category/:category',
+            },
+            {
+                title: '影视剧集更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: ['/:name', '/:name/:season'],
+                target: (params) => `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`,
+                verification: (params) => params.name !== 'category' && params.name !== 'tag' && params.name !== 'ddrklogin' && params.name !== 'about' && params.name !== 'deleted',
+            },
+        ],
+    },
 });

@@ -295,9 +295,21 @@ pageClass: routes
 
 ## 低端影视
 
-### 影视剧集
+### 影视剧集更新
 
-<Route author="saintwinkle" example="/ddrk/silicon-valley/6" path="/ddrk/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容，']" />
+<Route author="saintwinkle" example="/ddrk/update/silicon-valley/6" path="/ddrk/update/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容']" radar="1" />
+
+### 首页
+
+<Route author="hoilc" example="/ddrk/index" path="/ddrk/index" radar="1" />
+
+### 分类
+
+<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" :paramsDesc="['分类 ID, 可在 URL 中找到, 注意, 如果有两级分类, 只需要填写第二级即可']" radar="1" />
+
+### 标签
+
+<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" :paramsDesc="['标签名, 可在 URL 中找到']" radar="1" />
 
 ## 电影首发站
 
