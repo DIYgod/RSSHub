@@ -140,14 +140,6 @@ pageClass: routes
 |userwanted|userwatched|userowned|userposts|
 </Route>
 
-### 用户想要的
-
-<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" >
-|想要的|看过的|拥有的|发表的文章|
-|-----|------|------|-----|
-|userwanted|userwatched|userowned|userposts|
-</Route>
-
 ## Last.fm
 
 ### 用户播放记录
