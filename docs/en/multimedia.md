@@ -30,13 +30,25 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ## JavLibrary
 
-### Best rated videos
+### Videos
 
-<RouteEn author="DIYgod" example="/javlibrary/bestrated" path="/javlibrary/bestrated"/>
+<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['video type']" >
+|New Comments|New Release|New Entries|Most Wanted|Best Rated|
+|-----|------|------|-----|------|
+|update|newrelease|newentries|mostwanted|bestrated|
+</Route>
 
-### User posts
+### Stars
 
-<RouteEn author="junfengP" example="/javlibrary/userposts/siccalol" path="/javlibrary/userposts/:uid" :paramsDesc="['User id']" />
+<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['star id, find it from link']" />
+
+### Users
+
+<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" >
+|User wanted|User watched|User owned|User posts|
+|-----|------|------|-----|
+|userwanted|userwatched|userowned|userposts|
+</Route>
 
 ## Nyaa
 

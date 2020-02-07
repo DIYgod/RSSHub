@@ -59,7 +59,7 @@
     "yorkie": "2.0.0"
   },
   "dependencies": {
-    "@koa/router": "8.0.6",
+    "@koa/router": "8.0.7",
     "@postlight/mercury-parser": "2.2.0",
     "@sentry/node": "5.12.3",
     "aes-js": "3.1.2",
@@ -75,7 +75,7 @@
     "fanfou-sdk": "4.1.0",
     "git-rev-sync": "2.0.0",
     "googleapis": "47.0.0",
-    "got": "10.4.0",
+    "got": "10.5.0",
     "he": "1.2.0",
     "iconv-lite": "0.5.1",
     "jsdom": "16.1.0",
@@ -92,7 +92,7 @@
     "module-alias": "2.2.2",
     "pidusage": "2.0.17",
     "plist": "3.0.1",
-    "puppeteer": "2.1.0",
+    "puppeteer": "2.1.1",
     "query-string": "6.10.1",
     "redis": "2.8.0",
     "require-all": "3.0.0",
