@@ -1107,4 +1107,15 @@
             },
         ],
     },
+    'hackerone.com': {
+        _name: 'HackerOne',
+        '.': [
+            {
+                title: 'HackerOne Hacker Activity',
+                docs: 'https://docs.rsshub.app/other.html#hackerone-hacker-activity',
+                source: '/hacktivity',
+                target: '/hackerone/hacktivity',
+            },
+        ],
+    },
 });
