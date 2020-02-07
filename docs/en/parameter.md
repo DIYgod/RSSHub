@@ -36,7 +36,7 @@ Set `filterout` to exclude unwanted content.
 
 For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
-Set `filter_case_sensitive` determine whether the filtering keywords should be case sensitive.
+Set `filter_case_sensitive` to determine whether the filtering keywords should be case sensitive. The parameter would apply to both `filter` and `filterout`.
 
 Default: `true`
 
