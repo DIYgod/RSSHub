@@ -4,6 +4,12 @@ pageClass: routes
 
 # 音视频
 
+## 2048 核基地
+
+### 论坛更新
+
+<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到, 例如, `thread.php?fid-16.html`中, 板块 ID 为`16`']"/>
+
 ## 60-Second Science - Scientific American
 
 ### Transcript
