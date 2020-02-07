@@ -312,6 +312,16 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
 
+## piapro
+
+### 用户最新作品
+
+<Route author="hoilc" example="/piapro/user/shine_longer" path="/piapro/user/:pid" :paramsDesc="['用户 ID, 可在 URL 中找到']"/>
+
+### 全站最新作品
+
+<Route author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['作品类别, 可选`music`,`illust`,`text`','标签, 即 URL 中`tag`参数','分类 ID, 即 URL 中 `categoryId` 参数']"/>
+
 ## pixiv
 
 ### 用户收藏
@@ -382,7 +392,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户时间线
 
-<Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id" :paramsDesc="['用户名']" radar="1"/>
+<Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id/:type?" :paramsDesc="['用户名', '额外选项 `exclude_replies`去除回复，`exclude_rts`去除转推，`exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1"/>
 
 ### 用户关注时间线
 

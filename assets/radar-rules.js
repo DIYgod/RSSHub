@@ -978,6 +978,7 @@
             },
         ],
     },
+
     'www.dybz9.net': {
         _name: '第一版主',
         www: [
@@ -986,6 +987,136 @@
                 docs: 'https://docs.rsshub.app/reading.html#di-yi-ban-zhu',
                 source: '',
                 target: '/d1bz',
+            },
+         ],
+    },
+
+    '163.com': {
+        _name: '网易',
+        ds: [
+            {
+                title: '大神',
+                docs: 'https://docs.rsshub.app/game.html#wang-yi-da-shen',
+                source: '/user/:id',
+                target: '/netease/ds/:id',
+            },
+        ],
+        open: [
+            {
+                title: '公开课 - 精品课程',
+                docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke',
+                source: '/',
+                target: '/open163/vip',
+            },
+            {
+                title: '公开课 - 最新课程',
+                docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke',
+                source: '/',
+                target: '/open163/latest',
+            },
+        ],
+    },
+    'suzhou.gov.cn': {
+        _name: '苏州市政府',
+        www: [
+            {
+                title: '政府新闻',
+                docs: 'https://docs.rsshub.app/government.html#su-zhou-shi-ren-min-zheng-fu',
+                source: '/szsrmzf/:uid/nav_list.shtml',
+                target: '/gov/suzhou/news/:uid',
+            },
+        ],
+    },
+    'mqube.net': {
+        _name: 'MQube',
+        www: [
+            {
+                title: '全站最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/latest',
+            },
+            {
+                title: '全站每日排行',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/top',
+            },
+            {
+                title: '个人最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/user/:user',
+                target: '/mqube/user/:user',
+            },
+            {
+                title: '标签最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/search/tag/:tag',
+                target: '/mqube/tag/:tag',
+            },
+        ],
+    },
+    'nikkei.com': {
+        _name: '日本経済新聞',
+        www: [
+            {
+                title: 'ホームページ',
+                docs: 'https://docs.rsshub.app/traditional-media.html#ri-ben-jing-ji-xin-wen',
+                source: '/',
+                target: '/nikkei/index',
+            },
+        ],
+    },
+    'last.fm': {
+        _name: 'Last.fm',
+        www: [
+            {
+                title: '用户播放记录',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: ['/user/:user', '/user/:user/*'],
+                target: '/lastfm/recent/:user',
+            },
+            {
+                title: '用户 Love 记录',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: ['/user/:user', '/user/:user/*'],
+                target: '/lastfm/loved/:user',
+            },
+            {
+                title: '站内 Top 榜单',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: '/charts',
+                target: '/lastfm/top',
+            },
+        ],
+    },
+    'ddrk.me': {
+        _name: '低端影视',
+        www: [
+            {
+                title: '首页',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: '/',
+                target: '/ddrk/index',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: '/tag/:tag',
+                target: '/ddrk/tag/:tag',
+            },
+            {
+                title: '分类',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: ['/category/:category', '/category/:uplevel/:category'],
+                target: '/ddrk/category/:category',
+            },
+            {
+                title: '影视剧集更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: ['/:name', '/:name/:season'],
+                target: (params) => `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`,
+                verification: (params) => params.name !== 'category' && params.name !== 'tag' && params.name !== 'ddrklogin' && params.name !== 'about' && params.name !== 'deleted',
             },
         ],
     },

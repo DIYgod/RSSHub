@@ -58,6 +58,18 @@ pageClass: routes
 
 <Route author="TPOB" example="/pku/cls/lecture" path="/universities/pku/cls/lecture" />
 
+### 北大未名 BBS 全站十大
+
+<Route author="wooddance" example="/pku/bbs/hot" path="/universities/pku/bbs/hot">
+
+::: warning 注意
+
+论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
@@ -603,6 +615,18 @@ category 列表：
 | 通知公告 | 学术公告 |
 | -------- | -------- |
 | 1        | 2        |
+
+</Route>
+
+## 南京林业大学
+
+### 教务处
+
+<Route author="kiusiudeng" example="/njfu/jwc/1798" path="/universities/njfu/jwc/:category?" :paramsDesc="['省略则默认为1799']">
+
+| 校级发文 | 通知公告 | 上级发文 | 下载专区 |
+| -------- | -------- | -------- | -------- |
+| 1798     | 1799     | 2270     | 1797     |
 
 </Route>
 
