@@ -76,6 +76,11 @@ pageClass: routes
 
 </Route>
 
+## 第一版主
+
+### 小说更新
+
+<Route author="uTginZYXHOWdxjbA" example="/novel/d1bz/10/10967" path="/novel/d1bz/:category/:id" :paramsDesc="['分类id，可以在对应小说页url找到', '小说id, 可在对应小说页url中找到']"/>
 ## 飞地
 
 ### 分类

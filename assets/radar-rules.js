@@ -978,4 +978,15 @@
             },
         ],
     },
+    'www.dybz9.net': {
+        _name: '第一版主',
+        www: [
+            {
+                title: '小说',
+                docs: 'https://docs.rsshub.app/reading.html#di-yi-ban-zhu',
+                source: '',
+                target: '/d1bz',
+            },
+        ],
+    },
 });
