@@ -5429,10 +5429,10 @@ googleapis@47.0.0:
     google-auth-library "^5.6.1"
     googleapis-common "^3.2.0"
 
-got@10.5.2:
-  version "10.5.2"
-  resolved "https://registry.yarnpkg.com/got/-/got-10.5.2.tgz#28a35ed7d6dac64fe58074965d9bb17c941b8fe0"
-  integrity sha512-uN3A7WzRXLBDm/U1dlrQkyvnkWHk8KkVK8TEP4GohWQrit91MQ0/qAzQqB2ylFkNp5l3oKmWq+SNNxXqk2mYUg==
+got@10.5.3:
+  version "10.5.3"
+  resolved "https://registry.yarnpkg.com/got/-/got-10.5.3.tgz#41112536ace735166a2c144fc31b96112d555120"
+  integrity sha512-PmA4BGUTptinJSDMOVz9FmOovKOAZDAEvmIrTX7Qg/kq6t99HP8LXBPbye3iWjAOngZ0cZ2AQpYQZb+ldU0lEA==
   dependencies:
     "@sindresorhus/is" "^1.0.0"
     "@szmarczak/http-timer" "^4.0.0"
