@@ -48,6 +48,16 @@ Official user RSS: http://**:username**.lofter.com/rss
 
 <RouteEn author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['instance address, noly domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
 
+## piapro
+
+### User latest works
+
+<RouteEn author="hoilc" example="/piapro/user/shine_longer" path="/piapro/user/:pid" :paramsDesc="['User ID, can be found in url']"/>
+
+### Website latest works
+
+<RouteEn author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']"/>
+
 ## pixiv
 
 ### User Bookmark
