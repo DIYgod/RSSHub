@@ -402,4 +402,10 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
     -   `LASTFM_API_KEY`: Last.fm API Key
 
 -   北大未名 BBS 全站十大
+
     -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1.登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+
+-   nhentai torrent 下载: [申请地址](https://nhentai.net/register/)
+
+    -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
+    -   `NHENTAI_PASSWORD`: nhentai 密码
