@@ -277,6 +277,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+## 奶牛关
+
+### 元素文章
+
+<Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" />
+
 ## 网易大神
 
 ### 用户发帖
