@@ -1107,6 +1107,18 @@
             },
         ],
     },
+    'google.com': {
+        _name: '谷歌',
+        photos: [
+            {
+                title: '相册',
+                docs: 'https://docs.rsshub.app/picture.html#google-xiang-ce',
+                source: '/share/*',
+                target: '/google/album/:id',
+                script: "({id: document.querySelector('html').innerHTML.match(/photos.app.goo.gl\\/(.*?)\"/)[1]})",
+            },
+        ],
+    },
     'javlibrary.com': {
         _name: 'javlibrary',
         www: [
