@@ -1107,4 +1107,15 @@
             },
         ],
     },
+    'cowlevel.net': {
+        _name: '奶牛关',
+        '.': [
+            {
+                title: '元素文章',
+                docs: 'https://docs.rsshub.app/game.html#nai-niu-guan',
+                source: ['/element/:id', '/element/:id/article'],
+                target: '/cowlevel/element/:id',
+            },
+        ],
+    },
 });
