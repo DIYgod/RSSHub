@@ -9804,10 +9804,10 @@ redis-parser@^3.0.0:
   dependencies:
     redis-errors "^1.0.0"
 
-redis@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.1.tgz#6bb31a7cb39e245fe75783f8a920153a575bd560"
-  integrity sha512-hqW1xndQngujard3DlK3c1/BNWupZJgUYjXR59yxa9UKtRdAMTV2dDdcx4rKSj4Hb6534rT9+JjPWSA7HpSbUw==
+redis@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.2.tgz#bd47067b8a4a3e6a2e556e57f71cc82c7360150a"
+  integrity sha512-PNhLCrjU6vKVuMOyFu7oSP296mwBkcE6lrAjruBYG5LgdSqtRBoVQIylrMyVZD/lkF24RSNNatzvYag6HRBHjQ==
   dependencies:
     denque "^1.4.1"
     redis-commands "^1.5.0"
