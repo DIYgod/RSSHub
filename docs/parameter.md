@@ -37,6 +37,12 @@ filterout 去掉不要的内容
 
 举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
 
+filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时适用
+
+默认为 true，区分大小写
+
+举例 1: <https://rsshub.app/bilibili/user/coin/2267573?filter=diyGOD|RSShub&filter_case_sensitive=false>
+
 ## 条数限制
 
 可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS

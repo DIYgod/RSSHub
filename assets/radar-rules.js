@@ -1172,4 +1172,26 @@
             },
         ],
     },
+    'hackerone.com': {
+        _name: 'HackerOne',
+        '.': [
+            {
+                title: 'HackerOne Hacker Activity',
+                docs: 'https://docs.rsshub.app/other.html#hackerone-hacker-activity',
+                source: '/hacktivity',
+                target: '/hackerone/hacktivity',
+            },
+        ],
+    },
+    'cowlevel.net': {
+        _name: '奶牛关',
+        '.': [
+            {
+                title: '元素文章',
+                docs: 'https://docs.rsshub.app/game.html#nai-niu-guan',
+                source: ['/element/:id', '/element/:id/article'],
+                target: '/cowlevel/element/:id',
+            },
+        ],
+    },
 });
