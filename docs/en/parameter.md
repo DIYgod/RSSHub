@@ -36,6 +36,12 @@ Set `filterout` to exclude unwanted content.
 
 For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
+Set `filter_case_sensitive` to determine whether the filtering keywords should be case sensitive. The parameter would apply to both `filter` and `filterout`.
+
+Default: `true`
+
+Example: [https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false](https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false)
+
 ### Limit Entries
 
 Set `limit` to limit the number of articles in the feed.
