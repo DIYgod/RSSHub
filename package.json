@@ -95,7 +95,7 @@
     "plist": "3.0.1",
     "puppeteer": "2.1.1",
     "query-string": "6.10.1",
-    "redis": "3.0.1",
+    "redis": "3.0.2",
     "require-all": "3.0.0",
     "rss-parser": "3.7.5",
     "socks-proxy-agent": "5.0.0",
