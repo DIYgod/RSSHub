@@ -32,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 爱下电子书
+
+### 最新章节
+
+<Route author="JeasonLau" example="/axdzs/191/191976" path="/axdzs/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到', '小说网站链接最后的数字, 可在对应小说页 URL 中找到']"  />
+
 ## 笔趣阁
 
 ### 小说更新
