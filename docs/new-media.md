@@ -393,6 +393,16 @@ Supported sub-sites：
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
+## 凤凰网
+
+### 大风号
+
+<Route author="Jamch" example="/ifeng/feng/2583/doc" path="/ifeng/feng/:id/:type" :paramsDesc="['对应 id，可在 大风号作者页面 找到','类型，见下表']"/>
+
+| 文章 | 视频  |
+| ---- | ----- |
+| doc  | video |
+
 ## 观察者网-中国关怀 全球视野
 
 ### 观察者首页

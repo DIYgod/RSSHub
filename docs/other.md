@@ -43,6 +43,12 @@ pageClass: routes
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
+## HackerOne
+
+### HackerOne Hacker Activity
+
+<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+
 ## Instapaper
 
 ### 个人分享
