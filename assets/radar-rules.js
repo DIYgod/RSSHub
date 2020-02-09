@@ -1107,6 +1107,17 @@
             },
         ],
     },
+    'hackerone.com': {
+        _name: 'HackerOne',
+        '.': [
+            {
+                title: 'HackerOne Hacker Activity',
+                docs: 'https://docs.rsshub.app/other.html#hackerone-hacker-activity',
+                source: '/hacktivity',
+                target: '/hackerone/hacktivity',
+            },
+        ],
+    },
     'cowlevel.net': {
         _name: '奶牛关',
         '.': [
