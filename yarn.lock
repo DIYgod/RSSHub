@@ -9426,7 +9426,7 @@ prettier@1.16.3:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.3.tgz#8c62168453badef702f34b45b6ee899574a6a65d"
   integrity sha512-kn/GU6SMRYPxUakNXhpP0EedT/KmaPzr0H5lIsDogrykbaxOpOfAFfk5XA7DZrJyMAv1wlMV3CPcZruGXVVUZw==
 
-prettier@1.19.1, prettier@^1.19.1:
+prettier@1.19.1:
   version "1.19.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
   integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
@@ -9804,13 +9804,12 @@ redis-parser@^3.0.0:
   dependencies:
     redis-errors "^1.0.0"
 
-redis@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.0.tgz#05905b9f6da32eb1258242a3afe21d78c5411117"
-  integrity sha512-EvXfmZoixkHAtM4FAPPIm6utLLzbtSNj3kMNlyxmi3K9jxzXnbYwlOnwGAwOP8bhADLfm/ma8I9R6aPwGzpPIg==
+redis@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.1.tgz#6bb31a7cb39e245fe75783f8a920153a575bd560"
+  integrity sha512-hqW1xndQngujard3DlK3c1/BNWupZJgUYjXR59yxa9UKtRdAMTV2dDdcx4rKSj4Hb6534rT9+JjPWSA7HpSbUw==
   dependencies:
     denque "^1.4.1"
-    prettier "^1.19.1"
     redis-commands "^1.5.0"
     redis-errors "^1.2.0"
     redis-parser "^3.0.0"
