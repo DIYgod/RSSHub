@@ -63,7 +63,8 @@ describe('got', () => {
         require('../../lib/utils/request-wrapper');
         check = (request) => {
             expect(request.agent.constructor.name).toBe('SocksProxyAgent');
-            expect(request.agent.proxy.href).toBe('socks://rsshub.proxy:2333');
+            expect(request.agent.proxy.host).toBe('rsshub.proxy');
+            expect(request.agent.proxy.port).toBe(2333);
         };
 
         nock(/rsshub\.test/)
@@ -151,7 +152,8 @@ describe('got', () => {
         check = (request) => {
             if (request.path === '/url_regex') {
                 expect(request.agent.constructor.name).toBe('SocksProxyAgent');
-                expect(request.agent.proxy.href).toBe('socks://rsshub.proxy:2333');
+                expect(request.agent.proxy.host).toBe('rsshub.proxy');
+                expect(request.agent.proxy.port).toBe(2333);
             } else if (request.path === '/proxy') {
                 expect(request.agent).toBe(undefined);
             }
