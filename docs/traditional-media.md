@@ -104,12 +104,12 @@ Solidot 提供的 feed:
 
 `地区`
 | 香港 | 台灣 | 美國 |
-| -- | -- | -- |
+| ---- | ---- | ---- |
 | hk | tw | en |
 
 `类別`
 | 新聞總集 | 兩岸國際 | 財經 | 娛樂 | 體育 | 健康 |
-| -- | -- | -- | -- | -- | -- |
+| -------- | -------- | -------- | ------------- | ------ | ------ |
 | (空) | world | business | entertainment | sports | health |
 
 </Route>
@@ -187,6 +187,10 @@ Category 列表:
 ### 24 小时新闻排行榜
 
 <Route author="HenryQW" example="/dwnews/rank" path="/dwnews/rank"/>
+
+## 谷歌新闻
+
+<Route author="zoenglinghou" example="/google/news/要闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
 
 ## 华尔街见闻
 
