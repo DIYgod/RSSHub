@@ -8147,10 +8147,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@11.7.2:
-  version "11.7.2"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-11.7.2.tgz#4cee4fa838dc3635c074c5b3436bcdec7f7ee213"
-  integrity sha512-7swr5bL1xBZ5FctyubjxEVySXOSebyqcL7Vy1bx1nS9IUqQWj81cmKjVKJLr8fHhtzI1MV8nyCdENA/cGcY1+Q==
+nock@11.8.2:
+  version "11.8.2"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-11.8.2.tgz#7845608d57769f41375b63521a7e6b554f4cdbb2"
+  integrity sha512-udrFXJ/aqPM9NmrKOcNJ67lvrs/zroNq2sbumhaMPW5JLNy/6LsWiZEwU9DiQIUHOcOCR4MPeqIG7uQNbDGExA==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
