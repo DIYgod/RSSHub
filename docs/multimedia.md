@@ -4,6 +4,12 @@ pageClass: routes
 
 # 音视频
 
+## 2048 核基地
+
+### 论坛更新
+
+<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到, 例如, `thread.php?fid-16.html`中, 板块 ID 为`16`']"/>
+
 ## 60-Second Science - Scientific American
 
 ### Transcript
@@ -122,7 +128,7 @@ pageClass: routes
 
 ### 影片
 
-<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['影片类型']" >
+<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['影片类型']" radar="1" >
 |新话题|新发行|新加入|最想要|高评价|
 |-----|------|------|-----|------|
 |update|newrelease|newentries|mostwanted|bestrated|
@@ -130,11 +136,11 @@ pageClass: routes
 
 ### 影星
 
-<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星id，从链接上获取']" />
+<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星id，从链接上获取']" radar="1" />
 
 ### 用户
 
-<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" >
+<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" radar="1" >
 |想要的|看过的|拥有的|发表的文章|
 |-----|------|------|-----|
 |userwanted|userwatched|userowned|userposts|
@@ -237,6 +243,12 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
+## Yahoo!テレビ
+
+### 番組検索
+
+<Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
+
 ## Youtube
 
 见 [#youtube](/social-media.html#youtube)
@@ -295,9 +307,21 @@ pageClass: routes
 
 ## 低端影视
 
-### 影视剧集
+### 影视剧集更新
 
-<Route author="saintwinkle" example="/ddrk/silicon-valley/6" path="/ddrk/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容，']" />
+<Route author="saintwinkle" example="/ddrk/update/silicon-valley/6" path="/ddrk/update/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容']" radar="1" />
+
+### 首页
+
+<Route author="hoilc" example="/ddrk/index" path="/ddrk/index" radar="1" />
+
+### 分类
+
+<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" :paramsDesc="['分类 ID, 可在 URL 中找到, 注意, 如果有两级分类, 只需要填写第二级即可']" radar="1" />
+
+### 标签
+
+<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" :paramsDesc="['标签名, 可在 URL 中找到']" radar="1" />
 
 ## 电影首发站
 
