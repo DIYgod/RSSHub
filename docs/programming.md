@@ -26,9 +26,21 @@ pageClass: routes
 
 ## GitChat
 
-### 最新
+### 最新文章
 
-<Route author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
+<Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" :paramsDesc="['分类 ID, 置空或`all`代表全部, 具体值需要抓取前端请求, 以下列出可能有变动, 仅供参考','是否只显示严选文章, 任意值为是, 置空为否']" />
+
+| 分类名   | 分类 ID                  |
+| :------- | :----------------------- |
+| 前端     | 58e84f875295227534aad506 |
+| 后端     | 5d8b7c3786194a1921979122 |
+| 移动开发 | 5d8b7c3786194a1921979123 |
+| 运维     | 5901bd477b61a76bc4016423 |
+| 测试     | 58e84f425295227534aad502 |
+| 架构     | 58e84f6bad952d6b3428af9a |
+| 人工智能 | 58e84f53ec8e9e7b34457809 |
+| 职场     | 58e84f1584c651693437f27c |
+| 互联网   | 5d8b7c3786194a1921979124 |
 
 > GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
@@ -268,9 +280,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Scala Blog
 
-<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分']" >
-默认为All part参数可在url中获得
-</Route>
+<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分, 默认为All, part参数可在url中获得']" />
 
 ## segmentfault
 
