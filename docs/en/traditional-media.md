@@ -60,10 +60,6 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </RouteEn>
 
-## Google News
-
-<Route author="zoenglinghou" example="/google/news/Headlines/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" :paramsDesc="['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']"/>
-
 ## NHK
 
 ### News Web Easy
