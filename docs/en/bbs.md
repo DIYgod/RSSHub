@@ -15,7 +15,7 @@ pageClass: routes
 <Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" :paramsDesc="['discuz version，see below table','link of subforum, require url encoded']" >
 
 | Discuz X Series | Discuz 7.x Series |
-| ------------- | --------------- |
-| x             | 7               |
+| --------------- | ----------------- |
+| x               | 7                 |
 
 </Route>
