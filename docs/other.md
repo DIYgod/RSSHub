@@ -430,6 +430,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ---- | ---- | ---- |
 | ch   | en   | pt   |
 
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
+
+<Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
+
 ## 新趣集
 
 > 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
