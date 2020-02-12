@@ -128,12 +128,12 @@ Provides a better reading experience (full text articles) over the official one.
 
 `Region`
 | Hong Kong | Taiwan | US |
-| -- | -- | -- |
+| --------- | ------ | --- |
 | hk | tw | en |
 
 `Category`
 | All | World | Business | Entertainment | Sports | Health |
-| -- | -- | -- | -- | -- | -- |
+| ------- | ----- | -------- | ------------- | ------ | ------ |
 | (Empty) | world | business | entertainment | sports | health |
 
 </Route>

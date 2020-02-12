@@ -1107,4 +1107,144 @@
             },
         ],
     },
+    'google.com': {
+        _name: '谷歌',
+        photos: [
+            {
+                title: '相册',
+                docs: 'https://docs.rsshub.app/picture.html#google-xiang-ce',
+                source: '/share/*',
+                target: '/google/album/:id',
+                script: "({id: document.querySelector('html').innerHTML.match(/photos.app.goo.gl\\/(.*?)\"/)[1]})",
+            },
+        ],
+    },
+    'javlibrary.com': {
+        _name: 'javlibrary',
+        www: [
+            {
+                title: '新话题',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/update',
+            },
+            {
+                title: '新发行',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/newrelease',
+            },
+            {
+                title: '新加入',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/newentries',
+            },
+            {
+                title: '最想要',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/mostwanted',
+            },
+            {
+                title: '高评价',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/bestrated',
+            },
+            {
+                title: '影星',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn/vl_star.php',
+                target: (params, url) => `/javlibrary/stars/${new URL(url).searchParams.get('s')}`,
+            },
+            {
+                title: '用户文章',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userposts`,
+            },
+            {
+                title: '用户拥有',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userowned`,
+            },
+            {
+                title: '用户看过',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwatched`,
+            },
+            {
+                title: '用户想要',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwanted`,
+            },
+        ],
+    },
+    'qidian.com': {
+        _name: '起点',
+        book: [
+            {
+                title: '章节',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/info/:id',
+                target: '/qidian/chapter/:id',
+            },
+            {
+                title: '讨论区',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/info/:id',
+                target: '/qidian/forum/:id',
+            },
+        ],
+        www: [
+            {
+                title: '限免',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/free',
+                target: '/qidian/free',
+            },
+            {
+                title: '女生限免',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/mm/free',
+                target: '/qidian/free/mm',
+            },
+        ],
+    },
+    'hackerone.com': {
+        _name: 'HackerOne',
+        '.': [
+            {
+                title: 'HackerOne Hacker Activity',
+                docs: 'https://docs.rsshub.app/other.html#hackerone-hacker-activity',
+                source: '/hacktivity',
+                target: '/hackerone/hacktivity',
+            },
+        ],
+    },
+    'cowlevel.net': {
+        _name: '奶牛关',
+        '.': [
+            {
+                title: '元素文章',
+                docs: 'https://docs.rsshub.app/game.html#nai-niu-guan',
+                source: ['/element/:id', '/element/:id/article'],
+                target: '/cowlevel/element/:id',
+            },
+        ],
+    },
+    'beijing.gov.cn': {
+        wjw: [
+            {
+                title: '北京卫生健康委员会',
+                docs: 'https://docs.rsshub.app/government.html#zhong-yang-ji-wei-guo-jia-jian-wei',
+                source: '/xwzx_20031/:caty',
+                target: '/gov/beijing/mhc/:caty',
+            },
+        ],
+    },
 });

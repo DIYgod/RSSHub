@@ -55,6 +55,12 @@ pageClass: routes
 
 <RouteEn author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
+## HackerOne
+
+### HackerOne Hacker Activity
+
+<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+
 ## Instapaper
 
 ### Personal sharing
