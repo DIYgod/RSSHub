@@ -42,6 +42,16 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 <Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
 
+## 好好住
+
+### 整屋案例
+
+<Route author="hoilc" example="/haohaozhu/whole-house/日式" path="/haohaozhu/whole-house/:keyword?" :paramsDesc="['分类名或关键字，请使用中文']"/>
+
+### 发现
+
+<Route author="hoilc" example="/haohaozhu/discover/厨房" path="/haohaozhu/discover/:keyword?" :paramsDesc="['分类名或关键字，请使用中文']"/>
+
 ## 京东众筹
 
 ### 众筹项目
