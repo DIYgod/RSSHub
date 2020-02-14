@@ -70,7 +70,7 @@
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.8.20",
     "dotenv": "8.2.0",
-    "emailjs-imap-client": "3.0.7",
+    "emailjs-imap-client": "3.1.0",
     "etag": "1.8.1",
     "fanfou-sdk": "4.1.0",
     "git-rev-sync": "2.0.0",
