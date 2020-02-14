@@ -4248,19 +4248,19 @@ emailjs-base64@^1.1.2, emailjs-base64@^1.1.4:
   resolved "https://registry.yarnpkg.com/emailjs-base64/-/emailjs-base64-1.1.4.tgz#392fa38cb6aa35dccd3af3637ffc14c1c7ce9612"
   integrity sha1-OS+jjLaqNdzNOvNjf/wUwcfOlhI=
 
-emailjs-imap-client@3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/emailjs-imap-client/-/emailjs-imap-client-3.0.7.tgz#d76f1e7279c8d0d519d82fde1f5e3dc06b1a2a95"
-  integrity sha1-128ecnnI0NUZ2C/eH149wGsaKpU=
+emailjs-imap-client@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/emailjs-imap-client/-/emailjs-imap-client-3.1.0.tgz#fd0486f0d3a679f2ac0b1ea0e7dd6e777c479da1"
+  integrity sha512-YgWOmzxuD2/fGRL+VKDGt+nszHrUlz2BmD+gfM3+aeCzFF+Y+ayShylXl70rURRQ6a0TdEKp2Ty+kJB9d/lGJw==
   dependencies:
     emailjs-addressparser "^2.0.2"
-    emailjs-base64 "^1.1.2"
+    emailjs-base64 "^1.1.4"
     emailjs-imap-handler "^3.0.2"
-    emailjs-mime-codec "^2.0.7"
-    emailjs-tcp-socket "^2.0.0"
+    emailjs-mime-codec "^2.0.8"
+    emailjs-tcp-socket "^2.0.2"
     emailjs-utf7 "^4.0.1"
-    pako "^1.0.6"
-    ramda "^0.25.0"
+    pako "^1.0.10"
+    ramda "^0.26.1"
 
 emailjs-imap-handler@^3.0.2:
   version "3.0.2"
@@ -4269,19 +4269,19 @@ emailjs-imap-handler@^3.0.2:
   dependencies:
     ramda "^0.25.0"
 
-emailjs-mime-codec@^2.0.7:
+emailjs-mime-codec@^2.0.8:
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/emailjs-mime-codec/-/emailjs-mime-codec-2.0.9.tgz#d184451b6f2e55c5868b0f0a82d18fe2b82f0c97"
-  integrity sha1-0YRFG28uVcWGiw8KgtGP4rgvDJc=
+  integrity sha512-7qJo4pFGcKlWh/kCeNjmcgj34YoJWY0ekZXEHYtluWg4MVBnXqGM4CRMtZQkfYwitOhUgaKN5EQktJddi/YIDQ==
   dependencies:
     emailjs-base64 "^1.1.4"
     ramda "^0.26.1"
     text-encoding "^0.7.0"
 
-emailjs-tcp-socket@^2.0.0:
+emailjs-tcp-socket@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/emailjs-tcp-socket/-/emailjs-tcp-socket-2.0.2.tgz#e89be8d331b5ab5dddca47428e5f64c1ac5154f4"
-  integrity sha1-6Jvo0zG1q13dykdCjl9kwaxRVPQ=
+  integrity sha512-ro2G1WS7UQwFNpjrWRK6awjsBjG00Y4AxSEvuG1YUORzIqnzdOUVmaHnptZ8UFDPYglsu8O4nm6+luflmTy3Qg==
   dependencies:
     node-forge "^0.7.5"
     ramda "^0.25.0"
@@ -8730,10 +8730,10 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-pako@^1.0.6, pako@~1.0.5:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
-  integrity sha512-0DTvPVU3ed8+HNXOu5Bs+o//Mbdj9VNQMUOe9oKCwh8l0GNwpTDMKCWbRjgtD291AWnkAgkqA/LOnQS8AmS1tw==
+pako@^1.0.10, pako@~1.0.5:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
+  integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
 parallel-transform@^1.1.0:
   version "1.1.0"
