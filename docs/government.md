@@ -318,6 +318,18 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
 
+## 中华人民共和国教育部
+
+### 新闻
+
+<Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
+
+|  政策解读   |  最新文件   | 公告公示 |    教育部简报     |
+| :---------: | :---------: | :------: | :---------------: |
+| policy_anal | newest_file |  notice  | edu_ministry_news |
+
+</Route>
+
 ## 中华人民共和国商务部
 
 ### 政务公开
@@ -339,18 +351,6 @@ pageClass: routes
 | 部内信息 | 政策解读 | 首页信息 |
 | :------: | :------: | :------: |
 |   bnxx   |   zcjd   |  index   |
-
-</Route>
-
-## 中华人民共和国教育部
-
-### 新闻
-
-<Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
-
-|  政策解读   |  最新文件   | 公告公示 |    教育部简报     |
-| :---------: | :---------: | :------: | :---------------: |
-| policy_anal | newest_file |  notice  | edu_ministry_news |
 
 </Route>
 
