@@ -342,6 +342,18 @@ pageClass: routes
 
 </Route>
 
+## 中华人民共和国教育部
+
+### 新闻
+
+<Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
+
+|  政策解读   |  最新文件   | 公告公示 |    教育部简报     |
+| :---------: | :---------: | :------: | :---------------: |
+| policy_anal | newest_file |  notice  | edu_ministry_news |
+
+</Route>
+
 ## 中华人民共和国外交部
 
 ### 发言人表态
