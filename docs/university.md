@@ -764,18 +764,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
-## 中国海洋大学
-
-### 信息科学与工程学院
-
-<Route author="Geo" example="/ouc/it/0" path="/universities/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
-
-| 学院要闻 | 学院公告 | 学院活动 |
-| -------- | -------- | -------- |
-| 0        | 1        | 2        |
-
-</Route>
-
 ## 山东大学
 
 ### 软件学院通知
@@ -1036,9 +1024,9 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 全文内容需使用校园网或 VPN 获取
 :::
 
-| 全部  | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
-| :---: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-|  all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+| 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
+| :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+| all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
 
 </Route>
 
@@ -1188,6 +1176,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 研究生院综合通知公告
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
+
+## 中国海洋大学
+
+### 信息科学与工程学院
+
+<Route author="Geo" example="/ouc/it/0" path="/universities/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院要闻 | 学院公告 | 学院活动 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</Route>
 
 ## 中国科学院
 
