@@ -176,6 +176,16 @@ pageClass: routes
 
 </Route>
 
+## 虛詞
+
+### 版块
+
+<Route author="LogicJake" example="/p-articles/section/critics-art" path="/p-articles/section/:section" :paramsDesc="['版块链接, 可在对应版块 URL 中找到, 子版块链接用`-`连接']"/>
+
+### 作者
+
+<Route author="LogicJake" example="/p-articles/contributors/朗天" path="/p-articles/contributors/:author" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
+
 ## 纵横
 
 ### 章节
