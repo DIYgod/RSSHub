@@ -4248,19 +4248,19 @@ emailjs-base64@^1.1.2, emailjs-base64@^1.1.4:
   resolved "https://registry.yarnpkg.com/emailjs-base64/-/emailjs-base64-1.1.4.tgz#392fa38cb6aa35dccd3af3637ffc14c1c7ce9612"
   integrity sha1-OS+jjLaqNdzNOvNjf/wUwcfOlhI=
 
-emailjs-imap-client@3.0.7:
-  version "3.0.7"
-  resolved "https://registry.yarnpkg.com/emailjs-imap-client/-/emailjs-imap-client-3.0.7.tgz#d76f1e7279c8d0d519d82fde1f5e3dc06b1a2a95"
-  integrity sha1-128ecnnI0NUZ2C/eH149wGsaKpU=
+emailjs-imap-client@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/emailjs-imap-client/-/emailjs-imap-client-3.1.0.tgz#fd0486f0d3a679f2ac0b1ea0e7dd6e777c479da1"
+  integrity sha512-YgWOmzxuD2/fGRL+VKDGt+nszHrUlz2BmD+gfM3+aeCzFF+Y+ayShylXl70rURRQ6a0TdEKp2Ty+kJB9d/lGJw==
   dependencies:
     emailjs-addressparser "^2.0.2"
-    emailjs-base64 "^1.1.2"
+    emailjs-base64 "^1.1.4"
     emailjs-imap-handler "^3.0.2"
-    emailjs-mime-codec "^2.0.7"
-    emailjs-tcp-socket "^2.0.0"
+    emailjs-mime-codec "^2.0.8"
+    emailjs-tcp-socket "^2.0.2"
     emailjs-utf7 "^4.0.1"
-    pako "^1.0.6"
-    ramda "^0.25.0"
+    pako "^1.0.10"
+    ramda "^0.26.1"
 
 emailjs-imap-handler@^3.0.2:
   version "3.0.2"
@@ -4269,19 +4269,19 @@ emailjs-imap-handler@^3.0.2:
   dependencies:
     ramda "^0.25.0"
 
-emailjs-mime-codec@^2.0.7:
+emailjs-mime-codec@^2.0.8:
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/emailjs-mime-codec/-/emailjs-mime-codec-2.0.9.tgz#d184451b6f2e55c5868b0f0a82d18fe2b82f0c97"
-  integrity sha1-0YRFG28uVcWGiw8KgtGP4rgvDJc=
+  integrity sha512-7qJo4pFGcKlWh/kCeNjmcgj34YoJWY0ekZXEHYtluWg4MVBnXqGM4CRMtZQkfYwitOhUgaKN5EQktJddi/YIDQ==
   dependencies:
     emailjs-base64 "^1.1.4"
     ramda "^0.26.1"
     text-encoding "^0.7.0"
 
-emailjs-tcp-socket@^2.0.0:
+emailjs-tcp-socket@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/emailjs-tcp-socket/-/emailjs-tcp-socket-2.0.2.tgz#e89be8d331b5ab5dddca47428e5f64c1ac5154f4"
-  integrity sha1-6Jvo0zG1q13dykdCjl9kwaxRVPQ=
+  integrity sha512-ro2G1WS7UQwFNpjrWRK6awjsBjG00Y4AxSEvuG1YUORzIqnzdOUVmaHnptZ8UFDPYglsu8O4nm6+luflmTy3Qg==
   dependencies:
     node-forge "^0.7.5"
     ramda "^0.25.0"
@@ -7987,6 +7987,11 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
   dependencies:
     minimist "0.0.8"
 
+mkdirp@^1.0.0:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.3.tgz#4cf2e30ad45959dddea53ad97d518b6c8205e1ea"
+  integrity sha512-6uCP4Qc0sWsgMLy1EOqqS/3rjDHOEnsStVr/4vtAIK2Y5i2kA7lFFejYrpIyiN9w0pYf4ckeCYT9f1r1P9KX5g==
+
 mockdate@2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-2.0.5.tgz#70c6abf9ed4b2dae65c81dfc170dd1a5cec53620"
@@ -8147,15 +8152,15 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@11.8.2:
-  version "11.8.2"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-11.8.2.tgz#7845608d57769f41375b63521a7e6b554f4cdbb2"
-  integrity sha512-udrFXJ/aqPM9NmrKOcNJ67lvrs/zroNq2sbumhaMPW5JLNy/6LsWiZEwU9DiQIUHOcOCR4MPeqIG7uQNbDGExA==
+nock@11.9.0:
+  version "11.9.0"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-11.9.0.tgz#012adc21e534a95a127808c5addd696695db293a"
+  integrity sha512-2ml3A1pqTLapa4US4sv5n5XtIuaTNMd0hQNDG4EtTUY38TQroIf3EIEl8aA6mvY9Dtt8gofCtJZElRLfhW7/Hg==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
     lodash "^4.17.13"
-    mkdirp "^0.5.0"
+    mkdirp "^1.0.0"
     propagate "^2.0.0"
 
 node-fetch@^2.3.0:
@@ -8725,10 +8730,10 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-pako@^1.0.6, pako@~1.0.5:
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.10.tgz#4328badb5086a426aa90f541977d4955da5c9732"
-  integrity sha512-0DTvPVU3ed8+HNXOu5Bs+o//Mbdj9VNQMUOe9oKCwh8l0GNwpTDMKCWbRjgtD291AWnkAgkqA/LOnQS8AmS1tw==
+pako@^1.0.10, pako@~1.0.5:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
+  integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
 parallel-transform@^1.1.0:
   version "1.1.0"
@@ -9642,10 +9647,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-query-string@6.10.1, query-string@^6.2.0:
-  version "6.10.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.10.1.tgz#30b3505f6fca741d5ae541964d1b3ae9dc2a0de8"
-  integrity sha512-SHTUV6gDlgMXg/AQUuLpTiBtW/etZ9JT6k6RCtCyqADquApLX0Aq5oK/s5UeTUAWBG50IExjIr587GqfXRfM4A==
+query-string@6.11.0, query-string@^6.2.0:
+  version "6.11.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.11.0.tgz#dc27a05733d1be66f16d0f83dfa957270f45f66d"
+  integrity sha512-jS+me8X3OEGFTsF6kF+vUUMFG/d3WUCvD7bHhfZP5784nOq1pjj8yau/u86nfOncmcN6ZkSWKWkKAvv/MGxzLA==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
