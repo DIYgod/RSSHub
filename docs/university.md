@@ -598,6 +598,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 清华大学
+
+### 清华大学校内信息发布平台
+
+<Route author="prnake" example="/thu/zhongyao" path="/thu/:type" :paramsDesc="['默认为重要公告']">
+
+| 重要公告 | 教务公告 | 学术文化 | 校园风采 | 海报列表 | 疫情防控 |
+| -------- | -------- | -------- | -------- | -------- | :------: |
+| zhongyao | jiaowu   | keyan    | bangong  | haibao   |  yiqing  |
+
+</Route>
+
 ## 山东大学
 
 ### 软件学院通知
