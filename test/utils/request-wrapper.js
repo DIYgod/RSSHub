@@ -40,18 +40,18 @@ describe('got', () => {
     it('headers', async () => {
         nock(/rsshub\.test/)
             .get(/.*/)
-            .times(4)
+            .times(3)
             .reply(function() {
                 expect(this.req.headers.server).toBe('RSSHub');
-                expect(this.req.headers.referer).toBe('http://www.rsshub.test');
+                expect(this.req.headers.referer).toBe('http://api.rsshub.test');
+                expect(this.req.headers.host).toBe('api.rsshub.test');
                 return [200, simpleResponse];
             });
 
-        await got.get('http://rsshub.test/test');
-        await got.get('http://rsshub.test');
         await got.get('http://api.rsshub.test/test');
+        await got.get('http://api.rsshub.test');
 
-        await parser.parseURL('http://rsshub.test/test');
+        await parser.parseURL('http://api.rsshub.test/test');
     });
 
     it('proxy socks', async () => {
