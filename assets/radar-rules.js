@@ -1241,7 +1241,7 @@
         wjw: [
             {
                 title: '北京卫生健康委员会',
-                docs: 'https://docs.rsshub.app/government.html#zhong-yang-ji-wei-guo-jia-jian-wei',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui',
                 source: '/xwzx_20031/:caty',
                 target: '/gov/beijing/mhc/:caty',
             },
