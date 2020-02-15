@@ -49,7 +49,9 @@ const sortByHeading = async (filePath) => {
             })
             .map((x) => x.content.join('\n'))
             .join('\n');
-        h1.push(newContent);
+        if (newContent) {
+            h1.push(newContent);
+        }
         newContent = h1.join('\n');
 
         fs.writeFile(filePath, newContent, 'utf8', (err) => {
@@ -69,7 +71,12 @@ const sortByHeading = async (filePath) => {
         .map((key) => {
             const locale = config.themeConfig.locales[key];
             if (locale.hasOwnProperty('sidebar')) {
-                return locale.sidebar['/'][1].children.map((x) => path.resolve(__dirname, `./${x}.md`));
+                if (locale.sidebar['/']) {
+                    return locale.sidebar['/'][1].children.map((x) => path.resolve(__dirname, `./${x}.md`));
+                } else if (locale.sidebar['/en/']) {
+                    return locale.sidebar['/en/'][1].children.map((x) => path.resolve(__dirname, `./en/${x}.md`));
+                }
+                return null;
             } else {
                 return null;
             }
