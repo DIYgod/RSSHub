@@ -52,7 +52,7 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Bestreviews
 
-<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" :paramsDesc="['user id','user choice, see table below']" radar="1" />
+<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" />
 
 ## Nyaa
 
