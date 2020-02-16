@@ -86,6 +86,16 @@ pageClass: routes
 
 </Route>
 
+## Minecraft
+
+### Java 版游戏更新
+
+<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+
+### CurseForge Mod 更新
+
+<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
+
 ## Nintendo
 
 ### eShop 新发售游戏
@@ -191,6 +201,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | ------ | ---- | -------- |
 | update | hot  | spent    |
 
+## 公主链接
+
+### 日服公告
+
+<Route author="SayaSS" example="/pcr/news" path="/pcr/news"/>
+
+### 台服公告
+
+<Route author="hoilc" example="/pcr/news-tw" path="/pcr/news-tw"/>
+
 ## 篝火营地
 
 ### 游戏资讯
@@ -260,6 +280,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 游戏公告与新闻
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
+
+## 奶牛关
+
+### 元素文章
+
+<Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" />
+
+## 网易大神
+
+### 用户发帖
+
+<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
 
 ## 王者荣耀
 
@@ -333,7 +365,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游研社
 
-<Route author="LightStrawberry" example="/yystv/category/:category" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
+<Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
 | --------- | ------- | ------ | ------- | ---- | -------- |

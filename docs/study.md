@@ -103,6 +103,16 @@ pageClass: routes
 
 </Route>
 
+## 网易公开课
+
+### 精品课程
+
+<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" />
+
+### 最新课程
+
+<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" />
+
 ## 下厨房
 
 ### 用户作品
@@ -166,6 +176,12 @@ pageClass: routes
 | -1   | 117    | 118       | 119  | 120  | 121  | 122       | 123       | 124      | 125  | 126  | 127  | 128       | 129  | 130  | 131  | 132       | 133  | 134  | 135  | 201        | 2550     | 2783 | 2952 | 6200       |
 
 </Route>
+
+## 英中协会
+
+### 奖学金
+
+<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
 ## 语雀
 
