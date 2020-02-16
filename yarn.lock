@@ -5453,10 +5453,10 @@ googleapis@47.0.0:
     google-auth-library "^5.6.1"
     googleapis-common "^3.2.0"
 
-got@10.5.6:
-  version "10.5.6"
-  resolved "https://registry.yarnpkg.com/got/-/got-10.5.6.tgz#fa9cbec9563ad27cff6008e8d48be04aa7788463"
-  integrity sha512-I6rsJJe98gZvmOpqtfU5dhqEjxY6gXrdAq0YfRUM1slGvJeJMlglWLACCwiUjZNZGvKUe4mAbTakRV4jPXO/bw==
+got@10.5.7:
+  version "10.5.7"
+  resolved "https://registry.yarnpkg.com/got/-/got-10.5.7.tgz#bd0ef35404345d31f1d6793ed8133896ea911a19"
+  integrity sha512-ZDu27XJw4XuOM3wOjOfHPLQiyE0h/+CqX5DkfptEJD2bnn2idqua6uQl9HUGwgQE3Ogv8uOvE2W8jUTrTVrRbw==
   dependencies:
     "@sindresorhus/is" "^2.0.0"
     "@szmarczak/http-timer" "^4.0.0"
