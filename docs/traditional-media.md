@@ -306,6 +306,16 @@ category 对应的关键词有
 
 <Route author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
 
+### 澎湃美数组作品集
+
+<Route author="umm233" example="/thepaper/839studio/2" path="/thepaper/839studio/:id?" :paramsDesc="['分类 id 可选，默认订阅全部分类']">
+
+| 视频 | 交互 | 信息图 | 数据故事 |
+| ---- | ---- | ------ | -------- |
+| 2    | 4    | 3      | 453      |
+
+</Route>
+
 ## 人民日报
 
 ### 观点
