@@ -308,7 +308,7 @@ category 对应的关键词有
 
 ### 澎湃美数组作品集
 
-<Route author="umm233" example="/thepaper/839studio/2" path="/thepaper/839studio/:id" :paramsDesc="['分类 id 可选，默认订阅全部分类']">
+<Route author="umm233" example="/thepaper/839studio/2" path="/thepaper/839studio/:id?" :paramsDesc="['分类 id 可选，默认订阅全部分类']">
 
 | 视频 | 交互 | 信息图 | 数据故事 |
 | ---- | ---- | ------ | -------- |
