@@ -50,6 +50,10 @@ Official RSS: https://eztv.io/ezrss.xml
 |userwanted|userwatched|userowned|userposts|
 </Route>
 
+### Bestreviews
+
+<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" />
+
 ## Nyaa
 
 ### Seatch Result

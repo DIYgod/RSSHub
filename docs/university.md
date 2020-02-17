@@ -776,6 +776,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 清华大学
+
+### 清华大学校内信息发布平台
+
+<Route author="prnake" example="/thu/zhongyao" path="/thu/:type" :paramsDesc="['默认为重要公告']">
+
+| 重要公告 | 教务公告 | 科研通知 | 办公通知 | 海报列表 | 疫情防控 |
+| -------- | -------- | -------- | -------- | -------- | :------: |
+| zhongyao | jiaowu   | keyan    | bangong  | haibao   |  yiqing  |
+
+</Route>
+
 ## 山东大学
 
 ### 软件学院通知
@@ -1118,11 +1130,11 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 浙大软件学院
 
-<Route author="yonvenne" example="/zju/cst/1" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']">
+<Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']">
 
-| 全部通知 | 招生信息 | 教学管理 | 思政工作 | 实习就业 | 合作科研 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| 0        | 1        | 2        | 3        | 4        | 5        |
+| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9 |
 
 </Route>
 
@@ -1188,6 +1200,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 研究生院综合通知公告
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
+
+## 中国海洋大学
+
+### 信息科学与工程学院
+
+<Route author="Geo" example="/ouc/it/0" path="/universities/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院要闻 | 学院公告 | 学院活动 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</Route>
 
 ## 中国科学院
 

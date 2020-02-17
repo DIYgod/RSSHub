@@ -1153,6 +1153,12 @@
                 target: '/javlibrary/videos/bestrated',
             },
             {
+                title: '最佳评论',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/bestreviews',
+            },
+            {
                 title: '影星',
                 docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
                 source: '/cn/vl_star.php',
@@ -1241,7 +1247,7 @@
         wjw: [
             {
                 title: '北京卫生健康委员会',
-                docs: 'https://docs.rsshub.app/government.html#zhong-yang-ji-wei-guo-jia-jian-wei',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui',
                 source: '/xwzx_20031/:caty',
                 target: '/gov/beijing/mhc/:caty',
             },
