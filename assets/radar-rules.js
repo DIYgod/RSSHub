@@ -1153,6 +1153,12 @@
                 target: '/javlibrary/videos/bestrated',
             },
             {
+                title: '最佳评论',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/bestreviews',
+            },
+            {
                 title: '影星',
                 docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
                 source: '/cn/vl_star.php',

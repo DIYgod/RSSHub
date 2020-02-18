@@ -146,6 +146,10 @@ pageClass: routes
 |userwanted|userwatched|userowned|userposts|
 </Route>
 
+### 最佳评论
+
+<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" />
+
 ## Last.fm
 
 ### 用户播放记录

@@ -178,9 +178,9 @@ Category 列表:
 
 <Route author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
 
-| 全部   | 国际   | 中国  | 香港     | 台湾   | 经济   |
-| ------ | ------ | ----- | -------- | ------ | ------ |
-| yaowen | global | china | hongkong | taiwan | jingji |
+| 全部   | 国际   | 中国  | 香港     | 台湾   | 经济   | 视觉   |
+| ------ | ------ | ----- | -------- | ------ | ------ | ------ |
+| yaowen | global | china | hongkong | taiwan | jingji | shijue |
 
 </Route>
 
