@@ -530,21 +530,21 @@ category 列表：
 
 ### 新闻中心
 
-<Route author="AngUOI" example="/lit/xwzx/ggtz" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `ggtz`']">
+<Route author="AngUOI" example="/lit/xwzx" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `all`']">
 
-| 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
-| -------- | -------- | -------- | -------- |
-| ggtz     | xwkx     | xsxx     | mtxw     |
+| 全部 | 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | ggtz     | xwkx     | xsxx     | mtxw     |
 
 </Route>
 
 ### 团委
 
-<Route author="AngUOI" example="/lit/tw/tntz" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `tntz`']">
+<Route author="AngUOI" example="/lit/tw" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `all`']">
 
-| 团内通知 | 青年快讯 | 理论学习 |
-| -------- | -------- | -------- |
-| tntz     | qnkx     | llxx     |
+| 全部 | 团内通知 | 青年快讯 |
+| ---- | -------- | -------- |
+| all  | tntz     | qnkx     |
 
 </Route>
 
