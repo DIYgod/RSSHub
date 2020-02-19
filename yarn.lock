@@ -8158,10 +8158,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-12.0.0.tgz#f405309bbf305d9a5bba2e9718aab4463edc9572"
-  integrity sha512-aTzDlXFH/Xq4m2V5x5nV13RTvYX8RXXcurCx6z4+y8IsloFMizZsDe/189GX1pSMJ99HBFZAokS5sMiMX/qfaQ==
+nock@12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-12.0.1.tgz#6d497d01f23cb52c733545c97e09e8318f6af801"
+  integrity sha512-f5u5k7O5D2YXH2WEFQVLLPa36D5C0dxU9Lrg6KOuaFCMDt7yd1W4S3hbZClCMczxc4EZ0k1bEhPeMWSewrxYNw==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
