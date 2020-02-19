@@ -61,7 +61,7 @@
   "dependencies": {
     "@koa/router": "8.0.8",
     "@postlight/mercury-parser": "2.2.0",
-    "@sentry/node": "5.12.3",
+    "@sentry/node": "5.12.4",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "cheerio": "1.0.0-rc.3",
