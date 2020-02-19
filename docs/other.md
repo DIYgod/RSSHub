@@ -248,6 +248,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
 
+## 快递 100
+
+### 快递订单追踪
+
+<Route author="NeverBehave" example="/kuaidi100/track/shunfeng/SF1007896781640/0383" path="/track/:number/:id/:phone?" :paramsDesc="['快递公司代号', '订单号', '手机号后四位（仅顺丰）']">
+
+快递公司代号如果不能确定，可通过下方快递列表获得。
+
+</Route>
+
+### 支持的快递公司列表
+
+<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company"/>
+
 ## 裏垢女子まとめ
 
 ### 主页
@@ -531,17 +545,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-## 快递 100
-
-### 快递订单追踪
-
-<Route author="NeverBehave" example="/kuaidi100/track/shunfeng/SF1007896781640/0383" path="/track/:number/:id/:phone?" :paramsDesc="['快递公司代号', '订单号', '手机号后四位（仅顺丰）']">
-
-快递公司代号如果不能确定，可通过下方快递列表获得。
-
-</Route>
-
-### 支持的快递公司列表
-
-<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company"/>
