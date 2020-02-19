@@ -308,6 +308,8 @@ GitHub 官方也提供了一些 RSS:
 
 ## wolley
 
+### posts
+
 <Route author="umm233" example="/wolley" path="/wolley/index"/>
 
 ## 阿里云
