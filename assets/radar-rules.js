@@ -1318,4 +1318,21 @@
             },
         ],
     },
+    'kuaidi100.com': {
+        _name: '快递100',
+        '.': [
+            {
+                title: '快递100 快递追踪',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '',
+                target: '',
+            },
+            {
+                title: '快递100 支持的快递列表',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: '/kuaidi100/company',
+            },
+        ],
+    },
 });
