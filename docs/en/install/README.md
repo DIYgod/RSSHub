@@ -372,3 +372,7 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
     -   `NHENTAI_USERNAME`: nhentai username or email
     -   `NHENTAI_PASSWORD`: nhentai password
+
+-   discuz cookies
+
+    -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
