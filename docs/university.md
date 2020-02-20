@@ -530,21 +530,21 @@ category 列表：
 
 ### 新闻中心
 
-<Route author="AngUOI" example="/lit/xwzx/ggtz" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `ggtz`']">
+<Route author="AngUOI" example="/lit/xwzx" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `all`']">
 
-| 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
-| -------- | -------- | -------- | -------- |
-| ggtz     | xwkx     | xsxx     | mtxw     |
+| 全部 | 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | ggtz     | xwkx     | xsxx     | mtxw     |
 
 </Route>
 
 ### 团委
 
-<Route author="AngUOI" example="/lit/tw/tntz" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `tntz`']">
+<Route author="AngUOI" example="/lit/tw" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `all`']">
 
-| 团内通知 | 青年快讯 | 理论学习 |
-| -------- | -------- | -------- |
-| tntz     | qnkx     | llxx     |
+| 全部 | 团内通知 | 青年快讯 |
+| ---- | -------- | -------- |
+| all  | tntz     | qnkx     |
 
 </Route>
 
@@ -1130,7 +1130,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 浙大软件学院
 
-<Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']">
+<Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1">
 
 | 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ |
