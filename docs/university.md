@@ -970,6 +970,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 天津大学
+
+### 天津大学教务处
+
+<Route author="AmosChenYQ" example="/tjpyu/ooa/news" path="/universities/tjpyu/ooa/:type" :paramsDesc="['默认为`news`']">
+
+| 新闻动态 | 通知公告     |
+| -------- | ------------ |
+| news     | notification |
+
+</Route>
+
 ## 同济大学
 
 ### 同济大学软件学院通知
