@@ -247,6 +247,18 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 </Route>
 
+## 东北大学
+
+### 东北大学新闻网
+
+<Route author="JeasonLau" example="/neu/news/ddyw" path="/neu/news/:type" :paramsDesc="['种类名']">
+
+| 东大要闻 | 媒体东大 | 通知公告 | 新闻纵横 | 人才培养 | 学术科研 | 英文新闻 | 招生就业 | 考研出国 | 校园文学 | 校友风采 |
+| -------- | -------- | -------- | -------- | -------: | -------- | -------- | -------- | -------- | -------- | -------- |
+| ddyw     | mtdd     | tzgg     | xwzh     |     rcpy | xsky     | 217      | zsjy     | kycg     | xywx     | xyfc     |
+
+</Route>
+
 ## 东莞理工学院
 
 ### 教务处通知
@@ -518,21 +530,21 @@ category 列表：
 
 ### 新闻中心
 
-<Route author="AngUOI" example="/lit/xwzx/ggtz" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `ggtz`']">
+<Route author="AngUOI" example="/lit/xwzx" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `all`']">
 
-| 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
-| -------- | -------- | -------- | -------- |
-| ggtz     | xwkx     | xsxx     | mtxw     |
+| 全部 | 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | ggtz     | xwkx     | xsxx     | mtxw     |
 
 </Route>
 
 ### 团委
 
-<Route author="AngUOI" example="/lit/tw/tntz" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `tntz`']">
+<Route author="AngUOI" example="/lit/tw" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `all`']">
 
-| 团内通知 | 青年快讯 | 理论学习 |
-| -------- | -------- | -------- |
-| tntz     | qnkx     | llxx     |
+| 全部 | 团内通知 | 青年快讯 |
+| ---- | -------- | -------- |
+| all  | tntz     | qnkx     |
 
 </Route>
 
@@ -761,6 +773,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 通知公告 | 新闻动态 |
 | -------- | -------- |
 | 1        | 2        |
+
+</Route>
+
+## 清华大学
+
+### 清华大学校内信息发布平台
+
+<Route author="prnake" example="/thu/zhongyao" path="/thu/:type" :paramsDesc="['默认为重要公告']">
+
+| 重要公告 | 教务公告 | 科研通知 | 办公通知 | 海报列表 | 疫情防控 |
+| -------- | -------- | -------- | -------- | -------- | :------: |
+| zhongyao | jiaowu   | keyan    | bangong  | haibao   |  yiqing  |
 
 </Route>
 
@@ -1106,11 +1130,11 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 浙大软件学院
 
-<Route author="yonvenne" example="/zju/cst/1" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']">
+<Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1">
 
-| 全部通知 | 招生信息 | 教学管理 | 思政工作 | 实习就业 | 合作科研 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| 0        | 1        | 2        | 3        | 4        | 5        |
+| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9 |
 
 </Route>
 
@@ -1176,6 +1200,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 研究生院综合通知公告
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
+
+## 中国海洋大学
+
+### 信息科学与工程学院
+
+<Route author="Geo" example="/ouc/it/0" path="/universities/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
+
+| 学院要闻 | 学院公告 | 学院活动 |
+| -------- | -------- | -------- |
+| 0        | 1        | 2        |
+
+</Route>
 
 ## 中国科学院
 

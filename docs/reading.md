@@ -82,6 +82,19 @@ pageClass: routes
 
 </Route>
 
+## 稻草人书屋
+
+### 章节更新
+
+<Route author="JeasonLau" example="/dcrsw/zhongjidouluo/2" path="/dcrsw/:name/:count?" :paramsDesc="['小说名，可在对应小说页URL中找到', '显示的章节数，缺省为`3`']">
+
+::: warning 注意
+
+count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 以下。
+:::
+
+</Route>
+
 ## 飞地
 
 ### 分类
@@ -175,6 +188,16 @@ pageClass: routes
 举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
 
 </Route>
+
+## 虛詞
+
+### 版块
+
+<Route author="LogicJake" example="/p-articles/section/critics-art" path="/p-articles/section/:section" :paramsDesc="['版块链接, 可在对应版块 URL 中找到, 子版块链接用`-`连接']"/>
+
+### 作者
+
+<Route author="LogicJake" example="/p-articles/contributors/朗天" path="/p-articles/contributors/:author" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
 
 ## 纵横
 
