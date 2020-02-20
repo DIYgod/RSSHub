@@ -335,7 +335,7 @@
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai',
                 source: '/',
-                target: (params, url) => `/smzdm/keyword/${new URL(url).searchParams.get('s')}`,
+                target: (params, url) => `/smzdm/keyword/${encodeURIComponent(new URL(url).searchParams.get('s'))}`,
             },
         ],
     },
