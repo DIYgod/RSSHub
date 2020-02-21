@@ -922,7 +922,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 通知公告
 
-<Route author="BENDIT" example="/slu/tzgg" path="/universities/slu/:type" :paramsDesc="['无默认选项']">/>
+<Route author="Veagau" example="/slu/tzgg" path="/slu/:type" :paramsDesc="['分类, 见下表']">
 
 | 官网通知 | 教务处 | 学生处 | 会计学院 | 财税与公共管理学院 | 体育与健康学院 |
 | -------- | ------ | ------ | -------- | ------------------ | -------------- |
