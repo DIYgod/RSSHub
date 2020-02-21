@@ -928,6 +928,8 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | -------- | ------ | ------ | -------- | ------------------ | -------------- |
 | tzgg     | jwc    | xsc    | kjxy     | csggxy             | tyyjkxy        |
 
+</Route>
+
 ## 深圳大学
 
 ### 深圳大学研究生招生网
