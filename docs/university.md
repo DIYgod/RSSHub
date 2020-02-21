@@ -918,6 +918,12 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="HenryQW" example="/shanghaitech/sist/activity" path="/universities/shanghaitech/sist/activity"/>
 
+## 上海立信会计金融学院
+
+### 官网公告
+
+<Route author="BENDIT" example="/slu/tzgg" path="/universities/slu/tzgg"/>
+
 ## 深圳大学
 
 ### 深圳大学研究生招生网
