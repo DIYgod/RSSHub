@@ -920,9 +920,13 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 上海立信会计金融学院
 
-### 官网公告
+### 通知公告
 
-<Route author="BENDIT" example="/slu/tzgg" path="/universities/slu/tzgg"/>
+<Route author="BENDIT" example="/slu/tzgg" path="/universities/slu/:type" :paramsDesc="['无默认选项']">/>
+
+| 官网通知 | 教务处 | 学生处 | 会计学院 | 财税与公共管理学院 | 体育与健康学院 |
+| -------- | ------ | ------ | -------- | ------------------ | -------------- |
+| tzgg     | jwc    | xsc    | kjxy     | csggxy             | tyyjkxy        |
 
 ## 深圳大学
 
