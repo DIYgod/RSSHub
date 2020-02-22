@@ -870,7 +870,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 电子信息与电气工程学院本科教务办
 
-<Route author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
+<Route author="Polynomia" example="/sjtu/seiee/bjwb/major_select" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
 
 | 分专业       | 转专业         | 直升研究生   | 交换交流 | 国际办学      |
 | ------------ | -------------- | ------------ | -------- | ------------- |
