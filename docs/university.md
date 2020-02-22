@@ -912,6 +912,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="SeanChao" example="/sjtu/tongqu" path="/universities/sjtu/tongqu"/>
 
+### 研究生招生网招考信息
+
+<Route author="richardchien" example="/sjtu/yzb/zkxx/sszs" path="/universities/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']">
+
+| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+| -------- | -------- | ---------- | -------- | -------- |
+| bszs     | sszs     | gatzs      | kdxx     | yxdt     |
+
+</Route>
+
 ## 上海科技大学
 
 ### 信息科技与技术学院活动
