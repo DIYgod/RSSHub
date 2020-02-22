@@ -30,6 +30,16 @@ pageClass: routes
 
 </Route>
 
+### 通用子版块-支持 Cookie
+
+<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" :paramsDesc="['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']" >
+
+| Discuz X 系列 | Discuz 7.x 系列 |
+| ------------- | --------------- |
+| x             | 7               |
+
+</Route>
+
 ## MCBBS
 
 ### 版块

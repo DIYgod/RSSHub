@@ -162,8 +162,12 @@ Type
 
 Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
 
-<Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
+<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
 
 | Chinese | English | Portuguese |
 | ------- | ------- | ---------- |
 | ch      | en      | pt         |
+
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
+
+<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
