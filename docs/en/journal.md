@@ -54,7 +54,7 @@ pageClass: routes
 
 <RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
 
-## 聚合平台
+## Search Engine
 
 ### X-MOL 平台-新闻
 

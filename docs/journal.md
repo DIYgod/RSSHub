@@ -26,31 +26,31 @@ pageClass: routes
 
 <Route author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
 
-### Nature Genetics(ng)-最新成果
+### Nature Genetics (ng)-最新成果
 
 <Route author="yech1990" example="/nature/ng/research" path="/nature/ng/research" />
 
-### Nature Methods(nmeth)-最新成果
+### Nature Methods (nmeth)-最新成果
 
 <Route author="yech1990" example="/nature/nmeth/research" path="/nature/nmeth/research" />
 
-### Nature Biotechnology(nbt)-最新成果
+### Nature Biotechnology (nbt)-最新成果
 
 <Route author="yech1990" example="/nature/nbt/research" path="/nature/nbt/research" />
 
-### Nature Neuroscience(neuro)-最新成果
+### Nature Neuroscience (neuro)-最新成果
 
 <Route author="yech1990" example="/nature/neuro/research" path="/nature/neuro/research" />
 
-### Nature Machine Intelligence(natmachintell)-最新成果
+### Nature Machine Intelligence (natmachintell)-最新成果
 
 <Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
 
-### Proceedings of The National Academy of Sciences (PNAS) - 最新文章(全部)
+### PNAS - 最新文章(全部)
 
 <Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
 
-### Proceedings of The National Academy of Sciences (PNAS) - 最新文章(根据领域分类)
+### PNAS - 最新文章(根据领域分类)
 
 <Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
 
