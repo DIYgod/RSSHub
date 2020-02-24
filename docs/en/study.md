@@ -26,6 +26,33 @@ pageClass: routes
 
 <RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']"/>
 
+| `:type`   | type name |
+| --------- | --------- |
+| biology   | Biology   |
+| medicine  | Medicine  |
+| ai        | AI        |
+| physics   | physics   |
+| chymistry | Chymistry |
+| astronomy | Astronomy |
+| others    | Others    |
+
+> leave it blank（`/zhishifenzi/news`）to get all
+
 ### depth
 
 <RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+
+### 创新
+
+<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
+
+| `:type`       | type name     |
+| ------------- | ------------- |
+| ~~multiple~~  | ~~Multiple~~  |
+| company       | Company       |
+| product       | Product       |
+| technology    | Technology    |
+| ~~character~~ | ~~Character~~ |
+| policy        | Policy        |
+
+> leave it blank（`/zhishifenzi/innovation`）to get all

@@ -138,9 +138,36 @@ pageClass: routes
 
 <Route author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
 
+| `:type`   | 类别名称 |
+| --------- | -------- |
+| biology   | 生物     |
+| medicine  | 医药     |
+| ai        | 人工智能 |
+| physics   | 物理     |
+| chymistry | 化学     |
+| astronomy | 天文     |
+| others    | 其他     |
+
+> 参数置空（`/zhishifenzi/news`）获取所有类别
+
 ### 深度
 
 <Route author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+
+### 创新
+
+<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
+
+| `:type`       | 类别名称 |
+| ------------- | -------- |
+| ~~multiple~~  | ~~综合~~ |
+| company       | 公司     |
+| product       | 产品     |
+| technology    | 技术     |
+| ~~character~~ | ~~人物~~ |
+| policy        | 政策     |
+
+> 参数置空（`/zhishifenzi/innovation`）获取所有类别
 
 ## 中国大学 MOOC(慕课)
 
