@@ -595,8 +595,8 @@
             {
                 title: '每周免费游戏',
                 docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
-                source: '/:collection',
-                target: '/epicgames/:collection',
+                source: '/store/zh-CN/free-games',
+                target: '/epicgames/freegames',
             },
         ],
     },
