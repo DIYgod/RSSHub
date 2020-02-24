@@ -73,11 +73,11 @@ pageClass: routes
 
 <Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
 
-### PNAS - 最新文章(全部)
+### PNAS-最新文章(全部)
 
 <Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
 
-### PNAS - 最新文章(根据领域分类)
+### PNAS-最新文章(根据领域分类)
 
 <Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
 
@@ -88,3 +88,7 @@ pageClass: routes
 ### Science 主刊-在线发表
 
 <Route author="yech1990" example="/sciencemag/science/early" path="/sciencemag/science/early" />
+
+### Science Advances-本期刊物
+
+<Route author="yech1990" example="/sciencemag/advances/current" path="/sciencemag/advances/current" />

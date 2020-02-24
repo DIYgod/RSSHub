@@ -16,35 +16,35 @@ pageClass: routes
 
 ### Nature Journal - Latest Research
 
-<Route author="yech1990" example="/nature/nature/research" path="/nature/nature/research" />
+<RouteEn author="yech1990" example="/nature/nature/research" path="/nature/nature/research" />
 
 ### Nature Journal - News
 
-<Route author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />
+<RouteEn author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />
 
 ### Nature Journal - Research Highlight
 
-<Route author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
+<RouteEn author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
 
 ### Nature Genetics (ng) - Latest Research
 
-<Route author="yech1990" example="/nature/ng/research" path="/nature/ng/research" />
+<RouteEn author="yech1990" example="/nature/ng/research" path="/nature/ng/research" />
 
 ### Nature Methods (nmeth) - Latest Research
 
-<Route author="yech1990" example="/nature/nmeth/research" path="/nature/nmeth/research" />
+<RouteEn author="yech1990" example="/nature/nmeth/research" path="/nature/nmeth/research" />
 
 ### Nature Biotechnology (nbt) - Latest Research
 
-<Route author="yech1990" example="/nature/nbt/research" path="/nature/nbt/research" />
+<RouteEn author="yech1990" example="/nature/nbt/research" path="/nature/nbt/research" />
 
 ### Nature Neuroscience (neuro) - Latest Research
 
-<Route author="yech1990" example="/nature/neuro/research" path="/nature/neuro/research" />
+<RouteEn author="yech1990" example="/nature/neuro/research" path="/nature/neuro/research" />
 
 ### Nature Machine Intelligence (natmachintell) - Latest Research
 
-<Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+<RouteEn author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
 
 ### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles - ALL
 
@@ -56,21 +56,25 @@ pageClass: routes
 
 ### Science Journal - Current Issue
 
-<Route author="yech1990" example="/sciencemag/science/current" path="/sciencemag/science/current" />
+<RouteEn author="yech1990" example="/sciencemag/science/current" path="/sciencemag/science/current" />
 
 ### Science Journal - First Release
 
-<Route author="yech1990" example="/sciencemag/science/early" path="/sciencemag/science/early" />
+<RouteEn author="yech1990" example="/sciencemag/science/early" path="/sciencemag/science/early" />
+
+### Science Advances - Current Issue
+
+<RouteEn author="yech1990" example="/sciencemag/advances/current" path="/sciencemag/advances/current" />
 
 ## Search Engine
 
-### X-MOL 平台-新闻
+### X-MOL Platform - News
 
-<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
 
-### X-MOL 平台-期刊
+### X-MOL Platform - Journal
 
-<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
+<RouteEn author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
 
 ### Google Scholar - Keywords Monitoring
 
