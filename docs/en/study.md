@@ -19,3 +19,9 @@ pageClass: routes
 ### Educational Trust
 
 <RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
+## ZhiShiFenZi
+
+### News
+
+<RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']"/>

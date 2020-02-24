@@ -20,6 +20,12 @@ pageClass: routes
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
+## 知識分子
+
+### 新聞
+
+<Route author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
+
 ## 扇贝
 
 ### 用户打卡
