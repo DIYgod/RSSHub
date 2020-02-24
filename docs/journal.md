@@ -84,3 +84,7 @@ pageClass: routes
 ### Science 主刊-本期刊物
 
 <Route author="yech1990" example="/sciencemag/science/current" path="/sciencemag/science/current" />
+
+### Science 主刊-在线发表
+
+<Route author="yech1990" example="/sciencemag/science/early" path="/sciencemag/science/early" />
