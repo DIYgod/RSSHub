@@ -4,6 +4,22 @@ pageClass: routes
 
 # 金融
 
+## finviz
+
+### 美股股票新闻
+
+<Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
+
+## 淘股吧股票论坛
+
+### 论坛总版
+
+<Route author="emdoe" example="/taoguba/index" path="/taoguba/index"/>
+
+### 用户博客
+
+<Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
+
 ## 雪球
 
 ### 用户动态
@@ -41,19 +57,3 @@ pageClass: routes
 | announcement | news | research |
 
 </Route>
-
-## 淘股吧股票论坛
-
-### 论坛总版
-
-<Route author="emdoe" example="/taoguba/index" path="/taoguba/index"/>
-
-### 用户博客
-
-<Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
-
-## finviz
-
-### 美股股票新闻
-
-<Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
