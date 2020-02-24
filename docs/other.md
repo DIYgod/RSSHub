@@ -372,16 +372,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
 
-## 淘股吧股票论坛
-
-### 论坛总版
-
-<Route author="emdoe" example="/taoguba/index" path="/taoguba/index"/>
-
-### 用户博客
-
-<Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
-
 ## 腾讯吐个槽
 
 ### 吐槽新帖
