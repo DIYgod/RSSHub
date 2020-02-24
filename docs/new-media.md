@@ -733,6 +733,10 @@ Supported sub-sites：
 
 <Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
 
+### 作者动态
+
+<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']"/>
+
 ### 专题
 
 <Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
