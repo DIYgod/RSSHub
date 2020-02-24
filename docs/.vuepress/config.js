@@ -130,6 +130,10 @@ module.exports = {
                                 'government',
                                 'study',
                                 'journal',
+<<<<<<< HEAD
+=======
+                                'finance',
+>>>>>>> upstream/master
                                 'other',
                             ],
                         },
@@ -193,6 +197,7 @@ module.exports = {
                                 'government',
                                 'study',
                                 'journal',
+                                'finance',
                                 'other',
                             ],
                         },
