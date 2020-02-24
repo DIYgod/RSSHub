@@ -130,10 +130,7 @@ module.exports = {
                                 'government',
                                 'study',
                                 'journal',
-<<<<<<< HEAD
-=======
                                 'finance',
->>>>>>> upstream/master
                                 'other',
                             ],
                         },
