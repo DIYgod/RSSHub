@@ -870,7 +870,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 电子信息与电气工程学院本科教务办
 
-<Route author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
+<Route author="Polynomia" example="/sjtu/seiee/bjwb/major_select" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
 
 | 分专业       | 转专业         | 直升研究生   | 交换交流 | 国际办学      |
 | ------------ | -------------- | ------------ | -------- | ------------- |
@@ -911,6 +911,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 同去网最新活动
 
 <Route author="SeanChao" example="/sjtu/tongqu" path="/universities/sjtu/tongqu"/>
+
+### 研究生招生网招考信息
+
+<Route author="richardchien" example="/sjtu/yzb/zkxx/sszs" path="/universities/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']">
+
+| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+| -------- | -------- | ---------- | -------- | -------- |
+| bszs     | sszs     | gatzs      | kdxx     | yxdt     |
+
+</Route>
 
 ## 上海科技大学
 
