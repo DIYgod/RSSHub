@@ -6,6 +6,10 @@ pageClass: routes
 
 ## 聚合平台
 
+### PubMed-热门文章
+
+<Route author="yech1990" example="/pubmed/trending" path="/pubmed/trending" />
+
 ### X-MOL 平台-新闻
 
 <Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
