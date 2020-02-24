@@ -1322,13 +1322,15 @@
         _name: '快递100',
         '.': [
             {
-                title: '快递100 快递追踪',
+                title: '快递追踪',
                 docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
-                source: '',
-                target: '',
+                source: '/',
+                target: (params, url) => `/kuaidi100/track/${params.com}/${params.postid}`,
+                script: "({postid: document.querySelector('#postid').value, com: document.querySelector('#selectComBtn').childNodes[1].attributes[1].value})",
+                verification: (params) => params.com !== 'default' && param.postid,
             },
             {
-                title: '快递100 支持的快递列表',
+                title: '支持的快递公司列表',
                 docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
                 source: '/',
                 target: '/kuaidi100/company',
