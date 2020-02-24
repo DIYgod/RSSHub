@@ -138,6 +138,10 @@ pageClass: routes
 
 <Route author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
 
+### 深度
+
+<Route author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+
 ## 中国大学 MOOC(慕课)
 
 ### 最新

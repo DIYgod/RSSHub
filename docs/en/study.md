@@ -25,3 +25,7 @@ pageClass: routes
 ### News
 
 <RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']"/>
+
+### depth
+
+<RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
