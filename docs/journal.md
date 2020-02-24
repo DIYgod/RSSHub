@@ -80,3 +80,7 @@ pageClass: routes
 ### PNAS - 最新文章(根据领域分类)
 
 <Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+
+### Science 主刊-本期刊物
+
+<Route author="yech1990" example="/sciencemag/science/current" path="/sciencemag/science/current" />
