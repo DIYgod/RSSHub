@@ -27,6 +27,12 @@ pageClass: routes
 | columns  | columns=健康    | 可置空                               |
 | query    | query=病毒      | 可置空                               |
 
+## X-MOL 平台
+
+### 新闻
+
+<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
 ## 码农周刊
 
 ### issues

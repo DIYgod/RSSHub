@@ -10,10 +10,6 @@ pageClass: routes
 
 <Route author="yech1990" example="/pubmed/trending" path="/pubmed/trending" />
 
-### X-MOL 平台-新闻
-
-<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
-
 ### X-MOL 平台-期刊
 
 <Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
