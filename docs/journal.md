@@ -37,9 +37,17 @@ pageClass: routes
 
 ## 期刊网站
 
-### Cell 主刊-本期刊物
+### Cell 主刊
 
-<Route author="yech1990" example="/cell/cell/current" path="/cell/cell/current" />
+<Route author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
+
+> 本期刊物 (默认选项)
+
+`/cell/cell/current`
+
+> 在线发表
+
+`/cell/cell/inpress`
 
 ### eLife-最新成果-综合
 

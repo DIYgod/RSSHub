@@ -6,9 +6,17 @@ pageClass: routes
 
 ## Online papers
 
-### Cell Journal - Current Issue
+### Cell Journal
 
-<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/current" />
+<Route author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
+
+> Current Issue (default)
+
+`/cell/cell/current`
+
+> Articles in press
+
+`/cell/cell/inpress`
 
 ### eLife - Latest Research-ALL
 
