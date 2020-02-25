@@ -24,12 +24,13 @@ pageClass: routes
 
 ### theses
 
-<Route author="yech1990" example="/linkresearcher/theses/subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. 生物']"/>
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. subject=生物']"/>
 
-| `:param` | example      |
-| -------- | ------------ |
-| subject  | subject=生物 |
-| columns  | columns=健康 |
+| `:param` | example         | definition                             |
+| -------- | --------------- | -------------------------------------- |
+| category | category=thesis | **one of**，theses/information/careers |
+| subject  | subject=生物    | string / undefined                     |
+| columns  | columns=健康    | string / undefined                     |
 
 ## ZhiShiFenZi
 

@@ -18,13 +18,13 @@ pageClass: routes
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/theses" path="/linkresearcher/theses" />
-<Route author="yech1990" example="/linkresearcher/theses/subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['类别，如 生物']"/>
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['参数，如 subject=生物']"/>
 
-| `:param` | 举例         |
-| -------- | ------------ |
-| subject  | subject=生物 |
-| columns  | columns=健康 |
+| `:param` | 举例            | 定义                                 |
+| -------- | --------------- | ------------------------------------ |
+| category | category=thesis | **必填**，theses/information/careers |
+| subject  | subject=生物    | 可置空                               |
+| columns  | columns=健康    | 可置空                               |
 
 ## 码农周刊
 
