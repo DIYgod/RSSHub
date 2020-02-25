@@ -20,6 +20,17 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
+## LinkResearch
+
+### theses
+
+<Route author="yech1990" example="/linkresearcher/theses/subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. 生物']"/>
+
+| `:param` | example      |
+| -------- | ------------ |
+| subject  | subject=生物 |
+| columns  | columns=健康 |
+
 ## ZhiShiFenZi
 
 ### News
@@ -56,14 +67,3 @@ pageClass: routes
 | policy        | Policy        |
 
 > leave it blank（`/zhishifenzi/innovation`）to get all
-
-## LinkResearch
-
-### theses
-
-<Route author="yech1990" example="/linkresearcher/theses/subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. 生物']"/>
-
-| `:param` | example      |
-| -------- | ------------ |
-| subject  | subject=生物 |
-| columns  | columns=健康 |
