@@ -6,6 +6,10 @@ pageClass: routes
 
 ## Online papers
 
+### Cell Journal - Current Issue
+
+<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/current" />
+
 ### eLife - Latest Research-ALL
 
 <RouteEn author="emdoe" example="/elife/latest" path="/elife/latest" />
