@@ -1324,4 +1324,23 @@
             },
         ],
     },
+    'kuaidi100.com': {
+        _name: '快递100',
+        '.': [
+            {
+                title: '快递追踪',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: (params) => `/kuaidi100/track/${params.com}/${params.postid}`,
+                script: "({postid: document.querySelector('#postid').value, com: document.querySelector('#selectComBtn').childNodes[1].attributes[1].value})",
+                verification: (params) => params.com !== 'default' && params.postid,
+            },
+            {
+                title: '支持的快递公司列表',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: '/kuaidi100/company',
+            },
+        ],
+    },
 });
