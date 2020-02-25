@@ -42,9 +42,9 @@ pageClass: routes
 
 <RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
-### 创新
+### innovation
 
-<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
+<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
 
 | `:type`       | type name     |
 | ------------- | ------------- |
@@ -56,3 +56,14 @@ pageClass: routes
 | policy        | Policy        |
 
 > leave it blank（`/zhishifenzi/innovation`）to get all
+
+## LinkResearch
+
+### theses
+
+<Route author="yech1990" example="/linkresearcher/theses/subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. 生物']"/>
+
+| `:param` | example      |
+| -------- | ------------ |
+| subject  | subject=生物 |
+| columns  | columns=健康 |

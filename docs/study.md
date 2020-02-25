@@ -169,6 +169,18 @@ pageClass: routes
 
 > 参数置空（`/zhishifenzi/innovation`）获取所有类别
 
+## 领研
+
+### 论文
+
+<Route author="yech1990" example="/linkresearcher/theses" path="/linkresearcher/theses" />
+<Route author="yech1990" example="/linkresearcher/theses/subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['类别，如 生物']"/>
+
+| `:param` | 举例         |
+| -------- | ------------ |
+| subject  | subject=生物 |
+| columns  | columns=健康 |
+
 ## 中国大学 MOOC(慕课)
 
 ### 最新
