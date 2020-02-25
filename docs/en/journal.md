@@ -68,6 +68,10 @@ pageClass: routes
 
 ## Search Engine
 
+### PubMed Trending
+
+<RouteEn author="yech1990" example="/pubmed/trending" path="/pubmed/trending" />
+
 ### X-MOL Platform - News
 
 <RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
