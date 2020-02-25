@@ -25,6 +25,7 @@ pageClass: routes
 | category | category=thesis | **必填**，theses/information/careers |
 | subject  | subject=生物    | 可置空                               |
 | columns  | columns=健康    | 可置空                               |
+| query    | query=病毒      | 可置空                               |
 
 ## 码农周刊
 

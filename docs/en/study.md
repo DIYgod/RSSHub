@@ -31,6 +31,7 @@ pageClass: routes
 | category | category=thesis | **one of**，theses/information/careers |
 | subject  | subject=生物    | string / undefined                     |
 | columns  | columns=健康    | string / undefined                     |
+| columns  | columns=virus   | string / undefined                     |
 
 ## ZhiShiFenZi
 
