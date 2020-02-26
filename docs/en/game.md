@@ -10,6 +10,12 @@ pageClass: routes
 
 <RouteEn author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['Category name']"/>
 
+## Epic Games Store
+
+### Free games
+
+<RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+
 ## Metacritic
 
 ### Game Releases
