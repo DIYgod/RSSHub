@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# Sciences Journal
+# Scientific Journal
 
 ## Online papers
 
@@ -17,13 +17,9 @@ pageClass: routes
 
 </RouteEn>
 
-### eLife - Latest Research-ALL
+### eLife - Latest Research - Research by Subject
 
-<RouteEn author="emdoe" example="/elife/latest" path="/elife/latest" />
-
-### eLife - Latest Research-Research by Subject
-
-<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage']" />
+<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" />
 
 ### Nature Journal - Latest Research
 
@@ -70,23 +66,19 @@ pageClass: routes
 
 ### Nature Journal - News
 
-<RouteEn author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />
+<RouteEn author="yech1990" example="/nature/news" path="/nature/news" />
 
 ### Nature Journal - Research Highlight
 
-<RouteEn author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
+<RouteEn author="yech1990" example="/nature/highlight" path="/nature/highlight" />
 
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles - ALL
+### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles - Articles by Topic
 
-<RouteEn author="emdoe" example="/pnas/latest" path="/pnas/latest" />
-
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles-Articles by Topic
-
-<RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
+<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" />
 
 ### Science Journal - Current Issue
 
-<RouteEn author="yech1990" example="/sciencemag/current/science" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990" example="/sciencemag/current/science" path="/sciencemag/research/:journal" :paramsDesc="['short name for a journal']" />
 
 | `:journal` |    Full Name of the Journal    | Route                                                            |
 | :--------: | :----------------------------: | ---------------------------------------------------------------- |
