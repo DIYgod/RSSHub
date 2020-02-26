@@ -37,13 +37,10 @@ pageClass: routes
 
 <Route author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
 
-> 本期刊物 (默认选项)
-
-`/cell/cell/current`
-
-> 在线发表
-
-`/cell/cell/inpress`
+| `:category` |      类型说明       | 路由                                     |
+| :---------: | :-----------------: | ---------------------------------------- |
+|   current   | 本期刊物 (默认选项) | [/cell/cell/current](/cell/cell/current) |
+|   inpress   |      在线发表       | [/cell/cell/inpress](/cell/cell/inpress) |
 
 ### eLife-最新成果-综合
 
@@ -55,7 +52,24 @@ pageClass: routes
 
 ### Nature 主刊-最新成果
 
-<Route author="yech1990" example="/nature/nature/research" path="/nature/nature/research" />
+<Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="期刊名简写" />
+
+|  `:journal`   |           期刊名            | 路由                                                             |
+| :-----------: | :-------------------------: | ---------------------------------------------------------------- |
+|    nature     |           Nature            | [/nature/research/nature](/nature/research/nature)               |
+|      nbt      |    Nature Biotechnology     | [/nature/research/nbt](/nature/research/nbt)                     |
+|     neuro     |     Nature Neuroscience     | [/nature/research/neuro](/nature/research/neuro)                 |
+|      ng       |       Nature Genetics       | [/nature/research/ng](/nature/research/ng)                       |
+|      ni       |      Nature Immunology      | [/nature/research/ni](/nature/research/ni)                       |
+|     nmeth     |        Nature Method        | [/nature/research/nmeth](/nature/research/nmeth)                 |
+|     nchem     |      Nature Chemistry       | [/nature/research/nchem](/nature/research/nchem)                 |
+|     nmat      |      Nature Materials       | [/nature/research/nmat](/nature/research/nmat)                   |
+| natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](/nature/research/natmachintell) |
+
+-   通过 `/nature/research/` + “杂志简写”来获取对应杂志的最新文章（Latest Research）。
+    若参数置空（`/nature/research`），则默认获取主刊（Nature）的最新文章。
+-   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
+-   由于权限的限制，目前仅获取论文的摘要进行展示。
 
 ### Nature 主刊-新闻动态
 
@@ -64,26 +78,6 @@ pageClass: routes
 ### Nature 主刊-精彩研究
 
 <Route author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
-
-### Nature Genetics (ng)-最新成果
-
-<Route author="yech1990" example="/nature/ng/research" path="/nature/ng/research" />
-
-### Nature Methods (nmeth)-最新成果
-
-<Route author="yech1990" example="/nature/nmeth/research" path="/nature/nmeth/research" />
-
-### Nature Biotechnology (nbt)-最新成果
-
-<Route author="yech1990" example="/nature/nbt/research" path="/nature/nbt/research" />
-
-### Nature Neuroscience (neuro)-最新成果
-
-<Route author="yech1990" example="/nature/neuro/research" path="/nature/neuro/research" />
-
-### Nature Machine Intelligence (natmachintell)-最新成果
-
-<Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
 
 ### PNAS-最新文章(全部)
 

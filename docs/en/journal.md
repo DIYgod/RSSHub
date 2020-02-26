@@ -8,15 +8,12 @@ pageClass: routes
 
 ### Cell Journal
 
-<Route author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
+<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
 
-> Current Issue (default)
-
-`/cell/cell/current`
-
-> Articles in press
-
-`/cell/cell/inpress`
+| `:category` |       Query Type        | Route                                    |
+| :---------: | :---------------------: | ---------------------------------------- |
+|   current   | Current Issue (default) | [/cell/cell/current](/cell/cell/current) |
+|   inpress   |    Articles in press    | [/cell/cell/inpress](/cell/cell/inpress) |
 
 ### eLife - Latest Research-ALL
 
@@ -28,7 +25,24 @@ pageClass: routes
 
 ### Nature Journal - Latest Research
 
-<RouteEn author="yech1990" example="/nature/nature/research" path="/nature/nature/research" />
+<RouteEn author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="short name for a journal" />
+
+|  `:journal`   |  Full Name of the Journal   | Route                                                            |
+| :-----------: | :-------------------------: | ---------------------------------------------------------------- |
+|    nature     |           Nature            | [/nature/research/nature](/nature/research/nature)               |
+|      nbt      |    Nature Biotechnology     | [/nature/research/nbt](/nature/research/nbt)                     |
+|     neuro     |     Nature Neuroscience     | [/nature/research/neuro](/nature/research/neuro)                 |
+|      ng       |       Nature Genetics       | [/nature/research/ng](/nature/research/ng)                       |
+|      ni       |      Nature Immunology      | [/nature/research/ni](/nature/research/ni)                       |
+|     nmeth     |        Nature Method        | [/nature/research/nmeth](/nature/research/nmeth)                 |
+|     nchem     |      Nature Chemistry       | [/nature/research/nchem](/nature/research/nchem)                 |
+|     nmat      |      Nature Materials       | [/nature/research/nmat](/nature/research/nmat)                   |
+| natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](/nature/research/natmachintell) |
+
+-   Using router (`/nature/research/` + “short name for a journal”) to query latest research paper for a certain journal of Nature Publishing Group.
+    If the `:journal` parameter is blank, then latest research of Nature will return.
+-   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+-   Only the abstract section is rendered
 
 ### Nature Journal - News
 
@@ -37,26 +51,6 @@ pageClass: routes
 ### Nature Journal - Research Highlight
 
 <RouteEn author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
-
-### Nature Genetics (ng) - Latest Research
-
-<RouteEn author="yech1990" example="/nature/ng/research" path="/nature/ng/research" />
-
-### Nature Methods (nmeth) - Latest Research
-
-<RouteEn author="yech1990" example="/nature/nmeth/research" path="/nature/nmeth/research" />
-
-### Nature Biotechnology (nbt) - Latest Research
-
-<RouteEn author="yech1990" example="/nature/nbt/research" path="/nature/nbt/research" />
-
-### Nature Neuroscience (neuro) - Latest Research
-
-<RouteEn author="yech1990" example="/nature/neuro/research" path="/nature/neuro/research" />
-
-### Nature Machine Intelligence (natmachintell) - Latest Research
-
-<RouteEn author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
 
 ### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles - ALL
 
