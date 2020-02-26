@@ -15,6 +15,8 @@ pageClass: routes
 |   current   | Current Issue (default) | [/cell/cell/current](/cell/cell/current) |
 |   inpress   |    Articles in press    | [/cell/cell/inpress](/cell/cell/inpress) |
 
+</RouteEn>
+
 ### eLife - Latest Research-ALL
 
 <RouteEn author="emdoe" example="/elife/latest" path="/elife/latest" />
@@ -44,9 +46,11 @@ pageClass: routes
 -   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
 -   Only the abstract section is rendered
 
+</RouteEn>
+
 ### Nature Journal - News & Comment
 
-<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="short name for a journal" />
+<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="short name for a journal" />
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                            |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
@@ -61,6 +65,8 @@ pageClass: routes
 
 -   Using router (`/nature/research/` + “short name for a journal”) to query latest research paper for a certain journal of Nature Publishing Group.
 -   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+
+</RouteEn>
 
 ### Nature Journal - News
 
