@@ -86,15 +86,29 @@ pageClass: routes
 
 ### Science Journal - Current Issue
 
-<RouteEn author="yech1990" example="/sciencemag/science/current" path="/sciencemag/science/current" />
+<RouteEn author="yech1990" example="/sciencemag/current/science" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
+
+| `:journal` |    Full Name of the Journal    | Route                                                            |
+| :--------: | :----------------------------: | ---------------------------------------------------------------- |
+|  science   |            Science             | [/sciencemag/current/science](/sciencemag/current/science)       |
+|  advances  |        Science Advances        | [/sciencemag/current/advances](/sciencemag/current/advances)     |
+| immunology |       Science Immunology       | [/sciencemag/current/immunology](/sciencemag/current/immunology) |
+|  robotics  |        Science Robotics        | [/sciencemag/current/robotics](/sciencemag/current/robotics)     |
+|    stke    |       Science Signaling        | [/sciencemag/current/stke](/sciencemag/current/stke)             |
+|    stm     | Science Translational Medicine | [/sciencemag/current/stm](/sciencemag/current/stm)               |
+
+-   Using router (`/sciencemag/current/` + “short name for a journal”) to query current issue of a journal form AAAS.
+    leave the parameter blank（`/sciencemag/current`）to get update from Science.
+
+</RouteEn>
 
 ### Science Journal - First Release
 
-<RouteEn author="yech1990" example="/sciencemag/science/early" path="/sciencemag/science/early" />
+<RouteEn author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" />
 
-### Science Advances - Current Issue
+_only support Science Journal_
 
-<RouteEn author="yech1990" example="/sciencemag/advances/current" path="/sciencemag/advances/current" />
+</RouteEn>
 
 ## Search Engine
 

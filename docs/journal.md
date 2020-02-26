@@ -52,7 +52,7 @@ pageClass: routes
 
 <Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
 
-### Nature-最新成果
+### Nature 系列-最新成果
 
 <Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
@@ -112,14 +112,28 @@ pageClass: routes
 
 <Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
 
-### Science 主刊-本期刊物
+### Science 系列-本期刊物
 
-<Route author="yech1990" example="/sciencemag/science/current" path="/sciencemag/science/current" />
+<Route author="yech1990" example="/sciencemag/current/science" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
+
+| `:journal` |             期刊名             | 路由                                                             |
+| :--------: | :----------------------------: | ---------------------------------------------------------------- |
+|  science   |            Science             | [/sciencemag/current/science](/sciencemag/current/science)       |
+|  advances  |        Science Advances        | [/sciencemag/current/advances](/sciencemag/current/advances)     |
+| immunology |       Science Immunology       | [/sciencemag/current/immunology](/sciencemag/current/immunology) |
+|  robotics  |        Science Robotics        | [/sciencemag/current/robotics](/sciencemag/current/robotics)     |
+|    stke    |       Science Signaling        | [/sciencemag/current/stke](/sciencemag/current/stke)             |
+|    stm     | Science Translational Medicine | [/sciencemag/current/stm](/sciencemag/current/stm)               |
+
+-   通过 `/sciencemag/current/` + “杂志简写”来获取对应杂志最新一期的文章（Current Issue）。
+    若参数置空（`/sciencemag/current`），则默认获取主刊（Science）的最新文章。
+
+</Route>
 
 ### Science 主刊-在线发表
 
-<Route author="yech1990" example="/sciencemag/science/early" path="/sciencemag/science/early" />
+<Route author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" />
 
-### Science Advances-本期刊物
+_仅支持 Science 主刊_
 
-<Route author="yech1990" example="/sciencemag/advances/current" path="/sciencemag/advances/current" />
+</Route>
