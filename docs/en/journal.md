@@ -44,6 +44,24 @@ pageClass: routes
 -   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
 -   Only the abstract section is rendered
 
+### Nature Journal - News & Comment
+
+<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="short name for a journal" />
+
+|  `:journal`   |  Full Name of the Journal   | Route                                                                            |
+| :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
+|      nbt      |    Nature Biotechnology     | [/nature/news-and-comment/nbt](/nature/news-and-comment/nbt)                     |
+|     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](/nature/news-and-comment/neuro)                 |
+|      ng       |       Nature Genetics       | [/nature/news-and-comment/ng](/nature/news-and-comment/ng)                       |
+|      ni       |      Nature Immunology      | [/nature/news-and-comment/ni](/nature/news-and-comment/ni)                       |
+|     nmeth     |        Nature Method        | [/nature/news-and-comment/nmeth](/nature/news-and-comment/nmeth)                 |
+|     nchem     |      Nature Chemistry       | [/nature/news-and-comment/nchem](/nature/news-and-comment/nchem)                 |
+|     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](/nature/news-and-comment/nmat)                   |
+| natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](/nature/news-and-comment/natmachintell) |
+
+-   Using router (`/nature/research/` + “short name for a journal”) to query latest research paper for a certain journal of Nature Publishing Group.
+-   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+
 ### Nature Journal - News
 
 <RouteEn author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />

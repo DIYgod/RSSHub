@@ -50,7 +50,7 @@ pageClass: routes
 
 <Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
 
-### Nature 主刊-最新成果
+### Nature-最新成果
 
 <Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="期刊名简写" />
 
@@ -70,6 +70,25 @@ pageClass: routes
     若参数置空（`/nature/research`），则默认获取主刊（Nature）的最新文章。
 -   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
 -   由于权限的限制，目前仅获取论文的摘要进行展示。
+
+### Nature-新闻及评论
+
+<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="期刊名简写" />
+
+|  `:journal`   |           期刊名            | 路由                                                                             |
+| :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
+|      nbt      |    Nature Biotechnology     | [/nature/news-and-comment/nbt](/nature/news-and-comment/nbt)                     |
+|     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](/nature/news-and-comment/neuro)                 |
+|      ng       |       Nature Genetics       | [/nature/news-and-comment/ng](/nature/news-and-comment/ng)                       |
+|      ni       |      Nature Immunology      | [/nature/news-and-comment/ni](/nature/news-and-comment/ni)                       |
+|     nmeth     |        Nature Method        | [/nature/news-and-comment/nmeth](/nature/news-and-comment/nmeth)                 |
+|     nchem     |      Nature Chemistry       | [/nature/news-and-comment/nchem](/nature/news-and-comment/nchem)                 |
+|     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](/nature/news-and-comment/nmat)                   |
+| natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](/nature/news-and-comment/natmachintell) |
+
+-   通过 `/nature/research/` + “杂志简写”来获取对应杂志的最新文章（Latest Research）。
+    主刊由于格式不同，该 router 并未支持，采用 `/nature/nature/news` 来获取新闻。
+-   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
 
 ### Nature 主刊-新闻动态
 
