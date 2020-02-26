@@ -312,6 +312,14 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="umm233" example="/wolley" path="/wolley/index"/>
 
+### user post
+
+<Route author="umm233" example="/wolley/user/kyth" path="/wolley/user/:id" :paramsDesc="['用户 id']" />
+
+### host
+
+<Route author="umm233" example="/wolley/host/www.youtube.com" path="/wolley/host/:host" :paramsDesc="['文章对应 host 分类']" />
+
 ## 阿里云
 
 ### 数据库内核月报
