@@ -870,7 +870,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 电子信息与电气工程学院本科教务办
 
-<Route author="Polynomia" example="/sjtu/seiee/xsb/news" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
+<Route author="Polynomia" example="/sjtu/seiee/bjwb/major_select" path="/universities/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
 
 | 分专业       | 转专业         | 直升研究生   | 交换交流 | 国际办学      |
 | ------------ | -------------- | ------------ | -------- | ------------- |
@@ -911,6 +911,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 同去网最新活动
 
 <Route author="SeanChao" example="/sjtu/tongqu" path="/universities/sjtu/tongqu"/>
+
+### 研究生招生网招考信息
+
+<Route author="richardchien" example="/sjtu/yzb/zkxx/sszs" path="/universities/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']">
+
+| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+| -------- | -------- | ---------- | -------- | -------- |
+| bszs     | sszs     | gatzs      | kdxx     | yxdt     |
+
+</Route>
 
 ## 上海科技大学
 
@@ -967,6 +977,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 教务处通告详情
 
 <Route author="talenHuang" example="/sctu/jwc/13/645" path="/universities/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']">
+
+</Route>
+
+## 天津大学
+
+### 天津大学教务处
+
+<Route author="AmosChenYQ" example="/tjpyu/ooa/news" path="/universities/tjpyu/ooa/:type" :paramsDesc="['默认为`news`']">
+
+| 新闻动态 | 通知公告     |
+| -------- | ------------ |
+| news     | notification |
 
 </Route>
 
@@ -1051,6 +1073,24 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
 | :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
 | all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+
+</Route>
+
+## 西安交通大学
+
+### 教务处
+
+<Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" :paramsDesc="['栏目路径, 支持多级, 不包括末尾的`.htm`']">
+
+::: tip 提示
+
+支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目,
+
+例如`http://dean.xjtu.edu.cn/gzlc.htm`, 则`subpath`为`gzlc`
+
+又例`http://dean.xjtu.edu.cn/jxxx/xytz.htm`, 则`subpath`为`jxxx/xytz`
+
+:::
 
 </Route>
 

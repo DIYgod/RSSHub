@@ -502,6 +502,18 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
 
+## 洛谷
+
+### 日报
+
+<Route author="LogicJake prnake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']">
+</Route>
+
+### 近期比赛
+
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest">
+</Route>
+
 ## 码农俱乐部
 
 ### 话题

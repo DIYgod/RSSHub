@@ -42,6 +42,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
 
+## Epic Games Store
+
+### 免费游戏
+
+<Route author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
