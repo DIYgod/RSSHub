@@ -27,7 +27,7 @@ pageClass: routes
 
 ### Nature Journal - Latest Research
 
-<RouteEn author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="short name for a journal" />
+<RouteEn author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                            |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------- |
@@ -50,7 +50,7 @@ pageClass: routes
 
 ### Nature Journal - News & Comment
 
-<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="short name for a journal" />
+<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" />
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                            |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |

@@ -54,7 +54,7 @@ pageClass: routes
 
 ### Nature-最新成果
 
-<Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="期刊名简写" />
+<Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
 |  `:journal`   |           期刊名            | 路由                                                             |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------- |
@@ -77,7 +77,7 @@ pageClass: routes
 
 ### Nature-新闻及评论
 
-<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="期刊名简写" />
+<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" />
 
 |  `:journal`   |           期刊名            | 路由                                                                             |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
