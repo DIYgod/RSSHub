@@ -385,13 +385,15 @@ category 列表：
 
 </Route>
 
-### 研究生院通知公告
+### 研究生院
 
-<Route author="XYenon" example="/heu/yjsy/announcement" path="/heu/yjsy/announcement"/>
+<Route author="XYenon" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']">
 
-### 研究生院新闻动态
+| 通知公告     | 新闻动态 |
+| ------------ | -------- |
+| announcement | news     |
 
-<Route author="XYenon" example="/heu/yjsy/news" path="/heu/yjsy/news"/>
+</Route>
 
 ## 哈尔滨工业大学
 
