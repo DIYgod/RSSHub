@@ -4,36 +4,9 @@ pageClass: routes
 
 # 科学期刊
 
-## 聚合平台
+## Cell
 
-### PubMed-热门文章
-
-<Route author="yech1990" example="/journals/pubmed/trending" path="/pubmed/trending" />
-
-### X-MOL 平台-期刊
-
-<Route author="cssxsh" example="/journals/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
-
-### 谷歌学术-关键词更新
-
-<Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" anticrawler="1">
-
-1. 简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
-2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
-
-</Route>
-
-### 谷歌学术-作者引用更新
-
-<Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
-
-路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ 中 user= 后的 mlmE4JMAAAAJ。
-
-</Route>
-
-## 期刊网站
-
-### Cell 主刊
+### 主刊
 
 <Route author="yech1990" example="/journals/cell/cell/current" path="/cell/cell/:category" />
 
@@ -44,11 +17,15 @@ pageClass: routes
 
 </Route>
 
-### elife - 最新成果
+## elife
+
+### 最新成果
 
 <Route author="emdoe HenryQW" example="/elife/cell-biology" path="/journals/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" />
 
-### Nature 系列-最新成果
+## Nature 系列
+
+### 最新成果
 
 <Route author="yech1990" example="/nature/research/ng" path="/journals/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
@@ -71,7 +48,7 @@ pageClass: routes
 
 </Route>
 
-### Nature-新闻及评论
+### 新闻及评论
 
 <Route author="yech1990" example="/nature/news-and-comment/ng" path="/journals/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" />
 
@@ -92,19 +69,29 @@ pageClass: routes
 
 </Route>
 
-### Nature 主刊-新闻动态
+### 主刊 - 新闻动态
 
 <Route author="yech1990" example="/nature/nature/news" path="/journals/nature/nature/news" />
 
-### Nature 主刊-精彩研究
+### 主刊 - 精彩研究
 
 <Route author="yech1990" example="/nature/nature/highlight" path="/journals/nature/nature/highlight" />
 
-### PNAS - 最新文章(根据领域分类)
+## PNAS
 
-<Route author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/journals/pnas/:topic" :paramsDesc="['领域名称'，'可从 pnas.org 获得。`latest` 则为全部。']" />
+### 最新文章(根据领域分类)
 
-### Science 系列-本期刊物
+<Route author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/journals/pnas/:topic" :paramsDesc="['领域名称, 可从 pnas.org 获得。`latest` 则为全部。']" />
+
+## PubMed
+
+### 热门文章
+
+<Route author="yech1990" example="/journals/pubmed/trending" path="/pubmed/trending" />
+
+## Science 系列
+
+### 本期刊物
 
 <Route author="yech1990" example="/sciencemag/current/science" path="/journals/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
@@ -122,10 +109,35 @@ pageClass: routes
 
 </Route>
 
-### Science 主刊-在线发表
+### 主刊-在线发表
 
 <Route author="yech1990" example="/sciencemag/early/science" path="/journals/sciencemag/early/science" />
 
 _仅支持 Science 主刊_
+
+</Route>
+
+## X-MOL
+
+### 平台-期刊
+
+<Route author="cssxsh" example="/journals/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
+
+## 谷歌学术
+
+### 关键词更新
+
+<Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" anticrawler="1">
+
+1. 简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
+2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
+
+</Route>
+
+### 作者引用更新
+
+<Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
+
+路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ 中 user= 后的 mlmE4JMAAAAJ。
 
 </Route>
