@@ -118,7 +118,7 @@ _only support Science Journal_
 
 ### X-MOL Platform - Journal
 
-<RouteEn author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
+<RouteEn author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['type','magazine']" />
 
 ### Google Scholar - Keywords Monitoring
 

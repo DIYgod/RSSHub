@@ -8,11 +8,11 @@ pageClass: routes
 
 ### PubMed-热门文章
 
-<Route author="yech1990" example="/pubmed/trending" path="/pubmed/trending" />
+<Route author="yech1990" example="/journals/pubmed/trending" path="/pubmed/trending" />
 
 ### X-MOL 平台-期刊
 
-<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
+<Route author="cssxsh" example="/journals/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
 
 ### 谷歌学术-关键词更新
 
@@ -35,7 +35,7 @@ pageClass: routes
 
 ### Cell 主刊
 
-<Route author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
+<Route author="yech1990" example="/journals/cell/cell/current" path="/cell/cell/:category" />
 
 | `:category` |      类型说明       | 路由                                     |
 | :---------: | :-----------------: | ---------------------------------------- |
@@ -46,15 +46,15 @@ pageClass: routes
 
 ### eLife-最新成果-综合
 
-<Route author="emdoe" example="/elife/latest" path="/elife/latest" />
+<Route author="emdoe" example="/elife/latest" path="/journals/elife/latest" />
 
 ### elife-最新成果-细分领域
 
-<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
+<Route author="emdoe" example="/elife/cell-biology" path="/journals/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
 
 ### Nature 系列-最新成果
 
-<Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
+<Route author="yech1990" example="/nature/research/ng" path="/journals/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
 |  `:journal`   |           期刊名            | 路由                                                             |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------- |
@@ -77,7 +77,7 @@ pageClass: routes
 
 ### Nature-新闻及评论
 
-<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" />
+<Route author="yech1990" example="/nature/news-and-comment/ng" path="/journals/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" />
 
 |  `:journal`   |           期刊名            | 路由                                                                             |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
@@ -98,23 +98,23 @@ pageClass: routes
 
 ### Nature 主刊-新闻动态
 
-<Route author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />
+<Route author="yech1990" example="/nature/nature/news" path="/journals/nature/nature/news" />
 
 ### Nature 主刊-精彩研究
 
-<Route author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
+<Route author="yech1990" example="/nature/nature/highlight" path="/journals/nature/nature/highlight" />
 
 ### PNAS-最新文章(全部)
 
-<Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+<Route author="emdoe" example="/pnas/latest" path="/journals/pnas/latest" />
 
 ### PNAS-最新文章(根据领域分类)
 
-<Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+<Route author="emdoe" example="/pnas/Applied Mathematics" path="/journals/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
 
 ### Science 系列-本期刊物
 
-<Route author="yech1990" example="/sciencemag/current/science" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
+<Route author="yech1990" example="/sciencemag/current/science" path="/journals/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
 | `:journal` |             期刊名             | 路由                                                             |
 | :--------: | :----------------------------: | ---------------------------------------------------------------- |
@@ -132,7 +132,7 @@ pageClass: routes
 
 ### Science 主刊-在线发表
 
-<Route author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" />
+<Route author="yech1990" example="/sciencemag/early/science" path="/journals/sciencemag/early/science" />
 
 _仅支持 Science 主刊_
 
