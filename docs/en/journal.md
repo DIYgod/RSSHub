@@ -68,6 +68,14 @@ pageClass: routes
 
 </RouteEn>
 
+### Nature - Cover Story
+
+<RouteEn author="yech1990" example="/nature/cover" path="/nature/cover" />
+
+Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.
+
+</RouteEn>
+
 ### Nature Journal - News
 
 <RouteEn author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />

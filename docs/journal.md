@@ -96,6 +96,14 @@ pageClass: routes
 
 </Route>
 
+### Nature-封面故事
+
+<Route author="yech1990" example="/nature/cover" path="/nature/cover" />
+
+订阅 Nature 系列杂志的封面图片，并及时获取刊物更新状态。
+
+</Route>
+
 ### Nature 主刊-新闻动态
 
 <Route author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />
