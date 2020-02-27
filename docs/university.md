@@ -395,6 +395,16 @@ category 列表：
 
 </Route>
 
+### 工学网
+
+<Route author="Derekmini XYenon" example="/heu/gongxue/yw" path="/heu/gongxue/:type?" :paramsDesc="['分类, 默认为 `yw`']">
+
+| 要闻 | 时讯 |
+| ---- | ---- |
+| yw   | sx   |
+
+</Route>
+
 ## 哈尔滨工业大学
 
 ### 哈尔滨工业大学教务处通知公告
