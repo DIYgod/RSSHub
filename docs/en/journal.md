@@ -6,7 +6,7 @@ pageClass: routes
 
 ## Cell Journal
 
-<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
+<RouteEn author="yech1990" example="/cell/cell/current" path="/journal/cell/cell/:category" supportScihub="1" />
 
 | `:category` |       Query Type        | Route                                    |
 | :---------: | :---------------------: | ---------------------------------------- |
@@ -19,7 +19,7 @@ pageClass: routes
 
 ### Latest Research - Research by Subject
 
-<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" supportScihub="1"/>
+<RouteEn author="emdoe" example="/elife/cell-biology" path="/journal/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" supportScihub="1"/>
 
 ## Google Scholar
 
@@ -51,7 +51,7 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 ### Latest Research
 
-<RouteEn author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990" example="/nature/research/ng" path="/journal/nature/research/:journal" :paramsDesc="['short name for a journal']" />
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                            |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------- |
@@ -74,7 +74,7 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 ### News & Comment
 
-<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/journal/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" />
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                            |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
@@ -94,29 +94,29 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 ### News
 
-<RouteEn author="yech1990" example="/nature/news" path="/nature/news" />
+<RouteEn author="yech1990" example="/nature/news" path="/journal/nature/news" />
 
 ### Research Highlight
 
-<RouteEn author="yech1990" example="/nature/highlight" path="/nature/highlight" />
+<RouteEn author="yech1990" example="/nature/highlight" path="/journal/nature/highlight" supportScihub="1"/>
 
 ## Proceedings of The National Academy of Sciences (PNAS)
 
 ### Latest Articles - Articles by Topic
 
-<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" supportScihub="1"/>
+<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/journal/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" supportScihub="1"/>
 
 ## PubMed
 
 ### Trending
 
-<RouteEn author="yech1990" example="/pubmed/trending" path="/pubmed/trending" />
+<RouteEn author="yech1990" example="/pubmed/trending" path="/journal/pubmed/trending" supportScihub="1"/>
 
 ## Science Journal
 
 ### Current Issue
 
-<RouteEn author="yech1990" example="/sciencemag/current/science" path="/sciencemag/research/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990" example="/sciencemag/current/science" path="/journal/sciencemag/research/:journal" :paramsDesc="['short name for a journal']" supportScihub="1"/>
 
 | `:journal` |    Full Name of the Journal    | Route                                                            |
 | :--------: | :----------------------------: | ---------------------------------------------------------------- |
@@ -134,7 +134,7 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 ### First Release
 
-<RouteEn author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" />
+<RouteEn author="yech1990" example="/sciencemag/early/science" path="/journal/sciencemag/early/science" supportScihub="1"/>
 
 _only support Science Journal_
 
@@ -144,4 +144,4 @@ _only support Science Journal_
 
 ### Journal
 
-<RouteEn author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['type','magazine']" />
+<RouteEn author="cssxsh" example="/x-mol/paper/0/9" path="/journal/x-mol/paper/:type/:magazine" :paramsDesc="['type','magazine']" />

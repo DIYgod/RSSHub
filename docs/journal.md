@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 主刊
 
-<Route author="yech1990" example="/journals/cell/cell/current" path="/cell/cell/:category" supportScihub="1"/>
+<Route author="yech1990" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
 
 | `:category` |      类型说明       | 路由                                     |
 | :---------: | :-----------------: | ---------------------------------------- |
@@ -50,7 +50,7 @@ pageClass: routes
 
 ### 新闻及评论
 
-<Route author="yech1990" example="/nature/news-and-comment/ng" path="/journals/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" />
+<Route author="yech1990" example="/nature/news-and-comment/ng" path="/journals/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
 
 |  `:journal`   |           期刊名            | 路由                                                                             |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
@@ -64,18 +64,18 @@ pageClass: routes
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](/nature/news-and-comment/natmachintell) |
 
 -   通过 `/nature/research/` + “杂志简写”来获取对应杂志的最新文章（Latest Research）。
-    主刊由于格式不同，该 router 并未支持，采用 `/nature/nature/news` 来获取新闻。
+    主刊由于格式不同，该 router 并未支持，采用 `/nature/news` 来获取新闻。
 -   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
 
 </Route>
 
 ### 主刊 - 新闻动态
 
-<Route author="yech1990" example="/nature/nature/news" path="/journals/nature/nature/news" />
+<Route author="yech1990" example="/nature/news" path="/journals/nature/news" />
 
 ### 主刊 - 精彩研究
 
-<Route author="yech1990" example="/nature/nature/highlight" path="/journals/nature/nature/highlight" />
+<Route author="yech1990" example="/nature/highlight" path="/journals/nature/highlight" supportScihub="1"/>
 
 ## PNAS
 
@@ -87,13 +87,13 @@ pageClass: routes
 
 ### 热门文章
 
-<Route author="yech1990" example="/journals/pubmed/trending" path="/pubmed/trending" />
+<Route author="yech1990" example="/pubmed/trending" path="/journals/pubmed/trending" supportScihub="1"/>
 
 ## Science 系列
 
 ### 本期刊物
 
-<Route author="yech1990" example="/sciencemag/current/science" path="/journals/nature/research/:journal" :paramsDesc="['期刊名简写']" />
+<Route author="yech1990" example="/sciencemag/current/science" path="/journals/sciencemag/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
 
 | `:journal` |             期刊名             | 路由                                                             |
 | :--------: | :----------------------------: | ---------------------------------------------------------------- |
@@ -111,7 +111,7 @@ pageClass: routes
 
 ### 主刊-在线发表
 
-<Route author="yech1990" example="/sciencemag/early/science" path="/journals/sciencemag/early/science" />
+<Route author="yech1990" example="/sciencemag/early/science" path="/journals/sciencemag/early/science" supportScihub="1"/>
 
 _仅支持 Science 主刊_
 
@@ -121,7 +121,7 @@ _仅支持 Science 主刊_
 
 ### 平台-期刊
 
-<Route author="cssxsh" example="/journals/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
+<Route author="cssxsh" example="/journals/x-mol/paper/0/9" path="/journals/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
 
 ## 谷歌学术
 
