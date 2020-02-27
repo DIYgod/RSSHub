@@ -66,7 +66,7 @@ Eg: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
 
 ## Sci-hub link
 
-Output Sci-hub link in scientific journal routes.
+Output Sci-hub link in scientific journal routes, this supports major journals or routes that output DOIs.
 
 -   scihub: set to any value
 

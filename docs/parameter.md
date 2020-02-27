@@ -67,7 +67,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 ## 输出 Sci-hub 链接
 
-可以输出 Sci-hub 链接, 用于科学期刊类 RSS
+可以输出 Sci-hub 链接，用于知名期刊或输出 DOI 的科学期刊类 RSS。
 
 -   scihub: 任意值开启
 
