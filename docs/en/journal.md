@@ -84,13 +84,14 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 <RouteEn author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
 
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles - ALL
-
-<RouteEn author="emdoe" example="/pnas/latest" path="/pnas/latest" />
-
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles-Articles by Topic
+### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles
 
 <RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
+
+-   Using router (`/pnas/` + Topic of Interest) to query latest research paper for a certain topic from PNAS journal.
+    If the `:topic` parameter is blank, or equal to 'latest', then all the latest papers will return.
+
+</RouteEn>
 
 ### Science Journal - Current Issue
 

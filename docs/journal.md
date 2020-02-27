@@ -112,13 +112,14 @@ pageClass: routes
 
 <Route author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
 
-### PNAS-最新文章(全部)
-
-<Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
-
-### PNAS-最新文章(根据领域分类)
+### PNAS-最新文章
 
 <Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+
+-   通过 `/pnas/` + “领域名称”来获取对应“领域”的最新文章（Latest Research）。
+    若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
+
+</Route>
 
 ### Science 系列-本期刊物
 
