@@ -7448,10 +7448,10 @@ koa-convert@^1.2.0:
     co "^4.6.0"
     koa-compose "^3.0.0"
 
-koa-favicon@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/koa-favicon/-/koa-favicon-2.0.1.tgz#cfae363e5fd00bd5dd67c1150fbef31e0b5d6f4d"
-  integrity sha512-chGoY4E+TQ87CQBNsqP9DR9Kq5C10zHZsEr/0gftHyA4f/zmulY043hv8gSrgU3pW8yGjbMEodSHWLdH1yPcxw==
+koa-favicon@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/koa-favicon/-/koa-favicon-2.1.0.tgz#c430cc594614fb494adcb5ee1196a2f7f53ea442"
+  integrity sha512-LvukcooYjxKtnZq0RXdBup+JDhaHwLgnLlDHB/xvjwQEjbc4rbp/0WkmOzpOvaHujc+fIwPear0dpKX1V+dHVg==
   dependencies:
     mz "^2.7.0"
 
