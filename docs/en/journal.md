@@ -6,7 +6,7 @@ pageClass: routes
 
 ## Cell Journal
 
-<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
+<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
 
 | `:category` |       Query Type        | Route                                    |
 | :---------: | :---------------------: | ---------------------------------------- |
@@ -19,7 +19,7 @@ pageClass: routes
 
 ### Latest Research - Research by Subject
 
-<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" />
+<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" supportScihub="1"/>
 
 ## Google Scholar
 
@@ -104,7 +104,7 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 ### Latest Articles - Articles by Topic
 
-<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" />
+<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" supportScihub="1"/>
 
 ## PubMed
 

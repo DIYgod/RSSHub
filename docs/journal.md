@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 主刊
 
-<Route author="yech1990" example="/journals/cell/cell/current" path="/cell/cell/:category" />
+<Route author="yech1990" example="/journals/cell/cell/current" path="/cell/cell/:category" supportScihub="1"/>
 
 | `:category` |      类型说明       | 路由                                     |
 | :---------: | :-----------------: | ---------------------------------------- |
@@ -21,7 +21,7 @@ pageClass: routes
 
 ### 最新成果
 
-<Route author="emdoe HenryQW" example="/elife/cell-biology" path="/journals/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" />
+<Route author="emdoe HenryQW" example="/elife/cell-biology" path="/journals/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" supportScihub="1"/>
 
 ## Nature 系列
 
@@ -81,7 +81,7 @@ pageClass: routes
 
 ### 最新文章(根据领域分类)
 
-<Route author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/journals/pnas/:topic" :paramsDesc="['领域名称, 可从 pnas.org 获得。`latest` 则为全部。']" />
+<Route author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/journals/pnas/:topic" :paramsDesc="['领域名称, 可从 pnas.org 获得。`latest` 则为全部。']" supportScihub="1" />
 
 ## PubMed
 
