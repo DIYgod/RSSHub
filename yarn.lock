@@ -1271,10 +1271,10 @@
   dependencies:
     safe-buffer "^5.0.1"
 
-"@sentry/apm@5.13.0":
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/@sentry/apm/-/apm-5.13.0.tgz#ffc8ab476bb40ef92cde3d813718528564ef293a"
-  integrity sha512-hNYXjvjvaa/z+EGbkHyEHag4qGq9+snSRHV+C7cWvGDio01zSOdusHJDqH7S6GzJ0yRY4nbq3l6xc9STlmlthQ==
+"@sentry/apm@5.13.1":
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/@sentry/apm/-/apm-5.13.1.tgz#152a7a54b06f344112477cb376e8554860a6af86"
+  integrity sha512-be6M8/TOA/K7jQNZEm1YC0Y9+LdM0jyX5LMwy9NWwhneE6Iq8xvsU/pYZByj6+AAs0tIpiFd9QFxFKNUtKIRUQ==
   dependencies:
     "@sentry/browser" "5.13.0"
     "@sentry/hub" "5.13.0"
@@ -1322,12 +1322,12 @@
     "@sentry/types" "5.12.4"
     tslib "^1.9.3"
 
-"@sentry/node@5.13.0":
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-5.13.0.tgz#3ac727ad3d585a1a1fe96dd4b6b0010b00410215"
-  integrity sha512-aT8mYy3hsnhueaOfPbTIMPruhnRlRNKI8tiqPE50KO9o8n1djSCf0/pxz3ErYaJOOfyFzvOL/sKtBXGLoNC+uA==
+"@sentry/node@5.13.1":
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-5.13.1.tgz#41d2eec02bc718a0f5aa59698635242d585470f2"
+  integrity sha512-6/HaewN2kX0za3LncYwp6nlvm/6i0S0/D/HO7VDHMSpc8z/8/Em6xTZy7hLV3phosMoLIa5P3CRXvLVybBTrpg==
   dependencies:
-    "@sentry/apm" "5.13.0"
+    "@sentry/apm" "5.13.1"
     "@sentry/core" "5.13.0"
     "@sentry/hub" "5.13.0"
     "@sentry/types" "5.12.4"
