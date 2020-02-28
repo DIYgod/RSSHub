@@ -725,7 +725,7 @@ Supported sub-sites：
 
 ### 作者
 
-<Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
 
 ### 作者动态
 
