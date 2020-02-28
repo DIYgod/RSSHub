@@ -83,7 +83,7 @@
     "json5": "2.1.1",
     "koa": "2.11.0",
     "koa-basic-auth": "4.0.0",
-    "koa-favicon": "2.0.1",
+    "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
     "lru-cache": "5.1.1",
     "lz-string": "1.4.4",
