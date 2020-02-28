@@ -111,6 +111,16 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 </RouteEn>
 
+### Science Journal - Cover Story
+
+<RouteEn author="yech1990" example="/science/cover" path="/science/cover" />
+
+Subscribe to the cover images of the Science journals, and get the latest publication updates in time.
+
+Including ‘Science’, 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.
+
+</RouteEn>
+
 ### Science Journal - First Release
 
 <RouteEn author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" />

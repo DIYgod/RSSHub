@@ -139,6 +139,16 @@ pageClass: routes
 
 </Route>
 
+### Science 系列-封面故事
+
+<Route author="yech1990" example="/science/cover" path="/science/cover" />
+
+订阅 Science 系列杂志的封面图片，并及时获取刊物更新状态。
+
+包含了： ‘Science’, 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' 和 'Science Translational Medicine'。
+
+</Route>
+
 ### Science 主刊-在线发表
 
 <Route author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" />
