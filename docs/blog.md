@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Google Sites
+
+### 文章更新
+
+<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" />
+
 ## Hexo
 
 ### Next 主题博客
