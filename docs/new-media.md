@@ -804,20 +804,6 @@ Supported sub-sites：
 
 <Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
 
-## 腾讯大家
-
-### 首页
-
-<Route author="xyqfer" example="/dajia" path="/dajia"/>
-
-### 作者作品
-
-<Route author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
-
-### 专栏
-
-<Route author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
-
 ## 腾讯谷雨
 
 ### 栏目
