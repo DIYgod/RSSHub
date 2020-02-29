@@ -10,6 +10,14 @@ pageClass: routes
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Hedwig.pub
+
+<Route author="zwithz" example="/blogs/hedwig/0" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
+
+| 全部 | 呆唯的 Newsletter | 0neSe7en 的技术周刊 | 地心引力 | 宪学宪卖 | Comeet 每周精选 | 我有一片芝麻地 |
+| ---- | ----------------- | ------------------- | -------- | -------- | --------------- | -------------- |
+| 0    | 1                 | 2                   | 3        | 4        | 5               | 6              |
+
 ## Hexo
 
 ### Next 主题博客
@@ -93,9 +101,3 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
-
-## Hedwig.pub
-
-### 我有一片芝麻地
-
-<Route author="zwithz" example="/blogs/zmd" path="/blogs/zmd"/>
