@@ -1124,6 +1124,14 @@
                 script: "({id: document.querySelector('html').innerHTML.match(/photos.app.goo.gl\\/(.*?)\"/)[1]})",
             },
         ],
+        sites: [
+            {
+                title: 'Sites',
+                docs: 'https://docs.rsshub.app/blog.html#google-sites',
+                source: ['/site/:id/*', '/site/:id'],
+                target: '/google/sites/:id',
+            },
+        ],
     },
     'javlibrary.com': {
         _name: 'javlibrary',
