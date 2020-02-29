@@ -93,3 +93,9 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## Hedwig.pub
+
+### 我有一片芝麻地
+
+<Route author="zwithz" example="/blogs/zmd" path="/blogs/zmd"/>
