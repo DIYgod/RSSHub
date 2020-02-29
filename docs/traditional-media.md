@@ -104,12 +104,12 @@ Solidot 提供的 feed:
 
 `地区`
 | 香港 | 台灣 | 美國 |
-| -- | -- | -- |
+| ---- | ---- | ---- |
 | hk | tw | en |
 
 `类別`
 | 新聞總集 | 兩岸國際 | 財經 | 娛樂 | 體育 | 健康 |
-| -- | -- | -- | -- | -- | -- |
+| -------- | -------- | -------- | ------------- | ------ | ------ |
 | (空) | world | business | entertainment | sports | health |
 
 </Route>
@@ -178,9 +178,9 @@ Category 列表:
 
 <Route author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
 
-| 全部   | 国际   | 中国  | 香港     | 台湾   | 经济   |
-| ------ | ------ | ----- | -------- | ------ | ------ |
-| yaowen | global | china | hongkong | taiwan | jingji |
+| 全部   | 国际   | 中国  | 香港     | 台湾   | 经济   | 视觉   |
+| ------ | ------ | ----- | -------- | ------ | ------ | ------ |
+| yaowen | global | china | hongkong | taiwan | jingji | shijue |
 
 </Route>
 
@@ -305,6 +305,16 @@ category 对应的关键词有
 ### 频道
 
 <Route author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
+
+### 澎湃美数组作品集
+
+<Route author="umm233" example="/thepaper/839studio/2" path="/thepaper/839studio/:id?" :paramsDesc="['分类 id 可选，默认订阅全部分类']">
+
+| 视频 | 交互 | 信息图 | 数据故事 |
+| ---- | ---- | ------ | -------- |
+| 2    | 4    | 3      | 453      |
+
+</Route>
 
 ## 人民日报
 

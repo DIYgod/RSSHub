@@ -22,6 +22,12 @@
                     return `/bilibili/video/danmaku/${params.aid.replace('av', '')}/${pid ? pid : 1}`;
                 },
             },
+            {
+                title: '番剧',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/bangumi/media/:bid',
+                target: (params) => `/bilibili/bangumi/media/${params.bid.replace('md', '')}`,
+            },
         ],
         space: [
             {
@@ -589,8 +595,8 @@
             {
                 title: '每周免费游戏',
                 docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
-                source: '/:collection',
-                target: '/epicgames/:collection',
+                source: '/store/zh-CN/free-games',
+                target: '/epicgames/freegames',
             },
         ],
     },
@@ -1153,6 +1159,12 @@
                 target: '/javlibrary/videos/bestrated',
             },
             {
+                title: '最佳评论',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/bestreviews',
+            },
+            {
                 title: '影星',
                 docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
                 source: '/cn/vl_star.php',
@@ -1234,6 +1246,100 @@
                 docs: 'https://docs.rsshub.app/game.html#nai-niu-guan',
                 source: ['/element/:id', '/element/:id/article'],
                 target: '/cowlevel/element/:id',
+            },
+        ],
+    },
+    'beijing.gov.cn': {
+        wjw: [
+            {
+                title: '北京卫生健康委员会',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui',
+                source: '/xwzx_20031/:caty',
+                target: '/gov/beijing/mhc/:caty',
+            },
+        ],
+    },
+    'zju.edu.cn': {
+        _name: '浙江大学',
+        cst: [
+            {
+                title: '软件学院 - 全部通知',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: ['', '/*tpath'],
+                target: '/universities/zju/cst/0',
+            },
+            {
+                title: '软件学院 - 招生信息',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/32178/list.htm',
+                target: '/universities/zju/cst/1',
+            },
+            {
+                title: '软件学院 - 教务管理',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36216/list.htm',
+                target: '/universities/zju/cst/2',
+            },
+            {
+                title: '软件学院 - 论文管理',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36217/list.htm',
+                target: '/universities/zju/cst/3',
+            },
+            {
+                title: '软件学院 - 思政工作',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36192/list.htm',
+                target: '/universities/zju/cst/4',
+            },
+            {
+                title: '软件学院 - 评奖评优',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36228/list.htm',
+                target: '/universities/zju/cst/5',
+            },
+            {
+                title: '软件学院 - 实习就业',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36193/list.htm',
+                target: '/universities/zju/cst/6',
+            },
+            {
+                title: '软件学院 - 国际实习',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36235/list.htm',
+                target: '/universities/zju/cst/7',
+            },
+            {
+                title: '软件学院 - 国内合作科研',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36194/list.htm',
+                target: '/universities/zju/cst/8',
+            },
+            {
+                title: '软件学院 - 国际合作科研',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36246/list.htm',
+                target: '/universities/zju/cst/9',
+            },
+        ],
+    },
+    'kuaidi100.com': {
+        _name: '快递100',
+        '.': [
+            {
+                title: '快递追踪',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: (params) => `/kuaidi100/track/${params.com}/${params.postid}`,
+                script: "({postid: document.querySelector('#postid').value, com: document.querySelector('#selectComBtn').childNodes[1].attributes[1].value})",
+                verification: (params) => params.com !== 'default' && params.postid,
+            },
+            {
+                title: '支持的快递公司列表',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: '/kuaidi100/company',
             },
         ],
     },

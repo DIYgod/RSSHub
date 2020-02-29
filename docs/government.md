@@ -4,6 +4,18 @@ pageClass: routes
 
 # 政务消息
 
+## 北京市卫生健康委员会
+
+### 新闻中心
+
+<Route author="luyuhuang" example="/gov/beijing/mhc/wnxw" path="/gov/beijing/mhc/:caty" :paramsDesc="['类别']">
+
+| 委内新闻 | 基层动态 | 媒体聚焦 | 热点新闻 |
+| :------: | :------: | :------: | :------: |
+|   wnxw   |   jcdt   |   mtjj   |  rdxws   |
+
+</Route>
+
 ## 国家新闻出版广电总局
 
 ### 游戏审批结果
@@ -305,6 +317,18 @@ pageClass: routes
 ### 拍卖信息/海关法规
 
 <Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
+
+## 中华人民共和国教育部
+
+### 新闻
+
+<Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
+
+|  政策解读   |  最新文件   | 公告公示 |    教育部简报     |
+| :---------: | :---------: | :------: | :---------------: |
+| policy_anal | newest_file |  notice  | edu_ministry_news |
+
+</Route>
 
 ## 中华人民共和国商务部
 
