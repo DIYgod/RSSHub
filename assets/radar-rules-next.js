@@ -51,9 +51,10 @@
                 title: '博主',
                 docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
                 source: ['/u/:id', '/:id'],
-                target: '/weibo/user/:uid',
-                script: "({uid: document.querySelector('head').innerHTML.match(/\\$CONFIG\\['oid']='(\\d+)'/)[1]})",
-                verification: (params) => params.uid,
+                target: (params, url, document) => {
+                    const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                    return uid ? `/weibo/user/${uid}` : '';
+                },
             },
             {
                 title: '关键词',
@@ -115,29 +116,41 @@
                 title: '用户时间线',
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
-                target: '/twitter/user/:id',
-                verification: (params) => params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search',
+                target: (params) => {
+                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                        return '/twitter/user/:id';
+                    }
+                },
             },
             {
                 title: '用户关注时间线',
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
-                target: '/twitter/followings/:id',
-                verification: (params) => params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search',
+                target: (params) => {
+                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                        return '/twitter/followings/:id';
+                    }
+                },
             },
             {
                 title: '用户喜欢列表',
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
-                target: '/twitter/likes/:id',
-                verification: (params) => params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search',
+                target: (params) => {
+                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                        return '/twitter/likes/:id';
+                    }
+                },
             },
             {
                 title: '列表时间线',
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id/lists/:name',
-                target: '/twitter/list/:id/:name',
-                verification: (params) => params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search',
+                target: (params) => {
+                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                        return '/twitter/list/:id/:name';
+                    }
+                },
             },
             {
                 title: '关键词',
@@ -363,8 +376,11 @@
                 title: '专辑',
                 docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
                 source: '/:type/:id',
-                target: '/ximalaya/album/:id/',
-                verification: (params) => parseInt(params.id) + '' === params.id,
+                target: (params) => {
+                    if (parseInt(params.id) + '' === params.id) {
+                        return '/ximalaya/album/:id/';
+                    }
+                },
             },
         ],
     },
@@ -412,9 +428,10 @@
                 title: '搜尋',
                 docs: 'https://docs.rsshub.app/anime.html#anime1',
                 source: '/',
-                script: "({keyword: new URLSearchParams(location.search).get('s')})",
-                target: '/anime1/search/:keyword',
-                verification: (params) => params.keyword,
+                target: (params, url) => {
+                    const keyword = new URL(url).searchParams.get('s');
+                    return keyword ? `/anime1/search/${keyword}` : '';
+                },
             },
         ],
     },
@@ -425,8 +442,11 @@
                 title: '用户',
                 docs: 'https://docs.rsshub.app/social-media.html#instagram',
                 source: '/:id',
-                target: '/instagram/user/:id',
-                verification: (params) => params.id !== 'explore' && params.id !== 'developer',
+                target: (params) => {
+                    if (params.id !== 'explore' && params.id !== 'developer') {
+                        return '/instagram/user/:id';
+                    }
+                },
             },
             {
                 title: '标签',
@@ -491,7 +511,7 @@
         '.': [
             {
                 title: '电影和剧集',
-                description: 'https://docs.rsshub.app/multimedia.html#pian-yuan',
+                docs: 'https://docs.rsshub.app/multimedia.html#pian-yuan',
                 source: '/',
             },
         ],
@@ -552,17 +572,23 @@
                 title: '帖子列表',
                 docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
                 source: 'f',
-                target: (params, url) => `/tieba/forum/${new URL(url).searchParams.get('kw')}`,
-                script: "({type: new URLSearchParams(location.search).get('tab')})",
-                verification: (params) => !params.type || params.type === 'main',
+                target: (params, url) => {
+                    const type = new URL(url).searchParams.get('tab');
+                    if (!type || type === 'main') {
+                        return `/tieba/forum/${new URL(url).searchParams.get('kw')}`;
+                    }
+                },
             },
             {
                 title: '精品帖子',
                 docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
                 source: 'f',
-                target: (params, url) => `/tieba/forum/good/${new URL(url).searchParams.get('kw')}`,
-                script: "({type: new URLSearchParams(location.search).get('tab')})",
-                verification: (params) => params.type === 'good',
+                target: (params, url) => {
+                    const type = new URL(url).searchParams.get('tab');
+                    if (type === 'good') {
+                        return `/tieba/forum/good/${new URL(url).searchParams.get('kw')}`;
+                    }
+                },
             },
             {
                 title: '帖子动态',
@@ -583,7 +609,7 @@
         www: [
             {
                 title: '最新商品',
-                description: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
+                docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
                 source: ['/:category'],
                 target: '/wineyun/:category',
             },
@@ -1108,8 +1134,11 @@
                 title: '影视剧集更新',
                 docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
                 source: ['/:name', '/:name/:season'],
-                target: (params) => `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`,
-                verification: (params) => params.name !== 'category' && params.name !== 'tag' && params.name !== 'ddrklogin' && params.name !== 'about' && params.name !== 'deleted',
+                target: (params) => {
+                    if (params.name !== 'category' && params.name !== 'tag' && params.name !== 'ddrklogin' && params.name !== 'about' && params.name !== 'deleted') {
+                        return `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`;
+                    }
+                },
             },
         ],
     },
@@ -1120,16 +1149,10 @@
                 title: '相册',
                 docs: 'https://docs.rsshub.app/picture.html#google-xiang-ce',
                 source: '/share/*',
-                target: '/google/album/:id',
-                script: "({id: document.querySelector('html').innerHTML.match(/photos.app.goo.gl\\/(.*?)\"/)[1]})",
-            },
-        ],
-        sites: [
-            {
-                title: 'Sites',
-                docs: 'https://docs.rsshub.app/blog.html#google-sites',
-                source: ['/site/:id/*', '/site/:id'],
-                target: '/google/sites/:id',
+                target: (params, url, document) => {
+                    const id = document && document.querySelector('html').innerHTML.match(/photos.app.goo.gl\/(.*?)"/)[1];
+                    return id ? `/google/album/${id}` : '';
+                },
             },
         ],
     },
@@ -1339,9 +1362,13 @@
                 title: '快递追踪',
                 docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
                 source: '/',
-                target: (params) => `/kuaidi100/track/${params.com}/${params.postid}`,
-                script: "({postid: document.querySelector('#postid').value, com: document.querySelector('#selectComBtn').childNodes[1].attributes[1].value})",
-                verification: (params) => params.com !== 'default' && params.postid,
+                target: (params, url, document) => {
+                    const postid = document && document.querySelector('#postid').value;
+                    const com = document && document.querySelector('#selectComBtn').childNodes[1].attributes[1].value;
+                    if (com && com !== 'default' && postid) {
+                        return `/kuaidi100/track/${com}/${postid}`;
+                    }
+                },
             },
             {
                 title: '支持的快递公司列表',

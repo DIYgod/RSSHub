@@ -513,8 +513,11 @@ ctx.state.data = {
             title: '用户时间线',
             description: 'https://docs.rsshub.app/social-media.html#twitter',
             source: '/:id',
-            target: '/twitter/user/:id',
-            verification: (params) => (params.id !== 'home'),
+            target: (params) => {
+                if (params.id !== 'home') {
+                    return '/twitter/user/:id';
+                }
+            },
         }],
     },
     'pixiv.net': {
@@ -532,9 +535,10 @@ ctx.state.data = {
             title: '博主',
             description: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
             source: ['/u/:id', '/:id'],
-            target: '/weibo/user/:uid',
-            script: '({uid: document.querySelector(\'head\').innerHTML.match(/\\$CONFIG\\[\'uid\']=\'(\\d+)\'/)[1]})',
-            verification: (params) => params.uid,
+            target: (params, url, document) => {
+                const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                return uid ? `/weibo/user/${uid}` : '';
+            },
         }],
     },
 }
@@ -562,7 +566,7 @@ ctx.state.data = {
 
 如 `Twitter 用户时间线` 规则的 `source` 为 `/:id`
 
-比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` `script` `verification` 字段生成 RSSHub 地址
+比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` 字段生成 RSSHub 地址
 
 请注意 `source` 只可以匹配 URL Path，如果参数在 URL Param 和 URL Hash 里请使用 `target`
 
@@ -574,31 +578,11 @@ ctx.state.data = {
 
 上一步中源站路径匹配出 `id` 为 `DIYgod`，则 RSSHub 路径中的 `:id` 会被替换成 `DIYgod`，匹配结果为 `/twitter/user/DIYgod`，就是我们想要的结果
 
-进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 params 和 url 两个参数
+进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 `params` 和 `url` 和 `document` 两个参数
 
-如 `bilibili 分区视频` 规则，把 `https://www.bilibili.com/v/douga/mad/` 匹配为 `/bilibili/partion/24`
+`params` 为上一步 `source` 匹配出来的参数，`url` 为页面 url，`document` 为页面 document
 
-又如 `Pixiv 用户收藏` 规则，把 `https://www.pixiv.net/bookmark.php?id=15288095` 匹配为 `/pixiv/user/bookmarks/15288095`
-
-#### script
-
-可选，执行脚本
-
-有时候我们需要的参数不在 URL 中，无法通过上述方法获取，这时可以通过这个参数在页面执行脚本
-
-请注意，由于插件权限限制，无法访问页面的 window 对象
-
-如 `微博博主` 规则
-
-#### verification
-
-可选，验证源站路径
-
-`verification` 为一个函数，函数有 params 参数
-
-这个参数用于解决 `source` 匹配成功了，但不是我们想要的页面 的问题
-
-比如 `twitter.com/:id` 可以匹配 `https://twitter.com/DIYgod`，也可以匹配 Twitter 主页 `https://twitter.com/home`，后者显然不是我们想匹配的，就用 `verification` 把 `id` 为 `home` 时排除掉
+请注意，`target` 方法运行在沙盒中，对 `document` 的任何修改都不会反应到页面中
 
 ### 补充文档
 
