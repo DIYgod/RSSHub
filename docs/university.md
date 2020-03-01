@@ -405,6 +405,16 @@ category 列表：
 
 </Route>
 
+### 水声工程学院通知
+
+<Route author="Derekmini" example="/heu/shuisheng/xwdt" path="/heu/shuisheng/:type?" :paramsDesc="['分类, 默认为 `xwdt`']">
+
+| 新闻动态 | 通知公告 |
+| -------- | -------- |
+| xwdt     | tzgg     |
+
+</Route>
+
 ## 哈尔滨工业大学
 
 ### 哈尔滨工业大学教务处通知公告
