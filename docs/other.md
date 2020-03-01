@@ -25,7 +25,9 @@ pageClass: routes
 
 </Route>
 
-### BOOKSOURCE.STORE
+## BOOKSOURCE.STORE
+
+### 书源仓库更新
 
 <Route author="vhxubo" example="/booksource" path="/booksource"/>
 
@@ -487,7 +489,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
 
-### 源仓库
+## 源仓库
+
+### 源仓库更新
 
 <Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
 | 阅读 | 异次元 | 海阔 | 
