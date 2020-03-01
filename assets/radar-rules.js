@@ -22,6 +22,12 @@
                     return `/bilibili/video/danmaku/${params.aid.replace('av', '')}/${pid ? pid : 1}`;
                 },
             },
+            {
+                title: '番剧',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/bangumi/media/:bid',
+                target: (params) => `/bilibili/bangumi/media/${params.bid.replace('md', '')}`,
+            },
         ],
         space: [
             {
@@ -346,7 +352,13 @@
                 title: '有新路由啦',
                 docs: 'https://docs.rsshub.app/program-update.html#rsshub',
                 source: ['', '/*tpath'],
-                target: '/rsshub/rss',
+                target: '/rsshub/routes',
+            },
+            {
+                title: '有新赞助商啦',
+                docs: 'https://docs.rsshub.app/program-update.html#rsshub',
+                source: ['', '/*tpath'],
+                target: '/rsshub/sponsors',
             },
         ],
     },
@@ -589,8 +601,8 @@
             {
                 title: '每周免费游戏',
                 docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
-                source: '/:collection',
-                target: '/epicgames/:collection',
+                source: '/store/zh-CN/free-games',
+                target: '/epicgames/freegames',
             },
         ],
     },
@@ -759,7 +771,7 @@
                 title: '分类',
                 docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao',
                 source: '/categories/:idd',
-                target: (params) => `/qdaily/researcach/${params.idd.replace('.html', '')}`,
+                target: (params) => `/qdaily/category/${params.idd.replace('.html', '')}`,
             },
         ],
     },
@@ -953,6 +965,395 @@
                 docs: 'https://docs.rsshub.app/game.html#steam',
                 source: '/news/',
                 target: (params, url) => `/steam/news/${new URL(url).searchParams.get('appids')}`,
+            },
+        ],
+    },
+    'baijingapp.com': {
+        _name: '白鲸出海',
+        www: [
+            {
+                title: '文章',
+                docs: 'https://docs.rsshub.app/new-media.html#bai-jing-chu-hai',
+                source: '',
+                target: '/baijing',
+            },
+        ],
+    },
+    'xiaomi.cn': {
+        _name: '小米社区',
+        www: [
+            {
+                title: '圈子',
+                docs: 'https://docs.rsshub.app/bbs.html#xiao-mi-she-qu',
+                source: '/board/:boardId',
+                target: '/mi/bbs/board/:boardId',
+            },
+        ],
+    },
+    '163.com': {
+        _name: '网易',
+        ds: [
+            {
+                title: '大神',
+                docs: 'https://docs.rsshub.app/game.html#wang-yi-da-shen',
+                source: '/user/:id',
+                target: '/netease/ds/:id',
+            },
+        ],
+        open: [
+            {
+                title: '公开课 - 精品课程',
+                docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke',
+                source: '/',
+                target: '/open163/vip',
+            },
+            {
+                title: '公开课 - 最新课程',
+                docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke',
+                source: '/',
+                target: '/open163/latest',
+            },
+        ],
+    },
+    'suzhou.gov.cn': {
+        _name: '苏州市政府',
+        www: [
+            {
+                title: '政府新闻',
+                docs: 'https://docs.rsshub.app/government.html#su-zhou-shi-ren-min-zheng-fu',
+                source: '/szsrmzf/:uid/nav_list.shtml',
+                target: '/gov/suzhou/news/:uid',
+            },
+        ],
+    },
+    'mqube.net': {
+        _name: 'MQube',
+        www: [
+            {
+                title: '全站最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/latest',
+            },
+            {
+                title: '全站每日排行',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/',
+                target: '/mqube/top',
+            },
+            {
+                title: '个人最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/user/:user',
+                target: '/mqube/user/:user',
+            },
+            {
+                title: '标签最近更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#mqube',
+                source: '/search/tag/:tag',
+                target: '/mqube/tag/:tag',
+            },
+        ],
+    },
+    'nikkei.com': {
+        _name: '日本経済新聞',
+        www: [
+            {
+                title: 'ホームページ',
+                docs: 'https://docs.rsshub.app/traditional-media.html#ri-ben-jing-ji-xin-wen',
+                source: '/',
+                target: '/nikkei/index',
+            },
+        ],
+    },
+    'last.fm': {
+        _name: 'Last.fm',
+        www: [
+            {
+                title: '用户播放记录',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: ['/user/:user', '/user/:user/*'],
+                target: '/lastfm/recent/:user',
+            },
+            {
+                title: '用户 Love 记录',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: ['/user/:user', '/user/:user/*'],
+                target: '/lastfm/loved/:user',
+            },
+            {
+                title: '站内 Top 榜单',
+                docs: 'https://docs.rsshub.app/multimedia.html#last-fm',
+                source: '/charts',
+                target: '/lastfm/top',
+            },
+        ],
+    },
+    'ddrk.me': {
+        _name: '低端影视',
+        www: [
+            {
+                title: '首页',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: '/',
+                target: '/ddrk/index',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: '/tag/:tag',
+                target: '/ddrk/tag/:tag',
+            },
+            {
+                title: '分类',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: ['/category/:category', '/category/:uplevel/:category'],
+                target: '/ddrk/category/:category',
+            },
+            {
+                title: '影视剧集更新',
+                docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi',
+                source: ['/:name', '/:name/:season'],
+                target: (params) => `/ddrk/update/${params.name}${params.season ? '/' + params.season : ''}`,
+                verification: (params) => params.name !== 'category' && params.name !== 'tag' && params.name !== 'ddrklogin' && params.name !== 'about' && params.name !== 'deleted',
+            },
+        ],
+    },
+    'google.com': {
+        _name: '谷歌',
+        photos: [
+            {
+                title: '相册',
+                docs: 'https://docs.rsshub.app/picture.html#google-xiang-ce',
+                source: '/share/*',
+                target: '/google/album/:id',
+                script: "({id: document.querySelector('html').innerHTML.match(/photos.app.goo.gl\\/(.*?)\"/)[1]})",
+            },
+        ],
+        sites: [
+            {
+                title: 'Sites',
+                docs: 'https://docs.rsshub.app/blog.html#google-sites',
+                source: ['/site/:id/*', '/site/:id'],
+                target: '/google/sites/:id',
+            },
+        ],
+    },
+    'javlibrary.com': {
+        _name: 'javlibrary',
+        www: [
+            {
+                title: '新话题',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/update',
+            },
+            {
+                title: '新发行',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/newrelease',
+            },
+            {
+                title: '新加入',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/newentries',
+            },
+            {
+                title: '最想要',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/mostwanted',
+            },
+            {
+                title: '高评价',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/videos/bestrated',
+            },
+            {
+                title: '最佳评论',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/bestreviews',
+            },
+            {
+                title: '影星',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn/vl_star.php',
+                target: (params, url) => `/javlibrary/stars/${new URL(url).searchParams.get('s')}`,
+            },
+            {
+                title: '用户文章',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userposts`,
+            },
+            {
+                title: '用户拥有',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userowned`,
+            },
+            {
+                title: '用户看过',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwatched`,
+            },
+            {
+                title: '用户想要',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
+                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwanted`,
+            },
+        ],
+    },
+    'qidian.com': {
+        _name: '起点',
+        book: [
+            {
+                title: '章节',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/info/:id',
+                target: '/qidian/chapter/:id',
+            },
+            {
+                title: '讨论区',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/info/:id',
+                target: '/qidian/forum/:id',
+            },
+        ],
+        www: [
+            {
+                title: '限免',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/free',
+                target: '/qidian/free',
+            },
+            {
+                title: '女生限免',
+                docs: 'https://docs.rsshub.app/reading.html#qi-dian',
+                source: '/mm/free',
+                target: '/qidian/free/mm',
+            },
+        ],
+    },
+    'hackerone.com': {
+        _name: 'HackerOne',
+        '.': [
+            {
+                title: 'HackerOne Hacker Activity',
+                docs: 'https://docs.rsshub.app/other.html#hackerone-hacker-activity',
+                source: '/hacktivity',
+                target: '/hackerone/hacktivity',
+            },
+        ],
+    },
+    'cowlevel.net': {
+        _name: '奶牛关',
+        '.': [
+            {
+                title: '元素文章',
+                docs: 'https://docs.rsshub.app/game.html#nai-niu-guan',
+                source: ['/element/:id', '/element/:id/article'],
+                target: '/cowlevel/element/:id',
+            },
+        ],
+    },
+    'beijing.gov.cn': {
+        wjw: [
+            {
+                title: '北京卫生健康委员会',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui',
+                source: '/xwzx_20031/:caty',
+                target: '/gov/beijing/mhc/:caty',
+            },
+        ],
+    },
+    'zju.edu.cn': {
+        _name: '浙江大学',
+        cst: [
+            {
+                title: '软件学院 - 全部通知',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: ['', '/*tpath'],
+                target: '/universities/zju/cst/0',
+            },
+            {
+                title: '软件学院 - 招生信息',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/32178/list.htm',
+                target: '/universities/zju/cst/1',
+            },
+            {
+                title: '软件学院 - 教务管理',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36216/list.htm',
+                target: '/universities/zju/cst/2',
+            },
+            {
+                title: '软件学院 - 论文管理',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36217/list.htm',
+                target: '/universities/zju/cst/3',
+            },
+            {
+                title: '软件学院 - 思政工作',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36192/list.htm',
+                target: '/universities/zju/cst/4',
+            },
+            {
+                title: '软件学院 - 评奖评优',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36228/list.htm',
+                target: '/universities/zju/cst/5',
+            },
+            {
+                title: '软件学院 - 实习就业',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36193/list.htm',
+                target: '/universities/zju/cst/6',
+            },
+            {
+                title: '软件学院 - 国际实习',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36235/list.htm',
+                target: '/universities/zju/cst/7',
+            },
+            {
+                title: '软件学院 - 国内合作科研',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36194/list.htm',
+                target: '/universities/zju/cst/8',
+            },
+            {
+                title: '软件学院 - 国际合作科研',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36246/list.htm',
+                target: '/universities/zju/cst/9',
+            },
+        ],
+    },
+    'kuaidi100.com': {
+        _name: '快递100',
+        '.': [
+            {
+                title: '快递追踪',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: (params) => `/kuaidi100/track/${params.com}/${params.postid}`,
+                script: "({postid: document.querySelector('#postid').value, com: document.querySelector('#selectComBtn').childNodes[1].attributes[1].value})",
+                verification: (params) => params.com !== 'default' && params.postid,
+            },
+            {
+                title: '支持的快递公司列表',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: '/kuaidi100/company',
             },
         ],
     },

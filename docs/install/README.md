@@ -300,7 +300,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/rss
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -396,3 +396,24 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
     -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
     -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
     -   `FANFOU_PASSWORD`: 饭否密码
+
+-   Last.fm 全部路由: [申请地址](https://www.last.fm/api/)
+
+    -   `LASTFM_API_KEY`: Last.fm API Key
+
+-   北大未名 BBS 全站十大
+
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1.登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+
+-   nhentai torrent: [注册地址](https://nhentai.net/register/)
+
+    -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
+    -   `NHENTAI_PASSWORD`: nhentai 密码
+
+-   discuz cookies 设定
+
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时, 通过指定 cid 来调用该 cookie
+
+-   Sci-hub 设置，用于科学期刊路由。
+
+    -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。

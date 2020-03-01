@@ -48,6 +48,16 @@ Official user RSS: http://**:username**.lofter.com/rss
 
 <RouteEn author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['instance address, noly domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
 
+## piapro
+
+### User latest works
+
+<RouteEn author="hoilc" example="/piapro/user/shine_longer" path="/piapro/user/:pid" :paramsDesc="['User ID, can be found in url']"/>
+
+### Website latest works
+
+<RouteEn author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']"/>
+
 ## pixiv
 
 ### User Bookmark
@@ -90,7 +100,15 @@ Only for self-hosted
 
 ### Channel
 
-<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" />
+<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']">
+
+::: tip
+
+Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting https://t.me/s/:username.
+
+:::
+
+</RouteEn>
 
 ### Sticker Pack
 
@@ -104,7 +122,7 @@ Only for self-hosted
 
 ### User timeline
 
-<RouteEn path="/twitter/user/:id" example="/twitter/user/DIYgod" :paramsDesc="['user id']" radar="1" />
+<RouteEn path="/twitter/user/:id/:type?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'Extra options `exclude_replies` exclude replies,`exclude_rts` exclude retweets,`exclude_rts_replies` exclude replies and retweets, for default include all.']" radar="1" />
 
 ## User following timeline
 

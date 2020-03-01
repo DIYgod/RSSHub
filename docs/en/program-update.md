@@ -36,6 +36,12 @@ pageClass: routes
 
 <RouteEn author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
 
+## Chrome Web Store
+
+### Extensions Update
+
+<RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']/>
+
 ## CurseForge
 
 ### File Update
@@ -76,6 +82,10 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 </RouteEn>
 
+### Add-ons Update
+
+<RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']/>
+
 ## Greasy Fork
 
 ### Script Update
@@ -88,11 +98,9 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']"/>
 
-## Minecraft CurseForge
+## Minecraft
 
-### Mod Update
-
-<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for exmaple `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
+Refer to [#minecraft](/en/game.html#minecraft)
 
 ## MIUI
 
@@ -139,7 +147,11 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 ### New routes
 
-<RouteEn path="/rsshub/rss" example="/rsshub/rss" />
+<RouteEn path="/rsshub/routes" example="/rsshub/routes" />
+
+### New sponsors
+
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
 
 ## sketch.com
 

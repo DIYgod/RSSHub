@@ -32,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 爱下电子书
+
+### 最新章节
+
+<Route author="JeasonLau" example="/axdzs/191/191976" path="/axdzs/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到', '小说网站链接最后的数字, 可在对应小说页 URL 中找到']"  />
+
 ## 笔趣阁
 
 ### 小说更新
@@ -76,6 +82,19 @@ pageClass: routes
 
 </Route>
 
+## 稻草人书屋
+
+### 章节更新
+
+<Route author="JeasonLau" example="/dcrsw/zhongjidouluo/2" path="/dcrsw/:name/:count?" :paramsDesc="['小说名，可在对应小说页URL中找到', '显示的章节数，缺省为`3`']">
+
+::: warning 注意
+
+count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 以下。
+:::
+
+</Route>
+
 ## 飞地
 
 ### 分类
@@ -103,6 +122,16 @@ pageClass: routes
 <Route author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
 
 举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+
+</Route>
+
+## 飘天文学
+
+### 章节
+
+<Route author="LJason77" example="/novel/ptwxz/10/10272" path="/novel/ptwxz/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `10`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `10272`']" >
+
+举例网址：https://www.ptwxz.com/bookinfo/10/10272.html
 
 </Route>
 
@@ -159,6 +188,16 @@ pageClass: routes
 举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
 
 </Route>
+
+## 虛詞
+
+### 版块
+
+<Route author="LogicJake" example="/p-articles/section/critics-art" path="/p-articles/section/:section" :paramsDesc="['版块链接, 可在对应版块 URL 中找到, 子版块链接用`-`连接']"/>
+
+### 作者
+
+<Route author="LogicJake" example="/p-articles/contributors/朗天" path="/p-articles/contributors/:author" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
 
 ## 纵横
 
