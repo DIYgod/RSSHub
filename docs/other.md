@@ -27,7 +27,7 @@ pageClass: routes
 
 ## BOOKSOURCE.STORE
 
-<Route author="vhxubo" example="/booksource" path="/booksource/index"/>
+<Route author="vhxubo" example="/booksource" path="/booksource"/>
 
 ## checkee.info
 
@@ -486,6 +486,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+
+## 源仓库
+
+<Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
+| 阅读 | 异次元 | 海阔 | 
+| ---- | ----- | ---- | 
+| yuedu | yiciyuan | haikuo |
+
+</Route>
 
 ## 远程.work
 
