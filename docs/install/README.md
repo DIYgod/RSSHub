@@ -413,3 +413,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 -   discuz cookies 设定
 
     -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时, 通过指定 cid 来调用该 cookie
+
+-   Sci-hub 设置，用于科学期刊路由。
+
+    -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。

@@ -376,3 +376,7 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 -   discuz cookies
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
+
+-   Sci-hub for scientific journal routes:
+
+    -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.tw`.
