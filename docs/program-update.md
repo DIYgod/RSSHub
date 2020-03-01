@@ -168,7 +168,7 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss" radar="1"/>
+<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes" radar="1"/>
 
 ## sketch.com
 

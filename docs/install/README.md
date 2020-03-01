@@ -300,7 +300,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/rss
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 

@@ -352,7 +352,7 @@
                 title: '有新路由啦',
                 docs: 'https://docs.rsshub.app/program-update.html#rsshub',
                 source: ['', '/*tpath'],
-                target: '/rsshub/rss',
+                target: '/rsshub/routes',
             },
         ],
     },

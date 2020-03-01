@@ -147,7 +147,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New routes
 
-<RouteEn path="/rsshub/rss" example="/rsshub/rss" />
+<RouteEn path="/rsshub/routes" example="/rsshub/routes" />
 
 ## sketch.com
 
