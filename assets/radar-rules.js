@@ -354,6 +354,12 @@
                 source: ['', '/*tpath'],
                 target: '/rsshub/routes',
             },
+            {
+                title: '有新赞助商啦',
+                docs: 'https://docs.rsshub.app/program-update.html#rsshub',
+                source: ['', '/*tpath'],
+                target: '/rsshub/sponsors',
+            },
         ],
     },
     'ximalaya.com': {

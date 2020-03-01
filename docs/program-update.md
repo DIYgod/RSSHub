@@ -170,6 +170,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes" radar="1"/>
 
+### 有新赞助商啦
+
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+
 ## sketch.com
 
 ### beta 更新

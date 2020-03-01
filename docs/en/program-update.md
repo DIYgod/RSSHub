@@ -149,6 +149,10 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn path="/rsshub/routes" example="/rsshub/routes" />
 
+### New sponsors
+
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+
 ## sketch.com
 
 ### Beta update
