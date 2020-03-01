@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+    rsshub:
+        image: diygod/rsshub
+        restart: always
+        ports:
+            - '1200:1200'
+        environment:
+            NODE_ENV: production
+            CACHE_TYPE: redis
+            REDIS_URL: 'redis://redis:6379/'
+            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000'
+        depends_on:
+            - redis
+            - browserless
+
+    browserless:
+        image: browserless/chrome
+        restart: always
+
+    redis:
+        image: redis:alpine
+        restart: always
+        volumes:
+            - redis-data:/data
+
+volumes:
+    redis-data:
