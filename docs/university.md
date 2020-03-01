@@ -52,7 +52,7 @@ pageClass: routes
 
 ### 每周一推 - 中国政治学研究中心
 
-<Route author="AngUOI" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
+<Route author="vhxubo" example="/pku/rccp/mzyt" path="/universities/pku/rccp/mzyt" />
 
 ### 生命科学学院近期讲座
 
@@ -546,11 +546,11 @@ category 列表：
 
 ### 教务处
 
-<Route author="AngUOI" example="/lit/jwc" path="/universities/lit/jwc" />
+<Route author="vhxubo" example="/lit/jwc" path="/universities/lit/jwc" />
 
 ### 新闻中心
 
-<Route author="AngUOI" example="/lit/xwzx" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `all`']">
+<Route author="vhxubo" example="/lit/xwzx" path="/universities/lit/xwzx/:name?" :paramsDesc="['默认为 `all`']">
 
 | 全部 | 公告通知 | 新闻快讯 | 学术信息 | 媒体新闻 |
 | ---- | -------- | -------- | -------- | -------- |
@@ -560,7 +560,7 @@ category 列表：
 
 ### 团委
 
-<Route author="AngUOI" example="/lit/tw" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `all`']">
+<Route author="vhxubo" example="/lit/tw" path="/universities/lit/tw/:name?" :paramsDesc="['默认为 `all`']">
 
 | 全部 | 团内通知 | 青年快讯 |
 | ---- | -------- | -------- |
