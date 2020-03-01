@@ -22,6 +22,12 @@
                     return `/bilibili/video/danmaku/${params.aid.replace('av', '')}/${pid ? pid : 1}`;
                 },
             },
+            {
+                title: '番剧',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/bangumi/media/:bid',
+                target: (params) => `/bilibili/bangumi/media/${params.bid.replace('md', '')}`,
+            },
         ],
         space: [
             {
@@ -589,8 +595,8 @@
             {
                 title: '每周免费游戏',
                 docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
-                source: '/:collection',
-                target: '/epicgames/:collection',
+                source: '/store/zh-CN/free-games',
+                target: '/epicgames/freegames',
             },
         ],
     },
@@ -1118,6 +1124,14 @@
                 script: "({id: document.querySelector('html').innerHTML.match(/photos.app.goo.gl\\/(.*?)\"/)[1]})",
             },
         ],
+        sites: [
+            {
+                title: 'Sites',
+                docs: 'https://docs.rsshub.app/blog.html#google-sites',
+                source: ['/site/:id/*', '/site/:id'],
+                target: '/google/sites/:id',
+            },
+        ],
     },
     'javlibrary.com': {
         _name: 'javlibrary',
@@ -1315,6 +1329,25 @@
                 docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
                 source: '/36246/list.htm',
                 target: '/universities/zju/cst/9',
+            },
+        ],
+    },
+    'kuaidi100.com': {
+        _name: '快递100',
+        '.': [
+            {
+                title: '快递追踪',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: (params) => `/kuaidi100/track/${params.com}/${params.postid}`,
+                script: "({postid: document.querySelector('#postid').value, com: document.querySelector('#selectComBtn').childNodes[1].attributes[1].value})",
+                verification: (params) => params.com !== 'default' && params.postid,
+            },
+            {
+                title: '支持的快递公司列表',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: '/kuaidi100/company',
             },
         ],
     },

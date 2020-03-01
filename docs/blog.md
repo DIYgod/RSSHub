@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Google Sites
+
+### 文章更新
+
+<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" />
+
 ## Hexo
 
 ### Next 主题博客
@@ -79,6 +85,14 @@ pageClass: routes
 ### 最近更新
 
 <Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
+
+## 王五四文集
+
+### 文章
+
+<Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" :paramsDesc="['RSS抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为2020']">
+
+</Route>
 
 ## 王垠博客
 

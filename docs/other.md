@@ -252,15 +252,22 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 快递订单追踪
 
-<Route author="NeverBehave" example="/kuaidi100/track/shunfeng/SF1007896781640/0383" path="/track/:number/:id/:phone?" :paramsDesc="['快递公司代号', '订单号', '手机号后四位（仅顺丰）']">
+<Route author="NeverBehave" example="/kuaidi100/track/shunfeng/SF1007896781640/0383" path="/kuaidi100/track/:number/:id/:phone?" :paramsDesc="['快递公司代号', '订单号', '手机号后四位（仅顺丰）']" radar="1">
 
 快递公司代号如果不能确定，可通过下方快递列表获得。
 
+::: warning 注意
+
+1. 构造链接前请确认所有参数正确：错误`快递公司-订单号`组合将会缓存信息一小段时间防止产生无用查询
+2. 正常查询的订单在未签收状态下不会被缓存：请控制查询频率
+3. 订单完成后请尽快取消订阅，避免资源浪费
+
+:::
 </Route>
 
 ### 支持的快递公司列表
 
-<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company"/>
+<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company" radar="1"/>
 
 ## 裏垢女子まとめ
 
@@ -371,16 +378,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 搜狗特色 LOGO
 
 <Route author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
-
-## 淘股吧股票论坛
-
-### 论坛总版
-
-<Route author="emdoe" example="/taoguba/index" path="/taoguba/index"/>
-
-### 用户博客
-
-<Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
 
 ## 腾讯吐个槽
 

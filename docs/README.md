@@ -25,7 +25,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Special Sponsors
 
-<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rixcloud.png"></a><a href="https://angelia.codeeer.com" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/angelia.png"></a><a href="https://lizhi.io/store" target="_blank" style="margin-left: 10px;"><img height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/lizhi.jpg"></a>
+<a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rixcloud.png"></a><a style="margin-right: 10px;" href="https://angelia.codeeer.com" target="_blank"><img height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/angelia.png"></a><a style="margin-right: 10px;margin-left: 10px;" href="http://authing.cn" target="_blank"><img height="55px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/authing.png"></a><a style="margin-right: 10px;" href="https://lizhi.io/store" target="_blank"><img height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/lizhi.jpg"></a>
 
 ### Sponsors
 
