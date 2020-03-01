@@ -79,6 +79,12 @@ pageClass: routes
 
 </Route>
 
+## LoveHeaven
+
+### 漫画更新
+
+<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
+
 ## nHentai
 
 ### 分类筛选
