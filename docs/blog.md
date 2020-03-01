@@ -16,6 +16,16 @@ pageClass: routes
 
 <Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" />
 
+## Hedwig.pub
+
+<Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
+
+| 呆唯的 Newsletter | 0neSe7en 的技术周刊 | 地心引力 | 宪学宪卖 | Comeet 每周精选 | 无鸡之谈 | 我有一片芝麻地 |
+| ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
+| hirasawayui       | se7en               | walnut   | themez   | comeet          | sunskyxh | zmd            |
+
+> 原则上只要是{type}.hedwig.pub 都可以匹配。
+
 ## Hexo
 
 ### Next 主题博客
