@@ -437,16 +437,6 @@ Supported sub-sites：
 | calendar | institute | beauty |
 </Route>
 
-## 好奇怪
-
-### 首页
-
-<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
-
-### 探索
-
-<Route author="HenryQW" example="/qdaily/notch/explore/1" path="/qdaily/explore/:id" :paramsDesc="['探索 id，可通过好奇怪 APP 复制分享链接找到']"/>
-
 ## 好奇心日报
 
 ### 标签，栏目，分类

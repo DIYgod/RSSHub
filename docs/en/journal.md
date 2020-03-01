@@ -2,13 +2,11 @@
 pageClass: routes
 ---
 
-# Sciences Journal
+# Scientific Journal
 
-## Online papers
+## Cell Journal
 
-### Cell Journal
-
-<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" />
+<RouteEn author="yech1990" example="/cell/cell/current" path="/journal/cell/cell/:category" supportScihub="1" />
 
 | `:category` |       Query Type        | Route                                    |
 | :---------: | :---------------------: | ---------------------------------------- |
@@ -17,17 +15,43 @@ pageClass: routes
 
 </RouteEn>
 
-### eLife - Latest Research-ALL
+## eLife
 
-<RouteEn author="emdoe" example="/elife/latest" path="/elife/latest" />
+### Latest Research - Research by Subject
 
-### eLife - Latest Research-Research by Subject
+<RouteEn author="emdoe" example="/elife/cell-biology" path="/journal/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" supportScihub="1"/>
 
-<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage']" />
+## Google Scholar
 
-### Nature Journal - Latest Research
+### Keywords Monitoring
 
-<RouteEn author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" :paramsDesc="['query statement which supports「Basic」and「Advanced」modes']" anticrawler="1">
+
+::: warning
+
+Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
+
+:::
+
+1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
+
+2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+
+</RouteEn>
+
+### Author Citations
+
+<RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
+
+The parameter id in the route is the id in the URL of the user ’s Google Scholar reference page，for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+
+</RouteEn>
+
+## Nature Journal
+
+### Latest Research
+
+<RouteEn author="yech1990" example="/nature/research/ng" path="/journal/nature/research/:journal" :paramsDesc="['short name for a journal']" />
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                            |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------- |
@@ -48,9 +72,9 @@ pageClass: routes
 
 </RouteEn>
 
-### Nature Journal - News & Comment
+### News & Comment
 
-<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/journal/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" />
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                            |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------- |
@@ -68,25 +92,31 @@ pageClass: routes
 
 </RouteEn>
 
-### Nature Journal - News
+### News
 
-<RouteEn author="yech1990" example="/nature/nature/news" path="/nature/nature/news" />
+<RouteEn author="yech1990" example="/nature/news" path="/journal/nature/news" />
 
-### Nature Journal - Research Highlight
+### Research Highlight
 
-<RouteEn author="yech1990" example="/nature/nature/highlight" path="/nature/nature/highlight" />
+<RouteEn author="yech1990" example="/nature/highlight" path="/journal/nature/highlight" supportScihub="1"/>
 
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles - ALL
+## Proceedings of The National Academy of Sciences (PNAS)
 
-<RouteEn author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+### Latest Articles - Articles by Topic
 
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles-Articles by Topic
+<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/journal/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" supportScihub="1"/>
 
-<RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
+## PubMed
 
-### Science Journal - Current Issue
+### Trending
 
-<RouteEn author="yech1990" example="/sciencemag/current/science" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990" example="/pubmed/trending" path="/journal/pubmed/trending" supportScihub="1"/>
+
+## Science Journal
+
+### Current Issue
+
+<RouteEn author="yech1990" example="/sciencemag/current/science" path="/journal/sciencemag/research/:journal" :paramsDesc="['short name for a journal']" supportScihub="1"/>
 
 | `:journal` |    Full Name of the Journal    | Route                                                            |
 | :--------: | :----------------------------: | ---------------------------------------------------------------- |
@@ -102,44 +132,16 @@ pageClass: routes
 
 </RouteEn>
 
-### Science Journal - First Release
+### First Release
 
-<RouteEn author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" />
+<RouteEn author="yech1990" example="/sciencemag/early/science" path="/journal/sciencemag/early/science" supportScihub="1"/>
 
 _only support Science Journal_
 
 </RouteEn>
 
-## Search Engine
+## X-MOL Platform
 
-### PubMed Trending
+### Journal
 
-<RouteEn author="yech1990" example="/pubmed/trending" path="/pubmed/trending" />
-
-### X-MOL Platform - Journal
-
-<RouteEn author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
-
-### Google Scholar - Keywords Monitoring
-
-<RouteEn author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" :paramsDesc="['query statement which supports「Basic」and「Advanced」modes']" anticrawler="1">
-
-::: warning
-
-Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
-
-:::
-
-1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
-
-2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
-
-</RouteEn>
-
-### Google Scholar - Author Citations
-
-<RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
-
-The parameter id in the route is the id in the URL of the user ’s Google Scholar reference page，for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
-
-</RouteEn>
+<RouteEn author="cssxsh" example="/x-mol/paper/0/9" path="/journal/x-mol/paper/:type/:magazine" :paramsDesc="['type','magazine']" />
