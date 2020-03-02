@@ -1357,4 +1357,52 @@
             },
         ],
     },
+    'hrbeu.edu.cn': {
+        _name: '哈尔滨工程大学',
+        yjsy: [
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/announcement',
+            },
+            {
+                title: '研究生院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/news',
+            },
+        ],
+        uae: [
+            {
+                title: '水声学院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/xwdt',
+            },
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/tzgg',
+            },
+        ],
+    },
+    'gongxue.cn': {
+        _name: '工学网',
+        '.': [
+            {
+                title: '要闻',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/yw',
+            },
+            {
+                title: '时讯',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/sx',
+            },
+        ],
+    },
 });
