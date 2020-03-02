@@ -23,49 +23,6 @@ sidebar: auto
 
 在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
 
-#### 举例
-
-1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
-
-| 名称                       | 说明                                                                               |
-| -------------------------- | ---------------------------------------------------------------------------------- |
-| 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
-| 数据来源                   | bilibili                                                                           |
-| 路由名称                   | bangumi                                                                            |
-| 参数 1                     | :seasonid 必选                                                                     |
-| 参数 2                     | 无                                                                                 |
-| 参数 3                     | 无                                                                                 |
-| 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
-| lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
-
-2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/github/issue/:user/:repo`                                                  |
-| 数据来源                   | github                                                                       |
-| 路由名称                   | issue                                                                        |
-| 参数 1                     | :user 必选                                                                   |
-| 参数 2                     | :repo 必选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/github/issue`                                                      |
-| lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
-
-3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/embassy/:country/:city?`                                                   |
-| 数据来源                   | embassy                                                                      |
-| 路由名称                   | 无                                                                           |
-| 参数 1                     | :country 必选                                                                |
-| 参数 2                     | ?city 可选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/embassy/index`                                                     |
-| lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
-
----
-
 ### 编写脚本
 
 在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
@@ -165,7 +122,7 @@ sidebar: auto
     ```js
     const $ = cheerio.load(data); // 使用 cheerio 加载返回的 HTML
     const list = $('div[data-item_id]');
-    // 使用 cheerio 选择器，选择 class="list-item" 的所有元素，返回 cheerio node 对象数组
+    // 使用 cheerio 选择器，选择带有 data-item_id 属性的所有 div 元素，返回 cheerio node 对象数组
 
     // 注：每一个 cheerio node 对应一个 HTML DOM
     // 注：cheerio 选择器与 jquery 选择器几乎相同
@@ -276,7 +233,7 @@ sidebar: auto
     4. **使用通用配置型路由**
 
     很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
-    通用配置即通过 cherrio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
+    通用配置即通过 cheerio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
 
     首先我们需要几个数据：
 
@@ -288,11 +245,11 @@ sidebar: auto
     const buildData = require('@/utils/common-config');
     module.exports = async (ctx) => {
         ctx.state.data = await buildData({
-            link: RSS来源链接,
-            url: 数据来源链接,
-            title: '%title%', //这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
+            link: '', // RSS来源链接
+            url: '', // 数据来源链接
+            title: '%title%', // 这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
             params: {
-                title: RSS标题,
+                title: '', // RSS标题
             },
         });
     };
@@ -315,8 +272,8 @@ sidebar: auto
             },
             item: {
                 item: '.content-main .stream .stream-item',
-                title: `$('.post-account-group').text() + ' - %title%'`, //只支持$().xxx()这样的js语句，也足够使用
-                link: `$('.post-account-group').attr('href')`, //.text()代表获取元素的文本，attr()表示获取指定属性
+                title: `$('.post-account-group').text() + ' - %title%'`, // 只支持$().xxx()这样的js语句，也足够使用
+                link: `$('.post-account-group').attr('href')`, // .text()代表获取元素的文本，.attr()表示获取指定属性
                 description: `$('.post .context').html()`, // .html()代表获取元素的html代码
                 pubDate: `new Date($('.post-time').attr('datetime')).toUTCString()`, // 日期的格式多种多样，可以尝试使用**/utils/date**
                 guid: `new Date($('.post-time').attr('datetime')).getTime()`, // guid必须唯一，这是RSS的不同item的标志
@@ -556,8 +513,11 @@ ctx.state.data = {
             title: '用户时间线',
             description: 'https://docs.rsshub.app/social-media.html#twitter',
             source: '/:id',
-            target: '/twitter/user/:id',
-            verification: (params) => (params.id !== 'home'),
+            target: (params) => {
+                if (params.id !== 'home') {
+                    return '/twitter/user/:id';
+                }
+            },
         }],
     },
     'pixiv.net': {
@@ -575,9 +535,10 @@ ctx.state.data = {
             title: '博主',
             description: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
             source: ['/u/:id', '/:id'],
-            target: '/weibo/user/:uid',
-            script: '({uid: document.querySelector(\'head\').innerHTML.match(/\\$CONFIG\\[\'uid\']=\'(\\d+)\'/)[1]})',
-            verification: (params) => params.uid,
+            target: (params, url, document) => {
+                const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                return uid ? `/weibo/user/${uid}` : '';
+            },
         }],
     },
 }
@@ -605,7 +566,7 @@ ctx.state.data = {
 
 如 `Twitter 用户时间线` 规则的 `source` 为 `/:id`
 
-比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` `script` `verification` 字段生成 RSSHub 地址
+比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` 字段生成 RSSHub 地址
 
 请注意 `source` 只可以匹配 URL Path，如果参数在 URL Param 和 URL Hash 里请使用 `target`
 
@@ -617,31 +578,11 @@ ctx.state.data = {
 
 上一步中源站路径匹配出 `id` 为 `DIYgod`，则 RSSHub 路径中的 `:id` 会被替换成 `DIYgod`，匹配结果为 `/twitter/user/DIYgod`，就是我们想要的结果
 
-进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 params 和 url 两个参数
+进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 `params` 和 `url` 和 `document` 两个参数
 
-如 `bilibili 分区视频` 规则，把 `https://www.bilibili.com/v/douga/mad/` 匹配为 `/bilibili/partion/24`
+`params` 为上一步 `source` 匹配出来的参数，`url` 为页面 url，`document` 为页面 document
 
-又如 `Pixiv 用户收藏` 规则，把 `https://www.pixiv.net/bookmark.php?id=15288095` 匹配为 `/pixiv/user/bookmarks/15288095`
-
-#### script
-
-可选，执行脚本
-
-有时候我们需要的参数不在 URL 中，无法通过上述方法获取，这时可以通过这个参数在页面执行脚本
-
-请注意，由于插件权限限制，无法访问页面的 window 对象
-
-如 `微博博主` 规则
-
-#### verification
-
-可选，验证源站路径
-
-`verification` 为一个函数，函数有 params 参数
-
-这个参数用于解决 `source` 匹配成功了，但不是我们想要的页面 的问题
-
-比如 `twitter.com/:id` 可以匹配 `https://twitter.com/DIYgod`，也可以匹配 Twitter 主页 `https://twitter.com/home`，后者显然不是我们想匹配的，就用 `verification` 把 `id` 为 `home` 时排除掉
+请注意，`target` 方法运行在沙盒中，对 `document` 的任何修改都不会反应到页面中
 
 ### 补充文档
 

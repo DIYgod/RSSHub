@@ -4,11 +4,60 @@ pageClass: routes
 
 # 政务消息
 
+## 北京市卫生健康委员会
+
+### 新闻中心
+
+<Route author="luyuhuang" example="/gov/beijing/mhc/wnxw" path="/gov/beijing/mhc/:caty" :paramsDesc="['类别']">
+
+| 委内新闻 | 基层动态 | 媒体聚焦 | 热点新闻 |
+| :------: | :------: | :------: | :------: |
+|   wnxw   |   jcdt   |   mtjj   |  rdxws   |
+
+</Route>
+
+## 国家新闻出版广电总局
+
+### 游戏审批结果
+
+<Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020年1月" path="/gov/sapprft/approval/:channel/:detail?" :paramsDesc="['栏目名', '标题关键字']">
+
+|         栏目         |      channel      |
+| :------------------: | :---------------: |
+| 进口网络游戏审批信息 |  importednetgame  |
+| 进口电子游戏审批信息 | importedvideogame |
+| 国产网络游戏审批信息 |  domesticnetgame  |
+|   游戏审批变更信息   |    gamechange     |
+
+|                  描述                  |      detail      |
+| :------------------------------------: | :--------------: |
+|         留空，返回栏目所有文章         |                  |
+|      new，返回栏目第一篇文章内容       |       new        |
+| 某个文章标题的一部分，返回这篇文章内容 | 例：2020 年 1 月 |
+
+</Route>
+
 ## 联合国
 
 ### 安理会否决了决议
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+## 苏州市人民政府
+
+### 政府新闻
+
+<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" :paramsDesc="['分类名']">
+
+| 政务要闻 | 区县快讯 | 部门动态 | 新闻视频 | 热点专题 | 市本级专题 | 最新热点专题 | 往期专题 | 区县专题 | 政务公告 | 便民资讯 |
+| :------: | :------: | :------: | :------: | :------: | :--------: | :----------: | :------: | :------: | :------: | :------: |
+|   news   | district |   bmdt   |   xwsp   |   rdzt   |   sbjzt    |    zxrdzt    |   wqzt   |   qxzt   |   zwgg   |   bmzx   |
+
+</Route>
+
+### 政府信息公开文件
+
+<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
 ## 中国工业和信息化部
 
@@ -69,9 +118,9 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" :paramsDesc="['分类名']">
 
-| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 |
-| :------: | :------: | :------: | :--------: |
-|    bm    |    gd    |    yw    |    gwy     |
+| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
+| :------: | :------: | :------: | :--------: | :------: |
+|    bm    |    gd    |    yw    |    gwy     | zhengce  |
 
 </Route>
 
@@ -111,6 +160,21 @@ pageClass: routes
 
 </Route>
 
+#### 江苏省教育考试院
+
+<Route author="schen1024" example="/gov/jiangsu/eea/zcgd" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
+注意: 其他栏目的内容格式不兼容, 且不便统一, 此处只做了下标的栏目
+
+| 具体栏目 | 参数 |
+| :------: | :--: |
+| 招考要闻 | zkyw |
+| 政策规定 | zcgd |
+| 招考信息 | zkxx |
+| 招考资料 | zkzl |
+| 学习交流 | xxjl |
+
+</Route>
+
 ### 山西省人民政府
 
 #### 山西省人社厅
@@ -132,22 +196,6 @@ pageClass: routes
 |   news   | department | district | livelihood |
 
 </Route>
-
-### 苏州市人民政府
-
-#### 政府新闻
-
-<Route author="EsuRt" example="/gov/suzhou/news/:uid" path="/gov/suzhou/news" :paramsDesc="['分类名']">
-
-| 政务要闻 | 区县快讯 |
-| :------: | :------: |
-|   news   | district |
-
-</Route>
-
-#### 政府信息公开文件
-
-<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
 ## 中国证券监督管理委员会
 
@@ -269,6 +317,18 @@ pageClass: routes
 ### 拍卖信息/海关法规
 
 <Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
+
+## 中华人民共和国教育部
+
+### 新闻
+
+<Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
+
+|  政策解读   |  最新文件   | 公告公示 |    教育部简报     |
+| :---------: | :---------: | :------: | :---------------: |
+| policy_anal | newest_file |  notice  | edu_ministry_news |
+
+</Route>
 
 ## 中华人民共和国商务部
 

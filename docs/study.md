@@ -4,45 +4,15 @@ pageClass: routes
 
 # 学习
 
-## eLife
+## gradCafe
 
-### 最新成果
+### gradCafe result
 
-#### 综合
+<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
 
-<Route author="emdoe" example="/elife/latest" path="/elife/latest" />
+### gradCafe result by key words
 
-#### 细分领域
-
-<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取']" />
-
-## Nature
-
-### Latest Research
-
-#### Nature
-
-<Route author="emdoe" example="/nature/research" path="/nature/research" />
-
-#### Nature Machine Intelligence
-
-<Route author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
-
-#### Nature Neuroscience
-
-<Route author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
-
-## Proceedings of The National Academy of Sciences
-
-### 最新文章
-
-#### 全部
-
-<Route author="emdoe" example="/pnas/latest" path="/pnas/latest" />
-
-#### 根据领域分类
-
-<Route author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
 ## X-MOL 平台
 
@@ -50,28 +20,18 @@ pageClass: routes
 
 <Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
 
-### 期刊
+## 领研
 
-<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
+### 论文
 
-## 谷歌学术
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['参数，如 subject=生物']"/>
 
-### 谷歌学术关键词更新
-
-<Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" anticrawler="1">
-
-1. 简单模式, 例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
-2. 高级模式, 前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角, 选择高级搜索并提交查询. 此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数. 例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
-
-</Route>
-
-### 谷歌学术作者引用更新
-
-<Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
-
-路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ 中 user= 后的 mlmE4JMAAAAJ。
-
-</Route>
+| `:param` | 举例            | 定义                                 |
+| -------- | --------------- | ------------------------------------ |
+| category | category=thesis | **必填**，theses/information/careers |
+| subject  | subject=生物    | 可置空                               |
+| columns  | columns=健康    | 可置空                               |
+| query    | query=病毒      | 可置空                               |
 
 ## 码农周刊
 
@@ -98,6 +58,16 @@ pageClass: routes
 | 13       | 22         | 28       | 4        | 19       | 25         | 37       | 49           | 52       |
 
 </Route>
+
+## 网易公开课
+
+### 精品课程
+
+<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" />
+
+### 最新课程
+
+<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" />
 
 ## 下厨房
 
@@ -163,6 +133,12 @@ pageClass: routes
 
 </Route>
 
+## 英中协会
+
+### 奖学金
+
+<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
 ## 语雀
 
 ### 知识库
@@ -174,6 +150,43 @@ pageClass: routes
 | 75258        | 102804         | 75257        |
 
 </Route>
+
+## 知識分子
+
+### 新聞
+
+<Route author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
+
+| `:type`   | 类别名称 |
+| --------- | -------- |
+| biology   | 生物     |
+| medicine  | 医药     |
+| ai        | 人工智能 |
+| physics   | 物理     |
+| chymistry | 化学     |
+| astronomy | 天文     |
+| others    | 其他     |
+
+> 参数置空（`/zhishifenzi/news`）获取所有类别
+
+### 深度
+
+<Route author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+
+### 创新
+
+<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
+
+| `:type`       | 类别名称 |
+| ------------- | -------- |
+| ~~multiple~~  | ~~综合~~ |
+| company       | 公司     |
+| product       | 产品     |
+| technology    | 技术     |
+| ~~character~~ | ~~人物~~ |
+| policy        | 政策     |
+
+> 参数置空（`/zhishifenzi/innovation`）获取所有类别
 
 ## 中国大学 MOOC(慕课)
 

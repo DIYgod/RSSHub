@@ -4,23 +4,15 @@ pageClass: routes
 
 # Uncategorized
 
-## All Poetry
-
-### Poems
-
-<RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['order by type, `best` or `newest`, default to `best`']"/>
-
 ## Apple
 
 ### Exchange and Repair Extension Programs
 
 <RouteEn author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />
 
-## aptonic
+### App Store/Mac App Store
 
-### New Dropzone Actions
-
-<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
+见 [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
 
 ## AutoTrader
 
@@ -33,27 +25,47 @@ pageClass: routes
 
 </RouteEn>
 
+## checkee.info
+
+### US Visa check status
+
+<RouteEn author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['Year-month of visa check，for example 2019-03']" />
+
+## DHL
+
+### DHL express
+
+<RouteEn author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['Waybill number']"/>
+
+## Email
+
+### Email list
+
+> Only support IMAP protocol, email password and other settings refer to [Email setting](/en/install)
+
+<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" />
+
 ## Emi Nitta official website
 
 ### Recent update
 
-<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
+<RouteEn author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
 
 ### News
 
-<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+<RouteEn author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
-## EZTV
+## HackerOne
 
-::: tip
+### HackerOne Hacker Activity
 
-EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
+<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
 
-:::
+## Instapaper
 
-### Torrent Lookup by IMDB ID
+### Personal sharing
 
-<RouteEn author="Songkeys" path="/eztv/torrents/:imdb_id" example="/eztv/torrents/6048596" :paramsDesc="['search for the IMDB ID of the desired show, available at [IMDB](https://www.imdb.com)']" />
+<RouteEn author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
 ## Japanpost
 
@@ -67,6 +79,21 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 <RouteEn author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
 
+## Pocket
+
+### Trending
+
+<RouteEn author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
+
+## Product Hunt
+
+> The official feed: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+
+### Today Popular
+
+<RouteEn author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+</RouteEn>
+
 ## Remote.work
 
 ### Remote.work Job Information
@@ -79,12 +106,68 @@ EZTV provides an official RSS feed of all torrents: https://eztv.ag/ezrss.xml
 
 </RouteEn>
 
+## SANS Institute
+
+### Latest conference materials
+
+<RouteEn author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
+
 ## TransferWise
 
 ### FX Pair Yesterday
 
 <RouteEn author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']">
 
-See [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
+Refer to [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
 
 </RouteEn>
+
+## TSSstatus（iOS downgrade channel）
+
+### Status
+
+<RouteEn author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['Board id', 'Build id']">
+
+Board and Build can be found in [here](http://api.ineal.me/tss/status)
+
+</RouteEn>
+
+## wikiHow
+
+### Home
+
+<RouteEn author="sanmmm" example="/wikihow/index" path="/wikihow/index"/>
+
+### Category
+
+<RouteEn author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['Category', 'Type, default to `all`']">
+
+Top category can be found in [category Page](https://zh.wikihow.com/Special:CategoryListing), support secondary directories
+
+Type
+
+| All | Recommend |
+| --- | --------- |
+| all | rec       |
+
+</RouteEn>
+
+## Wuhan coronavirus
+
+### South China Morning Post - China coronavirus outbreak
+
+<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
+
+Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
+
+<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
+
+| Chinese | English | Portuguese |
+| ------- | ------- | ---------- |
+| ch      | en      | pt         |
+
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
+
+<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>

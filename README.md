@@ -3,101 +3,95 @@
 </p>
 <h1 align="center">RSSHub</h1>
 
-> 🍰 万物皆可 RSS
+> 🍰 Everything is RSSible
 
 [![telegram](https://img.shields.io/badge/chat-telegram-brightgreen.svg?style=flat-square)](https://t.me/rsshub)
 [![build status](https://img.shields.io/travis/DIYgod/RSSHub/master.svg?style=flat-square)](https://travis-ci.org/DIYgod/RSSHub)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square)](https://codecov.io/github/DIYgod/RSSHub?branch=master)
 
-## 介绍
+## Introduction
+
+RSSHub is an open source, easy to use, and extensible RSS feed aggregator, it's capable of generating RSS feeds from pretty much everything.
+
+RSSHub delivers millions of contents aggregated from all kinds of sources, our vibrant open source community is ensuring the deliver of RSSHub's new routes, new features and bug fixes.
+
+RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar)
+
+[English docs](https://docs.rsshub.app/en) | [Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub)
+
+---
 
 RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源。RSSHub 借助于开源社区的力量快速发展中，目前已适配数百家网站的上千项内容
 
 可以配合浏览器扩展 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 食用
 
-[Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
+[中文文档](https://docs.rsshub.app) | [Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
 
-[使用文档](https://docs.rsshub.app/) | [English docs](https://docs.rsshub.app/en)
-
-## 鸣谢
+## Special Thanks
 
 ### Special Sponsors
 
 <div>
-<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://kzfeed.com/?from=rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/YjqwaKE.png"></a>&nbsp;&nbsp;&nbsp;
-</div>
-<div>
-<a href="https://angelia.codeeer.com" target="_blank"><img height="60px" src="https://i.imgur.com/oQf2WJl.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://mianbaoduo.com" target="_blank"><img height="60px" src="https://i.imgur.com/vLhRKp4.jpg"></a>
-</div>
-<div>
-<a href="https://lizhi.io/store" target="_blank"><img height="60px" src="https://i.imgur.com/1u6jJ6L.jpg"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://angelia.codeeer.com" target="_blank"><img height="60px" src="https://i.imgur.com/oQf2WJl.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://authing.cn" target="_blank"><img height="55px" src="https://i.imgur.com/n4RieVC.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://lizhi.io/store" target="_blank"><img height="60px" src="https://i.imgur.com/1u6jJ6L.jpg"></a>
 </div>
 
 ### Sponsors
 
-| [Liuyang](https://github.com/lingllting) | [Sayori Studio](https://t.me/SayoriStudio) | 匿名 | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) |
-| :--------------------------------------: | :----------------------------------------: | :--: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: |
+| [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS Reader](https://www.coolapk.com/apk/239500) | [mokeyjay](https://www.mokeyjay.com/) | [tkaray](https://rayray.moe/) | [NeverBehave](https://never.pet/) |
+| :----------------------------------------: | :-------: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: | :-----------------------------------: | :---------------------------: | :-------------------------------: |
 
 
-[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/en/support/)
 
 ### Contributors
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
 
-## 参与我们
+Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
-如果有任何想法或需求，可以在 [issue](https://github.com/DIYgod/RSSHub/issues) 中告诉我们，同时我们欢迎各种 pull requests
+### Backers
 
-### 提交新的 RSS 内容
+<a href="https://www.cloudflare.com" target="_blank"><img height="50px" src="https://i.imgur.com/7Ph27Fq.png"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.netlify.com" target="_blank"><img height="40px" src="https://i.imgur.com/cU01915.png"></a>
 
-1.  在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
+## Join Us
 
-2.  在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径添加获取 RSS 内容的脚本
+We welcome all pull requests. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
 
-3.  更新文档: [/docs/README.md](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md)
+Refer to [Join Us](https://docs.rsshub.app/en/joinus/)
 
-### 参与讨论
+见 [参与我们](https://docs.rsshub.app/joinus/)
 
-1.  [Telegram 群](https://t.me/rsshub)
+## Deployment
 
-## 部署
+Refer to [Deployment](https://docs.rsshub.app/en/install/)
 
-见[部署文档](https://docs.rsshub.app/install/)
+见 [部署](https://docs.rsshub.app/install/)
 
-## 赞助 RSSHub 的研发
+## Support RSSHub
 
-RSSHub 是采用 MIT 许可的开源项目，使用完全免费。 但是随着项目规模的增长，也需要有相应的资金支持才能持续项目的维护与开发。
+Refer to [Support RSSHub](https://docs.rsshub.app/en/support/)
 
-你可以通过下列的方法来赞助 RSSHub 的开发。
+见 [支持 RSSHub](https://docs.rsshub.app/support/)
 
-## 周期性赞助
+RSSHub is open source and completely free under the MIT license. However, just like any other open source project, as the project grows, the hosting, development and maintenance requires funding support.
 
-周期性赞助可以获得额外的回报, 比如更快的 GitHub 响应或者你的名字会出现在 RSSHub 的 GitHub 仓库和现在我们的官网中.
+You can support RSSHub via donations.
 
--   通过 [Patreon](https://www.patreon.com/DIYgod) 赞助
--   给我们发邮件联系赞助事宜: i#diygod.me
+### Recurring Donation
 
-## 一次性赞助
+Recurring donors will be rewarded via express issue response, or even have your name displayed on our GitHub page and website.
 
-我们通过以下方式接受赞助:
+-   Become a Sponser on [Patreon](https://www.patreon.com/DIYgod)
+-   Become a Sponser on [爱发电](https://afdian.net/@diygod)
+-   Contact us directly: i@diygod.me
 
--   [微信支付](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
--   [支付宝](https://i.loli.net/2019/03/23/5c950ebbc980e.png)
+### One-time Donation
 
-## 周边产品
+We accept donations via the following ways:
 
-也可以购买我们[官方授权的周边产品](https://telegra.ph/RSSHub-周边-08-20-2)，每售出一件周边，我们将获得售价 10% 的捐赠。
-
-## 相关项目
-
--   [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar): 探测当前页面可用的 RSS 和 RSSHub 的浏览器扩展
-
--   [Easy to RSS](https://github.com/idealclover/Easy-to-RSS): 一个一键式发现当前网页 RSS 的 chrome 扩展，与 RSSHub 联动支持更多网页
-
--   [rsshub.js](https://github.com/SevenOutman/rsshub.js): JavaScript library for RSSHub
-
--   [RSSHelper](https://greasyfork.org/zh-CN/scripts/374570-rsshelper): 可以发现 RSS 的 Tampermonkey 插件
+-   [WeChat Pay](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
+-   [Alipay](https://i.loli.net/2019/03/23/5c950ebbc980e.png)
+-   [Paypal](https://www.paypal.me/DIYgod)
 
 ## Author
 

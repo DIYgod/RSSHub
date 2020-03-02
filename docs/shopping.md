@@ -10,6 +10,18 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## LeBonCoin
+
+### Ads
+
+Transform any search into a feed.
+
+<Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
+
+For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
+
+</Route>
+
 ## Westore
 
 ### 新品
@@ -29,6 +41,16 @@ pageClass: routes
 ### 搜索结果
 
 <Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
+
+## 好好住
+
+### 整屋案例
+
+<Route author="hoilc" example="/haohaozhu/whole-house/日式" path="/haohaozhu/whole-house/:keyword?" :paramsDesc="['分类名或关键字，请使用中文']"/>
+
+### 发现
+
+<Route author="hoilc" example="/haohaozhu/discover/厨房" path="/haohaozhu/discover/:keyword?" :paramsDesc="['分类名或关键字，请使用中文']"/>
 
 ## 京东众筹
 
@@ -61,9 +83,9 @@ pageClass: routes
 ### 最新商品
 
 <Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" :paramsDesc="['分类名']" >
-| 全部     | 闪购 | 秒发 | 跨境    | 
-| -------- | ------- | --- | ------- | 
-| home | shangou | miaofa | csborder |
+| 全部     | 闪购 | 秒发 | 跨境    | 尾货专场 |
+| -------- | ------- | --- | ------- | ------ |
+| home | shangou | miaofa | csborder | weihuo |
 
 </Route>
 
@@ -195,11 +217,11 @@ pageClass: routes
 
 ### 宜家 IKEA（英国）- 商品上新
 
-<RouteEn author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
+<Route author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
 
 ### 宜家 IKEA（英国）- 促销
 
-<RouteEn author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+<Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
 
 ## 有赞
 

@@ -18,10 +18,10 @@ pageClass: routes
 
 ### 9To5 分站
 
-<Route author="HenryQW" example="/9to5/mac" path="/9to5/:type" :paramsDesc="['分站名字']">
+<Route author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:tag?" :paramsDesc="['分站名字','标签，可在文章标签 URL 中找到']">
 
 支持分站：
-| Mac | Google | Toys |
+| 9To5Mac | 9To5Google | 9To5Toys |
 | --- | ------ | ---- |
 | Mac | Google | Toys |
 
@@ -79,6 +79,16 @@ pageClass: routes
 
 <Route author="JamesWDGu" example="/engadget-cn" path="/engadget-cn"/>
 
+### 多語言
+
+<Route author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['語言']">
+
+| 繁體中文 | 簡體中文 | US  | 日文     |
+| -------- | -------- | --- | -------- |
+| chinese  | cn       | us  | japanese |
+
+</Route>
+
 ## iDownloadBlog
 
 ### blog
@@ -121,6 +131,16 @@ pageClass: routes
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
+## Letterboxd
+
+### User diary
+
+<Route author="loganrockmore" example="/letterboxd/user/diary/demiadejuyigbe" path="/letterboxd/user/diary/:username" :paramsDesc="['username']" />
+
+### Following diary
+
+<Route author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
+
 ## Matters
 
 ### 最新排序
@@ -151,6 +171,14 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
 
+### 社区
+
+<Route author="WenryXu" example="/pmcaff/feed/1" path="/pmcaff/feed/:typeid" :paramsDesc="['分类 id']"/>
+
+| 发现 | 待回答 | 最热 | 问答专场 | 投稿 | 深度 | 专栏 |
+| ---- | ------ | ---- | -------- | ---- | ---- | ---- |
+| 1    | 2      | 3    | 4        | 5    | 6    | 7    |
+
 ## Quanta Magazine
 
 ### 全部
@@ -179,7 +207,7 @@ pageClass: routes
 
 <Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
-## sixthtone
+## Sixth Tone
 
 ### 最新文章
 
@@ -200,6 +228,17 @@ pageClass: routes
 ### 分类
 
 <Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
+
+## Vulture
+
+<Route author="loganrockmore" example="/vulture/movies" path="/vulture/:type" :paramsDesc="['The sub-site name']">
+
+Supported sub-sites：
+| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+| ----- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| tv | movies | comedy | music | tvrecaps | books | theater | art | awards | video |
+
+</Route>
 
 ## ZAKER
 
@@ -236,6 +275,12 @@ pageClass: routes
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
+## 白鲸出海
+
+### 首页最新帖子
+
+<Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
+
 ## 坂道系列官网新闻
 
 ### 乃木坂 46
@@ -255,6 +300,22 @@ pageClass: routes
 ### 快讯
 
 <Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
+
+## 抽屉新热榜
+
+### 最新
+
+<Route author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
+
+| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
+| ---- | ----- | ----- | ---- | --------- | -------- |
+| hot  | news  | scoff | pic  | tec       | ask      |
+
+</Route>
+
+### 最热榜 TOP10
+
+<Route author="DIYgod" example="/chouti/top/24" path="/chouti/top/:hour?" :paramsDesc="['排行榜周期，可选 24 72 168 三种，默认 24']" />
 
 ## 创业邦
 
@@ -332,6 +393,22 @@ pageClass: routes
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
+## 凤凰网
+
+### 大风号
+
+<Route author="Jamch" example="/ifeng/feng/2583/doc" path="/ifeng/feng/:id/:type" :paramsDesc="['对应 id，可在 大风号作者页面 找到','类型，见下表']"/>
+
+| 文章 | 视频  |
+| ---- | ----- |
+| doc  | video |
+
+## 谷歌新闻
+
+### 新闻
+
+<Route author="zoenglinghou" example="/google/news/要闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
+
 ## 观察者网-中国关怀 全球视野
 
 ### 观察者首页
@@ -360,25 +437,15 @@ pageClass: routes
 | calendar | institute | beauty |
 </Route>
 
-## 好奇怪
-
-### 首页
-
-<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
-
-### 探索
-
-<Route author="HenryQW" example="/qdaily/notch/explore/1" path="/qdaily/explore/:id" :paramsDesc="['探索 id，可通过好奇怪 APP 复制分享链接找到']"/>
-
 ## 好奇心日报
 
 ### 标签，栏目，分类
 
 <Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" :paramsDesc="['类型，见下表', '对应 id，可在 URL 找到']" radar="1">
 
-| 标签 | 栏目   | 分类       |
-| ---- | ------ | ---------- |
-| tag  | column | researcach |
+| 标签 | 栏目   | 分类     |
+| ---- | ------ | -------- |
+| tag  | column | category |
 
 </Route>
 
@@ -516,12 +583,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
 
-## 洛谷
-
-### 日报
-
-<Route author="LogicJake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2019年日报']"/>
-
 ## 镁客网 im2maker
 
 ### 镁客网频道
@@ -618,6 +679,10 @@ pageClass: routes
 
 <Route author="WenryXu" example="/woshipm/popular" path="/woshipm/popular"/>
 
+### 天天问
+
+<Route author="WenryXu" example="/woshipm/wen" path="/woshipm/wen"/>
+
 ### 用户收藏
 
 <Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']"/>
@@ -650,7 +715,11 @@ pageClass: routes
 
 ### 作者
 
-<Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
+
+### 作者动态
+
+<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']"/>
 
 ### 专题
 
@@ -668,7 +737,7 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
 
-## 世界卫生组织
+## 世界卫生组织 WHO
 
 ### 媒体中心
 
@@ -724,20 +793,6 @@ pageClass: routes
 ### 头条新闻
 
 <Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
-
-## 腾讯大家
-
-### 首页
-
-<Route author="xyqfer" example="/dajia" path="/dajia"/>
-
-### 作者作品
-
-<Route author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
-
-### 专栏
-
-<Route author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
 
 ## 腾讯谷雨
 
@@ -808,6 +863,10 @@ pageClass: routes
 ### 公众号（传送门来源）
 
 <Route author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众号（CareerEngine 来源）
+
+<Route author="HenryQW" example="/wechat/ce/595a5b14d7164e53908f1606" path="/wechat/ce/:id" :paramsDesc="['公众号 id, 在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id']"/>
 
 ### 公众号（Telegram 频道来源）
 
@@ -917,6 +976,18 @@ pageClass: routes
 ### 首页最新帖子
 
 <Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
+
+### 子板块帖子
+
+<Route author="c4605" example="/zfrontier/board/56" path="/zfrontier/board/:boardId" :paramsDesc="['板块 ID']"/>
+
+QueryString:
+
+-   `sort`：排序方式
+
+| 根据创建时间（默认） | 根据回复时间 | 根据热度 |
+| -------------------- | ------------ | -------- |
+| byCtime              | byReplyTime  | byScore  |
 
 ## 紫竹张先生
 

@@ -4,6 +4,16 @@ pageClass: routes
 
 # 预报预警
 
+## Outage.Report
+
+### Report
+
+<Route author="cxumol" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" :paramsDesc="['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']">
+ 
+其中 name 参数, 请略过本地服务的区域码, 例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
+
+</Route>
+
 ## 地震速报
 
 ### 中国地震局
@@ -83,16 +93,6 @@ pageClass: routes
 ### Current Weather Report
 
 <Route author="calpa" example="/hko/weather" path="/hko/weather"/>
-
-## 在线服务/本地设施 停服通知
-
-### Outage.Report
-
-<Route author="cxumol" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" :paramsDesc="['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']">
- 
-其中 name 参数, 请略过本地服务的区域码, 例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
-
-</Route>
 
 ## 中央气象台
 

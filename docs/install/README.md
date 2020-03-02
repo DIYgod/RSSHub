@@ -264,42 +264,6 @@ gcloud app deploy
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
-## 部署到 arm32v7 设备（树莓派）
-
-### 使用现成镜像
-
-运行下面的命令下载 rsshub:arm32v7 镜像（镜像更新可能会有较长延迟）
-
-```
-docker pull pjf1996/rsshub:arm32v7
-```
-
-### 自行构建镜像
-
-首先下载 `RSSHub` 源码
-
-```
-$ git clone https://github.com/DIYgod/RSSHub.git
-$ cd RSSHub
-```
-
-运行下列命令构建 `rsshub:arm32v7`镜像
-
-```
-$ docker build -f ./Dockerfile.arm32v7 -t rsshub:arm32v7 .
-```
-
-运行 RSSHub
-
-```bash
-# 使用现成镜像方式
-$ docker run -d --name rsshub -p 1200:1200 pjf1996/rsshub:arm32v7
-# 自行构建镜像方式
-$ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
-```
-
-其余参数见[使用 Docker 部署](#docker-bu-shu)
-
 ## 配置
 
 通过设置环境变量来配置 RSSHub
@@ -336,7 +300,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/rss
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -390,7 +354,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
 
-    -   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 consumer_key consumer_secret access_token access_token_secret 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
+    -   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 `consumer_key consumer_secret access_token access_token_secret` 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
 
 -   youtube 全部路由: [申请地址](https://console.developers.google.com/)
 
@@ -432,3 +396,24 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
     -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
     -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
     -   `FANFOU_PASSWORD`: 饭否密码
+
+-   Last.fm 全部路由: [申请地址](https://www.last.fm/api/)
+
+    -   `LASTFM_API_KEY`: Last.fm API Key
+
+-   北大未名 BBS 全站十大
+
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1.登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+
+-   nhentai torrent: [注册地址](https://nhentai.net/register/)
+
+    -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
+    -   `NHENTAI_PASSWORD`: nhentai 密码
+
+-   discuz cookies 设定
+
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时, 通过指定 cid 来调用该 cookie
+
+-   Sci-hub 设置，用于科学期刊路由。
+
+    -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。

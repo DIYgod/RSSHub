@@ -21,11 +21,94 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker Compose Deployment
+
+### Install
+
+Download [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml)
+
+```bash
+wget https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml
+```
+
+Create a docker volume to persist Redis caches
+
+```bash
+$ docker volume create redis-data
+```
+
+Launch
+
+```bash
+$ docker-compose up -d
+```
+
+### Update
+
+Remove old containers
+
+```bash
+$ docker-compose down
+```
+
+Then repeat the installation steps
+
+### Configuration
+
+Edit `environment` in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml)
+
+## Docker Deployment
+
+### Install
+
+Execute the following command to pull RSSHub's docker image.
+
+```bash
+$ docker pull diygod/rsshub
+```
+
+Start a RSSHub container
+
+```bash
+$ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
+```
+
+Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
+
+Execute the following command to stop `RSSHub`.
+
+```bash
+$ docker stop rsshub
+```
+
+### Update
+
+Remove old container
+
+```bash
+$ docker stop rsshub
+$ docker rm rsshub
+```
+
+Then repeat the installation steps
+
+### Configuration
+
+The simplest way to configure RSSHub container is via system environment variables.
+
+For example, adding `-e CACHE_EXPIRE=3600` will set the cache time to 1 hour.
+
+```bash
+$ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
+```
+
+To configure more options please refer to [Configuration](#configuration).
+
 ## Manual Deployment
 
-Manually deploy a new `RSSHub` instance to a location of your choice.
+The most direct way to deploy `RSSHub`, you can follow the steps below to deploy`RSSHub` on your computer, server or anywhere.
 
-### Download RSSHub
+### Install
 
 Execute the following commands to download the source code
 
@@ -62,25 +145,19 @@ Or
 $ yarn start
 ```
 
-Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
-
-::: tip tip
-
-Refer to our [Guide](https://docs.rsshub.app/) for usage. Replace `https://rsshub.app/` with `http://localhost:1200` in any route example to see the effect.
-
-:::
-
-### Update
-
-Under `RSSHub`'s directory, execute the following commands to pull the latest source code for `RSSHub`
+Or use [PM2](https://pm2.io/doc/zh/runtime/quick-start/)
 
 ```bash
-$ git pull
+$ pm2 start lib/index.js --name rsshub
 ```
+
+Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
+
+Refer to our [Guide](https://docs.rsshub.app/en/) for usage. Replace `https://rsshub.app/` with `http://localhost:1200` in any route example to see the effect.
 
 ### Configuration
 
-`RSSHub` reads its configurations from `lib/config.js` or system environment variables.
+RSSHub can be configured by setting environment variables.
 
 Create a `.env` file in the root directory of your project. Add environment-specific variables on new lines in the form of `NAME=VALUE`. For example:
 
@@ -91,82 +168,19 @@ CACHE_EXPIRE=600
 
 Please notice that it will not override already existed environment variables, more rules please refer to [dotenv](https://github.com/motdotla/dotenv)
 
-To configure more options please refer to [Configuration](#configuration-3).
+This deployment method does not include puppeteer and redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
 
-### Use Redis for caching
+To configure more options please refer to [Configuration](#configuration).
 
-By default, `RSSHub` caches everything for 5 minutes in RAM. Redis support is built-in.
+### Update
 
-::: tip tips
-
-Unless you are expecting high traffic or deploying in cluster-mode, Redis is not necessary.
-
-:::
-
-Change `CACHE_TYPE` to `redis`, RSSHub will try to connect to `redis://localhost:6379/`. For changing the target address, please refer to [Configuration](#configuration-3).
-
-## Docker Deployment
-
-Execute the following command to pull RSSHub's docker image.
-
-```bash
-$ docker pull diygod/rsshub
-```
-
-Start a RSSHub container
-
-```bash
-$ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
-```
-
-Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
-
-Execute the following command to stop `RSSHub`.
-
-```bash
-$ docker stop rsshub
-```
-
-### Configuration
-
-The simplest way to configure RSSHub container is via system environment variables.
-
-For example, adding `-e CACHE_EXPIRE=3600` will set the cache time to 1 hour.
-
-```bash
-$ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
-```
-
-To configure more options please refer to [Configuration](#configuration-3).
-
-### docker-compose Deployment
-
-1.  Create a docker volume to persist Redis caches
-
-```bash
-$ docker volume create redis-data
-```
-
-1.  Copy `lib/config.js` to `lib/config/config.js`, to avoid conflicts with master branch. Git will ignore this file as it contains sensitive information.
-
-1.  Change `environment` section in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) to configure the corresponding option
-
-    -   `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1` skips puppeteer Chromium installation. Default to 1, requires `puppeteerWSEndpoint` in `lib/config.js` to be set with a remote Chrome Websocket address, otherwise relevant routes will not work.
-    -   `USE_CHINA_NPM_REGISTRY=1` avoids GFW npm registry interference in mainland China. Default to 0.
-
-1.  Deploy
-
-```bash
-$ docker-compose up -d
-```
-
-1.  Update
+Under `RSSHub`'s directory, execute the following commands to pull the latest source code for `RSSHub`
 
 ```bash
 $ git pull
-$ docker-compose build
-$ docker-compose up -d
 ```
+
+Then repeat the installation steps
 
 ## Heroku Deployment
 
@@ -181,8 +195,6 @@ Follow the [official guide](https://cloud.google.com/appengine/docs/flexible/nod
 Please note, GAE free tier doesn't support Flexible Environment, please check the pricing plan prior to deployment.
 
 Node.js standard environment is still under beta, unknown or unexpected errors might be encountered during the deployment.
-
-### Pull
 
 Execute `git clone https://github.com/DIYgod/RSSHub.git` to pull the latest code
 
@@ -236,7 +248,7 @@ env_variables:
 # [END app_yaml]
 ```
 
-### Launch
+### Install
 
 Under RSSHub's root directory, execute the following commands to launch RSSHub
 
@@ -250,19 +262,11 @@ You can access your `Google App Engine URL` to check the deployment status
 
 ## Configuration
 
-### Application Configurations
+Configure RSSHub by setting environment variables
 
-`RSSHub` reads its configurations from `lib/config.js` or environment variables.
+### Cache Configurations
 
-::: tip
-
-Use environment variables is recommended to avoid conflicts during upgrade.
-
-:::
-
-`PORT`: listening port, default to `1200`
-
-`SOCKET`: listening Unix Socket, default to `null`
+RSSHub supports two caching methods: memory and redis
 
 `CACHE_TYPE`: cache type, `memory` or `redis`, empty this value will disable caching, default to `memory`
 
@@ -270,23 +274,13 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, it will be recalculated when it is accessed, default to `1 * 60 * 60`
 
-`LISTEN_INADDR_ANY`: open up for external access, default to `1`
-
-`REQUEST_RETRY`: retries allowed for failed requests, default to `2`
-
-`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
-
-`TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `100`
-
 `REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
 
 `REDIS_PASSWORD`: Redis password（invalid when `CACHE_TYPE` is set to memory)
 
-`HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
+### Proxy Configurations
 
-`HTTP_BASIC_AUTH_PASS`: Http basic authentication password, default to `passw0rd`, please change asap
-
-`LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
+Partial routes have a strict anti-crawler policy, and can be configured to use proxy
 
 `PROXY_PROTOCOL`: Using proxy, Supports socks, http, https
 
@@ -298,31 +292,59 @@ Use environment variables is recommended to avoid conflicts during upgrade.
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
 
+### User Authentication Configurations
+
+Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
+
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/routes.
+
+`HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
+
+`HTTP_BASIC_AUTH_PASS`: Http basic authentication password, default to `passw0rd`, please change asap
+
+### Access Control Configuration
+
+Access control includes a whitelist and a blacklist, support IP and route, use `,` as the delimiter to separate multiple values. When both are defined, values in `BLACKLIST` will be disregarded.
+
+-   `BLACKLIST`: the blacklist
+
+-   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded.
+
+### Other Application Configurations
+
+`PORT`: listening port, default to `1200`
+
+`SOCKET`: listening Unix Socket, default to `null`
+
+`LISTEN_INADDR_ANY`: open up for external access, default to `1`
+
+`TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `100`
+
+`REQUEST_RETRY`: retries allowed for failed requests, default to `2`
+
+`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
+
+`LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
+
 `NODE_NAME`: node name, used for load balancing, identify current node
 
 `PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
-### User Authentication
-
-Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
-
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/rss.
-
 ### Route-specific Configurations
 
--   `pixiv`: [Registration](https://accounts.pixiv.net/signup)
+-   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
     -   `PIXIV_PASSWORD`: Pixiv password
 
--   `disqus`: [API Key application](https://disqus.com/api/applications/)
+-   disqus: [API Key application](https://disqus.com/api/applications/)
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   `twitter`: [Application creation](https://apps.twitter.com)
+-   twitter: [Application creation](https://apps.twitter.com)
 
     -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key, support multiple keys, split them with `,`
 
@@ -330,28 +352,31 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
     -   `TWITTER_TOKEN_{id}`: Twitter token's corresponding id, replace `{id}` with the id, the value is a combination of `consumer_key consumer_secret access_token access_token_secret` by a comma `,`. Eg. `{consumer_key},{consumer_secret},{access_token},{access_token_secret}`.
 
--   `youtube`: [API Key application](https://console.developers.google.com/)
+-   youtube: [API Key application](https://console.developers.google.com/)
 
     -   `YOUTUBE_KEY`: YouTube API Key
 
--   `telegram`: [Bot application](https://telegram.org/blog/bot-revolution)
+-   telegram: [Bot application](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram bot token
 
--   `github`: [Access Token application](https://github.com/settings/tokens)
+-   github: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   `mail`:
+-   mail:
 
     -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. the value is in the format of `password=password&host=server&port=port`, eg. `password=123456&host=imap.gmail.com&port=993`
 
-### Access Control
+-   nhentai torrent: [Registration](https://nhentai.net/register/)
 
-Access control includes a whitelist and a blacklist, which is configured via `middleware/access-control.js` or environment variables.
+    -   `NHENTAI_USERNAME`: nhentai username or email
+    -   `NHENTAI_PASSWORD`: nhentai password
 
-Support `IP` and `Route`, use `,` as the delimiter to separate multiple values. When both are defined, values in `BLACKLIST` will be disregarded.
+-   discuz cookies
 
--   `BLACKLIST`: the blacklist
+    -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
 
--   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded.
+-   Sci-hub for scientific journal routes:
+
+    -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.tw`.

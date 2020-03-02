@@ -25,6 +25,12 @@ pageClass: routes
 
 </Route>
 
+## BOOKSOURCE.STORE
+
+### 书源仓库更新
+
+<Route author="vhxubo" example="/booksource" path="/booksource"/>
+
 ## checkee.info
 
 ### 美国签证 check 动态
@@ -43,21 +49,11 @@ pageClass: routes
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
-## Google Doodles
+## HackerOne
 
-### 更新
+### HackerOne Hacker Activity
 
-<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']" />
-
-## gradCafe
-
-### gradCafe result
-
-<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
-
-### gradCafe result by key words
-
-<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
 
 ## Instapaper
 
@@ -95,11 +91,26 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## Parcel Tracking
+
+### Hermes UK
+
+<Route author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+
 ## Pocket
 
 ### Trending
 
 <Route author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
+
+## Product Hunt
+
+> 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+
+### Today Popular
+
+<Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+</Route>
 
 ## SANS Institute
 
@@ -213,23 +224,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
-## 抽屉
-
-### 新热榜
-
-<Route author="xyqfer" example="/chouti/hot" path="/chouti/:subject?" :paramsDesc="['主题名称']">
-
-| 热榜 | 42 区 | 段子  | 图片 | 挨踢 1024 | 你问我答 |
-| ---- | ----- | ----- | ---- | --------- | -------- |
-| hot  | news  | scoff | pic  | tec       | ask      |
-
-</Route>
-
-## 电鸭社区
-
-### 工作机会
-
-<Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 ## 福利资源-met.red
 
 ### 福利资源-met.red
@@ -259,6 +253,27 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 实时 AQI
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
+
+## 快递 100
+
+### 快递订单追踪
+
+<Route author="NeverBehave" example="/kuaidi100/track/shunfeng/SF1007896781640/0383" path="/kuaidi100/track/:number/:id/:phone?" :paramsDesc="['快递公司代号', '订单号', '手机号后四位（仅顺丰）']" radar="1">
+
+快递公司代号如果不能确定，可通过下方快递列表获得。
+
+::: warning 注意
+
+1. 构造链接前请确认所有参数正确：错误`快递公司-订单号`组合将会缓存信息一小段时间防止产生无用查询
+2. 正常查询的订单在未签收状态下不会被缓存：请控制查询频率
+3. 订单完成后请尽快取消订阅，避免资源浪费
+
+:::
+</Route>
+
+### 支持的快递公司列表
+
+<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company" radar="1"/>
 
 ## 裏垢女子まとめ
 
@@ -370,16 +385,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
 
-## 淘股吧股票论坛
-
-### 论坛总版
-
-<Route author="emdoe" example="/taoguba/index" path="/taoguba/index"/>
-
-### 用户博客
-
-<Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
-
 ## 腾讯吐个槽
 
 ### 吐槽新帖
@@ -406,6 +411,60 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
+## 武汉肺炎疫情新闻动态
+
+### 国家卫健委 - 疫情通报
+
+<Route author="Cielpy DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
+
+### 财新网 - 武汉肺炎防疫全纪录
+
+<Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
+
+### 丁香园 - 全国新型肺炎疫情实时播报
+
+<Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
+
+### 丁香园 - 全国新型肺炎疫情数据统计
+
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回全国数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
+
+### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
+
+<Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
+
+### South China Morning Post - China coronavirus outbreak
+
+<Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
+### 澳門特別行政區政府 抗疫專頁：最新消息
+
+官方網址：[https://www.ssm.gov.mo/apps1/PreventWuhanInfection/ch.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/ch.aspx)
+
+<Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['語言']"/>
+
+| 中文 | 英文 | 葡文 |
+| ---- | ---- | ---- |
+| ch   | en   | pt   |
+
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
+
+<Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
+
+## 新趣集
+
+> 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
+
+### 今日最佳
+
+<Route author="kiddyuchina" example="/xinquji/today" path="/xinquji/today">
+</Route>
+
+### 今日国内
+
+<Route author="kiddyuchina" example="/xinquji/today/internal" path="/xinquji/today/internal">
+</Route>
+
 ## 新田惠海官方网站
 
 ### 最近的更新
@@ -429,6 +488,17 @@ type 为 all 时，category 参数不支持 cost 和 free
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+
+## 源仓库
+
+### 源仓库更新
+
+<Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
+| 阅读 | 异次元 | 海阔 | 
+| ---- | ----- | ---- | 
+| yuedu | yiciyuan | haikuo |
+
+</Route>
 
 ## 远程.work
 
