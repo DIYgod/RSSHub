@@ -14,7 +14,7 @@ pageClass: routes
 
 ### 视频更新
 
-<Route author="ImSingee" example="/algocasts" path="/algocasts"></Route>
+<Route author="ImSingee" example="/algocasts" path="/algocasts" radar="1"></Route>
 
 > AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
@@ -26,9 +26,21 @@ pageClass: routes
 
 ## GitChat
 
-### 最新
+### 最新文章
 
-<Route author="xyqfer" example="/gitchat/newest" path="/gitchat/newest"/>
+<Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" :paramsDesc="['分类 ID, 置空或`all`代表全部, 具体值需要抓取前端请求, 以下列出可能有变动, 仅供参考','是否只显示严选文章, 任意值为是, 置空为否']" />
+
+| 分类名   | 分类 ID                  |
+| :------- | :----------------------- |
+| 前端     | 58e84f875295227534aad506 |
+| 后端     | 5d8b7c3786194a1921979122 |
+| 移动开发 | 5d8b7c3786194a1921979123 |
+| 运维     | 5901bd477b61a76bc4016423 |
+| 测试     | 58e84f425295227534aad502 |
+| 架构     | 58e84f6bad952d6b3428af9a |
+| 人工智能 | 58e84f53ec8e9e7b34457809 |
+| 职场     | 58e84f1584c651693437f27c |
+| 互联网   | 5d8b7c3786194a1921979124 |
 
 > GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
@@ -63,7 +75,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1"/>
 
-### 仓库 Issue
+### 仓库 Issues
 
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
 
@@ -111,6 +123,10 @@ GitHub 官方也提供了一些 RSS:
 | 根据 fork 数量排序 | forks     |
 | 根据更新时间排序   | updated   |
 
+### 用户 Star 的仓库
+
+<Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['用户名']" radar="1"/>
+
 ## GitLab
 
 ### Explore
@@ -147,6 +163,40 @@ GitHub 官方也提供了一些 RSS:
 | -------- | ----------------------------- |
 | story    | 默认值，链向用户分享的地址    |
 | comments | 链向 Hacker News 上的讨论页面 |
+
+</Route>
+
+## Hex-Rays
+
+### Hex-Rays News
+
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
+
+## ITSlide
+
+### 最新
+
+<Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1"/>
+
+## Kaggle
+
+### Discussion
+
+<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['讨论区 id, 打开网页请求, 搜索 forumId；填 all 可以订阅全站讨论区', '排序方式见下表, 默认为 hot']">
+
+| hot     | recent          | new             | top        | active        |
+| ------- | --------------- | --------------- | ---------- | ------------- |
+| Hotness | Recent Comments | Recently Posted | Most Votes | Most Comments |
+
+</Route>
+
+### Competitions
+
+<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" :paramsDesc="['类别, 默认为空']">
+
+| 空             | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
+| -------------- | -------- | -------- | ----------- | --------------- | ------- | ---------- | --------- |
+| All Categories | Featured | Research | Recruitment | Getting started | Masters | Playground | Analytics |
 
 </Route>
 
@@ -202,6 +252,36 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## NOSEC.org
+
+### Posts
+
+<Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind?" :paramsDesc="['对应文章分类']">
+
+| 分类     | 标识       |
+| :------- | :--------- |
+| 威胁情报 | `threaten` |
+| 安全动态 | `security` |
+| 漏洞预警 | `hole`     |
+| 数据泄露 | `leakage`  |
+| 专题报告 | `speech`   |
+| 技术分析 | `skill`    |
+| 安全工具 | `tool`     |
+
+</Route>
+
+## project-zero issues
+
+### issues
+
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+
+## Scala
+
+### Scala Blog
+
+<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分, 默认为All, part参数可在url中获得']" />
+
 ## segmentfault
 
 ### 频道
@@ -214,21 +294,49 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
-## V2EX
+## Visual Studio Code Marketplace
 
-### 最热/最新主题
+### Visual Studio Code 插件
 
-<Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
+<Route author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['分类']">
 
-### 帖子
+| Featured | Trending Weekly | Trending Monthly | Trending Daily | Most Popular | Recently Added |
+| -------- | --------------- | ---------------- | -------------- | ------------ | -------------- |
+| featured | trending        | trending_m       | trending_d     | popular      | new            |
 
-<Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
+</Route>
+
+## wolley
+
+### posts
+
+<Route author="umm233" example="/wolley" path="/wolley/index"/>
+
+### user post
+
+<Route author="umm233" example="/wolley/user/kyth" path="/wolley/user/:id" :paramsDesc="['用户 id']" />
+
+### host
+
+<Route author="umm233" example="/wolley/host/www.youtube.com" path="/wolley/host/:host" :paramsDesc="['文章对应 host 分类']" />
 
 ## 阿里云
 
 ### 数据库内核月报
 
 <Route author="junbaor" example="/aliyun/database_month" path="/aliyun/database_month"/>
+
+### 公告
+
+<Route author="muzea" example="/aliyun/notice" path="/aliyun/notice/:type?"/>
+
+| 类型     | type |
+| -------- | ---- |
+| 全部     |      |
+| 升级公告 | 1    |
+| 安全公告 | 2    |
+| 备案公告 | 3    |
+| 其他     | 4    |
 
 ## 安全客
 
@@ -251,6 +359,16 @@ GitHub 官方也提供了一些 RSS:
 | week             | activity | knowledge | news | job  |
 
 </Route>
+
+## 饿了么开放平台
+
+### 商家开放平台公告
+
+<Route author="phantomk" example="/eleme/open/announce" path="/eleme/open/announce"/>
+
+### 饿百零售开放平台公告
+
+<Route author="phantomk" example="/eleme/open-be/announce" path="/eleme/open-be/announce"/>
 
 ## 极客时间
 
@@ -276,9 +394,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
-| 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
-| -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
-| frontend | android | ios | backend | design | product | freebie  | article | ai       |
+| 后端    | 前端     | Android | iOS | 人工智能 | 开发工具 | 代码人生 | 阅读    |
+| ------- | -------- | ------- | --- | -------- | -------- | -------- | ------- |
+| backend | frontend | android | ios | ai       | freebie  | career   | article |
 
 </Route>
 
@@ -324,7 +442,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 专栏
 
-<Route author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
+<Route author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']" radar="1"/>
 
 ### 收藏集
 
@@ -392,32 +510,38 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
 
-## 看雪
+## 洛谷
 
-### 论坛
+### 日报
 
-<Route author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
+<Route author="LogicJake prnake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']">
+</Route>
 
-| 版块         | category   |
-| ------------ | ---------- |
-| 智能设备     | iot        |
-| 区块链安全   | blockchain |
-| Android 安全 | android    |
-| iOS 安全     | ios        |
-| 软件逆向     | re         |
-| 编程技术     | coding     |
-| 加壳脱壳     | unpack     |
-| 密码算法     | crypto     |
-| 二进制漏洞   | vuln       |
-| CrackMe      | crackme    |
-| Pwn          | pwn        |
-| WEB 安全     | web        |
-| 全站         | all        |
+### 近期比赛
 
-| 类型     | type   |
-| -------- | ------ |
-| 最新主题 | latest |
-| 精华主题 | digest |
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest">
+</Route>
+
+## 码农俱乐部
+
+### 话题
+
+<Route author="mlogclub" example="/mlog-club/topics/newest" path="/mlog-club/topics/:node" :paramsDesc="['node']">
+
+| node      | 名称     |
+| --------- | -------- |
+| newest    | 最新话题 |
+| recommend | 热门话题 |
+| 1         | 交流     |
+| 2         | 开源     |
+| 3         | 提问     |
+
+</Route>
+
+### 开源项目
+
+<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects">
+</Route>
 
 ## 码农网
 
@@ -471,23 +595,42 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 美团技术团队
+## 码农周刊
 
-### 最近更新
+### issues
 
-<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
+<Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
-## 牛客网
+## 平安银河实验室
 
-### 讨论区
+### posts
 
-<Route author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
+<Route author="hellodword" example="/galaxylab" path="/galaxylab">
+</Route>
 
-| 最新回复 | 最新发表 | 最新 | 精华 |
-| -------- | -------- | ---- | ---- |
-| 0        | 3        | 1    | 4    |
+## 前端艺术家&&飞冰早报
+
+### 列表
+
+<Route author="kouchao" example="/jskou/0" path="/jskou/:type?" :paramsDesc="['分类']">
+
+| 前端艺术家 | 飞冰早报 |
+| ---------- | -------- |
+| 0          | 1        |
 
 </Route>
+
+## 日报 | D2 资源库
+
+### 日报 | D2 资源库
+
+<Route author="Andiedie" example="/d2/daily" path="/d2/daily"/>
+
+## 顺丰
+
+### 顺丰丰桥开放平台公告
+
+<Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
 
 ## 腾讯游戏开发者社区
 
@@ -506,6 +649,50 @@ GitHub 官方也提供了一些 RSS:
 | hot  | plan | program | tech     | audio | project  | yunying  | test     |
 
 </Route>
+
+## 微信开放平台
+
+### 微信开放社区-小程序公告
+
+<Route author="phantomk" example="/wechat-open/community/xcx-announce" path="/wechat-open/community/xcx-announce"/>
+
+### 微信开放社区-小游戏公告
+
+<Route author="phantomk" example="/wechat-open/community/xyx-announce" path="/wechat-open/community/xyx-announce"/>
+
+### 微信开放社区-微信支付公告
+
+<Route author="phantomk" example="/wechat-open/community/pay-announce" path="/wechat-open/community/pay-announce"/>
+
+### 微信开放社区-小游戏问答
+
+<Route author="bestony" example="/wechat-open/community/xyx-question/0" path="/wechat-open/community/xyx-question/:category" :paramsDesc="['0','hot','topic']">
+
+| 全部 | 游戏引擎 | 规则 | 账号  | 运营 | 游戏审核 | API 和组件 | 框架 | 管理后台 | 开发者工具 | 客户端 | 插件 | 云开发 | 教程反馈 | 其他 |
+| ---- | -------- | ---- | ----- | ---- | -------- | ---------- | ---- | -------- | ---------- | ------ | ---- | ------ | -------- | ---- |
+| 0    | 4096     | 8192 | 16384 | 2048 | 1        | 2          | 64   | 4        | 8          | 16     | 256  | 1024   | 128      | 32   |
+
+</Route>
+
+### 微信开放社区-小程序问答
+
+<Route author="bestony" example="/wechat-open/community/xcx-question/new" path="/wechat-open/community/xcx-question/:tag" :paramsDesc="['new','hot','topic']">
+
+| 最新 | 最热 | 热门话题 |
+| ---- | ---- | -------- |
+| new  | hot  | topic    |
+
+</Route>
+
+### 微信支付-商户平台公告
+
+<Route author="phantomk" example="/wechat-open/pay/announce" path="/wechat-open/pay/announce"/>
+
+## 微信小程序
+
+### 基础库更新日志
+
+<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixin/miniprogram/release"/>
 
 ## 印记中文周刊
 
