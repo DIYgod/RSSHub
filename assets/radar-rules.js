@@ -1387,7 +1387,7 @@
         '.': [
             {
                 title: '要闻',
-                docs: 'https://docs.rsshub.app/anime.html#ha-er-bin-gong-cheng-da-xue',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
                 source: '/*',
                 target: '/heu/gongxue/yw',
             },
