@@ -510,6 +510,18 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
 
+## 拉勾网
+
+::: tip 提示
+
+拉勾网官方提供职位的[邮件订阅](https://www.lagou.com/s/subscribe.html)，请根据自身需要选择使用。
+
+:::
+
+### 职位招聘
+
+<Route author="hoilc" example="/lagou/jobs/JavaScript/上海" path="/lagou/jobs/:position/:city" :paramsDesc="['职位名，可以参考[拉勾网首页](https://www.lagou.com)的职位列表', '城市名，请参考[拉勾网支持的全部城市](https://www.lagou.com/jobs/allCity.html)']"/>
+
 ## 洛谷
 
 ### 日报
