@@ -1152,6 +1152,28 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 扬州大学
+
+### 官网消息
+
+<Route author="LogicJake" example="/yzu/home/xxyw" path="/universities/yzu/home/:type" :paramsDesc="['分类名']">
+
+| 学校要闻 | 校园新闻 | 信息公告 | 学术活动 | 媒体扬大 |
+| -------- | -------- | -------- | -------- | -------- |
+| xxyw     | xyxw     | xxgg     | xshd     | mtyd     |
+
+</Route>
+
+### 研究生招生
+
+<Route author="LogicJake" example="/yzu/yjszs/tzgg" path="/universities/yzu/yjszs/:type" :paramsDesc="['分类名']">
+
+| 通知公告 | 博士招生 | 硕士招生 |
+| -------- | -------- | -------- |
+| tzgg     | bszs     | sszs     |
+
+</Route>
+
 ## 浙江大学
 
 ### 普通栏目 如学术/图片/新闻等
