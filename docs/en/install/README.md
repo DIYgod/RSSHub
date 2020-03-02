@@ -21,6 +21,21 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Play with Docker
+
+If you would like to test routes or avoid IP limits, etc., you may build your own RSSHub for free by clicking the button below.
+
+[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
+
+::: warning Warning
+
+-   [DockerHub](https://hub.docker.com) account required
+-   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
+-   If deploy success but port cannot be auto-deteced，please click the `open port` button on the top and type `1200`
+-   Sometimes PWD won't work as expected. If you encounter blank screen after `Start`, or some error during initialization, please retry
+
+:::
+
 ## Docker Compose Deployment
 
 ### Install
