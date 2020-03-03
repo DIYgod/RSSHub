@@ -71,7 +71,7 @@ pageClass: routes
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']">
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1">
 
 | Japanese | English |
 | -------- | ------- |

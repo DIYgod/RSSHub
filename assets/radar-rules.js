@@ -1405,4 +1405,17 @@
             },
         ],
     },
+    'japanpost.jp': {
+        _name: '日本郵便',
+        'trackings.post': [
+            {
+                title: '郵便・荷物の追跡',
+                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian',
+                source: '/services/srv/search/direct',
+                target: (params) => `/japanpost/${params.reqCode}/${params.locale}`,
+                script: "({reqCode: new URLSearchParams(location.search).get('reqCodeNo1').toUpperCase(), locale: new URLSearchParams(location.search).get('locale').toLowerCase()})",
+                verification: (params) => (params.reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && params.locale === 'ja') || params.locale === 'en',
+            },
+        ],
+    },
 });
