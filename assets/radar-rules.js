@@ -497,7 +497,7 @@
         '.': [
             {
                 title: '电影和剧集',
-                description: 'https://docs.rsshub.app/multimedia.html#pian-yuan',
+                docs: 'https://docs.rsshub.app/multimedia.html#pian-yuan',
                 source: '/',
             },
         ],
@@ -589,7 +589,7 @@
         www: [
             {
                 title: '最新商品',
-                description: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
+                docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
                 source: ['/:category'],
                 target: '/wineyun/:category',
             },
@@ -1354,6 +1354,96 @@
                 docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
                 source: '/',
                 target: '/kuaidi100/company',
+            },
+        ],
+    },
+    'hrbeu.edu.cn': {
+        _name: '哈尔滨工程大学',
+        yjsy: [
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/announcement',
+            },
+            {
+                title: '研究生院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/news',
+            },
+        ],
+        uae: [
+            {
+                title: '水声学院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/xwdt',
+            },
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/tzgg',
+            },
+        ],
+    },
+    'gongxue.cn': {
+        _name: '工学网',
+        '.': [
+            {
+                title: '要闻',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/yw',
+            },
+            {
+                title: '时讯',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/sx',
+            },
+        ],
+    },
+    'nsfc.gov.cn': {
+        _name: '国家自然科学基金委员会',
+        www: [
+            {
+                title: '基金要闻',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/jjyw',
+            },
+            {
+                title: '通知公告',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/tzgg',
+            },
+            {
+                title: '资助成果',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/zzcg',
+            },
+            {
+                title: '科普快讯',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/kpkx',
+            },
+        ],
+    },
+    'japanpost.jp': {
+        _name: '日本郵便',
+        'trackings.post': [
+            {
+                title: '郵便・荷物の追跡',
+                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian',
+                source: '/services/srv/search/direct',
+                target: (params) => `/japanpost/${params.reqCode}/${params.locale}`,
+                script: "({reqCode: new URLSearchParams(location.search).get('reqCodeNo1').toUpperCase(), locale: new URLSearchParams(location.search).get('locale').toLowerCase()})",
+                verification: (params) => (params.reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && params.locale === 'ja') || params.locale === 'en',
             },
         ],
     },

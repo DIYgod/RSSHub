@@ -21,6 +21,21 @@ sidebar: auto
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Play with Docker
+
+如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
+
+[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
+
+::: warning 注意
+
+-   需要 [DockerHub](https://hub.docker.com) 账号
+-   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
+-   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
+-   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
+
+:::
+
 ## Docker Compose 部署
 
 ### 安装

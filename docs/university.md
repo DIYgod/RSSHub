@@ -387,7 +387,7 @@ category 列表：
 
 ### 研究生院
 
-<Route author="XYenon" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']">
+<Route author="XYenon" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']" radar="1">
 
 | 通知公告     | 新闻动态 |
 | ------------ | -------- |
@@ -397,11 +397,21 @@ category 列表：
 
 ### 工学网
 
-<Route author="Derekmini XYenon" example="/heu/gongxue/yw" path="/heu/gongxue/:type?" :paramsDesc="['分类, 默认为 `yw`']">
+<Route author="Derekmini XYenon" example="/heu/gongxue/yw" path="/heu/gongxue/:type?" :paramsDesc="['分类, 默认为 `yw`']" radar="1">
 
 | 要闻 | 时讯 |
 | ---- | ---- |
 | yw   | sx   |
+
+</Route>
+
+### 水声工程学院通知
+
+<Route author="Derekmini" example="/heu/shuisheng/xwdt" path="/heu/shuisheng/:type?" :paramsDesc="['分类, 默认为 `xwdt`']" radar="1">
+
+| 新闻动态 | 通知公告 |
+| -------- | -------- |
+| xwdt     | tzgg     |
 
 </Route>
 

@@ -236,6 +236,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
 
+## 国家自然科学基金委员会
+
+### 新闻通知
+
+<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1">
+
+| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
+| -------- | -------- | -------- | -------- |
+| jjyw     | tzgg     | zzcg     | kpkx     |
+
+</Route>
+
 ## 好队友
 
 ### 工作机会
@@ -353,7 +365,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 郵便追跡サービス
 
-<Route author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['运单号']"/>
+<Route author="tuzi3040" example="/japanpost/EJ123456789JP/ja" path="/japanpost/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1">
+
+| 日语 | 英语 |
+| ---- | ---- |
+| ja   | en   |
+
+</Route>
 
 ## 上证债券信息网
 

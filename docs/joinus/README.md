@@ -492,7 +492,7 @@ ctx.state.data = {
         _name: 'bilibili',
         www: [{
             title: '分区视频',
-            description: 'https://docs.rsshub.app/social-media.html#bilibili',
+            docs: 'https://docs.rsshub.app/social-media.html#bilibili',
             source: '/v/*tpath',
             target: (params) => {
                 let tid;
@@ -511,7 +511,7 @@ ctx.state.data = {
         _name: 'Twitter',
         '.': [{  // for twitter.com
             title: '用户时间线',
-            description: 'https://docs.rsshub.app/social-media.html#twitter',
+            docs: 'https://docs.rsshub.app/social-media.html#twitter',
             source: '/:id',
             target: (params) => {
                 if (params.id !== 'home') {
@@ -524,7 +524,7 @@ ctx.state.data = {
         _name: 'Pixiv',
         'www': [{
             title: '用户收藏',
-            description: 'https://docs.rsshub.app/social-media.html#pixiv',
+            docs: 'https://docs.rsshub.app/social-media.html#pixiv',
             source: '/bookmark.php',
             target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
         }],
@@ -533,7 +533,7 @@ ctx.state.data = {
         _name: '微博',
         '.': [{
             title: '博主',
-            description: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+            docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
             source: ['/u/:id', '/:id'],
             target: (params, url, document) => {
                 const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
@@ -578,7 +578,7 @@ ctx.state.data = {
 
 上一步中源站路径匹配出 `id` 为 `DIYgod`，则 RSSHub 路径中的 `:id` 会被替换成 `DIYgod`，匹配结果为 `/twitter/user/DIYgod`，就是我们想要的结果
 
-进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 `params` 和 `url` 和 `document` 两个参数
+进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 `params` 、 `url` 和 `document` 三个参数
 
 `params` 为上一步 `source` 匹配出来的参数，`url` 为页面 url，`document` 为页面 document
 
