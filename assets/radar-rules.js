@@ -1372,6 +1372,18 @@
                 source: '/*',
                 target: '/heu/yjsy/news',
             },
+            {
+                title: '研究生院 - 国家公派项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjgp',
+            },
+            {
+                title: '研究生院 - 国际合作与交流项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjhz',
+            },
         ],
         uae: [
             {
