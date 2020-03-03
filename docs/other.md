@@ -353,7 +353,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 郵便追跡サービス
 
-<Route author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['运单号']"/>
+<Route author="tuzi3040" example="/japanpost/EJ123456789JP/ja" path="/japanpost/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1">
+
+| 日语 | 英语 |
+| ---- | ---- |
+| ja   | en   |
+
+</Route>
 
 ## 上证债券信息网
 
