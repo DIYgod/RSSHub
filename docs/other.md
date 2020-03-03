@@ -236,6 +236,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
 
+## 国家留学网
+
+### 通知
+
+<Route author="Derekmini" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
+
+| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 |
+| -------- | ------------ | ------------ | -------- |
+| lxtz     | xmzl         | wtjd         | lqgg     |
+
+</Route>
+
 ## 国家自然科学基金委员会
 
 ### 新闻通知
