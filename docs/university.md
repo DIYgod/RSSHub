@@ -327,6 +327,20 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 </Route>
 
+## 桂林航天工业学院
+
+### 新闻资讯
+
+<Route author="wyml" example="/guat/news/ghyw" path="/guat/news/:type?" :paramsDesc="['资讯类型，如下表']">
+
+| 桂航要闻 | 院部动态 | 通知公告 | 信息公开 | 桂航大讲堂 |
+| -------- | -------- | -------- | -------- | ---------- |
+| gdyw     | ybdt     | tzgg     | xxgk     | ghdjt      |
+
+注 1: 不要吐槽拼音缩写，缩写原本的 URL 构成就这样。
+
+</Route>
+
 ## 哈尔滨工程大学
 
 ### 本科生院工作通知
