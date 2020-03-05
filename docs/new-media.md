@@ -431,7 +431,7 @@ Supported sub-sites：
 
 ### 果壳网专栏
 
-<Route author="DHPO" example="/guokr/calendar" path="/guokr/:category" :paramsDesc="['专栏类别']">
+<Route author="DHPO hoilc" example="/guokr/calendar" path="/guokr/:channel" :paramsDesc="['专栏类别']">
 | 物种日历 | 吃货研究所 | 美丽也是技术活 |
 | ------- | ---------| ------------ |
 | calendar | institute | beauty |
