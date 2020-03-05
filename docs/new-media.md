@@ -121,6 +121,16 @@ pageClass: routes
 
 </Route>
 
+### 热榜
+
+<Route author="immmortal" example="/ithome/ranking/1" path="/ithome/ranking/:type" :paramsDesc="['类别']">
+
+| 1             | 2    | 3        | 4    |
+| ------------- | ---- | -------- | ---- |
+| 24 小时阅读榜 | 周榜 | 7 天热评 | 月榜 |
+
+</Route>
+
 ## IT 桔子
 
 ### 投融资事件
