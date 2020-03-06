@@ -784,6 +784,20 @@ rule
 
 <Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
 
+## 小红书
+
+### 用户笔记和专辑
+
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['user_id']"/>
+
+### 用户专辑
+
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/album" path="/xiaohongshu/user/:user_id/album" :paramsDesc="['user_id']"/>
+
+### 专辑
+
+<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" />
+
 ## 知乎
 
 ### 收藏夹
