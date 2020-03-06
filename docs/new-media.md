@@ -131,6 +131,10 @@ pageClass: routes
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
+## Krankenkassen 德国新闻社卫健新闻
+
+<Route author="howel52" example="/krankenkassen" path="/krankenkassen"/>
+
 ## Letterboxd
 
 ### User diary
