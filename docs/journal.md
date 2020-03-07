@@ -10,10 +10,20 @@ pageClass: routes
 
 <Route author="yech1990" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
 
-| `:category` |      类型说明       | 路由                                     |
-| :---------: | :-----------------: | ---------------------------------------- |
-|   current   | 本期刊物 (默认选项) | [/cell/cell/current](/cell/cell/current) |
-|   inpress   |      在线发表       | [/cell/cell/inpress](/cell/cell/inpress) |
+| `:category` |      类型说明       | 路由                                                       |
+| :---------: | :-----------------: | ---------------------------------------------------------- |
+|   current   | 本期刊物 (默认选项) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
+|   inpress   |      在线发表       | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
+
+</Route>
+
+### 封面故事
+
+<Route author="yech1990" example="/cell/cover" path="/cell/cover" />
+
+订阅 Cell 系列杂志的封面图片，并及时获取刊物更新状态。
+
+包含了： 'cell'、 'cancer-cell'、 'cell-chemical-biology'、 'cell-host-microbe'、 'cell-metabolism'、 'cell-reports'、 'cell-reports-physical-science'、 'cell-stem-cell'、 'cell-systems'、 'chem'、 'current-biology'、 'developmental-cell'、 'immunity'、 'joule'、 'matter'、 'molecular-cell'、 'neuron'、 'one-earth' 和 'structure'。
 
 </Route>
 
@@ -124,7 +134,7 @@ pageClass: routes
 
 ### 封面故事
 
-<Route author="yech1990" example="/science/cover" path="/science/cover" />
+<Route author="yech1990" example="/sciencemag/cover" path="/sciencemag/cover" />
 
 订阅 Science 系列杂志的封面图片，并及时获取刊物更新状态。
 
@@ -140,9 +150,9 @@ _仅支持 Science 主刊_
 
 </Route>
 
-## X-MOL
+## X-MOL 平台
 
-### 平台-期刊
+### 期刊
 
 <Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" :paramsDesc="['类别','机构，两个参数都可从期刊URL获取。']" />
 
