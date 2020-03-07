@@ -437,16 +437,6 @@ Supported sub-sites：
 | calendar | institute | beauty |
 </Route>
 
-## 好奇怪
-
-### 首页
-
-<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
-
-### 探索
-
-<Route author="HenryQW" example="/qdaily/notch/explore/1" path="/qdaily/explore/:id" :paramsDesc="['探索 id，可通过好奇怪 APP 复制分享链接找到']"/>
-
 ## 好奇心日报
 
 ### 标签，栏目，分类
@@ -725,7 +715,7 @@ Supported sub-sites：
 
 ### 作者
 
-<Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
 
 ### 作者动态
 
@@ -803,20 +793,6 @@ Supported sub-sites：
 ### 头条新闻
 
 <Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
-
-## 腾讯大家
-
-### 首页
-
-<Route author="xyqfer" example="/dajia" path="/dajia"/>
-
-### 作者作品
-
-<Route author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
-
-### 专栏
-
-<Route author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
 
 ## 腾讯谷雨
 
@@ -1000,6 +976,18 @@ Supported sub-sites：
 ### 首页最新帖子
 
 <Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
+
+### 子板块帖子
+
+<Route author="c4605" example="/zfrontier/board/56" path="/zfrontier/board/:boardId" :paramsDesc="['板块 ID']"/>
+
+QueryString:
+
+-   `sort`：排序方式
+
+| 根据创建时间（默认） | 根据回复时间 | 根据热度 |
+| -------------------- | ------------ | -------- |
+| byCtime              | byReplyTime  | byScore  |
 
 ## 紫竹张先生
 
