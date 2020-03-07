@@ -211,7 +211,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ### 小米有品每日上新
 
-<Route author="xyqfer" example="/mi/youpin/new" path="/mi/youpin/new"/>
+<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new"/>
 
 ## 宜家 IKEA
 
