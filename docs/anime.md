@@ -141,11 +141,11 @@ pageClass: routes
 
 ### 用户动态
 
-<Route author="luyuhuang" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
+<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
 
-| 想买的手办 | 预定的手办 | 已入的手办 |
-| ---------- | ---------- | ---------- |
-| want       | preorder   | buy        |
+| 想买 | 预定     | 已入 | 关注 | 有过   |
+| ---- | -------- | ---- | ---- | ------ |
+| want | preorder | buy  | care | resell |
 
 </Route>
 
