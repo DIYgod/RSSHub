@@ -387,11 +387,11 @@ category 列表：
 
 ### 研究生院
 
-<Route author="XYenon" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']" radar="1">
+<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']" radar="1">
 
-| 通知公告     | 新闻动态 |
-| ------------ | -------- |
-| announcement | news     |
+| 通知公告     | 新闻动态 | 国家公派项目 | 国际合作与交流项目 |
+| ------------ | -------- | ------------ | ------------------ |
+| announcement | news     | gjgp         | gjhz               |
 
 </Route>
 
