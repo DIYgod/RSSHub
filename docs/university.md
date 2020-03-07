@@ -664,11 +664,11 @@ category 列表：
 
 ### 教务处
 
-<Route author="kiusiudeng" example="/njfu/jwc/1798" path="/njfu/jwc/:category?" :paramsDesc="['省略则默认为1799']">
+<Route author="kiusiudeng" example="/njfu/jwc/1798" path="/njfu/jwc/:category?" :paramsDesc="['省略则默认为tzgg']">
 
 | 校级发文 | 通知公告 | 上级发文 | 下载专区 |
 | -------- | -------- | -------- | -------- |
-| 1798     | 1799     | 2270     | 1797     |
+| xjfw     | tzgg     | sjfw     | xzzq     |
 
 </Route>
 
