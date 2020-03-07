@@ -1372,6 +1372,18 @@
                 source: '/*',
                 target: '/heu/yjsy/news',
             },
+            {
+                title: '研究生院 - 国家公派项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjgp',
+            },
+            {
+                title: '研究生院 - 国际合作与交流项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjhz',
+            },
         ],
         uae: [
             {
@@ -1444,6 +1456,35 @@
                 target: (params) => `/japanpost/${params.reqCode}/${params.locale}`,
                 script: "({reqCode: new URLSearchParams(location.search).get('reqCodeNo1').toUpperCase(), locale: new URLSearchParams(location.search).get('locale').toLowerCase()})",
                 verification: (params) => (params.reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && params.locale === 'ja') || params.locale === 'en',
+            },
+        ],
+    },
+    'csc.edu.cn': {
+        _name: '国家留学网',
+        www: [
+            {
+                title: '遴选通知',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/lxtz',
+            },
+            {
+                title: '综合项目专栏',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/xmzl',
+            },
+            {
+                title: '常见问题解答',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/wtjd',
+            },
+            {
+                title: '录取公告',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/lqgg',
             },
         ],
     },
