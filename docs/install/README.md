@@ -373,7 +373,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   youtube 全部路由: [申请地址](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key
+    -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
 
 -   telegram - 贴纸包路由: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
