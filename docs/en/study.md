@@ -33,6 +33,12 @@ pageClass: routes
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |
 
+## X-MOL
+
+### News
+
+<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
 ## ZhiShiFenZi
 
 ### News

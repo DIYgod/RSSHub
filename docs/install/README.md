@@ -21,6 +21,21 @@ sidebar: auto
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Play with Docker
+
+如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
+
+[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
+
+::: warning 注意
+
+-   需要 [DockerHub](https://hub.docker.com) 账号
+-   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
+-   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
+-   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
+
+:::
+
 ## Docker Compose 部署
 
 ### 安装
@@ -300,7 +315,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/rss
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -358,7 +373,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   youtube 全部路由: [申请地址](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key
+    -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
 
 -   telegram - 贴纸包路由: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
@@ -413,3 +428,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 -   discuz cookies 设定
 
     -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时, 通过指定 cid 来调用该 cookie
+
+-   Sci-hub 设置，用于科学期刊路由。
+
+    -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。

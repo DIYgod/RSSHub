@@ -64,6 +64,10 @@ pageClass: routes
 :::
 </Route>
 
+### 专栏列表
+
+<Route author="LogicJake" example="/chuiniu/column_list" path="/chuiniu/column_list"/>
+
 ## 刺猬猫
 
 ### 章节
