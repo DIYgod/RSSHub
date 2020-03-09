@@ -51,13 +51,13 @@ pageClass: routes
 
 | base                     | govern                 |
 | ------------------------ | ---------------------- |
-| https://www.88btbtt.com/ | http://www.1btjia.com/ |
+| https://www.88btbtt.com/ | http://www.2btjia.com/ |
 
 </Route>
 
 ::: tip 提示
 
-由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.1btjia.com/`](http://www.1btjia.com/)域名.
+由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
 可空，默认为 base
 
 :::
