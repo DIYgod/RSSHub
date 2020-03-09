@@ -21,6 +21,21 @@ sidebar: auto
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Play with Docker
+
+如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
+
+[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
+
+::: warning 注意
+
+-   需要 [DockerHub](https://hub.docker.com) 账号
+-   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
+-   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
+-   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
+
+:::
+
 ## Docker Compose 部署
 
 ### 安装
@@ -104,7 +119,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
-更多配置项请看 [#配置](#配置)
+更多配置项请看 [#配置](#pei-zhi)
 
 ## 手动部署
 
@@ -172,7 +187,7 @@ CACHE_EXPIRE=600
 
 该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
-更多配置项请看 [#配置](#配置)
+更多配置项请看 [#配置](#pei-zhi)
 
 ### 更新
 
@@ -264,46 +279,6 @@ gcloud app deploy
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
-## 部署到 arm32v7 设备（树莓派）
-
-### 使用现成镜像
-
-运行下面的命令下载 rsshub:arm32v7 镜像（镜像更新可能会有较长延迟）
-
-```
-docker pull pjf1996/rsshub:arm32v7
-```
-
-### 自行构建镜像
-
-首先下载 `RSSHub` 源码
-
-```
-$ git clone https://github.com/DIYgod/RSSHub.git
-$ cd RSSHub
-```
-
-运行下列命令构建 `rsshub:arm32v7`镜像
-
-```
-$ docker build -f ./Dockerfile.arm32v7 -t rsshub:arm32v7 .
-```
-
-puppeteer 本身不会下载 chrome-arm，需要在 `lib/config.js` 中的 `puppeteerWSEndpoint`中设置相应的远程 Chrome Websocket 地址，以启用相应路由
-
-TO DO: 暂时还没有找到合适的 `chrome websocket` arm32v7 镜像
-
-运行 RSSHub
-
-```bash
-# 使用现成镜像方式
-$ docker run -d --name rsshub -p 1200:1200 pjf1996/rsshub:arm32v7
-# 自行构建镜像方式
-$ docker run -d --name rsshub -p 1200:1200 rsshub:arm32v7
-```
-
-其余参数见[使用 Docker 部署](#使用-Docker-部署)
-
 ## 配置
 
 通过设置环境变量来配置 RSSHub
@@ -340,7 +315,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/rss
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -370,6 +345,12 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
+`NODE_NAME`: 节点名，用于负载均衡，识别当前节点
+
+`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+
+`SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
+
 ### 部分 RSS 模块配置
 
 -   pixiv 全部路由: [注册地址](https://accounts.pixiv.net/signup)
@@ -388,13 +369,13 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
 
-    -   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 consumer_key consumer_secret access_token access_token_secret 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
+    -   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 `consumer_key consumer_secret access_token access_token_secret` 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
 
 -   youtube 全部路由: [申请地址](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key
+    -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
 
--   telegram 全部路由: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+-   telegram - 贴纸包路由: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
@@ -409,3 +390,45 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 -   语雀 全部路由: [注册地址](https://www.yuque.com/register)
 
     -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见[语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
+
+-   邮箱 邮件列表路由:
+
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如 `password=123456&host=imap.qq.com&port=993`。
+
+-   吹牛部落 栏目更新
+
+    -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式：1. 登陆后点开文章正文 2. 打开控制台 3. 刷新 4. 找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求 5. 找到请求头中的 x-member
+
+-   微博 个人时间线路由: [申请地址](https://open.weibo.com/connect)
+
+    -   `WEIBO_APP_KEY`: 微博 App Key
+    -   `WEIBO_APP_SECRET`: 微博 App Secret
+    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub地址/weibo/timeline/0?code=xxx`
+
+-   饭否 全部路由: [申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
+
+    -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
+    -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
+    -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
+    -   `FANFOU_PASSWORD`: 饭否密码
+
+-   Last.fm 全部路由: [申请地址](https://www.last.fm/api/)
+
+    -   `LASTFM_API_KEY`: Last.fm API Key
+
+-   北大未名 BBS 全站十大
+
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1.登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+
+-   nhentai torrent: [注册地址](https://nhentai.net/register/)
+
+    -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
+    -   `NHENTAI_PASSWORD`: nhentai 密码
+
+-   discuz cookies 设定
+
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时, 通过指定 cid 来调用该 cookie
+
+-   Sci-hub 设置，用于科学期刊路由。
+
+    -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。
