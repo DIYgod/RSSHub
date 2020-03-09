@@ -1408,3 +1408,9 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+
+## 中国农业大学
+
+### 中国农业大学研招网通知公告
+
+<Route author="sushengmao" example="/cauyjs" path="/cauyjs" />
