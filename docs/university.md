@@ -1414,3 +1414,9 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+
+## 南方科技大学
+
+## 南方科技大学研究生网通知公告
+
+<Route author="sushengmao" example="/sustyjs/sustyjs" path="/sustyjs/sustyjs" />
