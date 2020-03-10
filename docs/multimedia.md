@@ -339,10 +339,6 @@ pageClass: routes
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
-## 抖音
-
-见 [#抖音](/social-media.html#dou-yin)
-
 ## 高清电台
 
 ### 最新电影
