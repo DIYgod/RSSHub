@@ -974,6 +974,11 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 深圳大学
 
+#### 深圳大学研究生招生网通知公告
+
+<Route author="sushengmao" example="/szuyjs/szuyjs" path="/szuyjs/szuyjs" />
+
+
 ### 深圳大学研究生招生网
 
 <Route author="NagaruZ" example="/szu/yz/1" path="/szu/yz/:type?" :paramsDesc="['默认为1']" >
