@@ -16,29 +16,22 @@ describe('got', () => {
 
     it('retry', async () => {
         const requestRun = jest.fn();
-        let requestTime;
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
             .reply(function() {
                 requestRun();
-                const now = new Date();
-                if (requestTime) {
-                    expect(now - requestTime).toBeGreaterThanOrEqual(100);
-                    expect(now - requestTime).toBeLessThan(120);
-                }
-                requestTime = new Date();
                 return [404, '0'];
             });
 
         try {
             await got.get('http://rsshub.test/testRerty');
         } catch (error) {
-            expect(error.name).toBe('RequestError');
+            expect(error.name).toBe('HTTPError');
         }
 
         // retries
-        expect(requestRun).toHaveBeenCalledTimes(config.requestRetry);
+        expect(requestRun).toHaveBeenCalledTimes(config.requestRetry + 1);
     });
 
     it('axios', async () => {
@@ -48,10 +41,8 @@ describe('got', () => {
                 return [200, '{"code": 0}'];
             });
 
-        const response1 = await got.post('post', {
-            baseUrl: 'http://rsshub.test/',
-            form: true,
-            data: {
+        const response1 = await got.post('http://rsshub.test/post', {
+            form: {
                 test: 1,
             },
         });
@@ -59,19 +50,5 @@ describe('got', () => {
         expect(response1.status).toBe(200);
         expect(response1.body).toBe('{"code": 0}');
         expect(response1.data.code).toBe(0);
-
-        nock('http://rsshub.test')
-            .get(/^\/params/)
-            .reply(function() {
-                expect(this.req.path).toBe('/params?test=1');
-                return [200, ''];
-            });
-
-        await got.get('http://rsshub.test/params', {
-            params: {
-                test: 1,
-            },
-            responseType: 'buffer',
-        });
     });
 });

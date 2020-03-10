@@ -139,6 +139,16 @@ pageClass: routes
 
 </Route>
 
+### 用户动态
+
+<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
+
+| 想买 | 预定     | 已入 | 关注 | 有过   |
+| ---- | -------- | ---- | ---- | ------ |
+| want | preorder | buy  | care | resell |
+
+</Route>
+
 ## say 花火
 
 ### 文章
@@ -164,6 +174,10 @@ pageClass: routes
 <Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" :paramsDesc="['语言','类别','名称','ID']"/>
 
 比如漫画公主彻夜未眠的网址为https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
+
+### [Naver](https://comic.naver.com)
+
+<Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
 
 ## 嘀哩嘀哩 - dilidili
 
@@ -228,6 +242,12 @@ pageClass: routes
 ### 漫画 DB
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
+
+## 三界异次元
+
+### 三界异次元
+
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
 
 ## 鼠绘漫画
 

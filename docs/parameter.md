@@ -37,6 +37,12 @@ filterout 去掉不要的内容
 
 举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
 
+filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时适用
+
+默认为 true，区分大小写
+
+举例 1: <https://rsshub.app/bilibili/user/coin/2267573?filter=diyGOD|RSShub&filter_case_sensitive=false>
+
 ## 条数限制
 
 可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS
@@ -58,6 +64,14 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 -   tgiv: 模板 hash，可从模板制作页面分享出来的链接末尾获取（`&rhash=`后面跟着的字符串）
 
 举例: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+
+## 输出 Sci-hub 链接
+
+可以输出 Sci-hub 链接，用于知名期刊或输出 DOI 的科学期刊类 RSS。
+
+-   scihub: 任意值开启
+
+举例: <https://rsshub.app/pnas/latest?scihub=1>
 
 ## 输出格式
 
