@@ -1420,3 +1420,9 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ## 南方科技大学研究生网通知公告
 
 <Route author="sushengmao" example="/sustyjs/sustyjs" path="/sustyjs/sustyjs" />
+
+## 广州大学
+
+## 广州大学研招网通知公告
+
+<Route author="sushengmao" example="/gzyjs/gzyjs" path="/gzyjs/gzyjs" />
