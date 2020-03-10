@@ -313,6 +313,12 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 广州大学
+
+## 广州大学研招网通知公告
+
+<Route author="sushengmao" example="/gzyjs/gzyjs" path="/gzyjs/gzyjs" />
+
 ## 桂林电子科技大学
 
 ### 新闻资讯
@@ -603,6 +609,12 @@ category 列表：
 | notice   | news     |
 
 </Route>
+
+## 南方科技大学
+
+## 南方科技大学研究生网通知公告
+
+<Route author="sushengmao" example="/sustyjs/sustyjs" path="/sustyjs/sustyjs" />
 
 ## 南京工业大学
 
@@ -977,7 +989,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 #### 深圳大学研究生招生网通知公告
 
 <Route author="sushengmao" example="/szuyjs/szuyjs" path="/szuyjs/szuyjs" />
-
 
 ### 深圳大学研究生招生网
 
@@ -1419,15 +1430,3 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
-
-## 南方科技大学
-
-## 南方科技大学研究生网通知公告
-
-<Route author="sushengmao" example="/sustyjs/sustyjs" path="/sustyjs/sustyjs" />
-
-## 广州大学
-
-## 广州大学研招网通知公告
-
-<Route author="sushengmao" example="/gzyjs/gzyjs" path="/gzyjs/gzyjs" />
