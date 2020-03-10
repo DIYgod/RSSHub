@@ -1401,4 +1401,14 @@
             },
         ],
     },
+    'biquge5200.com': {
+        www: [
+            {
+                title: '当前小说',
+                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge',
+                source: '/:id',
+                target: '/novel/biquge/:id',
+            },
+        ],
+    },
 });

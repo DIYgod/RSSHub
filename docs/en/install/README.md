@@ -369,7 +369,7 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
 -   youtube: [API Key application](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key
+    -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
 
 -   telegram: [Bot application](https://telegram.org/blog/bot-revolution)
 

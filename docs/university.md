@@ -327,6 +327,20 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 </Route>
 
+## 桂林航天工业学院
+
+### 新闻资讯
+
+<Route author="wyml" example="/guat/news/ghyw" path="/guat/news/:type?" :paramsDesc="['资讯类型，如下表']">
+
+| 桂航要闻 | 院部动态 | 通知公告 | 信息公开 | 桂航大讲堂 |
+| -------- | -------- | -------- | -------- | ---------- |
+| gdyw     | ybdt     | tzgg     | xxgk     | ghdjt      |
+
+注 1: 不要吐槽拼音缩写，缩写原本的 URL 构成就这样。
+
+</Route>
+
 ## 哈尔滨工程大学
 
 ### 本科生院工作通知
@@ -387,11 +401,11 @@ category 列表：
 
 ### 研究生院
 
-<Route author="XYenon" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']" radar="1">
+<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']" radar="1">
 
-| 通知公告     | 新闻动态 |
-| ------------ | -------- |
-| announcement | news     |
+| 通知公告     | 新闻动态 | 国家公派项目 | 国际合作与交流项目 |
+| ------------ | -------- | ------------ | ------------------ |
+| announcement | news     | gjgp         | gjhz               |
 
 </Route>
 
@@ -664,11 +678,11 @@ category 列表：
 
 ### 教务处
 
-<Route author="kiusiudeng" example="/njfu/jwc/1798" path="/njfu/jwc/:category?" :paramsDesc="['省略则默认为1799']">
+<Route author="kiusiudeng" example="/njfu/jwc/1798" path="/njfu/jwc/:category?" :paramsDesc="['省略则默认为tzgg']">
 
 | 校级发文 | 通知公告 | 上级发文 | 下载专区 |
 | -------- | -------- | -------- | -------- |
-| 1798     | 1799     | 2270     | 1797     |
+| xjfw     | tzgg     | sjfw     | xzzq     |
 
 </Route>
 

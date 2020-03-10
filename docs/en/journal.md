@@ -8,10 +8,20 @@ pageClass: routes
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
 
-| `:category` |       Query Type        | Route                                    |
-| :---------: | :---------------------: | ---------------------------------------- |
-|   current   | Current Issue (default) | [/cell/cell/current](/cell/cell/current) |
-|   inpress   |    Articles in press    | [/cell/cell/inpress](/cell/cell/inpress) |
+| `:category` |       Query Type        | Route                                                      |
+| :---------: | :---------------------: | ---------------------------------------------------------- |
+|   current   | Current Issue (default) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
+|   inpress   |    Articles in press    | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
+
+</RouteEn>
+
+### Cover Story
+
+<RouteEn author="yech1990" example="/cell/cover" path="/cell/cover" />
+
+Subscribe to the cover images of the Cell journals, and get the latest publication updates in time.
+
+Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', 'cell-metabolism', 'cell-reports', 'cell-reports-physical-science', 'cell-stem-cell', 'cell-systems', 'chem', 'current-biology', 'developmental-cell', 'immunity', 'joule', 'matter', 'molecular-cell', 'neuron', 'one-earth' and 'structure'.
 
 </RouteEn>
 
@@ -151,7 +161,7 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 ### Cover Story
 
-<RouteEn author="yech1990" example="/science/cover" path="/science/cover" />
+<RouteEn author="yech1990" example="/sciencemag/cover" path="/sciencemag/cover" />
 
 Subscribe to the cover images of the Science journals, and get the latest publication updates in time.
 
