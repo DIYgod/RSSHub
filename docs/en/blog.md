@@ -10,6 +10,12 @@ pageClass: routes
 
 <RouteEn author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Google Sites
+
+### Articles
+
+<RouteEn author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, can be found in URL']" />
+
 ## Hexo Blog
 
 ### Blog using Next theme

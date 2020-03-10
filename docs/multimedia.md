@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 论坛更新
 
-<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到, 例如, `thread.php?fid-16.html`中, 板块 ID 为`16`']"/>
+<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到, 例如, `thread.php?fid-16.html`中, 板块 ID 为`16`']" supportBT="1" />
 
 ## 60-Second Science - Scientific American
 
@@ -146,6 +146,10 @@ pageClass: routes
 |userwanted|userwatched|userowned|userposts|
 </Route>
 
+### 最佳评论
+
+<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" />
+
 ## Last.fm
 
 ### 用户播放记录
@@ -273,7 +277,7 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+<Route author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']" anticrawler="1">
 
 > 注意：并非所有的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
 
@@ -293,7 +297,7 @@ pageClass: routes
 
 ### 帖子跟踪
 
-<Route author="cnzgray" example="/t66y/post/3286088" path="/t66y/post/:tid" :paramsDesc="['帖子 id, 可在帖子 URL 中找到']">
+<Route author="cnzgray" example="/t66y/post/3286088" path="/t66y/post/:tid" :paramsDesc="['帖子 id, 可在帖子 URL 中找到']" anticrawler="1">
 
 ::: tip 提示
 

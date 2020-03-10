@@ -77,7 +77,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 仓库 Issues
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1"/>
+<Route author="HenryQW AndreyMZ" example="/github/issue/DIYgod/RSSHub/open/RSS%20wanted" path="/github/issue/:user/:repo/:state?/:labels?" :paramsDesc="['用户名', '仓库名', 'issue 状态，可选`open`,`closed`或`all`，默认为`open`', '标签列表，以逗号分隔']" radar="1"/>
 
 ### 仓库 Pull Requests
 
@@ -306,6 +306,20 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## wolley
+
+### posts
+
+<Route author="umm233" example="/wolley" path="/wolley/index"/>
+
+### user post
+
+<Route author="umm233" example="/wolley/user/kyth" path="/wolley/user/:id" :paramsDesc="['用户 id']" />
+
+### host
+
+<Route author="umm233" example="/wolley/host/www.youtube.com" path="/wolley/host/:host" :paramsDesc="['文章对应 host 分类']" />
+
 ## 阿里云
 
 ### 数据库内核月报
@@ -495,6 +509,30 @@ GitHub 官方也提供了一些 RSS:
 ### 问答主题
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
+
+## 拉勾网
+
+::: tip 提示
+
+拉勾网官方提供职位的[邮件订阅](https://www.lagou.com/s/subscribe.html)，请根据自身需要选择使用。
+
+:::
+
+### 职位招聘
+
+<Route author="hoilc" example="/lagou/jobs/JavaScript/上海" path="/lagou/jobs/:position/:city" :paramsDesc="['职位名，可以参考[拉勾网首页](https://www.lagou.com)的职位列表', '城市名，请参考[拉勾网支持的全部城市](https://www.lagou.com/jobs/allCity.html)']" anticrawler="1"/>
+
+## 洛谷
+
+### 日报
+
+<Route author="LogicJake prnake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']">
+</Route>
+
+### 近期比赛
+
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest">
+</Route>
 
 ## 码农俱乐部
 

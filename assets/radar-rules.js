@@ -22,6 +22,12 @@
                     return `/bilibili/video/danmaku/${params.aid.replace('av', '')}/${pid ? pid : 1}`;
                 },
             },
+            {
+                title: '番剧',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/bangumi/media/:bid',
+                target: (params) => `/bilibili/bangumi/media/${params.bid.replace('md', '')}`,
+            },
         ],
         space: [
             {
@@ -346,7 +352,13 @@
                 title: '有新路由啦',
                 docs: 'https://docs.rsshub.app/program-update.html#rsshub',
                 source: ['', '/*tpath'],
-                target: '/rsshub/rss',
+                target: '/rsshub/routes',
+            },
+            {
+                title: '有新赞助商啦',
+                docs: 'https://docs.rsshub.app/program-update.html#rsshub',
+                source: ['', '/*tpath'],
+                target: '/rsshub/sponsors',
             },
         ],
     },
@@ -437,13 +449,13 @@
                 title: '经济信息工程学院 - 通知公告',
                 docs: 'https://docs.rsshub.app/university.html#xi-nan-cai-jing-da-xue',
                 source: '/index/tzgg.htm',
-                target: '/universities/swufe/seie/tzgg',
+                target: '/swufe/seie/tzgg',
             },
             {
                 title: '经济信息工程学院 - 学院新闻',
                 docs: 'https://docs.rsshub.app/university.html#xi-nan-cai-jing-da-xue',
                 source: '/index/xyxw.htm',
-                target: '/universities/swufe/seie/xyxw',
+                target: '/swufe/seie/xyxw',
             },
         ],
     },
@@ -485,7 +497,7 @@
         '.': [
             {
                 title: '电影和剧集',
-                description: 'https://docs.rsshub.app/multimedia.html#pian-yuan',
+                docs: 'https://docs.rsshub.app/multimedia.html#pian-yuan',
                 source: '/',
             },
         ],
@@ -577,7 +589,7 @@
         www: [
             {
                 title: '最新商品',
-                description: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
+                docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang',
                 source: ['/:category'],
                 target: '/wineyun/:category',
             },
@@ -589,8 +601,8 @@
             {
                 title: '每周免费游戏',
                 docs: 'https://docs.rsshub.app/game.html#epicgames-freegame',
-                source: '/:collection',
-                target: '/epicgames/:collection',
+                source: '/store/zh-CN/free-games',
+                target: '/epicgames/freegames',
             },
         ],
     },
@@ -1118,6 +1130,14 @@
                 script: "({id: document.querySelector('html').innerHTML.match(/photos.app.goo.gl\\/(.*?)\"/)[1]})",
             },
         ],
+        sites: [
+            {
+                title: 'Sites',
+                docs: 'https://docs.rsshub.app/blog.html#google-sites',
+                source: ['/site/:id/*', '/site/:id'],
+                target: '/google/sites/:id',
+            },
+        ],
     },
     'javlibrary.com': {
         _name: 'javlibrary',
@@ -1151,6 +1171,12 @@
                 docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
                 source: '/cn',
                 target: '/javlibrary/videos/bestrated',
+            },
+            {
+                title: '最佳评论',
+                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
+                source: '/cn',
+                target: '/javlibrary/bestreviews',
             },
             {
                 title: '影星',
@@ -1241,9 +1267,235 @@
         wjw: [
             {
                 title: '北京卫生健康委员会',
-                docs: 'https://docs.rsshub.app/government.html#zhong-yang-ji-wei-guo-jia-jian-wei',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui',
                 source: '/xwzx_20031/:caty',
                 target: '/gov/beijing/mhc/:caty',
+            },
+        ],
+    },
+    'zju.edu.cn': {
+        _name: '浙江大学',
+        cst: [
+            {
+                title: '软件学院 - 全部通知',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: ['', '/*tpath'],
+                target: '/zju/cst/0',
+            },
+            {
+                title: '软件学院 - 招生信息',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/32178/list.htm',
+                target: '/zju/cst/1',
+            },
+            {
+                title: '软件学院 - 教务管理',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36216/list.htm',
+                target: '/zju/cst/2',
+            },
+            {
+                title: '软件学院 - 论文管理',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36217/list.htm',
+                target: '/zju/cst/3',
+            },
+            {
+                title: '软件学院 - 思政工作',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36192/list.htm',
+                target: '/zju/cst/4',
+            },
+            {
+                title: '软件学院 - 评奖评优',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36228/list.htm',
+                target: '/zju/cst/5',
+            },
+            {
+                title: '软件学院 - 实习就业',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36193/list.htm',
+                target: '/zju/cst/6',
+            },
+            {
+                title: '软件学院 - 国际实习',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36235/list.htm',
+                target: '/zju/cst/7',
+            },
+            {
+                title: '软件学院 - 国内合作科研',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36194/list.htm',
+                target: '/zju/cst/8',
+            },
+            {
+                title: '软件学院 - 国际合作科研',
+                docs: 'https://docs.rsshub.app/university.html#zhe-jiang-da-xue',
+                source: '/36246/list.htm',
+                target: '/zju/cst/9',
+            },
+        ],
+    },
+    'kuaidi100.com': {
+        _name: '快递100',
+        '.': [
+            {
+                title: '快递追踪',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: (params) => `/kuaidi100/track/${params.com}/${params.postid}`,
+                script: "({postid: document.querySelector('#postid').value, com: document.querySelector('#selectComBtn').childNodes[1].attributes[1].value})",
+                verification: (params) => params.com !== 'default' && params.postid,
+            },
+            {
+                title: '支持的快递公司列表',
+                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
+                source: '/',
+                target: '/kuaidi100/company',
+            },
+        ],
+    },
+    'hrbeu.edu.cn': {
+        _name: '哈尔滨工程大学',
+        yjsy: [
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/announcement',
+            },
+            {
+                title: '研究生院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/news',
+            },
+            {
+                title: '研究生院 - 国家公派项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjgp',
+            },
+            {
+                title: '研究生院 - 国际合作与交流项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjhz',
+            },
+        ],
+        uae: [
+            {
+                title: '水声学院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/xwdt',
+            },
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/tzgg',
+            },
+        ],
+    },
+    'gongxue.cn': {
+        _name: '工学网',
+        '.': [
+            {
+                title: '要闻',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/yw',
+            },
+            {
+                title: '时讯',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/sx',
+            },
+        ],
+    },
+    'nsfc.gov.cn': {
+        _name: '国家自然科学基金委员会',
+        www: [
+            {
+                title: '基金要闻',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/jjyw',
+            },
+            {
+                title: '通知公告',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/tzgg',
+            },
+            {
+                title: '资助成果',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/zzcg',
+            },
+            {
+                title: '科普快讯',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/kpkx',
+            },
+        ],
+    },
+    'japanpost.jp': {
+        _name: '日本郵便',
+        'trackings.post': [
+            {
+                title: '郵便・荷物の追跡',
+                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian',
+                source: '/services/srv/search/direct',
+                target: (params) => `/japanpost/${params.reqCode}/${params.locale}`,
+                script: "({reqCode: new URLSearchParams(location.search).get('reqCodeNo1').toUpperCase(), locale: new URLSearchParams(location.search).get('locale').toLowerCase()})",
+                verification: (params) => (params.reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && params.locale === 'ja') || params.locale === 'en',
+            },
+        ],
+    },
+    'apnews.com': {
+        _name: 'AP News',
+        '.': [
+            {
+                title: '话题',
+                docs: 'https://docs.rsshub.app/traditional-media.html#ap-news',
+                source: '/:topic',
+                target: '/apnews/topics/:topic',
+            },
+        ],
+    },
+    'csc.edu.cn': {
+        _name: '国家留学网',
+        www: [
+            {
+                title: '遴选通知',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/lxtz',
+            },
+            {
+                title: '综合项目专栏',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/xmzl',
+            },
+            {
+                title: '常见问题解答',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/wtjd',
+            },
+            {
+                title: '录取公告',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/lqgg',
             },
         ],
     },
