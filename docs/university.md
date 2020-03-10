@@ -1347,6 +1347,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="sushengmao" example="/cauyjs" path="/cauyjs" />
 
+#### 中国农业大学信电学院
+
+<Route author="sushengmao" example="/cauele" path="/cauele" />
+
 ## 中国石油大学（华东）
 
 ### 主页
