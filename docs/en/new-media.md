@@ -101,11 +101,11 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Tags
 
-<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']" radar="1"/>
+<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['Tag id, can be found in the url of the tag page']" radar="1"/>
 
 ### Author
 
-<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1"/>
+<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author's homepage']" radar="1"/>
 
 ## Nautilus
 
