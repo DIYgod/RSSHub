@@ -8498,10 +8498,10 @@ node-releases@^1.1.49:
   dependencies:
     semver "^6.3.0"
 
-nodejieba@2.4.0, nodejieba@^2.2.1:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.4.0.tgz#934b394d1650a1bce24beed7c252ce49bb997328"
-  integrity sha512-MpzLxgwwRlgDflwX7osfZgm3+/78bI3rIA7/ECe96AzevbMTqQdnFx74pRdaivf6TtfWPceCQAzODG80WMgQZA==
+nodejieba@2.4.1, nodejieba@^2.2.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.4.1.tgz#2c3e422fbcc6d8d449f2d02226da053ba594736c"
+  integrity sha512-fxlVloaO5baDBmpnQ2egDCe6FT9SJdfbFak7tK7dKH16d7SxA5bLdv47EdTwtKS9DRbnXnMlyX5Wc33XAnaQuA==
   dependencies:
     nan "^2.14.0"
     node-pre-gyp "^0.14.0"
