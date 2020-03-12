@@ -60,7 +60,7 @@ pageClass: routes
 
 ### 扩展程序更新
 
-<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['应用 id, 可在应用页 URL 中找到']/>
+<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
 
 ## CurseForge
 
@@ -108,6 +108,10 @@ pageClass: routes
 
 </Route>
 
+### 附加组件(Add-ons)更新
+
+<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']/>
+
 ## Greasy Fork
 
 ### 脚本更新
@@ -120,11 +124,9 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
 
-## Minecraft CurseForge
+## Minecraft
 
-### Mod 更新
-
-<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
+见 [#minecraft](/game.html#minecraft)
 
 ## MIUI
 
@@ -166,7 +168,11 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss" radar="1"/>
+<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes" radar="1"/>
+
+### 有新赞助商啦
+
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
 
 ## sketch.com
 
