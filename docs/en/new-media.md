@@ -105,7 +105,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Author
 
-<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author's homepage']" radar="1"/>
+<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1"/>
 
 ## Nautilus
 
