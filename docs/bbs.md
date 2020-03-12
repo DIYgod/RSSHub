@@ -4,6 +4,12 @@ pageClass: routes
 
 # 论坛
 
+## Chiphell
+
+### 子版块
+
+<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
+
 ## Dcard
 
 ### 首頁帖子
@@ -247,9 +253,3 @@ pageClass: routes
 ### 回帖
 
 <Route author="LogicJake" example="/zhibo8/post/2601615" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']"/>
-
-## Chiphell
-
-### 子版块
-
-<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
