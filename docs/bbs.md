@@ -4,6 +4,12 @@ pageClass: routes
 
 # 论坛
 
+## Chiphell
+
+### 子版块
+
+<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
+
 ## Dcard
 
 ### 首頁帖子

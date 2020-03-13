@@ -272,6 +272,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址 site 后面']"/>
 
+## 静态模型爱好者
+
+### 新品信息
+
+<Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
+
 ## 空气质量
 
 ### 实时 AQI
