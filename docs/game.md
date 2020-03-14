@@ -161,6 +161,19 @@ pageClass: routes
 
 <Route author="LightStrawberry" example="/psnine/game" path="/psnine/game"/>
 
+## Rockstar Games Social Club
+
+### 在线活动
+
+<Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" :paramsDesc="['游戏代码（默认所有）']">
+
+| 游戏代码 | 游戏名称     |
+| -------- | ------------ |
+| GTAV     | 侠盗猎车手 5 |
+| RDR2     | 荒野大镖客 2 |
+
+</Route>
+
 ## Steam
 
 ### Steam search
