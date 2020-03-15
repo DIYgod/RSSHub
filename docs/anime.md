@@ -266,3 +266,9 @@ pageClass: routes
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## 紳士漫畫
+
+### 最新
+
+<Route author="KenMizz" example="/ssmh" path="/ssmh/">
