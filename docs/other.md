@@ -347,6 +347,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 模型网
+
+### 新闻
+
+<Route author="cc798461" example="/moxingnet" path="/moxingnet"/>
+
 ## 且听风吟福利
 
 ### 分类
