@@ -1509,4 +1509,36 @@
             },
         ],
     },
+    'matters.news': {
+        _name: 'Matters',
+        '.': [
+            {
+                title: '最新排序',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: '',
+                target: '/matters/latest',
+            },
+            {
+                title: '熱門文章',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: '',
+                target: '/matters/hot',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: '/tags/:tid',
+                target: '/matters/tags/:tid',
+            },
+            {
+                title: '作者',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: ['/:id', '/:id/comments'],
+                target: (params) => {
+                    const uid = params.id.replace('@', '');
+                    return uid ? `/matters/author/${uid}` : '';
+                },
+            },
+        ],
+    },
 });
