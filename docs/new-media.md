@@ -297,19 +297,27 @@ Supported sub-sites：
 
 <Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
 
-## 坂道系列官网新闻
+## 坂道系列官网资讯
 
-### 乃木坂 46
+### 乃木坂 46 新闻
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
-### 欅坂 46
+### 欅坂 46 新闻
 
 <Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
 
-### 日向坂 46
+### 欅坂 46 博客
+
+<Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
+
+### 日向坂 46 新闻
 
 <Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+
+### 日向坂 46 博客
+
+<Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
 ## 币世界
 
