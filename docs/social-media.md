@@ -610,16 +610,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
-## 抖音
-
-### 用户动态
-
-<Route author="DIYgod" example="/douyin/user/93610979153" path="/douyin/user/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
-
-### 喜欢的视频
-
-<Route author="xyqfer" example="/douyin/like/93610979153" path="/douyin/like/:id" :paramsDesc="['用户 id, 可在 分享出去获得的用户主页 URL 中找到']"/>
-
 ## 饭否
 
 ::: warning 注意
@@ -783,6 +773,20 @@ rule
 ### 热帖
 
 <Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
+
+## 小红书
+
+### 用户笔记和专辑
+
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['user_id']"/>
+
+### 用户专辑
+
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/album" path="/xiaohongshu/user/:user_id/album" :paramsDesc="['user_id']"/>
+
+### 专辑
+
+<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" />
 
 ## 知乎
 
