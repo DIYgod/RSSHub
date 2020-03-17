@@ -496,6 +496,18 @@ category 列表：
 
 <Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match"/>
 
+## 湖北大学
+
+### 新闻通知
+
+<Route author="cijiugechu" example="/hubu/news/zhxw" path="/universities/hubu/news/:type?" :paramsDesc="['默认为 `zhxw`']">
+
+| 综合新闻 | 湖大要闻 | 通知公告 | 学术学者学生 | 媒体湖大 |
+| -------- | -------- | -------- | ------------ | -------- |
+| zhxw     | hdyw     | tzgg     | xsxzxs       | mthd     |
+
+</Route>
+
 ## 华中科技大学
 
 ### 人工智能和自动化学院通知
@@ -1059,6 +1071,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 校园新闻 | 媒体商院 | 通知公告 | 人才招聘 | 行事历  | 招标公告 | 学术动态 |
 | -------- | -------- | -------- | -------- | ------- | -------- | -------- |
 | news     | media    | notice   | jobs     | workday | tender   | activity |
+
+</Route>
+
+## 武昌首义学院
+
+### 新闻中心
+
+<Route author="Derekmini" example="/wsyu/news/xxyw" path="/wsyu/news/:type?" :paramsDesc="['分类, 默认为 `xxyw`']">
+
+| 学校要闻 | 综合新闻 | 媒体聚焦 |
+| -------- | -------- | -------- |
+| xxyw     | zhxw     | mtjj     |
 
 </Route>
 
