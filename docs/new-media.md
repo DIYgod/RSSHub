@@ -195,6 +195,10 @@ pageClass: routes
 | ---- | ------ | ---- | -------- | ---- | ---- | ---- |
 | 1    | 2      | 3    | 4        | 5    | 6    | 7    |
 
+### 用户文章
+
+<Route author="SChen1024" example="/pmcaff/user/Oak7mqnEQJ" path="/pmcaff/user/:userid" :paramsDesc="['用户 id, 用户界面对应的 URL 最后面的字符']"/>
+
 ## Quanta Magazine
 
 ### 全部
