@@ -463,13 +463,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
 
-### 丁香园 - 全国新型肺炎疫情实时播报
+### 丁香园 - 新冠病毒疫情实时播报
 
 <Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
 
-### 丁香园 - 全国新型肺炎疫情数据统计
+### 丁香园 - 新冠病毒疫情数据统计
 
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回全国数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
 
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
 

@@ -466,6 +466,18 @@ category 列表：
 
 </Route>
 
+## 湖北大学
+
+### 新闻通知
+
+<Route author="cijiugechu" example="/hubu/news/zhxw" path="/universities/hubu/news/:type?" :paramsDesc="['默认为 `zhxw`']">
+
+| 综合新闻 | 湖大要闻 | 通知公告 | 学术学者学生 | 媒体湖大 |
+| -------- | -------- | -------- | ------------ | -------- |
+| zhxw     | hdyw     | tzgg     | xsxzxs       | mthd     |
+
+</Route>
+
 ## 华北水利水电大学
 
 ### 学校通知
@@ -501,18 +513,6 @@ category 列表：
 ### 计算机学院竞赛通知
 
 <Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match"/>
-
-## 湖北大学
-
-### 新闻通知
-
-<Route author="cijiugechu" example="/hubu/news/zhxw" path="/universities/hubu/news/:type?" :paramsDesc="['默认为 `zhxw`']">
-
-| 综合新闻 | 湖大要闻 | 通知公告 | 学术学者学生 | 媒体湖大 |
-| -------- | -------- | -------- | ------------ | -------- |
-| zhxw     | hdyw     | tzgg     | xsxzxs       | mthd     |
-
-</Route>
 
 ## 华中科技大学
 
