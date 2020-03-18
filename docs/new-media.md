@@ -1022,3 +1022,15 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+
+## WEEX 华尔街见闻旗下全球投资线上品牌
+
+### 资讯
+
+<Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码, 按照表列出']">
+
+| 最新文章 | 市场要闻 | 交易策略 | 机构观点 | 投资学堂 | 行业观察 | 基金理财 | 分析师投稿 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 1 | 2     | 3     | 4     | 5| 6| 7 | 8|
+
