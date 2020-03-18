@@ -249,6 +249,12 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
 
+## 紳士漫畫
+
+### 最新
+
+<Route author="KenMizz" example="/ssmh" path="/ssmh/">
+
 ## 鼠绘漫画
 
 ### 鼠绘漫画
@@ -266,9 +272,3 @@ pageClass: routes
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
-
-## 紳士漫畫
-
-### 最新
-
-<Route author="KenMizz" example="/ssmh" path="/ssmh/">

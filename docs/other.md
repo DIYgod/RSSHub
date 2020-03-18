@@ -284,6 +284,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
 
+## 酷安
+
+### 图文-编辑精选
+
+<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen" />
+
 ## 快递 100
 
 ### 快递订单追踪
@@ -601,9 +607,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-## 酷安
-
-### 图文-编辑精选
-
-<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen" />
