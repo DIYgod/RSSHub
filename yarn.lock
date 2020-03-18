@@ -1834,13 +1834,13 @@
   dependencies:
     nprogress "^0.2.0"
 
-"@vuepress/plugin-pwa@1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.3.1.tgz#4049273bb9161e15546ce8a2843eda1089614daa"
-  integrity sha512-ExudmW8w4jY+lNjTteYeEFNajLPr5dhiSyokYIcF3mX64xHwLJqqgHDUXZKh6ELTAZ6tUmuAMdFj76fjRaqJDw==
+"@vuepress/plugin-pwa@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.4.0.tgz#efc8a78ec21dba29911fd7797c86726c56de537e"
+  integrity sha512-op+nR0BA2Icl293dR+ti7dL08sDUalcQl9KUyvERkmJ0X85+7um/AYw9uotzuEnDca5BM5IRO7y5z+r2MxtI8g==
   dependencies:
-    "@vuepress/shared-utils" "^1.3.1"
-    register-service-worker "^1.5.2"
+    "@vuepress/shared-utils" "^1.4.0"
+    register-service-worker "^1.7.0"
     workbox-build "^4.3.1"
 
 "@vuepress/plugin-register-components@^1.3.1":
@@ -1855,10 +1855,10 @@
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-search/-/plugin-search-1.3.1.tgz#eee95c9c79a316a64ab046696a90a2ee1db35c34"
   integrity sha512-iOIvMWUTPHrGxjDprFoGTcuI8Y8/6e6JjLO4mO6qe6qVqR1yCQ8cJzVYXIizjEHUFYJ04uZ3jF9gBV8npS+3ZQ==
 
-"@vuepress/shared-utils@^1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.3.1.tgz#930038dfadf28f39147e6cb781e9930259995a7e"
-  integrity sha512-MlIAlnptjDC9+l0SJKW6BpkuwtxfKDzq4Rmag75RdyIqkkNv4EsCXZ8Y3HSuzENWFBwoD31jLC+nCZ3hULcvSg==
+"@vuepress/shared-utils@^1.3.1", "@vuepress/shared-utils@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.4.0.tgz#ab4bfcd5c1e3d0e5e384e0c1d0bb86470430c87e"
+  integrity sha512-6QTv7zMRXAojCuPRIm4aosYfrQO4OREhyxvbFeg/ZMWkVX+xZZQTdE7ZyK/4NAvEgkpjtPTRC1TQYhLJUqC5mQ==
   dependencies:
     chalk "^2.3.2"
     diacritics "^1.3.0"
@@ -10073,10 +10073,10 @@ regexpu-core@^4.6.0:
     unicode-match-property-ecmascript "^1.0.4"
     unicode-match-property-value-ecmascript "^1.1.0"
 
-register-service-worker@^1.5.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/register-service-worker/-/register-service-worker-1.6.2.tgz#9297e54c205c371c6e49bfa88f6997e8dd315f4c"
-  integrity sha512-I8L87fX2TK29LDx+wgyOUh2BJ3rDIRC1FtRZEHeP3rivzDv6p1DDZLGGtPucqjEkm45+2crtFIFssEWv56+9Wg==
+register-service-worker@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/register-service-worker/-/register-service-worker-1.7.0.tgz#b4b60d87a1d117f119bfd24ece073dcdb85dae64"
+  integrity sha512-sJQIxgodrulyN4d+bTkRnroPNMH3i1J4kP7Wm+vLhTP5CdbDSRr5jCeC9sJ6jyL603IZVbMAZ5HcU0hWCbJQQA==
 
 registry-auth-token@^3.0.1:
   version "3.4.0"
