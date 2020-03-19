@@ -1136,7 +1136,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 综合新闻 |   zhxw   |
 | 珞珈影像 |   ljyx   |
 | 学术动态 |   kydt   |
-| 点击排行 |   djpx   |
 | 珞珈副刊 |   ljfk   |
 | 校史钩沉 |   xsgc   |
 | 来稿选登 |   lgxd   |
