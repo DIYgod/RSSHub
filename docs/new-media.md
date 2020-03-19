@@ -719,6 +719,10 @@ Supported sub-sites：
 
 <Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
 
+### 最新文章
+
+<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
+
 ## 少数派 sspai
 
 ### 最新上架付费专栏
