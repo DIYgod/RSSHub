@@ -191,6 +191,18 @@ pageClass: routes
 
 </Route>
 
+## 大连海事大学
+
+### 新闻网
+
+<Route author="arjenzhou" example="/dlmu/news/hdyw" path="/dlmu/news/:type" :paramsDesc="['默认为 `hdyw`']">
+
+| 海大要闻 | 媒体海大 | 综合新闻 | 院系风采 | 海大校报 | 理论园地 | 海大讲坛 | 艺文荟萃 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   hdyw   |   mthd   |   zhxw   |   yxfc   |   hdxb   |   llyd   |   hdjt   |   ywhc   |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
