@@ -77,6 +77,10 @@ GitHub provides some official RSS feeds:
 
 <RouteEn author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['User name']" radar="1"/>
 
+### Repo Contributors
+
+<RouteEn author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:anon?" :paramsDesc="['User name', 'Repo name', 'If anonymous users are included. Leave blank for no, use any values for yes.']" radar="1"/>
+
 ## GitLab
 
 ### Explore

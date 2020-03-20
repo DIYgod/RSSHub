@@ -127,6 +127,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['用户名']" radar="1"/>
 
+### 仓库 Contirbutors
+
+<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:anon?" :paramsDesc="['用户名', '仓库名', '是否包括匿名用户。留空默认不包含，任意值包含匿名用户']" radar="1"/>
+
 ## GitLab
 
 ### Explore
