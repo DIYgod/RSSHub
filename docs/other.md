@@ -284,6 +284,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
 
+## 酷安
+
+### 图文-编辑精选
+
+<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen" />
+
 ## 快递 100
 
 ### 快递订单追踪
@@ -346,6 +352,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 0        | 1        | recommends |
 
 </Route>
+
+## 模型网
+
+### 新闻
+
+<Route author="cc798461" example="/moxingnet" path="/moxingnet"/>
 
 ## 且听风吟福利
 
@@ -457,13 +469,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
 
-### 丁香园 - 全国新型肺炎疫情实时播报
+### 丁香园 - 新冠病毒疫情实时播报
 
 <Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
 
-### 丁香园 - 全国新型肺炎疫情数据统计
+### 丁香园 - 新冠病毒疫情数据统计
 
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回全国数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
 
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
 
