@@ -490,6 +490,12 @@ category 列表：
 
 </Route>
 
+## 湖南科技大学
+
+### 教务处通知
+
+<Route author="Pretty9" example="/hnust/jwc" path="/hnust/jwc"/>
+
 ## 华北水利水电大学
 
 ### 学校通知
