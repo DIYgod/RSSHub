@@ -10,6 +10,16 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
+## WEEX 华尔街见闻旗下全球投资线上品牌
+
+### 资讯
+
+<Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码, 按照表列出']">
+
+| 最新文章 | 市场要闻 | 交易策略 | 机构观点 | 投资学堂 | 行业观察 | 基金理财 | 分析师投稿 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
@@ -19,6 +29,12 @@ pageClass: routes
 ### 用户博客
 
 <Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
+
+## 天天基金
+
+### 用户动态
+
+<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
 ## 雪球
 

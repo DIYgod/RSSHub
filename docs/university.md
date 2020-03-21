@@ -191,6 +191,18 @@ pageClass: routes
 
 </Route>
 
+## 大连海事大学
+
+### 新闻网
+
+<Route author="arjenzhou" example="/dlmu/news/hdyw" path="/dlmu/news/:type" :paramsDesc="['默认为 `hdyw`']">
+
+| 海大要闻 | 媒体海大 | 综合新闻 | 院系风采 | 海大校报 | 理论园地 | 海大讲坛 | 艺文荟萃 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   hdyw   |   mthd   |   zhxw   |   yxfc   |   hdxb   |   llyd   |   hdjt   |   ywhc   |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
@@ -463,6 +475,18 @@ category 列表：
 | 学生专栏 | 教师专栏 | 新闻公告 | 院部动态 | 高教前沿 |
 | -------- | -------- | -------- | -------- | -------- |
 | xszl     | jszl     | xwgg     | ybdt     | gjqy     |
+
+</Route>
+
+## 湖北大学
+
+### 新闻通知
+
+<Route author="cijiugechu" example="/hubu/news/zhxw" path="/universities/hubu/news/:type?" :paramsDesc="['默认为 `zhxw`']">
+
+| 综合新闻 | 湖大要闻 | 通知公告 | 学术学者学生 | 媒体湖大 |
+| -------- | -------- | -------- | ------------ | -------- |
+| zhxw     | hdyw     | tzgg     | xsxzxs       | mthd     |
 
 </Route>
 
@@ -1078,6 +1102,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 武昌首义学院
+
+### 新闻中心
+
+<Route author="Derekmini" example="/wsyu/news/xxyw" path="/wsyu/news/:type?" :paramsDesc="['分类, 默认为 `xxyw`']">
+
+| 学校要闻 | 综合新闻 | 媒体聚焦 |
+| -------- | -------- | -------- |
+| xxyw     | zhxw     | mtjj     |
+
+</Route>
+
 ## 武汉大学
 
 ### 计算机学院公告
@@ -1112,7 +1148,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 综合新闻 |   zhxw   |
 | 珞珈影像 |   ljyx   |
 | 学术动态 |   kydt   |
-| 点击排行 |   djpx   |
 | 珞珈副刊 |   ljfk   |
 | 校史钩沉 |   xsgc   |
 | 来稿选登 |   lgxd   |
