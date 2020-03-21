@@ -496,6 +496,12 @@ category 列表：
 
 <Route author="vuhe" example="/ncwu/notice" path="/ncwu/notice"/>
 
+## 华东理工大学
+
+###华东理工大学研究生院通知公告
+
+<Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
+
 ## 华南理工大学
 
 ### 教务处通知公告
@@ -1082,7 +1088,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="sushengmao" example="/tjuyjs" path="/tjuyjs" />
 
-
 ### 同济大学软件学院通知
 
 <Route author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
@@ -1383,7 +1388,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="sushengmao" example="/outele" path="/outele" />
 
-
 ## 中国科学院
 
 ### 上海微系统与信息技术研究所学术活动
@@ -1405,7 +1409,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 中国石油大学研究生院通知公告
 
 <Route author="sushengmao" example="/upcyjs" path="/upcyjs" />
-
 
 ### 主页
 
@@ -1498,9 +1501,3 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ###中科院人工智能所
 
 <Route author="sushengmao" example="/zkyai" path="/zkyai" />
-
-## 华东理工大学
-
-###华东理工大学研究生院通知公告
-
-<Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
