@@ -520,6 +520,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | -------- | -------- | -------- | -------- |
 | U        | T        | S        | R        |
 
+### 豆瓣电影人
+
+<Route author="minimalistrojan" example="/douban/celebrity/1274261" path="/douban/celebrity/:id/:sort?" :paramsDesc="['电影人 id', '排序方式，缺省为 `time` (时间排序)，可为 `vote` (评价排序)']"/>
+
 ### 豆瓣小组
 
 <Route author="DIYgod" example="/douban/group/camera" path="/douban/group/:groupid" :paramsDesc="['豆瓣小组的 id']"/>
