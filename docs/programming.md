@@ -129,7 +129,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 仓库 Contirbutors
 
-<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:anon?" :paramsDesc="['用户名', '仓库名', '是否包括匿名用户。留空默认不包含，任意值包含匿名用户']" radar="1"/>
+<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['用户名', '仓库名', 'Commit 数量排序顺序，desc和asc（默认desc降序）', '是否包括匿名用户，默认不包含，任意值包含匿名用户']" radar="1"/>
 
 ## GitLab
 

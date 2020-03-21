@@ -19,35 +19,35 @@ GitHub provides some official RSS feeds:
 
 ### User Repo
 
-<RouteEn author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" :paramsDesc="['GitHub username']" radar="1" />
+<Route author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" :paramsDesc="['GitHub username']" radar="1" />
 
 ### Trending
 
-<RouteEn path="/github/trending/:since/:language?" example="/github/trending/daily/javascript" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: daily, weekly or monthly', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" radar="1" />
+<Route path="/github/trending/:since/:language?" example="/github/trending/daily/javascript" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: daily, weekly or monthly', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" radar="1" />
 
 ### Repo Issues
 
-<RouteEn author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/bug" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" />
+<Route author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/bug" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" />
 
 ### Repo Pull Requests
 
-<RouteEn author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1"/>
+<Route author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1"/>
 
 ### User Followers
 
-<RouteEn author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" radar="1" />
+<Route author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" radar="1" />
 
 ### Repo Stars
 
-<RouteEn author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" radar="1" />
+<Route author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" radar="1" />
 
 ### Repo Branches
 
-<RouteEn author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1"/>
+<Route author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1"/>
 
 ### Files Commits
 
-<RouteEn author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['User name', 'Repo name', 'Branch name', 'File path']" radar="1">
+<Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['User name', 'Repo name', 'Branch name', 'File path']" radar="1">
 
 | User name | Repo name | Branch name | File path       |
 | --------- | --------- | ----------- | --------------- |
@@ -60,11 +60,11 @@ GitHub provides some official RSS feeds:
 >     >
 >     > Such as: replace `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` to `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss`
 
-</RouteEn>
+</Route>
 
 ### Search Result
 
-<RouteEn author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['search keyword', 'Sort options (default to bestmatch)','Sort order, desc and asc (desc descending by default)']"/>
+<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['search keyword', 'Sort options (default to bestmatch)','Sort order, desc and asc (desc descending by default)']"/>
 
 | Sort options     | sort      |
 | ---------------- | --------- |
@@ -75,29 +75,29 @@ GitHub provides some official RSS feeds:
 
 ### User Starred Repositories
 
-<RouteEn author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['User name']" radar="1"/>
+<Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['User name']" radar="1"/>
 
 ### Repo Contributors
 
-<RouteEn author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:anon?" :paramsDesc="['User name', 'Repo name', 'If anonymous users are included. Leave blank for no, use any values for yes.']" radar="1"/>
+<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']" radar="1"/>
 
 ## GitLab
 
 ### Explore
 
-<RouteEn author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">
+<Route author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
 
-</RouteEn>
+</Route>
 
 ## Hacker News
 
 ### Section
 
-<RouteEn author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['Section', 'Link type']">
+<Route author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['Section', 'Link type']">
 
 Website: https://news.ycombinator.com/
 
@@ -118,7 +118,7 @@ Website: https://news.ycombinator.com/
 | story     | Deault, link to shared address |
 | comments  | Link to Hacker News address    |
 
-</RouteEn>
+</Route>
 
 ## Hex-Rays
 
@@ -131,45 +131,45 @@ Website: https://news.ycombinator.com/
 
 ### Discussion
 
-<RouteEn author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['Forum ID, open web request, search forumId; fill in all to subscribe to the whole site discussion forum', 'See the table below for sorting methods, default to hot']">
+<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['Forum ID, open web request, search forumId; fill in all to subscribe to the whole site discussion forum', 'See the table below for sorting methods, default to hot']">
 
 | hot     | recent          | new             | top        | active        |
 | ------- | --------------- | --------------- | ---------- | ------------- |
 | Hotness | Recent Comments | Recently Posted | Most Votes | Most Comments |
 
-</RouteEn>
+</Route>
 
 ### Competitions
 
-<RouteEn author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" :paramsDesc="['category, default to all']">
+<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" :paramsDesc="['category, default to all']">
 
 | 空             | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
 | -------------- | -------- | -------- | ----------- | --------------- | ------- | ---------- | --------- |
 | All Categories | Featured | Research | Recruitment | Getting started | Masters | Playground | Analytics |
 
-</RouteEn>
+</Route>
 
 ## LeetCode
 
 ### Articles
 
-<RouteEn author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
+<Route author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
 
 ### Submission
 
-<RouteEn author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['country, Chines(cn) and US(us)', 'Username, available at the URL of the LeetCode user homepage']"/>
+<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['country, Chines(cn) and US(us)', 'Username, available at the URL of the LeetCode user homepage']"/>
 
 ## Linux Patchwork
 
 ### Patch Comments
 
-<RouteEn author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
+<Route author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" :paramsDesc="['Patch ID']"/>
 
 ## LWN.net
 
 ### Security alerts
 
-<RouteEn author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" :paramsDesc="['Distribution identification']">
+<Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" :paramsDesc="['Distribution identification']">
 
 | Distribution     | Identification     |
 | :--------------- | :----------------- |
@@ -187,7 +187,7 @@ Website: https://news.ycombinator.com/
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
 
-</RouteEn>
+</Route>
 
 ## project-zero issues
 
@@ -199,18 +199,16 @@ Website: https://news.ycombinator.com/
 
 ### Scala Blog
 
-<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part']" >
-part parmater can be found in the url of blog
-</RouteEn>
+<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part parmater can be found in the url of blog, defaults to All']"/>
 
 ## Visual Studio Code Marketplace
 
 ### Visual Studio Code Plugins Marketplace
 
-<RouteEn author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['Category']">
+<Route author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['Category']">
 
 | Featured | Trending Weekly | Trending Monthly | Trending Daily | Most Popular | Recently Added |
 | -------- | --------------- | ---------------- | -------------- | ------------ | -------------- |
 | featured | trending        | trending_m       | trending_d     | popular      | new            |
 
-</RouteEn>
+</Route>
