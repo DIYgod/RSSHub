@@ -1492,12 +1492,19 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
 
-##中科院
+## 中科院
 
-###中科院自动化所
+### 中科院自动化所
 
 <Route author="sushengmao" example="/zkyyjs" path="/zkyyjs" />
 
-###中科院人工智能所
+### 中科院人工智能所
 
 <Route author="sushengmao" example="/zkyai" path="/zkyai" />
+
+## 华东师范大学
+
+### 华东师范大学研究生院
+
+<Route author="sushengmao" example="/ecnuyjs" path="/ecnuyjs" />
+
