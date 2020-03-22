@@ -270,10 +270,6 @@ Supported sub-sites：
 
 <Route author="kt286" example="/zaker/channel/13" path="/zaker/source/:id" :paramsDesc="['channel id，可在 URL 中找到']"/>
 
-### 精读
-
-<Route author="AlexdanerZe" example="/zaker/focusread" path="/zaker/focusread" />
-
 ## 爱范儿 ifanr
 
 ### 爱范儿频道
