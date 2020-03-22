@@ -540,6 +540,10 @@ category 列表：
 
 ## 华中科技大学
 
+### 华中科技大学研究生院通知公告
+
+<Route author="sushengmao" example="/hustyjs" path="/hustyjs" />
+
 ### 人工智能和自动化学院通知
 
 <Route author="RayHY" example="/hust/aia/notice/0" path="/hust/aia/notice/:type?" :paramsDesc="['分区 type, 默认为最新通知 可在网页 HTML中找到']">
@@ -555,6 +559,18 @@ category 列表：
 <Route author="RayHY" example="/hust/aia/news" path="/hust/aia/news" />
 
 ## 华中师范大学
+
+### 华中师范大学研究生通知公告
+
+<Route author="sushengmao" example="/ccnuyjs" path="/ccnuyjs" />
+
+### 华中师范大学计算机学院
+
+<Route author="sushengmao" example="/ccnucs" path="/ccnucs" />
+
+### 华中师范大学伍论贡学院
+
+<Route author="sushengmao" example="/ccnuwu" path="/ccnuwu" />
 
 ### 就业信息
 
