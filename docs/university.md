@@ -510,6 +510,10 @@ category 列表：
 
 ## 华南理工大学
 
+### 研究生院通知公告
+
+<Route author="sushengmao" example="/scutyjs" path="/scutyjs" />
+
 ### 教务处通知公告
 
 <Route author="KeNorizon" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
@@ -525,6 +529,14 @@ category 列表：
 <Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
 
 ## 华南师范大学
+
+### 软件学院通知公告
+
+<Route author="sushengmao" example="/scnucs" path="/scnucs" />
+
+### 研究生院通知公告
+
+<Route author="sushengmao" example="/scnuyjs" path="/scnuyjs" />
 
 ### 教务处通知
 
