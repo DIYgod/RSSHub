@@ -502,6 +502,12 @@ category 列表：
 
 <Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
 
+## 华东师范大学
+
+### 华东师范大学研究生院
+
+<Route author="sushengmao" example="/ecnuyjs" path="/ecnuyjs" />
+
 ## 华南理工大学
 
 ### 教务处通知公告
@@ -1442,6 +1448,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 中科院
+
+### 中科院自动化所
+
+<Route author="sushengmao" example="/zkyyjs" path="/zkyyjs" />
+
+### 中科院人工智能所
+
+<Route author="sushengmao" example="/zkyai" path="/zkyai" />
+
 ## 中南大学
 
 ### 招聘信息
@@ -1491,20 +1507,3 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
-
-## 中科院
-
-### 中科院自动化所
-
-<Route author="sushengmao" example="/zkyyjs" path="/zkyyjs" />
-
-### 中科院人工智能所
-
-<Route author="sushengmao" example="/zkyai" path="/zkyai" />
-
-## 华东师范大学
-
-### 华东师范大学研究生院
-
-<Route author="sushengmao" example="/ecnuyjs" path="/ecnuyjs" />
-
