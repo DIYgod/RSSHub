@@ -4,6 +4,12 @@ pageClass: routes
 
 # 论坛
 
+## Chiphell
+
+### 子版块
+
+<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
+
 ## Dcard
 
 ### 首頁帖子
@@ -16,9 +22,39 @@ pageClass: routes
 
 ## Discuz
 
-### 通用子版块
+### 通用子版块-自动检测
 
 <Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" :paramsDesc="['子版块链接， 需要手动Url编码']"/>
+
+### 通用子版块-指定版本
+
+<Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" :paramsDesc="['discuz版本类型，见下表','子版块链接， 需要手动Url编码']" >
+
+| Discuz X 系列 | Discuz 7.x 系列 |
+| ------------- | --------------- |
+| x             | 7               |
+
+</Route>
+
+### 通用子版块-支持 Cookie
+
+<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" :paramsDesc="['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']" >
+
+| Discuz X 系列 | Discuz 7.x 系列 |
+| ------------- | --------------- |
+| x             | 7               |
+
+</Route>
+
+## LearnKu
+
+### 社区
+
+<Route author="haokaiyang" example="/learnku/laravel/qa" path="/learnku/:community/:category?" :paramsDesc="['社区 标识，可在 <https://learnku.com/communities> 找到', '分类，如果不传 `category` 则获取全部分类']"/>
+
+| 招聘 | 翻译         | 问答 | 链接  |
+| ---- | ------------ | ---- | ----- |
+| jobs | translations | qa   | links |
 
 ## MCBBS
 
@@ -34,7 +70,7 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
 
 ### 帖子
 
@@ -176,6 +212,12 @@ pageClass: routes
 ### 楼主动态
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
+
+## 小米社区
+
+### 圈子
+
+<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" :paramsDesc="['圈子 id，可在圈子 URL 找到']" radar="1"/>
 
 ## 一亩三分地
 

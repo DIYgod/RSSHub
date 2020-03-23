@@ -139,6 +139,16 @@ pageClass: routes
 
 </Route>
 
+### 用户动态
+
+<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
+
+| 想买 | 预定     | 已入 | 关注 | 有过   |
+| ---- | -------- | ---- | ---- | ------ |
+| want | preorder | buy  | care | resell |
+
+</Route>
+
 ## say 花火
 
 ### 文章
@@ -238,6 +248,12 @@ pageClass: routes
 ### 三界异次元
 
 <Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
+
+## 紳士漫畫
+
+### 最新
+
+<Route author="KenMizz" example="/ssmh" path="/ssmh/">
 
 ## 鼠绘漫画
 

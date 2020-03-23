@@ -1,5 +1,6 @@
 const supertest = require('supertest');
 let server;
+jest.mock('request-promise-native');
 
 async function checkBlock(response) {
     expect(response.status).toBe(403);
