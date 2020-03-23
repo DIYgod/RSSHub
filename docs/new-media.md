@@ -910,6 +910,10 @@ Supported sub-sites：
 
 <Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
 
+### 公众号 (今天看啥来源)
+
+<Route author="JeasonLau" example="/wechat/jtks/uRbAcCYKay" path="/wechat/jtks/:id" :paramsDesc="['今天看啥url中的id，如：http://www.jintiankansha.me/column/uRbAcCYKay中的uRbAcCYKay']"/>
+
 ### 公众平台系统公告栏目
 
 <Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
