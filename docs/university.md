@@ -482,9 +482,6 @@ category 列表：
 
 ### 新闻通知
 
-<<<<<<< HEAD
-<Route author="vuhe" example="/ncwu/notice" path="/universities/ncwu/notice"/>
-=======
 <Route author="cijiugechu" example="/hubu/news/zhxw" path="/universities/hubu/news/:type?" :paramsDesc="['默认为 `zhxw`']">
 
 | 综合新闻 | 湖大要闻 | 通知公告 | 学术学者学生 | 媒体湖大 |
@@ -492,7 +489,6 @@ category 列表：
 | zhxw     | hdyw     | tzgg     | xsxzxs       | mthd     |
 
 </Route>
->>>>>>> af202266771ad442671769d58b45edc34e24de5d
 
 ## 华北水利水电大学
 
