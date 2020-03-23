@@ -22,7 +22,7 @@ pageClass: routes
 
 支持分站：
 | 9To5Mac | 9To5Google | 9To5Toys |
-| --- | ------ | ---- |
+| ------- | ---------- | -------- |
 | Mac | Google | Toys |
 
 </Route>
@@ -79,6 +79,16 @@ pageClass: routes
 
 <Route author="JamesWDGu" example="/engadget-cn" path="/engadget-cn"/>
 
+### 多語言
+
+<Route author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['語言']">
+
+| 繁體中文 | 簡體中文 | US  | 日文     |
+| -------- | -------- | --- | -------- |
+| chinese  | cn       | us  | japanese |
+
+</Route>
+
 ## iDownloadBlog
 
 ### blog
@@ -111,6 +121,16 @@ pageClass: routes
 
 </Route>
 
+### 热榜
+
+<Route author="immmortal" example="/ithome/ranking/1" path="/ithome/ranking/:type" :paramsDesc="['类别']">
+
+| 1             | 2    | 3        | 4    |
+| ------------- | ---- | -------- | ---- |
+| 24 小时阅读榜 | 周榜 | 7 天热评 | 月榜 |
+
+</Route>
+
 ## IT 桔子
 
 ### 投融资事件
@@ -121,23 +141,39 @@ pageClass: routes
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
+## Krankenkassen 德国新闻社卫健新闻
+
+### dpa news
+
+<Route author="howel52" example="/krankenkassen" path="/krankenkassen"/>
+
+## Letterboxd
+
+### User diary
+
+<Route author="loganrockmore" example="/letterboxd/user/diary/demiadejuyigbe" path="/letterboxd/user/diary/:username" :paramsDesc="['username']" />
+
+### Following diary
+
+<Route author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
+
 ## Matters
 
 ### 最新排序
 
-<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
+<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1"/>
 
 ### 熱門文章
 
-<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" />
+<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1"/>
 
 ### 标签
 
-<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
+<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']" radar="1"/>
 
 ### 作者
 
-<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
+<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1"/>
 
 ## Nautilus
 
@@ -158,6 +194,10 @@ pageClass: routes
 | 发现 | 待回答 | 最热 | 问答专场 | 投稿 | 深度 | 专栏 |
 | ---- | ------ | ---- | -------- | ---- | ---- | ---- |
 | 1    | 2      | 3    | 4        | 5    | 6    | 7    |
+
+### 用户文章
+
+<Route author="SChen1024" example="/pmcaff/user/Oak7mqnEQJ" path="/pmcaff/user/:userid" :paramsDesc="['用户 id, 用户界面对应的 URL 最后面的字符']"/>
 
 ## Quanta Magazine
 
@@ -215,7 +255,7 @@ pageClass: routes
 
 Supported sub-sites：
 | TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
-| ----- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
 | tv | movies | comedy | music | tvrecaps | books | theater | art | awards | video |
 
 </Route>
@@ -261,19 +301,27 @@ Supported sub-sites：
 
 <Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
 
-## 坂道系列官网新闻
+## 坂道系列官网资讯
 
-### 乃木坂 46
+### 乃木坂 46 新闻
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
-### 欅坂 46
+### 欅坂 46 新闻
 
 <Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
 
-### 日向坂 46
+### 欅坂 46 博客
+
+<Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
+
+### 日向坂 46 新闻
 
 <Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+
+### 日向坂 46 博客
+
+<Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
 ## 币世界
 
@@ -373,6 +421,22 @@ Supported sub-sites：
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
+## 凤凰网
+
+### 大风号
+
+<Route author="Jamch" example="/ifeng/feng/2583/doc" path="/ifeng/feng/:id/:type" :paramsDesc="['对应 id，可在 大风号作者页面 找到','类型，见下表']"/>
+
+| 文章 | 视频  |
+| ---- | ----- |
+| doc  | video |
+
+## 谷歌新闻
+
+### 新闻
+
+<Route author="zoenglinghou" example="/google/news/要闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
+
 ## 观察者网-中国关怀 全球视野
 
 ### 观察者首页
@@ -395,21 +459,11 @@ Supported sub-sites：
 
 ### 果壳网专栏
 
-<Route author="DHPO" example="/guokr/calendar" path="/guokr/:category" :paramsDesc="['专栏类别']">
+<Route author="DHPO hoilc" example="/guokr/calendar" path="/guokr/:channel" :paramsDesc="['专栏类别']">
 | 物种日历 | 吃货研究所 | 美丽也是技术活 |
-| ------- | ---------| ------------ |
-| calendar | institute | beauty |
+| -------- | ---------- | -------------- |
+| calendar | institute  | beauty         |
 </Route>
-
-## 好奇怪
-
-### 首页
-
-<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
-
-### 探索
-
-<Route author="HenryQW" example="/qdaily/notch/explore/1" path="/qdaily/explore/:id" :paramsDesc="['探索 id，可通过好奇怪 APP 复制分享链接找到']"/>
 
 ## 好奇心日报
 
@@ -557,12 +611,6 @@ Supported sub-sites：
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
 
-## 洛谷
-
-### 日报
-
-<Route author="LogicJake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2019年日报']"/>
-
 ## 镁客网 im2maker
 
 ### 镁客网频道
@@ -671,6 +719,10 @@ Supported sub-sites：
 
 <Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
 
+### 最新文章
+
+<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
+
 ## 少数派 sspai
 
 ### 最新上架付费专栏
@@ -695,7 +747,11 @@ Supported sub-sites：
 
 ### 作者
 
-<Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
+
+### 作者动态
+
+<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']"/>
 
 ### 专题
 
@@ -770,20 +826,6 @@ Supported sub-sites：
 
 <Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
 
-## 腾讯大家
-
-### 首页
-
-<Route author="xyqfer" example="/dajia" path="/dajia"/>
-
-### 作者作品
-
-<Route author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
-
-### 专栏
-
-<Route author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
-
 ## 腾讯谷雨
 
 ### 栏目
@@ -853,6 +895,10 @@ Supported sub-sites：
 ### 公众号（传送门来源）
 
 <Route author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众号（CareerEngine 来源）
+
+<Route author="HenryQW" example="/wechat/ce/595a5b14d7164e53908f1606" path="/wechat/ce/:id" :paramsDesc="['公众号 id, 在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id']"/>
 
 ### 公众号（Telegram 频道来源）
 
@@ -962,6 +1008,18 @@ Supported sub-sites：
 ### 首页最新帖子
 
 <Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
+
+### 子板块帖子
+
+<Route author="c4605" example="/zfrontier/board/56" path="/zfrontier/board/:boardId" :paramsDesc="['板块 ID']"/>
+
+QueryString:
+
+-   `sort`：排序方式
+
+| 根据创建时间（默认） | 根据回复时间 | 根据热度 |
+| -------------------- | ------------ | -------- |
+| byCtime              | byReplyTime  | byScore  |
 
 ## 紫竹张先生
 

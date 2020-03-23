@@ -36,6 +36,12 @@ Set `filterout` to exclude unwanted content.
 
 For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
+Set `filter_case_sensitive` to determine whether the filtering keywords should be case sensitive. The parameter would apply to both `filter` and `filterout`.
+
+Default: `true`
+
+Example: [https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false](https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false)
+
 ### Limit Entries
 
 Set `limit` to limit the number of articles in the feed.
@@ -57,6 +63,14 @@ Enable Telegram Instant View requires a page template, it can be obtained from T
 -   tgiv: template hash, obtained from the link of template page generated（the string after `&rhash=`）
 
 Eg: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+
+## Sci-hub link
+
+Output Sci-hub link in scientific journal routes, this supports major journals or routes that output DOIs.
+
+-   scihub: set to any value
+
+举例: <https://rsshub.app/pnas/latest?scihub=1>
 
 ### Output Formats
 
