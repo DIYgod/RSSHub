@@ -427,6 +427,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
 
+## 四川省科学技术厅
+
+### 四川省科学技术厅-公示公告
+
+<Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" :paramsDesc="['默认为`tz`']">
+
+| 通知 | 公示公告 |
+| ---- | -------- |
+| tz   | gs       |
+
+</Route>
+
 ## 搜狗
 
 ### 搜狗特色 LOGO
