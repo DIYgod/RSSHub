@@ -504,6 +504,16 @@ category 列表：
 
 <Route author="Pretty9" example="/hnust/art" path="/hnust/art">
 
+### 研究生院招生工作
+
+<Route author="Pretty9" example="/hnust/graduate/sszs" path="/hnust/graduate/:type?" :paramsDesc="['默认为 `sszs`']">
+
+| 硕士招生 | 博士招生 |
+| -------- | -------- |
+| sszs     | bszs     |
+
+</Route>
+
 ## 华北水利水电大学
 
 ### 学校通知
