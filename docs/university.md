@@ -500,6 +500,10 @@ category 列表：
 
 <Route author="Pretty9" example="/hnust/computer" path="/hnust/computer">
 
+### 艺术学院通知
+
+<Route author="Pretty9" example="/hnust/art" path="/hnust/art">
+
 ## 华北水利水电大学
 
 ### 学校通知
