@@ -498,7 +498,7 @@ category 列表：
 
 ## 华东理工大学
 
-###华东理工大学研究生院通知公告
+### 华东理工大学研究生院通知公告
 
 <Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
 
