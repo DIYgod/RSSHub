@@ -265,7 +265,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="DIYgod" example="/mmgal" path="/mmgal"/>
+<Route author="DIYgod kotoyuuko" example="/hhgal" path="/hhgal"/>
 
 ## 终点分享
 
