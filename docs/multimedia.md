@@ -39,6 +39,12 @@ pageClass: routes
 
 <Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
 
+## AGE 动漫
+
+### 番剧详情
+
+<Route author="s2marine" example="/agefans/detail/20200035" path="/agefans/detail/:id" :paramsDesc="['番剧 id，对应详情 URL 中找到']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
