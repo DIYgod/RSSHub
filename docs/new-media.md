@@ -270,6 +270,10 @@ Supported sub-sites：
 
 <Route author="kt286" example="/zaker/channel/13" path="/zaker/source/:id" :paramsDesc="['channel id，可在 URL 中找到']"/>
 
+### 精读
+
+<Route author="AlexdanerZe" example="/zaker/focusread" path="/zaker/focusread" />
+
 ## 爱范儿 ifanr
 
 ### 爱范儿频道
@@ -514,6 +518,10 @@ Supported sub-sites：
 ### 作者
 
 <Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" :paramsDesc="['用户 id']" />
+
+### 文集
+
+<Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" :paramsDesc="['文集 id']" />
 
 ## 汇通网
 
