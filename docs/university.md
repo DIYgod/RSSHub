@@ -496,6 +496,10 @@ category 列表：
 
 <Route author="Pretty9" example="/hnust/jwc" path="/hnust/jwc"/>
 
+### 计算机科学与工程学院通知
+
+<Route author="Pretty9" example="/hnust/computer" path="/hnust/computer">
+
 ## 华北水利水电大学
 
 ### 学校通知
