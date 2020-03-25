@@ -193,6 +193,16 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 </Route>
 
+## 晋江文学城
+
+### 小说更新
+
+<Route author="cilofax859" example="/novel/jjwxc/3193259" path="/novel/jjwxc/:novelId" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `3193259`']">
+
+举例网址：https://m.jjwxc.net/book2/**3193259** / https://www.jjwxc.net/onebook.php?novelid=**3193259**
+
+</Route>
+
 ## 虛詞
 
 ### 版块
