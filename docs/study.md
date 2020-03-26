@@ -4,6 +4,12 @@ pageClass: routes
 
 # 学习
 
+## CET
+
+### 四六级考试动态
+
+<Route author="SunShinenny" example="/cet/notice" path="/cet/notice"/>
+
 ## gradCafe
 
 ### gradCafe result
