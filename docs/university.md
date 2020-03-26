@@ -1040,6 +1040,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="stevelee477" example="/scu/xg/notice" path="/scu/xg/notice" />
 
+### 研究生部通知公告
+
+<Route author="NSH" example="/scu/gs/notice" path="/scu/gs/notice" />
+
 ## 四川旅游学院
 
 ### 信息与工程学院动态公告列表
