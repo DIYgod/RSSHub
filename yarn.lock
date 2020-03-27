@@ -8978,10 +8978,10 @@ parse-json@^4.0.0:
     error-ex "^1.3.1"
     json-parse-better-errors "^1.0.1"
 
-parse-torrent@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-7.0.1.tgz#669c51a95363550055c7de0957741d6a05575daf"
-  integrity sha512-FdF1kBImRLt+ICV4NTz8L+sI2hFlPXAq1tXuw21gKz8EuThyVUFJ/wPfBEyYQrvnBpmGf7cM/LVSOhMRe8MrKw==
+parse-torrent@7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-7.1.1.tgz#2dec089ea2d4c2f9052a5a815d23bd1c530ad24d"
+  integrity sha512-trOvjD326fRBkKdi2ZztZgm1rGtoOUeCroXzPzCq8irpa4dgbpLe4fqcjIDLZQsjoFqhgH2hQuHED8lT1/PCBw==
   dependencies:
     bencode "^2.0.0"
     blob-to-buffer "^1.2.6"
@@ -8989,7 +8989,6 @@ parse-torrent@7.0.1:
     magnet-uri "^5.1.3"
     simple-get "^3.0.1"
     simple-sha1 "^3.0.0"
-    uniq "^1.0.1"
 
 parse5@4.0.0:
   version "4.0.0"
