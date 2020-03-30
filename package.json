@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "@types/cheerio": "0.22.16",
+    "@types/cheerio": "0.22.17",
     "@types/got": "9.6.9",
     "@types/koa": "2.11.2",
     "@vuepress/plugin-back-to-top": "1.4.0",
@@ -43,7 +43,7 @@
     "cross-env": "7.0.2",
     "entities": "2.0.0",
     "eslint": "6.8.0",
-    "eslint-config-prettier": "6.10.0",
+    "eslint-config-prettier": "6.10.1",
     "eslint-plugin-prettier": "3.1.2",
     "jest": "25.1.0",
     "mockdate": "2.0.5",
