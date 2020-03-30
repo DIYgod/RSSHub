@@ -20,6 +20,12 @@ pageClass: routes
 
 <Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
 
+## 天天基金
+
+### 用户动态
+
+<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
 ## 雪球
 
 ### 用户动态
@@ -57,9 +63,3 @@ pageClass: routes
 | announcement | news | research |
 
 </Route>
-
-## 天天基金
-
-### 用户动态
-
-<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
