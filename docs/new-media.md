@@ -121,6 +121,16 @@ pageClass: routes
 
 </Route>
 
+### 热榜
+
+<Route author="immmortal" example="/ithome/ranking/1" path="/ithome/ranking/:type" :paramsDesc="['类别']">
+
+| 1             | 2    | 3        | 4    |
+| ------------- | ---- | -------- | ---- |
+| 24 小时阅读榜 | 周榜 | 7 天热评 | 月榜 |
+
+</Route>
+
 ## IT 桔子
 
 ### 投融资事件
@@ -130,6 +140,12 @@ pageClass: routes
 ### 并购事件
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
+
+## Krankenkassen 德国新闻社卫健新闻
+
+### dpa news
+
+<Route author="howel52" example="/krankenkassen" path="/krankenkassen"/>
 
 ## Letterboxd
 
@@ -431,7 +447,7 @@ Supported sub-sites：
 
 ### 果壳网专栏
 
-<Route author="DHPO" example="/guokr/calendar" path="/guokr/:category" :paramsDesc="['专栏类别']">
+<Route author="DHPO hoilc" example="/guokr/calendar" path="/guokr/:channel" :paramsDesc="['专栏类别']">
 | 物种日历 | 吃货研究所 | 美丽也是技术活 |
 | ------- | ---------| ------------ |
 | calendar | institute | beauty |

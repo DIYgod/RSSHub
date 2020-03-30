@@ -139,6 +139,16 @@ pageClass: routes
 
 </Route>
 
+### 用户动态
+
+<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
+
+| 想买 | 预定     | 已入 | 关注 | 有过   |
+| ---- | -------- | ---- | ---- | ------ |
+| want | preorder | buy  | care | resell |
+
+</Route>
+
 ## say 花火
 
 ### 文章
