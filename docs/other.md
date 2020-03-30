@@ -236,6 +236,30 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
 
+## 国家留学网
+
+### 通知
+
+<Route author="Derekmini" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
+
+| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 |
+| -------- | ------------ | ------------ | -------- |
+| lxtz     | xmzl         | wtjd         | lqgg     |
+
+</Route>
+
+## 国家自然科学基金委员会
+
+### 新闻通知
+
+<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1">
+
+| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
+| -------- | -------- | -------- | -------- |
+| jjyw     | tzgg     | zzcg     | kpkx     |
+
+</Route>
+
 ## 好队友
 
 ### 工作机会
@@ -247,6 +271,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 板块信息
 
 <Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址 site 后面']"/>
+
+## 静态模型爱好者
+
+### 新品信息
+
+<Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
 
 ## 空气质量
 
@@ -317,6 +347,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 模型网
+
+### 新闻
+
+<Route author="cc798461" example="/moxingnet" path="/moxingnet"/>
+
 ## 且听风吟福利
 
 ### 分类
@@ -353,7 +389,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 郵便追跡サービス
 
-<Route author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['运单号']"/>
+<Route author="tuzi3040" example="/japanpost/EJ123456789JP/ja" path="/japanpost/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1">
+
+| 日语 | 英语 |
+| ---- | ---- |
+| ja   | en   |
+
+</Route>
 
 ## 上证债券信息网
 
@@ -421,13 +463,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
 
-### 丁香园 - 全国新型肺炎疫情实时播报
+### 丁香园 - 新冠病毒疫情实时播报
 
 <Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
 
-### 丁香园 - 全国新型肺炎疫情数据统计
+### 丁香园 - 新冠病毒疫情数据统计
 
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回全国数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
 
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
 
@@ -559,3 +601,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
+## 酷安
+
+### 图文-编辑精选
+
+<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen" />

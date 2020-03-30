@@ -57,3 +57,9 @@ pageClass: routes
 | announcement | news | research |
 
 </Route>
+
+## 天天基金
+
+### 用户动态
+
+<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
