@@ -427,6 +427,16 @@ category 列表：
 
 </Route>
 
+### 就业服务平台
+
+<Route author="Derekmini" example="/heu/job/tzgg" path="/heu/job/:type?" :paramsDesc="['分类, 默认为 `tzgg`']" radar="1">
+
+| 通知公告 |
+| -------- |
+| tzgg     |
+
+</Route>
+
 ### 工学网
 
 <Route author="Derekmini XYenon" example="/heu/gongxue/yw" path="/heu/gongxue/:type?" :paramsDesc="['分类, 默认为 `yw`']" radar="1">
