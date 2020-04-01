@@ -1541,4 +1541,15 @@
             },
         ],
     },
+    'zhaishuyuan.com': {
+        _name: '斋书苑',
+        www: [
+            {
+                title: '最新章节',
+                docs: 'https://docs.rsshub.app/reading.html#zhai-shu-yuan',
+                source: ['/book/:id', '/read/:id'],
+                target: '/novel/zhaishuyuan/:id',
+            },
+        ],
+    },
 });
