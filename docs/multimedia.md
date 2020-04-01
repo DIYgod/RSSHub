@@ -182,8 +182,6 @@ pageClass: routes
 
 </Route>
 
-<<<<<<< HEAD
-=======
 ## MQube
 
 ### 全站最近更新
@@ -202,7 +200,6 @@ pageClass: routes
 
 <Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" :paramsDesc="['标签名称, 可参考`https://mqube.net/search/tag`']" radar="1" />
 
->>>>>>> pr/1
 ## Nyaa
 
 ### 搜索结果
