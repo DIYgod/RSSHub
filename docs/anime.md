@@ -16,6 +16,29 @@ pageClass: routes
 
 <Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
+## AcFun
+
+### 番剧
+
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+
+::: tip 提示
+
+番剧 id 不包含开头的 aa。
+例如：http://www.acfun.cn/bangumi/aa5022158 的番剧 id 是 5022158，不包括开头的 aa。
+
+:::
+
+### 用户投稿
+
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+
+## AGE 动漫
+
+### 番剧详情
+
+<Route author="s2marine" example="/agefans/detail/20200035" path="/agefans/detail/:id" :paramsDesc="['番剧 id，对应详情 URL 中找到']"/>
+
 ## Anime1
 
 ### 動畫
@@ -139,6 +162,16 @@ pageClass: routes
 
 </Route>
 
+### 用户动态
+
+<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
+
+| 想买 | 预定     | 已入 | 关注 | 有过   |
+| ---- | -------- | ---- | ---- | ------ |
+| want | preorder | buy  | care | resell |
+
+</Route>
+
 ## say 花火
 
 ### 文章
@@ -164,6 +197,10 @@ pageClass: routes
 <Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" :paramsDesc="['语言','类别','名称','ID']"/>
 
 比如漫画公主彻夜未眠的网址为https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
+
+### [Naver](https://comic.naver.com)
+
+<Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
 
 ## 嘀哩嘀哩 - dilidili
 
@@ -233,7 +270,13 @@ pageClass: routes
 
 ### 三界异次元
 
-<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home"/>
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
+
+## 紳士漫畫
+
+### 最新
+
+<Route author="KenMizz" example="/ssmh" path="/ssmh/">
 
 ## 鼠绘漫画
 
