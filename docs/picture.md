@@ -181,6 +181,8 @@ pageClass: routes
 
 ## 绝对领域
 
+### 图集文章
+
 <Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
 
 | 图集 | 文章 |
