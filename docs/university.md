@@ -329,7 +329,7 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 ## 广州大学研招网通知公告
 
-<Route author="sushengmao" example="/gzyjs/gzyjs" path="/gzyjs/gzyjs" />
+<Route author="sushengmao" example="/gzyjs" path="/gzyjs" />
 
 ## 桂林电子科技大学
 
@@ -520,7 +520,23 @@ category 列表：
 
 <Route author="vuhe" example="/ncwu/notice" path="/ncwu/notice"/>
 
+## 华东理工大学
+
+### 华东理工大学研究生院通知公告
+
+<Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
+
+## 华东师范大学
+
+### 华东师范大学研究生院
+
+<Route author="sushengmao" example="/ecnuyjs" path="/ecnuyjs" />
+
 ## 华南理工大学
+
+### 研究生院通知公告
+
+<Route author="sushengmao" example="/scutyjs" path="/scutyjs" />
 
 ### 教务处通知公告
 
@@ -538,6 +554,14 @@ category 列表：
 
 ## 华南师范大学
 
+### 软件学院通知公告
+
+<Route author="sushengmao" example="/scnucs" path="/scnucs" />
+
+### 研究生院通知公告
+
+<Route author="sushengmao" example="/scnuyjs" path="/scnuyjs" />
+
 ### 教务处通知
 
 <Route author="fengkx" example="/scnu/jw" path="/scnu/jw"/>
@@ -551,6 +575,10 @@ category 列表：
 <Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match"/>
 
 ## 华中科技大学
+
+### 华中科技大学研究生院通知公告
+
+<Route author="sushengmao" example="/hustyjs" path="/hustyjs" />
 
 ### 人工智能和自动化学院通知
 
@@ -567,6 +595,18 @@ category 列表：
 <Route author="RayHY" example="/hust/aia/news" path="/hust/aia/news" />
 
 ## 华中师范大学
+
+### 华中师范大学研究生通知公告
+
+<Route author="sushengmao" example="/ccnuyjs" path="/ccnuyjs" />
+
+### 华中师范大学计算机学院
+
+<Route author="sushengmao" example="/ccnucs" path="/ccnucs" />
+
+### 华中师范大学伍论贡学院
+
+<Route author="sushengmao" example="/ccnuwu" path="/ccnuwu" />
 
 ### 就业信息
 
@@ -660,9 +700,9 @@ category 列表：
 
 ## 南方科技大学
 
-## 南方科技大学研究生网通知公告
+### 南方科技大学研究生网通知公告
 
-<Route author="sushengmao" example="/sustyjs/sustyjs" path="/sustyjs/sustyjs" />
+<Route author="sushengmao" example="/sustyjs" path="/sustyjs" />
 
 ## 南京工业大学
 
@@ -1036,7 +1076,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 #### 深圳大学研究生招生网通知公告
 
-<Route author="sushengmao" example="/szuyjs/szuyjs" path="/szuyjs/szuyjs" />
+<Route author="sushengmao" example="/szuyjs" path="/szuyjs" />
 
 ### 深圳大学研究生招生网
 
@@ -1101,6 +1141,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 </Route>
 
 ## 同济大学
+
+### 同济大学研究生院通知公告
+
+<Route author="sushengmao" example="/tjuyjs" path="/tjuyjs" />
 
 ### 同济大学软件学院通知
 
@@ -1394,6 +1438,14 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 中国海洋大学研究生院
+
+<Route author="sushengmao" example="/outyjs" path="/outyjs" />
+
+### 中国海洋大学信电学院通知公告
+
+<Route author="sushengmao" example="/outele" path="/outele" />
+
 ## 中国科学院
 
 ### 上海微系统与信息技术研究所学术活动
@@ -1411,6 +1463,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 <Route author="sushengmao" example="/cauele" path="/cauele" />
 
 ## 中国石油大学（华东）
+
+### 中国石油大学研究生院通知公告
+
+<Route author="sushengmao" example="/upcyjs" path="/upcyjs" />
 
 ### 主页
 
@@ -1443,6 +1499,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | home | jwc    | yjsy     |
 
 </Route>
+
+## 中科院
+
+### 中科院自动化所
+
+<Route author="sushengmao" example="/zkyyjs" path="/zkyyjs" />
+
+### 中科院人工智能所
+
+<Route author="sushengmao" example="/zkyai" path="/zkyai" />
 
 ## 中南大学
 
