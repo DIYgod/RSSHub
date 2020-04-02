@@ -1432,6 +1432,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 中北大学
+
+### 各种新闻通知
+
+<Route author="Dreace" example="/nuc/zbxw" path="/nuc/:type?" :paramsDesc="['默认为 zbxw']">
+
+| 中北新闻 | 通知公告 | 学术活动 | 教务通知 |
+| -------- | -------- | -------- | -------- |
+| zbxw     | tzgg     | xshd     | jwtz     |
+
+</Route>
+
 ## 中国传媒大学
 
 ### 中国传媒大学研究生招生网
