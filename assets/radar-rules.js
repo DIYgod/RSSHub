@@ -1385,6 +1385,14 @@
                 target: '/heu/yjsy/gjhz',
             },
         ],
+        job: [
+            {
+                title: '就业服务平台 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/job/tzgg',
+            },
+        ],
         uae: [
             {
                 title: '水声学院 - 新闻动态',
