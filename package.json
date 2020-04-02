@@ -51,7 +51,7 @@
     "nodejieba": "2.4.1",
     "nodemon": "2.0.2",
     "pinyin": "2.9.0",
-    "prettier": "1.19.1",
+    "prettier": "2.0.2",
     "prettier-check": "2.0.0",
     "pretty-quick": "2.0.1",
     "supertest": "4.0.2",
