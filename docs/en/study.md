@@ -4,20 +4,74 @@ pageClass: routes
 
 # Study
 
-## Google Scholar
+## gradCafe
 
-### Keywords Monitoring
+### gradCafe result
 
-<RouteEn author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" :paramsDesc="['query statement which supports「Basic」and「Advanced」modes']" anticrawler="1">
+<RouteEn author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
 
-::: warning
+### gradCafe result by key words
 
-Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
+<RouteEn author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['Keyword']"/>
 
-:::
+## Great Britain China Centre
 
-1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
+### Educational Trust
 
-2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+<RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
-</RouteEn>
+## LinkResearch
+
+### theses
+
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. subject=生物']"/>
+
+| `:param` | example         | definition                             |
+| -------- | --------------- | -------------------------------------- |
+| category | category=thesis | **one of**，theses/information/careers |
+| subject  | subject=生物    | string / undefined                     |
+| columns  | columns=健康    | string / undefined                     |
+| columns  | columns=virus   | string / undefined                     |
+
+## X-MOL
+
+### News
+
+<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
+## ZhiShiFenZi
+
+### News
+
+<RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']"/>
+
+| `:type`   | type name |
+| --------- | --------- |
+| biology   | Biology   |
+| medicine  | Medicine  |
+| ai        | AI        |
+| physics   | physics   |
+| chymistry | Chymistry |
+| astronomy | Astronomy |
+| others    | Others    |
+
+> leave it blank（`/zhishifenzi/news`）to get all
+
+### depth
+
+<RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+
+### innovation
+
+<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
+
+| `:type`       | type name     |
+| ------------- | ------------- |
+| ~~multiple~~  | ~~Multiple~~  |
+| company       | Company       |
+| product       | Product       |
+| technology    | Technology    |
+| ~~character~~ | ~~Character~~ |
+| policy        | Policy        |
+
+> leave it blank（`/zhishifenzi/innovation`）to get all

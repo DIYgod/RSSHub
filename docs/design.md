@@ -10,13 +10,20 @@ pageClass: routes
 
 <Route author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" :paramsDesc="['时间维度, 支持 week month year ever']"/>
 
-### 用户（团队
+### 用户（团队）
 
 <Route author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" :paramsDesc="['用户名, 可在该用户主页 URL 中找到']"/>
 
 ### 关键词
 
 <Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
+
+## Inside Design
+
+### Recent Stories
+
+<Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
+</Route>
 
 ## UI 中国
 
