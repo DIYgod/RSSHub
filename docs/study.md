@@ -40,6 +40,35 @@ pageClass: routes
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
+## NEEA 中国教育考试网
+
+### 国家教育考试
+
+<Route author="SunShinenny" example="/neea/gaokao" path="/neea/:type" :paramsDesc="['类别，如 gaokao']"/>
+
+| `:type`  | 类别名称           |
+| -------- | ------------------ |
+| gaokao   | 普通高考           |
+| chengkao | 成人高考           |
+| yankao   | 研究生考试         |
+| zikao    | 自学考试           |
+| ntce     | 中小学教师资格考试 |
+
+### 社会证书考试
+
+<Route author="SunShinenny" example="/neea/cet" path="/neea/:type" :paramsDesc="['类别，如 cet']"/>
+
+| `:type` | 类别名称                      |
+| ------- | ----------------------------- |
+| cet     | 全国四六级（CET）             |
+| ncre    | 全国计算机等级考试（NCRE）    |
+| nit     | 全国计算机应用水平考试（NIT） |
+| pets    | 全国英语等级考试 (PETS)       |
+| wsk     | 全国外语水平考试 (WSK)        |
+| ccpt    | 书画等级考试 (CCPT)           |
+| wsk     | 全国外语水平考试 (WSK)        |
+| mets    | 医护英语水平考试 (METS)       |
+
 ## X-MOL 平台
 
 ### 新闻
