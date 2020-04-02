@@ -500,6 +500,18 @@ category 列表：
 
 </Route>
 
+## 湖北工业大学
+
+### 新闻中心
+
+<Route author="Lava-Swimmer" example="/hbut/news/tzgg" path="/hbut/news/:type" radar="1" :paramsDesc="['分类']">
+
+| 通知公告 | 湖工要闻 | 学术活动 | 媒体湖工大 | 综合新闻 | 湖工故事 |
+| -------- | -------- | -------- | ---------- | -------- | -------- |
+| tzgg     | hgyw     | xshd     | mthgd      | zhxw     | hggs     |
+
+</Route>
+
 ## 湖南科技大学
 
 ### 教务处通知

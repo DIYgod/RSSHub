@@ -1549,4 +1549,18 @@
             },
         ],
     },
+    'hbut.edu.cn': {
+        _name: '湖北工业大学',
+        www: [
+            {
+                title: '新闻中心',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/xwzx/:name',
+                target: (params) => {
+                    const type = params.name.replace('.htm', '');
+                    return type ? `/hbut/news/${type}` : '/hbut/news/tzgg';
+                },
+            },
+        ],
+    },
 });
