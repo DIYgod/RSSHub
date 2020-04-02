@@ -24,20 +24,11 @@ pageClass: routes
 
 ## AcFun
 
-### 番剧
+见 [#AcFun](/social-media.html#acfun)
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+## AGE 动漫
 
-::: tip 提示
-
-番剧 id 不包含开头的 aa。
-例如：http://www.acfun.cn/bangumi/aa5022158 的番剧 id 是 5022158，不包括开头的 aa。
-
-:::
-
-### 用户投稿
-
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+见 [#AGE 动漫](/social-media.html#age-dong-man)
 
 ## bilibili
 

@@ -191,6 +191,18 @@ pageClass: routes
 
 </Route>
 
+## 大连海事大学
+
+### 新闻网
+
+<Route author="arjenzhou" example="/dlmu/news/hdyw" path="/dlmu/news/:type" :paramsDesc="['默认为 `hdyw`']">
+
+| 海大要闻 | 媒体海大 | 综合新闻 | 院系风采 | 海大校报 | 理论园地 | 海大讲坛 | 艺文荟萃 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   hdyw   |   mthd   |   zhxw   |   yxfc   |   hdxb   |   llyd   |   hdjt   |   ywhc   |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
@@ -253,9 +265,9 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 
 <Route author="JeasonLau" example="/neu/news/ddyw" path="/neu/news/:type" :paramsDesc="['种类名']">
 
-| 东大要闻 | 媒体东大 | 通知公告 | 新闻纵横 | 人才培养 | 学术科研 | 英文新闻 | 招生就业 | 考研出国 | 校园文学 | 校友风采 |
-| -------- | -------- | -------- | -------- | -------: | -------- | -------- | -------- | -------- | -------- | -------- |
-| ddyw     | mtdd     | tzgg     | xwzh     |     rcpy | xsky     | 217      | zsjy     | kycg     | xywx     | xyfc     |
+| 东大要闻 | 媒体东大 | 通知公告 | 新闻纵横 | 人才培养 | 学术科研 | 英文新闻 | 招生就业 | 考研出国 | 校园文学 | 校友风采 | 时事热点 | 教育前沿 | 文化体育 | 最新科技 |
+| -------- | -------- | -------- | -------- | -------: | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| ddyw     | mtdd     | tzgg     | xwzh     |     rcpy | xsky     | 217      | zsjy     | kycg     | xywx     | xyfc     | ssrd     | jyqy     | whty     | zxkj     |
 
 </Route>
 
@@ -312,6 +324,12 @@ xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
 ### 广东海洋大学
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
+
+## 广州大学
+
+## 广州大学研招网通知公告
+
+<Route author="sushengmao" example="/gzyjs/gzyjs" path="/gzyjs/gzyjs" />
 
 ## 桂林电子科技大学
 
@@ -460,6 +478,24 @@ category 列表：
 
 </Route>
 
+## 湖北大学
+
+### 新闻通知
+
+<Route author="cijiugechu" example="/hubu/news/zhxw" path="/universities/hubu/news/:type?" :paramsDesc="['默认为 `zhxw`']">
+
+| 综合新闻 | 湖大要闻 | 通知公告 | 学术学者学生 | 媒体湖大 |
+| -------- | -------- | -------- | ------------ | -------- |
+| zhxw     | hdyw     | tzgg     | xsxzxs       | mthd     |
+
+</Route>
+
+## 湖南科技大学
+
+### 教务处通知
+
+<Route author="Pretty9" example="/hnust/jwc" path="/hnust/jwc"/>
+
 ## 华北水利水电大学
 
 ### 学校通知
@@ -603,6 +639,12 @@ category 列表：
 | notice   | news     |
 
 </Route>
+
+## 南方科技大学
+
+## 南方科技大学研究生网通知公告
+
+<Route author="sushengmao" example="/sustyjs/sustyjs" path="/sustyjs/sustyjs" />
 
 ## 南京工业大学
 
@@ -974,6 +1016,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 深圳大学
 
+#### 深圳大学研究生招生网通知公告
+
+<Route author="sushengmao" example="/szuyjs/szuyjs" path="/szuyjs/szuyjs" />
+
 ### 深圳大学研究生招生网
 
 <Route author="NagaruZ" example="/szu/yz/1" path="/szu/yz/:type?" :paramsDesc="['默认为1']" >
@@ -1062,6 +1108,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 武昌首义学院
+
+### 新闻中心
+
+<Route author="Derekmini" example="/wsyu/news/xxyw" path="/wsyu/news/:type?" :paramsDesc="['分类, 默认为 `xxyw`']">
+
+| 学校要闻 | 综合新闻 | 媒体聚焦 |
+| -------- | -------- | -------- |
+| xxyw     | zhxw     | mtjj     |
+
+</Route>
+
 ## 武汉大学
 
 ### 计算机学院公告
@@ -1096,7 +1154,6 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | 综合新闻 |   zhxw   |
 | 珞珈影像 |   ljyx   |
 | 学术动态 |   kydt   |
-| 点击排行 |   djpx   |
 | 珞珈副刊 |   ljfk   |
 | 校史钩沉 |   xsgc   |
 | 来稿选登 |   lgxd   |
@@ -1324,6 +1381,16 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 ### 上海微系统与信息技术研究所学术活动
 
 <Route author="HenryQW" example="/cas/sim/academic" path="/cas/sim/academic"/>
+
+## 中国农业大学
+
+### 中国农业大学研招网通知公告
+
+<Route author="sushengmao" example="/cauyjs" path="/cauyjs" />
+
+#### 中国农业大学信电学院
+
+<Route author="sushengmao" example="/cauele" path="/cauele" />
 
 ## 中国石油大学（华东）
 

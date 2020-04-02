@@ -22,7 +22,7 @@ pageClass: routes
 
 支持分站：
 | 9To5Mac | 9To5Google | 9To5Toys |
-| --- | ------ | ---- |
+| ------- | ---------- | -------- |
 | Mac | Google | Toys |
 
 </Route>
@@ -161,19 +161,19 @@ pageClass: routes
 
 ### 最新排序
 
-<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
+<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1"/>
 
 ### 熱門文章
 
-<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" />
+<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1"/>
 
 ### 标签
 
-<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
+<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']" radar="1"/>
 
 ### 作者
 
-<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
+<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1"/>
 
 ## Nautilus
 
@@ -194,6 +194,10 @@ pageClass: routes
 | 发现 | 待回答 | 最热 | 问答专场 | 投稿 | 深度 | 专栏 |
 | ---- | ------ | ---- | -------- | ---- | ---- | ---- |
 | 1    | 2      | 3    | 4        | 5    | 6    | 7    |
+
+### 用户文章
+
+<Route author="SChen1024" example="/pmcaff/user/Oak7mqnEQJ" path="/pmcaff/user/:userid" :paramsDesc="['用户 id, 用户界面对应的 URL 最后面的字符']"/>
 
 ## Quanta Magazine
 
@@ -251,7 +255,7 @@ pageClass: routes
 
 Supported sub-sites：
 | TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
-| ----- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
 | tv | movies | comedy | music | tvrecaps | books | theater | art | awards | video |
 
 </Route>
@@ -265,6 +269,10 @@ Supported sub-sites：
 ### channel
 
 <Route author="kt286" example="/zaker/channel/13" path="/zaker/source/:id" :paramsDesc="['channel id，可在 URL 中找到']"/>
+
+### 精读
+
+<Route author="AlexdanerZe" example="/zaker/focusread" path="/zaker/focusread" />
 
 ## 爱范儿 ifanr
 
@@ -297,19 +305,27 @@ Supported sub-sites：
 
 <Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
 
-## 坂道系列官网新闻
+## 坂道系列官网资讯
 
-### 乃木坂 46
+### 乃木坂 46 新闻
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
-### 欅坂 46
+### 欅坂 46 新闻
 
 <Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
 
-### 日向坂 46
+### 欅坂 46 博客
+
+<Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
+
+### 日向坂 46 新闻
 
 <Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+
+### 日向坂 46 博客
+
+<Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
 ## 币世界
 
@@ -449,8 +465,8 @@ Supported sub-sites：
 
 <Route author="DHPO hoilc" example="/guokr/calendar" path="/guokr/:channel" :paramsDesc="['专栏类别']">
 | 物种日历 | 吃货研究所 | 美丽也是技术活 |
-| ------- | ---------| ------------ |
-| calendar | institute | beauty |
+| -------- | ---------- | -------------- |
+| calendar | institute  | beauty         |
 </Route>
 
 ## 好奇心日报
@@ -502,6 +518,10 @@ Supported sub-sites：
 ### 作者
 
 <Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" :paramsDesc="['用户 id']" />
+
+### 文集
+
+<Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" :paramsDesc="['文集 id']" />
 
 ## 汇通网
 
@@ -706,6 +726,10 @@ Supported sub-sites：
 ### 用户文章
 
 <Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
+
+### 最新文章
+
+<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
 
 ## 少数派 sspai
 
