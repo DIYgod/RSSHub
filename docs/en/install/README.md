@@ -160,7 +160,7 @@ Or
 $ yarn start
 ```
 
-Or use [PM2](https://pm2.io/doc/zh/runtime/quick-start/)
+Or use [PM2](https://pm2.io/docs/plus/quick-start/)
 
 ```bash
 $ pm2 start lib/index.js --name rsshub
