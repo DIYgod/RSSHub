@@ -520,11 +520,11 @@ category 列表：
 
 ### 计算机科学与工程学院通知
 
-<Route author="Pretty9" example="/hnust/computer" path="/hnust/computer">
+<Route author="Pretty9" example="/hnust/computer" path="/hnust/computer"/>
 
 ### 艺术学院通知
 
-<Route author="Pretty9" example="/hnust/art" path="/hnust/art">
+<Route author="Pretty9" example="/hnust/art" path="/hnust/art"/>
 
 ### 研究生院招生工作
 
