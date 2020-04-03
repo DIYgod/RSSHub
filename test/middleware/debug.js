@@ -30,14 +30,8 @@ describe('debug', () => {
 
         const $ = cheerio.load(response.text);
         $('.debug-item').each((index, item) => {
-            const key = $(item)
-                .find('.debug-key')
-                .html()
-                .trim();
-            const value = $(item)
-                .find('.debug-value')
-                .html()
-                .trim();
+            const key = $(item).find('.debug-key').html().trim();
+            const value = $(item).find('.debug-value').html().trim();
             switch (key) {
                 case 'node name:':
                     expect(value).toBe('mock');

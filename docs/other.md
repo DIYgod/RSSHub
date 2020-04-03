@@ -278,6 +278,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
 
+## 考研帮
+
+### 考研帮调剂信息
+
+<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+
 ## 空气质量
 
 ### 实时 AQI

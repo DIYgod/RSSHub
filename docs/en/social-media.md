@@ -148,6 +148,10 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 
 <RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['keyword']" radar="1"/>
 
+### Trends
+
+<RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']" radar="1"/>
+
 ## Youtube
 
 ::: tip Tiny Tiny RSS users please notice

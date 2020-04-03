@@ -179,6 +179,16 @@ pageClass: routes
 | ------ | ---------- |
 | ooxx   | top-ooxx   |
 
+## 绝对领域
+
+### 图集文章
+
+<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
+
+| 图集 | 文章 |
+| ---- | ---- |
+| tuji | as   |
+
 ## 妹子图
 
 ### 首页（最新）
