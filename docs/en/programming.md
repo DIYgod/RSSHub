@@ -1,5 +1,5 @@
 ---
-pageClass: RouteEns
+pageClass: routes
 ---
 
 # Programming
@@ -47,18 +47,18 @@ GitHub provides some official RSS feeds:
 
 ### Files Commits
 
-<RouteEn author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/RouteEnr.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['User name', 'Repo name', 'Branch name', 'File path']" radar="1">
+<RouteEn author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['User name', 'Repo name', 'Branch name', 'File path']" radar="1">
 
-| User name | Repo name | Branch name | File path         |
-| --------- | --------- | ----------- | ----------------- |
-| `DIYgod`  | `RSSHub`  | `master`    | `lib/RouteEnr.js` |
+| User name | Repo name | Branch name | File path       |
+| --------- | --------- | ----------- | --------------- |
+| `DIYgod`  | `RSSHub`  | `master`    | `lib/router.js` |
 
 > -   If there are special characters such as `/` in the **branch name**, they need to be encoded with urlencode, usually `/` needs to be replaced with `%2f`
 > -   If there are special characters in the **file path**, you need to use urlencode to encode them, but the file path can be recognized normally `/` characters
 > -   If the **file path** ends with `.rss`, `.atom`, `.json`, you need to replace the `.` in the suffix with `%2e`
->     > Reeder will make an error when subscribing to `% 2erss` or similar suffixes. At this time, add`.rss` after the RouteEn to subscribe
+>     > Reeder will make an error when subscribing to `% 2erss` or similar suffixes. At this time, add`.rss` after the route to subscribe
 >     >
->     > Such as: replace `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/RouteEnr%2ejs` to `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/RouteEnr%2ejs.rss`
+>     > Such as: replace `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` to `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss`
 
 </RouteEn>
 
@@ -124,8 +124,8 @@ Website: https://news.ycombinator.com/
 
 ### Hex-Rays News
 
-<RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
-</RouteEn>
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</Route>
 
 ## Kaggle
 
@@ -193,13 +193,14 @@ Website: https://news.ycombinator.com/
 
 ### issues
 
-<RouteEn author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
 ## Scala
 
 ### Scala Blog
 
-<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part parmater can be found in the url of blog, defaults to All']"/>
+<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part parmater can be found in the url of blog']" >
+</RouteEn>
 
 ## Visual Studio Code Marketplace
 
