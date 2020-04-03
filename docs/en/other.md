@@ -158,9 +158,9 @@ Type
 
 </RouteEn>
 
-## Wuhan coronavirus
+## Corona Virus Disease 2019
 
-### South China Morning Post - China coronavirus outbreak
+### South China Morning Post - Coronavirus outbreak
 
 <RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
 
