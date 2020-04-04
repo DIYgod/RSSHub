@@ -1573,5 +1573,16 @@
                 },
             },
         ],
+        jsjxy: [
+            {
+                title: '计算机学院',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/cs/:name',
+                target: (params) => {
+                    const type = params.name.replace('.htm', '');
+                    return type ? `/hbut/cs/${type}` : '/hbut/cs/xwdt';
+                },
+            },
+        ],
     },
 });
