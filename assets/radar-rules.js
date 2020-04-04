@@ -1575,13 +1575,34 @@
         ],
         jsjxy: [
             {
-                title: '计算机学院',
+                title: '新闻动态',
                 docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
-                source: '/cs/:name',
-                target: (params) => {
-                    const type = params.name.replace('.htm', '');
-                    return type ? `/hbut/cs/${type}` : '/hbut/cs/xwdt';
-                },
+                source: '/index/xwdt.htm',
+                target: '/hbut/cs/xwdt',
+            },
+            {
+                title: '通知公告',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/tzgg.htm',
+                target: '/hbut/cs/tzgg',
+            },
+            {
+                title: '教学信息',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/jxxx.htm',
+                target: '/hbut/cs/jxxx',
+            },
+            {
+                title: '科研动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/kxyj/kydt.htm',
+                target: '/hbut/cs/kydt',
+            },
+            {
+                title: '党建活动',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/djhd/djhd.htm',
+                target: '/hbut/cs/djhd',
             },
         ],
     },
