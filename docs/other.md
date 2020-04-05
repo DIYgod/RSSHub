@@ -630,7 +630,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类列表
 
-<Route author="Wenmoux" example="/lingyishijian" path="/:topics" :paramsDesc="['子版块 view, 为空默认最新发表']">
+<Route author="Wenmoux" example="/lingyishijian" path="/:topics" :paramsDesc="['分类名称,可在URL中找到']">
 
 | 灵异事件  | 亲身经历 | 灵异求助 | 灵异图片 |等等 |
 | --------- | -------- | -------- | -------- | -------- |
