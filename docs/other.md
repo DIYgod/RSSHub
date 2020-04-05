@@ -625,3 +625,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
+## 中国灵异网
+
+### 分类列表
+
+<Route author="Wenmoux" example="/lingyishijian" path="/:topics" :paramsDesc="['子版块 view, 为空默认最新发表']">
+
+| 灵异事件  | 亲身经历 | 灵异求助 | 灵异图片 | | ... |
+| --------- | -------- | -------- | -------- | | -------- |
+| lingyishijian | lingyijingli      | lingyiqiuzhu   | lingyitupian      | ...     |
+
+</Route>
