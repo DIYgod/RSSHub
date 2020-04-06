@@ -19,7 +19,7 @@ afterEach(() => {
     const http = require('http');
     const httpWrap = (func) => {
         const origin = func;
-        return function(url, request) {
+        return function (url, request) {
             if (typeof url === 'object') {
                 if (url instanceof URL) {
                     check(request);
@@ -41,7 +41,7 @@ describe('got', () => {
         nock(/rsshub\.test/)
             .get(/.*/)
             .times(3)
-            .reply(function() {
+            .reply(function () {
                 expect(this.req.headers.server).toBe('RSSHub');
                 expect(this.req.headers.referer).toBe('http://api.rsshub.test');
                 expect(this.req.headers.host).toBe('api.rsshub.test');
@@ -132,7 +132,7 @@ describe('got', () => {
         nock(/rsshub\.test/)
             .get('/auth')
             .times(2)
-            .reply(function() {
+            .reply(function () {
                 expect(this.req.headers['proxy-authorization']).toBe('Basic testtest');
                 return [200, simpleResponse];
             });
