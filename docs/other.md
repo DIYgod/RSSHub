@@ -4,6 +4,11 @@ pageClass: routes
 
 # 其他
 
+## acwifi 路由器交流
+
+### 新闻
+
+<Route author="cc798461" example="/acwifi" path="/acwifi"/>
 ## Apple
 
 ### 更换和维修扩展计划
