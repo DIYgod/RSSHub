@@ -68,6 +68,7 @@
     "chrono-node": "1.4.4",
     "cloudscraper": "4.6.0",
     "co-redis": "2.1.1",
+    "crypto-js": "4.0.0",
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.8.23",
     "dotenv": "8.2.0",
