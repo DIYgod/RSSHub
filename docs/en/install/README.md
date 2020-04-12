@@ -21,6 +21,21 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Play with Docker
+
+If you would like to test routes or avoid IP limits, etc., you may build your own RSSHub for free by clicking the button below.
+
+[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
+
+::: warning Warning
+
+-   [DockerHub](https://hub.docker.com) account required
+-   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
+-   If deploy success but port cannot be auto-deteced，please click the `open port` button on the top and type `1200`
+-   Sometimes PWD won't work as expected. If you encounter blank screen after `Start`, or some error during initialization, please retry
+
+:::
+
 ## Docker Compose Deployment
 
 ### Install
@@ -145,7 +160,7 @@ Or
 $ yarn start
 ```
 
-Or use [PM2](https://pm2.io/doc/zh/runtime/quick-start/)
+Or use [PM2](https://pm2.io/docs/plus/quick-start/)
 
 ```bash
 $ pm2 start lib/index.js --name rsshub
@@ -296,7 +311,7 @@ Partial routes have a strict anti-crawler policy, and can be configured to use p
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/rss.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/routes.
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
 
@@ -354,7 +369,7 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
 -   youtube: [API Key application](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key
+    -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
 
 -   telegram: [Bot application](https://telegram.org/blog/bot-revolution)
 
@@ -376,3 +391,7 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 -   discuz cookies
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
+
+-   Sci-hub for scientific journal routes:
+
+    -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.tw`.

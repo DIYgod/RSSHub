@@ -42,7 +42,7 @@ pageClass: routes
 
 ### 小说更新
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1">
+<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1">
 
 ::: tip 提示
 
@@ -63,6 +63,10 @@ pageClass: routes
 正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
 :::
 </Route>
+
+### 专栏列表
+
+<Route author="LogicJake" example="/chuiniu/column_list" path="/chuiniu/column_list"/>
 
 ## 刺猬猫
 
@@ -198,6 +202,16 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 作者
 
 <Route author="LogicJake" example="/p-articles/contributors/朗天" path="/p-articles/contributors/:author" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
+
+## 斋书苑
+
+### 最新章节
+
+<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1">
+
+举例网址：https://www.zhaishuyuan.com/book/17858
+
+</Route>
 
 ## 纵横
 

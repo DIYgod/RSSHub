@@ -22,7 +22,7 @@ pageClass: routes
 
 支持分站：
 | 9To5Mac | 9To5Google | 9To5Toys |
-| --- | ------ | ---- |
+| ------- | ---------- | -------- |
 | Mac | Google | Toys |
 
 </Route>
@@ -121,6 +121,16 @@ pageClass: routes
 
 </Route>
 
+### 热榜
+
+<Route author="immmortal" example="/ithome/ranking/1" path="/ithome/ranking/:type" :paramsDesc="['类别']">
+
+| 1             | 2    | 3        | 4    |
+| ------------- | ---- | -------- | ---- |
+| 24 小时阅读榜 | 周榜 | 7 天热评 | 月榜 |
+
+</Route>
+
 ## IT 桔子
 
 ### 投融资事件
@@ -130,6 +140,12 @@ pageClass: routes
 ### 并购事件
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
+
+## Krankenkassen 德国新闻社卫健新闻
+
+### dpa news
+
+<Route author="howel52" example="/krankenkassen" path="/krankenkassen"/>
 
 ## Letterboxd
 
@@ -145,19 +161,19 @@ pageClass: routes
 
 ### 最新排序
 
-<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" />
+<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1"/>
 
 ### 熱門文章
 
-<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" />
+<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1"/>
 
 ### 标签
 
-<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']"/>
+<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']" radar="1"/>
 
 ### 作者
 
-<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']"/>
+<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1"/>
 
 ## Nautilus
 
@@ -178,6 +194,10 @@ pageClass: routes
 | 发现 | 待回答 | 最热 | 问答专场 | 投稿 | 深度 | 专栏 |
 | ---- | ------ | ---- | -------- | ---- | ---- | ---- |
 | 1    | 2      | 3    | 4        | 5    | 6    | 7    |
+
+### 用户文章
+
+<Route author="SChen1024" example="/pmcaff/user/Oak7mqnEQJ" path="/pmcaff/user/:userid" :paramsDesc="['用户 id, 用户界面对应的 URL 最后面的字符']"/>
 
 ## Quanta Magazine
 
@@ -235,7 +255,7 @@ pageClass: routes
 
 Supported sub-sites：
 | TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
-| ----- | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
 | tv | movies | comedy | music | tvrecaps | books | theater | art | awards | video |
 
 </Route>
@@ -249,6 +269,10 @@ Supported sub-sites：
 ### channel
 
 <Route author="kt286" example="/zaker/channel/13" path="/zaker/source/:id" :paramsDesc="['channel id，可在 URL 中找到']"/>
+
+### 精读
+
+<Route author="AlexdanerZe" example="/zaker/focusread" path="/zaker/focusread" />
 
 ## 爱范儿 ifanr
 
@@ -281,19 +305,27 @@ Supported sub-sites：
 
 <Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
 
-## 坂道系列官网新闻
+## 坂道系列官网资讯
 
-### 乃木坂 46
+### 乃木坂 46 新闻
 
 <Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
 
-### 欅坂 46
+### 欅坂 46 新闻
 
 <Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
 
-### 日向坂 46
+### 欅坂 46 博客
+
+<Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
+
+### 日向坂 46 新闻
 
 <Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+
+### 日向坂 46 博客
+
+<Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
 ## 币世界
 
@@ -431,21 +463,11 @@ Supported sub-sites：
 
 ### 果壳网专栏
 
-<Route author="DHPO" example="/guokr/calendar" path="/guokr/:category" :paramsDesc="['专栏类别']">
+<Route author="DHPO hoilc" example="/guokr/calendar" path="/guokr/:channel" :paramsDesc="['专栏类别']">
 | 物种日历 | 吃货研究所 | 美丽也是技术活 |
-| ------- | ---------| ------------ |
-| calendar | institute | beauty |
+| -------- | ---------- | -------------- |
+| calendar | institute  | beauty         |
 </Route>
-
-## 好奇怪
-
-### 首页
-
-<Route author="HenryQW" example="/qdaily/notch/posts" path="/qdaily/notch/posts" />
-
-### 探索
-
-<Route author="HenryQW" example="/qdaily/notch/explore/1" path="/qdaily/explore/:id" :paramsDesc="['探索 id，可通过好奇怪 APP 复制分享链接找到']"/>
 
 ## 好奇心日报
 
@@ -496,6 +518,10 @@ Supported sub-sites：
 ### 作者
 
 <Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" :paramsDesc="['用户 id']" />
+
+### 文集
+
+<Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" :paramsDesc="['文集 id']" />
 
 ## 汇通网
 
@@ -701,6 +727,10 @@ Supported sub-sites：
 
 <Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
 
+### 最新文章
+
+<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
+
 ## 少数派 sspai
 
 ### 最新上架付费专栏
@@ -725,7 +755,7 @@ Supported sub-sites：
 
 ### 作者
 
-<Route author="SunShinenny" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 id，可在作者主页URL中找到']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
 
 ### 作者动态
 
@@ -803,20 +833,6 @@ Supported sub-sites：
 ### 头条新闻
 
 <Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
-
-## 腾讯大家
-
-### 首页
-
-<Route author="xyqfer" example="/dajia" path="/dajia"/>
-
-### 作者作品
-
-<Route author="LogicJake" example="/dajia/author/404" path="/dajia/author/:uid" :paramsDesc="['作者id']"/>
-
-### 专栏
-
-<Route author="LogicJake" example="/dajia/zhuanlan/404" path="/dajia/zhuanlan/:uid" :paramsDesc="['专栏id']"/>
 
 ## 腾讯谷雨
 
@@ -1000,6 +1016,18 @@ Supported sub-sites：
 ### 首页最新帖子
 
 <Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
+
+### 子板块帖子
+
+<Route author="c4605" example="/zfrontier/board/56" path="/zfrontier/board/:boardId" :paramsDesc="['板块 ID']"/>
+
+QueryString:
+
+-   `sort`：排序方式
+
+| 根据创建时间（默认） | 根据回复时间 | 根据热度 |
+| -------------------- | ------------ | -------- |
+| byCtime              | byReplyTime  | byScore  |
 
 ## 紫竹张先生
 

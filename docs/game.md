@@ -106,11 +106,15 @@ pageClass: routes
 
 ### eShop 新发售游戏
 
-<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服)']"/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服), `cn`(国服)']"/>
 
 ### 首页资讯（香港）
 
 <Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+
+### 首页资讯（中国）
+
+<Route author="NeverBehave" example="/nintendo/news/china" path="/nintendo/news/china"/>
 
 ### 直面会
 
@@ -156,6 +160,19 @@ pageClass: routes
 ### 游戏-新游戏奖杯信息
 
 <Route author="LightStrawberry" example="/psnine/game" path="/psnine/game"/>
+
+## Rockstar Games Social Club
+
+### 在线活动
+
+<Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" :paramsDesc="['游戏代码（默认所有）']">
+
+| 游戏代码 | 游戏名称     |
+| -------- | ------------ |
+| GTAV     | 侠盗猎车手 5 |
+| RDR2     | 荒野大镖客 2 |
+
+</Route>
 
 ## Steam
 

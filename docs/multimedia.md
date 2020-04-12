@@ -24,20 +24,11 @@ pageClass: routes
 
 ## AcFun
 
-### 番剧
+见 [#AcFun](/social-media.html#acfun)
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+## AGE 动漫
 
-::: tip 提示
-
-番剧 id 不包含开头的 aa。
-例如：http://www.acfun.cn/bangumi/aa5022158 的番剧 id 是 5022158，不包括开头的 aa。
-
-:::
-
-### 用户投稿
-
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+见 [#AGE 动漫](/social-media.html#age-dong-man)
 
 ## bilibili
 
@@ -51,13 +42,13 @@ pageClass: routes
 
 | base                     | govern                 |
 | ------------------------ | ---------------------- |
-| https://www.88btbtt.com/ | http://www.1btjia.com/ |
+| https://www.88btbtt.com/ | http://www.2btjia.com/ |
 
 </Route>
 
 ::: tip 提示
 
-由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.1btjia.com/`](http://www.1btjia.com/)域名.
+由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
 可空，默认为 base
 
 :::
@@ -338,10 +329,6 @@ pageClass: routes
 ### 新片精品
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
-
-## 抖音
-
-见 [#抖音](/social-media.html#dou-yin)
 
 ## 高清电台
 

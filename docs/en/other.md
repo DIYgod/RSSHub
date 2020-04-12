@@ -71,7 +71,13 @@ pageClass: routes
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['Package Number']"/>
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1">
+
+| Japanese | English |
+| -------- | ------- |
+| ja       | en      |
+
+</RouteEn>
 
 ## Parcel Tracking
 
@@ -152,9 +158,9 @@ Type
 
 </RouteEn>
 
-## Wuhan coronavirus
+## Corona Virus Disease 2019
 
-### South China Morning Post - China coronavirus outbreak
+### South China Morning Post - Coronavirus outbreak
 
 <RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
 

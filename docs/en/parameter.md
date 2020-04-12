@@ -64,6 +64,14 @@ Enable Telegram Instant View requires a page template, it can be obtained from T
 
 Eg: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
 
+## Sci-hub link
+
+Output Sci-hub link in scientific journal routes, this supports major journals or routes that output DOIs.
+
+-   scihub: set to any value
+
+举例: <https://rsshub.app/pnas/latest?scihub=1>
+
 ### Output Formats
 
 RSSHub conforms to RSS 2.0 and Atom Standard, simply append `.rss` `.atom` to the end of the feed address to obtain the feed in corresponding format, default to RSS 2.0.

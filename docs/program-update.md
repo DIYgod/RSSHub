@@ -50,6 +50,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/centbrowser/history" path="/centbrowser/history"/>
 
+## Checkra1n
+
+### 新版本发布
+
+<Route author="ntzyz" example="/checkra1n/releases" path="/checkra1n/releases"/>
+
 ## Chocolatey
 
 ### 软件更新
@@ -168,7 +174,11 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/rss" path="/rsshub/rss" radar="1"/>
+<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes" radar="1"/>
+
+### 有新赞助商啦
+
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
 
 ## sketch.com
 

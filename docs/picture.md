@@ -79,6 +79,12 @@ pageClass: routes
 
 </Route>
 
+## LoveHeaven
+
+### 漫画更新
+
+<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
+
 ## nHentai
 
 ### 分类筛选
@@ -172,6 +178,16 @@ pageClass: routes
 | 妹子图 | 妹子图热榜 |
 | ------ | ---------- |
 | ooxx   | top-ooxx   |
+
+## 绝对领域
+
+### 图集文章
+
+<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
+
+| 图集 | 文章 |
+| ---- | ---- |
+| tuji | as   |
 
 ## 妹子图
 

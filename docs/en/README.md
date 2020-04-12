@@ -23,13 +23,14 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 
 ### Special Sponsors
 
-<a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a style="margin-right: 10px;" href="https://angelia.codeeer.com" target="_blank"><img height="60px" src="https://i.imgur.com/oQf2WJl.png"></a><a style="margin-right: 10px;margin-left: 10px;" href="http://authing.cn" target="_blank"><img height="55px" src="https://i.imgur.com/n4RieVC.png"></a><a style="margin-right: 10px;" href="https://lizhi.io/store" target="_blank"><img height="60px" src="https://i.imgur.com/1u6jJ6L.jpg"></a>
+<a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>
+<a style="margin-right: 10px;" href="https://angelia.codeeer.com" target="_blank"><img height="60px" src="https://i.imgur.com/oQf2WJl.png"></a>
+<a style="margin-right: 10px;margin-left: 10px;" href="http://authing.cn" target="_blank"><img height="55px" src="https://i.imgur.com/n4RieVC.png"></a>
+<a style="margin-right: 10px;" href="https://lizhi.io/store" target="_blank"><img height="60px" src="https://i.imgur.com/1u6jJ6L.jpg"></a>
 
 ### Sponsors
 
-| [Sayori Studio](https://t.me/SayoriStudio) | Anonymous | [Sion Kazama](https://blog.sion.moe) | [琚致远](https://www.shaoyaoju.org/) | [Rolly RSS Reader](https://www.coolapk.com/apk/239500) | [mokeyjay](https://www.mokeyjay.com/) | [tkaray](https://rayray.moe/) |
-| :----------------------------------------: | :-------: | :----------------------------------: | :----------------------------------: | :----------------------------------------------------: | :-----------------------------------: | :---------------------------: |
-
+[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [tkaray](https://rayray.moe/) . [NeverBehave](https://never.pet/) . [萌开源联盟](https://www.moeunion.com)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/en/support/)
 

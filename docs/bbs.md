@@ -4,6 +4,12 @@ pageClass: routes
 
 # 论坛
 
+## Chiphell
+
+### 子版块
+
+<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
+
 ## Dcard
 
 ### 首頁帖子
@@ -40,6 +46,16 @@ pageClass: routes
 
 </Route>
 
+## LearnKu
+
+### 社区
+
+<Route author="haokaiyang" example="/learnku/laravel/qa" path="/learnku/:community/:category?" :paramsDesc="['社区 标识，可在 <https://learnku.com/communities> 找到', '分类，如果不传 `category` 则获取全部分类']"/>
+
+| 招聘 | 翻译         | 问答 | 链接  |
+| ---- | ------------ | ---- | ----- |
+| jobs | translations | qa   | links |
+
 ## MCBBS
 
 ### 版块
@@ -54,7 +70,7 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
 
 ### 帖子
 
@@ -212,6 +228,14 @@ pageClass: routes
 ### 回帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
+
+### 帖子 (手机端的最热与最新 Tab)
+
+<Route author="NavePnow" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+
+| 最热帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
 
 ### 录取结果
 
