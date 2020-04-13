@@ -4,6 +4,11 @@ pageClass: routes
 
 # 其他
 
+## acwifi 路由器交流
+
+### 新闻
+
+<Route author="cc798461" example="/acwifi" path="/acwifi"/>
 ## Apple
 
 ### 更换和维修扩展计划
@@ -60,6 +65,12 @@ pageClass: routes
 ### 个人分享
 
 <Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
+
+## iYouport
+
+### 首页
+
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport"/>
 
 ## MobData
 

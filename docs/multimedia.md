@@ -24,11 +24,11 @@ pageClass: routes
 
 ## AcFun
 
-见 [#AcFun](/social-media.html#acfun)
+见 [#AcFun](/anime.html#acfun)
 
 ## AGE 动漫
 
-见 [#AGE 动漫](/social-media.html#age-dong-man)
+见 [#AGE 动漫](/anime.html#age-dong-man)
 
 ## bilibili
 

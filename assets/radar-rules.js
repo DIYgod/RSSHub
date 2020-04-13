@@ -241,7 +241,7 @@
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/people/:id/activities',
+                source: '/people/:id',
                 target: '/zhihu/people/activities/:id',
             },
             {
@@ -1571,6 +1571,38 @@
                     const type = params.name.replace('.htm', '');
                     return type ? `/hbut/news/${type}` : '/hbut/news/tzgg';
                 },
+            },
+        ],
+        jsjxy: [
+            {
+                title: '新闻动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/xwdt.htm',
+                target: '/hbut/cs/xwdt',
+            },
+            {
+                title: '通知公告',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/tzgg.htm',
+                target: '/hbut/cs/tzgg',
+            },
+            {
+                title: '教学信息',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/jxxx.htm',
+                target: '/hbut/cs/jxxx',
+            },
+            {
+                title: '科研动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/kxyj/kydt.htm',
+                target: '/hbut/cs/kydt',
+            },
+            {
+                title: '党建活动',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/djhd/djhd.htm',
+                target: '/hbut/cs/djhd',
             },
         ],
     },
