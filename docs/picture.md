@@ -44,6 +44,12 @@ pageClass: routes
 
 </Route>
 
+## GirlImg
+
+### album
+
+<Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" :paramsDesc="['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']" />
+
 ## Google Doodles
 
 ### 更新
