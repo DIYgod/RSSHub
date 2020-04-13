@@ -66,6 +66,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
+## iYouport
+
+### 首页
+
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport"/>
+
 ## MobData
 
 ### 分析报告
