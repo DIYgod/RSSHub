@@ -512,6 +512,20 @@ category 列表：
 
 </Route>
 
+### 计算机学院
+
+<Route author="Lava-Swimmer" example="/hbut/cs/xwdt" path="/hbut/cs/:type" radar="1" :paramsDesc="['分类']">
+
+| 新闻动态 | 通知公告 | 教学信息 | 科研动态 | 党建活动 |
+| -------- | -------- | -------- | -------- | -------- |
+| xwdt     | tzgg     | jxxx     | kydt     | djhd     |
+
+</Route>
+
+::: warning 注意
+jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
+:::
+
 ## 湖南科技大学
 
 ### 教务处通知
