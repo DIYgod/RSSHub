@@ -241,7 +241,7 @@
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/people/:id/activities',
+                source: '/people/:id',
                 target: '/zhihu/people/activities/:id',
             },
             {
