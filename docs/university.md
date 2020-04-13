@@ -1446,6 +1446,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+## 浙江工业大学
+
+### 浙江工业大学
+
+<Route author="junbaor" example="/zjut/1" path="/zjut/:type" :paramsDesc="['板块id']">
+
+| 公告栏 | 每周会议 | 屏峰班车 | 新闻速递 | 学术动态 |
+| ------ | -------- | -------- | -------- | -------- |
+| 1      | 2        | 3        | 10       | 25       |
+
+</Route>
+
 ## 郑州大学
 
 ### 郑州大学新闻网
