@@ -300,7 +300,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户
 
-<RouteEn author="hondajojo" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter 用户名, 在URL里']"/>
+<Route author="hondajojo" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter 用户名, 在URL里']"/>
 
 ### 话题(标签)
 
