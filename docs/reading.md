@@ -203,6 +203,16 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="LogicJake" example="/p-articles/contributors/朗天" path="/p-articles/contributors/:author" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
 
+## 斋书苑
+
+### 最新章节
+
+<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1">
+
+举例网址：https://www.zhaishuyuan.com/book/17858
+
+</Route>
+
 ## 纵横
 
 ### 章节

@@ -44,6 +44,14 @@ Official user RSS: http://**:username**.lofter.com/rss
 
 ## Mastodon
 
+::: tip
+
+Offical user RSS: https://**:instance**/users/**:username**.atom or https://**:instance**/users/**:username**.rss
+
+For example, https://pawoo.net/users/pawoo_support.atom or https://pawoo.net/users/pawoo_support.rss
+
+:::
+
 ### Timeline
 
 <RouteEn author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['instance address, noly domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
@@ -147,6 +155,10 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 ### Keyword
 
 <RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['keyword']" radar="1"/>
+
+### Trends
+
+<RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']" radar="1"/>
 
 ## Youtube
 

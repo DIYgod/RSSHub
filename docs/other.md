@@ -4,6 +4,11 @@ pageClass: routes
 
 # 其他
 
+## acwifi 路由器交流
+
+### 新闻
+
+<Route author="cc798461" example="/acwifi" path="/acwifi"/>
 ## Apple
 
 ### 更换和维修扩展计划
@@ -60,6 +65,12 @@ pageClass: routes
 ### 个人分享
 
 <Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
+
+## iYouport
+
+### 首页
+
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport"/>
 
 ## MobData
 
@@ -278,6 +289,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
 
+## 考研帮
+
+### 考研帮调剂信息
+
+<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+
 ## 空气质量
 
 ### 实时 AQI
@@ -471,13 +488,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
-## 武汉肺炎疫情新闻动态
+## 新冠肺炎疫情新闻动态
 
 ### 国家卫健委 - 疫情通报
 
 <Route author="Cielpy DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
 
-### 财新网 - 武汉肺炎防疫全纪录
+### 财新网 - 新冠肺炎防疫全纪录
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
 

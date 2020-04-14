@@ -241,7 +241,7 @@
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/people/:id/activities',
+                source: '/people/:id',
                 target: '/zhihu/people/activities/:id',
             },
             {
@@ -1385,6 +1385,14 @@
                 target: '/heu/yjsy/gjhz',
             },
         ],
+        job: [
+            {
+                title: '就业服务平台 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/job/tzgg',
+            },
+        ],
         uae: [
             {
                 title: '水声学院 - 新闻动态',
@@ -1538,6 +1546,63 @@
                     const uid = params.id.replace('@', '');
                     return uid ? `/matters/author/${uid}` : '';
                 },
+            },
+        ],
+    },
+    'zhaishuyuan.com': {
+        _name: '斋书苑',
+        www: [
+            {
+                title: '最新章节',
+                docs: 'https://docs.rsshub.app/reading.html#zhai-shu-yuan',
+                source: ['/book/:id', '/read/:id'],
+                target: '/novel/zhaishuyuan/:id',
+            },
+        ],
+    },
+    'hbut.edu.cn': {
+        _name: '湖北工业大学',
+        www: [
+            {
+                title: '新闻中心',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/xwzx/:name',
+                target: (params) => {
+                    const type = params.name.replace('.htm', '');
+                    return type ? `/hbut/news/${type}` : '/hbut/news/tzgg';
+                },
+            },
+        ],
+        jsjxy: [
+            {
+                title: '新闻动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/xwdt.htm',
+                target: '/hbut/cs/xwdt',
+            },
+            {
+                title: '通知公告',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/tzgg.htm',
+                target: '/hbut/cs/tzgg',
+            },
+            {
+                title: '教学信息',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/jxxx.htm',
+                target: '/hbut/cs/jxxx',
+            },
+            {
+                title: '科研动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/kxyj/kydt.htm',
+                target: '/hbut/cs/kydt',
+            },
+            {
+                title: '党建活动',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/djhd/djhd.htm',
+                target: '/hbut/cs/djhd',
             },
         ],
     },
