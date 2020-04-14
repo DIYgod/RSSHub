@@ -294,9 +294,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ::: tip 提示
 
-官方提供了用户主页 RSS: http://**:username**.lofter.com/rss
+~~官方提供了用户主页 RSS: http://**:username**.lofter.com/rss~~
 
 :::
+
+### 用户
+
+<Route author="hondajojo" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter 用户名, 在URL里']"/>
 
 ### 话题(标签)
 
