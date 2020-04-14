@@ -556,7 +556,7 @@ Supported sub-sites：
 
 ### 关键词
 
-<Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" :paramsDesc="['关键词']"/>
+<Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" :paramsDesc="['关键词']" anticrawler="1"/>
 
 ## 鲸跃汽车
 
