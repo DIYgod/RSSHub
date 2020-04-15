@@ -51,7 +51,13 @@ pageClass: routes
 
 ### 作品总榜单
 
-<Route author="junbaor" example="/zcool/top" path="/zcool/top"/>
+<Route author="mexunco" example="/zcool/recommend/design" path="/zcool/top/:type" :paramsDesc="['推荐类型,详见下面的表格']">
+
+推荐类型
+
+| design   | article  |
+| -------- | -------- |
+| 作品榜单 | 文章榜单 |
 
 ### 用户作品
 
