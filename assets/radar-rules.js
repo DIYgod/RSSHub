@@ -1612,4 +1612,51 @@
             },
         ],
     },
+    'zcool.com.cn': {
+        _name: '站酷',
+        www: [
+            {
+                title: '全部推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/all',
+            },
+            {
+                title: '首页推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '编辑推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '文章推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/article',
+            },
+            {
+                title: '作品榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/design',
+            },
+            {
+                title: '文章榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/article',
+            },
+            {
+                title: '用户作品',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: ['/u/:id'],
+                target: (params) => `/zcoo/user/${params.id}`,
+            },
+        ],
+    },
 });
