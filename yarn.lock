@@ -1856,12 +1856,12 @@
   dependencies:
     nprogress "^0.2.0"
 
-"@vuepress/plugin-pwa@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.4.0.tgz#efc8a78ec21dba29911fd7797c86726c56de537e"
-  integrity sha512-op+nR0BA2Icl293dR+ti7dL08sDUalcQl9KUyvERkmJ0X85+7um/AYw9uotzuEnDca5BM5IRO7y5z+r2MxtI8g==
+"@vuepress/plugin-pwa@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.4.1.tgz#febe16bcdc3543d5118aab3a90110b54e651ac40"
+  integrity sha512-oWlBuC9cquuuuCUBGVbZQFJARq3mVUnuFtD4Wkwjm937kTwC+GbxfS7tSVAMgjdDM2JiyB6HSVKwqFmtwHipaA==
   dependencies:
-    "@vuepress/shared-utils" "^1.4.0"
+    "@vuepress/shared-utils" "1.4.1"
     register-service-worker "^1.7.0"
     workbox-build "^4.3.1"
 
@@ -1877,10 +1877,10 @@
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-search/-/plugin-search-1.4.0.tgz#26a02e3409e6ea6830f9fc7e6d87fc45ba46c579"
   integrity sha512-5K02DL9Wqlfy/aNiYXdbXBOGzR9zMNKz/P8lfHDU+ZOjtfNf6ImAdUkHS4pi70YkkTuemdYM8JjG/j5UYn6Rjw==
 
-"@vuepress/shared-utils@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.4.0.tgz#ab4bfcd5c1e3d0e5e384e0c1d0bb86470430c87e"
-  integrity sha512-6QTv7zMRXAojCuPRIm4aosYfrQO4OREhyxvbFeg/ZMWkVX+xZZQTdE7ZyK/4NAvEgkpjtPTRC1TQYhLJUqC5mQ==
+"@vuepress/shared-utils@1.4.1", "@vuepress/shared-utils@^1.4.0":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.4.1.tgz#d09fcd742111f2efeef93b9c9b353bcd8202ae97"
+  integrity sha512-FBUHFhvR7vk6glQy/qUntBz8bVeWiNYZ2/G16EKaerKKn15xAiD7tUFCQ3L/KjtQJ8TV38GK47UEXh7UTcRwQg==
   dependencies:
     chalk "^2.3.2"
     diacritics "^1.3.0"
