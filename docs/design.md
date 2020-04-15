@@ -43,9 +43,9 @@ pageClass: routes
 
 推荐类型
 
-| all      | home     | edit     |
-| -------- | -------- | -------- |
-| 全部推荐 | 首页推荐 | 编辑推荐 |
+| all      | home     | edit     | article  |
+| -------- | -------- | -------- | -------- |
+| 全部推荐 | 首页推荐 | 编辑推荐 | 文章推荐 |
 
 </Route>
 
@@ -53,7 +53,7 @@ pageClass: routes
 
 <Route author="mexunco" example="/zcool/recommend/design" path="/zcool/top/:type" :paramsDesc="['推荐类型,详见下面的表格']">
 
-推荐类型
+榜单类型
 
 | design   | article  |
 | -------- | -------- |
