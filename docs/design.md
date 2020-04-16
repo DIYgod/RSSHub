@@ -39,23 +39,31 @@ pageClass: routes
 
 ### 推荐
 
-<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']">
+<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']" radar="1">
 
 推荐类型
 
-| all      | home     | edit     |
-| -------- | -------- | -------- |
-| 全部推荐 | 首页推荐 | 编辑推荐 |
+| all      | home     | edit     | article  |
+| -------- | -------- | -------- | -------- |
+| 全部推荐 | 首页推荐 | 编辑推荐 | 文章推荐 |
 
 </Route>
 
 ### 作品总榜单
 
-<Route author="junbaor" example="/zcool/top" path="/zcool/top"/>
+<Route author="mexunco" example="/zcool/top/design" path="/zcool/top/:type" :paramsDesc="['推荐类型,详见下面的表格']" radar="1">
+
+榜单类型
+
+| design   | article  |
+| -------- | -------- |
+| 作品榜单 | 文章榜单 |
+
+</Route>
 
 ### 用户作品
 
-<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uid" :paramsDesc="['个性域名前缀或者用户ID']">
+<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uid" :paramsDesc="['个性域名前缀或者用户ID']" radar="1">
 
 例如:
 
