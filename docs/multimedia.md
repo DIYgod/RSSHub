@@ -474,7 +474,7 @@ pageClass: routes
 
 ### 更新列表
 
-<Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" radar="1" />
+<Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" />
 
 ## 字幕库
 
