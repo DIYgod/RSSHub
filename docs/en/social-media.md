@@ -32,11 +32,9 @@ pageClass: routes
 
 ## Lofter
 
-::: tip
+### User
 
-Official user RSS: http://**:username**.lofter.com/rss
-
-:::
+<RouteEn author="hoilc" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter user name, in the URL']"/>
 
 ### Tag
 

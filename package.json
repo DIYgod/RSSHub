@@ -35,11 +35,11 @@
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
     "@types/cheerio": "0.22.17",
-    "@types/got": "9.6.9",
+    "@types/got": "9.6.10",
     "@types/koa": "2.11.3",
-    "@vuepress/plugin-back-to-top": "1.4.0",
-    "@vuepress/plugin-google-analytics": "1.4.0",
-    "@vuepress/plugin-pwa": "1.4.0",
+    "@vuepress/plugin-back-to-top": "1.4.1",
+    "@vuepress/plugin-google-analytics": "1.4.1",
+    "@vuepress/plugin-pwa": "1.4.1",
     "cross-env": "7.0.2",
     "entities": "2.0.0",
     "eslint": "6.8.0",
@@ -55,7 +55,7 @@
     "prettier-check": "2.0.0",
     "pretty-quick": "2.0.1",
     "supertest": "4.0.2",
-    "vuepress": "1.4.0",
+    "vuepress": "1.4.1",
     "yorkie": "2.0.0"
   },
   "dependencies": {
@@ -76,7 +76,7 @@
     "etag": "1.8.1",
     "fanfou-sdk": "4.1.0",
     "git-rev-sync": "2.0.0",
-    "googleapis": "48.0.0",
+    "googleapis": "49.0.0",
     "got": "10.7.0",
     "he": "1.2.0",
     "iconv-lite": "0.5.1",

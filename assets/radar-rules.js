@@ -227,6 +227,12 @@
                 source: '/:user',
                 target: '/github/starred_repos/:user',
             },
+            {
+                title: '仓库 Contributors',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: ['/:user/:repo/graphs/contributors', '/:user/:repo'],
+                target: '/github/contributors/:user/:repo',
+            },
         ],
     },
     'zhihu.com': {
@@ -1603,6 +1609,53 @@
                 docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
                 source: '/djhd/djhd.htm',
                 target: '/hbut/cs/djhd',
+            },
+        ],
+    },
+    'zcool.com.cn': {
+        _name: '站酷',
+        www: [
+            {
+                title: '全部推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/all',
+            },
+            {
+                title: '首页推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '编辑推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '文章推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/article',
+            },
+            {
+                title: '作品榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/design',
+            },
+            {
+                title: '文章榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/article',
+            },
+            {
+                title: '用户作品',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: ['/u/:id'],
+                target: (params) => `/zcoo/user/${params.id}`,
             },
         ],
     },
