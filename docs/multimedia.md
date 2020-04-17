@@ -495,3 +495,9 @@ pageClass: routes
 ### 影视
 
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
+
+## 追新番日剧站
+
+### 更新列表
+
+<Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" radar="1" />
