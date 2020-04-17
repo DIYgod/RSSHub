@@ -1660,8 +1660,8 @@
         ],
     },
     "t.me":{
-    _name: "Telegram",
-    ".": [
+        _name: "Telegram",
+        ".": [
             {
                 title: "频道",
                 docs: "https://docs.rsshub.app/social-media.html#telegram",
