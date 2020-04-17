@@ -347,6 +347,8 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
+`HOTLINK_TEMPLATE`: Replace image link in description to avoid anti-hotlink protection. usage [#2769](https://github.com/DIYgod/RSSHub/issues/2769)
+
 ### Route-specific Configurations
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
