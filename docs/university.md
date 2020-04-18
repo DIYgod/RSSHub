@@ -964,13 +964,17 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 清华大学校内信息发布平台
 
-<Route author="prnake Halcao" example="/thu/zhongyao" path="/thu/:type" :paramsDesc="['默认为重要公告']">
+<Route author="prnake" example="/thu/zhongyao" path="/thu/:type" :paramsDesc="['默认为重要公告']">
 
-| 重要公告 | 教务公告 | 科研通知 | 办公通知 | 海报列表 | 疫情防控 | 招聘信息 |
-| -------- | -------- | -------- | -------- | -------- | -------- | :------: |
-| zhongyao | jiaowu   | keyan    | bangong  | haibao   | yiqing   |  career  |
+| 重要公告 | 教务公告 | 科研通知 | 办公通知 | 海报列表 | 疫情防控 |
+| -------- | -------- | -------- | -------- | -------- | :------: |
+| zhongyao | jiaowu   | keyan    | bangong  | haibao   |  yiqing  |
 
 </Route>
+
+### 清华大学招聘信息
+
+<Route author="Halcao" example="/thu/career" path="/thu/career" />
 
 ## 山东大学
 
