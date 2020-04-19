@@ -986,6 +986,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 </Route>
 
+### 清华大学招聘信息
+
+<Route author="Halcao" example="/thu/career" path="/thu/career" />
+
 ## 山东大学
 
 ### 软件学院通知
