@@ -24,7 +24,7 @@ describe('anti-hotlink', () => {
         expect(parsed.items[1].content).toBe(`<a href="https://mock.com/DIYgod/RSSHub"/> <img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer"/>`);
     });
     it('url', async () => {
-        process.env.HOTLINK_TEMPLATE = '${url.protocol}//${url.host}${url.pathname}';
+        process.env.HOTLINK_TEMPLATE = '${protocol}//${host}${pathname}';
         const response = await request.get('/test/complicated');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).toBe(
