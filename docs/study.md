@@ -4,6 +4,39 @@ pageClass: routes
 
 # 学习
 
+## 51VOA 美国之音
+
+### 频道
+
+<Route author="guhuaijin" example="/51voa/address" path="/51voa/:channel" :paramsDesc="['频道名称']"/>
+
+| `:channel`  | 对应网站栏目                                 |
+| ----------- | -------------------------------------------- |
+| standard    | 常速英语(VOA Standard English )              |
+| archive     | 常速英语存档(VOA Standard English Archives ) |
+| technology  | 科技报道(Technology Report)                  |
+| daily       | 今日美国(This is America)                    |
+| sciences    | 科技报道(Science in the News)                |
+| health      | 健康报道(Health Report)                      |
+| education   | 教育报道(Education Report)                   |
+| economics   | 经济报道(Economics Report)                   |
+| culture     | 文化艺术(American Mosaic)                    |
+| events      | 时事新闻(In the News)                        |
+| stories     | 美国故事(American Stories)                   |
+| words       | 词汇掌故(Words And Their Stories)            |
+| trending    | 今日热点(Trending Today)                     |
+| magazine    | 新闻杂志(AS IT IS)                           |
+| grammar     | 日常语法(Everyday Grammar)                   |
+| queries     | 名师答疑(Ask a Teacher)                      |
+| history     | 美国历史(U.S. History)                       |
+| park        | 国家公园(America's National Parks)           |
+| president   | 美国总统(America's Presidents)               |
+| agriculture | 农业报道(Agriculture Report)                 |
+| exploration | 自然探索(Explorations)                       |
+| people      | 美国人物(People in America)                  |
+| bilingual   | 双语新闻(Bilingual News)                     |
+| address     | 总统演讲(President Address)                  |
+
 ## CTFHub Calendar
 
 ### 查询国内外 CTF 赛事信息

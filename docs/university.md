@@ -24,6 +24,12 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## 安徽医科大学
+
+### 研究生学院通知公告
+
+<Route author="Origami404" example="/ahmu/news" path="/ahmu/news" />
+
 ## 北华航天工业学院
 
 ### 新闻
@@ -991,6 +997,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | zhongyao | jiaowu   | keyan    | bangong  | haibao   |  yiqing  |
 
 </Route>
+
+### 清华大学招聘信息
+
+<Route author="Halcao" example="/thu/career" path="/thu/career" />
 
 ## 山东大学
 

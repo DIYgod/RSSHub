@@ -376,7 +376,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 频道
 
-<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']">
+<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']" radar="1">
 
 ::: tip 提示
 
