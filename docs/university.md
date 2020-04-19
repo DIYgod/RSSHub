@@ -664,6 +664,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 教务公告
+
+<Route author="ikvarxt" example="/lntu/jwnews" path="/lntu/jwnews" />
+
 ## 井冈山大学
 
 ### 教务处通知
@@ -695,6 +699,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 双选会
 
 <Route author="geekrainy" example="/kmust/job/jobfairs" path="/kmust/job/jobfairs" />
+
+## 辽宁工程技术大学
+
+### 教务公告
+
+<Route author="ikvarxt" example="/lntu/jwnews" path="/lntu/jwnews" />
 
 ## 洛阳理工学院
 
