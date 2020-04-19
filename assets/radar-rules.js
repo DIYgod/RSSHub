@@ -1659,4 +1659,23 @@
             },
         ],
     },
+    't.me': {
+        _name: 'Telegram',
+        '.': [
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/:username',
+                target: '/telegram/channel/:username',
+                script: "({isChannel:document.querySelector('.tgme_action_button_label')})",
+                verification: (params) => params.isChannel,
+            },
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/s/:username',
+                target: '/telegram/channel/:username',
+            },
+        ],
+    },
 });
