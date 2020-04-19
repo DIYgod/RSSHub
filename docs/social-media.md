@@ -446,13 +446,19 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:disableEmbed?" :paramsDesc="['用户名', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
 
+<Route author="DIYgod" example="/youtube/user/JFlaMusic/true/10" path="/youtube/user/:username/:disableEmbed/:maxResults" :paramsDesc="['用户名', '是否开启内嵌视频,', '最大返回数量, 默认5, 0-50可选']" radar="1"/>
+
 ### 频道
 
 <Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:disableEmbed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
 
+<Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ/true/10" path="/youtube/channel/:id/:disableEmbed/:maxResults" :paramsDesc="['频道 id', '是否开启内嵌视频,', '最大返回数量, 默认5, 0-50可选']" radar="1"/>
+
 ### 播放列表
 
 <Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
+
+<Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z/true/10" path="/youtube/playlist/:id/:disableEmbed/:maxResults" :paramsDesc="['播放列表 id', '是否开启内嵌视频,', '最大返回数量, 默认5, 0-50可选']" radar="1"/>
 
 ## 巴哈姆特
 
