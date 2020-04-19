@@ -664,10 +664,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 教务公告
-
-<Route author="ikvarxt" example="/lntu/jwnews" path="/lntu/jwnews" />
-
 ## 井冈山大学
 
 ### 教务处通知
