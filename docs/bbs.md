@@ -86,7 +86,7 @@ pageClass: routes
 
 ### 主题贴
 
-<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']"/>
+<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" />
 
 ## LearnKu
 
