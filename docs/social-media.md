@@ -170,7 +170,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 视频选集列表
 
-<Route author="sxzz" example="/bilibili/video/page/39732828" path="/bilibili/video/page/:aid/:disableEmbed?" :paramsDesc="['可在视频页 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="sxzz" example="/bilibili/video/page/BV1Hi4y1t7zY" path="/bilibili/video/page/:vid/:disableEmbed?" :paramsDesc="['可在视频页 URL 中找到，同时支持 av 号和 BV 号', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ### 视频评论
 
