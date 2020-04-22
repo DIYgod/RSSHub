@@ -72,6 +72,14 @@ describe('router', () => {
         await checkRSS(response);
     });
 
+    // robots.txt
+    it('/robots.txt', async () => {
+        const response = await request.get('/robots.txt');
+        expect(response.status).toBe(200);
+        expect(response.text).toBe('User-agent: *\nDisallow: /');
+        expect(response.headers['content-type']).toBe('text/plain');
+    });
+
     // api
     it(`/api/routes/test`, async () => {
         const response = await request.get('/api/routes/test');
