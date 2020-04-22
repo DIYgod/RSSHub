@@ -178,7 +178,8 @@ pageClass: routes
 
 ### 用户动态
 
-<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页URL中获取']"/>
+<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页URL中获取']"/>
+
 ## Steam
 
 ### Steam search
