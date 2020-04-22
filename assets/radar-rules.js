@@ -1696,9 +1696,7 @@
                 title: '主题贴',
                 docs: 'https://docs.rsshub.app/bbs.html#etoland',
                 source: ['/bbs/board.php', '/plugin/mobile/board.php'],
-                target: (url) => {
-                    return `/etoland/${new URL(url).searchParams.get('bo_table')}`;
-                },
+                target: (url) => `/etoland/${new URL(url).searchParams.get('bo_table')}`,
             },
         ],
     },
