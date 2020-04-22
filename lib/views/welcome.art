@@ -3,7 +3,7 @@
 
 <head>
     <title>Welcome to RSSHub!</title>
-    {{ if noRobot }}
+    {{ if disallowRobot }}
         <meta name="robots" content="noindex">
     {{ /if }}
     <style>

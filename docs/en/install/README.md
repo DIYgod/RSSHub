@@ -347,7 +347,7 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
-`NO_ROBOT`: Add noindex meta to prevent indexing by search engine
+`DISALLOW_ROBOT`: prevent indexing by search engine
 
 ### Route-specific Configurations
 

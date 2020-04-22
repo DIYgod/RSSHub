@@ -351,7 +351,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
-`NO_ROBOT`: 添加 noindex meta 防止被搜索引擎收录
+`DISALLOW_ROBOT`: 防止被搜索引擎收录
 
 ### 部分 RSS 模块配置
 
