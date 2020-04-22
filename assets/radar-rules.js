@@ -1678,4 +1678,17 @@
             },
         ],
     },
+    'zhuixinfan.com': {
+        _name: '追新番日剧站',
+        '.': [
+            {
+                title: '更新列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan',
+                source: ['/main.php'],
+                target: (params, url, document) => {
+                    return '/zhuixinfan/list';
+                },
+            },
+        ],
+    },
 });
