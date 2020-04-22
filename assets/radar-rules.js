@@ -1685,7 +1685,7 @@
                 title: '更新列表',
                 docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan',
                 source: ['/main.php'],
-                target: (params, url, document) => {
+                target: () => {
                     return '/zhuixinfan/list';
                 },
             },
@@ -1698,7 +1698,7 @@
                 title: '主题贴',
                 docs: 'https://docs.rsshub.app/bbs.html#etoland',
                 source: ['/bbs/board.php', '/plugin/mobile/board.php'],
-                target: (params, url, document) => {
+                target: (url) => {
                     return `/etoland/${new URL(url).searchParams.get('bo_table')}`;
                 },
             },
