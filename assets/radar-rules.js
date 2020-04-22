@@ -1691,4 +1691,17 @@
             },
         ],
     },
+    'etoland.co.kr': {
+        _name: 'eTOLAND',
+        '.': [
+            {
+                title: '主题贴',
+                docs: 'https://docs.rsshub.app/bbs.html#etoland',
+                source: ['/bbs/board.php', '/plugin/mobile/board.php'],
+                target: (params, url, document) => {
+                    return `/etoland/${new URL(url).searchParams.get('bo_table')}`;
+                },
+            },
+        ],
+    },
 });
