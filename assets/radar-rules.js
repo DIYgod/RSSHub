@@ -1685,9 +1685,7 @@
                 title: '更新列表',
                 docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan',
                 source: ['/main.php'],
-                target: () => {
-                    return '/zhuixinfan/list';
-                },
+                target: '/zhuixinfan/list',
             },
         ],
     },
