@@ -74,6 +74,11 @@ describe('router', () => {
 
     // robots.txt
     it('/robots.txt', async () => {
+        config.disallowRobot = false;
+        const response404 = await request.get('/robots.txt');
+        expect(response404.status).toBe(404);
+
+        config.disallowRobot = true;
         const response = await request.get('/robots.txt');
         expect(response.status).toBe(200);
         expect(response.text).toBe('User-agent: *\nDisallow: /');
