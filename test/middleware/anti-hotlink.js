@@ -16,7 +16,7 @@ afterEach(() => {
 
 describe('anti-hotlink', () => {
     it('template', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${noProtocol}';
+        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
         server = require('../../lib/index');
         const request = supertest(server);
 
