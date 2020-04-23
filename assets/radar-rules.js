@@ -1659,4 +1659,45 @@
             },
         ],
     },
+    't.me': {
+        _name: 'Telegram',
+        '.': [
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/:username',
+                target: '/telegram/channel/:username',
+                script: "({isChannel:document.querySelector('.tgme_action_button_label')})",
+                verification: (params) => params.isChannel,
+            },
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/s/:username',
+                target: '/telegram/channel/:username',
+            },
+        ],
+    },
+    'zhuixinfan.com': {
+        _name: '追新番日剧站',
+        '.': [
+            {
+                title: '更新列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan',
+                source: ['/main.php'],
+                target: '/zhuixinfan/list',
+            },
+        ],
+    },
+    'etoland.co.kr': {
+        _name: 'eTOLAND',
+        '.': [
+            {
+                title: '主题贴',
+                docs: 'https://docs.rsshub.app/bbs.html#etoland',
+                source: ['/bbs/board.php', '/plugin/mobile/board.php'],
+                target: (url) => `/etoland/${new URL(url).searchParams.get('bo_table')}`,
+            },
+        ],
+    },
 });

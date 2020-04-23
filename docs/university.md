@@ -24,6 +24,12 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## 安徽医科大学
+
+### 研究生学院通知公告
+
+<Route author="Origami404" example="/ahmu/news" path="/ahmu/news" />
+
 ## 北华航天工业学院
 
 ### 新闻
@@ -696,6 +702,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="geekrainy" example="/kmust/job/jobfairs" path="/kmust/job/jobfairs" />
 
+## 辽宁工程技术大学
+
+### 教务公告
+
+<Route author="ikvarxt" example="/lntu/jwnews" path="/lntu/jwnews" />
+
 ## 洛阳理工学院
 
 ### 教务处
@@ -985,6 +997,10 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 | zhongyao | jiaowu   | keyan    | bangong  | haibao   |  yiqing  |
 
 </Route>
+
+### 清华大学招聘信息
+
+<Route author="Halcao" example="/thu/career" path="/thu/career" />
 
 ## 山东大学
 
