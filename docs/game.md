@@ -252,7 +252,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 国服公告
 
-<Route author="hoilc" example="/pcr/news-cn" path="/pcr/news-cn"/>
+<Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn"/>
 
 ## 篝火营地
 
