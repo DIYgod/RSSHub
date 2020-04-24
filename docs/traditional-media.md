@@ -330,6 +330,16 @@ category 对应的关键词有
 
 <Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>
 
+## 人民日报社 国际金融报
+
+### 栏目
+
+<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目ID']">
+
+`cid`可在对应栏目的 url 后的参数中获取, 如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
+
+</Route>
+
 ## 日本経済新聞
 
 ### ホームページ
