@@ -1,0 +1,62 @@
+name: Build Lambda Zip Package
+
+on:
+    push:
+        branches: master
+        paths:
+            - 'lib/**'
+            - 'Dockerfile'
+            - 'package.json'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: mkdir app
+    - run: cp -a lib/. app/
+    - run: mv *.json app
+    - run: mv *.sh app
+    - name: Install Dependencies
+      run: npm install --production
+      working-directory: ./app
+      env:
+        PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+    - name: clean up Node Modules
+      run: sh ./clean-nm.sh
+      working-directory: ./app
+    - name: Create Zip File
+      uses: thedoctor0/zip-release@master
+      with:
+#         filename: 'release.zip'
+        directory: 'app/'
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: true
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./app/release.zip
+        asset_name: release.zip
+        asset_content_type: application/zip  

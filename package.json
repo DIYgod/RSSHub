@@ -64,6 +64,7 @@
     "@sentry/node": "5.15.5",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
+    "aws-serverless-koa": "1.0.1",
     "cheerio": "1.0.0-rc.3",
     "chrono-node": "1.4.5",
     "cloudscraper": "4.6.0",

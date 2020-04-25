@@ -2496,6 +2496,21 @@ autoprefixer@^9.5.1:
     postcss "^7.0.14"
     postcss-value-parser "^3.3.1"
 
+aws-serverless-express@^3.3.5:
+  version "3.3.8"
+  resolved "https://registry.yarnpkg.com/aws-serverless-express/-/aws-serverless-express-3.3.8.tgz#8c05e0ce3651fc277725c6d2e1b8f8a36dbe4f4b"
+  integrity sha512-2TQdF5EhxnAtGeEi+wSi2M3xCfpiemuImnpU7HKih3onH0izJ/G2tkM+gwcGHZEsW/gLWFl/JjQAYGa3fILfvw==
+  dependencies:
+    binary-case "^1.0.0"
+    type-is "^1.6.16"
+
+aws-serverless-koa@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/aws-serverless-koa/-/aws-serverless-koa-1.0.1.tgz#e81cb05e265d2a8d2fc4b0258178b98fd9f2a32c"
+  integrity sha512-PYS9rvAgbCj9q0da/XOUJqUgVp7n3Y+RQ7mAt647OJk8kF9bgtZ+DOsHiACwMGGvZGFNoZaPQB3jRANHQKMEag==
+  dependencies:
+    aws-serverless-express "^3.3.5"
+
 aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
@@ -2679,6 +2694,11 @@ bignumber.js@^7.0.0:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-7.2.1.tgz#80c048759d826800807c4bfd521e50edbba57a5f"
   integrity sha512-S4XzBk5sMB+Rcb/LNcpzXr57VRTxgAvaAEDAl1AwRx27j00hT84O6OkteE7u8UB3NuaaygCRrEpqox4uDOrbdQ==
+
+binary-case@^1.0.0:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/binary-case/-/binary-case-1.1.4.tgz#d687104d59e38f2b9e658d3a58936963c59ab931"
+  integrity sha512-9Kq8m6NZTAgy05Ryuh7U3Qc4/ujLQU1AZ5vMw4cr3igTdi5itZC6kCNrRr2X8NzPiDn2oUIFTfa71DKMnue/Zg==
 
 binary-extensions@^1.0.0:
   version "1.13.1"
