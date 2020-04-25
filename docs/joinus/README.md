@@ -142,14 +142,8 @@ sidebar: auto
                     item = $(item);
                     itemPicUrl = `${item.find('a.cover').attr('style')}`.replace('background-image:url(', '').replace(')', '');
                     return {
-                        title: item
-                            .find('.title a')
-                            .first()
-                            .text(),
-                        description: `作者：${item
-                            .find('.usr-pic a')
-                            .last()
-                            .text()}<br>描述：${item.find('.content p').text()}<br><img src="${itemPicUrl}">`,
+                        title: item.find('.title a').first().text(),
+                        description: `作者：${item.find('.usr-pic a').last().text()}<br>描述：${item.find('.content p').text()}<br><img src="${itemPicUrl}">`,
                         link: item.find('.title a').attr('href'),
                     };
                 })
@@ -205,22 +199,11 @@ sidebar: auto
         item: list
             .map((i, item) => ({
                 // 文章标题
-                title: $(item)
-                    .find('.item-title a')
-                    .text()
-                    .trim(),
+                title: $(item).find('.item-title a').text().trim(),
                 // 文章链接
-                link: url.resolve(
-                    link,
-                    $(item)
-                        .find('.item-title a')
-                        .attr('href')
-                ),
+                link: url.resolve(link, $(item).find('.item-title a').attr('href')),
                 // 文章作者
-                author: $(item)
-                    .find('.item-author')
-                    .text()
-                    .trim(),
+                author: $(item).find('.item-author').text().trim(),
             }))
             .get(), // cheerio get() 方法将 cheerio node 对象数组转换为 node 对象数组
     };
@@ -299,7 +282,7 @@ const description = await ctx.cache.tryGet(link, async () => {
     const result = await got.get(link);
 
     const $ = cheerio.load(result.data);
-    $('img').each(function(i, e) {
+    $('img').each(function (i, e) {
         $(e).attr('src', $(e).attr('data-src'));
     });
 

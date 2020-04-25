@@ -4,6 +4,65 @@ pageClass: routes
 
 # 学习
 
+## 51VOA 美国之音
+
+### 频道
+
+<Route author="guhuaijin" example="/51voa/address" path="/51voa/:channel" :paramsDesc="['频道名称']"/>
+
+| `:channel`  | 对应网站栏目                                 |
+| ----------- | -------------------------------------------- |
+| standard    | 常速英语(VOA Standard English )              |
+| archive     | 常速英语存档(VOA Standard English Archives ) |
+| technology  | 科技报道(Technology Report)                  |
+| daily       | 今日美国(This is America)                    |
+| sciences    | 科技报道(Science in the News)                |
+| health      | 健康报道(Health Report)                      |
+| education   | 教育报道(Education Report)                   |
+| economics   | 经济报道(Economics Report)                   |
+| culture     | 文化艺术(American Mosaic)                    |
+| events      | 时事新闻(In the News)                        |
+| stories     | 美国故事(American Stories)                   |
+| words       | 词汇掌故(Words And Their Stories)            |
+| trending    | 今日热点(Trending Today)                     |
+| magazine    | 新闻杂志(AS IT IS)                           |
+| grammar     | 日常语法(Everyday Grammar)                   |
+| queries     | 名师答疑(Ask a Teacher)                      |
+| history     | 美国历史(U.S. History)                       |
+| park        | 国家公园(America's National Parks)           |
+| president   | 美国总统(America's Presidents)               |
+| agriculture | 农业报道(Agriculture Report)                 |
+| exploration | 自然探索(Explorations)                       |
+| people      | 美国人物(People in America)                  |
+| bilingual   | 双语新闻(Bilingual News)                     |
+| address     | 总统演讲(President Address)                  |
+
+## CTFHub Calendar
+
+### 查询国内外 CTF 赛事信息
+
+<Route author="frankli0324" example="/ctfhub/calendar" 
+    path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
+    :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
+
+| `:class` | 类型                             |
+| :------: | -------------------------------- |
+|    0     | Jeopardy[解题]                   |
+|    1     | Attack with Defense[AwD 攻防]    |
+|    2     | Robo Hacking Game[RHG AI 自动化] |
+|    3     | Real World[RW 真实世界]          |
+|    4     | King of The Hill[KoH 抢占山头]   |
+|    5     | Mix[混合]                        |
+
+> class 以 https://api.ctfhub.com/User_API/Event/getType 的返回结果为准
+
+| `:form` | 形式   |
+| :-----: | ------ |
+|    0    | 线上赛 |
+|    1    | 线下赛 |
+
+</Route>
+
 ## gradCafe
 
 ### gradCafe result
@@ -13,6 +72,35 @@ pageClass: routes
 ### gradCafe result by key words
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+
+## NEEA 中国教育考试网
+
+### 国家教育考试
+
+<Route author="SunShinenny" example="/neea/gaokao" path="/neea/:type" :paramsDesc="['类别，如 gaokao']"/>
+
+| `:type`  | 类别名称           |
+| -------- | ------------------ |
+| gaokao   | 普通高考           |
+| chengkao | 成人高考           |
+| yankao   | 研究生考试         |
+| zikao    | 自学考试           |
+| ntce     | 中小学教师资格考试 |
+
+### 社会证书考试
+
+<Route author="SunShinenny" example="/neea/cet" path="/neea/:type" :paramsDesc="['类别，如 cet']"/>
+
+| `:type` | 类别名称                      |
+| ------- | ----------------------------- |
+| cet     | 全国四六级（CET）             |
+| ncre    | 全国计算机等级考试（NCRE）    |
+| nit     | 全国计算机应用水平考试（NIT） |
+| pets    | 全国英语等级考试 (PETS)       |
+| wsk     | 全国外语水平考试 (WSK)        |
+| ccpt    | 书画等级考试 (CCPT)           |
+| wsk     | 全国外语水平考试 (WSK)        |
+| mets    | 医护英语水平考试 (METS)       |
 
 ## X-MOL 平台
 

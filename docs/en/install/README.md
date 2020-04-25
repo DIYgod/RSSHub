@@ -160,7 +160,7 @@ Or
 $ yarn start
 ```
 
-Or use [PM2](https://pm2.io/doc/zh/runtime/quick-start/)
+Or use [PM2](https://pm2.io/docs/plus/quick-start/)
 
 ```bash
 $ pm2 start lib/index.js --name rsshub
@@ -346,6 +346,8 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 `PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
+
+`DISALLOW_ROBOT`: prevent indexing by search engine
 
 ### Route-specific Configurations
 

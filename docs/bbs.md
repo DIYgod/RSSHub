@@ -4,6 +4,48 @@ pageClass: routes
 
 # 论坛
 
+## A 岛匿名版
+
+### 串
+
+<Route author="zcx1218029121" example="/adnmb/20/1" path="/adnmb/:pid/page" :paramsDesc="['板块列表，见下表','页数， 1开始必填']" >
+
+| 综合版 1 | 围炉 | 欢乐恶搞 | 速报 2 | 推理 | 跑团 | 技术宅 | 料理 | 猫版 | 音乐 | 考试 | 社畜 |
+| -------- | ---- | -------- | ------ | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- |
+| 4        | 120  | 20       | 121    | 11   | 111  | 30     | 32   | 40   | 35   | 56   | 110  |
+
+| 科学 | 文学 | 创意 | 姐妹 1 | 数码 | 女装 | 日记 | 圈内 | 都市怪谈 | 买买买 | 动画 | 漫画 | 美漫 | 国漫 | 小说 |
+| ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | -------- | ------ | ---- | ---- | ---- | ---- | ---- |
+| 15   | 103  | 17   | 98     | 75   | 97   | 89   | 96   | 81       | 106    | 14   | 12   | 90   | 99   | 19   |
+
+| 轻小说 | GALGAME | 东方 Project | 舰娘 | 虚拟偶像 | VOCALOID | 游戏 | DNF | SE  | 手游 |
+| ------ | ------- | ------------ | ---- | -------- | -------- | ---- | --- | --- | ---- |
+| 87     | 64      | 5            | 93   | 101      | 6        | 2    | 72  | 124 | 3    |
+
+| Steam | 索尼 | LOL | DOTA | 口袋妖怪 | 战争雷霆 | WOT | Minecraft | 怪物猎人 | 3A 游戏 |
+| ----- | ---- | --- | ---- | -------- | -------- | --- | --------- | -------- | ------- |
+| 107   | 24   | 22  | 70   | 38       | 86       | 51  | 10        | 28       | 108     |
+
+| 彩虹六号 | 暴雪游戏 | 卡牌桌游 | MUG | AC 大逃杀 | 任天堂 | AKB | SNH48 | COSPLAY | 声优 |
+| -------- | -------- | -------- | --- | --------- | ------ | --- | ----- | ------- | ---- |
+| 119      | 23       | 45       | 34  | 29        | 25     | 16  | 100   | 13      | 55   |
+
+| 模型 | 影视 | 军武 | 体育 | 值班室 | 城墙 | 技术支持 | 询问 3 | 宠物 | 摄影 2 |
+| ---- | ---- | ---- | ---- | ------ | ---- | -------- | ------ | ---- | ------ |
+| 39   | 31   | 37   | 33   | 18     | 112  | 117      | 114    | 118  | 115    |
+
+| 主播 | 育儿 | 围炉 | 旅行 | 特摄 |
+| ---- | ---- | ---- | ---- | ---- |
+| 116  | 113  | 120  | 125  | 9    |
+
+</Route>
+
+## Chiphell
+
+### 子版块
+
+<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
+
 ## Dcard
 
 ### 首頁帖子
@@ -40,6 +82,12 @@ pageClass: routes
 
 </Route>
 
+## eTOLAND
+
+### 主题贴
+
+<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" />
+
 ## LearnKu
 
 ### 社区
@@ -64,7 +112,7 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
 
 ### 帖子
 
@@ -222,6 +270,14 @@ pageClass: routes
 ### 回帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
+
+### 帖子 (手机端的最热与最新 Tab)
+
+<Route author="NavePnow" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+
+| 最热帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
 
 ### 录取结果
 

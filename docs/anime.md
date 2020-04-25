@@ -16,6 +16,29 @@ pageClass: routes
 
 <Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
+## AcFun
+
+### 番剧
+
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+
+::: tip 提示
+
+番剧 id 不包含开头的 aa。
+例如：http://www.acfun.cn/bangumi/aa5022158 的番剧 id 是 5022158，不包括开头的 aa。
+
+:::
+
+### 用户投稿
+
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+
+## AGE 动漫
+
+### 番剧详情
+
+<Route author="s2marine" example="/agefans/detail/20200035" path="/agefans/detail/:id" :paramsDesc="['番剧 id，对应详情 URL 中找到']"/>
+
 ## Anime1
 
 ### 動畫
@@ -249,6 +272,12 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
 
+## 紳士漫畫
+
+### 最新
+
+<Route author="KenMizz" example="/ssmh" path="/ssmh/">
+
 ## 鼠绘漫画
 
 ### 鼠绘漫画
@@ -259,7 +288,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="DIYgod" example="/mmgal" path="/mmgal"/>
+<Route author="DIYgod kotoyuuko" example="/hhgal" path="/hhgal"/>
 
 ## 终点分享
 

@@ -50,6 +50,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/centbrowser/history" path="/centbrowser/history"/>
 
+## Checkra1n
+
+### 新版本发布
+
+<Route author="ntzyz" example="/checkra1n/releases" path="/checkra1n/releases"/>
+
 ## Chocolatey
 
 ### 软件更新
