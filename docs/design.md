@@ -4,9 +4,6 @@ pageClass: routes
 
 # 设计
 
-## Digic Picture
-
-<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
 ## Dribbble
 
 ### 流行
@@ -28,6 +25,9 @@ pageClass: routes
 <Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </Route>
 
+## Sun Creature
+
+<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
 ## UI 中国
 
 ### 推荐文章
