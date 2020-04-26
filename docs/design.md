@@ -8,9 +8,10 @@ pageClass: routes
 
 ### Work type
 
-<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/work" :paramsDesc="['文章内的 Work type URL，例如 Compositing, vfx-supervision, design-concept']">
+<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/work/：tag?" :paramsDesc="['文章内的 Work type URL，例如 Compositing, vfx-supervision, design-concept']">
 
 默认为 https://axisstudiosgroup.com/work 下的文章。
+
 文章内 Work type 指向的栏目地址，比如： https://axisstudiosgroup.com/work/full-service-cg-production 就填写 /work/full-service-cg-production。
 
 </Route>
