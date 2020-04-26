@@ -4,6 +4,9 @@ pageClass: routes
 
 # Design
 
+## Digic Picture
+
+<Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
 ## Dribbble
 
 ### Popular
