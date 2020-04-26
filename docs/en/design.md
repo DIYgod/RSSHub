@@ -27,10 +27,10 @@ pageClass: routes
 
 ## Method Studios
 
-<Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:tag?" :paramsDesc="[' URL behind '/en',link '/games', '/episodic'']">
+<RouteEn author="MisteryMonster" path="/method-studios/:tag?" example="/method-studios/games" :paramsDesc="['URL behind /en']">
 
 Default is under 'https://www.methodstudios.com/en/features'.
 
 URL behind '/en' witch was the menu. Such as: 'https://www.methodstudios.com/en/games/' then fill '/method-studios/games'.
 
-</RoutenEn>
+</RouteEn>
