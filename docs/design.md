@@ -4,6 +4,9 @@ pageClass: routes
 
 # 设计
 
+## Digic Picture
+
+<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
 ## Dribbble
 
 ### 流行
