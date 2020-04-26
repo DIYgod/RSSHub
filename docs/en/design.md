@@ -24,3 +24,11 @@ pageClass: routes
 
 <RouteEn author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </RouteEn>
+
+## Method Studios
+
+<Route author="MisteryMonster" example="/method-studios/games" path="/blow-studio" :paramsDesc="[' URL behind /en,link '/games', '/episodic'']">
+
+URL behind '/en' witch was the menu. Such as: 'https://www.methodstudios.com/en/games/' then fill '/method-studios/games'.
+
+</RoutenEn>

@@ -25,6 +25,14 @@ pageClass: routes
 <Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </Route>
 
+## Method Studios
+
+<Route author="MisteryMonster" example="/method-studios/games" path="/blow-studio" :paramsDesc="['地址栏下/en后的栏目']">
+
+地址栏上 /en 下的栏目，比如： https://www.methodstudios.com/en/games/ 就填写 /method-studios/games。
+
+</Route>
+
 ## UI 中国
 
 ### 推荐文章
