@@ -27,4 +27,4 @@ pageClass: routes
 
 ## Sun Creature
 
-<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
+<RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
