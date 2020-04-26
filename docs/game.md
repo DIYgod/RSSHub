@@ -350,13 +350,13 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏折扣信息
 
-<Router author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform">
+<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" :paramsDesc="['平台, 默认为Steam']">
 
 | Steam | PlatStation4 | Switch |
 | ----- | ------------ | ------ |
 | pc    | ps4          | switch |
 
-</Router>
+</Route>
 
 ## 英雄联盟
 
