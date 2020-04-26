@@ -4,7 +4,7 @@ pageClass: routes
 
 # 设计
 
-## Digic Picture
+## Blow Studio
 
 <Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
 ## Dribbble
