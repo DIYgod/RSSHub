@@ -37,7 +37,10 @@ pageClass: routes
 
 ## Unit Image
 
-<Route author="MisteryMonster" example="/unit-image/films" path="/unit-image/films" />
+### Films
+
+<Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
+
 ## 站酷
 
 ### 推荐
