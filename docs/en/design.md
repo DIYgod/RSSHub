@@ -4,6 +4,16 @@ pageClass: routes
 
 # Design
 
+## Axis Studios
+
+### Work type
+
+<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/work" :paramsDesc="['Compositing, vfx-supervision, design-concept']">
+
+Default is under https://axisstudiosgroup.com/work .
+Work type URL in articles. Such as： https://axisstudiosgroup.com/work/full-service-cg-production then fill /work/full-service-cg-production.
+
+</Route>
 ## Dribbble
 
 ### Popular
