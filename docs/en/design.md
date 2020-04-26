@@ -6,7 +6,7 @@ pageClass: routes
 
 ## Blur Studio
 
-<Route author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
+<RouteEn author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
 
 ## Dribbble
 
