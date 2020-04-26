@@ -6,7 +6,7 @@ pageClass: routes
 
 ## Blow Studio
 
-<Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
+<RouteEn author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
 ## Dribbble
 
 ### Popular
