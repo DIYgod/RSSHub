@@ -4,6 +4,10 @@ pageClass: routes
 
 # Design
 
+## Blur Studio
+
+<Route author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
+
 ## Dribbble
 
 ### Popular
