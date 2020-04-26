@@ -6,7 +6,8 @@ pageClass: routes
 
 ## Digic Picture
 
-<Route author="MisteryMonster" example="/digic-picture" path="/digic-picture" />
+<RouteEn author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']" />
+
 ## Dribbble
 
 ### Popular
