@@ -27,11 +27,11 @@ pageClass: routes
 
 ## Method Studios
 
-<Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:tag?" :paramsDesc="['地址栏下/en后的栏目']">
+<Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:menu?" :paramsDesc="['地址栏下/en后的栏目: `features`, `advertising`, `episodic`, `games`, `methodmade`']">
+
+不支持`news`和`main`。
 
 默认为 'https://www.methodstudios.com/en/features' 下的栏目。
-
-地址栏上 /en 下的栏目，比如： https://www.methodstudios.com/en/games/ 就填写 /method-studios/games。
 
 </Route>
 

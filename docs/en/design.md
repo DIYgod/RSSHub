@@ -27,10 +27,10 @@ pageClass: routes
 
 ## Method Studios
 
-<RouteEn author="MisteryMonster" path="/method-studios/:tag?" example="/method-studios/games" :paramsDesc="['URL behind /en']">
+<RouteEn author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" :paramsDesc="['URL behind '/en': `features`, `advertising`, `episodic`, `games`, `methodmade`']]">
+
+Not support `main`, `news`.
 
 Default is under 'https://www.methodstudios.com/en/features'.
-
-URL behind '/en' witch was the menu. Such as: 'https://www.methodstudios.com/en/games/' then fill '/method-studios/games'.
 
 </RouteEn>
