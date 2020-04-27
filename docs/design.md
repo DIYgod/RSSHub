@@ -8,11 +8,11 @@ pageClass: routes
 
 ### Work type
 
-<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/work/：tag?" :paramsDesc="['文章内的 Work type URL，例如 Compositing, vfx-supervision, design-concept']">
+<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" :paramsDesc="['`work`, `blog`','文章内的 Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']">
 
-默认为 https://axisstudiosgroup.com/work 下的文章。
+文章内 Work type 指向的栏目地址，比如： 'https://axisstudiosgroup.com/work/full-service-cg-production' 的 tag 为 `full-service-cg-production`，要注意的是 tag 和文章的目录是一样的。
 
-文章内 Work type 指向的栏目地址，比如： https://axisstudiosgroup.com/work/full-service-cg-production 就填写 /work/full-service-cg-production。
+有一些 tag 并不经常使用： `Script`, `direction`, `production`, `design-concept` 等等。
 
 </Route>
 ## Dribbble

@@ -347,6 +347,8 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
+`DISALLOW_ROBOT`: prevent indexing by search engine
+
 ### Route-specific Configurations
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)

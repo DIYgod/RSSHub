@@ -8,11 +8,11 @@ pageClass: routes
 
 ### Work type
 
-<RouteEn author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/work/:tag?" :paramsDesc="['Compositing, vfx-supervision, design-concept etc.']">
+<RouteEn author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/work/:tag?" :paramsDesc="['`work`, `blog`', 'Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']">
 
-Default is under https://axisstudiosgroup.com/work .
+Work type URL in articles. Such as： 'https://axisstudiosgroup.com/work/full-service-cg-production' the tag will be `full-service-cg-production`.
 
-Work type URL in articles. Such as： https://axisstudiosgroup.com/work/full-service-cg-production then fill /work/full-service-cg-production.
+Some tags are rarely used： `Script`, `direction`, `production`, `design-concept` etc。
 
 </RouteEn>
 
