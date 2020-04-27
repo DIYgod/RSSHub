@@ -27,7 +27,7 @@ pageClass: routes
 
 ## Method Studios
 
-<RouteEn author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" :paramsDesc="['URL behind '/en': `features`, `advertising`, `episodic`, `games`, `methodmade`']]">
+<RouteEn author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" :paramsDesc="['URL behind /en: `features`, `advertising`, `episodic`, `games`, `methodmade`']">
 
 Not support `main`, `news`.
 
