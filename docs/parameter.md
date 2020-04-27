@@ -22,8 +22,8 @@ filter 选出想要的内容
 
 -   filter_time: 过滤时间，仅支持数字，单位为秒。返回指定时间范围内的内容。如果条目没有输出`pubDate`或者格式不正确将不会被过滤
 
-举例 1: <https://rsshub.app/bilibili/user/coin/2267573?filter=微小微|赤九玖|暴走大事件>
-举例 2: <https://rsshub.app/nga/forum/485?filter_time=600>
+举例 1: <https://rsshub.app/bilibili/fav/2267573/801952073?filter=编曲|摄影>
+举例 2: <https://rsshub.app/nga/forum/489?filter_time=600>
 
 filterout 去掉不要的内容
 
@@ -35,7 +35,7 @@ filterout 去掉不要的内容
 
 -   filterout_author: 过滤作者
 
-举例: <https://rsshub.app/bilibili/user/coin/2267573?filterout=微小微|赤九玖|暴走大事件>
+举例: <https://rsshub.app/bilibili/fav/2267573/801952073?filterout=编曲|摄影>
 
 filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时适用
 

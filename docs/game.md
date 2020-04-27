@@ -174,6 +174,12 @@ pageClass: routes
 
 </Route>
 
+## ScoreSaber
+
+### 用户动态
+
+<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页URL中获取']"/>
+
 ## Steam
 
 ### Steam search
@@ -189,6 +195,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### Steam news
 
 <Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1"/>
+
+## SteamDB
+
+### 免费游戏
+
+<Route author="dearrrfish" example="/steamdb/free" path="/steamdb/free/:type?" :paramsDesc="['免费类型，留空为不过滤']"/>
+
+| 全部   | 周末    | 永久 |
+| ------ | ------- | ---- |
+| <留空> | weekend | keep |
 
 ## SteamGifts
 

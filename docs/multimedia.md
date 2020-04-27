@@ -24,11 +24,11 @@ pageClass: routes
 
 ## AcFun
 
-见 [#AcFun](/social-media.html#acfun)
+见 [#AcFun](/anime.html#acfun)
 
 ## AGE 动漫
 
-见 [#AGE 动漫](/social-media.html#age-dong-man)
+见 [#AGE 动漫](/anime.html#age-dong-man)
 
 ## bilibili
 
@@ -469,6 +469,12 @@ pageClass: routes
 ### 电台节目
 
 <Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
+
+## 追新番日剧站
+
+### 更新列表
+
+<Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" radar="1" />
 
 ## 字幕库
 

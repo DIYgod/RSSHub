@@ -32,17 +32,23 @@ pageClass: routes
 
 ## Lofter
 
-::: tip
+### User
 
-Official user RSS: http://**:username**.lofter.com/rss
-
-:::
+<RouteEn author="hoilc" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter user name, in the URL']"/>
 
 ### Tag
 
 <RouteEn author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['tag name', 'ranking type, default to new, can be new date week month total']"/>
 
 ## Mastodon
+
+::: tip
+
+Offical user RSS: https://**:instance**/users/**:username**.atom or https://**:instance**/users/**:username**.rss
+
+For example, https://pawoo.net/users/pawoo_support.atom or https://pawoo.net/users/pawoo_support.rss
+
+:::
 
 ### Timeline
 
@@ -100,7 +106,7 @@ Only for self-hosted
 
 ### Channel
 
-<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']">
+<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" radar="1">
 
 ::: tip
 

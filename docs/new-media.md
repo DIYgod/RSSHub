@@ -175,6 +175,11 @@ pageClass: routes
 
 <Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1"/>
 
+## MIT 科技评论
+
+### 首页
+
+<Route author="EsuRt" example="/mittrchina/article" path="/mittrchina"/>
 ## Nautilus
 
 ### 话题
@@ -551,7 +556,7 @@ Supported sub-sites：
 
 ### 关键词
 
-<Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" :paramsDesc="['关键词']"/>
+<Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" :paramsDesc="['关键词']" anticrawler="1"/>
 
 ## 鲸跃汽车
 

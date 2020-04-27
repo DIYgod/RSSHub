@@ -227,6 +227,12 @@
                 source: '/:user',
                 target: '/github/starred_repos/:user',
             },
+            {
+                title: '仓库 Contributors',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: ['/:user/:repo/graphs/contributors', '/:user/:repo'],
+                target: '/github/contributors/:user/:repo',
+            },
         ],
     },
     'zhihu.com': {
@@ -241,7 +247,7 @@
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/people/:id/activities',
+                source: '/people/:id',
                 target: '/zhihu/people/activities/:id',
             },
             {
@@ -1571,6 +1577,126 @@
                     const type = params.name.replace('.htm', '');
                     return type ? `/hbut/news/${type}` : '/hbut/news/tzgg';
                 },
+            },
+        ],
+        jsjxy: [
+            {
+                title: '新闻动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/xwdt.htm',
+                target: '/hbut/cs/xwdt',
+            },
+            {
+                title: '通知公告',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/tzgg.htm',
+                target: '/hbut/cs/tzgg',
+            },
+            {
+                title: '教学信息',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/jxxx.htm',
+                target: '/hbut/cs/jxxx',
+            },
+            {
+                title: '科研动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/kxyj/kydt.htm',
+                target: '/hbut/cs/kydt',
+            },
+            {
+                title: '党建活动',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/djhd/djhd.htm',
+                target: '/hbut/cs/djhd',
+            },
+        ],
+    },
+    'zcool.com.cn': {
+        _name: '站酷',
+        www: [
+            {
+                title: '全部推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/all',
+            },
+            {
+                title: '首页推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '编辑推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '文章推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/article',
+            },
+            {
+                title: '作品榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/design',
+            },
+            {
+                title: '文章榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/article',
+            },
+            {
+                title: '用户作品',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: ['/u/:id'],
+                target: (params) => `/zcoo/user/${params.id}`,
+            },
+        ],
+    },
+    't.me': {
+        _name: 'Telegram',
+        '.': [
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/:username',
+                target: '/telegram/channel/:username',
+                script: "({isChannel:document.querySelector('.tgme_action_button_label')})",
+                verification: (params) => params.isChannel,
+            },
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/s/:username',
+                target: '/telegram/channel/:username',
+            },
+        ],
+    },
+    'zhuixinfan.com': {
+        _name: '追新番日剧站',
+        '.': [
+            {
+                title: '更新列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan',
+                source: ['/main.php'],
+                target: '/zhuixinfan/list',
+            },
+        ],
+    },
+    'etoland.co.kr': {
+        _name: 'eTOLAND',
+        '.': [
+            {
+                title: '主题贴',
+                docs: 'https://docs.rsshub.app/bbs.html#etoland',
+                source: ['/bbs/board.php', '/plugin/mobile/board.php'],
+                target: (url) => `/etoland/${new URL(url).searchParams.get('bo_table')}`,
             },
         ],
     },
