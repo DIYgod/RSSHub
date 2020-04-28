@@ -4,6 +4,12 @@ pageClass: routes
 
 # Design
 
+## Digic Picture
+
+### Works & News
+
+<RouteEn author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']" />
+
 ## Blur Studio
 
 ### Works
