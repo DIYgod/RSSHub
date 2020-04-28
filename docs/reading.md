@@ -224,3 +224,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页
 
 <Route author="kt286" example="/zreading" path="/zreading" />
+
+## 第一版主
+
+<Route author="x1a0xv4n" example="/novel/d1bz/2/2608_6" path="/novel/d1bz/:category/:id" :paramsDesc="['小说分类，可在对应小说页 URL 中找到，例如`2`', '小说id，可在对应小说页 URL 中找到，例如`2608_6`']"/>
