@@ -250,6 +250,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="hoilc" example="/pcr/news-tw" path="/pcr/news-tw"/>
 
+### 国服公告
+
+<Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn"/>
+
 ## 篝火营地
 
 ### 游戏资讯
