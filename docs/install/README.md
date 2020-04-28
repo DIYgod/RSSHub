@@ -267,6 +267,10 @@ env_variables:
 # [END app_yaml]
 ```
 
+#### 部署至 Vercel(Zeit Now)
+
+项目中导出了 now serverless function 并附带 `now.json`相关配置，安装了[Vercel(Zeit Now)](https://vercel.com/docs/now-cli)之后，只需要在项目中运行`now` 即可部署到 Now 的云函数上。
+
 ### 安装
 
 在 RSSHub 项目根目录下运行
