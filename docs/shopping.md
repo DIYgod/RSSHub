@@ -235,13 +235,14 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 <Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
 
+## 优衣库
+
+### Stylingbook
+
+<Route author="LunaXu" example="/uniqlo/stylingbook/woman" path="/uniqlo/stylingbook" />
+
 ## 有赞
 
 ### 商品上新
 
 <Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺id']"/>
-
-## 优衣库
-### Stylingbook
-<Route author="LunaXu" example="/uniqlo/stylingbook/woman" path="/uniqlo/stylingbook" />
-
