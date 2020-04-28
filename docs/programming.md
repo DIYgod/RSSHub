@@ -342,6 +342,10 @@ GitHub 官方也提供了一些 RSS:
 | 备案公告 | 3    |
 | 其他     | 4    |
 
+### 开发者社区-主题
+
+<Route author="umm233" example="/aliyun/developer/group/alitech" path="/aliyun/developer/group/:type" :paramsDesc="['对应技术领域分类']" />
+
 ## 安全客
 
 ::: tip 提示
