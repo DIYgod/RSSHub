@@ -4,6 +4,24 @@ pageClass: routes
 
 # Design
 
+## Blow Studio
+
+### Home
+
+<RouteEn author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
+
+## Axis Studios
+
+### Work type
+
+<RouteEn author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" :paramsDesc="['`work`, `blog`', 'Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']">
+
+Work type URL in articles. Such as： 'https://axisstudiosgroup.com/work/full-service-cg-production' the tag will be `full-service-cg-production`.
+
+Some tags are rarely used： `Script`, `direction`, `production`, `design-concept` etc。
+
+</RouteEn>
+
 ## Dribbble
 
 ### Popular
@@ -30,3 +48,21 @@ pageClass: routes
 ### Works
 
 <RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
+
+## Method Studios
+
+### Menus
+
+<RouteEn author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" :paramsDesc="['URL behind /en: `features`, `advertising`, `episodic`, `games`, `methodmade`']">
+
+Not support `main`, `news`.
+
+Default is under 'https://www.methodstudios.com/en/features'.
+
+</RouteEn>
+
+## Unit Image
+
+### Films
+
+<RouteEn author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films type，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>

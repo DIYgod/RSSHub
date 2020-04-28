@@ -170,15 +170,15 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 视频选集列表
 
-<Route author="sxzz" example="/bilibili/video/page/39732828" path="/bilibili/video/page/:aid/:disableEmbed?" :paramsDesc="['可在视频页 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="sxzz" example="/bilibili/video/page/BV1i7411M7N9" path="/bilibili/video/page/:bvid/:disableEmbed?" :paramsDesc="['可在视频页 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ### 视频评论
 
-<Route author="Qixingchen" example="/bilibili/video/reply/21669336" path="/bilibili/video/reply/:aid" :paramsDesc="['可在视频页 URL 中找到']"/>
+<Route author="Qixingchen" example="/bilibili/video/reply/BV1vA411b7ip" path="/bilibili/video/reply/:bvid" :paramsDesc="['可在视频页 URL 中找到']"/>
 
 ### 视频弹幕
 
-<Route author="Qixingchen" example="/bilibili/video/danmaku/21669336/1" path="/bilibili/video/danmaku/:aid/:pid?" :paramsDesc="['视频AV号,可在视频页 URL 中找到','分P号,不填默认为1']"/>
+<Route author="Qixingchen" example="/bilibili/video/danmaku/BV1vA411b7ip/1" path="/bilibili/video/danmaku/:bvid/:pid?" :paramsDesc="['视频AV号,可在视频页 URL 中找到','分P号,不填默认为1']"/>
 
 ### link 公告
 
@@ -244,11 +244,11 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 话题(频道/标签)
 
-<Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
+<Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/:topic" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
 
 ### 歌单
 
-<Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
+<Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/:id" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
 
 ### 专栏文集
 
@@ -574,11 +574,11 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 热门图书排行
 
-<Route author="xyqfer" example="/douban/book/rank/fiction" path="/douban/book/rank/:type" :paramsDesc="['图书类型']">
+<Route author="xyqfer queensferryme" example="/douban/book/rank/fiction" path="/douban/book/rank/:type?" :paramsDesc="['图书类型，默认合并列表']">
 
-| 虚构    | 非虚构     |
-| ------- | ---------- |
-| fiction | nonfiction |
+| 全部 | 虚构    | 非虚构     |
+| ---- | ------- | ---------- |
+|      | fiction | nonfiction |
 
 </Route>
 
