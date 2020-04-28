@@ -4,6 +4,18 @@ pageClass: routes
 
 # Design
 
+## Axis Studios
+
+### Work type
+
+<RouteEn author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" :paramsDesc="['`work`, `blog`', 'Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']">
+
+Work type URL in articles. Such as： 'https://axisstudiosgroup.com/work/full-service-cg-production' the tag will be `full-service-cg-production`.
+
+Some tags are rarely used： `Script`, `direction`, `production`, `design-concept` etc。
+
+</RouteEn>
+
 ## Dribbble
 
 ### Popular
