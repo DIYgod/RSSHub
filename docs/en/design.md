@@ -6,6 +6,8 @@ pageClass: routes
 
 ## Blow Studio
 
+### Home
+
 <RouteEn author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
 
 ## Dribbble
