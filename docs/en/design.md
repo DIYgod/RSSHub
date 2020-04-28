@@ -4,24 +4,6 @@ pageClass: routes
 
 # Design
 
-## Digic Picture
-
-### Works & News
-
-<RouteEn author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']" />
-
-## Blur Studio
-
-### Works
-
-<RouteEn author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
-
-## Blow Studio
-
-### Home
-
-<RouteEn author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
-
 ## Axis Studios
 
 ### Work type
@@ -33,6 +15,24 @@ Work type URL in articles. Such as： 'https://axisstudiosgroup.com/work/full-se
 Some tags are rarely used： `Script`, `direction`, `production`, `design-concept` etc。
 
 </RouteEn>
+
+## Blow Studio
+
+### Home
+
+<RouteEn author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
+
+## Blur Studio
+
+### Works
+
+<RouteEn author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
+
+## Digic Picture
+
+### Works & News
+
+<RouteEn author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']" />
 
 ## Dribbble
 
@@ -55,12 +55,6 @@ Some tags are rarely used： `Script`, `direction`, `production`, `design-concep
 <RouteEn author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </RouteEn>
 
-## Sun Creature
-
-### Works
-
-<RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
-
 ## Method Studios
 
 ### Menus
@@ -72,6 +66,12 @@ Not support `main`, `news`.
 Default is under 'https://www.methodstudios.com/en/features'.
 
 </RouteEn>
+
+## Sun Creature
+
+### Works
+
+<RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
 
 ## Unit Image
 

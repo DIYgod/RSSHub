@@ -4,24 +4,6 @@ pageClass: routes
 
 # 设计
 
-## Digic Picture
-
-### 作品和新闻
-
-<Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'WORK 下项目类型: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']"/>
-
-## Blur Studio
-
-### Works
-
-<Route author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
-
-## Blow Studio
-
-### 主页
-
-<Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
-
 ## Axis Studios
 
 ### Work type
@@ -33,6 +15,24 @@ pageClass: routes
 有一些 tag 并不经常使用： `Script`, `direction`, `production`, `design-concept` 等等。
 
 </Route>
+
+## Blow Studio
+
+### 主页
+
+<Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
+
+## Blur Studio
+
+### Works
+
+<Route author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
+
+## Digic Picture
+
+### 作品和新闻
+
+<Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'WORK 下项目类型: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']"/>
 
 ## Dribbble
 
@@ -55,12 +55,6 @@ pageClass: routes
 <Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </Route>
 
-## Sun Creature
-
-### Works
-
-<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
-
 ## Method Studios
 
 ### 菜单
@@ -72,6 +66,12 @@ pageClass: routes
 默认为 'https://www.methodstudios.com/en/features' 下的栏目。
 
 </Route>
+
+## Sun Creature
+
+### Works
+
+<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
 
 ## UI 中国
 
