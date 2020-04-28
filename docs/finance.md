@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
+## 新浪财经
+
+### 新浪财经－国內
+
+<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
+
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
 ### 资讯
