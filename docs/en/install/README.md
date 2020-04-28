@@ -182,7 +182,7 @@ $ git pull
 
 Then repeat the installation steps
 
-## Heroku Deployment
+## Deploy to Heroku
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
@@ -190,7 +190,7 @@ Then repeat the installation steps
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
-## Google App Engine(GAE) Deployment
+## Deploy to Google App Engine(GAE)
 
 ### Before You Begin
 
