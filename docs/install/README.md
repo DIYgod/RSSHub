@@ -188,7 +188,7 @@ $ git pull
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
-## 部署至 Vercel(Zeit Now)
+## 部署到 Vercel(Zeit Now)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
@@ -200,7 +200,7 @@ $ git pull
 
 按照这里的引导完成 GCP 账号设置，创建 GCP 项目，创建 App Engine 项目，开通付费功能（必须），安装 git 与 gcloud 工具。并完成 gcloud 工具的初始化，初始化具体方式[请查看这个链接](https://cloud.google.com/sdk/gcloud/?hl=zh-CN)。如果你不打算在本地调试本项目，可以不安装 Node.js 环境。
 
-请注意，GAE 免费用量不支持 Flexible Environment，部署至 Flexible Environment 前请确认收费标准。
+请注意，GAE 免费用量不支持 Flexible Environment，部署到 Flexible Environment 前请确认收费标准。
 
 Node.JS 的 standard environment 仍在测试中，您可能会在部署或使用中遇到某些不可预期的问题。
 
@@ -208,7 +208,7 @@ Node.JS 的 standard environment 仍在测试中，您可能会在部署或使�
 
 ### app.yaml 配置
 
-#### 部署至 Flexible Environment
+#### 部署到 Flexible Environment
 
 在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
 
@@ -238,7 +238,7 @@ env_variables:
 # [END app_yaml]
 ```
 
-#### 部署至 standard environment
+#### 部署到 standard environment
 
 在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
 
