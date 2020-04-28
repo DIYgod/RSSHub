@@ -9,5 +9,5 @@ const s = require('@/app.js').callback();
 module.exports = (req, res) => {
     s(req, res);
     // set cdn cache timeout of now
-    res.setHeader('Cache-Control', `max-age=0, s-maxage=${config.cache.routeExpire}`);
+    res.setHeader('Cache-Control', `max-age=${config.cache.routeExpire}, s-maxage=${config.cache.routeExpire}`);
 };
