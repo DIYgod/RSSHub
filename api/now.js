@@ -1,9 +1,9 @@
 const config = require('../lib/config');
-const app = require('../lib/app');
-
 config.set({
-    noLogFiles: true,
+    NO_LOGFILES: true,
 });
+
+const app = require('../lib/app');
 
 module.exports = (req, res) => {
     app.callback()(req, res);
