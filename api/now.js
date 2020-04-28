@@ -1,3 +1,7 @@
+const path = require('path');
+const moduleAlias = require('module-alias');
+moduleAlias.addAlias('@', path.join(__dirname, '../lib'));
+
 const config = require('../lib/config');
 config.set({
     NO_LOGFILES: true,
