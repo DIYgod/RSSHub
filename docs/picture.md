@@ -4,12 +4,6 @@ pageClass: routes
 
 # 图片
 
-## 1X
-
-### Magazine
-
-<Route author="emdoe" example="/1x/magazine" path="/1x/magazine"/>
-
 ## Awesome Pigtails
 
 ### 最新图片

@@ -349,6 +349,8 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
 `DISALLOW_ROBOT`: prevent indexing by search engine
 
+`HOTLINK_TEMPLATE`: Replace image link in description to avoid anti-hotlink protection, leave blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any properity listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
+
 ### Route-specific Configurations
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)

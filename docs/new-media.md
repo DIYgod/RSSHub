@@ -332,6 +332,23 @@ Supported sub-sites：
 
 <Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
+## 本地宝
+
+### 焦点资讯
+
+<Route author="nczitzk" example="/bendibao/news/bj" path="/bendibao/news/:city" :paramsDesc="['城市缩写']">
+
+| 城市名 | 缩写 |
+| ------ | ---- |
+| 北京   | bj   |
+| 上海   | sh   |
+| 广州   | gz   |
+| 深圳   | sz   |
+
+更多城市请参见 [这里](http://www.bendibao.com/city.htm)
+
+</Route>
+
 ## 币世界
 
 ### 快讯
