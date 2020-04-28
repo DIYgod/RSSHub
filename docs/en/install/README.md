@@ -263,6 +263,10 @@ env_variables:
 # [END app_yaml]
 ```
 
+#### Deploy to Vercel(Zeit Now)
+
+Project export a now serverless function with a `now.json` configuration，After installing[Vercel(Zeit Now)](https://vercel.com/docs/now-cli)，just run `now` in project directory, RSSHub is on now serverless function.
+
 ### Install
 
 Under RSSHub's root directory, execute the following commands to launch RSSHub
