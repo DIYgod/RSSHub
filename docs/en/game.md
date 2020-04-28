@@ -80,6 +80,16 @@ Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk
 
 </RouteEn>
 
+### Game Product Price
+
+<RouteEn author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['region','gridName from the product']" radar="1">
+
+Tested some countries, it should be work for most.
+
+Compatible with Product with an URL like <https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000>. For instance ['Cyberpunk 2077'](https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) the region is `en-us`, the gridName is `HP4497-CUSA16570_00-ASIAFULLGAME0000`
+
+</RouteEn>
+
 ### PlayStation Network user trophy
 
 <RouteEn author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['User ID']" radar="1"/>

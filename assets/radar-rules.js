@@ -649,6 +649,12 @@
                 source: '/zh-hans-hk/grid/:id/:page',
                 target: '/ps/list/:id',
             },
+            {
+                title: '折扣|价格',
+                docs: 'https://docs.rsshub.app/game.html#playstation',
+                source: ['/:lang/product/:gridName'],
+                target: '/ps/:lang/product/:gridName',
+            },
         ],
         www: [
             {
