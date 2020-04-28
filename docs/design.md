@@ -35,6 +35,12 @@ pageClass: routes
 
 <Route author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" :paramsDesc="['用户id']"/>
 
+## Unit Image
+
+### Films
+
+<Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
+
 ## 站酷
 
 ### 推荐
