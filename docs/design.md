@@ -6,6 +6,8 @@ pageClass: routes
 
 ## Digic Picture
 
+### 作品和新闻
+
 <Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'WORK 下项目类型: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']"/>
 ## Dribbble
 
