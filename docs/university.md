@@ -425,7 +425,7 @@ category 列表：
 
 ### 研究生院
 
-<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']" radar="1">
+<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['栏目, 默认为 `announcement`']" radar="1">
 
 | 通知公告     | 新闻动态 | 国家公派项目 | 国际合作与交流项目 |
 | ------------ | -------- | ------------ | ------------------ |
@@ -435,7 +435,7 @@ category 列表：
 
 ### 就业服务平台
 
-<Route author="Derekmini" example="/heu/job/tzgg" path="/heu/job/:type?" :paramsDesc="['分类, 默认为 `tzgg`']" radar="1">
+<Route author="Derekmini" example="/heu/job/tzgg" path="/heu/job/:type?" :paramsDesc="['栏目, 默认为 `tzgg`']" radar="1">
 
 | 通知公告 |
 | -------- |
@@ -443,9 +443,9 @@ category 列表：
 
 </Route>
 
-### 工学网
+### 工学新闻
 
-<Route author="Derekmini XYenon" example="/heu/gongxue/yw" path="/heu/gongxue/:type?" :paramsDesc="['分类, 默认为 `yw`']" radar="1">
+<Route author="Derekmini XYenon" example="/heu/news/yw" path="/heu/news/:type?" :paramsDesc="['栏目, 默认为 `yw`']" radar="1">
 
 | 要闻 | 时讯 |
 | ---- | ---- |
@@ -455,7 +455,7 @@ category 列表：
 
 ### 水声工程学院通知
 
-<Route author="Derekmini" example="/heu/shuisheng/xwdt" path="/heu/shuisheng/:type?" :paramsDesc="['分类, 默认为 `xwdt`']" radar="1">
+<Route author="Derekmini" example="/heu/uae/xwdt" path="/heu/uae/:type?" :paramsDesc="['栏目, 默认为 `xwdt`']" radar="1">
 
 | 新闻动态 | 通知公告 |
 | -------- | -------- |
