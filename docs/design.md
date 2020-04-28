@@ -43,6 +43,12 @@ pageClass: routes
 <Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </Route>
 
+## Sun Creature
+
+### Works
+
+<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
+
 ## Method Studios
 
 ### 菜单

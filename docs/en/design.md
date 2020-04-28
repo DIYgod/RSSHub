@@ -43,6 +43,12 @@ Some tags are rarely used： `Script`, `direction`, `production`, `design-concep
 <RouteEn author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </RouteEn>
 
+## Sun Creature
+
+### Works
+
+<RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
+
 ## Method Studios
 
 ### Menus
