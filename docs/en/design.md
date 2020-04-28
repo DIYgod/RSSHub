@@ -43,6 +43,18 @@ Some tags are rarely used： `Script`, `direction`, `production`, `design-concep
 <RouteEn author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </RouteEn>
 
+## Method Studios
+
+### Menus
+
+<RouteEn author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" :paramsDesc="['URL behind /en: `features`, `advertising`, `episodic`, `games`, `methodmade`']">
+
+Not support `main`, `news`.
+
+Default is under 'https://www.methodstudios.com/en/features'.
+
+</RouteEn>
+
 ## Unit Image
 
 ### Films
