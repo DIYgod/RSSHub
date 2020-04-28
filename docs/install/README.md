@@ -186,11 +186,11 @@ $ git pull
 
 ## 部署到 Heroku
 
-[![Deploy](https://i.imgur.com/e6ZcmUY.png)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+[![Deploy to Heroku](https://i.imgur.com/e6ZcmUY.png)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
 ## 部署至 Vercel(Zeit Now)
 
-项目中导出了 now serverless function 并附带 `now.json`相关配置，安装了[Vercel(Zeit Now)](https://vercel.com/docs/now-cli)之后，只需要在项目中运行`now` 即可部署到 Now 的云函数上。
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
 ## 部署到 Google App Engine
 
