@@ -4,6 +4,12 @@ pageClass: routes
 
 # Design
 
+## Blur Studio
+
+### Works
+
+<RouteEn author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
+
 ## Blow Studio
 
 ### Home
