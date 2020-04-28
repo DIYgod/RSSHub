@@ -4,6 +4,12 @@ pageClass: routes
 
 # Design
 
+## Blow Studio
+
+### Home
+
+<RouteEn author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
+
 ## Axis Studios
 
 ### Work type

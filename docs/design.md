@@ -4,6 +4,12 @@ pageClass: routes
 
 # 设计
 
+## Blow Studio
+
+### 主页
+
+<Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
+
 ## Axis Studios
 
 ### Work type
@@ -15,6 +21,7 @@ pageClass: routes
 有一些 tag 并不经常使用： `Script`, `direction`, `production`, `design-concept` 等等。
 
 </Route>
+
 ## Dribbble
 
 ### 流行
