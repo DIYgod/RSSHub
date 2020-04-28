@@ -184,7 +184,7 @@ Then repeat the installation steps
 
 ## Heroku Deployment
 
-[![Deploy to Heroku](https://i.imgur.com/e6ZcmUY.png)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
 ## Deploy to Vercel(Zeit Now)
 
