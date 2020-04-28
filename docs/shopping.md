@@ -105,6 +105,12 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 <Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
 
+## 人民邮电出版社
+
+### 图书列表
+
+<Route author="hoilc" example="/ptpress/book/new" path="/ptpress/book/:type?" :paramsDesc="['排序方式，默认`new`为最新图书，可选`hot`为最热图书']"/>
+
 ## 什么值得买
 
 ::: tip 提示
