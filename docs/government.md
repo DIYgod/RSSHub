@@ -330,6 +330,21 @@ pageClass: routes
 
 </Route>
 
+## 中华人民共和国农业农村部
+
+### 新闻
+
+<Route author="Origami404" example="/gov/moa/xw/zwdt" path="/gov/moa/:suburl" :paramsDesc="['分类目录的子url']">
+
+更多例子:
+
+-   `农业农村部动态`的网页链接是`http://www.moa.gov.cn/xw/zwdt/`, 对应的`suburl`是`xw/zwdt`
+-   `财务公开`的网页链接是`http://www.moa.gov.cn/gk/cwgk_1/`, 对应的`suburl`是`gk/cwgk_1`
+-   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面(`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录, 它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合, 这时候请点开对应栏目的`更多>>`进入栏目的目录, 再根据上面的规则提取`suburl`
+-   特别地, `图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
+
+</Route>
+
 ## 中华人民共和国商务部
 
 ### 政务公开
