@@ -27,6 +27,8 @@ pageClass: routes
 
 ## Method Studios
 
+###菜单
+
 <Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:menu?" :paramsDesc="['地址栏下 /en 后的栏目: `features`, `advertising`, `episodic`, `games`, `methodmade`']">
 
 不支持`news`和`main`。
