@@ -143,6 +143,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/bjp/apod" path="/bjp/apod"/>
 
+## 比村乳业
+
+### 游戏时光 - 「周更」《星期一的丰满》鲜奶图汇总
+
+<Route author="filwaline" example="/vgtime/mondaymilk" path="/vgtime/mondaymilk"/>
+
 ## 不羞涩
 
 ### 分类
@@ -232,10 +238,3 @@ pageClass: routes
 ### 用户上传作品和用户喜欢作品
 
 <Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" :paramsDesc="['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']"/>
-
-
-## 比村乳业
-
-### 游戏时光 - 「周更」《星期一的丰满》鲜奶图汇总
-
-<Route author="filwaline" example="/vgtime/mondaymilk" path="/vgtime/mondaymilk"/>
