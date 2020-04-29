@@ -1711,7 +1711,6 @@
                 title: '频道',
                 docs: 'https://docs.rsshub.app/social-media.html#telegram',
                 source: '/:username',
-                verification: (params) => params.isChannel,
                 target: (params, url, document) => {
                     const isChannel = document && document.querySelector('.tgme_action_button_label');
                     if (isChannel) {
