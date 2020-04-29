@@ -18,6 +18,12 @@ pageClass: routes
 
 > AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
+## cve.mitre.org
+
+### 搜索结果
+
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词'] >
+
 ## Dockone
 
 ### 周报
@@ -712,7 +718,21 @@ GitHub 官方也提供了一些 RSS:
 
 ### 基础库更新日志
 
-<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixin/miniprogram/release"/>
+<Route author="magicLaLa nczitzk" example="/weixin/miniprogram/framework" path="/weixin/miniprogram/framework"/>
+
+### 开发者工具更新日志
+
+<Route author="nczitzk" example="/weixin/miniprogram/devtools" path="/weixin/miniprogram/devtools"/>
+
+### 云开发更新日志
+
+<Route author="nczitzk" example="/weixin/miniprogram/wxcloud/cloud-sdk" path="/weixin/miniprogram/wxcloud/:caty?" :paramsDesc="['日志分类']">
+
+| 小程序基础库更新日志（云开发部分） | IDE 云开发 & 云控制台更新日志 | wx-server-sdk 更新日志 |
+| ---------------------------------- | ----------------------------- | ---------------------- |
+| cloud-sdk                          | ide                           | server-sdk             |
+
+</Route>
 
 ## 印记中文周刊
 
