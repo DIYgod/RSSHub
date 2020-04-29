@@ -35,8 +35,6 @@
             {{ if $value.itunes_item_image }}<itunes:image href="{{ $value.itunes_item_image }}"/>{{ /if }}
             {{ if $value.enclosure_url }}<enclosure url="{{ $value.enclosure_url }}" {{ if $value.enclosure_length }}length="{{ $value.enclosure_length }}"{{ /if }} {{ if $value.enclosure_type }}type="{{ $value.enclosure_type }}"{{ /if }} />{{ /if }}
             {{ if itunes_author && $value.itunes_duration }}<itunes:duration>{{ $value.itunes_duration }}</itunes:duration> {{ /if }}
-            {{ if itunes_author && $value.itunes_category }}<itunes:category>{{ $value.itunes_category }}</itunes:category> {{ /if }}
-            {{ if itunes_author && $value.itunes_explicit }}<itunes:explicit>{{ $value.itunes_explicit }}</itunes:explicit> {{ /if }}
             {{ if $value.author }}<author><![CDATA[{{ $value.author }}]]></author>{{ /if }}
             {{ if typeof $value.category === 'string' }}
             <category>{{ $value.category }}</category>
