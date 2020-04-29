@@ -240,6 +240,12 @@
                 source: '/:user',
                 target: '/github/starred_repos/:user',
             },
+            {
+                title: '仓库 Contributors',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: ['/:user/:repo/graphs/contributors', '/:user/:repo'],
+                target: '/github/contributors/:user/:repo',
+            },
         ],
     },
     'zhihu.com': {
@@ -254,7 +260,7 @@
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/people/:id/activities',
+                source: '/people/:id',
                 target: '/zhihu/people/activities/:id',
             },
             {
@@ -668,6 +674,12 @@
                 docs: 'https://docs.rsshub.app/game.html#playstation',
                 source: '/zh-hans-hk/grid/:id/:page',
                 target: '/ps/list/:id',
+            },
+            {
+                title: '折扣|价格',
+                docs: 'https://docs.rsshub.app/game.html#playstation',
+                source: ['/:lang/product/:gridName'],
+                target: '/ps/:lang/product/:gridName',
             },
         ],
         www: [
@@ -1161,6 +1173,14 @@
                 },
             },
         ],
+        sites: [
+            {
+                title: 'Sites',
+                docs: 'https://docs.rsshub.app/blog.html#google-sites',
+                source: ['/site/:id/*', '/site/:id'],
+                target: '/google/sites/:id',
+            },
+        ],
     },
     'javlibrary.com': {
         _name: 'javlibrary',
@@ -1384,6 +1404,103 @@
             },
         ],
     },
+    'hrbeu.edu.cn': {
+        _name: '哈尔滨工程大学',
+        yjsy: [
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/announcement',
+            },
+            {
+                title: '研究生院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/news',
+            },
+            {
+                title: '研究生院 - 国家公派项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjgp',
+            },
+            {
+                title: '研究生院 - 国际合作与交流项目',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/yjsy/gjhz',
+            },
+        ],
+        job: [
+            {
+                title: '就业服务平台 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/job/tzgg',
+            },
+        ],
+        uae: [
+            {
+                title: '水声学院 - 新闻动态',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/xwdt',
+            },
+            {
+                title: '研究生院 - 通知公告',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/shuisheng/tzgg',
+            },
+        ],
+    },
+    'gongxue.cn': {
+        _name: '工学网',
+        '.': [
+            {
+                title: '要闻',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/yw',
+            },
+            {
+                title: '时讯',
+                docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
+                source: '/*',
+                target: '/heu/gongxue/sx',
+            },
+        ],
+    },
+    'nsfc.gov.cn': {
+        _name: '国家自然科学基金委员会',
+        www: [
+            {
+                title: '基金要闻',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/jjyw',
+            },
+            {
+                title: '通知公告',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/tzgg',
+            },
+            {
+                title: '资助成果',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/zzcg',
+            },
+            {
+                title: '科普快讯',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui',
+                source: '/*',
+                target: '/nsfc/news/kpkx',
+            },
+        ],
+    },
     'japanpost.jp': {
         _name: '日本郵便',
         'trackings.post': [
@@ -1391,13 +1508,53 @@
                 title: '郵便・荷物の追跡',
                 docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian',
                 source: '/services/srv/search/direct',
-                target: (url) => {
+                target: (params, url) => {
                     const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
                     const locale = new URL(url).searchParams.get('locale').toLowerCase();
                     if ((reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
                         return `/japanpost/${reqCode}/${locale}`;
                     }
                 },
+            },
+        ],
+    },
+    'apnews.com': {
+        _name: 'AP News',
+        '.': [
+            {
+                title: '话题',
+                docs: 'https://docs.rsshub.app/traditional-media.html#ap-news',
+                source: '/:topic',
+                target: '/apnews/topics/:topic',
+            },
+        ],
+    },
+    'csc.edu.cn': {
+        _name: '国家留学网',
+        www: [
+            {
+                title: '遴选通知',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/lxtz',
+            },
+            {
+                title: '综合项目专栏',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/xmzl',
+            },
+            {
+                title: '常见问题解答',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/wtjd',
+            },
+            {
+                title: '录取公告',
+                docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang',
+                source: '/*',
+                target: '/csc/notice/lqgg',
             },
         ],
     },
@@ -1408,6 +1565,187 @@
                 docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge',
                 source: '/:id',
                 target: '/novel/biquge/:id',
+            },
+        ],
+    },
+    'matters.news': {
+        _name: 'Matters',
+        '.': [
+            {
+                title: '最新排序',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: '',
+                target: '/matters/latest',
+            },
+            {
+                title: '熱門文章',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: '',
+                target: '/matters/hot',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: '/tags/:tid',
+                target: '/matters/tags/:tid',
+            },
+            {
+                title: '作者',
+                docs: 'https://docs.rsshub.app/new-media.html#matters',
+                source: ['/:id', '/:id/comments'],
+                target: (params) => {
+                    const uid = params.id.replace('@', '');
+                    return uid ? `/matters/author/${uid}` : '';
+                },
+            },
+        ],
+    },
+    'zhaishuyuan.com': {
+        _name: '斋书苑',
+        www: [
+            {
+                title: '最新章节',
+                docs: 'https://docs.rsshub.app/reading.html#zhai-shu-yuan',
+                source: ['/book/:id', '/read/:id'],
+                target: '/novel/zhaishuyuan/:id',
+            },
+        ],
+    },
+    'hbut.edu.cn': {
+        _name: '湖北工业大学',
+        www: [
+            {
+                title: '新闻中心',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/xwzx/:name',
+                target: (params) => {
+                    const type = params.name.replace('.htm', '');
+                    return type ? `/hbut/news/${type}` : '/hbut/news/tzgg';
+                },
+            },
+        ],
+        jsjxy: [
+            {
+                title: '新闻动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/xwdt.htm',
+                target: '/hbut/cs/xwdt',
+            },
+            {
+                title: '通知公告',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/index/tzgg.htm',
+                target: '/hbut/cs/tzgg',
+            },
+            {
+                title: '教学信息',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/jxxx.htm',
+                target: '/hbut/cs/jxxx',
+            },
+            {
+                title: '科研动态',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/kxyj/kydt.htm',
+                target: '/hbut/cs/kydt',
+            },
+            {
+                title: '党建活动',
+                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                source: '/djhd/djhd.htm',
+                target: '/hbut/cs/djhd',
+            },
+        ],
+    },
+    'zcool.com.cn': {
+        _name: '站酷',
+        www: [
+            {
+                title: '全部推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/all',
+            },
+            {
+                title: '首页推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '编辑推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/home',
+            },
+            {
+                title: '文章推荐',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/recommenda/article',
+            },
+            {
+                title: '作品榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/design',
+            },
+            {
+                title: '文章榜单',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/top/article',
+            },
+            {
+                title: '用户作品',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: ['/u/:id'],
+                target: `/zcoo/user/:id`,
+            },
+        ],
+    },
+    't.me': {
+        _name: 'Telegram',
+        '.': [
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/:username',
+                verification: (params) => params.isChannel,
+                target: (params, url, document) => {
+                    const isChannel = document && document.querySelector('.tgme_action_button_label');
+                    if (isChannel) {
+                        return '/telegram/channel/:username';
+                    }
+                },
+            },
+            {
+                title: '频道',
+                docs: 'https://docs.rsshub.app/social-media.html#telegram',
+                source: '/s/:username',
+                target: '/telegram/channel/:username',
+            },
+        ],
+    },
+    'zhuixinfan.com': {
+        _name: '追新番日剧站',
+        '.': [
+            {
+                title: '更新列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan',
+                source: ['/main.php'],
+                target: '/zhuixinfan/list',
+            },
+        ],
+    },
+    'etoland.co.kr': {
+        _name: 'eTOLAND',
+        '.': [
+            {
+                title: '主题贴',
+                docs: 'https://docs.rsshub.app/bbs.html#etoland',
+                source: ['/bbs/board.php', '/plugin/mobile/board.php'],
+                target: (params, url) => `/etoland/${new URL(url).searchParams.get('bo_table')}`,
             },
         ],
     },
