@@ -143,6 +143,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/bjp/apod" path="/bjp/apod"/>
 
+## 比村乳业
+
+### 游戏时光 - 「周更」《星期一的丰满》鲜奶图汇总
+
+<Route author="filwaline" example="/vgtime/mondaymilk" path="/vgtime/mondaymilk"/>
+
 ## 不羞涩
 
 ### 分类
