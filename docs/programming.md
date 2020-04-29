@@ -708,7 +708,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 基础库更新日志
 
-<Route author="magicLaLa nczitzk" example="/weixin/miniprogram/release" path="/weixin/miniprogram/release"/>
+<Route author="magicLaLa nczitzk" example="/weixin/miniprogram/framework" path="/weixin/miniprogram/framework"/>
 
 ### 开发者工具更新日志
 
