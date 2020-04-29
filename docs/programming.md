@@ -18,6 +18,12 @@ pageClass: routes
 
 > AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
 
+## cve.mitre.org
+
+### 搜索结果
+
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词'] >
+
 ## Dockone
 
 ### 周报
