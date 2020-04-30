@@ -186,3 +186,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### ROM Releases
 
 <RouteEn author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+
+## Xposed Module Repository
+
+### Module Update
+
+<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>

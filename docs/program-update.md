@@ -116,7 +116,7 @@ pageClass: routes
 
 ### 附加组件(Add-ons)更新
 
-<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']/>
+<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']" />
 
 ## Greasy Fork
 
@@ -220,7 +220,9 @@ pageClass: routes
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
 
-## Xposed Module
+## Xposed Module Repository
+
+### Module 更新
 
 <Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['模块包名, 模块页中的 Package 字段']"/>
 
