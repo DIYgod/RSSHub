@@ -70,6 +70,10 @@ Sorting types, default to `date`:
 
 <RouteEn author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
 
+### Voucher Compatible Games
+
+<RouteEn author="MisteryMonster" example="/nintendo/voucher-compatible-games" path="/nintendo/voucher-compatible-games"/>
+
 ## PlayStation Store
 
 ### Game List（Hong Kong）

@@ -124,6 +124,10 @@ pageClass: routes
 
 <Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
 
+### 游戏抵用券支持兑换的游戏
+
+<Route author="MisteryMonster" example="/nintendo/voucher-compatible-games" path="/nintendo/voucher-compatible-games"/>
+
 ## PlayStation
 
 ### PlayStation Store 游戏列表
