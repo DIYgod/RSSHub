@@ -649,6 +649,12 @@
                 source: '/zh-hans-hk/grid/:id/:page',
                 target: '/ps/list/:id',
             },
+            {
+                title: '折扣|价格',
+                docs: 'https://docs.rsshub.app/game.html#playstation',
+                source: ['/:lang/product/:gridName'],
+                target: '/ps/:lang/product/:gridName',
+            },
         ],
         www: [
             {
@@ -1404,30 +1410,27 @@
                 title: '水声学院 - 新闻动态',
                 docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
                 source: '/*',
-                target: '/heu/shuisheng/xwdt',
+                target: '/heu/uae/xwdt',
             },
             {
                 title: '研究生院 - 通知公告',
                 docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
                 source: '/*',
-                target: '/heu/shuisheng/tzgg',
+                target: '/heu/uae/tzgg',
             },
         ],
-    },
-    'gongxue.cn': {
-        _name: '工学网',
-        '.': [
+        news: [
             {
-                title: '要闻',
+                title: '工学新闻 - 要闻',
                 docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
                 source: '/*',
-                target: '/heu/gongxue/yw',
+                target: '/heu/news/yw',
             },
             {
-                title: '时讯',
+                title: '工学新闻 - 时讯',
                 docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue',
                 source: '/*',
-                target: '/heu/gongxue/sx',
+                target: '/heu/news/sx',
             },
         ],
     },

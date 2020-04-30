@@ -21,21 +21,6 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
-## Play with Docker
-
-If you would like to test routes or avoid IP limits, etc., you may build your own RSSHub for free by clicking the button below.
-
-[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
-
-::: warning Warning
-
--   [DockerHub](https://hub.docker.com) account required
--   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
--   If deploy success but port cannot be auto-deteced，please click the `open port` button on the top and type `1200`
--   Sometimes PWD won't work as expected. If you encounter blank screen after `Start`, or some error during initialization, please retry
-
-:::
-
 ## Docker Compose Deployment
 
 ### Install
@@ -197,11 +182,15 @@ $ git pull
 
 Then repeat the installation steps
 
-## Heroku Deployment
+## Deploy to Heroku
 
-[![Deploy](https://i.imgur.com/e6ZcmUY.png)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
-## Google App Engine(GAE) Deployment
+## Deploy to Vercel(Zeit Now)
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
+
+## Deploy to Google App Engine(GAE)
 
 ### Before You Begin
 
@@ -274,6 +263,21 @@ gcloud app deploy
 For changing the deployment project id or version id, please refer to `Deploying a service` section [here](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app).
 
 You can access your `Google App Engine URL` to check the deployment status
+
+## Play with Docker
+
+If you would like to test routes or avoid IP limits, etc., you may build your own RSSHub for free by clicking the button below.
+
+[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
+
+::: warning Warning
+
+-   [DockerHub](https://hub.docker.com) account required
+-   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
+-   If deploy success but port cannot be auto-deteced，please click the `open port` button on the top and type `1200`
+-   Sometimes PWD won't work as expected. If you encounter blank screen after `Start`, or some error during initialization, please retry
+
+:::
 
 ## Configuration
 
@@ -348,6 +352,8 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
 `DISALLOW_ROBOT`: prevent indexing by search engine
+
+`HOTLINK_TEMPLATE`: Replace image link in description to avoid anti-hotlink protection, leave blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any properity listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
 
 ### Route-specific Configurations
 

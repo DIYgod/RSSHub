@@ -83,9 +83,9 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 最新商品
 
 <Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" :paramsDesc="['分类名']" >
-| 全部     | 闪购 | 秒发 | 跨境    | 尾货专场 |
-| -------- | ------- | --- | ------- | ------ |
-| home | shangou | miaofa | csborder | weihuo |
+| 全部 | 闪购    | 秒发   | 跨境     | 尾货专场 |
+| ---- | ------- | ------ | -------- | -------- |
+| home | shangou | miaofa | csborder | weihuo   |
 
 </Route>
 
@@ -104,6 +104,12 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 单品活动信息
 
 <Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
+
+## 人民邮电出版社
+
+### 图书列表
+
+<Route author="hoilc" example="/ptpress/book/new" path="/ptpress/book/:type?" :paramsDesc="['排序方式，默认`new`为最新图书，可选`hot`为最热图书']"/>
 
 ## 什么值得买
 
@@ -228,6 +234,16 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 宜家 IKEA（英国）- 促销
 
 <Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+
+## 优衣库
+
+### Stylingbook
+
+<Route author="LunaXu" example="/uniqlo/stylingbook/women" path="/uniqlo/stylingbook/:category?" :paramsDesc="['类别']">
+| 女式  | 男式 | 小孩 | 婴儿 |
+| ----- | ---- | ---- | ---- |
+| women | men  | kids | baby |
+</Route>
 
 ## 有赞
 

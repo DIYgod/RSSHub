@@ -14,7 +14,7 @@ pageClass: routes
 
 ### 资讯
 
-<Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码, 按照表列出']">
+<Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码, 按照表列出']" />
 
 | 最新文章 | 市场要闻 | 交易策略 | 机构观点 | 投资学堂 | 行业观察 | 基金理财 | 分析师投稿 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
@@ -35,6 +35,12 @@ pageClass: routes
 ### 用户动态
 
 <Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
+## 新浪财经
+
+### 新浪财经－国內
+
+<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
 
 ## 雪球
 

@@ -21,21 +21,6 @@ sidebar: auto
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
-## Play with Docker
-
-如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
-
-[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
-
-::: warning 注意
-
--   需要 [DockerHub](https://hub.docker.com) 账号
--   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
--   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
--   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
-
-:::
-
 ## Docker Compose 部署
 
 ### 安装
@@ -201,7 +186,11 @@ $ git pull
 
 ## 部署到 Heroku
 
-[![Deploy](https://i.imgur.com/e6ZcmUY.png)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+## 部署到 Vercel(Zeit Now)
+
+[![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
 ## 部署到 Google App Engine
 
@@ -211,7 +200,7 @@ $ git pull
 
 按照这里的引导完成 GCP 账号设置，创建 GCP 项目，创建 App Engine 项目，开通付费功能（必须），安装 git 与 gcloud 工具。并完成 gcloud 工具的初始化，初始化具体方式[请查看这个链接](https://cloud.google.com/sdk/gcloud/?hl=zh-CN)。如果你不打算在本地调试本项目，可以不安装 Node.js 环境。
 
-请注意，GAE 免费用量不支持 Flexible Environment，部署至 Flexible Environment 前请确认收费标准。
+请注意，GAE 免费用量不支持 Flexible Environment，部署到 Flexible Environment 前请确认收费标准。
 
 Node.JS 的 standard environment 仍在测试中，您可能会在部署或使用中遇到某些不可预期的问题。
 
@@ -219,7 +208,7 @@ Node.JS 的 standard environment 仍在测试中，您可能会在部署或使�
 
 ### app.yaml 配置
 
-#### 部署至 Flexible Environment
+#### 部署到 Flexible Environment
 
 在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
 
@@ -249,7 +238,7 @@ env_variables:
 # [END app_yaml]
 ```
 
-#### 部署至 standard environment
+#### 部署到 standard environment
 
 在 RSSHub 项目根目录下建立一个 app.yaml 文件，内容示例如下：
 
@@ -266,6 +255,21 @@ env_variables:
     CACHE_EXPIRE: '300'
 # [END app_yaml]
 ```
+
+## Play with Docker
+
+如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
+
+[![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
+
+::: warning 注意
+
+-   需要 [DockerHub](https://hub.docker.com) 账号
+-   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
+-   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
+-   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
+
+:::
 
 ### 安装
 
@@ -352,6 +356,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
 `DISALLOW_ROBOT`: 防止被搜索引擎收录
+
+`HOTLINK_TEMPLATE`: 用于处理描述中图片的链接，绕过防盗链等限制，留空不生效。用法参考[#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用[URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties)的所有属性，格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
 
 ### 部分 RSS 模块配置
 

@@ -24,6 +24,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run : sudo apt-get update & sudo apt-get install -y libgbm-dev
     - run : yarn install
     - run: npm run test
       env:
