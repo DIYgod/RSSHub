@@ -220,6 +220,10 @@ pageClass: routes
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
 
+## Xposed Module
+
+<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['模块包名, 模块页中的 Package 字段']"/>
+
 ## 怪物猎人世界
 
 ### 更新
