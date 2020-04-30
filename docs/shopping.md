@@ -83,9 +83,9 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 最新商品
 
 <Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" :paramsDesc="['分类名']" >
-| 全部     | 闪购 | 秒发 | 跨境    | 尾货专场 |
-| -------- | ------- | --- | ------- | ------ |
-| home | shangou | miaofa | csborder | weihuo |
+| 全部 | 闪购    | 秒发   | 跨境     | 尾货专场 |
+| ---- | ------- | ------ | -------- | -------- |
+| home | shangou | miaofa | csborder | weihuo   |
 
 </Route>
 
@@ -234,6 +234,16 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 宜家 IKEA（英国）- 促销
 
 <Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+
+## 优衣库
+
+### Stylingbook
+
+<Route author="LunaXu" example="/uniqlo/stylingbook/women" path="/uniqlo/stylingbook/:category?" :paramsDesc="['类别']">
+| 女式  | 男式 | 小孩 | 婴儿 |
+| ----- | ---- | ---- | ---- |
+| women | men  | kids | baby |
+</Route>
 
 ## 有赞
 

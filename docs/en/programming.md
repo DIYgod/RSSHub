@@ -4,6 +4,12 @@ pageClass: routes
 
 # Programming
 
+## cve.mitre.org
+
+### Search Result
+
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
+
 ## GitHub
 
 ::: tip
