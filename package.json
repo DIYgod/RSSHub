@@ -70,7 +70,7 @@
     "co-redis": "2.1.1",
     "crypto-js": "4.0.0",
     "currency-symbol-map": "4.0.4",
-    "dayjs": "1.8.25",
+    "dayjs": "1.8.26",
     "dotenv": "8.2.0",
     "emailjs-imap-client": "3.1.0",
     "etag": "1.8.1",

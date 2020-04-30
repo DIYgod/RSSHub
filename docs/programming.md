@@ -22,7 +22,7 @@ pageClass: routes
 
 ### 搜索结果
 
-<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词'] >
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词']" />
 
 ## Dockone
 
