@@ -322,11 +322,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 崩坏 3-游戏公告
 
-<Route author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
+<Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
 
-| 最新   | 公告   | 新闻 | 活动     | 攻略     |
-| ------ | ------ | ---- | -------- | -------- |
-| latest | notice | news | activity | strategy |
+| 最新   | 动态 | 公告   | 活动     | 补给     |
+| ------ | ---- | ------ | -------- | -------- |
+| latest | news | notice | activity | strategy |
 
 </Route>
 
