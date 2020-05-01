@@ -1142,6 +1142,18 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="HenryQW" example="/shanghaitech/sist/activity" path="/shanghaitech/sist/activity"/>
 
+## 上海立信会计金融学院
+
+### 通知公告
+
+<Route author="BENDIT233" example="/slu/tzgg" path="/slu/:type" :paramsDesc="['分类, 见下表']">
+
+| 官网通知 | 教务处 | 学生处 | 会计学院 | 财税与公共管理学院 | 体育与健康学院 |
+| -------- | ------ | ------ | -------- | ------------------ | -------------- |
+| tzgg     | jwc    | xsc    | kjxy     | csggxy             | tyyjkxy        |
+
+</Route>
+
 ## 深圳大学
 
 #### 深圳大学研究生招生网通知公告
