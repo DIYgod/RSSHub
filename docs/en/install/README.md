@@ -315,7 +315,7 @@ Partial routes have a strict anti-crawler policy, and can be configured to use p
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/routes.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes.
 
 For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
 
@@ -331,7 +331,7 @@ RSSHub supports access control via access keys, whitelisting and/or blacklisting
 1. Use `,` as the delimiter to separate multiple values
 1. White/blacklisting support IP and route as values
 
--   `ACCESS_KEY`: the access keys
+-   `ACCESS_KEY`: the access keys. When set, access via: http://rsshub.app/rsshub/routes?key=ILoveRSSHub
 
 -   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded.
 
