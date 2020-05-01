@@ -317,17 +317,25 @@ Routes in `protected_route.js` will be protected using HTTP Basic Authentication
 
 When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/routes.
 
+For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
+
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication password, default to `passw0rd`, please change asap
 
 ### Access Control Configuration
 
-Access control includes a whitelist and a blacklist, support IP and route, use `,` as the delimiter to separate multiple values. When both are defined, values in `BLACKLIST` will be disregarded.
+RSSHub supports access control via access keys, whitelisting and/or blacklisting.
 
--   `BLACKLIST`: the blacklist
+1. Control priority: access keys > whitelist > blacklist
+1. Use `,` as the delimiter to separate multiple values
+1. White/blacklisting support IP and route as values
+
+-   `ACCESS_KEY`: the access keys
 
 -   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded.
+
+-   `BLACKLIST`: the blacklist
 
 ### Other Application Configurations
 

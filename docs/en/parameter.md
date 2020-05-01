@@ -54,6 +54,10 @@ Enable fulltext via `mode` parameter.
 
 Eg: bilibili article <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
 
+## Access Control
+
+Set `key` to grant access to requests. See [Access Control Configuration](install/#access-control-configuration).
+
 ## Telegram Instant View
 
 Replace website link with Telegram's Instant View link.

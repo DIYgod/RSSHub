@@ -315,11 +315,13 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `PROXY_URL_REGEX`: 启用代理的 URL 正则表达式，默认全部开启 `.*`
 
-### 用户认证配置
+### 用户认证
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes。
+
+对于不支持该认证协议的阅读器，请参考[访问控制配置](#fang-wen-kong-zhi-pei-zhi)。
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -327,11 +329,17 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 访问控制配置
 
-配置黑名单和白名单，支持 IP 和路由，设置多项时用英文逗号 `,` 隔开，同时设置黑名单和白名单时仅白名单有效
+RSSHub 支持使用密钥和黑白名单进行访问控制。
 
--   `BLACKLIST`: 黑名单
+1. 控制优先级为 密钥 > 白名单 > 黑名单
+1. 设置多项时用英文逗号 `,` 隔开
+1. 黑白名单支持 IP 和路由
+
+-   `ACCESS_KEY`: 使用密钥访问控制
 
 -   `WHITELIST`: 白名单，设置白名单后黑名单无效
+
+-   `BLACKLIST`: 黑名单
 
 ### 其他应用配置
 
