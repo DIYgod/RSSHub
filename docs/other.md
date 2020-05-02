@@ -13,7 +13,7 @@ pageClass: routes
 
 ### 更换和维修扩展计划
 
-<Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']"/>
+<Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码，默认美国 ，中国 `zh-cn`']"/>
 
 ### App Store/Mac App Store
 
@@ -46,7 +46,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']" />
 
 ## DHL
 
@@ -116,7 +116,7 @@ pageClass: routes
 
 ## Product Hunt
 
-> 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+> 官方 Feed 地址为：[https://www.producthunt.com/feed](https://www.producthunt.com/feed)
 
 ### Today Popular
 
@@ -135,7 +135,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']">
 
-参见支持的[货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
+参见支持的 [货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
 
 </Route>
 
@@ -145,7 +145,7 @@ pageClass: routes
 
 <Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']">
 
-board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
+board 和 build 可在 [这里](http://api.ineal.me/tss/status) 查看
 
 </Route>
 
@@ -176,9 +176,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类目录
 
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['目录分类', '类型, 默认为`all`']">
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['目录分类', '类型，默认为`all`']">
 
-顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
+顶级目录分类可在目录分类页 [查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
 
 类型
 
@@ -192,7 +192,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 发现用户
 
-<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
+<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型，默认为 `所有`']">
 分类
 
 | 推荐 | 最热 |
@@ -209,7 +209,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 用户动态
 
-<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
+<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户 id, 用户动态页面 url 里可找到']"/>
 
 ## 艾瑞
 
@@ -251,7 +251,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 通知
 
-<Route author="Derekmini" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
+<Route author="Derekmini" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类，默认为 `lxtz`']" radar="1">
 
 | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 |
 | -------- | ------------ | ------------ | -------- |
@@ -263,7 +263,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 新闻通知
 
-<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1">
+<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类，默认为 `jjyw`']" radar="1">
 
 | 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
 | -------- | -------- | -------- | -------- |
@@ -299,7 +299,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 实时 AQI
 
-<Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
+<Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见 [aqicn.org](http://aqicn.org/city/)']"/>
 
 ## 酷安
 
@@ -354,7 +354,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 表盘更新
 
-<Route author="hoilc" example="/watchface/mi4/" path="/watchface/:watch_type?/:list_type?" :paramsDesc="['手环型号, 默认为`小米手环4`', '列表类型, 默认为`最新上传`']">
+<Route author="hoilc" example="/watchface/mi4/" path="/watchface/:watch_type?/:list_type?" :paramsDesc="['手环型号，默认为`小米手环 4`', '列表类型，默认为`最新上传`']">
 
 表盘型号
 
@@ -400,7 +400,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 板块
 
-<Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" :paramsDesc="['板块id，可在 URL 中找到', '排序方式']">
+<Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" :paramsDesc="['板块 id，可在 URL 中找到', '排序方式']">
 
 | 发帖时间 | 回复/查看 | 查看 | 最后发表 | 热门 |
 | -------- | --------- | ---- | -------- | ---- |
@@ -440,9 +440,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
 
-### 问询函件(全部/主板/中小企业板/创业板)
+### 问询函件（全部/主板/中小企业板/创业板）
 
-<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab 选项，navall 为全部，nav1 为主板，nav2, 为中小企业板，nav3 位创业板']"/>
 
 ## 四川省科学技术厅
 
@@ -530,7 +530,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 新趣集
 
-> 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
+> 官方 Feed 地址为：[https://xinquji.com/rss](https://xinquji.com/rss)
 
 ### 今日最佳
 
@@ -556,7 +556,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 今日油价
 
-<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
+<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见 [成品油价格网](http://oil.usd-cny.com/)']"/>
 
 ## 邮箱
 
@@ -577,11 +577,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 远程.work
+## 远程。work
 
-### 远程.work 招聘信息
+### 远程。work 招聘信息
 
-<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型，默认为全部职位']" radar="1">
 
 | 所有职位 |    技术     |  设计  |   运营    |  产品   | 其他  |   市场    | 销售  |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
@@ -593,7 +593,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类列表
 
-<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/:category?" :paramsDesc="['内容类型, 默认为`全部`']">
+<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/:category?" :paramsDesc="['内容类型，默认为`全部`']">
 
 类型
 
@@ -629,7 +629,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 房源
 
-<Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
+<Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市，北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
 
 ## はてな
 

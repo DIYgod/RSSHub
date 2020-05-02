@@ -14,7 +14,7 @@ pageClass: routes
 
 ### 资讯
 
-<Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码, 按照表列出']" />
+<Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码，按照表列出']" />
 
 | 最新文章 | 市场要闻 | 交易策略 | 机构观点 | 投资学堂 | 行业观察 | 基金理财 | 分析师投稿 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
@@ -46,7 +46,7 @@ pageClass: routes
 
 ### 用户动态
 
-<Route author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" :paramsDesc="['用户 id, 可在用户主页 URL 中找到', '动态的类型, 不填则默认全部']">
+<Route author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" :paramsDesc="['用户 id, 可在用户主页 URL 中找到', '动态的类型，不填则默认全部']">
 
 | 原发布 | 长文 | 问答 | 热门 | 交易 |
 | ------ | ---- | ---- | ---- | ---- |
@@ -64,15 +64,15 @@ pageClass: routes
 
 ### 基金净值更新
 
-<Route author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
+<Route author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码，可在基金主页 URL 中找到。此路由的数据为场外基金 (`F`开头）']"/>
 
 ### 组合最新调仓信息
 
-<Route author="ZhishanZhang" example="/xueqiu/p/ZH1288184" path="/xueqiu/snb/:id" :paramsDesc="['组合代码, 可在组合主页 URL 中找到.']"/>
+<Route author="ZhishanZhang" example="/xueqiu/p/ZH1288184" path="/xueqiu/snb/:id" :paramsDesc="['组合代码，可在组合主页 URL 中找到。']"/>
 
 ### 股票信息
 
-<Route author="YuYang" example="/xueqiu/stock_info/SZ000002" path="/xueqiu/stock_info/:id/:type?" :paramsDesc="['股票代码（需要带上交易所）', '动态的类型, 不填则为股票公告']">
+<Route author="YuYang" example="/xueqiu/stock_info/SZ000002" path="/xueqiu/stock_info/:id/:type?" :paramsDesc="['股票代码（需要带上交易所）', '动态的类型，不填则为股票公告']">
 
 | 公告         | 新闻 | 研报     |
 | ------------ | ---- | -------- |

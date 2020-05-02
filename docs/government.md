@@ -20,7 +20,7 @@ pageClass: routes
 
 ### 游戏审批结果
 
-<Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020年1月" path="/gov/sapprft/approval/:channel/:detail?" :paramsDesc="['栏目名', '标题关键字']">
+<Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020 年 1 月" path="/gov/sapprft/approval/:channel/:detail?" :paramsDesc="['栏目名', '标题关键字']">
 
 |         栏目         |      channel      |
 | :------------------: | :---------------: |
@@ -95,11 +95,11 @@ pageClass: routes
 
 ### 最新文件
 
-<Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
+<Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。 国令；国发；国函；国发明电；国办发；国办函；国办发明电；其他']" />
 
 ### 信息稿件
 
-<Route author="ciaranchen" example="/gov/zhengce/govall/orpro=555&notpro=2&search_field=title" path="/gov/zhengce/govall/:advance?" :paramsDesc="['高级搜索选项，将作为请求参数直接添加到url后。目前已知的选项及其意义如下。' ]" >
+<Route author="ciaranchen" example="/gov/zhengce/govall/orpro=555&notpro=2&search_field=title" path="/gov/zhengce/govall/:advance?" :paramsDesc="['高级搜索选项，将作为请求参数直接添加到 url 后。目前已知的选项及其意义如下。' ]" >
 
 |              选项               |                       意义                       |              备注              |
 | :-----------------------------: | :----------------------------------------------: | :----------------------------: |
@@ -107,7 +107,7 @@ pageClass: routes
 |             allpro              |                包含以下全部关键词                |                                |
 |             notpro              |                 不包含以下关键词                 |                                |
 |              inpro              |                完整不拆分的关键词                |                                |
-|           searchfield           | title: 搜索词在标题中; content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
+|           searchfield           | title: 搜索词在标题中；content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
 | pubmintimeYear, pubmintimeMonth |                    从某年某月                    | 单独使用月份参数无法只筛选月份 |
 | pubmaxtimeYear, pubmaxtimeMonth |                    到某年某月                    | 单独使用月份参数无法只筛选月份 |
 |              colid              |                       栏目                       |      比较复杂，不建议使用      |
@@ -140,7 +140,7 @@ pageClass: routes
 
 ### 湖南省政府采购网-公告
 
-<Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
+<Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告，zb=中标公告，fb=废标公告，ht=合同公告，gz=更正公告，zz=终止公告，qt=其他公告']" />
 
 ### 江苏省人民政府
 
@@ -162,8 +162,8 @@ pageClass: routes
 
 #### 江苏省教育考试院
 
-<Route author="schen1024" example="/gov/jiangsu/eea/zcgd" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
-注意: 其他栏目的内容格式不兼容, 且不便统一, 此处只做了下标的栏目
+<Route author="schen1024" example="/gov/jiangsu/eea/zcgd" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类，默认为 `wdyw`, 具体参数见下表']">
+注意：其他栏目的内容格式不兼容，且不便统一，此处只做了下标的栏目
 
 | 具体栏目 | 参数 |
 | :------: | :--: |
@@ -209,25 +209,25 @@ pageClass: routes
 
 ### 申请事项进度
 
-<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
+<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别 id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国驻外使领馆
 
 ### 大使馆重要通知
 
-<Route author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+<Route author="HenryQW" example="/embassy/us" path="/embassy/:country" :paramsDesc="['国家短代码，见 [支持国家列表](#支持国家列表)', '城市，对应国家列表下的`领事馆城市列表`']" />
 
 ### 领事馆重要通知
 
-<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码，见 [支持国家列表](#支持国家列表)', '城市，对应国家列表下的`领事馆城市列表`']" />
 
 ### 支持国家列表
 
 #### 德国 `DE`
 
--   大使馆: `/embassy/de`
+-   大使馆：`/embassy/de`
 
--   领事馆城市列表:
+-   领事馆城市列表：
 
 | 城市   | 路由                 |
 | ------ | -------------------- |
@@ -237,9 +237,9 @@ pageClass: routes
 
 #### 法国 `FR`
 
--   大使馆: `/embassy/fr`
+-   大使馆：`/embassy/fr`
 
--   领事馆城市列表:
+-   领事馆城市列表：
 
 | 城市       | 路由                     |
 | ---------- | ------------------------ |
@@ -251,9 +251,9 @@ pageClass: routes
 
 #### 日本 `JP`
 
--   大使馆: `/embassy/jp`
+-   大使馆：`/embassy/jp`
 
--   领事馆城市列表:
+-   领事馆城市列表：
 
 | 城市   | 路由                   |
 | ------ | ---------------------- |
@@ -268,9 +268,9 @@ pageClass: routes
 
 #### 韩国 `KR`
 
--   大使馆: `/embassy/kr`
+-   大使馆：`/embassy/kr`
 
--   领事馆城市列表:
+-   领事馆城市列表：
 
 | 城市 | 路由                  |
 | ---- | --------------------- |
@@ -282,15 +282,15 @@ pageClass: routes
 
 #### 新加坡 `SG`
 
--   大使馆: `/embassy/sg`
+-   大使馆：`/embassy/sg`
 
 ---
 
 #### 美国 `US`
 
--   大使馆: `/embassy/us`
+-   大使馆：`/embassy/us`
 
--   领事馆城市列表:
+-   领事馆城市列表：
 
 | 城市   | 路由                       |
 | ------ | -------------------------- |
@@ -302,9 +302,9 @@ pageClass: routes
 
 #### 英国 `UK`
 
--   大使馆: `/embassy/uk`
+-   大使馆：`/embassy/uk`
 
--   领事馆城市列表:
+-   领事馆城市列表：
 
 | 城市       | 路由                     |
 | ---------- | ------------------------ |
@@ -316,7 +316,7 @@ pageClass: routes
 
 ### 拍卖信息/海关法规
 
-<Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
+<Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持 paimai,fagui 等 2 个频道']" />
 
 ## 中华人民共和国教育部
 
@@ -334,14 +334,14 @@ pageClass: routes
 
 ### 新闻
 
-<Route author="Origami404" example="/gov/moa/xw/zwdt" path="/gov/moa/:suburl" :paramsDesc="['分类目录的子url']">
+<Route author="Origami404" example="/gov/moa/xw/zwdt" path="/gov/moa/:suburl" :paramsDesc="['分类目录的子 url']">
 
-更多例子:
+更多例子：
 
 -   `农业农村部动态`的网页链接是`http://www.moa.gov.cn/xw/zwdt/`, 对应的`suburl`是`xw/zwdt`
 -   `财务公开`的网页链接是`http://www.moa.gov.cn/gk/cwgk_1/`, 对应的`suburl`是`gk/cwgk_1`
--   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面(`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录, 它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合, 这时候请点开对应栏目的`更多>>`进入栏目的目录, 再根据上面的规则提取`suburl`
--   特别地, `图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
+-   像 [政策法规](http://www.moa.gov.cn/gk/zcfg/) 这种页面 (`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录，它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合，这时候请点开对应栏目的`更多>>`进入栏目的目录，再根据上面的规则提取`suburl`
+-   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
 
 </Route>
 

@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 论坛更新
 
-<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到, 例如, `thread.php?fid-16.html`中, 板块 ID 为`16`']" supportBT="1" />
+<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到，例如，`thread.php?fid-16.html`中，板块 ID 为`16`']" supportBT="1" />
 
 ## 60-Second Science - Scientific American
 
@@ -38,7 +38,7 @@ pageClass: routes
 
 ### 最新种子
 
-<Route author="zhang-wangz" example="/btzj/base" path="/btzj/:type?" anticrawler="1" :paramsDesc="['type,见下表']">
+<Route author="zhang-wangz" example="/btzj/base" path="/btzj/:type?" anticrawler="1" :paramsDesc="['type, 见下表']">
 
 | base                     | govern                 |
 | ------------------------ | ---------------------- |
@@ -48,7 +48,7 @@ pageClass: routes
 
 ::: tip 提示
 
-由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
+由于 BT 之家域名有多个。此 feed 对应 [`https://www.88btbtt.com`](https://www.88btbtt.com) 域名和 [`http://www.2btjia.com/`](http://www.2btjia.com/) 域名。
 可空，默认为 base
 
 :::
@@ -73,15 +73,15 @@ pageClass: routes
 
 ### 分类
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/genre/7g" path="/javbus/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/genre)的链接']" />
+<Route author="MegrezZhu CoderTonyChan" example="/javbus/genre/7g" path="/javbus/genre/:gid" :paramsDesc="['分类 id，详见 [网站里](https://www.javbus.com/genre) 的链接']" />
 
 ### 演员
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/star/2jv" path="/javbus/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/actresses)的链接']" />
+<Route author="MegrezZhu CoderTonyChan" example="/javbus/star/2jv" path="/javbus/star/:sid" :paramsDesc="['演员 id，详见 [网站里](https://www.javbus.com/actresses) 的链接']" />
 
 ### 系列
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列 id，详见作品中系列的链接']" />
 
 ### 首页/步兵
 
@@ -89,15 +89,15 @@ pageClass: routes
 
 ### 分类/步兵
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/uncensored/genre)的链接']" />
+<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid" :paramsDesc="['分类 id，详见 [网站里](https://www.javbus.com/uncensored/genre) 的链接']" />
 
 ### 演员/步兵
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/uncensored/actresses)的链接']" />
+<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid" :paramsDesc="['演员 id，详见 [网站里](https://www.javbus.com/uncensored/actresses) 的链接']" />
 
 ### 系列/步兵
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/uncensored/series/1ft" path="/javbus/uncensored/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/uncensored/series/1ft" path="/javbus/uncensored/series/:seriesid" :paramsDesc="['系列 id，详见作品中系列的链接']" />
 
 ### 首页/欧陆风云
 
@@ -105,15 +105,15 @@ pageClass: routes
 
 ### 分类/欧陆风云
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
+<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类 id，详见 [网站里](https://www.javbus.work/genre) 的链接']" />
 
 ### 演员/欧陆风云
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
+<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员 id，详见 [网站里](https://www.javbus.work/actresses) 的链接']" />
 
 ### 系列/欧陆风云
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/western/series/20" path="/javbus/western/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/western/series/20" path="/javbus/western/series/:seriesid" :paramsDesc="['系列 id，详见作品中系列的链接']" />
 
 ## JavLibrary
 
@@ -127,11 +127,11 @@ pageClass: routes
 
 ### 影星
 
-<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星id，从链接上获取']" radar="1" />
+<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星 id，从链接上获取']" radar="1" />
 
 ### 用户
 
-<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" radar="1" >
+<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户 id，即用户名称','用户选项，见下表']" radar="1" >
 |想要的|看过的|拥有的|发表的文章|
 |-----|------|------|-----|
 |userwanted|userwatched|userowned|userposts|
@@ -153,7 +153,7 @@ pageClass: routes
 
 ### 站内 Top 榜单
 
-<Route author="hoilc" example="/lastfm/top/spain" path="/lastfm/top/:country?" :paramsDesc="['国家或地区, 需要符合`ISO 3166-1`的英文全称, 可参考`https://zh.wikipedia.org/wiki/ISO_3166-1二位字母代码#正式分配代码`']" radar="1" />
+<Route author="hoilc" example="/lastfm/top/spain" path="/lastfm/top/:country?" :paramsDesc="['国家或地区，需要符合`ISO 3166-1`的英文全称，可参考`https://zh.wikipedia.org/wiki/ISO_3166-1 二位字母代码#正式分配代码`']" radar="1" />
 
 ## Mp4Ba
 
@@ -198,7 +198,7 @@ pageClass: routes
 
 ### 标签最近更新
 
-<Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" :paramsDesc="['标签名称, 可参考`https://mqube.net/search/tag`']" radar="1" />
+<Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" :paramsDesc="['标签名称，可参考`https://mqube.net/search/tag`']" radar="1" />
 
 ## Nyaa
 
@@ -224,7 +224,7 @@ pageClass: routes
 
 <Route author="cnzgray" example="/sexinsex/230/634" path="/sexinsex/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
 
-> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的[字幕]这一子类型。
+> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的 [字幕] 这一子类型。
 
 | 亚洲成人无码原创区 | 亚洲成人有码原创区 | 欧美无码原创区 | 欧美无码区 | 亚洲有码薄码区 |
 | ------------------ | ------------------ | -------------- | ---------- | -------------- |
@@ -238,7 +238,7 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
-## Yahoo!テレビ
+## Yahoo! テレビ
 
 ### 番組検索
 
@@ -256,7 +256,7 @@ pageClass: routes
 
 ### 动漫
 
-<Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
+<Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到（不包括`.html`)']"/>
 
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
@@ -270,7 +270,7 @@ pageClass: routes
 
 <Route author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']" anticrawler="1">
 
-> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
+> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的 [古典武侠] 这一子类型。
 
 | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
 | -------------- | -------------- | ---------- | ---------- | ---------- |
@@ -292,9 +292,9 @@ pageClass: routes
 
 ::: tip 提示
 
-帖子 id 查找办法:
+帖子 id 查找办法：
 
-打开想跟踪的帖子，比如：http://t66y.com/htm_data/20/1811/3286088.html。其中`3286088`就是帖子id。
+打开想跟踪的帖子，比如：http://t66y.com/htm_data/20/1811/3286088.html。其中`3286088`就是帖子 id。
 
 :::
 
@@ -312,11 +312,11 @@ pageClass: routes
 
 ### 分类
 
-<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" :paramsDesc="['分类 ID, 可在 URL 中找到, 注意, 如果有两级分类, 只需要填写第二级即可']" radar="1" />
+<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" :paramsDesc="['分类 ID, 可在 URL 中找到，注意，如果有两级分类，只需要填写第二级即可']" radar="1" />
 
 ### 标签
 
-<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" :paramsDesc="['标签名, 可在 URL 中找到']" radar="1" />
+<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" :paramsDesc="['标签名，可在 URL 中找到']" radar="1" />
 
 ## 电影首发站
 
@@ -437,9 +437,9 @@ pageClass: routes
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
 
-**付费内容不可收听，但可使用非播客软件(例如 Inoreader)获取更新**
+**付费内容不可收听，但可使用非播客软件（例如 Inoreader) 获取更新**
 
-目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持, 也就是说你**只能使用**以下类型的链接来订阅播客:
+目前支持泛用型播客订阅的 [输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**只能使用**以下类型的链接来订阅播客：
 
 -   https://rsshub.app/ximalaya/album/*
 -   https://rsshub.app/ximalaya/album/*.rss
@@ -452,13 +452,13 @@ pageClass: routes
 
 ### 频道
 
-<Route author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频，任意值为关闭']"/>
 
 ## 中国高清网
 
 ### 电影
 
-<Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签tag，视频清晰度']" />
+<Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签 tag，视频清晰度']" />
 
 | 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
 | ---- | ------ | ----- | ---- | --- | ------ |
@@ -468,7 +468,7 @@ pageClass: routes
 
 ### 电台节目
 
-<Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
+<Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道 ID, 可在对应专辑页面的 URL 中找到','节目 ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
 
 ## 追新番日剧站
 
@@ -480,7 +480,7 @@ pageClass: routes
 
 ### 字幕列表
 
-<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型，默认为`mv`电影']">
 
 类型
 

@@ -14,11 +14,11 @@ pageClass: routes
 
 ### Ads
 
-Transform any search into a feed.
+转化搜索结果
 
-<Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
+<Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['搜索字符串']">
 
-For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
+如在 https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015** 中，搜索字符串为 **category=10&locations=Paris_75015**
 
 </Route>
 
@@ -32,9 +32,9 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ### 票务更新
 
-<Route author="hoilc" example="/damai/activity/上海/音乐会/全部/柴可夫斯基" path="/damai/activity/:city/:category/:subcategory/:keyword?" :paramsDesc="['城市, 如果不需要限制, 请填入`全部`', '分类, 如果不需要限制, 请填入`全部`', '子分类, 如果不需要限制, 请填入`全部`', '搜索关键字, 置空为不限制']"/>
+<Route author="hoilc" example="/damai/activity/上海/音乐会/全部/柴可夫斯基" path="/damai/activity/:city/:category/:subcategory/:keyword?" :paramsDesc="['城市，如果不需要限制，请填入`全部`', '分类，如果不需要限制，请填入`全部`', '子分类，如果不需要限制，请填入`全部`', '搜索关键字，置空为不限制']"/>
 
-城市、分类名、子分类名, 请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
+城市、分类名、子分类名，请参见 [大麦网搜索页面](https://search.damai.cn/search.htm)
 
 ## 多抓鱼
 
@@ -103,7 +103,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ### 单品活动信息
 
-<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
+<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书 ID，可在链接中获取']"/>
 
 ## 人民邮电出版社
 
@@ -125,7 +125,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ### 排行榜
 
-<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1">
+<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单 ID','时间跨度']" radar="1">
 
 -   榜单类型
 
@@ -169,7 +169,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ### 好文
 
-<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为all，其余可以选择1，7，30，365']"/>
+<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为 all，其余可以选择 1，7，30，365']"/>
 
 ### 好文分类
 
@@ -185,7 +185,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ### 众筹项目
 
-<Route author="xyqfer" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
+<Route author="xyqfer" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型，默认为 `all` 全部']">
 
 | 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
 | ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
@@ -249,4 +249,4 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ### 商品上新
 
-<Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺id']"/>
+<Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺 id']"/>

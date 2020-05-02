@@ -65,11 +65,11 @@ pageClass: routes
 
 ### 栏目
 
-<Route author="HenryQW" example="/donews" path="/donews/:column?" :paramsDesc="['栏目代码, 默认为首页.']">
+<Route author="HenryQW" example="/donews" path="/donews/:column?" :paramsDesc="['栏目代码，默认为首页。']">
 
-| 首页 | 商业    | 创业     | 互娱 | 科技       | 专栏    |
-| ---- | ------- | -------- | ---- | ---------- | ------- |
-| (空) | company | business | ent  | technology | idonews |
+| 首页   | 商业    | 创业     | 互娱 | 科技       | 专栏    |
+| ------ | ------- | -------- | ---- | ---------- | ------- |
+| （空） | company | business | ent  | technology | idonews |
 
 </Route>
 
@@ -95,7 +95,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 </Route>
 
@@ -107,7 +107,7 @@ pageClass: routes
 
 ### 话题
 
-<Route author="brilon" example="/infoq/topic/1" path="/infoq/topic/:id" :paramsDesc="['话题id，可在[InfoQ全部话题](https://www.infoq.cn/topics)页面找到URL里的话题id']" />
+<Route author="brilon" example="/infoq/topic/1" path="/infoq/topic/:id" :paramsDesc="['话题 id，可在 [InfoQ 全部话题](https://www.infoq.cn/topics) 页面找到 URL 里的话题 id']" />
 
 ## IT 之家
 
@@ -190,7 +190,7 @@ pageClass: routes
 
 ### 今日推荐/精选
 
-<Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
+<Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐，2=精选']"/>
 
 ### 社区
 
@@ -244,7 +244,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/verge" path="/verge">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 </Route>
 
@@ -252,7 +252,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
+<Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类 ID，可在对应页面的 URL 中找到']"/>
 
 ## Vulture
 
@@ -285,8 +285,8 @@ Supported sub-sites：
 
 <Route author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']">
 
--   频道为单一路径, 如 https://www.ifanr.com/`coolbuy` 则为 `/ifanr/coolbuy`.
--   频道包含多重路径, 如 https://www.ifanr.com/`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
+-   频道为单一路径，如 https://www.ifanr.com/`coolbuy` 则为 `/ifanr/coolbuy`.
+-   频道包含多重路径，如 https://www.ifanr.com/`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
 
 | AppSolution | 玩物志  | 董车会                  |
 | ----------- | ------- | ----------------------- |
@@ -298,7 +298,7 @@ Supported sub-sites：
 
 ### 作者专栏
 
-<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
+<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者 ID，可在对应专辑页面的 URL 中找到']"/>
 
 ### 快讯
 
@@ -387,7 +387,7 @@ Supported sub-sites：
 
 ### 电商在线
 
-<Route author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" :paramsDesc="['类别id，可在 URL 中找到']" />
+<Route author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" :paramsDesc="['类别 id，可在 URL 中找到']" />
 
 ## 懂球帝
 
@@ -421,21 +421,21 @@ Supported sub-sites：
 
 ::: tip 提示
 
-部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.
+部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头。
 
 :::
 
 ### 足球赛果
 
-<Route author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+<Route author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" :paramsDesc="['球队 id, 可在 [懂球帝数据](https://www.dongqiudi.com/data) 中找到']"/>
 
 ### 球队新闻
 
-<Route author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+<Route author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在 [懂球帝数据](https://www.dongqiudi.com/data) 中找到']"/>
 
 ### 球员新闻
 
-<Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
+<Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在 [懂球帝数据](https://www.dongqiudi.com/data) 中通过其队伍找到']"/>
 
 ## 多知网
 
@@ -469,15 +469,15 @@ Supported sub-sites：
 
 ### 观察者首页
 
-<Route author="Jeason0228" example="/guanchazhe/index/all" path="/guanchazhe/index/:type" :paramsDesc="['新闻汇总:默认home输出头条+3列新闻,others则为滚动新闻+热点+观察者付费,all则包括以上']" />
+<Route author="Jeason0228" example="/guanchazhe/index/all" path="/guanchazhe/index/:type" :paramsDesc="['新闻汇总：默认 home 输出头条+3 列新闻，others 则为滚动新闻+热点+观察者付费，all 则包括以上']" />
 
 ### 观察者风闻话题
 
-<Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+<Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题 id， 可在 URL 中找到']" />
 
 ### 个人主页文章
 
-<Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+<Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户 id， 可在 URL 中找到']" />
 
 ## 果壳网
 
@@ -569,7 +569,7 @@ Supported sub-sites：
 
 ### 榜单
 
-<Route author="LogicJake"  example="/tophub/Om4ejxvxEN" path="/tophub/:id" :paramsDesc="['榜单id，可在 URL 中找到']"/>
+<Route author="LogicJake"  example="/tophub/Om4ejxvxEN" path="/tophub/:id" :paramsDesc="['榜单 id，可在 URL 中找到']"/>
 
 ## 今日头条
 
@@ -585,7 +585,7 @@ Supported sub-sites：
 
 ### 其他栏目
 
-<Route author="Jeason0228" example="/whalegogo/portal/2" path="/whalegogo/portal/:type_id/:tagid?/" :paramsDesc="['type_id,栏目id','tagid,标签id']">
+<Route author="Jeason0228" example="/whalegogo/portal/2" path="/whalegogo/portal/:type_id/:tagid?/" :paramsDesc="['type_id, 栏目 id','tagid, 标签 id']">
 
 | 快讯                 | 文章                 | 活动                 | 评测                 | 视频               | 访谈               |
 | -------------------- | -------------------- | -------------------- | -------------------- | ------------------ | ------------------ |
@@ -601,7 +601,7 @@ Supported sub-sites：
 
 ### 公司公告-A 股港股
 
-<Route author="LogicJake hillerliao" example="/cninfo/announcement/002024/gqjl" path="/cninfo/announcement/:code/:category?" :paramsDesc="['股票代码, 若不指定公司则填 all', '公告分类，对A股有效如 gqjl 表示 股权激励 分类']">
+<Route author="LogicJake hillerliao" example="/cninfo/announcement/002024/gqjl" path="/cninfo/announcement/:code/:category?" :paramsDesc="['股票代码，若不指定公司则填 all', '公告分类，对 A 股有效如 gqjl 表示 股权激励 分类']">
 
 | 年报 | 半年报 | 一季报 | 三季报 | 业绩预告 | 权益分派 | 董事会 | 监事会 | 股东大会 | 日常经营 | 公司治理 | 中介报告 | 首发 | 增发 | 股权激励 | 配股 | 解禁 | 债券 | 其他融资 | 股权变动 | 补充更正 | 澄清致歉 | 风险提示 | 特别处理和退市 |
 | ---- | ------ | ------ | ------ | -------- | -------- | ------ | ------ | -------- | -------- | -------- | -------- | ---- | ---- | -------- | ---- | ---- | ---- | -------- | -------- | -------- | -------- | -------- | -------------- |
@@ -611,7 +611,7 @@ Supported sub-sites：
 
 ### 基金公告
 
-<Route author="hillerliao" example="/cninfo/fund_announcement/159977/基金合同" path="/cninfo/fund_announcement/:code/:searchkey" :paramsDesc="['基金代码, 若不指定则填 all', '过滤词，若不指定则填all']"/>
+<Route author="hillerliao" example="/cninfo/fund_announcement/159977/基金合同" path="/cninfo/fund_announcement/:code/:searchkey" :paramsDesc="['基金代码，若不指定则填 all', '过滤词，若不指定则填 all']"/>
 
 ## 决胜网
 
@@ -629,14 +629,14 @@ Supported sub-sites：
 
 ### 话题
 
-<Route author="hoilc" example="/kzfeed/topic/KklZRd9a04OgA" path="/kzfeed/topic/:id" :paramsDesc="['话题ID, 可以从话题URL中获得']"/>
+<Route author="hoilc" example="/kzfeed/topic/KklZRd9a04OgA" path="/kzfeed/topic/:id" :paramsDesc="['话题 ID, 可以从话题 URL 中获得']"/>
 
 ## 老司机
 
 ### 首页
 
 <Route author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
-### 24小时热门
+### 24 小时热门
 
 <Route author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
 ### 节目
@@ -679,7 +679,7 @@ Supported sub-sites：
 
 ### 文章
 
-<Route author="DIYgod" example="/pintu360/0" path="/pintu360/:type?" :paramsDesc="['类型, 默认为 `0` 推荐']">
+<Route author="DIYgod" example="/pintu360/0" path="/pintu360/:type?" :paramsDesc="['类型，默认为 `0` 推荐']">
 
 类型
 
@@ -697,7 +697,7 @@ Supported sub-sites：
 
 ### 话题动态
 
-<Route author="sanmmm" path="/pingwest/tag/:tag/:type" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题id, 可从话题页url中得到', '内容类型']">
+<Route author="sanmmm" path="/pingwest/tag/:tag/:type" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题 id, 可从话题页 url 中得到', '内容类型']">
 
 内容类型
 
@@ -709,7 +709,7 @@ Supported sub-sites：
 
 ### 用户
 
-<Route author="sanmmm" path="/pingwest/user/:uid/:type?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`']">
+<Route author="sanmmm" path="/pingwest/user/:uid/:type?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户 id, 可从用户主页中得到', '内容类型，默认为`article`']">
 
 内容类型
 
@@ -729,7 +729,7 @@ Supported sub-sites：
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | --- |
 | 255  | 1    | 6    | 42   | 5    | 4    | 7    | ... |
 
-更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
+更多的 cid 可通过访问 [官网](http://home.qutoutiao.net) 切换分类，观察 url 获得。
 
 </Route>
 
@@ -761,7 +761,7 @@ Supported sub-sites：
 
 <Route author="HenryQW" example="/sspai/series" path="/sspai/series">
 
-> 少数派专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 少数派专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容。
 
 </Route>
 
@@ -779,23 +779,23 @@ Supported sub-sites：
 
 ### 作者
 
-<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页 URL 中找到，id 不易查找，仅作兼容']"/>
 
 ### 作者动态
 
-<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']"/>
+<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页 URL 中找到']"/>
 
 ### 专题
 
 <Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
 
-此为专题广场更新提示=>集合型而非单篇文章.与下方"专题内文章更新"存在明显区别!
+此为专题广场更新提示=>集合型而非单篇文章。与下方"专题内文章更新"存在明显区别！
 
 </Route>
 
 ### 专题内文章更新
 
-<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
+<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页 URL 中找到']"/>
 
 ### 标签订阅
 
@@ -811,11 +811,11 @@ Supported sub-sites：
 
 ### 数英网最新文章
 
-<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
+<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章，数英网']" />
 
 ### 数英网文章专题
 
-<Route author="occupy5" example="/digitaling/articles/latest" path="/digitaling/articles/:category/:subcate?" :paramsDesc="['文章专题分类 ','hot分类下的子类']" />
+<Route author="occupy5" example="/digitaling/articles/latest" path="/digitaling/articles/:category/:subcate?" :paramsDesc="['文章专题分类 ','hot 分类下的子类']" />
 
 | 最新文章 | 头条     | 热文 | 精选   |
 | -------- | -------- | ---- | ------ |
@@ -862,7 +862,7 @@ Supported sub-sites：
 
 ### 栏目
 
-<Route author="LogicJake" example="/tencent/guyu/channel/lab" path="/tencent/guyu/channel/:name" :paramsDesc="['栏目名称，包括lab，report，story，shalong']"/>
+<Route author="LogicJake" example="/tencent/guyu/channel/lab" path="/tencent/guyu/channel/:name" :paramsDesc="['栏目名称，包括 lab，report，story，shalong']"/>
 
 ## 腾讯企鹅号
 
@@ -886,11 +886,11 @@ Supported sub-sites：
 
 ### 资讯
 
-<Route author="kt286" example="/10000link/news/My01" path="/10000link/news/:category?" :paramsDesc="['栏目代码, 默认为全部']">
+<Route author="kt286" example="/10000link/news/My01" path="/10000link/news/:category?" :paramsDesc="['栏目代码，默认为全部']">
 
-| 全部 | 天下大势 | 企业动态 | 专家观点 | 研究报告 |
-| ---- | -------- | -------- | -------- | -------- |
-| (空) | My01     | My02     | My03     | My04     |
+| 全部   | 天下大势 | 企业动态 | 专家观点 | 研究报告 |
+| ------ | -------- | -------- | -------- | -------- |
+| （空） | My01     | My02     | My03     | My04     |
 
 </Route>
 
@@ -900,7 +900,7 @@ Supported sub-sites：
 
 <Route author="HendricksZheng" example="/netease/dy/W4983108759592548559" path="/netease/dy/:id" :paramsDesc="['网易号 ID', '见如下说明']">
 
-1. 在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
+1. 在 [网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
 2. 打开网易号文章页面。
 3. 通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
 
@@ -916,17 +916,17 @@ Supported sub-sites：
 
 ::: tip 提示
 
-公众号直接抓取困难, 故目前提供几种间接抓取方案, 请自行选择
+公众号直接抓取困难，故目前提供几种间接抓取方案，请自行选择
 
 :::
 
 ### 公众号（ wemp.app 来源）
 
-<Route author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']" anticrawler="1"/>
+<Route author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如：人民日报 site:wemp.app), 打开公众号页，在 URL 中找到 id']" anticrawler="1"/>
 
 ### 公众号（传送门来源）
 
-<Route author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+<Route author="HenryQW" example="/wechat/csm/huxiu_com" path="/wechat/csm/:id" :paramsDesc="['公众号 id, 打开公众号页，在 URL 中找到 id']"/>
 
 ### 公众号（CareerEngine 来源）
 
@@ -938,17 +938,17 @@ Supported sub-sites：
 
 ::: warning 注意
 
-该方法需要通过 efb 进行频道绑定，具体操作见[https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
+该方法需要通过 efb 进行频道绑定，具体操作见 [https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
 :::
 </Route>
 
-### 公众号 (优读来源)
+### 公众号 （优读来源）
 
-<Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
+<Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号，可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
 
-### 公众号 (二十次幂来源)
+### 公众号 （二十次幂来源）
 
-<Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
+<Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号 id, 打开公众号页，在 URL 中找到 id']"/>
 
 ### 公众平台系统公告栏目
 
@@ -962,11 +962,11 @@ Supported sub-sites：
 
 ### 频道
 
-<Route author="LogicJake" example="/xici" path="/xici/:id?" :paramsDesc="['频道id，默认为首页推荐']">
+<Route author="LogicJake" example="/xici" path="/xici/:id?" :paramsDesc="['频道 id，默认为首页推荐']">
 
 | 首页推荐 | 民生 | 情感 | 亲子 |
 | -------- | ---- | ---- | ---- |
-| (空)     | ms   | qg   | qz   |
+| （空）   | ms   | qg   | qz   |
 
 </Route>
 
@@ -978,7 +978,7 @@ Supported sub-sites：
 
 ### 香评
 
-<Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" :paramsDesc="['用户id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']"/>
+<Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" :paramsDesc="['用户 id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']"/>
 
 ## 新浪专栏
 
@@ -1007,7 +1007,7 @@ Supported sub-sites：
 ### 分类
 
 <Route author="zhuan-zhu" example="/mpaypass/main/policy" path="mpaypass/main/:type?"
-:paramsDesc="['新闻类型,类型可在URL中找到，类似policy，eye等，空或其他任意值展示最新新闻']"/>
+:paramsDesc="['新闻类型，类型可在 URL 中找到，类似 policy，eye 等，空或其他任意值展示最新新闻']"/>
 
 ## 一兜糖
 
@@ -1025,7 +1025,7 @@ Supported sub-sites：
 
 ### 全屋记
 
-<Route author="sanmmm" example="/yidoutang/case/hot" path="/yidoutang/:type?" :paramsDesc="['类型, 默认为`default`']">
+<Route author="sanmmm" example="/yidoutang/case/hot" path="/yidoutang/:type?" :paramsDesc="['类型，默认为`default`']">
 
 类型
 
@@ -1039,7 +1039,7 @@ Supported sub-sites：
 
 ### 首页最新帖子
 
-<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签, 点击标签后地址栏有显示']"/>
+<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" :paramsDesc="['内容标签，点击标签后地址栏有显示']"/>
 
 ### 子板块帖子
 

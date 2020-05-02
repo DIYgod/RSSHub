@@ -12,7 +12,7 @@ pageClass: routes
 
 ### 游戏资讯
 
-<Route author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
+<Route author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字，可以在专题页的 url 中找到', '资讯类型']">
 
 | 新闻 | 攻略 | 下载资源 | 区块链快讯 |
 | ---- | ---- | -------- | ---------- |
@@ -28,7 +28,7 @@ pageClass: routes
 
 ### 标签
 
-<Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" :paramsDesc="['标签名, 可在标签 URL 中找到']"/>
+<Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" :paramsDesc="['标签名，可在标签 URL 中找到']"/>
 
 ## a9vgNews 游戏新闻
 
@@ -58,7 +58,7 @@ pageClass: routes
 
 ### indienova 文章
 
-<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
+<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型：`article` 文章，`development` 开发']"/>
 
 ## Maxjia News
 
@@ -72,7 +72,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['主机平台', '发行类型，默认为 `new`', '排序类型，默认为`date`']">
 
-支持的主机平台:
+支持的主机平台：
 
 | PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
 | ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
@@ -100,13 +100,13 @@ pageClass: routes
 
 ### CurseForge Mod 更新
 
-<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
+<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到，例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
 
 ## Nintendo
 
 ### eShop 新发售游戏
 
-<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服), `cn`(国服)']"/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`（港服）,`jp`（日服）,`us`（美服）, `cn`（国服）']"/>
 
 ### 首页资讯（香港）
 
@@ -190,7 +190,7 @@ pageClass: routes
 
 ### 用户动态
 
-<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页URL中获取']"/>
+<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页 URL 中获取']"/>
 
 ## Steam
 
@@ -222,7 +222,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### Discussions
 
-<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
+<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为 All']"/>
 
 ## TapTap
 
@@ -234,7 +234,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏论坛
 
-<Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '论坛版块ID, 默认显示所有帖子, 论坛版块URL中`group_label_id`参数，特别的有']"/>
+<Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏 ID, 游戏主页 URL 中获取', '论坛版块 ID, 默认显示所有帖子，论坛版块 URL 中`group_label_id`参数，特别的有']"/>
 
 | 全部 | 精华  | 官方     |
 | ---- | ----- | -------- |
@@ -242,11 +242,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏更新
 
-<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏ID, 游戏主页URL中获取']"/>
+<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏 ID, 游戏主页 URL 中获取']"/>
 
 ### 游戏评价
 
-<Route author="hoilc" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '排序方式, 空为默认排序, 可选如下']"/>
+<Route author="hoilc" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?" :paramsDesc="['游戏 ID, 游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下']"/>
 
 | 最新   | 最热 | 游戏时长 |
 | ------ | ---- | -------- |
@@ -346,13 +346,13 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 用户发帖
 
-<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
+<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户 ID']"/>
 
 ## 王者荣耀
 
 ### 新闻中心
 
-<Route author="Jeason0228" example="/pvp/newsindex/all" path="/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
+<Route author="Jeason0228" example="/pvp/newsindex/all" path="/pvp/newsindex/:type" :paramsDesc="['栏目分类，all=全部，rm=热门，xw=新闻，gg=公告，hd=活动，ss=赛事']"/>
 
 ## 小黑盒
 
@@ -366,7 +366,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏折扣信息
 
-<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" :paramsDesc="['平台, 默认为Steam']">
+<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" :paramsDesc="['平台，默认为 Steam']">
 
 | Steam | PlatStation4 | Switch |
 | ----- | ------------ | ------ |
@@ -378,7 +378,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 新闻中心
 
-<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类,all=全部,zh=综合,gg=公告,ss=赛事,gl=攻略,sq=社区']"/>
+<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类，all=全部，zh=综合，gg=公告，ss=赛事，gl=攻略，sq=社区']"/>
 
 ## 游民星空
 

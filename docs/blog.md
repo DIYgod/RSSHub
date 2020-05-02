@@ -18,7 +18,7 @@ pageClass: routes
 
 ## Hedwig.pub
 
-<Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
+<Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类，见下表']"/>
 
 | 呆唯的 Newsletter | 0neSe7en 的技术周刊 | 地心引力 | 宪学宪卖 | Comeet 每周精选 | 无鸡之谈 | 我有一片芝麻地 |
 | ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
@@ -78,7 +78,7 @@ pageClass: routes
 
 <Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column" :paramsDesc="['博客名称，可在博客主页的 URL 找到']">
 
-通过提取文章全文，以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 </Route>
 
@@ -110,7 +110,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" :paramsDesc="['RSS抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为2020']">
+<Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" :paramsDesc="['RSS 抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为 2020']">
 
 </Route>
 

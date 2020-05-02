@@ -10,11 +10,11 @@
 
 **Q: RSSHub Radar 是如何工作的？**
 
-**A:** 进入新页面时， RSSHub Radar 先根据页面 link 标签[寻找](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/content/utils.js#L25)页面自带 RSS，再根据远程更新的[规则](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)寻找适用当前页面和当前网站的 RSSHub 路由；再加一点点魔法。
+**A:** 进入新页面时， RSSHub Radar 先根据页面 link 标签 [寻找](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/content/utils.js#L25) 页面自带 RSS，再根据远程更新的 [规则](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 寻找适用当前页面和当前网站的 RSSHub 路由；再加一点点魔法。
 
 **Q: 演示地址可以用么？**
 
-**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟, 可以随意使用。但如果你看到路由有 <Badge text="反爬严格" vertical="middle" type="warn"/> 标记，如微博、知乎等，意味着目标网站有严重的反爬策略，demo 无法确保可用性，建议自建来提高稳定性。
+**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟，可以随意使用。但如果你看到路由有 <Badge text="反爬严格" vertical="middle" type="warn"/> 标记，如微博、知乎等，意味着目标网站有严重的反爬策略，demo 无法确保可用性，建议自建来提高稳定性。
 
 **Q: 为什么 RSSHub 里的图片加载不出来？**
 
@@ -22,8 +22,8 @@
 
 **Q: 没有我想订阅的网站怎么办嘤嘤嘤 QAQ**
 
-**A:** 如果你会写 JavaScript，请按照[规则](/joinus/#%E6%8F%90%E4%BA%A4%E6%96%B0%E7%9A%84-rss-%E5%86%85%E5%AE%B9)提交 pull request，否则按照要求[提交 issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_zh.md)，然后等待有缘人完成你的需求，也可以考虑[赞助项目](/support)或附上一张你自己的女装照来获得更快的 issue 响应速度。
+**A:** 如果你会写 JavaScript，请按照 [规则](/joinus/#%E6%8F%90%E4%BA%A4%E6%96%B0%E7%9A%84-rss-%E5%86%85%E5%AE%B9) 提交 pull request，否则按照要求 [提交 issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_zh.md)，然后等待有缘人完成你的需求，也可以考虑 [赞助项目](/support) 或附上一张你自己的女装照来获得更快的 issue 响应速度。
 
 **Q: 我怎么才能知道 RSSHub 更新了哪些路由？**
 
-**A:** 可以使用 RSS 订阅[RSSHub 有新路由啦](/program-update.html#rsshub)。
+**A:** 可以使用 RSS 订阅 [RSSHub 有新路由啦](/program-update.html#rsshub)。

@@ -2,13 +2,13 @@
 
 ::: tip 提示
 
-所有通用参数可以使用 `&` 连接组合使用, 效果叠加
+所有通用参数可以使用 `&` 连接组合使用，效果叠加
 
 :::
 
 ## 内容过滤
 
-可以使用以下 URL query 过滤内容, 支持正则
+可以使用以下 URL query 过滤内容，支持正则
 
 filter 选出想要的内容
 
@@ -35,7 +35,7 @@ filterout 去掉不要的内容
 
 -   filterout_author: 过滤作者
 
-举例: <https://rsshub.app/bilibili/fav/2267573/801952073?filterout=编曲|摄影>
+举例：<https://rsshub.app/bilibili/fav/2267573/801952073?filterout=编曲|摄影>
 
 filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时适用
 
@@ -45,25 +45,25 @@ filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时�
 
 ## 条数限制
 
-可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS
+可以使用 `limit` 参数限制最大条数，主要用于排行榜类 RSS
 
-举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
+举例：bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
 ## 全文输出
 
 可以使用 mode 参数来开启自动提取全文内容功能
 
-举例: bilibili 专栏全文输出 <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
+举例：bilibili 专栏全文输出 <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
 
 ## 输出 Telegram 即时预览链接
 
-可以输出 Telegram 可识别的即时预览链接, 主要用于文章类 RSS
+可以输出 Telegram 可识别的即时预览链接，主要用于文章类 RSS
 
-Telegram 即时预览模式需要在官网制作页面处理模板，请前往[官网](https://instantview.telegram.org/)了解更多
+Telegram 即时预览模式需要在官网制作页面处理模板，请前往 [官网](https://instantview.telegram.org/) 了解更多
 
 -   tgiv: 模板 hash，可从模板制作页面分享出来的链接末尾获取（`&rhash=`后面跟着的字符串）
 
-举例: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+举例：<https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
 
 ## 输出 Sci-hub 链接
 
@@ -71,13 +71,13 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 -   scihub: 任意值开启
 
-举例: <https://rsshub.app/pnas/latest?scihub=1>
+举例：<https://rsshub.app/pnas/latest?scihub=1>
 
 ## 输出格式
 
-RSSHub 同时支持 RSS 2.0 和 Atom 输出格式, 在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式, 缺省为 RSS 2.0
+RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式，缺省为 RSS 2.0
 
-举例:
+举例：
 
 -   缺省 RSS 2.0 - <https://rsshub.app/jianshu/home>
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>

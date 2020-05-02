@@ -16,7 +16,7 @@ pageClass: routes
 
 <Route author="ImSingee" example="/algocasts" path="/algocasts" radar="1"></Route>
 
-> AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> AlgoCasts 需要付费订阅，RSS 仅做更新提醒，不含付费内容。
 
 ## cve.mitre.org
 
@@ -34,7 +34,7 @@ pageClass: routes
 
 ### 最新文章
 
-<Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" :paramsDesc="['分类 ID, 置空或`all`代表全部, 具体值需要抓取前端请求, 以下列出可能有变动, 仅供参考','是否只显示严选文章, 任意值为是, 置空为否']" />
+<Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" :paramsDesc="['分类 ID, 置空或`all`代表全部，具体值需要抓取前端请求，以下列出可能有变动，仅供参考','是否只显示严选文章，任意值为是，置空为否']" />
 
 | 分类名   | 分类 ID                  |
 | :------- | :----------------------- |
@@ -48,7 +48,7 @@ pageClass: routes
 | 职场     | 58e84f1584c651693437f27c |
 | 互联网   | 5d8b7c3786194a1921979124 |
 
-> GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> GitChat 需要付费订阅，RSS 仅做更新提醒，不含付费内容。
 
 ## Gitea
 
@@ -68,8 +68,8 @@ GitHub 官方也提供了一些 RSS:
 
 -   仓库 releases: https://github.com/:owner/:repo/releases.atom
 -   仓库 commits: https://github.com/:owner/:repo/commits.atom
--   用户动态: https://github.com/:user.atom
--   专属动态: https://github.com/:user.private.atom?token=:secret (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
+-   用户动态：https://github.com/:user.atom
+-   专属动态：https://github.com/:user.private.atom?token=:secret （登录后在 [仪表盘页面](https://github.com) 找到 **Subscribe to your news feed** 字样即可）
 
 :::
 
@@ -79,7 +79,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到，可选 daily weekly monthly', '语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1"/>
 
 ### 仓库 Issues
 
@@ -120,7 +120,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 搜索结果
 
-<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
+<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为 bestmatch）','排序顺序，desc 和 asc（默认 desc 降序）']"/>
 
 | 排序选项           | sort      |
 | ------------------ | --------- |
@@ -135,7 +135,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 仓库 Contirbutors
 
-<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['用户名', '仓库名', 'Commit 数量排序顺序，desc和asc（默认desc降序）', '是否包括匿名用户，默认不包含，任意值包含匿名用户']" radar="1"/>
+<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['用户名', '仓库名', 'Commit 数量排序顺序，desc 和 asc（默认 desc 降序）', '是否包括匿名用户，默认不包含，任意值包含匿名用户']" radar="1"/>
 
 ## GitLab
 
@@ -192,7 +192,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Discussion
 
-<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['讨论区 id, 打开网页请求, 搜索 forumId；填 all 可以订阅全站讨论区', '排序方式见下表, 默认为 hot']">
+<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" :paramsDesc="['讨论区 id, 打开网页请求，搜索 forumId；填 all 可以订阅全站讨论区', '排序方式见下表，默认为 hot']">
 
 | hot     | recent          | new             | top        | active        |
 | ------- | --------------- | --------------- | ---------- | ------------- |
@@ -202,7 +202,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Competitions
 
-<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" :paramsDesc="['类别, 默认为空']">
+<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" :paramsDesc="['类别，默认为空']">
 
 | 空             | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
 | -------------- | -------- | -------- | ----------- | --------------- | ------- | ---------- | --------- |
@@ -218,13 +218,13 @@ GitHub 官方也提供了一些 RSS:
 
 ### 打卡
 
-<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['国家 country, 中国(cn)和美国(us)', '用户名 user, 可在LeetCode用户主页的 URL 中找到']"/>
+<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['国家 country, 中国 (cn) 和美国 (us)', '用户名 user, 可在 LeetCode 用户主页的 URL 中找到']"/>
 
 ## LinkedKeeper
 
 ### 博文
 
-<Route author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" :paramsDesc="['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']"/>
+<Route author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" :paramsDesc="['博文分类，为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']"/>
 
 ## Linux Patchwork
 
@@ -290,7 +290,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Scala Blog
 
-<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分, 默认为All, part参数可在url中获得']" />
+<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分，默认为 All, part 参数可在 url 中获得']" />
 
 ## segmentfault
 
@@ -388,13 +388,13 @@ GitHub 官方也提供了一些 RSS:
 
 ### 专栏文章
 
-<Route author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" :paramsDesc="['专栏 id, 可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页, 在 URL 中找到']"/>
+<Route author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" :paramsDesc="['专栏 id, 可从 [全部专栏](https://time.geekbang.org/paid-content) 进入专栏介绍页，在 URL 中找到']"/>
 ### 极客新闻
 
 <Route author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
 
-> -   极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
-> -   极客新闻不需要付费,可通过 RSS 订阅.
+> -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容。
+> -   极客新闻不需要付费，可通过 RSS 订阅。
 
 ## 技术头条
 
@@ -416,7 +416,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 标签
 
-<Route author="isheng5" example="/juejin/tag/架构" path="/juejin/tag/:tag" :paramsDesc="['标签名, 可在标签 URL 中找到']"/>
+<Route author="isheng5" example="/juejin/tag/架构" path="/juejin/tag/:tag" :paramsDesc="['标签名，可在标签 URL 中找到']"/>
 
 ### 热门
 
@@ -448,7 +448,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/juejin/books" path="/juejin/books"/>
 
-> 掘金小册需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 掘金小册需要付费订阅，RSS 仅做更新提醒，不含付费内容。
 
 ### 沸点
 
@@ -460,11 +460,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 收藏集
 
-<Route author="isQ" example="/juejin/collections/5791879979bc440066171bdb" path="/juejin/collections/:userId" :paramsDesc="['用户唯一标志符, 在浏览器地址栏URL中能够找到']"/>
+<Route author="isQ" example="/juejin/collections/5791879979bc440066171bdb" path="/juejin/collections/:userId" :paramsDesc="['用户唯一标志符，在浏览器地址栏 URL 中能够找到']"/>
 
 ### 单个收藏夹
 
-<Route author="isQ" example="/juejin/collection/5cbf079df265da03462270f9" path="/juejin/collection/:collectionId" :paramsDesc="['收藏夹唯一标志符, 在浏览器地址栏URL中能够找到']"/>
+<Route author="isQ" example="/juejin/collection/5cbf079df265da03462270f9" path="/juejin/collection/:collectionId" :paramsDesc="['收藏夹唯一标志符，在浏览器地址栏 URL 中能够找到']"/>
 
 ### 分享
 
@@ -490,7 +490,7 @@ GitHub 官方也提供了一些 RSS:
 | ------------------- | ------------------------ | ------------------- | ---------------------- |
 | industry            | project                  | industry-news       | programming            |
 
-订阅[全部板块资讯][osc_all]可以使用 <https://rsshub.app/oschina/news>
+订阅 [全部板块资讯][osc_all] 可以使用 <https://rsshub.app/oschina/news>
 
 [osc_all]: https://www.oschina.net/news '开源中国-全部资讯'
 [osc_gen]: https://www.oschina.net/news/industry '开源中国-综合资讯'
@@ -522,25 +522,25 @@ GitHub 官方也提供了一些 RSS:
 
 ### 问答主题
 
-<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名, 可从[全部主题](https://www.oschina.net/question/topics)进入主题页, 在 URL 中找到']"/>
+<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到']"/>
 
 ## 拉勾网
 
 ::: tip 提示
 
-拉勾网官方提供职位的[邮件订阅](https://www.lagou.com/s/subscribe.html)，请根据自身需要选择使用。
+拉勾网官方提供职位的 [邮件订阅](https://www.lagou.com/s/subscribe.html)，请根据自身需要选择使用。
 
 :::
 
 ### 职位招聘
 
-<Route author="hoilc" example="/lagou/jobs/JavaScript/上海" path="/lagou/jobs/:position/:city" :paramsDesc="['职位名，可以参考[拉勾网首页](https://www.lagou.com)的职位列表', '城市名，请参考[拉勾网支持的全部城市](https://www.lagou.com/jobs/allCity.html)']" anticrawler="1"/>
+<Route author="hoilc" example="/lagou/jobs/JavaScript/上海" path="/lagou/jobs/:position/:city" :paramsDesc="['职位名，可以参考 [拉勾网首页](https://www.lagou.com) 的职位列表', '城市名，请参考 [拉勾网支持的全部城市](https://www.lagou.com/jobs/allCity.html)']" anticrawler="1"/>
 
 ## 洛谷
 
 ### 日报
 
-<Route author="LogicJake prnake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']">
+<Route author="LogicJake prnake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 2020 年日报']">
 </Route>
 
 ### 近期比赛

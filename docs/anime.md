@@ -43,9 +43,9 @@ pageClass: routes
 
 ### 動畫
 
-<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
+<Route author="maple3142" example="/anime1/anime/2018 年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
 
-时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
+时间和动画名称请自己从网址取得：<https://anime1.me/category/2018 年秋季/刀劍神域-alicization>
 
 </Route>
 
@@ -69,7 +69,7 @@ pageClass: routes
 
 ### Anitama Channel
 
-<Route author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
+<Route author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道 id，从频道的地址栏中查看']"/>
 
 ## Bangumi
 
@@ -83,7 +83,7 @@ pageClass: routes
 
 ### 条目的吐槽箱
 
-<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']"/>
+<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看。minLength: 以查询字符串（query string）的形式指定。用于过滤掉内容长度小于指定值的吐槽']"/>
 
 ### 条目的评论
 
@@ -115,9 +115,9 @@ pageClass: routes
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
-| 同人 | 漫画  | 软件 | 同人(R18) | 漫画(R18) | 美少女游戏 | 乙女  | BL  |
-| ---- | ----- | ---- | --------- | --------- | ---------- | ----- | --- |
-| home | comic | soft | maniax    | books     | pro        | girls | bl  |
+| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL  |
+| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | --- |
+| home | comic | soft | maniax     | books      | pro        | girls | bl  |
 
 </Route>
 
@@ -142,7 +142,7 @@ pageClass: routes
 
 ### 情报
 
-<Route author="sanmmm" path="/hpoi/info/:type?" example="/hpoi/info/all" :paramsDesc="['分类, 见下表, 默认为`all`']">
+<Route author="sanmmm" path="/hpoi/info/:type?" example="/hpoi/info/all" :paramsDesc="['分类，见下表，默认为`all`']">
 
 分类
 
@@ -154,7 +154,7 @@ pageClass: routes
 
 ### 浏览周边
 
-<Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '角色/作品 ID']">
+<Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类，见下表', '角色/作品 ID']">
 
 | 角色手办  | 作品手办 |
 | --------- | -------- |
@@ -164,7 +164,7 @@ pageClass: routes
 
 ### 用户动态
 
-<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
+<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户 ID', '类别，见下表']">
 
 | 想买 | 预定     | 已入 | 关注 | 有过   |
 | ---- | -------- | ---- | ---- | ------ |
@@ -196,7 +196,7 @@ pageClass: routes
 
 <Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" :paramsDesc="['语言','类别','名称','ID']"/>
 
-比如漫画公主彻夜未眠的网址为https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
+比如漫画公主彻夜未眠的网址为 https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
 
 ### [Naver](https://comic.naver.com)
 
@@ -206,10 +206,10 @@ pageClass: routes
 
 ### 嘀哩嘀哩番剧更新
 
-<Route author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id']">
+<Route author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧 id']">
 
-请打开对应番剧的纵览页(非具体某集),从 url 中最后一位查看番剧 id.(一般为英文)
-除去'海贼'此类具有特殊页面的超长番剧,绝大多数页面都可以解析.
+请打开对应番剧的纵览页（非具体某集）, 从 url 中最后一位查看番剧 id.（一般为英文）
+除去'海贼'此类具有特殊页面的超长番剧，绝大多数页面都可以解析。
 最适合用来追新番
 
 </Route>
@@ -246,25 +246,25 @@ pageClass: routes
 
 ### 漫画更新
 
-<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
+<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画 ID']"/>
 
 ## 海猫吧
 
 ### 漫画更新
 
-<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
+<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画 id，漫画主页的地址栏中最后一位数字']" radar="1"/>
 
 ## 看漫画
 
 ### 漫画更新
 
-<Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']"/>
+<Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画 ID']"/>
 
 ## 漫画 DB
 
 ### 漫画 DB
 
-<Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
+<Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画 ID']"/>
 
 ## 三界异次元
 
@@ -282,7 +282,7 @@ pageClass: routes
 
 ### 鼠绘漫画
 
-<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
+<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画 id，漫画主页的地址栏中最后一位数字']" radar="1"/>
 
 ## 忧郁的 loli
 

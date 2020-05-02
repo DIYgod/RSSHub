@@ -1,26 +1,26 @@
 # API 接口
 
 ::: warning 注意
-API 仍处于开发状态中,  并可能会有改动. 欢迎提供建议！
+API 仍处于开发状态中， 并可能会有改动。欢迎提供建议！
 :::
 
-RSSHub 提供下列 API 接口:
+RSSHub 提供下列 API 接口：
 
 ### 可用公共路由列表
 
 ::: tip 提示
-`protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中.
+`protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中。
 :::
 
-举例: <https://rsshub.app/api/routes/bilibili>
+举例：<https://rsshub.app/api/routes/bilibili>
 
-路由: `/api/routes/:name?`
+路由：`/api/routes/:name?`
 
-参数:
+参数：
 
--   name, 路由一级名称, 对应 [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的文件夹名称. 可选, **缺省则返回所有可用路由**.
+-   name, 路由一级名称，对应 [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的文件夹名称。可选，**缺省则返回所有可用路由**.
 
-成功请求将会返回 HTTP 状态码 `200 OK` 与 JSON 结果, 格式如下:
+成功请求将会返回 HTTP 状态码 `200 OK` 与 JSON 结果，格式如下：
 
 ```js
 {
@@ -58,4 +58,4 @@ RSSHub 提供下列 API 接口:
 }
 ```
 
-若无符合请求路由, 请求将会返回 HTTP 状态码 `204 No Content`.
+若无符合请求路由，请求将会返回 HTTP 状态码 `204 No Content`.
