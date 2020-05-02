@@ -1144,15 +1144,37 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 上海立信会计金融学院
 
-### 通知公告
+::: warning 注意
 
-<Route author="BENDIT233" example="/slu/tzgg" path="/slu/:type" :paramsDesc="['分类, 见下表']">
+分区 ID 是`info/iList.jsp?cat_id=`后方数字
 
-| 官网通知 | 教务处 | 学生处 | 会计学院 | 财税与公共管理学院 | 体育与健康学院 |
-| -------- | ------ | ------ | -------- | ------------------ | -------------- |
-| tzgg     | jwc    | xsc    | kjxy     | csggxy             | tyyjkxy        |
+目前仅支持文章分区的识别
 
-</Route>
+:::
+
+### 官网
+
+<Route author="NeverBehave" example="/slu/tzgg/12707" path="/slu/tzgg/:id" :paramsDesc="['类别ID']" />
+
+### 教务处
+
+<Route author="NeverBehave" example="/slu/jwc/13424" path="/slu/jwc/:id" :paramsDesc="['类别ID']" />
+
+### 学生处
+
+<Route author="NeverBehave" example="/slu/xsc/14751" path="/slu/xsc/:id" :paramsDesc="['类别ID']" />
+
+### 会计学院
+
+<Route author="NeverBehave" example="/slu/kjxy/13496" path="/slu/kjxy/:id" :paramsDesc="['类别ID']" />
+
+### 财税与公共管理学院
+
+<Route author="NeverBehave" example="/slu/csggxy/14751" path="/slu/csggxy/:id" :paramsDesc="['类别ID']" />
+
+### 体育与健康学院
+
+<Route author="NeverBehave" example="/slu/tyyjkxy/14754" path="/slu/tyyjkxy/:id" :paramsDesc="['类别ID']" />
 
 ## 深圳大学
 
