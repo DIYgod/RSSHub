@@ -10,6 +10,14 @@ pageClass: routes
 
 <Route author="hillerliao" example="/36kr/newsflashes" path="/36kr/newsflashes" />
 
+### 用户文章
+
+<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户ID']" />
+
+### 主题文章
+
+<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题ID']" />
+
 ### 搜索文章
 
 <Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
