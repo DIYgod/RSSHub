@@ -325,9 +325,13 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 ### Access Control Configuration
 
-RSSHub supports access control via access keys, whitelisting and/or blacklisting.
+RSSHub supports access control via access keys, whitelisting and blacklisting, enabling any will activate access control for all routes. See the relation between access keys and white/blacklisting.
 
-1. Control priority: access keys > whitelist > blacklist
+|             | Whitelisted | Blacklisted | Correct key | Wrong key | No key |
+| ----------- | ----------- | ----------- | ----------- | --------- | ------ |
+| Whitelisted | ✅          | ✅          | ✅          | ✅        | ✅     |
+| Blacklisted | ✅          | ❌          | ✅          | ❌        | ❌     |
+
 1. Use `,` as the delimiter to separate multiple values
 1. White/blacklisting support IP and route as values
 
