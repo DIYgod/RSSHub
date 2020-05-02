@@ -1142,6 +1142,40 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="HenryQW" example="/shanghaitech/sist/activity" path="/shanghaitech/sist/activity"/>
 
+## 上海立信会计金融学院
+
+::: warning 注意
+
+分区 ID 是`info/iList.jsp?cat_id=`后方数字
+
+目前仅支持文章分区的识别
+
+:::
+
+### 官网
+
+<Route author="NeverBehave" example="/slu/tzgg/12707" path="/slu/tzgg/:id" :paramsDesc="['类别ID']" />
+
+### 教务处
+
+<Route author="NeverBehave" example="/slu/jwc/13424" path="/slu/jwc/:id" :paramsDesc="['类别ID']" />
+
+### 学生处
+
+<Route author="NeverBehave" example="/slu/xsc/14751" path="/slu/xsc/:id" :paramsDesc="['类别ID']" />
+
+### 会计学院
+
+<Route author="NeverBehave" example="/slu/kjxy/13496" path="/slu/kjxy/:id" :paramsDesc="['类别ID']" />
+
+### 财税与公共管理学院
+
+<Route author="NeverBehave" example="/slu/csggxy/14751" path="/slu/csggxy/:id" :paramsDesc="['类别ID']" />
+
+### 体育与健康学院
+
+<Route author="NeverBehave" example="/slu/tyyjkxy/14754" path="/slu/tyyjkxy/:id" :paramsDesc="['类别ID']" />
+
 ## 深圳大学
 
 #### 深圳大学研究生招生网通知公告
