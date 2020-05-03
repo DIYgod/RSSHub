@@ -1,97 +1,54 @@
-const fs = require('fs');
-const pinyin = require('pinyin');
+const file = require('./.format/file');
 const path = require('path');
-const isASCII = (str) => /^[\x00-\x7F]*$/.test(str);
+const sortByHeading = require('./.format/sortByHeading');
+const chineseFormat = require('./.format/chineseFormat');
 
-const sortByHeading = async (filePath) => {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            return Promise.reject(err);
-        }
-        const content = data.split('\n');
+const processors = [sortByHeading, chineseFormat];
 
-        const blocks = [];
-        const h1 = [];
+const loopSideBar = (children, type, lang) =>
+    children
+        .filter((e) => e !== '')
+        .map((x) => ({
+            path: path.resolve(__dirname, `./${x}.md`),
+            type,
+            lang,
+        }));
 
-        let i = 0;
-        while (i < content.length) {
-            const m = /^##\s*(.*)$/.exec(content[i]);
-            if (m) {
-                const b = {
-                    title: m[1],
-                    content: [],
-                };
+const loopType = (sidebar, lang) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang));
 
-                b.content.push(content[i]);
-                i++;
-                while (i < content.length && !/^##\s.*$/.test(content[i])) {
-                    b.content.push(content[i]);
-                    i++;
-                }
-                blocks.push(b);
-            } else {
-                h1.push(content[i]);
-                i++;
+const buildFileList = () => {
+    const config = require(`./.vuepress/config`);
+    let fileList = [];
+    Object.keys(config.themeConfig.locales).forEach((key) => {
+        const locale = config.themeConfig.locales[key];
+        if (locale.hasOwnProperty('sidebar')) {
+            if (locale.sidebar['/']) {
+                fileList = fileList.concat(loopType(locale.sidebar['/'], file.LANG_CN));
+            } else if (locale.sidebar['/en/']) {
+                fileList = fileList.concat(loopType(locale.sidebar['/en/'], file.LANG_EN));
             }
         }
-
-        let newContent = blocks
-            .sort((a, b) => {
-                const ia = isASCII(a.title[0]);
-                const ib = isASCII(b.title[0]);
-                if (ia && ib) {
-                    return a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1;
-                } else if (ia || ib) {
-                    return ia > ib ? -1 : 1;
-                } else {
-                    return pinyin.compare(a.title, b.title);
-                }
-            })
-            .map((x) => x.content.join('\n'))
-            .join('\n');
-        if (newContent) {
-            h1.push(newContent);
-        }
-        newContent = h1.join('\n');
-
-        fs.writeFile(filePath, newContent, 'utf8', (err) => {
-            if (err) {
-                return Promise.reject(err);
-            } else {
-                return Promise.resolve(newContent);
-            }
-        });
     });
+
+    return fileList;
 };
 
+// Entry
 (async () => {
-    const config = require(`./.vuepress/config`);
-
-    let fileList = Object.keys(config.themeConfig.locales)
-        .map((key) => {
-            const locale = config.themeConfig.locales[key];
-            if (locale.hasOwnProperty('sidebar')) {
-                if (locale.sidebar['/']) {
-                    return locale.sidebar['/'][1].children.map((x) => path.resolve(__dirname, `./${x}.md`));
-                } else if (locale.sidebar['/en/']) {
-                    return locale.sidebar['/en/'][1].children.map((x) => path.resolve(__dirname, `./en/${x}.md`));
-                }
-                return null;
-            } else {
-                return null;
-            }
-        })
-        .filter((x) => !!x);
-
-    fileList = [].concat.apply([], fileList);
-
-    fileList.forEach((filePath) => {
-        sortByHeading(filePath)
-            .then(() => {
-                // console.log(`Processed ${filePath}`);
+    const fileList = buildFileList();
+    for (const processor of processors) {
+        // We don't want to mix up processor
+        /* eslint-disable no-await-in-loop */
+        await Promise.all(
+            processor.rules(fileList).map(async (e) => {
+                let formatted = await file.readFile(e.path);
+                formatted = await processor.handler(formatted);
+                return file.writeFile(e.path, formatted);
             })
-            .catch((err) => {
-                throw err;
-            });
-    });
+        ).catch((err) => {
+            // eslint-disable-next-line no-console
+            console.log(err);
+            process.exit(1);
+        });
+    }
 })();
