@@ -91,6 +91,7 @@
     "lz-string": "1.4.4",
     "mailparser": "2.7.7",
     "markdown-it": "10.0.0",
+    "md5": "2.2.1",
     "module-alias": "2.2.2",
     "parse-torrent": "7.1.2",
     "pidusage": "2.0.18",

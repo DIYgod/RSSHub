@@ -57,7 +57,7 @@ filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时�
 
 ## 访问控制
 
-可以使用 `key` 进行访问控制。参考[访问控制配置](install/#fang-wen-kong-zhi-pei-zhi)。
+可以使用 `code` 或 `key` 进行访问控制。参考[访问控制配置](install/#fang-wen-mi-yue-ma)。
 
 ## 输出 Telegram 即时预览链接
 

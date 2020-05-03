@@ -325,21 +325,36 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 ### Access Control Configuration
 
-RSSHub supports access control via access keys, whitelisting and blacklisting, enabling any will activate access control for all routes. See the relation between access keys and white/blacklisting.
+RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes.
 
-|             | Whitelisted | Blacklisted | Correct key | Wrong key | No key |
-| ----------- | ----------- | ----------- | ----------- | --------- | ------ |
-| Whitelisted | ✅          | ✅          | ✅          | ✅        | ✅     |
-| Blacklisted | ✅          | ❌          | ✅          | ❌        | ❌     |
+#### White/blacklisting
 
-1. Use `,` as the delimiter to separate multiple values
-1. White/blacklisting support IP and route as values
-
--   `ACCESS_KEY`: the access keys. When set, access via: http://rsshub.app/rsshub/routes?key=ILoveRSSHub
-
--   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded.
+-   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded
 
 -   `BLACKLIST`: the blacklist
+
+White/blacklisting support IP and route as values. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+
+#### Access Key/Code
+
+-   `ACCESS_KEY`: the access key. When set, access via the key directly or the access code described above
+
+Access code is the md5 generated based on the access key + route, eg:
+
+| Access key  | Route             | Generating access code                   | Access code                      |
+| ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
+| ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
+
+-   Routes are accessible via `code`, eg: <https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
+
+-   Or using `key` directly, eg: <https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
+
+See the relation between access key/code and white/blacklisting.
+
+|             | Whitelisted | Blacklisted | Correct access key/code | Wrong access key/code | No access key/code |
+| ----------- | ----------- | ----------- | ----------------------- | --------------------- | ------------------ |
+| Whitelisted | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
+| Blacklisted | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
 
 ### Other Application Configurations
 
