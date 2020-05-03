@@ -294,7 +294,7 @@ pageClass: routes
 
 帖子 id 查找办法:
 
-打开想跟踪的帖子，比如：[http://t66y.com/htm_data/20/1811/3286088.html。其中 \`3286088\` 就是帖子 id。](http://t66y.com/htm_data/20/1811/3286088.html。其中`3286088`就是帖子id。)
+打开想跟踪的帖子，比如：<http://t66y.com/htm_data/20/1811/3286088.html> 其中 `3286088` 就是帖子 id。
 
 :::
 
@@ -441,8 +441,8 @@ pageClass: routes
 
 目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持, 也就是说你**只能使用**以下类型的链接来订阅播客:
 
--   <https://rsshub.app/ximalaya/album/>\*
--   <https://rsshub.app/ximalaya/album/*.rss>
+-   `https://rsshub.app/ximalaya/album/*`
+-   `https://rsshub.app/ximalaya/album/*.rss`
 
 :::
 

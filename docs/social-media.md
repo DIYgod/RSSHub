@@ -308,7 +308,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ::: tip 提示
 
-官方提供了用户时间线 RSS: https&#x3A;//**:instance**/users/**:username**.atom 或 https&#x3A;//**:instance**/users/**:username**.rss
+官方提供了用户时间线 RSS: `https://**:instance**/users/**:username**.atom` 或 `https://**:instance**/users/**:username**.rss`
 
 例如：<https://pawoo.net/users/pawoo_support.atom> 或 <https://pawoo.net/users/pawoo_support.rss>
 
