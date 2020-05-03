@@ -8,18 +8,18 @@ sidebar: auto
 
 部署涉及到以下基本编程常识:
 
-1. 命令行操作
-1. [Git](https://git-scm.com/)
-1. [Node.js](https://nodejs.org/)
-1. [npm](https://www.npmjs.com/get-npm) 或 [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+1.  命令行操作
+2.  [Git](https://git-scm.com/)
+3.  [Node.js](https://nodejs.org/)
+4.  [npm](https://www.npmjs.com/get-npm) 或 [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 部署到可外网访问则可能涉及到:
 
-1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
-1. [Docker](https://www.docker.com/get-started) 或 [docker-compose](https://docs.docker.com/compose/install/)
-1. [Redis](https://redis.io/download)
-1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-1. [Google App Engine](https://cloud.google.com/appengine/)
+1.  [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
+2.  [Docker](https://www.docker.com/get-started) 或 [docker-compose](https://docs.docker.com/compose/install/)
+3.  [Redis](https://redis.io/download)
+4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+5.  [Google App Engine](https://cloud.google.com/appengine/)
 
 ## Docker Compose 部署
 
@@ -73,7 +73,7 @@ $ docker pull diygod/rsshub
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
 
 您可以使用下面的命令来关闭 RSSHub
 
@@ -153,7 +153,7 @@ $ yarn start
 $ pm2 start lib/index.js --name rsshub
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
 
 详细使用说明参照 [指南](https://docs.rsshub.app/)，替换所有路由例子中的 `https://rsshub.app/` 为 `http://localhost:1200` 即可正常使用
 
@@ -163,10 +163,8 @@ $ pm2 start lib/index.js --name rsshub
 
 在项目根目录新建一个 `.env` 文件，每行以 `NAME=VALUE` 格式添加环境变量，例如
 
-```
-CACHE_TYPE=redis
-CACHE_EXPIRE=600
-```
+    CACHE_TYPE=redis
+    CACHE_EXPIRE=600
 
 注意它不会覆盖已有的环境变量，更多规则请参考 [dotenv](https://github.com/motdotla/dotenv)
 
@@ -265,7 +263,7 @@ env_variables:
 ::: warning 注意
 
 -   需要 [DockerHub](https://hub.docker.com) 账号
--   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
+-   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
 -   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
 -   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
 
@@ -319,7 +317,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：`http&#x3A;//usernam3:passw0rd@127.0.0.1passw0rd@127.0.0.1:1200/protected/rsshub/routes`
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -401,7 +399,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   邮箱 邮件列表路由:
 
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如 `password=123456&host=imap.qq.com&port=993`。
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password = 密码 & host = 服务器 & port = 端口`，例如 `password=123456&host=imap.qq.com&port=993`。
 
 -   吹牛部落 栏目更新
 
@@ -411,7 +409,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `WEIBO_APP_KEY`: 微博 App Key
     -   `WEIBO_APP_SECRET`: 微博 App Secret
-    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub地址/weibo/timeline/0?code=xxx`
+    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址 / weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址 / weibo/timeline/0?code=xxx`
 
 -   饭否 全部路由: [申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
@@ -426,7 +424,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   北大未名 BBS 全站十大
 
-    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1.登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
 
 -   nhentai torrent: [注册地址](https://nhentai.net/register/)
 

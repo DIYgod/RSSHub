@@ -109,9 +109,10 @@ Solidot 提供的 feed:
 | hk   | tw   | en   |
 
 `类別`
-| 新聞總集 | 兩岸國際 | 財經 | 娛樂 | 體育 | 健康 |
-\| -------- \| -------- \| -------- \| ------------- \| ------ \| ------ \|
-| (空) | world | business | entertainment | sports | health |
+
+| 新聞總集 | 兩岸國際 | 財經     | 娛樂          | 體育   | 健康   |
+| -------- | -------- | -------- | ------------- | ------ | ------ |
+| (空)     | world    | business | entertainment | sports | health |
 
 </Route>
 

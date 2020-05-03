@@ -21,6 +21,12 @@ const loopSideBar = (children, type, lang, prefix) =>
             type,
             lang,
         }));
+const loopNav = (nav, lang) =>
+    nav.map((e) => ({
+        path: path.resolve(__dirname, e.link.slice(1), 'README.md'),
+        type: file.NAV_TYPE,
+        lang,
+    }));
 const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang, prefix).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang, prefix));
 
 /**
@@ -37,12 +43,12 @@ const buildFileList = async () => {
     let fileList = [];
     Object.keys(config.themeConfig.locales).forEach((key) => {
         const locale = config.themeConfig.locales[key];
+        const key_path = key.slice(1);
         if (locale.hasOwnProperty('sidebar')) {
-            if (locale.sidebar['/']) {
-                fileList = fileList.concat(loopType(locale.sidebar['/'], file.LANG_CN, ''));
-            } else if (locale.sidebar['/en/']) {
-                fileList = fileList.concat(loopType(locale.sidebar['/en/'], file.LANG_EN, 'en/'));
-            }
+            fileList = fileList.concat(loopType(locale.sidebar[key], locale.lang, key_path));
+        }
+        if (locale.hasOwnProperty('nav')) {
+            fileList = fileList.concat(loopNav(locale.nav, locale.lang));
         }
     });
 
