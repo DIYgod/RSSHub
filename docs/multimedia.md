@@ -382,6 +382,10 @@ pageClass: routes
 
 <Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1"/>
 
+## 蜻蜓 FM
+
+<Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
+
 ## 色花堂中文论坛
 
 ### 原创 BT 电影
