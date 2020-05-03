@@ -6,8 +6,6 @@ const frontmatter = require('remark-frontmatter');
 
 const prettier = require('remark-preset-prettier');
 
-// Helpers
-
 module.exports = {
     rules: (list) => list.filter((e) => e.lang === file.LANG_CN),
     handler: async (doc) => {

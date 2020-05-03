@@ -4,8 +4,15 @@ const path = require('path');
 const sortByHeading = require('./.format/sortByHeading');
 const chineseFormat = require('./.format/chineseFormat');
 
+/**
+ * Processors are objects contains two methods:
+ * `rules(list)`, and `handler(str)`
+ * rules filters required file document object
+ * and handler get document string and return formatted document
+ */
 const processors = [sortByHeading, chineseFormat];
 
+// Helpers
 const loopSideBar = (children, type, lang, prefix) =>
     children
         .filter((e) => e !== '')
@@ -14,9 +21,17 @@ const loopSideBar = (children, type, lang, prefix) =>
             type,
             lang,
         }));
-
 const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang, prefix).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang, prefix));
 
+/**
+ * Iterate config and build document object:
+ * E.g.
+ * {
+        path: 'docs/en/other.md', <-- full path here
+        type: 'route', <--- Defined in file.js
+        lang: 'en' <-- Defined in file.js
+    }
+ */
 const buildFileList = async () => {
     const config = require(`./.vuepress/config`);
     let fileList = [];
@@ -34,6 +49,10 @@ const buildFileList = async () => {
     return fileList;
 };
 
+/**
+ * Select files that only being modified
+ * Same format as `buildFileList()`
+ */
 const buildStagedList = async () => {
     const stagedFiles = await sgf();
     const stagedFileList = [];
@@ -54,8 +73,9 @@ const buildStagedList = async () => {
     return result;
 };
 
-// Entry
-// Usage: node format.js --full/--staged
+/** Entry
+ * Usage: node format.js --full/--staged
+ */
 (async () => {
     // Mode
     const flag = process.argv[2] || '--full';
@@ -69,7 +89,6 @@ const buildStagedList = async () => {
             fileList = await buildFileList();
     }
 
-    // Processors
     for (const processor of processors) {
         // We don't want to mix up processor
         /* eslint-disable no-await-in-loop */
