@@ -1,8 +1,8 @@
-const file = require('./.format/file');
+const file = require('./file');
 const sgf = require('staged-git-files');
 const path = require('path');
-const sortByHeading = require('./.format/sortByHeading');
-const chineseFormat = require('./.format/chineseFormat');
+const sortByHeading = require('./sortByHeading');
+const chineseFormat = require('./chineseFormat');
 
 /**
  * Processors are objects contains two methods:
@@ -17,13 +17,13 @@ const loopSideBar = (children, type, lang, prefix) =>
     children
         .filter((e) => e !== '')
         .map((x) => ({
-            path: path.resolve(__dirname, prefix, `./${x}.md`),
+            path: path.resolve(__dirname, '..', prefix, `./${x}.md`),
             type,
             lang,
         }));
 const loopNav = (nav, lang) =>
     nav.map((e) => ({
-        path: path.resolve(__dirname, e.link.slice(1), 'README.md'),
+        path: path.resolve(__dirname, '..', e.link.slice(1), 'README.md'),
         type: file.NAV_TYPE,
         lang,
     }));
@@ -39,7 +39,7 @@ const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, fil
     }
  */
 const buildFileList = async () => {
-    const config = require(`./.vuepress/config`);
+    const config = require(`../.vuepress/config`);
     let fileList = [];
     Object.keys(config.themeConfig.locales).forEach((key) => {
         const locale = config.themeConfig.locales[key];
@@ -94,6 +94,8 @@ const buildStagedList = async () => {
         default:
             fileList = await buildFileList();
     }
+    // console.log(fileList);
+    // return
 
     for (const processor of processors) {
         // We don't want to mix up processor
