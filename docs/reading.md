@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# 小说·文学·阅读
+# 小说 · 文学 · 阅读
 
 ## All Poetry
 
@@ -131,7 +131,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
 
-举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+举例网址：<http://booksky.so/BookDetail.aspx?Level=1&bid=98619>
 
 </Route>
 
@@ -141,7 +141,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="LJason77" example="/novel/ptwxz/10/10272" path="/novel/ptwxz/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `10`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `10272`']" >
 
-举例网址：https://www.ptwxz.com/bookinfo/10/10272.html
+举例网址：<https://www.ptwxz.com/bookinfo/10/10272.html>
 
 </Route>
 
@@ -185,7 +185,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']">
 
-举例网址：http://www.shuquge.com/txt/8659/index.html
+举例网址：<http://www.shuquge.com/txt/8659/index.html>
 
 </Route>
 
@@ -195,7 +195,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']">
 
-举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+举例网址：<https://www.wenxuemi.com/files/article/html/6/6144/>
 
 </Route>
 
@@ -215,7 +215,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1">
 
-举例网址：https://www.zhaishuyuan.com/book/17858
+举例网址：<https://www.zhaishuyuan.com/book/17858>
 
 </Route>
 
