@@ -4,9 +4,6 @@ const remark = require('remark');
 const pangu = require('remark-pangu');
 const frontmatter = require('remark-frontmatter');
 
-const consistent = require('remark-preset-lint-consistent');
-const styleGuide = require('remark-preset-lint-markdown-style-guide');
-const recommended = require('remark-preset-lint-recommended');
 const prettier = require('remark-preset-prettier');
 
 // Helpers
@@ -17,9 +14,6 @@ module.exports = {
         let result = await remark()
             .use(frontmatter)
             .use(pangu)
-            .use(consistent)
-            .use(styleGuide)
-            .use(recommended)
             .use(prettier)
             .use({
                 settings: {
