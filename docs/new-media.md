@@ -577,6 +577,12 @@ Supported sub-sites：
 
 <Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" :paramsDesc="['关键词']" anticrawler="1"/>
 
+## 金色财经
+
+### 快讯
+
+<Route author="nczitzk" example="/jinse/lives" path="/jinse/lives"/>
+
 ## 鲸跃汽车
 
 ### 首页
