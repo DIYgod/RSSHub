@@ -186,7 +186,7 @@ $ git pull
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
-## 部署到 Vercel(Zeit Now)
+## 部署到 Vercel (Zeit Now)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
@@ -317,7 +317,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：`http&#x3A;//usernam3:passw0rd@127.0.0.1passw0rd@127.0.0.1:1200/protected/rsshub/routes`
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：`http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes`
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -399,7 +399,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   邮箱 邮件列表路由:
 
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password = 密码 & host = 服务器 & port = 端口`，例如 `password=123456&host=imap.qq.com&port=993`。
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如 `password=123456&host=imap.qq.com&port=993`。
 
 -   吹牛部落 栏目更新
 
@@ -409,7 +409,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `WEIBO_APP_KEY`: 微博 App Key
     -   `WEIBO_APP_SECRET`: 微博 App Secret
-    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址 / weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址 / weibo/timeline/0?code=xxx`
+    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub地址/weibo/timeline/0?code=xxx`
 
 -   饭否 全部路由: [申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
@@ -433,7 +433,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   discuz cookies 设定
 
-    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时, 通过指定 cid 来调用该 cookie
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
 
 -   Sci-hub 设置，用于科学期刊路由。
 

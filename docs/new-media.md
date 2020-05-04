@@ -98,7 +98,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
 </Route>
 
@@ -247,7 +247,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/verge" path="/verge">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
 </Route>
 
@@ -289,8 +289,8 @@ Supported sub-sites:
 
 <Route author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']">
 
--   频道为单一路径, 如 <https://www.ifanr.com/`coolbuy`> 则为 `/ifanr/coolbuy`.
--   频道包含多重路径, 如 <https://www.ifanr.com/`category/intelligentcar`> 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
+-   频道为单一路径，如 <https://www.ifanr.com/`coolbuy`> 则为 `/ifanr/coolbuy`.
+-   频道包含多重路径，如 <https://www.ifanr.com/`category/intelligentcar`> 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
 
 | AppSolution | 玩物志  | 董车会                  |
 | ----------- | ------- | ----------------------- |
@@ -765,7 +765,7 @@ Supported sub-sites:
 
 <Route author="HenryQW" example="/sspai/series" path="/sspai/series">
 
-> 少数派专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 少数派专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 </Route>
 
@@ -793,7 +793,7 @@ Supported sub-sites:
 
 <Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
 
-此为专题广场更新提示 => 集合型而非单篇文章. 与下方 "专题内文章更新" 存在明显区别!
+此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！
 
 </Route>
 
@@ -920,7 +920,7 @@ Supported sub-sites:
 
 ::: tip 提示
 
-公众号直接抓取困难, 故目前提供几种间接抓取方案, 请自行选择
+公众号直接抓取困难，故目前提供几种间接抓取方案，请自行选择
 
 :::
 

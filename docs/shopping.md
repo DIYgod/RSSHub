@@ -34,7 +34,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="hoilc" example="/damai/activity/上海/音乐会/全部/柴可夫斯基" path="/damai/activity/:city/:category/:subcategory/:keyword?" :paramsDesc="['城市, 如果不需要限制, 请填入`全部`', '分类, 如果不需要限制, 请填入`全部`', '子分类, 如果不需要限制, 请填入`全部`', '搜索关键字, 置空为不限制']"/>
 
-城市、分类名、子分类名, 请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
+城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
 
 ## 多抓鱼
 

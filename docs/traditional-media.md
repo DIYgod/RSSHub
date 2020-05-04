@@ -22,12 +22,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
-支持大部分频道, 频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
+支持大部分频道，频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
 
--   频道为单一路径, 如 <https://feeds.bbci.co.uk/news/`business`/rss.xml> 则为 `/bbc/business`.
--   频道包含多重路径, 如 <https://feeds.bbci.co.uk/news/`world/asia`/rss.xml> 则替换 `/` 为 `-` `/bbc/world-asia`.
+-   频道为单一路径，如 <https://feeds.bbci.co.uk/news/`business`/rss.xml> 则为 `/bbc/business`.
+-   频道包含多重路径，如 <https://feeds.bbci.co.uk/news/`world/asia`/rss.xml> 则替换 `/` 为 `-` `/bbc/world-asia`.
 -   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
 
 </Route>
@@ -51,12 +51,12 @@ pageClass: routes
 
 :::
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
-支持所有频道, 频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
+支持所有频道，频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
 
--   频道为单一路径, 如 <http://www.ftchinese.com/rss/`news`> 则为 `/ft/chinese/news`.
--   频道包含多重路径, 如 <http://www.ftchinese.com/rss/`column/007000002`> 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
+-   频道为单一路径，如 <http://www.ftchinese.com/rss/`news`> 则为 `/ft/chinese/news`.
+-   频道包含多重路径，如 <http://www.ftchinese.com/rss/`column/007000002`> 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
 
 </Route>
 
@@ -130,7 +130,7 @@ Solidot 提供的 feed:
 
 ## 财新网
 
-> 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 ### 新闻分类
 
@@ -338,7 +338,7 @@ category 对应的关键词有
 
 <Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目ID']">
 
-`cid`可在对应栏目的 url 后的参数中获取, 如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
+`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
 
 </Route>
 

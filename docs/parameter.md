@@ -2,13 +2,13 @@
 
 ::: tip 提示
 
-所有通用参数可以使用 `&` 连接组合使用, 效果叠加
+所有通用参数可以使用 `&` 连接组合使用，效果叠加
 
 :::
 
 ## 内容过滤
 
-可以使用以下 URL query 过滤内容, 支持正则
+可以使用以下 URL query 过滤内容，支持正则
 
 filter 选出想要的内容
 
@@ -45,7 +45,7 @@ filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时�
 
 ## 条数限制
 
-可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS
+可以使用 limit 参数限制最大条数，主要用于排行榜类 RSS
 
 举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
@@ -57,7 +57,7 @@ filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时�
 
 ## 输出 Telegram 即时预览链接
 
-可以输出 Telegram 可识别的即时预览链接, 主要用于文章类 RSS
+可以输出 Telegram 可识别的即时预览链接，主要用于文章类 RSS
 
 Telegram 即时预览模式需要在官网制作页面处理模板，请前往[官网](https://instantview.telegram.org/)了解更多
 
@@ -75,7 +75,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 ## 输出格式
 
-RSSHub 同时支持 RSS 2.0 和 Atom 输出格式, 在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式, 缺省为 RSS 2.0
+RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式，缺省为 RSS 2.0
 
 举例:
 

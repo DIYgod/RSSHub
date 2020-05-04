@@ -1303,7 +1303,7 @@ type 列表：
 
 <Route author="SChen1024" example="/whu/news/wdyw" path="/whu/news/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
 
-注意: 除了 `kydt` 代表学术动态, 其余页面均是拼音首字母小写.
+注意：除了 `kydt` 代表学术动态，其余页面均是拼音首字母小写.
 
 | **内容** | **参数** |
 | :------: | :------: |
@@ -1351,7 +1351,7 @@ type 列表：
 
 ::: tip 提示
 
-支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目,
+支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
 
 例如`http://dean.xjtu.edu.cn/gzlc.htm`, 则`subpath`为`gzlc`
 

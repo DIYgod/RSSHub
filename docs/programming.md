@@ -16,7 +16,7 @@ pageClass: routes
 
 <Route author="ImSingee" example="/algocasts" path="/algocasts" radar="1"></Route>
 
-> AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> AlgoCasts 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 ## cve.mitre.org
 
@@ -48,7 +48,7 @@ pageClass: routes
 | 职场     | 58e84f1584c651693437f27c |
 | 互联网   | 5d8b7c3786194a1921979124 |
 
-> GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> GitChat 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 ## Gitea
 
@@ -393,8 +393,8 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
 
-> -   极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
-> -   极客新闻不需要付费, 可通过 RSS 订阅.
+> -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
+> -   极客新闻不需要付费，可通过 RSS 订阅.
 
 ## 技术头条
 
@@ -448,7 +448,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/juejin/books" path="/juejin/books"/>
 
-> 掘金小册需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 掘金小册需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 ### 沸点
 

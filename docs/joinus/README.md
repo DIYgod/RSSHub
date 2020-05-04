@@ -387,7 +387,7 @@ ctx.state.data = {
 
 ### 添加脚本文档
 
-1.  更新 [文档 (/docs/) ](https://github.com/DIYgod/RSSHub/blob/master/docs/) 目录内对应的文档, 可以执行 `npm run docs:dev` 查看文档效果
+1.  更新 [文档 (/docs/) ](https://github.com/DIYgod/RSSHub/blob/master/docs/) 目录内对应的文档，可以执行 `npm run docs:dev` 查看文档效果
 
     -   文档采用 vue 组件形式，格式如下：
         -   `author`: 路由作者，多位作者使用单个空格分隔
@@ -457,7 +457,7 @@ ctx.state.data = {
 
 1.  请一定要注意把`<Route>`的标签关闭！
 
-2.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
+2.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
 
 ## 提交新的 RSSHub Radar 规则
 

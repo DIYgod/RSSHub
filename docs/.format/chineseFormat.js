@@ -11,7 +11,9 @@ module.exports = {
     handler: async (doc) => {
         let result = await remark()
             .use(frontmatter)
-            .use(pangu)
+            .use(pangu, {
+                inlineCode: false,
+            })
             .use(prettier)
             .use({
                 settings: {
