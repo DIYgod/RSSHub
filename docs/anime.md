@@ -276,7 +276,7 @@ pageClass: routes
 
 ### 最新
 
-<Route author="KenMizz" example="/ssmh" path="/ssmh/">
+<Route author="KenMizz" example="/ssmh" path="/ssmh/" />
 
 ## 鼠绘漫画
 

@@ -355,7 +355,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
-`DISALLOW_ROBOT`: 防止被搜索引擎收录
+`DISALLOW_ROBOT`: 阻止搜索引擎收录，默认开启，设置 false 或 0 关闭
 
 `HOTLINK_TEMPLATE`: 用于处理描述中图片的链接，绕过防盗链等限制，留空不生效。用法参考[#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用[URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties)的所有属性，格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
 

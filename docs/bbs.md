@@ -118,6 +118,26 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1"/>
 
+## Ruby China
+
+> 未登录状态下抓取页面非实时更新
+
+### 主题
+
+<Route author="ahonn" example="/ruby-china/topics" path="/ruby-china/topics/:type" :paramsDesc="['主题类型，在 URL 可以找到']"/>
+
+| 主题类型 | type       |
+| -------- | ---------- |
+| 精华贴   | excellent  |
+| 优质帖子 | popular    |
+| 无人问津 | no_reply   |
+| 最新回复 | last_reply |
+| 最新发布 | last       |
+
+### 招聘
+
+<Route author="ahonn" example="/ruby-china/jobs" path="/ruby-china/jobs"/>
+
 ## Saraba1st
 
 ### 帖子
