@@ -99,7 +99,7 @@
     "query-string": "6.12.1",
     "redis": "3.0.2",
     "require-all": "3.0.0",
-    "rss-parser": "3.7.6",
+    "rss-parser": "3.8.0",
     "socks-proxy-agent": "5.0.0",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
