@@ -8,18 +8,18 @@ sidebar: auto
 
 部署涉及到以下基本编程常识：
 
-1. 命令行操作
-1. [Git](https://git-scm.com/)
-1. [Node.js](https://nodejs.org/)
-1. [npm](https://www.npmjs.com/get-npm) 或 [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+1.  命令行操作
+2.  [Git](https://git-scm.com/)
+3.  [Node.js](https://nodejs.org/)
+4.  [npm](https://www.npmjs.com/get-npm) 或 [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 部署到可外网访问则可能涉及到：
 
-1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
-1. [Docker](https://www.docker.com/get-started) 或 [docker-compose](https://docs.docker.com/compose/install/)
-1. [Redis](https://redis.io/download)
-1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-1. [Google App Engine](https://cloud.google.com/appengine/)
+1.  [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
+2.  [Docker](https://www.docker.com/get-started) 或 [docker-compose](https://docs.docker.com/compose/install/)
+3.  [Redis](https://redis.io/download)
+4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+5.  [Google App Engine](https://cloud.google.com/appengine/)
 
 ## Docker Compose 部署
 
@@ -73,7 +73,7 @@ $ docker pull diygod/rsshub
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
 
 您可以使用下面的命令来关闭 RSSHub
 
@@ -153,7 +153,7 @@ $ yarn start
 $ pm2 start lib/index.js --name rsshub
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
 
 详细使用说明参照 [指南](https://docs.rsshub.app/)，替换所有路由例子中的 `https://rsshub.app/` 为 `http://localhost:1200` 即可正常使用
 
@@ -163,9 +163,9 @@ $ pm2 start lib/index.js --name rsshub
 
 在项目根目录新建一个 `.env` 文件，每行以 `NAME=VALUE` 格式添加环境变量，例如
 
-```
-CACHE_TYPE=redis
-CACHE_EXPIRE=600
+```env
+    CACHE_TYPE=redis
+    CACHE_EXPIRE=600
 ```
 
 注意它不会覆盖已有的环境变量，更多规则请参考 [dotenv](https://github.com/motdotla/dotenv)
@@ -188,7 +188,7 @@ $ git pull
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
-## 部署到 Vercel(Zeit Now)
+## 部署到 Vercel (Zeit Now)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
@@ -265,7 +265,7 @@ env_variables:
 ::: warning 注意
 
 -   需要 [DockerHub](https://hub.docker.com) 账号
--   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
+-   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
 -   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
 -   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
 
@@ -341,7 +341,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes。
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：`http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`。
 
 对于不支持该认证协议的阅读器，请参考 [访问控制配置](#fang-wen-kong-zhi-pei-zhi)。
 
@@ -351,7 +351,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 访问控制配置
 
-RSSHub 支持使用访问密钥/码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。
+RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。
 
 #### 黑白名单
 
@@ -361,7 +361,7 @@ RSSHub 支持使用访问密钥/码，白名单和黑名单三种方式进行访
 
 黑白名单支持 IP 和路由，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
-#### 访问密钥/码
+#### 访问密钥 / 码
 
 -   `ACCESS_KEY`: 访问密钥，用于直接访问所有路由或者生成访问码
 
@@ -375,12 +375,12 @@ RSSHub 支持使用访问密钥/码，白名单和黑名单三种方式进行访
 
 -   或使用访问密钥 `key` 直接访问所有路由，例如：<https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
 
-访问密钥/码与黑白名单的访问控制关系如下：
+访问密钥 / 码与黑白名单的访问控制关系如下：
 
-|            | 在白名单中 | 在黑名单中 | 正确访问密钥/码 | 错误访问密钥/码 | 无访问密钥/码 |
-| ---------- | ---------- | ---------- | --------------- | --------------- | ------------- |
-| 在白名单中 | ✅         | ✅         | ✅              | ✅              | ✅            |
-| 在黑名单中 | ✅         | ❌         | ✅              | ❌              | ❌            |
+|            | 在白名单中 | 在黑名单中 | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
+| ---------- | ---------- | ---------- | ----------------- | ----------------- | --------------- |
+| 在白名单中 | ✅         | ✅         | ✅                | ✅                | ✅              |
+| 在黑名单中 | ✅         | ❌         | ✅                | ❌                | ❌              |
 
 ### 其他应用配置
 
@@ -484,7 +484,7 @@ RSSHub 支持使用访问密钥/码，白名单和黑名单三种方式进行访
 
 -   discuz cookies 设定
 
-    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围 [00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
 
 -   Sci-hub 设置，用于科学期刊路由。
 

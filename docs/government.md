@@ -107,7 +107,7 @@ pageClass: routes
 |             allpro              |                包含以下全部关键词                |                                |
 |             notpro              |                 不包含以下关键词                 |                                |
 |              inpro              |                完整不拆分的关键词                |                                |
-|           searchfield           | title: 搜索词在标题中; content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
+|           searchfield           | title: 搜索词在标题中；content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
 | pubmintimeYear, pubmintimeMonth |                    从某年某月                    | 单独使用月份参数无法只筛选月份 |
 | pubmaxtimeYear, pubmaxtimeMonth |                    到某年某月                    | 单独使用月份参数无法只筛选月份 |
 |              colid              |                       栏目                       |      比较复杂，不建议使用      |
@@ -138,7 +138,7 @@ pageClass: routes
 
 </Route>
 
-### 湖南省政府采购网-公告
+### 湖南省政府采购网 - 公告
 
 <Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
 
@@ -314,7 +314,7 @@ pageClass: routes
 
 ## 中华人民共和国海关总署
 
-### 拍卖信息/海关法规
+### 拍卖信息 / 海关法规
 
 <Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
 
@@ -340,8 +340,8 @@ pageClass: routes
 
 -   `农业农村部动态`的网页链接是`http://www.moa.gov.cn/xw/zwdt/`, 对应的`suburl`是`xw/zwdt`
 -   `财务公开`的网页链接是`http://www.moa.gov.cn/gk/cwgk_1/`, 对应的`suburl`是`gk/cwgk_1`
--   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面(`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录, 它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合, 这时候请点开对应栏目的`更多>>`进入栏目的目录, 再根据上面的规则提取`suburl`
--   特别地, `图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
+-   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面 (`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录，它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合，这时候请点开对应栏目的`更多 >>`进入栏目的目录，再根据上面的规则提取`suburl`
+-   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
 
 </Route>
 

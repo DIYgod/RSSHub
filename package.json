@@ -11,8 +11,8 @@
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "format": "eslint \"**/*.js\" --fix && node docs/format.js && prettier \"**/*.{js,json,md}\" --write",
-    "format:staged": "eslint \"**/*.js\" --fix && node docs/format.js && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
+    "format": "eslint \"**/*.js\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json,md}\" --write",
+    "format:staged": "eslint \"**/*.js\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json,md}\"",
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json,md}\"",
     "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit"
@@ -54,6 +54,12 @@
     "prettier": "2.0.5",
     "prettier-check": "2.0.0",
     "pretty-quick": "2.0.1",
+    "remark": "12.0.0",
+    "remark-frontmatter": "2.0.0",
+    "remark-pangu": "2.1.1",
+    "remark-preset-prettier": "0.4.0",
+    "staged-git-files": "1.2.0",
+    "string-width": "4.2.0",
     "supertest": "4.0.2",
     "vuepress": "1.4.1",
     "yorkie": "2.0.0"

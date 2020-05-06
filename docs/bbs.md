@@ -58,11 +58,11 @@ pageClass: routes
 
 ## Discuz
 
-### 通用子版块-自动检测
+### 通用子版块 - 自动检测
 
 <Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" :paramsDesc="['子版块链接， 需要手动Url编码']"/>
 
-### 通用子版块-指定版本
+### 通用子版块 - 指定版本
 
 <Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" :paramsDesc="['discuz版本类型，见下表','子版块链接， 需要手动Url编码']" >
 
@@ -72,7 +72,7 @@ pageClass: routes
 
 </Route>
 
-### 通用子版块-支持 Cookie
+### 通用子版块 - 支持 Cookie
 
 <Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" :paramsDesc="['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']" >
 
@@ -150,7 +150,7 @@ pageClass: routes
 
 ## V2EX
 
-### 最热/最新主题
+### 最热 / 最新主题
 
 <Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
 
@@ -304,12 +304,12 @@ pageClass: routes
 <Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" :paramsDesc="['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']">
 ::: warning 三个 id 获取方式
 
-1. 打开 https://offer.1point3acres.com
-2. 打开控制台
-3. 切换到 Network 面板
-4. 点击 搜索 按钮
-5. 点击 results?ps=15&pg=1 POST 请求
-6. 找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
+1.  打开 <https://offer.1point3acres.com>
+2.  打开控制台
+3.  切换到 Network 面板
+4.  点击 搜索 按钮
+5.  点击 results?ps=15&pg=1 POST 请求
+6.  找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
 
 :::
 </Route>

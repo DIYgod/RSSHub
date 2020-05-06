@@ -40,15 +40,15 @@ pageClass: routes
 
 <Route author="zhang-wangz" example="/btzj/base" path="/btzj/:type?" anticrawler="1" :paramsDesc="['type,见下表']">
 
-| base                     | govern                 |
-| ------------------------ | ---------------------- |
-| https://www.88btbtt.com/ | http://www.2btjia.com/ |
+| base                       | govern                   |
+| -------------------------- | ------------------------ |
+| <https://www.88btbtt.com/> | <http://www.2btjia.com/> |
 
 </Route>
 
 ::: tip 提示
 
-由于 BT 之家域名有多个. 此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
+由于 BT 之家域名有多个。此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
 可空，默认为 base
 
 :::
@@ -57,7 +57,7 @@ pageClass: routes
 
 ::: tip 提示
 
-网站提供了全部种子的 RSS: https://eztv.io/ezrss.xml
+网站提供了全部种子的 RSS: <https://eztv.io/ezrss.xml>
 
 :::
 
@@ -83,35 +83,35 @@ pageClass: routes
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
 
-### 首页/步兵
+### 首页 / 步兵
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/home" path="/javbus/uncensored/home"/>
 
-### 分类/步兵
+### 分类 / 步兵
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/uncensored/genre)的链接']" />
 
-### 演员/步兵
+### 演员 / 步兵
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/uncensored/actresses)的链接']" />
 
-### 系列/步兵
+### 系列 / 步兵
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/uncensored/series/1ft" path="/javbus/uncensored/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
 
-### 首页/欧陆风云
+### 首页 / 欧陆风云
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/western/home" path="/javbus/western/home"/>
 
-### 分类/欧陆风云
+### 分类 / 欧陆风云
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
 
-### 演员/欧陆风云
+### 演员 / 欧陆风云
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
 
-### 系列/欧陆风云
+### 系列 / 欧陆风云
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/western/series/20" path="/javbus/western/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
 
@@ -162,9 +162,10 @@ pageClass: routes
 <Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" :paramsDesc="['类型']" supportBT="1"/>
 
 **类型参考这里**
+
 | 电影 | 连续剧 | 动画 | 综艺 | 纪录片 |
 | ---- | ------ | ---- | ---- | ------ |
-| 6 | 7 | 15 | 20 | 24 |
+| 6    | 7      | 15   | 20   | 24     |
 
 | 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
 | ------ | ------ | ------ | ------ | ------ |
@@ -238,7 +239,7 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
-## Yahoo!テレビ
+## Yahoo! テレビ
 
 ### 番組検索
 
@@ -294,7 +295,7 @@ pageClass: routes
 
 帖子 id 查找办法:
 
-打开想跟踪的帖子，比如：http://t66y.com/htm_data/20/1811/3286088.html。其中`3286088`就是帖子id。
+打开想跟踪的帖子，比如：<http://t66y.com/htm_data/20/1811/3286088.html> 其中 `3286088` 就是帖子 id。
 
 :::
 
@@ -443,12 +444,12 @@ pageClass: routes
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
 
-**付费内容不可收听，但可使用非播客软件(例如 Inoreader)获取更新**
+**付费内容不可收听，但可使用非播客软件 (例如 Inoreader) 获取更新**
 
-目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持, 也就是说你**只能使用**以下类型的链接来订阅播客:
+目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**只能使用**以下类型的链接来订阅播客:
 
--   https://rsshub.app/ximalaya/album/*
--   https://rsshub.app/ximalaya/album/*.rss
+-   `https://rsshub.app/ximalaya/album/*`
+-   `https://rsshub.app/ximalaya/album/*.rss`
 
 :::
 
