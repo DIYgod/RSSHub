@@ -303,7 +303,29 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 代理配置
 
-部分路由反爬严格，可以配置使用代理抓取
+部分路由反爬严格，可以配置使用代理抓取。
+
+可通过**代理 URI**或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI**中的配置。
+
+#### 代理 URI
+
+`PROXY_URI`: 代理 URI，支持 socks4, socks5, http, https
+
+> 代理 URI 的格式为:
+>
+> -   `{protocol}://{host}:{port}`
+> -   `{protocol}://{username}:{password}@{host}:{port}` (带身份凭证)
+>
+> 一些示例:
+>
+> -   `socks4://127.0.0.1:1080`
+> -   `socks5://user:pass@127.0.0.1:1080` (用户名为 `user`, 密码为 `pass`)
+> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`)
+> -   `http://127.0.0.1:8080`
+> -   `http://user:pass@127.0.0.1:8080`
+> -   `https://127.0.0.1:8443`
+
+#### 代理选项
 
 `PROXY_PROTOCOL`: 使用代理，支持 socks，http，https
 
