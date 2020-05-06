@@ -66,7 +66,6 @@
     "art-template": "4.13.2",
     "cheerio": "1.0.0-rc.3",
     "chrono-node": "1.4.6",
-    "cloudscraper": "4.6.0",
     "co-redis": "2.1.1",
     "crypto-js": "4.0.0",
     "currency-symbol-map": "4.0.4",
@@ -79,6 +78,7 @@
     "googleapis": "50.0.0",
     "got": "11.1.1",
     "he": "1.2.0",
+    "hooman": "1.0.0",
     "iconv-lite": "0.5.1",
     "jsdom": "16.2.2",
     "json-bigint": "0.3.0",
@@ -101,6 +101,7 @@
     "require-all": "3.0.0",
     "rss-parser": "3.8.0",
     "socks-proxy-agent": "5.0.0",
+    "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
     "winston": "3.2.1"
