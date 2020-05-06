@@ -24,9 +24,9 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
-##北京林业大学
+## 北京林业大学
 
-###研究生院培养动态
+### 研究生院培养动态
 
 <Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
 
