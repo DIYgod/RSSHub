@@ -384,6 +384,8 @@ pageClass: routes
 
 ## 蜻蜓 FM
 
+### 专辑
+
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
 
 ## 色花堂中文论坛
