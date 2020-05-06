@@ -5742,25 +5742,25 @@ google-p12-pem@^3.0.0:
   dependencies:
     node-forge "^0.9.0"
 
-googleapis-common@^4.0.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/googleapis-common/-/googleapis-common-4.1.0.tgz#31d4bbc95b9d8837be1e03024efbd8dd51221dac"
-  integrity sha512-/T+GflstRAbXbf33zeutDXhXj25I1gKwaWNJ4kWSJVSVpXIZugOX8K7iq3uFCQCOJzehPuPLAC2u8iEf6jN0dw==
+googleapis-common@^4.1.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/googleapis-common/-/googleapis-common-4.1.1.tgz#433069ce463e50c631c5e1b5871f9d44881c90af"
+  integrity sha512-Br3EPgm1f7Zb/Vi8R+1Jc5jjhaFZMgQpvGaGAKcBq81BAi7m8NCHBaaR0XF3p4RbMjA4Wiz1RkPD0A8/5aP+xw==
   dependencies:
     extend "^3.0.2"
     gaxios "^3.0.0"
     google-auth-library "^6.0.0"
     qs "^6.7.0"
     url-template "^2.0.8"
-    uuid "^7.0.0"
+    uuid "^8.0.0"
 
-googleapis@49.0.0:
-  version "49.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-49.0.0.tgz#e2e8bfc070dc1c09aa77fdd842bddd685d9ffb11"
-  integrity sha512-UoUuDbOzLxtU6fZnDyj6IvYvczBYP08RK3Sn0AknssQJceUYiHldaCjEFT1PDcT9MiKSJrbPze6PRdzQDny0Xw==
+googleapis@50.0.0:
+  version "50.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-50.0.0.tgz#861aacb96190f9a19dec19c08f0858369ecc1f4e"
+  integrity sha512-AJdOpPbDiNauraQZr51RR85cA53ygYtzLUj6Nq0cTr3g+GQ+GxjyLT6IMGgSE+/0dGLTpRVCemkZjZQA0XMb5Q==
   dependencies:
     google-auth-library "^6.0.0"
-    googleapis-common "^4.0.0"
+    googleapis-common "^4.1.0"
 
 got@11.1.0:
   version "11.1.0"
@@ -11963,10 +11963,15 @@ uuid@^3.0.1, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
-uuid@^7.0.0, uuid@^7.0.3:
+uuid@^7.0.3:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.3.tgz#c5c9f2c8cf25dc0a372c4df1441c41f5bd0c680b"
   integrity sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==
+
+uuid@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.0.0.tgz#bc6ccf91b5ff0ac07bbcdbf1c7c4e150db4dbb6c"
+  integrity sha512-jOXGuXZAWdsTH7eZLtyXMqUb9EcWMGZNbL9YcGBJl4MH4nrxHmZJhEHvyLFrkxo+28uLb/NYRcStH48fnD0Vzw==
 
 v8-compile-cache@^2.0.3:
   version "2.0.3"
