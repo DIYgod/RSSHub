@@ -10,7 +10,7 @@ pageClass: routes
 
 <Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" :paramsDesc="['`work`, `blog`','文章内的 Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']">
 
-文章内 Work type 指向的栏目地址，比如： '<https://axisstudiosgroup.com/work/full-service-cg-production'> 的 tag 为 `full-service-cg-production`，要注意的是 tag 和文章的目录是一样的。
+文章内 Work type 指向的栏目地址，比如： <https://axisstudiosgroup.com/work/full-service-cg-production> 的 tag 为 `full-service-cg-production`，要注意的是 tag 和文章的目录是一样的。
 
 有一些 tag 并不经常使用： `Script`, `direction`, `production`, `design-concept` 等等。
 
@@ -63,7 +63,7 @@ pageClass: routes
 
 不支持`news`和`main`。
 
-默认为 '<https://www.methodstudios.com/en/features'> 下的栏目。
+默认为 <https://www.methodstudios.com/en/features> 下的栏目。
 
 </Route>
 

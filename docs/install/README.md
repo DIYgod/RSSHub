@@ -163,8 +163,10 @@ $ pm2 start lib/index.js --name rsshub
 
 在项目根目录新建一个 `.env` 文件，每行以 `NAME=VALUE` 格式添加环境变量，例如
 
+```env
     CACHE_TYPE=redis
     CACHE_EXPIRE=600
+```
 
 注意它不会覆盖已有的环境变量，更多规则请参考 [dotenv](https://github.com/motdotla/dotenv)
 

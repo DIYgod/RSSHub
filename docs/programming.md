@@ -66,10 +66,10 @@ pageClass: routes
 
 GitHub 官方也提供了一些 RSS:
 
--   仓库 releases: <https://github.com/:owner/:repo/releases.atom>
--   仓库 commits: <https://github.com/:owner/:repo/commits.atom>
--   用户动态: <https://github.com/:user.atom>
--   专属动态: <https://github.com/:user.private.atom?token=:secret> (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
+-   仓库 releases: `https://github.com/:owner/:repo/releases.atom`
+-   仓库 commits: `https://github.com/:owner/:repo/commits.atom`
+-   用户动态: `https://github.com/:user.atom`
+-   专属动态: `https://github.com/:user.private.atom?token=:secret` (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
 
 :::
 

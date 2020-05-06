@@ -45,8 +45,7 @@ pageClass: routes
 
 <Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
 
-时间和动画名称请自己从网址取得: [https://anime1.me/category/2018 年秋季 / 刀劍神域 - alicization](https://anime1.me/category/2018年秋季/刀劍神域-alicization)
-
+时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
 </Route>
 
 ### 搜尋

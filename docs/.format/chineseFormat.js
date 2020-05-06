@@ -13,6 +13,7 @@ module.exports = {
             .use(frontmatter)
             .use(pangu, {
                 inlineCode: false,
+                link: false,
             })
             .use(prettier)
             .use({
