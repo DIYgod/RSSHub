@@ -14,6 +14,8 @@ pageClass: routes
 | ------ | --------- | ------- | ------ | ------ | ---------- | ----------------- | ------- | ---- | -------- | ----------- | --------- | ----- |
 | latest | recommend | contact | ccs    | travel | technology | enterpriseservice | banking | life | innovate | real_estate | workplace | other |
 
+</Route>
+
 ### 快讯
 
 <Route author="hillerliao" example="/36kr/newsflashes" path="/36kr/newsflashes" />
