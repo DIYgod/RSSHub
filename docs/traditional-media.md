@@ -316,6 +316,22 @@ category 对应的关键词有
 
 </Route>
 
+## 齐鲁晚报
+
+### 新闻
+
+<Route author="nczitzk" example="/qlwb/news" path="/qlwb/news"/>
+
+### 今日城市
+
+<Route author="nczitzk" example="/qlwb/city/:city" path="/qlwb/city" :paramsDesc="['城市代码']">
+
+| 今日临沂 | 今日德州 | 今日威海 | 今日枣庄  | 今日淄博 | 今日烟台 | 今日潍坊 | 今日菏泽 | 今日日照 | 今日泰山 | 今日聊城  | 今日济宁 |
+| -------- | -------- | -------- | --------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- |
+| linyi    | dezhou   | weihai   | zaozhuang | zibo     | yantai   | weifang  | heze     | rizhao   | taishan  | liaocheng | jining   |
+
+</Route>
+
 ## 人民日报
 
 ### 观点
