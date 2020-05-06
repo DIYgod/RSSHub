@@ -45,15 +45,19 @@ filter_case_sensitive 过滤是否区分大小写，filter 和 filterout 同时�
 
 ## 条数限制
 
-可以使用 limit 参数限制最大条数, 主要用于排行榜类 RSS
+可以使用 `limit` 参数限制最大条数, 主要用于排行榜类 RSS
 
 举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
 ## 全文输出
 
-可以使用 mode 参数来开启自动提取全文内容功能
+可以使用 `mode` 参数来开启自动提取全文内容功能
 
 举例: bilibili 专栏全文输出 <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
+
+## 访问控制
+
+可以使用 `code` 或 `key` 进行访问控制。参考[访问控制配置](install/#fang-wen-mi-yue-ma)。
 
 ## 输出 Telegram 即时预览链接
 
