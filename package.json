@@ -79,6 +79,7 @@
     "googleapis": "49.0.0",
     "got": "11.0.3",
     "he": "1.2.0",
+    "https-proxy-agent": "5.0.0",
     "iconv-lite": "0.5.1",
     "jsdom": "16.2.2",
     "json-bigint": "0.3.0",
