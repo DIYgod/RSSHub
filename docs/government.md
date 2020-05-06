@@ -375,6 +375,12 @@ pageClass: routes
 
 <Route author="nicolaszf" example="/gov/fmprc/fyrbt" path="/gov/fmprc/fyrbt"/>
 
+## 中华人民共和国住房和城乡建设部
+
+### 政策发布
+
+<Route author="nczitzk" example="/gov/mohurd/policy" path="/gov/mohurd/policy"/>
+
 ## 中央纪委国家监委
 
 ### 审查调查
