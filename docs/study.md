@@ -12,30 +12,30 @@ pageClass: routes
 
 | `:channel`  | 对应网站栏目                                 |
 | ----------- | -------------------------------------------- |
-| standard    | 常速英语(VOA Standard English )              |
-| archive     | 常速英语存档(VOA Standard English Archives ) |
-| technology  | 科技报道(Technology Report)                  |
-| daily       | 今日美国(This is America)                    |
-| sciences    | 科技报道(Science in the News)                |
-| health      | 健康报道(Health Report)                      |
-| education   | 教育报道(Education Report)                   |
-| economics   | 经济报道(Economics Report)                   |
-| culture     | 文化艺术(American Mosaic)                    |
-| events      | 时事新闻(In the News)                        |
-| stories     | 美国故事(American Stories)                   |
-| words       | 词汇掌故(Words And Their Stories)            |
-| trending    | 今日热点(Trending Today)                     |
-| magazine    | 新闻杂志(AS IT IS)                           |
-| grammar     | 日常语法(Everyday Grammar)                   |
-| queries     | 名师答疑(Ask a Teacher)                      |
-| history     | 美国历史(U.S. History)                       |
-| park        | 国家公园(America's National Parks)           |
-| president   | 美国总统(America's Presidents)               |
-| agriculture | 农业报道(Agriculture Report)                 |
-| exploration | 自然探索(Explorations)                       |
-| people      | 美国人物(People in America)                  |
-| bilingual   | 双语新闻(Bilingual News)                     |
-| address     | 总统演讲(President Address)                  |
+| standard    | 常速英语 (VOA Standard English)              |
+| archive     | 常速英语存档 (VOA Standard English Archives) |
+| technology  | 科技报道 (Technology Report)                 |
+| daily       | 今日美国 (This is America)                   |
+| sciences    | 科技报道 (Science in the News)               |
+| health      | 健康报道 (Health Report)                     |
+| education   | 教育报道 (Education Report)                  |
+| economics   | 经济报道 (Economics Report)                  |
+| culture     | 文化艺术 (American Mosaic)                   |
+| events      | 时事新闻 (In the News)                       |
+| stories     | 美国故事 (American Stories)                  |
+| words       | 词汇掌故 (Words And Their Stories)           |
+| trending    | 今日热点 (Trending Today)                    |
+| magazine    | 新闻杂志 (AS IT IS)                          |
+| grammar     | 日常语法 (Everyday Grammar)                  |
+| queries     | 名师答疑 (Ask a Teacher)                     |
+| history     | 美国历史 (U.S. History)                      |
+| park        | 国家公园 (America's National Parks)          |
+| president   | 美国总统 (America's Presidents)              |
+| agriculture | 农业报道 (Agriculture Report)                |
+| exploration | 自然探索 (Explorations)                      |
+| people      | 美国人物 (People in America)                 |
+| bilingual   | 双语新闻 (Bilingual News)                    |
+| address     | 总统演讲 (President Address)                 |
 
 ## CTFHub Calendar
 
@@ -54,7 +54,7 @@ pageClass: routes
 |    4     | King of The Hill[KoH 抢占山头]   |
 |    5     | Mix[混合]                        |
 
-> class 以 https://api.ctfhub.com/User_API/Event/getType 的返回结果为准
+> class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
 
 | `:form` | 形式   |
 | :-----: | ------ |
@@ -117,9 +117,9 @@ pageClass: routes
 | `:param` | 举例            | 定义                                 |
 | -------- | --------------- | ------------------------------------ |
 | category | category=thesis | **必填**，theses/information/careers |
-| subject  | subject=生物    | 可置空                               |
-| columns  | columns=健康    | 可置空                               |
-| query    | query=病毒      | 可置空                               |
+| subject  | subject = 生物  | 可置空                               |
+| columns  | columns = 健康  | 可置空                               |
+| query    | query = 病毒    | 可置空                               |
 
 ## 码农周刊
 
@@ -215,9 +215,9 @@ pageClass: routes
 
 学科分类
 
-| 全部 | 计算机 | 经管·会计 | 创业 | 电子 | 工程 | 环境·地球 | 医学·健康 | 生命科学 | 数学 | 物理 | 化学 | 社科·法律 | 文学 | 历史 | 哲学 | 艺术·设计 | 外语 | 教育 | 其他 | 大学先修课 | 公共管理 | 建筑 | 职场 | 全球胜任力 |
-| ---- | ------ | --------- | ---- | ---- | ---- | --------- | --------- | -------- | ---- | ---- | ---- | --------- | ---- | ---- | ---- | --------- | ---- | ---- | ---- | ---------- | -------- | ---- | ---- | ---------- |
-| -1   | 117    | 118       | 119  | 120  | 121  | 122       | 123       | 124      | 125  | 126  | 127  | 128       | 129  | 130  | 131  | 132       | 133  | 134  | 135  | 201        | 2550     | 2783 | 2952 | 6200       |
+| 全部 | 计算机 | 经管・会计 | 创业 | 电子 | 工程 | 环境・地球 | 医学・健康 | 生命科学 | 数学 | 物理 | 化学 | 社科・法律 | 文学 | 历史 | 哲学 | 艺术・设计 | 外语 | 教育 | 其他 | 大学先修课 | 公共管理 | 建筑 | 职场 | 全球胜任力 |
+| ---- | ------ | ---------- | ---- | ---- | ---- | ---------- | ---------- | -------- | ---- | ---- | ---- | ---------- | ---- | ---- | ---- | ---------- | ---- | ---- | ---- | ---------- | -------- | ---- | ---- | ---------- |
+| -1   | 117    | 118        | 119  | 120  | 121  | 122        | 123        | 124      | 125  | 126  | 127  | 128        | 129  | 130  | 131  | 132        | 133  | 134  | 135  | 201        | 2550     | 2783 | 2952 | 6200       |
 
 </Route>
 
@@ -276,7 +276,7 @@ pageClass: routes
 
 > 参数置空（`/zhishifenzi/innovation`）获取所有类别
 
-## 中国大学 MOOC(慕课)
+## 中国大学 MOOC (慕课)
 
 ### 最新
 
