@@ -1748,4 +1748,15 @@
             },
         ],
     },
+    'qq.com': {
+        _name: '微信',
+        'mp.weixin': [
+            {
+                title: '公众号栏目',
+                docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
+                source: '/mp/homepage',
+                target: (params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}`,
+            },
+        ],
+    },
 });
