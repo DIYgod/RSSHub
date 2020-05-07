@@ -5821,7 +5821,7 @@ googleapis@50.0.0:
     google-auth-library "^6.0.0"
     googleapis-common "^4.1.0"
 
-got@11.1.1, got@^11.1.0:
+got@11.1.1:
   version "11.1.1"
   resolved "https://registry.yarnpkg.com/got/-/got-11.1.1.tgz#11f83049df8155b384413547fe163dd4b35b4240"
   integrity sha512-7WxfuTyT02hMZZdDvaAprEoxsU13boxI8rWMpqk/5Mq6t+YVbExVB2L6yRLh2Nw3TeJyFpanId41+ZyXGesmbw==
@@ -6037,15 +6037,15 @@ hogan.js@^3.0.2:
     mkdirp "0.3.0"
     nopt "1.0.10"
 
-hooman@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.0.0.tgz#0769b81d6e3ce94db3c1b1a35d766531403a53a1"
-  integrity sha512-XkbN3bTqqkkqU4KfdsKEAmjtxJMJkVD4nlFOcFQEuYXUpnPnZbN3UOjvoR+oWtEsX0Vtjz5ffrJUtdjtzz89mw==
+hooman@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.1.0.tgz#37eb11aee895f7e0fd97df40b76496aecd670518"
+  integrity sha512-g/rKFrmpVh/xg5MlgiuW5zvwBQ+rfUzHAl7bHJmph46OKMVenSxmFNmrS5rnTvJuNo0IKjWceTNtSGKvWM+c4Q==
   dependencies:
-    got "^11.1.0"
     jsdom "^16.2.2"
     tough-cookie "^4.0.0"
     user-agents "^1.0.559"
+    vm2 "^3.9.2"
 
 hosted-git-info@^2.1.4:
   version "2.8.8"
@@ -12408,6 +12408,11 @@ vm-browserify@0.0.4:
   integrity sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=
   dependencies:
     indexof "0.0.1"
+
+vm2@^3.9.2:
+  version "3.9.2"
+  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.9.2.tgz#a4085d2d88a808a1b3c06d5478c2db3222a9cc30"
+  integrity sha512-nzyFmHdy2FMg7mYraRytc2jr4QBaUY3TEGe3q3bK8EgS9WC98wxn2jrPxS/ruWm+JGzrEIIeufKweQzVoQEd+Q==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.3"
