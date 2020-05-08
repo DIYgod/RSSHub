@@ -501,6 +501,18 @@ Supported sub-sites:
 
 <Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
 
+## 广告门
+
+### 板块
+
+<Route author="nczitzk" example="/adquan/info" path="/adquan/:type?" :paramsDesc="['分类, 置空为首页']">
+
+| 行业观察 | 案例库   |
+| -------- | -------- |
+| info     | creative |
+
+</Route>
+
 ## 果壳网
 
 ### 科学人
