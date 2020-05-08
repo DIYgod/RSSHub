@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 串
 
-<Route author="zcx1218029121" example="/adnmb/20/1" path="/adnmb/:pid/page" :paramsDesc="['板块列表，见下表','页数， 1开始必填']" >
+<Route author="zcx1218029121" example="/adnmb/20" path="/adnmb/:pid" :paramsDesc="['板块 id 或者板块名称，例如`/adnmb/20`等价于`/adnmb/欢乐恶搞`，现有板块请参考下表']" >
 
 | 综合版 1 | 围炉 | 欢乐恶搞 | 速报 2 | 推理 | 跑团 | 技术宅 | 料理 | 猫版 | 音乐 | 考试 | 社畜 |
 | -------- | ---- | -------- | ------ | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- |

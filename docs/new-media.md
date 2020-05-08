@@ -6,6 +6,16 @@ pageClass: routes
 
 ## 36kr
 
+### 资讯
+
+<Route author="nczitzk" example="/36kr/news/latest" path="/36kr/news/:caty" :paramsDesc="['资讯分类']">
+
+| 最新   | 推荐      | 创投    | 中概股 | 汽车   | 科技       | 企服              | 金融    | 生活 | 创新     | 房产        | 职场      | 其他  |
+| ------ | --------- | ------- | ------ | ------ | ---------- | ----------------- | ------- | ---- | -------- | ----------- | --------- | ----- |
+| latest | recommend | contact | ccs    | travel | technology | enterpriseservice | banking | life | innovate | real_estate | workplace | other |
+
+</Route>
+
 ### 快讯
 
 <Route author="hillerliao" example="/36kr/newsflashes" path="/36kr/newsflashes" />
@@ -490,6 +500,18 @@ Supported sub-sites:
 ### 个人主页文章
 
 <Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
+## 广告门
+
+### 板块
+
+<Route author="nczitzk" example="/adquan/info" path="/adquan/:type?" :paramsDesc="['分类, 置空为首页']">
+
+| 行业观察 | 案例库   |
+| -------- | -------- |
+| info     | creative |
+
+</Route>
 
 ## 果壳网
 

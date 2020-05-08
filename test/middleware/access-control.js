@@ -67,6 +67,12 @@ describe('access-control', () => {
         server = require('../../lib/index');
         const request = supertest(server);
 
+        const response01 = await request.get('/');
+        expect(response01.status).toBe(200);
+
+        const response02 = await request.get('/robots.txt');
+        expect(response02.status).toBe(200);
+
         const response11 = await request.get('/test/1');
         expect(response11.status).toBe(200);
 
@@ -98,6 +104,40 @@ describe('access-control', () => {
         expect(response331.status).toBe(200);
 
         const response332 = await request.get(`/test/2?key=${key}`);
+        expect(response332.status).toBe(200);
+    });
+
+    it(`no list`, async () => {
+        const key = '1L0veRSSHub';
+        const code = md5('/test/2' + key);
+        process.env.ACCESS_KEY = key;
+        server = require('../../lib/index');
+        const request = supertest(server);
+
+        const response01 = await request.get('/');
+        expect(response01.status).toBe(200);
+
+        const response02 = await request.get('/robots.txt');
+        expect(response02.status).toBe(200);
+
+        const response11 = await request.get('/test/1');
+        checkBlock(response11);
+
+        const response21 = await request.get('/test/2');
+        checkBlock(response21);
+
+        // wrong key/code
+        const response321 = await request.get(`/test/2?key=wrong+${key}`);
+        checkBlock(response321);
+
+        const response322 = await request.get(`/test/2?code=wrong+${code}`);
+        checkBlock(response322);
+
+        // right key/code
+        const response331 = await request.get(`/test/2?key=${key}`);
+        expect(response331.status).toBe(200);
+
+        const response332 = await request.get(`/test/2?code=${code}`);
         expect(response332.status).toBe(200);
     });
 });
