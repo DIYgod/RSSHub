@@ -6,9 +6,27 @@ pageClass: routes
 
 ## 36kr
 
+### 资讯
+
+<Route author="nczitzk" example="/36kr/news/latest" path="/36kr/news/:caty" :paramsDesc="['资讯分类']">
+
+| 最新   | 推荐      | 创投    | 中概股 | 汽车   | 科技       | 企服              | 金融    | 生活 | 创新     | 房产        | 职场      | 其他  |
+| ------ | --------- | ------- | ------ | ------ | ---------- | ----------------- | ------- | ---- | -------- | ----------- | --------- | ----- |
+| latest | recommend | contact | ccs    | travel | technology | enterpriseservice | banking | life | innovate | real_estate | workplace | other |
+
+</Route>
+
 ### 快讯
 
 <Route author="hillerliao" example="/36kr/newsflashes" path="/36kr/newsflashes" />
+
+### 用户文章
+
+<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户ID']" />
+
+### 主题文章
+
+<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题ID']" />
 
 ### 搜索文章
 
@@ -21,9 +39,10 @@ pageClass: routes
 <Route author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:tag?" :paramsDesc="['分站名字','标签，可在文章标签 URL 中找到']">
 
 支持分站：
+
 | 9To5Mac | 9To5Google | 9To5Toys |
 | ------- | ---------- | -------- |
-| Mac | Google | Toys |
+| Mac     | Google     | Toys     |
 
 </Route>
 
@@ -32,11 +51,13 @@ pageClass: routes
 <Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']">
 
 支持以文体分类：
+
 | Ideas | Essays | Videos |
 | ----- | ------ | ------ |
 | ideas | essays | videos |
 
 同样支持以话题分类：
+
 | Culture | Philosophy | Psychology | Society | Science |
 | ------- | ---------- | ---------- | ------- | ------- |
 | culture | philosophy | psychology | society | science |
@@ -95,7 +116,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/iDownloadBlog" path="/iDownloadBlog/index">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
 </Route>
 
@@ -188,7 +209,7 @@ pageClass: routes
 
 ## PMCAFF
 
-### 今日推荐/精选
+### 今日推荐 / 精选
 
 <Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" :paramsDesc="['分类 id,1=今天推荐,2=精选']"/>
 
@@ -244,7 +265,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/verge" path="/verge">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
 </Route>
 
@@ -258,10 +279,11 @@ pageClass: routes
 
 <Route author="loganrockmore" example="/vulture/movies" path="/vulture/:type" :paramsDesc="['The sub-site name']">
 
-Supported sub-sites：
-| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+Supported sub-sites:
+
+| TV  | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
 | --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
-| tv | movies | comedy | music | tvrecaps | books | theater | art | awards | video |
+| tv  | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
 
 </Route>
 
@@ -285,8 +307,8 @@ Supported sub-sites：
 
 <Route author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" :paramsDesc="['默认 app，部分频道如下']">
 
--   频道为单一路径, 如 https://www.ifanr.com/`coolbuy` 则为 `/ifanr/coolbuy`.
--   频道包含多重路径, 如 https://www.ifanr.com/`category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
+-   频道为单一路径，如 <https://www.ifanr.com/`coolbuy`> 则为 `/ifanr/coolbuy`.
+-   频道包含多重路径，如 <https://www.ifanr.com/`category/intelligentcar`> 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
 
 | AppSolution | 玩物志  | 董车会                  |
 | ----------- | ------- | ----------------------- |
@@ -332,6 +354,25 @@ Supported sub-sites：
 
 <Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
+## 本地宝
+
+### 焦点资讯
+
+<Route author="nczitzk" example="/bendibao/news/bj" path="/bendibao/news/:city" :paramsDesc="['城市缩写，可在该城市页面的 URL 中找到']">
+
+| 城市名 | 缩写 |
+| ------ | ---- |
+| 北京   | bj   |
+| 上海   | sh   |
+| 广州   | gz   |
+| 深圳   | sz   |
+
+更多城市请参见 [这里](http://www.bendibao.com/city.htm)
+
+> **香港特别行政区** 和 **澳门特别行政区** 的本地宝城市页面不更新资讯。
+
+</Route>
+
 ## 币世界
 
 ### 快讯
@@ -374,7 +415,7 @@ Supported sub-sites：
 
 ::: tip 提示
 
--   可以通过头条新闻+参数过滤的形式获得早报、专题等内容。
+-   可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。
 
 :::
 
@@ -446,7 +487,7 @@ Supported sub-sites：
 
 <Route author="zoenglinghou" example="/google/news/要闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
 
-## 观察者网-中国关怀 全球视野
+## 观察者网 - 中国关怀 全球视野
 
 ### 观察者首页
 
@@ -459,6 +500,18 @@ Supported sub-sites：
 ### 个人主页文章
 
 <Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
+## 广告门
+
+### 板块
+
+<Route author="nczitzk" example="/adquan/info" path="/adquan/:type?" :paramsDesc="['分类, 置空为首页']">
+
+| 行业观察 | 案例库   |
+| -------- | -------- |
+| info     | creative |
+
+</Route>
 
 ## 果壳网
 
@@ -558,6 +611,12 @@ Supported sub-sites：
 
 <Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" :paramsDesc="['关键词']" anticrawler="1"/>
 
+## 金色财经
+
+### 快讯
+
+<Route author="nczitzk" example="/jinse/lives" path="/jinse/lives"/>
+
 ## 鲸跃汽车
 
 ### 首页
@@ -580,7 +639,7 @@ Supported sub-sites：
 
 <Route author="LogicJake" example="/cninfo/stock_announcement/000410" path="/cninfo/stock_announcement/:code" :paramsDesc="['股票代码']"/>
 
-### 公司公告-A 股港股
+### 公司公告 - A 股港股
 
 <Route author="LogicJake hillerliao" example="/cninfo/announcement/002024/gqjl" path="/cninfo/announcement/:code/:category?" :paramsDesc="['股票代码, 若不指定公司则填 all', '公告分类，对A股有效如 gqjl 表示 股权激励 分类']">
 
@@ -742,7 +801,7 @@ Supported sub-sites：
 
 <Route author="HenryQW" example="/sspai/series" path="/sspai/series">
 
-> 少数派专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 少数派专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 </Route>
 
@@ -770,7 +829,7 @@ Supported sub-sites：
 
 <Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
 
-此为专题广场更新提示=>集合型而非单篇文章.与下方"专题内文章更新"存在明显区别!
+此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！
 
 </Route>
 
@@ -822,8 +881,8 @@ Supported sub-sites：
 
 <Route author="HenryQW" example="/sohu/mp/119097" path="/sohu/mp/:id" :paramsDesc="['搜狐号 ID', '见如下说明']">
 
-1. 通过浏览器搜索相关搜狐号 `果壳 site: mp.sohu.com`。
-2. 通过浏览器控制台执行 `cfgs.author_id`，返回的即为搜狐号 ID。
+1.  通过浏览器搜索相关搜狐号 `果壳 site: mp.sohu.com`。
+2.  通过浏览器控制台执行 `cfgs.author_id`，返回的即为搜狐号 ID。
 
 </Route>
 
@@ -881,9 +940,9 @@ Supported sub-sites：
 
 <Route author="HendricksZheng" example="/netease/dy/W4983108759592548559" path="/netease/dy/:id" :paramsDesc="['网易号 ID', '见如下说明']">
 
-1. 在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
-2. 打开网易号文章页面。
-3. 通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
+1.  在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
+2.  打开网易号文章页面。
+3.  通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
 
 </Route>
 
@@ -897,7 +956,7 @@ Supported sub-sites：
 
 ::: tip 提示
 
-公众号直接抓取困难, 故目前提供几种间接抓取方案, 请自行选择
+公众号直接抓取困难，故目前提供几种间接抓取方案，请自行选择
 
 :::
 
@@ -919,7 +978,7 @@ Supported sub-sites：
 
 ::: warning 注意
 
-该方法需要通过 efb 进行频道绑定，具体操作见[https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
+该方法需要通过 efb 进行频道绑定，具体操作见<https://github.com/DIYgod/RSSHub/issues/2172>
 :::
 </Route>
 

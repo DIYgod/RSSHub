@@ -40,7 +40,7 @@ pageClass: routes
 
 ### Extensions Update
 
-<RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']/>
+<RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']"/>
 
 ## CurseForge
 
@@ -84,7 +84,7 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 ### Add-ons Update
 
-<RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']/>
+<RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
 
 ## Greasy Fork
 
@@ -97,6 +97,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 ### Apple Firmware Update-IPSWs/OTAs version
 
 <RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']"/>
+
+## Microsoft Edge
+
+### Addons Update
+
+<RouteEn author="hoilc" example="/edge/addon/iikmkjmpaadaobahmlepeloendndfphd" path="/edge/addon/:crxid" :paramsDesc="['Addon id, can be found in addon url']"/>
 
 ## Minecraft
 
@@ -180,3 +186,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### ROM Releases
 
 <RouteEn author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+
+## Xposed Module Repository
+
+### Module Update
+
+<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>
