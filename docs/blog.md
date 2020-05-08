@@ -24,7 +24,7 @@ pageClass: routes
 | ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
 | hirasawayui       | se7en               | walnut   | themez   | comeet          | sunskyxh | zmd            |
 
-> 原则上只要是{type}.hedwig.pub 都可以匹配。
+> 原则上只要是 {type}.hedwig.pub 都可以匹配。
 
 ## Hexo
 

@@ -30,7 +30,7 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 
 ### Sponsors
 
-[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [tkaray](https://rayray.moe/) . [NeverBehave](https://never.pet/) . [萌开源联盟](https://www.moeunion.com)
+[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [tkaray](https://rayray.moe/) . [NeverBehave](https://never.pet/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/en/support/)
 

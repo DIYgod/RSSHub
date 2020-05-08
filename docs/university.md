@@ -110,6 +110,12 @@ pageClass: routes
 
 <Route author="sinofp" example="/bit/cs" path="/bit/cs" />
 
+## 北京林业大学
+
+### 研究生院培养动态
+
+<Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
@@ -239,12 +245,12 @@ pageClass: routes
 | ---------- | --------- | --------- | --------- | ---------- |
 | xwzx\*xyxw | tzgg\*xsk | tzgg\*jwk | tzgg\*ygk | ztlj\*xskb |
 
-注 1: xwzx\*xyxw 对应 http://www.scse.uestc.edu.cn/xwzx/xyxw.htm ;
-tzgg\*xsk 对应 http://www.scse.uestc.edu.cn/tzgg/xsk.htm
+注 1: xwzx\*xyxw 对应 <http://www.scse.uestc.edu.cn/xwzx/xyxw.htm> ;
+tzgg\*xsk 对应 <http://www.scse.uestc.edu.cn/tzgg/xsk.htm>
 
 可自定义设置
 
-注 2; 用+号来叠加 学生科+教务科 `/uestc/cs/ztlj*xskb+tzgg*jwk`
+注 2; 用 + 号来叠加 学生科 + 教务科 `/uestc/cs/ztlj*xskb+tzgg*jwk`
 
 </Route>
 
@@ -256,12 +262,12 @@ tzgg\*xsk 对应 http://www.scse.uestc.edu.cn/tzgg/xsk.htm
 | -------- | -------- | -------- | -------- |
 | tzgg1    | xskb1    | jdxw     | zhxw1    |
 
-注 1: tzgg1 对应 http://www.auto.uestc.edu.cn/index/tzgg1.htm ;
-xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
+注 1: tzgg1 对应 <http://www.auto.uestc.edu.cn/index/tzgg1.htm> ;
+xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 可自定义设置
 
-注 2: 用+号来叠加，通知公告+学术看板 `/uestc/auto/tzgg1+xskb1`
+注 2: 用 + 号来叠加，通知公告 + 学术看板 `/uestc/auto/tzgg1+xskb1`
 
 </Route>
 
@@ -862,11 +868,11 @@ type 列表：
 
 以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目
 
-获得 URL 中的**分域名**和**栏目编号（可选）**：https://`bulletin`.nuist.edu.cn/`791`/list.htm
+获得 URL 中的**分域名**和**栏目编号（可选）**：https&#x3A;//`bulletin`.nuist.edu.cn/`791`/list.htm
 
 将其替换到 RSS 路由地址中即可：
 
-https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bulletin`/`791`
+<https://rsshub.app/**nuist**/`bulletin`> 或 <https://rsshub.app/**nuist**/`bulletin`/`791`>
 
 :::
 
@@ -956,7 +962,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 学校图书馆官网提供了[新书通报](http://lib2.nuist.edu.cn/newbook/newbook_cls_browse.php)的订阅
 
-由于图书馆通知频率过低(故只提供 3 条)，有待将其和 **网络信息中心**、**基建处**、**总务处** 等的通知整合起来
+由于图书馆通知频率过低 (故只提供 3 条)，有待将其和 **网络信息中心**、**基建处**、**总务处** 等的通知整合起来
 
 :::
 
@@ -1303,7 +1309,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="SChen1024" example="/whu/news/wdyw" path="/whu/news/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
 
-注意: 除了 `kydt` 代表学术动态,其余页面均是拼音首字母小写.
+注意：除了 `kydt` 代表学术动态，其余页面均是拼音首字母小写.
 
 | **内容** | **参数** |
 | :------: | :------: |
@@ -1351,7 +1357,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ::: tip 提示
 
-支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目,
+支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
 
 例如`http://dean.xjtu.edu.cn/gzlc.htm`, 则`subpath`为`gzlc`
 
@@ -1423,7 +1429,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 浙江大学
 
-### 普通栏目 如学术/图片/新闻等
+### 普通栏目 如学术 / 图片 / 新闻等
 
 <Route author="Jeason0228" example="/zju/list/xs" path="/zju/list/:type" :paramsDesc="['xs为学术,xw为新闻,5461是图片新闻,578是浙大报道,具体参数参考左侧的菜单']"/>
 
@@ -1461,9 +1467,9 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1">
 
-| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ |
-| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9 |
+| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |     |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | --- |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9   |
 
 </Route>
 
@@ -1548,7 +1554,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
 
-## 中国地质大学(武汉)
+## 中国地质大学 (武汉)
 
 ### 研究生院综合通知公告
 
