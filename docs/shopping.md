@@ -18,7 +18,7 @@ Transform any search into a feed.
 
 <Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
 
-For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
+For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015>, the query is `category=10&locations=Paris_75015`
 
 </Route>
 
@@ -34,7 +34,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 <Route author="hoilc" example="/damai/activity/上海/音乐会/全部/柴可夫斯基" path="/damai/activity/:city/:category/:subcategory/:keyword?" :paramsDesc="['城市, 如果不需要限制, 请填入`全部`', '分类, 如果不需要限制, 请填入`全部`', '子分类, 如果不需要限制, 请填入`全部`', '搜索关键字, 置空为不限制']"/>
 
-城市、分类名、子分类名, 请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
+城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
 
 ## 多抓鱼
 
@@ -115,7 +115,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 ::: tip 提示
 
-网站也提供了部分 RSS: https://www.smzdm.com/dingyue
+网站也提供了部分 RSS: <https://www.smzdm.com/dingyue>
 
 :::
 

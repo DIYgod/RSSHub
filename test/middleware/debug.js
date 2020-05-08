@@ -43,7 +43,7 @@ describe('debug', () => {
                     expect(value).toBe('8');
                     break;
                 case 'hot routes:':
-                    expect(value).toBe('4  undefined<br>3  /test/:id<br>');
+                    expect(value).toBe('3  /test/:id<br>');
                     break;
                 case 'hot paths:':
                     expect(value).toBe('3  /test/1<br>2  /test/2<br>2  /test/empty<br>1  /<br>');
@@ -52,7 +52,7 @@ describe('debug', () => {
                     expect(value).toBe('5  233.233.233.233<br>3  233.233.233.234<br>');
                     break;
                 case 'hot error routes:':
-                    expect(value).toBe('1  /test/:id<br>1  undefined<br>');
+                    expect(value).toBe('1  /test/:id<br>');
                     break;
                 case 'hot error paths:':
                     expect(value).toBe('2  /test/empty<br>');

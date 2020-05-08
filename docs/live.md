@@ -4,12 +4,6 @@ pageClass: routes
 
 # 直播
 
-## kingkong 直播
-
-### 直播间开播
-
-<Route author="LogicJake" example="/kingkong/room/2133342" path="/kingkong/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
-
 ## SHOWROOM 直播
 
 ### 直播间开播
@@ -32,7 +26,7 @@ pageClass: routes
 
 ::: warning 注意
 
-由于接口未提供开播时间, 如果直播间未更换标题与分区, 将视为一次. 如果直播间更换分区与标题, 将视为另一项
+由于接口未提供开播时间，如果直播间未更换标题与分区，将视为一次。如果直播间更换分区与标题，将视为另一项
 
 :::
 
@@ -49,6 +43,12 @@ pageClass: routes
 ### 直播间开播
 
 <Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+
+## 浪 Play (原 kingkong) 直播
+
+### 直播间开播
+
+<Route author="MittWillson" example="/langlive/room/666666" path="/langlive/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 战旗直播
 
