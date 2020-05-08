@@ -1748,4 +1748,27 @@
             },
         ],
     },
+    'sexinsex.net': {
+        _name: 'sexinsex',
+        '.': [
+            {
+                title: '分区帖子',
+                docs: 'https://docs.rsshub.app/multimedia.html#sexinsex',
+                source: '/bbs/:path',
+                target: (params, url) => {
+                    let pid, typeid;
+                    const static_matched = params.path.match(/forum-(\d+)-\d+.html/);
+                    if (static_matched) {
+                        pid = static_matched[1];
+                    } else if (params.path === 'forumdisplay.php') {
+                        pid = new URL(url).searchParams.get('fid');
+                        typeid = new URL(url).searchParams.get('typeid');
+                    } else {
+                        return false;
+                    }
+                    return `/sexinsex/${pid}/${typeid ? typeid : ''}`;
+                },
+            },
+        ],
+    },
 });
