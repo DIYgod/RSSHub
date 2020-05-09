@@ -1864,4 +1864,19 @@
             },
         ],
     },
+    't66y.com': {
+        _name: '草榴社区',
+        www: [
+            {
+                title: '分区帖子',
+                docs: 'https://docs.rsshub.app/multimedia.html#cao-liu-she-qu',
+                source: '/thread0806.php',
+                target: (params, url) => {
+                    const id = new URL(url).searchParams.get('fid');
+                    const type = new URL(url).searchParams.get('type');
+                    return `/t66y/${id}/${type ? type : ''}`;
+                },
+            },
+        ],
+    },
 });
