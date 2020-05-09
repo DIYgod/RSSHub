@@ -396,6 +396,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ## Twitter
 
+::: warning 注意
+
+由于 Twitter Api 限制，关于 Twitter 相关的 RSS 接口目前仅支持 7 天内推文检索
+
+:::
+
 ### 用户时间线
 
 <Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id/:type?" :paramsDesc="['用户名', '额外选项 `exclude_replies`去除回复，`exclude_rts`去除转推，`exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1"/>
