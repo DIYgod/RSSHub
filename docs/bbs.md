@@ -231,6 +231,10 @@ pageClass: routes
 
 </Route>
 
+### 校招日程
+
+<Route author="junfengP" example="/nowcoder/schedule" path="nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
+
 ## 书友社区
 
 ### 导读
