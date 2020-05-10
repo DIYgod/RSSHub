@@ -6,20 +6,20 @@ sidebar: auto
 
 部署 RSSHub 需要基本的计算机编程常识，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new/choose)，我们会尽快给您答复
 
-部署涉及到以下基本编程常识:
+部署涉及到以下基本编程常识：
 
-1. 命令行操作
-1. [Git](https://git-scm.com/)
-1. [Node.js](https://nodejs.org/)
-1. [npm](https://www.npmjs.com/get-npm) 或 [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+1.  命令行操作
+2.  [Git](https://git-scm.com/)
+3.  [Node.js](https://nodejs.org/)
+4.  [npm](https://www.npmjs.com/get-npm) 或 [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
-部署到可外网访问则可能涉及到:
+部署到可外网访问则可能涉及到：
 
-1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
-1. [Docker](https://www.docker.com/get-started) 或 [docker-compose](https://docs.docker.com/compose/install/)
-1. [Redis](https://redis.io/download)
-1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-1. [Google App Engine](https://cloud.google.com/appengine/)
+1.  [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
+2.  [Docker](https://www.docker.com/get-started) 或 [docker-compose](https://docs.docker.com/compose/install/)
+3.  [Redis](https://redis.io/download)
+4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+5.  [Google App Engine](https://cloud.google.com/appengine/)
 
 ## Docker Compose 部署
 
@@ -73,7 +73,7 @@ $ docker pull diygod/rsshub
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
 
 您可以使用下面的命令来关闭 RSSHub
 
@@ -96,7 +96,7 @@ $ docker rm rsshub
 
 配置运行在 docker 中的 RSSHub，最便利的方法是使用 docker 环境变量
 
-以设置缓存时间为 1 小时举例，只需要在运行时增加参数: `-e CACHE_EXPIRE=3600`
+以设置缓存时间为 1 小时举例，只需要在运行时增加参数：`-e CACHE_EXPIRE=3600`
 
 ```bash
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
@@ -153,7 +153,7 @@ $ yarn start
 $ pm2 start lib/index.js --name rsshub
 ```
 
-在浏览器中打开 [http://127.0.0.1:1200/](http://127.0.0.1:1200/)，enjoy it! ✅
+在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
 
 详细使用说明参照 [指南](https://docs.rsshub.app/)，替换所有路由例子中的 `https://rsshub.app/` 为 `http://localhost:1200` 即可正常使用
 
@@ -163,9 +163,9 @@ $ pm2 start lib/index.js --name rsshub
 
 在项目根目录新建一个 `.env` 文件，每行以 `NAME=VALUE` 格式添加环境变量，例如
 
-```
-CACHE_TYPE=redis
-CACHE_EXPIRE=600
+```env
+    CACHE_TYPE=redis
+    CACHE_EXPIRE=600
 ```
 
 注意它不会覆盖已有的环境变量，更多规则请参考 [dotenv](https://github.com/motdotla/dotenv)
@@ -188,7 +188,7 @@ $ git pull
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
-## 部署到 Vercel(Zeit Now)
+## 部署到 Vercel (Zeit Now)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
@@ -198,7 +198,7 @@ $ git pull
 
 [Before you begin](https://cloud.google.com/appengine/docs/flexible/nodejs/quickstart)
 
-按照这里的引导完成 GCP 账号设置，创建 GCP 项目，创建 App Engine 项目，开通付费功能（必须），安装 git 与 gcloud 工具。并完成 gcloud 工具的初始化，初始化具体方式[请查看这个链接](https://cloud.google.com/sdk/gcloud/?hl=zh-CN)。如果你不打算在本地调试本项目，可以不安装 Node.js 环境。
+按照这里的引导完成 GCP 账号设置，创建 GCP 项目，创建 App Engine 项目，开通付费功能（必须），安装 git 与 gcloud 工具。并完成 gcloud 工具的初始化，初始化具体方式 [请查看这个链接](https://cloud.google.com/sdk/gcloud/?hl=zh-CN)。如果你不打算在本地调试本项目，可以不安装 Node.js 环境。
 
 请注意，GAE 免费用量不支持 Flexible Environment，部署到 Flexible Environment 前请确认收费标准。
 
@@ -265,7 +265,7 @@ env_variables:
 ::: warning 注意
 
 -   需要 [DockerHub](https://hub.docker.com) 账号
--   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试/验证路由规则
+-   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
 -   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
 -   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
 
@@ -303,7 +303,29 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 代理配置
 
-部分路由反爬严格，可以配置使用代理抓取
+部分路由反爬严格，可以配置使用代理抓取。
+
+可通过**代理 URI**或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI**中的配置。
+
+#### 代理 URI
+
+`PROXY_URI`: 代理 URI，支持 socks4, socks5, http, https
+
+> 代理 URI 的格式为:
+>
+> -   `{protocol}://{host}:{port}`
+> -   `{protocol}://{username}:{password}@{host}:{port}` (带身份凭证)
+>
+> 一些示例:
+>
+> -   `socks4://127.0.0.1:1080`
+> -   `socks5://user:pass@127.0.0.1:1080` (用户名为 `user`, 密码为 `pass`)
+> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`)
+> -   `http://127.0.0.1:8080`
+> -   `http://user:pass@127.0.0.1:8080`
+> -   `https://127.0.0.1:8443`
+
+#### 代理选项
 
 `PROXY_PROTOCOL`: 使用代理，支持 socks，http，https
 
@@ -315,11 +337,13 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `PROXY_URL_REGEX`: 启用代理的 URL 正则表达式，默认全部开启 `.*`
 
-### 用户认证配置
+### 用户认证
 
 `protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
 
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：http://usernam3:passw0rd@127.0.0.1:1200/protected/rsshub/routes
+支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：`http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`。
+
+对于不支持该认证协议的阅读器，请参考 [访问控制配置](#fang-wen-kong-zhi-pei-zhi)。
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
 
@@ -327,11 +351,37 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 访问控制配置
 
-配置黑名单和白名单，支持 IP 和路由，设置多项时用英文逗号 `,` 隔开，同时设置黑名单和白名单时仅白名单有效
+RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。
+
+#### 黑白名单
+
+-   `WHITELIST`: 白名单，设置白名单后黑名单无效
 
 -   `BLACKLIST`: 黑名单
 
--   `WHITELIST`: 白名单，设置白名单后黑名单无效
+黑白名单支持 IP 和路由，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+
+#### 访问密钥 / 码
+
+-   `ACCESS_KEY`: 访问密钥，用于直接访问所有路由或者生成访问码
+
+访问码为 访问密钥 + 路由 共同生成的 md5，例如：
+
+| 访问密钥    | 路由              | 生成过程                                 | 访问码                           |
+| ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
+| ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
+
+-   此时可以通过 `code` 访问路由，例如：<https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
+
+-   或使用访问密钥 `key` 直接访问所有路由，例如：<https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
+
+访问密钥 / 码与黑白名单的访问控制关系如下：
+
+|            | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
+| ---------- | ----------------- | ----------------- | --------------- |
+| 在白名单中 | ✅                | ✅                | ✅              |
+| 在黑名单中 | ✅                | ❌                | ❌              |
+| 无黑白名单 | ✅                | ❌                | ❌              |
 
 ### 其他应用配置
 
@@ -347,7 +397,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `DEBUG_INFO`: 是否在首页显示路由信息，默认 `true`
 
-`LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大[等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
+`LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大 [等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
 
@@ -355,23 +405,23 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
-`DISALLOW_ROBOT`: 防止被搜索引擎收录
+`DISALLOW_ROBOT`: 阻止搜索引擎收录，默认开启，设置 false 或 0 关闭
 
-`HOTLINK_TEMPLATE`: 用于处理描述中图片的链接，绕过防盗链等限制，留空不生效。用法参考[#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用[URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties)的所有属性，格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
+`HOTLINK_TEMPLATE`: 用于处理描述中图片的链接，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性，格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
 
 ### 部分 RSS 模块配置
 
--   pixiv 全部路由: [注册地址](https://accounts.pixiv.net/signup)
+-   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv 用户名
 
     -   `PIXIV_PASSWORD`: Pixiv 密码
 
--   disqus 全部路由: [申请地址](https://disqus.com/api/applications/)
+-   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
 
     -   `DISQUS_API_KEY`: Disqus API
 
--   twitter 全部路由: [申请地址](https://apps.twitter.com)
+-   twitter 全部路由：[申请地址](https://apps.twitter.com)
 
     -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key，支持多个 key，用英文逗号 `,` 隔开
 
@@ -379,15 +429,15 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 `consumer_key consumer_secret access_token access_token_secret` 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
 
--   youtube 全部路由: [申请地址](https://console.developers.google.com/)
+-   youtube 全部路由：[申请地址](https://console.developers.google.com/)
 
     -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
 
--   telegram - 贴纸包路由: [Telegram 机器人](https://telegram.org/blog/bot-revolution)
+-   telegram - 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
--   github 全部路由: [申请地址](https://github.com/settings/tokens)
+-   github 全部路由：[申请地址](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
@@ -395,11 +445,11 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
 
--   语雀 全部路由: [注册地址](https://www.yuque.com/register)
+-   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
-    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见[语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
+    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
 
--   邮箱 邮件列表路由:
+-   邮箱 邮件列表路由：
 
     -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如 `password=123456&host=imap.qq.com&port=993`。
 
@@ -407,26 +457,26 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
     -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式：1. 登陆后点开文章正文 2. 打开控制台 3. 刷新 4. 找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求 5. 找到请求头中的 x-member
 
--   微博 个人时间线路由: [申请地址](https://open.weibo.com/connect)
+-   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
 
     -   `WEIBO_APP_KEY`: 微博 App Key
     -   `WEIBO_APP_SECRET`: 微博 App Secret
-    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub地址/weibo/timeline/0?code=xxx`
+    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
 
--   饭否 全部路由: [申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
+-   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
     -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
     -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
     -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
     -   `FANFOU_PASSWORD`: 饭否密码
 
--   Last.fm 全部路由: [申请地址](https://www.last.fm/api/)
+-   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
 
     -   `LASTFM_API_KEY`: Last.fm API Key
 
 -   北大未名 BBS 全站十大
 
-    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1.登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
 
 -   nhentai torrent: [注册地址](https://nhentai.net/register/)
 
@@ -435,7 +485,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 -   discuz cookies 设定
 
-    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值 , cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时, 通过指定 cid 来调用该 cookie
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
 
 -   Sci-hub 设置，用于科学期刊路由。
 

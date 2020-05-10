@@ -315,7 +315,9 @@ Partial routes have a strict anti-crawler policy, and can be configured to use p
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@localhost:1200/protected/rsshub/routes.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes.
+
+For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
 
 `HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
 
@@ -323,11 +325,36 @@ When adding feeds using RSS readers with HTTP Basic Authentication support, auth
 
 ### Access Control Configuration
 
-Access control includes a whitelist and a blacklist, support IP and route, use `,` as the delimiter to separate multiple values. When both are defined, values in `BLACKLIST` will be disregarded.
+RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes.
+
+#### White/blacklisting
+
+-   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded
 
 -   `BLACKLIST`: the blacklist
 
--   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded.
+White/blacklisting support IP and route as values. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+
+#### Access Key/Code
+
+-   `ACCESS_KEY`: the access key. When set, access via the key directly or the access code described above
+
+Access code is the md5 generated based on the access key + route, eg:
+
+| Access key  | Route             | Generating access code                   | Access code                      |
+| ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
+| ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
+
+-   Routes are accessible via `code`, eg: <https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
+
+-   Or using `key` directly, eg: <https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
+
+See the relation between access key/code and white/blacklisting.
+
+|             | Whitelisted | Blacklisted | Correct access key/code | Wrong access key/code | No access key/code |
+| ----------- | ----------- | ----------- | ----------------------- | --------------------- | ------------------ |
+| Whitelisted | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
+| Blacklisted | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
 
 ### Other Application Configurations
 
@@ -351,7 +378,7 @@ Access control includes a whitelist and a blacklist, support IP and route, use `
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
-`DISALLOW_ROBOT`: prevent indexing by search engine
+`DISALLOW_ROBOT`: prevent indexing by search engine, default to enable, set false or 0 to disable
 
 `HOTLINK_TEMPLATE`: Replace image link in description to avoid anti-hotlink protection, leave blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any properity listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
 

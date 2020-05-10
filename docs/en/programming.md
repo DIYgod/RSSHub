@@ -8,7 +8,7 @@ pageClass: routes
 
 ### Search Result
 
-<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword'] >
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
 
 ## GitHub
 

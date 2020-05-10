@@ -86,7 +86,7 @@ pageClass: routes
 
 ::: warning 注意
 
-官方镜像的 owner 填写 library, 如: https://rsshub.app/dockerhub/build/library/mysql
+官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/build/library/mysql>
 
 :::
 
@@ -114,9 +114,9 @@ pageClass: routes
 
 </Route>
 
-### 附加组件(Add-ons)更新
+### 附加组件 (Add-ons) 更新
 
-<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']/>
+<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']" />
 
 ## Greasy Fork
 
@@ -126,9 +126,15 @@ pageClass: routes
 
 ## IPSW.me
 
-### 苹果固件更新-IPSWs/OTAs 版本
+### 苹果固件更新 - IPSWs/OTAs 版本
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
+
+## Microsoft Edge
+
+### 扩展更新
+
+<Route author="hoilc" example="/edge/addon/iikmkjmpaadaobahmlepeloendndfphd" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
 
 ## Minecraft
 
@@ -213,6 +219,12 @@ pageClass: routes
 ### ROM Releases
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+
+## Xposed Module Repository
+
+### Module 更新
+
+<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['模块包名, 模块页中的 Package 字段']"/>
 
 ## 怪物猎人世界
 
