@@ -156,7 +156,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ## Vulture
 
-<RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:type/:excludetags" :paramsDesc="['The sub-site name', 'Comma-delimited list of tags. If an article includes one of these tags, it will be excluded from the RSS feed.']">
+<RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:type/:excludetags?" :paramsDesc="['The sub-site name', 'Comma-delimited list of tags. If an article includes one of these tags, it will be excluded from the RSS feed.']">
 
 Supported sub-sites：
 | TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
