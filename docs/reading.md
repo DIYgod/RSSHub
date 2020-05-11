@@ -34,7 +34,7 @@ pageClass: routes
 
 ### 思想库（专栏）
 
-<Route author="hoilc" example="/aisixiang/thinktank/WuQine/lunw" path="/aisixiang/thinktank/:name/:type?" :paramsDesc="['专栏 ID，可在URL中找到', '栏目类型，参考下表，默认为论文']">
+<Route author="hoilc" example="/aisixiang/thinktank/WuQine/lunw" path="/aisixiang/thinktank/:name/:type?" :paramsDesc="['专栏 ID，一般为作者拼音，可在URL中找到', '栏目类型，参考下表，默认为`lunw`']">
 
 | 论文 | 时评 | 随笔  | 演讲 | 访谈  | 著作   | 读书  | 史论   | 译作  | 诗歌  | 书信   | 科学  |
 | ---- | ---- | ----- | ---- | ----- | ------ | ----- | ------ | ----- | ----- | ------ | ----- |
