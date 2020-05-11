@@ -430,6 +430,10 @@ category 对应的关键词有
 
 <Route author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
 
+### 电子报
+
+<Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`,特刊为`special`']"/>
+
 ## 新浪科技
 
 ### 科学探索
