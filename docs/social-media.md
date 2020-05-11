@@ -68,9 +68,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 动画
 
-| MAD·AMV | MMD·3D | 短片·手书·配音 | 综合 |
-| ------- | ------ | -------------- | ---- |
-| 24      | 25     | 47             | 27   |
+| MAD·AMV | MMD·3D | 短片・手书・配音 | 综合 |
+| ------- | ------ | ---------------- | ---- |
+| 24      | 25     | 47               | 27   |
 
 番剧
 
@@ -104,9 +104,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 科技
 
-| 趣味科普人文 | 野生技术协会 | 演讲·公开课 | 星海 | 数码 | 机械 | 汽车 |
-| ------------ | ------------ | ----------- | ---- | ---- | ---- | ---- |
-| 124          | 122          | 39          | 96   | 95   | 98   | 176  |
+| 趣味科普人文 | 野生技术协会 | 演讲・公开课 | 星海 | 数码 | 机械 | 汽车 |
+| ------------ | ------------ | ------------ | ---- | ---- | ---- | ---- |
+| 124          | 122          | 39           | 96   | 95   | 98   | 176  |
 
 生活
 
@@ -140,15 +140,15 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 影视
 
-| 影视杂谈 | 影视剪辑 | 短片 | 预告·资讯 | 特摄 |
-| -------- | -------- | ---- | --------- | ---- |
-| 182      | 183      | 85   | 184       | 86   |
+| 影视杂谈 | 影视剪辑 | 短片 | 预告・资讯 | 特摄 |
+| -------- | -------- | ---- | ---------- | ---- |
+| 182      | 183      | 85   | 184        | 86   |
 
 纪录片
 
-| 全部 | 人文·历史 | 科学·探索·自然 | 军事 | 社会·美食·旅行 |
-| ---- | --------- | -------------- | ---- | -------------- |
-| 177  | 37        | 178            | 179  | 180            |
+| 全部 | 人文・历史 | 科学・探索・自然 | 军事 | 社会・美食・旅行 |
+| ---- | ---------- | ---------------- | ---- | ---------------- |
+| 177  | 37         | 178              | 179  | 180              |
 
 电影
 
@@ -170,15 +170,15 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 视频选集列表
 
-<Route author="sxzz" example="/bilibili/video/page/39732828" path="/bilibili/video/page/:aid/:disableEmbed?" :paramsDesc="['可在视频页 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="sxzz" example="/bilibili/video/page/BV1i7411M7N9" path="/bilibili/video/page/:bvid/:disableEmbed?" :paramsDesc="['可在视频页 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ### 视频评论
 
-<Route author="Qixingchen" example="/bilibili/video/reply/21669336" path="/bilibili/video/reply/:aid" :paramsDesc="['可在视频页 URL 中找到']"/>
+<Route author="Qixingchen" example="/bilibili/video/reply/BV1vA411b7ip" path="/bilibili/video/reply/:bvid" :paramsDesc="['可在视频页 URL 中找到']"/>
 
 ### 视频弹幕
 
-<Route author="Qixingchen" example="/bilibili/video/danmaku/21669336/1" path="/bilibili/video/danmaku/:aid/:pid?" :paramsDesc="['视频AV号,可在视频页 URL 中找到','分P号,不填默认为1']"/>
+<Route author="Qixingchen" example="/bilibili/video/danmaku/BV1vA411b7ip/1" path="/bilibili/video/danmaku/:bvid/:pid?" :paramsDesc="['视频AV号,可在视频页 URL 中找到','分P号,不填默认为1']"/>
 
 ### link 公告
 
@@ -242,13 +242,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
-### 话题(频道/标签)
+### 话题 (频道 / 标签)
 
-<Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/2233" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
+<Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/:topic" :paramsDesc="['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']"/>
 
 ### 歌单
 
-<Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/10624" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
+<Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/:id" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']"/>
 
 ### 专栏文集
 
@@ -296,7 +296,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="hondajojo" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter 用户名, 在URL里']"/>
 
-### 话题(标签)
+### 话题 (标签)
 
 <Route author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['话题名(标签名) 例如 `名侦探柯南`', '排行类型, 默认显示最新话题, 取值如下']"/>
 
@@ -308,9 +308,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ::: tip 提示
 
-官方提供了用户时间线 RSS: https://**:instance**/users/**:username**.atom 或 https://**:instance**/users/**:username**.rss
+官方提供了用户时间线 RSS: `https://**:instance**/users/**:username**.atom` 或 `https://**:instance**/users/**:username**.rss`
 
-例如：https://pawoo.net/users/pawoo_support.atom 或 https://pawoo.net/users/pawoo_support.rss
+例如：<https://pawoo.net/users/pawoo_support.atom> 或 <https://pawoo.net/users/pawoo_support.rss>
 
 :::
 
@@ -361,7 +361,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 <Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1"/>
 ::: warning 注意
 
-因为每个人关注的画师不同，所以只能自建。请不要将画师设为“悄悄关注”，这样子画师的作品就不会出现在订阅里了。
+因为每个人关注的画师不同，所以只能自建。请不要将画师设为 “悄悄关注”，这样子画师的作品就不会出现在订阅里了。
 
 :::
 </Route>
@@ -380,7 +380,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ::: tip 提示
 
-由于 Telegram 限制，部分涉及色情、版权、政治的频道无法订阅，可通过访问 https://t.me/s/:username 确认。
+由于 Telegram 限制，部分涉及色情、版权、政治的频道无法订阅，可通过访问 <https://t.me/s/:username> 确认。
 
 :::
 
@@ -574,11 +574,11 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 热门图书排行
 
-<Route author="xyqfer" example="/douban/book/rank/fiction" path="/douban/book/rank/:type" :paramsDesc="['图书类型']">
+<Route author="xyqfer queensferryme" example="/douban/book/rank/fiction" path="/douban/book/rank/:type?" :paramsDesc="['图书类型，默认合并列表']">
 
-| 虚构    | 非虚构     |
-| ------- | ---------- |
-| fiction | nonfiction |
+| 全部 | 虚构    | 非虚构     |
+| ---- | ------- | ---------- |
+|      | fiction | nonfiction |
 
 </Route>
 
@@ -852,14 +852,14 @@ rule
 
 <Route author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
 
-### 知乎书店-新书
+### 知乎书店 - 新书
 
 <Route author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" anticrawler="1" radar="1"/>
 
-### 知乎想法-24 小时新闻汇总
+### 知乎想法 - 24 小时新闻汇总
 
 <Route author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" anticrawler="1" radar="1"/>
 
-### 知乎书店-知乎周刊
+### 知乎书店 - 知乎周刊
 
 <Route author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" anticrawler="1" radar="1"/>

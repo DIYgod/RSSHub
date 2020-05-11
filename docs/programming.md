@@ -16,7 +16,13 @@ pageClass: routes
 
 <Route author="ImSingee" example="/algocasts" path="/algocasts" radar="1"></Route>
 
-> AlgoCasts 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> AlgoCasts 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
+
+## cve.mitre.org
+
+### 搜索结果
+
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词']" />
 
 ## Dockone
 
@@ -42,7 +48,7 @@ pageClass: routes
 | 职场     | 58e84f1584c651693437f27c |
 | 互联网   | 5d8b7c3786194a1921979124 |
 
-> GitChat 需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> GitChat 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 ## Gitea
 
@@ -60,10 +66,10 @@ pageClass: routes
 
 GitHub 官方也提供了一些 RSS:
 
--   仓库 releases: https://github.com/:owner/:repo/releases.atom
--   仓库 commits: https://github.com/:owner/:repo/commits.atom
--   用户动态: https://github.com/:user.atom
--   专属动态: https://github.com/:user.private.atom?token=:secret (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
+-   仓库 releases: `https://github.com/:owner/:repo/releases.atom`
+-   仓库 commits: `https://github.com/:owner/:repo/commits.atom`
+-   用户动态: `https://github.com/:user.atom`
+-   专属动态: `https://github.com/:user.private.atom?token=:secret` (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
 
 :::
 
@@ -149,19 +155,19 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['内容分区', '链接类型（可不填）']">
 
-网站地址：https://news.ycombinator.com/
+网站地址：<https://news.ycombinator.com/>
 
-| 内容分区 | section                             |
-| -------- | ----------------------------------- |
-| index    | https://news.ycombinator.com/       |
-| new      | https://news.ycombinator.com/newest |
-| past     | https://news.ycombinator.com/front  |
-| ask      | https://news.ycombinator.com/ask    |
-| show     | https://news.ycombinator.com/show   |
-| jobs     | https://news.ycombinator.com/jobs   |
-| best     | https://news.ycombinator.com/best   |
+| 内容分区 | section                               |
+| -------- | ------------------------------------- |
+| index    | <https://news.ycombinator.com/>       |
+| new      | <https://news.ycombinator.com/newest> |
+| past     | <https://news.ycombinator.com/front>  |
+| ask      | <https://news.ycombinator.com/ask>    |
+| show     | <https://news.ycombinator.com/show>   |
+| jobs     | <https://news.ycombinator.com/jobs>   |
+| best     | <https://news.ycombinator.com/best>   |
 
-> 网站有默认的 RSS：https://news.ycombinator.com/rss 内容同 index，应优先考虑
+> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 index，应优先考虑
 
 | 链接类型 | type                          |
 | -------- | ----------------------------- |
@@ -342,11 +348,15 @@ GitHub 官方也提供了一些 RSS:
 | 备案公告 | 3    |
 | 其他     | 4    |
 
+### 开发者社区 - 主题
+
+<Route author="umm233" example="/aliyun/developer/group/alitech" path="/aliyun/developer/group/:type" :paramsDesc="['对应技术领域分类']" />
+
 ## 安全客
 
 ::: tip 提示
 
-官方提供了混合的主页资讯 RSS: https://api.anquanke.com/data/v1/rss
+官方提供了混合的主页资讯 RSS: <https://api.anquanke.com/data/v1/rss>
 
 :::
 
@@ -383,8 +393,8 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
 
-> -   极客时间专栏需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
-> -   极客新闻不需要付费,可通过 RSS 订阅.
+> -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
+> -   极客新闻不需要付费，可通过 RSS 订阅.
 
 ## 技术头条
 
@@ -438,7 +448,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/juejin/books" path="/juejin/books"/>
 
-> 掘金小册需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 掘金小册需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 ### 沸点
 
@@ -482,11 +492,11 @@ GitHub 官方也提供了一些 RSS:
 
 订阅[全部板块资讯][osc_all]可以使用 <https://rsshub.app/oschina/news>
 
-[osc_all]: https://www.oschina.net/news '开源中国-全部资讯'
-[osc_gen]: https://www.oschina.net/news/industry '开源中国-综合资讯'
-[osc_proj]: https://www.oschina.net/news/project '开源中国-软件更新资讯'
-[osc_ind]: https://www.oschina.net/news/industry-news '开源中国-行业资讯'
-[osc_pl]: https://www.oschina.net/news/programming '开源中国-编程语言资讯'
+[osc_all]: https://www.oschina.net/news '开源中国 - 全部资讯'
+[osc_gen]: https://www.oschina.net/news/industry '开源中国 - 综合资讯'
+[osc_proj]: https://www.oschina.net/news/project '开源中国 - 软件更新资讯'
+[osc_ind]: https://www.oschina.net/news/industry-news '开源中国 - 行业资讯'
+[osc_pl]: https://www.oschina.net/news/programming '开源中国 - 编程语言资讯'
 
 </Route>
 
@@ -569,24 +579,24 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="kt286" example="/codeceo/category/java" path="/codeceo/category/:category?" :paramsDesc="['category']">
 
-| category        | 名称              |
-| --------------- | ----------------- |
-| news            | 资讯              |
-| java            | JAVA 开发         |
-| cpp             | C/C++开发         |
-| donet           | .NET 开发         |
-| web             | WEB 开发          |
-| android         | Android 开发      |
-| ios             | iOS 开发          |
-| cloud           | 云计算/大数据     |
-| os              | 操作系统          |
-| database        | 数据库            |
-| machine         | 机器学习/人工智能 |
-| algorithm       | 算法设计          |
-| design-patterns | 设计模式          |
-| programmer      | 程序员人生        |
-| weekly          | 《快乐码农》      |
-| project         | 开源软件          |
+| category        | 名称                |
+| --------------- | ------------------- |
+| news            | 资讯                |
+| java            | JAVA 开发           |
+| cpp             | C/C++ 开发          |
+| donet           | .NET 开发           |
+| web             | WEB 开发            |
+| android         | Android 开发        |
+| ios             | iOS 开发            |
+| cloud           | 云计算 / 大数据     |
+| os              | 操作系统            |
+| database        | 数据库              |
+| machine         | 机器学习 / 人工智能 |
+| algorithm       | 算法设计            |
+| design-patterns | 设计模式            |
+| programmer      | 程序员人生          |
+| weekly          | 《快乐码农》        |
+| project         | 开源软件            |
 
 </Route>
 
@@ -624,7 +634,7 @@ GitHub 官方也提供了一些 RSS:
 <Route author="hellodword" example="/galaxylab" path="/galaxylab">
 </Route>
 
-## 前端艺术家&&飞冰早报
+## 前端艺术家 && 飞冰早报
 
 ### 列表
 
@@ -668,19 +678,19 @@ GitHub 官方也提供了一些 RSS:
 
 ## 微信开放平台
 
-### 微信开放社区-小程序公告
+### 微信开放社区 - 小程序公告
 
 <Route author="phantomk" example="/wechat-open/community/xcx-announce" path="/wechat-open/community/xcx-announce"/>
 
-### 微信开放社区-小游戏公告
+### 微信开放社区 - 小游戏公告
 
 <Route author="phantomk" example="/wechat-open/community/xyx-announce" path="/wechat-open/community/xyx-announce"/>
 
-### 微信开放社区-微信支付公告
+### 微信开放社区 - 微信支付公告
 
 <Route author="phantomk" example="/wechat-open/community/pay-announce" path="/wechat-open/community/pay-announce"/>
 
-### 微信开放社区-小游戏问答
+### 微信开放社区 - 小游戏问答
 
 <Route author="bestony" example="/wechat-open/community/xyx-question/0" path="/wechat-open/community/xyx-question/:category" :paramsDesc="['0','hot','topic']">
 
@@ -690,7 +700,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 微信开放社区-小程序问答
+### 微信开放社区 - 小程序问答
 
 <Route author="bestony" example="/wechat-open/community/xcx-question/new" path="/wechat-open/community/xcx-question/:tag" :paramsDesc="['new','hot','topic']">
 
@@ -700,7 +710,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 微信支付-商户平台公告
+### 微信支付 - 商户平台公告
 
 <Route author="phantomk" example="/wechat-open/pay/announce" path="/wechat-open/pay/announce"/>
 
@@ -708,7 +718,21 @@ GitHub 官方也提供了一些 RSS:
 
 ### 基础库更新日志
 
-<Route author="magicLaLa" example="/weixin/miniprogram/release" path="/weixin/miniprogram/release"/>
+<Route author="magicLaLa nczitzk" example="/weixin/miniprogram/framework" path="/weixin/miniprogram/framework"/>
+
+### 开发者工具更新日志
+
+<Route author="nczitzk" example="/weixin/miniprogram/devtools" path="/weixin/miniprogram/devtools"/>
+
+### 云开发更新日志
+
+<Route author="nczitzk" example="/weixin/miniprogram/wxcloud/cloud-sdk" path="/weixin/miniprogram/wxcloud/:caty?" :paramsDesc="['日志分类']">
+
+| 小程序基础库更新日志（云开发部分） | IDE 云开发 & 云控制台更新日志 | wx-server-sdk 更新日志 |
+| ---------------------------------- | ----------------------------- | ---------------------- |
+| cloud-sdk                          | ide                           | server-sdk             |
+
+</Route>
 
 ## 印记中文周刊
 
@@ -728,7 +752,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 小程序商店-最新
+### 小程序商店 - 最新
 
 <Route author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest"/>
 

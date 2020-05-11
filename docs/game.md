@@ -134,6 +134,18 @@ pageClass: routes
 
 </Route>
 
+### PlayStation Store 游戏折扣 | 价格
+
+<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['地区语言','游戏的 grid 名']" radar="1">
+
+地区语言如 `zh-hans-hk` 代表香港区简体中文， `zh-hant-tw` 为台湾繁体中文。不同地区游戏 gridName 不同，非中文地区使用英文提示。
+
+适用于 URL 如 <https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570_00-ASIAFULLGAME0000> 的游戏。
+
+比如 PlayStation Store 香港简体中文区的 [《赛博朋克 2077》](https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) 的 lang 为 `zh-hans-hk`， gridName 为 `HP4497-CUSA16570_00-ASIAFULLGAME0000`
+
+</Route>
+
 ### PlayStation Network 用户奖杯
 
 <Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']" radar="1"/>
@@ -144,11 +156,11 @@ pageClass: routes
 
 ## psnine
 
-### 首页-白金攻略/游戏开箱
+### 首页 - 白金攻略 / 游戏开箱
 
 <Route author="LightStrawberry" example="/psnine/index" path="/psnine/index"/>
 
-### 新闻-游戏资讯
+### 新闻 - 游戏资讯
 
 <Route author="LightStrawberry" example="/psnine/news" path="/psnine/news"/>
 ### 数折-折扣信息推送
@@ -202,9 +214,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="dearrrfish" example="/steamdb/free" path="/steamdb/free/:type?" :paramsDesc="['免费类型，留空为不过滤']"/>
 
-| 全部   | 周末    | 永久 |
-| ------ | ------- | ---- |
-| <留空> | weekend | keep |
+| 全部 | 周末    | 永久 |
+| ---- | ------- | ---- |
+| 留空 | weekend | keep |
 
 ## SteamGifts
 
@@ -298,7 +310,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 米哈游
 
-### 崩坏 2-游戏公告
+### 崩坏 2 - 游戏公告
 
 <Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
 
@@ -308,13 +320,13 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-### 崩坏 3-游戏公告
+### 崩坏 3 - 游戏公告
 
-<Route author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
+<Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
 
-| 最新   | 公告   | 新闻 | 活动     | 攻略     |
-| ------ | ------ | ---- | -------- | -------- |
-| latest | notice | news | activity | strategy |
+| 最新   | 动态 | 公告   | 活动     | 补给     |
+| ------ | ---- | ------ | -------- | -------- |
+| latest | news | notice | activity | strategy |
 
 </Route>
 
@@ -352,9 +364,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="MyFaith" example="/xiaoheihe/news" path="xiaoheihe/news"/>
 
-### 游戏打折情况
+### 游戏折扣信息
 
-<Route author="MyFaith" example="/xiaoheihe/discount" path="xiaoheihe/discount"/>
+<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" :paramsDesc="['平台, 默认为Steam']">
+
+| Steam | PlatStation4 | Switch |
+| ----- | ------------ | ------ |
+| pc    | ps4          | switch |
+
+</Route>
 
 ## 英雄联盟
 
