@@ -126,6 +126,12 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 ## Twitter
 
+::: warning
+
+Due to Twitter API restrictions, the Twitter Routes currently supports tweets within 7 days
+
+:::
+
 ### User timeline
 
 <RouteEn path="/twitter/user/:id/:type?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'Extra options `exclude_replies` exclude replies,`exclude_rts` exclude retweets,`exclude_rts_replies` exclude replies and retweets, for default include all.']" radar="1" />
