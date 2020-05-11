@@ -1144,6 +1144,10 @@ type 列表：
 
 ## 上海科技大学
 
+### 活动通知
+
+<Route author="nczitzk" example="/shanghaitech/activity" path="/shanghaitech/activity"/>
+
 ### 信息科技与技术学院活动
 
 <Route author="HenryQW" example="/shanghaitech/sist/activity" path="/shanghaitech/sist/activity"/>
