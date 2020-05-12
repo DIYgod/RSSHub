@@ -1108,3 +1108,13 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+
+## 快媒体
+
+### 所有栏目
+
+<Route author="xfangbao" example="/kuai/0" path="/kuai/index"/>
+
+::: 具体栏目编号,去网站上看标签 catid
+:::
