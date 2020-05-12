@@ -118,6 +118,10 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1"/>
 
+## RF 技术社区
+
+<Route author="nczitzk" example="/rf/article" path="/rf/article"/>
+
 ## Ruby China
 
 > 未登录状态下抓取页面非实时更新
