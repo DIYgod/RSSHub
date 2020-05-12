@@ -383,6 +383,12 @@ pageClass: routes
 
 <Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1"/>
 
+## 飘花电影网
+
+### 今日热门
+
+<Route author="nczitzk" example="/piaohua/hot" path="/piaohua/hot" />
+
 ## 蜻蜓 FM
 
 ### 专辑

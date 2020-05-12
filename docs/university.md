@@ -116,6 +116,16 @@ pageClass: routes
 
 <Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
 
+### 教务处通知公告
+
+<Route author="markmingjie" example="/bjfu/jwc/jwkx" path="/bjfu/jwc/:type" :paramsDesc="['通知类别']">
+
+| 教务快讯 | 考试信息 | 课程信息 | 教改动态 | 图片新闻 |
+| -------- | -------- | -------- | -------- | -------- |
+| jwkx     | ksxx     | kcxx     | jgdt     | tpxw     |
+
+</Route>
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
@@ -1368,6 +1378,10 @@ type 列表：
 ### 教务处
 
 <Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" :paramsDesc="['栏目路径, 支持多级, 不包括末尾的`.htm`']">
+
+### 研究生院通知公告
+
+<Route author="nczitzk" example="/xjtu/gs/tzgg" path="/xjtu/gs/tzgg"/>
 
 ::: tip 提示
 
