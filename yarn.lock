@@ -6025,10 +6025,10 @@ hogan.js@^3.0.2:
     mkdirp "0.3.0"
     nopt "1.0.10"
 
-hooman@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.0.tgz#e0d746316b502f2d906220ded749b5f6a7e0f866"
-  integrity sha512-L7W6u+cOXc0cts6OFsvYGaw4F9aFBW5C+rOMw8bP5RUCGSyre2DkU+9mDvPP+Pi35HXqpR8ai4inxRgMXifV4Q==
+hooman@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.1.tgz#beff6d4a53256b649bbbdb04e3590e9bd4257b9f"
+  integrity sha512-ulF2LNse9/vXlqkD/oTczDVhF3CFysCcbrx2BI3/MWjqVz3YtWRauIVFHEV/mX7b9mM4m3A/+z6gaETz+tbd+A==
   dependencies:
     jsdom "^16.2.2"
     tough-cookie "^4.0.0"
