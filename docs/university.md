@@ -1359,6 +1359,10 @@ type 列表：
 
 <Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" :paramsDesc="['栏目路径, 支持多级, 不包括末尾的`.htm`']">
 
+### 研究生院通知公告
+
+<Route author="nczitzk" example="/xjtu/gs/tzgg" path="/xjtu/gs/tzgg"/>
+
 ::: tip 提示
 
 支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
