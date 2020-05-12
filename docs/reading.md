@@ -240,3 +240,30 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页
 
 <Route author="kt286" example="/zreading" path="/zreading" />
+
+
+## 生物帮
+
+### 分栏目更新
+
+<Route author="xfangbao" example="/biobio/cell/cell-stem-cell" path="/biobio/:column/:id?" :paramsDesc="['分栏', '某些分栏下包含二级目录,看情况']">
+
+::: 分栏和目录
+  不存在二级目录 路由 /biobio/news
+  资讯 news  国外科研 gwjz  国内科研 gnjz  企业新闻 qiye 行业动态 hangye 人物 figure 专题 zt
+  
+  cell 杂志 分栏为 路由 /biobio/cell/cell-stem-cell
+  当代生物学 current-biology	分子细胞 molecular-cell	干细胞 cell-stem-cell	细胞报告 cell-reports	细胞发育 developmental-cell	遗传学趋势 trends-in-genetics	植物学趋势 trends-in-plant-science	
+  
+  nature杂志
+  
+  大脑行为 brain-behavior	分子 molecular	古生物学 paleontology	基因蛋白 gene-protein	技术 technology	健康 health	进化 evolution	科学政策 scientific-policy	生态环境 ecology-environment	生物化学 biochemistry	生物物理 biophysics	细胞 cell	遗传发育 genetic-developmental	植物动物 plants-animals	
+  
+  science杂志
+ 生物信息学 bioinformatics	生物技术 biotechnology	植物学 botany	细胞学 cell	生态学ecology	遗传学 genetics	基因组学 genomics	免疫学 immunology	微生物学 microbiology	Nature杂志精选 naturearchive	神经科学 neuroscience	生理学 physiology	蛋白质组学 proteomics	动物学 zoology	
+
+
+count 的取值范围为 1-20，为防止请求次数过多，推荐设置为 5 以下。
+:::
+
+</Route> 
