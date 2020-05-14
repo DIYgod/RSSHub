@@ -181,6 +181,10 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+### 用户文章
+
+<Route author="xfangbao" example="/smzdm/article/6902738986" path="/smzdm/article/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
+
 ## 淘宝众筹
 
 ### 众筹项目
