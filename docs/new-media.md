@@ -1119,3 +1119,7 @@ QueryString:
 | -------- | -------- |
 | kuai.media |  /kuai |
 | www.kuai.media/portal.php?mod=list&catid=38 |  /kuai/38  |
+
+### 199IT
+
+<Route author="xfangbao" example="/199it" path="/199it" />
