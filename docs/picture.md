@@ -4,12 +4,6 @@ pageClass: routes
 
 # 图片
 
-## 1X
-
-### Magazine
-
-<Route author="emdoe" example="/1x/magazine" path="/1x/magazine"/>
-
 ## Awesome Pigtails
 
 ### 最新图片
@@ -67,8 +61,8 @@ pageClass: routes
 ::: tip 提示
 
 -   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
--   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
--   网站提供了 Posts 订阅: https://konachan.com/post/piclens?tags=[tags]
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅: <https://konachan.com/post/piclens?tags=[tags]>
 
 :::
 
@@ -120,7 +114,7 @@ pageClass: routes
 
 ::: tip 提示
 
--   网站提供了 Posts 订阅: https://yande.re/post/piclens?tags=[tags]
+-   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
 
 :::
 

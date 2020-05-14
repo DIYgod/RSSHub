@@ -23,3 +23,13 @@ pageClass: routes
 ### News
 
 <RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
+
+## UMASS Amherst
+
+### College of Electrical and Computer Engineering News
+
+<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1"/>
+
+### College of Information & Computer Sciences News
+
+<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>

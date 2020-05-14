@@ -110,6 +110,22 @@ pageClass: routes
 
 <Route author="sinofp" example="/bit/cs" path="/bit/cs" />
 
+## 北京林业大学
+
+### 研究生院培养动态
+
+<Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
+
+### 教务处通知公告
+
+<Route author="markmingjie" example="/bjfu/jwc/jwkx" path="/bjfu/jwc/:type" :paramsDesc="['通知类别']">
+
+| 教务快讯 | 考试信息 | 课程信息 | 教改动态 | 图片新闻 |
+| -------- | -------- | -------- | -------- | -------- |
+| jwkx     | ksxx     | kcxx     | jgdt     | tpxw     |
+
+</Route>
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
@@ -239,12 +255,12 @@ pageClass: routes
 | ---------- | --------- | --------- | --------- | ---------- |
 | xwzx\*xyxw | tzgg\*xsk | tzgg\*jwk | tzgg\*ygk | ztlj\*xskb |
 
-注 1: xwzx\*xyxw 对应 http://www.scse.uestc.edu.cn/xwzx/xyxw.htm ;
-tzgg\*xsk 对应 http://www.scse.uestc.edu.cn/tzgg/xsk.htm
+注 1: xwzx\*xyxw 对应 <http://www.scse.uestc.edu.cn/xwzx/xyxw.htm> ;
+tzgg\*xsk 对应 <http://www.scse.uestc.edu.cn/tzgg/xsk.htm>
 
 可自定义设置
 
-注 2; 用+号来叠加 学生科+教务科 `/uestc/cs/ztlj*xskb+tzgg*jwk`
+注 2; 用 + 号来叠加 学生科 + 教务科 `/uestc/cs/ztlj*xskb+tzgg*jwk`
 
 </Route>
 
@@ -256,12 +272,12 @@ tzgg\*xsk 对应 http://www.scse.uestc.edu.cn/tzgg/xsk.htm
 | -------- | -------- | -------- | -------- |
 | tzgg1    | xskb1    | jdxw     | zhxw1    |
 
-注 1: tzgg1 对应 http://www.auto.uestc.edu.cn/index/tzgg1.htm ;
-xskb1 对应 http://www.auto.uestc.edu.cn/index/xskb1.htm
+注 1: tzgg1 对应 <http://www.auto.uestc.edu.cn/index/tzgg1.htm> ;
+xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 可自定义设置
 
-注 2: 用+号来叠加，通知公告+学术看板 `/uestc/auto/tzgg1+xskb1`
+注 2: 用 + 号来叠加，通知公告 + 学术看板 `/uestc/auto/tzgg1+xskb1`
 
 </Route>
 
@@ -425,7 +441,7 @@ category 列表：
 
 ### 研究生院
 
-<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['分类, 默认为 `announcement`']" radar="1">
+<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['栏目, 默认为 `announcement`']" radar="1">
 
 | 通知公告     | 新闻动态 | 国家公派项目 | 国际合作与交流项目 |
 | ------------ | -------- | ------------ | ------------------ |
@@ -435,7 +451,7 @@ category 列表：
 
 ### 就业服务平台
 
-<Route author="Derekmini" example="/heu/job/tzgg" path="/heu/job/:type?" :paramsDesc="['分类, 默认为 `tzgg`']" radar="1">
+<Route author="Derekmini" example="/heu/job/tzgg" path="/heu/job/:type?" :paramsDesc="['栏目, 默认为 `tzgg`']" radar="1">
 
 | 通知公告 |
 | -------- |
@@ -443,9 +459,9 @@ category 列表：
 
 </Route>
 
-### 工学网
+### 工学新闻
 
-<Route author="Derekmini XYenon" example="/heu/gongxue/yw" path="/heu/gongxue/:type?" :paramsDesc="['分类, 默认为 `yw`']" radar="1">
+<Route author="Derekmini XYenon" example="/heu/news/yw" path="/heu/news/:type?" :paramsDesc="['栏目, 默认为 `yw`']" radar="1">
 
 | 要闻 | 时讯 |
 | ---- | ---- |
@@ -455,7 +471,7 @@ category 列表：
 
 ### 水声工程学院通知
 
-<Route author="Derekmini" example="/heu/shuisheng/xwdt" path="/heu/shuisheng/:type?" :paramsDesc="['分类, 默认为 `xwdt`']" radar="1">
+<Route author="Derekmini" example="/heu/uae/xwdt" path="/heu/uae/:type?" :paramsDesc="['栏目, 默认为 `xwdt`']" radar="1">
 
 | 新闻动态 | 通知公告 |
 | -------- | -------- |
@@ -734,6 +750,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 马萨诸塞大学 阿默斯特分校 (UMASS Amherst)
+
+### 电子与计算机工程系新闻
+
+<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1"/>
+
+### 信息与计算机科学系新闻
+
+<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
+
 ## 南昌航空大学
 
 ### 教务处公告与新闻
@@ -862,11 +888,11 @@ type 列表：
 
 以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目
 
-获得 URL 中的**分域名**和**栏目编号（可选）**：https://`bulletin`.nuist.edu.cn/`791`/list.htm
+获得 URL 中的**分域名**和**栏目编号（可选）**：https&#x3A;//`bulletin`.nuist.edu.cn/`791`/list.htm
 
 将其替换到 RSS 路由地址中即可：
 
-https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bulletin`/`791`
+<https://rsshub.app/**nuist**/`bulletin`> 或 <https://rsshub.app/**nuist**/`bulletin`/`791`>
 
 :::
 
@@ -956,7 +982,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 学校图书馆官网提供了[新书通报](http://lib2.nuist.edu.cn/newbook/newbook_cls_browse.php)的订阅
 
-由于图书馆通知频率过低(故只提供 3 条)，有待将其和 **网络信息中心**、**基建处**、**总务处** 等的通知整合起来
+由于图书馆通知频率过低 (故只提供 3 条)，有待将其和 **网络信息中心**、**基建处**、**总务处** 等的通知整合起来
 
 :::
 
@@ -1138,9 +1164,47 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 上海科技大学
 
+### 活动通知
+
+<Route author="nczitzk" example="/shanghaitech/activity" path="/shanghaitech/activity"/>
+
 ### 信息科技与技术学院活动
 
 <Route author="HenryQW" example="/shanghaitech/sist/activity" path="/shanghaitech/sist/activity"/>
+
+## 上海立信会计金融学院
+
+::: warning 注意
+
+分区 ID 是`info/iList.jsp?cat_id=`后方数字
+
+目前仅支持文章分区的识别
+
+:::
+
+### 官网
+
+<Route author="NeverBehave" example="/slu/tzgg/12707" path="/slu/tzgg/:id" :paramsDesc="['类别ID']" />
+
+### 教务处
+
+<Route author="NeverBehave" example="/slu/jwc/13424" path="/slu/jwc/:id" :paramsDesc="['类别ID']" />
+
+### 学生处
+
+<Route author="NeverBehave" example="/slu/xsc/14751" path="/slu/xsc/:id" :paramsDesc="['类别ID']" />
+
+### 会计学院
+
+<Route author="NeverBehave" example="/slu/kjxy/13496" path="/slu/kjxy/:id" :paramsDesc="['类别ID']" />
+
+### 财税与公共管理学院
+
+<Route author="NeverBehave" example="/slu/csggxy/14751" path="/slu/csggxy/:id" :paramsDesc="['类别ID']" />
+
+### 体育与健康学院
+
+<Route author="NeverBehave" example="/slu/tyyjkxy/14754" path="/slu/tyyjkxy/:id" :paramsDesc="['类别ID']" />
 
 ## 深圳大学
 
@@ -1269,7 +1333,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="SChen1024" example="/whu/news/wdyw" path="/whu/news/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
 
-注意: 除了 `kydt` 代表学术动态,其余页面均是拼音首字母小写.
+注意：除了 `kydt` 代表学术动态，其余页面均是拼音首字母小写.
 
 | **内容** | **参数** |
 | :------: | :------: |
@@ -1305,7 +1369,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 | 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
 | :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+|  all |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
 
 </Route>
 
@@ -1313,11 +1377,15 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ### 教务处
 
-<Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" :paramsDesc="['栏目路径, 支持多级, 不包括末尾的`.htm`']">
+<Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" :paramsDesc="['栏目路径, 支持多级, 不包括末尾的`.htm`']" />
+
+### 研究生院通知公告
+
+<Route author="nczitzk" example="/xjtu/gs/tzgg" path="/xjtu/gs/tzgg"/>
 
 ::: tip 提示
 
-支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目,
+支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
 
 例如`http://dean.xjtu.edu.cn/gzlc.htm`, 则`subpath`为`gzlc`
 
@@ -1389,7 +1457,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 ## 浙江大学
 
-### 普通栏目 如学术/图片/新闻等
+### 普通栏目 如学术 / 图片 / 新闻等
 
 <Route author="Jeason0228" example="/zju/list/xs" path="/zju/list/:type" :paramsDesc="['xs为学术,xw为新闻,5461是图片新闻,578是浙大报道,具体参数参考左侧的菜单']"/>
 
@@ -1427,8 +1495,8 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1">
 
-| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ |
+| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |   |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | - |
 | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9 |
 
 </Route>
@@ -1514,7 +1582,7 @@ https://rsshub.app/**nuist**/`bulletin` 或 https://rsshub.app/**nuist**/`bullet
 
 <Route author="YunYouJun" example="/cuc/yz" path="/cuc/yz" />
 
-## 中国地质大学(武汉)
+## 中国地质大学 (武汉)
 
 ### 研究生院综合通知公告
 
