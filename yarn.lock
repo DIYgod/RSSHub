@@ -5801,10 +5801,10 @@ googleapis-common@^4.1.0:
     url-template "^2.0.8"
     uuid "^8.0.0"
 
-googleapis@50.0.0:
-  version "50.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-50.0.0.tgz#861aacb96190f9a19dec19c08f0858369ecc1f4e"
-  integrity sha512-AJdOpPbDiNauraQZr51RR85cA53ygYtzLUj6Nq0cTr3g+GQ+GxjyLT6IMGgSE+/0dGLTpRVCemkZjZQA0XMb5Q==
+googleapis@51.0.0:
+  version "51.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-51.0.0.tgz#59ca84a578f8bc41f6257b49fc439bb17b91fe4a"
+  integrity sha512-ZicnODSX5apolF05lNXc3AHW/zazeaWL8zSiQ7a/Bd4pfHU+TJzX7GP38phjyOVPzIG3qnrJ0SMASJgljlFZlQ==
   dependencies:
     google-auth-library "^6.0.0"
     googleapis-common "^4.1.0"
@@ -6025,10 +6025,10 @@ hogan.js@^3.0.2:
     mkdirp "0.3.0"
     nopt "1.0.10"
 
-hooman@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.2.tgz#3c7d2aa3fe6ca215787b34fce371a8f6e9db6199"
-  integrity sha512-5z1i8f3CrioVRX3WXs3kdwdsftIBmDqwG/nb/v6V6vID4E/OzTmU2SyerOI2DSSGevsBnl1mr2OzDMjFBOOQtQ==
+hooman@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.3.tgz#d3200848139ec61ed0188d3efb90fe9fbc07606d"
+  integrity sha512-gEOHQChypGUa+QMydYIXF1bx2dcVsz6N7dRCK+Rmb+NGgLw+LqF41MBr8oB4mg3ECW3pPXmh6vQLHDSxRBFhDA==
   dependencies:
     jsdom "^16.2.2"
     tough-cookie "^4.0.0"
@@ -8531,10 +8531,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@13.0.0-beta.4:
-  version "13.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-13.0.0-beta.4.tgz#68821d84196cbdbda0e4134aab9f9cb7db14d180"
-  integrity sha512-COPgakmKZAwo7BpwridoakOAgg/bB5sjstrcW7lHy+BX7uV3Gg1ei02JzZJiJhGPiDLvWcdPSlqx/7U7lp4nPw==
+nock@13.0.0-beta.5:
+  version "13.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-13.0.0-beta.5.tgz#59c52f3e1046068928c19c3352e6c3af34de7321"
+  integrity sha512-oFWo/hX+Q9pSQNjqLu1b0VtPNnle+TDVO28U6l29flg2U4kYIMeyiedc3OwXYrVGG/urG/sQDHIbSJTZD0YOQA==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
