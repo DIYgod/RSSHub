@@ -408,6 +408,10 @@ category 对应的关键词有
 
 <Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']"/>
 
+### 《香港 01》周报
+
+<Route author="MisteryMonster" example="/hk01/ebook" path="/hk01/ebook"/>
+
 ## 香港電台
 
 ### 新聞

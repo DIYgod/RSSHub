@@ -1909,4 +1909,47 @@
             },
         ],
     },
+    'hk01.com': {
+        _name: '香港01',
+        www: [
+            {
+                title: '最 Hit',
+                docs: 'https://docs.rsshub.app/traditional-media.html#re-men',
+                source: ['/hot', '/'],
+                target: '/hk01/hot',
+            },
+            {
+                title: 'zone',
+                docs: 'https://docs.rsshub.app/traditional-media.html#lan-mu-3',
+                source: '/zone/:id/:title',
+                target: '/hk01/zone/:id',
+            },
+            {
+                title: 'channel',
+                docs: 'https://docs.rsshub.app/traditional-media.html#zi-lan-mu',
+                source: '/channel/:id/:title',
+                target: '/hk01/channel/:id',
+            },
+            {
+                title: 'tag',
+                docs: 'https://docs.rsshub.app/traditional-media.html#biao-qian-2',
+                source: '/tag/:id/:title',
+                target: '/hk01/tag/:id',
+            },
+            {
+                title: 'issue',
+                docs: 'https://docs.rsshub.app/traditional-media.html#zhuan-ti',
+                source: '/issue/:id/:title',
+                target: '/hk01/issue/:id',
+            },
+        ],
+        ebook: [
+            {
+                title: '《香港01》周报',
+                docs: 'https://docs.rsshub.app/traditional-media.html#%E3%80%8A-xiang-gang-01%E3%80%8B-zhou-bao',
+                source: ['/', '/subscribe'],
+                target: '/hk01/ebook',
+            },
+        ],
+    },
 });
