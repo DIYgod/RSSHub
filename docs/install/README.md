@@ -490,3 +490,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   Sci-hub 设置，用于科学期刊路由。
 
     -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。
+
+-   端传媒：
+
+    -   `INITIUM_USERNAME`: 端传媒用户名
+
+    -   `INITIUM_PASSWORD`: 端传媒密码
