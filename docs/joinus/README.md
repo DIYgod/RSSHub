@@ -269,7 +269,7 @@ sidebar: auto
 
     至此我们完成了一个最简单的路由
 
----
+* * *
 
 #### 使用缓存
 
@@ -294,7 +294,7 @@ const description = await ctx.cache.tryGet(link, async () => {
 
 tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache.js#L128)，第一个参数为缓存的 key，第二个参数为缓存数据获取方法，第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)，且每次访问缓存会重新计算过期时间
 
----
+* * *
 
 #### 生成 RSS 源
 
@@ -383,7 +383,7 @@ ctx.state.data = {
 };
 ```
 
----
+* * *
 
 ### 添加脚本文档
 
@@ -408,11 +408,11 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
-        ***
+        * * *
 
         2.  多参数：
 
@@ -422,11 +422,11 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
-        ***
+        * * *
 
 
         3. 复杂说明支持 slot:
@@ -457,7 +457,33 @@ ctx.state.data = {
 
 1.  请一定要注意把`<Route>`的标签关闭！
 
-2.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
+2.  编写文档时应该用 `一级标题` + `二级标题` 的格式解决生成锚点不唯一导致的定位问题。
+
+    -   文档样例：
+
+        ```vue
+            ## PlayStation
+
+            ### PlayStation Store 游戏列表
+        ```
+
+        或者：
+
+        ```vue
+            ## 香港 01
+
+            ### 香港 01-热门
+        ```
+
+        而不是：
+
+        ```vue
+            ## PlayStation
+
+            ### 游戏列表
+        ```
+
+3.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
 
 ## 提交新的 RSSHub Radar 规则
 
@@ -541,9 +567,9 @@ ctx.state.data = {
 
 必填，文档地址
 
-如 `Twitter 用户时间线` 规则的 `docs` 为 `https://docs.rsshub.app/social-media.html#twitter`
+如 `PlayStation Store 游戏列表` 规则的 `docs` 为 `http://docs.rsshub.app/game.html#playstation-store-you-xi-lie-biao`
 
-注意不是 `https://docs.rsshub.app/social-media.html#yong-hu-shi-jian-xian`，hash 应该定位到一级标题
+添加到雷达的`docs`对应的文档必须拥有唯一标题，否则会定位失败。
 
 #### source
 
