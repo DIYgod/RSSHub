@@ -24,20 +24,15 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
-## 安徽医科大学
-
-### 研究生学院通知公告
-
-<Route author="Origami404" example="/ahmu/news" path="/ahmu/news" />
-
 ## 安徽农业大学
 
 ### 计算机学院
+
 <Route author="SimonHu-HN" example="/ahau/cs_news/xxtg" path="/ahau/cs_news/:type" :paramsDesc="['类型名']">
 
 | 信息通告 | 新闻动态 |
-| -------- | ------- |
-| xxtg | xwddyn |
+| -------- | -------- |
+| xxtg     | xwddyn   |
 
 </Route>
 
@@ -46,8 +41,8 @@ pageClass: routes
 <Route author="SimonHu-HN" example="/ahau/jwc/jwyw" path="/ahau/jwc/:type" :paramsDesc="['类型名']">
 
 | 教务要闻 | 通知公告 |
-| --------| ------- |
-| jwyw    | tzgg    |
+| -------- | -------- |
+| jwyw     | tzgg     |
 
 </Route>
 
@@ -56,10 +51,16 @@ pageClass: routes
 <Route author="SimonHu-HN" example="/ahau/main/xnyw" path="/ahau/main/:type" :paramsDesc="['类型名']">
 
 | 校内要闻 | 学院动态 |
-| -------- | ------- |
-| xnyw | xydt |
+| -------- | -------- |
+| xnyw     | xydt     |
 
 </Route>
+
+## 安徽医科大学
+
+### 研究生学院通知公告
+
+<Route author="Origami404" example="/ahmu/news" path="/ahmu/news" />
 
 ## 北华航天工业学院
 
