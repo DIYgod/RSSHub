@@ -102,7 +102,7 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 ### Addons Update
 
-<RouteEn author="hoilc" example="/edge/addon/iikmkjmpaadaobahmlepeloendndfphd" path="/edge/addon/:crxid" :paramsDesc="['Addon id, can be found in addon url']"/>
+<RouteEn author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['Addon id, can be found in addon url']"/>
 
 ## Minecraft
 
