@@ -1879,4 +1879,34 @@
             },
         ],
     },
+    'umass.edu': {
+        _name: 'UMASS Amherst',
+        ece: [
+            {
+                title: 'ECE News',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/news',
+                target: '/umass/amherst/ecenews',
+            },
+        ],
+        'www.cics': [
+            {
+                title: 'CICS News',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/news',
+                target: '/umass/amherst/csnews',
+            },
+        ],
+    },
+    'lofter.com': {
+        _name: 'Lofter',
+        www: [
+            {
+                title: '话题 (标签)',
+                docs: 'https://docs.rsshub.app/social-media.html#lofter',
+                source: ['/tag/:name', '/tag/:name/:type'],
+                target: (params) => `/lofter/tag/${params.name}/${params.type || ''}`,
+            },
+        ],
+    },
 });
