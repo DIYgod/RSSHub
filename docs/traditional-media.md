@@ -188,9 +188,9 @@ Category 列表:
 
 Type 栏目:
 
-| 深度    | What’s New | Pick-Up |
-| ------- | ---------- | ------- |
-| feature | news-brief | pick_up |
+| 深度    | What’s New | 广场              | Pick-Up |
+| ------- | ---------- | ----------------- | ------- |
+| feature | news-brief | notes-and-letters | pick_up |
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
