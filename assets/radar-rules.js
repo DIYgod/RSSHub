@@ -1914,31 +1914,31 @@
         www: [
             {
                 title: '最 Hit',
-                docs: 'https://rsshub.app/traditional-media.html#xiang-gang-01-re-men',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01-re-men',
                 source: ['/hot', '/'],
                 target: '/hk01/hot',
             },
             {
                 title: 'zone',
-                docs: 'https://rsshub.app/traditional-media.html#xiang-gang-01-lan-mu',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01-lan-mu',
                 source: '/zone/:id/:title',
                 target: '/hk01/zone/:id',
             },
             {
                 title: 'channel',
-                docs: 'https://rsshub.app/traditional-media.html#xiang-gang-01-zi-lan-mu',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01-zi-lan-mu',
                 source: '/channel/:id/:title',
                 target: '/hk01/channel/:id',
             },
             {
                 title: 'issue',
-                docs: 'https://rsshub.app/traditional-media.html#xiang-gang-01-zhuan-ti',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01-zhuan-ti',
                 source: '/issue/:id/:title',
                 target: '/hk01/issue/:id',
             },
             {
                 title: 'tag',
-                docs: 'https://rsshub.app/traditional-media.html#xiang-gang-01-biao-qian',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01-biao-qian',
                 source: '/tag/:id/:title',
                 target: '/hk01/tag/:id',
             },
