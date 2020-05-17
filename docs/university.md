@@ -24,6 +24,38 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## 安徽农业大学
+
+### 计算机学院
+
+<Route author="SimonHu-HN" example="/ahau/cs_news/xxtg" path="/ahau/cs_news/:type" :paramsDesc="['类型名']">
+
+| 信息通告 | 新闻动态 |
+| -------- | -------- |
+| xxtg     | xwddyn   |
+
+</Route>
+
+### 教务处
+
+<Route author="SimonHu-HN" example="/ahau/jwc/jwyw" path="/ahau/jwc/:type" :paramsDesc="['类型名']">
+
+| 教务要闻 | 通知公告 |
+| -------- | -------- |
+| jwyw     | tzgg     |
+
+</Route>
+
+### 安农大官网新闻
+
+<Route author="SimonHu-HN" example="/ahau/main/xnyw" path="/ahau/main/:type" :paramsDesc="['类型名']">
+
+| 校内要闻 | 学院动态 |
+| -------- | -------- |
+| xnyw     | xydt     |
+
+</Route>
+
 ## 安徽医科大学
 
 ### 研究生学院通知公告
@@ -786,33 +818,33 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南京航空航天大学
 
-### 教务通知
+### 教务处
 
-<Route author="arcosx Seiry" example="/nuaa/jwc/default" path="/nuaa/jwc/:type" :paramsDesc="['分类名']">
+<Route author="SimonHu-HN" example="/nuaa/jwc/1" path="/nuaa/jwc/:type" :paramsDesc="['分类名']">
 
-| 教学服务      | 教学建设 | 学生培养 | 教学资源 |
-| ------------- | -------- | -------- | -------- |
-| jxfw(default) | jxjs     | xspy     | jxzy     |
+| 教学服务 | 学生培养 | 教学建设 | 教学资源 |
+| -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        |
 
 </Route>
 
-### 计算机科学与技术学院
+### 计算机学院
 
-<Route author="LogicJake Seiry" example="/nuaa/cs/kydt" path="/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+<Route author="SimonHu-HN" example="/nuaa/cs/1" path="/nuaa/cs/:type" :paramsDesc="['分类名']"/>
 
-| 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| tzgg     | xwdt     | kydt     | jxdt     | xsgz     | zsxx     | jyxx     |
+| 公式 | 人事 | 科研 | 研究生 |
+| ---- | ---- | ---- | ------ |
+| 1    | 2    | 3    | 4      |
 
 </Route>
 
 ### 研究生院
 
-<Route author="junfengP Seiry" example="/nuaa/yjsy/latest" path="/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
+<Route author="SimonHu-HN" example="/nuaa/yjsy/1" path="/nuaa/yjsy/:type" :paramsDesc="['分类名']"/>
 
-| 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
-| -------- | -------- | -------- | -------- | -------- |
-| latest   | yyxw     | sjwj     | glwj     | xxfw     |
+| 招生工作 - 动态信息 | 招生工作 - 信息服务 | 培养工作 - 动态信息 | 培养工作 - 信息服务 | 学位工作 - 动态信息 | 学位工作 - 信息服务 |
+| ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
+| 1                   | 2                   | 3                   | 4                   | 5                   | 6                   |
 
 </Route>
 
