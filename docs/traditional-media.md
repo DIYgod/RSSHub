@@ -579,3 +579,7 @@ category 对应的关键词有
 | article | blog | culture | reports |
 
 </Route>
+
+## 新闻联播文字版
+
+<Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
