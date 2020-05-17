@@ -35,7 +35,7 @@
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
     "@types/cheerio": "0.22.18",
-    "@types/got": "9.6.10",
+    "@types/got": "9.6.11",
     "@types/koa": "2.11.3",
     "@vuepress/plugin-back-to-top": "1.5.0",
     "@vuepress/plugin-google-analytics": "1.5.0",
@@ -82,7 +82,7 @@
     "fanfou-sdk": "4.1.0",
     "git-rev-sync": "2.0.0",
     "googleapis": "51.0.0",
-    "got": "11.1.3",
+    "got": "11.1.4",
     "he": "1.2.0",
     "hooman": "1.2.3",
     "https-proxy-agent": "5.0.0",
