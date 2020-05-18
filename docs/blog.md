@@ -24,7 +24,7 @@ pageClass: routes
 | ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
 | hirasawayui       | se7en               | walnut   | themez   | comeet          | sunskyxh | zmd            |
 
-> 原则上只要是{type}.hedwig.pub 都可以匹配。
+> 原则上只要是 {type}.hedwig.pub 都可以匹配。
 
 ## Hexo
 
@@ -35,6 +35,16 @@ pageClass: routes
 ### Yilia 主题博客
 
 <Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+
+## Hi, DIYgod
+
+### DIYgod 的动森日记
+
+<Route author="DIYgod" example="/blogs/diygod/animal-crossing" path="/blogs/diygod/animal-crossing"/>
+
+### DIYgod 的可爱的手办们
+
+<Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk"/>
 
 ## LaTeX 开源小屋
 

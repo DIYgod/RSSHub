@@ -16,14 +16,36 @@ pageClass: routes
 
 <Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
+## AcFun
+
+### 番剧
+
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+
+::: tip 提示
+
+番剧 id 不包含开头的 aa。
+例如：<http://www.acfun.cn/bangumi/aa5022158> 的番剧 id 是 5022158，不包括开头的 aa。
+
+:::
+
+### 用户投稿
+
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+
+## AGE 动漫
+
+### 番剧详情
+
+<Route author="s2marine" example="/agefans/detail/20200035" path="/agefans/detail/:id" :paramsDesc="['番剧 id，对应详情 URL 中找到']"/>
+
 ## Anime1
 
 ### 動畫
 
 <Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
 
-时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
-
+时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
 </Route>
 
 ### 搜尋
@@ -92,9 +114,9 @@ pageClass: routes
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
-| 同人 | 漫画  | 软件 | 同人(R18) | 漫画(R18) | 美少女游戏 | 乙女  | BL  |
-| ---- | ----- | ---- | --------- | --------- | ---------- | ----- | --- |
-| home | comic | soft | maniax    | books     | pro        | girls | bl  |
+| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL |
+| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | -- |
+| home | comic | soft | maniax     | books      | pro        | girls | bl |
 
 </Route>
 
@@ -173,7 +195,7 @@ pageClass: routes
 
 <Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" :paramsDesc="['语言','类别','名称','ID']"/>
 
-比如漫画公主彻夜未眠的网址为https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
+比如漫画公主彻夜未眠的网址为<https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894>, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
 
 ### [Naver](https://comic.naver.com)
 
@@ -185,8 +207,8 @@ pageClass: routes
 
 <Route author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id']">
 
-请打开对应番剧的纵览页(非具体某集),从 url 中最后一位查看番剧 id.(一般为英文)
-除去'海贼'此类具有特殊页面的超长番剧,绝大多数页面都可以解析.
+请打开对应番剧的纵览页 (非具体某集), 从 url 中最后一位查看番剧 id.(一般为英文)
+除去 ' 海贼 ' 此类具有特殊页面的超长番剧，绝大多数页面都可以解析.
 最适合用来追新番
 
 </Route>
@@ -249,6 +271,12 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
 
+## 紳士漫畫
+
+### 最新
+
+<Route author="KenMizz" example="/ssmh" path="/ssmh/" />
+
 ## 鼠绘漫画
 
 ### 鼠绘漫画
@@ -259,7 +287,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="DIYgod" example="/mmgal" path="/mmgal"/>
+<Route author="DIYgod kotoyuuko" example="/hhgal" path="/hhgal"/>
 
 ## 终点分享
 

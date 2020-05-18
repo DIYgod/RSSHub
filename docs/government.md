@@ -12,7 +12,7 @@ pageClass: routes
 
 | 委内新闻 | 基层动态 | 媒体聚焦 | 热点新闻 |
 | :------: | :------: | :------: | :------: |
-|   wnxw   |   jcdt   |   mtjj   |  rdxws   |
+|   wnxw   |   jcdt   |   mtjj   |   rdxws  |
 
 </Route>
 
@@ -27,12 +27,12 @@ pageClass: routes
 | 进口网络游戏审批信息 |  importednetgame  |
 | 进口电子游戏审批信息 | importedvideogame |
 | 国产网络游戏审批信息 |  domesticnetgame  |
-|   游戏审批变更信息   |    gamechange     |
+|   游戏审批变更信息   |     gamechange    |
 
 |                  描述                  |      detail      |
 | :------------------------------------: | :--------------: |
 |         留空，返回栏目所有文章         |                  |
-|      new，返回栏目第一篇文章内容       |       new        |
+|       new，返回栏目第一篇文章内容      |        new       |
 | 某个文章标题的一部分，返回这篇文章内容 | 例：2020 年 1 月 |
 
 </Route>
@@ -51,7 +51,7 @@ pageClass: routes
 
 | 政务要闻 | 区县快讯 | 部门动态 | 新闻视频 | 热点专题 | 市本级专题 | 最新热点专题 | 往期专题 | 区县专题 | 政务公告 | 便民资讯 |
 | :------: | :------: | :------: | :------: | :------: | :--------: | :----------: | :------: | :------: | :------: | :------: |
-|   news   | district |   bmdt   |   xwsp   |   rdzt   |   sbjzt    |    zxrdzt    |   wqzt   |   qxzt   |   zwgg   |   bmzx   |
+|   news   | district |   bmdt   |   xwsp   |   rdzt   |    sbjzt   |    zxrdzt    |   wqzt   |   qxzt   |   zwgg   |   bmzx   |
 
 </Route>
 
@@ -101,13 +101,13 @@ pageClass: routes
 
 <Route author="ciaranchen" example="/gov/zhengce/govall/orpro=555&notpro=2&search_field=title" path="/gov/zhengce/govall/:advance?" :paramsDesc="['高级搜索选项，将作为请求参数直接添加到url后。目前已知的选项及其意义如下。' ]" >
 
-|              选项               |                       意义                       |              备注              |
+|               选项              |                       意义                       |              备注              |
 | :-----------------------------: | :----------------------------------------------: | :----------------------------: |
 |              orpro              |             包含以下任意一个关键词。             |          用空格分隔。          |
-|             allpro              |                包含以下全部关键词                |                                |
-|             notpro              |                 不包含以下关键词                 |                                |
+|              allpro             |                包含以下全部关键词                |                                |
+|              notpro             |                 不包含以下关键词                 |                                |
 |              inpro              |                完整不拆分的关键词                |                                |
-|           searchfield           | title: 搜索词在标题中; content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
+|           searchfield           | title: 搜索词在标题中；content: 搜索词在正文中。 |  默认为空，即网页的任意位置。  |
 | pubmintimeYear, pubmintimeMonth |                    从某年某月                    | 单独使用月份参数无法只筛选月份 |
 | pubmaxtimeYear, pubmaxtimeMonth |                    到某年某月                    | 单独使用月份参数无法只筛选月份 |
 |              colid              |                       栏目                       |      比较复杂，不建议使用      |
@@ -120,13 +120,23 @@ pageClass: routes
 
 | 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
 | :------: | :------: | :------: | :--------: | :------: |
-|    bm    |    gd    |    yw    |    gwy     | zhengce  |
+|    bm    |    gd    |    yw    |     gwy    |  zhengce |
 
 </Route>
 
 ### 吹风会
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
+
+### 北京市人民政府
+
+#### 北京教育考试院
+
+<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']"/>
+
+| 通知公告 | 招考政策 | 自考快递 |
+| :------: | :------: | :------: |
+|  bjeeagg |   zkzc   |   zkkd   |
 
 ### 河北省退役军人事务厅
 
@@ -138,7 +148,7 @@ pageClass: routes
 
 </Route>
 
-### 湖南省政府采购网-公告
+### 湖南省政府采购网 - 公告
 
 <Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
 
@@ -146,13 +156,13 @@ pageClass: routes
 
 <Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
 
-|  省政府常务会议   |    要闻关注    |  部门资讯  |  市县动态   |       政策解读        |
+|   省政府常务会议  |    要闻关注    |  部门资讯  |   市县动态  |        政策解读       |
 | :---------------: | :------------: | :--------: | :---------: | :-------------------: |
 | executive-meeting | important-news | department | city-county | policy-interpretation |
 
-| 政府信息公开年度报告 |   政府信息公开制度    | 省政府及办公厅文件 |     规范性文件     |
+| 政府信息公开年度报告 |    政府信息公开制度   | 省政府及办公厅文件 |     规范性文件     |
 | :------------------: | :-------------------: | :----------------: | :----------------: |
-|    annual-report     | information-publicity |   documentation    | normative-document |
+|     annual-report    | information-publicity |    documentation   | normative-document |
 
 |          立法意见征集          |      意见征集      |
 | :----------------------------: | :----------------: |
@@ -181,9 +191,9 @@ pageClass: routes
 
 <Route author="wolfyu1991" example="/gov/shanxi/rst/rsks-tzgg" path="/gov/shanxi/rst/:category" :paramsDesc="['分类名']">
 
-| 通知公告  | 公务员考试 | 事业单位考试 | 专业技术人员资格考试 | 其他考试  |
+|  通知公告 | 公务员考试 | 事业单位考试 | 专业技术人员资格考试 |  其他考试 |
 | :-------: | :--------: | :----------: | :------------------: | :-------: |
-| rsks-tzgg | rsks-gwyks | rsks-sydwks  |   rsks-zyjsryzgks    | rsks-qtks |
+| rsks-tzgg | rsks-gwyks |  rsks-sydwks |    rsks-zyjsryzgks   | rsks-qtks |
 
 </Route>
 
@@ -233,7 +243,7 @@ pageClass: routes
 | ------ | -------------------- |
 | 慕尼黑 | `/embassy/de/munich` |
 
----
+* * *
 
 #### 法国 `FR`
 
@@ -247,7 +257,7 @@ pageClass: routes
 | 斯特拉斯堡 | `/embassy/fr/strasbourg` |
 | 里昂       | `/embassy/fr/lyon`       |
 
----
+* * *
 
 #### 日本 `JP`
 
@@ -264,7 +274,7 @@ pageClass: routes
 | 札幌   | `/embassy/jp/sapporo`  |
 | 新潟   | `/embassy/jp/niigata`  |
 
----
+* * *
 
 #### 韩国 `KR`
 
@@ -278,13 +288,13 @@ pageClass: routes
 | 济州 | `/embassy/kr/jeju`    |
 | 光州 | `/embassy/kr/gwangju` |
 
----
+* * *
 
 #### 新加坡 `SG`
 
 -   大使馆: `/embassy/sg`
 
----
+* * *
 
 #### 美国 `US`
 
@@ -298,7 +308,7 @@ pageClass: routes
 | 芝加哥 | `/embassy/us/chicago`      |
 | 旧金山 | `/embassy/us/sanfrancisco` |
 
----
+* * *
 
 #### 英国 `UK`
 
@@ -314,7 +324,7 @@ pageClass: routes
 
 ## 中华人民共和国海关总署
 
-### 拍卖信息/海关法规
+### 拍卖信息 / 海关法规
 
 <Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
 
@@ -324,9 +334,24 @@ pageClass: routes
 
 <Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
 
-|  政策解读   |  最新文件   | 公告公示 |    教育部简报     |
+|   政策解读  |   最新文件  | 公告公示 |     教育部简报    |
 | :---------: | :---------: | :------: | :---------------: |
 | policy_anal | newest_file |  notice  | edu_ministry_news |
+
+</Route>
+
+## 中华人民共和国农业农村部
+
+### 新闻
+
+<Route author="Origami404" example="/gov/moa/xw/zwdt" path="/gov/moa/:suburl" :paramsDesc="['分类目录的子url']">
+
+更多例子:
+
+-   `农业农村部动态`的网页链接是`http://www.moa.gov.cn/xw/zwdt/`, 对应的`suburl`是`xw/zwdt`
+-   `财务公开`的网页链接是`http://www.moa.gov.cn/gk/cwgk_1/`, 对应的`suburl`是`gk/cwgk_1`
+-   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面 (`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录，它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合，这时候请点开对应栏目的`更多 >>`进入栏目的目录，再根据上面的规则提取`suburl`
+-   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
 
 </Route>
 
@@ -350,7 +375,7 @@ pageClass: routes
 
 | 部内信息 | 政策解读 | 首页信息 |
 | :------: | :------: | :------: |
-|   bnxx   |   zcjd   |  index   |
+|   bnxx   |   zcjd   |   index  |
 
 </Route>
 
@@ -359,6 +384,12 @@ pageClass: routes
 ### 发言人表态
 
 <Route author="nicolaszf" example="/gov/fmprc/fyrbt" path="/gov/fmprc/fyrbt"/>
+
+## 中华人民共和国住房和城乡建设部
+
+### 政策发布
+
+<Route author="nczitzk" example="/gov/mohurd/policy" path="/gov/mohurd/policy"/>
 
 ## 中央纪委国家监委
 

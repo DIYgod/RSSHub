@@ -4,12 +4,6 @@ pageClass: routes
 
 # 图片
 
-## 1X
-
-### Magazine
-
-<Route author="emdoe" example="/1x/magazine" path="/1x/magazine"/>
-
 ## Awesome Pigtails
 
 ### 最新图片
@@ -44,6 +38,12 @@ pageClass: routes
 
 </Route>
 
+## GirlImg
+
+### album
+
+<Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" :paramsDesc="['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']" />
+
 ## Google Doodles
 
 ### 更新
@@ -61,8 +61,8 @@ pageClass: routes
 ::: tip 提示
 
 -   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
--   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
--   网站提供了 Posts 订阅: https://konachan.com/post/piclens?tags=[tags]
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅: <https://konachan.com/post/piclens?tags=[tags]>
 
 :::
 
@@ -114,7 +114,7 @@ pageClass: routes
 
 ::: tip 提示
 
--   网站提供了 Posts 订阅: https://yande.re/post/piclens?tags=[tags]
+-   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
 
 :::
 
@@ -178,6 +178,16 @@ pageClass: routes
 | 妹子图 | 妹子图热榜 |
 | ------ | ---------- |
 | ooxx   | top-ooxx   |
+
+## 绝对领域
+
+### 图集文章
+
+<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
+
+| 图集 | 文章 |
+| ---- | ---- |
+| tuji | as   |
 
 ## 妹子图
 

@@ -4,6 +4,48 @@ pageClass: routes
 
 # 论坛
 
+## A 岛匿名版
+
+### 串
+
+<Route author="zcx1218029121" example="/adnmb/20" path="/adnmb/:pid" :paramsDesc="['板块 id 或者板块名称，例如`/adnmb/20`等价于`/adnmb/欢乐恶搞`，现有板块请参考下表']" >
+
+| 综合版 1 | 围炉 | 欢乐恶搞 | 速报 2 | 推理 | 跑团 | 技术宅 | 料理 | 猫版 | 音乐 | 考试 | 社畜 |
+| -------- | ---- | -------- | ------ | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- |
+| 4        | 120  | 20       | 121    | 11   | 111  | 30     | 32   | 40   | 35   | 56   | 110  |
+
+| 科学 | 文学 | 创意 | 姐妹 1 | 数码 | 女装 | 日记 | 圈内 | 都市怪谈 | 买买买 | 动画 | 漫画 | 美漫 | 国漫 | 小说 |
+| ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | -------- | ------ | ---- | ---- | ---- | ---- | ---- |
+| 15   | 103  | 17   | 98     | 75   | 97   | 89   | 96   | 81       | 106    | 14   | 12   | 90   | 99   | 19   |
+
+| 轻小说 | GALGAME | 东方 Project | 舰娘 | 虚拟偶像 | VOCALOID | 游戏 | DNF | SE  | 手游 |
+| ------ | ------- | ------------ | ---- | -------- | -------- | ---- | --- | --- | ---- |
+| 87     | 64      | 5            | 93   | 101      | 6        | 2    | 72  | 124 | 3    |
+
+| Steam | 索尼 | LOL | DOTA | 口袋妖怪 | 战争雷霆 | WOT | Minecraft | 怪物猎人 | 3A 游戏 |
+| ----- | ---- | --- | ---- | -------- | -------- | --- | --------- | -------- | ------- |
+| 107   | 24   | 22  | 70   | 38       | 86       | 51  | 10        | 28       | 108     |
+
+| 彩虹六号 | 暴雪游戏 | 卡牌桌游 | MUG | AC 大逃杀 | 任天堂 | AKB | SNH48 | COSPLAY | 声优 |
+| -------- | -------- | -------- | --- | --------- | ------ | --- | ----- | ------- | ---- |
+| 119      | 23       | 45       | 34  | 29        | 25     | 16  | 100   | 13      | 55   |
+
+| 模型 | 影视 | 军武 | 体育 | 值班室 | 城墙 | 技术支持 | 询问 3 | 宠物 | 摄影 2 |
+| ---- | ---- | ---- | ---- | ------ | ---- | -------- | ------ | ---- | ------ |
+| 39   | 31   | 37   | 33   | 18     | 112  | 117      | 114    | 118  | 115    |
+
+| 主播 | 育儿 | 围炉 | 旅行 | 特摄 |
+| ---- | ---- | ---- | ---- | ---- |
+| 116  | 113  | 120  | 125  | 9    |
+
+</Route>
+
+## Chiphell
+
+### 子版块
+
+<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
+
 ## Dcard
 
 ### 首頁帖子
@@ -16,11 +58,11 @@ pageClass: routes
 
 ## Discuz
 
-### 通用子版块-自动检测
+### 通用子版块 - 自动检测
 
 <Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" :paramsDesc="['子版块链接， 需要手动Url编码']"/>
 
-### 通用子版块-指定版本
+### 通用子版块 - 指定版本
 
 <Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" :paramsDesc="['discuz版本类型，见下表','子版块链接， 需要手动Url编码']" >
 
@@ -30,7 +72,7 @@ pageClass: routes
 
 </Route>
 
-### 通用子版块-支持 Cookie
+### 通用子版块 - 支持 Cookie
 
 <Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" :paramsDesc="['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']" >
 
@@ -39,6 +81,12 @@ pageClass: routes
 | x             | 7               |
 
 </Route>
+
+## eTOLAND
+
+### 主题贴
+
+<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" />
 
 ## LearnKu
 
@@ -64,11 +112,37 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
 
 ### 帖子
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1"/>
+
+## RF 技术社区
+
+### 文章
+
+<Route author="nczitzk" example="/rf/article" path="/rf/article"/>
+
+## Ruby China
+
+> 未登录状态下抓取页面非实时更新
+
+### 主题
+
+<Route author="ahonn" example="/ruby-china/topics" path="/ruby-china/topics/:type" :paramsDesc="['主题类型，在 URL 可以找到']"/>
+
+| 主题类型 | type       |
+| -------- | ---------- |
+| 精华贴   | excellent  |
+| 优质帖子 | popular    |
+| 无人问津 | no_reply   |
+| 最新回复 | last_reply |
+| 最新发布 | last       |
+
+### 招聘
+
+<Route author="ahonn" example="/ruby-china/jobs" path="/ruby-china/jobs"/>
 
 ## Saraba1st
 
@@ -82,7 +156,7 @@ pageClass: routes
 
 ## V2EX
 
-### 最热/最新主题
+### 最热 / 最新主题
 
 <Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
 
@@ -163,6 +237,10 @@ pageClass: routes
 
 </Route>
 
+### 校招日程
+
+<Route author="junfengP" example="/nowcoder/schedule" path="nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
+
 ## 书友社区
 
 ### 导读
@@ -223,17 +301,25 @@ pageClass: routes
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
 
+### 帖子 (手机端的最热与最新 Tab)
+
+<Route author="NavePnow" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+
+| 最热帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
 ### 录取结果
 
 <Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" :paramsDesc="['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']">
 ::: warning 三个 id 获取方式
 
-1. 打开 https://offer.1point3acres.com
-2. 打开控制台
-3. 切换到 Network 面板
-4. 点击 搜索 按钮
-5. 点击 results?ps=15&pg=1 POST 请求
-6. 找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
+1.  打开 <https://offer.1point3acres.com>
+2.  打开控制台
+3.  切换到 Network 面板
+4.  点击 搜索 按钮
+5.  点击 results?ps=15&pg=1 POST 请求
+6.  找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
 
 :::
 </Route>

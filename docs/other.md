@@ -4,6 +4,11 @@ pageClass: routes
 
 # 其他
 
+## acwifi 路由器交流
+
+### 新闻
+
+<Route author="cc798461" example="/acwifi" path="/acwifi"/>
 ## Apple
 
 ### 更换和维修扩展计划
@@ -20,8 +25,8 @@ pageClass: routes
 
 <Route author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['查询语句']">
 
-1. 在 AutoTrader 选择筛选条件进行搜索
-1. 复制查询结果 URL 中`?`后的部分，例如 `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` 则为 `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
+1.  在 AutoTrader 选择筛选条件进行搜索
+2.  复制查询结果 URL 中`?`后的部分，例如 `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` 则为 `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
 
 </Route>
 
@@ -61,6 +66,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
+## iYouport
+
+### 首页
+
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport"/>
+
 ## MobData
 
 ### 分析报告
@@ -85,7 +96,7 @@ pageClass: routes
 
 <Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
 
-## ONE · 一个
+## ONE・一个
 
 ### 图片文字问答
 
@@ -105,7 +116,7 @@ pageClass: routes
 
 ## Product Hunt
 
-> 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
+> 官方 Feed 地址为: <https://www.producthunt.com/feed>
 
 ### Today Popular
 
@@ -224,9 +235,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
-## 福利资源-met.red
+## 福利资源 - met.red
 
-### 福利资源-met.red
+### 福利资源 - met.red
 
 <Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
 
@@ -272,11 +283,29 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址 site 后面']"/>
 
+## 静态模型爱好者
+
+### 新品信息
+
+<Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
+
+## 考研帮
+
+### 考研帮调剂信息
+
+<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+
 ## 空气质量
 
 ### 实时 AQI
 
 <Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
+
+## 酷安
+
+### 图文 - 编辑精选
+
+<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen" />
 
 ## 快递 100
 
@@ -288,9 +317,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ::: warning 注意
 
-1. 构造链接前请确认所有参数正确：错误`快递公司-订单号`组合将会缓存信息一小段时间防止产生无用查询
-2. 正常查询的订单在未签收状态下不会被缓存：请控制查询频率
-3. 订单完成后请尽快取消订阅，避免资源浪费
+1.  构造链接前请确认所有参数正确：错误`快递公司 - 订单号`组合将会缓存信息一小段时间防止产生无用查询
+2.  正常查询的订单在未签收状态下不会被缓存：请控制查询频率
+3.  订单完成后请尽快取消订阅，避免资源浪费
 
 :::
 </Route>
@@ -341,6 +370,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 模型网
+
+### 新闻
+
+<Route author="cc798461" example="/moxingnet" path="/moxingnet"/>
+
 ## 且听风吟福利
 
 ### 分类
@@ -367,9 +402,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" :paramsDesc="['板块id，可在 URL 中找到', '排序方式']">
 
-| 发帖时间 | 回复/查看 | 查看 | 最后发表 | 热门 |
-| -------- | --------- | ---- | -------- | ---- |
-| dateline | reply     | view | lastpost | heat |
+| 发帖时间 | 回复 / 查看 | 查看 | 最后发表 | 热门 |
+| -------- | ----------- | ---- | -------- | ---- |
+| dateline | reply       | view | lastpost | heat |
 
 </Route>
 
@@ -401,13 +436,25 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 深圳证券交易所
 
-### 上市公告-可转换债券
+### 上市公告 - 可转换债券
 
 <Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
 
-### 问询函件(全部/主板/中小企业板/创业板)
+### 问询函件 (全部 / 主板 / 中小企业板 / 创业板)
 
 <Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+
+## 四川省科学技术厅
+
+### 四川省科学技术厅 - 公示公告
+
+<Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" :paramsDesc="['默认为`tz`']">
+
+| 通知 | 公示公告 |
+| ---- | -------- |
+| tz   | gs       |
+
+</Route>
 
 ## 搜狗
 
@@ -441,23 +488,23 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
-## 武汉肺炎疫情新闻动态
+## 新冠肺炎疫情新闻动态
 
 ### 国家卫健委 - 疫情通报
 
 <Route author="Cielpy DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
 
-### 财新网 - 武汉肺炎防疫全纪录
+### 财新网 - 新冠肺炎防疫全纪录
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
 
-### 丁香园 - 全国新型肺炎疫情实时播报
+### 丁香园 - 新冠病毒疫情实时播报
 
 <Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
 
-### 丁香园 - 全国新型肺炎疫情数据统计
+### 丁香园 - 新冠病毒疫情数据统计
 
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回全国数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
 
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
 
@@ -469,7 +516,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 澳門特別行政區政府 抗疫專頁：最新消息
 
-官方網址：[https://www.ssm.gov.mo/apps1/PreventWuhanInfection/ch.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/ch.aspx)
+官方網址：<https://www.ssm.gov.mo/apps1/PreventWuhanInfection/ch.aspx>
 
 <Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['語言']"/>
 
@@ -483,7 +530,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 新趣集
 
-> 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
+> 官方 Feed 地址为: <https://xinquji.com/rss>
 
 ### 今日最佳
 
@@ -530,15 +577,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 远程.work
+## 远程 work
 
-### 远程.work 招聘信息
+### 远程 work 招聘信息
 
 <Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
 
-| 所有职位 |    技术     |  设计  |   运营    |  产品   | 其他  |   市场    | 销售  |
+| 所有职位 |     技术    |  设计  |    运营   |   产品  |  其他 |    市场   |  销售 |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
-|   all    | development | design | operation | product | other | marketing | sales |
+|    all   | development | design | operation | product | other | marketing | sales |
 
 </Route>
 
@@ -550,9 +597,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 类型
 
-| 全部文章 | 永久免费 | 限时折扣 | 限时免费 | PC  | Mac | Android | UWP |
-| -------- | -------- | -------- | -------- | --- | --- | ------- | --- |
-| all      | 311      | 309      | 310      | 8   | 50  | 17      | 312 |
+| 全部文章 | 永久免费 | 限时折扣 | 限时免费 | PC | Mac | Android | UWP |
+| -------- | -------- | -------- | -------- | -- | --- | ------- | --- |
+| all      | 311      | 309      | 310      | 8  | 50  | 17      | 312 |
 
 </Route>
 
