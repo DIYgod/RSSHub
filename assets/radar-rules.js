@@ -1879,4 +1879,57 @@
             },
         ],
     },
+    'umass.edu': {
+        _name: 'UMASS Amherst',
+        ece: [
+            {
+                title: 'ECE News',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/news',
+                target: '/umass/amherst/ecenews',
+            },
+        ],
+        'www.cics': [
+            {
+                title: 'CICS News',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/news',
+                target: '/umass/amherst/csnews',
+            },
+        ],
+    },
+    'lofter.com': {
+        _name: 'Lofter',
+        www: [
+            {
+                title: '话题 (标签)',
+                docs: 'https://docs.rsshub.app/social-media.html#lofter',
+                source: ['/tag/:name', '/tag/:name/:type'],
+                target: (params) => `/lofter/tag/${params.name}/${params.type || ''}`,
+            },
+        ],
+    },
+    'bjeea.com': {
+        _name: '北京考试院',
+        www: [
+            {
+                title: '首页 / 通知公告',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/bjeeagg'],
+                target: '/gov/beijing/bjeea/bjeeagg',
+            },
+            {
+                title: '首页 / 招考政策',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/zkzc'],
+                target: '/gov/beijing/bjeea/zkzc',
+            },
+            {
+                title: '首页 / 自考快递',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/zkkd'],
+                target: '/gov/beijing/bjeea/zkkd',
+            },
+        ],
+    },
 });
