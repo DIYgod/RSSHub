@@ -174,6 +174,27 @@ Category 列表:
 
 </Route>
 
+## 端传媒
+
+### 端传媒
+
+<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度'，'语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
+
+::: warning 注意
+
+付费内容全文需要登陆获取，详情见部署页面的配置模块。
+
+:::
+
+Type 栏目:
+
+| 深度    | What’s New | 广场              | Pick-Up |
+| ------- | ---------- | ----------------- | ------- |
+| feature | news-brief | notes-and-letters | pick_up |
+
+通过提取文章全文，以提供比官方源更佳的阅读体验.
+
+</Route>
 ## 多维新闻网
 
 ### 要闻
