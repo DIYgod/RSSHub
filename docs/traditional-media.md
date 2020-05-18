@@ -582,4 +582,6 @@ category 对应的关键词有
 
 ## 新闻联播文字版
 
+### 每日全文
+
 <Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
