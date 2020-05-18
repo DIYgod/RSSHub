@@ -1915,12 +1915,19 @@
         www: [
             {
                 title: '知识库',
-                docs: 'https://docs.rsshub.app/study.html#ying-zhong-xie-hui',
+                docs: 'https://docs.rsshub.app/study.html#yu-que',
                 source: ['/:space/:book'],
                 target: (params, url, document) => {
-                    const dataStr = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/)[1];
-                    const appData = JSON.parse(decodeURIComponent(dataStr));
-                    return `/yuque/doc/${appData.book.id}`;
+                    const match = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/);
+                    if (match && match[1]) {
+                        const dataStr = match[1];
+                        try {
+                            const appData = JSON.parse(decodeURIComponent(dataStr));
+                            return `/yuque/doc/${appData.book.id}`;
+                        } catch (e) {
+                            // pass
+                        }
+                    }
                 },
             },
         ],
