@@ -1113,7 +1113,7 @@ QueryString:
 
 ### 首页更新
 
-<Route author="xfangbao" example="/kuai" path="/kuai/index" />
+<Route author="xfangbao" example="/kuai" path="/kuai" />
 
 
 ### 具体栏目更新
@@ -1128,8 +1128,8 @@ QueryString:
 | kuai.media |  /kuai |
 | www.kuai.media/portal.php?mod=list&catid=38 |  /kuai/38  |
 
-### 199IT
+## 199IT
 
-## 首页更新
+### 首页更新
 
 <Route author="xfangbao" example="/199it" path="/199it" />
