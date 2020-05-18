@@ -114,9 +114,9 @@ pageClass: routes
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
-| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL  |
-| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | --- |
-| home | comic | soft | maniax     | books      | pro        | girls | bl  |
+| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL |
+| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | -- |
+| home | comic | soft | maniax     | books      | pro        | girls | bl |
 
 </Route>
 
