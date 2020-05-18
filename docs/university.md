@@ -150,6 +150,15 @@ pageClass: routes
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
 
+### BTBYR 趣味盒
+
+<Route author="prnake" example="/bupt/funbox" path="/bupt/funbox" />
+::: warning 注意
+
+由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。
+
+:::
+
 ## 常州大学
 
 ### 教务处
