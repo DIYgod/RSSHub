@@ -225,6 +225,18 @@ pageClass: routes
 
 </Route>
 
+### 研究生院
+
+#### 招生工作
+
+<Route author="nczitzk" example="/dlmu/grs/zsgz/ssyjs" path="/dlmu/grs/zsgz/:type" :paramsDesc="['招生类别']">
+
+| 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
+| :--------: | :--------: | :------------------: | :------------: |
+|   bsyjs    |   ssyjs    |      tdxlgdssxw      |    gatdqzs     |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
