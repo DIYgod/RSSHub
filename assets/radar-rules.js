@@ -1918,10 +1918,11 @@
                 docs: 'https://docs.rsshub.app/study.html#ying-zhong-xie-hui',
                 source: ['/:space/:book'],
                 target: (params, url, document) => {
-                    const appData = JSON.parse(decodeURIComponent(document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/)[1]));
+                    const dataStr = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/)[1];
+                    const appData = JSON.parse(decodeURIComponent(dataStr));
                     return `/yuque/doc/${appData.book.id}`;
                 },
-            }
-        ]
+            },
+        ],
     },
 });
