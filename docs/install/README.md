@@ -491,6 +491,12 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。
 
+-   端传媒设置，用于获取付费内容全文：
+
+    -   `INITIUM_USERNAME`: 端传媒用户名
+
+    -   `INITIUM_PASSWORD`: 端传媒密码
+
 -   BTBYR
 
     -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
