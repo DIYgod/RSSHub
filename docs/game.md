@@ -48,6 +48,12 @@ pageClass: routes
 
 <Route author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## Fate Grand Order
+
+### News
+
+<Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻

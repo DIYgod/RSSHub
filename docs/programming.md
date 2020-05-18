@@ -24,6 +24,12 @@ pageClass: routes
 
 <Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词']" />
 
+## deeplearning.ai
+
+### TheBatch 周报
+
+<Route author="nczitzk" example="/deeplearning/thebatch" path="/deeplearning/thebatch"/>
+
 ## Dockone
 
 ### 周报
