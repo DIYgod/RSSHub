@@ -128,6 +128,16 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
 
+### 北京市人民政府
+
+#### 北京教育考试院
+
+<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']"/>
+
+| 通知公告 | 招考政策 | 自考快递 |
+| :------: | :------: | :------: |
+|  bjeeagg |   zkzc   |   zkkd   |
+
 ### 河北省退役军人事务厅
 
 <Route author="SunShinenny" example="/gov/veterans/hebei/sxxx" path="/gov/veterans/hebei/:type" :paramsDesc="['分类名']">
