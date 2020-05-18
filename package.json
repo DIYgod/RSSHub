@@ -102,7 +102,7 @@
     "parse-torrent": "7.1.3",
     "pidusage": "2.0.19",
     "plist": "3.0.1",
-    "puppeteer": "3.0.4",
+    "puppeteer": "3.1.0",
     "query-string": "6.12.1",
     "redis": "3.0.2",
     "require-all": "3.0.0",
