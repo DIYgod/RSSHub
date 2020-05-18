@@ -1909,4 +1909,20 @@
             },
         ],
     },
+
+    'yuque.com': {
+        _name: '语雀',
+        www: [
+            {
+                title: '知识库',
+                docs: 'https://docs.rsshub.app/study.html#ying-zhong-xie-hui',
+                source: ['/:space/:book'],
+                target: (params, url, document) => {
+                    console.log(document);
+                    const appData = JSON.parse(decodeURIComponent(document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/)[1]));
+                    return `/yuque/doc/${appData.book.id}`;
+                },
+            }
+        ]
+    },
 });
