@@ -383,6 +383,12 @@ pageClass: routes
 
 <Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1"/>
 
+## 飘花电影网
+
+### 今日热门
+
+<Route author="nczitzk" example="/piaohua/hot" path="/piaohua/hot" />
+
 ## 蜻蜓 FM
 
 ### 专辑
@@ -465,9 +471,9 @@ pageClass: routes
 
 <Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签tag，视频清晰度']" />
 
-| 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
-| ---- | ------ | ----- | ---- | --- | ------ |
-| 留空 | bluray | 1080p | 720p | 3d  | webdl  |
+| 全部 | 蓝光   | 1080P | 720P | 3D | WEB-DL |
+| ---- | ------ | ----- | ---- | -- | ------ |
+| 留空 | bluray | 1080p | 720p | 3d | webdl  |
 
 ## 中国广播
 

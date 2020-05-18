@@ -116,6 +116,16 @@ pageClass: routes
 
 <Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
 
+### 教务处通知公告
+
+<Route author="markmingjie" example="/bjfu/jwc/jwkx" path="/bjfu/jwc/:type" :paramsDesc="['通知类别']">
+
+| 教务快讯 | 考试信息 | 课程信息 | 教改动态 | 图片新闻 |
+| -------- | -------- | -------- | -------- | -------- |
+| jwkx     | ksxx     | kcxx     | jgdt     | tpxw     |
+
+</Route>
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
@@ -139,6 +149,15 @@ pageClass: routes
 ### 校园新闻
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
+
+### BTBYR 趣味盒
+
+<Route author="prnake" example="/bupt/funbox" path="/bupt/funbox" />
+::: warning 注意
+
+由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。
+
+:::
 
 ## 常州大学
 
@@ -212,6 +231,18 @@ pageClass: routes
 | 海大要闻 | 媒体海大 | 综合新闻 | 院系风采 | 海大校报 | 理论园地 | 海大讲坛 | 艺文荟萃 |
 | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
 |   hdyw   |   mthd   |   zhxw   |   yxfc   |   hdxb   |   llyd   |   hdjt   |   ywhc   |
+
+</Route>
+
+### 研究生院
+
+#### 招生工作
+
+<Route author="nczitzk" example="/dlmu/grs/zsgz/ssyjs" path="/dlmu/grs/zsgz/:type" :paramsDesc="['招生类别']">
+
+| 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
+| :--------: | :--------: | :------------------: | :------------: |
+|   bsyjs    |   ssyjs    |      tdxlgdssxw      |    gatdqzs     |
 
 </Route>
 
@@ -739,6 +770,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | all  | tntz     | qnkx     |
 
 </Route>
+
+## 马萨诸塞大学 阿默斯特分校 (UMASS Amherst)
+
+### 电子与计算机工程系新闻
+
+<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1"/>
+
+### 信息与计算机科学系新闻
+
+<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
 
 ## 南昌航空大学
 
@@ -1349,7 +1390,7 @@ type 列表：
 
 | 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
 | :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-| all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+|  all |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
 
 </Route>
 
@@ -1357,7 +1398,11 @@ type 列表：
 
 ### 教务处
 
-<Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" :paramsDesc="['栏目路径, 支持多级, 不包括末尾的`.htm`']">
+<Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" :paramsDesc="['栏目路径, 支持多级, 不包括末尾的`.htm`']" />
+
+### 研究生院通知公告
+
+<Route author="nczitzk" example="/xjtu/gs/tzgg" path="/xjtu/gs/tzgg"/>
 
 ::: tip 提示
 
@@ -1471,9 +1516,9 @@ type 列表：
 
 <Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1">
 
-| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |     |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | --- |
-| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9   |
+| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |   |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | - |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9 |
 
 </Route>
 
