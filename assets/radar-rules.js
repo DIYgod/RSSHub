@@ -1914,7 +1914,7 @@
         www: [
             {
                 title: '用户的广播',
-                docs: 'https://docs.rsshub.app/social-media.html#yong-hu-guang-bo',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
                 source: '/people/:user/',
                 target: (params, url, document) => {
                     const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
