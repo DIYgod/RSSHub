@@ -24,20 +24,6 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
-## 安徽工业大学
-
-### 教务处
-
-<Route author="Diffumist" example="/ahut/jwc" path="/ahut/jwc" />
-
-### 学校要闻
-
-<Route author="Diffumist" example="/ahut/news" path="/ahut/news" />
-
-### 计算机学院公告
-
-<Route author="Diffumist" example="/ahut/cstzgg" path="/ahut/cstzgg" />
-
 ## 安徽农业大学
 
 ### 计算机学院
@@ -288,7 +274,7 @@ pageClass: routes
 
 | 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
 | :--------: | :--------: | :------------------: | :------------: |
-|   bsyjs    |   ssyjs    |      tdxlgdssxw      |    gatdqzs     |
+|    bsyjs   |    ssyjs   |      tdxlgdssxw      |     gatdqzs    |
 
 </Route>
 
@@ -1239,12 +1225,6 @@ type 列表：
 
 <Route author="HenryQW" example="/shanghaitech/sist/activity" path="/shanghaitech/sist/activity"/>
 
-## 上海理工大学
-
-### 教务处
-
-<Route author="Diffumist" example="/usst/jwc" path="/usst/jwc">
-
 ## 上海立信会计金融学院
 
 ::: warning 注意
@@ -1440,9 +1420,9 @@ type 列表：
 全文内容需使用校园网或 VPN 获取
 :::
 
-| 全部  | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
-| :---: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-|  all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+| 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
+| :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|  all |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
 
 </Route>
 
@@ -1568,9 +1548,9 @@ type 列表：
 
 <Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1">
 
-| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |     |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | --- |
-| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9   |
+| 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国内合作科研 | 国际合作科研 |   |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | - |
+| 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7            | 8            | 9 |
 
 </Route>
 
