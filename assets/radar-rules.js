@@ -1946,7 +1946,7 @@
         ebook: [
             {
                 title: '《香港01》周报',
-                docs: 'https://docs.rsshub.app/traditional-media.html#%E3%80%8A-xiang-gang-01%E3%80%8B-zhou-bao',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
                 source: ['/', '/subscribe'],
                 target: '/hk01/ebook',
             },
