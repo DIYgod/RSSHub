@@ -9303,10 +9303,10 @@ picomatch@^2.0.5:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.1.tgz#21bac888b6ed8601f831ce7816e335bc779f0a4a"
   integrity sha512-ISBaA8xQNmwELC7eOjqFKMESB2VIqt4PPDD0nsS95b/9dZXvVKOlz9keMSnoGGKcOHXfTvDD6WMaRoSc9UuhRA==
 
-pidusage@2.0.19:
-  version "2.0.19"
-  resolved "https://registry.yarnpkg.com/pidusage/-/pidusage-2.0.19.tgz#5fec4574b886c9b0325f6fbd244edcd03d78f048"
-  integrity sha512-JyPR5G3crevDDaIw+CCnMEDQYuKEod/1BCgtNpyVJknJiXVqf+c9Oy3W+PKoPw8e7KA5AmwHecoviWstXHwI6w==
+pidusage@2.0.20:
+  version "2.0.20"
+  resolved "https://registry.yarnpkg.com/pidusage/-/pidusage-2.0.20.tgz#206ad92f086c892c014dcfb9159909eaec072e18"
+  integrity sha512-ObZwSCGhHAu+fDpHeIP7ZTy5YbQNOguJCKQE02kSnlEvBgj62cParJ4nzYQxpXauKUzT3e0CeSb1Y9Cgbry2qQ==
   dependencies:
     safe-buffer "^5.1.2"
 
