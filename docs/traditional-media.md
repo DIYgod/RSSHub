@@ -178,7 +178,7 @@ Category 列表:
 
 ### 端传媒
 
-<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度'，'语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
+<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
 ::: warning 注意
 
