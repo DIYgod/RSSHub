@@ -31,6 +31,26 @@ pageClass: routes
 
 <RouteEn author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['Year-month of visa check，for example 2019-03']" />
 
+## Corona Virus Disease 2019
+
+### South China Morning Post - Coronavirus outbreak
+
+<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
+
+Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
+
+<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
+
+| Chinese | English | Portuguese |
+| ------- | ------- | ---------- |
+| ch      | en      | pt         |
+
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
+
+<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
+
 ## DHL
 
 ### DHL express
@@ -71,7 +91,13 @@ pageClass: routes
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP" path="/japanpost/:reqCode" :paramsDesc="['Package Number']"/>
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1">
+
+| Japanese | English |
+| -------- | ------- |
+| ja       | en      |
+
+</RouteEn>
 
 ## Parcel Tracking
 
@@ -151,23 +177,3 @@ Type
 | all | rec       |
 
 </RouteEn>
-
-## Wuhan coronavirus
-
-### South China Morning Post - China coronavirus outbreak
-
-<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
-
-### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
-
-Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
-
-<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
-
-| Chinese | English | Portuguese |
-| ------- | ------- | ---------- |
-| ch      | en      | pt         |
-
-### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
-
-<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
