@@ -178,7 +178,7 @@ Category 列表:
 
 ### 端传媒
 
-<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度'，'语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
+<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
 ::: warning 注意
 
@@ -386,6 +386,18 @@ category 对应的关键词有
 <Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1">
 
 日文版首页
+
+</Route>
+
+## 网易新闻专栏
+
+### 栏目
+
+<Route author="Solist-X" example="/netease/news/special/1" path="/netease/news/special/:type?" :paramsDesc="['栏目']">
+
+| 轻松一刻 | 槽值 | 人间 | 大国小民 | 三三有梗 | 数读 | 看客 | 下划线 | 谈心社 | 哒哒 | 胖编怪聊 | 曲一刀 | 今日之声 | 浪潮 | 沸点 |
+| -------- | ---- | ---- | -------- | -------- | ---- | ---- | ------ | ------ | ---- | -------- | ------ | -------- | ---- | ---- |
+| 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |
 
 </Route>
 
