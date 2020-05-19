@@ -476,6 +476,11 @@ category 对应的关键词有
 
 <Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
 
+
+### 新闻联播文字版全文
+
+<Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
+
 ## 朝日新聞中文網（繁體中文版）
 
 ### 新聞分類
@@ -580,8 +585,3 @@ category 对应的关键词有
 
 </Route>
 
-## 新闻联播文字版
-
-### 每日全文
-
-<Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
