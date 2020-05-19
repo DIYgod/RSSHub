@@ -64,6 +64,12 @@ pageClass: routes
 
 </Route>
 
+## Aljazeera 半岛网
+
+### 新闻
+
+<Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
+
 ## BOF
 
 ### 首页
