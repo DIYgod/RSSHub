@@ -555,7 +555,7 @@ category 列表：
 
 ### 今日工大 - 通知公告
 
-<Route author="raptazure" example="/hitwh/today" path="hitwh/today">
+<Route author="raptazure" example="/hitwh/today" path="hitwh/today" />
 
 ## 河南大学
 
