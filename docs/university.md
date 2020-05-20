@@ -1244,7 +1244,7 @@ type 列表：
 
 ### 教务处
 
-<Route author="Diffumist" example="/usst/jwc" path="/usst/jwc">
+<Route author="Diffumist" example="/usst/jwc" path="/usst/jwc"/>
 
 ## 上海立信会计金融学院
 
