@@ -132,9 +132,9 @@ pageClass: routes
 
 ## Microsoft Edge
 
-### 扩展更新
+### 外接程序更新
 
-<Route author="hoilc" example="/edge/addon/iikmkjmpaadaobahmlepeloendndfphd" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
+<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
 
 ## Minecraft
 

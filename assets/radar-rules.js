@@ -1909,6 +1909,52 @@
             },
         ],
     },
+
+    'yuque.com': {
+        _name: '语雀',
+        www: [
+            {
+                title: '知识库',
+                docs: 'https://docs.rsshub.app/study.html#yu-que',
+                source: ['/:space/:book'],
+                target: (params, url, document) => {
+                    const match = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/);
+                    if (match && match[1]) {
+                        const dataStr = match[1];
+                        try {
+                            const appData = JSON.parse(decodeURIComponent(dataStr));
+                            return `/yuque/doc/${appData.book.id}`;
+                        } catch (e) {
+                            // pass
+                        }
+                    }
+                },
+            },
+        ],
+    },
+    'bjeea.com': {
+        _name: '北京考试院',
+        www: [
+            {
+                title: '首页 / 通知公告',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/bjeeagg'],
+                target: '/gov/beijing/bjeea/bjeeagg',
+            },
+            {
+                title: '首页 / 招考政策',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/zkzc'],
+                target: '/gov/beijing/bjeea/zkzc',
+            },
+            {
+                title: '首页 / 自考快递',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/zkkd'],
+                target: '/gov/beijing/bjeea/zkkd',
+            },
+        ],
+    },
     'hk01.com': {
         _name: '香港01',
         www: [
