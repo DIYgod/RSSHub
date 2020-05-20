@@ -8377,10 +8377,10 @@ mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mockdate@2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-2.0.5.tgz#70c6abf9ed4b2dae65c81dfc170dd1a5cec53620"
-  integrity sha512-ST0PnThzWKcgSLyc+ugLVql45PvESt3Ul/wrdV/OPc/6Pr8dbLAIJsN1cIp41FLzbN+srVTNIRn+5Cju0nyV6A==
+mockdate@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.0.tgz#2901b0deaab4b73072ec799de412d36c903543ec"
+  integrity sha512-asiMT839yFv38PHV9Rm4cBLnrRXlRmcddvuzdKvXygxN2Cw+d96cmMPNJ4JXIHkV/EghuJ9fNG/qzotmLsWDOg==
 
 module-alias@2.2.2:
   version "2.2.2"
