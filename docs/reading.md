@@ -189,6 +189,19 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
+## 生物帮
+
+### 所有栏目
+
+<Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" />
+
+具体栏目编号，去网站上看标签 
+
+| 网址                                             | 对应路由                            |
+| ------------------------------------------------ | ----------------------------------- |
+| <http://science.bio1000.com/ecology-environment> | /biobio/science/ecology-environment |
+| <http://www.bio1000.com/gnjz>                    | /biobio/gnjz                        |
+
 ## 书趣阁
 
 ### 小说更新
@@ -240,16 +253,3 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页
 
 <Route author="kt286" example="/zreading" path="/zreading" />
-
-## 生物帮
-
-### 所有栏目
-
-<Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" />
-
-具体栏目编号,去网站上看标签 
-
-| 网址 | 对应路由 |
-| -------- | -------- |
-| http://science.bio1000.com/ecology-environment |  /biobio/science/ecology-environment |
-| http://www.bio1000.com/gnjz | /biobio/gnjz |
