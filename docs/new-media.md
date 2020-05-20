@@ -64,6 +64,12 @@ pageClass: routes
 
 </Route>
 
+## Aljazeera 半岛网
+
+### 新闻
+
+<Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
+
 ## BOF
 
 ### 首页
@@ -104,11 +110,17 @@ pageClass: routes
 
 <Route author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['語言']">
 
-| 繁體中文 | 簡體中文 | US  | 日文     |
-| -------- | -------- | --- | -------- |
-| chinese  | cn       | us  | japanese |
+| 繁體中文 | 簡體中文 | US | 日文     |
+| -------- | -------- | -- | -------- |
+| chinese  | cn       | us | japanese |
 
 </Route>
+
+## Grub Street
+
+### Posts
+
+<Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
 ## iDownloadBlog
 
@@ -281,9 +293,9 @@ pageClass: routes
 
 Supported sub-sites:
 
-| TV  | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
-| --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
-| tv  | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
+| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+| -- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
+| tv | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
 
 </Route>
 

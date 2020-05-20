@@ -583,9 +583,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
 
-| 所有职位 |    技术     |  设计  |   运营    |  产品   | 其他  |   市场    | 销售  |
+| 所有职位 |     技术    |  设计  |    运营   |   产品  |  其他 |    市场   |  销售 |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
-|   all    | development | design | operation | product | other | marketing | sales |
+|    all   | development | design | operation | product | other | marketing | sales |
 
 </Route>
 
@@ -597,9 +597,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 类型
 
-| 全部文章 | 永久免费 | 限时折扣 | 限时免费 | PC  | Mac | Android | UWP |
-| -------- | -------- | -------- | -------- | --- | --- | ------- | --- |
-| all      | 311      | 309      | 310      | 8   | 50  | 17      | 312 |
+| 全部文章 | 永久免费 | 限时折扣 | 限时免费 | PC | Mac | Android | UWP |
+| -------- | -------- | -------- | -------- | -- | --- | ------- | --- |
+| all      | 311      | 309      | 310      | 8  | 50  | 17      | 312 |
 
 </Route>
 

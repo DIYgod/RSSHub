@@ -24,6 +24,12 @@ pageClass: routes
 
 <Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词']" />
 
+## deeplearning.ai
+
+### TheBatch 周报
+
+<Route author="nczitzk" example="/deeplearning/thebatch" path="/deeplearning/thebatch"/>
+
 ## Dockone
 
 ### 周报
@@ -492,11 +498,15 @@ GitHub 官方也提供了一些 RSS:
 
 订阅[全部板块资讯][osc_all]可以使用 <https://rsshub.app/oschina/news>
 
-[osc_all]: https://www.oschina.net/news '开源中国 - 全部资讯'
-[osc_gen]: https://www.oschina.net/news/industry '开源中国 - 综合资讯'
-[osc_proj]: https://www.oschina.net/news/project '开源中国 - 软件更新资讯'
-[osc_ind]: https://www.oschina.net/news/industry-news '开源中国 - 行业资讯'
-[osc_pl]: https://www.oschina.net/news/programming '开源中国 - 编程语言资讯'
+[osc_all]: https://www.oschina.net/news "开源中国 - 全部资讯"
+
+[osc_gen]: https://www.oschina.net/news/industry "开源中国 - 综合资讯"
+
+[osc_proj]: https://www.oschina.net/news/project "开源中国 - 软件更新资讯"
+
+[osc_ind]: https://www.oschina.net/news/industry-news "开源中国 - 行业资讯"
+
+[osc_pl]: https://www.oschina.net/news/programming "开源中国 - 编程语言资讯"
 
 </Route>
 
