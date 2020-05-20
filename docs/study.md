@@ -287,3 +287,14 @@ pageClass: routes
 ### 通知公告
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
+
+
+## 唧唧堂
+
+### 论文
+
+<Route author="xfangbao" example="/jijitang/publication" path="/jijitang/publication/" />
+
+### 文档
+
+<Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" :paramsDesc="['类别，latest 或者 recommand']"/>
