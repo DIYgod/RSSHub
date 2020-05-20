@@ -178,7 +178,7 @@ Category 列表:
 
 ### 端传媒
 
-<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度'，'语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
+<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
 ::: warning 注意
 
@@ -508,6 +508,10 @@ category 对应的关键词有
 ### 新闻联播文字版
 
 <Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
+
+### 新闻联播文字版全文
+
+<Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
 
 ## 朝日新聞中文網（繁體中文版）
 

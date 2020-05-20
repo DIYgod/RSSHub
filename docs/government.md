@@ -16,6 +16,18 @@ pageClass: routes
 
 </Route>
 
+## 广东省人民政府
+
+### 广东省教育厅
+
+<Route author="nczitzk" example="/gov/guangdong/edu/tzgg" path="/gov/guangdong/edu/:caty" :paramsDesc="['资讯类别']">
+
+| 通知公告 | 本厅信息 | 新闻发布 | 媒体聚焦 | 广东教育 | 教育动态 | 图片新闻 | 政声传递 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   tzgg   |   btxx   |   xwfb   |   mtjj   |   gdjy   |   jydt   |   tpxw   |   zscd   |
+
+</Route>
+
 ## 国家新闻出版广电总局
 
 ### 游戏审批结果
