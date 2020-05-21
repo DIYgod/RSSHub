@@ -551,6 +551,12 @@ category 列表：
 部分文章需要经过统一身份认证后才能阅读全文。
 :::
 
+## 哈尔滨工业大学（威海）
+
+### 今日工大 - 通知公告
+
+<Route author="raptazure" example="/hitwh/today" path="hitwh/today" />
+
 ## 河南大学
 
 ### 河南大学
