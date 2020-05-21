@@ -79,3 +79,13 @@ pageClass: routes
 | announcement | news | research |
 
 </Route>
+
+## 中国人民银行
+
+### 沟通交流
+
+<Route author="nczitzk" example="/pbc/goutongjiaoliu" path="/pbc/goutongjiaoliu"/>
+
+### 货币政策司公开市场交易公告
+
+<Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
