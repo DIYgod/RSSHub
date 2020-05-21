@@ -147,7 +147,7 @@ $ npm start
 $ yarn start
 ```
 
-或使用 [PM2](https://pm2.io/doc/zh/runtime/quick-start/)
+或使用 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/)
 
 ```bash
 $ pm2 start lib/index.js --name rsshub
