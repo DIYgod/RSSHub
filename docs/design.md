@@ -67,6 +67,12 @@ pageClass: routes
 
 </Route>
 
+## Monotype
+
+### Featured Article
+
+<Route author="nczitzk" example="/monotype/article" path="/monotype/article" />
+
 ## Sun Creature
 
 ### Works

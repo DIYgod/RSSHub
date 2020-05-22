@@ -38,7 +38,6 @@ pageClass: routes
 
 <Route author="Diffumist" example="/ahut/cstzgg" path="/ahut/cstzgg" />
 
-
 ## 安徽农业大学
 
 ### 计算机学院
