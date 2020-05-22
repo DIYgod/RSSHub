@@ -38,7 +38,6 @@ pageClass: routes
 
 <Route author="Diffumist" example="/ahut/cstzgg" path="/ahut/cstzgg" />
 
-
 ## 安徽农业大学
 
 ### 计算机学院
@@ -1781,6 +1780,16 @@ type 列表：
 | 工作动态 | 院系风采 | 通知公告（可能需内网） | 文件转载 |
 | -------- | -------- | ---------------------- | -------- |
 | gzdt     | yxfc     | tzgg                   | wjzz     |
+
+</Route>
+
+### 数学与统计学院
+
+<Route author="Hagb" example="/cqu/sci/1053" path="/cqu/sci/:category" :paramsDesc="['分类名']">
+
+| 学院新闻 | 学院公告 | 学院活动 | 学术活动 |
+| -------- | -------- | -------- | -------- |
+| 1053     | 1054     | 1055     | 1056     |
 
 </Route>
 
