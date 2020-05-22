@@ -46,7 +46,7 @@ Sorting types, default to `date`:
 
 ### Java Game Update
 
-<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+<RouteEn author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
 
 ### CurseForge Mod Update
 

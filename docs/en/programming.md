@@ -8,7 +8,7 @@ pageClass: routes
 
 ### Search Result
 
-<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
+<RouteEn author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
 
 ## GitHub
 
@@ -130,8 +130,8 @@ Website: https://news.ycombinator.com/
 
 ### Hex-Rays News
 
-<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
-</Route>
+<RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</RouteEn>
 
 ## Kaggle
 
@@ -199,7 +199,7 @@ Website: https://news.ycombinator.com/
 
 ### issues
 
-<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+<RouteEn author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
 ## Scala
 

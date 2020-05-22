@@ -248,6 +248,12 @@ pageClass: routes
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
+## 风之动漫
+
+### 风之动漫
+
+<Route author="geeeeoff" path="/fzdm/manhua/:id" example="/fzdm/manhua/39" :paramsDesc="['漫画ID']"/>
+
 ## 海猫吧
 
 ### 漫画更新
@@ -265,6 +271,12 @@ pageClass: routes
 ### 漫画 DB
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
+
+## 漫画堆
+
+### 漫画
+
+<Route author="geeeeoff" path="/manhuadui/manhua/:name/:serial?" example="/manhuadui/manhua/yiquanchaoren/1" :paramsDesc="['漫画名称', '内容序号，部分漫画存在最新章节、原作、番外，根据页面顺序从1开始排序']"/>
 
 ## 三界异次元
 

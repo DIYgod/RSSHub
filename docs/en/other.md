@@ -79,7 +79,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### HackerOne Hacker Activity
 
-<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+<RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
 
 ## Instapaper
 
