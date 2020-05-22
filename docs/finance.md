@@ -4,6 +4,12 @@ pageClass: routes
 
 # 金融
 
+## CFD
+
+### 每周股指派息调整 (GBP)
+
+<Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
+
 ## finviz
 
 ### 美股股票新闻
