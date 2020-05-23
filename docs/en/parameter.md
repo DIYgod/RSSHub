@@ -56,7 +56,7 @@ Eg: bilibili article <https://rsshub.app/bilibili/user/article/334958638?mode=fu
 
 ## Access Control
 
-Set `key` or `code` to grant access to requests. See [Access Control Configuration](install/#access-key-code).
+Set `key` or `code` to grant access to requests. See [Access Control Configuration](install/#configuration-access-control-configuration-access-key-code).
 
 ## Telegram Instant View
 

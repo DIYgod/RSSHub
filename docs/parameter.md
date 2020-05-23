@@ -57,7 +57,7 @@ filterout 去掉不要的内容
 
 ## 访问控制
 
-可以使用 `code` 或 `key` 进行访问控制。参考[访问控制配置](install/#fang-wen-mi-yue-ma)。
+可以使用 `code` 或 `key` 进行访问控制。参考[访问控制配置](install/#pei-zhi-fang-wen-kong-zhi-pei-zhi-fang-wen-mi-yue-ma)。
 
 ## 输出 Telegram 即时预览链接
 
