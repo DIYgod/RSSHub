@@ -6020,15 +6020,14 @@ hogan.js@^3.0.2:
     mkdirp "0.3.0"
     nopt "1.0.10"
 
-hooman@1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.3.tgz#d3200848139ec61ed0188d3efb90fe9fbc07606d"
-  integrity sha512-gEOHQChypGUa+QMydYIXF1bx2dcVsz6N7dRCK+Rmb+NGgLw+LqF41MBr8oB4mg3ECW3pPXmh6vQLHDSxRBFhDA==
+hooman@1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.4.tgz#92a1bfc5de59d10bd919623b8be5058f815200eb"
+  integrity sha512-AH40TAuHlImznA9R3/lN55BsGLMSyyOgwIZVwR2v8eL4nDJJj6Z+mufvmOzfOcoUsMCZY4mBE4GIOq9Q/XDMxg==
   dependencies:
     jsdom "^16.2.2"
     tough-cookie "^4.0.0"
     user-agents "^1.0.559"
-    vm2 "^3.9.2"
 
 hosted-git-info@^2.1.4:
   version "2.8.8"
@@ -12434,11 +12433,6 @@ vm-browserify@0.0.4:
   integrity sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=
   dependencies:
     indexof "0.0.1"
-
-vm2@^3.9.2:
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/vm2/-/vm2-3.9.2.tgz#a4085d2d88a808a1b3c06d5478c2db3222a9cc30"
-  integrity sha512-nzyFmHdy2FMg7mYraRytc2jr4QBaUY3TEGe3q3bK8EgS9WC98wxn2jrPxS/ruWm+JGzrEIIeufKweQzVoQEd+Q==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.3"
