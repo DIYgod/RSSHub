@@ -102,6 +102,14 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 <Route author="sinchang" example="/mafengwo/note/hot" path="/mafengwo/note/:type" :paramsDesc="['目前支持两种, `hot` 代表热门游记, `latest` 代表最新游记']"/>
 
+### 自由行
+
+<Route author="nczitzk" example="/mafengwo/ziyouxing/10186" path="/mafengwo/ziyouxing/:code" :paramsDesc="['目的地代码，可在该目的地页面的 URL 中找到']">
+
+目的地代码请参见 [这里](http://www.mafengwo.cn/mdd/)
+
+</Route>
+
 ## 中国美术馆
 
 ### 美术馆新闻
