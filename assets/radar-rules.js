@@ -53,7 +53,7 @@
                 source: ['/u/:id', '/:id'],
                 target: (params, url, document) => {
                     const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
-                    return uid ? `/weibo/user/${uid}` : '';
+                    return uid ? `/weibo/user/${uid}/1` : '';
                 },
             },
             {
