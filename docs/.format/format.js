@@ -99,6 +99,7 @@ const buildStagedList = async () => {
     // console.log(fileList);
     // return
 
+    const stagedFiles = await sgf();
     for (const processor of processors) {
         // We don't want to mix up processor
         /* eslint-disable no-await-in-loop */
@@ -107,7 +108,9 @@ const buildStagedList = async () => {
                 let formatted = await file.readFile(e.path);
                 formatted = await processor.handler(formatted);
                 await file.writeFile(e.path, formatted);
-                await exec(`git add ${e.path}`);
+                if (stagedFiles.find((x) => e.path.indexOf(x.filename) !== -1)) {
+                    await exec(`git add ${e.path}`);
+                }
             })
         ).catch((err) => {
             // eslint-disable-next-line no-console
