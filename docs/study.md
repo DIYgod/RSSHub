@@ -108,6 +108,16 @@ pageClass: routes
 
 <Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
 
+## 唧唧堂
+
+### 论文
+
+<Route author="xfangbao" example="/jijitang/publication" path="/jijitang/publication/" />
+
+### 文档
+
+<Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" :paramsDesc="['类别，latest 或者 recommand']"/>
+
 ## 领研
 
 ### 论文

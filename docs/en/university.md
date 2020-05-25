@@ -28,8 +28,8 @@ pageClass: routes
 
 ### College of Electrical and Computer Engineering News
 
-<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1"/>
+<RouteEn author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1"/>
 
 ### College of Information & Computer Sciences News
 
-<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
+<RouteEn author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
