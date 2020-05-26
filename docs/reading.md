@@ -253,3 +253,15 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 | -------- | -------- |
 | http://science.bio1000.com/ecology-environment |  /biobio/science/ecology-environment |
 | http://www.bio1000.com/gnjz | /biobio/gnjz |
+
+## 生物谷
+
+### 所有栏目
+
+<Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" />
+
+具体栏目编号,去网站上看标签 
+
+| 网址 | 对应路由 |
+| -------- | -------- |
+| http://news.bioon.com/biology |  /shengwugu/biology |
