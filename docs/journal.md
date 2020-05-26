@@ -150,6 +150,15 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## Stork 文献鸟订阅
+
+### 关键词
+
+<Route author="xraywu" example="/stork/keyword/409159/R4j3Hbn5ia" path="/stork/keyword/:trackID/:displayKey" :paramsDesc="['关键词订阅 URL 上的 trackID 参数','关键词订阅 URL 上的  displayKey 参数']">
+
+在 Stork 上注册并订阅关键词后，在 `我的` -> `关键词` 中可找到对应关键词的订阅 URL。URL 后的两个参数即为路由参数。
+
+</Route>
 ## X-MOL 平台
 
 ### 期刊

@@ -193,7 +193,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 所有栏目
 
-<Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" />
+<Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" :paramsDesc="['', '']" />
 
 具体栏目编号，去网站上看标签 
 
