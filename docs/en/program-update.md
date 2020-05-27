@@ -157,7 +157,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New sponsors
 
-<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
 
 ## sketch.com
 
@@ -191,4 +191,4 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Module Update
 
-<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>
+<RouteEn author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>

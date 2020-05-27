@@ -68,6 +68,16 @@ pageClass: routes
 
 <Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
 
+## cpython
+
+### 正式版本发布
+
+<Route author="trim21" example="/cpython" path="/cpython" />
+
+### 所有版本发布
+
+<Route author="trim21" example="/cpython/pre" path="/cpython/pre" />
+
 ## CurseForge
 
 ### 文件更新

@@ -50,7 +50,7 @@ pageClass: routes
 
 ### 首页
 
-<Route author="kt286" example="/latexstudio/home" path="/latexstudio/home"/>
+<Route author="kt286 nczitzk" example="/latexstudio/home" path="/latexstudio/home"/>
 
 ## LeeMeng
 
