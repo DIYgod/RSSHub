@@ -395,6 +395,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
 
+## 人人影视
+
+### 评测推荐
+
+<Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
+
 ## 色花堂中文论坛
 
 ### 分区帖子

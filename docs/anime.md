@@ -46,6 +46,7 @@ pageClass: routes
 <Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
 
 时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
+
 </Route>
 
 ### 搜尋
@@ -247,6 +248,12 @@ pageClass: routes
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
+## 风之动漫
+
+### 风之动漫
+
+<Route author="geeeeoff" path="/fzdm/manhua/:id" example="/fzdm/manhua/39" :paramsDesc="['漫画ID']"/>
+
 ## 海猫吧
 
 ### 漫画更新
@@ -264,6 +271,12 @@ pageClass: routes
 ### 漫画 DB
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
+
+## 漫画堆
+
+### 漫画
+
+<Route author="geeeeoff" path="/manhuadui/manhua/:name/:serial?" example="/manhuadui/manhua/yiquanchaoren/1" :paramsDesc="['漫画名称', '内容序号，部分漫画存在最新章节、原作、番外，根据页面顺序从1开始排序']"/>
 
 ## 三界异次元
 

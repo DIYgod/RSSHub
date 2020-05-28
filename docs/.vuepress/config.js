@@ -34,24 +34,31 @@ module.exports = {
         },
     },
     markdown: {
-        slugify: function (s) {
-            return _slugify(
-                pinyin(s, {
-                    style: pinyin.STYLE_NORMAL,
-                    heteronym: true,
-                    segment: true,
-                })
-                    .map((item) => item[0])
-                    .join('-')
-            );
-        },
         anchor: {
-            permalink: true,
-            permalinkBefore: true,
-            permalinkSymbol: '#',
+            level: 999, // Disable original Plugin
+        },
+        extendMarkdown: (md) => {
+            md.use(require('../.format/md/hierarchySlug'), {
+                slugify: function (s) {
+                    return _slugify(
+                        pinyin(s, {
+                            style: pinyin.STYLE_NORMAL,
+                            heteronym: true,
+                            segment: true,
+                        })
+                            .map((item) => item[0])
+                            .join('-')
+                    );
+                },
+                level: 2,
+                permalink: true,
+                permalinkBefore: true,
+                permalinkSymbol: '#',
+            });
         },
     },
     head: [
+        ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
         ['link', { rel: 'icon', href: '/logo.png' }],
         ['link', { rel: 'manifest', href: '/manifest.json' }],
         ['meta', { name: 'theme-color', content: '#fff' }],

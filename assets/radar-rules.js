@@ -1909,6 +1909,29 @@
             },
         ],
     },
+
+    'yuque.com': {
+        _name: '语雀',
+        www: [
+            {
+                title: '知识库',
+                docs: 'https://docs.rsshub.app/study.html#yu-que',
+                source: ['/:space/:book'],
+                target: (params, url, document) => {
+                    const match = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/);
+                    if (match && match[1]) {
+                        const dataStr = match[1];
+                        try {
+                            const appData = JSON.parse(decodeURIComponent(dataStr));
+                            return `/yuque/doc/${appData.book.id}`;
+                        } catch (e) {
+                            // pass
+                        }
+                    }
+                },
+            },
+        ],
+    },
     'bjeea.com': {
         _name: '北京考试院',
         www: [
@@ -1929,6 +1952,63 @@
                 docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
                 source: ['/html/zkkd'],
                 target: '/gov/beijing/bjeea/zkkd',
+            },
+        ],
+    },
+    'hk01.com': {
+        _name: '香港01',
+        www: [
+            {
+                title: '最 Hit',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: ['/hot', '/'],
+                target: '/hk01/hot',
+            },
+            {
+                title: 'zone',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/zone/:id/:title',
+                target: '/hk01/zone/:id',
+            },
+            {
+                title: 'channel',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/channel/:id/:title',
+                target: '/hk01/channel/:id',
+            },
+            {
+                title: 'issue',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/issue/:id/:title',
+                target: '/hk01/issue/:id',
+            },
+            {
+                title: 'tag',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/tag/:id/:title',
+                target: '/hk01/tag/:id',
+            },
+        ],
+        ebook: [
+            {
+                title: '《香港01》周报',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: ['/', '/subscribe'],
+                target: '/hk01/ebook',
+            },
+        ],
+    },
+    'douban.com': {
+        _name: '豆瓣',
+        www: [
+            {
+                title: '用户的广播',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/people/:user/',
+                target: (params, url, document) => {
+                    const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
+                    return uid ? `/douban/people/${uid}/status` : '';
+                },
             },
         ],
     },
