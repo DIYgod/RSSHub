@@ -105,6 +105,10 @@ pageClass: routes
 
 <Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
+### 用户日志
+
+<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
