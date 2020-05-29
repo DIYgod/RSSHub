@@ -48,6 +48,12 @@ pageClass: routes
 
 <Route author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## Fate Grand Order
+
+### News
+
+<Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
@@ -74,9 +80,9 @@ pageClass: routes
 
 支持的主机平台:
 
-| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
-| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
-| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+| PS 4 | Xbox One | Switch | PC | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | -- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc | wii-u | 3ds | vita    | ios |
 
 发行类型，默认为 `new`:
 
@@ -134,7 +140,7 @@ pageClass: routes
 
 </Route>
 
-### PlayStation Store 游戏折扣|价格
+### PlayStation Store 游戏折扣 | 价格
 
 <Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['地区语言','游戏的 grid 名']" radar="1">
 
@@ -156,11 +162,11 @@ pageClass: routes
 
 ## psnine
 
-### 首页-白金攻略/游戏开箱
+### 首页 - 白金攻略 / 游戏开箱
 
 <Route author="LightStrawberry" example="/psnine/index" path="/psnine/index"/>
 
-### 新闻-游戏资讯
+### 新闻 - 游戏资讯
 
 <Route author="LightStrawberry" example="/psnine/news" path="/psnine/news"/>
 ### 数折-折扣信息推送
@@ -214,9 +220,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="dearrrfish" example="/steamdb/free" path="/steamdb/free/:type?" :paramsDesc="['免费类型，留空为不过滤']"/>
 
-| 全部   | 周末    | 永久 |
-| ------ | ------- | ---- |
-| <留空> | weekend | keep |
+| 全部 | 周末    | 永久 |
+| ---- | ------- | ---- |
+| 留空 | weekend | keep |
 
 ## SteamGifts
 
@@ -272,9 +278,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="sintak" example="/gouhuo/news/switch" path="/gouhuo/news/:category" :paramsDesc="['资讯类型']">
 
-| 精选       | 海外     | 原创    | PS4 | Xboxone | PC  | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
-| ---------- | -------- | ------- | --- | ------- | --- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
-| choiceness | overseas | orignal | ps4 | xboxone | pc  | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
+| 精选       | 海外     | 原创    | PS4 | Xboxone | PC | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
+| ---------- | -------- | ------- | --- | ------- | -- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
+| choiceness | overseas | orignal | ps4 | xboxone | pc | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
 
 </Route>
 
@@ -310,7 +316,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 米哈游
 
-### 崩坏 2-游戏公告
+### 崩坏 2 - 游戏公告
 
 <Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
 
@@ -320,7 +326,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-### 崩坏 3-游戏公告
+### 崩坏 3 - 游戏公告
 
 <Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
 

@@ -61,8 +61,8 @@ pageClass: routes
 ::: tip 提示
 
 -   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
--   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
--   网站提供了 Posts 订阅: https://konachan.com/post/piclens?tags=[tags]
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅: <https://konachan.com/post/piclens?tags=[tags]>
 
 :::
 
@@ -114,7 +114,7 @@ pageClass: routes
 
 ::: tip 提示
 
--   网站提供了 Posts 订阅: https://yande.re/post/piclens?tags=[tags]
+-   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
 
 :::
 
@@ -232,3 +232,9 @@ pageClass: routes
 ### 用户上传作品和用户喜欢作品
 
 <Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" :paramsDesc="['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']"/>
+
+## 致美化
+
+### 最新主题
+
+<Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest"/>

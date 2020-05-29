@@ -24,7 +24,7 @@ pageClass: routes
 | ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
 | hirasawayui       | se7en               | walnut   | themez   | comeet          | sunskyxh | zmd            |
 
-> 原则上只要是{type}.hedwig.pub 都可以匹配。
+> 原则上只要是 {type}.hedwig.pub 都可以匹配。
 
 ## Hexo
 
@@ -50,7 +50,7 @@ pageClass: routes
 
 ### 首页
 
-<Route author="kt286" example="/latexstudio/home" path="/latexstudio/home"/>
+<Route author="kt286 nczitzk" example="/latexstudio/home" path="/latexstudio/home"/>
 
 ## LeeMeng
 

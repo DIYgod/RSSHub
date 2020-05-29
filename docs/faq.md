@@ -14,7 +14,7 @@
 
 **Q: 演示地址可以用么？**
 
-**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟, 可以随意使用。但如果你看到路由有 <Badge text="反爬严格" vertical="middle" type="warn"/> 标记，如微博、知乎等，意味着目标网站有严重的反爬策略，demo 无法确保可用性，建议自建来提高稳定性。
+**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟，可以随意使用。但如果你看到路由有 <Badge text="反爬严格" vertical="middle" type="warn"/> 标记，如微博、知乎等，意味着目标网站有严重的反爬策略，demo 无法确保可用性，建议自建来提高稳定性。
 
 **Q: 为什么 RSSHub 里的图片加载不出来？**
 
