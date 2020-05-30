@@ -258,7 +258,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 所有栏目
 
-<Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" />
+<Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" :paramsDesc="['分栏代码, 可在 URL 找到']" />
 
 具体栏目编号,去网站上看标签 
 
