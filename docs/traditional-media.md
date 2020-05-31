@@ -22,12 +22,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
-支持大部分频道, 频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
+支持大部分频道，频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
 
--   频道为单一路径, 如 https://feeds.bbci.co.uk/news/`business`/rss.xml 则为 `/bbc/business`.
--   频道包含多重路径, 如 https://feeds.bbci.co.uk/news/`world/asia`/rss.xml 则替换 `/` 为 `-` `/bbc/world-asia`.
+-   频道为单一路径，如 `https://feeds.bbci.co.uk/news/business/rss.xml` 则为 `/bbc/business`.
+-   频道包含多重路径，如 `https://feeds.bbci.co.uk/news/world/asia/rss.xml` 则替换 `/` 为 `-` `/bbc/world-asia`.
 -   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
 
 </Route>
@@ -51,12 +51,12 @@ pageClass: routes
 
 :::
 
-通过提取文章全文, 以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验.
 
-支持所有频道, 频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
+支持所有频道，频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
 
--   频道为单一路径, 如 http://www.ftchinese.com/rss/`news` 则为 `/ft/chinese/news`.
--   频道包含多重路径, 如 http://www.ftchinese.com/rss/`column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
+-   频道为单一路径，如 `http://www.ftchinese.com/rss/news` 则为 `/ft/chinese/news`.
+-   频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
 
 </Route>
 
@@ -76,7 +76,7 @@ pageClass: routes
 
 Solidot 提供的 feed:
 
--   https://www.solidot.org/index.rss
+-   <https://www.solidot.org/index.rss>
 
 :::
 
@@ -103,14 +103,16 @@ Solidot 提供的 feed:
 <Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['地区','类别']">
 
 `地区`
+
 | 香港 | 台灣 | 美國 |
 | ---- | ---- | ---- |
-| hk | tw | en |
+| hk   | tw   | en   |
 
 `类別`
-| 新聞總集 | 兩岸國際 | 財經 | 娛樂 | 體育 | 健康 |
+
+| 新聞總集 | 兩岸國際 | 財經     | 娛樂          | 體育   | 健康   |
 | -------- | -------- | -------- | ------------- | ------ | ------ |
-| (空) | world | business | entertainment | sports | health |
+| (空)     | world    | business | entertainment | sports | health |
 
 </Route>
 
@@ -128,7 +130,7 @@ Solidot 提供的 feed:
 
 ## 财新网
 
-> 网站部分内容需要付费订阅, RSS 仅做更新提醒, 不含付费内容.
+> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
 ### 新闻分类
 
@@ -172,6 +174,27 @@ Category 列表:
 
 </Route>
 
+## 端传媒
+
+### 端传媒
+
+<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+::: warning 注意
+
+付费内容全文需要登陆获取，详情见部署页面的配置模块。
+
+:::
+
+Type 栏目:
+
+| 深度    | What’s New | 广场              | Pick-Up |
+| ------- | ---------- | ----------------- | ------- |
+| feature | news-brief | notes-and-letters | pick_up |
+
+通过提取文章全文，以提供比官方源更佳的阅读体验.
+
+</Route>
 ## 多维新闻网
 
 ### 要闻
@@ -316,6 +339,22 @@ category 对应的关键词有
 
 </Route>
 
+## 齐鲁晚报
+
+### 新闻
+
+<Route author="nczitzk" example="/qlwb/news" path="/qlwb/news"/>
+
+### 今日城市
+
+<Route author="nczitzk" example="/qlwb/city/:city" path="/qlwb/city" :paramsDesc="['城市代码']">
+
+| 今日临沂 | 今日德州 | 今日威海 | 今日枣庄  | 今日淄博 | 今日烟台 | 今日潍坊 | 今日菏泽 | 今日日照 | 今日泰山 | 今日聊城  | 今日济宁 |
+| -------- | -------- | -------- | --------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- |
+| linyi    | dezhou   | weihai   | zaozhuang | zibo     | yantai   | weifang  | heze     | rizhao   | taishan  | liaocheng | jining   |
+
+</Route>
+
 ## 人民日报
 
 ### 观点
@@ -330,6 +369,16 @@ category 对应的关键词有
 
 <Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>
 
+## 人民日报社 国际金融报
+
+### 栏目
+
+<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目ID']">
+
+`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
+
+</Route>
+
 ## 日本経済新聞
 
 ### ホームページ
@@ -337,6 +386,18 @@ category 对应的关键词有
 <Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1">
 
 日文版首页
+
+</Route>
+
+## 网易新闻专栏
+
+### 栏目
+
+<Route author="Solist-X" example="/netease/news/special/1" path="/netease/news/special/:type?" :paramsDesc="['栏目']">
+
+| 轻松一刻 | 槽值 | 人间 | 大国小民 | 三三有梗 | 数读 | 看客 | 下划线 | 谈心社 | 哒哒 | 胖编怪聊 | 曲一刀 | 今日之声 | 浪潮 | 沸点 |
+| -------- | ---- | ---- | -------- | -------- | ---- | ---- | ------ | ------ | ---- | -------- | ------ | -------- | ---- | ---- |
+| 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |
 
 </Route>
 
@@ -362,23 +423,27 @@ category 对应的关键词有
 
 ### 热门
 
-<Route author="hoilc" example="/hk01/hot" path="/hk01/hot" />
+<Route author="hoilc" example="/hk01/hot" path="/hk01/hot" radar="1"/>
 
 ### 栏目
 
-<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目id, 可在URL中找到']"/>
+<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目id, 可在URL中找到']" radar="1"/>
 
 ### 子栏目
 
-<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目id, 可在URL中找到']"/>
+<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目id, 可在URL中找到']" radar="1"/>
 
 ### 专题
 
-<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题id, 可在URL中找到']"/>
+<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题id, 可在URL中找到']" radar="1"/>
 
 ### 标签
 
-<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']"/>
+<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']" radar="1"/>
+
+### 《香港 01》周报
+
+<Route author="MisteryMonster" example="/hk01/ebook" path="/hk01/ebook" radar="1"/>
 
 ## 香港電台
 
@@ -402,6 +467,10 @@ category 对应的关键词有
 
 <Route author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
 
+### 电子报
+
+<Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`,特刊为`special`']"/>
+
 ## 新浪科技
 
 ### 科学探索
@@ -409,7 +478,8 @@ category 对应的关键词有
 <Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
 
 分类：
-| zx | twhk | dwzw | zrdl | lskg | smyx | shbk | kjqy |
+
+| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
 | ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
 
@@ -443,6 +513,10 @@ category 对应的关键词有
 
 <Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
 
+### 新闻联播文字版全文
+
+<Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
+
 ## 朝日新聞中文網（繁體中文版）
 
 ### 新聞分類
@@ -453,7 +527,7 @@ category 对应的关键词有
 
 | society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    | whatsnew |
 | -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
-| 國內綜合 | 政治・經濟       | 文化・生活 | 旅遊・活動 | 體育・奧運 | 商業・商品 | IT・科技   | 國際・東亞 | 評論・專欄 | 最新消息 |
+| 國內綜合 | 政治・經濟       | 文化・生活 | 旅遊・活動 | 體育・奧運 | 商業・商品 | IT ・科技  | 國際・東亞 | 評論・專欄 | 最新消息 |
 
 版块 `cool_japan` 和 `travel` 包含子版块：
 
@@ -481,7 +555,7 @@ category 对应的关键词有
 
 | society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    | whatsnew |
 | -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
-| 日本社会 | 政治・经济       | 文娱・生活 | 旅游・活动 | 体育・奥运 | 商务・商品 | IT・科技   | 国际・东亚 | 观点・专栏 | 最新     |
+| 日本社会 | 政治・经济       | 文娱・生活 | 旅游・活动 | 体育・奥运 | 商务・商品 | IT ・科技  | 国际・东亚 | 观点・专栏 | 最新     |
 
 版块 `cool_japan` 和 `travel` 包含子版块：
 
