@@ -108,6 +108,7 @@
     "require-all": "3.0.0",
     "rss-parser": "3.8.0",
     "socks-proxy-agent": "5.0.0",
+    "tiny-async-pool": "1.1.0",
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
