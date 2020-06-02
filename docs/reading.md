@@ -279,15 +279,3 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页
 
 <Route author="kt286" example="/zreading" path="/zreading" />
-
-## 生物谷
-
-### 所有栏目
-
-<Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" :paramsDesc="['分栏代码, 可在 URL 找到']" />
-
-具体栏目编号,去网站上看标签 
-
-| 网址 | 对应路由 |
-| -------- | -------- |
-| http://news.bioon.com/biology |  /shengwugu/biology |
