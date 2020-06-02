@@ -56,9 +56,9 @@ pageClass: routes
 
 ## 笔趣阁
 
-### 小说更新
+### biquge5200.com
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1">
+<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
 
 ::: tip 提示
 
@@ -66,7 +66,15 @@ pageClass: routes
 
 :::
 
-</Route>
+### biquge.info
+
+<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+
+::: tip 提示
+
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge.info`](http://www.biquge.info/)中的小说 id.
+
+:::
 
 ## 吹牛部落
 
@@ -201,7 +209,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" :paramsDesc="['', '']" />
 
-具体栏目编号，去网站上看标签 
+具体栏目编号，去网站上看标签
 
 | 网址                                             | 对应路由                            |
 | ------------------------------------------------ | ----------------------------------- |
