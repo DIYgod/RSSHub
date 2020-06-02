@@ -1561,10 +1561,20 @@
     'biquge5200.com': {
         www: [
             {
-                title: '当前小说',
-                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge',
+                title: 'biquge5200.com',
+                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge5200-com',
                 source: '/:id',
                 target: '/novel/biquge/:id',
+            },
+        ],
+    },
+    'biquge.info': {
+        www: [
+            {
+                title: 'biquge.info',
+                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge-info',
+                source: '/:id',
+                target: '/novel/biqugeinfo/:id',
             },
         ],
     },
