@@ -325,7 +325,7 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 ### Access Control Configuration
 
-RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes.
+RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
 
 #### White/blacklisting
 
