@@ -164,6 +164,10 @@ pageClass: routes
 
 <Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
 
+### 标签
+
+<Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
+
 ## 电鸭社区
 
 ### 工作机会
