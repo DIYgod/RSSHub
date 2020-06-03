@@ -41,7 +41,7 @@ describe('index', () => {
     it('buildData', async () => {
         nock('http://rsshub.test')
             .get('/buildData')
-            .reply(function() {
+            .reply(function () {
                 return [
                     200,
                     `<div class="content">

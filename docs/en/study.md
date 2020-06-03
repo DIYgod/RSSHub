@@ -24,7 +24,7 @@ pageClass: routes
 
 ### theses
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. subject=生物']"/>
+<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. subject=生物']"/>
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
@@ -63,7 +63,7 @@ pageClass: routes
 
 ### innovation
 
-<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
+<RouteEn author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
 
 | `:type`       | type name     |
 | ------------- | ------------- |

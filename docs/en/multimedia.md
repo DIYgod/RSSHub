@@ -32,27 +32,27 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Videos
 
-<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['video type']" radar="1" >
+<RouteEn author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['video type']" radar="1" >
 |New Comments|New Release|New Entries|Most Wanted|Best Rated|
 |-----|------|------|-----|------|
 |update|newrelease|newentries|mostwanted|bestrated|
-</Route>
+</RouteEn>
 
 ### Stars
 
-<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['star id, find it from link']" radar="1" />
+<RouteEn author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['star id, find it from link']" radar="1" />
 
 ### Users
 
-<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" radar="1" >
+<RouteEn author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" radar="1" >
 |User wanted|User watched|User owned|User posts|
 |-----|------|------|-----|
 |userwanted|userwatched|userowned|userposts|
-</Route>
+</RouteEn>
 
 ### Bestreviews
 
-<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" />
+<RouteEn author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" />
 
 ## Nyaa
 
