@@ -263,11 +263,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 通知
 
-<Route author="Derekmini" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
+<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
 
-| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 |
-| -------- | ------------ | ------------ | -------- |
-| lxtz     | xmzl         | wtjd         | lqgg     |
+| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
+| -------- | ------------ | ------------ | -------- | -------- | -------- |
+| lxtz     | xmzl         | wtjd         | lqgg     | xwzx     | xwgg     |
 
 </Route>
 

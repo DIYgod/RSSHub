@@ -99,6 +99,20 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
 
+## 中国信息通信研究院
+
+### 白皮书
+
+<Route author="nczitzk" example="/gov/caict/bps" path="/gov/caict/bps"/>
+
+### 权威数据
+
+<Route author="nczitzk" example="/gov/caict/qwsj" path="/gov/caict/qwsj"/>
+
+### CAICT 观点
+
+<Route author="nczitzk" example="/gov/caict/caictgd" path="/gov/caict/caictgd"/>
+
 ## 中国政府
 
 ### 最新政策

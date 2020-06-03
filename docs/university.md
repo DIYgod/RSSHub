@@ -158,6 +158,16 @@ pageClass: routes
 
 ## 北京林业大学
 
+### 绿色新闻网
+
+<Route author="markmingjie" example="/bjfu/news/lsyw" path="/bjfu/news/:type" :paramsDesc="['新闻栏目']">
+
+| 绿色要闻 | 校园动态 | 教学科研 | 党建思政 | 一周排行 |
+| -------- | -------- | -------- | -------- | -------- |
+| lsyw     | lsxy     | jxky     | djsz     | yzph     |
+
+</Route>
+
 ### 研究生院培养动态
 
 <Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
