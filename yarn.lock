@@ -5783,10 +5783,10 @@ google-p12-pem@^3.0.0:
   dependencies:
     node-forge "^0.9.0"
 
-googleapis-common@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/googleapis-common/-/googleapis-common-4.2.0.tgz#a7f17bcc88abddae5646d7b7df943df2bb4681ff"
-  integrity sha512-Z6MTCEvvfPEGz+qfYOA8trZ6if3EdGXwJwRa6mCTjJv+LKdUHxjdsak6dOETDqVnIhytWQAUpURFsLCaxDI8rg==
+googleapis-common@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/googleapis-common/-/googleapis-common-4.3.0.tgz#39d2d44216bc44a09853260b9c4edc1f46362428"
+  integrity sha512-9xFX0A+PkJ9DUh2Cq81+Nx+J+v0Geo5Vgte8PKEQP5Wrbt5UfX964AGb+QhkfirlxlHrfpm7n5FRmr2FxktB/A==
   dependencies:
     extend "^3.0.2"
     gaxios "^3.0.0"
@@ -5795,13 +5795,13 @@ googleapis-common@^4.2.0:
     url-template "^2.0.8"
     uuid "^8.0.0"
 
-googleapis@52.0.0:
-  version "52.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-52.0.0.tgz#08eea0b614eb1dee49d292083ac04eb6a2fa0478"
-  integrity sha512-BuizQsORPkTRF/QzeXN6sV5wqXomZEk2u3zi1a+QBJtfUmVcW7KtsiJijX/pYVCVfsa7/T3fCpBF1d2FqyIFyA==
+googleapis@52.1.0:
+  version "52.1.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-52.1.0.tgz#d9480469c3021d8ca0bc98bef5b785dde2eb3648"
+  integrity sha512-8eHVXidZv/C/xos/rEIlWZCwuR638yaqjlBMMk2y9iT8hOe7ebkgW0pENUv8KeSFowTQFKCfQ/nLdBRM8z2hUg==
   dependencies:
     google-auth-library "^6.0.0"
-    googleapis-common "^4.2.0"
+    googleapis-common "^4.3.0"
 
 got@11.1.4:
   version "11.1.4"
