@@ -126,6 +126,14 @@ Website: https://news.ycombinator.com/
 
 </RouteEn>
 
+## HackMD
+
+<RouteEn author="Yukaii" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" :paramsDesc="['userpath or team path']">
+
+Website: <https://hackmd.io/>
+
+</RouteEn>
+
 ## Hex-Rays
 
 ### Hex-Rays News
