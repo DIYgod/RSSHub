@@ -1677,6 +1677,14 @@ type 列表：
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
 
+## 中国地质大学通知公告
+
+<Route author="chunibyo-wly" example="/cug/undergraduate" path="/cug/undergraduate" />
+
+## 地理与信息工程学院综合通知公告
+
+<Route author="chunibyo-wly" example="/cug/xgxy" path="/cug/xgxy" />
+
 ## 中国海洋大学
 
 ### 信息科学与工程学院
