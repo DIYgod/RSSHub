@@ -26,6 +26,16 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
+## 财联社
+
+### 电报
+
+<Route author="nczitzk" example="/cls/telegragh" path="/cls/telegragh"/>
+
+### 深度
+
+<Route author="nczitzk" example="/cls/depth" path="/cls/depth"/>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版

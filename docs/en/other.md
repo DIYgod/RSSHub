@@ -177,3 +177,9 @@ Type
 | all | rec       |
 
 </RouteEn>
+
+## dcinside
+
+### board
+
+<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
