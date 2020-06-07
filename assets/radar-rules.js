@@ -43,6 +43,14 @@
                 target: '/bilibili/user/video/:uid',
             },
         ],
+        manga: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili-man-hua-geng-xin',
+                source: '/detail/:comicid',
+                target: '/bilibili/manga/update/:comicid',
+            },
+        ],
     },
     'weibo.com': {
         _name: '微博',
