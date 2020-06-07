@@ -28,6 +28,12 @@ pageClass: routes
 
 </Route>
 
+## 国家税务总局
+
+### 最新文件
+
+<Route author="nczitzk" example="/gov/chinatax/latest" path="/gov/chinatax/latest"/>
+
 ## 国家新闻出版广电总局
 
 ### 游戏审批结果
