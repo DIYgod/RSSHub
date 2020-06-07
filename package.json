@@ -87,6 +87,7 @@
     "hooman": "1.2.5",
     "https-proxy-agent": "5.0.0",
     "iconv-lite": "0.5.1",
+    "is-localhost-ip": "1.4.0",
     "jsdom": "16.2.2",
     "json-bigint": "0.3.0",
     "json5": "2.1.3",
