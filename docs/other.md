@@ -48,6 +48,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
 
+## dcinside
+
+### board
+
+<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
+
 ## DHL
 
 ### DHL 国际快递包裹追踪
@@ -354,31 +360,40 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 君合
 
-<Route author="snipetsteve" example="/law/jh" path="/law/jh" />
+<Route author="snipersteve" example="/law/jh" path="/law/jh" />
 
 ### 通商
 
-<Route author="snipetsteve" example="/law/ts" path="/law/ts" />
+<Route author="snipersteve" example="/law/ts" path="/law/ts" />
 
 ### 海问
 
-<Route author="snipetsteve" example="/law/hw" path="/law/hw" />
+<Route author="snipersteve" example="/law/hw" path="/law/hw" />
 
 ### 环球
 
-<Route author="snipetsteve" example="/law/hq" path="/law/hq" />
+<Route author="snipersteve" example="/law/hq" path="/law/hq" />
 
 ### 国枫
 
-<Route author="snipetsteve" example="/law/gf" path="/law/gf" />
+<Route author="snipersteve" example="/law/gf" path="/law/gf" />
 
 ### 中伦
 
-<Route author="snipetsteve" example="/law/zl" path="/law/zl" />
+<Route author="snipersteve" example="/law/zl" path="/law/zl" />
 
 ### 锦天城
 
-<Route author="snipetsteve" example="/law/jtc" path="/law/jtc" />
+<Route author="snipersteve" example="/law/jtc" path="/law/jtc" />
+
+### 德恒
+
+<Route author="snipersteve" example="/law/dh" path="/law/dh" />
+
+### 金诚同达
+
+<Route author="snipersteve" example="/law/jctd" path="/law/jctd" />
+
 ## 马良行
 
 ### 产品更新
