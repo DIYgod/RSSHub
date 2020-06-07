@@ -258,6 +258,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="ttttmr" example="/bilibili/weekly" path="/bilibili/weekly/:disableEmbed?" :paramsDesc="['默认为开启内嵌视频, 任意值为关闭']"/>
 
+### 漫画更新
+
+<Route author="hoilc" example="/bilibili/manga/update/26009" path="/bilibili/manga/update/:comicid" :paramsDesc="['漫画 id, 可在 URL 中找到, 支持带有`mc`前缀']"/>
+
 ## Disqus
 
 ### 评论
