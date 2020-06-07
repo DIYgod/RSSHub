@@ -354,31 +354,40 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 君合
 
-<Route author="snipetsteve" example="/law/jh" path="/law/jh" />
+<Route author="snipersteve" example="/law/jh" path="/law/jh" />
 
 ### 通商
 
-<Route author="snipetsteve" example="/law/ts" path="/law/ts" />
+<Route author="snipersteve" example="/law/ts" path="/law/ts" />
 
 ### 海问
 
-<Route author="snipetsteve" example="/law/hw" path="/law/hw" />
+<Route author="snipersteve" example="/law/hw" path="/law/hw" />
 
 ### 环球
 
-<Route author="snipetsteve" example="/law/hq" path="/law/hq" />
+<Route author="snipersteve" example="/law/hq" path="/law/hq" />
 
 ### 国枫
 
-<Route author="snipetsteve" example="/law/gf" path="/law/gf" />
+<Route author="snipersteve" example="/law/gf" path="/law/gf" />
 
 ### 中伦
 
-<Route author="snipetsteve" example="/law/zl" path="/law/zl" />
+<Route author="snipersteve" example="/law/zl" path="/law/zl" />
 
 ### 锦天城
 
-<Route author="snipetsteve" example="/law/jtc" path="/law/jtc" />
+<Route author="snipersteve" example="/law/jtc" path="/law/jtc" />
+
+### 德恒
+
+<Route author="snipersteve" example="/law/dh" path="/law/dh" />
+
+### 金诚同达
+
+<Route author="snipersteve" example="/law/jctd" path="/law/jctd" />
+
 ## 马良行
 
 ### 产品更新

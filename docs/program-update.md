@@ -265,3 +265,9 @@ pageClass: routes
 ### 更新日志
 
 <Route author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
+
+## 小米应用商店
+
+### 金米奖
+
+<Route author="nczitzk" example="/mi/golden" path="/mi/golden"/>
