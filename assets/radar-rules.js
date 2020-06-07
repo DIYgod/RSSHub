@@ -1759,13 +1759,25 @@
         ],
     },
     'qq.com': {
-        _name: '微信',
+        _name: '腾讯',
         'mp.weixin': [
             {
-                title: '公众号栏目',
+                title: '微信公众号栏目',
                 docs: 'https://docs.rsshub.app/new-media.html#gong-zhong-hao-lan-mu-fei-tui-song-li-shi-xiao-xi',
                 source: '/mp/homepage',
                 target: (params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}`,
+            },
+        ],
+        egame: [
+            {
+                title: '企鹅电竞直播间',
+                docs: 'https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo',
+                source: '/:id',
+                target: (params) => {
+                    if (params.id.match(/^\d+$/)) {
+                        return '/egameqq/room/:id';
+                    }
+                },
             },
         ],
     },
