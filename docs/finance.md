@@ -117,3 +117,9 @@ pageClass: routes
 | zzkx     | hyzx     |
 
 </Route>
+
+## 富途牛牛
+
+### 要闻
+
+<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
