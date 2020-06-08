@@ -164,13 +164,17 @@ pageClass: routes
 
 | 绿色要闻 | 校园动态 | 教学科研 | 党建思政 | 一周排行 |
 | -------- | -------- | -------- | -------- | -------- |
-| lsyw     | lsxy     | jxky     | djsz     | yzph     |
+| lsyw     | xydt     | jxky     | djsz     | yzph     |
 
 </Route>
 
 ### 研究生院培养动态
 
 <Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
+
+### 科技处通知公告
+
+<Route author="markmingjie" example="/bjfu/kjc" path="/bjfu/kjc" />
 
 ### 教务处通知公告
 

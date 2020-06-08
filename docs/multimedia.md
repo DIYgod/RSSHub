@@ -349,6 +349,12 @@ pageClass: routes
 
 <Route author="SunShinenny" example="/kaiyan/index" path="/kaiyan/index"/>
 
+## 荔枝 FM
+
+### 电台更新
+
+<Route author="nczitzk" example="/lizhi/user/27151442948222380" path="/lizhi/user/:id" :paramsDesc="['用户 id，可以在电台的 URL 中找到']"/>
+
 ## 猫眼电影
 
 ### 正在热映
