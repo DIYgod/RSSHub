@@ -30,7 +30,7 @@ pageClass: routes
 
 ### 电报
 
-<Route author="nczitzk" example="/cls/telegragh" path="/cls/telegragh"/>
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph"/>
 
 ### 深度
 
