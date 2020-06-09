@@ -36,6 +36,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cls/depth" path="/cls/depth"/>
 
+## 富途牛牛
+
+### 要闻
+
+<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
