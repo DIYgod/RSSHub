@@ -1044,7 +1044,7 @@ Supported sub-sites:
 
 ### 公众号 （外接大脑来源）
 
-<Route author="VeryLazyBoy" example="/wechat/5d5e683c82339df472988f59" path="/wechat/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+<Route author="BugWriter2" example="/wechat/wjdn/5d5e683c82339df472988f59" path="/wechat/wjdn/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
 
 ### 公众号栏目 (非推送 & 历史消息)
 
