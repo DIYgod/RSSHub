@@ -698,7 +698,7 @@ Supported sub-sites:
 
 <Route author="xfangbao" example="/kuai/1" path="/kuai/:id" />
 
-具体栏目编号，去网站上看标签 
+具体栏目编号，去网站上看标签
 
 | 网址                                                                                              | 对应路由 |
 | ------------------------------------------------------------------------------------------------- | -------- |
@@ -1041,6 +1041,10 @@ Supported sub-sites:
 ### 公众号 (二十次幂来源)
 
 <Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众号 (外接大脑来源)
+
+<Route author="BugWriter2" example="/wechat/wjdn/5d5e683c82339df472988f59" path="/wechat/wjdn/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
 
 ### 公众号栏目 (非推送 & 历史消息)
 
