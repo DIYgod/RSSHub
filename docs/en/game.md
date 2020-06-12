@@ -46,7 +46,7 @@ Sorting types, default to `date`:
 
 ### Java Game Update
 
-<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+<RouteEn author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
 
 ### CurseForge Mod Update
 
@@ -77,6 +77,16 @@ Sorting types, default to `date`:
 <RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['gridName from the list']">
 
 Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
+
+</RouteEn>
+
+### Game Product Price
+
+<RouteEn author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['region','gridName from the product']" radar="1">
+
+Tested some countries, it should be work for most.
+
+Compatible with Product with an URL like <https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000>. For instance ['Cyberpunk 2077'](https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) the region is `en-us`, the gridName is `HP4497-CUSA16570_00-ASIAFULLGAME0000`
 
 </RouteEn>
 

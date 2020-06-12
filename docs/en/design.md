@@ -4,6 +4,36 @@ pageClass: routes
 
 # Design
 
+## Axis Studios
+
+### Work type
+
+<RouteEn author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" :paramsDesc="['`work`, `blog`', 'Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']">
+
+Work type URL in articles. Such as： 'https://axisstudiosgroup.com/work/full-service-cg-production' the tag will be `full-service-cg-production`.
+
+Some tags are rarely used： `Script`, `direction`, `production`, `design-concept` etc。
+
+</RouteEn>
+
+## Blow Studio
+
+### Home
+
+<RouteEn author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
+
+## Blur Studio
+
+### Works
+
+<RouteEn author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
+
+## Digic Picture
+
+### Works & News
+
+<RouteEn author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']" />
+
 ## Dribbble
 
 ### Popular
@@ -24,3 +54,27 @@ pageClass: routes
 
 <RouteEn author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </RouteEn>
+
+## Method Studios
+
+### Menus
+
+<RouteEn author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" :paramsDesc="['URL behind /en: `features`, `advertising`, `episodic`, `games`, `methodmade`']">
+
+Not support `main`, `news`.
+
+Default is under 'https://www.methodstudios.com/en/features'.
+
+</RouteEn>
+
+## Sun Creature
+
+### Works
+
+<RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
+
+## Unit Image
+
+### Films
+
+<RouteEn author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films type，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
