@@ -986,6 +986,18 @@ Supported sub-sites:
 
 </Route>
 
+## 网易号
+
+### 更新
+
+<Route author="HendricksZheng" example="/netease/dy/W4983108759592548559" path="/netease/dy/:id" :paramsDesc="['网易号 ID', '见如下说明']">
+
+1.  在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
+2.  打开网易号文章页面。
+3.  通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
+
+</Route>
+
 ## 网易新闻
 
 ### 排行榜
@@ -1007,18 +1019,6 @@ Supported sub-sites:
 | 全站  | 新闻 | 娱乐          | 体育   | 财经  | 科技 | 汽车 | 女人 | 房产  | 游戏 | 旅游   | 教育 |
 | ----- | ---- | ------------- | ------ | ----- | ---- | ---- | ---- | ----- | ---- | ------ | ---- |
 | whole | news | entertainment | sports | money | tech | auto | lady | house | game | travel | edu  |
-
-</Route>
-
-## 网易号
-
-### 更新
-
-<Route author="HendricksZheng" example="/netease/dy/W4983108759592548559" path="/netease/dy/:id" :paramsDesc="['网易号 ID', '见如下说明']">
-
-1.  在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
-2.  打开网易号文章页面。
-3.  通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
 
 </Route>
 
