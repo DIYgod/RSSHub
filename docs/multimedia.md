@@ -30,6 +30,16 @@ pageClass: routes
 
 见 [#AGE 动漫](/anime.html#age-dong-man)
 
+## Avgle
+
+### 视频列表
+
+<Route author="I2IMk" example="/avgle/videos" path="/avgle/videos/:order?/:time?" :paramsDesc="['视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg`最长, 默认 `mv`', '视频的添加时间, `a` 所有/`1` 今天/`d` 本周/`m` 本月, 默认 `m`']"/>
+
+### 视频搜索
+
+<Route author="I2IMk" example="/avgle/search/橋本ありな" path="/avgle/search/:keyword/:order?/:time?" :paramsDesc="['搜索的关键词', '视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg`最长, 默认 `mv`', '视频的添加时间, `a` 所有 / `1` 今天 / `d` 本周 / `m` 本月, 默认 `m`']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)

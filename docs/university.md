@@ -1815,6 +1815,16 @@ type 列表：
 
 </Route>
 
+### 信息化办公室
+
+<Route author="Hagb" example="/cqu/net/tzgg" path="/cqu/net/:category" :paramsDesc="['分类名']">
+
+| 通知公告 | 单位动态 | 语言文字 |
+| -------- | -------- | -------- |
+| tzgg     | dwdt     | yywz     |
+
+</Route>
+
 ## 重庆科技学院
 
 ### 教务处公告
