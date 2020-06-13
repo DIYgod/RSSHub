@@ -4,11 +4,43 @@ pageClass: routes
 
 # 金融
 
+## CFD
+
+### 每周股指派息调整 (GBP)
+
+<Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
+
 ## finviz
 
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
+
+## WEEX 华尔街见闻旗下全球投资线上品牌
+
+### 资讯
+
+<Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码, 按照表列出']" />
+
+| 最新文章 | 市场要闻 | 交易策略 | 机构观点 | 投资学堂 | 行业观察 | 基金理财 | 分析师投稿 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
+
+## 财联社
+
+### 电报
+
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph"/>
+
+### 深度
+
+<Route author="nczitzk" example="/cls/depth" path="/cls/depth"/>
+
+## 富途牛牛
+
+### 要闻
+
+<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
 
 ## 淘股吧股票论坛
 
@@ -19,6 +51,18 @@ pageClass: routes
 ### 用户博客
 
 <Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
+
+## 天天基金
+
+### 用户动态
+
+<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
+## 新浪财经
+
+### 新浪财经－国內
+
+<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
 
 ## 雪球
 
@@ -55,5 +99,27 @@ pageClass: routes
 | 公告         | 新闻 | 研报     |
 | ------------ | ---- | -------- |
 | announcement | news | research |
+
+</Route>
+
+## 中国人民银行
+
+### 沟通交流
+
+<Route author="nczitzk" example="/pbc/goutongjiaoliu" path="/pbc/goutongjiaoliu"/>
+
+### 货币政策司公开市场交易公告
+
+<Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
+
+## 中证网
+
+### 资讯
+
+<Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" :paramsDesc="['资讯类型']">
+
+| 中证快讯 | 行业资讯 |
+| -------- | -------- |
+| zzkx     | hyzx     |
 
 </Route>

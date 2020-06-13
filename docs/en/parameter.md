@@ -42,7 +42,7 @@ Default: `true`
 
 Example: [https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false](https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false)
 
-### Limit Entries
+## Limit Entries
 
 Set `limit` to limit the number of articles in the feed.
 
@@ -54,6 +54,10 @@ Enable fulltext via `mode` parameter.
 
 Eg: bilibili article <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
 
+## Access Control
+
+Set `key` or `code` to grant access to requests. See [Access Control Configuration](install/#configuration-access-control-configuration-access-key-code).
+
 ## Telegram Instant View
 
 Replace website link with Telegram's Instant View link.
@@ -64,7 +68,15 @@ Enable Telegram Instant View requires a page template, it can be obtained from T
 
 Eg: <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
 
-### Output Formats
+## Sci-hub link
+
+Output Sci-hub link in scientific journal routes, this supports major journals or routes that output DOIs.
+
+-   scihub: set to any value
+
+举例: <https://rsshub.app/pnas/latest?scihub=1>
+
+## Output Formats
 
 RSSHub conforms to RSS 2.0 and Atom Standard, simply append `.rss` `.atom` to the end of the feed address to obtain the feed in corresponding format, default to RSS 2.0.
 

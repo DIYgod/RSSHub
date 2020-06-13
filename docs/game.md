@@ -48,6 +48,12 @@ pageClass: routes
 
 <Route author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## Fate Grand Order
+
+### News
+
+<Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
@@ -74,9 +80,9 @@ pageClass: routes
 
 支持的主机平台:
 
-| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
-| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
-| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+| PS 4 | Xbox One | Switch | PC | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | -- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc | wii-u | 3ds | vita    | ios |
 
 发行类型，默认为 `new`:
 
@@ -106,11 +112,15 @@ pageClass: routes
 
 ### eShop 新发售游戏
 
-<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服)']"/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服), `cn`(国服)']"/>
 
 ### 首页资讯（香港）
 
 <Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+
+### 首页资讯（中国）
+
+<Route author="NeverBehave" example="/nintendo/news/china" path="/nintendo/news/china"/>
 
 ### 直面会
 
@@ -130,6 +140,18 @@ pageClass: routes
 
 </Route>
 
+### PlayStation Store 游戏折扣 | 价格
+
+<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['地区语言','游戏的 grid 名']" radar="1">
+
+地区语言如 `zh-hans-hk` 代表香港区简体中文， `zh-hant-tw` 为台湾繁体中文。不同地区游戏 gridName 不同，非中文地区使用英文提示。
+
+适用于 URL 如 <https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570_00-ASIAFULLGAME0000> 的游戏。
+
+比如 PlayStation Store 香港简体中文区的 [《赛博朋克 2077》](https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) 的 lang 为 `zh-hans-hk`， gridName 为 `HP4497-CUSA16570_00-ASIAFULLGAME0000`
+
+</Route>
+
 ### PlayStation Network 用户奖杯
 
 <Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']" radar="1"/>
@@ -140,11 +162,11 @@ pageClass: routes
 
 ## psnine
 
-### 首页-白金攻略/游戏开箱
+### 首页 - 白金攻略 / 游戏开箱
 
 <Route author="LightStrawberry" example="/psnine/index" path="/psnine/index"/>
 
-### 新闻-游戏资讯
+### 新闻 - 游戏资讯
 
 <Route author="LightStrawberry" example="/psnine/news" path="/psnine/news"/>
 ### 数折-折扣信息推送
@@ -156,6 +178,25 @@ pageClass: routes
 ### 游戏-新游戏奖杯信息
 
 <Route author="LightStrawberry" example="/psnine/game" path="/psnine/game"/>
+
+## Rockstar Games Social Club
+
+### 在线活动
+
+<Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" :paramsDesc="['游戏代码（默认所有）']">
+
+| 游戏代码 | 游戏名称     |
+| -------- | ------------ |
+| GTAV     | 侠盗猎车手 5 |
+| RDR2     | 荒野大镖客 2 |
+
+</Route>
+
+## ScoreSaber
+
+### 用户动态
+
+<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页URL中获取']"/>
 
 ## Steam
 
@@ -172,6 +213,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### Steam news
 
 <Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1"/>
+
+## SteamDB
+
+### 免费游戏
+
+<Route author="dearrrfish" example="/steamdb/free" path="/steamdb/free/:type?" :paramsDesc="['免费类型，留空为不过滤']"/>
+
+| 全部 | 周末    | 永久 |
+| ---- | ------- | ---- |
+| 留空 | weekend | keep |
 
 ## SteamGifts
 
@@ -217,15 +268,19 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="hoilc" example="/pcr/news-tw" path="/pcr/news-tw"/>
 
+### 国服公告
+
+<Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn"/>
+
 ## 篝火营地
 
 ### 游戏资讯
 
 <Route author="sintak" example="/gouhuo/news/switch" path="/gouhuo/news/:category" :paramsDesc="['资讯类型']">
 
-| 精选       | 海外     | 原创    | PS4 | Xboxone | PC  | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
-| ---------- | -------- | ------- | --- | ------- | --- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
-| choiceness | overseas | orignal | ps4 | xboxone | pc  | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
+| 精选       | 海外     | 原创    | PS4 | Xboxone | PC | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
+| ---------- | -------- | ------- | --- | ------- | -- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
+| choiceness | overseas | orignal | ps4 | xboxone | pc | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
 
 </Route>
 
@@ -261,7 +316,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 米哈游
 
-### 崩坏 2-游戏公告
+### 崩坏 2 - 游戏公告
 
 <Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
 
@@ -271,13 +326,13 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-### 崩坏 3-游戏公告
+### 崩坏 3 - 游戏公告
 
-<Route author="deepred5" example="/mihoyo/bh3/strategy" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
+<Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
 
-| 最新   | 公告   | 新闻 | 活动     | 攻略     |
-| ------ | ------ | ---- | -------- | -------- |
-| latest | notice | news | activity | strategy |
+| 最新   | 动态 | 公告   | 活动     | 补给     |
+| ------ | ---- | ------ | -------- | -------- |
+| latest | news | notice | activity | strategy |
 
 </Route>
 
@@ -315,9 +370,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="MyFaith" example="/xiaoheihe/news" path="xiaoheihe/news"/>
 
-### 游戏打折情况
+### 游戏折扣信息
 
-<Route author="MyFaith" example="/xiaoheihe/discount" path="xiaoheihe/discount"/>
+<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" :paramsDesc="['平台, 默认为Steam']">
+
+| Steam | PlatStation4 | Switch |
+| ----- | ------------ | ------ |
+| pc    | ps4          | switch |
+
+</Route>
 
 ## 英雄联盟
 

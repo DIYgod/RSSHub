@@ -6,7 +6,7 @@ describe('got', () => {
     it('headers', async () => {
         nock('http://rsshub.test')
             .get('/test')
-            .reply(function() {
+            .reply(function () {
                 expect(this.req.headers['user-agent']).toBe(config.ua);
                 return [200, ''];
             });
@@ -19,7 +19,7 @@ describe('got', () => {
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
-            .reply(function() {
+            .reply(function () {
                 requestRun();
                 return [404, '0'];
             });
@@ -37,7 +37,7 @@ describe('got', () => {
     it('axios', async () => {
         nock('http://rsshub.test')
             .post('/post')
-            .reply(function() {
+            .reply(function () {
                 return [200, '{"code": 0}'];
             });
 
