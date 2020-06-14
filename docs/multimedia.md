@@ -311,6 +311,12 @@ pageClass: routes
 
 </Route>
 
+## 场库
+
+### 今日精选
+
+<Route author="Wenmoux" example="/changku" path="/changku"/>
+
 ## 低端影视
 
 ### 影视剧集更新
@@ -534,9 +540,3 @@ pageClass: routes
 ### 影视
 
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
-
-## 场库
-
-### 今日精选
-
-<Route author="Wenmoux" example="/changku" path="/changku"/>
