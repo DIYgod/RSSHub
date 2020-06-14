@@ -2069,7 +2069,7 @@
         ],
     },
     'ems.com.cn': {
-        _name: 'Emi Nitta',
+        _name: '中国邮政速递物流',
         www: [
             {
                 title: '新闻',
