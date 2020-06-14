@@ -683,6 +683,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 中国邮政速递物流
 
+### 新闻
+
 <Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1"/>
 
 ## 自如

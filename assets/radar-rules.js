@@ -2068,13 +2068,12 @@
             },
         ],
     },
-
     'ems.com.cn': {
         _name: 'Emi Nitta',
         www: [
             {
                 title: '新闻',
-                docs: 'https://docs.rsshub.app/other.html#',
+                docs: 'https://docs.rsshub.app/other.html#zhong-guo-you-zheng-su-di-wu-liu',
                 source: '/aboutus/xin_wen_yu_shi_jian.html',
                 target: '/ems/news',
             },
