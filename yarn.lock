@@ -8540,10 +8540,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@13.0.0-beta.5:
-  version "13.0.0-beta.5"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-13.0.0-beta.5.tgz#59c52f3e1046068928c19c3352e6c3af34de7321"
-  integrity sha512-oFWo/hX+Q9pSQNjqLu1b0VtPNnle+TDVO28U6l29flg2U4kYIMeyiedc3OwXYrVGG/urG/sQDHIbSJTZD0YOQA==
+nock@13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-13.0.0.tgz#e07276d558245386a2872cebf4d5570583c0d225"
+  integrity sha512-FiW8t91Je5yG5MVT1r+go1Z9bX3rCYIEjenUYeZrEl2v8aTWdIX336itrmQaKUO8Ske5Z7RHR7OIzr/9p0Ujjg==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
