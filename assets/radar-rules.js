@@ -455,27 +455,6 @@
             },
         ],
     },
-    'instagram.com': {
-        _name: 'Instagram',
-        www: [
-            {
-                title: '用户',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/:id',
-                target: (params) => {
-                    if (params.id !== 'explore' && params.id !== 'developer') {
-                        return '/instagram/user/:id';
-                    }
-                },
-            },
-            {
-                title: '标签',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/explore/tags/:tag',
-                target: '/instagram/tag/:tag',
-            },
-        ],
-    },
     'swufe.edu.cn': {
         _name: '西南财经大学',
         it: [
