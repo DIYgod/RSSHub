@@ -16,20 +16,6 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
-## Instagram
-
-### User
-
-<RouteEn path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" anticrawler="1"/>
-
-### Hashtag
-
-<RouteEn author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']"  anticrawler="1"/>
-
-### Stories
-
-<RouteEn author="Maecenas" path="/instagram/story/:username" example="/instagram/story/instagram" :paramsDesc="['user name']"/>
-
 ## Lofter
 
 ### User
