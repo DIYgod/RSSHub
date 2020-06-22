@@ -627,8 +627,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 源仓库更新
 
 <Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
-| 阅读 | 异次元 | 海阔 | 
-| ---- | ----- | ---- | 
+| 阅读 | 异次元 | 海阔 |
+| ---- | ----- | ---- |
 | yuedu | yiciyuan | haikuo |
 
 </Route>
@@ -680,6 +680,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
 
 </Route>
+
+## 中国邮政速递物流
+
+### 新闻
+
+<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1"/>
 
 ## 自如
 

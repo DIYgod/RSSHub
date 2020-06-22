@@ -292,20 +292,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']" anticrawler="1"/>
 
-## Instagram
-
-### 用户
-
-<Route author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']" anticrawler="1"/>
-
-### 标签
-
-<Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" anticrawler="1"/>
-
-### 快拍 Stories
-
-<Route author="Maecenas" path="/instagram/story/:username" example="/instagram/story/instagram" :paramsDesc="['用户名']"/>
-
 ## Keep
 
 ### 运动日记

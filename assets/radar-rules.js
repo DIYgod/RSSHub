@@ -455,27 +455,6 @@
             },
         ],
     },
-    'instagram.com': {
-        _name: 'Instagram',
-        www: [
-            {
-                title: '用户',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/:id',
-                target: (params) => {
-                    if (params.id !== 'explore' && params.id !== 'developer') {
-                        return '/instagram/user/:id';
-                    }
-                },
-            },
-            {
-                title: '标签',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/explore/tags/:tag',
-                target: '/instagram/tag/:tag',
-            },
-        ],
-    },
     'swufe.edu.cn': {
         _name: '西南财经大学',
         it: [
@@ -2065,6 +2044,17 @@
                 docs: 'https://docs.rsshub.app/social-media.html#ji-ke-quan-zi-chun-wen-zi',
                 source: '/topics/:id',
                 target: '/jike/topic/text/:id',
+            },
+        ],
+    },
+    'ems.com.cn': {
+        _name: '中国邮政速递物流',
+        www: [
+            {
+                title: '新闻',
+                docs: 'https://docs.rsshub.app/other.html#zhong-guo-you-zheng-su-di-wu-liu',
+                source: '/aboutus/xin_wen_yu_shi_jian.html',
+                target: '/ems/news',
             },
         ],
     },
