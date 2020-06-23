@@ -164,6 +164,10 @@ pageClass: routes
 
 <Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
 
+### 标签
+
+<Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
+
 ## 电鸭社区
 
 ### 工作机会
@@ -240,6 +244,12 @@ pageClass: routes
 ### 校招日程
 
 <Route author="junfengP" example="/nowcoder/schedule" path="nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
+
+## 三星盖乐世社区
+
+### 最新帖子
+
+<Route author="nczitzk" example="/samsungmembers/latest" path="/samsungmembers/latest"/>
 
 ## 书友社区
 

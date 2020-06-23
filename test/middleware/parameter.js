@@ -184,6 +184,20 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title2');
         expect(parsed.items[2].title).toBe('Title3');
     });
+
+    it(`filter combination`, async () => {
+        const response = await request.get('/test/filter?filter_title=Filter&filter_description=Description1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(1);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+    });
+
+    it(`filterout combination`, async () => {
+        const response = await request.get('/test/filter?filterout_title=Filter&filterout_description=Description1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(4);
+        expect(parsed.items[0].title).toBe('Title2');
+    });
 });
 
 describe('limit', () => {

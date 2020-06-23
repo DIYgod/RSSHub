@@ -214,16 +214,6 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1"/>
 
-## SteamDB
-
-### 免费游戏
-
-<Route author="dearrrfish" example="/steamdb/free" path="/steamdb/free/:type?" :paramsDesc="['免费类型，留空为不过滤']"/>
-
-| 全部 | 周末    | 永久 |
-| ---- | ------- | ---- |
-| 留空 | weekend | keep |
-
 ## SteamGifts
 
 ### Discussions

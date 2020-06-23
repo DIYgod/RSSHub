@@ -26,6 +26,22 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
+## 财联社
+
+### 电报
+
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph"/>
+
+### 深度
+
+<Route author="nczitzk" example="/cls/depth" path="/cls/depth"/>
+
+## 富途牛牛
+
+### 要闻
+
+<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
@@ -95,3 +111,15 @@ pageClass: routes
 ### 货币政策司公开市场交易公告
 
 <Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
+
+## 中证网
+
+### 资讯
+
+<Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" :paramsDesc="['资讯类型']">
+
+| 中证快讯 | 行业资讯 |
+| -------- | -------- |
+| zzkx     | hyzx     |
+
+</Route>

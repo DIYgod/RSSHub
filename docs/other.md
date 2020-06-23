@@ -48,6 +48,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
 
+## dcinside
+
+### board
+
+<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
+
 ## DHL
 
 ### DHL 国际快递包裹追踪
@@ -235,6 +241,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 东莞教研网
+
+### 信息公开
+
+<Route author="nczitzk" example="/dgjyw/news" path="/dgjyw/:type" :paramsDesc="['分类']">
+
+| 动态 | 公示         | 通知   |
+| ---- | ------------ | ------ |
+| news | announcement | notice |
+
+</Route>
+
 ## 福利资源 - met.red
 
 ### 福利资源 - met.red
@@ -251,11 +269,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 通知
 
-<Route author="Derekmini" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
+<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
 
-| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 |
-| -------- | ------------ | ------------ | -------- |
-| lxtz     | xmzl         | wtjd         | lqgg     |
+| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
+| -------- | ------------ | ------------ | -------- | -------- | -------- |
+| lxtz     | xmzl         | wtjd         | lqgg     | xwzx     | xwgg     |
 
 </Route>
 
@@ -337,6 +355,44 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 用户
 
 <Route author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
+
+## 律师事务所文章
+
+### 君合
+
+<Route author="snipersteve" example="/law/jh" path="/law/jh" />
+
+### 通商
+
+<Route author="snipersteve" example="/law/ts" path="/law/ts" />
+
+### 海问
+
+<Route author="snipersteve" example="/law/hw" path="/law/hw" />
+
+### 环球
+
+<Route author="snipersteve" example="/law/hq" path="/law/hq" />
+
+### 国枫
+
+<Route author="snipersteve" example="/law/gf" path="/law/gf" />
+
+### 中伦
+
+<Route author="snipersteve" example="/law/zl" path="/law/zl" />
+
+### 锦天城
+
+<Route author="snipersteve" example="/law/jtc" path="/law/jtc" />
+
+### 德恒
+
+<Route author="snipersteve" example="/law/dh" path="/law/dh" />
+
+### 金诚同达
+
+<Route author="snipersteve" example="/law/jctd" path="/law/jctd" />
 
 ## 马良行
 
@@ -443,6 +499,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 问询函件 (全部 / 主板 / 中小企业板 / 创业板)
 
 <Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+
+### 最新规则
+
+<Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
 
 ## 四川省科学技术厅
 
@@ -571,8 +631,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 源仓库更新
 
 <Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
-| 阅读 | 异次元 | 海阔 | 
-| ---- | ----- | ---- | 
+| 阅读 | 异次元 | 海阔 |
+| ---- | ----- | ---- |
 | yuedu | yiciyuan | haikuo |
 
 </Route>
@@ -624,6 +684,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
 
 </Route>
+
+## 中国邮政速递物流
+
+### 新闻
+
+<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1"/>
 
 ## 自如
 
