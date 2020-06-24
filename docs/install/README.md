@@ -256,6 +256,18 @@ env_variables:
 # [END app_yaml]
 ```
 
+### 安装
+
+在 RSSHub 项目根目录下运行
+
+```bash
+gcloud app deploy
+```
+
+进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
+
+部署完成后可访问您的 Google App Engine URL 查看部署情况。
+
 ## Play with Docker
 
 如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
@@ -270,18 +282,6 @@ env_variables:
 -   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
 
 :::
-
-### 安装
-
-在 RSSHub 项目根目录下运行
-
-```bash
-gcloud app deploy
-```
-
-进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
-
-部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
 ## 配置
 
@@ -493,7 +493,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   端传媒设置，用于获取付费内容全文：
 
-    -   `INITIUM_USERNAME`: 端传媒用户名
+    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6JiE1NTYzNDgxNDVAcXEuY29tIiwidXNlcl9pZCI6MTM0NDIwLCJlbWFpbCI6IjE1NTYzNDgxNDVAcXEuY29tIiwiZXhwIjoxNTk0MTk5NjQ3fQ.Tqui-ORNR7d4Bh240nKy_Ldi6crfq0A78Yj2iwy2_U8'`。
+
+    如果你在进行上述操作时遇到困难，亦可选择在环境设置中填写明文的用户名和密码：
+
+    -   `INITIUM_USERNAME`: 端传媒用户名 (邮箱)
 
     -   `INITIUM_PASSWORD`: 端传媒密码
 
