@@ -260,6 +260,12 @@ pageClass: routes
 
 <Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1"/>
 
+## 腾讯柠檬 Lab
+
+### 柠檬精选 Mac Apps
+
+<Route author="HenryQW" example="/tencent/lemon" path="/tencent/lemon"/>
+
 ## 腾讯云移动直播 SDK
 
 ### 更新日志
