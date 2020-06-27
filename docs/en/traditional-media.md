@@ -82,6 +82,15 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 </RouteEn>
 
+## SCMP
+
+### News
+
+<RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['Category']">
+
+See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
+
+</RouteEn>
 ## The Economist
 
 ### Category
