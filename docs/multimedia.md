@@ -429,6 +429,10 @@ pageClass: routes
 
 <Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
 
+### 今日更新
+
+<Route author="alcarl" example="/yyets/todayfilelist" path="/yyets/todayfilelist" />
+
 ## 色花堂中文论坛
 
 ### 分区帖子
