@@ -4,6 +4,16 @@ pageClass: routes
 
 # 程序更新
 
+## AMD
+
+### 显卡驱动更新
+
+<Route author="ysc3839" example="/amd/graphicsdrivers/731F/C0" path="/amd/graphicsdrivers/:id/:rid?" :paramsDesc="['id', 'rid']">
+
+可从设备管理器查看 id 和 rid。如 `PCI\VEN_1002&DEV_731F&SUBSYS_05771043&REV_C1`，则 id 为 `731F`，rid 为 `C1`。
+
+</Route>
+
 ## Apkpure
 
 ### Versions
