@@ -549,8 +549,8 @@ pageClass: routes
 
 ### 排行榜
 
-<Route author="queensferryme" example="/zimuzu/top/week/movie/10" path="/zimuzu/top/:range/:type/:count?" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`', '数量限制, 截取排行榜前若干条，为空时输出全部内容']">
+<Route author="queensferryme" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']">
 
-例如，路由 `/zimuzu/top/week/movie/10` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的前 10 条
+例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
 
 </Route>
