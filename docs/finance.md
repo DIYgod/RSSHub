@@ -34,7 +34,13 @@ pageClass: routes
 
 ### 深度
 
-<Route author="nczitzk" example="/cls/depth" path="/cls/depth"/>
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:caty" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+
+| 要闻 | 股市 | 环球 | 公司 | 地产 | 券商 | 金融 | 汽车 | 科创版 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
+| 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111   |
+
+</Route>
 
 ## 富途牛牛
 
