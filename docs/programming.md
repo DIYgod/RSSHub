@@ -155,6 +155,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Go语言中文网
+
+### 周刊
+
+<Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
+
 ## Hacker News
 
 ### 分类
