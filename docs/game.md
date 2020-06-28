@@ -461,3 +461,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 游戏横幅
 
 <Route author="y2361547758" example="/magireco/event_banner" path="/magireco/event_banner"/>
+
+## 二柄APP
+
+### 新闻
+
+<Route author="wushijishan" example="/erbingapp/news" path="/erbingapp/news"/>
