@@ -9,6 +9,31 @@ pageClass: routes
 ### 新闻
 
 <Route author="cc798461" example="/acwifi" path="/acwifi"/>
+
+## Amazfit Watch Faces
+
+手表型号可在网站中选择后到地址栏查看
+
+| Amazfit Bip | Amazfit Cor | Amazfit GTR | Amazfit GTS | Amazfit Stratos | Amazfit T-Rex | Amazfit Verge | Amazfit Verge Lite | Honor Band 5 | Honor Watch Magic | Huawei Watch GT | Xiaomi Mi Band 4 |
+| ----------- | ----------- | ----------- | ----------- | --------------- | ------------- | ------------- | ------------------ | ------------ | ----------------- | --------------- | ---------------- |
+| bip         | cor         | gtr         | gts         | pace            | t-rex         | verge         | verge-lite         | honor-band-5 | honor-watch-magic | huawei-watch-gt | mi-band-4        |
+
+### 新品上架
+
+<Route author="nczitzk" example="/amazfitwatchfaces/fresh/bip/Bip/zh" path="/amazfitwatchfaces/fresh/:model/:type?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+
+### 最近更新
+
+<Route author="nczitzk" example="/amazfitwatchfaces/updated/bip/Bip/zh" path="/amazfitwatchfaces/updated/:model/:type?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+
+### 排行榜
+
+<Route author="nczitzk" example="/amazfitwatchfaces/top/bip/Bip/month/views/zh" path="/amazfitwatchfaces/top/:model/:type?/:time?/:sortBy?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '统计时间，`week` 指 上周，`month` 指 上月，`alltime` 指 全部时间', '排序参数，`download` 指 下载量，`views` 指 查看量，`fav` 指 收藏数', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+
+### 搜索结果
+
+<Route author="nczitzk" example="/amazfitwatchfaces/search/bip/battery" path="/amazfitwatchfaces/search/:model/:keyword?/:sortBy?" :paramsDesc="['手表型号', '关键词，多个关键词用半角逗号隔开', '排序参数，`fresh` 指 新品上架，`updated` 指 已更新的，`views` 指 查看量，`download` 指 下载量，`fav` 指 收藏数']"/>
+
 ## Apple
 
 ### 更换和维修扩展计划
@@ -499,6 +524,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 问询函件 (全部 / 主板 / 中小企业板 / 创业板)
 
 <Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+
+### 最新规则
+
+<Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
 
 ## 四川省科学技术厅
 
