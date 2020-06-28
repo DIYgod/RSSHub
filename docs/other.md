@@ -61,6 +61,12 @@ pageClass: routes
 
 <Route author="vhxubo" example="/booksource" path="/booksource"/>
 
+## BOOKWALKERTW
+
+### 热门新书
+
+<Route author="wushijishan" example="/bookwalkertw/news" path="/bookwalkertw/news"/>
+
 ## checkee.info
 
 ### 美国签证 check 动态
@@ -727,9 +733,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-## BOOKWALKERTW
-
-### 热门新书
-
-<Route author="wushijishan" example="/bookwalkertw/news" path="/bookwalkertw/news"/>
