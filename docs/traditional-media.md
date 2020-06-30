@@ -32,6 +32,17 @@ pageClass: routes
 
 </Route>
 
+## Chicago Tribune
+
+### 新闻
+
+<Route author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['目录分类'，'子分类']">
+
+相比官方 RSS，多提供全文。
+目录分类[见其网站](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html)。例如，`https://www.chicagotribune.com/arcio/rss/category/nation-world/` 对应的 RSSHub 路由是 `/chicagotribune/nation-world`。由于官方源的部分路由有两级，因此这里也相应需要填写子分类。
+
+</Route>
+
 ## e 公司
 
 ### 快讯
