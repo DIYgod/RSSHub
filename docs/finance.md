@@ -48,6 +48,20 @@ pageClass: routes
 
 <Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
 
+## 格隆汇
+
+### 用户文章
+
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']"/>
+
+### 主题文章
+
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']"/>
+
+### 搜索关键字
+
+&lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
