@@ -342,9 +342,9 @@ category 对应的关键词有
 
     -   主频道:
 
-    | Business | World | UK  | Tech       | Money           | Breakingviews | Life      |
-    | -------- | ----- | --- | ---------- | --------------- | ------------- | --------- |
-    | business | world | uk  | technology | personalFinance | breakingviews | lifestyle |
+    | Business | World | UK | Tech       | Money           | Breakingviews | Life      |
+    | -------- | ----- | -- | ---------- | --------------- | ------------- | --------- |
+    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
 
 </Route>
 
