@@ -733,9 +733,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-## 靠谱新闻
-
-### 新闻聚合
-
-<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>

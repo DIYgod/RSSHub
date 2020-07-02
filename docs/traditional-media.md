@@ -255,6 +255,12 @@ category 对应的关键词有
 
 </Route>
 
+## 靠谱新闻
+
+### 新闻聚合
+
+<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>
+
 ## 联合早报
 
 ### 即时新闻
