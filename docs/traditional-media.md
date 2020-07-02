@@ -32,6 +32,17 @@ pageClass: routes
 
 </Route>
 
+## Boston.com
+
+### 新闻
+
+<Route author="oppilate" example="/boston/technology" path="/boston/:tag?" :paramsDesc="['Tag']">
+
+生成官方未提供的全文订阅点。
+有哪些 tag 请参考 [Boston.com 官网上的订阅页面](https://www.boston.com/rss-feeds)。例如，`https://www.boston.com/tag/local-news/?feed=rss` 对应 RSSHub 路由 `/boston/local-news`。
+
+</Route>
+
 ## Chicago Tribune
 
 ### 新闻
