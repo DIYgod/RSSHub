@@ -267,6 +267,26 @@ pageClass: routes
 
 <Route author="junfengP" example="/nowcoder/recommend" path="nowcoder/recommend"/>
 
+### 实习广场 & 社招广场
+
+<Route author="nczitzk" example="/nowcoder/jobcenter/1/北京/1/1/true" path="/nowcoder/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?" :paramsDesc="['招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`', '所在城市，可选城市见下表，若空则为 `全国`', '职位类型，可选职位代码见下表，若空则为 `全部`', '排序参数，可选排序参数代码见下表，若空则为 `默认`', '是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`']">
+
+可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他
+
+职位类型代码见下表：
+
+| 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |
+
+排序参数见下表：
+
+| 最新发布 | 最快处理 | 处理率最高 |
+| -------- | -------- | ---------- |
+| 1        | 2        | 3          |
+
+</Route>
+
 ## 三星盖乐世社区
 
 ### 最新帖子
