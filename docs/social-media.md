@@ -244,7 +244,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 会员购新品上架
 
-<Route author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
+<Route author="DIYgod" example="/bilibili/mall/new/1" path="/bilibili/mall/new/:category?" :paramsDesc="['分类，默认全部，见下表']">
+
+| 全部 | 手办 | 魔力赏 | 周边 | 游戏 |
+| ---- | ---- | ------ | ---- | ---- |
+| 0    | 1    | 7      | 3    | 6    |
+
+</Route>
 
 ### 会员购作品
 
