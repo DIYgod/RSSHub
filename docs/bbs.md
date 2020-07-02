@@ -180,6 +180,18 @@ pageClass: routes
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 
+## 光谷社区
+
+### 子论坛
+
+<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:caty" :paramsDesc="['子论坛']">
+
+| 首页  | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
+| ----- | -------- | -------- | ------- | -------- | -------- | -------- |
+| index | qna      | lowshine | it      | finance  | startup  | city     |
+
+</Route>
+
 ## 虎扑
 
 ### 虎扑 BBS 论坛
