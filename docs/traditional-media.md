@@ -310,6 +310,16 @@ category 对应的关键词有
 
 </Route>
 
+## 南华早报 SCMP
+
+### 新闻
+
+<Route author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['栏目分类']">
+
+栏目分类对应的数字编号见[官方 RSS](https://www.scmp.com/rss)。相比官方提供的 RSS，多提供了全文输出。
+
+</Route>
+
 ## 纽约时报
 
 ### 新闻
