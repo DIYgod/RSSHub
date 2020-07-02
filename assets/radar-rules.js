@@ -483,6 +483,16 @@
             },
         ],
     },
+    'www.chicagotribune.com': {
+        _name: 'Chicago Tribune',
+        www: [
+            {
+                title: 'Chicago Tribune',
+                docs: 'https://docs.rsshub.app/traditional_media.html#chicago-tribune',
+                source: '/',
+            },
+        ],
+    },
     'haimaoba.com': {
         _name: '海猫吧',
         www: [
