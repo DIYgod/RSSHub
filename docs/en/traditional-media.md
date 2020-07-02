@@ -89,6 +89,23 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Reuters
+
+### Channel
+
+<RouteEn author="HenryQW" example="/reuters/channel/uk/personalFinance" path="/reuters/:lang/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
+
+Supported sub-sites:
+
+-   中国分站 `cn`：
+    See [路透社中国分站](../traditional-media.html#lu-tou-she)
+-   UK site `uk`：
+    | Business | World | UK | Tech | Money | Breakingviews | Life |
+    | -------- | ----- | --- | ---------- | --------------- | ------------- | --------- |
+    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
+
+</RouteEn>
+
 ## RTHK
 
 ### News

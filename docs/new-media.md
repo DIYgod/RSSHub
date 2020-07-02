@@ -116,9 +116,9 @@ pageClass: routes
 
 <Route author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['語言']">
 
-| 繁體中文 | 簡體中文 | US | 日文     |
-| -------- | -------- | -- | -------- |
-| chinese  | cn       | us | japanese |
+| 繁體中文 | 簡體中文 | US  | 日文     |
+| -------- | -------- | --- | -------- |
+| chinese  | cn       | us  | japanese |
 
 </Route>
 
@@ -300,9 +300,9 @@ pageClass: routes
 
 Supported sub-sites:
 
-| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
-| -- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
-| tv | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
+| TV  | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+| --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
+| tv  | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
 
 </Route>
 
@@ -736,32 +736,6 @@ area 分区选项
 ### 节目
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
-
-## 路透社
-
-### 中文网栏目
-
-<Route author="HenryQW" example="/reuters/channel/analyses" path="/reuters/channel" :paramsDesc="['频道名，请注意大小写需与如下表格中一致。']">
-
-主频道:
-
-| 深度分析 | 时事要闻    | 生活 | 投资      |
-| -------- | ----------- | ---- | --------- |
-| analyses | generalnews | life | investing |
-
-资讯子频道:
-
-| 中国财经 | 国际财经              | 新闻人物  | 财经视点 |
-| -------- | --------------------- | --------- | -------- |
-| china    | internationalbusiness | newsmaker | opinions |
-
-专栏子频道:
-
-| 中国财经 | 国际财经专栏 | 大宗商品专栏 |
-| -------- | ------------ | ------------ |
-| CnColumn | IntColumn    | ComColumn    |
-
-</Route>
 
 ## 镁客网 im2maker
 
