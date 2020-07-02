@@ -507,9 +507,9 @@ pageClass: routes
 
 <Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签tag，视频清晰度']" />
 
-| 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
-| ---- | ------ | ----- | ---- | --- | ------ |
-| 留空 | bluray | 1080p | 720p | 3d  | webdl  |
+| 全部 | 蓝光   | 1080P | 720P | 3D | WEB-DL |
+| ---- | ------ | ----- | ---- | -- | ------ |
+| 留空 | bluray | 1080p | 720p | 3d | webdl  |
 
 ## 中国广播
 
