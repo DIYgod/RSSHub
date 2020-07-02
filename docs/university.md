@@ -302,7 +302,7 @@ pageClass: routes
 
 | 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
 | :--------: | :--------: | :------------------: | :------------: |
-|    bsyjs   |    ssyjs   |      tdxlgdssxw      |     gatdqzs    |
+|   bsyjs    |   ssyjs    |      tdxlgdssxw      |    gatdqzs     |
 
 </Route>
 
@@ -1474,7 +1474,7 @@ type 列表：
 
 | 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
 | :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-|  all |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+| all  |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
 
 </Route>
 
