@@ -282,6 +282,14 @@ category 对应的关键词有
 
 </Route>
 
+## 路透社
+
+### 实时资讯
+
+<Route author="black-desk" example="/reuters/theWire" path="/reuters/theWire">
+
+</Route>
+
 ## 每经网
 
 ### 重磅原创
