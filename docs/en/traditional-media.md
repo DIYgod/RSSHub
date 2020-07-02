@@ -26,6 +26,17 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </RouteEn>
 
+## Chicago Tribune
+
+### News
+
+<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['Category'，'Subcategory']">
+
+Generates full-text that the official feed doesn't provide.
+Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
+
+</RouteEn>
+
 ## China Dialogue
 
 ### Topics
@@ -82,6 +93,15 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 </RouteEn>
 
+## SCMP
+
+### News
+
+<RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['Category']">
+
+See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
+
+</RouteEn>
 ## The Economist
 
 ### Category

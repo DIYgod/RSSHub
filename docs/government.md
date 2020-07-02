@@ -34,7 +34,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/chinatax/latest" path="/gov/chinatax/latest"/>
 
-## 国家新闻出版广电总局
+## 国家新闻出版广电总局（弃用）
 
 ### 游戏审批结果
 
@@ -54,6 +54,16 @@ pageClass: routes
 | 某个文章标题的一部分，返回这篇文章内容 | 例：2020 年 1 月 |
 
 </Route>
+
+## 国家新闻出版署
+
+### 列表
+
+<Route author="y2361547758" example="/gov/nppa/317" path="/gov/nppa/:channel" :paramsDesc="['栏目名id']" />
+
+### 详情
+
+<Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" />
 
 ## 联合国
 
