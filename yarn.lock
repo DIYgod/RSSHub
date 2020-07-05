@@ -1248,10 +1248,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@koa/router@9.2.0":
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/@koa/router/-/router-9.2.0.tgz#97f2e47b438ce8d6b8c6ea36743a12d6ada68008"
-  integrity sha512-lucZYJY1Sf2spcaS/v2dqKfj3HKH2caoIuQSogdD77iduWbLmJTM+sHde8XNGQVqyZ+IW42F7Lc5pjwFXKufpQ==
+"@koa/router@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@koa/router/-/router-9.3.0.tgz#cc0a68a9a16a90c2dafb5cf105f51ad27957d66c"
+  integrity sha512-gYp4kY65gWT6XwE0NT+l/uVl2DhWTh7gO1k5hCfATcnzEYEKBEw4UDzpym3hD1dbhgbgF2zuYVDDAMfca1F4Hw==
   dependencies:
     debug "^4.1.1"
     http-errors "^1.7.3"
