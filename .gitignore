@@ -15,5 +15,5 @@ tmp
 *.iml
 coverage
 .env
-
+.history/
 .now
