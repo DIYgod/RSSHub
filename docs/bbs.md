@@ -337,6 +337,12 @@ pageClass: routes
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
 
+## 万维读者
+
+### 焦点新闻
+
+<Route author="nczitzk" example="/creaders/headline" path="/creaders/headline"/>
+
 ## 小米社区
 
 ### 圈子
