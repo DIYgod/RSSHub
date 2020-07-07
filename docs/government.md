@@ -433,6 +433,24 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/mohurd/policy" path="/gov/mohurd/policy"/>
 
+## 重庆市人民政府
+
+### 两江新区信息公开网
+
+#### 党务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
+
+#### 政务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" :paramsDesc="['分类名']">
+
+| 履职依据 | 公示公告 |
+| -------- | -------- |
+| lzyj     | gsgg     |
+
+</Route>
+
 ## 中央纪委国家监委
 
 ### 审查调查
