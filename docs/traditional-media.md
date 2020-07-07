@@ -32,6 +32,28 @@ pageClass: routes
 
 </Route>
 
+## Boston.com
+
+### 新闻
+
+<Route author="oppilate" example="/boston/technology" path="/boston/:tag?" :paramsDesc="['Tag']">
+
+生成官方未提供的全文订阅点。
+有哪些 tag 请参考 [Boston.com 官网上的订阅页面](https://www.boston.com/rss-feeds)。例如，`https://www.boston.com/tag/local-news/?feed=rss` 对应 RSSHub 路由 `/boston/local-news`。
+
+</Route>
+
+## Chicago Tribune
+
+### 新闻
+
+<Route author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['目录分类'，'子分类']">
+
+相比官方 RSS，多提供全文。
+目录分类[见其网站](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html)。例如，`https://www.chicagotribune.com/arcio/rss/category/nation-world/` 对应的 RSSHub 路由是 `/chicagotribune/nation-world`。由于官方源的部分路由有两级，因此这里也相应需要填写子分类。
+
+</Route>
+
 ## e 公司
 
 ### 快讯
@@ -244,6 +266,12 @@ category 对应的关键词有
 
 </Route>
 
+## 靠谱新闻
+
+### 新闻聚合
+
+<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>
+
 ## 联合早报
 
 ### 即时新闻
@@ -282,6 +310,14 @@ category 对应的关键词有
 
 </Route>
 
+## 路透社
+
+### 实时资讯
+
+<Route author="black-desk" example="/reuters/theWire" path="/reuters/theWire">
+
+</Route>
+
 ## 每经网
 
 ### 重磅原创
@@ -299,6 +335,16 @@ category 对应的关键词有
 | 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |
+
+</Route>
+
+## 南华早报 SCMP
+
+### 新闻
+
+<Route author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['栏目分类']">
+
+栏目分类对应的数字编号见[官方 RSS](https://www.scmp.com/rss)。相比官方提供的 RSS，多提供了全文输出。
 
 </Route>
 
@@ -441,10 +487,6 @@ category 对应的关键词有
 ### 标签
 
 <Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']" radar="1"/>
-
-### 《香港 01》周报
-
-<Route author="MisteryMonster" example="/hk01/ebook" path="/hk01/ebook" radar="1"/>
 
 ## 香港電台
 

@@ -248,6 +248,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | ------ | ---- | -------- |
 | update | hot  | spent    |
 
+## 二柄 APP
+
+### 新闻
+
+<Route author="wushijishan" example="/erbingapp/news" path="/erbingapp/news"/>
+
 ## 公主链接
 
 ### 日服公告
