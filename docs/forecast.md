@@ -32,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 国家突发事件预警信息发布网
+
+### 当前生效预警
+
+<Route author="nczitzk" example="/12379" path="/12379/index"/>
+
 ## 国家应急广播网
 
 ### 预警信息
