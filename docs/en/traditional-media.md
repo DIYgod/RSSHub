@@ -26,6 +26,17 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </RouteEn>
 
+## Boston.com
+
+### News
+
+<RouteEn author="oppilate" example="/boston/technology" path="/boston/:tag?" :paramsDesc="['Tag']">
+
+Generates full-text feeds that the official feed doesn't provide.
+Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. For instance, `https://www.boston.com/tag/local-news/?feed=rss` corresponds to `/boston/local-news`.
+
+</RouteEn>
+
 ## Chicago Tribune
 
 ### News
@@ -34,6 +45,7 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 Generates full-text that the official feed doesn't provide.
 Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
+
 
 </RouteEn>
 
