@@ -245,6 +245,10 @@ pageClass: routes
 
 <Route author="junfengP" example="/nowcoder/schedule" path="nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
 
+### 求职推荐
+
+<Route author="junfengP" example="/nowcoder/recommend" path="nowcoder/recommend"/>
+
 ## 三星盖乐世社区
 
 ### 最新帖子
