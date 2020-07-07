@@ -2068,6 +2068,7 @@
             },
         ],
     },
+<<<<<<< HEAD
     'popiask.cn': {
         _name: 'Popi 提问箱',
         www: [
@@ -2080,6 +2081,22 @@
                         return '/popiask/:id';
                     }
                 },
+=======
+    'nppa.gov.cn': {
+        _name: '国家新闻出版署',
+        www: [
+            {
+                title: '栏目',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/channels/:channel',
+                target: (params, url) => `/gov/nppa/${/nppa\/channels\/(\d+)\.shtml/.exec(url)[1]}`,
+            },
+            {
+                title: '内容',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/contents/:channel/:content',
+                target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
+>>>>>>> aa358b30... feat: nppa.radar (#5112)
             },
         ],
     },
