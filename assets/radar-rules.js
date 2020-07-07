@@ -2008,14 +2008,6 @@
                 target: '/hk01/tag/:id',
             },
         ],
-        ebook: [
-            {
-                title: '《香港01》周报',
-                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
-                source: ['/', '/subscribe'],
-                target: '/hk01/ebook',
-            },
-        ],
     },
     'douban.com': {
         _name: '豆瓣',
@@ -2065,6 +2057,23 @@
                 docs: 'https://docs.rsshub.app/other.html#zhong-guo-you-zheng-su-di-wu-liu',
                 source: '/aboutus/xin_wen_yu_shi_jian.html',
                 target: '/ems/news',
+            },
+        ],
+    },
+    'nppa.gov.cn': {
+        _name: '国家新闻出版署',
+        www: [
+            {
+                title: '栏目',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/channels/:channel',
+                target: (params, url) => `/gov/nppa/${/nppa\/channels\/(\d+)\.shtml/.exec(url)[1]}`,
+            },
+            {
+                title: '内容',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/contents/:channel/:content',
+                target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
             },
         ],
     },

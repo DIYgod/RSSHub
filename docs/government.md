@@ -59,11 +59,11 @@ pageClass: routes
 
 ### 列表
 
-<Route author="y2361547758" example="/gov/nppa/317" path="/gov/nppa/:channel" :paramsDesc="['栏目名id']" />
+<Route author="y2361547758" example="/gov/nppa/317" path="/gov/nppa/:channel" :paramsDesc="['栏目名id']" radar="1" />
 
 ### 详情
 
-<Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" />
+<Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" />
 
 ## 联合国
 
@@ -432,6 +432,24 @@ pageClass: routes
 ### 政策发布
 
 <Route author="nczitzk" example="/gov/mohurd/policy" path="/gov/mohurd/policy"/>
+
+## 重庆市人民政府
+
+### 两江新区信息公开网
+
+#### 党务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
+
+#### 政务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" :paramsDesc="['分类名']">
+
+| 履职依据 | 公示公告 |
+| -------- | -------- |
+| lzyj     | gsgg     |
+
+</Route>
 
 ## 中央纪委国家监委
 
