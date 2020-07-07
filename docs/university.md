@@ -1189,6 +1189,12 @@ type 列表：
 
 <Route author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
 
+## 上海海洋大学
+
+### 官网信息
+
+<Route author="Swung0x48" example="/shou/www/tzgg" path="/shou/www/:type" :paramsDesc="['tzgg 为通知公告, zbxx 为招标信息']"/>
+
 ## 上海交通大学
 
 ### 电子信息与电气工程学院学术动态
