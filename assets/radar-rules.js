@@ -2008,14 +2008,6 @@
                 target: '/hk01/tag/:id',
             },
         ],
-        ebook: [
-            {
-                title: '《香港01》周报',
-                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
-                source: ['/', '/subscribe'],
-                target: '/hk01/ebook',
-            },
-        ],
     },
     'douban.com': {
         _name: '豆瓣',
