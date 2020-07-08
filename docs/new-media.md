@@ -226,16 +226,6 @@ pageClass: routes
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
-## 鸟哥笔记
-
-### 今日事
-
-<Route author="KotoriK" example="/ngbj/today" path="/ngbj/today"/>
-
-### 分类目录
-
-<Route author="KotoriK" example="/ngbj/cat/103" path="/ngbj/cat/:cat" :paramsDesc="['如https://www.niaogebiji.com/cat/103,最后的数字就是要填写在这的id']"/>
-
 ## PMCAFF
 
 ### 今日推荐 / 精选
@@ -764,6 +754,16 @@ area 分区选项
 ### 新闻
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+## 鸟哥笔记
+
+### 今日事
+
+<Route author="KotoriK" example="/ngbj/today" path="/ngbj/today"/>
+
+### 分类目录
+
+<Route author="KotoriK" example="/ngbj/cat/103" path="/ngbj/cat/:cat" :paramsDesc="['如https://www.niaogebiji.com/cat/103,最后的数字就是要填写在这的id']"/>
 
 ## 派代
 
