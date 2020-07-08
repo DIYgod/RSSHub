@@ -48,7 +48,6 @@
     "jest": "26.1.0",
     "mockdate": "3.0.2",
     "nock": "13.0.2",
-    "nodejieba": "2.4.1",
     "nodemon": "2.0.4",
     "pinyin": "2.9.1",
     "prettier": "2.0.5",
