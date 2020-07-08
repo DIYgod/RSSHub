@@ -119,18 +119,18 @@ $ git clone https://github.com/DIYgod/RSSHub.git
 $ cd RSSHub
 ```
 
-下载完成后，需要安装依赖
+下载完成后，需要安装依赖（开发不要加 `--production` 参数）
 
 使用 `npm`
 
 ```bash
-$ npm install
+$ npm install --production
 ```
 
 或 `yarn`
 
 ```bash
-$ yarn
+$ yarn install --production
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
