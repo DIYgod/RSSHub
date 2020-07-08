@@ -41,7 +41,7 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 ### News
 
-<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['Category'，'Subcategory']">
+<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['Category', 'Subcategory']">
 
 Generates full-text that the official feed doesn't provide.
 Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
