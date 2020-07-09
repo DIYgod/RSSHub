@@ -23,6 +23,6 @@ jobs:
         git config --local user.name "GitHub Action"
         git commit -m "style: auto format" -a
     - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
