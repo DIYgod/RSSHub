@@ -18,12 +18,6 @@ pageClass: routes
 
 <RouteEn author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
 
-## Polimi
-
-### News
-
-<RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
-
 ## UMASS Amherst
 
 ### College of Electrical and Computer Engineering News
@@ -33,3 +27,9 @@ pageClass: routes
 ### College of Information & Computer Sciences News
 
 <RouteEn author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
+
+## Polimi
+
+### News
+
+<RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
