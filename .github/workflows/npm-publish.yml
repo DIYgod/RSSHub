@@ -15,7 +15,10 @@ jobs:
       with:
         node-version: '12'
     - name: Release
-      run: npx version-from-git --allow-same-version --template 'master.short'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        npx version-from-git --allow-same-version --template 'master.short'
     - name: Publish to npmjs
       run: npm publish
       env:
