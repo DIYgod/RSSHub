@@ -14,17 +14,15 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '12'
-        registry-url: 'https://registry.npmjs.org'
     - name: Release
-      run: npx version-from-git --allow-same-version
+      run: npx version-from-git --allow-same-version --template 'master.short'
     - name: Publish to npmjs
       run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-    - uses: actions/setup-node@v1
-      with:
-        registry-url: 'https://npm.pkg.github.com'
     - name: Publish to GPR
-      run: npm publish
+      run: |
+        npm config set registry https://npm.pkg.github.com
+        npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
