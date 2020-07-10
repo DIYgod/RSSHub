@@ -11,7 +11,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
     - uses: actions/setup-node@v1
       with:
         node-version: '12'
@@ -21,4 +20,5 @@ jobs:
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        git status
         git diff-index --quiet HEAD || (git commit -m "style: auto format" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)
