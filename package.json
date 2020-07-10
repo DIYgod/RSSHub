@@ -1,6 +1,6 @@
 {
   "name": "rsshub",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Make RSS Great Again!",
   "main": "lib/pkg.js",
   "files": [
