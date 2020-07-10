@@ -26,7 +26,7 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     - name: Publish to GPR
       run: |
-        npm config set registry https://npm.pkg.github.com
+        npm config set @DIYgod:registry https://npm.pkg.github.com
         npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
