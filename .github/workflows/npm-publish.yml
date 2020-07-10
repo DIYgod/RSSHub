@@ -1,8 +1,8 @@
-name: test
+name: publish
 
 on:
-  schedule:
-    - cron:  '33 22 */3 * *'
+  push:
+    branches: master
 
 jobs:
   build:
