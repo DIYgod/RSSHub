@@ -43,6 +43,12 @@ pageClass: routes
 
 </Route>
 
+## CBC
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+<Route author="wangbin" example="/cbc/topics" path="/cbc/topics/:topic?" :paramsDesc="['CBC 频道。默认为 Top Stories。二级话题如 canada/toronto，需要用 `-` 替换掉 `/`。']"/>
+
 ## Chicago Tribune
 
 ### 新闻
