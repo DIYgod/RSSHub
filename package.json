@@ -94,7 +94,7 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
-    "lru-cache": "5.1.1",
+    "lru-cache": "6.0.0",
     "lz-string": "1.4.4",
     "mailparser": "2.7.7",
     "markdown-it": "11.0.0",
