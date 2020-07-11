@@ -338,13 +338,21 @@ category 对应的关键词有
     | ------------ | ------------ | ------------ |
     | CnColumn     | IntColumn    | ComColumn    |
 
+-   美国分站 `us`：
+
+    -   主频道:
+
+    | Business | Markets | World | Politics | Tech       | Breakingviews | Wealth | Life      |
+    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
+    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+
 -   英国分站 `uk`：
 
     -   主频道:
 
-    | Business | World | UK | Tech       | Money           | Breakingviews | Life      |
-    | -------- | ----- | -- | ---------- | --------------- | ------------- | --------- |
-    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
+    | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
+    | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
+    | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
 
 </Route>
 
