@@ -92,7 +92,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### Channel
 
-<RouteEn author="HenryQW" example="/reuters/channel/uk/personalFinance" path="/reuters/channel/:site/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
+<RouteEn author="HenryQW proletarius101" example="/reuters/channel/uk/personalFinance" path="/reuters/channel/:site/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
 
 Supported sub-sites:
 
