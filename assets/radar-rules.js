@@ -2058,4 +2058,19 @@
             },
         ],
     },
+    'popiask.cn': {
+        _name: 'Popi 提问箱',
+        www: [
+            {
+                title: '提问箱新回答',
+                docs: 'https://docs.rsshub.app/social-media.html#popi-ti-wen-xiang',
+                source: '/:id',
+                target: (params) => {
+                    if (params.id) {
+                        return '/popiask/:id';
+                    }
+                },
+            },
+        ],
+    },
 });
