@@ -497,6 +497,20 @@ pageClass: routes
 
 </Route>
 
+## 小宇宙
+
+### 发现
+
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou">
+
+::: warning 注意
+
+小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。
+
+:::
+
+</Route>
+
 ## 优酷
 
 ### 频道
