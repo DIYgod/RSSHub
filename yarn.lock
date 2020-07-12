@@ -7375,7 +7375,14 @@ jsesc@~0.5.0:
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
-json-bigint@0.3.1, json-bigint@^0.3.0:
+json-bigint@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/json-bigint/-/json-bigint-0.4.0.tgz#58ae093245fe002e919a89e24431ba318a4c5f10"
+  integrity sha512-XVRlFBFhzHFuV6ACStPP+7MURGyHWvEP+cPCWox6Y4oySdlqHVjOHd/EL3q/kKbDc6p3tdQV/kZuFIFUQQFmaw==
+  dependencies:
+    bignumber.js "^9.0.0"
+
+json-bigint@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/json-bigint/-/json-bigint-0.3.1.tgz#0c1729d679f580d550899d6a2226c228564afe60"
   integrity sha512-DGWnSzmusIreWlEupsUelHrhwmPPE+FiQvg+drKfk2p+bdEYa5mp4PJ8JsCWqae0M2jQNb0HPvnwvf1qOTThzQ==
