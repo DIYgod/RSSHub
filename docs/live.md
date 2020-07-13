@@ -54,7 +54,7 @@ pageClass: routes
 
 ### 直播间开播
 
-<Route author="hoilc" example="/liequtv/room/liequtv" path="/liequtv/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+<Route author="hoilc" example="/liequtv/room/175435" path="/liequtv/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 企鹅电竞
 
