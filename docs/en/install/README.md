@@ -427,6 +427,11 @@ See the relation between access key/code and white/blacklisting.
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
 
+-   Mastodon user timeline: apply api here `https://mastodon.example/settings/applications`, please check scope `read:search`
+    -   `MASTODON_API_HOST`: api instance domain
+    -   `MASTODON_API_ACCESS_TOKEN`: user access token
+    -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
+
 -   Sci-hub for scientific journal routes:
 
     -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.tw`.
