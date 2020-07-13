@@ -4342,6 +4342,11 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
   integrity sha512-ZIzRpLJrOj7jjP2miAtgqIfmzbxa4ZOr5jJc601zklsfEx9oTzmmj2nVpIPRpNlRTIh8lc1kyViIY7BWSGNmKw==
 
+devtools-protocol@0.0.767361:
+  version "0.0.767361"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.767361.tgz#5977f2558b84f9df36f62501bdddb82f3ae7b66b"
+  integrity sha512-ziRTdhEVQ9jEwedaUaXZ7kl9w9TF/7A3SXQ0XuqrJB+hMS62POHZUWTbumDN2ehRTfvWqTPc2Jw4gUl/jggmHA==
+
 diacritics@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/diacritics/-/diacritics-1.3.0.tgz#3efa87323ebb863e6696cebb0082d48ff3d6f7a1"
@@ -9980,12 +9985,13 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-puppeteer@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-5.0.0.tgz#7cf1b1a5c5b6ce5d7abe4d9c9f206d4c52e214ff"
-  integrity sha512-JnZcgRQnfowRSJoSHteKU7G9fP/YYGB/juPn8m4jNqtzvR0h8GOoFmdjTBesJFfzhYkPU1FosHXnBVUB++xgaA==
+puppeteer@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-5.1.0.tgz#e7bae2caa6e3a13a622755e4c27689d9812c38ca"
+  integrity sha512-IZBFG8XcA+oHxYo5rEpJI/HQignUis2XPijPoFpNxla2O+WufonGsUsSqrhRXgBKOME5zNfhRdUY2LvxAiKlhw==
   dependencies:
     debug "^4.1.0"
+    devtools-protocol "0.0.767361"
     extract-zip "^2.0.0"
     https-proxy-agent "^4.0.0"
     mime "^2.0.3"
