@@ -26,6 +26,42 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
+## 财联社
+
+### 电报
+
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph"/>
+
+### 深度
+
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:caty" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+
+| 要闻 | 股市 | 环球 | 公司 | 地产 | 券商 | 金融 | 汽车 | 科创版 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
+| 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111   |
+
+</Route>
+
+## 富途牛牛
+
+### 要闻
+
+<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
+
+## 格隆汇
+
+### 用户文章
+
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']"/>
+
+### 主题文章
+
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']"/>
+
+### 搜索关键字
+
+&lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
@@ -95,3 +131,15 @@ pageClass: routes
 ### 货币政策司公开市场交易公告
 
 <Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
+
+## 中证网
+
+### 资讯
+
+<Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" :paramsDesc="['资讯类型']">
+
+| 中证快讯 | 行业资讯 |
+| -------- | -------- |
+| zzkx     | hyzx     |
+
+</Route>

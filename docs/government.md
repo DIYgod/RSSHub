@@ -28,7 +28,13 @@ pageClass: routes
 
 </Route>
 
-## 国家新闻出版广电总局
+## 国家税务总局
+
+### 最新文件
+
+<Route author="nczitzk" example="/gov/chinatax/latest" path="/gov/chinatax/latest"/>
+
+## 国家新闻出版广电总局（弃用）
 
 ### 游戏审批结果
 
@@ -48,6 +54,16 @@ pageClass: routes
 | 某个文章标题的一部分，返回这篇文章内容 | 例：2020 年 1 月 |
 
 </Route>
+
+## 国家新闻出版署
+
+### 列表
+
+<Route author="y2361547758" example="/gov/nppa/317" path="/gov/nppa/:channel" :paramsDesc="['栏目名id']" radar="1" />
+
+### 详情
+
+<Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" />
 
 ## 联合国
 
@@ -98,6 +114,20 @@ pageClass: routes
 ### 最新通知
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
+
+## 中国信息通信研究院
+
+### 白皮书
+
+<Route author="nczitzk" example="/gov/caict/bps" path="/gov/caict/bps"/>
+
+### 权威数据
+
+<Route author="nczitzk" example="/gov/caict/qwsj" path="/gov/caict/qwsj"/>
+
+### CAICT 观点
+
+<Route author="nczitzk" example="/gov/caict/caictgd" path="/gov/caict/caictgd"/>
 
 ## 中国政府
 
@@ -402,6 +432,24 @@ pageClass: routes
 ### 政策发布
 
 <Route author="nczitzk" example="/gov/mohurd/policy" path="/gov/mohurd/policy"/>
+
+## 重庆市人民政府
+
+### 两江新区信息公开网
+
+#### 党务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
+
+#### 政务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" :paramsDesc="['分类名']">
+
+| 履职依据 | 公示公告 |
+| -------- | -------- |
+| lzyj     | gsgg     |
+
+</Route>
 
 ## 中央纪委国家监委
 
