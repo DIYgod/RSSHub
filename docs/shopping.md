@@ -16,6 +16,10 @@ pageClass: routes
 
 <Route author="NeverBehave" example="/furstar/characters/cn" path="/furstar/characters/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
 
+### 已经出售的角色列表
+
+<Route author="NeverBehave" example="/furstar/archive/cn" path="/furstar/archive/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
 ### 画师列表
 
 <Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
