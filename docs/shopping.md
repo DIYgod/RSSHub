@@ -10,6 +10,15 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## Furstar
+
+### 最新售卖角色列表
+
+<Route author="NeverBehave" example="/furstar/characters/cn" path="/furstar/characters/:lang" :paramsDesc="['语言, 留空为jp, 支持cn, en']">
+
+### 画师列表
+
+<Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang" :paramsDesc="['语言, 留空为jp, 支持cn, en']">
 ## LeBonCoin
 
 ### Ads
