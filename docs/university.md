@@ -192,6 +192,10 @@ pageClass: routes
 
 <Route author="Muxq99" example="/bwu/news" path="/bwu/news" />
 
+::: warning 注意
+由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
+:::
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
