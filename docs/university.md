@@ -186,6 +186,12 @@ pageClass: routes
 
 </Route>
 
+## 北京物资学院
+
+### 通知公告
+
+<Route author="Muxq99" example="/bwu/news" path="/bwu/news" />
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
