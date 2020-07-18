@@ -585,6 +585,18 @@ category 列表：
 
 <Route author="raptazure" example="/hitwh/today" path="hitwh/today" />
 
+## 河海大学
+
+### 河海大学图书馆 - 新闻动态
+
+<Route author="plusmultiply0" example="/hhu/libNews" path="/hhu/libNews"/>
+
+## 河海大学（常州校区）
+
+### 河海大学常州校区图书馆 - 新闻动态
+
+<Route author="plusmultiply0" example="/hhuc/libNews" path="/hhuc/libNews"/>
+
 ## 河南大学
 
 ### 河南大学
