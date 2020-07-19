@@ -16,33 +16,25 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
-## Instagram
+## Lofter
 
 ### User
 
-<RouteEn path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" anticrawler="1"/>
-
-### Hashtag
-
-<RouteEn author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']"  anticrawler="1"/>
-
-### Stories
-
-<RouteEn author="Maecenas" path="/instagram/story/:username" example="/instagram/story/instagram" :paramsDesc="['user name']"/>
-
-## Lofter
-
-::: tip
-
-Official user RSS: http://**:username**.lofter.com/rss
-
-:::
+<RouteEn author="hoilc" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter user name, in the URL']"/>
 
 ### Tag
 
 <RouteEn author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['tag name', 'ranking type, default to new, can be new date week month total']"/>
 
 ## Mastodon
+
+::: tip
+
+Offical user RSS: https://**:instance**/users/**:username**.atom or https://**:instance**/users/**:username**.rss
+
+For example, https://pawoo.net/users/pawoo_support.atom or https://pawoo.net/users/pawoo_support.rss
+
+:::
 
 ### Timeline
 
@@ -100,7 +92,7 @@ Only for self-hosted
 
 ### Channel
 
-<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']">
+<RouteEn path="/telegram/channel/:username/:searchQuery?" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" :paramsDesc="['channel name', 'search query; replace `#` by `%23` for tag searching']" radar="1">
 
 ::: tip
 
@@ -119,6 +111,12 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 <RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
 ## Twitter
+
+::: warning
+
+Due to Twitter API restrictions, the Twitter Routes currently supports tweets within 7 days
+
+:::
 
 ### User timeline
 
@@ -147,6 +145,10 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 ### Keyword
 
 <RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['keyword']" radar="1"/>
+
+### Trends
+
+<RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']" radar="1"/>
 
 ## Youtube
 

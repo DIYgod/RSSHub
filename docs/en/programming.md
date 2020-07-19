@@ -4,6 +4,12 @@ pageClass: routes
 
 # Programming
 
+## cve.mitre.org
+
+### Search Result
+
+<RouteEn author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
+
 ## GitHub
 
 ::: tip
@@ -77,6 +83,10 @@ GitHub provides some official RSS feeds:
 
 <RouteEn author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['User name']" radar="1"/>
 
+### Repo Contributors
+
+<RouteEn author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']" radar="1"/>
+
 ## GitLab
 
 ### Explore
@@ -120,8 +130,8 @@ Website: https://news.ycombinator.com/
 
 ### Hex-Rays News
 
-<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
-</Route>
+<RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
+</RouteEn>
 
 ## Kaggle
 
@@ -189,14 +199,13 @@ Website: https://news.ycombinator.com/
 
 ### issues
 
-<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+<RouteEn author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
 ## Scala
 
 ### Scala Blog
 
-<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part']" >
-part parmater can be found in the url of blog
+<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part parmater can be found in the url of blog']" >
 </RouteEn>
 
 ## Visual Studio Code Marketplace

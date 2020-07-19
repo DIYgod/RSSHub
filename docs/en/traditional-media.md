@@ -8,7 +8,7 @@ pageClass: routes
 
 ### Topics
 
-<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1"/>
+<RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1"/>
 
 ## BBC
 
@@ -26,27 +26,50 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </RouteEn>
 
+## Boston.com
+
+### News
+
+<RouteEn author="oppilate" example="/boston/technology" path="/boston/:tag?" :paramsDesc="['Tag']">
+
+Generates full-text feeds that the official feed doesn't provide.
+Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. For instance, `https://www.boston.com/tag/local-news/?feed=rss` corresponds to `/boston/local-news`.
+
+</RouteEn>
+
+## Chicago Tribune
+
+### News
+
+<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['Category', 'Subcategory']">
+
+Generates full-text that the official feed doesn't provide.
+Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
+
+
+</RouteEn>
+
 ## China Dialogue
 
 ### Topics
 
-<Route author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" :paramsDesc="['Topics']">
+<RouteEn author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" :paramsDesc="['Topics']">
 
 | Business | Cities | Climate Change            | Conservation | Governance & Law   | Health and Food | Natural Disasters | Pollution | Science & Tech   | Security | Water |
 | -------- | ------ | ------------------------- | ------------ | ------------------ | --------------- | ----------------- | --------- | ---------------- | -------- | ----- |
 | business | cities | climate-change-and-energy | conservation | governance-and-law | health-and-food | natural-disasters | pollution | science-and-tech | security | water |
 
-</Route>
+</RouteEn>
 
 ### Columns
 
-<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
+<RouteEn author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
 
 | Articles | Blogs | Culture | Reports |
 | -------- | ----- | ------- | ------- |
 | article  | blog  | culture | reports |
 
-</Route>
+</RouteEn>
 
 ## China Times
 
@@ -74,14 +97,23 @@ RTHK offical provides full text RSS, check the offical website for detail inform
 
 This route adds the missing photo and Link element. (Offical RSS doesn't have Link element may cause issue on some RSS client)
 
-<Route author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" :paramsDesc="['Language，Traditional Chinese`hk`，English`en`','Category']">
+<RouteEn author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" :paramsDesc="['Language，Traditional Chinese`hk`，English`en`','Category']">
 
 | local      | greaterchina       | international | finance      | sport      |
 | ---------- | ------------------ | ------------- | ------------ | ---------- |
 | Local News | Greater China News | World News    | Finance News | Sport News |
 
-</Route>
+</RouteEn>
 
+## SCMP
+
+### News
+
+<RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['Category']">
+
+See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
+
+</RouteEn>
 ## The Economist
 
 ### Category
@@ -124,7 +156,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### News
 
-<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+<RouteEn author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
 
 `Region`
 | Hong Kong | Taiwan | US |
@@ -136,4 +168,4 @@ Provides a better reading experience (full text articles) over the official one.
 | ------- | ----- | -------- | ------------- | ------ | ------ |
 | (Empty) | world | business | entertainment | sports | health |
 
-</Route>
+</RouteEn>
