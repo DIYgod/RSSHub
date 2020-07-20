@@ -337,6 +337,12 @@ pageClass: routes
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
 
+## 万维读者
+
+### 焦点新闻
+
+<Route author="nczitzk" example="/creaders/headline" path="/creaders/headline"/>
+
 ## 小米社区
 
 ### 圈子
@@ -385,3 +391,7 @@ pageClass: routes
 ### 回帖
 
 <Route author="LogicJake" example="/zhibo8/post/2601615" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']"/>
+
+### 滚动新闻
+
+<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>

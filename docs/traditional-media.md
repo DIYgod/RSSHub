@@ -32,11 +32,22 @@ pageClass: routes
 
 </Route>
 
+## Boston.com
+
+### 新闻
+
+<Route author="oppilate" example="/boston/technology" path="/boston/:tag?" :paramsDesc="['Tag']">
+
+生成官方未提供的全文订阅点。
+有哪些 tag 请参考 [Boston.com 官网上的订阅页面](https://www.boston.com/rss-feeds)。例如，`https://www.boston.com/tag/local-news/?feed=rss` 对应 RSSHub 路由 `/boston/local-news`。
+
+</Route>
+
 ## Chicago Tribune
 
 ### 新闻
 
-<Route author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['目录分类'，'子分类']">
+<Route author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['目录分类', '子分类']">
 
 相比官方 RSS，多提供全文。
 目录分类[见其网站](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html)。例如，`https://www.chicagotribune.com/arcio/rss/category/nation-world/` 对应的 RSSHub 路由是 `/chicagotribune/nation-world`。由于官方源的部分路由有两级，因此这里也相应需要填写子分类。
@@ -476,10 +487,6 @@ category 对应的关键词有
 ### 标签
 
 <Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']" radar="1"/>
-
-### 《香港 01》周报
-
-<Route author="MisteryMonster" example="/hk01/ebook" path="/hk01/ebook" radar="1"/>
 
 ## 香港電台
 
