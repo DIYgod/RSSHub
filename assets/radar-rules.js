@@ -2060,7 +2060,6 @@
             },
         ],
     },
-
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
@@ -2083,7 +2082,7 @@
         www: [
             {
                 title: 'User',
-                docs: 'https://docs.rsshub.app/social-media.html#yong-hu-guang-bo',
+                docs: 'https://docs.rsshub.app/design.html#behance-user-works',
                 source: ['/:user'],
                 target: (params, url, document) => {
                     const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];

@@ -18,7 +18,7 @@ pageClass: routes
 
 ## Behance
 
-### 用户 Works
+### User Works
 
 <Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user" :paramsDesc="['用户名']" radar="1">
 
