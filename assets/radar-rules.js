@@ -2068,4 +2068,18 @@
             },
         ],
     },
+    'behance.net': {
+        _name: 'Behance',
+        www: [
+            {
+                title: 'User',
+                docs: 'https://docs.rsshub.app/social-media.html#yong-hu-guang-bo',
+                source: ['/:user'],
+                target: (params, url, document) => {
+                    const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
+                    return `/behance/${uid1}`;
+                },
+            },
+        ],
+    },
 });
