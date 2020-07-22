@@ -168,11 +168,29 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
+## 才符
+
+### 用户动态
+
+<Route author="nczitzk" example="/91ddcc/user/2377095" path="/91ddcc/user/:user" :paramsDesc="['用户ID，在 URL 可以找到']"/>
+
 ## 电鸭社区
 
 ### 工作机会
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
+
+## 光谷社区
+
+### 子论坛
+
+<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:caty" :paramsDesc="['子论坛']">
+
+| 首页  | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
+| ----- | -------- | -------- | ------- | -------- | -------- | -------- |
+| index | qna      | lowshine | it      | finance  | startup  | city     |
+
+</Route>
 
 ## 虎扑
 
@@ -245,6 +263,30 @@ pageClass: routes
 
 <Route author="junfengP" example="/nowcoder/schedule" path="nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
 
+### 求职推荐
+
+<Route author="junfengP" example="/nowcoder/recommend" path="nowcoder/recommend"/>
+
+### 实习广场 & 社招广场
+
+<Route author="nczitzk" example="/nowcoder/jobcenter/1/北京/1/1/true" path="/nowcoder/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?" :paramsDesc="['招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`', '所在城市，可选城市见下表，若空则为 `全国`', '职位类型，可选职位代码见下表，若空则为 `全部`', '排序参数，可选排序参数代码见下表，若空则为 `默认`', '是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`']">
+
+可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他
+
+职位类型代码见下表：
+
+| 研发 | 测试 | 数据 | 算法 | 前端 | 产品 | 运营 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 2    | 3    | 4    | 5    | 6    | 7    | 0    |
+
+排序参数见下表：
+
+| 最新发布 | 最快处理 | 处理率最高 |
+| -------- | -------- | ---------- |
+| 1        | 2        | 3          |
+
+</Route>
+
 ## 三星盖乐世社区
 
 ### 最新帖子
@@ -295,6 +337,12 @@ pageClass: routes
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
 
+## 万维读者
+
+### 焦点新闻
+
+<Route author="nczitzk" example="/creaders/headline" path="/creaders/headline"/>
+
 ## 小米社区
 
 ### 圈子
@@ -343,3 +391,7 @@ pageClass: routes
 ### 回帖
 
 <Route author="LogicJake" example="/zhibo8/post/2601615" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']"/>
+
+### 滚动新闻
+
+<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>

@@ -92,7 +92,7 @@ Only for self-hosted
 
 ### Channel
 
-<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" radar="1">
+<RouteEn path="/telegram/channel/:username/:searchQuery?" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" :paramsDesc="['channel name', 'search query; replace `#` by `%23` for tag searching']" radar="1">
 
 ::: tip
 

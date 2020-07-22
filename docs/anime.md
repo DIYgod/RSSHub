@@ -230,6 +230,32 @@ pageClass: routes
 
 </Route>
 
+## 东方我乐多丛志
+
+### 文章
+
+<Route author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/cn/index" :paramsDesc="['语言', '类型']">
+
+语言
+
+| 中文 | 日文 | 韩文 |
+| ---- | ---- | ---- |
+| cn   | ja   | ko   |
+
+类型
+
+| 最新情报 | 连载   | 特辑       | 小说   | 漫画   | 新闻 |
+| -------- | ------ | ---------- | ------ | ------ | ---- |
+| index    | series | interviews | novels | comics | news |
+
+| 音乐点评     | 游戏测评    | 同人作品感想 | 关于本站      |
+| ------------ | ----------- | ------------ | ------------- |
+| music_review | game_review | book_review  | where_are_you |
+
+**注：** 最新情报包括后面所有类型的文章，内容较多，谨慎使用。
+
+</Route>
+
 ## 動畫瘋
 
 ### 最後更新

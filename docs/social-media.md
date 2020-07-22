@@ -244,11 +244,17 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 会员购新品上架
 
-<Route author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
+<Route author="DIYgod" example="/bilibili/mall/new/1" path="/bilibili/mall/new/:category?" :paramsDesc="['分类，默认全部，见下表']">
+
+| 全部 | 手办 | 魔力赏 | 周边 | 游戏 |
+| ---- | ---- | ------ | ---- | ---- |
+| 0    | 1    | 7      | 3    | 6    |
+
+</Route>
 
 ### 会员购作品
 
-<Route author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+<Route author="DIYgod" example="/bilibili/mall/ip/0_3000294" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
 
 ### 排行榜
 
@@ -378,13 +384,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 瞬间更新
 
-<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']" radar="1"></Route>
+<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul/:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']" radar="1"></Route>
 
 ## Telegram
 
 ### 频道
 
-<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']" radar="1">
+<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" path="/telegram/channel/:username/:searchQuery?" :paramsDesc="['频道 username', '搜索关键词, 如需搜索 tag 请用 `%23` 替代 `#`']" radar="1">
 
 ::: tip 提示
 
@@ -778,7 +784,11 @@ rule
 
 ### 博主
 
-<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:displayVideo?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '是否直接显示微博视频, 缺省 `1` 显示, 若不需要显示则填 `0` ']" anticrawler="1" radar="1"/>
+<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:displayVideo?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '是否直接显示微博视频, 缺省 `1` 显示, 若不需要显示则填 `0` ']" anticrawler="1" radar="1">
+
+部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
+
+</Route>
 
 ### 关键词
 
