@@ -48,6 +48,12 @@ pageClass: routes
 
 <Route author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## Fate Grand Order
+
+### News
+
+<Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
@@ -74,9 +80,9 @@ pageClass: routes
 
 支持的主机平台:
 
-| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
-| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
-| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
+| PS 4 | Xbox One | Switch | PC | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | -- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc | wii-u | 3ds | vita    | ios |
 
 发行类型，默认为 `new`:
 
@@ -208,16 +214,6 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1"/>
 
-## SteamDB
-
-### 免费游戏
-
-<Route author="dearrrfish" example="/steamdb/free" path="/steamdb/free/:type?" :paramsDesc="['免费类型，留空为不过滤']"/>
-
-| 全部 | 周末    | 永久 |
-| ---- | ------- | ---- |
-| 留空 | weekend | keep |
-
 ## SteamGifts
 
 ### Discussions
@@ -252,6 +248,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | ------ | ---- | -------- |
 | update | hot  | spent    |
 
+## 二柄 APP
+
+### 新闻
+
+<Route author="wushijishan" example="/erbingapp/news" path="/erbingapp/news"/>
+
 ## 公主链接
 
 ### 日服公告
@@ -272,9 +274,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="sintak" example="/gouhuo/news/switch" path="/gouhuo/news/:category" :paramsDesc="['资讯类型']">
 
-| 精选       | 海外     | 原创    | PS4 | Xboxone | PC  | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
-| ---------- | -------- | ------- | --- | ------- | --- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
-| choiceness | overseas | orignal | ps4 | xboxone | pc  | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
+| 精选       | 海外     | 原创    | PS4 | Xboxone | PC | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
+| ---------- | -------- | ------- | --- | ------- | -- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
+| choiceness | overseas | orignal | ps4 | xboxone | pc | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
 
 </Route>
 

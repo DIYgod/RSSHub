@@ -16,20 +16,6 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
-## Instagram
-
-### User
-
-<RouteEn path="/instagram/user/:id" example="/instagram/user/diygod" :paramsDesc="['Instagram id']" anticrawler="1"/>
-
-### Hashtag
-
-<RouteEn author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['Instagram hashtag']"  anticrawler="1"/>
-
-### Stories
-
-<RouteEn author="Maecenas" path="/instagram/story/:username" example="/instagram/story/instagram" :paramsDesc="['user name']"/>
-
 ## Lofter
 
 ### User
@@ -106,7 +92,7 @@ Only for self-hosted
 
 ### Channel
 
-<RouteEn path="/telegram/channel/:username" example="/telegram/channel/awesomeDIYgod" :paramsDesc="['channel name']" radar="1">
+<RouteEn path="/telegram/channel/:username/:searchQuery?" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" :paramsDesc="['channel name', 'search query; replace `#` by `%23` for tag searching']" radar="1">
 
 ::: tip
 
@@ -125,6 +111,12 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 <RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
 ## Twitter
+
+::: warning
+
+Due to Twitter API restrictions, the Twitter Routes currently supports tweets within 7 days
+
+:::
 
 ### User timeline
 

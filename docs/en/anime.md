@@ -10,6 +10,32 @@ pageClass: routes
 
 <RouteEn author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
+## Touhougarakuta
+
+### Articles
+
+<RouteEn author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/ja/news" :paramsDesc="['language', 'article type']">
+
+Languages:
+
+| Chinese | Japanese | Korean |
+| ---- | ---- | ---- |
+|  cn  |  ja  |  ko  |
+
+Article types:
+
+|  Index   | Series | Interviews | Novels | Comics | News |
+| -------- | ------ | ---------- | ------ | ------ | ---- |
+|  index   | series | interviews | novels | comics | news |
+
+| Music review | Game review | Book review  | Where are you |
+| ------------ | ----------- | ------------ | ------------- |
+| music_review | game_review | book_review  | where_are_you |
+
+**Note:** The index type includes all types of articles. Think twice before using it.
+
+</RouteEn>
+
 ## Vol.moe
 
 ### vol

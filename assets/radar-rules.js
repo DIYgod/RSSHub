@@ -43,6 +43,14 @@
                 target: '/bilibili/user/video/:uid',
             },
         ],
+        manga: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili-man-hua-geng-xin',
+                source: '/detail/:comicid',
+                target: '/bilibili/manga/update/:comicid',
+            },
+        ],
     },
     'weibo.com': {
         _name: '微博',
@@ -447,27 +455,6 @@
             },
         ],
     },
-    'instagram.com': {
-        _name: 'Instagram',
-        www: [
-            {
-                title: '用户',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/:id',
-                target: (params) => {
-                    if (params.id !== 'explore' && params.id !== 'developer') {
-                        return '/instagram/user/:id';
-                    }
-                },
-            },
-            {
-                title: '标签',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/explore/tags/:tag',
-                target: '/instagram/tag/:tag',
-            },
-        ],
-    },
     'swufe.edu.cn': {
         _name: '西南财经大学',
         it: [
@@ -493,6 +480,16 @@
                 docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua',
                 source: '/comics/anime/:id',
                 target: '/shuhui/comics/:id',
+            },
+        ],
+    },
+    'www.chicagotribune.com': {
+        _name: 'Chicago Tribune',
+        www: [
+            {
+                title: 'Chicago Tribune',
+                docs: 'https://docs.rsshub.app/traditional_media.html#chicago-tribune',
+                source: '/',
             },
         ],
     },
@@ -1561,10 +1558,20 @@
     'biquge5200.com': {
         www: [
             {
-                title: '当前小说',
-                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge',
+                title: 'biquge5200.com',
+                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge5200-com',
                 source: '/:id',
                 target: '/novel/biquge/:id',
+            },
+        ],
+    },
+    'biquge.info': {
+        www: [
+            {
+                title: 'biquge.info',
+                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge-info',
+                source: '/:id',
+                target: '/novel/biqugeinfo/:id',
             },
         ],
     },
@@ -1745,6 +1752,328 @@
                 docs: 'https://docs.rsshub.app/bbs.html#etoland',
                 source: ['/bbs/board.php', '/plugin/mobile/board.php'],
                 target: (params, url) => `/etoland/${new URL(url).searchParams.get('bo_table')}`,
+            },
+        ],
+    },
+    'qq.com': {
+        _name: '腾讯',
+        'mp.weixin': [
+            {
+                title: '微信公众号栏目',
+                docs: 'https://docs.rsshub.app/new-media.html#gong-zhong-hao-lan-mu-fei-tui-song-li-shi-xiao-xi',
+                source: '/mp/homepage',
+                target: (params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}`,
+            },
+        ],
+        egame: [
+            {
+                title: '企鹅电竞直播间',
+                docs: 'https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo',
+                source: '/:id',
+                target: (params) => {
+                    if (params.id.match(/^\d+$/)) {
+                        return '/egameqq/room/:id';
+                    }
+                },
+            },
+        ],
+    },
+    'javbus.com': {
+        _name: 'JavBus',
+        www: [
+            {
+                title: '首页',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/',
+                target: '/javbus/home',
+            },
+            {
+                title: '分类',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/genre/:gid',
+                target: '/javbus/genre/:gid',
+            },
+            {
+                title: '演员',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/star/:sid',
+                target: '/javbus/star/:sid',
+            },
+            {
+                title: '系列',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/series/:seriesid',
+                target: '/javbus/series/:seriesid',
+            },
+            {
+                title: '首页 / 步兵',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/uncensored',
+                target: '/javbus/uncensored/home',
+            },
+            {
+                title: '分类 / 步兵',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/uncensored/genre/:gid',
+                target: '/javbus/uncensored/genre/:gid',
+            },
+            {
+                title: '演员 / 步兵',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/uncensored/star/:sid',
+                target: '/javbus/uncensored/star/:sid',
+            },
+            {
+                title: '系列 / 步兵',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/uncensored/series/:seriesid',
+                target: '/javbus/uncensored/series/:seriesid',
+            },
+        ],
+    },
+    'javbus.one': {
+        _name: 'JavBus',
+        www: [
+            {
+                title: '首页 / 欧陆风云',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/',
+                target: '/javbus/western/home',
+            },
+            {
+                title: '分类 / 欧陆风云',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/genre/:gid',
+                target: '/javbus/western/genre/:gid',
+            },
+            {
+                title: '演员 / 欧陆风云',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/star/:sid',
+                target: '/javbus/western/star/:sid',
+            },
+            {
+                title: '系列 / 欧陆风云',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/series/:seriesid',
+                target: '/javbus/western/series/:seriesid',
+            },
+        ],
+    },
+    'sexinsex.net': {
+        _name: 'sexinsex',
+        '.': [
+            {
+                title: '分区帖子',
+                docs: 'https://docs.rsshub.app/multimedia.html#sexinsex',
+                source: '/bbs/:path',
+                target: (params, url) => {
+                    let pid, typeid;
+                    const static_matched = params.path.match(/forum-(\d+)-\d+.html/);
+                    if (static_matched) {
+                        pid = static_matched[1];
+                    } else if (params.path === 'forumdisplay.php') {
+                        pid = new URL(url).searchParams.get('fid');
+                        typeid = new URL(url).searchParams.get('typeid');
+                    } else {
+                        return false;
+                    }
+                    return `/sexinsex/${pid}/${typeid ? typeid : ''}`;
+                },
+            },
+        ],
+    },
+    't66y.com': {
+        _name: '草榴社区',
+        www: [
+            {
+                title: '分区帖子',
+                docs: 'https://docs.rsshub.app/multimedia.html#cao-liu-she-qu',
+                source: '/thread0806.php',
+                target: (params, url) => {
+                    const id = new URL(url).searchParams.get('fid');
+                    const type = new URL(url).searchParams.get('type');
+                    return `/t66y/${id}/${type ? type : ''}`;
+                },
+            },
+        ],
+    },
+    'umass.edu': {
+        _name: 'UMASS Amherst',
+        ece: [
+            {
+                title: 'ECE News',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/news',
+                target: '/umass/amherst/ecenews',
+            },
+        ],
+        'www.cics': [
+            {
+                title: 'CICS News',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/news',
+                target: '/umass/amherst/csnews',
+            },
+        ],
+    },
+    'lofter.com': {
+        _name: 'Lofter',
+        www: [
+            {
+                title: '话题 (标签)',
+                docs: 'https://docs.rsshub.app/social-media.html#lofter',
+                source: ['/tag/:name', '/tag/:name/:type'],
+                target: (params) => `/lofter/tag/${params.name}/${params.type || ''}`,
+            },
+        ],
+    },
+
+    'yuque.com': {
+        _name: '语雀',
+        www: [
+            {
+                title: '知识库',
+                docs: 'https://docs.rsshub.app/study.html#yu-que',
+                source: ['/:space/:book'],
+                target: (params, url, document) => {
+                    const match = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/);
+                    if (match && match[1]) {
+                        const dataStr = match[1];
+                        try {
+                            const appData = JSON.parse(decodeURIComponent(dataStr));
+                            return `/yuque/doc/${appData.book.id}`;
+                        } catch (e) {
+                            // pass
+                        }
+                    }
+                },
+            },
+        ],
+    },
+    'bjeea.com': {
+        _name: '北京考试院',
+        www: [
+            {
+                title: '首页 / 通知公告',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/bjeeagg'],
+                target: '/gov/beijing/bjeea/bjeeagg',
+            },
+            {
+                title: '首页 / 招考政策',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/zkzc'],
+                target: '/gov/beijing/bjeea/zkzc',
+            },
+            {
+                title: '首页 / 自考快递',
+                docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
+                source: ['/html/zkkd'],
+                target: '/gov/beijing/bjeea/zkkd',
+            },
+        ],
+    },
+    'hk01.com': {
+        _name: '香港01',
+        www: [
+            {
+                title: '最 Hit',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: ['/hot', '/'],
+                target: '/hk01/hot',
+            },
+            {
+                title: 'zone',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/zone/:id/:title',
+                target: '/hk01/zone/:id',
+            },
+            {
+                title: 'channel',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/channel/:id/:title',
+                target: '/hk01/channel/:id',
+            },
+            {
+                title: 'issue',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/issue/:id/:title',
+                target: '/hk01/issue/:id',
+            },
+            {
+                title: 'tag',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/tag/:id/:title',
+                target: '/hk01/tag/:id',
+            },
+        ],
+    },
+    'douban.com': {
+        _name: '豆瓣',
+        www: [
+            {
+                title: '用户的广播',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/people/:user/',
+                target: (params, url, document) => {
+                    const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
+                    return uid ? `/douban/people/${uid}/status` : '';
+                },
+            },
+        ],
+    },
+    'okjike.com': {
+        _name: '即刻',
+        m: [
+            {
+                title: '用户动态',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-yong-hu-dong-tai',
+                source: '/reposts/:repostId',
+                target: (params, url, document) => {
+                    const uid = document.querySelector('.avatar').getAttribute('href').replace('/users/', '');
+                    return uid ? `/jike/user/${uid}` : '';
+                },
+            },
+            {
+                title: '圈子',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-quan-zi',
+                source: '/topics/:id',
+                target: '/jike/topic/:id',
+            },
+            {
+                title: '圈子 - 纯文字',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-quan-zi-chun-wen-zi',
+                source: '/topics/:id',
+                target: '/jike/topic/text/:id',
+            },
+        ],
+    },
+    'ems.com.cn': {
+        _name: '中国邮政速递物流',
+        www: [
+            {
+                title: '新闻',
+                docs: 'https://docs.rsshub.app/other.html#zhong-guo-you-zheng-su-di-wu-liu',
+                source: '/aboutus/xin_wen_yu_shi_jian.html',
+                target: '/ems/news',
+            },
+        ],
+    },
+    'nppa.gov.cn': {
+        _name: '国家新闻出版署',
+        www: [
+            {
+                title: '栏目',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/channels/:channel',
+                target: (params, url) => `/gov/nppa/${/nppa\/channels\/(\d+)\.shtml/.exec(url)[1]}`,
+            },
+            {
+                title: '内容',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/contents/:channel/:content',
+                target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
             },
         ],
     },

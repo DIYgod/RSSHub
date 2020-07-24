@@ -47,12 +47,12 @@ pageClass: routes
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
-|    0     | Jeopardy[解题]                   |
-|    1     | Attack with Defense[AwD 攻防]    |
-|    2     | Robo Hacking Game[RHG AI 自动化] |
-|    3     | Real World[RW 真实世界]          |
-|    4     | King of The Hill[KoH 抢占山头]   |
-|    5     | Mix[混合]                        |
+|     0    | Jeopardy[解题]                   |
+|     1    | Attack with Defense[AwD 攻防]    |
+|     2    | Robo Hacking Game[RHG AI 自动化] |
+|     3    | Real World[RW 真实世界]          |
+|     4    | King of The Hill[KoH 抢占山头]   |
+|     5    | Mix[混合]                        |
 
 > class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
 
@@ -107,6 +107,31 @@ pageClass: routes
 ### 新闻
 
 <Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
+## 唧唧堂
+
+### 论文
+
+<Route author="xfangbao" example="/jijitang/publication" path="/jijitang/publication/" />
+
+### 文档
+
+<Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" :paramsDesc="['类别，latest 或者 recommand']"/>
+
+## 金山词霸
+
+### 每日一句
+
+<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['展示的条目数（最小1，最大7，默认1，只展示当天的条目）', '图片格式']">
+
+| `:img_type` | 图片格式 |
+| ----------- | -------- |
+| original    | 原图     |
+| medium      | 尺寸优化 |
+| thumbnail   | 缩略图   |
+| poster      | 文艺海报 |
+
+</Route>
 
 ## 领研
 

@@ -32,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 国家突发事件预警信息发布网
+
+### 当前生效预警
+
+<Route author="nczitzk" example="/12379" path="/12379/index"/>
+
 ## 国家应急广播网
 
 ### 预警信息
@@ -41,6 +47,12 @@ pageClass: routes
 ### 国内新闻
 
 <Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
+
+## 上海市生态环境局
+
+### 空气质量
+
+<Route author="nczitzk" example="/gov/shanghai/sthj" path="/gov/shanghai/sthj"/>
 
 ## 停电通知
 

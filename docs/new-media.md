@@ -4,6 +4,12 @@ pageClass: routes
 
 # 新媒体
 
+## 199IT
+
+### 首页更新
+
+<Route author="xfangbao" example="/199it" path="/199it" />
+
 ## 36kr
 
 ### 资讯
@@ -64,6 +70,12 @@ pageClass: routes
 
 </Route>
 
+## Aljazeera 半岛网
+
+### 新闻
+
+<Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
+
 ## BOF
 
 ### 首页
@@ -104,11 +116,17 @@ pageClass: routes
 
 <Route author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['語言']">
 
-| 繁體中文 | 簡體中文 | US  | 日文     |
-| -------- | -------- | --- | -------- |
-| chinese  | cn       | us  | japanese |
+| 繁體中文 | 簡體中文 | US | 日文     |
+| -------- | -------- | -- | -------- |
+| chinese  | cn       | us | japanese |
 
 </Route>
+
+## Grub Street
+
+### Posts
+
+<Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
 ## iDownloadBlog
 
@@ -201,6 +219,7 @@ pageClass: routes
 ### 首页
 
 <Route author="EsuRt" example="/mittrchina/article" path="/mittrchina"/>
+
 ## Nautilus
 
 ### 话题
@@ -277,13 +296,13 @@ pageClass: routes
 
 ## Vulture
 
-<Route author="loganrockmore" example="/vulture/movies" path="/vulture/:type" :paramsDesc="['The sub-site name']">
+<Route author="loganrockmore" example="/vulture/movies" path="/vulture/:type/:excludetags?" :paramsDesc="['The sub-site name', '逗号分隔的标签列表。 如果文章包含这些标签之一，则该文章将从RSS feed中排除']">
 
 Supported sub-sites:
 
-| TV  | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
-| --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
-| tv  | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
+| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+| -- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
+| tv | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
 
 </Route>
 
@@ -325,6 +344,12 @@ Supported sub-sites:
 ### 快讯
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
+
+## 百度知道日报
+
+### 精选
+
+<Route author="1813927768" example="/baidu/daily" path="/baidu/daily"/>
 
 ## 白鲸出海
 
@@ -404,6 +429,18 @@ Supported sub-sites:
 ### 标签
 
 <Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
+
+## 电商报
+
+### 分区
+
+<Route author="FlashWingShadow" example="/dsb/area/lingshou" path="/dsb/area/:area" :paramsDesc="['分区']"/>
+
+area 分区选项
+
+| 零售     | 物流  | O2O | 金融    | B2B | 人物  | 跨境    | 行业观察 |
+| -------- | ----- | --- | ------- | --- | ----- | ------- | -------- |
+| lingshou | wuliu | O2O | jinrong | B2B | renwu | kuajing | guancha  |
 
 ## 电商在线
 
@@ -665,6 +702,23 @@ Supported sub-sites:
 
 <Route author="kt286" example="/kkj/news" path="/kkj/news"/>
 
+## 快媒体
+
+### 首页更新
+
+<Route author="xfangbao" example="/kuai" path="/kuai" />
+
+### 具体栏目更新
+
+<Route author="xfangbao" example="/kuai/1" path="/kuai/:id" />
+
+具体栏目编号，去网站上看标签
+
+| 网址                                                                                              | 对应路由 |
+| ------------------------------------------------------------------------------------------------- | -------- |
+| kuai.media                                                                                        | /kuai    |
+| [www.kuai.media/portal.php?mod=list&catid=38](http://www.kuai.media/portal.php?mod=list&catid=38) | /kuai/38 |
+
 ## 快知
 
 ### 话题
@@ -700,6 +754,16 @@ Supported sub-sites:
 ### 新闻
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+## 鸟哥笔记
+
+### 今日事
+
+<Route author="KotoriK" example="/ngbj/today" path="/ngbj/today"/>
+
+### 分类目录
+
+<Route author="KotoriK" example="/ngbj/cat/103" path="/ngbj/cat/:cat" :paramsDesc="['如https://www.niaogebiji.com/cat/103,最后的数字就是要填写在这的id']"/>
 
 ## 派代
 
@@ -922,6 +986,18 @@ Supported sub-sites:
 
 </Route>
 
+## 外接大脑
+
+### 文章
+
+<Route author="nczitzk" example="/waijiedanao/article/all" path="/waijiedanao/article/:caty" :paramsDesc="['文章分类']">
+
+| 全部 | 新闻 | 金融    | 区块链     | 互联网   | 科技 | 新媒体   | 商业思考 | 行业 100 强 | 电商      | 娱乐          | 生活 |
+| ---- | ---- | ------- | ---------- | -------- | ---- | -------- | -------- | ----------- | --------- | ------------- | ---- |
+| all  | news | finance | blockchain | internet | tech | newmedia | business | hundred     | ecommerce | entertainment | life |
+
+</Route>
+
 ## 万联网
 
 ### 资讯
@@ -943,6 +1019,30 @@ Supported sub-sites:
 1.  在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
 2.  打开网易号文章页面。
 3.  通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
+
+</Route>
+
+## 网易新闻
+
+### 排行榜
+
+<Route author="nczitzk" example="/netease/news/rank/whole/click/day" path="/netease/news/rank/:category?/:type?/:time?" :paramsDesc="['新闻分类，参见下表，默认为“全站”','排行榜类型，“点击榜”对应`click`，“跟贴榜”对应`follow`，默认为“点击榜”','统计时间，“1小时”对应`hour`，“24小时”对应`day`，“本周”对应`week`，“本月”对应`month`，默认为“24小时”']">
+
+::: tip 提示
+
+全站新闻 **点击榜** 的统计时间仅包含 “24 小时”、“本周”、“本月”，不包含 “1 小时”。即可用的`time`参数为`day`、`week`、`month`。
+
+其他分类 **点击榜** 的统计时间仅包含 “1 小时”、“24 小时”、“本周”。即可用的`time`参数为`hour`、`day`、`week`。
+
+而所有分类（包括全站）的 **跟贴榜** 的统计时间皆仅包含 “24 小时”、“本周”、“本月”。即可用的`time`参数为`day`、`week`、`month`。
+
+:::
+
+新闻分类：
+
+| 全站  | 新闻 | 娱乐          | 体育   | 财经  | 科技 | 汽车 | 女人 | 房产  | 游戏 | 旅游   | 教育 |
+| ----- | ---- | ------------- | ------ | ----- | ---- | ---- | ---- | ----- | ---- | ------ | ---- |
+| whole | news | entertainment | sports | money | tech | auto | lady | house | game | travel | edu  |
 
 </Route>
 
@@ -989,6 +1089,20 @@ Supported sub-sites:
 ### 公众号 (二十次幂来源)
 
 <Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众号 (外接大脑来源)
+
+<Route author="BugWriter2" example="/wechat/wjdn/5d5e683c82339df472988f59" path="/wechat/wjdn/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众号栏目 (非推送 & 历史消息)
+
+<Route author="MisteryMonster" example="/wechat/mp/homepage/MzA3MDM3NjE5NQ==/16" path="/wechat/mp/homepage/:biz/:hid/:cid?" :paramsDesc="['公众号id', '分页id', '页内栏目']" radar="1" anticrawler="1">
+
+只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 <https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4>，`biz` 为 `MzA3MDM3NjE5NQ==`，`hid` 为 `4`。
+
+有些页面里会有分栏， `cid` 可以通过元素选择器选中栏目查看`data-index`。如[链接](https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4)里的 `京都职人` 栏目的 `cid` 为 `0`，`文艺时光` 栏目的 `cid` 为 `2`。如果不清楚的话最左边的栏目为`0`，其右方栏目依次递增 `1`。
+
+</Route>
 
 ### 公众平台系统公告栏目
 

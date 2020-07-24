@@ -4,16 +4,28 @@ pageClass: routes
 
 # 科学期刊
 
+## arXiv
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" :paramsDesc="['查询语句']" anticrawler="1">
+
+参见 [arXiv API 用户手册](https://arxiv.org/help/api/user-manual) 查看所有查询参数。
+
+路由中的参数 query 处填写 `http://export.arxiv.org/api/query?` 后的内容。
+
+</Route>
+
 ## Cell
 
 ### 主刊
 
 <Route author="yech1990" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
 
-| `:category` |      类型说明       | 路由                                                       |
+| `:category` |       类型说明      | 路由                                                       |
 | :---------: | :-----------------: | ---------------------------------------------------------- |
 |   current   | 本期刊物 (默认选项) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
-|   inpress   |      在线发表       | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
+|   inpress   |       在线发表      | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
 
 </Route>
 
@@ -33,22 +45,34 @@ pageClass: routes
 
 <Route author="emdoe HenryQW" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" supportScihub="1"/>
 
+## IEEE Xplore
+
+### 作者
+
+<Route author="queensferryme" example="/ieee/author/37283006000/newest/10" path="/ieee/author/:aid/:sortType/:count?" :paramsDesc="['作者 ID，可以在 URL 中找到，例如 [https://ieeexplore.ieee.org/author/37283006000](https://ieeexplore.ieee.org/author/37283006000)', '排序方式，详细见下', '数量限制，默认为 10 篇']">
+
+| 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
+| ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
+| `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
+
+</Route>
+
 ## Nature 系列
 
 ### 最新成果
 
 <Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
-|  `:journal`   |           期刊名            | 路由                                                                               |
+|   `:journal`  |            期刊名           | 路由                                                                               |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
-|    nature     |           Nature            | [/nature/research/nature](https://rsshub.app/nature/research/nature)               |
-|      nbt      |    Nature Biotechnology     | [/nature/research/nbt](https://rsshub.app/nature/research/nbt)                     |
+|     nature    |            Nature           | [/nature/research/nature](https://rsshub.app/nature/research/nature)               |
+|      nbt      |     Nature Biotechnology    | [/nature/research/nbt](https://rsshub.app/nature/research/nbt)                     |
 |     neuro     |     Nature Neuroscience     | [/nature/research/neuro](https://rsshub.app/nature/research/neuro)                 |
-|      ng       |       Nature Genetics       | [/nature/research/ng](https://rsshub.app/nature/research/ng)                       |
-|      ni       |      Nature Immunology      | [/nature/research/ni](https://rsshub.app/nature/research/ni)                       |
+|       ng      |       Nature Genetics       | [/nature/research/ng](https://rsshub.app/nature/research/ng)                       |
+|       ni      |      Nature Immunology      | [/nature/research/ni](https://rsshub.app/nature/research/ni)                       |
 |     nmeth     |        Nature Method        | [/nature/research/nmeth](https://rsshub.app/nature/research/nmeth)                 |
-|     nchem     |      Nature Chemistry       | [/nature/research/nchem](https://rsshub.app/nature/research/nchem)                 |
-|     nmat      |      Nature Materials       | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
+|     nchem     |       Nature Chemistry      | [/nature/research/nchem](https://rsshub.app/nature/research/nchem)                 |
+|      nmat     |       Nature Materials      | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
 -   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
@@ -62,15 +86,15 @@ pageClass: routes
 
 <Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
 
-|  `:journal`   |           期刊名            | 路由                                                                                               |
+|   `:journal`  |            期刊名           | 路由                                                                                               |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
-|      nbt      |    Nature Biotechnology     | [/nature/news-and-comment/nbt](https://rsshub.app/nature/news-and-comment/nbt)                     |
+|      nbt      |     Nature Biotechnology    | [/nature/news-and-comment/nbt](https://rsshub.app/nature/news-and-comment/nbt)                     |
 |     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](https://rsshub.app/nature/news-and-comment/neuro)                 |
-|      ng       |       Nature Genetics       | [/nature/news-and-comment/ng](https://rsshub.app/nature/news-and-comment/ng)                       |
-|      ni       |      Nature Immunology      | [/nature/news-and-comment/ni](https://rsshub.app/nature/news-and-comment/ni)                       |
+|       ng      |       Nature Genetics       | [/nature/news-and-comment/ng](https://rsshub.app/nature/news-and-comment/ng)                       |
+|       ni      |      Nature Immunology      | [/nature/news-and-comment/ni](https://rsshub.app/nature/news-and-comment/ni)                       |
 |     nmeth     |        Nature Method        | [/nature/news-and-comment/nmeth](https://rsshub.app/nature/news-and-comment/nmeth)                 |
-|     nchem     |      Nature Chemistry       | [/nature/news-and-comment/nchem](https://rsshub.app/nature/news-and-comment/nchem)                 |
-|     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                   |
+|     nchem     |       Nature Chemistry      | [/nature/news-and-comment/nchem](https://rsshub.app/nature/news-and-comment/nchem)                 |
+|      nmat     |       Nature Materials      | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
 -   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
@@ -120,12 +144,12 @@ pageClass: routes
 
 | `:journal` |             期刊名             | 路由                                                                               |
 | :--------: | :----------------------------: | ---------------------------------------------------------------------------------- |
-|  science   |            Science             | [/sciencemag/current/science](https://rsshub.app/sciencemag/current/science)       |
+|   science  |             Science            | [/sciencemag/current/science](https://rsshub.app/sciencemag/current/science)       |
 |  advances  |        Science Advances        | [/sciencemag/current/advances](https://rsshub.app/sciencemag/current/advances)     |
 | immunology |       Science Immunology       | [/sciencemag/current/immunology](https://rsshub.app/sciencemag/current/immunology) |
 |  robotics  |        Science Robotics        | [/sciencemag/current/robotics](https://rsshub.app/sciencemag/current/robotics)     |
-|    stke    |       Science Signaling        | [/sciencemag/current/stke](https://rsshub.app/sciencemag/current/stke)             |
-|    stm     | Science Translational Medicine | [/sciencemag/current/stm](https://rsshub.app/sciencemag/current/stm)               |
+|    stke    |        Science Signaling       | [/sciencemag/current/stke](https://rsshub.app/sciencemag/current/stke)             |
+|     stm    | Science Translational Medicine | [/sciencemag/current/stm](https://rsshub.app/sciencemag/current/stm)               |
 
 -   通过 `/sciencemag/current/` + “杂志简写” 来获取对应杂志最新一期的文章（Current Issue）。
     若参数置空（`/sciencemag/current`），则默认获取主刊（Science）的最新文章。
@@ -150,6 +174,15 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## Stork 文献鸟订阅
+
+### 关键词
+
+<Route author="xraywu" example="/stork/keyword/409159/R4j3Hbn5ia" path="/stork/keyword/:trackID/:displayKey" :paramsDesc="['关键词订阅 URL 上的 trackID 参数','关键词订阅 URL 上的  displayKey 参数']">
+
+在 Stork 上注册并订阅关键词后，在 `我的` -> `关键词` 中可找到对应关键词的订阅 URL。URL 后的两个参数即为路由参数。
+
+</Route>
 ## X-MOL 平台
 
 ### 期刊

@@ -30,6 +30,16 @@ pageClass: routes
 
 见 [#AGE 动漫](/anime.html#age-dong-man)
 
+## Avgle
+
+### 视频列表
+
+<Route author="I2IMk" example="/avgle/videos" path="/avgle/videos/:order?/:time?/:top?" :paramsDesc="['视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg` 最长, 默认 `mv`', '视频的添加时间, `a` 所有 / `t` 今天 / `d` 本周 / `m` 本月, 默认 `m`', '按次序获取的视频数, 不大于 `250`, 默认 `30`']"/>
+
+### 视频搜索
+
+<Route author="I2IMk" example="/avgle/search/橋本ありな" path="/avgle/search/:keyword/:order?/:time?/:top?" :paramsDesc="['搜索的关键词', '视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg` 最长, 默认 `mr`', '视频的添加时间, `a` 所有 / `t` 今天 / `d` 本周 / `m` 本月, 默认 `a`', '按次序获取的视频数, 不大于 `250`, 默认 `30`']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
@@ -301,6 +311,12 @@ pageClass: routes
 
 </Route>
 
+## 场库
+
+### 今日精选
+
+<Route author="Wenmoux" example="/changku" path="/changku"/>
+
 ## 低端影视
 
 ### 影视剧集更新
@@ -349,6 +365,18 @@ pageClass: routes
 
 <Route author="SunShinenny" example="/kaiyan/index" path="/kaiyan/index"/>
 
+## 荔枝 FM
+
+### 电台更新
+
+<Route author="nczitzk" example="/lizhi/user/27151442948222380" path="/lizhi/user/:id" :paramsDesc="['用户 id，可以在电台的 URL 中找到']"/>
+
+## 猫耳 FM
+
+### 广播剧 / 有声漫画
+
+<Route author="FlashWingShadow" example="/missevan/drama/28499" path="/missevan/drama/:id" :paramsDesc="['剧集 id，在剧集主页 URL 中可以找到']"/>
+
 ## 猫眼电影
 
 ### 正在热映
@@ -383,27 +411,41 @@ pageClass: routes
 
 <Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1"/>
 
+## 飘花电影网
+
+### 今日热门
+
+<Route author="nczitzk" example="/piaohua/hot" path="/piaohua/hot" />
+
 ## 蜻蜓 FM
 
 ### 专辑
 
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
 
+## 人人影视
+
+### 评测推荐
+
+<Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
+
+### 今日更新
+
+<Route author="alcarl" example="/yyets/todayfilelist" path="/yyets/todayfilelist" />
+
 ## 色花堂中文论坛
 
-### 原创 BT 电影
+### 分区帖子
 
 <Route author="qiwihui junfengP" example="/dsndsht23/36/368" path="/dsndsht23/:subforumid?/:type?" supportBT="1" :paramsDesc="['版块 id 或板块名称（见下表）, 为空默认高清中文字幕', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+
+**原创 BT 电影**
 
 | 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV |
 | -------- | -------- | ------------ | ------------ | ------------ | -------- | ------------ | ------- | -------- | -------- | ----------- | ------------ |
 | mrhj     | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | yzmzym       | vr      | omwm     | dmyc     | ai          | ydsc         |
 
-</Route>
-
-### 色花图片
-
-<Route author="junfengP" example="/dsndsht23/picture/hrxazp" path="/dsndsht23/picture/:subforumid" :paramsDesc="['子版块 id']">
+**色花图片**
 
 | 华人性爱自拍 | 华人街拍区 | 亚洲性爱 | 欧美性爱 | 卡通动漫 |
 | ------------ | ---------- | -------- | -------- | -------- |
@@ -467,9 +509,9 @@ pageClass: routes
 
 <Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签tag，视频清晰度']" />
 
-| 全部 | 蓝光   | 1080P | 720P | 3D  | WEB-DL |
-| ---- | ------ | ----- | ---- | --- | ------ |
-| 留空 | bluray | 1080p | 720p | 3d  | webdl  |
+| 全部 | 蓝光   | 1080P | 720P | 3D | WEB-DL |
+| ---- | ------ | ----- | ---- | -- | ------ |
+| 留空 | bluray | 1080p | 720p | 3d | webdl  |
 
 ## 中国广播
 
@@ -499,12 +541,20 @@ pageClass: routes
 
 ## 字幕组（ZiMuZu.tv）
 
+### 影视
+
 ::: tip 提示
 
 跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
 
 :::
 
-### 影视
-
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
+
+### 排行榜
+
+<Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']">
+
+例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
+
+</Route>

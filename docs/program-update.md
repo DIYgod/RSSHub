@@ -4,6 +4,16 @@ pageClass: routes
 
 # 程序更新
 
+## AMD
+
+### 显卡驱动更新
+
+<Route author="ysc3839" example="/amd/graphicsdrivers/731F/C0" path="/amd/graphicsdrivers/:id/:rid?" :paramsDesc="['id', 'rid']">
+
+可从设备管理器查看 id 和 rid。如 `PCI\VEN_1002&DEV_731F&SUBSYS_05771043&REV_C1`，则 id 为 `731F`，rid 为 `C1`。
+
+</Route>
+
 ## Apkpure
 
 ### Versions
@@ -67,6 +77,16 @@ pageClass: routes
 ### 扩展程序更新
 
 <Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
+
+## cpython
+
+### 正式版本发布
+
+<Route author="trim21" example="/cpython" path="/cpython" />
+
+### 所有版本发布
+
+<Route author="trim21" example="/cpython/pre" path="/cpython/pre" />
 
 ## CurseForge
 
@@ -132,9 +152,9 @@ pageClass: routes
 
 ## Microsoft Edge
 
-### 扩展更新
+### 外接程序更新
 
-<Route author="hoilc" example="/edge/addon/iikmkjmpaadaobahmlepeloendndfphd" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
+<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
 
 ## Minecraft
 
@@ -250,8 +270,20 @@ pageClass: routes
 
 <Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1"/>
 
+## 腾讯柠檬 Lab
+
+### 柠檬精选 Mac Apps
+
+<Route author="HenryQW" example="/tencent/lemon" path="/tencent/lemon"/>
+
 ## 腾讯云移动直播 SDK
 
 ### 更新日志
 
 <Route author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
+
+## 小米应用商店
+
+### 金米奖
+
+<Route author="nczitzk" example="/mi/golden" path="/mi/golden"/>
