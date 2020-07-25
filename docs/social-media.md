@@ -840,6 +840,16 @@ rule
 
 <Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" />
 
+## 新榜
+
+::: warning 注意
+部署时需要配置 NEWRANK_USERNAME、NEWRANK_PASSWORD，具体见部署文档
+:::
+
+### 微信公众号
+
+<Route author="BossDoge" example="/newrank/wechat/chijiread" path="/newrank/wechat/:wxid" :paramsDesc="['微信号，若微信号与新榜信息不一致，以新榜为准']" anticrawler="1"/>
+
 ## 知乎
 
 ### 收藏夹
