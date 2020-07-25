@@ -346,7 +346,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户
 
-<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id" :paramsDesc="['Instagram 用户 id']" />
+<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id" :paramsDesc="['Instagram 用户 id']" radar="1" />
 
 ## pixiv
 
