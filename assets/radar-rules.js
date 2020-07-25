@@ -2077,4 +2077,21 @@
             },
         ],
     },
+    'acfun.cn': {
+        _name: 'AcFun',
+        www: [
+            {
+                tilte: '番剧',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-fan-ju',
+                source: '/bangumi/:id',
+                target: (params) => `/acfun/bangumi/${params.id.replace('aa', '')}`,
+            },
+            {
+                title: '用户投稿',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao',
+                source: '/u/:id',
+                target: '/acfun/user/video/:id',
+            },
+        ],
+    },
 });
