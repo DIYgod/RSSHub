@@ -850,9 +850,13 @@ rule
 
 <Route author="BossDoge" example="/newrank/wechat/chijiread" path="/newrank/wechat/:wxid" :paramsDesc="['微信号，若微信号与新榜信息不一致，以新榜为准']" anticrawler="1"/>
 
-### 抖音
+### 抖音短视频
 
 <Route author="BossDoge" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" :paramsDesc="['抖音ID，可在新榜账号详情 URL 中找到']" anticrawler="1"/>
+
+::: warning 注意
+免费版账户抖音每天查询次数20次，如需增加次数可购买新榜会员或等待未来多账户支持
+:::
 
 ## 知乎
 
