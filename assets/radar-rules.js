@@ -1829,6 +1829,24 @@
                 source: '/uncensored/series/:seriesid',
                 target: '/javbus/uncensored/series/:seriesid',
             },
+            {
+                title: 'director',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/director/:directorid',
+                target: '/javbus/director/:directorid',
+            },
+            {
+                title: 'label',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/label/:labelid',
+                target: '/javbus/label/:labelid',
+            },
+            {
+                title: 'studio',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/studio/:studioid',
+                target: '/javbus/studio/:studioid',
+            },
         ],
     },
     'javbus.one': {
