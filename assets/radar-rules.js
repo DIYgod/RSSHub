@@ -908,26 +908,6 @@
 
     'ithome.com': {
         _name: 'IT 之家',
-        '.': [
-            {
-                title: '24 小时阅读榜',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/24h',
-            },
-            {
-                title: '7 天最热',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/7days',
-            },
-            {
-                title: '月榜',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/monthly',
-            },
-        ],
         it: [
             {
                 title: 'IT 资讯',
