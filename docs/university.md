@@ -757,6 +757,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="jackyu1996" example="/ccnu/career" path="/ccnu/career" />
 
+## 吉林大学
+
+### 校内通知
+
+<Route author="276562578" example="/jlu/oa" path="/jlu" />
+
 ## 江南大学
 
 ### 教务处通知
