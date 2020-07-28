@@ -2103,7 +2103,7 @@
                 docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
                 source: '/book/:id',
                 target: '/manxiaosi/book/:id',
-            }
+            },
         ],
     },
 });
