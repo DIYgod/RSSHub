@@ -28,7 +28,7 @@ pageClass: routes
 
 ### New Dropzone Actions
 
-<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
+<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
 
 ## Chocolatey
 
