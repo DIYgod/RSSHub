@@ -196,6 +196,12 @@ pageClass: routes
 
 见 [#playstation](/game.html#playstation)
 
+## Quicker
+
+### 版本更新
+
+<Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
+
 ## RSSHub
 
 ### 有新路由啦

@@ -6,7 +6,7 @@ about: Submit discovered bugs
 <!--
 Please ensure you have read [documentation](https://docs.rsshub.app/en), and provide all the information required by this template, otherwise the issue will be closed immediately.
 
-Due to the anti-crawling of the certain source website, some RSS of the demo will return status code 403. This is not an issue caused by RSSHub and please do not report it.
+Due to the anti-crawling policy implemented by certain websites, some RSS routes provided by the demo will return status code 403. This is not an issue caused by RSSHub and please do not report it.
 -->
 
 - Involved route
