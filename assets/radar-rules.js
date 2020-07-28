@@ -1934,7 +1934,7 @@
                 target: '/umass/amherst/csnews',
             },
         ],
-        'www': [
+        www: [
             {
                 title: 'IPO Events',
                 docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
