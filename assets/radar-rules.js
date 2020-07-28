@@ -1934,7 +1934,7 @@
                 target: '/umass/amherst/csnews',
             },
         ],
-        'www': [
+        www: [
             {
                 title: 'IPO Events',
                 docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
@@ -2106,6 +2106,17 @@
                 docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
                 source: '/nppa/contents/:channel/:content',
                 target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
+            },
+        ],
+    },
+    'picuki.com': {
+        _name: 'Picuki',
+        www: [
+            {
+                title: '用户',
+                docs: 'https://docs.rsshub.app/social-media.html#picuki-yong-hu',
+                source: '/profile/:id',
+                target: '/picuki/profile/:id',
             },
         ],
     },
