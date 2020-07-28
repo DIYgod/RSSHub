@@ -2124,6 +2124,17 @@
             },
         ],
     },
+    'behance.net': {
+        _name: 'Behance',
+        www: [
+            {
+                title: 'User',
+                docs: 'https://docs.rsshub.app/design.html#behance-user-works',
+                source: ['/:user'],
+                target: (params, url, document) => {
+                    const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
+                    return `/behance/${uid1}`;
+                },
     'picuki.com': {
         _name: 'Picuki',
         www: [
