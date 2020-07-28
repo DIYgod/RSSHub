@@ -278,6 +278,16 @@ pageClass: routes
 
 <Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
+## SocialBeta
+
+### 首页
+
+<Route author="nczitzk" example="/socialbeta/home" path="/socialbeta/home"/>
+
+### 案例
+
+<Route author="nczitzk" example="/socialbeta/hunt" path="/socialbeta/hunt"/>
+
 ## The Verge
 
 ### The Verge
