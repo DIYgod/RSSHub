@@ -2110,4 +2110,15 @@
             },
         ],
     },
+    'manxiaosi.com': {
+        _name: '漫小肆',
+        '.': [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
+                source: '/book/:id',
+                target: '/manxiaosi/book/:id',
+            }
+        ],
+    },
 });
