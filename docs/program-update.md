@@ -46,7 +46,7 @@ pageClass: routes
 
 ### 新的 Dropzone 动作
 
-<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
+<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['填写任意值，将会同时包括非官方的 Dropzone 动作']"/>
 
 ## Bugly SDK
 
