@@ -847,6 +847,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
 
+### 国际项目办公室
+
+#### 活动
+
+<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1"/>
+
+#### 新闻
+
+<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1"/>
+
+
 ## 南昌航空大学
 
 ### 教务处公告与新闻
