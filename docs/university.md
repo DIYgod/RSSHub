@@ -857,7 +857,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1"/>
 
-
 ## 南昌航空大学
 
 ### 教务处公告与新闻
@@ -1687,8 +1686,8 @@ type 列表：
 <Route author="Fantasia1999" example="/zzuli/campus/0" path="/zzuli/campus/:type" :paramsDesc="['分类, 见下表']" radar="1">
 
 | 参数名称 | 公告信息 | 学工信息 | 教学信息 | 信息快递 | 学术报告 | 科研信息 | 网络公告 | 班车查询 | 周会表 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 参数     | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8            |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------ |
+| 参数     | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8      |
 
 </Route>
 
