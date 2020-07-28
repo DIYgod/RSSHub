@@ -191,8 +191,6 @@ pageClass: routes
 
 <Route author="wolfyu1991"  example="/mp4ba/复仇者联盟" path="/mp4ba/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
 
-</Route>
-
 ## MQube
 
 ### 全站最近更新
@@ -429,6 +427,10 @@ pageClass: routes
 
 <Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
 
+### 今日更新
+
+<Route author="alcarl" example="/yyets/todayfilelist" path="/yyets/todayfilelist" />
+
 ## 色花堂中文论坛
 
 ### 分区帖子
@@ -493,6 +495,20 @@ pageClass: routes
 
 </Route>
 
+## 小宇宙
+
+### 发现
+
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou">
+
+::: warning 注意
+
+小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。
+
+:::
+
+</Route>
+
 ## 优酷
 
 ### 频道
@@ -537,12 +553,20 @@ pageClass: routes
 
 ## 字幕组（ZiMuZu.tv）
 
+### 影视
+
 ::: tip 提示
 
 跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
 
 :::
 
-### 影视
-
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
+
+### 排行榜
+
+<Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']">
+
+例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
+
+</Route>

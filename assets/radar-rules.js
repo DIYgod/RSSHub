@@ -483,6 +483,16 @@
             },
         ],
     },
+    'www.chicagotribune.com': {
+        _name: 'Chicago Tribune',
+        www: [
+            {
+                title: 'Chicago Tribune',
+                docs: 'https://docs.rsshub.app/traditional_media.html#chicago-tribune',
+                source: '/',
+            },
+        ],
+    },
     'haimaoba.com': {
         _name: '海猫吧',
         www: [
@@ -1819,6 +1829,24 @@
                 source: '/uncensored/series/:seriesid',
                 target: '/javbus/uncensored/series/:seriesid',
             },
+            {
+                title: 'director',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/director/:directorid',
+                target: '/javbus/director/:directorid',
+            },
+            {
+                title: 'label',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/label/:labelid',
+                target: '/javbus/label/:labelid',
+            },
+            {
+                title: 'studio',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/studio/:studioid',
+                target: '/javbus/studio/:studioid',
+            },
         ],
     },
     'javbus.one': {
@@ -1904,6 +1932,20 @@
                 docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
                 source: '/news',
                 target: '/umass/amherst/csnews',
+            },
+        ],
+        www: [
+            {
+                title: 'IPO Events',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/events',
+                target: '/umass/amherst/ipoevents',
+            },
+            {
+                title: 'IPO Featured Stories',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/featured-stories',
+                target: '/umass/amherst/ipostories',
             },
         ],
     },
@@ -1998,14 +2040,6 @@
                 target: '/hk01/tag/:id',
             },
         ],
-        ebook: [
-            {
-                title: '《香港01》周报',
-                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
-                source: ['/', '/subscribe'],
-                target: '/hk01/ebook',
-            },
-        ],
     },
     'douban.com': {
         _name: '豆瓣',
@@ -2070,6 +2104,76 @@
                         return '/popiask/:id';
                     }
                 },
+            },
+        ],
+    },
+    'nppa.gov.cn': {
+        _name: '国家新闻出版署',
+        www: [
+            {
+                title: '栏目',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/channels/:channel',
+                target: (params, url) => `/gov/nppa/${/nppa\/channels\/(\d+)\.shtml/.exec(url)[1]}`,
+            },
+            {
+                title: '内容',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/contents/:channel/:content',
+                target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
+            },
+        ],
+    },
+    'acfun.cn': {
+        _name: 'AcFun',
+        www: [
+            {
+                tilte: '番剧',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-fan-ju',
+                source: '/bangumi/:id',
+                target: (params) => `/acfun/bangumi/${params.id.replace('aa', '')}`,
+            },
+            {
+                title: '用户投稿',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao',
+                source: '/u/:id',
+                target: '/acfun/user/video/:id',
+            },
+        ],
+    },
+    'behance.net': {
+        _name: 'Behance',
+        www: [
+            {
+                title: 'User',
+                docs: 'https://docs.rsshub.app/design.html#behance-user-works',
+                source: ['/:user'],
+                target: (params, url, document) => {
+                    const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
+                    return `/behance/${uid1}`;
+                },
+            },
+        ],
+    },
+    'picuki.com': {
+        _name: 'Picuki',
+        www: [
+            {
+                title: '用户',
+                docs: 'https://docs.rsshub.app/social-media.html#picuki-yong-hu',
+                source: '/profile/:id',
+                target: '/picuki/profile/:id',
+            },
+        ],
+    },
+    'manxiaosi.com': {
+        _name: '漫小肆',
+        '.': [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
+                source: '/book/:id',
+                target: '/manxiaosi/book/:id',
             },
         ],
     },

@@ -20,6 +20,21 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
+## iciba
+
+### Daily English Sentence
+
+<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show（min = 1, max = 7, default = 1）', 'image style']">
+
+| `:img_type` | image style    |
+| ----------- | -------------- |
+| original    | Original size  |
+| medium      | Medium size    |
+| thumbnail   | Thumbnail size |
+| poster      | Art poster     |
+
+</Route>
+
 ## LinkResearch
 
 ### theses
