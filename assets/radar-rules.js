@@ -908,26 +908,6 @@
 
     'ithome.com': {
         _name: 'IT 之家',
-        '.': [
-            {
-                title: '24 小时阅读榜',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/24h',
-            },
-            {
-                title: '7 天最热',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/7days',
-            },
-            {
-                title: '月榜',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/monthly',
-            },
-        ],
         it: [
             {
                 title: 'IT 资讯',
@@ -1848,6 +1828,24 @@
                 docs: 'https://docs.rsshub.app/multimedia.html#javbus',
                 source: '/uncensored/series/:seriesid',
                 target: '/javbus/uncensored/series/:seriesid',
+            },
+            {
+                title: 'director',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/director/:directorid',
+                target: '/javbus/director/:directorid',
+            },
+            {
+                title: 'label',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/label/:labelid',
+                target: '/javbus/label/:labelid',
+            },
+            {
+                title: 'studio',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/studio/:studioid',
+                target: '/javbus/studio/:studioid',
             },
         ],
     },

@@ -162,11 +162,11 @@ pageClass: routes
 
 ### 热榜
 
-<Route author="immmortal luyuhuang" example="/ithome/ranking/24h" path="/ithome/ranking/:type" :paramsDesc="['类别']" radar="1">
+<Route author="immmortal" example="/ithome/ranking/1" path="/ithome/ranking/:type" :paramsDesc="['类别']">
 
-| 24h           | 7days    | monthly |
-| ------------- | -------- | ------- |
-| 24 小时阅读榜 | 7 天最热 | 月榜    |
+| 1             | 2    | 3        | 4    |
+| ------------- | ---- | -------- | ---- |
+| 24 小时阅读榜 | 周榜 | 7 天热评 | 月榜 |
 
 </Route>
 
