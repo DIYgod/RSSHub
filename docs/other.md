@@ -105,9 +105,15 @@ pageClass: routes
 
 ## iYouport
 
-### 首页
+### 首页（旧版）
 
-<Route author="EsuRt" example="/iyouport/article" path="/iyouport"/>
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport/article"/>
+
+### 分类
+
+支持 iyouport.org 页面 Header 全部分类。例如，`https://www.iyouport.org/category/osint` 对应 `/iyouport/osint`。若不填写 `category`，则输出全部文章，但比旧版首页 feed 有更多元数据。
+
+<Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
 ## MobData
 
