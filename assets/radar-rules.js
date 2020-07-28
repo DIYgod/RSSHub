@@ -908,26 +908,6 @@
 
     'ithome.com': {
         _name: 'IT 之家',
-        '.': [
-            {
-                title: '24 小时阅读榜',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/24h',
-            },
-            {
-                title: '7 天最热',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/7days',
-            },
-            {
-                title: '月榜',
-                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
-                source: ['', '/*'],
-                target: '/ithome/ranking/monthly',
-            },
-        ],
         it: [
             {
                 title: 'IT 资讯',
@@ -1849,6 +1829,24 @@
                 source: '/uncensored/series/:seriesid',
                 target: '/javbus/uncensored/series/:seriesid',
             },
+            {
+                title: 'director',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/director/:directorid',
+                target: '/javbus/director/:directorid',
+            },
+            {
+                title: 'label',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/label/:labelid',
+                target: '/javbus/label/:labelid',
+            },
+            {
+                title: 'studio',
+                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
+                source: '/studio/:studioid',
+                target: '/javbus/studio/:studioid',
+            },
         ],
     },
     'javbus.one': {
@@ -1934,6 +1932,20 @@
                 docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
                 source: '/news',
                 target: '/umass/amherst/csnews',
+            },
+        ],
+        'www': [
+            {
+                title: 'IPO Events',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/events',
+                target: '/umass/amherst/ipoevents',
+            },
+            {
+                title: 'IPO Featured Stories',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/featured-stories',
+                target: '/umass/amherst/ipostories',
             },
         ],
     },
@@ -2094,6 +2106,17 @@
                 docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
                 source: '/nppa/contents/:channel/:content',
                 target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
+            },
+        ],
+    },
+    'manxiaosi.com': {
+        _name: '漫小肆',
+        '.': [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
+                source: '/book/:id',
+                target: '/manxiaosi/book/:id',
             },
         ],
     },

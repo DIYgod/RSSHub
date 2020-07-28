@@ -191,8 +191,6 @@ pageClass: routes
 
 <Route author="wolfyu1991"  example="/mp4ba/复仇者联盟" path="/mp4ba/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
 
-</Route>
-
 ## MQube
 
 ### 全站最近更新
