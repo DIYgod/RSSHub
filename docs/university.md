@@ -593,7 +593,7 @@ category 列表：
 
 ### 河海大学常州校区图书馆 - 新闻动态
 
-<Route author="plusmultiply0" example="/hhu/libNewsc" path="/hhuc/libNewsc"/>
+<Route author="plusmultiply0" example="/hhu/libNewsc" path="/hhu/libNewsc"/>
 
 ## 河南大学
 
