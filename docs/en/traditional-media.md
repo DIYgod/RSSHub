@@ -46,7 +46,6 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 Generates full-text that the official feed doesn't provide.
 Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
 
-
 </RouteEn>
 
 ## China Dialogue
@@ -88,6 +87,29 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 ### News Web Easy
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+## Reuters
+
+### Channel
+
+<RouteEn author="HenryQW proletarius101" example="/reuters/channel/uk/personalFinance" path="/reuters/channel/:site/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
+
+Supported sub-sites:
+
+-   中国分站 `cn`：
+    See [路透社中国分站](../traditional-media.html#lu-tou-she)
+
+-   US site `us`：
+    | Business | Markets | World | Politics | Tech | Breakingviews | Wealth | Life |
+    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
+    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+
+-   UK site `uk`：
+    | Business | World | UK | Tech | Money | Breakingviews | Life |
+    | -------- | ----- | --- | ---------- | --------------- | ------------- | --------- |
+    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
+
+</RouteEn>
 
 ## RTHK
 
