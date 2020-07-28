@@ -1934,6 +1934,20 @@
                 target: '/umass/amherst/csnews',
             },
         ],
+        'www': [
+            {
+                title: 'IPO Events',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/events',
+                target: '/umass/amherst/ipoevents',
+            },
+            {
+                title: 'IPO Featured Stories',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/featured-stories',
+                target: '/umass/amherst/ipostories',
+            },
+        ],
     },
     'lofter.com': {
         _name: 'Lofter',
