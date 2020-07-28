@@ -591,7 +591,7 @@ category 列表：
 
 <Route author="plusmultiply0" example="/hhu/libNews" path="/hhu/libNews"/>
 
-### 河海大学常州校区图书馆 - 新闻动态
+### 常州校区图书馆 - 新闻动态
 
 <Route author="plusmultiply0" example="/hhu/libNewsc" path="/hhu/libNewsc"/>
 
