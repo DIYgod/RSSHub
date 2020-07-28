@@ -2093,7 +2093,11 @@
         ],
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     'popiask.cn': {
+=======
+    'popiapp.cn': {
+>>>>>>> 2c7dabec... migrate domain to popiapp.cn
         _name: 'Popi 提问箱',
         www: [
             {
@@ -2124,6 +2128,23 @@
             },
         ],
     },
+    'acfun.cn': {
+        _name: 'AcFun',
+        www: [
+            {
+                tilte: '番剧',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-fan-ju',
+                source: '/bangumi/:id',
+                target: (params) => `/acfun/bangumi/${params.id.replace('aa', '')}`,
+            },
+            {
+                title: '用户投稿',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao',
+                source: '/u/:id',
+                target: '/acfun/user/video/:id',
+            },
+        ],
+    },
     'behance.net': {
         _name: 'Behance',
         www: [
@@ -2135,6 +2156,9 @@
                     const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
                     return `/behance/${uid1}`;
                 },
+            },
+        ],
+    },
     'picuki.com': {
         _name: 'Picuki',
         www: [

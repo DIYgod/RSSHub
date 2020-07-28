@@ -20,7 +20,7 @@ pageClass: routes
 
 ### 番剧
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']" radar="1"/>
 
 ::: tip 提示
 
@@ -31,7 +31,7 @@ pageClass: routes
 
 ### 用户投稿
 
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1"/>
 
 ## AGE 动漫
 
