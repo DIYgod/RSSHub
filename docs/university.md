@@ -186,6 +186,16 @@ pageClass: routes
 
 </Route>
 
+## 北京物资学院
+
+### 通知公告
+
+<Route author="Muxq99" example="/bwu/news" path="/bwu/news" />
+
+::: warning 注意
+由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
+:::
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
@@ -756,6 +766,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 就业信息
 
 <Route author="jackyu1996" example="/ccnu/career" path="/ccnu/career" />
+
+## 吉林大学
+
+### 校内通知
+
+<Route author="276562578" example="/jlu/oa" path="/jlu" />
 
 ## 江南大学
 
