@@ -278,6 +278,16 @@ pageClass: routes
 
 <Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
+## SocialBeta
+
+### 首页
+
+<Route author="nczitzk" example="/socialbeta/home" path="/socialbeta/home"/>
+
+### 案例
+
+<Route author="nczitzk" example="/socialbeta/hunt" path="/socialbeta/hunt"/>
+
 ## The Verge
 
 ### The Verge
@@ -695,6 +705,12 @@ area 分区选项
 ### 最新资讯
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
+
+## 看点快报
+
+### 首页
+
+<Route author="nczitzk" example="/kuaibao" path="/kuaibao/index"/>
 
 ## 快科技（原驱动之家）
 
