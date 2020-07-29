@@ -2092,6 +2092,21 @@
             },
         ],
     },
+    'popiask.cn': {
+        _name: 'Popi 提问箱',
+        www: [
+            {
+                title: '提问箱新回答',
+                docs: 'https://docs.rsshub.app/social-media.html#popi-ti-wen-xiang',
+                source: '/:id',
+                target: (params) => {
+                    if (params.id) {
+                        return '/popiask/:id';
+                    }
+                },
+            },
+        ],
+    },
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
@@ -2109,6 +2124,23 @@
             },
         ],
     },
+    'acfun.cn': {
+        _name: 'AcFun',
+        www: [
+            {
+                tilte: '番剧',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-fan-ju',
+                source: '/bangumi/:id',
+                target: (params) => `/acfun/bangumi/${params.id.replace('aa', '')}`,
+            },
+            {
+                title: '用户投稿',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao',
+                source: '/u/:id',
+                target: '/acfun/user/video/:id',
+            },
+        ],
+    },
     'behance.net': {
         _name: 'Behance',
         www: [
@@ -2120,6 +2152,9 @@
                     const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
                     return `/behance/${uid1}`;
                 },
+            },
+        ],
+    },
     'picuki.com': {
         _name: 'Picuki',
         www: [
