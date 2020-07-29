@@ -342,6 +342,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['作品类别, 可选`music`,`illust`,`text`','标签, 即 URL 中`tag`参数','分类 ID, 即 URL 中 `categoryId` 参数']"/>
 
+## Picuki
+
+### 用户
+
+<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id" :paramsDesc="['Instagram 用户 id']" radar="1" />
+
 ## pixiv
 
 ### 用户收藏
@@ -379,6 +385,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 </Route>
+
+## Popi 提问箱
+
+### 提问箱新回答
+
+<Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" radar="1"/>
 
 ## Soul
 
@@ -839,6 +851,24 @@ rule
 ### 专辑
 
 <Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" />
+
+## 新榜
+
+::: warning 注意
+部署时需要配置 NEWRANK_USERNAME、NEWRANK_PASSWORD，具体见部署文档
+:::
+
+### 微信公众号
+
+<Route author="BossDoge" example="/newrank/wechat/chijiread" path="/newrank/wechat/:wxid" :paramsDesc="['微信号，若微信号与新榜信息不一致，以新榜为准']" anticrawler="1"/>
+
+### 抖音短视频
+
+<Route author="BossDoge" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" :paramsDesc="['抖音ID，可在新榜账号详情 URL 中找到']" anticrawler="1"/>
+
+::: warning 注意
+免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
+:::
 
 ## 知乎
 
