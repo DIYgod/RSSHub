@@ -595,6 +595,12 @@ category 列表：
 
 <Route author="raptazure" example="/hitwh/today" path="hitwh/today" />
 
+## 合肥工业大学
+
+### 通知公告
+
+<Route author="log_e" example="/hfut/tzgg" path="/hfut/tzgg"/>
+
 ## 河海大学
 
 ### 河海大学图书馆 - 新闻动态
