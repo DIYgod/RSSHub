@@ -37,6 +37,12 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 </RouteEn>
 
+## CBC
+
+Provide full article RSS for CBC topics.
+
+<RouteEn author="wangbin" example="/cbc/topics" path="/cbc/topics/:topic?" :paramsDesc="['CBC topics. Default to Top Stories. For second level topics like canada/toronto, need to replace `/` by `-`.']"/>
+
 ## Chicago Tribune
 
 ### News
