@@ -61,6 +61,12 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 <RouteEn author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']"/>
 
+## Picuki
+
+### User Profile
+
+<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id" :paramsDesc="['Instagram id']" />
+
 ## pixiv
 
 ### User Bookmark

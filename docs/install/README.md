@@ -503,11 +503,19 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     如果你在进行上述操作时遇到困难，亦可选择在环境设置中填写明文的用户名和密码：
 
     -   `INITIUM_USERNAME`: 端传媒用户名 (邮箱)
-
     -   `INITIUM_PASSWORD`: 端传媒密码
 
 -   BTBYR
 
     -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
-
     -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开网站首页 2. 打开控制台 3. 刷新 4. 找到 <https://bt.byr.cn/index.php> 请求 5. 找到请求头中的 Cookie
+
+-   小宇宙：需要 App 登陆后抓包获取相应数据。
+
+    -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
+    -   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
+
+-   新榜
+
+    -   `NEWRANK_USERNAME`: 用户名
+    -   `NEWRANK_PASSWORD`: 密码

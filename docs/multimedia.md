@@ -191,8 +191,6 @@ pageClass: routes
 
 <Route author="wolfyu1991"  example="/mp4ba/复仇者联盟" path="/mp4ba/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
 
-</Route>
-
 ## MQube
 
 ### 全站最近更新
@@ -492,6 +490,20 @@ pageClass: routes
 
 -   `https://rsshub.app/ximalaya/album/*`
 -   `https://rsshub.app/ximalaya/album/*.rss`
+
+:::
+
+</Route>
+
+## 小宇宙
+
+### 发现
+
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou">
+
+::: warning 注意
+
+小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。
 
 :::
 

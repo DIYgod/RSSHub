@@ -50,6 +50,12 @@ pageClass: routes
 
 <Route author="MittWillson" example="/langlive/room/666666" path="/langlive/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
+## 猎趣 TV
+
+### 直播间开播
+
+<Route author="hoilc" example="/liequtv/room/175435" path="/liequtv/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
 ## 企鹅电竞
 
 ### 直播间开播
