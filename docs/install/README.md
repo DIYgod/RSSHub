@@ -186,7 +186,14 @@ $ git pull
 
 ## 部署到 Heroku
 
+### 一键部署（无自动更新）
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+### 自动更新部署
+1. 将 RSSHub [分叉（fork）](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) 到自己的账户下。
+2. 把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址(例如 `https://github.com/USERNAME/RSSHub`)。
+3. 检查 Heroku 设置，随代码库更新自动部署。
+4. 安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
 ## 部署到 Vercel (Zeit Now)
 
