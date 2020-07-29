@@ -278,6 +278,16 @@ pageClass: routes
 
 <Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
+## SocialBeta
+
+### 首页
+
+<Route author="nczitzk" example="/socialbeta/home" path="/socialbeta/home"/>
+
+### 案例
+
+<Route author="nczitzk" example="/socialbeta/hunt" path="/socialbeta/hunt"/>
+
 ## The Verge
 
 ### The Verge
@@ -696,6 +706,12 @@ area 分区选项
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
 
+## 看点快报
+
+### 首页
+
+<Route author="nczitzk" example="/kuaibao" path="/kuaibao/index"/>
+
 ## 快科技（原驱动之家）
 
 ### 最新新闻
@@ -736,6 +752,28 @@ area 分区选项
 ### 节目
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
+
+## 梅花网
+
+### 作品
+
+<Route author="nczitzk" example="/meihua/shots/latest" path="/meihua/shots/:caty">
+
+| 最新   | 热门 | 推荐      |
+| ------ | ---- | --------- |
+| latest | hot  | recommend |
+
+</Route>
+
+### 文章
+
+<Route author="nczitzk" example="/meihua/article/latest" path="/meihua/article/:caty">
+
+| 最新   | 热门 |
+| ------ | ---- |
+| latest | hot  |
+
+</Route>
 
 ## 镁客网 im2maker
 
