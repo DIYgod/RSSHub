@@ -599,7 +599,7 @@ category 列表：
 
 ### 通知公告
 
-<Route author="log_e" example="/hfut/tzgg" path="/hfut/tzgg"/>
+<Route author="log-e" example="/hfut/tzgg" path="/hfut/tzgg"/>
 
 ## 河海大学
 
