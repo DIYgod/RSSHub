@@ -222,6 +222,10 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+### User Discussion
+
+<Route author="nczitzk" example="/kaggle/user/antgoldbloom" path="/kaggle/user/:user" :paramsDesc="['用户名']"/>
+
 ## LeetCode
 
 ### 文章
