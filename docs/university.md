@@ -1791,6 +1791,10 @@ type 列表：
 
 <Route author="HenryQW" example="/cas/sim/academic" path="/cas/sim/academic"/>
 
+### 中国科学院信息工程研究所 第二研究室 处理架构组 知识库
+
+<Route author="renzhexigua" example="/cas/mesalab/kb" path="/cas/mesalab/kb"/>
+
 ## 中国农业大学
 
 ### 中国农业大学研招网通知公告
