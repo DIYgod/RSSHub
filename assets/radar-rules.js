@@ -1880,6 +1880,37 @@
             },
         ],
     },
+    'onejav.com': {
+        _name: 'OneJAV',
+        '.': [
+            {
+                title: '最新种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: '/onejav/new',
+            },
+            {
+                title: '页面种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: ['/:type', '/:type/:key', '/:year/:month/:day'],
+                target: (params, url, document) => {
+                    let itype, ikey;
+                    itype = `${params.type || ''}`;
+                    ikey = `${params.key || ''}`;
+                    if (ikey === '' && itype === 'actress') {
+                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
+                    } else if (ikey === '' && itype === 'tag') {
+                        ikey = document.querySelector('a.button.is-link.is-outlined.is-fullwidth').getAttribute('href').replace('/tag/', '');
+                    }
+                    if (params.day) {
+                        itype = 'day';
+                        ikey = `${params.year}${params.month}${params.day}`;
+                    }
+                    return `/onejav/${itype}/${ikey}`;
+                },
+            },
+        ],
+    },
     'sexinsex.net': {
         _name: 'sexinsex',
         '.': [

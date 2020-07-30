@@ -219,7 +219,7 @@ pageClass: routes
 
 ### OneJAV4RSSHub
 
-<Route author="monsterxcn" example="/onejav/popular/30" path="/onejav/:type/:key?" supportBT="1" :paramsDesc="['类型', '关键词']">
+<Route author="monsterxcn" example="/onejav/popular/30" path="/onejav/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
 
 **类型**
 
@@ -235,7 +235,7 @@ pageClass: routes
 
 **详细示例**
 
--   `/onejav/new/`
+-   `/onejav/new`
 -   `/onejav/popular`
 -   `/onejav/popular/30`
 -   `/onejav/actress/Yua%20Mikami`
@@ -246,7 +246,7 @@ pageClass: routes
 
 ::: warning 注意
 
--   仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空** ，且路由结尾必须带 `/`
+-   仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
 -   `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
 -   `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://onejav.com/actress/) 查找
 -   `tag` 类型的关键词必须填写 **标签名** ，可在 [此处](https://onejav.com/tag/) 查找
