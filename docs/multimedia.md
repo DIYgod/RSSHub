@@ -215,6 +215,45 @@ pageClass: routes
 
 <Route author="Lava-Swimmer" example="/nyaa/search/psycho-pass" path="/nyaa/search/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
 
+## OneJAV
+
+### OneJAV4RSSHub
+
+<Route author="monsterxcn" example="/onejav/popular/30" path="/onejav/:type/:key?" supportBT="1" :paramsDesc="['类型', '关键词']">
+
+**类型**
+
+| 最新 | 热门    | 随机   | 指定演员 | 指定标签 | 指定日期 |
+| ---- | ------- | ------ | -------- | -------- | -------- |
+| new  | popular | random | actress  | tag      | day      |
+
+**关键词**
+
+| 空 | 日期范围    | 演员名       | 标签名         | 日期     |
+| -- | ----------- | ------------ | -------------- | -------- |
+|    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
+
+**详细示例**
+
+-   `/onejav/new/`
+-   `/onejav/popular`
+-   `/onejav/popular/30`
+-   `/onejav/actress/Yua%20Mikami`
+-   `/onejav/tag/Adult%20Awards`
+-   `/onejav/day/20200730`
+
+</Route>
+
+::: warning 注意
+
+-   仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空** ，且路由结尾必须带 `/`
+-   `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
+-   `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://onejav.com/actress/) 查找
+-   `tag` 类型的关键词必须填写 **标签名** ，可在 [此处](https://onejav.com/tag/) 查找
+-   `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
+
+:::
+
 ## rs05 人生 05 电影
 
 ### rs05 电影列表
