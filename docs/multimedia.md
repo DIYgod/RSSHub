@@ -233,24 +233,24 @@ pageClass: routes
 | -- | ----------- | ------------ | -------------- | -------- |
 |    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
 
-**详细示例**
+**示例说明**
 
 -   `/onejav/new`
--   `/onejav/popular`
+    仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
 -   `/onejav/popular/30`
+    `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
 -   `/onejav/actress/Yua%20Mikami`
+    `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://onejav.com/actress/) 演员单页链接中获取
 -   `/onejav/tag/Adult%20Awards`
+    `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://onejav.com/tag/) 标签单页链接中获取
 -   `/onejav/day/20200730`
+    `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
 
 </Route>
 
 ::: warning 注意
 
--   仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
--   `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
--   `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://onejav.com/actress/) 查找
--   `tag` 类型的关键词必须填写 **标签名** ，可在 [此处](https://onejav.com/tag/) 查找
--   `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
+官方订阅源不支持 BT 和 Radar，地址为 <https://onejav.com/feeds/>
 
 :::
 

@@ -1892,19 +1892,16 @@
             {
                 title: '页面种子',
                 docs: 'https://docs.rsshub.app/multimedia.html#onejav',
-                source: ['/:type', '/:type/:key', '/:year/:month/:day'],
+                source: ['/:type', '/:type/:key', '/:one/:two/:three'],
                 target: (params, url, document) => {
-                    let itype, ikey;
-                    itype = `${params.type || ''}`;
-                    ikey = `${params.key || ''}`;
-                    if (ikey === '' && itype === 'actress') {
-                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
+                    const itype = params.one !== undefined ? (params.one === 'tag' ? 'tag' : 'day') : `${params.type}`;
+                    let ikey = `${params.key || ''}`;
+                    if (itype === 'day') {
+                        ikey = `${params.one}${params.two}${params.three}`;
                     } else if (ikey === '' && itype === 'tag') {
-                        ikey = document.querySelector('a.button.is-link.is-outlined.is-fullwidth').getAttribute('href').replace('/tag/', '');
-                    }
-                    if (params.day) {
-                        itype = 'day';
-                        ikey = `${params.year}${params.month}${params.day}`;
+                        ikey = params.type === 'tag' ? document.querySelector('a.button.is-link.is-outlined.is-fullwidth').getAttribute('href').replace('/tag/', '').replace('/', '%2F') : `${params.two}%2F${params.three || ''}`;
+                    } else if (ikey === '' && itype === 'actress') {
+                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
                     }
                     return `/onejav/${itype}/${ikey}`;
                 },
