@@ -1881,7 +1881,7 @@
         ],
     },
     'onejav.com': {
-        _name: 'OneJAV',
+        _name: 'OneJAV BT',
         '.': [
             {
                 title: '最新种子',
