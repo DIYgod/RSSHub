@@ -14,15 +14,21 @@ pageClass: routes
 
 ### BBC
 
-<RouteEn author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+<RouteEn author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
 Provides a better reading experience (full text articles) over the official ones.
 
 Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
 
--   Channel with a single path, such as `https://feeds.bbci.co.uk/news/business/rss.xml`, use `/bbc/business`.
--   Channel contains multiple paths, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
--   Exemption: use `/bbc/chinese` for BBC News Chinese, `/bbc/traditionalchinese` for Traditional Chinese.
+-   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
+
+</RouteEn>
+
+### BBC Chinese
+
+<RouteEn author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['lang, Simplified or Traditional Chinese','channel, default to `top stories`']">
+
+See [BBC 中文网](../traditional-media.html#bbc-bbc-zhong-wen-wang).
 
 </RouteEn>
 
