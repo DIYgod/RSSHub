@@ -306,7 +306,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 首页推荐
 
-<Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+<Route author="LogicJake" example="/gushiwen/recommend/zhushang" path="/gushiwen/recommend/:annotation?"/>
+
+`annotation` 字段为添加哪些附加信息。可从以下表格中选择值后按顺序拼接。例如如果需要注释和赏析，则为`zhushang`。
+
+| 翻译 | 注释 | 赏析  |
+| ---- | ---- | ----- |
+| yi   | zhu  | shang |
 
 ## 国家留学网
 
