@@ -1884,22 +1884,32 @@
         _name: 'OneJAV BT',
         '.': [
             {
-                title: '最新种子',
+                title: '今日种子',
                 docs: 'https://docs.rsshub.app/multimedia.html#onejav',
                 source: '/',
-                target: '/onejav/new',
+                target: (params, url, document) => {
+                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    return `/onejav/day/${today}`;
+                },
+            },
+            {
+                title: '今日演员',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: (params, url, document) => {
+                    const star = document.querySelector('div.card-content > div > a').getAttribute('href');
+                    return `/onejav${star}`;
+                },
             },
             {
                 title: '页面种子',
                 docs: 'https://docs.rsshub.app/multimedia.html#onejav',
-                source: ['/:type', '/:type/:key', '/:one/:two/:three'],
+                source: ['/:type', '/:type/:key', '/:type/:key/:morekey'],
                 target: (params, url, document) => {
-                    const itype = params.one !== undefined ? (params.one === 'tag' ? 'tag' : 'day') : `${params.type}`;
-                    let ikey = `${params.key || ''}`;
-                    if (itype === 'day') {
-                        ikey = `${params.one}${params.two}${params.three}`;
-                    } else if (ikey === '' && itype === 'tag') {
-                        ikey = params.type === 'tag' ? document.querySelector('a.button.is-link.is-outlined.is-fullwidth').getAttribute('href').replace('/tag/', '').replace('/', '%2F') : `${params.two}%2F${params.three || ''}`;
+                    const itype = params.morekey === undefined ? `${params.type}` : params.type === 'tag' ? 'tag' : 'day';
+                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${params.morekey || ''}`;
+                    if (ikey === '' && itype === 'tag') {
+                        ikey = document.querySelector('div.thumbnail.is-inline > a').getAttribute('href').replace('/tag/', '').replace('/', '%2F');
                     } else if (ikey === '' && itype === 'actress') {
                         ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
                     }
