@@ -1333,6 +1333,51 @@
             },
         ],
     },
+    'ynu.edu.cn': {
+        _name: '云南大学',
+        home: [
+            {
+                title: '官网消息通告',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/tzgg.htm',
+                target: '/ynu/home',
+            },
+        ],
+        jwc: [
+            {
+                title: '教务处教务科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/1',
+            },
+            {
+                title: '教务处学籍科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/2',
+            },
+            {
+                title: '教务处教学研究科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/3',
+            },
+            {
+                title: '教务处实践科学科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/4',
+            },
+        ],
+        grs: [
+            {
+                title: '研究生院通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '',
+            },
+        ],
+    },
     'zju.edu.cn': {
         _name: '浙江大学',
         cst: [

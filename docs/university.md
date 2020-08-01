@@ -1602,6 +1602,38 @@ type 列表：
 
 </Route>
 
+## 云南大学
+
+### 官网消息通告
+
+<Route author="hzcheney" example="/ynu/home" path="/ynu/home" >
+</Route>
+
+### 教务处主要通知
+
+<Route author="hzcheney" example="/ynu/jwc/1" path="/ynu/jwc/:category" :paramsDesc="['教务处通知分类']">
+
+| 教务科 | 学籍科 | 教学研究科 | 实践科学科 |
+| ------ | ------ | ---------- | ---------- |
+| 1      | 2      | 3          | 4          |
+
+</Route>
+
+### 研究生院重要通知（置顶消息）
+
+<Route author="hzcheney" example="/ynu/grs/zytz" path="/ynu/grs/zytz" >
+</Route>
+
+### 研究生院其他通知
+
+<Route author="hzcheney" example="/ynu/grs/qttz/2" path="/ynu/grs/qttz/:category" :paramsDesc="['研究生院通知分类']">
+
+| 招生工作 | 研究生培养 | 质量管理 | 学位工作 | 综合办公室 | 相关下载 |
+| -------- | ---------- | -------- | -------- | ---------- | -------- |
+| 1        | 2          | 3        | 4        | 5          | 6        |
+
+</Route>
+
 ## 浙江大学
 
 ### 普通栏目 如学术 / 图片 / 新闻等
