@@ -1925,6 +1925,44 @@
             },
         ],
     },
+    'onejav.com': {
+        _name: 'OneJAV BT',
+        '.': [
+            {
+                title: '今日种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: (params, url, document) => {
+                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    return `/onejav/day/${today}`;
+                },
+            },
+            {
+                title: '今日演员',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: (params, url, document) => {
+                    const star = document.querySelector('div.card-content > div > a').getAttribute('href');
+                    return `/onejav${star}`;
+                },
+            },
+            {
+                title: '页面种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: ['/:type', '/:type/:key', '/:type/:key/:morekey'],
+                target: (params, url, document) => {
+                    const itype = params.morekey === undefined ? `${params.type}` : params.type === 'tag' ? 'tag' : 'day';
+                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${params.morekey || ''}`;
+                    if (ikey === '' && itype === 'tag') {
+                        ikey = document.querySelector('div.thumbnail.is-inline > a').getAttribute('href').replace('/tag/', '').replace('/', '%2F');
+                    } else if (ikey === '' && itype === 'actress') {
+                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
+                    }
+                    return `/onejav/${itype}/${ikey}`;
+                },
+            },
+        ],
+    },
     'sexinsex.net': {
         _name: 'sexinsex',
         '.': [
