@@ -18,17 +18,34 @@ pageClass: routes
 
 ## BBC
 
-### BBC
+### BBC 英文
 
-<Route author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
+<Route author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道, 缺省为热门']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
-支持大部分频道，频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
+支持大部分频道，频道名称见[BBC 官方 RSS](https://www.bbc.co.uk/news/10628494)。
 
 -   频道为单一路径，如 `https://feeds.bbci.co.uk/news/business/rss.xml` 则为 `/bbc/business`.
 -   频道包含多重路径，如 `https://feeds.bbci.co.uk/news/world/asia/rss.xml` 则替换 `/` 为 `-` `/bbc/world-asia`.
--   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
+
+</Route>
+
+### BBC 中文网
+
+<Route author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['简体或繁体','频道, 缺省为热门']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验.
+
+支持大部分频道，频道名称见[BBC 中文网官方 RSS](https://www.bbc.com/zhongwen/simp/services/2009/09/000000_rss)。
+
+简体版：
+
+-   频道，如金融财经 `http://www.bbc.co.uk/zhongwen/simp/business/index.xml` 则为 `/bbc/chinese/business`.
+
+繁体版：
+
+-   频道，如金融财经 `http://www.bbc.co.uk/zhongwen/trad/business/index.xml` 则为 `/bbc/traditionalchinese/business`.
 
 </Route>
 
