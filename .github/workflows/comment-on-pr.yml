@@ -1,15 +1,24 @@
-name: Comment On PR
+name: Auto Comment
 
-on: pull_request
+on:
+  pull_request:
+    types: [opened]
+  issues:
+    types: [opened]
 
 jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - 
-          uses: github-actions-up-and-running/pr-comment@v1.0.0
-          with:
-              repo-token: ${{ secrets.GITHUB_TOKEN }}
-              message: "👍感谢提交该 PR，请确保使用了 [PR 模板](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md) 以便于测试。
-
-👍Thanks for the PR, please make sure you have followed the [PR template](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md) to simplify the testing."
+      - if: github.event.issue.pull_request != ''
+        name: Comment on PR
+        uses: github-actions-up-and-running/pr-comment@v1.0.1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          message: "👍 感谢提交该 PR，请确保使用了 [PR 模板](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATEpull_request_template.md) 以便于测试。<br /><br />👍 Thanks for the PR, please make sure you have followed the [PR template](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md) to simplify the testing."
+      - if: github.event.issue.pull_request == ''
+        name: Comment on Issue
+        uses: ben-z/actions-comment-on-issue@1.0.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: "👍 感谢提交该 Issue，请确保仔细阅读 [Issue 模板](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/bug_report_zh.md)，[RSS 提案模板](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/rss_request_zh.md) 或 [Feature 提案模板](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/feature_request_zh.md) 以便于测试。不符合模板将导致 Issue 被直接关闭。<br /><br />👍 Thanks for the issue, please follow the [Issue template](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/bug_report_en.md), [RSS proposal template](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/rss_request_zh.md) or [Feature proposal template](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/feature_request_en.md). Otherwise the issue will be closed."
