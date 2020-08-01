@@ -1409,6 +1409,12 @@ type 列表：
 
 <Route author="talenHuang" example="/sctu/jwc/13/645" path="/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']"/>
 
+## 四川职业技术学院
+
+### 学院公告
+
+<Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xygg" />
+
 ## 天津大学
 
 ### 天津大学教务处
