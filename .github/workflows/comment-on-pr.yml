@@ -1,4 +1,4 @@
-name: format
+name: Comment On PR
 
 on: pull_request
 
@@ -6,9 +6,10 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      uses: github-actions-up-and-running/pr-comment@v1.0.0
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        message: "👍感谢提交该 PR，请确保使用了 [PR 模板](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md) 以便于测试。
+      - 
+          uses: github-actions-up-and-running/pr-comment@v1.0.0
+          with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          message: "👍感谢提交该 PR，请确保使用了 [PR 模板](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md) 以便于测试。
 
 👍Thanks for the PR, please make sure you have followed the [PR template](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md) to simplify the testing."
