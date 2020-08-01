@@ -1952,7 +1952,7 @@
                 source: ['/:type', '/:type/:key', '/:type/:key/:morekey'],
                 target: (params, url, document) => {
                     const itype = params.morekey === undefined ? `${params.type}` : params.type === 'tag' ? 'tag' : 'day';
-                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${params.morekey || ''}`;
+                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${itype === 'tag' && params.morekey !== undefined ? '%2F' : ''}${params.morekey || ''}`;
                     if (ikey === '' && itype === 'tag') {
                         ikey = document.querySelector('div.thumbnail.is-inline > a').getAttribute('href').replace('/tag/', '').replace('/', '%2F');
                     } else if (ikey === '' && itype === 'actress') {
