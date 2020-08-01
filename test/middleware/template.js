@@ -1,5 +1,6 @@
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+jest.mock('request-promise-native');
+const server = require('../../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
@@ -66,7 +67,7 @@ describe('template', () => {
     it(`long title`, async () => {
         const response = await request.get('/test/long');
         const parsed = await parser.parseString(response.text);
-        expect(parsed.items[0].title.length).toBe(103);
+        expect(parsed.items[0].title.length).toBe(153);
     });
 
     it(`enclosure`, async () => {

@@ -4,6 +4,16 @@ pageClass: routes
 
 # 预报预警
 
+## Outage.Report
+
+### Report
+
+<Route author="cxumol" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" :paramsDesc="['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']">
+ 
+其中 name 参数, 请略过本地服务的区域码, 例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
+
+</Route>
+
 ## 地震速报
 
 ### 中国地震局
@@ -22,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 国家突发事件预警信息发布网
+
+### 当前生效预警
+
+<Route author="nczitzk" example="/12379" path="/12379/index"/>
+
 ## 国家应急广播网
 
 ### 预警信息
@@ -32,15 +48,13 @@ pageClass: routes
 
 <Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
 
+## 上海市生态环境局
+
+### 空气质量
+
+<Route author="nczitzk" example="/gov/shanghai/sthj" path="/gov/shanghai/sthj"/>
+
 ## 停电通知
-
-获取未来一天的停电通知
-
-### 国家电网
-
-<Route author="xyqfer moonbegonia" example="/tingdiantz/95598/36401/36101" path="/tingdiantz/95598/:orgNo/:provinceNo/:scope?" :paramsDesc="['所属省供电公司编码', '所属地市供电公司编码', '停电范围关键字']"/>
-
-> 以上参数可从[查询页面](http://www.95598.cn/95598/outageNotice/initOutageNotice)打开控制台抓包获得
 
 ### 南京市
 
@@ -92,21 +106,11 @@ pageClass: routes
 
 <Route author="calpa" example="/hko/weather" path="/hko/weather"/>
 
-## 在线服务/本地设施 停服通知
-
-### Outage.Report
-
-<Route author="cxumol" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" :paramsDesc="['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']">
- 
-其中 name 参数, 请略过本地服务的区域码, 例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
-
-</Route>
-
 ## 中央气象台
 
 ### 全国气象预警
 
-<Route author="ylc395" example="/weatheralarm" path="/weatheralarm">
+<Route author="ylc395" example="/weatheralarm/广东省" path="/weatheralarm/:province?" :paramsDesc="['省份']">
 
 可通过全局过滤参数订阅您感兴趣的地区.
 

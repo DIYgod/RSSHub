@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss  xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"
 {{ if itunes_author }}
- xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
 {{ else if item && item.some((i) => i.media) }}
   xmlns:media="http://search.yahoo.com/mrss/"
 {{ /if }}
 >
     <channel>
         <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
-        <link>{{ link || 'https://github.com/DIYgod/RSSHub' }}</link>
+        <link>{{ link || 'https://docs.rsshub.app' }}</link>
         <atom:link href="{{ atomlink }}" rel="self" type="application/rss+xml" />
         <description><![CDATA[{{@ description || title }} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)]]></description>
         <generator>RSSHub</generator>
         <webMaster>i@diygod.me (DIYgod)</webMaster>
         {{ if itunes_author }}<itunes:author>{{ itunes_author}}</itunes:author>{{ /if }}
         {{ if itunes_category }}<itunes:category text="{{ itunes_category }}"/>{{ /if }}
+        {{ if itunes_author }}<itunes:explicit>{{ itunes_explicit || 'clean' }}</itunes:explicit>{{ /if }}
         <language>{{ language || 'zh-cn' }}</language>
         {{ if image }}
         <image>
@@ -30,7 +31,7 @@
             <title><![CDATA[{{@ $value.title }}]]></title>
             <description><![CDATA[{{@ $value.description || $value.title }}]]></description>
             {{ if $value.pubDate }}<pubDate>{{ $value.pubDate }}</pubDate>{{ /if }}
-            <guid isPermaLink="false">{{ $value.guid || $value.link }}</guid>
+            <guid isPermaLink="false">{{ $value.guid || $value.link || $value.title }}</guid>
             <link>{{ $value.link }}</link>
             {{ if $value.itunes_item_image }}<itunes:image href="{{ $value.itunes_item_image }}"/>{{ /if }}
             {{ if $value.enclosure_url }}<enclosure url="{{ $value.enclosure_url }}" {{ if $value.enclosure_length }}length="{{ $value.enclosure_length }}"{{ /if }} {{ if $value.enclosure_type }}type="{{ $value.enclosure_type }}"{{ /if }} />{{ /if }}
