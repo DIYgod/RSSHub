@@ -3353,10 +3353,10 @@ chrome-trace-event@^1.0.0:
   dependencies:
     tslib "^1.9.0"
 
-chrono-node@2.1.5:
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.1.5.tgz#b691b0e925d75f0c9ebff518673af6543cc3b2d9"
-  integrity sha512-KshuspQwOhVcZ/8cY11p2+230qIX8VE9P7W8LdwSMWbMwu3TKl6BcHLccmkCt4m+QUK23yuOMD61yPXmjC++bg==
+chrono-node@2.1.6:
+  version "2.1.6"
+  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.1.6.tgz#3ae44dcd465f34da43556fc63cbb63a23b98e945"
+  integrity sha512-d3UOLVWf/Fmy75V6cyJHyyeAHJT41vNJqLOsApGfdnWJTG/xUWNjy6j8DGBZPJ3NnR5qNanYrv1MOaziS+0MTw==
   dependencies:
     dayjs "^1.8.29"
 
