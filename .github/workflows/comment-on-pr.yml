@@ -1,8 +1,6 @@
-name: Auto Comment
+name: Comment on Issue
 
 on:
-  pull_request:
-    types: [opened]
   issues:
     types: [opened]
 
@@ -10,14 +8,7 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - if: github.event_name == 'pull_request' && github.event.pull_request.head.user.login != 'dependabot[bot]' && github.event.pull_request.head.user.login != 'dependabot-preview[bot]'
-        name: Comment on PR
-        uses: github-actions-up-and-running/pr-comment@v1.0.1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          message: "👍 感谢提交该 PR，请确保使用了 [PR 模板](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATEpull_request_template.md) 以便于测试。<br /><br />👍 Thanks for the PR, please make sure you have followed the [PR template](https://github.com/DIYgod/RSSHub/blob/master/.github/PULL_REQUEST_TEMPLATE/pull_request_template.md) to simplify the testing."
-      - if: github.event_name == 'issues'
-        name: Comment on Issue
+      - name: Comment
         uses: ben-z/actions-comment-on-issue@1.0.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
