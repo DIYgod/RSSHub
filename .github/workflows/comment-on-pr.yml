@@ -10,7 +10,7 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - if: github.event_name == 'pull_request'
+      - if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' &&  github.actor != 'dependabot-preview[bot]'
         name: Comment on PR
         uses: github-actions-up-and-running/pr-comment@v1.0.1
         with:
