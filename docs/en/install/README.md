@@ -110,14 +110,14 @@ The most direct way to deploy `RSSHub`, you can follow the steps below to deploy
 
 ### A tip for Nix users
 
-To install nodejs and yarn you can use the following `nix-shell` configuration script.
+To install nodejs, yarn and jieba (to build documentation) you can use the following `nix-shell` configuration script.
 
 ```nix
 let
     pkgs = import <nixpkgs> {};
     node = pkgs.nodejs-12_x;
 in pkgs.stdenv.mkDerivation {
-    name = "nodejs-yarn";
+    name = "nodejs-yarn-jieba";
     buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
 }
 ```
