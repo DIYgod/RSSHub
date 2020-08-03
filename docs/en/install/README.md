@@ -108,6 +108,20 @@ To configure more options please refer to [Configuration](#configuration).
 
 The most direct way to deploy `RSSHub`, you can follow the steps below to deploy`RSSHub` on your computer, server or anywhere.
 
+### A tip for Nix users
+
+To install nodejs and yarn you can use the following `nix-shell` configuration script.
+
+```nix
+let
+    pkgs = import <nixpkgs> {};
+    node = pkgs.nodejs-12_x;
+in pkgs.stdenv.mkDerivation {
+    name = "nodejs-yarn";
+    buildInputs = [node pkgs.yarn];
+}
+```
+
 ### Install
 
 Execute the following commands to download the source code
