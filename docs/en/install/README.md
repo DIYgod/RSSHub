@@ -118,7 +118,7 @@ let
     node = pkgs.nodejs-12_x;
 in pkgs.stdenv.mkDerivation {
     name = "nodejs-yarn";
-    buildInputs = [node pkgs.yarn];
+    buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
 }
 ```
 
