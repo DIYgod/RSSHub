@@ -1727,6 +1727,16 @@ type 列表：
 
 </Route>
 
+### 设计与建筑学院
+
+<Route author="yikZero" example="/zjut/design/5" path="/zjut/design/:type" :paramsDesc="['板块id']">
+
+| 学术科研 | 学院新闻 | 公告通知 | 学术交流 |
+| ------ | -------- | -------- | -------- |
+| 5      | 16        | 18        | 20       |
+
+</Route>
+
 ## 郑州大学
 
 ### 郑州大学新闻网
