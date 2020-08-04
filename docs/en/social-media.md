@@ -4,6 +4,12 @@ pageClass: routes
 
 # Social Media
 
+## CuriousCat
+
+### User
+
+<RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/username" :paramsDesc="['name, username that is in the URL']" />
+
 ## Disqus
 
 ### Comment
