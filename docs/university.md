@@ -1719,7 +1719,7 @@ type 列表：
 
 ### 浙江工业大学
 
-<Route author="junbaor" example="/zjut/1" path="/zjut/:type" :paramsDesc="['板块id']">
+<Route author="junbaor" example="/zjut/gw/1" path="/zjut/gw/:type" :paramsDesc="['板块id']">
 
 | 公告栏 | 每周会议 | 屏峰班车 | 新闻速递 | 学术动态 |
 | ------ | -------- | -------- | -------- | -------- |
