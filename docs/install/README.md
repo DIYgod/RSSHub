@@ -182,7 +182,21 @@ $ pm2 start lib/index.js --name rsshub
 $ git pull
 ```
 
-然后重复安装步骤
+然后重复安装步骤。
+
+### Nix 用户提示
+
+通过 `nix-shell` 配置简化安装 nodejs, yarn 和 jieba：
+
+```nix
+let
+    pkgs = import <nixpkgs> {};
+    node = pkgs.nodejs-12_x;
+in pkgs.stdenv.mkDerivation {
+    name = "nodejs-yarn-jieba";
+    buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
+}
+```
 
 ## 部署到 Heroku
 
@@ -473,6 +487,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
 
 -   Mastodon 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
+
     -   `MASTODON_API_HOST`: API 请求的实例
     -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
     -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
