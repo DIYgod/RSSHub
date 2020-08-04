@@ -131,6 +131,28 @@ Solidot 提供的 feed:
 
 </Route>
 
+## Telecompaper
+
+### News
+
+<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?/:keyword?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限', '搜索关键字']">
+
+可选分类如下
+
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | -- | ------------------ |
+| mobile   | internet  | boardcast | general | it | industry-resources |
+
+::: tip 提示
+
+若 `country` 或 `type` 参数包含空格，则用 `-` 替代。如 `United States` 更换为 `United-States`，`White paper` 更换为 `White-paper`
+
+[INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
+
+:::
+
+</Route>
+
 ## The Economist
 
 ### 分类

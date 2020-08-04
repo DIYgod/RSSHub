@@ -83,12 +83,6 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="nczitzk" example="/monotype/article" path="/monotype/article" />
 
-## Sun Creature
-
-### Works
-
-<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
-
 ## UI 中国
 
 ### 推荐文章
