@@ -33,3 +33,13 @@ pageClass: routes
 ### College of Information & Computer Sciences News
 
 <RouteEn author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
+
+### International Programs Office
+
+#### Events
+
+<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1"/>
+
+#### Featured Stories
+
+<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1"/>

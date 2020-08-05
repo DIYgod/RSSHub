@@ -79,6 +79,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
 
+## Darwin Awards
+
+### 文章
+
+<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all"/>
+
 ## dcinside
 
 ### board
@@ -105,9 +111,15 @@ pageClass: routes
 
 ## iYouport
 
-### 首页
+### 首页（旧版）
 
-<Route author="EsuRt" example="/iyouport/article" path="/iyouport"/>
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport/article"/>
+
+### 分类
+
+支持 iyouport.org 页面 Header 全部分类。例如，`https://www.iyouport.org/category/osint` 对应 `/iyouport/osint`。若不填写 `category`，则输出全部文章，但比旧版首页 feed 有更多元数据。
+
+<Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
 ## MobData
 
@@ -294,7 +306,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 首页推荐
 
-<Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+<Route author="LogicJake" example="/gushiwen/recommend/zhushang" path="/gushiwen/recommend/:annotation?"/>
+
+`annotation` 字段为添加哪些附加信息。可从以下表格中选择值后按顺序拼接。例如如果需要注释和赏析，则为`zhushang`。
+
+| 翻译 | 注释 | 赏析  |
+| ---- | ---- | ----- |
+| yi   | zhu  | shang |
 
 ## 国家留学网
 
@@ -662,8 +680,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 源仓库更新
 
 <Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
-| 阅读 | 异次元 | 海阔 |
-| ---- | ----- | ---- |
+| 阅读  | 异次元   | 海阔   |
+| ----- | -------- | ------ |
 | yuedu | yiciyuan | haikuo |
 
 </Route>

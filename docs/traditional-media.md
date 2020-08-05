@@ -18,17 +18,34 @@ pageClass: routes
 
 ## BBC
 
-### BBC
+### BBC 英文
 
-<Route author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['频道, 缺省为热门']">
+<Route author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道, 缺省为热门']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
-支持大部分频道，频道名称见[官方频道 RSS](https://www.bbc.co.uk/news/10628494).
+支持大部分频道，频道名称见[BBC 官方 RSS](https://www.bbc.co.uk/news/10628494)。
 
 -   频道为单一路径，如 `https://feeds.bbci.co.uk/news/business/rss.xml` 则为 `/bbc/business`.
 -   频道包含多重路径，如 `https://feeds.bbci.co.uk/news/world/asia/rss.xml` 则替换 `/` 为 `-` `/bbc/world-asia`.
--   例外: BBC 中文网为 `/bbc/chinese`, 繁体中文为 `/bbc/traditionalchinese`.
+
+</Route>
+
+### BBC 中文网
+
+<Route author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['简体或繁体','频道, 缺省为热门']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验.
+
+支持大部分频道，频道名称见[BBC 中文网官方 RSS](https://www.bbc.com/zhongwen/simp/services/2009/09/000000_rss)。
+
+简体版：
+
+-   频道，如金融财经 `http://www.bbc.co.uk/zhongwen/simp/business/index.xml` 则为 `/bbc/chinese/business`.
+
+繁体版：
+
+-   频道，如金融财经 `http://www.bbc.co.uk/zhongwen/trad/business/index.xml` 则为 `/bbc/traditionalchinese/business`.
 
 </Route>
 
@@ -42,6 +59,12 @@ pageClass: routes
 有哪些 tag 请参考 [Boston.com 官网上的订阅页面](https://www.boston.com/rss-feeds)。例如，`https://www.boston.com/tag/local-news/?feed=rss` 对应 RSSHub 路由 `/boston/local-news`。
 
 </Route>
+
+## CBC
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+<Route author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" :paramsDesc="['CBC 频道。默认为 Top Stories。二级话题如 canada/toronto，需要用 `-` 替换掉 `/`。']"/>
 
 ## Chicago Tribune
 
@@ -105,6 +128,28 @@ Solidot 提供的 feed:
 | 全部 | 创业    | Linux | 科学    | 科技       | 移动   | 苹果  | 硬件     | 软件     | 安全     | 游戏  | 书籍  | ask | idle | 博客 | 云计算 |
 | ---- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ------ |
 | www  | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud  |
+
+</Route>
+
+## Telecompaper
+
+### News
+
+<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?/:keyword?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限', '搜索关键字']">
+
+可选分类如下
+
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | -- | ------------------ |
+| mobile   | internet  | boardcast | general | it | industry-resources |
+
+::: tip 提示
+
+若 `country` 或 `type` 参数包含空格，则用 `-` 替代。如 `United States` 更换为 `United-States`，`White paper` 更换为 `White-paper`
+
+[INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
+
+:::
 
 </Route>
 
@@ -193,8 +238,6 @@ Category 列表:
 ### 上海新闻
 
 <Route author="saury" example="/eastday/sh" path="/eastday/sh" />
-
-</Route>
 
 ## 端传媒
 
@@ -306,15 +349,55 @@ category 对应的关键词有
 
 ### 标签
 
-<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']">
-
-</Route>
+<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']"/>
 
 ## 路透社
 
 ### 实时资讯
 
-<Route author="black-desk" example="/reuters/theWire" path="/reuters/theWire">
+<Route author="black-desk" example="/reuters/theWire" path="/reuters/theWire" />
+
+### 频道
+
+<Route author="HenryQW proletarius101" example="/reuters/channel/cn/analyses" path="/reuters/channel/:site/:channel" :paramsDesc="['语言，支持的分站列表如下','频道名，请注意大小写需与如下表格中一致。']">
+
+支持语言列表
+
+-   中国分站 `cn`：
+
+    -   主频道:
+
+    | 深度分析 | 时事要闻    | 生活 | 投资      |
+    | -------- | ----------- | ---- | --------- |
+    | analyses | generalnews | life | investing |
+
+    -   资讯子频道:
+
+    | 中国财经 | 国际财经              | 新闻人物  | 财经视点 |
+    | -------- | --------------------- | --------- | -------- |
+    | china    | internationalbusiness | newsmaker | opinions |
+
+    -   专栏子频道:
+
+    | 中国财经专栏 | 国际财经专栏 | 大宗商品专栏 |
+    | ------------ | ------------ | ------------ |
+    | CnColumn     | IntColumn    | ComColumn    |
+
+-   美国分站 `us`：
+
+    -   主频道:
+
+    | Business | Markets | World | Politics | Tech       | Breakingviews | Wealth | Life      |
+    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
+    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+
+-   英国分站 `uk`：
+
+    -   主频道:
+
+    | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
+    | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
+    | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
 
 </Route>
 

@@ -14,15 +14,21 @@ pageClass: routes
 
 ### BBC
 
-<RouteEn author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+<RouteEn author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
 Provides a better reading experience (full text articles) over the official ones.
 
 Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
 
--   Channel with a single path, such as `https://feeds.bbci.co.uk/news/business/rss.xml`, use `/bbc/business`.
--   Channel contains multiple paths, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
--   Exemption: use `/bbc/chinese` for BBC News Chinese, `/bbc/traditionalchinese` for Traditional Chinese.
+-   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
+
+</RouteEn>
+
+### BBC Chinese
+
+<RouteEn author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['lang, Simplified or Traditional Chinese','channel, default to `top stories`']">
+
+See [BBC 中文网](../traditional-media.html#bbc-bbc-zhong-wen-wang).
 
 </RouteEn>
 
@@ -37,6 +43,12 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 </RouteEn>
 
+## CBC
+
+Provide full article RSS for CBC topics.
+
+<RouteEn author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" :paramsDesc="['CBC topics. Default to Top Stories. For second level topics like canada/toronto, need to replace `/` by `-`.']"/>
+
 ## Chicago Tribune
 
 ### News
@@ -45,7 +57,6 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 Generates full-text that the official feed doesn't provide.
 Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
-
 
 </RouteEn>
 
@@ -88,6 +99,29 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 ### News Web Easy
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+## Reuters
+
+### Channel
+
+<RouteEn author="HenryQW proletarius101" example="/reuters/channel/uk/personalFinance" path="/reuters/channel/:site/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
+
+Supported sub-sites:
+
+-   中国分站 `cn`：
+    See [路透社中国分站](../traditional-media.html#lu-tou-she)
+
+-   US site `us`：
+    | Business | Markets | World | Politics | Tech | Breakingviews | Wealth | Life |
+    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
+    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+
+-   UK site `uk`：
+    | Business | World | UK | Tech | Money | Breakingviews | Life |
+    | -------- | ----- | --- | ---------- | --------------- | ------------- | --------- |
+    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
+
+</RouteEn>
 
 ## RTHK
 
