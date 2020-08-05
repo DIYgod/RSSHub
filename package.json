@@ -60,7 +60,7 @@
     "staged-git-files": "1.2.0",
     "string-width": "4.2.0",
     "supertest": "4.0.2",
-    "vuepress": "1.5.2",
+    "vuepress": "1.5.3",
     "yorkie": "2.0.0"
   },
   "dependencies": {
