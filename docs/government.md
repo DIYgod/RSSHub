@@ -417,7 +417,7 @@ pageClass: routes
 
 ### 数据 - 最新发布
 
-<Route author="MisteryMonster" example="/gov/moasj/zxfb" path="/gov/moasj/zxfb"/>
+<Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
 
 ## 中华人民共和国商务部
 
