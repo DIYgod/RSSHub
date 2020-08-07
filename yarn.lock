@@ -6023,12 +6023,12 @@ hogan.js@^3.0.2:
     mkdirp "0.3.0"
     nopt "1.0.10"
 
-hooman@1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.5.tgz#93cc1b29653fc9a64629ce05b78c4e83dca6b86d"
-  integrity sha512-Pfw9k2yvhvzMF/ICrYudBE4G0MuxU/k9Act062RJByoFBiZBObBQxyQKJLN5s+U8vpvNkkbxkGPVKTw5OFm9AA==
+hooman@1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/hooman/-/hooman-1.2.6.tgz#a6e994ed2379078fad49adf1844dab5f4fe79535"
+  integrity sha512-cPdUqlgb4Unlvw+sV1SQKSwx6mgKDRSwkeeZVH0n4dcMwXWuD6fsy352TrVK7H/ZaHXvwC98zdCRU32qaNB1Iw==
   dependencies:
-    jsdom "^16.2.2"
+    jsdom "^16.3.0"
     tough-cookie "^4.0.0"
     user-agents "^1.0.559"
 
@@ -7332,7 +7332,7 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jsdom@16.3.0, jsdom@^16.2.2:
+jsdom@16.3.0, jsdom@^16.2.2, jsdom@^16.3.0:
   version "16.3.0"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-16.3.0.tgz#75690b7dac36c67be49c336dcd7219bbbed0810c"
   integrity sha512-zggeX5UuEknpdZzv15+MS1dPYG0J/TftiiNunOeNxSl3qr8Z6cIlQpN0IdJa44z9aFxZRIVqRncvEhQ7X5DtZg==
