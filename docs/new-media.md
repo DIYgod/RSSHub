@@ -194,6 +194,20 @@ pageClass: routes
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
+## Kotaku
+
+### Story
+
+<Route author="CYTMWIA" example="/kotaku/story/news" path="/kotaku/story/:type" :paramsDesc="['Story类型']">
+
+可在 url 中找到，例如`https://kotaku.com/c/news`和`https://kotaku.com/c/kotaku-east`中的`news`和`kotaku-east`
+
+注意，无论是`news`还是`kotaku-east`之前都有`/c/`
+
+所以，如果您把`https://kotaku.com/latest`中的`latest`填入，该路由并不会正常工作
+
+</Route>
+
 ## Krankenkassen 德国新闻社卫健新闻
 
 ### dpa news
