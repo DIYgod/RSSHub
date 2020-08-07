@@ -263,6 +263,12 @@ pageClass: routes
 
 </Route>
 
+## PornHub
+
+### 视频列表
+
+<Route author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['相对路径, `pornhub.com/` 后的部分, 需手动 URL 编码']"/>
+
 ## rs05 人生 05 电影
 
 ### rs05 电影列表
