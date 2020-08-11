@@ -180,11 +180,32 @@ Under `RSSHub`'s directory, execute the following commands to pull the latest so
 $ git pull
 ```
 
-Then repeat the installation steps
+Then repeat the installation steps.
+
+### A tip for Nix users
+
+To install nodejs, yarn and jieba (to build documentation) you can use the following `nix-shell` configuration script.
+
+```nix
+let
+    pkgs = import <nixpkgs> {};
+    node = pkgs.nodejs-12_x;
+in pkgs.stdenv.mkDerivation {
+    name = "nodejs-yarn-jieba";
+    buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
+}
+```
 
 ## Deploy to Heroku
 
+### Instant deploy (without automatic update)
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+### Automatic deploy upon update
+1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
+2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
+3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
+4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
 
 ## Deploy to Vercel(Zeit Now)
 
@@ -325,7 +346,7 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 ### Access Control Configuration
 
-RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes.
+RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
 
 #### White/blacklisting
 
@@ -426,6 +447,11 @@ See the relation between access key/code and white/blacklisting.
 -   discuz cookies
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
+
+-   Mastodon user timeline: apply api here `https://mastodon.example/settings/applications`, please check scope `read:search`
+    -   `MASTODON_API_HOST`: api instance domain
+    -   `MASTODON_API_ACCESS_TOKEN`: user access token
+    -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
 
 -   Sci-hub for scientific journal routes:
 

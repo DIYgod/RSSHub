@@ -4,6 +4,18 @@ pageClass: routes
 
 # 科学期刊
 
+## arXiv
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" :paramsDesc="['查询语句']" anticrawler="1">
+
+参见 [arXiv API 用户手册](https://arxiv.org/help/api/user-manual) 查看所有查询参数。
+
+路由中的参数 query 处填写 `http://export.arxiv.org/api/query?` 后的内容。
+
+</Route>
+
 ## Cell
 
 ### 主刊
@@ -32,6 +44,18 @@ pageClass: routes
 ### 最新成果
 
 <Route author="emdoe HenryQW" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" supportScihub="1"/>
+
+## IEEE Xplore
+
+### 作者
+
+<Route author="queensferryme" example="/ieee/author/37283006000/newest/10" path="/ieee/author/:aid/:sortType/:count?" :paramsDesc="['作者 ID，可以在 URL 中找到，例如 [https://ieeexplore.ieee.org/author/37283006000](https://ieeexplore.ieee.org/author/37283006000)', '排序方式，详细见下', '数量限制，默认为 10 篇']">
+
+| 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
+| ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
+| `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
+
+</Route>
 
 ## Nature 系列
 
@@ -150,6 +174,15 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## Stork 文献鸟订阅
+
+### 关键词
+
+<Route author="xraywu" example="/stork/keyword/409159/R4j3Hbn5ia" path="/stork/keyword/:trackID/:displayKey" :paramsDesc="['关键词订阅 URL 上的 trackID 参数','关键词订阅 URL 上的  displayKey 参数']">
+
+在 Stork 上注册并订阅关键词后，在 `我的` -> `关键词` 中可找到对应关键词的订阅 URL。URL 后的两个参数即为路由参数。
+
+</Route>
 ## X-MOL 平台
 
 ### 期刊

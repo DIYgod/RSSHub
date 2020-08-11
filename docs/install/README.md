@@ -119,18 +119,18 @@ $ git clone https://github.com/DIYgod/RSSHub.git
 $ cd RSSHub
 ```
 
-下载完成后，需要安装依赖
+下载完成后，需要安装依赖（开发不要加 `--production` 参数）
 
 使用 `npm`
 
 ```bash
-$ npm install
+$ npm install --production
 ```
 
 或 `yarn`
 
 ```bash
-$ yarn
+$ yarn install --production
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
@@ -147,7 +147,7 @@ $ npm start
 $ yarn start
 ```
 
-或使用 [PM2](https://pm2.io/doc/zh/runtime/quick-start/)
+或使用 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/)
 
 ```bash
 $ pm2 start lib/index.js --name rsshub
@@ -182,11 +182,34 @@ $ pm2 start lib/index.js --name rsshub
 $ git pull
 ```
 
-然后重复安装步骤
+然后重复安装步骤。
+
+### Nix 用户提示
+
+通过 `nix-shell` 配置简化安装 nodejs, yarn 和 jieba：
+
+```nix
+let
+    pkgs = import <nixpkgs> {};
+    node = pkgs.nodejs-12_x;
+in pkgs.stdenv.mkDerivation {
+    name = "nodejs-yarn-jieba";
+    buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
+}
+```
 
 ## 部署到 Heroku
 
+### 一键部署（无自动更新）
+
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+### 自动更新部署
+
+1.  将 RSSHub [分叉（fork）](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) 到自己的账户下。
+2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 (例如 `https://github.com/USERNAME/RSSHub`)。
+3.  检查 Heroku 设置，随代码库更新自动部署。
+4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
 ## 部署到 Vercel (Zeit Now)
 
@@ -256,6 +279,18 @@ env_variables:
 # [END app_yaml]
 ```
 
+### 安装
+
+在 RSSHub 项目根目录下运行
+
+```bash
+gcloud app deploy
+```
+
+进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
+
+部署完成后可访问您的 Google App Engine URL 查看部署情况。
+
 ## Play with Docker
 
 如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
@@ -270,18 +305,6 @@ env_variables:
 -   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
 
 :::
-
-### 安装
-
-在 RSSHub 项目根目录下运行
-
-```bash
-gcloud app deploy
-```
-
-进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
-
-部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
 ## 配置
 
@@ -351,7 +374,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 访问控制配置
 
-RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。
+RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
 
 #### 黑白名单
 
@@ -463,6 +486,12 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `WEIBO_APP_SECRET`: 微博 App Secret
     -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
 
+-   Mastodon 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
+
+    -   `MASTODON_API_HOST`: API 请求的实例
+    -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
+    -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
+
 -   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
     -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
@@ -493,12 +522,24 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   端传媒设置，用于获取付费内容全文：
 
-    -   `INITIUM_USERNAME`: 端传媒用户名
+    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6JiE1NTYzNDgxNDVAcXEuY29tIiwidXNlcl9pZCI6MTM0NDIwLCJlbWFpbCI6IjE1NTYzNDgxNDVAcXEuY29tIiwiZXhwIjoxNTk0MTk5NjQ3fQ.Tqui-ORNR7d4Bh240nKy_Ldi6crfq0A78Yj2iwy2_U8'`。
 
+    如果你在进行上述操作时遇到困难，亦可选择在环境设置中填写明文的用户名和密码：
+
+    -   `INITIUM_USERNAME`: 端传媒用户名 (邮箱)
     -   `INITIUM_PASSWORD`: 端传媒密码
 
 -   BTBYR
 
     -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
-
     -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开网站首页 2. 打开控制台 3. 刷新 4. 找到 <https://bt.byr.cn/index.php> 请求 5. 找到请求头中的 Cookie
+
+-   小宇宙：需要 App 登陆后抓包获取相应数据。
+
+    -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
+    -   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
+
+-   新榜
+
+    -   `NEWRANK_USERNAME`: 用户名
+    -   `NEWRANK_PASSWORD`: 密码

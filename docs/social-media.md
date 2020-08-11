@@ -36,7 +36,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### UP 主动态
 
-<Route author="DIYgod" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
+<Route author="DIYgod zytomorrow" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
 
 ### UP 主频道
 
@@ -68,9 +68,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 动画
 
-| MAD·AMV | MMD·3D | 短片・手书・配音 | 综合 |
-| ------- | ------ | ---------------- | ---- |
-| 24      | 25     | 47               | 27   |
+| MAD·AMV | MMD·3D | 短片・手书・配音 | 特摄 | 综合 |
+| ------- | ------ | ---------------- | ---- | ---- |
+| 24      | 25     | 47               | 86   | 27   |
 
 番剧
 
@@ -80,21 +80,21 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 国创
 
-| 国产动画 | 国产原创相关 | 布袋戏 | 资讯 |
-| -------- | ------------ | ------ | ---- |
-| 153      | 168          | 169    | 170  |
+| 国产动画 | 国产原创相关 | 布袋戏 | 动态漫・广播剧 | 资讯 |
+| -------- | ------------ | ------ | -------------- | ---- |
+| 153      | 168          | 169    | 195            | 170  |
 
 音乐
 
-| 原创音乐 | 翻唱 | VOCALOID·UTAU | 演奏 | 三次元音乐 | OP/ED/OST | 音乐选集 |
-| -------- | ---- | ------------- | ---- | ---------- | --------- | -------- |
-| 28       | 31   | 30            | 59   | 29         | 54        | 130      |
+| 原创音乐 | 翻唱 | VOCALOID·UTAU | 电音 | 演奏 | MV  | 音乐现场 | 音乐综合 | ~~OP/ED/OST~~ |
+| -------- | ---- | ------------- | ---- | ---- | --- | -------- | -------- | ------------- |
+| 28       | 31   | 30            | 194  | 59   | 193 | 29       | 130      | 54            |
 
 舞蹈
 
-| 宅舞 | 三次元舞蹈 | 舞蹈教程 |
-| ---- | ---------- | -------- |
-| 20   | 154        | 156      |
+| 宅舞 | 街舞 | 明星舞蹈 | 中国舞 | 舞蹈综合 | 舞蹈教程 |
+| ---- | ---- | -------- | ------ | -------- | -------- |
+| 20   | 198  | 199      | 200    | 154      | 156      |
 
 游戏
 
@@ -102,17 +102,29 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | -------- | -------- | -------- | -------- | -------- | --- | ---- | ----- |
 | 17       | 171      | 172      | 65       | 173      | 121 | 136  | 19    |
 
-科技
+知识
 
-| 趣味科普人文 | 野生技术协会 | 演讲・公开课 | 星海 | 数码 | 机械 | 汽车 |
-| ------------ | ------------ | ------------ | ---- | ---- | ---- | ---- |
-| 124          | 122          | 39           | 96   | 95   | 98   | 176  |
+| 科学科普 | 社科人文 | 财经 | 校园学习 | 职业职场 | 野生技术协会 |
+| -------- | -------- | ---- | -------- | -------- | ------------ |
+| 201      | 124      | 207  | 208      | 209      | 122          |
+
+~~科技~~
+
+| ~~演讲・公开课~~ | ~~星海~~ | ~~机械~~ | ~~汽车~~ |
+| ---------------- | -------- | -------- | -------- |
+| 39               | 96       | 98       | 176      |
+
+数码
+
+| 手机平板 | 电脑装机 | 摄影摄像 | 影音智能 |
+| -------- | -------- | -------- | -------- |
+| 95       | 189      | 190      | 191      |
 
 生活
 
-| 搞笑 | 日常 | 美食圈 | 动物圈 | 手工 | 绘画 | ASMR | 运动 | 其他 |
-| ---- | ---- | ------ | ------ | ---- | ---- | ---- | ---- | ---- |
-| 138  | 21   | 76     | 75     | 161  | 162  | 175  | 163  | 174  |
+| 搞笑 | 日常 | 美食圈 | 动物圈 | 手工 | 绘画 | 运动 | 汽车 | 其他 | ~~ASMR~~ |
+| ---- | ---- | ------ | ------ | ---- | ---- | ---- | ---- | ---- | -------- |
+| 138  | 21   | 76     | 75     | 161  | 162  | 163  | 176  | 174  | 175      |
 
 鬼畜
 
@@ -122,15 +134,21 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 时尚
 
-| 美妆 | 服饰 | 健身 | 资讯 |
+| 美妆 | 服饰 | 健身 | T 台 | 风向标 |
+| ---- | ---- | ---- | ---- | ------ |
+| 157  | 158  | 164  | 159  | 192    |
+
+~~广告~~
+
+| ~~广告~~ |
+| -------- |
+| 166      |
+
+资讯
+
+| 热点 | 环球 | 社会 | 综合 |
 | ---- | ---- | ---- | ---- |
-| 157  | 158  | 164  | 159  |
-
-广告
-
-| 广告 |
-| ---- |
-| 166  |
+| 203  | 204  | 205  | 206  |
 
 娱乐
 
@@ -140,9 +158,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 影视
 
-| 影视杂谈 | 影视剪辑 | 短片 | 预告・资讯 | 特摄 |
-| -------- | -------- | ---- | ---------- | ---- |
-| 182      | 183      | 85   | 184        | 86   |
+| 影视杂谈 | 影视剪辑 | 短片 | 预告・资讯 |
+| -------- | -------- | ---- | ---------- |
+| 182      | 183      | 85   | 184        |
 
 纪录片
 
@@ -226,19 +244,25 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 会员购新品上架
 
-<Route author="DIYgod" example="/bilibili/mall/new" path="/bilibili/mall/new" />
+<Route author="DIYgod" example="/bilibili/mall/new/1" path="/bilibili/mall/new/:category?" :paramsDesc="['分类，默认全部，见下表']">
+
+| 全部 | 手办 | 魔力赏 | 周边 | 游戏 |
+| ---- | ---- | ------ | ---- | ---- |
+| 0    | 1    | 7      | 3    | 6    |
+
+</Route>
 
 ### 会员购作品
 
-<Route author="DIYgod" example="/bilibili/mall/ip/1_5883" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
+<Route author="DIYgod" example="/bilibili/mall/ip/0_3000294" path="/bilibili/mall/ip/:id" :paramsDesc="['作品 id, 可在作品列表页 URL 中找到']"/>
 
 ### 排行榜
 
 <Route author="DIYgod" example="/bilibili/ranking/0/3/1" path="/bilibili/ranking/:tid/:days?/:arc_type?/:disableEmbed?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30', '投稿时间, 可为 0(全部投稿) 1(近期投稿) , 默认 1', '默认为开启内嵌视频, 任意值为关闭']">
 
-| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
-| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 160  | 119  | 155  | 5    | 181  |
+| 全站 | 动画 | 国创相关 | 音乐 | 舞蹈 | 游戏 | 科技 | 数码 | 生活 | 鬼畜 | 时尚 | 娱乐 | 影视 |
+| ---- | ---- | -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |
 
 </Route>
 
@@ -258,6 +282,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="ttttmr" example="/bilibili/weekly" path="/bilibili/weekly/:disableEmbed?" :paramsDesc="['默认为开启内嵌视频, 任意值为关闭']"/>
 
+### 漫画更新
+
+<Route author="hoilc" example="/bilibili/manga/update/26009" path="/bilibili/manga/update/:comicid" :paramsDesc="['漫画 id, 可在 URL 中找到, 支持带有`mc`前缀']"/>
+
 ## Disqus
 
 ### 评论
@@ -269,20 +297,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ### 粉絲專頁
 
 <Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']" anticrawler="1"/>
-
-## Instagram
-
-### 用户
-
-<Route author="DIYgod" example="/instagram/user/diygod" path="/instagram/user/:id" :paramsDesc="['用户 id']" anticrawler="1"/>
-
-### 标签
-
-<Route author="widyakumara" path="/instagram/tag/:tag" example="/instagram/tag/urbantoys" :paramsDesc="['标签名']" anticrawler="1"/>
-
-### 快拍 Stories
-
-<Route author="Maecenas" path="/instagram/story/:username" example="/instagram/story/instagram" :paramsDesc="['用户名']"/>
 
 ## Keep
 
@@ -308,15 +322,28 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ::: tip 提示
 
-官方提供了用户时间线 RSS: `https://**:instance**/users/**:username**.atom` 或 `https://**:instance**/users/**:username**.rss`
+通常来说，各实例提供用户时间线的订阅源，如下：
 
-例如：<https://pawoo.net/users/pawoo_support.atom> 或 <https://pawoo.net/users/pawoo_support.rss>
+-   RSS: `https://**:instance**/users/**:username**.rss`
+-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (仅 pawoo.net)
+
+例如：<https://pawoo.net/users/pawoo_support.rss> 或 <https://pawoo.net/users/pawoo_support.atom>
+
+上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的配置模块。
 
 :::
+
+### 用户公共时间线
+
+<Route author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" :paramsDesc="['Webfinger account URI, 形如 `user@host`', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
 
 ### 实例公共时间线
 
 <Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
+
+### 用户公共时间线（备用）
+
+<Route author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '用户 ID. 登录实例后, 搜索用户并进入用户页, 在地址中可以找到这串数字', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
 
 ## piapro
 
@@ -327,6 +354,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ### 全站最新作品
 
 <Route author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['作品类别, 可选`music`,`illust`,`text`','标签, 即 URL 中`tag`参数','分类 ID, 即 URL 中 `categoryId` 参数']"/>
+
+## Picuki
+
+### 用户
+
+<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id" :paramsDesc="['Instagram 用户 id']" radar="1" />
 
 ## pixiv
 
@@ -366,17 +399,23 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 :::
 </Route>
 
+## Popi 提问箱
+
+### 提问箱新回答
+
+<Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" radar="1"/>
+
 ## Soul
 
 ### 瞬间更新
 
-<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']" radar="1"></Route>
+<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul/:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']" radar="1"></Route>
 
 ## Telegram
 
 ### 频道
 
-<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod" path="/telegram/channel/:username" :paramsDesc="['频道 username']" radar="1">
+<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" path="/telegram/channel/:username/:searchQuery?" :paramsDesc="['频道 username', '搜索关键词, 如需搜索 tag 请用 `%23` 替代 `#`']" radar="1">
 
 ::: tip 提示
 
@@ -594,7 +633,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户广播
 
-<Route author="alfredcai" example="/douban/people/62759792/status" path="douban/people/:userid/status" :paramsDesc="['整数型用户 id']">
+<Route author="alfredcai" example="/douban/people/62759792/status" path="douban/people/:userid/status" :paramsDesc="['整数型用户 id']" radar="1">
 
 ::: tip 提示
 
@@ -665,6 +704,20 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ### 用户个人文章
 
 <Route author="LogicJake" example="/vocus/user/tsetyan" path="/vocus/user/:id" :paramsDesc="['用户 id，可在用户主页的 URL 找到']"/>
+
+## 即刻
+
+### 用户动态
+
+<Route author="DIYgod prnake" example="/jike/user/3EE02BC9-C5B3-4209-8750-4ED1EE0F67BB" path="/jike/user/:id" :paramsDesc="['用户 id, 可在即刻分享出来的单条动态页点击用户头像进入个人主页，然后在个人主页的 URL 中找到，或者在单条动态页使用 RSSHub Radar 插件']" radar="1"/>
+
+### 圈子
+
+<Route author="DIYgod prnake" example="/jike/topic/556688fae4b00c57d9dd46ee" path="/jike/topic/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']" radar="1"/>
+
+### 圈子 - 纯文字
+
+<Route author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']" radar="1"/>
 
 ## 简书
 
@@ -756,7 +809,11 @@ rule
 
 ### 博主
 
-<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:displayVideo?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '是否直接显示微博视频, 缺省 `0` 不显示, 若需要显示则填 `1` ']" anticrawler="1" radar="1"/>
+<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:displayVideo?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '是否直接显示微博视频, 缺省 `1` 显示, 若不需要显示则填 `0` ']" anticrawler="1" radar="1">
+
+部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
+
+</Route>
 
 ### 关键词
 
@@ -807,6 +864,24 @@ rule
 ### 专辑
 
 <Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" />
+
+## 新榜
+
+::: warning 注意
+部署时需要配置 NEWRANK_USERNAME、NEWRANK_PASSWORD，具体见部署文档
+:::
+
+### 微信公众号
+
+<Route author="BossDoge" example="/newrank/wechat/chijiread" path="/newrank/wechat/:wxid" :paramsDesc="['微信号，若微信号与新榜信息不一致，以新榜为准']" anticrawler="1"/>
+
+### 抖音短视频
+
+<Route author="BossDoge" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" :paramsDesc="['抖音ID，可在新榜账号详情 URL 中找到']" anticrawler="1"/>
+
+::: warning 注意
+免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
+:::
 
 ## 知乎
 

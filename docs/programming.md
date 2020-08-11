@@ -155,6 +155,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Go 语言中文网
+
+### 周刊
+
+<Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
+
 ## Hacker News
 
 ### 分类
@@ -215,6 +221,10 @@ GitHub 官方也提供了一些 RSS:
 | All Categories | Featured | Research | Recruitment | Getting started | Masters | Playground | Analytics |
 
 </Route>
+
+### User Discussion
+
+<Route author="nczitzk" example="/kaggle/user/antgoldbloom" path="/kaggle/user/:user" :paramsDesc="['用户名']"/>
 
 ## LeetCode
 

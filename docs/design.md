@@ -16,6 +16,16 @@ pageClass: routes
 
 </Route>
 
+## Behance
+
+### User Works
+
+<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user" :paramsDesc="['用户名']" radar="1">
+
+Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapetrick> 的用户名为 `mishapetrick`。
+
+</Route>
+
 ## Blow Studio
 
 ### 主页
@@ -67,11 +77,11 @@ pageClass: routes
 
 </Route>
 
-## Sun Creature
+## Monotype
 
-### Works
+### Featured Article
 
-<Route author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
+<Route author="nczitzk" example="/monotype/article" path="/monotype/article" />
 
 ## UI 中国
 

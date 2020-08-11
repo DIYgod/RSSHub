@@ -9,6 +9,31 @@ pageClass: routes
 ### 新闻
 
 <Route author="cc798461" example="/acwifi" path="/acwifi"/>
+
+## Amazfit Watch Faces
+
+手表型号可在网站中选择后到地址栏查看
+
+| Amazfit Bip | Amazfit Cor | Amazfit GTR | Amazfit GTS | Amazfit Stratos | Amazfit T-Rex | Amazfit Verge | Amazfit Verge Lite | Honor Band 5 | Honor Watch Magic | Huawei Watch GT | Xiaomi Mi Band 4 |
+| ----------- | ----------- | ----------- | ----------- | --------------- | ------------- | ------------- | ------------------ | ------------ | ----------------- | --------------- | ---------------- |
+| bip         | cor         | gtr         | gts         | pace            | t-rex         | verge         | verge-lite         | honor-band-5 | honor-watch-magic | huawei-watch-gt | mi-band-4        |
+
+### 新品上架
+
+<Route author="nczitzk" example="/amazfitwatchfaces/fresh/bip/Bip/zh" path="/amazfitwatchfaces/fresh/:model/:type?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+
+### 最近更新
+
+<Route author="nczitzk" example="/amazfitwatchfaces/updated/bip/Bip/zh" path="/amazfitwatchfaces/updated/:model/:type?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+
+### 排行榜
+
+<Route author="nczitzk" example="/amazfitwatchfaces/top/bip/Bip/month/views/zh" path="/amazfitwatchfaces/top/:model/:type?/:time?/:sortBy?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '统计时间，`week` 指 上周，`month` 指 上月，`alltime` 指 全部时间', '排序参数，`download` 指 下载量，`views` 指 查看量，`fav` 指 收藏数', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+
+### 搜索结果
+
+<Route author="nczitzk" example="/amazfitwatchfaces/search/bip/battery" path="/amazfitwatchfaces/search/:model/:keyword?/:sortBy?" :paramsDesc="['手表型号', '关键词，多个关键词用半角逗号隔开', '排序参数，`fresh` 指 新品上架，`updated` 指 已更新的，`views` 指 查看量，`download` 指 下载量，`fav` 指 收藏数']"/>
+
 ## Apple
 
 ### 更换和维修扩展计划
@@ -36,6 +61,12 @@ pageClass: routes
 
 <Route author="vhxubo" example="/booksource" path="/booksource"/>
 
+## BOOKWALKERTW
+
+### 热门新书
+
+<Route author="wushijishan" example="/bookwalkertw/news" path="/bookwalkertw/news"/>
+
 ## checkee.info
 
 ### 美国签证 check 动态
@@ -47,6 +78,18 @@ pageClass: routes
 ### 文章
 
 <Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
+
+## Darwin Awards
+
+### 文章
+
+<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all"/>
+
+## dcinside
+
+### board
+
+<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
 
 ## DHL
 
@@ -68,9 +111,15 @@ pageClass: routes
 
 ## iYouport
 
-### 首页
+### 首页（旧版）
 
-<Route author="EsuRt" example="/iyouport/article" path="/iyouport"/>
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport/article"/>
+
+### 分类
+
+支持 iyouport.org 页面 Header 全部分类。例如，`https://www.iyouport.org/category/osint` 对应 `/iyouport/osint`。若不填写 `category`，则输出全部文章，但比旧版首页 feed 有更多元数据。
+
+<Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
 ## MobData
 
@@ -235,6 +284,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 东莞教研网
+
+### 信息公开
+
+<Route author="nczitzk" example="/dgjyw/news" path="/dgjyw/:type" :paramsDesc="['分类']">
+
+| 动态 | 公示         | 通知   |
+| ---- | ------------ | ------ |
+| news | announcement | notice |
+
+</Route>
+
 ## 福利资源 - met.red
 
 ### 福利资源 - met.red
@@ -245,17 +306,23 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 首页推荐
 
-<Route author="LogicJake" example="/gushiwen/recommend" path="/gushiwen/recommend"/>
+<Route author="LogicJake" example="/gushiwen/recommend/zhushang" path="/gushiwen/recommend/:annotation?"/>
+
+`annotation` 字段为添加哪些附加信息。可从以下表格中选择值后按顺序拼接。例如如果需要注释和赏析，则为`zhushang`。
+
+| 翻译 | 注释 | 赏析  |
+| ---- | ---- | ----- |
+| yi   | zhu  | shang |
 
 ## 国家留学网
 
 ### 通知
 
-<Route author="Derekmini" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
+<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
 
-| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 |
-| -------- | ------------ | ------------ | -------- |
-| lxtz     | xmzl         | wtjd         | lqgg     |
+| 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
+| -------- | ------------ | ------------ | -------- | -------- | -------- |
+| lxtz     | xmzl         | wtjd         | lqgg     | xwzx     | xwgg     |
 
 </Route>
 
@@ -337,6 +404,44 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 用户
 
 <Route author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
+
+## 律师事务所文章
+
+### 君合
+
+<Route author="snipersteve" example="/law/jh" path="/law/jh" />
+
+### 通商
+
+<Route author="snipersteve" example="/law/ts" path="/law/ts" />
+
+### 海问
+
+<Route author="snipersteve" example="/law/hw" path="/law/hw" />
+
+### 环球
+
+<Route author="snipersteve" example="/law/hq" path="/law/hq" />
+
+### 国枫
+
+<Route author="snipersteve" example="/law/gf" path="/law/gf" />
+
+### 中伦
+
+<Route author="snipersteve" example="/law/zl" path="/law/zl" />
+
+### 锦天城
+
+<Route author="snipersteve" example="/law/jtc" path="/law/jtc" />
+
+### 德恒
+
+<Route author="snipersteve" example="/law/dh" path="/law/dh" />
+
+### 金诚同达
+
+<Route author="snipersteve" example="/law/jctd" path="/law/jctd" />
 
 ## 马良行
 
@@ -443,6 +548,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 问询函件 (全部 / 主板 / 中小企业板 / 创业板)
 
 <Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+
+### 最新规则
+
+<Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
 
 ## 四川省科学技术厅
 
@@ -571,8 +680,8 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 源仓库更新
 
 <Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
-| 阅读 | 异次元 | 海阔 | 
-| ---- | ----- | ---- | 
+| 阅读  | 异次元   | 海阔   |
+| ----- | -------- | ------ |
 | yuedu | yiciyuan | haikuo |
 
 </Route>
@@ -624,6 +733,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
 
 </Route>
+
+## 中国邮政速递物流
+
+### 新闻
+
+<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1"/>
 
 ## 自如
 

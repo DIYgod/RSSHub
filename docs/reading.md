@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## Mobilism
+
+### eBook Releases
+
+<Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
+
 ## UU 看书
 
 ### 小说更新
@@ -50,9 +56,9 @@ pageClass: routes
 
 ## 笔趣阁
 
-### 小说更新
+### biquge5200.com
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1">
+<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
 
 ::: tip 提示
 
@@ -60,7 +66,15 @@ pageClass: routes
 
 :::
 
-</Route>
+### biquge.info
+
+<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+
+::: tip 提示
+
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge.info`](http://www.biquge.info/)中的小说 id.
+
+:::
 
 ## 吹牛部落
 
@@ -188,6 +202,31 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 章节
 
 <Route author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+## 生物帮
+
+### 所有栏目
+
+<Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" :paramsDesc="['', '']" />
+
+具体栏目编号，去网站上看标签
+
+| 网址                                             | 对应路由                            |
+| ------------------------------------------------ | ----------------------------------- |
+| <http://science.bio1000.com/ecology-environment> | /biobio/science/ecology-environment |
+| <http://www.bio1000.com/gnjz>                    | /biobio/gnjz                        |
+
+## 生物谷
+
+### 所有栏目
+
+<Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" :paramsDesc="['分栏代码, 可在 URL 找到']" />
+
+具体栏目编号，去网站上看标签 
+
+| 网址                            | 对应路由           |
+| ------------------------------- | ------------------ |
+| <http://news.bioon.com/biology> | /shengwugu/biology |
 
 ## 书趣阁
 

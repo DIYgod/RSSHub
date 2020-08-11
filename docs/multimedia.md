@@ -30,6 +30,16 @@ pageClass: routes
 
 见 [#AGE 动漫](/anime.html#age-dong-man)
 
+## Avgle
+
+### 视频列表
+
+<Route author="I2IMk" example="/avgle/videos" path="/avgle/videos/:order?/:time?/:top?" :paramsDesc="['视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg` 最长, 默认 `mv`', '视频的添加时间, `a` 所有 / `t` 今天 / `d` 本周 / `m` 本月, 默认 `m`', '按次序获取的视频数, 不大于 `250`, 默认 `30`']"/>
+
+### 视频搜索
+
+<Route author="I2IMk" example="/avgle/search/橋本ありな" path="/avgle/search/:keyword/:order?/:time?/:top?" :paramsDesc="['搜索的关键词', '视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg` 最长, 默认 `mr`', '视频的添加时间, `a` 所有 / `t` 今天 / `d` 本周 / `m` 本月, 默认 `a`', '按次序获取的视频数, 不大于 `250`, 默认 `30`']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
@@ -181,8 +191,6 @@ pageClass: routes
 
 <Route author="wolfyu1991"  example="/mp4ba/复仇者联盟" path="/mp4ba/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
 
-</Route>
-
 ## MQube
 
 ### 全站最近更新
@@ -206,6 +214,60 @@ pageClass: routes
 ### 搜索结果
 
 <Route author="Lava-Swimmer" example="/nyaa/search/psycho-pass" path="/nyaa/search/:keyword" :paramsDesc="['搜索关键字']" supportBT="1"/>
+
+## OneJAV
+
+::: tip 提示
+
+官方提供的订阅源不支持 BT 下载订阅，地址为 <https://onejav.com/feeds/>
+
+:::
+
+### OneJAV BT
+
+<Route author="monsterxcn" example="/onejav/popular/30" path="/onejav/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
+
+**类型**
+
+| 最新 | 热门    | 随机   | 指定演员 | 指定标签 | 指定日期 |
+| ---- | ------- | ------ | -------- | -------- | -------- |
+| new  | popular | random | actress  | tag      | day      |
+
+**关键词**
+
+| 空 | 日期范围    | 演员名       | 标签名         | 日期     |
+| -- | ----------- | ------------ | -------------- | -------- |
+|    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
+
+**示例说明**
+
+-   `/onejav/new`
+
+    仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
+
+-   `/onejav/popular/30`
+
+    `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
+
+-   `/onejav/actress/Yua%20Mikami`
+
+    `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://onejav.com/actress/) 演员单页链接中获取
+
+-   `/onejav/tag/Adult%20Awards`
+
+    `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://onejav.com/tag/) 标签单页链接中获取
+
+-   `/onejav/day/20200730`
+
+    `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
+
+</Route>
+
+## PornHub
+
+### 视频列表
+
+<Route author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['相对路径, `pornhub.com/` 后的部分, 需手动 URL 编码']"/>
 
 ## rs05 人生 05 电影
 
@@ -301,6 +363,12 @@ pageClass: routes
 
 </Route>
 
+## 场库
+
+### 今日精选
+
+<Route author="Wenmoux" example="/changku" path="/changku"/>
+
 ## 低端影视
 
 ### 影视剧集更新
@@ -349,6 +417,18 @@ pageClass: routes
 
 <Route author="SunShinenny" example="/kaiyan/index" path="/kaiyan/index"/>
 
+## 荔枝 FM
+
+### 电台更新
+
+<Route author="nczitzk" example="/lizhi/user/27151442948222380" path="/lizhi/user/:id" :paramsDesc="['用户 id，可以在电台的 URL 中找到']"/>
+
+## 猫耳 FM
+
+### 广播剧 / 有声漫画
+
+<Route author="FlashWingShadow" example="/missevan/drama/28499" path="/missevan/drama/:id" :paramsDesc="['剧集 id，在剧集主页 URL 中可以找到']"/>
+
 ## 猫眼电影
 
 ### 正在热映
@@ -394,6 +474,16 @@ pageClass: routes
 ### 专辑
 
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
+
+## 人人影视
+
+### 评测推荐
+
+<Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
+
+### 今日更新
+
+<Route author="alcarl" example="/yyets/todayfilelist" path="/yyets/todayfilelist" />
 
 ## 色花堂中文论坛
 
@@ -459,6 +549,20 @@ pageClass: routes
 
 </Route>
 
+## 小宇宙
+
+### 发现
+
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou">
+
+::: warning 注意
+
+小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。
+
+:::
+
+</Route>
+
 ## 优酷
 
 ### 频道
@@ -503,12 +607,20 @@ pageClass: routes
 
 ## 字幕组（ZiMuZu.tv）
 
+### 影视
+
 ::: tip 提示
 
 跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
 
 :::
 
-### 影视
-
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
+
+### 排行榜
+
+<Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']">
+
+例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
+
+</Route>

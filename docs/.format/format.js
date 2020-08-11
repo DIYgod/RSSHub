@@ -3,6 +3,8 @@ const sgf = require('staged-git-files');
 const path = require('path');
 const sortByHeading = require('./sortByHeading');
 const chineseFormat = require('./chineseFormat');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 /**
  * Processors are objects contains two methods:
@@ -97,19 +99,15 @@ const buildStagedList = async () => {
     // console.log(fileList);
     // return
 
+    const stagedFiles = await sgf();
     for (const processor of processors) {
-        // We don't want to mix up processor
-        /* eslint-disable no-await-in-loop */
-        await Promise.all(
-            processor.rules(fileList).map(async (e) => {
-                let formatted = await file.readFile(e.path);
-                formatted = await processor.handler(formatted);
-                return file.writeFile(e.path, formatted);
-            })
-        ).catch((err) => {
-            // eslint-disable-next-line no-console
-            console.log(err);
-            process.exit(1);
-        });
+        for (const e of processor.rules(fileList)) {
+            let formatted = await file.readFile(e.path);
+            formatted = await processor.handler(formatted);
+            await file.writeFile(e.path, formatted);
+            if (stagedFiles.find((x) => e.path.indexOf(x.filename) !== -1)) {
+                await exec(`git add ${e.path}`);
+            }
+        }
     }
 })();

@@ -20,7 +20,7 @@ pageClass: routes
 
 ### 番剧
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']" radar="1"/>
 
 ::: tip 提示
 
@@ -31,7 +31,7 @@ pageClass: routes
 
 ### 用户投稿
 
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1"/>
 
 ## AGE 动漫
 
@@ -46,6 +46,7 @@ pageClass: routes
 <Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
 
 时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
+
 </Route>
 
 ### 搜尋
@@ -103,6 +104,10 @@ pageClass: routes
 ### 小组话题
 
 <Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
+
+### 用户日志
+
+<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']"/>
 
 ## bilibili
 
@@ -225,6 +230,32 @@ pageClass: routes
 
 </Route>
 
+## 东方我乐多丛志
+
+### 文章
+
+<Route author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/cn/index" :paramsDesc="['语言', '类型']">
+
+语言
+
+| 中文 | 日文 | 韩文 |
+| ---- | ---- | ---- |
+| cn   | ja   | ko   |
+
+类型
+
+| 最新情报 | 连载   | 特辑       | 小说   | 漫画   | 新闻 |
+| -------- | ------ | ---------- | ------ | ------ | ---- |
+| index    | series | interviews | novels | comics | news |
+
+| 音乐点评     | 游戏测评    | 同人作品感想 | 关于本站      |
+| ------------ | ----------- | ------------ | ------------- |
+| music_review | game_review | book_review  | where_are_you |
+
+**注：** 最新情报包括后面所有类型的文章，内容较多，谨慎使用。
+
+</Route>
+
 ## 動畫瘋
 
 ### 最後更新
@@ -247,6 +278,12 @@ pageClass: routes
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
+## 风之动漫
+
+### 风之动漫
+
+<Route author="geeeeoff" path="/fzdm/manhua/:id" example="/fzdm/manhua/39" :paramsDesc="['漫画ID']"/>
+
 ## 海猫吧
 
 ### 漫画更新
@@ -264,6 +301,18 @@ pageClass: routes
 ### 漫画 DB
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
+
+## 漫画堆
+
+### 漫画
+
+<Route author="geeeeoff" path="/manhuadui/manhua/:name/:serial?" example="/manhuadui/manhua/yiquanchaoren/1" :paramsDesc="['漫画名称', '内容序号，部分漫画存在最新章节、原作、番外，根据页面顺序从1开始排序']"/>
+
+## 漫小肆
+
+### 漫画更新
+
+<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1"/>
 
 ## 三界异次元
 

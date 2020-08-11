@@ -4,6 +4,26 @@ pageClass: routes
 
 # 新媒体
 
+## 199IT
+
+### 首页更新
+
+<Route author="xfangbao" example="/199it" path="/199it" />
+
+### 分类
+
+<Route author="nczitzk" example="/199it/category/199itdata" path="/199it/category/:caty" :paramsDesc="['分类, 可在分类页 URL 中找到']">
+
+分类为单一路径，如 `http://www.199it.com/archives/category/199itdata` 则路由为 `/199it/category/199itdata`.
+
+分类包含多重路径，如 `http://www.199it.com/archives/category/emerging/5g` 则替换 `/` 为 `|`，即路由为 `/199it/category/emerging|5g`.
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/199it/tag/数据早报" path="/199it/tag/:tag" :paramsDesc="['标签, 可在标签页 URL 中找到']"/>
+
 ## 36kr
 
 ### 资讯
@@ -63,6 +83,12 @@ pageClass: routes
 | culture | philosophy | psychology | society | science |
 
 </Route>
+
+## Aljazeera 半岛网
+
+### 新闻
+
+<Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
 
 ## BOF
 
@@ -150,11 +176,11 @@ pageClass: routes
 
 ### 热榜
 
-<Route author="immmortal" example="/ithome/ranking/1" path="/ithome/ranking/:type" :paramsDesc="['类别']">
+<Route author="immmortal luyuhuang" example="/ithome/ranking/24h" path="/ithome/ranking/:type" :paramsDesc="['类别']" radar="1">
 
-| 1             | 2    | 3        | 4    |
-| ------------- | ---- | -------- | ---- |
-| 24 小时阅读榜 | 周榜 | 7 天热评 | 月榜 |
+| 24h           | 7days    | monthly |
+| ------------- | -------- | ------- |
+| 24 小时阅读榜 | 7 天最热 | 月榜    |
 
 </Route>
 
@@ -207,6 +233,7 @@ pageClass: routes
 ### 首页
 
 <Route author="EsuRt" example="/mittrchina/article" path="/mittrchina"/>
+
 ## Nautilus
 
 ### 话题
@@ -264,6 +291,16 @@ pageClass: routes
 ### 最新文章
 
 <Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
+
+## SocialBeta
+
+### 首页
+
+<Route author="nczitzk" example="/socialbeta/home" path="/socialbeta/home"/>
+
+### 案例
+
+<Route author="nczitzk" example="/socialbeta/hunt" path="/socialbeta/hunt"/>
 
 ## The Verge
 
@@ -331,6 +368,12 @@ Supported sub-sites:
 ### 快讯
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
+
+## 百度知道日报
+
+### 精选
+
+<Route author="1813927768" example="/baidu/daily" path="/baidu/daily"/>
 
 ## 白鲸出海
 
@@ -410,6 +453,18 @@ Supported sub-sites:
 ### 标签
 
 <Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
+
+## 电商报
+
+### 分区
+
+<Route author="FlashWingShadow" example="/dsb/area/lingshou" path="/dsb/area/:area" :paramsDesc="['分区']"/>
+
+area 分区选项
+
+| 零售     | 物流  | O2O | 金融    | B2B | 人物  | 跨境    | 行业观察 |
+| -------- | ----- | --- | ------- | --- | ----- | ------- | -------- |
+| lingshou | wuliu | O2O | jinrong | B2B | renwu | kuajing | guancha  |
 
 ## 电商在线
 
@@ -665,11 +720,34 @@ Supported sub-sites:
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
 
+## 看点快报
+
+### 首页
+
+<Route author="nczitzk" example="/kuaibao" path="/kuaibao/index"/>
+
 ## 快科技（原驱动之家）
 
 ### 最新新闻
 
 <Route author="kt286" example="/kkj/news" path="/kkj/news"/>
+
+## 快媒体
+
+### 首页更新
+
+<Route author="xfangbao" example="/kuai" path="/kuai" />
+
+### 具体栏目更新
+
+<Route author="xfangbao" example="/kuai/1" path="/kuai/:id" />
+
+具体栏目编号，去网站上看标签
+
+| 网址                                                                                              | 对应路由 |
+| ------------------------------------------------------------------------------------------------- | -------- |
+| kuai.media                                                                                        | /kuai    |
+| [www.kuai.media/portal.php?mod=list&catid=38](http://www.kuai.media/portal.php?mod=list&catid=38) | /kuai/38 |
 
 ## 快知
 
@@ -689,6 +767,28 @@ Supported sub-sites:
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
 
+## 梅花网
+
+### 作品
+
+<Route author="nczitzk" example="/meihua/shots/latest" path="/meihua/shots/:caty">
+
+| 最新   | 热门 | 推荐      |
+| ------ | ---- | --------- |
+| latest | hot  | recommend |
+
+</Route>
+
+### 文章
+
+<Route author="nczitzk" example="/meihua/article/latest" path="/meihua/article/:caty">
+
+| 最新   | 热门 |
+| ------ | ---- |
+| latest | hot  |
+
+</Route>
+
 ## 镁客网 im2maker
 
 ### 镁客网频道
@@ -706,6 +806,16 @@ Supported sub-sites:
 ### 新闻
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
+
+## 鸟哥笔记
+
+### 今日事
+
+<Route author="KotoriK" example="/ngbj/today" path="/ngbj/today"/>
+
+### 分类目录
+
+<Route author="KotoriK" example="/ngbj/cat/103" path="/ngbj/cat/:cat" :paramsDesc="['如https://www.niaogebiji.com/cat/103,最后的数字就是要填写在这的id']"/>
 
 ## 派代
 
@@ -847,6 +957,12 @@ Supported sub-sites:
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
 
+## 生物谷
+
+### 最新资讯
+
+<Route author="nczitzk" example="/bioon/latest" path="/bioon/latest"/>
+
 ## 世界卫生组织 WHO
 
 ### 媒体中心
@@ -928,6 +1044,18 @@ Supported sub-sites:
 
 </Route>
 
+## 外接大脑
+
+### 文章
+
+<Route author="nczitzk" example="/waijiedanao/article/all" path="/waijiedanao/article/:caty" :paramsDesc="['文章分类']">
+
+| 全部 | 新闻 | 金融    | 区块链     | 互联网   | 科技 | 新媒体   | 商业思考 | 行业 100 强 | 电商      | 娱乐          | 生活 |
+| ---- | ---- | ------- | ---------- | -------- | ---- | -------- | -------- | ----------- | --------- | ------------- | ---- |
+| all  | news | finance | blockchain | internet | tech | newmedia | business | hundred     | ecommerce | entertainment | life |
+
+</Route>
+
 ## 万联网
 
 ### 资讯
@@ -949,6 +1077,30 @@ Supported sub-sites:
 1.  在[网易号搜索页面](https://dy.163.com/v2/media/tosearch.html) 搜索想要订阅的网易号。
 2.  打开网易号文章页面。
 3.  通过浏览器控制台执行 `$('#contain').dataset.wemediaid`，返回的即为网易号 ID。
+
+</Route>
+
+## 网易新闻
+
+### 排行榜
+
+<Route author="nczitzk" example="/netease/news/rank/whole/click/day" path="/netease/news/rank/:category?/:type?/:time?" :paramsDesc="['新闻分类，参见下表，默认为“全站”','排行榜类型，“点击榜”对应`click`，“跟贴榜”对应`follow`，默认为“点击榜”','统计时间，“1小时”对应`hour`，“24小时”对应`day`，“本周”对应`week`，“本月”对应`month`，默认为“24小时”']">
+
+::: tip 提示
+
+全站新闻 **点击榜** 的统计时间仅包含 “24 小时”、“本周”、“本月”，不包含 “1 小时”。即可用的`time`参数为`day`、`week`、`month`。
+
+其他分类 **点击榜** 的统计时间仅包含 “1 小时”、“24 小时”、“本周”。即可用的`time`参数为`hour`、`day`、`week`。
+
+而所有分类（包括全站）的 **跟贴榜** 的统计时间皆仅包含 “24 小时”、“本周”、“本月”。即可用的`time`参数为`day`、`week`、`month`。
+
+:::
+
+新闻分类：
+
+| 全站  | 新闻 | 娱乐          | 体育   | 财经  | 科技 | 汽车 | 女人 | 房产  | 游戏 | 旅游   | 教育 |
+| ----- | ---- | ------------- | ------ | ----- | ---- | ---- | ---- | ----- | ---- | ------ | ---- |
+| whole | news | entertainment | sports | money | tech | auto | lady | house | game | travel | edu  |
 
 </Route>
 
@@ -995,6 +1147,10 @@ Supported sub-sites:
 ### 公众号 (二十次幂来源)
 
 <Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
+
+### 公众号 (外接大脑来源)
+
+<Route author="BugWriter2" example="/wechat/wjdn/5d5e683c82339df472988f59" path="/wechat/wjdn/:id" :paramsDesc="['公众号 id, 打开公众号页, 在 URL 中找到 id']"/>
 
 ### 公众号栏目 (非推送 & 历史消息)
 

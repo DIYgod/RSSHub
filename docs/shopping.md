@@ -10,6 +10,20 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## Furstar
+
+### 最新售卖角色列表
+
+<Route author="NeverBehave" example="/furstar/characters/cn" path="/furstar/characters/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
+### 已经出售的角色列表
+
+<Route author="NeverBehave" example="/furstar/archive/cn" path="/furstar/archive/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
+### 画师列表
+
+<Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
 ## LeBonCoin
 
 ### Ads
@@ -180,6 +194,14 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 | 0    | 7      | 30     |
 
 </Route>
+
+### 用户文章
+
+<Route author="xfangbao" example="/smzdm/article/6902738986" path="/smzdm/article/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
+
+### 用户爆料
+
+<Route author="nczitzk" example="/smzdm/baoliao/7367111021" path="/smzdm/baoliao/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
 
 ## 淘宝众筹
 

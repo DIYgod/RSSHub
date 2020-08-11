@@ -43,6 +43,14 @@
                 target: '/bilibili/user/video/:uid',
             },
         ],
+        manga: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili-man-hua-geng-xin',
+                source: '/detail/:comicid',
+                target: '/bilibili/manga/update/:comicid',
+            },
+        ],
     },
     'weibo.com': {
         _name: '微博',
@@ -447,27 +455,6 @@
             },
         ],
     },
-    'instagram.com': {
-        _name: 'Instagram',
-        www: [
-            {
-                title: '用户',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/:id',
-                target: (params) => {
-                    if (params.id !== 'explore' && params.id !== 'developer') {
-                        return '/instagram/user/:id';
-                    }
-                },
-            },
-            {
-                title: '标签',
-                docs: 'https://docs.rsshub.app/social-media.html#instagram',
-                source: '/explore/tags/:tag',
-                target: '/instagram/tag/:tag',
-            },
-        ],
-    },
     'swufe.edu.cn': {
         _name: '西南财经大学',
         it: [
@@ -493,6 +480,16 @@
                 docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua',
                 source: '/comics/anime/:id',
                 target: '/shuhui/comics/:id',
+            },
+        ],
+    },
+    'www.chicagotribune.com': {
+        _name: 'Chicago Tribune',
+        www: [
+            {
+                title: 'Chicago Tribune',
+                docs: 'https://docs.rsshub.app/traditional_media.html#chicago-tribune',
+                source: '/',
             },
         ],
     },
@@ -911,6 +908,26 @@
 
     'ithome.com': {
         _name: 'IT 之家',
+        '.': [
+            {
+                title: '24 小时阅读榜',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: ['', '/*'],
+                target: '/ithome/ranking/24h',
+            },
+            {
+                title: '7 天最热',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: ['', '/*'],
+                target: '/ithome/ranking/7days',
+            },
+            {
+                title: '月榜',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: ['', '/*'],
+                target: '/ithome/ranking/monthly',
+            },
+        ],
         it: [
             {
                 title: 'IT 资讯',
@@ -1316,6 +1333,51 @@
             },
         ],
     },
+    'ynu.edu.cn': {
+        _name: '云南大学',
+        home: [
+            {
+                title: '官网消息通告',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/tzgg.htm',
+                target: '/ynu/home',
+            },
+        ],
+        jwc: [
+            {
+                title: '教务处教务科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/1',
+            },
+            {
+                title: '教务处学籍科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/2',
+            },
+            {
+                title: '教务处教学研究科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/3',
+            },
+            {
+                title: '教务处实践科学科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/4',
+            },
+        ],
+        grs: [
+            {
+                title: '研究生院通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '',
+            },
+        ],
+    },
     'zju.edu.cn': {
         _name: '浙江大学',
         cst: [
@@ -1561,10 +1623,20 @@
     'biquge5200.com': {
         www: [
             {
-                title: '当前小说',
-                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge',
+                title: 'biquge5200.com',
+                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge5200-com',
                 source: '/:id',
                 target: '/novel/biquge/:id',
+            },
+        ],
+    },
+    'biquge.info': {
+        www: [
+            {
+                title: 'biquge.info',
+                docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge-info',
+                source: '/:id',
+                target: '/novel/biqugeinfo/:id',
             },
         ],
     },
@@ -1749,13 +1821,25 @@
         ],
     },
     'qq.com': {
-        _name: '微信',
+        _name: '腾讯',
         'mp.weixin': [
             {
-                title: '公众号栏目',
+                title: '微信公众号栏目',
                 docs: 'https://docs.rsshub.app/new-media.html#gong-zhong-hao-lan-mu-fei-tui-song-li-shi-xiao-xi',
                 source: '/mp/homepage',
                 target: (params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}`,
+            },
+        ],
+        egame: [
+            {
+                title: '企鹅电竞直播间',
+                docs: 'https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo',
+                source: '/:id',
+                target: (params) => {
+                    if (params.id.match(/^\d+$/)) {
+                        return '/egameqq/room/:id';
+                    }
+                },
             },
         ],
     },
@@ -1841,6 +1925,44 @@
             },
         ],
     },
+    'onejav.com': {
+        _name: 'OneJAV BT',
+        '.': [
+            {
+                title: '今日种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: (params, url, document) => {
+                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    return `/onejav/day/${today}`;
+                },
+            },
+            {
+                title: '今日演员',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: (params, url, document) => {
+                    const star = document.querySelector('div.card-content > div > a').getAttribute('href');
+                    return `/onejav${star}`;
+                },
+            },
+            {
+                title: '页面种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: ['/:type', '/:type/:key', '/:type/:key/:morekey'],
+                target: (params, url, document) => {
+                    const itype = params.morekey === undefined ? `${params.type}` : params.type === 'tag' ? 'tag' : 'day';
+                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${itype === 'tag' && params.morekey !== undefined ? '%2F' : ''}${params.morekey || ''}`;
+                    if (ikey === '' && itype === 'tag') {
+                        ikey = document.querySelector('div.thumbnail.is-inline > a').getAttribute('href').replace('/tag/', '').replace('/', '%2F');
+                    } else if (ikey === '' && itype === 'actress') {
+                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
+                    }
+                    return `/onejav/${itype}/${ikey}`;
+                },
+            },
+        ],
+    },
     'sexinsex.net': {
         _name: 'sexinsex',
         '.': [
@@ -1897,6 +2019,20 @@
                 target: '/umass/amherst/csnews',
             },
         ],
+        www: [
+            {
+                title: 'IPO Events',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/events',
+                target: '/umass/amherst/ipoevents',
+            },
+            {
+                title: 'IPO Featured Stories',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/ipo/iss/featured-stories',
+                target: '/umass/amherst/ipostories',
+            },
+        ],
     },
     'lofter.com': {
         _name: 'Lofter',
@@ -1906,6 +2042,29 @@
                 docs: 'https://docs.rsshub.app/social-media.html#lofter',
                 source: ['/tag/:name', '/tag/:name/:type'],
                 target: (params) => `/lofter/tag/${params.name}/${params.type || ''}`,
+            },
+        ],
+    },
+
+    'yuque.com': {
+        _name: '语雀',
+        www: [
+            {
+                title: '知识库',
+                docs: 'https://docs.rsshub.app/study.html#yu-que',
+                source: ['/:space/:book'],
+                target: (params, url, document) => {
+                    const match = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/);
+                    if (match && match[1]) {
+                        const dataStr = match[1];
+                        try {
+                            const appData = JSON.parse(decodeURIComponent(dataStr));
+                            return `/yuque/doc/${appData.book.id}`;
+                        } catch (e) {
+                            // pass
+                        }
+                    }
+                },
             },
         ],
     },
@@ -1929,6 +2088,177 @@
                 docs: 'https://docs.rsshub.app/government.html#bei-jing-jiao-yu-kao-shi-yuan',
                 source: ['/html/zkkd'],
                 target: '/gov/beijing/bjeea/zkkd',
+            },
+        ],
+    },
+    'hk01.com': {
+        _name: '香港01',
+        www: [
+            {
+                title: '最 Hit',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: ['/hot', '/'],
+                target: '/hk01/hot',
+            },
+            {
+                title: 'zone',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/zone/:id/:title',
+                target: '/hk01/zone/:id',
+            },
+            {
+                title: 'channel',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/channel/:id/:title',
+                target: '/hk01/channel/:id',
+            },
+            {
+                title: 'issue',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/issue/:id/:title',
+                target: '/hk01/issue/:id',
+            },
+            {
+                title: 'tag',
+                docs: 'https://docs.rsshub.app/traditional-media.html#xiang-gang-01',
+                source: '/tag/:id/:title',
+                target: '/hk01/tag/:id',
+            },
+        ],
+    },
+    'douban.com': {
+        _name: '豆瓣',
+        www: [
+            {
+                title: '用户的广播',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/people/:user/',
+                target: (params, url, document) => {
+                    const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
+                    return uid ? `/douban/people/${uid}/status` : '';
+                },
+            },
+        ],
+    },
+    'okjike.com': {
+        _name: '即刻',
+        m: [
+            {
+                title: '用户动态',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-yong-hu-dong-tai',
+                source: '/reposts/:repostId',
+                target: (params, url, document) => {
+                    const uid = document.querySelector('.avatar').getAttribute('href').replace('/users/', '');
+                    return uid ? `/jike/user/${uid}` : '';
+                },
+            },
+            {
+                title: '圈子',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-quan-zi',
+                source: '/topics/:id',
+                target: '/jike/topic/:id',
+            },
+            {
+                title: '圈子 - 纯文字',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-quan-zi-chun-wen-zi',
+                source: '/topics/:id',
+                target: '/jike/topic/text/:id',
+            },
+        ],
+    },
+    'ems.com.cn': {
+        _name: '中国邮政速递物流',
+        www: [
+            {
+                title: '新闻',
+                docs: 'https://docs.rsshub.app/other.html#zhong-guo-you-zheng-su-di-wu-liu',
+                source: '/aboutus/xin_wen_yu_shi_jian.html',
+                target: '/ems/news',
+            },
+        ],
+    },
+    'popiask.cn': {
+        _name: 'Popi 提问箱',
+        www: [
+            {
+                title: '提问箱新回答',
+                docs: 'https://docs.rsshub.app/social-media.html#popi-ti-wen-xiang',
+                source: '/:id',
+                target: (params) => {
+                    if (params.id) {
+                        return '/popiask/:id';
+                    }
+                },
+            },
+        ],
+    },
+    'nppa.gov.cn': {
+        _name: '国家新闻出版署',
+        www: [
+            {
+                title: '栏目',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/channels/:channel',
+                target: (params, url) => `/gov/nppa/${/nppa\/channels\/(\d+)\.shtml/.exec(url)[1]}`,
+            },
+            {
+                title: '内容',
+                docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
+                source: '/nppa/contents/:channel/:content',
+                target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
+            },
+        ],
+    },
+    'acfun.cn': {
+        _name: 'AcFun',
+        www: [
+            {
+                tilte: '番剧',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-fan-ju',
+                source: '/bangumi/:id',
+                target: (params) => `/acfun/bangumi/${params.id.replace('aa', '')}`,
+            },
+            {
+                title: '用户投稿',
+                docs: 'https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao',
+                source: '/u/:id',
+                target: '/acfun/user/video/:id',
+            },
+        ],
+    },
+    'behance.net': {
+        _name: 'Behance',
+        www: [
+            {
+                title: 'User',
+                docs: 'https://docs.rsshub.app/design.html#behance-user-works',
+                source: ['/:user'],
+                target: (params, url, document) => {
+                    const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
+                    return `/behance/${uid1}`;
+                },
+            },
+        ],
+    },
+    'picuki.com': {
+        _name: 'Picuki',
+        www: [
+            {
+                title: '用户',
+                docs: 'https://docs.rsshub.app/social-media.html#picuki-yong-hu',
+                source: '/profile/:id',
+                target: '/picuki/profile/:id',
+            },
+        ],
+    },
+    'manxiaosi.com': {
+        _name: '漫小肆',
+        '.': [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
+                source: '/book/:id',
+                target: '/manxiaosi/book/:id',
             },
         ],
     },
