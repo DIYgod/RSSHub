@@ -77,12 +77,6 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 </RouteEn>
 
-## Sun Creature
-
-### Works
-
-<RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
-
 ## Unit Image
 
 ### Films

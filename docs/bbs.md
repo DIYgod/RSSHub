@@ -315,6 +315,12 @@ pageClass: routes
 
 </Route>
 
+## 水木社区
+
+### 用户文章
+
+<Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
+
 ## 天涯论坛
 
 ### 子版块
