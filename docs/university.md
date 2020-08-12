@@ -1923,6 +1923,10 @@ type 列表：
 
 <Route author="nicolaszf" example="/cqu/news/jzyg" path="/cqu/news/jzyg"/>
 
+### 新闻网通知公告简报
+
+<Route author="Hagb" example="/cqu/news/tz" path="/cqu/news/tz"/>
+
 ### 校团委
 
 <Route author="Hagb" example="/cqu/youth/gzdt" path="/cqu/youth/:category" :paramsDesc="['分类名']">
