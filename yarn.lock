@@ -5827,10 +5827,10 @@ googleapis-common@^4.4.0:
     url-template "^2.0.8"
     uuid "^8.0.0"
 
-googleapis@58.0.0:
-  version "58.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-58.0.0.tgz#03d5d1f40a12ca60adc139ef4624636024afaeac"
-  integrity sha512-gfpv+8Fr8TCO6yMCTrQUySZe2IJDM/6lulUAh3RuYYPlUBdd3g1B2zMkd7Ot59P6CyGYt4ZMzTLpyHVoLxM85w==
+googleapis@59.0.0:
+  version "59.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-59.0.0.tgz#aec5c6f5b0b347c9c6996d45fa8ad8176e585fae"
+  integrity sha512-GV/E4KRN89a4GxSk7D7cwUfRYgcJHR05sOgm/WGdwc/u8dxNXG5lWmz9gF5ZwFGk2yKtVxL4VZNn4zBuZ6rmGg==
   dependencies:
     google-auth-library "^6.0.0"
     googleapis-common "^4.4.0"
