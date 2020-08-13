@@ -1,7 +1,6 @@
 on:
-  - push
-  - schedule:
-    - cron:  "*/15 * * * *"
+  push
+
 jobs:
   sync_fork:
     runs-on: ubuntu-latest
