@@ -413,7 +413,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 热门瞬间
 
-<Route author="BugWriter2" example="/soul/hot" path="/soul/hot" radar="1"></Route>
+<Route author="BugWriter2" example="/soul/posts/hot" path="/soul/posts/hot" radar="1"></Route>
 
 ## Telegram
 
