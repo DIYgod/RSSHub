@@ -8,8 +8,8 @@ jobs:
       - uses: TobKed/github-forks-sync-action@master
         with:
           github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          upstream_repository: leyuuu/RSSHub
-          target_repository: DIYgod/RSSHub
+          upstream_repository: DIYgod/RSSHub
+          target_repository: ''
           upstream_branch: master
           target_branch: master
           force: true
