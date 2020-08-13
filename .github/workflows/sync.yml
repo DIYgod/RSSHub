@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: TobKed/github-forks-sync-action@master
         with:
-          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           upstream_repository: DIYgod/RSSHub
           target_repository: ''
           upstream_branch: master
