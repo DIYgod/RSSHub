@@ -1,0 +1,17 @@
+on:
+  - push
+  - schedule:
+    - cron:  "*/15 * * * *"
+jobs:
+  sync_fork:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: TobKed/github-forks-sync-action@master
+        with:
+          github_token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          upstream_repository: leyuuu/RSSHub
+          target_repository: DIYgod/RSSHub
+          upstream_branch: master
+          target_branch: master
+          force: true
+          tags: true
