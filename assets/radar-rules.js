@@ -2092,7 +2092,7 @@
             },
         ],
     },
-    'popiask.cn': {
+    'popiapp.cn': {
         _name: 'Popi 提问箱',
         www: [
             {
