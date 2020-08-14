@@ -908,6 +908,26 @@
 
     'ithome.com': {
         _name: 'IT 之家',
+        '.': [
+            {
+                title: '24 小时阅读榜',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: ['', '/*'],
+                target: '/ithome/ranking/24h',
+            },
+            {
+                title: '7 天最热',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: ['', '/*'],
+                target: '/ithome/ranking/7days',
+            },
+            {
+                title: '月榜',
+                docs: 'https://docs.rsshub.app/new-media.html#it-zhi-jia',
+                source: ['', '/*'],
+                target: '/ithome/ranking/monthly',
+            },
+        ],
         it: [
             {
                 title: 'IT 资讯',
@@ -1310,6 +1330,51 @@
                 docs: 'https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui',
                 source: '/xwzx_20031/:caty',
                 target: '/gov/beijing/mhc/:caty',
+            },
+        ],
+    },
+    'ynu.edu.cn': {
+        _name: '云南大学',
+        home: [
+            {
+                title: '官网消息通告',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/tzgg.htm',
+                target: '/ynu/home',
+            },
+        ],
+        jwc: [
+            {
+                title: '教务处教务科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/1',
+            },
+            {
+                title: '教务处学籍科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/2',
+            },
+            {
+                title: '教务处教学研究科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/3',
+            },
+            {
+                title: '教务处实践科学科通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '/jwc/4',
+            },
+        ],
+        grs: [
+            {
+                title: '研究生院通知',
+                docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue',
+                source: '/*',
+                target: '',
             },
         ],
     },
@@ -1829,24 +1894,6 @@
                 source: '/uncensored/series/:seriesid',
                 target: '/javbus/uncensored/series/:seriesid',
             },
-            {
-                title: 'director',
-                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
-                source: '/director/:directorid',
-                target: '/javbus/director/:directorid',
-            },
-            {
-                title: 'label',
-                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
-                source: '/label/:labelid',
-                target: '/javbus/label/:labelid',
-            },
-            {
-                title: 'studio',
-                docs: 'https://docs.rsshub.app/multimedia.html#javbus',
-                source: '/studio/:studioid',
-                target: '/javbus/studio/:studioid',
-            },
         ],
     },
     'javbus.one': {
@@ -1875,6 +1922,44 @@
                 docs: 'https://docs.rsshub.app/multimedia.html#javbus',
                 source: '/series/:seriesid',
                 target: '/javbus/western/series/:seriesid',
+            },
+        ],
+    },
+    'onejav.com': {
+        _name: 'OneJAV BT',
+        '.': [
+            {
+                title: '今日种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: (params, url, document) => {
+                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    return `/onejav/day/${today}`;
+                },
+            },
+            {
+                title: '今日演员',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: '/',
+                target: (params, url, document) => {
+                    const star = document.querySelector('div.card-content > div > a').getAttribute('href');
+                    return `/onejav${star}`;
+                },
+            },
+            {
+                title: '页面种子',
+                docs: 'https://docs.rsshub.app/multimedia.html#onejav',
+                source: ['/:type', '/:type/:key', '/:type/:key/:morekey'],
+                target: (params, url, document) => {
+                    const itype = params.morekey === undefined ? `${params.type}` : params.type === 'tag' ? 'tag' : 'day';
+                    let ikey = `${itype === 'day' ? params.type : ''}${params.key || ''}${itype === 'tag' && params.morekey !== undefined ? '%2F' : ''}${params.morekey || ''}`;
+                    if (ikey === '' && itype === 'tag') {
+                        ikey = document.querySelector('div.thumbnail.is-inline > a').getAttribute('href').replace('/tag/', '').replace('/', '%2F');
+                    } else if (ikey === '' && itype === 'actress') {
+                        ikey = document.querySelector('div.card > a').getAttribute('href').replace('/actress/', '');
+                    }
+                    return `/onejav/${itype}/${ikey}`;
+                },
             },
         ],
     },

@@ -124,6 +124,10 @@ pageClass: routes
 
 <Route author="Cesaryuan" example="/quicker/qa" path="/quicker/qa"/>
 
+### 用户动作更新
+
+<Route author="Cesaryuan" example="/quicker/user/action/18359/Cesaryuan" path="/quicker/user/action/:uid/:person" :paramsDesc="['用户ID，可在用户主页链接里找到', '用户昵称，可在用户主页链接里找到']" />
+
 ## RF 技术社区
 
 ### 文章
@@ -310,6 +314,12 @@ pageClass: routes
 | newthread | hot      | digest   | new      |
 
 </Route>
+
+## 水木社区
+
+### 用户文章
+
+<Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
 
 ## 天涯论坛
 

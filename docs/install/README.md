@@ -182,11 +182,34 @@ $ pm2 start lib/index.js --name rsshub
 $ git pull
 ```
 
-然后重复安装步骤
+然后重复安装步骤。
+
+### Nix 用户提示
+
+通过 `nix-shell` 配置简化安装 nodejs, yarn 和 jieba：
+
+```nix
+let
+    pkgs = import <nixpkgs> {};
+    node = pkgs.nodejs-12_x;
+in pkgs.stdenv.mkDerivation {
+    name = "nodejs-yarn-jieba";
+    buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
+}
+```
 
 ## 部署到 Heroku
 
+### 一键部署（无自动更新）
+
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+### 自动更新部署
+
+1.  将 RSSHub [分叉（fork）](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) 到自己的账户下。
+2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 (例如 `https://github.com/USERNAME/RSSHub`)。
+3.  检查 Heroku 设置，随代码库更新自动部署。
+4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
 ## 部署到 Vercel (Zeit Now)
 
@@ -462,6 +485,12 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `WEIBO_APP_KEY`: 微博 App Key
     -   `WEIBO_APP_SECRET`: 微博 App Secret
     -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
+
+-   Mastodon 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
+
+    -   `MASTODON_API_HOST`: API 请求的实例
+    -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
+    -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
 -   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
