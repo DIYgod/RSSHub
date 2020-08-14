@@ -42,7 +42,7 @@
     "@vuepress/plugin-pwa": "1.5.3",
     "cross-env": "7.0.2",
     "entities": "2.0.3",
-    "eslint": "7.6.0",
+    "eslint": "7.7.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.4",
     "jest": "26.4.0",
