@@ -2189,6 +2189,9 @@
                         return '/popiask/:id';
                     }
                 },
+            },
+        ],
+    },
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
