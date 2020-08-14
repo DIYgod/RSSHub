@@ -2094,10 +2094,14 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     'popiask.cn': {
 =======
     'popiapp.cn': {
 >>>>>>> 2c7dabec... migrate domain to popiapp.cn
+=======
+    'popiapp.cn': {
+>>>>>>> 2c7dabec8c446605efa079359183e760f7ba73e9
         _name: 'Popi 提问箱',
         www: [
             {
@@ -2109,7 +2113,13 @@
                         return '/popiask/:id';
                     }
                 },
+<<<<<<< HEAD
 =======
+=======
+            },
+        ],
+    },
+>>>>>>> 2c7dabec8c446605efa079359183e760f7ba73e9
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
@@ -2124,7 +2134,10 @@
                 docs: 'https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu',
                 source: '/nppa/contents/:channel/:content',
                 target: (params, url) => `/gov/nppa/${/nppa\/contents\/(\d+\/\d+)\.shtml/.exec(url)[1]}`,
+<<<<<<< HEAD
 >>>>>>> aa358b30... feat: nppa.radar (#5112)
+=======
+>>>>>>> 2c7dabec8c446605efa079359183e760f7ba73e9
             },
         ],
     },
