@@ -1221,6 +1221,12 @@ type 列表：
 
 </Route>
 
+## 上海电力大学
+
+### 上海电力大学新闻网 - 通知公告
+
+<Route author="小熊软糖" example="/shiep/news" path="/shiep/news" />
+
 ## 上海海事大学
 
 ### 官网信息
