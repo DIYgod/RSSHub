@@ -24,6 +24,12 @@ pageClass: routes
 
 <RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## Southwest Jiaotong University
+
+### School of Transportation and Logistics
+
+<Route author="zoenglinghou" example="/swjtu/tl/news" path="/swjtu/tl/news"/>
+
 ## UMASS Amherst
 
 ### College of Electrical and Computer Engineering News
