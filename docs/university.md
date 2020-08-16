@@ -1231,7 +1231,6 @@ type 列表：
 
 <Route author="小熊软糖" example="/shiep/department/energy" path="/shiep/department/energy" />
 
-
 ### 上海电力大学 - 环境与化学工程学院通知
 
 <Route author="小熊软糖" example="/shiep/department/hhxy" path="/shiep/department/energy" />
@@ -1240,41 +1239,33 @@ type 列表：
 
 <Route author="小熊软糖" example="/shiep/department/dqxy" path="/shiep/department/energy" />
 
-
 ### 上海电力大学 - 自动化工程学院通知
 
 <Route author="小熊软糖" example="/shiep/department/zdhxy" path="/shiep/department/energy" />
-
 
 ### 上海电力大学 - 计算机科学与技术学院通知
 
 <Route author="小熊软糖" example="/shiep/department/jsjxy" path="/shiep/department/energy" />
 
-
 ### 上海电力大学 - 电子与信息学院通知
 
 <Route author="小熊软糖" example="/shiep/department/dxxy" path="/shiep/department/energy" />
-
 
 ### 上海电力大学 - 经济与管理学院通知
 
 <Route author="小熊软糖" example="/shiep/department/jgxy" path="/shiep/department/energy" />
 
-
 ### 上海电力大学 - 数理学院通知
 
 <Route author="小熊软糖" example="/shiep/department/slxy" path="/shiep/department/energy" />
-
 
 ### 上海电力大学 - 外国语学院通知
 
 <Route author="小熊软糖" example="/shiep/department/wgyxy" path="/shiep/department/energy" />
 
-
 ### 上海电力大学 - 国际交流学院通知
 
 <Route author="小熊软糖" example="/shiep/department/gjjlxy" path="/shiep/department/energy" />
-
 
 ### 上海电力大学 - 继续教育学院通知
 
