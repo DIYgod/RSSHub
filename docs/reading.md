@@ -145,10 +145,6 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ## 观止（每日一文）
 
-### 观止
-
-<Route author="Andiedie" example="/guanzhi" path="/guanzhi"/>
-
 ## 快眼看书
 
 ### 小说更新
