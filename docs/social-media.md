@@ -859,6 +859,12 @@ rule
 
 <Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
 
+## 悟空问答
+
+### 用户动态
+
+<Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id" :paramsDesc="['用户ID，可在用户页 URL 中找到']"/>
+
 ## 小红书
 
 ### 用户笔记和专辑
@@ -890,12 +896,6 @@ rule
 ::: warning 注意
 免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
 :::
-
-## 悟空问答
-
-### 用户动态
-
-<Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id" :paramsDesc="['用户ID，可在用户页 URL 中找到']"/>
 
 ## 知乎
 
