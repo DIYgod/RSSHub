@@ -34,7 +34,7 @@
 
     {{ each item $e }}
     <entry>
-        <id>{{ $e.id || $e.link }}</id>
+        <id>{{ $e.guid || $e.id || $e.link }}</id>
         <title><![CDATA[{{@ $e.title }}]]></title>
 
         <published>{{ $e.pubDate || $e.updated }}</published>
