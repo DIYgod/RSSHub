@@ -415,6 +415,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul/:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']" radar="1"></Route>
 
+### 热门瞬间
+
+<Route author="BugWriter2" example="/soul/posts/hot" path="/soul/posts/hot" radar="1"></Route>
+
 ## Telegram
 
 ### 频道
