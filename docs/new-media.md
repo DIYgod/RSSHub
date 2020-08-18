@@ -801,6 +801,12 @@ area 分区选项
 
 </Route>
 
+## 梅斯医学 MedSci
+
+### 推荐
+
+<Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
+
 ## 摩根大通研究所
 
 ### 新闻
