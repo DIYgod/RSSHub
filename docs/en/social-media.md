@@ -48,9 +48,13 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 <RouteEn author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" :paramsDesc="['Webfinger account URI', 'whether only display media content, default to false, any value to true']"/>
 
-### Timeline
+### Instance timeline (local)
 
 <RouteEn author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
+
+### Instance timeline (federated)
+
+<RouteEn author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
 
 ### User timeline (backup)
 

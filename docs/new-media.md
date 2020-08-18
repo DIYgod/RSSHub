@@ -815,6 +815,12 @@ area 分区选项
 
 </Route>
 
+## 梅斯医学 MedSci
+
+### 推荐
+
+<Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
+
 ## 摩根大通研究所
 
 ### 新闻
@@ -970,6 +976,12 @@ area 分区选项
 ### 标签订阅
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
+
+## 生物谷
+
+### 最新资讯
+
+<Route author="nczitzk" example="/bioon/latest" path="/bioon/latest"/>
 
 ## 世界卫生组织 WHO
 
