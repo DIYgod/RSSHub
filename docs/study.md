@@ -172,6 +172,12 @@ pageClass: routes
 
 </Route>
 
+## 搜韵网
+
+### 诗词日历
+
+<Route author="nczitzk" example="/souyun/today" path="/souyun/today"/>
+
 ## 网易公开课
 
 ### 精品课程

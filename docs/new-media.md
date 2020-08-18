@@ -957,6 +957,12 @@ area 分区选项
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
 
+## 生物谷
+
+### 最新资讯
+
+<Route author="nczitzk" example="/bioon/latest" path="/bioon/latest"/>
+
 ## 世界卫生组织 WHO
 
 ### 媒体中心
