@@ -678,6 +678,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
 
+## 腾讯大数据
+
+<Route author="nczitzk" example="/tencent/bigdata" path="/tencent/bigdata"/>
+
 ## 腾讯游戏开发者社区
 
 ::: warning 注意
