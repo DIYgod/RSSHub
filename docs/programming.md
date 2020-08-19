@@ -314,6 +314,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
 
+### 用户
+
+<Route author="leyuuu" example="/segmentfault/user/yunqishequ_5aa899aad5395" path="/segmentfault/user/:name" :paramsDesc="['用户Id，用户详情页URL可以找到']"/>
+
 ## TesterHome
 
 ### 最新发布
