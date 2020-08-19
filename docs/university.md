@@ -1227,61 +1227,15 @@ type 列表：
 
 <Route author="小熊软糖" example="/shiep/news" path="/shiep/news" />
 
-### 上海电力大学 - 能源与机械工程学院通知
+### 上海电力大学 - 学院通知
 
-<Route author="小熊软糖" example="/shiep/department/energy" path="/shiep/department/energy" />
+<Route author="小熊软糖" example="/shiep/energy" path="/shiep/:department" :paramsDesc="['学院名']">
 
-### 上海电力大学 - 环境与化学工程学院通知
+| 能源与机械工程学院 | 环境与化学工程学院 | 电气工程学院 | 自动化工程学院 | 计算机科学与技术学院 | 电子与信息学院 | 经济与管理学院 | 数理学院 | 外国语学院 | 国际交流学院 | 继续教育学院 | 马克思主义学院 | 体育部 | 艺术教育中心 |
+| ------------------ | ------------------ | ------------ | -------------- | -------------------- | -------------- | -------------- | -------- | ---------- | ------------ | ------------ | -------------- | ------ | ------------ |
+| energy             | hhxy               | dqxy         | zdhxy          | jsjxy                | dxxy           | jgxy           | slxy     | wgyxy      | gjxy         | jjxy         | skb            | tyb    | yjzx         |
 
-<Route author="小熊软糖" example="/shiep/department/hhxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 电气工程学院通知
-
-<Route author="小熊软糖" example="/shiep/department/dqxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 自动化工程学院通知
-
-<Route author="小熊软糖" example="/shiep/department/zdhxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 计算机科学与技术学院通知
-
-<Route author="小熊软糖" example="/shiep/department/jsjxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 电子与信息学院通知
-
-<Route author="小熊软糖" example="/shiep/department/dxxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 经济与管理学院通知
-
-<Route author="小熊软糖" example="/shiep/department/jgxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 数理学院通知
-
-<Route author="小熊软糖" example="/shiep/department/slxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 外国语学院通知
-
-<Route author="小熊软糖" example="/shiep/department/wgyxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 国际交流学院通知
-
-<Route author="小熊软糖" example="/shiep/department/gjjlxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 继续教育学院通知
-
-<Route author="小熊软糖" example="/shiep/department/jjxy" path="/shiep/department/energy" />
-
-### 上海电力大学 - 马克思主义学院通知
-
-<Route author="小熊软糖" example="/shiep/department/skb" path="/shiep/department/energy" />
-
-### 上海电力大学 - 体育部通知
-
-<Route author="小熊软糖" example="/shiep/department/tyb" path="/shiep/department/energy" />
-
-### 上海电力大学 - 艺术教育中心通知
-
-<Route author="小熊软糖" example="/shiep/department/yjzx" path="/shiep/department/energy" />
+</Route>
 
 ## 上海海事大学
 
