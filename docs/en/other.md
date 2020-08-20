@@ -31,6 +31,38 @@ pageClass: routes
 
 <RouteEn author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['Year-month of visa check，for example 2019-03']" />
 
+## Corona Virus Disease 2019
+
+### South China Morning Post - Coronavirus outbreak
+
+<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
+
+Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
+
+<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
+
+| Chinese | English | Portuguese |
+| ------- | ------- | ---------- |
+| ch      | en      | pt         |
+
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
+
+<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
+
+## Darwin Awards
+
+### Articles
+
+<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
+
+## dcinside
+
+### board
+
+<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
+
 ## DHL
 
 ### DHL express
@@ -59,7 +91,7 @@ pageClass: routes
 
 ### HackerOne Hacker Activity
 
-<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+<RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
 
 ## Instapaper
 
@@ -157,23 +189,3 @@ Type
 | all | rec       |
 
 </RouteEn>
-
-## Wuhan coronavirus
-
-### South China Morning Post - China coronavirus outbreak
-
-<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
-
-### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
-
-Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
-
-<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
-
-| Chinese | English | Portuguese |
-| ------- | ------- | ---------- |
-| ch      | en      | pt         |
-
-### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
-
-<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>

@@ -10,6 +10,20 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## Furstar
+
+### 最新售卖角色列表
+
+<Route author="NeverBehave" example="/furstar/characters/cn" path="/furstar/characters/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
+### 已经出售的角色列表
+
+<Route author="NeverBehave" example="/furstar/archive/cn" path="/furstar/archive/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
+### 画师列表
+
+<Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
 ## LeBonCoin
 
 ### Ads
@@ -18,7 +32,7 @@ Transform any search into a feed.
 
 <Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
 
-For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
+For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015>, the query is `category=10&locations=Paris_75015`
 
 </Route>
 
@@ -34,7 +48,7 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 <Route author="hoilc" example="/damai/activity/上海/音乐会/全部/柴可夫斯基" path="/damai/activity/:city/:category/:subcategory/:keyword?" :paramsDesc="['城市, 如果不需要限制, 请填入`全部`', '分类, 如果不需要限制, 请填入`全部`', '子分类, 如果不需要限制, 请填入`全部`', '搜索关键字, 置空为不限制']"/>
 
-城市、分类名、子分类名, 请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
+城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
 
 ## 多抓鱼
 
@@ -83,9 +97,9 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 最新商品
 
 <Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" :paramsDesc="['分类名']" >
-| 全部     | 闪购 | 秒发 | 跨境    | 尾货专场 |
-| -------- | ------- | --- | ------- | ------ |
-| home | shangou | miaofa | csborder | weihuo |
+| 全部 | 闪购    | 秒发   | 跨境     | 尾货专场 |
+| ---- | ------- | ------ | -------- | -------- |
+| home | shangou | miaofa | csborder | weihuo   |
 
 </Route>
 
@@ -105,11 +119,17 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 <Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" :paramsDesc="['图书ID，可在链接中获取']"/>
 
+## 人民邮电出版社
+
+### 图书列表
+
+<Route author="hoilc" example="/ptpress/book/new" path="/ptpress/book/:type?" :paramsDesc="['排序方式，默认`new`为最新图书，可选`hot`为最热图书']"/>
+
 ## 什么值得买
 
 ::: tip 提示
 
-网站也提供了部分 RSS: https://www.smzdm.com/dingyue
+网站也提供了部分 RSS: <https://www.smzdm.com/dingyue>
 
 :::
 
@@ -175,6 +195,14 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 </Route>
 
+### 用户文章
+
+<Route author="xfangbao" example="/smzdm/article/6902738986" path="/smzdm/article/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
+
+### 用户爆料
+
+<Route author="nczitzk" example="/smzdm/baoliao/7367111021" path="/smzdm/baoliao/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
+
 ## 淘宝众筹
 
 ### 众筹项目
@@ -199,6 +227,12 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 
 <Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" :paramsDesc="['商铺 id']"/>
 
+## 消费者报道
+
+### 要闻
+
+<Route author="EsuRt" example="/ccreports/article" path="/ccreports"/>
+
 ## 小米
 
 ### 小米众筹
@@ -222,6 +256,16 @@ For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Par
 ### 宜家 IKEA（英国）- 促销
 
 <Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+
+## 优衣库
+
+### Stylingbook
+
+<Route author="LunaXu" example="/uniqlo/stylingbook/women" path="/uniqlo/stylingbook/:category?" :paramsDesc="['类别']">
+| 女式  | 男式 | 小孩 | 婴儿 |
+| ----- | ---- | ---- | ---- |
+| women | men  | kids | baby |
+</Route>
 
 ## 有赞
 

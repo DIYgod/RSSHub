@@ -4,12 +4,6 @@ pageClass: routes
 
 # 图片
 
-## 1X
-
-### Magazine
-
-<Route author="emdoe" example="/1x/magazine" path="/1x/magazine"/>
-
 ## Awesome Pigtails
 
 ### 最新图片
@@ -44,6 +38,12 @@ pageClass: routes
 
 </Route>
 
+## GirlImg
+
+### album
+
+<Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" :paramsDesc="['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']" />
+
 ## Google Doodles
 
 ### 更新
@@ -56,13 +56,19 @@ pageClass: routes
 
 <Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']" radar="1" />
 
+## Hentai Cosplay
+
+### 最新图片
+
+<Route author="hoilc" example="/hentai-cosplays/tag/swimsuit" path="/hentai-cosplays/:type?/:name?" :paramsDesc="['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']" />
+
 ## Konachan Anime Wallpapers
 
 ::: tip 提示
 
 -   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
--   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同, `.net` 是全年龄健康的壁纸 ♡
--   网站提供了 Posts 订阅: https://konachan.com/post/piclens?tags=[tags]
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅: <https://konachan.com/post/piclens?tags=[tags]>
 
 :::
 
@@ -95,6 +101,12 @@ pageClass: routes
 
 <Route author="MegrezZhu hoilc" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入。用法详见[官网](https://nhentai.net/info/)', '模式，`simple`为仅封面，`detail`会包括本子每一页，但对服务器负载大，`torrent`会包括磁力链接，需要登录，参见[部分 RSS 模块配置](/install/#bu-fen-rss-mo-kuai-pei-zhi)。默认为`simple`']" anticrawler="1" supportBT="1" />
 
+## Porn Image XXX
+
+### 最新图片
+
+<Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" :paramsDesc="['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']" />
+
 ## Tits Guru
 
 ### Home
@@ -110,11 +122,15 @@ pageClass: routes
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
+## Wallpaperhub
+
+<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
+
 ## yande.re
 
 ::: tip 提示
 
--   网站提供了 Posts 订阅: https://yande.re/post/piclens?tags=[tags]
+-   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
 
 :::
 
@@ -179,6 +195,16 @@ pageClass: routes
 | ------ | ---------- |
 | ooxx   | top-ooxx   |
 
+## 绝对领域
+
+### 图集文章
+
+<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
+
+| 图集 | 文章 |
+| ---- | ---- |
+| tuji | as   |
+
 ## 妹子图
 
 ### 首页（最新）
@@ -222,3 +248,9 @@ pageClass: routes
 ### 用户上传作品和用户喜欢作品
 
 <Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" :paramsDesc="['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']"/>
+
+## 致美化
+
+### 最新主题
+
+<Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest"/>

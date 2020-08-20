@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# 小说·文学·阅读
+# 阅读
 
 ## All Poetry
 
@@ -10,11 +10,17 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## Mobilism
+
+### eBook Releases
+
+<Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
+
 ## UU 看书
 
 ### 小说更新
 
-<Route author="jacky2001114" example="/novel/uukanshu/49621>" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<Route author="jacky2001114" example="/novel/uukanshu/49621" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ## 爱思想
 
@@ -32,6 +38,16 @@ pageClass: routes
 
 </Route>
 
+### 思想库（专栏）
+
+<Route author="hoilc" example="/aisixiang/thinktank/WuQine/lunw" path="/aisixiang/thinktank/:name/:type?" :paramsDesc="['专栏 ID，一般为作者拼音，可在URL中找到', '栏目类型，参考下表，默认为`lunw`']">
+
+| 论文 | 时评 | 随笔  | 演讲 | 访谈  | 著作   | 读书  | 史论   | 译作  | 诗歌  | 书信   | 科学  |
+| ---- | ---- | ----- | ---- | ----- | ------ | ----- | ------ | ----- | ----- | ------ | ----- |
+| lunw | ship | shuib | yanj | fangt | zhuanz | dushu | shilun | yizuo | shige | shuxin | kexue |
+
+</Route>
+
 ## 爱下电子书
 
 ### 最新章节
@@ -40,17 +56,25 @@ pageClass: routes
 
 ## 笔趣阁
 
-### 小说更新
+### biquge5200.com
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1">
+<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
 
 ::: tip 提示
 
-由于笔趣阁网站有多个, 各站点小说对应的小说 id 不同. 此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id.
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id.
 
 :::
 
-</Route>
+### biquge.info
+
+<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+
+::: tip 提示
+
+由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge.info`](http://www.biquge.info/)中的小说 id.
+
+:::
 
 ## 吹牛部落
 
@@ -99,6 +123,12 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 </Route>
 
+## 第一版主
+
+### 小说
+
+<Route author="x1a0xv4n" example="/novel/d1bz/2/2608_6" path="/novel/d1bz/:category/:id" :paramsDesc="['小说分类，可在对应小说页 URL 中找到，例如`2`', '小说id，可在对应小说页 URL 中找到，例如`2608_6`']"/>
+
 ## 飞地
 
 ### 分类
@@ -115,17 +145,13 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ## 观止（每日一文）
 
-### 观止
-
-<Route author="Andiedie" example="/guanzhi" path="/guanzhi"/>
-
 ## 快眼看书
 
 ### 小说更新
 
 <Route author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']">
 
-举例网址：http://booksky.so/BookDetail.aspx?Level=1&bid=98619
+举例网址：<http://booksky.so/BookDetail.aspx?Level=1&bid=98619>
 
 </Route>
 
@@ -135,7 +161,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="LJason77" example="/novel/ptwxz/10/10272" path="/novel/ptwxz/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `10`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `10272`']" >
 
-举例网址：https://www.ptwxz.com/bookinfo/10/10272.html
+举例网址：<https://www.ptwxz.com/bookinfo/10/10272.html>
 
 </Route>
 
@@ -163,7 +189,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="sgqy" example="/aozora/newbook/10" path="/aozora/newbook/:count?" :paramsDesc="['更新数量. 设置每次下载列表大小. 范围是 1 到 50.']">
 
-书籍网站每日一更. 信息更新时间为书籍最初出版时间, 排序可能不符合网络发表时间, 请认准未读消息.
+书籍网站每日一更。信息更新时间为书籍最初出版时间，排序可能不符合网络发表时间，请认准未读消息.
 
 </Route>
 
@@ -173,13 +199,38 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
+## 生物帮
+
+### 所有栏目
+
+<Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" :paramsDesc="['', '']" />
+
+具体栏目编号，去网站上看标签
+
+| 网址                                             | 对应路由                            |
+| ------------------------------------------------ | ----------------------------------- |
+| <http://science.bio1000.com/ecology-environment> | /biobio/science/ecology-environment |
+| <http://www.bio1000.com/gnjz>                    | /biobio/gnjz                        |
+
+## 生物谷
+
+### 所有栏目
+
+<Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" :paramsDesc="['分栏代码, 可在 URL 找到']" />
+
+具体栏目编号，去网站上看标签
+
+| 网址                            | 对应路由           |
+| ------------------------------- | ------------------ |
+| <http://news.bioon.com/biology> | /shengwugu/biology |
+
 ## 书趣阁
 
 ### 小说更新
 
 <Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']">
 
-举例网址：http://www.shuquge.com/txt/8659/index.html
+举例网址：<http://www.shuquge.com/txt/8659/index.html>
 
 </Route>
 
@@ -189,7 +240,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']">
 
-举例网址：https://www.wenxuemi.com/files/article/html/6/6144/
+举例网址：<https://www.wenxuemi.com/files/article/html/6/6144/>
 
 </Route>
 
@@ -202,6 +253,16 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 作者
 
 <Route author="LogicJake" example="/p-articles/contributors/朗天" path="/p-articles/contributors/:author" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
+
+## 斋书苑
+
+### 最新章节
+
+<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1">
+
+举例网址：<https://www.zhaishuyuan.com/book/17858>
+
+</Route>
 
 ## 纵横
 
