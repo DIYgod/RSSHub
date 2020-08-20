@@ -222,6 +222,10 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+### User Discussion
+
+<Route author="nczitzk" example="/kaggle/user/antgoldbloom" path="/kaggle/user/:user" :paramsDesc="['用户名']"/>
+
 ## LeetCode
 
 ### 文章
@@ -673,6 +677,10 @@ GitHub 官方也提供了一些 RSS:
 ### 顺丰丰桥开放平台公告
 
 <Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
+
+## 腾讯大数据
+
+<Route author="nczitzk" example="/tencent/bigdata" path="/tencent/bigdata"/>
 
 ## 腾讯游戏开发者社区
 

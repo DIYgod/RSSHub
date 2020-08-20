@@ -71,6 +71,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 日本国外務省
+
+### 記者会見
+
+<Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
+
 ## 苏州市人民政府
 
 ### 政府新闻
@@ -130,6 +136,24 @@ pageClass: routes
 <Route author="nczitzk" example="/gov/caict/caictgd" path="/gov/caict/caictgd"/>
 
 ## 中国政府
+
+### 数据
+
+<Route author="nczitzk" example="/gov/shuju/shengzhu/baitiaorou" path="/gov/shuju/:caty/:item" :paramsDesc="['分类，“生猪”对应`shengzhu`，“价格”对应`jiage`', '项目，见表']">
+
+生猪分类可选项目：
+
+| 白条猪价格 | 生猪屠宰与活体交易 | 仔猪价格 | 生猪出场价与玉米价  | 生猪存栏信息和生猪疫情 |
+| ---------- | ------------------ | -------- | ------------------- | ---------------------- |
+| baitiaorou | huotijiaoyi        | zizhu    | chuchangjia_yumijia | cunlan_yiqing          |
+
+价格分类可选项目：
+
+| 商品价格 | 农产品价格  | 油价   |
+| -------- | ----------- | ------ |
+| shangpin | nongchanpin | youjia |
+
+</Route>
 
 ### 最新政策
 
@@ -396,6 +420,10 @@ pageClass: routes
 -   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
 
 </Route>
+
+### 数据 - 最新发布
+
+<Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
 
 ## 中华人民共和国商务部
 

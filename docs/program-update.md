@@ -46,7 +46,7 @@ pageClass: routes
 
 ### 新的 Dropzone 动作
 
-<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
+<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['填写任意值，将会同时包括非官方的 Dropzone 动作']"/>
 
 ## Bugly SDK
 
@@ -195,6 +195,12 @@ pageClass: routes
 ### PlayStation 4 系统更新纪录
 
 见 [#playstation](/game.html#playstation)
+
+## Quicker
+
+### 版本更新
+
+<Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
 
 ## RSSHub
 

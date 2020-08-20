@@ -16,6 +16,16 @@ Some tags are rarely used： `Script`, `direction`, `production`, `design-concep
 
 </RouteEn>
 
+## Behance
+
+### User Works
+
+<RouteEn author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user" :paramsDesc="['username']" radar="1">
+
+Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be `mishapetrick`。
+
+</RouteEn>
+
 ## Blow Studio
 
 ### Home
@@ -66,12 +76,6 @@ Not support `main`, `news`.
 Default is under 'https://www.methodstudios.com/en/features'.
 
 </RouteEn>
-
-## Sun Creature
-
-### Works
-
-<RouteEn author="MisteryMonster" example="/sun-creature" path="/sun-creature" />
 
 ## Unit Image
 

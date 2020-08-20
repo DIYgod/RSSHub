@@ -122,6 +122,10 @@ pageClass: routes
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
+## Wallpaperhub
+
+<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
+
 ## yande.re
 
 ::: tip 提示
