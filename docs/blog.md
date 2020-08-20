@@ -58,6 +58,10 @@ pageClass: routes
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## JustRun
+
+<Route author="nczitzk" example="/justrun" path="/justrun"/>
+
 ## Paul Graham 博客
 
 通过提取文章全文，提供比官方源更佳的阅读体验。
