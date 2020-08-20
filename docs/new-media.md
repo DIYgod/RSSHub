@@ -694,7 +694,7 @@ area 分区选项
 
 ### 分类
 
-<Route author="nczitzk" example="/jinse/catalogue/zhengce" path="/jinse/catalogue/:caty" :paramsDesc="['分类名，参见下表']"/>
+<Route author="nczitzk" example="/jinse/catalogue/zhengce" path="/jinse/catalogue/:caty" :paramsDesc="['分类名，参见下表']">
 
 | 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 | 产业     | IPFS | 技术 | 百科  | 研报          |
 | ------- | ------------ | ---- | ----- | ---------- | -------- | ---- | ---- | ----- | ------------- |
