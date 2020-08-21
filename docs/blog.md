@@ -46,6 +46,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk"/>
 
+## JustRun
+
+<Route author="nczitzk" example="/justrun" path="/justrun"/>
+
 ## LaTeX 开源小屋
 
 ### 首页
