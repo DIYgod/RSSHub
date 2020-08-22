@@ -55,12 +55,6 @@ pageClass: routes
 
 </Route>
 
-## 爱 Q 生活网
-
-### 最近更新
-
-<Route author="nczitzk" example="/iqshw/latest" path="/iqshw/latest"/>
-
 ## BOOKSOURCE.STORE
 
 ### 书源仓库更新
@@ -242,6 +236,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 | all  | rec  |
 
 </Route>
+
+## 爱 Q 生活网
+
+### 最近更新
+
+<Route author="nczitzk" example="/iqshw/latest" path="/iqshw/latest"/>
 
 ## 爱发电
 
