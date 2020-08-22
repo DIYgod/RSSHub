@@ -893,7 +893,7 @@ rule
 
 ::: warning 注意
 部署时需要配置 NEWRANK_USERNAME、NEWRANK_PASSWORD，具体见部署文档
-请勿过高频抓取，新榜疑似对每天调用token总次数进行了限制，超限会报错
+请勿过高频抓取，新榜疑似对每天调用 token 总次数进行了限制，超限会报错
 :::
 
 ### 微信公众号
