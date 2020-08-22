@@ -363,7 +363,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户
 
-<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id" :paramsDesc="['Instagram 用户 id']" radar="1" />
+<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram 用户 id','是否显示视频，任意值为是，留空为否']" radar="1" />
 
 ## pixiv
 
@@ -863,7 +863,17 @@ rule
 
 ### 用户动态
 
-<Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id" :paramsDesc="['用户ID，可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id/:type?" :paramsDesc="['用户ID，可在用户页 URL 中找到', '类型，可选 `dongtai` 即 动态，`answers` 即 回答，`questions` 即 提问，默认为 `dongtai`']">
+
+::: tip 注意
+
+用户的动态是一定时间范围内用户提出的问题和作出的回答，距离现在时间较久的问题和回答不会出现，此时选择 `dongtai` 用户动态是会缺失的。
+
+同理选择 `answers` 和 `questions` 作为参数时，对于没有提出过问题和作出过回答的用户，其内容也会相应缺失。
+
+:::
+
+</Route>
 
 ## 小红书
 
