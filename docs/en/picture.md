@@ -65,11 +65,11 @@ For example:
 
 ### NASA
 
-<Route author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
+<RouteEn author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
 
 ### Cheng Kung University Mirror
 
-<Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
+<RouteEn author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
 
 ## nHentai
 
