@@ -55,6 +55,12 @@ pageClass: routes
 
 </Route>
 
+## 爱 Q 生活网
+
+### 最近更新
+
+<Route author="nczitzk" example="/iqshw/latest" path="/iqshw/latest"/>
+
 ## BOOKSOURCE.STORE
 
 ### 书源仓库更新
