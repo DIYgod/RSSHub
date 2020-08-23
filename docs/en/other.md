@@ -144,6 +144,12 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 </RouteEn>
 
+## MITRE
+
+### All Publications
+
+<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
+
 ## SANS Institute
 
 ### Latest conference materials
