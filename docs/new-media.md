@@ -316,6 +316,32 @@ pageClass: routes
 
 <Route author="nczitzk" example="/socialbeta/hunt" path="/socialbeta/hunt"/>
 
+## Soomal
+
+### 话题
+
+<Route author="zoenglinghou" example="/soomal/topics/最新文章" path="/soomal/topics/:category/:language?" :paramsDesc="['话题，可在顶部菜单找到对应名称', '语言，默认为简体中文']">
+
+-   可选语言：
+
+| 简体中文 | 正体中文 | 英语 |
+| -------- | -------- | ---- |
+| zh       | zh_tw    | en   |
+
+-   可选话题（按语言分类）：
+
+| 语言     |          |       |          |          |          |              |
+| -------- | -------- | ----- | -------- | -------- | -------- | ------------ |
+| 简体中文 | 最新文章 | 科普  | 测评报告 | 发烧入门 | 摄影入门 | 古典音乐入门 |
+| 正体中文 | 最新文章 | 科普  | 測評報告 | 發燒入門 | 攝影入門 | 古典音樂入門 |
+| 英语     | Phone    | Audio | Album    | Review   |          |              |
+
+-   Soomal 提供官方 RSS 订阅
+    -   Soomal 网站更新：<http://www.soomal.com/doc/101.rss.xml>
+    -   Soomal 论坛与留言系统的更新：<http://www.soomal.com/bbs/101.rss.xml>
+
+</Route>
+
 ## The Verge
 
 ### The Verge
@@ -695,6 +721,16 @@ area 分区选项
 ### 头条
 
 <Route author="nczitzk" example="/jinse/timeline" path="/jinse/timeline"/>
+
+### 分类
+
+<Route author="nczitzk" example="/jinse/catalogue/zhengce" path="/jinse/catalogue/:caty" :paramsDesc="['分类名，参见下表']">
+
+| 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 | 产业     | IPFS | 技术 | 百科  | 研报          |
+| ------- | ------------ | ---- | ----- | ---------- | -------- | ---- | ---- | ----- | ------------- |
+| zhengce | fenxishishuo | defi | kuang | 以太坊 2.0 | industry | IPFS | tech | baike | capitalmarket |
+
+</Route>
 
 ## 鲸跃汽车
 

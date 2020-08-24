@@ -13,7 +13,7 @@ pageClass: routes
 Supported sub-sites：
 | 9To5Mac | 9To5Google | 9To5Toys |
 | ------- | ---------- | -------- |
-| Mac | Google | Toys |
+| Mac     | Google     | Toys     |
 
 </RouteEn>
 
@@ -151,6 +151,32 @@ Compared to the official one, this feed:
 ### News
 
 <RouteEn author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
+
+## Soomal
+
+### 话题
+
+<RouteEn author="zoenglinghou" example="/soomal/topics/Phone/en" path="/soomal/topics/:category/:language?" :paramsDesc="['Topic, found on the top menu bar', 'locale, default to simplified Chinese']">
+
+- Available languages：
+
+| Simplified Chinese | Traditional Chinese | English |
+| ------------------ | ------------------- | ------- |
+| zh                 | zh_tw               | en      |
+
+- Available topics by locale：
+
+| Languages           |          |       |          |          |          |
+| ------------------- | -------- | ----- | -------- | -------- | -------- |
+| Simplified Chinese  | 最新文章 | 科普  | 测评报告 | 发烧入门 | 摄影入门 | 古典音乐入门 |
+| Traditional Chinese | 最新文章 | 科普  | 測評報告 | 發燒入門 | 攝影入門 | 古典音樂入門 |
+| English             | Phone    | Audio | Album    | Review   |
+
+- Soomal offers official RSS subscriptions
+  - Soomal website：[http://www.soomal.com/doc/101.rss.xml](http://www.soomal.com/doc/101.rss.xml)
+  - Soomal forum and comments：[http://www.soomal.com/bbs/101.rss.xml](http://www.soomal.com/bbs/101.rss.xml)
+
+</RouteEn>
 
 ## The Verge
 

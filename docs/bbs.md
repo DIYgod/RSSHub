@@ -208,6 +208,42 @@ pageClass: routes
 
 <Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
 
+### 分类
+
+<Route author="nczitzk" example="/hupu/all/gambia" path="/hupu/all/:caty" :paramsDesc="['分类名，见下表']">
+
+| 分类         | 名称     |
+| ------------ | -------- |
+| NBA 论坛     | nba      |
+| CBA 论坛     | cba      |
+| 运动和装备   | gear     |
+| 国际足球论坛 | soccer   |
+| 中国足球论坛 | csl      |
+| 综合体育     | sports   |
+| 步行街       | gambia   |
+| 彩票中心     | lottery  |
+| 自建版块     | boards   |
+| 虎扑社团     | group    |
+| 站务管理     | feedback |
+
+更多参见 [虎扑社区版块目录](https://bbs.hupu.com/boards.php) 左侧导航栏各板块分类页
+
+</Route>
+
+### 子站
+
+<Route author="nczitzk" example="/hupu/dept/nba" path="/hupu/dept/:dept" :paramsDesc="['名称，见下表']">
+
+| 子站     | 名称         |
+| -------- | ------------ |
+| NBA      | nba          |
+| 国际足球 | soccer       |
+| 中国足球 | soccer-china |
+| CBA      | cba          |
+| 电竞     | gg           |
+
+</Route>
+
 ## 看雪
 
 ### 论坛
