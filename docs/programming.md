@@ -564,13 +564,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 日报
 
-<Route author="LogicJake prnake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']">
-</Route>
+<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']"/>
 
 ### 近期比赛
 
-<Route author="prnake" example="/luogu/contest" path="/luogu/contest">
-</Route>
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest"/>
 
 ## 码农俱乐部
 
