@@ -718,6 +718,10 @@ area 分区选项
 
 <Route author="nczitzk" example="/jinse/lives" path="/jinse/lives"/>
 
+### 头条
+
+<Route author="nczitzk" example="/jinse/timeline" path="/jinse/timeline"/>
+
 ### 分类
 
 <Route author="nczitzk" example="/jinse/catalogue/zhengce" path="/jinse/catalogue/:caty" :paramsDesc="['分类名，参见下表']">
