@@ -2,7 +2,7 @@
 
 **Q: How does RSSHub work？**
 
-**A:** When a request is received, RSSHub fetches the corresponding data from the original site, the result ing contents will be output in RSS format. Caching is implemented to avoid requesting original sites for content. And of course, we throw in a little magic 🎩.
+**A:** When a request is received, RSSHub fetches the corresponding data from the original site, the resulting contents will be outputted in RSS format. Caching is implemented to avoid requesting original sites for content. And of course, we throw in a little magic 🎩.
 
 **Q: Can I use the demo instance？**
 
