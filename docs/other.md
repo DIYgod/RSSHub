@@ -172,6 +172,12 @@ pageClass: routes
 <Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
 </Route>
 
+## MITRE
+
+### All Publications
+
+<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
+
 ## SANS Institute
 
 ### 最新会议材料
