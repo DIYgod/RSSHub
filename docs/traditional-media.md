@@ -748,10 +748,8 @@ category 对应的关键词有
 </Route>
 
 ### 福建新闻
-<Route author="jjlzg" example="/fjnews/fj/30" path="/fjnews/fznews"/>
-
-### 福州新闻
-<Route author="jjlzg" example="/fjnews/fz/30" path="/fjnews/fznews"/>
+### city=fj,福建新闻,city=fz，福州新闻;limit-限制条数,建议30
+<Route author="jjlzg" example="/fjnews/:city/:limit" path="/fjnews/fznews"/>
 
 ### 九江新闻
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
