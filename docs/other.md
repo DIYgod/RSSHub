@@ -237,6 +237,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 爱 Q 生活网
+
+### 最近更新
+
+<Route author="nczitzk" example="/iqshw/latest" path="/iqshw/latest"/>
+
 ## 爱发电
 
 ### 发现用户

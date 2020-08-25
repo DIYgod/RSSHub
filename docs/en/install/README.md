@@ -199,9 +199,11 @@ in pkgs.stdenv.mkDerivation {
 ## Deploy to Heroku
 
 ### Instant deploy (without automatic update)
+
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
 
 ### Automatic deploy upon update
+
 1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
 2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
 3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
@@ -437,7 +439,9 @@ See the relation between access key/code and white/blacklisting.
 
 -   mail:
 
-    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. the value is in the format of `password=password&host=server&port=port`, eg. `password=123456&host=imap.gmail.com&port=993`
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. The value is in the format of `password=password&host=server&port=port`, eg:
+        -   Linux env: `EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
+        -   docker env: `EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
 
 -   nhentai torrent: [Registration](https://nhentai.net/register/)
 
@@ -449,6 +453,7 @@ See the relation between access key/code and white/blacklisting.
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
 
 -   Mastodon user timeline: apply api here `https://mastodon.example/settings/applications`, please check scope `read:search`
+
     -   `MASTODON_API_HOST`: api instance domain
     -   `MASTODON_API_ACCESS_TOKEN`: user access token
     -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance

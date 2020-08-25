@@ -91,6 +91,16 @@ pageClass: routes
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## NASA 每日天文图片
+
+### NASA
+
+<Route author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
+
+### 台湾成功大学镜像
+
+<Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
+
 ## nHentai
 
 ### 分类筛选
