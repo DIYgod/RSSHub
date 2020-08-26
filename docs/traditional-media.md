@@ -749,7 +749,15 @@ category 对应的关键词有
 
 ### 福建新闻
 ### city=fj,福建新闻,city=fz，福州新闻;limit-限制条数,建议30
-<Route author="jjlzg" example="/fjnews/:city/:limit" path="/fjnews/fznews"/>
+<Route author="jjlzg" example="/fjnews/fz/30" path="/fjnews/fznews"/>
+
+城市分类
+| fj     | fz   |
+| ------ |------|
+|福建新闻|福州新闻|
+
+限制条数
+建议30条，抓取太多速度会变慢
 
 ### 九江新闻
 
