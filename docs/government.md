@@ -71,6 +71,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 日本国外務省
+
+### 記者会見
+
+<Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
+
 ## 苏州市人民政府
 
 ### 政府新闻

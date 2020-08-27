@@ -237,6 +237,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 爱 Q 生活网
+
+### 最近更新
+
+<Route author="nczitzk" example="/iqshw/latest" path="/iqshw/latest"/>
+
 ## 爱发电
 
 ### 发现用户
@@ -372,7 +378,35 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 图文 - 编辑精选
 
-<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen" />
+<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen">
+
+::: tip
+每晚更新，更新较慢。
+:::
+
+</Route>
+
+### 新鲜图文
+
+<Route author="xizeyoupan" example="/coolapk/tuwen-xinxian" path="/coolapk/tuwen-xinxian"/>
+
+### 看看号 - 图文 & 动态
+
+<Route author="xizeyoupan" example="/coolapk/dyh/1524" path="/coolapk/dyh/:dyhId" :paramsDesc="['看看号ID']">
+
+::: tip
+仅限于采集**站内订阅**的看看号的**图文及动态**内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
+:::
+
+</Route>
+
+### 话题 - 图文 & 动态
+
+<Route author="xizeyoupan" example="/coolapk/huati/酷安夜话" path="/coolapk/huati/:tag" :paramsDesc="['话题名称']"/>
+
+### 用户 - 图文 & 动态
+
+<Route author="xizeyoupan" example="/coolapk/user/3177668/dynamic" path="/coolapk/user/:uid/dynamic" :paramsDesc="['uid,在个人界面右上分享-复制链接获取']"/>
 
 ## 快递 100
 
