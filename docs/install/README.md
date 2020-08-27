@@ -541,5 +541,4 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   新榜
 
-    -   `NEWRANK_USERNAME`: 用户名
-    -   `NEWRANK_PASSWORD`: 密码
+    -   `NEWRANK_COOKIE`: 登陆后 cookie 值，只添加 token 即可
