@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# Multimedia
+# Multimedia 
 
 ## 60-Second Science - Scientific American
 
@@ -32,7 +32,7 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Recent Videos
 
-<RouteEn author="everyonus" example="/hentaimama/monthlies" path="/hentaimama/monthlies" />
+<RouteEn author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
 ## JavLibrary
 
