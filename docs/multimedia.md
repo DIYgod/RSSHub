@@ -75,6 +75,12 @@ pageClass: routes
 
 <Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']" supportBT="1"/>
 
+## Hentaimama
+
+### 近期更新
+
+<Route author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
+
 ## JavBus
 
 ### 首页
