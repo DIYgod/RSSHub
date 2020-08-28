@@ -7,7 +7,7 @@
     "lib"
   ],
   "scripts": {
-    "start": "node lib/index.js",
+    "start": "node --tls-min-v1.0 lib/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
