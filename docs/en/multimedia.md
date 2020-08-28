@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# Multimedia
+# Multimedia 
 
 ## 60-Second Science - Scientific American
 
@@ -27,6 +27,12 @@ Official RSS: https://eztv.io/ezrss.xml
 ### Lookup Torrents by IMDB ID
 
 <RouteEn author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['The IMDB ID corresponding to the seed of show you want to search can be found on the official website [IMDB](https://www.imdb.com)']" supportBT="1"/>
+
+## Hentaimama
+
+### Recent Videos
+
+<RouteEn author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
 ## JavLibrary
 
