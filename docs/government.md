@@ -71,6 +71,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 日本国外務省
+
+### 記者会見
+
+<Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
+
 ## 苏州市人民政府
 
 ### 政府新闻
@@ -414,6 +420,10 @@ pageClass: routes
 -   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
 
 </Route>
+
+### 数据 - 最新发布
+
+<Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
 
 ## 中华人民共和国商务部
 

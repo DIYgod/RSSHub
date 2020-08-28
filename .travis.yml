@@ -9,7 +9,7 @@ install:
   - yarn
 
 script:
-  - npm run jest
+  - npm run test
 
 after_script:
   - npm install codecov
