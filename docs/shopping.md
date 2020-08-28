@@ -24,6 +24,12 @@ pageClass: routes
 
 <Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
 
+## Guiltfree.pl
+
+### Onsale
+
+<Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+
 ## LeBonCoin
 
 ### Ads
@@ -232,6 +238,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 商品上新
 
 <Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" :paramsDesc="['商铺 id']"/>
+
+## 消费明鉴
+
+### 最新新闻
+
+<Route author="nczitzk" example="/mingjian" path="/mingjian"/>
 
 ## 消费者报道
 
