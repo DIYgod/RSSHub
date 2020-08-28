@@ -209,6 +209,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="nczitzk" example="/smzdm/baoliao/7367111021" path="/smzdm/baoliao/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
 
+## 它惠网
+
+### 线报
+
+<Route author="nczitzk" example="/tahui/rptlist" path="/tahui/rptlist"/>
+
 ## 淘宝众筹
 
 ### 众筹项目
