@@ -227,6 +227,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" :paramsDesc="['商铺 id']"/>
 
+## 消费明鉴
+
+### 最新新闻
+
+<Route author="nczitzk" example="/mingjian" path="/mingjian"/>
+
 ## 消费者报道
 
 ### 要闻
