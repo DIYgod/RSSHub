@@ -24,6 +24,12 @@ pageClass: routes
 
 <Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
 
+## Guiltfree.pl
+
+### Onsale
+
+<Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+
 ## LeBonCoin
 
 ### Ads
