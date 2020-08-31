@@ -101,9 +101,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
 
-### NASA China
+### NASA 中文
 
-<Route author="nczitzk" example="/nasachina/apotd" path="/nasachina/apotd">
+<Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
 
 ::: tip 提示
 
