@@ -102,6 +102,18 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+## XMind
+
+### Mindmap Gallery
+
+<Route author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['语言代码，见下表，默认为所有语言']">
+
+| English | Español | Deutsch | Français | 中文 | 日本語 |
+| ------- | ------- | ------- | -------- | ---- | ------ |
+| en      | es      | de      | fr       | zh   | jp     |
+
+</Route>
+
 ## X-MOL 平台
 
 ### 新闻
