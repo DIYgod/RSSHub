@@ -1254,7 +1254,7 @@ area 分区选项
 
 ## 小刀娱乐网
 
-<Route author="nczitzk" example="/x6d/34" path="/x6d/:id" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到']">
+<Route author="nczitzk" example="/x6d/34" path="/x6d/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']">
 
 | 技巧分享 | QQ 技巧 | 微信技巧 | 其他教程 | 其他分享 |
 | -------- | ------- | -------- | -------- | -------- |
