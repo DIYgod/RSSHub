@@ -234,6 +234,10 @@ pageClass: routes
 
 <Route author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
+### Dev Release Changelog
+
+<Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
+
 ## xclient.info
 
 ### 应用更新
