@@ -155,6 +155,18 @@ pageClass: routes
 
 </Route>
 
+### 图解
+
+<Route author="nczitzk" example="/gov/xinwen/tujie/zhengce" path="/gov/xinwen/tujie/:caty" :paramsDesc="['图解分类，见下表']">
+
+| 总理活动图解 | 每周一画 | 其他漫画 | 图解政策 | 其他图解 |
+| ------------ | -------- | -------- | -------- | -------- |
+| zlhd         | mzyh     | qtmh     | zhengce  | qttj     |
+
+全部分类参见 [图解图表](http://www.gov.cn/xinwen/tujie/index.htm)
+
+</Route>
+
 ### 最新政策
 
 <Route author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>

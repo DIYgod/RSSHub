@@ -10,6 +10,12 @@ pageClass: routes
 
 <RouteEn author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## Guiltfree.pl
+
+### Onsale
+
+<RouteEn author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+
 ## IKEA
 
 ### UK - New Product Release
