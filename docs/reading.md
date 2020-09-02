@@ -155,6 +155,12 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 </Route>
 
+## 孔夫子旧书网
+
+### 用户动态
+
+<Route author="nczitzk" example="/kongfz/people/5032170" path="/kongfz/people/:id" :paramsDesc="['用户 id, 可在对应用户页 URL 中找到']"/>
+
 ## 飘天文学
 
 ### 章节
