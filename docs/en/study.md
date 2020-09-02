@@ -48,6 +48,18 @@ pageClass: routes
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |
 
+## XMind
+
+### Mindmap Gallery
+
+<RouteEn author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['language code, all languages by default']">
+
+| English | Español | Deutsch | Français | 中文 | 日本語 |
+| ------- | ------- | ------- | -------- | ---- | ------ |
+| en      | es      | de      | fr       | zh   | jp     |
+
+</RouteEn>
+
 ## X-MOL
 
 ### News
