@@ -5668,14 +5668,14 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-git-rev-sync@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/git-rev-sync/-/git-rev-sync-2.0.0.tgz#82fb77d9281efe7e7947569380dda4d1c19f4cb3"
-  integrity sha512-vnHFv2eocTmt/wHqZm3ksxtVshK4vptT0cEoumk6hAYRFx3do6Qo7xHBTBCv29+r3ZZCQOQ1i328MUCsYF7AUw==
+git-rev-sync@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/git-rev-sync/-/git-rev-sync-3.0.1.tgz#a393a97f2e4b2a0cc41e512b48065e64f4d8ca3a"
+  integrity sha512-8xZzUwzukIuU3sasgYt3RELc3Ny7o+tbtvitnnU4a4j3djyZNpJ5JmqVX+K7Xv3gE/i7ln3hGdBfZ00T5WWoow==
   dependencies:
     escape-string-regexp "1.0.5"
     graceful-fs "4.1.15"
-    shelljs "0.7.7"
+    shelljs "0.8.4"
 
 glob-parent@^3.1.0:
   version "3.1.0"
@@ -5901,12 +5901,12 @@ got@^9.6.0:
     to-readable-stream "^1.0.0"
     url-parse-lax "^3.0.0"
 
-graceful-fs@4.1.15, graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
+graceful-fs@4.1.15:
   version "4.1.15"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.15.tgz#ffb703e1066e8a0eeaa4c8b80ba9253eeefbfb00"
   integrity sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==
 
-graceful-fs@^4.2.4:
+graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.4:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -10963,10 +10963,10 @@ shebang-regex@^3.0.0:
   resolved "https://registry.yarnpkg.com/shebang-regex/-/shebang-regex-3.0.0.tgz#ae16f1644d873ecad843b0307b143362d4c42172"
   integrity sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==
 
-shelljs@0.7.7:
-  version "0.7.7"
-  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.7.7.tgz#b2f5c77ef97148f4b4f6e22682e10bba8667cff1"
-  integrity sha1-svXHfvlxSPS09uImguELuoZnz/E=
+shelljs@0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.4.tgz#de7684feeb767f8716b326078a8a00875890e3c2"
+  integrity sha512-7gk3UZ9kOfPLIAbslLzyWeGiEqx9e3rxwZM0KE6EL8GlGwjym9Mrlx5/p33bWTu9YG6vcS4MBxYZDHYr5lr8BQ==
   dependencies:
     glob "^7.0.0"
     interpret "^1.0.0"
