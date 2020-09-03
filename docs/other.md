@@ -121,6 +121,12 @@ pageClass: routes
 
 <Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
+## MITRE
+
+### 全部出版物
+
+<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
+
 ## MobData
 
 ### 分析报告
