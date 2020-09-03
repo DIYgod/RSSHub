@@ -4,12 +4,6 @@ pageClass: routes
 
 # 图片
 
-## Awesome Pigtails
-
-### 最新图片
-
-<Route author="Chingyat" example="/pigtails" path="/pigtails/index"/>
-
 ## Bing 壁纸
 
 ### 每日壁纸

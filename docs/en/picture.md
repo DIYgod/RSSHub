@@ -4,12 +4,6 @@ pageClass: routes
 
 # Picture
 
-## Awesome Pigtails
-
-### New
-
-<RouteEn author="Chingyat" example="/pigtails" path="/pigtails/index"/>
-
 ## Bing Wallpaper
 
 ### Daily Wallpaper
