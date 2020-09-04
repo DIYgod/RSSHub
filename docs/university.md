@@ -1438,6 +1438,10 @@ type 列表：
 
 <Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xygg" />
 
+## 太原师范学院
+
+<Route author="2PoL" example="/tynu" path="/tynu" />
+
 ## 天津大学
 
 ### 天津大学教务处
