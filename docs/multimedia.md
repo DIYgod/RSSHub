@@ -271,6 +271,14 @@ pageClass: routes
 
 ## PornHub
 
+### 分类
+
+<Route author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" :paramsDesc="['类别，参见 [categories](https://cn.pornhub.com/webmasters/categories)']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" :paramsDesc="['关键字']"/>
+
 ### 视频列表
 
 <Route author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['相对路径, `pornhub.com/` 后的部分, 需手动 URL 编码']"/>
