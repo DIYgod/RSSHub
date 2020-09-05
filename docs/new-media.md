@@ -474,6 +474,12 @@ Supported sub-sites:
 
 <Route author="22k" example="/buaq" path="/buaq/index"/>
 
+## 差评
+
+### 图片墙
+
+<Route author="nczitzk" example="/chaping/banner" path="/chaping/banner"/>
+
 ## 抽屉新热榜
 
 ### 最新
