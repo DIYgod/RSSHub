@@ -468,6 +468,12 @@ Supported sub-sites:
 
 <Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
 
+## 不安全
+
+### 全文
+
+<Route author="22k" example="/buaq" path="/buaq/index"/>
+
 ## 抽屉新热榜
 
 ### 最新
