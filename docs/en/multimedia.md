@@ -62,11 +62,11 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ## PornHub
 
-### 分类
+### Category
 
 <RouteEn author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" :paramsDesc="['category，see [categories](https://cn.pornhub.com/webmasters/categories)']"/>
 
-### 搜索
+### Keyword Search
 
 <RouteEn author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" :paramsDesc="['keyword']"/>
 
