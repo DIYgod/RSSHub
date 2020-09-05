@@ -2177,7 +2177,7 @@
             },
         ],
     },
-    'popiask.cn': {
+    'popiapp.cn': {
         _name: 'Popi 提问箱',
         www: [
             {
@@ -2259,6 +2259,17 @@
                 docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
                 source: '/book/:id',
                 target: '/manxiaosi/book/:id',
+            },
+        ],
+    },
+    'buaq.net': {
+        _name: '不安全资讯',
+        '.': [
+            {
+                title: '不安全资讯',
+                docs: 'http://docs.rsshub.app/new-media.html#bu-an-quan',
+                source: '/',
+                target: '/buaq',
             },
         ],
     },

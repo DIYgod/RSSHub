@@ -91,6 +91,28 @@ pageClass: routes
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## NASA 每日天文图片
+
+### NASA
+
+<Route author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
+
+### 台湾成功大学镜像
+
+<Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
+
+### NASA 中文
+
+<Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
+
+::: tip 提示
+
+[NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
+
+:::
+
+</Route>
+
 ## nHentai
 
 ### 分类筛选
@@ -121,6 +143,10 @@ pageClass: routes
 ### Categories
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
+
+## Wallpaperhub
+
+<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
 
 ## yande.re
 

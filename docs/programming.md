@@ -314,6 +314,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
 
+### 用户
+
+<Route author="leyuuu" example="/segmentfault/user/yunqishequ_5aa899aad5395" path="/segmentfault/user/:name" :paramsDesc="['用户Id，用户详情页URL可以找到']"/>
+
 ## TesterHome
 
 ### 最新发布
@@ -560,13 +564,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 日报
 
-<Route author="LogicJake prnake" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']">
-</Route>
+<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子id，可在 URL 中找到，不填默认为2020年日报']"/>
 
 ### 近期比赛
 
-<Route author="prnake" example="/luogu/contest" path="/luogu/contest">
-</Route>
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest"/>
+
+### 用户动态
+
+<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']"/>
 
 ## 码农俱乐部
 
@@ -677,6 +683,10 @@ GitHub 官方也提供了一些 RSS:
 ### 顺丰丰桥开放平台公告
 
 <Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
+
+## 腾讯大数据
+
+<Route author="nczitzk" example="/tencent/bigdata" path="/tencent/bigdata"/>
 
 ## 腾讯游戏开发者社区
 

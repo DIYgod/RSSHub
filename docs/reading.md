@@ -20,7 +20,7 @@ pageClass: routes
 
 ### 小说更新
 
-<Route author="jacky2001114" example="/novel/uukanshu/49621>" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<Route author="jacky2001114" example="/novel/uukanshu/49621" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ## 爱思想
 
@@ -145,9 +145,21 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ## 观止（每日一文）
 
-### 观止
+## 孔夫子旧书网
 
-<Route author="Andiedie" example="/guanzhi" path="/guanzhi"/>
+### 用户动态
+
+<Route author="nczitzk" example="/kongfz/people/5032170" path="/kongfz/people/:id" :paramsDesc="['用户 id, 可在对应用户页 URL 中找到']"/>
+
+## 孔夫子旧书网
+
+### 用户动态
+
+<Route author="nczitzk" example="/kongfz/people/5032170" path="/kongfz/people/:id" :paramsDesc="['用户 id, 可在对应用户页 URL 中找到']"/>
+
+### 店铺上架
+
+<Route author="nczitzk" example="/kongfz/shop/238901/1" path="/kongfz/shop/:id/:cat?" :paramsDesc="['店铺 id, 可在对应店铺页 URL 中找到', '分类 id，可在对应分类页 URL 中找到，默认为店铺最新上架']"/>
 
 ## 快眼看书
 
@@ -222,7 +234,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" :paramsDesc="['分栏代码, 可在 URL 找到']" />
 
-具体栏目编号，去网站上看标签 
+具体栏目编号，去网站上看标签
 
 | 网址                            | 对应路由           |
 | ------------------------------- | ------------------ |

@@ -71,6 +71,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 日本国外務省
+
+### 記者会見
+
+<Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
+
 ## 苏州市人民政府
 
 ### 政府新闻
@@ -146,6 +152,18 @@ pageClass: routes
 | 商品价格 | 农产品价格  | 油价   |
 | -------- | ----------- | ------ |
 | shangpin | nongchanpin | youjia |
+
+</Route>
+
+### 图解
+
+<Route author="nczitzk" example="/gov/xinwen/tujie/zhengce" path="/gov/xinwen/tujie/:caty" :paramsDesc="['图解分类，见下表']">
+
+| 总理活动图解 | 每周一画 | 其他漫画 | 图解政策 | 其他图解 |
+| ------------ | -------- | -------- | -------- | -------- |
+| zlhd         | mzyh     | qtmh     | zhengce  | qttj     |
+
+全部分类参见 [图解图表](http://www.gov.cn/xinwen/tujie/index.htm)
 
 </Route>
 

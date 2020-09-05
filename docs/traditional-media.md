@@ -746,3 +746,15 @@ category 对应的关键词有
 | article | blog | culture | reports |
 
 </Route>
+
+### 福建新闻
+
+<Route author="jjlzg" example="/fjnews/fj/30" path="/fjnews/fznews"/>
+
+### 福州新闻
+
+<Route author="jjlzg" example="/fjnews/fz/30" path="/fjnews/fznews"/>
+
+### 九江新闻
+
+<Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
