@@ -102,6 +102,12 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+## X-MOL 平台
+
+### 新闻
+
+<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
 ## XMind
 
 ### Mindmap Gallery
@@ -113,12 +119,6 @@ pageClass: routes
 | en      | es      | de      | fr       | zh   | jp     |
 
 </Route>
-
-## X-MOL 平台
-
-### 新闻
-
-<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
 
 ## 唧唧堂
 
