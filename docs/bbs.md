@@ -184,6 +184,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/91ddcc/user/2377095" path="/91ddcc/user/:user" :paramsDesc="['用户ID，在 URL 可以找到']"/>
 
+### 驿站帖子
+
+<Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" :paramsDesc="['驿站ID，在 URL 可以找到']"/>
+
 ## 电鸭社区
 
 ### 工作机会
