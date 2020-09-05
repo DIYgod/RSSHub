@@ -1587,6 +1587,12 @@ type 列表：
 
 </Route>
 
+## 西南交通大学
+
+### 交通运输与物流学院
+
+<Route author="zoenglinghou" example="/swjtu/tl/news" path="/swjtu/tl/news"/>
+
 ## 西南科技大学
 
 ### 教务处新闻
