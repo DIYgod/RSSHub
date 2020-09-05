@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# Multimedia
+# Multimedia 
 
 ## 60-Second Science - Scientific American
 
@@ -27,6 +27,12 @@ Official RSS: https://eztv.io/ezrss.xml
 ### Lookup Torrents by IMDB ID
 
 <RouteEn author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['The IMDB ID corresponding to the seed of show you want to search can be found on the official website [IMDB](https://www.imdb.com)']" supportBT="1"/>
+
+## Hentaimama
+
+### Recent Videos
+
+<RouteEn author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
 ## JavLibrary
 
@@ -62,9 +68,17 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ## PornHub
 
+### Category
+
+<RouteEn author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" :paramsDesc="['category，see [categories](https://cn.pornhub.com/webmasters/categories)']"/>
+
+### Keyword Search
+
+<RouteEn author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" :paramsDesc="['keyword']"/>
+
 ### Video List
 
-<Route author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['relative path after `pornhub.com/`, need to be URL encoded']"/>
+<RouteEn author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['relative path after `pornhub.com/`, need to be URL encoded']"/>
 
 
 ## Sankaku Complex
