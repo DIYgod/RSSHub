@@ -843,6 +843,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="ikvarxt" example="/lntu/jwnews" path="/lntu/jwnews" />
 
+## 临沂大学
+
+### 新闻
+
+<Route author="ueiu" example="/lyu/news/ldyw" path="/lyu/news/:type" :paramsDesc="['分类名']">
+
+| 临大要闻 | 信息公告 |
+| -------- | -------- |
+| ldyw     | xxgg     |
+
+</Route>
 ## 洛阳理工学院
 
 ### 教务处
@@ -1575,6 +1586,12 @@ type 列表：
 | xyxw     | tzgg     |
 
 </Route>
+
+## 西南交通大学
+
+### 交通运输与物流学院
+
+<Route author="zoenglinghou" example="/swjtu/tl/news" path="/swjtu/tl/news"/>
 
 ## 西南科技大学
 

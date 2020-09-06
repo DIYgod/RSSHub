@@ -101,6 +101,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
 
+### NASA 中文
+
+<Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
+
+::: tip 提示
+
+[NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
+
+:::
+
+</Route>
+
 ## nHentai
 
 ### 分类筛选
