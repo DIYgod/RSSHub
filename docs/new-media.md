@@ -578,6 +578,16 @@ area 分区选项
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
+## 飞雪娱乐网
+
+<Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']">
+
+| 实用软件 | 网站源码 | 技术教程 | 游戏助手 | 游戏资源 | 值得一看 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| rj       | wzym     | jsjc     | yx       | yxzy     | zdyk     |
+
+</Route>
+
 ## 凤凰网
 
 ### 大风号
