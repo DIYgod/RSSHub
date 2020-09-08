@@ -96,7 +96,7 @@
     "koa-mount": "4.0.0",
     "lru-cache": "6.0.0",
     "lz-string": "1.4.4",
-    "mailparser": "2.8.1",
+    "mailparser": "3.0.0",
     "markdown-it": "11.0.0",
     "module-alias": "2.2.2",
     "parse-torrent": "7.1.3",
