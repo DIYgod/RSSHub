@@ -108,6 +108,18 @@ pageClass: routes
 
 <Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
 
+## XMind
+
+### Mindmap Gallery
+
+<Route author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['语言代码，见下表，默认为所有语言']">
+
+| English | Español | Deutsch | Français | 中文 | 日本語 |
+| ------- | ------- | ------- | -------- | ---- | ------ |
+| en      | es      | de      | fr       | zh   | jp     |
+
+</Route>
+
 ## 唧唧堂
 
 ### 论文

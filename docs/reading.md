@@ -151,6 +151,10 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="nczitzk" example="/kongfz/people/5032170" path="/kongfz/people/:id" :paramsDesc="['用户 id, 可在对应用户页 URL 中找到']"/>
 
+### 店铺上架
+
+<Route author="nczitzk" example="/kongfz/shop/238901/1" path="/kongfz/shop/:id/:cat?" :paramsDesc="['店铺 id, 可在对应店铺页 URL 中找到', '分类 id，可在对应分类页 URL 中找到，默认为店铺最新上架']"/>
+
 ## 快眼看书
 
 ### 小说更新

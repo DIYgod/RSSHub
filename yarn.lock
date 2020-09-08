@@ -8067,10 +8067,10 @@ magnet-uri@^5.1.3:
     thirty-two "^1.0.1"
     uniq "^1.0.1"
 
-mailparser@2.8.1:
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.8.1.tgz#a95b062e49dcb39051018962504a1a79646c7195"
-  integrity sha512-H/CYAO9dsw6SFNbEGGpZsejVSWDcFlyHjb1OkHUWg0wggUekva1tNc28trB155nSqM8rhtbwTKt//orX0AmJxQ==
+mailparser@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-3.0.0.tgz#0c275cb3be02563fb8e10357529808ede277d70d"
+  integrity sha512-173gOV5y8kkCmvEZRgx0/XrOZ96F0Nm+tq382+/jIzPsBu9IYbn07l4t4DJqG4x5OSeKoBf5af/n1RRg+vbf8g==
   dependencies:
     encoding-japanese "1.0.30"
     he "1.2.0"
@@ -8080,7 +8080,7 @@ mailparser@2.8.1:
     linkify-it "3.0.2"
     mailsplit "5.0.0"
     nodemailer "6.4.11"
-    tlds "1.208.0"
+    tlds "1.209.0"
 
 mailsplit@5.0.0:
   version "5.0.0"
@@ -11839,10 +11839,10 @@ tiny-emitter@^2.0.0:
   resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
   integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
 
-tlds@1.208.0:
-  version "1.208.0"
-  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.208.0.tgz#f9a85c272aa500e56c92e7d342fbfdfbddaa9757"
-  integrity sha512-6kbY7GJpRQXwBddSOAbVUZXjObbCGFXliWWN+kOSEoRWIOyRWLB6zdeKC/Tguwwenl/KsUx016XR50EdHYsxZw==
+tlds@1.209.0:
+  version "1.209.0"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.209.0.tgz#13cfdc039331d49730ca7bfa9526fc9b319e2cec"
+  integrity sha512-KVsZ1NSpBodpo42/JIwTyau7SqUxV/qQMp2epSDPa99885LpHWLaVCCt8CWzGe4X5YIVNr+b6bUys9e9eEb5OA==
 
 tmpl@1.0.x:
   version "1.0.4"
