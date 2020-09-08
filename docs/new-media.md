@@ -1343,6 +1343,10 @@ area 分区选项
 
 <Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']"/>
 
+## 妖火网
+
+<Route author="nczitzk" example="/yaohuo/new" path="/yaohuo/:type?" :paramsDesc="['排序类型，可选 `new` 指最新，`hot` 指最热'，默认为 `new`]"/>
+
 ## 异次元软件世界
 
 ### 首页
