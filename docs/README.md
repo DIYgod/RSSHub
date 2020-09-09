@@ -26,7 +26,6 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 ### Special Sponsors
 
 <a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img alt="rixCloud" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rixcloud.png"></a>
-<a style="margin-right: 10px;" href="https://angelia.codeeer.com" target="_blank"><img alt="期待" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/angelia.png"></a>
 
 ### Sponsors
 
