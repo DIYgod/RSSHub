@@ -9931,10 +9931,10 @@ pretty-format@^26.4.2:
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
 
-pretty-quick@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/pretty-quick/-/pretty-quick-3.0.0.tgz#cba8597eca7f3821232abe6a93302d362cc30d71"
-  integrity sha512-oIXlGQUcUxt3XpoNfQECEWvH1Q9PtKfelF2pdp6UvC1CSQ5QcB7gUYKu0kuJGlm3LMBZzJaO/vbRkxA61pWlcg==
+pretty-quick@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/pretty-quick/-/pretty-quick-3.0.1.tgz#5860237ff370c02332bcbe3f8a42d9b3a876eff7"
+  integrity sha512-csYZMBFih6/buPQMfsPuBLXGVMEsClkvtojUFq78dirXcWU/gKu153bRcihbx2CNjqloaqrTw/e1XJiICyeHBw==
   dependencies:
     chalk "^3.0.0"
     execa "^4.0.0"
