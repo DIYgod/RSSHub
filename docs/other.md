@@ -648,6 +648,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 案例
 
 <Route author="alienmao" example="/itslaw/judgements/regulation+1121495748+13+中华人民共和国公司法（2018）第二十一条" path="/itslaw/judgements/:conditions" :paramsDesc="['筛选条件，见示例']"/>
+
 ## 新冠肺炎疫情新闻动态
 
 ### 国家卫健委 - 疫情通报
