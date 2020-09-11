@@ -1438,6 +1438,10 @@ type 列表：
 
 <Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xygg" />
 
+## 太原师范学院
+
+<Route author="2PoL" example="/tynu" path="/tynu" />
+
 ## 天津大学
 
 ### 天津大学教务处
@@ -1586,6 +1590,12 @@ type 列表：
 | xyxw     | tzgg     |
 
 </Route>
+
+## 西南交通大学
+
+### 交通运输与物流学院
+
+<Route author="zoenglinghou" example="/swjtu/tl/news" path="/swjtu/tl/news"/>
 
 ## 西南科技大学
 

@@ -468,6 +468,35 @@ Supported sub-sites:
 
 <Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
 
+## 不安全
+
+### 全文
+
+<Route author="22k" example="/buaq" path="/buaq/index"/>
+
+## 差评
+
+### 图片墙
+
+<Route author="nczitzk" example="/chaping/banner" path="/chaping/banner"/>
+
+### 资讯
+
+<Route author="nczitzk" example="/chaping/news/15" path="/chaping/news/:caty?" :paramsDesc="['分类，默认为全部资讯']">
+
+| 编号 | 分类       |
+| ---- | ---------- |
+| 15   | 直播       |
+| 3    | 科技新鲜事 |
+| 7    | 互联网槽点 |
+| 5    | 趣味科技   |
+| 6    | DEBUG TIME |
+| 1    | 游戏       |
+| 8    | 视频       |
+| 9    | 公里每小时 |
+
+</Route>
+
 ## 抽屉新热榜
 
 ### 最新
@@ -572,6 +601,16 @@ area 分区选项
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
+## 飞雪娱乐网
+
+<Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']">
+
+| 实用软件 | 网站源码 | 技术教程 | 游戏助手 | 游戏资源 | 值得一看 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| rj       | wzym     | jsjc     | yx       | yxzy     | zdyk     |
+
+</Route>
+
 ## 凤凰网
 
 ### 大风号
@@ -659,6 +698,16 @@ area 分区选项
 ### 最新专栏
 
 <Route author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
+
+## 互动吧
+
+### 活动
+
+<Route author="nczitzk" example="/hudongba/beijing/98-0-2-0-1-1" path="/hudongba/:city/:id" :paramsDesc="['城市，可在选定所在城市后的页面 URL 中找到', '编号，可在选定筛选条件后的页面 URL 中找到']">
+
+如例子 `/hudongba/beijing/98-0-2-0-1-1` 对应的网址 `https://www.hudongba.com/beijing/98-0-2-0-0-1` 中，`beijing` 即所在城市为北京；`98-0-2-0-0-1` 则是所选择的分类编号，指分类不限、时间不限、综合排序的所有亲子活动。
+
+</Route>
 
 ## 虎嗅
 
@@ -1293,6 +1342,10 @@ area 分区选项
 ### 主题
 
 <Route author="hillerliao" example="/xuangubao/subject/41" path="/xuangubao/subject/:subject_id" :paramsDesc="['主题 id，网址 https://xuangubao.cn/subject/41 中最后的数字']"/>
+
+## 妖火网
+
+<Route author="nczitzk" example="/yaohuo/new" path="/yaohuo/:type?" :paramsDesc="['排序类型，可选 `new` 指最新，`hot` 指最热，默认为 `new`']"/>
 
 ## 异次元软件世界
 
