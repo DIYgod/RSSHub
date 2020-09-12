@@ -344,8 +344,3 @@ pageClass: routes
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
 
-## 漫小肆
-
-### 漫画更新
-
-<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1"/>
