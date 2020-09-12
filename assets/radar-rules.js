@@ -2251,9 +2251,9 @@
             },
         ],
     },
-    'manxiaosi.com': {
+    'pknbc.com': {
         _name: '漫小肆',
-        '.': [
+        www: [
             {
                 title: '漫画更新',
                 docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
