@@ -24,12 +24,10 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 ### Special Sponsors
 
 <a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>
-<a style="margin-right: 10px;" href="https://angelia.codeeer.com" target="_blank"><img height="60px" src="https://i.imgur.com/oQf2WJl.png"></a>
-<a style="margin-right: 10px;margin-left: 10px;" href="http://authing.cn" target="_blank"><img height="55px" src="https://i.imgur.com/n4RieVC.png"></a>
 
 ### Sponsors
 
-[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [tkaray](https://rayray.moe/) . [NeverBehave](https://never.pet/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy) . [feeds.pub](https://feeds.pub)
+[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [tkaray](https://rayray.moe/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy) . [feeds.pub](https://feeds.pub)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/en/support/)
 

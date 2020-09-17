@@ -98,6 +98,12 @@ pageClass: routes
 
 <Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
+## 建宁闲谈
+
+### 文章
+
+<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1"/>
+
 ## 敬维博客
 
 ### 文章

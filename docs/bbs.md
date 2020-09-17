@@ -184,6 +184,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/91ddcc/user/2377095" path="/91ddcc/user/:user" :paramsDesc="['用户ID，在 URL 可以找到']"/>
 
+### 驿站帖子
+
+<Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" :paramsDesc="['驿站ID，在 URL 可以找到']"/>
+
 ## 电鸭社区
 
 ### 工作机会
@@ -353,6 +357,16 @@ pageClass: routes
 
 ## 水木社区
 
+### 分区文章
+
+<Route author="nczitzk" example="/newsmth/section/university" path="/newsmth/section/:section" :paramsDesc="['分区名，见下表']">
+
+| 社区管理  | 国内院校   | 休闲娱乐      | 五湖四海 | 游戏运动 | 社会信息 | 知性感性 | 文化人文 | 学术科学 | 电脑技术   |
+| --------- | ---------- | ------------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| community | university | entertainment | location | game     | society  | romance  | culture  | science  | technology |
+
+</Route>
+
 ### 用户文章
 
 <Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
@@ -394,6 +408,12 @@ pageClass: routes
 ### 焦点新闻
 
 <Route author="nczitzk" example="/creaders/headline" path="/creaders/headline"/>
+
+## 文学城
+
+### 博客
+
+<Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" :paramsDesc="['博客 ID, 可在 URL 中找到']" radar="1" />
 
 ## 小米社区
 

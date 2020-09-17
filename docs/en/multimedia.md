@@ -68,9 +68,37 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ## PornHub
 
+### Category
+
+<RouteEn author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" :paramsDesc="['category，see [categories](https://cn.pornhub.com/webmasters/categories)']"/>
+
+### Keyword Search
+
+<RouteEn author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" :paramsDesc="['keyword']"/>
+
+### Users
+
+<RouteEn author="I2IMk" example="/pornhub/users/0maru0" path="/pornhub/users/:username" :paramsDesc="['username, part of the url e.g. `pornhub.com/users/0maru0`']" />
+
+### Verified amateur / Model
+
+<RouteEn author="I2IMk" example="/pornhub/model/stacy-starando" path="/pornhub/model/:username/:sort?" :paramsDesc="['username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']" />
+
+### Verified model / Pornstar
+
+<RouteEn author="I2IMk" example="/pornhub/pornstar/june-liu" path="/pornhub/pornstar/:username/:sort?" :paramsDesc="['username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']" />
+
+**`sort`**
+
+| mr          | mv          | tr        | lg      | cm     |
+| ----------- | ----------- | --------- | ------- | ------ |
+| Most Recent | Most Viewed | Top Rated | Longest | Newest |
+
+
+
 ### Video List
 
-<Route author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['relative path after `pornhub.com/`, need to be URL encoded']"/>
+<RouteEn author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['relative path after `pornhub.com/`, need to be URL encoded']"/>
 
 
 ## Sankaku Complex
