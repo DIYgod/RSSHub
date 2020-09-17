@@ -357,6 +357,16 @@ pageClass: routes
 
 ## 水木社区
 
+### 分区文章
+
+<Route author="nczitzk" example="/newsmth/section/university" path="/newsmth/section/:section" :paramsDesc="['分区名，见下表']">
+
+| 社区管理  | 国内院校   | 休闲娱乐      | 五湖四海 | 游戏运动 | 社会信息 | 知性感性 | 文化人文 | 学术科学 | 电脑技术   |
+| --------- | ---------- | ------------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| community | university | entertainment | location | game     | society  | romance  | culture  | science  | technology |
+
+</Route>
+
 ### 用户文章
 
 <Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
