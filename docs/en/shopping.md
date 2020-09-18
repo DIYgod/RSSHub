@@ -16,13 +16,13 @@ pageClass: routes
 
 <RouteEn author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" :paramsDesc="['Category, `highlights` by default', 'Time, `24h` by default']">
 
-分类
+Category
 
 | Highlights | Active Sales | Now Free | Watchlist Charts |
 | ---------- | ------------ | -------- | ---------------- |
 | highlights | activesales  | nowfree  | mostwanted       |
 
-时间
+Time
 
 | the latest 24 hours | the latest week | all the time |
 | ------------------- | --------------- | ------------ |
