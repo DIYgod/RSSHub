@@ -1723,6 +1723,12 @@ type 列表：
 
 </Route>
 
+#### 自定义聚合通知
+
+<Route author="zwithz" example="/zju/cst/custom/36194+36241+36246" path="/zju/cst/custom/:id" :paramsDesc="['提取出通知页面中的 `ID`，如 `http://www.cst.zju.edu.cn/36246/list.htm` 中的 `36246`，可将你想获取通知的多个页面，通过 `+` 符号来聚合。']">
+
+</Route>
+
 ## 浙江大学城市学院
 
 ### 新闻通知
