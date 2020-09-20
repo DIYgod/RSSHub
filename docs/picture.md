@@ -4,11 +4,37 @@ pageClass: routes
 
 # 图片
 
-## Awesome Pigtails
+## 1X
 
-### 最新图片
+### Photos
 
-<Route author="Chingyat" example="/pigtails" path="/pigtails/index"/>
+<Route author="nczitzk" example="/1x/latest/all" path="/1x/:type?/:caty?" :paramsDesc="['排序类型，默认为 `latest`，亦可选 `popular` 或 `curators-choice`', '图片类别，默认为 `all`，见下表']">
+
+| 图片类别       | 代码          |
+| -------------- | ------------- |
+| All categories | all           |
+| Abstract       | abstract      |
+| Action         | action        |
+| Animals        | animals       |
+| Architecture   | architecture  |
+| Conceptual     | conceptual    |
+| Creative edit  | creative-edit |
+| Documentary    | documentary   |
+| Everyday       | everyday      |
+| Fine Art Nude  | fine-art-nude |
+| Humour         | humour        |
+| Landscape      | landscape     |
+| Macro          | macro         |
+| Mood           | mood          |
+| Night          | night         |
+| Performance    | performance   |
+| Portrait       | portrait      |
+| Still life     | still-life    |
+| Street         | street        |
+| Underwater     | underwater    |
+| Wildlife       | wildlife      |
+
+</Route>
 
 ## Bing 壁纸
 
@@ -100,6 +126,18 @@ pageClass: routes
 ### 台湾成功大学镜像
 
 <Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
+
+### NASA 中文
+
+<Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
+
+::: tip 提示
+
+[NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
+
+:::
+
+</Route>
 
 ## nHentai
 

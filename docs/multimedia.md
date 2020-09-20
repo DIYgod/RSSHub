@@ -75,6 +75,12 @@ pageClass: routes
 
 <Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']" supportBT="1"/>
 
+## Hentaimama
+
+### 近期更新
+
+<Route author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
+
 ## JavBus
 
 ### 首页
@@ -264,6 +270,32 @@ pageClass: routes
 </Route>
 
 ## PornHub
+
+### 分类
+
+<Route author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" :paramsDesc="['类别，参见 [categories](https://cn.pornhub.com/webmasters/categories)']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" :paramsDesc="['关键字']"/>
+
+### 用户
+
+<Route author="I2IMk" example="/pornhub/users/0maru0" path="/pornhub/users/:username" :paramsDesc="['用户名, 对应其专页地址的后面部分, 如 `pornhub.com/users/0maru0`']" />
+
+### 素人（Verified amateur /model）
+
+<Route author="I2IMk" example="/pornhub/model/stacy-starando" path="/pornhub/model/:username/:sort?" :paramsDesc="['用户名, 对应其专页地址的后面部分, 如 `pornhub.com/model/stacy-starando`', '排序方式, 下文会提到']" />
+
+### 色情明星（Verified model /pornstar）
+
+<Route author="I2IMk" example="/pornhub/pornstar/june-liu" path="/pornhub/pornstar/:username/:sort?" :paramsDesc="['用户名, 对应其专页地址的后面部分, 如 `pornhub.com/pornstar/june-liu`', '排序方式, 下文会提到']" />
+
+**排序方式 `sort`**
+
+| mr                   | mv                     | tr                 | lg           | cm          |
+| -------------------- | ---------------------- | ------------------ | ------------ | ----------- |
+| Most Recent 最新精选 | Most Viewed 最多次观看 | Top Rated 评价最好 | Longest 最长 | Newest 最新 |
 
 ### 视频列表
 

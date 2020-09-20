@@ -26,12 +26,10 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 ### Special Sponsors
 
 <a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img alt="rixCloud" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rixcloud.png"></a>
-<a style="margin-right: 10px;" href="https://angelia.codeeer.com" target="_blank"><img alt="期待" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/angelia.png"></a>
-<a style="margin-right: 10px;margin-left: 10px;" href="http://authing.cn" target="_blank"><img alt="Authing" height="55px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/authing.png"></a>
 
 ### Sponsors
 
-[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [tkaray](https://rayray.moe/) . [NeverBehave](https://never.pet/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy) . [feeds.pub](https://feeds.pub)
+[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [tkaray](https://rayray.moe/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy) . [feeds.pub](https://feeds.pub)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/support/)
 
