@@ -15,7 +15,7 @@ pageClass: routes
 <Route author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
 
 | 新闻 | 攻略 | 下载资源 | 区块链快讯 |
-|------|------|----------|------------|
+| ---- | ---- | -------- | ---------- |
 | news | gl   | resource | blockchain |
 
 </Route>
@@ -85,19 +85,19 @@ pageClass: routes
 支持的主机平台:
 
 | PS 4 | Xbox One | Switch | PC | Wii U | 3DS | PS Vita | iOS |
-|------|----------|--------|----|-------|-----|---------|-----|
+| ---- | -------- | ------ | -- | ----- | --- | ------- | --- |
 | ps4  | xboxone  | switch | pc | wii-u | 3ds | vita    | ios |
 
 发行类型，默认为 `new`:
 
 | 新游发行 | 即将发行 | 全部 |
-|----------|----------|------|
+| -------- | -------- | ---- |
 | new      | coming   | all  |
 
 排序类型，默认为`date`:
 
 | 日期 | Metacritic 评分 | 用户评分  |
-|------|-----------------|-----------|
+| ---- | --------------- | --------- |
 | date | metascore       | userscore |
 
 </Route>
@@ -190,7 +190,7 @@ pageClass: routes
 <Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" :paramsDesc="['游戏代码（默认所有）']">
 
 | 游戏代码 | 游戏名称     |
-|----------|----------|
+| -------- | ------------ |
 | GTAV     | 侠盗猎车手 5 |
 | RDR2     | 荒野大镖客 2 |
 
@@ -237,7 +237,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '论坛版块ID, 默认显示所有帖子, 论坛版块URL中`group_label_id`参数，特别的有']"/>
 
 | 全部 | 精华  | 官方     |
-|------|-------|----------|
+| ---- | ----- | -------- |
 | all  | elite | official |
 
 ### 游戏更新
@@ -249,7 +249,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="hoilc" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '排序方式, 空为默认排序, 可选如下']"/>
 
 | 最新   | 最热 | 游戏时长 |
-|--------|------|----------|
+| ------ | ---- | -------- |
 | update | hot  | spent    |
 
 ## 二柄 APP
@@ -279,7 +279,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="sintak" example="/gouhuo/news/switch" path="/gouhuo/news/:category" :paramsDesc="['资讯类型']">
 
 | 精选       | 海外     | 原创    | PS4 | Xboxone | PC | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
-|------------|----------|---------|-----|---------|----|--------|----------|------------|------|--------|---------|-------|-------|----------|
+| ---------- | -------- | ------- | --- | ------- | -- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
 | choiceness | overseas | orignal | ps4 | xboxone | pc | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
 
 </Route>
@@ -305,11 +305,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
 
 | 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王 | 电子游戏 | 手机游戏 | 桌面游戏 |
-|----------|----------|--------|--------|--------|----------|----------|----------|
+| -------- | -------- | ------ | ------ | ------ | -------- | -------- | -------- |
 | 1        | 2        | 3      | 14     | 16     | 4        | 22       | 9        |
 
 | 影之诗 | Artifact | 玩家杂谈 | 营地电台 | 2047 | 魂武 |
-|--------|----------|----------|----------|------|------|
+| ------ | -------- | -------- | -------- | ---- | ---- |
 | 17     | 67       | 21       | 5        | 62   | 68   |
 
 </Route>
@@ -321,7 +321,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
 
 | 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
-|----------|----------|----------|----------|
+| -------- | -------- | -------- | -------- |
 | new      | version  | gach     | event    |
 
 </Route>
@@ -331,7 +331,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
 
 | 最新   | 动态 | 公告   | 活动     | 补给     |
-|--------|------|--------|----------|----------|
+| ------ | ---- | ------ | -------- | -------- |
 | latest | news | notice | activity | strategy |
 
 </Route>
@@ -375,7 +375,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" :paramsDesc="['平台, 默认为Steam']">
 
 | Steam | PlatStation4 | Switch |
-|-------|--------------|--------|
+| ----- | ------------ | ------ |
 | pc    | ps4          | switch |
 
 </Route>
@@ -397,7 +397,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="LogicJake" example="/gamersky/ent/ymfl" path="/gamersky/ent/:category" :paramsDesc="['分类类型']">
 
 | 趣囧时间 | 游民影院 | 游观天下 | 壁纸图库 | 游民盘点 | 游民福利 |
-|----------|----------|----------|----------|----------|----------|
+| -------- | -------- | -------- | -------- | -------- | -------- |
 | qysj     | ymyy     | ygtx     | bztk     | ympd     | ymfl     |
 
 </Route>
@@ -409,7 +409,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="LogicJake" example="/yxdzqb/hot_chinese" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
 
 | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
-|----------------|--------------------|------------------------|----------------|------------------------|
+| -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
 | new            | hot                | hot_chinese            | low            | low_chinese            |
 
 </Route>
@@ -435,7 +435,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
-|-----------|---------|--------|---------|------|----------|
+| --------- | ------- | ------ | ------- | ---- | -------- |
 | recommend | history | big    | culture | news | retro    |
 
 </Route>
@@ -453,7 +453,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']"/>
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
-|------|----------|--------|-----------|------|
+| ---- | -------- | ------ | --------- | ---- |
 | news | announce | events | advertise | all  |
 
 ## きららファンタジア｜奇拉拉幻想曲
