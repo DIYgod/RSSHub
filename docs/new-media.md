@@ -627,6 +627,18 @@ area 分区选项
 | ---- | ----- |
 | doc  | video |
 
+## 福利年
+
+### 文章
+
+<Route author="nczitzk" example="/fulinian" path="/fulinian/:caty?" :paramsDesc="['分类, 默认为首页最新发布']">
+
+| 技术教程         | 精品软件         | 网络资源         | 福利年惠 | 创业知识 | 正版教程         |
+| ---------------- | ---------------- | ---------------- | -------- | -------- | ---------------- |
+| technical-course | quality-software | network-resource | fulinian | chuangye | authentic-course |
+
+</Route>
+
 ## 谷歌新闻
 
 ### 新闻
