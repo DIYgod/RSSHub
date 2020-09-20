@@ -247,7 +247,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 最近更新
 
-<Route author="nczitzk" example="/iqshw/latest" path="/iqshw/latest"/>
+<Route author="nczitzk" example="/3k8/latest" path="/3k8/latest"/>
 
 ## 爱发电
 

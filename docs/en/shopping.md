@@ -10,6 +10,32 @@ pageClass: routes
 
 <RouteEn author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## AppSales
+
+### Apps
+
+<RouteEn author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" :paramsDesc="['Category, `highlights` by default', 'Time, `24h` by default']">
+
+Category
+
+| Highlights | Active Sales | Now Free | Watchlist Charts |
+| ---------- | ------------ | -------- | ---------------- |
+| highlights | activesales  | nowfree  | mostwanted       |
+
+Time
+
+| the latest 24 hours | the latest week | all the time |
+| ------------------- | --------------- | ------------ |
+| 24h                 | week            | alltime      |
+
+::: tip Tip
+
+Parameter `time` only works when `mostwanted` is chosen as the category.
+
+:::
+
+</RouteEn>
+
 ## Guiltfree.pl
 
 ### Onsale
