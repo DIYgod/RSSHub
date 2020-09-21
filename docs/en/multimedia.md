@@ -76,6 +76,10 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" :paramsDesc="['keyword']"/>
 
+### Users
+
+<RouteEn author="I2IMk" example="/pornhub/users/0maru0" path="/pornhub/users/:username" :paramsDesc="['username, part of the url e.g. `pornhub.com/users/0maru0`']" />
+
 ### Verified amateur / Model
 
 <RouteEn author="I2IMk" example="/pornhub/model/stacy-starando" path="/pornhub/model/:username/:sort?" :paramsDesc="['username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']" />

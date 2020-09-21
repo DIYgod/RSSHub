@@ -357,6 +357,16 @@ pageClass: routes
 
 ## 水木社区
 
+### 分区文章
+
+<Route author="nczitzk" example="/newsmth/section/university" path="/newsmth/section/:section" :paramsDesc="['分区名，见下表']">
+
+| 社区管理  | 国内院校   | 休闲娱乐      | 五湖四海 | 游戏运动 | 社会信息 | 知性感性 | 文化人文 | 学术科学 | 电脑技术   |
+| --------- | ---------- | ------------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| community | university | entertainment | location | game     | society  | romance  | culture  | science  | technology |
+
+</Route>
+
 ### 用户文章
 
 <Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
@@ -404,6 +414,14 @@ pageClass: routes
 ### 博客
 
 <Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" :paramsDesc="['博客 ID, 可在 URL 中找到']" radar="1" />
+
+### 最热主题
+
+<Route author="changlan" example="/wenxuecity/hot/9" path="/wenxuecity/hot/:cid" :paramsDesc="['版面 ID, 可在 URL 中找到']" radar="1" />
+
+### 最新主题
+
+<Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" :paramsDesc="['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']" radar="1" />
 
 ## 小米社区
 
