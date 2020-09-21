@@ -108,6 +108,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cgtn/most/read/day" path="/cgtn/most/:type?/:time?" :paramsDesc="['类型，`read` 指最多阅读，`share` 指最多分享，默认为 `read`', '时间，`all` 指所有时间，`day` 指今天，`week` 指本周，`month` 指本月，`year` 指今年，默认为 `all`']"/>
 
+### Top News
+
+<Route author="nczitzk" example="/cgtn/top" path="/cgtn/top"/>
+
 ## cnBeta
 
 ### 最新
@@ -626,6 +630,18 @@ area 分区选项
 | 文章 | 视频  |
 | ---- | ----- |
 | doc  | video |
+
+## 福利年
+
+### 文章
+
+<Route author="nczitzk" example="/fulinian" path="/fulinian/:caty?" :paramsDesc="['分类, 默认为首页最新发布']">
+
+| 技术教程         | 精品软件         | 网络资源         | 福利年惠 | 创业知识 | 正版教程         |
+| ---------------- | ---------------- | ---------------- | -------- | -------- | ---------------- |
+| technical-course | quality-software | network-resource | fulinian | chuangye | authentic-course |
+
+</Route>
 
 ## 谷歌新闻
 
