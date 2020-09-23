@@ -30,6 +30,10 @@ pageClass: routes
 
 <Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" :paramsDesc="['标签名, 可在标签 URL 中找到']"/>
 
+### 主題
+
+<Route author="bestpika" example="/4gamers/topic/gentlemen-topic" path="/4gamers/topic/:topic" :paramsDesc="['主题, 可在首页上方页面内找到']" />
+
 ## a9vgNews 游戏新闻
 
 ### a9vgNews 游戏新闻
