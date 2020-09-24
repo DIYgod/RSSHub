@@ -8564,6 +8564,11 @@ nan@^2.12.1, nan@^2.14.0:
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
 
+nan@^2.14.1:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.1.tgz#d7be34dfa3105b91494c3147089315eff8874b01"
+  integrity sha512-isWHgVjnFjh2x2yuJ/tj3JbwoHu3UC2dX5G/88Cm24yB6YopVgxvBObDY7n5xW6ExmFhJpSEQqFPvq9zaXc8Jw==
+
 nanomatch@^1.2.9:
   version "1.2.13"
   resolved "https://registry.yarnpkg.com/nanomatch/-/nanomatch-1.2.13.tgz#b87a8aa4fc0de8fe6be88895b38983ff265bd119"
@@ -9021,6 +9026,14 @@ only@~0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/only/-/only-0.0.2.tgz#2afde84d03e50b9a8edc444e30610a70295edfb4"
   integrity sha1-Kv3oTQPlC5qO3EROMGEKcCle37Q=
+
+opencc@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/opencc/-/opencc-1.1.1.tgz#94776e515ef13b23e00065caa04a69e9529d460e"
+  integrity sha512-t/4FIL43esdrUDfQejqHPhZyWdDVRfwMxsNBkA/2NjIEQv33mG80WHXcmEJ+KMd6T8bjbtx+EiJzPiybE8SPeg==
+  dependencies:
+    nan "^2.14.1"
+    node-pre-gyp "^0.14.0"
 
 opencollective-postinstall@^2.0.2:
   version "2.0.2"
