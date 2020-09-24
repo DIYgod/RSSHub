@@ -117,6 +117,18 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 <Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
 
+## Nobel Prize
+
+### List
+
+<RouteEn author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['Category, see below, all by default']">
+
+| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science |
+| ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
+| physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
+
+</RouteEn>
+
 ## Parcel Tracking
 
 ### Hermes UK
