@@ -1,0 +1,16 @@
+version: "1"
+rules:
+  - base: master
+    upstream: DIYgod:master
+    mergeMethod: hardreset
+    mergeUnstable: false
+  - base: dev
+    upstream: master
+    assignees: 
+      - oouxx
+    reviewer:
+      - oouxx
+    conflictReviewers:
+      - oouxx
+lable: ":arrow_heading_down:pull"
+

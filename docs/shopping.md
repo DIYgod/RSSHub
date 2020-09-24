@@ -10,6 +10,32 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## AppSales
+
+### Apps
+
+<Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" :paramsDesc="['分类，默认为 `highlights`', '时间，默认为 `24h`']">
+
+分类
+
+| Highlights | Active Sales | Now Free | Watchlist Charts |
+| ---------- | ------------ | -------- | ---------------- |
+| highlights | activesales  | nowfree  | mostwanted       |
+
+时间
+
+| 最近一天 | 最近一周 | 所有时间 |
+| -------- | -------- | -------- |
+| 24h      | week     | alltime  |
+
+::: tip 提示
+
+参数 `time` 仅在选择 `mostwanted` 作为分类的时候有效。
+
+:::
+
+</Route>
+
 ## Furstar
 
 ### 最新售卖角色列表
