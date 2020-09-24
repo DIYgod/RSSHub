@@ -117,7 +117,7 @@
   },
   "jest": {
     "testMatch": [
-      "**/test/**/*.js"
+      "**/test/**/parameter.js"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
