@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "@types/cheerio": "0.22.21",
+    "@types/cheerio": "0.22.22",
     "@types/got": "9.6.11",
     "@types/koa": "2.11.4",
     "@vuepress/plugin-back-to-top": "1.5.4",
