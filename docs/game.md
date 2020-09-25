@@ -298,6 +298,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1"/>
 
+## 剑网 3
+
+### 新闻资讯
+
+<Route author="nczitzk" example="/jx3" path="/jx3/:caty?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新    | 新闻  | 活动 | 公告     |
+| ------- | ----- | ---- | -------- |
+| allnews | press | hd   | announce |
+
+</Route>
+
 ## 旅法师营地
 
 ### 旅法师营地

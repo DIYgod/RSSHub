@@ -283,6 +283,16 @@ Type 栏目:
 
 <Route author="conanjunn" example="/wallstreetcn/news/global" path="/wallstreetcn/news/global" />
 
+### 实时快讯
+
+<Route author="nczitzk" example="/wallstreetcn/live" path="/wallstreetcn/live/:channel?" :paramsDesc="['快讯分类，默认`global`，见下表']">
+
+| 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- |
+| global | a-stock | us-stock | hk-stock | forex | commodity | financing |
+
+</Route>
+
 ## 极客公园
 
 ### 全球快讯
@@ -622,6 +632,20 @@ category 对应的关键词有
 <Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
 
 新闻联播内容摘要。
+
+</Route>
+
+### 新闻专题
+
+<Route author="nczitzk" example="/cctv-special/315" path="/cctv-special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15晚会']">
+
+::: tip 提示
+
+如 [2020 年国家网络安全宣传周](https://news.cctv.com/special/2020gjwlaqxcz/index.shtml) 的专题页 URL 为 <https://news.cctv.com/special/2020gjwlaqxcz/index.shtml。其专题> id 即为 `2020gjwlaqxcz`。
+
+:::
+
+此处查看 [所有新闻专题](http://news.cctv.com/special/index.shtml)
 
 </Route>
 
