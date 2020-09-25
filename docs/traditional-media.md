@@ -283,6 +283,16 @@ Type 栏目:
 
 <Route author="conanjunn" example="/wallstreetcn/news/global" path="/wallstreetcn/news/global" />
 
+### 实时快讯
+
+<Route author="nczitzk" example="/wallstreetcn/live" path="/wallstreetcn/live/:channel?" :paramsDesc="['快讯分类，默认`global`，见下表']">
+
+| 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- |
+| global | a-stock | us-stock | hk-stock | forex | commodity | financing |
+
+</Route>
+
 ## 极客公园
 
 ### 全球快讯
