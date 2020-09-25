@@ -412,6 +412,12 @@ pageClass: routes
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
+## 中華民國國防部
+
+### 即時軍事動態
+
+<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
+
 ## 中华人民共和国海关总署
 
 ### 拍卖信息 / 海关法规
