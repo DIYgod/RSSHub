@@ -1936,10 +1936,10 @@
   dependencies:
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-google-analytics@1.5.4":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-google-analytics/-/plugin-google-analytics-1.5.4.tgz#43dff0a84b18b21ea597f3d97281c40d754a5083"
-  integrity sha512-JVmIPBqKNiOVvow+XAZE+jgGvIRMBVxZOpKb5HBQ0xwz/E81Opl7cxdX9VkPKX+i9VoRBPWEiD/874RivzbW1g==
+"@vuepress/plugin-google-analytics@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-google-analytics/-/plugin-google-analytics-1.6.0.tgz#1a3960259556016b668276ab00417f1c96ddf4bd"
+  integrity sha512-CPRTQsq6KnZEb4SEB/6KdXHFKGvKdsg0GWtSYpLTbF/aUETVRUVJsqR7i/tLWgtyB8qFMwzPUiTc7KlEFjvYyg==
 
 "@vuepress/plugin-last-updated@1.5.3":
   version "1.5.3"
