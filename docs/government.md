@@ -380,6 +380,12 @@ pageClass: routes
 
 * * *
 
+#### 马来西亚 `MY`
+
+-   大使馆: `/embassy/my`
+
+* * *
+
 #### 新加坡 `SG`
 
 -   大使馆: `/embassy/sg`
