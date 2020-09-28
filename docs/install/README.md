@@ -434,6 +434,12 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 部分 RSS 模块配置
 
+::: tip 提示
+
+此处信息不完整。完整配置请参考路由对应的文档和 `lib/config.js`。
+
+:::
+
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv 用户名

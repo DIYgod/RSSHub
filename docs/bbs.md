@@ -116,6 +116,18 @@ pageClass: routes
 
 ### 帖子
 
+::: warning 注意
+
+以游客 (Guest) 身份看贴会进入跳转页面，且跳转页面直接返回 HTTP 403.
+
+建议自建路由，并设置环境变量以登录论坛.
+
+`NGA_PASSPORT_UID` 对应 cookie 中的 `ngaPassportUid`.
+
+`NGA_PASSPORT_CID` 对应 cookie 中的 `ngaPassportCid`.
+
+:::
+
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1"/>
 
 ## Quicker
