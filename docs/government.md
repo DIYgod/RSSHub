@@ -520,3 +520,13 @@ pageClass: routes
 ### 审查调查
 
 <Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
+
+## 中国人大网
+
+<Route author="233yeee" example="/npc/c183" path="/npc/:caty" :paramsDesc="['分类名，支持形如`http://www.npc.gov.cn/npc/*/list.shtml`的网站，传入 npc 之后的参数']">
+
+| 立法 | 监督 | 代表 | 理论 | 权威发布 | 滚动新闻 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| c183     | c184     | c185     | c189     | c12435   | c10134   |
+
+</Route>
