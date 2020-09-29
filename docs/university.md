@@ -444,6 +444,24 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 <Route author="sushengmao" example="/gzyjs" path="/gzyjs" />
 
+## 暨南大学
+
+## 暨南要闻
+
+<Route author="hang333" example="/jnu/yw/tt" path="/jnu/yw/:type?" :paramDesc="['暨南要闻类型，默认为 `yw`']">
+
+| 暨大头条 | 暨南要闻 |
+| -------- | -------- |
+| tt       | yw       |
+
+### 暨南大学校园时讯
+
+<Route author="hang333" example="/jnu/xysx/yxsd" path="/jnu/xysx/:type" :paramDesc="['校园时讯类型']">
+
+| 院系速递 | 部门快讯 |
+| -------- | -------- |
+| yxsd     | bmkx     |
+
 ## 桂林电子科技大学
 
 ### 新闻资讯
