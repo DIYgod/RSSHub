@@ -34,31 +34,31 @@ describe('debug', () => {
             const key = $(item).find('.debug-key').html().trim();
             const value = $(item).find('.debug-value').html().trim();
             switch (key) {
-                case 'node name:':
+                case 'Node Name:':
                     expect(value).toBe('mock');
                     break;
-                case 'git hash:':
+                case 'Git Hash:':
                     expect(value).toBe(gitHash);
                     break;
-                case 'request amount:':
+                case 'Request Amount:':
                     expect(value).toBe('8');
                     break;
                 case 'ETag Matched:':
                     expect(value).toBe('1');
                     break;
-                case 'hot routes:':
+                case 'Hot Routes:':
                     expect(value).toBe('7  /test/:id<br>');
                     break;
-                case 'hot paths:':
+                case 'Hot Paths:':
                     expect(value).toBe('3  /test/1<br>2  /test/2<br>2  /test/empty<br>1  /<br>');
                     break;
-                case 'hot IP:':
+                case 'Hot IP:':
                     expect(value).toBe('5  233.233.233.233<br>3  233.233.233.234<br>');
                     break;
-                case 'hot error routes:':
+                case 'Hot Error Routes:':
                     expect(value).toBe('2  /test/:id<br>');
                     break;
-                case 'hot error paths:':
+                case 'Hot Error Paths:':
                     expect(value).toBe('2  /test/empty<br>');
                     break;
             }
