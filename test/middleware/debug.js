@@ -18,8 +18,9 @@ afterAll(() => {
 
 describe('debug', () => {
     it('debug', async () => {
-        await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
-        await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
+        const response1 = await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
+        const etag = response1.headers.etag;
+        await request.get('/test/1').set('If-None-Match', etag).set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/1').set('X-Forwarded-For', '233.233.233.234');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.234');
@@ -42,8 +43,11 @@ describe('debug', () => {
                 case 'request amount:':
                     expect(value).toBe('8');
                     break;
+                case 'ETag Matched:':
+                    expect(value).toBe('1');
+                    break;
                 case 'hot routes:':
-                    expect(value).toBe('3  /test/:id<br>');
+                    expect(value).toBe('7  /test/:id<br>');
                     break;
                 case 'hot paths:':
                     expect(value).toBe('3  /test/1<br>2  /test/2<br>2  /test/empty<br>1  /<br>');
@@ -52,7 +56,7 @@ describe('debug', () => {
                     expect(value).toBe('5  233.233.233.233<br>3  233.233.233.234<br>');
                     break;
                 case 'hot error routes:':
-                    expect(value).toBe('1  /test/:id<br>');
+                    expect(value).toBe('2  /test/:id<br>');
                     break;
                 case 'hot error paths:':
                     expect(value).toBe('2  /test/empty<br>');
