@@ -472,6 +472,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="y2361547758" example="/magireco/event_banner" path="/magireco/event_banner"/>
 
-### 巴哈姆特-GNN新闻
+## 巴哈姆特
 
-<Route author="arracc" example="/gamer/gnn" path="/gamer/index"/>
+### GNN新闻
+
+<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['分类']"/>
+
+| 首页 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 |  電競  |
+| ---- | -- | ------ | -------- | ----- | ------- | -------- | ------ |
+| 缺省 |  1  |   3    |     4    |    5  |    9   |    11    |    13  |

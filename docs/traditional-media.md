@@ -759,5 +759,12 @@ category 对应的关键词有
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
 
-### 读卖新闻
-<Route author="cc" example="/yomiuri/a9vg" path="/yomiuri/a9vg"/>
+## 読売新聞
+
+### 新聞
+
+<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['分类']"/>
+
+| 総合 |   社会    |   政治   |  経済   | スポーツ |  国際 | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋  | ライフ |  地域  |   社説    |
+| ---- |--------- | -------- | ------- | ------- | ----- | -------- | ------------- | ------------- | ---------- | ------ | ----- | --------- |
+| news | national | politics | economy | sports  | world | science  |    election   |    culture    |  igoshougi |  life  | local | editorial |
