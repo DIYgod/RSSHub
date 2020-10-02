@@ -239,6 +239,18 @@ Category 列表:
 
 <Route author="saury" example="/eastday/sh" path="/eastday/sh" />
 
+## 読売新聞
+
+### 新聞
+
+<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['分类']">
+
+| 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
+| ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
+| news | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
+
+</Route>
+
 ## 端传媒
 
 ### 端传媒
@@ -782,13 +794,3 @@ category 对应的关键词有
 ### 九江新闻
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
-
-## 読売新聞
-
-### 新聞
-
-<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['分类']"/>
-
-| 総合 |   社会    |   政治   |  経済   | スポーツ |  国際 | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋  | ライフ |  地域  |   社説    |
-| ---- |--------- | -------- | ------- | ------- | ----- | -------- | ------------- | ------------- | ---------- | ------ | ----- | --------- |
-| news | national | politics | economy | sports  | world | science  |    election   |    culture    |  igoshougi |  life  | local | editorial |
