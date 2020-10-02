@@ -372,6 +372,16 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+### 文化素质教育中心
+
+<Route author="truobel" example="/uestc/cqe/hdyg" path="/uestc/cqe/:type?" :paramsDesc="['默认为 `hdyg`']">
+
+| 活动预告 | 通知 | 课程通知 | 立人班选拔 |
+| -------- | ---- | -------- | ---------- |
+| hdyg     | tz   | kctz     | lrxb       |
+
+</Route>
+
 ## 东北大学
 
 ### 东北大学新闻网
@@ -1547,9 +1557,9 @@ type 列表：
 全文内容需使用校园网或 VPN 获取
 :::
 
-| 全部 | 信息发布 | 通知公告 | 教务信息 | 教学研究 | 教学实践 | 招生信息 | 质量监控 |
-| :--: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-|  all |   xxfb   |   tzgg   |   jwxx   |   jxyj   |   jxsj   |   zsxx   |   zljk   |
+| 全部 | 教学信息 | 教学研究 | 实践教学 | 质量监控 | 通知公告 |
+| :--: | :------: | :------: | :------: | :------: | :------: |
+|  all |   jxxx   |   jxyj   |   sjjx   |   zljk   |   tzgg   |
 
 </Route>
 

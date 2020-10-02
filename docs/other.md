@@ -521,6 +521,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="cc798461" example="/moxingnet" path="/moxingnet"/>
 
+## 诺贝尔奖
+
+### 获奖名单
+
+<Route author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['类别，见下表，默认为全部']">
+
+| 物理学  | 化学      | 生理学或医学           | 文学       | 和平  | 经济学            |
+| ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
+| physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
+
+</Route>
+
 ## 且听风吟福利
 
 ### 分类
