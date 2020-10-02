@@ -463,11 +463,21 @@ category 对应的关键词有
 
 ### 首页头条
 
-<Route author="HenryQW" example="/thepaper/featured" path="/thepaper/featured"/>
+<Route author="HenryQW nczitzk" example="/thepaper/featured" path="/thepaper/featured"/>
 
 ### 频道
 
-<Route author="xyqfer" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id']"/>
+<Route author="xyqfer nczitzk" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
+
+| 视频  | 时事  | 财经  | 思想  | 澎湃号 | 生活  |
+| ----- | ----- | ----- | ----- | ------ | ----- |
+| 26916 | 25950 | 25951 | 25952 | 36079  | 25953 |
+
+</Route>
+
+### 列表
+
+<Route author="nczitzk" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['列表 id，可在列表页 URL 中找到']"/>
 
 ### 澎湃美数组作品集
 
@@ -478,7 +488,6 @@ category 对应的关键词有
 | 2    | 4    | 3      | 453      |
 
 </Route>
-
 ## 齐鲁晚报
 
 ### 新闻
