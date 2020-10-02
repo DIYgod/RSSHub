@@ -380,6 +380,12 @@ pageClass: routes
 
 * * *
 
+#### 马来西亚 `MY`
+
+-   大使馆: `/embassy/my`
+
+* * *
+
 #### 新加坡 `SG`
 
 -   大使馆: `/embassy/sg`
@@ -411,6 +417,12 @@ pageClass: routes
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+## 中華民國國防部
+
+### 即時軍事動態
+
+<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
 
 ## 中华人民共和国海关总署
 
