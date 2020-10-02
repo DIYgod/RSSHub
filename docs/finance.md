@@ -62,6 +62,22 @@ pageClass: routes
 
 &lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
 
+## 世界经济论坛
+
+### 报告
+
+<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" :paramsDesc="['语言，见下表，默认为 `en`', '年份，对应年份过滤条件，默认为 `所有`', '平台，对应平台过滤条件，默认为 `所有`']">
+
+语言
+
+| English | Español | Français | 中文 | 日本語 |
+| ------- | ------- | -------- | ---- | ------ |
+| en      | es      | fr       | cn   | jp     |
+
+年份 和 平台 这两个参数请参见 [报告页](https://www.weforum.org/reports) 过滤条件处。
+
+</Route>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版

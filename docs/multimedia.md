@@ -131,6 +131,116 @@ pageClass: routes
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/western/series/20" path="/javbus/western/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
 
+## JavDB
+
+### 主页
+
+<Route author="nczitzk" example="/javdb/home" path="/javdb/home/:caty?/:sort?/:filter?" :paramsDesc="['分类，见下表，默认为 `有碼`', '排序，见下表，默认为 `磁鏈更新排序`', '过滤，见下表，默认为 `可下载`']">
+
+分类
+
+| 有碼     | 無碼       | 歐美    | FC2 |
+| -------- | ---------- | ------- | --- |
+| censored | uncensored | western | fc2 |
+
+排序
+
+| 发布日期排序 | 磁鏈更新排序 |
+| ------------ | ------------ |
+| 1            | 2            |
+
+过滤
+
+| 全部 | 可下载 | 含字幕 | 含短評 |
+| ---- | ------ | ------ | ------ |
+| 0    | 1      | 2      | 3      |
+
+</Route>
+
+### 分類
+
+<Route author="nczitzk" example="/javdb/tags/c2=5&c10=1" path="/javdb/tags/:query?/:caty?" :paramsDesc="['筛选，默认为 `c10=1`', '分类，见下表，默认为 `有碼`']">
+
+::: tip 提示
+
+在 [分類](https://javdb.com/tags) 中选定分类后，URL 中 `tags?` 后的字段即为筛选参数。
+
+如 <https://javdb.com/tags?c2=5&c10=1> 中 `c2=5&c10=1` 为筛选参数。
+
+:::
+
+分类
+
+| 有碼     | 無碼       | 歐美    | FC2 |
+| -------- | ---------- | ------- | --- |
+| censored | uncensored | western | fc2 |
+
+</Route>
+
+### 排行榜
+
+<Route author="nczitzk" example="/javdb/rankings" path="/javdb/rankings/:caty?/:time?" :paramsDesc="['分类，见下表，默认为 `有碼`', '时间，见下表，默认为 `日榜`']">
+
+分类
+
+| 有碼     | 無碼       | 歐美    | FC2 |
+| -------- | ---------- | ------- | --- |
+| censored | uncensored | western | fc2 |
+
+时间
+
+| 日榜  | 週榜   | 月榜    |
+| ----- | ------ | ------- |
+| daily | weekly | monthly |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/javdb/search/巨乳" path="/javdb/search/:keyword?/:filter?" :paramsDesc="['关键字，默认为空', '过滤，见下表，默认为 `可播放`']">
+
+| 全部 | 可播放   | 單體作品 | 演員  | 片商  | 導演     | 系列   | 番號 | 可下載   | 字幕  | 預覽圖  |
+| ---- | -------- | -------- | ----- | ----- | -------- | ------ | ---- | -------- | ----- | ------- |
+|      | playable | single   | actor | maker | director | series | code | download | cnsub | preview |
+
+</Route>
+
+### 演員
+
+<Route author="nczitzk" example="/javdb/actors/R2Vg" path="/javdb/actors/:id/:filter?" :paramsDesc="['编号，可在演员页 URL 中找到', '过滤，见下表，默认为 `全部`']">
+
+| 全部 | 可播放 | 單體作品 | 可下載 | 含字幕 |
+| ---- | ------ | -------- | ------ | ------ |
+|      | p      | s        | d      | c      |
+
+所有演员编号参见 [演員庫](https://javdb.com/actors)
+
+</Route>
+
+### 系列
+
+<Route author="nczitzk" example="/javdb/series/1NW" path="/javdb/series/:id/:filter?" :paramsDesc="['编号，可在系列页 URL 中找到', '过滤，见下表，默认为 `全部`']">
+
+| 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
+| ---- | -------- | -------- | -------- | ----- | ------- |
+|      | playable | single   | download | cnsub | preview |
+
+所有系列编号参见 [系列庫](https://javdb.com/series)
+
+</Route>
+
+### 片商
+
+<Route author="nczitzk" example="/javdb/makers/7R" path="/javdb/makers/:id/:filter?" :paramsDesc="['编号，可在片商页 URL 中找到', '过滤，见下表，默认为 `全部`']">
+
+| 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
+| ---- | -------- | -------- | -------- | ----- | ------- |
+|      | playable | single   | download | cnsub | preview |
+
+所有片商编号参见 [片商庫](https://javdb.com/makers)
+
+</Route>
+
 ## JavLibrary
 
 ### 影片
