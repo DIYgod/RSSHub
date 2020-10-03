@@ -241,9 +241,7 @@ Category 列表:
 
 ## 端传媒
 
-### 端传媒
-
-<Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 ::: warning 注意
 
@@ -251,17 +249,23 @@ Category 列表:
 
 :::
 
+### 专题・栏目
+
+<Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
 Type 栏目:
 
-| 最新   | 深度    | What’s New | 广场              | Pick-Up | 科技       | 风物    | ... |
-| ------ | ------- | ---------- | ----------------- | ------- | ---------- | ------- | --- |
-| latest | feature | news-brief | notes-and-letters | pick_up | technology | culture | ... |
+| 最新   | 深度    | What’s New | 广场              | 科技       | 风物    | 特约    | ... |
+| ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
+| latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
 
 更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
 
-通过提取文章全文，以提供比官方源更佳的阅读体验.
-
 </Route>
+
+### 话题・标签
+
+<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题ID，可从话题页URL中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
 ## 多维新闻网
 
