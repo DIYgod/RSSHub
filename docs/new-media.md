@@ -701,6 +701,12 @@ area 分区选项
 
 </Route>
 
+## 高科技行业门户
+
+### 新闻
+
+<Route author="luyuhuang" example="/ofweek/news" path="/ofweek/news"/>
+
 ## 谷歌新闻
 
 ### 新闻
