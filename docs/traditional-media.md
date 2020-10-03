@@ -243,19 +243,21 @@ Category 列表:
 
 ### 端传媒
 
-<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+<Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
 ::: warning 注意
 
-付费内容全文需要登陆获取，详情见部署页面的配置模块。
+付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
 
 :::
 
 Type 栏目:
 
-| 深度    | What’s New | 广场              | Pick-Up |
-| ------- | ---------- | ----------------- | ------- |
-| feature | news-brief | notes-and-letters | pick_up |
+| 最新   | 深度    | What’s New | 广场              | Pick-Up | 科技       | 风物    | ... |
+| ------ | ------- | ---------- | ----------------- | ------- | ---------- | ------- | --- |
+| latest | feature | news-brief | notes-and-letters | pick_up | technology | culture | ... |
+
+更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
