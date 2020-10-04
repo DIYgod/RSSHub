@@ -1466,6 +1466,10 @@ type 列表：
 
 <Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xygg" />
 
+### 学院新闻
+
+<Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xyxw" />
+
 ## 太原师范学院
 
 <Route author="2PoL" example="/tynu" path="/tynu" />
