@@ -1468,7 +1468,7 @@ type 列表：
 
 ### 学院新闻
 
-<Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xyxw" />
+<Route author="nczitzk" example="/scvtc/xyxw" path="/scvtc/xyxw" />
 
 ## 太原师范学院
 
