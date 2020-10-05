@@ -799,6 +799,24 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="276562578" example="/jlu/oa" path="/jlu" />
 
+## 暨南大学
+
+## 暨南要闻
+
+<Route author="hang333" example="/jnu/yw/tt" path="/jnu/yw/:type?" :paramDesc="['暨南要闻类型，默认为 `yw`']">
+
+| 暨大头条 | 暨南要闻 |
+| -------- | -------- |
+| tt       | yw       |
+
+### 暨南大学校园时讯
+
+<Route author="hang333" example="/jnu/xysx/yxsd" path="/jnu/xysx/:type" :paramDesc="['校园时讯类型']">
+
+| 院系速递 | 部门快讯 |
+| -------- | -------- |
+| yxsd     | bmkx     |
+
 ## 江南大学
 
 ### 教务处通知
@@ -1885,6 +1903,24 @@ type 列表：
 ### 中国海洋大学信电学院通知公告
 
 <Route author="sushengmao" example="/outele" path="/outele" />
+
+## 中国科学技术大学
+
+### 官网通知公告
+
+<Route author="hang333" example="/ustc/news/gl" path="/ustc/news/:type?" :paramsDesc="['可选，默认为 gl']">
+
+| 教学类 | 科研类 | 管理类 | 服务类 |
+| ------ | ------ | ------ | ------ |
+| jx     | ky     | gl     | fw     |
+
+### 教务处通知新闻
+
+<Route author="hang333" example="/ustc/jwc/info" path="/ustc/jwc/:type?" :paramsDesc="['可选，默认显示所有种类']">
+
+| 信息 | 教学     | 考试 | 交流     |
+| ---- | -------- | ---- | -------- |
+| info | teaching | exam | exchange |
 
 ## 中国科学院
 

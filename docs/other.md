@@ -378,7 +378,21 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 实时 AQI
 
-<Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
+<Route author="xapool" example="/aqicn/beijing/pm25,pm10" path="/aqicn/:city/:pollution?" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)', '可选择显示更详细的空气污染成分']"/>
+
+| 参数 | 污染成分 |
+| ---- | -------- |
+| pm25 | PM2.5    |
+| pm10 | PM10     |
+| o3   | O3       |
+| no2  | NO2      |
+| so2  | SO2      |
+| co   | CO       |
+
+举例: [https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
+
+1.  显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>
+2.  逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
 
 ## 酷安
 
