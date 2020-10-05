@@ -434,11 +434,21 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 部分 RSS 模块配置
 
+::: tip 提示
+
+此处信息不完整。完整配置请参考路由对应的文档和 `lib/config.js`。
+
+:::
+
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv 用户名
 
     -   `PIXIV_PASSWORD`: Pixiv 密码
+
+-   pixiv fanbox 用于获取付费内容
+
+    -   `FANBOX_SESSION_ID`: 对应 cookies 中的`FANBOXSESSID`。
 
 -   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
 
@@ -544,3 +554,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   新榜
 
     -   `NEWRANK_COOKIE`: 登陆后的 COOKIE 值，其中 token 是必要的，其他可删除
+
+-   NGA BBS 用于获取帖子内文
+
+    -   `NGA_PASSPORT_UID`: 对应 cookie 中的 `ngaPassportUid`.
+
+    -   `NGA_PASSPORT_CID`: 对应 cookie 中的 `ngaPassportCid`.
