@@ -1942,6 +1942,10 @@ type 列表：
 
 <Route author="renzhexigua" example="/cas/mesalab/kb" path="/cas/mesalab/kb"/>
 
+### 中国科学院电工研究所 科研动态
+
+<Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt"/>
+
 ## 中国农业大学
 
 ### 中国农业大学研招网通知公告
