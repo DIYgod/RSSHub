@@ -294,10 +294,6 @@ Type 栏目:
 :::
 </Route>
 
-### 话题・标签
-
-<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题ID，可从话题页URL中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
 ## 多维新闻网
 
 ### 要闻
