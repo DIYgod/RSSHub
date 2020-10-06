@@ -16,6 +16,25 @@ pageClass: routes
 
 </Route>
 
+## Academy of Management
+
+### Journal
+
+<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['期刊 id，见下表']">
+
+| Id        | 名称                                       |
+| --------- | ------------------------------------------ |
+| annals    | Academy of Management Annals               |
+| amd       | Academy of Management Discoveries          |
+| amgblproc | Academy of Management Global Proceedings   |
+| amj       | Academy of Management Journal              |
+| amle      | Academy of Management Learning & Education |
+| amp       | Academy of Management Perspectives         |
+| amproc    | Academy of Management Proceedings          |
+| amr       | Academy of Management Review               |
+
+</Route>
+
 ## Cell
 
 ### 主刊
