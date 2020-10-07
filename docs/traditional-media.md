@@ -779,6 +779,18 @@ category 对应的关键词有
 
 </Route>
 
+## 中山网
+
+### 中山网新闻
+
+<Route author="laampui" example="/zsnews/index/35" path="/zsnews/index/:cateid" :paramsDesc="['类别']">
+
+| 35   | 36   | 37   | 38   | 39   |
+| ---- | ---- | ---- | ---- | ---- |
+| 本地 | 镇区 | 热点 | 社会 | 综合 |
+
+</Route>
+
 ## 中時電子報
 
 ### 新聞
