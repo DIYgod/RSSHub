@@ -245,6 +245,8 @@ Category 列表:
 
 <Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['分类']">
 
+无料全文，综合页添加分类标签，用于过滤。
+
 | 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
 | ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
 | news | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
@@ -547,6 +549,18 @@ category 对应的关键词有
 <Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1">
 
 日文版首页
+
+</Route>
+
+### 新聞
+
+<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category" :paramsDesc="['分类']">
+
+无料全文，有料仅标题。综合页添加分类标签，用于过滤。
+
+| 総合 | マネーのまなび | 経済・金融 | 政治     | ビジネス | マネーのまなび | テクノロジー | 国際          | スポーツ | 社会・くらし | オピニオン | 文化    | FT     | 地域  | 日経ビジネス | ライフ |
+| ---- | -------------- | ---------- | -------- | -------- | -------------- | ------------ | ------------- | -------- | ------------ | ---------- | ------- | ------ | ----- | ------------ | ------ |
+| news | 未实现         | economy    | politics | business | 未实现         | technology   | international | sports   | society      | opinion    | culture | 未实现 | local | 未实现       | 未实现 |
 
 </Route>
 
