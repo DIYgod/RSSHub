@@ -255,24 +255,45 @@ Category 列表:
 
 ## 端传媒
 
-### 端传媒
-
-<Route author="prnake" example="/initium/feature/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为深度', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 ::: warning 注意
 
-付费内容全文需要登陆获取，详情见部署页面的配置模块。
+付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
 
 :::
 
+### 专题・栏目
+
+<Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
 Type 栏目:
 
-| 深度    | What’s New | 广场              | Pick-Up |
-| ------- | ---------- | ----------------- | ------- |
-| feature | news-brief | notes-and-letters | pick_up |
+| 最新   | 深度    | What’s New | 广场              | 科技       | 风物    | 特约    | ... |
+| ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
+| latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
 
-通过提取文章全文，以提供比官方源更佳的阅读体验.
+更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
 
+</Route>
+
+### 话题・标签
+
+<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题ID，可从话题页URL中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+### 作者
+
+<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="theinitium/author/:type/:language?" :paramsDesc="['作者ID，可从作者主页URL中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+### 个人订阅追踪动态
+
+<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="theinitium/follow/articles/:language?" :paramsDesc="['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
+
+::: warning 注意
+
+需要自建，详情见部署页面的配置模块。
+
+:::
 </Route>
 
 ## 多维新闻网
@@ -558,9 +579,9 @@ category 对应的关键词有
 
 无料全文，有料仅标题。综合页添加分类标签，用于过滤。
 
-| 総合 | マネーのまなび | 経済・金融 | 政治     | ビジネス | マネーのまなび | テクノロジー | 国際          | スポーツ | 社会・くらし | オピニオン | 文化    | FT     | 地域  | 日経ビジネス | ライフ |
-| ---- | -------------- | ---------- | -------- | -------- | -------------- | ------------ | ------------- | -------- | ------------ | ---------- | ------- | ------ | ----- | ------------ | ------ |
-| news | 未实现         | economy    | politics | business | 未实现         | technology   | international | sports   | society      | opinion    | culture | 未实现 | local | 未实现       | 未实现 |
+| 総合 | マネーのまなび | 経済・金融 |     政治   | ビジネス | マネーのまなび | テクノロジー  |     国際       | スポーツ | 社会・くらし  | オピニオン |   文化   |  FT    | 地域  | 日経ビジネス | ライフ |
+| ---- | ------------ | ---------- | --------- | -------- | ------------- | ------------ | ------------- | -------- | ----------- | ---------- | ------- | ----- | ----- | ------------ | ------ |
+| news |     未实现    | economy   | politics  | business |     未实现     | technology   | international | sports   | society     |  opinion   | culture | 未实现 | local |    未实现    | 未实现 |
 
 </Route>
 
