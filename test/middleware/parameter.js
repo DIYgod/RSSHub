@@ -301,3 +301,12 @@ describe('mess parameter', () => {
         expect(parsed.items[0].link).toBe('https://github.com/DIYgod/RSSHub/issues/0');
     });
 });
+
+describe('opencc', () => {
+    it(`opencc`, async () => {
+        const response = await request.get('/test/opencc?opencc=t2s');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].title).toBe('小可爱');
+        expect(parsed.items[0].content).toBe('宇宙无敌');
+    });
+});

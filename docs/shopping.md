@@ -68,6 +68,18 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## Mercari
+
+### 商品
+
+<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" :paramsDesc="['类型，可选 `category` 指按类别浏览，`brand` 指按品牌浏览，`search` 指搜索关键词浏览', 'id，可在对应分类或品牌页 URL 中找到。若选择 `search` 作为 `type` 则此处填写关键词']">
+
+所有分类参见 [分类清单](https://www.mercari.com/jp/category/)
+
+所有品牌参见 [品牌清单](https://www.mercari.com/jp/brand/)
+
+</Route>
+
 ## Westore
 
 ### 新品

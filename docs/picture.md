@@ -117,6 +117,31 @@ pageClass: routes
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## MM 范
+
+### 分类
+
+<Route author="nczitzk" example="/95mm/tab/热门" path="/95mm/tab/:tab?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/95mm/tag/黑丝" path="/95mm/tag/:tag" :paramsDesc="['标签，可在对应标签页中找到']"/>
+
+### 集合
+
+<Route author="nczitzk" example="/95mm/category/1" path="/95mm/category/:category" :paramsDesc="['集合，见下表']">
+
+| 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |
+| -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |
+| 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |
+
+</Route>
+
 ## NASA 每日天文图片
 
 ### NASA
