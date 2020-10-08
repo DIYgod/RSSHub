@@ -571,6 +571,18 @@ category 对应的关键词有
 
 </Route>
 
+## 台湾中央通讯社
+
+### 分类
+
+<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id，见下表，默认为 aall']">
+
+| 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| aall | aipl | aopl | acn  | aie  | asc  | ait  | ahel | asoc | aloc | acul | aspt | amov |
+
+</Route>
+
 ## 网易新闻专栏
 
 ### 栏目
