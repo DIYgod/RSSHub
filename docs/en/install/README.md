@@ -407,11 +407,23 @@ See the relation between access key/code and white/blacklisting.
 
 ### Route-specific Configurations
 
+::: tip Notice
+
+Configs here is incomplete.
+
+See docs of specified route and `lib/config.js` for detail information.
+
+:::
+
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
     -   `PIXIV_PASSWORD`: Pixiv password
+
+-   pixiv fanbox: Get paid content
+
+    -   `FANBOX_SESSION_ID`: equals to `FANBOXSESSID` in site cookies.
 
 -   disqus: [API Key application](https://disqus.com/api/applications/)
 
