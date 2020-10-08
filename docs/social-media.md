@@ -406,13 +406,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ## pixiv-fanbox
 
 <Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['用户名, 可在用户主页 URL 中找到. 默认为官方资讯']"/>
-::: warning 付费墙注意
-
-由于 fanbox 专为付费用户设计，要查看已经付费的内容只能自建。
-
-自建设置：环境变量`FANBOX_SESSION_ID`对应 cookies 中的`FANBOXSESSID`。
-
-:::
 
 ## Popi 提问箱
 

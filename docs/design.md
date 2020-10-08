@@ -83,6 +83,29 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="nczitzk" example="/monotype/article" path="/monotype/article" />
 
+## Notefolio
+
+### Works
+
+<Route author="nczitzk" example="/notefolio" path="/notefolio/:caty?/:order?/:time?/:query?" :paramsDesc="['分类，见下表，默认为 `all`', '排序，可选 `pick` 指 Notefolio 精选，`newest` 指 最新，`noted` 指 知名，默认为 `pick`', '时间，可选 `all` 指 全部，`day` 指 最近24小时，`week` 指 最近一周，`month` 指 最近一个月，`month3` 指 最近三个月，默认为`all`', '关键词，默认为空']">
+
+| 分类 | 韩文分类名      | 中文分类名      |
+| ---- | --------------- | --------------- |
+| all  | 전체            | 全部            |
+| A7   | 공예            | 工艺品          |
+| J7   | 그래픽 디자인   | 平面设计        |
+| B7   | 디지털 아트     | 数字艺术        |
+| C7   | 영상/모션그래픽 | 视频 / 图形动画 |
+| D7   | 브랜딩/편집     | 品牌创建 / 编辑 |
+| E7   | 산업 디자인     | 工业设计        |
+| F7   | UI/UX           | UI/UX           |
+| G7   | 일러스트레이션  | 插画            |
+| K7   | 타이포그래피    | 字体            |
+| H7   | 파인아트        | 纯艺术          |
+| I7   | 포토그래피      | 摄影            |
+
+</Route>
+
 ## UI 中国
 
 ### 推荐文章
