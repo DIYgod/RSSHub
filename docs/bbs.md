@@ -248,6 +248,26 @@ pageClass: routes
 
 </Route>
 
+## 华为心声社区
+
+### 华为家事
+
+<Route author="nczitzk" example="/huawei/xinsheng" path="/huawei/xinsheng/:caty?/:order?/:keyword?" :paramsDesc="['分区 ID, 见下表，默认为全部帖子', '排序方式, 见下表，默认为最新回复', '关键词，默认为空']">
+
+分区 ID
+
+| 全部帖子 | 公司文件 | 管理思考 | 产品改进 | 版务公告 |
+| -------- | -------- | -------- | -------- | -------- |
+|          | 155      | 415      | 427      | 419      |
+
+排序方式
+
+| 最新发帖 | 最新回复 | 最多回复   | 最多点击  |
+| -------- | -------- | ---------- | --------- |
+| cTime    | rTime    | replycount | viewcount |
+
+</Route>
+
 ## 看雪
 
 ### 论坛
