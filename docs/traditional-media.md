@@ -259,6 +259,8 @@ Category 列表:
 
 <Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['分类']">
 
+无料全文，综合页添加分类标签，可用于过滤。
+
 | 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
 | ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
 | news | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
