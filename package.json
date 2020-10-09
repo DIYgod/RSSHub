@@ -54,7 +54,7 @@
     "prettier-check": "2.0.0",
     "pretty-quick": "3.0.2",
     "remark": "12.0.1",
-    "remark-frontmatter": "2.0.0",
+    "remark-frontmatter": "3.0.0",
     "remark-pangu": "2.1.1",
     "remark-preset-prettier": "0.4.0",
     "staged-git-files": "1.2.0",
