@@ -1,6 +1,6 @@
----
-sidebar: auto
----
+* * *
+
+## sidebar: auto
 
 # 支持 RSSHub
 

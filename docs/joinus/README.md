@@ -1,6 +1,6 @@
----
-sidebar: auto
----
+* * *
+
+## sidebar: auto
 
 # 参与我们
 
