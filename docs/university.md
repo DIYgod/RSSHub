@@ -372,6 +372,16 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+### 文化素质教育中心
+
+<Route author="truobel" example="/uestc/cqe/hdyg" path="/uestc/cqe/:type?" :paramsDesc="['默认为 `hdyg`']">
+
+| 活动预告 | 通知 | 课程通知 | 立人班选拔 |
+| -------- | ---- | -------- | ---------- |
+| hdyg     | tz   | kctz     | lrxb       |
+
+</Route>
+
 ## 东北大学
 
 ### 东北大学新闻网
@@ -788,6 +798,24 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 校内通知
 
 <Route author="276562578" example="/jlu/oa" path="/jlu" />
+
+## 暨南大学
+
+## 暨南要闻
+
+<Route author="hang333" example="/jnu/yw/tt" path="/jnu/yw/:type?" :paramDesc="['暨南要闻类型，默认为 `yw`']">
+
+| 暨大头条 | 暨南要闻 |
+| -------- | -------- |
+| tt       | yw       |
+
+### 暨南大学校园时讯
+
+<Route author="hang333" example="/jnu/xysx/yxsd" path="/jnu/xysx/:type" :paramDesc="['校园时讯类型']">
+
+| 院系速递 | 部门快讯 |
+| -------- | -------- |
+| yxsd     | bmkx     |
 
 ## 江南大学
 
@@ -1876,7 +1904,35 @@ type 列表：
 
 <Route author="sushengmao" example="/outele" path="/outele" />
 
+## 中国科学技术大学
+
+### 官网通知公告
+
+<Route author="hang333" example="/ustc/news/gl" path="/ustc/news/:type?" :paramsDesc="['可选，默认为 gl']">
+
+| 教学类 | 科研类 | 管理类 | 服务类 |
+| ------ | ------ | ------ | ------ |
+| jx     | ky     | gl     | fw     |
+
+### 教务处通知新闻
+
+<Route author="hang333" example="/ustc/jwc/info" path="/ustc/jwc/:type?" :paramsDesc="['可选，默认显示所有种类']">
+
+| 信息 | 教学     | 考试 | 交流     |
+| ---- | -------- | ---- | -------- |
+| info | teaching | exam | exchange |
+
 ## 中国科学院
+
+### 成果转化
+
+<Route author="nczitzk" example="/cas/cg/cgzhld" path="/cas/cg/:caty?" :paramsDesc="['分类，见下表，默认为工作动态']">
+
+| 工作动态 | 科技成果转移转化亮点工作 |
+| -------- | ------------------------ |
+| zh       | cgzhld                   |
+
+</Route>
 
 ### 上海微系统与信息技术研究所学术活动
 
@@ -1885,6 +1941,10 @@ type 列表：
 ### 中国科学院信息工程研究所 第二研究室 处理架构组 知识库
 
 <Route author="renzhexigua" example="/cas/mesalab/kb" path="/cas/mesalab/kb"/>
+
+### 中国科学院电工研究所 科研动态
+
+<Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt"/>
 
 ## 中国农业大学
 

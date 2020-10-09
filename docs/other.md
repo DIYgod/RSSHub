@@ -378,7 +378,21 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 实时 AQI
 
-<Route author="xapool" example="/aqicn/beijing" path="/aqicn/:city" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)']"/>
+<Route author="xapool" example="/aqicn/beijing/pm25,pm10" path="/aqicn/:city/:pollution?" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)', '可选择显示更详细的空气污染成分']"/>
+
+| 参数 | 污染成分 |
+| ---- | -------- |
+| pm25 | PM2.5    |
+| pm10 | PM10     |
+| o3   | O3       |
+| no2  | NO2      |
+| so2  | SO2      |
+| co   | CO       |
+
+举例: [https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
+
+1.  显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>
+2.  逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
 
 ## 酷安
 
@@ -611,6 +625,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
 
+## 守望先锋
+
+### 补丁说明
+
+<Route author="nczitzk" example="/ow/patch" path="/ow/patch"/>
+
 ## 四川省科学技术厅
 
 ### 四川省科学技术厅 - 公示公告
@@ -785,6 +805,25 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 搜索
 
 <Route author="SunShinenny" example="/zhilian/台州/JavaScript" path="/zhilian/:city/:keyword" :paramsDesc="['城市「如若无该城市数据，将会报错」','搜索关键词']"/>
+
+## 中国工程科技知识中心
+
+### 知识应用
+
+<Route author="nczitzk" example="/cktest/app" path="/cktest/app/:ctgroup?/:domain?" :paramsDesc="['所属类别，见下表，默认为全部类别', '领域，见下表，默认为全部列表']">
+
+所属类别
+
+| 专题知识服务 | 知识分析 | 知识工具 | 综合性知识服务 | 全部类别 |
+| ------------ | -------- | -------- | -------------- | -------- |
+| 2            | 3        | 4        | 1              | 0        |
+
+领域
+
+| 综合 | 农业 | 航天 | 地质 | 信息技术 | 林业 | 医药卫生 | 战略性新兴产业 | 能源 | 冶金 | 化工 | 地理信息 | 营养健康 | 工程科教图书 | 交通 | 创新设计 | 地理资源与生态 | 材料 | 气象 | 渔业 | 环境工程 | 试验技术 | 中草药 | 水利 | 海洋工程 |
+| ---- | ---- | ---- | ---- | -------- | ---- | -------- | -------------- | ---- | ---- | ---- | -------- | -------- | ------------ | ---- | -------- | -------------- | ---- | ---- | ---- | -------- | -------- | ------ | ---- | -------- |
+
+</Route>
 
 ## 中国银行
 
