@@ -104,7 +104,7 @@
     "pidusage": "2.0.21",
     "plist": "3.0.1",
     "puppeteer": "5.3.1",
-    "query-string": "6.13.4",
+    "query-string": "6.13.5",
     "redis": "3.0.2",
     "require-all": "3.0.0",
     "rss-parser": "3.9.0",
