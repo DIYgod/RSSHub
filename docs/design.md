@@ -20,7 +20,7 @@ pageClass: routes
 
 ### User Works
 
-<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user" :paramsDesc="['用户名']" radar="1">
+<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" :paramsDesc="['用户名', '类型，可选 `projects` 或 `appreciated`']" radar="1">
 
 Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapetrick> 的用户名为 `mishapetrick`。
 
