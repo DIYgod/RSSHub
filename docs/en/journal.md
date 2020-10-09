@@ -4,18 +4,6 @@ pageClass: routes
 
 # Scientific Journal
 
-## arXiv
-
-### Search Keyword
-
-<RouteEn author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" :paramsDesc="['query statement']" anticrawler="1">
-
-See [arXiv API User Manual](https://arxiv.org/help/api/user-manual) to find out all query statements.
-
-Fill in parameter `query` with content after `http://export.arxiv.org/api/query?`.
-
-</RouteEn>
-
 ## Academy of Management
 
 ### Journal
@@ -32,6 +20,18 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 | amp       | Academy of Management Perspectives         |
 | amproc    | Academy of Management Proceedings          |
 | amr       | Academy of Management Review               |
+
+</RouteEn>
+
+## arXiv
+
+### Search Keyword
+
+<RouteEn author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" :paramsDesc="['query statement']" anticrawler="1">
+
+See [arXiv API User Manual](https://arxiv.org/help/api/user-manual) to find out all query statements.
+
+Fill in parameter `query` with content after `http://export.arxiv.org/api/query?`.
 
 </RouteEn>
 

@@ -4,18 +4,6 @@ pageClass: routes
 
 # 科学期刊
 
-## arXiv
-
-### 搜索关键字
-
-<Route author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" :paramsDesc="['查询语句']" anticrawler="1">
-
-参见 [arXiv API 用户手册](https://arxiv.org/help/api/user-manual) 查看所有查询参数。
-
-路由中的参数 query 处填写 `http://export.arxiv.org/api/query?` 后的内容。
-
-</Route>
-
 ## Academy of Management
 
 ### Journal
@@ -32,6 +20,18 @@ pageClass: routes
 | amp       | Academy of Management Perspectives         |
 | amproc    | Academy of Management Proceedings          |
 | amr       | Academy of Management Review               |
+
+</Route>
+
+## arXiv
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" :paramsDesc="['查询语句']" anticrawler="1">
+
+参见 [arXiv API 用户手册](https://arxiv.org/help/api/user-manual) 查看所有查询参数。
+
+路由中的参数 query 处填写 `http://export.arxiv.org/api/query?` 后的内容。
 
 </Route>
 
