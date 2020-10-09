@@ -934,7 +934,7 @@ rule
 
 ### 用户回答
 
-<Route author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="DIYgod prnake" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
 
 ### 用户文章
 
