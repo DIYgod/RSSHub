@@ -1,9 +1,5 @@
 * * *
 
-## pageClass: routes
-
-# 二次元
-
 ## 005.tv
 
 ### 二次元资讯
@@ -175,6 +171,10 @@
 | want | preorder | buy  | care | resell |
 
 </Route>
+
+## pageClass: routes
+
+# 二次元
 
 ## say 花火
 
