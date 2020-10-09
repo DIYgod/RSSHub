@@ -133,6 +133,16 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
 
+## 中国人大网
+
+<Route author="233yeee" example="/npc/c183" path="/npc/:caty" :paramsDesc="['分类名，支持形如`http://www.npc.gov.cn/npc/*/list.shtml`的网站，传入 npc 之后的参数']">
+
+| 立法 | 监督 | 代表 | 理论 | 权威发布 | 滚动新闻 |
+| ---- | ---- | ---- | ---- | -------- | -------- |
+| c183 | c184 | c185 | c189 | c12435   | c10134   |
+
+</Route>
+
 ## 中国信息通信研究院
 
 ### 白皮书
@@ -380,6 +390,12 @@ pageClass: routes
 
 * * *
 
+#### 马来西亚 `MY`
+
+-   大使馆: `/embassy/my`
+
+* * *
+
 #### 新加坡 `SG`
 
 -   大使馆: `/embassy/sg`
@@ -411,6 +427,12 @@ pageClass: routes
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+## 中華民國國防部
+
+### 即時軍事動態
+
+<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
 
 ## 中华人民共和国海关总署
 

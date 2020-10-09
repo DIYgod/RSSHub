@@ -298,6 +298,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']" anticrawler="1"/>
 
+## iCity
+
+### 用户动态
+
+<Route author="nczitzk" example="/icity/sai" path="/icity/:id" :paramsDesc="['用户 id']"/>
+
 ## Keep
 
 ### 运动日记
@@ -406,13 +412,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ## pixiv-fanbox
 
 <Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['用户名, 可在用户主页 URL 中找到. 默认为官方资讯']"/>
-::: warning 付费墙注意
-
-由于 fanbox 专为付费用户设计，要查看已经付费的内容只能自建。
-
-自建设置：环境变量`FANBOX_SESSION_ID`对应 cookies 中的`FANBOXSESSID`。
-
-:::
 
 ## Popi 提问箱
 
@@ -935,7 +934,7 @@ rule
 
 ### 用户回答
 
-<Route author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="DIYgod prnake" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
 
 ### 用户文章
 

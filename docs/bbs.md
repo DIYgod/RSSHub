@@ -178,6 +178,12 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
+## 巴哈姆特電玩資訊站
+
+### 熱門推薦
+
+<Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
+
 ## 才符
 
 ### 用户动态
@@ -245,6 +251,26 @@ pageClass: routes
 | 中国足球 | soccer-china |
 | CBA      | cba          |
 | 电竞     | gg           |
+
+</Route>
+
+## 华为心声社区
+
+### 华为家事
+
+<Route author="nczitzk" example="/huawei/xinsheng" path="/huawei/xinsheng/:caty?/:order?/:keyword?" :paramsDesc="['分区 ID, 见下表，默认为全部帖子', '排序方式, 见下表，默认为最新回复', '关键词，默认为空']">
+
+分区 ID
+
+| 全部帖子 | 公司文件 | 管理思考 | 产品改进 | 版务公告 |
+| -------- | -------- | -------- | -------- | -------- |
+|          | 155      | 415      | 427      | 419      |
+
+排序方式
+
+| 最新发帖 | 最新回复 | 最多回复   | 最多点击  |
+| -------- | -------- | ---------- | --------- |
+| cTime    | rTime    | replycount | viewcount |
 
 </Route>
 

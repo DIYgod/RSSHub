@@ -118,14 +118,6 @@ Only for self-hosted
 ## pixiv-fanbox
 
 <RouteEn author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['User name. Can be found in URL. Default is official news']"/>
-::: warning Paywall
-
-The site **fanbox** is made for paid users. To get paid content, you should host by yourself.
-
-Settings: environment argument `FANBOX_SESSION_ID` equals to `FANBOXSESSID` in site cookies.
-
-:::
-
 
 ## Telegram
 

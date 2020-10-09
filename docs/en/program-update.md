@@ -4,6 +4,12 @@ pageClass: routes
 
 # Application Updates
 
+## Anki
+
+### Changes
+
+<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+
 ## Apkpure
 
 ### Versions
