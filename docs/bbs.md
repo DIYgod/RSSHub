@@ -178,6 +178,12 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
+## 巴哈姆特電玩資訊站
+
+### 熱門推薦
+
+<Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
+
 ## 才符
 
 ### 用户动态
@@ -442,6 +448,10 @@ pageClass: routes
 ### 最新主题
 
 <Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" :paramsDesc="['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']" radar="1" />
+
+### 焦点新闻
+
+<Route author="nczitzk" example="/wenxuecity/news" path="/wenxuecity/news" />
 
 ## 小米社区
 
