@@ -468,6 +468,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 原神
+
+### 新闻
+
+<Route author="nczitzk" example="/yuanshen" path="/yuanshen/:location?/:category?" :paramsDesc="['区域，可选 zh_CN 或 zh_TW', '分类，见下表，默认为最新']">
+
+| 最新   | 新闻 | 公告   | 活动     |
+| ------ | ---- | ------ | -------- |
+| latest | news | notice | activity |
+
+</Route>
+
 ## 掌上英雄联盟
 
 ### 推荐

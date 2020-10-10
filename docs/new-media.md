@@ -477,6 +477,18 @@ Supported sub-sites:
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
+## 八阕
+
+### 广角新闻
+
+<Route author="nczitzk" example="/popyard" path="/popyard/:caty?" :paramsDesc="['分类, 默认为全景']">
+
+| 全景 | 中国 | 国际 | 科教 | 军事 | 体育 | 娱乐 | 艺术 | 文史 | 观点 | 生活 | 产经 | 其它 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   |
+
+</Route>
+
 ## 百度知道日报
 
 ### 精选

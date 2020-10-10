@@ -595,7 +595,7 @@ category 对应的关键词有
 
 | 総合 | マネーのまなび | 経済・金融 | 政治     | ビジネス | マネーのまなび | テクノロジー | 国際          | スポーツ | 社会・くらし | オピニオン | 文化    | FT     | 地域  | 日経ビジネス | ライフ |
 | ---- | -------------- | ---------- | -------- | -------- | -------------- | ------------ | ------------- | -------- | ------------ | ---------- | ------- | ------ | ----- | ------------ | ------ |
-| news | 不支持         | economy    | politics | business | 不支持         | technology   | international | sports   | society      | opinion    | culture | 不支持 | local | 不支持       | 不支持 |
+| news | 未支持         | economy    | politics | business | 未支持         | technology   | international | sports   | society      | opinion    | culture | 未支持 | local | 未支持       | 未支持 |
 
 ## 台湾中央通讯社
 

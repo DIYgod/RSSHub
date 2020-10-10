@@ -4,6 +4,37 @@ pageClass: routes
 
 # Scientific Journal
 
+## Academy of Management
+
+### Journal
+
+<RouteEn author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['journal id, see below']">
+
+| Id        | Title                                     |
+| --------- | ------------------------------------------ |
+| annals    | Academy of Management Annals               |
+| amd       | Academy of Management Discoveries          |
+| amgblproc | Academy of Management Global Proceedings   |
+| amj       | Academy of Management Journal              |
+| amle      | Academy of Management Learning & Education |
+| amp       | Academy of Management Perspectives         |
+| amproc    | Academy of Management Proceedings          |
+| amr       | Academy of Management Review               |
+
+</RouteEn>
+
+## arXiv
+
+### Search Keyword
+
+<RouteEn author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" :paramsDesc="['query statement']" anticrawler="1">
+
+See [arXiv API User Manual](https://arxiv.org/help/api/user-manual) to find out all query statements.
+
+Fill in parameter `query` with content after `http://export.arxiv.org/api/query?`.
+
+</RouteEn>
+
 ## Cell Journal
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
