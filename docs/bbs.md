@@ -449,6 +449,10 @@
 
 <Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" :paramsDesc="['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']" radar="1" />
 
+### 焦点新闻
+
+<Route author="nczitzk" example="/wenxuecity/news" path="/wenxuecity/news" />
+
 ## 小米社区
 
 ### 圈子
