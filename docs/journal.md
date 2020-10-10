@@ -1,6 +1,6 @@
-* * *
-
-## pageClass: routes
+---
+pageClass: routes
+---
 
 # 科学期刊
 
