@@ -1,5 +1,9 @@
 * * *
 
+## pageClass: routes
+
+# 编程
+
 ## AI 研习社
 
 ### 首页
@@ -291,10 +295,6 @@ GitHub 官方也提供了一些 RSS:
 | 安全工具 | `tool`     |
 
 </Route>
-
-## pageClass: routes
-
-# 编程
 
 ## project-zero issues
 

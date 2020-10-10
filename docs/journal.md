@@ -1,5 +1,9 @@
 * * *
 
+## pageClass: routes
+
+# 科学期刊
+
 ## Academy of Management
 
 ### Journal
@@ -133,10 +137,6 @@
 ### 主刊 - 精彩研究
 
 <Route author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
-
-## pageClass: routes
-
-# 科学期刊
 
 ## PNAS
 

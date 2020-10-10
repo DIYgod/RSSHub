@@ -1,5 +1,9 @@
 * * *
 
+## pageClass: routes
+
+# 游戏
+
 ## 3DMGame
 
 ### 新闻中心
@@ -129,10 +133,6 @@
 ### Switch 本体更新情报（日本）
 
 <Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
-
-## pageClass: routes
-
-# 游戏
 
 ## PlayStation
 

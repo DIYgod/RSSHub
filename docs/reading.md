@@ -1,5 +1,9 @@
 * * *
 
+## pageClass: routes
+
+# 阅读
+
 ## All Poetry
 
 ### Poems
@@ -11,10 +15,6 @@
 ### eBook Releases
 
 <Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
-
-## pageClass: routes
-
-# 阅读
 
 ## UU 看书
 

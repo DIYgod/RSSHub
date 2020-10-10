@@ -1,5 +1,9 @@
 * * *
 
+## pageClass: routes
+
+# 博客
+
 ## archdaily
 
 ### 首页
@@ -59,10 +63,6 @@
 ### blog
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
-
-## pageClass: routes
-
-# 博客
 
 ## Paul Graham 博客
 
