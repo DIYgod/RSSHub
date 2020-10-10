@@ -477,12 +477,6 @@ Supported sub-sites:
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
-## 百度知道日报
-
-### 精选
-
-<Route author="1813927768" example="/baidu/daily" path="/baidu/daily"/>
-
 ## 八阕
 
 ### 广角新闻
@@ -494,6 +488,12 @@ Supported sub-sites:
 | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   | 12   |
 
 </Route>
+
+## 百度知道日报
+
+### 精选
+
+<Route author="1813927768" example="/baidu/daily" path="/baidu/daily"/>
 
 ## 白鲸出海
 
