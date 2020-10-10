@@ -254,15 +254,17 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 巴哈姆特
 
-### GNN 新闻
+### GNN 新聞
 
-<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['分类']">
+<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
 
-暂无图片
-
-| 首页 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
 | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
 | 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+
+| Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
+| ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
+| ns     | ps5 | ps4 |  xbone  | xbsx   | pc      | olg     | ios | android | web | comic | anime |
 
 </Route>
 
@@ -463,6 +465,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
 | --------- | ------- | ------ | ------- | ---- | -------- |
 | recommend | history | big    | culture | news | retro    |
+
+</Route>
+
+## 原神
+
+### 新闻
+
+<Route author="nczitzk" example="/yuanshen" path="/yuanshen/:location?/:category?" :paramsDesc="['区域，可选 zh_CN 或 zh_TW', '分类，见下表，默认为最新']">
+
+| 最新   | 新闻 | 公告   | 活动     |
+| ------ | ---- | ------ | -------- |
+| latest | news | notice | activity |
 
 </Route>
 

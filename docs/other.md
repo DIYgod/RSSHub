@@ -625,6 +625,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
 
+## 守望先锋
+
+### 补丁说明
+
+<Route author="nczitzk" example="/ow/patch" path="/ow/patch"/>
+
 ## 四川省科学技术厅
 
 ### 四川省科学技术厅 - 公示公告
