@@ -6,6 +6,8 @@ rules:
     mergeUnstable: false
   - base: dev
     upstream: master
+    mergeMethod: merge
+    mergeUnstable: false
     assignees: 
       - oouxx
     reviewer:
