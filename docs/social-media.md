@@ -1,6 +1,6 @@
-* * *
-
-## pageClass: routes
+---
+pageClass: routes
+---
 
 # 社交媒体
 
