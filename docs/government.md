@@ -89,6 +89,12 @@
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
+## 世界贸易组织
+
+### 争端解决新闻
+
+<Route author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" :paramsDesc="['年份，默认为当前年份']"/>
+
 ## 苏州市人民政府
 
 ### 政府新闻
