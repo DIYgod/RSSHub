@@ -1,4 +1,8 @@
-* * *
+---
+pageClass: routes
+---
+
+# 学习
 
 ## 51VOA 美国之音
 
@@ -97,10 +101,6 @@
 | ccpt    | 书画等级考试 (CCPT)           |
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
-
-## pageClass: routes
-
-# 学习
 
 ## X-MOL 平台
 

@@ -1,4 +1,8 @@
-* * *
+---
+pageClass: routes
+---
+
+# 游戏
 
 ## 3DMGame
 
@@ -129,10 +133,6 @@
 ### Switch 本体更新情报（日本）
 
 <Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
-
-## pageClass: routes
-
-# 游戏
 
 ## PlayStation
 
@@ -463,6 +463,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
 | --------- | ------- | ------ | ------- | ---- | -------- |
 | recommend | history | big    | culture | news | retro    |
+
+</Route>
+
+## 原神
+
+### 新闻
+
+<Route author="nczitzk" example="/yuanshen" path="/yuanshen/:location?/:category?" :paramsDesc="['区域，可选 zh_CN 或 zh_TW', '分类，见下表，默认为最新']">
+
+| 最新   | 新闻 | 公告   | 活动     |
+| ------ | ---- | ------ | -------- |
+| latest | news | notice | activity |
 
 </Route>
 

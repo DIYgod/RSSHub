@@ -23,7 +23,7 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 
 ### Special Sponsors
 
-<a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>
+<a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a style="margin-right: 10px;" href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>
 
 ### Sponsors
 

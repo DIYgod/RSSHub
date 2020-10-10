@@ -1,4 +1,8 @@
-* * *
+---
+pageClass: routes
+---
+
+# 程序更新
 
 ## AMD
 
@@ -191,10 +195,6 @@
 ### 更新日志
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
-
-## pageClass: routes
-
-# 程序更新
 
 ## PlayStation
 

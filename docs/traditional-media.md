@@ -1,4 +1,8 @@
-* * *
+---
+pageClass: routes
+---
+
+# 传统媒体
 
 ## 21 财经
 
@@ -120,10 +124,6 @@
 ### News Web Easy
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
-
-## pageClass: routes
-
-# 传统媒体
 
 ## Solidot
 
