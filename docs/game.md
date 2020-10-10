@@ -258,10 +258,13 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
 
-
 | 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+| ---- | -- | ------ | -------- | ----- | ------- | -------- | ---- |
+| 缺省 | 1  |    3   |     4    |   5   |     9    |    11   |  13  |
+
+| Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
+| ------ | --- | --- | ------- | ------ | ------- | ------ | --- | ------- | --- | ----- | ----- |
+|   ns   | ps5 | ps4 |  xbsx   |  xbsx  |    pc   |  olg   | ios | android | web | comic | anime |
 
 </Route>
 
