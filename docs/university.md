@@ -733,6 +733,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
 
+### 研究生院通知公告
+
+<Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" />
+
 ## 华南师范大学
 
 ### 软件学院通知公告
