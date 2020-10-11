@@ -126,7 +126,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 推荐
 
-<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']" radar="1">
+<Route author="junbaor" example="/zcool/recommend/all" path="/zcool/recommend/:type" :paramsDesc="['推荐类型,详见下面的表格']" radar="1" rssbud="1">
 
 推荐类型
 
@@ -138,7 +138,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 作品总榜单
 
-<Route author="mexunco" example="/zcool/top/design" path="/zcool/top/:type" :paramsDesc="['推荐类型,详见下面的表格']" radar="1">
+<Route author="mexunco" example="/zcool/top/design" path="/zcool/top/:type" :paramsDesc="['推荐类型,详见下面的表格']" radar="1" rssbud="1">
 
 榜单类型
 
@@ -150,7 +150,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 用户作品
 
-<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uid" :paramsDesc="['个性域名前缀或者用户ID']" radar="1">
+<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uid" :paramsDesc="['个性域名前缀或者用户ID']" radar="1" rssbud="1">
 
 例如:
 

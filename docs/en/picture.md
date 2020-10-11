@@ -40,7 +40,7 @@ pageClass: routes
 
 ### Daily Wallpaper
 
-<RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1"/>
+<RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
 ## Dilbert Comic Strip
 
@@ -56,7 +56,7 @@ pageClass: routes
 
 ### Public Albums
 
-<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']" radar="1" />
+<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']" radar="1"/>
 
 ## Konachan Anime Wallpapers
 
