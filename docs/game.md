@@ -264,7 +264,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
 | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
-| ns     | ps5 | ps4 |  xbone  | xbsx   | pc      | olg     | ios | android | web | comic | anime |
+| ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |
 
 </Route>
 
