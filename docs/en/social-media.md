@@ -175,7 +175,7 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 
 ### List timeline
 
-<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']" radar="1"/>
+<RouteEn author="xyqfer" example="/twitter/list/ladyleet/Javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']" radar="1"/>
 
 ### User likes
 

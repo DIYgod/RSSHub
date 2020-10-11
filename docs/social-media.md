@@ -478,7 +478,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 列表时间线
 
-<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户名', 'list 名称']" radar="1"/>
+<Route author="xyqfer" example="/twitter/list/ladyleet/Javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户名', 'list 名称']" radar="1"/>
 
 ### 用户喜欢列表
 
