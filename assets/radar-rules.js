@@ -42,6 +42,42 @@
                 source: '/:uid',
                 target: '/bilibili/user/video/:uid',
             },
+            {
+                title: 'UP 主专栏',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/article/:uid',
+            },
+            {
+                title: 'UP 主默认收藏夹',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/fav/:uid',
+            },
+            {
+                title: 'UP 主投币视频',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/coin/:uid',
+            },
+            {
+                title: 'UP 主粉丝',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/followers/:uid',
+            },
+            {
+                title: 'UP 主关注用户',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/followings/:uid',
+            },
+            {
+                title: '用户追番列表',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/bangumi/:uid',
+            },
         ],
         manga: [
             {
