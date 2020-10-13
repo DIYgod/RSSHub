@@ -589,7 +589,7 @@ category 对应的关键词有
 
 ### 新聞
 
-<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article?" :paramsDesc="['版块','free 仅无料全文，缺省为无料全文，有料非全文']">
+<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块','文章类型，free仅无料全文，缺省为无料全文、有料非全文']">
 
 综合页文章标题添加板块标签
 
