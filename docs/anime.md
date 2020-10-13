@@ -136,6 +136,12 @@ pageClass: routes
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
 
+## Eventernote
+
+### 声优活动及演唱会
+
+<Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" :paramsDesc="['声优姓名', '声优 ID']"/>
+
 ## Hanime.tv
 
 ### 最近更新
