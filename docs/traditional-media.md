@@ -257,9 +257,9 @@ Category 列表:
 
 ### 新聞
 
-<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['分类']">
+<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['板块']">
 
-无料全文，综合页添加分类标签，可用于过滤。
+无料全文，综合页文章标题添加板块标签。
 
 | 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
 | ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
@@ -584,6 +584,18 @@ category 对应的关键词有
 <Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1">
 
 日文版首页
+
+</Route>
+
+### 新聞
+
+<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块','文章类型，free仅无料全文，缺省为无料全文、有料非全文']">
+
+综合页文章标题添加板块标签
+
+| 総合 | マネーのまなび | 経済・金融 | 政治     | ビジネス | マネーのまなび | テクノロジー | 国際          | スポーツ | 社会・くらし | オピニオン | 文化    | FT     | 地域  | 日経ビジネス | ライフ |
+| ---- | -------------- | ---------- | -------- | -------- | -------------- | ------------ | ------------- | -------- | ------------ | ---------- | ------- | ------ | ----- | ------------ | ------ |
+| news | 未支持         | economy    | politics | business | 未支持         | technology   | international | sports   | society      | opinion    | culture | 未支持 | local | 未支持       | 未支持 |
 
 </Route>
 
