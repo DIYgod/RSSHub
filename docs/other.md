@@ -825,6 +825,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+### 产业政策
+
+<Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+
 ## 中国银行
 
 ### 中国银行外汇牌价
