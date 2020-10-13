@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/cheerio": "0.22.22",
     "@types/got": "9.6.11",
-    "@types/koa": "2.11.4",
+    "@types/koa": "2.11.5",
     "@vuepress/plugin-back-to-top": "1.6.0",
     "@vuepress/plugin-google-analytics": "1.6.0",
     "@vuepress/plugin-pwa": "1.6.0",
@@ -66,7 +66,7 @@
   "dependencies": {
     "@koa/router": "9.4.0",
     "@postlight/mercury-parser": "2.2.0",
-    "@sentry/node": "5.25.0",
+    "@sentry/node": "5.26.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "cheerio": "1.0.0-rc.3",
@@ -74,7 +74,7 @@
     "co-redis": "2.1.1",
     "crypto-js": "4.0.0",
     "currency-symbol-map": "4.0.4",
-    "dayjs": "1.9.1",
+    "dayjs": "1.9.3",
     "dotenv": "8.2.0",
     "emailjs-imap-client": "3.1.0",
     "etag": "1.8.1",

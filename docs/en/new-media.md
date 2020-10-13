@@ -109,19 +109,19 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Latest
 
-<RouteEn author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1"/>
+<RouteEn author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1" rssbud="1"/>
 
 ### Hot
 
-<RouteEn author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1"/>
+<RouteEn author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1" rssbud="1"/>
 
 ### Tags
 
-<RouteEn author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['Tag id, can be found in the url of the tag page']" radar="1"/>
+<RouteEn author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['Tag id, can be found in the url of the tag page']" radar="1" rssbud="1"/>
 
 ### Author
 
-<RouteEn author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1"/>
+<RouteEn author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
 
 ## Nautilus
 

@@ -101,7 +101,7 @@ pageClass: routes
 
 ### HackerOne Hacker Activity
 
-<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
 
 ## Instapaper
 
@@ -208,10 +208,10 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 最近更新
 
-<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1"/>
+<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1" rssbud="1"/>
 ### 栏目
 
-<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']" radar="1">
+<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']" radar="1" rssbud="1">
 
 :::
 type 为 all 时，category 参数不支持 cost 和 free
@@ -330,7 +330,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 通知
 
-<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1">
+<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1" rssbud="1">
 
 | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
 | -------- | ------------ | ------------ | -------- | -------- | -------- |
@@ -342,7 +342,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 新闻通知
 
-<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1">
+<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1" rssbud="1">
 
 | 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
 | -------- | -------- | -------- | -------- |
@@ -447,7 +447,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 支持的快递公司列表
 
-<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company" radar="1"/>
+<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company" radar="1" rssbud="1"/>
 
 ## 裏垢女子まとめ
 
@@ -583,7 +583,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 郵便追跡サービス
 
-<Route author="tuzi3040" example="/japanpost/EJ123456789JP/ja" path="/japanpost/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1">
+<Route author="tuzi3040" example="/japanpost/EJ123456789JP/ja" path="/japanpost/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1" rssbud="1">
 
 | 日语 | 英语 |
 | ---- | ---- |
@@ -774,7 +774,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 远程 work 招聘信息
 
-<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1">
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1" rssbud="1">
 
 | 所有职位 |     技术    |  设计  |    运营   |   产品  |  其他 |    市场   |  销售 |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
@@ -825,6 +825,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+### 产业政策
+
+<Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+
 ## 中国银行
 
 ### 中国银行外汇牌价
@@ -841,7 +845,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 新闻
 
-<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1"/>
+<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" rssbud="1"/>
 
 ## 自如
 
