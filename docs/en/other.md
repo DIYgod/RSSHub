@@ -91,7 +91,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### HackerOne Hacker Activity
 
-<RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+<RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
 
 ## Instapaper
 
@@ -103,7 +103,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1">
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1" rssbud="1">
 
 | Japanese | English |
 | -------- | ------- |
@@ -154,7 +154,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Remote.work Job Information
 
-<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1">
+<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1" rssbud="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
