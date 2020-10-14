@@ -292,6 +292,41 @@ Tag
 
 <Route author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
+## Matataki
+
+### 最热作品
+
+<Route author="whyouare111" example="/matataki/posts/scoreranking" path="/matataki/posts/scoreranking" radar="1"/>
+
+### 最新作品
+
+<Route author="whyouare111" example="/matataki/posts/scoreranking" path="/matataki/posts/timeranking" radar="1"/>
+
+### 作者创作
+
+<Route author="whyouare111" example="/matataki/user/9/posts" path="/matataki/user/:authorId/posts" :paramsDesc="['作者ID']"  radar="1"/>
+
+### Fan票关联作品
+
+<Route author="whyouare111" example="/matataki/minetoken/22/related/3" path="/matataki/minetoken/:tokenId/related/:filterCode" :paramsDesc="['Fan票ID', '过滤条件 1: 需持票; 2: 需支付; 3: 全部 ']" radar="1"/>
+
+
+### 最热作品 (IPFS)
+
+<Route author="whyouare111" example="/ipfs/matataki/posts/scoreranking" path="/ipfs/matataki/posts/scoreranking" />
+
+### 最新作品 (IPFS)
+
+<Route author="whyouare111" example="/ipfs/matataki/posts/scoreranking" path="/ipfs/matataki/posts/timeranking" />
+
+### 作者创作 (IPFS)
+
+<Route author="whyouare111" example="/ipfs/matataki/user/9/posts" path="/ipfs/matataki/user/:authorId/posts" :paramsDesc="['作者ID']" />
+
+### Fan票关联作品 (IPFS)
+
+<Route author="whyouare111" example="/ipfs/matataki/minetoken/22/related/3" path="/ipfs/matataki/minetoken/:tokenId/related/:filterCode" :paramsDesc="['Fan票ID', '过滤条件 1: 需持票; 2: 需支付; 3: 全部 ']" />
+
 ## Matters
 
 ### 最新排序
