@@ -1,9 +1,5 @@
 ***
 
-## pageClass: routes
-
-# 其他
-
 ## acwifi 路由器交流
 
 ### 新闻
@@ -156,6 +152,10 @@
 ### 图片文字问答
 
 <Route author="fengkx" example="/one" path="/one"/>
+
+## pageClass: routes
+
+# 其他
 
 ## Parcel Tracking
 

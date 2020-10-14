@@ -1,9 +1,5 @@
 ***
 
-## pageClass: routes
-
-# 大学通知
-
 ## MIT
 
 ### MIT graduateadmissions's all blogs
@@ -17,6 +13,10 @@
 ### MIT graduateadmissions's blogs by category
 
 <Route author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
+
+## pageClass: routes
+
+# 大学通知
 
 ## Polimi
 
