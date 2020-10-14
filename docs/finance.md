@@ -1,9 +1,5 @@
 ***
 
-## pageClass: routes
-
-# 金融
-
 ## CFD
 
 ### 每周股指派息调整 (GBP)
@@ -15,6 +11,10 @@
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
+
+## pageClass: routes
+
+# 金融
 
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
