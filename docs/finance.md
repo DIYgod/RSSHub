@@ -1,6 +1,6 @@
----
-pageClass: routes
----
+***
+
+## pageClass: routes
 
 # 金融
 
@@ -60,7 +60,7 @@ pageClass: routes
 
 ### 搜索关键字
 
-&lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
+\<Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="\[' 搜索关键字 ']/>
 
 ## 世界经济论坛
 

@@ -1,6 +1,6 @@
----
-pageClass: routes
----
+***
+
+## pageClass: routes
 
 # 大学通知
 
@@ -964,7 +964,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 教学服务      | 教学建设 | 学生培养 | 教学资源 |
 | ------------- | -------- | -------- | -------- |
-| jxfw(default) | jxjs     | xspy     | jxzy     |
+| jxfw (default) | jxjs     | xspy     | jxzy     |
 
 </Route>
 
@@ -1060,7 +1060,7 @@ type 列表：
 
 以[南信大信息公告栏](https://bulletin.nuist.edu.cn)为例，点开任意一个栏目
 
-获得 URL 中的**分域名**和**栏目编号（可选）**：https&#x3A;//`bulletin`.nuist.edu.cn/`791`/list.htm
+获得 URL 中的**分域名**和**栏目编号（可选）**：https://`bulletin`.nuist.edu.cn/`791`/list.htm
 
 将其替换到 RSS 路由地址中即可：
 

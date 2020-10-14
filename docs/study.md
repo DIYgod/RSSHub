@@ -1,6 +1,6 @@
----
-pageClass: routes
----
+***
+
+## pageClass: routes
 
 # 学习
 
@@ -42,17 +42,17 @@ pageClass: routes
 ### 查询国内外 CTF 赛事信息
 
 <Route author="frankli0324" example="/ctfhub/calendar" 
-    path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
-    :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
+ path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
+ :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
-|     0    | Jeopardy[解题]                   |
-|     1    | Attack with Defense[AwD 攻防]    |
-|     2    | Robo Hacking Game[RHG AI 自动化] |
-|     3    | Real World[RW 真实世界]          |
-|     4    | King of The Hill[KoH 抢占山头]   |
-|     5    | Mix[混合]                        |
+|     0    | Jeopardy \[解题]                   |
+|     1    | Attack with Defense \[AwD 攻防]    |
+|     2    | Robo Hacking Game \[RHG AI 自动化] |
+|     3    | Real World \[RW 真实世界]          |
+|     4    | King of The Hill \[KoH 抢占山头]   |
+|     5    | Mix \[混合]                        |
 
 > class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
 
@@ -350,11 +350,11 @@ pageClass: routes
 
 | `:type`       | 类别名称 |
 | ------------- | -------- |
-| ~~multiple~~  | ~~综合~~ |
+| ~~multiple~~  | ~~ 综合～～|
 | company       | 公司     |
 | product       | 产品     |
 | technology    | 技术     |
-| ~~character~~ | ~~人物~~ |
+| ~~character~~ | ~~ 人物～～|
 | policy        | 政策     |
 
 > 参数置空（`/zhishifenzi/innovation`）获取所有类别

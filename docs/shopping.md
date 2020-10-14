@@ -1,6 +1,6 @@
----
-pageClass: routes
----
+***
+
+## pageClass: routes
 
 # 购物
 
@@ -185,13 +185,13 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1" rssbud="1">
 
--   榜单类型
+*   榜单类型
 
 | 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
 | ---------- | ---------- | ----------- | ---------- | ---------- |
 | pinlei     | dianshang  | haitao      | haowen     | haowu      |
 
--   榜单 ID
+*   榜单 ID
 
 好价品类榜
 

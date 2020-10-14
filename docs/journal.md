@@ -1,6 +1,6 @@
----
-pageClass: routes
----
+***
+
+## pageClass: routes
 
 # 科学期刊
 
@@ -94,10 +94,10 @@ pageClass: routes
 |      nmat     |       Nature Materials      | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
+*   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
     若参数置空（`/nature/research`），则默认获取主刊（Nature）的最新文章。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
--   由于权限的限制，目前仅获取论文的摘要进行展示。
+*   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
+*   由于权限的限制，目前仅获取论文的摘要进行展示。
 
 </Route>
 
@@ -116,9 +116,9 @@ pageClass: routes
 |      nmat     |       Nature Materials      | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
+*   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
     主刊由于格式不同，该 router 并未支持，采用 `/nature/news` 来获取新闻。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
+*   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
 
 </Route>
 
@@ -144,7 +144,7 @@ pageClass: routes
 
 <Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
 
--   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
+*   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
     若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
 
 </Route>
@@ -170,7 +170,7 @@ pageClass: routes
 |    stke    |        Science Signaling       | [/sciencemag/current/stke](https://rsshub.app/sciencemag/current/stke)             |
 |     stm    | Science Translational Medicine | [/sciencemag/current/stm](https://rsshub.app/sciencemag/current/stm)               |
 
--   通过 `/sciencemag/current/` + “杂志简写” 来获取对应杂志最新一期的文章（Current Issue）。
+*   通过 `/sciencemag/current/` + “杂志简写” 来获取对应杂志最新一期的文章（Current Issue）。
     若参数置空（`/sciencemag/current`），则默认获取主刊（Science）的最新文章。
 
 </Route>
@@ -189,7 +189,7 @@ pageClass: routes
 
 <Route author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" supportScihub="1"/>
 
-_仅支持 Science 主刊_
+*仅支持 Science 主刊*
 
 </Route>
 
@@ -215,7 +215,7 @@ _仅支持 Science 主刊_
 <Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" anticrawler="1">
 
 1.  简单模式，例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
-2.  高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角，选择高级搜索并提交查询。此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
+2.  高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn\&as_sdt=0,5), 点击左上角，选择高级搜索并提交查询。此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
 
 </Route>
 

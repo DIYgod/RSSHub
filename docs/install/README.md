@@ -1,6 +1,6 @@
----
-sidebar: auto
----
+***
+
+## sidebar: auto
 
 # 部署
 
@@ -287,7 +287,7 @@ env_variables:
 gcloud app deploy
 ```
 
-进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
+进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service\_2)。
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
@@ -299,10 +299,10 @@ gcloud app deploy
 
 ::: warning 注意
 
--   需要 [DockerHub](https://hub.docker.com) 账号
--   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
--   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
--   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
+*   需要 [DockerHub](https://hub.docker.com) 账号
+*   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
+*   如果部署完成后不能看到自动识别的端口，请手动点击顶部按钮`open port`并输入`1200`
+*   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
 
 :::
 
@@ -336,17 +336,17 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 > 代理 URI 的格式为:
 >
-> -   `{protocol}://{host}:{port}`
-> -   `{protocol}://{username}:{password}@{host}:{port}` (带身份凭证)
+> *   `{protocol}://{host}:{port}`
+> *   `{protocol}://{username}:{password}@{host}:{port}` (带身份凭证)
 >
 > 一些示例:
 >
-> -   `socks4://127.0.0.1:1080`
-> -   `socks5://user:pass@127.0.0.1:1080` (用户名为 `user`, 密码为 `pass`)
-> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`)
-> -   `http://127.0.0.1:8080`
-> -   `http://user:pass@127.0.0.1:8080`
-> -   `https://127.0.0.1:8443`
+> *   `socks4://127.0.0.1:1080`
+> *   `socks5://user:pass@127.0.0.1:1080` (用户名为 `user`, 密码为 `pass`)
+> *   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`)
+> *   `http://127.0.0.1:8080`
+> *   `http://user:pass@127.0.0.1:8080`
+> *   `https://127.0.0.1:8443`
 
 #### 代理选项
 
@@ -378,25 +378,25 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 #### 黑白名单
 
--   `WHITELIST`: 白名单，设置白名单后黑名单无效
+*   `WHITELIST`: 白名单，设置白名单后黑名单无效
 
--   `BLACKLIST`: 黑名单
+*   `BLACKLIST`: 黑名单
 
 黑白名单支持 IP 和路由，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### 访问密钥 / 码
 
--   `ACCESS_KEY`: 访问密钥，用于直接访问所有路由或者生成访问码
+*   `ACCESS_KEY`: 访问密钥，用于直接访问所有路由或者生成访问码
 
 访问码为 访问密钥 + 路由 共同生成的 md5，例如：
 
 | 访问密钥    | 路由              | 生成过程                                 | 访问码                           |
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
-| ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
+| ILoveRSSHub | /qdaily/column/59 | md5 ('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
--   此时可以通过 `code` 访问路由，例如：<https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
+*   此时可以通过 `code` 访问路由，例如：<https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
 
--   或使用访问密钥 `key` 直接访问所有路由，例如：<https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
+*   或使用访问密钥 `key` 直接访问所有路由，例如：<https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
 
 访问密钥 / 码与黑白名单的访问控制关系如下：
 
@@ -424,7 +424,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
 
-`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer\&version=v1.14.0\&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
@@ -440,127 +440,127 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 :::
 
--   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
+*   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv 用户名
+    *   `PIXIV_USERNAME`: Pixiv 用户名
 
-    -   `PIXIV_PASSWORD`: Pixiv 密码
+    *   `PIXIV_PASSWORD`: Pixiv 密码
 
--   pixiv fanbox 用于获取付费内容
+*   pixiv fanbox 用于获取付费内容
 
-    -   `FANBOX_SESSION_ID`: 对应 cookies 中的`FANBOXSESSID`。
+    *   `FANBOX_SESSION_ID`: 对应 cookies 中的`FANBOXSESSID`。
 
--   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
+*   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
 
-    -   `DISQUS_API_KEY`: Disqus API
+    *   `DISQUS_API_KEY`: Disqus API
 
--   twitter 全部路由：[申请地址](https://apps.twitter.com)
+*   twitter 全部路由：[申请地址](https://apps.twitter.com)
 
-    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key，支持多个 key，用英文逗号 `,` 隔开
+    *   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key，支持多个 key，用英文逗号 `,` 隔开
 
-    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
+    *   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
 
-    -   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 `consumer_key consumer_secret access_token access_token_secret` 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
+    *   `TWITTER_TOKEN_{id}`: 对应 id 的 Twitter token，`{id}` 替换为 id，值为 `consumer_key consumer_secret access_token access_token_secret` 用逗号隔开，即：`{consumer_key},{consumer_secret},{access_token},{access_token_secret}`
 
--   youtube 全部路由：[申请地址](https://console.developers.google.com/)
+*   youtube 全部路由：[申请地址](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
+    *   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
 
--   telegram - 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
+*   telegram - 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
-    -   `TELEGRAM_TOKEN`: Telegram 机器人 token
+    *   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
--   github 全部路由：[申请地址](https://github.com/settings/tokens)
+*   github 全部路由：[申请地址](https://github.com/settings/tokens)
 
-    -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+    *   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   bilibili 用户关注视频动态路由
+*   bilibili 用户关注视频动态路由
 
-    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
+    *   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
 
--   语雀 全部路由：[注册地址](https://www.yuque.com/register)
+*   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
-    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
+    *   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
 
--   邮箱 邮件列表路由：
+*   邮箱 邮件列表路由：
 
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如：
-        -   Linux 环境变量：`EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
-        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
+    *   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如：
+        *   Linux 环境变量：`EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
+        *   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
 
--   吹牛部落 栏目更新
+*   吹牛部落 栏目更新
 
-    -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式：1. 登陆后点开文章正文 2. 打开控制台 3. 刷新 4. 找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求 5. 找到请求头中的 x-member
+    *   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式：1. 登陆后点开文章正文 2. 打开控制台 3. 刷新 4. 找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求 5. 找到请求头中的 x-member
 
--   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
+*   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
 
-    -   `WEIBO_APP_KEY`: 微博 App Key
-    -   `WEIBO_APP_SECRET`: 微博 App Secret
-    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
+    *   `WEIBO_APP_KEY`: 微博 App Key
+    *   `WEIBO_APP_SECRET`: 微博 App Secret
+    *   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
 
--   Mastodon 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
+*   Mastodon 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
 
-    -   `MASTODON_API_HOST`: API 请求的实例
-    -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
-    -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
+    *   `MASTODON_API_HOST`: API 请求的实例
+    *   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
+    *   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
--   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
+*   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
-    -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
-    -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
-    -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
-    -   `FANFOU_PASSWORD`: 饭否密码
+    *   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
+    *   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
+    *   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
+    *   `FANFOU_PASSWORD`: 饭否密码
 
--   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
+*   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
 
-    -   `LASTFM_API_KEY`: Last.fm API Key
+    *   `LASTFM_API_KEY`: Last.fm API Key
 
--   北大未名 BBS 全站十大
+*   北大未名 BBS 全站十大
 
-    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+    *   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
 
--   nhentai torrent: [注册地址](https://nhentai.net/register/)
+*   nhentai torrent: [注册地址](https://nhentai.net/register/)
 
-    -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
-    -   `NHENTAI_PASSWORD`: nhentai 密码
+    *   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
+    *   `NHENTAI_PASSWORD`: nhentai 密码
 
--   discuz cookies 设定
+*   discuz cookies 设定
 
-    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
+    *   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 \[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
 
--   Sci-hub 设置，用于科学期刊路由。
+*   Sci-hub 设置，用于科学期刊路由。
 
-    -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。
+    *   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.tw`。
 
--   端传媒设置，用于获取付费内容全文：
+*   端传媒设置，用于获取付费内容全文：
 
-    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6JiE1NTYzNDgxNDVAcXEuY29tIiwidXNlcl9pZCI6MTM0NDIwLCJlbWFpbCI6IjE1NTYzNDgxNDVAcXEuY29tIiwiZXhwIjoxNTk0MTk5NjQ3fQ.Tqui-ORNR7d4Bh240nKy_Ldi6crfq0A78Yj2iwy2_U8'`。
+    *   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6JiE1NTYzNDgxNDVAcXEuY29tIiwidXNlcl9pZCI6MTM0NDIwLCJlbWFpbCI6IjE1NTYzNDgxNDVAcXEuY29tIiwiZXhwIjoxNTk0MTk5NjQ3fQ.Tqui-ORNR7d4Bh240nKy_Ldi6crfq0A78Yj2iwy2_U8'`。
 
     如果你在进行上述操作时遇到困难，亦可选择在环境设置中填写明文的用户名和密码：
 
-    -   `INITIUM_USERNAME`: 端传媒用户名 (邮箱)
-    -   `INITIUM_PASSWORD`: 端传媒密码
+    *   `INITIUM_USERNAME`: 端传媒用户名 (邮箱)
+    *   `INITIUM_PASSWORD`: 端传媒密码
 
--   BTBYR
+*   BTBYR
 
-    -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
-    -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开网站首页 2. 打开控制台 3. 刷新 4. 找到 <https://bt.byr.cn/index.php> 请求 5. 找到请求头中的 Cookie
+    *   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
+    *   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开网站首页 2. 打开控制台 3. 刷新 4. 找到 <https://bt.byr.cn/index.php> 请求 5. 找到请求头中的 Cookie
 
--   小宇宙：需要 App 登陆后抓包获取相应数据。
+*   小宇宙：需要 App 登陆后抓包获取相应数据。
 
-    -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
-    -   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
+    *   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
+    *   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
 
--   新榜
+*   新榜
 
-    -   `NEWRANK_COOKIE`: 登陆后的 COOKIE 值，其中 token 是必要的，其他可删除
+    *   `NEWRANK_COOKIE`: 登陆后的 COOKIE 值，其中 token 是必要的，其他可删除
 
--   NGA BBS 用于获取帖子内文
+*   NGA BBS 用于获取帖子内文
 
-    -   `NGA_PASSPORT_UID`: 对应 cookie 中的 `ngaPassportUid`.
+    *   `NGA_PASSPORT_UID`: 对应 cookie 中的 `ngaPassportUid`.
 
-    -   `NGA_PASSPORT_CID`: 对应 cookie 中的 `ngaPassportCid`.
+    *   `NGA_PASSPORT_CID`: 对应 cookie 中的 `ngaPassportCid`.
 
--   喜马拉雅
+*   喜马拉雅
 
-    -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：1. 登陆喜马拉雅网页版 2. 查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
+    *   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：1. 登陆喜马拉雅网页版 2. 查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
