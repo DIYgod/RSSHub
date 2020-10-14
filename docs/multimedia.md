@@ -1,9 +1,5 @@
 ***
 
-## pageClass: routes
-
-# 音视频
-
 ## 2048 核基地
 
 ### 论坛更新
@@ -58,7 +54,7 @@
 
 ::: tip 提示
 
-由于 BT 之家域名有多个。此 feed 对应<`https://www.88btbtt.com`>域名和<`http://www.2btjia.com/`>域名.
+由于 BT 之家域名有多个。此 feed 对应 <`https://www.88btbtt.com`> 域名和 <`http://www.2btjia.com/`> 域名.
 可空，默认为 base
 
 :::
@@ -378,6 +374,10 @@
     `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
 
 </Route>
+
+## pageClass: routes
+
+# 音视频
 
 ## PornHub
 
