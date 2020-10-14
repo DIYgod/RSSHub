@@ -1,9 +1,5 @@
 ***
 
-## pageClass: routes
-
-# 学习
-
 ## 51VOA 美国之音
 
 ### 频道
@@ -42,8 +38,8 @@
 ### 查询国内外 CTF 赛事信息
 
 <Route author="frankli0324" example="/ctfhub/calendar" 
- path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
- :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
+path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
+:paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
@@ -101,6 +97,10 @@
 | ccpt    | 书画等级考试 (CCPT)           |
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
+
+## pageClass: routes
+
+# 学习
 
 ## X-MOL 平台
 
