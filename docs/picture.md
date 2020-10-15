@@ -1,6 +1,6 @@
-***
-
-## pageClass: routes
+---
+pageClass: routes
+---
 
 # 图片
 
@@ -92,9 +92,9 @@
 
 ::: tip 提示
 
-*   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
-*   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
-*   网站提供了 Posts 订阅: <https://konachan.com/post/piclens?tags=[tags]>
+-   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
+-   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
+-   网站提供了 Posts 订阅: <https://konachan.com/post/piclens?tags=[tags]>
 
 :::
 
@@ -104,10 +104,10 @@
 
 举例:
 
-*   过去 24 小时:<https://rsshub.app/konachan/post/popular_recent/1d>
-*   过去一周:<https://rsshub.app/konachan/post/popular_recent/1w>
-*   过去一月:<https://rsshub.app/konachan/post/popular_recent/1m>
-*   过去一年:<https://rsshub.app/konachan/post/popular_recent/1y>
+-   过去 24 小时:<https://rsshub.app/konachan/post/popular_recent/1d>
+-   过去一周:<https://rsshub.app/konachan/post/popular_recent/1w>
+-   过去一月:<https://rsshub.app/konachan/post/popular_recent/1m>
+-   过去一年:<https://rsshub.app/konachan/post/popular_recent/1y>
 
 </Route>
 
@@ -203,7 +203,7 @@
 
 ::: tip 提示
 
-*   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
+-   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
 
 :::
 
@@ -213,10 +213,10 @@
 
 举例:
 
-*   过去 24 小时:<https://rsshub.app/yande.re/post/popular_recent/1d>
-*   过去一周:<https://rsshub.app/yande.re/post/popular_recent/1w>
-*   过去一月:<https://rsshub.app/yande.re/post/popular_recent/1m>
-*   过去一年:<https://rsshub.app/yande.re/post/popular_recent/1y>
+-   过去 24 小时:<https://rsshub.app/yande.re/post/popular_recent/1d>
+-   过去一周:<https://rsshub.app/yande.re/post/popular_recent/1w>
+-   过去一月:<https://rsshub.app/yande.re/post/popular_recent/1m>
+-   过去一年:<https://rsshub.app/yande.re/post/popular_recent/1y>
 
 </Route>
 
