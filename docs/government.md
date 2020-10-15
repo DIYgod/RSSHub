@@ -1,6 +1,6 @@
-***
-
-## pageClass: routes
+---
+pageClass: routes
+---
 
 # 政务消息
 
@@ -341,21 +341,21 @@
 
 #### 德国 `DE`
 
-*   大使馆: `/embassy/de`
+-   大使馆: `/embassy/de`
 
-*   领事馆城市列表:
+-   领事馆城市列表:
 
 | 城市   | 路由                 |
 | ------ | -------------------- |
 | 慕尼黑 | `/embassy/de/munich` |
 
-***
+* * *
 
 #### 法国 `FR`
 
-*   大使馆: `/embassy/fr`
+-   大使馆: `/embassy/fr`
 
-*   领事馆城市列表:
+-   领事馆城市列表:
 
 | 城市       | 路由                     |
 | ---------- | ------------------------ |
@@ -363,13 +363,13 @@
 | 斯特拉斯堡 | `/embassy/fr/strasbourg` |
 | 里昂       | `/embassy/fr/lyon`       |
 
-***
+* * *
 
 #### 日本 `JP`
 
-*   大使馆: `/embassy/jp`
+-   大使馆: `/embassy/jp`
 
-*   领事馆城市列表:
+-   领事馆城市列表:
 
 | 城市   | 路由                   |
 | ------ | ---------------------- |
@@ -380,13 +380,13 @@
 | 札幌   | `/embassy/jp/sapporo`  |
 | 新潟   | `/embassy/jp/niigata`  |
 
-***
+* * *
 
 #### 韩国 `KR`
 
-*   大使馆: `/embassy/kr`
+-   大使馆: `/embassy/kr`
 
-*   领事馆城市列表:
+-   领事馆城市列表:
 
 | 城市 | 路由                  |
 | ---- | --------------------- |
@@ -394,25 +394,25 @@
 | 济州 | `/embassy/kr/jeju`    |
 | 光州 | `/embassy/kr/gwangju` |
 
-***
+* * *
 
 #### 马来西亚 `MY`
 
-*   大使馆: `/embassy/my`
+-   大使馆: `/embassy/my`
 
-***
+* * *
 
 #### 新加坡 `SG`
 
-*   大使馆: `/embassy/sg`
+-   大使馆: `/embassy/sg`
 
-***
+* * *
 
 #### 美国 `US`
 
-*   大使馆: `/embassy/us`
+-   大使馆: `/embassy/us`
 
-*   领事馆城市列表:
+-   领事馆城市列表:
 
 | 城市   | 路由                       |
 | ------ | -------------------------- |
@@ -420,13 +420,13 @@
 | 芝加哥 | `/embassy/us/chicago`      |
 | 旧金山 | `/embassy/us/sanfrancisco` |
 
-***
+* * *
 
 #### 英国 `UK`
 
-*   大使馆: `/embassy/uk`
+-   大使馆: `/embassy/uk`
 
-*   领事馆城市列表:
+-   领事馆城市列表:
 
 | 城市       | 路由                     |
 | ---------- | ------------------------ |
@@ -466,10 +466,10 @@
 
 更多例子:
 
-*   `农业农村部动态`的网页链接是`http://www.moa.gov.cn/xw/zwdt/`, 对应的`suburl`是`xw/zwdt`
-*   `财务公开`的网页链接是`http://www.moa.gov.cn/gk/cwgk_1/`, 对应的`suburl`是`gk/cwgk_1`
-*   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面 (`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录，它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合，这时候请点开对应栏目的`更多 >>`进入栏目的目录，再根据上面的规则提取`suburl`
-*   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
+-   `农业农村部动态`的网页链接是`http://www.moa.gov.cn/xw/zwdt/`, 对应的`suburl`是`xw/zwdt`
+-   `财务公开`的网页链接是`http://www.moa.gov.cn/gk/cwgk_1/`, 对应的`suburl`是`gk/cwgk_1`
+-   像[政策法规](http://www.moa.gov.cn/gk/zcfg/)这种页面 (`http://www.moa.gov.cn/gk/zcfg/`), 它**不是**一个合法的分类目录，它是`法律`, `行政法规`, `部门规章`等一堆栏目的集合，这时候请点开对应栏目的`更多 >>`进入栏目的目录，再根据上面的规则提取`suburl`
+-   特别地，`图片新闻`对应的`suburl`为`xw/tpxw/`, `最新公开`对应的`suburl`为`govpublic`
 
 </Route>
 

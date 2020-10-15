@@ -1,6 +1,6 @@
-***
-
-## pageClass: routes
+---
+pageClass: routes
+---
 
 # 音视频
 
@@ -58,7 +58,7 @@
 
 ::: tip 提示
 
-由于 BT 之家域名有多个。此 feed 对应<`https://www.88btbtt.com`>域名和<`http://www.2btjia.com/`>域名.
+由于 BT 之家域名有多个。此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
 可空，默认为 base
 
 :::
@@ -357,23 +357,23 @@
 
 **示例说明**
 
-*   `/onejav/new`
+-   `/onejav/new`
 
     仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
 
-*   `/onejav/popular/30`
+-   `/onejav/popular/30`
 
     `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
 
-*   `/onejav/actress/Yua%20Mikami`
+-   `/onejav/actress/Yua%20Mikami`
 
     `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://onejav.com/actress/) 演员单页链接中获取
 
-*   `/onejav/tag/Adult%20Awards`
+-   `/onejav/tag/Adult%20Awards`
 
     `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://onejav.com/tag/) 标签单页链接中获取
 
-*   `/onejav/day/20200730`
+-   `/onejav/day/20200730`
 
     `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
 
@@ -429,7 +429,7 @@
 
 <Route author="cnzgray" example="/sexinsex/230/634" path="/sexinsex/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']">
 
-> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的 \[字幕] 这一子类型。
+> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的[字幕]这一子类型。
 
 | 亚洲成人无码原创区 | 亚洲成人有码原创区 | 欧美无码原创区 | 欧美无码区 | 亚洲有码薄码区 |
 | ------------------ | ------------------ | -------------- | ---------- | -------------- |
@@ -475,7 +475,7 @@
 
 <Route author="zhboner" example="/t66y/20/2" path="/t66y/:id/:type?" :paramsDesc="['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']" anticrawler="1">
 
-> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的 \[古典武侠] 这一子类型。
+> 注意：并非所有的分区都有子类型，可以参考成人文学交流区的[古典武侠]这一子类型。
 
 | 亚洲无码原创区 | 亚洲有码原创区 | 欧美原创区 | 动漫原创区 | 国产原创区 |
 | -------------- | -------------- | ---------- | ---------- | ---------- |
@@ -684,8 +684,8 @@
 
 目前支持泛用型播客订阅的[输出格式](https://docs.rsshub.app/#输出格式)中标明的格式只有 rss 支持，也就是说你**只能使用**以下类型的链接来订阅播客:
 
-*   `https://rsshub.app/ximalaya/album/*`
-*   `https://rsshub.app/ximalaya/album/*.rss`
+-   `https://rsshub.app/ximalaya/album/*`
+-   `https://rsshub.app/ximalaya/album/*.rss`
 
 :::
 
