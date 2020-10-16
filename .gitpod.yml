@@ -1,0 +1,19 @@
+tasks:
+  - name: Start
+    init: |
+        yarn install
+        gp sync-done install
+    command: yarn dev
+
+  - name: Docs
+    init: |
+        gp sync-await install
+    command:
+        yarn docs:dev
+
+ports:
+  - port: 1200
+    onOpen: open-preview
+  - port: 8080
+    onOpen: open-preview
+
