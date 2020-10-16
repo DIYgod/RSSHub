@@ -564,3 +564,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   喜马拉雅
 
     -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：1. 登陆喜马拉雅网页版 2. 查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
+
+-   4399 论坛
+
+    -   `GAME_4399`: 对应 4399 用户登录后的 cookie 值.
