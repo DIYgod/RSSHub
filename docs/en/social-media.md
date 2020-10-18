@@ -14,7 +14,7 @@ pageClass: routes
 
 ### Top Posts
 
-<RouteEn author="dwemerx" path="/dev.to/top/:period" example="/dev.to/top/month" :paramsDesc="['period']">
+<RouteEn author="dwemerx" example="/dev.to/top/month" path="/dev.to/top/:period" :paramsDesc="['period']">
 
 | dev.to weekly top | dev.to monthly top | dev.to yearly top | dev.to top posts of all time |
 | ----------------- | ------------------ | ----------------- | ---------------------------- |

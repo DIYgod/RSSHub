@@ -290,7 +290,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 最高职位
 
-<Route author="dwemerx" path="/dev.to/top/:period" example="/dev.to/top/month" :paramsDesc="['period']">
+<Route author="dwemerx" example="/dev.to/top/month" path="/dev.to/top/:period" :paramsDesc="['period']">
 
 | 开发到每周最高 | 开发至每月最高 | 开发年度最高 | 开发到有史以来最高职位 |
 | -------------- | -------------- | ------------ | ---------------------- |
