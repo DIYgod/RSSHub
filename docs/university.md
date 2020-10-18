@@ -482,6 +482,18 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+## 国防科技大学
+
+### 研究生招生信息网
+
+<Route author="nczitzk" example="/nudt/yjszs/16" path="/nudt/yjszs/:id?" :paramsDesc="['分类 id，默认为 `0` 即通知公告']">
+
+| 通知公告 | 招生简章 | 学校政策 | 硕士招生 | 博士招生 | 院所发文 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 0        | 8        | 12       | 16       | 17       | 23       |
+
+</Route>
+
 ## 哈尔滨工程大学
 
 ### 本科生院工作通知
