@@ -1120,6 +1120,10 @@ area 分区选项
 
 </Route>
 
+## 全现在
+
+<Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
+
 ## 人人都是产品经理
 
 ### 热门文章
