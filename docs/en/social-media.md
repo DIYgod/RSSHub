@@ -10,6 +10,18 @@ pageClass: routes
 
 <RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/username" :paramsDesc="['name, username that is in the URL']" />
 
+## Dev.to
+
+### Top Posts
+
+<RouteEn author="dwemerx" example="/dev.to/top/month" path="/dev.to/top/:period" :paramsDesc="['period']">
+
+| dev.to weekly top | dev.to monthly top | dev.to yearly top | dev.to top posts of all time |
+| ----------------- | ------------------ | ----------------- | ---------------------------- |
+| week              | month              | year              | infinity                     |
+
+</RouteEn>
+
 ## Disqus
 
 ### Comment
@@ -36,9 +48,10 @@ pageClass: routes
 
 ::: tip
 
-Official user RSS: 
- - RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
- - Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
+Official user RSS:
+
+-   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
+-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
 
 These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you will need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
@@ -59,7 +72,6 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 ### User timeline (backup)
 
 <RouteEn author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']"/>
-
 
 ## piapro
 
