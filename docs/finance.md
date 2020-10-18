@@ -138,6 +138,18 @@ pageClass: routes
 
 </Route>
 
+## 证券时报网
+
+### 要闻
+
+<Route author="nczitzk" example="/stcn/news" path="/stcn/news/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+
+| 要闻 | 滚动 | 深度 | 评论 |
+| ---- | ---- | ---- | ---- |
+| news | gd   | sd   | pl   |
+
+</Route>
+
 ## 中国人民银行
 
 ### 沟通交流

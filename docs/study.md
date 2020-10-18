@@ -234,11 +234,11 @@ pageClass: routes
 
 ### 精品课程
 
-<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" />
+<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" rssbud="1"/>
 
 ### 最新课程
 
-<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" />
+<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" rssbud="1"/>
 
 ## 下厨房
 
