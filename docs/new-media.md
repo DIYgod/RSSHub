@@ -517,7 +517,7 @@ Supported sub-sites:
 
 ### 櫻坂 46 博客
 
-<Route author="nwindz" example="/sakurazaka46/blog" path="/sakurazaka46/blog" />
+<Route author="victor21813" example="/sakurazaka46/blog" path="/sakurazaka46/blog" />
 
 ### 日向坂 46 新闻
 
