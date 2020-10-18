@@ -515,6 +515,10 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
 
+### 櫻坂 46 博客
+
+<Route author="nwindz" example="/sakurazaka46/blog" path="/sakurazaka46/blog" />
+
 ### 日向坂 46 新闻
 
 <Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
