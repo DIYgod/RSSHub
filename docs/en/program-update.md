@@ -163,7 +163,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New sponsors
 
-<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
 ## sketch.com
 
