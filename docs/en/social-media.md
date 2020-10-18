@@ -20,7 +20,7 @@ pageClass: routes
 | ----------------- | ------------------ | ----------------- | ---------------------------- |
 | week              | month              | year              | infinity                     |
 
-<RouteEn/>
+</RouteEn>
 
 ## Disqus
 

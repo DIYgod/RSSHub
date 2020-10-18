@@ -296,7 +296,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | -------------- | -------------- | ------------ | ---------------------- |
 | week           | month          | year         | infinity               |
 
-<Route/>
+</Route>
 
 ## Disqus
 
