@@ -693,6 +693,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="Pretty9" example="/hnust/computer" path="/hnust/computer"/>
 
+### 化学化工学院通知
+
+<Route author="OrbitZore" example="/hnust/chem" path="/hnust/chem"/>
+
 ### 艺术学院通知
 
 <Route author="Pretty9" example="/hnust/art" path="/hnust/art"/>
