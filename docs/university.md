@@ -6,7 +6,7 @@ pageClass: routes
 
 ## MIT
 
-### MIT OCW Most popular courses of the month
+### MIT OCW 每月热门课程
 
 <Route author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
 
