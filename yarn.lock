@@ -1936,10 +1936,10 @@
   dependencies:
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-back-to-top@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-back-to-top/-/plugin-back-to-top-1.7.0.tgz#d4210ddf94a541b49ab72c4bbd820ceaa20ebb64"
-  integrity sha512-KaxhsbHgKMzAmjCOkmpUxNWfHCpWdyU2UT0tMe1cWTc/PLHSS1HYF4C9h1GM2g/zrVNsxerAU1DvJjToyD1lLA==
+"@vuepress/plugin-back-to-top@1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-back-to-top/-/plugin-back-to-top-1.7.1.tgz#8bdc4a2de95f8244f167b3b3066c2610b88aabeb"
+  integrity sha512-Hw/5kQjqtkHEstifcq4gpdVwS38C3ecruLCUibq3YEES6DJUYZ8tN1oo3FTugYgpXsyn3HxWftyalozcZ2IutA==
   dependencies:
     lodash.debounce "^4.0.8"
 
@@ -1962,12 +1962,12 @@
   dependencies:
     nprogress "^0.2.0"
 
-"@vuepress/plugin-pwa@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.7.0.tgz#5a23020d169eff006f8edff136f0f63c267b7d4b"
-  integrity sha512-jFAxnkvRoN9t4In8XdAQskTVErhX+mK+cHca1yvX2L0Z8KyObextLmZuCnUJzsQHgIeI8cnr50xwih2uFijSQw==
+"@vuepress/plugin-pwa@1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.7.1.tgz#22fb176b48a4f9cba3d69a0a8c6d1971efb7e49d"
+  integrity sha512-c3oozxPPGpraU+UnY3gp3sWnKYO3mOLcexQWXaYABWnUC3yFbHx4e8wIF8LGqp7Z75bjQuUoI+LcHqpQXyYNag==
   dependencies:
-    "@vuepress/shared-utils" "1.7.0"
+    "@vuepress/shared-utils" "1.7.1"
     register-service-worker "^1.7.0"
     workbox-build "^4.3.1"
 
@@ -1982,21 +1982,6 @@
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-search/-/plugin-search-1.7.1.tgz#f52b6e77af30f452213bc677741cefe8a8309be2"
   integrity sha512-OmiGM5eYg9c+uC50b6/cSxAhqxfD7AIui6JEztFGeECrlP33RLHmteXK9YBBZjp5wTNmoYs+NXI/cWggYUPW8Q==
-
-"@vuepress/shared-utils@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.7.0.tgz#e04d587076960ecf932dffd784f24695dd3ec419"
-  integrity sha512-fhMh6lWc1LhNj9X5dpRJFyUITklcV0r+bSX+iY8Q8ZpnDuqaxAmy50rHJZJ/nK1Cc7HvynBBv+YjMKvDhSrygQ==
-  dependencies:
-    chalk "^2.3.2"
-    escape-html "^1.0.3"
-    fs-extra "^7.0.1"
-    globby "^9.2.0"
-    gray-matter "^4.0.1"
-    hash-sum "^1.0.2"
-    semver "^6.0.0"
-    toml "^3.0.0"
-    upath "^1.1.0"
 
 "@vuepress/shared-utils@1.7.1":
   version "1.7.1"
@@ -4789,15 +4774,20 @@ enquirer@^2.3.5:
   dependencies:
     ansi-colors "^3.2.1"
 
-entities@2.0.3, entities@^2.0.3, entities@~2.0.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.3.tgz#5c487e5742ab93c15abb5da22759b8590ec03b7f"
-  integrity sha512-MyoZ0jgnLvB2X3Lg5HqpFmn1kybDiIfEQmKzTb5apr51Rb+T3KdmMiqa70T+bhGnyv7bQ6WMj2QMHpGMmlrUYQ==
+entities@2.1.0, entities@^2.0.3:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
+  integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
 
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
+
+entities@~2.0.0:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.3.tgz#5c487e5742ab93c15abb5da22759b8590ec03b7f"
+  integrity sha512-MyoZ0jgnLvB2X3Lg5HqpFmn1kybDiIfEQmKzTb5apr51Rb+T3KdmMiqa70T+bhGnyv7bQ6WMj2QMHpGMmlrUYQ==
 
 envify@^4.0.0:
   version "4.1.0"
@@ -4896,10 +4886,10 @@ escodegen@^1.14.1, escodegen@^1.8.1, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@6.12.0:
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.12.0.tgz#9eb2bccff727db1c52104f0b49e87ea46605a0d2"
-  integrity sha512-9jWPlFlgNwRUYVoujvWTQ1aMO8o6648r+K7qU7K5Jmkbyqav1fuEZC0COYpGBxyiAJb65Ra9hrmFx19xRGwXWw==
+eslint-config-prettier@6.13.0:
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.13.0.tgz#207d88796b5624e5bb815bbbdfc5891ceb9ebffa"
+  integrity sha512-LcT0i0LSmnzqK2t764pyIt7kKH2AuuqKRTtJTdddWxOiUja9HdG5GXBVF2gmCTvVYWVsTu8J2MhJLVGRh+pj8w==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -10194,10 +10184,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-query-string@6.13.5, query-string@^6.2.0:
-  version "6.13.5"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.5.tgz#99e95e2fb7021db90a6f373f990c0c814b3812d8"
-  integrity sha512-svk3xg9qHR39P3JlHuD7g3nRnyay5mHbrPctEBDUxUkHRifPHXJDhBUycdCC0NBjXoDf44Gb+IsOZL1Uwn8M/Q==
+query-string@6.13.6, query-string@^6.2.0:
+  version "6.13.6"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.13.6.tgz#e5ac7c74f2a5da43fbca0b883b4f0bafba439966"
+  integrity sha512-/WWZ7d9na6s2wMEGdVCVgKWE9Rt7nYyNIf7k8xmHXcesPMlEzicWo3lbYwHyA4wBktI2KrXxxZeACLbE84hvSQ==
   dependencies:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"

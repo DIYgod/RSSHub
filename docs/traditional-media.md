@@ -707,6 +707,18 @@ category 对应的关键词有
 
 <Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
 
+## 新浪体育
+
+### 综合
+
+<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']">
+
+| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
+| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
+| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | mashu | kungfu   | ufc | others |
+
+</Route>
+
 ## 央视新闻
 
 ### 新闻联播

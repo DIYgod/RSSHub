@@ -515,6 +515,10 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
 
+### 櫻坂 46 博客
+
+<Route author="victor21813" example="/sakurazaka46/blog" path="/sakurazaka46/blog" />
+
 ### 日向坂 46 新闻
 
 <Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
@@ -1120,6 +1124,10 @@ area 分区选项
 
 </Route>
 
+## 全现在
+
+<Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
+
 ## 人人都是产品经理
 
 ### 热门文章
@@ -1377,7 +1385,7 @@ area 分区选项
 
 ### 公众号 (二十次幂来源)
 
-<Route author="sanmmm" example="/wechat/ershicimi/59" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
+<Route author="sanmmm" example="/wechat/ershicimi/813oxJOl" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']"/>
 
 ### 公众号 (外接大脑来源)
 
