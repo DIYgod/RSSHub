@@ -490,11 +490,26 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 最终幻想 14 国服
 
-<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']"/>
+<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']">
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
 | ---- | -------- | ------ | --------- | ---- |
 | news | announce | events | advertise | all  |
+
+</Route>
+
+### 最终幻想 14 国际服 （Lodestone）
+
+<Route author="chengyuhui" example="/ff14/ff14_global/na/all" path="/ff14/ff14_global/:lang/:type" :paramsDesc="['地区', '分类名']">
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| ---- | ------------ | ---- | ---- | ---- |
+| na   | eu           | fr   | de   | jp   |
+
+| 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
+| ------ | ------- | ----------- | ------- | -------- | ---------- |
+| topics | notices | maintenance | updates | status   | developers |
+
+</Route>
 
 ## きららファンタジア｜奇拉拉幻想曲
 
