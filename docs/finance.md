@@ -150,6 +150,16 @@ pageClass: routes
 
 </Route>
 
+### 数据
+
+<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
+
+| 数据 | 机器人新闻 |
+| ---- | ---------- |
+| data | jqrxw      |
+
+</Route>
+
 ## 中国人民银行
 
 ### 沟通交流
