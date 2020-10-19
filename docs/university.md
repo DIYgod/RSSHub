@@ -6,6 +6,10 @@ pageClass: routes
 
 ## MIT
 
+### MIT OCW 每月热门课程
+
+<Route author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
+
 ### MIT graduateadmissions's all blogs
 
 <Route author="LogicJake" example="/mit/graduateadmissions/index/all" path="/mit/graduateadmissions/index/all"/>
