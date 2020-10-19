@@ -1270,9 +1270,19 @@ type 列表：
 
 ## 上海大学
 
+### 上海大学官网信息
+
+<Route author="lonelyion" example="/shu/news" path="/shu/:type?" :paramsDesc="['消息类型,默认为`news`']">
+
+| 综合新闻 | 科研动态 | 通知公告 |
+| -------- | -------- | -------- |
+| news     | research | notice   |
+
+</Route>
+
 ### 上海大学教务处通知公告
 
-<Route author="tuxinghuan" example="/shu/jwc/notice" path="/university/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
+<Route author="tuxinghuan" example="/shu/jwc/notice" path="/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
 
 | 通知通告 | 新闻 |
 | -------- | ---- |
