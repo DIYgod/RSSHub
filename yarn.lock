@@ -8197,10 +8197,10 @@ markdown-it-table-of-contents@^0.4.0:
   resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.4.4.tgz#3dc7ce8b8fc17e5981c77cc398d1782319f37fbc"
   integrity sha512-TAIHTHPwa9+ltKvKPWulm/beozQU41Ab+FIefRaQV1NRnpzwcV9QOe6wXQS5WLivm5Q/nlo0rl6laGkMDZE7Gw==
 
-markdown-it@12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.0.0.tgz#c93a4faba84c2a1425944699d641ea47288e547b"
-  integrity sha512-zPq5nGY5L8FXVwffjbXwPqzh9TgkrZ4NDTWuiX5wUP0l/wvmlnJR+6ebbNlLqYzB7erhlAwxQusgXa1VqojTQg==
+markdown-it@12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.0.1.tgz#29e617276869614d6b0b45a90df39b8e7f58c53c"
+  integrity sha512-+y+88n2za9jayLU9ELoGdTKucnW4qIIg6JRWmkesrw8LBnp/Eb2Vurg2P1epf+iNvpRc7IzDjbYcgreOuuOZzw==
   dependencies:
     argparse "^2.0.1"
     entities "~2.0.0"
