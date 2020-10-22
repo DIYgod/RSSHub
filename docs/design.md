@@ -159,3 +159,13 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 站酷的个人主页 `https://www.zcool.com.cn/u/568339` 对应 rss 路径 `/zcool/user/568339`
 
 </Route>
+
+### 发现
+
+<Route author="nczitzk" example="/zcool/discovery" path="/zcool/discovery/:query?" :paramsDesc="['查询参数']" radar="1" rssbud="1">
+
+在 [发现页](https://www.zcool.com.cn/discover) 中选择查询参数后会跳转到对应搜索结果页面。此时地址栏 `https://www.zcool.com.cn/discover/` 后的字段即为查询参数。
+
+如：<https://www.zcool.com.cn/discover/0!0!0!0!0!!!!2!-1!1> 查询参数为 `0!0!0!0!0!!!!2!-1!1`
+
+</Route>
