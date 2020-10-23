@@ -160,6 +160,16 @@ pageClass: routes
 
 </Route>
 
+### 快讯
+
+<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+
+| 快讯 | e 公司 | 研报 | 时事 | 财经 |
+| ---- | ------ | ---- | ---- | ---- |
+|      | egs    | yb   | ss   | cj   |
+
+</Route>
+
 ## 中国人民银行
 
 ### 沟通交流
