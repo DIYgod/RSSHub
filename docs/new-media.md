@@ -729,7 +729,7 @@ area 分区选项
 
 <Route author="zoenglinghou" example="/google/news/要闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
 
-## 观察者网 - 中国关怀 全球视野
+## 观察者网
 
 ### 观察者首页
 
@@ -742,6 +742,22 @@ area 分区选项
 ### 个人主页文章
 
 <Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
+### 首页
+
+<Route author="nczitzk" example="/guancha" path="/guancha/:caty?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 评论 & 研究 | 要闻  | 风闻    | 热点新闻 | 滚动新闻 |
+| ---- | ----------- | ----- | ------- | -------- | -------- |
+| all  | review      | story | fengwen | redian   | gundong  |
+
+::: tip 提示
+
+观察者网首页的三个 column 分别对应 **评论 & 研究**、**要闻**、**风闻** 三个部分。
+
+:::
+
+</Route>
 
 ## 广告门
 
