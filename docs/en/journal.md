@@ -88,6 +88,27 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 </RouteEn>
 
+## MIT Technology Review
+
+<RouteEn author="laampui" example="/technologyreview/humans-and-technology" path="/technologyreview/:category_name" :paramsDesc="['see below']" />
+
+
+
+| `:category_name` | Route |
+| -------- | ----- |
+| humans-and-technology | [/technologyreview/humans-and-technology](https://rsshub.app/technologyreview/humans-and-technology) |
+| election-2020 | [/technologyreview/election-2020](https://rsshub.app/technologyreview/election-2020) |
+| artificial-intelligence | [/technologyreview/artificial-intelligence](https://rsshub.app/technologyreview/artificial-intelligence) |
+| biotechnology | [/technologyreview/biotechnology](https://rsshub.app/technologyreview/biotechnology) |
+| blockchain | [/technologyreview/blockchain](https://rsshub.app/technologyreview/blockchain) |
+| climate-change | [/technologyreview/climate-change](https://rsshub.app/technologyreview/climate-change) |
+| computing |[/technologyreview/computing](https://rsshub.app/technologyreview/computing)  |
+| tech-policy | [/technologyreview/tech-policy](https://rsshub.app/technologyreview/tech-policy) |
+| silicon-valley |  [/technologyreview/silicon-valley](https://rsshub.app/technologyreview/silicon-valley)|
+| smart-cities | [/technologyreview/smart-cities](https://rsshub.app/technologyreview/smart-cities) |
+| space | [/technologyreview/space](https://rsshub.app/technologyreview/space) |
+
+
 ## Nature Journal
 
 ### Latest Research
