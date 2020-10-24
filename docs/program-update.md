@@ -222,7 +222,7 @@ pageClass: routes
 
 ### Release Notes
 
-<Route author="nczitzk" example="//sesame/release_notes" path="/sesame/release_notes"/>
+<Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
 
 ## sketch.com
 
