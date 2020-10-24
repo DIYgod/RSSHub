@@ -662,7 +662,7 @@ GitHub 官方也提供了一些 RSS:
 
 ## 前端技术文章
 
-<Route author="laampui" example="/frontend" path="/frontend" :paramsDesc="['分类']">
+<Route author="laampui" example="/front-end-rss" path="/front-end-rss" :paramsDesc="['分类']">
 </Route>
 
 ## 前端艺术家 && 飞冰早报
