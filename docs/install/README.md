@@ -420,6 +420,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `DEBUG_INFO`: 是否在首页显示路由信息，默认 `true`
 
+`NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
+
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大 [等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
