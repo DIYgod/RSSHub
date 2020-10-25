@@ -43,7 +43,7 @@
     "cross-env": "7.0.2",
     "entities": "2.1.0",
     "eslint": "7.12.0",
-    "eslint-config-prettier": "6.13.0",
+    "eslint-config-prettier": "6.14.0",
     "eslint-plugin-prettier": "3.1.4",
     "jest": "26.6.1",
     "mockdate": "3.0.2",
