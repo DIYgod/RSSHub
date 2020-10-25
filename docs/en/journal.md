@@ -88,6 +88,27 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 </RouteEn>
 
+## MIT Technology Review
+
+<RouteEn author="laampui" example="/technologyreview/humans-and-technology" path="/technologyreview/:category_name" :paramsDesc="['see below']" />
+
+
+
+| `:category_name` | Route |
+| -------- | ----- |
+| humans-and-technology | /technologyreview/humans-and-technology |
+| election-2020 | /technologyreview/election-2020 |
+| artificial-intelligence | /technologyreview/artificial-intelligence |
+| biotechnology | /technologyreview/biotechnology |
+| blockchain | /technologyreview/blockchain |
+| climate-change | /technologyreview/climate-change |
+| computing |/technologyreview/computing  |
+| tech-policy | /technologyreview/tech-policy |
+| silicon-valley |  /technologyreview/silicon-valley|
+| smart-cities | /technologyreview/smart-cities|
+| space | /technologyreview/space |
+
+
 ## Nature Journal
 
 ### Latest Research
