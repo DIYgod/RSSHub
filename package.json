@@ -55,7 +55,7 @@
     "pretty-quick": "3.1.0",
     "remark": "12.0.1",
     "remark-frontmatter": "2.0.0",
-    "remark-pangu": "2.1.1",
+    "remark-pangu": "2.2.0",
     "remark-preset-prettier": "0.4.0",
     "staged-git-files": "1.2.0",
     "string-width": "4.2.0",
