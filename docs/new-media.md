@@ -901,7 +901,6 @@ area 分区选项
 
 ## 巨潮资讯
 
-
 <Route author="LogicJake hillerliao laampui" example="/cninfo/stock_announcement/szse/000002/gssz0000002/category_ndbg_szsh" path="/cninfo/announcement/:column/:code/:orgId/:category?" :paramsDesc="['szse 深圳证券交易所; sse 上海证券交易所; third 新三板; hke 港股; fund 基金', '股票或基金代码', 'orgId 组织 id', '公告分类，A 股及新三板']">
 
 column 为 szse 或 sse 时可选的 category:
@@ -912,9 +911,10 @@ column 为 szse 或 sse 时可选的 category:
 
 column 为 third 时可选的 category:
 
-| 临时公告 | 定期公告 | 中介机构公告 | 持续信息披露 | 首次信息披露 |
-|---|---|---|---|---|
-|category_lsgg|category_dqgg|category_zjjg|category_cxpl|category_scpl|
+| 临时公告      | 定期公告      | 中介机构公告  | 持续信息披露  | 首次信息披露  |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| category_lsgg | category_dqgg | category_zjjg | category_cxpl | category_scpl |
+
 </Route>
 
 ## 决胜网
