@@ -10496,10 +10496,10 @@ remark-frontmatter@2.0.0:
   dependencies:
     fault "^1.0.1"
 
-remark-pangu@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/remark-pangu/-/remark-pangu-2.1.1.tgz#845e837271a89074e2e8ff75d1d8764c5628f0fd"
-  integrity sha512-KVsDkF1EndVXlnNapNwWuus4UjifwzX45ic6Vkx9d8DEo1ZzS/F9yPbEJuM5b/EPxKAyN/PtAMUdEXMoCpSfBw==
+remark-pangu@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/remark-pangu/-/remark-pangu-2.2.0.tgz#6f28d8b37308bf0a88df9b803796c38e46927924"
+  integrity sha512-3h2UiRIbnEQR+IxYPhQ5SMbAZPobIV8ddza8U1hJLsfLranbv/cdFiwnZEgMOJYKmi+9XHLMxrAIipmIsLrzPg==
   dependencies:
     pangu "^4.0.7"
     unist-util-is "^4.0.2"
