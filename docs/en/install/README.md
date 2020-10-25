@@ -393,6 +393,8 @@ See the relation between access key/code and white/blacklisting.
 
 `DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
 
+`NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
+
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
 `NODE_NAME`: node name, used for load balancing, identify current node

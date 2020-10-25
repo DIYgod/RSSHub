@@ -440,6 +440,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
 
+## 中华人民共和国国家发展和改革委员会
+
+### 新闻动态
+
+<Route author="nczitzk" example="/gov/ndrc/xwdt" path="/gov/ndrc/xwdt/:caty?">
+
+| 新闻发布 | 通知通告 | 委领导动态 | 司局动态 | 地方动态 |
+| -------- | -------- | ---------- | -------- | -------- |
+| xwfb     | tzgg     | wlddt      | sjdt     | dfdt     |
+
+</Route>
+
 ## 中华人民共和国海关总署
 
 ### 拍卖信息 / 海关法规
