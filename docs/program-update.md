@@ -230,6 +230,12 @@ pageClass: routes
 
 <Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
+## Sesame
+
+### Release Notes
+
+<Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
+
 ## sketch.com
 
 ### beta 更新
