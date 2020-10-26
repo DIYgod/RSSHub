@@ -161,7 +161,7 @@ Due to Twitter API restrictions, the Twitter Routes currently supports tweets wi
 
 :::
 
-Specify options in query string to control the output style for Tweets
+Specify options (in query string's format) in parameter `routeParams` to control some extra features for Tweets
 
 | Key    | Description | Accepts | Defaults to |
 | ------ | ----------- | ------- | ------------ |
@@ -179,11 +179,14 @@ Specify options in query string to control the output style for Tweets
 | heightOfPics              | Height of Tweet pictures | Unspecified/Integer | Unspecified |
 | sizeOfAuthorAvatar        | Size of author's avatar | Integer | 48 |
 | sizeOfQuotedAuthorAvatar  | Size of quoted tweet's author's avatar | Integer | 24 |
+| excludeReplies            | Exclude replies, only available in "User timeline" | 0/1/true/false | false |
+| includeRts                | Include retweets, only available in "User timeline" | 0/1/true/false | true |
+| count                     | `count` parameter passed to Twitter API, only available in "User timeline" | Unspecified/Integer | Unspecified |
 
 Specify different option values than default values to improve readablility. The URL
 
 ```
-https://rsshub.app/twitter/user/durov?readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
+https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
 ```
 
 generates
@@ -192,15 +195,11 @@ generates
 
 ### User timeline
 
-<RouteEn path="/twitter/user/:id/:type?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'Extra options `exclude_replies` exclude replies,`exclude_rts` exclude retweets,`exclude_rts_replies` exclude replies and retweets, for default include all.']" radar="1" rssbud="1"/>
-
-QueryString:
-
-- `count`: `count` parameter passed to Twitter API
+<RouteEn path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
 
 ## User following timeline
 
-<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['user id']" radar="1" rssbud="1">
+<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['user id', 'extra parameters, see the table above']" radar="1" rssbud="1">
 
 ::: warning
 
@@ -212,15 +211,15 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 
 ### List timeline
 
-<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']" radar="1" rssbud="1"/>
+<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['user name', 'list name', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### User likes
 
-<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']" radar="1" rssbud="1"/>
+<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" :paramsDesc="['user name', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### Keyword
 
-<RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['keyword']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" :paramsDesc="['keyword', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### Trends
 
