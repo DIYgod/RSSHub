@@ -731,33 +731,33 @@ area 分区选项
 
 ## 观察者网
 
-### 观察者首页
-
-<Route author="Jeason0228" example="/guanchazhe/index/all" path="/guanchazhe/index/:type" :paramsDesc="['新闻汇总:默认home输出头条+3列新闻,others则为滚动新闻+热点+观察者付费,all则包括以上']" />
-
-### 观察者风闻话题
-
-<Route author="occupy5" example="/guanchazhe/topic/113" path="/guanchazhe/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
-
-### 个人主页文章
-
-<Route author="Jeason0228" example="/guanchazhe/personalpage/243983" path="/guanchazhe/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
-
 ### 首页
 
-<Route author="nczitzk" example="/guancha" path="/guancha/:caty?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="nczitzk Jeason0228" example="/guancha" path="/guancha/:caty?" :paramsDesc="['分类，见下表，默认为全部']">
 
 | 全部 | 评论 & 研究 | 要闻  | 风闻    | 热点新闻 | 滚动新闻 |
 | ---- | ----------- | ----- | ------- | -------- | -------- |
 | all  | review      | story | fengwen | redian   | gundong  |
 
+home = 评论 & 研究 + 要闻 + 风闻
+
+others = 热点新闻 + 滚动新闻
+
 ::: tip 提示
 
-观察者网首页的三个 column 分别对应 **评论 & 研究**、**要闻**、**风闻** 三个部分。
+观察者网首页左中右的三个 column 分别对应 **评论 & 研究**、**要闻**、**风闻** 三个部分。
 
 :::
 
 </Route>
+
+### 观察者风闻话题
+
+<Route author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+
+### 个人主页文章
+
+<Route author="Jeason0228" example="/guancha/personalpage/243983" path="/guancha/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
 
 ## 广告门
 
