@@ -123,7 +123,7 @@ pageClass: routes
 
 ## MiniFlux
 
-因需设置 API Key，故请自行架设 RSSHub。API 密钥则请于 MiniFlux 实体中的 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取。
+因需设置 API Key，故请自行架设 RSSHub。API 密钥则请于 MiniFlux 实例中的 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取。
 
 ### 订阅列表
 
