@@ -161,9 +161,42 @@ Due to Twitter API restrictions, the Twitter Routes currently supports tweets wi
 
 :::
 
+Specify options in query string to control the output style for Tweets
+
+| Key    | Description | Accepts | Defaults to |
+| ------ | ----------- | ------- | ------------ |
+| readable                  | Enable readable layout    | 0/1/true/false | false |
+| authorNameBold            | Display author name in bold | 0/1/true/false | false |
+| showAuthorInTitle         | Show author name in title | 0/1/true/false | false |
+| showAuthorInDesc          | Show author name in description (RSS body) | 0/1/true/false | false |
+| showQuotedAuthorAvatarInDesc | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | 0/1/true/false | false |
+| showAuthorAvatarInDesc    | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)| 0/1/true/false | false |
+| showEmojiForRetweetAndReply | Use "🔁" instead of "Rt", "↩️" & "💬" instead of "Re" | 0/1/true/false | false |
+| showRetweetTextInTitle    | Show quote comments in title | 0/1/true/false | true |
+| addLinkForPics           | Add clickable links for Tweet pictures | 0/1/true/false | false |
+| showTimestampInDescription| Show timestamp in description | 0/1/true/false | false |
+| widthOfPics               | Width of Tweet pictures | Unspecified/Integer      | Unspecified |
+| heightOfPics              | Height of Tweet pictures | Unspecified/Integer | Unspecified |
+| sizeOfAuthorAvatar        | Size of author's avatar | Integer | 48 |
+| sizeOfQuotedAuthorAvatar  | Size of quoted tweet's author's avatar | Integer | 24 |
+
+Specify different option values than default values to improve readablility. The URL
+
+```
+https://rsshub.app/twitter/user/durov?readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
+```
+
+generates
+
+<img src="/readable-twitter.png" alt="Readable Twitter RSS of Durov">
+
 ### User timeline
 
 <RouteEn path="/twitter/user/:id/:type?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'Extra options `exclude_replies` exclude replies,`exclude_rts` exclude retweets,`exclude_rts_replies` exclude replies and retweets, for default include all.']" radar="1" rssbud="1"/>
+
+QueryString:
+
+- `count`: `count` parameter passed to Twitter API
 
 ## User following timeline
 

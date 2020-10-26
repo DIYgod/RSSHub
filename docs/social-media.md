@@ -471,9 +471,40 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 
+对于推文内容，添加如下的 Query String 可以控制输出的样式
+
+| 键                           | 含义                                                                         | 接受的值       | 默认值 |
+| ---------------------------- | ---------------------------------------------------------------------------- | -------------- | ------ |
+| readable                     | 是否开启细节排版可读性优化                                                   | 0/1/true/false | false  |
+| authorNameBold               | 是否加粗作者名字                                                             | 0/1/true/false | false  |
+| showAuthorInTitle            | 是否在标题处显示作者                                                         | 0/1/true/false | false  |
+| showAuthorInDesc             | 是否在正文处显示作者                                                         | 0/1/true/false | false  |
+| showQuotedAuthorAvatarInDesc | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
+| showAuthorAvatarInDesc       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）               | 0/1/true/false | false  |
+| showEmojiForRetweetAndReply  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                          | 0/1/true/false | false  |
+| showRetweetTextInTitle       | 在标题出显示转推评论（置为 false 则在标题只显示被转推推文）                  | 0/1/true/false | true   |
+| addLinkForPics               | 为图片添加可点击的链接                                                       | 0/1/true/false | false  |
+| showTimestampInDescription   | 在正文处显示推特的时间戳                                                     | 0/1/true/false | false  |
+| widthOfPics                  | 推文配图宽（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定 |
+| heightOfPics                 | 推文配图高（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定 |
+| sizeOfAuthorAvatar           | 作者头像大小                                                                 | 数字           | 48     |
+| sizeOfQuotedAuthorAvatar     | 被转推推文作者头像大小                                                       | 数字           | 24     |
+
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+
+    https://rsshub.app/twitter/user/durov?readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
+
+的效果为
+
+<img src="/readable-twitter.png" alt="Durov 的可读推特 RSS">
+
 ### 用户时间线
 
 <Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id/:type?" :paramsDesc="['用户名', '额外选项 `exclude_replies`去除回复，`exclude_rts`去除转推，`exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1" rssbud="1"/>
+
+QueryString:
+
+-   `count`：传递给 Twitter API 的 `count` 参数
 
 ### 用户关注时间线
 
@@ -673,6 +704,32 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 
+对于豆瓣用户广播内容，添加如下的 Query String 可以控制输出的样式
+
+| 键                         | 含义                                                           | 接受的值       | 默认值 |
+| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |
+| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |
+| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |
+| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |
+| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |
+| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |
+| showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |
+| showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |
+| widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |
+
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+
+    https://rsshub.app/douban/people/113894409/status?readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100
+
+的效果为
+
+<img src="/readable-douban.png" alt="豆瓣读书的可读豆瓣广播 RSS">
+
 </Route>
 
 ### 日记最新回应
@@ -840,6 +897,31 @@ rule
 <Route author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>
 
 ## 微博
+
+对于微博内容，添加如下的 Query String 可以控制输出的样式
+
+| 键                         | 含义                                                           | 接受的值       | 默认值 |
+| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |
+| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |
+| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |
+| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | false  |
+| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                                   | 0/1/true/false | false  |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博）    | 0/1/true/false | true   |
+| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |
+| showTimestampInDescription | 在正文处显示被转发微博的时间戳                                 | 0/1/true/false | false  |
+| widthOfPics                | 微博配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| heightOfPics               | 微博配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |
+
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+
+    https://rsshub.app/weibo/user/1642909335?readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150
+
+的效果为
+
+<img src="/readable-weibo.png" alt="微博小秘书的可读微博 RSS">
 
 ### 博主
 
