@@ -473,25 +473,26 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 对于推文内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制额外的功能
 
-| 键                           | 含义                                                                         | 接受的值       | 默认值 |
-| ---------------------------- | ---------------------------------------------------------------------------- | -------------- | ------ |
-| readable                     | 是否开启细节排版可读性优化                                                   | 0/1/true/false | false  |
-| authorNameBold               | 是否加粗作者名字                                                             | 0/1/true/false | false  |
-| showAuthorInTitle            | 是否在标题处显示作者                                                         | 0/1/true/false | false  |
-| showAuthorInDesc             | 是否在正文处显示作者                                                         | 0/1/true/false | false  |
-| showQuotedAuthorAvatarInDesc | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
-| showAuthorAvatarInDesc       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）               | 0/1/true/false | false  |
-| showEmojiForRetweetAndReply  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                          | 0/1/true/false | false  |
-| showRetweetTextInTitle       | 在标题出显示转推评论（置为 false 则在标题只显示被转推推文）                  | 0/1/true/false | true   |
-| addLinkForPics               | 为图片添加可点击的链接                                                       | 0/1/true/false | false  |
-| showTimestampInDescription   | 在正文处显示推特的时间戳                                                     | 0/1/true/false | false  |
-| widthOfPics                  | 推文配图宽（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定 |
-| heightOfPics                 | 推文配图高（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定 |
-| sizeOfAuthorAvatar           | 作者头像大小                                                                 | 数字           | 48     |
-| sizeOfQuotedAuthorAvatar     | 被转推推文作者头像大小                                                       | 数字           | 24     |
-| excludeReplies               | 排除回复，只在用户时间线有效                                                 | 0/1/true/false | false  |
-| includeRts                   | 包括转推，只在用户时间线有效                                                 | 0/1/true/false | true   |
-| count                        | 传递给 Twitter API 的 `count` 参数，只在用户时间线有效                       | 不指定 / 数字  | 不指定 |
+| 键                           | 含义                                                                         | 接受的值       | 默认值                                   |
+| ---------------------------- | ---------------------------------------------------------------------------- | -------------- | ---------------------------------------- |
+| readable                     | 是否开启细节排版可读性优化                                                   | 0/1/true/false | false                                    |
+| authorNameBold               | 是否加粗作者名字                                                             | 0/1/true/false | false                                    |
+| showAuthorInTitle            | 是否在标题处显示作者                                                         | 0/1/true/false | false（`/twitter/followings` 中为 true） |
+| showAuthorInDesc             | 是否在正文处显示作者                                                         | 0/1/true/false | false（`/twitter/followings` 中为 true） |
+| showQuotedAuthorAvatarInDesc | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false                                    |
+| showAuthorAvatarInDesc       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）               | 0/1/true/false | false                                    |
+| showEmojiForRetweetAndReply  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                          | 0/1/true/false | false                                    |
+| showRetweetTextInTitle       | 在标题出显示转推评论（置为 false 则在标题只显示被转推推文）                  | 0/1/true/false | true                                     |
+| addLinkForPics               | 为图片添加可点击的链接                                                       | 0/1/true/false | false                                    |
+| showTimestampInDescription   | 在正文处显示推特的时间戳                                                     | 0/1/true/false | false                                    |
+| showQuotedInTitle            | 在标题处显示被引用的推文                                                     | 0/1/true/false | false                                    |
+| widthOfPics                  | 推文配图宽（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定                                   |
+| heightOfPics                 | 推文配图高（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定                                   |
+| sizeOfAuthorAvatar           | 作者头像大小                                                                 | 数字           | 48                                       |
+| sizeOfQuotedAuthorAvatar     | 被转推推文作者头像大小                                                       | 数字           | 24                                       |
+| excludeReplies               | 排除回复，只在用户时间线有效                                                 | 0/1/true/false | false                                    |
+| includeRts                   | 包括转推，只在用户时间线有效                                                 | 0/1/true/false | true                                     |
+| count                        | 传递给 Twitter API 的 `count` 参数，只在用户时间线有效                       | 不指定 / 数字  | 不指定                                   |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -507,7 +508,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户关注时间线
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['用户名']" radar="1" rssbud="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1">
 
 ::: warning 注意
 

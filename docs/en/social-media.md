@@ -167,14 +167,15 @@ Specify options (in query string's format) in parameter `routeParams` to control
 | ------ | ----------- | ------- | ------------ |
 | readable                  | Enable readable layout    | 0/1/true/false | false |
 | authorNameBold            | Display author name in bold | 0/1/true/false | false |
-| showAuthorInTitle         | Show author name in title | 0/1/true/false | false |
-| showAuthorInDesc          | Show author name in description (RSS body) | 0/1/true/false | false |
+| showAuthorInTitle         | Show author name in title | 0/1/true/false | false (true in `/twitter/followings`) |
+| showAuthorInDesc          | Show author name in description (RSS body) | 0/1/true/false | false (true in `/twitter/followings`) |
 | showQuotedAuthorAvatarInDesc | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | 0/1/true/false | false |
 | showAuthorAvatarInDesc    | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)| 0/1/true/false | false |
 | showEmojiForRetweetAndReply | Use "🔁" instead of "Rt", "↩️" & "💬" instead of "Re" | 0/1/true/false | false |
 | showRetweetTextInTitle    | Show quote comments in title | 0/1/true/false | true |
 | addLinkForPics           | Add clickable links for Tweet pictures | 0/1/true/false | false |
 | showTimestampInDescription| Show timestamp in description | 0/1/true/false | false |
+| showQuotedInTitle         | Show quoted tweet in title    | 0/1/true/false | false |
 | widthOfPics               | Width of Tweet pictures | Unspecified/Integer      | Unspecified |
 | heightOfPics              | Height of Tweet pictures | Unspecified/Integer | Unspecified |
 | sizeOfAuthorAvatar        | Size of author's avatar | Integer | 48 |
