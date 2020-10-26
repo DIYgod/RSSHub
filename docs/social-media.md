@@ -507,7 +507,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户关注时间线
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['用户名']" radar="1" rssbud="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1">
 
 ::: warning 注意
 
