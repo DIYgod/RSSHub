@@ -177,6 +177,14 @@ Solidot 提供的 feed:
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
 
+### 下载
+
+<Route author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+
+下载站：<http://www.cgx02.xyz/index.php?dir=/te>
+
+</Route>
+
 ## Yahoo
 
 ### 新聞
@@ -706,6 +714,18 @@ category 对应的关键词有
 ### 滚动新闻
 
 <Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
+
+## 新浪体育
+
+### 综合
+
+<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']">
+
+| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
+| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
+| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | mashu | kungfu   | ufc | others |
+
+</Route>
 
 ## 央视新闻
 

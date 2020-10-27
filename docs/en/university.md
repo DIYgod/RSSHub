@@ -6,6 +6,10 @@ pageClass: routes
 
 ## MIT
 
+### MIT OCW Most popular courses of the month
+
+<RouteEn author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
+
 ### MIT graduateadmissions's all blogs
 
 <RouteEn author="LogicJake" example="/mit/graduateadmissions/index/all" path="/mit/graduateadmissions/index/all"/>

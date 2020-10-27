@@ -58,6 +58,48 @@ pageClass: routes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
+## GameRes 游资网
+
+### 热点推荐
+
+<Route author="nczitzk" example="/gameres/hot" path="/gameres/hot"/>
+
+### 列表
+
+<Route author="nczitzk" example="/gameres/list/26" path="/gameres/list/:id" :paramsDesc="['列表 id']">
+
+产业
+
+| 厂商・专访 | 观察・投资 | 产品 | 政策 | 电子竞技 | 直播 | 区块链 |
+| ---------- | ---------- | ---- | ---- | -------- | ---- | ------ |
+| 1          | 11         | 6    | 45   | 14       | 42   | 41     |
+
+平台
+
+| 手游 | 页游・H5 | 端游・PC | 主机 | 虚拟・VR・AR | 云游戏 |
+| ---- | -------- | -------- | ---- | ------------ | ------ |
+| 5    | 17       | 18       | 21   | 16           | 48     |
+
+研发
+
+| 拆解分析 | 策划 | 程序・引擎 | 美术 | 音乐 | 测试 |
+| -------- | ---- | ---------- | ---- | ---- | ---- |
+| 24       | 25   | 26         | 27   | 28   | 29   |
+
+市场
+
+| 职场・创业 | 运营・渠道 | 海外 | 数据・报告 | App Store | Steam |
+| ---------- | ---------- | ---- | ---------- | --------- | ----- |
+| 38         | 34         | 47   | 33         | 46        | 40    |
+
+其他
+
+| 原创 | 硬件・周边 | 八卦 | 活动 | 综合 |
+| ---- | ---------- | ---- | ---- | ---- |
+| 43   | 44         | 15   | 22   | 39   |
+
+</Route>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
@@ -386,7 +428,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 新闻中心
 
-<Route author="Jeason0228" example="/pvp/newsindex/all" path="/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
+<Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
 
 ## 小黑盒
 
@@ -490,11 +532,26 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 最终幻想 14 国服
 
-<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']"/>
+<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']">
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
 | ---- | -------- | ------ | --------- | ---- |
 | news | announce | events | advertise | all  |
+
+</Route>
+
+### 最终幻想 14 国际服 （Lodestone）
+
+<Route author="chengyuhui" example="/ff14/ff14_global/na/all" path="/ff14/ff14_global/:lang/:type" :paramsDesc="['地区', '分类名']">
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| ---- | ------------ | ---- | ---- | ---- |
+| na   | eu           | fr   | de   | jp   |
+
+| 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
+| ------ | ------- | ----------- | ------- | -------- | ---------- |
+| topics | notices | maintenance | updates | status   | developers |
+
+</Route>
 
 ## きららファンタジア｜奇拉拉幻想曲
 

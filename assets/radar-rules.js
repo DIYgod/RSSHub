@@ -2293,7 +2293,7 @@
             },
         ],
     },
-    'pknbc.com': {
+    'jjmhw.cc': {
         _name: '漫小肆',
         www: [
             {
@@ -2363,6 +2363,17 @@
                 docs: 'https://docs.rsshub.app/blog.html#jian-ning-xian-tan',
                 source: '/*',
                 target: '/blogs/jianning',
+            },
+        ],
+    },
+    'eventernote.com': {
+        _name: 'Eventernote',
+        www: [
+            {
+                title: '声优活动及演唱会',
+                docs: 'https://docs.rsshub.app/anime.html#eventernote',
+                source: '/actors/:name/:id/events',
+                target: '/eventernote/actors/:name/:id',
             },
         ],
     },
