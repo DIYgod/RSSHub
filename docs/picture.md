@@ -4,17 +4,43 @@ pageClass: routes
 
 # 图片
 
-## Awesome Pigtails
+## 1X
 
-### 最新图片
+### Photos
 
-<Route author="Chingyat" example="/pigtails" path="/pigtails/index"/>
+<Route author="nczitzk" example="/1x/latest/all" path="/1x/:type?/:caty?" :paramsDesc="['排序类型，默认为 `latest`，亦可选 `popular` 或 `curators-choice`', '图片类别，默认为 `all`，见下表']">
+
+| 图片类别       | 代码          |
+| -------------- | ------------- |
+| All categories | all           |
+| Abstract       | abstract      |
+| Action         | action        |
+| Animals        | animals       |
+| Architecture   | architecture  |
+| Conceptual     | conceptual    |
+| Creative edit  | creative-edit |
+| Documentary    | documentary   |
+| Everyday       | everyday      |
+| Fine Art Nude  | fine-art-nude |
+| Humour         | humour        |
+| Landscape      | landscape     |
+| Macro          | macro         |
+| Mood           | mood          |
+| Night          | night         |
+| Performance    | performance   |
+| Portrait       | portrait      |
+| Still life     | still-life    |
+| Street         | street        |
+| Underwater     | underwater    |
+| Wildlife       | wildlife      |
+
+</Route>
 
 ## Bing 壁纸
 
 ### 每日壁纸
 
-<Route author="FHYunCai" example="/bing" path="/bing" radar="1"/>
+<Route author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
 ## CNU 视觉联盟
 
@@ -54,7 +80,13 @@ pageClass: routes
 
 ### 公开影集
 
-<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']" radar="1" />
+<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']" radar="1"/>
+
+## Hentai Cosplay
+
+### 最新图片
+
+<Route author="hoilc" example="/hentai-cosplays/tag/swimsuit" path="/hentai-cosplays/:type?/:name?" :paramsDesc="['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']" />
 
 ## Konachan Anime Wallpapers
 
@@ -85,6 +117,53 @@ pageClass: routes
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## MM 范
+
+### 分类
+
+<Route author="nczitzk" example="/95mm/tab/热门" path="/95mm/tab/:tab?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/95mm/tag/黑丝" path="/95mm/tag/:tag" :paramsDesc="['标签，可在对应标签页中找到']"/>
+
+### 集合
+
+<Route author="nczitzk" example="/95mm/category/1" path="/95mm/category/:category" :paramsDesc="['集合，见下表']">
+
+| 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |
+| -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |
+| 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |
+
+</Route>
+
+## NASA 每日天文图片
+
+### NASA
+
+<Route author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
+
+### 台湾成功大学镜像
+
+<Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
+
+### NASA 中文
+
+<Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
+
+::: tip 提示
+
+[NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
+
+:::
+
+</Route>
+
 ## nHentai
 
 ### 分类筛选
@@ -94,6 +173,12 @@ pageClass: routes
 ### 高级搜索
 
 <Route author="MegrezZhu hoilc" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入。用法详见[官网](https://nhentai.net/info/)', '模式，`simple`为仅封面，`detail`会包括本子每一页，但对服务器负载大，`torrent`会包括磁力链接，需要登录，参见[部分 RSS 模块配置](/install/#bu-fen-rss-mo-kuai-pei-zhi)。默认为`simple`']" anticrawler="1" supportBT="1" />
+
+## Porn Image XXX
+
+### 最新图片
+
+<Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" :paramsDesc="['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']" />
 
 ## Tits Guru
 
@@ -109,6 +194,10 @@ pageClass: routes
 ### Categories
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
+
+## Wallpaperhub
+
+<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
 
 ## yande.re
 

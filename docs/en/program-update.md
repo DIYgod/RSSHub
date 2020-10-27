@@ -4,6 +4,12 @@ pageClass: routes
 
 # Application Updates
 
+## Anki
+
+### Changes
+
+<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+
 ## Apkpure
 
 ### Versions
@@ -28,7 +34,7 @@ pageClass: routes
 
 ### New Dropzone Actions
 
-<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
+<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
 
 ## Chocolatey
 
@@ -149,6 +155,18 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#playstation](/game.html#playstation)
 
+## QNAP
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" :paramsDesc="['OS id, see below']">
+
+| QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
+| --- | --------- | --------- | ------------------ | --- | --- | ------ |
+| qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
+
+</RouteEn>
+
 ## RSSHub
 
 ### New routes
@@ -157,7 +175,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New sponsors
 
-<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
 ## sketch.com
 

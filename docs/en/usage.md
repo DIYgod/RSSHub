@@ -2,7 +2,7 @@
 
 ## Generate a RSS Feed
 
-To subscribe to a Twitter user's timeline, first look at the route document of [Twitter User Timeline](en/social-media.html#user-timeline).
+To subscribe to a Twitter user's timeline, first look at the route document of [Twitter User Timeline](en/social-media.html#twitter-user-timeline).
 
 `/twitter/user/:id` is the route where `:id` is the actual Twitter username you need to replace. For instance, `/twitter/user/DIYgod` with a prefix domain name will give you the timeline of Twitter user DIYgod.
 

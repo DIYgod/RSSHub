@@ -119,18 +119,18 @@ $ git clone https://github.com/DIYgod/RSSHub.git
 $ cd RSSHub
 ```
 
-下载完成后，需要安装依赖
+下载完成后，需要安装依赖（开发不要加 `--production` 参数）
 
 使用 `npm`
 
 ```bash
-$ npm install
+$ npm install --production
 ```
 
 或 `yarn`
 
 ```bash
-$ yarn
+$ yarn install --production
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
@@ -182,11 +182,34 @@ $ pm2 start lib/index.js --name rsshub
 $ git pull
 ```
 
-然后重复安装步骤
+然后重复安装步骤。
+
+### Nix 用户提示
+
+通过 `nix-shell` 配置简化安装 nodejs, yarn 和 jieba：
+
+```nix
+let
+    pkgs = import <nixpkgs> {};
+    node = pkgs.nodejs-12_x;
+in pkgs.stdenv.mkDerivation {
+    name = "nodejs-yarn-jieba";
+    buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
+}
+```
 
 ## 部署到 Heroku
 
+### 一键部署（无自动更新）
+
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+### 自动更新部署
+
+1.  将 RSSHub [分叉（fork）](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) 到自己的账户下。
+2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 (例如 `https://github.com/USERNAME/RSSHub`)。
+3.  检查 Heroku 设置，随代码库更新自动部署。
+4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
 ## 部署到 Vercel (Zeit Now)
 
@@ -256,6 +279,18 @@ env_variables:
 # [END app_yaml]
 ```
 
+### 安装
+
+在 RSSHub 项目根目录下运行
+
+```bash
+gcloud app deploy
+```
+
+进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
+
+部署完成后可访问您的 Google App Engine URL 查看部署情况。
+
 ## Play with Docker
 
 如果想要测试因为反爬规则导致无法访问的路由，您可以点击下方按钮拉起一套免费，临时，专属于您的 RSSHub
@@ -270,18 +305,6 @@ env_variables:
 -   有的时候 PWD 会抽风，如果遇到点击`Start`后空白页面，或者拉起失败，请重试
 
 :::
-
-### 安装
-
-在 RSSHub 项目根目录下运行
-
-```bash
-gcloud app deploy
-```
-
-进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
-
-部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
 ## 配置
 
@@ -351,7 +374,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 访问控制配置
 
-RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。
+RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
 
 #### 黑白名单
 
@@ -397,6 +420,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `DEBUG_INFO`: 是否在首页显示路由信息，默认 `true`
 
+`NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
+
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大 [等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
@@ -411,11 +436,27 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 部分 RSS 模块配置
 
+::: tip 提示
+
+此处信息不完整。完整配置请参考路由对应的文档和 `lib/config.js`。
+
+:::
+
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv 用户名
 
     -   `PIXIV_PASSWORD`: Pixiv 密码
+
+    -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
+
+    -   `PIXIV_BYPASS_HOSTNAME`: Pixiv 源站的主机名或 IP 地址，主机名会被解析为 IPv4 地址，默认为`public-api.secure.pixiv.net`；仅在`PIXIV_BYPASS_CDN`开启时生效
+
+    -   `PIXIV_BYPASS_DOH`: 用于解析 `PIXIV_BYPASS_HOSTNAME` 的 DoH 端点 URL，需要兼容 Cloudflare 或 Google 的 DoH 服务的 JSON 查询格式，默认为 `https://1.1.1.1/dns-query`
+
+-   pixiv fanbox 用于获取付费内容
+
+    -   `FANBOX_SESSION_ID`: 对应 cookies 中的`FANBOXSESSID`。
 
 -   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
 
@@ -451,7 +492,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   邮箱 邮件列表路由：
 
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如 `password=123456&host=imap.qq.com&port=993`。
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如：
+        -   Linux 环境变量：`EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
+        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
 
 -   吹牛部落 栏目更新
 
@@ -462,6 +505,12 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `WEIBO_APP_KEY`: 微博 App Key
     -   `WEIBO_APP_SECRET`: 微博 App Secret
     -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
+
+-   Mastodon 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
+
+    -   `MASTODON_API_HOST`: API 请求的实例
+    -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
+    -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
 -   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
@@ -493,12 +542,39 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   端传媒设置，用于获取付费内容全文：
 
-    -   `INITIUM_USERNAME`: 端传媒用户名
+    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6JiE1NTYzNDgxNDVAcXEuY29tIiwidXNlcl9pZCI6MTM0NDIwLCJlbWFpbCI6IjE1NTYzNDgxNDVAcXEuY29tIiwiZXhwIjoxNTk0MTk5NjQ3fQ.Tqui-ORNR7d4Bh240nKy_Ldi6crfq0A78Yj2iwy2_U8'`。
 
+    -   `INITIUM_IAP_RECEIPT`: 端传媒 iOS 版内购回执认证 token。获取方式：登陆后打开端传媒 iOS app 内任意页面，打开抓包工具，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`X-IAP-Receipt`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_IAP_RECEIPT: 'ef81dee9e4e2fe084a0af1ea82da2f7b16e75f756db321618a119fa62b52550e'`。
+
+    Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即可。如果你在进行上述操作时遇到困难，亦可选择在环境设置中填写明文的用户名和密码：
+
+    -   `INITIUM_USERNAME`: 端传媒用户名 (邮箱)
     -   `INITIUM_PASSWORD`: 端传媒密码
 
 -   BTBYR
 
     -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
-
     -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开网站首页 2. 打开控制台 3. 刷新 4. 找到 <https://bt.byr.cn/index.php> 请求 5. 找到请求头中的 Cookie
+
+-   小宇宙：需要 App 登陆后抓包获取相应数据。
+
+    -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
+    -   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
+
+-   新榜
+
+    -   `NEWRANK_COOKIE`: 登陆后的 COOKIE 值，其中 token 是必要的，其他可删除
+
+-   NGA BBS 用于获取帖子内文
+
+    -   `NGA_PASSPORT_UID`: 对应 cookie 中的 `ngaPassportUid`.
+
+    -   `NGA_PASSPORT_CID`: 对应 cookie 中的 `ngaPassportCid`.
+
+-   喜马拉雅
+
+    -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：1. 登陆喜马拉雅网页版 2. 查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
+
+-   4399 论坛
+
+    -   `GAME_4399`: 对应登录后的 cookie 值，获取方式：1. 在 4399 首页登录. 2. 打开开发者工具，切换到 Network 面板. 3. 刷新 4. 查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.

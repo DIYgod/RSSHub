@@ -4,25 +4,73 @@ pageClass: routes
 
 # News
 
+## ABC News
+
+### Site
+
+<Route author="nczitzk" example="/abc" path="/abc/:site?" :paramsDesc="['Site, see below']">
+
+Site
+
+| Just In | Politics | World | Business | Analysis | Sport | Science | Health | Arts | Fact Check | 中文新闻 | Berita Bahasa Indonesia | Tok Pisin |
+| - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| justin | politics | world | business | analysis-and-opinion | sport | science | health | arts-culture | factcheck | chinese | indonesian | tok-pisin |
+
+</Route>
+
 ## AP News
 
 ### Topics
 
-<RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1"/>
+<RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1"/>
 
 ## BBC
 
 ### BBC
 
-<RouteEn author="HenryQW" example="/bbc/chinese" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+<RouteEn author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
 Provides a better reading experience (full text articles) over the official ones.
 
 Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/10628494). Eg, `business` for `https://feeds.bbci.co.uk/news/business/rss.xml`.
 
--   Channel with a single path, such as `https://feeds.bbci.co.uk/news/business/rss.xml`, use `/bbc/business`.
--   Channel contains multiple paths, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
--   Exemption: use `/bbc/chinese` for BBC News Chinese, `/bbc/traditionalchinese` for Traditional Chinese.
+-   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
+
+</RouteEn>
+
+### BBC Chinese
+
+<RouteEn author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['lang, Simplified or Traditional Chinese','channel, default to `top stories`']">
+
+See [BBC 中文网](../traditional-media.html#bbc-bbc-zhong-wen-wang).
+
+</RouteEn>
+
+## Boston.com
+
+### News
+
+<RouteEn author="oppilate" example="/boston/technology" path="/boston/:tag?" :paramsDesc="['Tag']">
+
+Generates full-text feeds that the official feed doesn't provide.
+Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. For instance, `https://www.boston.com/tag/local-news/?feed=rss` corresponds to `/boston/local-news`.
+
+</RouteEn>
+
+## CBC
+
+Provide full article RSS for CBC topics.
+
+<RouteEn author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" :paramsDesc="['CBC topics. Default to Top Stories. For second level topics like canada/toronto, need to replace `/` by `-`.']"/>
+
+## Chicago Tribune
+
+### News
+
+<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['Category', 'Subcategory']">
+
+Generates full-text that the official feed doesn't provide.
+Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
 
 </RouteEn>
 
@@ -52,7 +100,7 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 ### News
 
-<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['category']" radar="1">
+<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['category']" radar="1" rssbud="1">
 
 | realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
 | -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
@@ -65,6 +113,29 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 ### News Web Easy
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+## Reuters
+
+### Channel
+
+<RouteEn author="HenryQW proletarius101" example="/reuters/channel/uk/personalFinance" path="/reuters/channel/:site/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
+
+Supported sub-sites:
+
+-   中国分站 `cn`：
+    See [路透社中国分站](../traditional-media.html#lu-tou-she)
+
+-   US site `us`：
+    | Business | Markets | World | Politics | Tech | Breakingviews | Wealth | Life |
+    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
+    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+
+-   UK site `uk`：
+    | Business | World | UK | Tech | Money | Breakingviews | Life |
+    | -------- | ----- | --- | ---------- | --------------- | ------------- | --------- |
+    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
+
+</RouteEn>
 
 ## RTHK
 
@@ -82,6 +153,16 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 </RouteEn>
 
+## SCMP
+
+### News
+
+<RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['Category']">
+
+See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
+
+</RouteEn>
+
 ## The Economist
 
 ### Category
@@ -91,6 +172,14 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 ### GRE Vocabulary
 
 <RouteEn author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+
+### Download
+
+<RouteEn author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+
+The download site: http://www.cgx02.xyz/index.php?dir=/te
+
+</RouteEn>
 
 ## The Guardian
 

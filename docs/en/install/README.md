@@ -180,11 +180,34 @@ Under `RSSHub`'s directory, execute the following commands to pull the latest so
 $ git pull
 ```
 
-Then repeat the installation steps
+Then repeat the installation steps.
+
+### A tip for Nix users
+
+To install nodejs, yarn and jieba (to build documentation) you can use the following `nix-shell` configuration script.
+
+```nix
+let
+    pkgs = import <nixpkgs> {};
+    node = pkgs.nodejs-12_x;
+in pkgs.stdenv.mkDerivation {
+    name = "nodejs-yarn-jieba";
+    buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
+}
+```
 
 ## Deploy to Heroku
 
+### Instant deploy (without automatic update)
+
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
+
+### Automatic deploy upon update
+
+1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
+2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
+3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
+4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
 
 ## Deploy to Vercel(Zeit Now)
 
@@ -325,7 +348,7 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 ### Access Control Configuration
 
-RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes.
+RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
 
 #### White/blacklisting
 
@@ -370,6 +393,8 @@ See the relation between access key/code and white/blacklisting.
 
 `DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
 
+`NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
+
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
 `NODE_NAME`: node name, used for load balancing, identify current node
@@ -384,11 +409,30 @@ See the relation between access key/code and white/blacklisting.
 
 ### Route-specific Configurations
 
+::: tip Notice
+
+Configs here is incomplete.
+
+See docs of specified route and `lib/config.js` for detail information.
+
+:::
+
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
     -   `PIXIV_PASSWORD`: Pixiv password
+    
+    -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
+
+    -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
+    
+    -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
+    
+
+-   pixiv fanbox: Get paid content
+
+    -   `FANBOX_SESSION_ID`: equals to `FANBOXSESSID` in site cookies.
 
 -   disqus: [API Key application](https://disqus.com/api/applications/)
 
@@ -416,7 +460,9 @@ See the relation between access key/code and white/blacklisting.
 
 -   mail:
 
-    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. the value is in the format of `password=password&host=server&port=port`, eg. `password=123456&host=imap.gmail.com&port=993`
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. The value is in the format of `password=password&host=server&port=port`, eg:
+        -   Linux env: `EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
+        -   docker env: `EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
 
 -   nhentai torrent: [Registration](https://nhentai.net/register/)
 
@@ -426,6 +472,12 @@ See the relation between access key/code and white/blacklisting.
 -   discuz cookies
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
+
+-   Mastodon user timeline: apply api here `https://mastodon.example/settings/applications`, please check scope `read:search`
+
+    -   `MASTODON_API_HOST`: api instance domain
+    -   `MASTODON_API_ACCESS_TOKEN`: user access token
+    -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
 
 -   Sci-hub for scientific journal routes:
 

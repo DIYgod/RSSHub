@@ -4,6 +4,25 @@ pageClass: routes
 
 # 科学期刊
 
+## Academy of Management
+
+### Journal
+
+<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['期刊 id，见下表']" supportScihub="1">
+
+| Id        | 名称                                       |
+| --------- | ------------------------------------------ |
+| annals    | Academy of Management Annals               |
+| amd       | Academy of Management Discoveries          |
+| amgblproc | Academy of Management Global Proceedings   |
+| amj       | Academy of Management Journal              |
+| amle      | Academy of Management Learning & Education |
+| amp       | Academy of Management Perspectives         |
+| amproc    | Academy of Management Proceedings          |
+| amr       | Academy of Management Review               |
+
+</Route>
+
 ## arXiv
 
 ### 搜索关键字
@@ -44,6 +63,18 @@ pageClass: routes
 ### 最新成果
 
 <Route author="emdoe HenryQW" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" supportScihub="1"/>
+
+## IEEE Xplore
+
+### 作者
+
+<Route author="queensferryme" example="/ieee/author/37283006000/newest/10" path="/ieee/author/:aid/:sortType/:count?" :paramsDesc="['作者 ID，可以在 URL 中找到，例如 [https://ieeexplore.ieee.org/author/37283006000](https://ieeexplore.ieee.org/author/37283006000)', '排序方式，详细见下', '数量限制，默认为 10 篇']">
+
+| 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
+| ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
+| `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
+
+</Route>
 
 ## Nature 系列
 
@@ -111,7 +142,7 @@ pageClass: routes
 
 ### 最新文章（可筛选领域）
 
-<Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+<Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
 
 -   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
     若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
