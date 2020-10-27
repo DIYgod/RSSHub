@@ -17,4 +17,3 @@ coverage
 .env
 
 .now
-lib/routes/nytimes/entire_index.js
