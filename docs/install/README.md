@@ -207,7 +207,7 @@ in pkgs.stdenv.mkDerivation {
 ### 自动更新部署
 
 1.  将 RSSHub [分叉（fork）](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) 到自己的账户下。
-2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 (例如 `https://github.com/USERNAME/RSSHub`)。
+2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 （例如 `https://github.com/USERNAME/RSSHub`)。
 3.  检查 Heroku 设置，随代码库更新自动部署。
 4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
@@ -328,21 +328,21 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 部分路由反爬严格，可以配置使用代理抓取。
 
-可通过**代理 URI**或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI**中的配置。
+可通过**代理 URI **或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI **中的配置。
 
 #### 代理 URI
 
 `PROXY_URI`: 代理 URI，支持 socks4, socks5, http, https
 
-> 代理 URI 的格式为:
+> 代理 URI 的格式为：
 >
 > -   `{protocol}://{host}:{port}`
-> -   `{protocol}://{username}:{password}@{host}:{port}` (带身份凭证)
+> -   `{protocol}://{username}:{password}@{host}:{port}` （带身份凭证）
 >
-> 一些示例:
+> 一些示例：
 >
 > -   `socks4://127.0.0.1:1080`
-> -   `socks5://user:pass@127.0.0.1:1080` (用户名为 `user`, 密码为 `pass`)
+> -   `socks5://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
 > -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`)
 > -   `http://127.0.0.1:8080`
 > -   `http://user:pass@127.0.0.1:8080`
@@ -420,6 +420,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `DEBUG_INFO`: 是否在首页显示路由信息，默认 `true`
 
+`NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
+
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大 [等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
@@ -482,7 +484,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   bilibili 用户关注视频动态路由
 
-    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：1. 打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8> 2. 打开控制台 3. 切换到 Network 面板 4. 刷新 5. 点击 dynamic_new 请求 6. 找到 Cookie
+    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
+        1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
+        2.  打开控制台，切换到 Network 面板，刷新
+        3.  点击 dynamic_new 请求，找到 Cookie
 
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
@@ -496,7 +501,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   吹牛部落 栏目更新
 
-    -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式：1. 登陆后点开文章正文 2. 打开控制台 3. 刷新 4. 找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求 5. 找到请求头中的 x-member
+    -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
+        1.  登陆后点开文章正文
+        2.  打开控制台，刷新
+        3.  找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求
+        4.  找到请求头中的 x-member
 
 -   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
 
@@ -523,7 +532,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   北大未名 BBS 全站十大
 
-    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开论坛首页 2. 打开控制台 3. 刷新 4. 找到 <https://bbs.pku.edu.cn/v2/home.php> 请求 5. 找到请求头中的 Cookie
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：
+        1.  登录后打开论坛首页
+        2.  打开控制台， 刷新
+        3.  找到 <https://bbs.pku.edu.cn/v2/home.php> 请求
+        4.  找到请求头中的 Cookie
 
 -   nhentai torrent: [注册地址](https://nhentai.net/register/)
 
@@ -532,7 +545,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   discuz cookies 设定
 
-    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 [00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
 
 -   Sci-hub 设置，用于科学期刊路由。
 
@@ -546,13 +559,17 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即可。如果你在进行上述操作时遇到困难，亦可选择在环境设置中填写明文的用户名和密码：
 
-    -   `INITIUM_USERNAME`: 端传媒用户名 (邮箱)
+    -   `INITIUM_USERNAME`: 端传媒用户名 （邮箱）
     -   `INITIUM_PASSWORD`: 端传媒密码
 
 -   BTBYR
 
     -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
-    -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：1. 登录后打开网站首页 2. 打开控制台 3. 刷新 4. 找到 <https://bt.byr.cn/index.php> 请求 5. 找到请求头中的 Cookie
+    -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：
+        1.  登录后打开网站首页
+        2.  打开控制台，刷新
+        3.  找到 <https://bt.byr.cn/index.php> 请求
+        4.  找到请求头中的 Cookie
 
 -   小宇宙：需要 App 登陆后抓包获取相应数据。
 
@@ -571,8 +588,14 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   喜马拉雅
 
-    -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：1. 登陆喜马拉雅网页版 2. 查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
+    -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：
+        1.  登陆喜马拉雅网页版
+        2.  打开控制台，刷新
+        3.  查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
 
 -   4399 论坛
 
-    -   `GAME_4399`: 对应登录后的 cookie 值，获取方式：1. 在 4399 首页登录. 2. 打开开发者工具，切换到 Network 面板. 3. 刷新 4. 查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.
+    -   `GAME_4399`: 对应登录后的 cookie 值，获取方式：
+        1.  在 4399 首页登录。
+        2.  打开开发者工具，切换到 Network 面板，刷新
+        3.  查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.
