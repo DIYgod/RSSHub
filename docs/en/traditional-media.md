@@ -108,6 +108,20 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 </RouteEn>
 
+## ChinaFile
+
+### Reporting & Opinion
+
+<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['Category, by default `all`']">
+
+Generates full-text feeds that the official feed doesn't provide.
+
+| All | The China NGO Project |
+| --- | --------------------- |
+| all | ngo                   |
+
+</RouteEn>
+
 ## NHK
 
 ### News Web Easy
