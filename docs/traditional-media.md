@@ -177,6 +177,14 @@ Solidot 提供的 feed:
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
 
+### 下载
+
+<Route author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+
+下载站：<http://www.cgx02.xyz/index.php?dir=/te>
+
+</Route>
+
 ## Yahoo
 
 ### 新聞
