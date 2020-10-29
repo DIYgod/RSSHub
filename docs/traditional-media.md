@@ -185,6 +185,12 @@ Solidot 提供的 feed:
 
 </Route>
 
+## UDN
+
+### 轉角國際
+
+<Route author="emdoe" example="/udn/global/鏡頭背後" path="/udn/global/:tid" :paramsDesc="['標籤名稱，請在轉角國際首頁獲取；如果選擇輸入 `newest` 則輸出最新文章']">
+
 ## Yahoo
 
 ### 新聞
