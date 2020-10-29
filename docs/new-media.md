@@ -118,6 +118,16 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## Deutsche Welle 德国之声
+
+<Route author="nczitzk" example="/dw/chi" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
+
+| 全部 | 德语媒体 | 文化经纬 | 经济纵横 | 科技环境 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | press    | cul      | eco      | sci      |
+
+</Route>
+
 ## DoNews
 
 ### 栏目
@@ -127,16 +137,6 @@ pageClass: routes
 | 首页 | 商业    | 创业     | 互娱 | 科技       | 专栏    |
 | ---- | ------- | -------- | ---- | ---------- | ------- |
 | (空) | company | business | ent  | technology | idonews |
-
-</Route>
-
-## Deutsche Welle 德国之声
-
-<Route author="nczitzk" example="/dw/chi" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
-
-| 全部 | 德语媒体 | 文化经纬 | 经济纵横 | 科技环境 |     |
-| ---- | -------- | -------- | -------- | -------- | --- |
-| all  | press    | cul      | ent      | eco      | sci |
 
 </Route>
 
