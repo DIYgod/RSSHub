@@ -2778,6 +2778,11 @@ bencode@^2.0.1:
   dependencies:
     safe-buffer "^5.1.1"
 
+bep53-range@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bep53-range/-/bep53-range-1.0.0.tgz#c776736b4669d7762d096f2b9cab735b6f8c7dcd"
+  integrity sha512-CNsnREjxe2/wD559wzFXMycUnbmUDA9C2Bs6Z2tm++amSma7JowAAxAnaZJMuDq3cWSx9HSIbV04H06QQ11zTA==
+
 big.js@^3.1.3:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
@@ -8109,11 +8114,12 @@ lz-string@1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
-magnet-uri@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/magnet-uri/-/magnet-uri-5.3.0.tgz#5dd2efbfcf44c41ce54fe309030bce4ee120b79b"
-  integrity sha512-8GuTc9mXYfaKrXz687kzx2YTEhMR/X1Qgt6tkTNwPlb2fUy3QfU+O9zuoB5DKAa/IyVdLGxe9xSFUtaA+ZG5tQ==
+magnet-uri@^5.4.0:
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/magnet-uri/-/magnet-uri-5.4.0.tgz#5c64d3b8853eafb2f31840df09fbfc90c00f0e1d"
+  integrity sha512-ZpqciThlbvE6KkyT5oxAup/6CwjePw1hdtR8NU5+vq2hn9Sp5b7w3bRiJRvo9fMHUj2dWSuVCdkqt9p4ed1V9Q==
   dependencies:
+    bep53-range "^1.0.0"
     thirty-two "^1.0.2"
 
 mailparser@3.0.0:
@@ -9333,15 +9339,15 @@ parse-json@^5.0.0:
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
 
-parse-torrent@8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-8.0.0.tgz#a608748d0ce7c9477d07a12c764a0aa47413d6f4"
-  integrity sha512-vS6qZtAQbVak2/cbDobmxBLfeBAyuMQEIW315Iq4tyfto8+8vtzMb7j3WG7x1FQkTqBh5hlhF7clINIVW6npJQ==
+parse-torrent@8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-8.1.0.tgz#fd085dc25d56c6b0c9189eeaff330f25aae9f7fd"
+  integrity sha512-NXkqvzo2K3LFwd1LoCa2eqitIrdOyB+2JiwlZXk4Ut9Q63a0xQS5OEs885U6uG9povYLiWeIQbK67Y2rOYfDTg==
   dependencies:
     bencode "^2.0.1"
     blob-to-buffer "^1.2.9"
     get-stdin "^8.0.0"
-    magnet-uri "^5.3.0"
+    magnet-uri "^5.4.0"
     simple-get "^4.0.0"
     simple-sha1 "^3.0.1"
 
