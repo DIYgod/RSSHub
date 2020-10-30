@@ -898,9 +898,35 @@ rule
 
 ## 微博
 
+对于微博内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制输出的样式
+
+| 键                         | 含义                                                           | 接受的值       | 默认值 |
+| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |
+| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |
+| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |
+| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | false  |
+| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                                   | 0/1/true/false | false  |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博）    | 0/1/true/false | true   |
+| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |
+| showTimestampInDescription | 在正文处显示被转发微博的时间戳                                 | 0/1/true/false | false  |
+| widthOfPics                | 微博配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| heightOfPics               | 微博配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |
+| displayVideo               | 是否直接显示微博视频，只在博主 RSS 中有效                      | 0/1/true/false | true   |
+
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+
+    https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150
+
+的效果为
+
+<img src="/readable-weibo.png" alt="微博小秘书的可读微博 RSS">
+
 ### 博主
 
-<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:displayVideo?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '是否直接显示微博视频, 缺省 `1` 显示, 若不需要显示则填 `0` ']" anticrawler="1" radar="1">
+<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']" anticrawler="1" radar="1">
 
 部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
 
@@ -908,7 +934,7 @@ rule
 
 ### 关键词
 
-<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" :paramsDesc="['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 热搜榜
 
@@ -916,9 +942,15 @@ rule
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id/:routeParams?" :paramsDesc="['超话ID', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 个人时间线
+
+::: warning 注意
+
+个人时间线暂不支持改善可读性。
+
+:::
 
 <Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']" anticrawler="1">
 
