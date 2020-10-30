@@ -6,9 +6,9 @@ pageClass: routes
 
 ## 60-Second Science - Scientific American
 
-### Transcript
+<RouteEn author="emdoe" example="/60s-science" path="/60s-science"/>
 
-<RouteEn author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+Full transcript support for better user experience.
 
 ## 99% Invisible
 
