@@ -62,6 +62,9 @@ pageClass: routes
 
 &lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
 
+## 金十数据
+
+<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
 ## 世界经济论坛
 
 ### 报告
