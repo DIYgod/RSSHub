@@ -159,6 +159,18 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#playstation](/game.html#playstation)
 
+## QNAP
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" :paramsDesc="['OS id, see below']">
+
+| QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
+| --- | --------- | --------- | ------------------ | --- | --- | ------ |
+| qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
+
+</RouteEn>
+
 ## RSSHub
 
 ### New routes

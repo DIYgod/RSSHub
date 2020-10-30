@@ -65,6 +65,12 @@ pageClass: routes
 
 <Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" rssbud="1"/>
 
+## 哈尔滨市科技局
+
+### 政务公开
+
+<Route author="XYenon" example="/gov/harbin/kjj" path="/gov/harbin/kjj"/>
+
 ## 联合国
 
 ### 安理会否决了决议
@@ -439,6 +445,18 @@ pageClass: routes
 ### 即時軍事動態
 
 <Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
+
+## 中华人民共和国国家发展和改革委员会
+
+### 新闻动态
+
+<Route author="nczitzk" example="/gov/ndrc/xwdt" path="/gov/ndrc/xwdt/:caty?">
+
+| 新闻发布 | 通知通告 | 委领导动态 | 司局动态 | 地方动态 |
+| -------- | -------- | ---------- | -------- | -------- |
+| xwfb     | tzgg     | wlddt      | sjdt     | dfdt     |
+
+</Route>
 
 ## 中华人民共和国海关总署
 

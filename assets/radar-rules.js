@@ -2293,7 +2293,7 @@
             },
         ],
     },
-    'pknbc.com': {
+    'jjmhw.cc': {
         _name: '漫小肆',
         www: [
             {
