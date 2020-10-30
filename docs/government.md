@@ -65,6 +65,12 @@ pageClass: routes
 
 <Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" rssbud="1"/>
 
+## 哈尔滨市科技局
+
+### 政务公开
+
+<Route author="XYenon" example="/gov/harbin/kjj" path="/gov/harbin/kjj"/>
+
 ## 联合国
 
 ### 安理会否决了决议

@@ -519,6 +519,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
     -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
+-   MiniFlux 全部路由：
+    -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的[付费服务地址](https://reader.miniflux.app)
+    -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取
+
 -   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
     -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
