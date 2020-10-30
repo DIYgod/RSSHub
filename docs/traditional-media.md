@@ -185,6 +185,16 @@ Solidot 提供的 feed:
 
 </Route>
 
+## The Wall Street Journal (WSJ)
+
+### 新闻
+
+<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['语言，暂时仅限 `en-us`', '分类，见[WSJ 官网 RSS 分类](https://www.wsj.com/news/rss-news-and-feeds)']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</Route>
+
 ## UDN
 
 ### 轉角國際
