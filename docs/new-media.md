@@ -120,7 +120,7 @@ pageClass: routes
 
 ## Deutsche Welle 德国之声
 
-<Route author="nczitzk" example="/dw/chi" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
+<Route author="nczitzk" example="/dw/zh" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
 
 | 全部 | 德语媒体 | 文化经纬 | 经济纵横 | 科技环境 |
 | ---- | -------- | -------- | -------- | -------- |
