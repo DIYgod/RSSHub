@@ -62,6 +62,9 @@ pageClass: routes
 
 &lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
 
+## 金十数据
+
+<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
 ## 世界经济论坛
 
 ### 报告
@@ -157,6 +160,16 @@ pageClass: routes
 | 数据 | 机器人新闻 |
 | ---- | ---------- |
 | data | jqrxw      |
+
+</Route>
+
+### 快讯
+
+<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+
+| 快讯 | e 公司 | 研报 | 时事 | 财经 |
+| ---- | ------ | ---- | ---- | ---- |
+|      | egs    | yb   | ss   | cj   |
 
 </Route>
 

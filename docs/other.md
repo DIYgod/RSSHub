@@ -121,6 +121,51 @@ pageClass: routes
 
 <Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
+## MiniFlux
+
+因需设置 API Key，故请自行架设 RSSHub。API 密钥则请于 MiniFlux 实例中的 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取。
+
+### 订阅列表
+
+<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" :paramsDesc="['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']">
+
+1.  如无指定参数，默认输出全部订阅源
+2.  分类 ID 或订阅源 ID 请于`分类`（快捷键 `g` `c`）或`源`（快捷键 `g` `f`）页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。
+3.  支持分类名称和分类 ID，如需输出多个分类，请重复输入 `category=` 并用 `&` 连接，或者不同的分类名之间直接用**英文**逗号连接。举例来说，可以通过 `/miniflux/subscription/category=科技&category=1` 或者 `/miniflux/subscription/categories=科技,1` 实现订阅。
+4.  支持指定订阅源名称或订阅源 ID，方法与分类的设定类似。举例来说，可以通过 `/miniflux/subscription/feed=1&feed=Archdaily` 或者 `/miniflux/subscription/feeds=1,Archdaily` 实现订阅。
+5.  支持同时指定订阅源信息和分类信息，将输出满足分类选项的订阅源信息。考虑一例：通过 `/miniflux/subscription/feeds=1,archdaily&category=art,7`，则如果订阅源 ID 为 1 或者订阅源名称为 ArchDaily 确实在分类 `art` 或者分类 ID 为 7 的分类下，则输出该订阅源信息。
+
+</Route>
+
+### 获取订阅源内容
+
+<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" :paramsDesc="['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']">
+
+1.  支持获取全部内容：即可通过 `/miniflux/all` 或 `/miniflux/default` 等关键字获取全部订阅源下的内容。
+2.  支持通过订阅源的 ID 获取指定订阅源的订阅内容，订阅源 ID 请于`源`（快捷键 `g` `f`）所在的页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。而格式上有如下选择：
+    1.  支持 `/miniflux/feed=[feed_id]`，请将 `[feed_id]` 替换为实际订阅的订阅源 ID（注意不包含括号，即单纯为一个数字）
+    2.  支持 `/miniflux/feed=[feed1_id]&feed=[feed2_id]` 或 `/miniflux/feeds=[feed1_id]&[feed2_id]` 订阅多个订阅源
+    3.  以上还支持简写，即直接使用订阅源 ID：`/miniflux/[feed1_id]&[feed2_id]`
+3.  可进一步根据需要，指定参数：
+    1.  支持 MiniFlux 提供的所有参数[选项](https://miniflux.app/docs/api.html#endpoint-get-feed-entries)。同其文档所注相同，多个过滤选项之间请用 `&` 连接。除去 `status` 外，多个相同的过滤选项应只会读取第一个。
+    2.  特别的，本路由将默认指定排序方式为从新到旧排序（`direction=desc`）。
+    3.  此外，本路由另支持额外的选项，包括：
+        1.  利用 `feed_name` 参数控制标题格式，`feed_name=1` 即输出的每一篇标题会变为 `文章标题 | 订阅源名称`，默认为 `feed_name=0`，即只输出文章标题。
+        2.  利用 `mark` 参数控制在 RSSHub 获取订阅内容之后的动作，包括维持不变（`unchanged`，默认），标记为已读（`read`），移除（`removed`），以及标记为未读（`unread`）。**注意，请不要将标记为已读简单的理解为是用于实现某种同步服务的**，这个功能更像是在辅助 MiniFlux 的自动清理功能。
+        3.  未来可能会支持利用 `link` 参数控制输出内容的网址（支持这个功能需要 MiniFlux 未来提供相应的接口），设定为通过 MiniFlux 实体的分享功能生成的网址或原始内容的网址。请注意，如果利用 MiniFlux 的分享功能，这些文章内容均不会被自动清理。
+        4.  可以通过 `limit` 参数控制输出内容的数量，默认输出全部符合其它条件的所有内容，但**建议用户设置该参数**。不过众所周知，RSSHub 提供全局参数 `?limit` 控制输出内容的数量，但如果用户存在设置错误，则可能出现一些奇怪的问题：不妨考虑用户的参数设定为 `miniflux/all/limit=5&status=unread&mark=read?limit=3`，那么则有两篇用户未读的文章自动被标记为已读，用户却很可能从未发现。为避免出现这样的情形，本路由对该参数的设定作出如下调整：
+            1.  选择输出全部内容时，如果同时设定两个参数，则取设定数值较小的那个，否则按照用户设定控制输出内容的数量。
+            2.  选择输出指定订阅源时，`&limit=` 参数控制**每一个**订阅源的输出数量，`?limit=` 控制**最终**输出内容的数量。不妨假设用户指定聚合两个订阅源，那么 `/miniflux/1&2/mark=read&limit=3` 与 `/miniflux/1&2/mark=read?limit=6` 的效果相同，除非
+            3.  用户设定的 `&limit` 值小于 `?limit`，路由会以 `&limit` 设定为准：即最终输出内容数量 = `&limit` 参数值 \* 订阅源数量，或者如果
+            4.  用户设定的 `&limit` 值大于 `?limit` 参数，又或者 `?limit` 参数并非是订阅源数量的整数倍，则路由将用 `?limit` 参数除去订阅源数量，并向下取整，每个订阅源将输出所得数字篇内容（如果得数为 0，则修改为每个订阅源输出 1 篇文章）。
+            5.  考虑一例：`/miniflux/1&2&3/status=unread&limit=2?limit=5` 或 `/miniflux/1&2&3/status=unread&limit=2?limit=7`，最终的输出结果均为 `/miniflux/1&2&3/status=unread&limit=2`，等效于 `/miniflux/1&2&3/status=unread?limit=6`
+            6.  考虑另一例：`/miniflux/1&2&3/status=unread?limit=2`，因为 2 / 3 ≈ 0.667 -> 0 -> 1，所以等效于 `/miniflux/1&2&3/status=unread?limit=3`，亦等效于 `/miniflux/1&2&3/status=unread&limit=1`
+        5.  以上选项均与 MiniFlux 的 API 的行为保持一致，如果用户错误重复设定某参数，只读取第一个设定的值。
+
+一例：如果用户希望输出全部订阅源中，最旧的两篇未读的文章，并希望在文章的标题栏显示订阅源的名字，同时希望输出内容在 MiniFlux 中被标为已读，那么路由设置应为：`/miniflux/all/direction=asc&status=unread&feed_name=1&mark=read&limit=2`
+
+</Route>
+
 ## MITRE
 
 ### 全部出版物
@@ -852,6 +897,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 房源
 
 <Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
+
+## 佐川急便
+
+### 查询快递
+
+<Route author="nczitzk" example="/sagawa/359554419420" path="/sagawa/:id" :paramsDesc="['快递编号']"/>
 
 ## はてな
 
