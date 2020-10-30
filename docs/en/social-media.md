@@ -161,13 +161,46 @@ Due to Twitter API restrictions, the Twitter Routes currently supports tweets wi
 
 :::
 
+Specify options (in query string's format) in parameter `routeParams` to control some extra features for Tweets
+
+| Key    | Description | Accepts | Defaults to |
+| ------ | ----------- | ------- | ------------ |
+| readable                  | Enable readable layout    | 0/1/true/false | false |
+| authorNameBold            | Display author name in bold | 0/1/true/false | false |
+| showAuthorInTitle         | Show author name in title | 0/1/true/false | false (true in `/twitter/followings`) |
+| showAuthorInDesc          | Show author name in description (RSS body) | 0/1/true/false | false (true in `/twitter/followings`) |
+| showQuotedAuthorAvatarInDesc | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | 0/1/true/false | false |
+| showAuthorAvatarInDesc    | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)| 0/1/true/false | false |
+| showEmojiForRetweetAndReply | Use "🔁" instead of "Rt", "↩️" & "💬" instead of "Re" | 0/1/true/false | false |
+| showRetweetTextInTitle    | Show quote comments in title | 0/1/true/false | true |
+| addLinkForPics           | Add clickable links for Tweet pictures | 0/1/true/false | false |
+| showTimestampInDescription| Show timestamp in description | 0/1/true/false | false |
+| showQuotedInTitle         | Show quoted tweet in title    | 0/1/true/false | false |
+| widthOfPics               | Width of Tweet pictures | Unspecified/Integer      | Unspecified |
+| heightOfPics              | Height of Tweet pictures | Unspecified/Integer | Unspecified |
+| sizeOfAuthorAvatar        | Size of author's avatar | Integer | 48 |
+| sizeOfQuotedAuthorAvatar  | Size of quoted tweet's author's avatar | Integer | 24 |
+| excludeReplies            | Exclude replies, only available in "User timeline" | 0/1/true/false | false |
+| includeRts                | Include retweets, only available in "User timeline" | 0/1/true/false | true |
+| count                     | `count` parameter passed to Twitter API, only available in "User timeline" | Unspecified/Integer | Unspecified |
+
+Specify different option values than default values to improve readablility. The URL
+
+```
+https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
+```
+
+generates
+
+<img src="/readable-twitter.png" alt="Readable Twitter RSS of Durov">
+
 ### User timeline
 
-<RouteEn path="/twitter/user/:id/:type?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'Extra options `exclude_replies` exclude replies,`exclude_rts` exclude retweets,`exclude_rts_replies` exclude replies and retweets, for default include all.']" radar="1" rssbud="1"/>
+<RouteEn path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
 
 ## User following timeline
 
-<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['user id']" radar="1" rssbud="1">
+<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['user id', 'extra parameters, see the table above']" radar="1" rssbud="1">
 
 ::: warning
 
@@ -179,15 +212,15 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 
 ### List timeline
 
-<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['user name', 'list name']" radar="1" rssbud="1"/>
+<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['user name', 'list name', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### User likes
 
-<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['user name']" radar="1" rssbud="1"/>
+<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" :paramsDesc="['user name', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### Keyword
 
-<RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['keyword']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" :paramsDesc="['keyword', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### Trends
 
