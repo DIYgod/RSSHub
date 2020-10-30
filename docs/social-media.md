@@ -593,7 +593,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 一周口碑榜
 
-<Route author="umm233" example="/douban/movie/weekly" path="/douban/movie/weekly"/>
+<Route author="umm233 nczitzk" example="/douban/movie/weekly" path="/douban/movie/weekly/:type?" :paramsDesc="['分类，可在榜单页 URL 中找到，默认为一周口碑电影榜']">
+
+| 一周口碑电影榜    | 一周口碑剧集榜 | 华语口碑剧集榜         |
+| ----------------- | -------------- | ---------------------- |
+| movie_weekly_best | tv_weekly_best | tv_chinese_best_weekly |
+
+</Route>
 
 ### 豆瓣电影分类
 
