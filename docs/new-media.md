@@ -527,6 +527,20 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
+## 報道者
+
+### 最新
+
+<Route author="emdoe" example="/twreporter/newest" path="/twreporter/newest"/>
+
+### 摄影
+
+<Route author="emdoe" example="/twreporter/photography" path="/twreporter/photography"/>
+
+### 分类
+
+<Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" :paramsDesc="['分类（议题）名称，于主页获取']"/>
+
 ## 本地宝
 
 ### 焦点资讯
