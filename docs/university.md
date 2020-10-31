@@ -1641,6 +1641,30 @@ type 列表：
 
 <Route author="nczitzk" example="/xjtu/gs/tzgg" path="/xjtu/gs/tzgg" />
 
+## 西北工业大学
+
+### 翱翔门户
+
+::: tip 提示
+
+翱翔门户只有登录才能访问，所以需要 Token，Token 获取方法：F12 进入控制台，
+输入`document.cookie`获取 cookie，其中`xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`字段的为所需要的 Token。
+
+注意：token 退出登录会失效，建议浏览器隐身模式登录翱翔门户获取 Cookie 之后退出浏览器。
+
+因为 Token 不宜公开，暂不提供示例。
+
+:::
+<Route author="WhoIsSure" example="/nwpu/token/10001" path="/nwpu/:token/:column" :paramsDesc="['Token', '栏目ID']">
+
+栏目 ID
+
+| 咨询中心 | 通知公告 | 校内新闻 | 校务公开 | 历史文件查询 | 教育教学 | 学术交流 | 学院动态 | 部门动态 |
+| -------- | -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- |
+| 10000    | 10001    | 10002    | 10003    | 10004        | 10005    | 10006    | 10007    | 10008    |
+
+</Route>
+
 ## 西南财经大学
 
 ### 经济信息工程学院
