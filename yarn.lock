@@ -8114,10 +8114,10 @@ lz-string@1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
-magnet-uri@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/magnet-uri/-/magnet-uri-5.4.0.tgz#5c64d3b8853eafb2f31840df09fbfc90c00f0e1d"
-  integrity sha512-ZpqciThlbvE6KkyT5oxAup/6CwjePw1hdtR8NU5+vq2hn9Sp5b7w3bRiJRvo9fMHUj2dWSuVCdkqt9p4ed1V9Q==
+magnet-uri@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/magnet-uri/-/magnet-uri-6.0.0.tgz#da0b9f4ce8240c5650de5fe1690faf6e2770c924"
+  integrity sha512-p9wst4k4u0seE7yPonAPKIUTaiC+fm706o2D8FrNoBalK5CcQdU4hB+RHQTqfIISYkFp0nZzsgyKPacPa6Yg/g==
   dependencies:
     bep53-range "^1.0.0"
     thirty-two "^1.0.2"
@@ -9339,15 +9339,15 @@ parse-json@^5.0.0:
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
 
-parse-torrent@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-8.1.0.tgz#fd085dc25d56c6b0c9189eeaff330f25aae9f7fd"
-  integrity sha512-NXkqvzo2K3LFwd1LoCa2eqitIrdOyB+2JiwlZXk4Ut9Q63a0xQS5OEs885U6uG9povYLiWeIQbK67Y2rOYfDTg==
+parse-torrent@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.0.0.tgz#3d5bbe8d0337b2aa3a40c9d6948345b544082c34"
+  integrity sha512-Er+VA8XwlGbuwEwss7LYIbWZRYvttS1c+0Td6FMxZhIog/0HDlU3A3qbRfL+1aOSM+L+kGL544yRoGbpTRWPsQ==
   dependencies:
     bencode "^2.0.1"
     blob-to-buffer "^1.2.9"
     get-stdin "^8.0.0"
-    magnet-uri "^5.4.0"
+    magnet-uri "^6.0.0"
     simple-get "^4.0.0"
     simple-sha1 "^3.0.1"
 
