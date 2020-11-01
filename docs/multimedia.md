@@ -459,7 +459,7 @@ pageClass: routes
 
 <Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
 
-## Youtube
+## YouTube
 
 见 [#youtube](/social-media.html#youtube)
 

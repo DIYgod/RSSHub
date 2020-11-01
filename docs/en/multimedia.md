@@ -113,6 +113,6 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['User name']" />
 
-## Youtube
+## YouTube
 
 Refer to [#youtube](/en/social-media.html#youtube)
