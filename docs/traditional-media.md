@@ -91,6 +91,18 @@ pageClass: routes
 
 </Route>
 
+## ChinaFile
+
+<Route author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['分类，默认 `all`']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+| 全部 | The China NGO Project |
+| ---- | --------------------- |
+| all  | ngo                   |
+
+</Route>
+
 ## e 公司
 
 ### 快讯
