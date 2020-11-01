@@ -227,11 +227,11 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### News
 
-<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['Language, `en-us` only for now', 'Category, see [RSS feeds in WSJ.com](https://www.wsj.com/news/rss-news-and-feeds)']">
+<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['Language, `en-us` only for now', 'Category, see [RSS feeds in WSJ.com](https://www.wsj.com/news/rss-news-and-feeds)']">
 
 Provide full article RSS for WSJ topics.
 
-</Route>
+</RouteEn>
 
 ## Yahoo
 
