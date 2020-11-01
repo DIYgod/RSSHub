@@ -981,6 +981,18 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/kuaibao" path="/kuaibao/index"/>
 
+## 科技島讀
+
+### 分類
+
+<Route author="nczitzk" example="/daodu" path="/daodu/:caty?" :paramsDesc="['分類，默認為全部']">
+
+| 全部 | 文章    | Podcast |
+| ---- | ------- | ------- |
+| all  | article | podcast |
+
+</Route>
+
 ## 快科技（原驱动之家）
 
 ### 最新新闻
