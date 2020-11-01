@@ -226,7 +226,7 @@ This route requires Twitter token's corresponding id, therefore it's only availb
 
 <RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']" radar="1" rssbud="1"/>
 
-## Youtube
+## YouTube
 
 ::: tip Tiny Tiny RSS users please notice
 

@@ -118,6 +118,16 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## Deutsche Welle 德国之声
+
+<Route author="nczitzk" example="/dw/zh" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
+
+| 全部 | 德语媒体 | 文化经纬 | 经济纵横 | 科技环境 |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | press    | cul      | eco      | sci      |
+
+</Route>
+
 ## DoNews
 
 ### 栏目
@@ -527,6 +537,20 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
+## 報道者
+
+### 最新
+
+<Route author="emdoe" example="/twreporter/newest" path="/twreporter/newest"/>
+
+### 摄影
+
+<Route author="emdoe" example="/twreporter/photography" path="/twreporter/photography"/>
+
+### 分类
+
+<Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" :paramsDesc="['分类（议题）名称，于主页获取']"/>
+
 ## 本地宝
 
 ### 焦点资讯
@@ -751,9 +775,21 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-### 观察者风闻话题
+### 风闻话题
 
-<Route author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+<Route author="occupy5 nczitzk" example="/guancha/topic/110/1" path="/guancha/topic/:id?/:order?" :paramsDesc="['话题 id，可在URL中找到，默认为全部，即为 `0`', '排序参数，见下表']">
+
+| 最新回复 | 最新发布 | 24 小时最热 | 3 天最热 | 7 天最热 | 3 个月最热 | 专栏文章 |
+| -------- | -------- | ----------- | -------- | -------- | ---------- | -------- |
+| 1        | 2        | 3           | 6        | 7        | 8          | 5        |
+
+::: tip 提示
+
+仅在话题 id 为 0，即选择 全部 时，**3 个月最热**、**24 小时最热**、**3 天最热**、**7 天最热** 和 **专栏文章** 参数生效。
+
+:::
+
+</Route>
 
 ### 个人主页文章
 

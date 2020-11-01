@@ -91,6 +91,18 @@ pageClass: routes
 
 </Route>
 
+## ChinaFile
+
+<Route author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['分类，默认 `all`']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+| 全部 | The China NGO Project |
+| ---- | --------------------- |
+| all  | ngo                   |
+
+</Route>
+
 ## e 公司
 
 ### 快讯
@@ -182,6 +194,16 @@ Solidot 提供的 feed:
 <Route author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
 
 下载站：<http://www.cgx02.xyz/index.php?dir=/te>
+
+</Route>
+
+## The Wall Street Journal (WSJ)
+
+### 新闻
+
+<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['语言，暂时仅限 `en-us`', '分类，见[WSJ 官网 RSS 分类](https://www.wsj.com/news/rss-news-and-feeds)']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 </Route>
 

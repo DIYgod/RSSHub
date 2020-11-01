@@ -108,6 +108,20 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 </RouteEn>
 
+## ChinaFile
+
+### Reporting & Opinion
+
+<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['Category, by default `all`']">
+
+Generates full-text feeds that the official feed doesn't provide.
+
+| All | The China NGO Project |
+| --- | --------------------- |
+| all | ngo                   |
+
+</RouteEn>
+
 ## NHK
 
 ### News Web Easy
@@ -206,6 +220,16 @@ Provides a better reading experience (full text articles) over the official one.
 | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
 | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
 | (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+
+</RouteEn>
+
+## The Wall Street Journal (WSJ)
+
+### News
+
+<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['Language, `en-us` only for now', 'Category, see [RSS feeds in WSJ.com](https://www.wsj.com/news/rss-news-and-feeds)']">
+
+Provide full article RSS for WSJ topics.
 
 </RouteEn>
 
