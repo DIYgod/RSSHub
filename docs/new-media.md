@@ -761,9 +761,21 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-### 观察者风闻话题
+### 风闻话题
 
-<Route author="occupy5" example="/guancha/topic/113" path="/guancha/topic/:id" :paramsDesc="['话题id， 可在URL中找到']" />
+<Route author="occupy5 nczitzk" example="/guancha/topic/110/1" path="/guancha/topic/:id?/:order?" :paramsDesc="['话题 id，可在URL中找到，默认为全部，即为 `0`', '排序参数，见下表']">
+
+| 最新回复 | 最新发布 | 24 小时最热 | 3 天最热 | 7 天最热 | 3 个月最热 | 专栏文章 |
+| -------- | -------- | ----------- | -------- | -------- | ---------- | -------- |
+| 1        | 2        | 3           | 6        | 7        | 8          | 5        |
+
+::: tip 提示
+
+仅在话题 id 为 0，即选择 全部 时，**3 个月最热**、**24 小时最热**、**3 天最热**、**7 天最热** 和 **专栏文章** 参数生效。
+
+:::
+
+</Route>
 
 ### 个人主页文章
 
