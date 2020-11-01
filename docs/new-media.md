@@ -763,7 +763,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 风闻话题
 
-<Route author="occupy5 nczitzk" example="/guancha/topic/113/1" path="/guancha/topic/:id?/:order?" :paramsDesc="['话题 id，可在URL中找到，默认为全部，即为 `0`', '排序参数，见下表']">
+<Route author="occupy5 nczitzk" example="/guancha/topic/110/1" path="/guancha/topic/:id?/:order?" :paramsDesc="['话题 id，可在URL中找到，默认为全部，即为 `0`', '排序参数，见下表']">
 
 | 最新回复 | 最新发布 | 24 小时最热 | 3 天最热 | 7 天最热 | 3 个月最热 | 专栏文章 |
 | -------- | -------- | ----------- | -------- | -------- | ---------- | -------- |
