@@ -440,6 +440,16 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+## 福州大学
+
+### 教务处教务通知
+
+<Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/jxtz"/>
+
+### 教务处专家讲座
+
+<Route author="Lao-Liu233" example="/fzu/zjjz" path="/fzu/zjjz"/>
+
 ## 广东工业大学
 
 ### 校内新闻网
