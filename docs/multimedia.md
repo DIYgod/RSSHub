@@ -12,9 +12,9 @@ pageClass: routes
 
 ## 60-Second Science - Scientific American
 
-### Transcript
+<Route author="emdoe" example="/60s-science" path="/60s-science"/>
 
-<Route author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+输出 Transcript 从而提供比官方（podcast）更好的使用体验。
 
 ## 99% Invisible
 
