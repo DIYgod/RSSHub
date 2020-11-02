@@ -63,6 +63,25 @@ pageClass: routes
 
 :::
 
+## CNTV 栏目
+
+::: tip 提示
+
+栏目 ID 查找示例: 
+打开栏目具体某一期页面，F12 控制台输入`column_id`得到栏目 ID。
+
+:::
+
+<Route author="WhoIsSure" example="/cntv/TOPC1451528971114112" path="/cntv/:column" :paramsDesc="['栏目ID, 可在对应CNTV栏目页面找到']">
+
+栏目
+
+| 新闻联播             | 新闻周刊             | 天下足球             |
+| -------------------- | -------------------- | -------------------- |
+| TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |
+
+</Route>
+
 ## EZTV
 
 ::: tip 提示
