@@ -97,6 +97,16 @@ pageClass: routes
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
+## Grand-Challenge
+
+### Challenge 列表
+
+<Route author="WhoIsSure" example="/grandchallenge/challenges" path="/grandchallenge/challenges"/>
+
+### 用户参加的 Challenge
+
+<Route author="WhoIsSure" example="/grandchallenge/user/Isensee" path="/grandchallenge/user/:id" :paramsDesc="['用户ID,必选-用户页面网址里面的用户ID']"/>
+
 ## HackerOne
 
 ### HackerOne Hacker Activity
