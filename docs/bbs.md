@@ -439,6 +439,12 @@ pageClass: routes
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
 
+### 用户帖子
+
+<Route author="humpylin" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" />
+
+用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
+
 ## 万维读者
 
 ### 焦点新闻
