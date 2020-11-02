@@ -442,7 +442,7 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ## 福州大学
 
-### 教务处教务通知
+### 教务处教学通知
 
 <Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/jxtz"/>
 
