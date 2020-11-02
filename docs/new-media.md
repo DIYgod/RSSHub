@@ -537,7 +537,7 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
-## 報道者
+## 報導者
 
 ### 最新
 
