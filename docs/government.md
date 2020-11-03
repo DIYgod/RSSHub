@@ -59,11 +59,17 @@ pageClass: routes
 
 ### 列表
 
-<Route author="y2361547758" example="/gov/nppa/317" path="/gov/nppa/:channel" :paramsDesc="['栏目名id']" radar="1" />
+<Route author="y2361547758" example="/gov/nppa/317" path="/gov/nppa/:channel" :paramsDesc="['栏目名id']" radar="1" rssbud="1"/>
 
 ### 详情
 
-<Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" />
+<Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" rssbud="1"/>
+
+## 哈尔滨市科技局
+
+### 政务公开
+
+<Route author="XYenon" example="/gov/harbin/kjj" path="/gov/harbin/kjj"/>
 
 ## 联合国
 
@@ -71,11 +77,29 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 泉州市跨境电子商务协会
+
+### 新闻动态
+
+<Route author="nczitzk" example="/qzcea" path="/qzcea/:caty?" :paramsDesc="['分类 id，默认为 1']">
+
+| 新闻动态 | 协会动态 | 通知公告 | 会员风采 | 政策法规 | 电商资讯 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 5        | 14       | 18       |
+
+</Route>
+
 ## 日本国外務省
 
 ### 記者会見
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
+
+## 世界贸易组织
+
+### 争端解决新闻
+
+<Route author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" :paramsDesc="['年份，默认为当前年份']"/>
 
 ## 苏州市人民政府
 
@@ -120,6 +144,16 @@ pageClass: routes
 ### 最新通知
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
+
+## 中国人大网
+
+<Route author="233yeee" example="/npc/c183" path="/npc/:caty" :paramsDesc="['分类名，支持形如`http://www.npc.gov.cn/npc/*/list.shtml`的网站，传入 npc 之后的参数']">
+
+| 立法 | 监督 | 代表 | 理论 | 权威发布 | 滚动新闻 |
+| ---- | ---- | ---- | ---- | -------- | -------- |
+| c183 | c184 | c185 | c189 | c12435   | c10134   |
+
+</Route>
 
 ## 中国信息通信研究院
 
@@ -368,6 +402,12 @@ pageClass: routes
 
 * * *
 
+#### 马来西亚 `MY`
+
+-   大使馆: `/embassy/my`
+
+* * *
+
 #### 新加坡 `SG`
 
 -   大使馆: `/embassy/sg`
@@ -399,6 +439,24 @@ pageClass: routes
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+## 中華民國國防部
+
+### 即時軍事動態
+
+<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
+
+## 中华人民共和国国家发展和改革委员会
+
+### 新闻动态
+
+<Route author="nczitzk" example="/gov/ndrc/xwdt" path="/gov/ndrc/xwdt/:caty?">
+
+| 新闻发布 | 通知通告 | 委领导动态 | 司局动态 | 地方动态 |
+| -------- | -------- | ---------- | -------- | -------- |
+| xwfb     | tzgg     | wlddt      | sjdt     | dfdt     |
+
+</Route>
 
 ## 中华人民共和国海关总署
 

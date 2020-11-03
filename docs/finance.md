@@ -62,6 +62,25 @@ pageClass: routes
 
 &lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
 
+## 金十数据
+
+<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+## 世界经济论坛
+
+### 报告
+
+<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" :paramsDesc="['语言，见下表，默认为 `en`', '年份，对应年份过滤条件，默认为 `所有`', '平台，对应平台过滤条件，默认为 `所有`']">
+
+语言
+
+| English | Español | Français | 中文 | 日本語 |
+| ------- | ------- | -------- | ---- | ------ |
+| en      | es      | fr       | cn   | jp     |
+
+年份 和 平台 这两个参数请参见 [报告页](https://www.weforum.org/reports) 过滤条件处。
+
+</Route>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
@@ -119,6 +138,38 @@ pageClass: routes
 | 公告         | 新闻 | 研报     |
 | ------------ | ---- | -------- |
 | announcement | news | research |
+
+</Route>
+
+## 证券时报网
+
+### 要闻
+
+<Route author="nczitzk" example="/stcn/news" path="/stcn/news/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+
+| 要闻 | 滚动 | 深度 | 评论 |
+| ---- | ---- | ---- | ---- |
+| news | gd   | sd   | pl   |
+
+</Route>
+
+### 数据
+
+<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
+
+| 数据 | 机器人新闻 |
+| ---- | ---------- |
+| data | jqrxw      |
+
+</Route>
+
+### 快讯
+
+<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+
+| 快讯 | e 公司 | 研报 | 时事 | 财经 |
+| ---- | ------ | ---- | ---- | ---- |
+|      | egs    | yb   | ss   | cj   |
 
 </Route>
 

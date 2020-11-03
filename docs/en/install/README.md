@@ -393,6 +393,8 @@ See the relation between access key/code and white/blacklisting.
 
 `DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
 
+`NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
+
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
 `NODE_NAME`: node name, used for load balancing, identify current node
@@ -407,11 +409,30 @@ See the relation between access key/code and white/blacklisting.
 
 ### Route-specific Configurations
 
+::: tip Notice
+
+Configs here is incomplete.
+
+See docs of specified route and `lib/config.js` for detail information.
+
+:::
+
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_USERNAME`: Pixiv username
 
     -   `PIXIV_PASSWORD`: Pixiv password
+    
+    -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
+
+    -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
+    
+    -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
+    
+
+-   pixiv fanbox: Get paid content
+
+    -   `FANBOX_SESSION_ID`: equals to `FANBOXSESSID` in site cookies.
 
 -   disqus: [API Key application](https://disqus.com/api/applications/)
 

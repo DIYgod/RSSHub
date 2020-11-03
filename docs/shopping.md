@@ -10,6 +10,32 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## AppSales
+
+### Apps
+
+<Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" :paramsDesc="['分类，默认为 `highlights`', '时间，默认为 `24h`']">
+
+分类
+
+| Highlights | Active Sales | Now Free | Watchlist Charts |
+| ---------- | ------------ | -------- | ---------------- |
+| highlights | activesales  | nowfree  | mostwanted       |
+
+时间
+
+| 最近一天 | 最近一周 | 所有时间 |
+| -------- | -------- | -------- |
+| 24h      | week     | alltime  |
+
+::: tip 提示
+
+参数 `time` 仅在选择 `mostwanted` 作为分类的时候有效。
+
+:::
+
+</Route>
+
 ## Furstar
 
 ### 最新售卖角色列表
@@ -39,6 +65,18 @@ Transform any search into a feed.
 <Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
 
 For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015>, the query is `category=10&locations=Paris_75015`
+
+</Route>
+
+## Mercari
+
+### 商品
+
+<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" :paramsDesc="['类型，可选 `category` 指按类别浏览，`brand` 指按品牌浏览，`search` 指搜索关键词浏览', 'id，可在对应分类或品牌页 URL 中找到。若选择 `search` 作为 `type` 则此处填写关键词']">
+
+所有分类参见 [分类清单](https://www.mercari.com/jp/category/)
+
+所有品牌参见 [品牌清单](https://www.mercari.com/jp/brand/)
 
 </Route>
 
@@ -141,11 +179,11 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 关键词
 
-<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']" radar="1"/>
+<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']" radar="1" rssbud="1"/>
 
 ### 排行榜
 
-<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1">
+<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1" rssbud="1">
 
 -   榜单类型
 

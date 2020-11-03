@@ -42,6 +42,42 @@
                 source: '/:uid',
                 target: '/bilibili/user/video/:uid',
             },
+            {
+                title: 'UP 主专栏',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/article/:uid',
+            },
+            {
+                title: 'UP 主默认收藏夹',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/fav/:uid',
+            },
+            {
+                title: 'UP 主投币视频',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/coin/:uid',
+            },
+            {
+                title: 'UP 主粉丝',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/followers/:uid',
+            },
+            {
+                title: 'UP 主关注用户',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/followings/:uid',
+            },
+            {
+                title: '用户追番列表',
+                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                source: '/:uid',
+                target: '/bilibili/user/bangumi/:uid',
+            },
         ],
         manga: [
             {
@@ -169,7 +205,7 @@
         ],
     },
     'youtube.com': {
-        _name: 'Youtube',
+        _name: 'YouTube',
         www: [
             {
                 title: '用户',
@@ -1829,6 +1865,12 @@
                 source: '/mp/homepage',
                 target: (params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}`,
             },
+            {
+                title: '微信公众号话题',
+                docs: 'https://docs.rsshub.app/new-media.html#wei-xin-gong-zhong-hao-wen-zhang-hua-ti-tag',
+                source: '/mp/appmsgalbum',
+                target: (params, url) => `/wechat/mp/msgalbum/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('album_id')}`,
+            },
         ],
         egame: [
             {
@@ -2251,9 +2293,9 @@
             },
         ],
     },
-    'manxiaosi.com': {
+    'jjmhw.cc': {
         _name: '漫小肆',
-        '.': [
+        www: [
             {
                 title: '漫画更新',
                 docs: 'https://docs.rsshub.app/anime.html#man-xiao-si',
@@ -2269,13 +2311,36 @@
                 title: '博客',
                 docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-bo-ke',
                 source: '/myblog/:id',
-                target: 'wenxuecity/blog/:id',
+                target: '/wenxuecity/blog/:id',
             },
             {
                 title: '博客',
                 docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-bo-ke',
                 source: '/myoverview/:id',
-                target: 'wenxuecity/blog/:id',
+                target: '/wenxuecity/blog/:id',
+            },
+        ],
+        bbs: [
+            {
+                title: '最新主题',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-zui-xin-zhu-ti',
+                source: '/:cat',
+                target: '/wenxuecity/bbs/:cat',
+            },
+            {
+                title: '最新主题 - 精华区',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-zui-xin-zhu-ti',
+                source: '/:cat',
+                target: '/wenxuecity/bbs/:cat/1',
+            },
+            {
+                title: '最热主题',
+                docs: 'https://docs.rsshub.app/bbs.html#wen-xue-cheng-zui-re-zhu-ti',
+                source: '/?cid=*',
+                target: (params, url, document) => {
+                    const cid = document && new URL(document.location).searchParams.get('cid');
+                    return `/wenxuecity/hot/${cid}`;
+                },
             },
         ],
     },
@@ -2298,6 +2363,17 @@
                 docs: 'https://docs.rsshub.app/blog.html#jian-ning-xian-tan',
                 source: '/*',
                 target: '/blogs/jianning',
+            },
+        ],
+    },
+    'eventernote.com': {
+        _name: 'Eventernote',
+        www: [
+            {
+                title: '声优活动及演唱会',
+                docs: 'https://docs.rsshub.app/anime.html#eventernote',
+                source: '/actors/:name/:id/events',
+                target: '/eventernote/actors/:name/:id',
             },
         ],
     },

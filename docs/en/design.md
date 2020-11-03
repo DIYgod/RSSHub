@@ -20,7 +20,7 @@ Some tags are rarely used： `Script`, `direction`, `production`, `design-concep
 
 ### User Works
 
-<RouteEn author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user" :paramsDesc="['username']" radar="1">
+<RouteEn author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" :paramsDesc="['username', 'type, `projects` or `appreciated`, `projects` by default']" radar="1">
 
 Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be `mishapetrick`。
 
@@ -74,6 +74,29 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 Not support `main`, `news`.
 
 Default is under 'https://www.methodstudios.com/en/features'.
+
+</RouteEn>
+
+## Notefolio
+
+### Works
+
+<RouteEn author="nczitzk" example="/notefolio" path="/notefolio/:caty?/:order?/:time?/:query?" :paramsDesc="['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `newest` as Newest, `noted` as Noted, `pick` by default', 'Time, `all` as All the time, `day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `month3` as Latest 3 months, `all` by default', 'Keyword, empty by default']">
+
+| Category | Name in Korean | Name in English |
+| -------- | -------------- | --------------- |
+| all | 전체 | All |
+| A7 | 공예 | Crafts |
+| J7 | 그래픽 디자인 | Graphic Design |
+| B7 | 디지털 아트 | Digital Art |
+| C7 | 영상/모션그래픽 | Video / Motion Graphics |
+| D7 | 브랜딩/편집 | Branding / Editing |
+| E7 | 산업 디자인 | Industrial Design |
+| F7 | UI/UX | UI/UX |
+| G7 | 일러스트레이션 | Illustration |
+| K7 | 타이포그래피 | Typography |
+| H7 | 파인아트 | Fine Art |
+| I7 | 포토그래피 | Photography |
 
 </RouteEn>
 

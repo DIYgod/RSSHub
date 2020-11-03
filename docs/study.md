@@ -149,7 +149,7 @@ pageClass: routes
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['参数，如 subject=生物']"/>
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']"/>
 
 | `:param` | 举例            | 定义                                 |
 | -------- | --------------- | ------------------------------------ |
@@ -234,11 +234,11 @@ pageClass: routes
 
 ### 精品课程
 
-<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" />
+<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" rssbud="1"/>
 
 ### 最新课程
 
-<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" />
+<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" rssbud="1"/>
 
 ## 下厨房
 

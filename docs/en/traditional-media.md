@@ -4,11 +4,25 @@ pageClass: routes
 
 # News
 
+## ABC News
+
+### Site
+
+<Route author="nczitzk" example="/abc" path="/abc/:site?" :paramsDesc="['Site, see below']">
+
+Site
+
+| Just In | Politics | World | Business | Analysis | Sport | Science | Health | Arts | Fact Check | 中文新闻 | Berita Bahasa Indonesia | Tok Pisin |
+| - | - | - | - | - | - | - | - | - | - | - | - | - | - |
+| justin | politics | world | business | analysis-and-opinion | sport | science | health | arts-culture | factcheck | chinese | indonesian | tok-pisin |
+
+</Route>
+
 ## AP News
 
 ### Topics
 
-<RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1"/>
+<RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1"/>
 
 ## BBC
 
@@ -86,11 +100,25 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### News
 
-<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['category']" radar="1">
+<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['category']" radar="1" rssbud="1">
 
 | realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
 | -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
 | Real Time News | Politic | Opinion | Life | Showbiz | Finance | Society | Hot Topics | Videos | World | Military | Mainland & Taiwan | Fashion | Sports | Technology News | Travel | Columns |
+
+</RouteEn>
+
+## ChinaFile
+
+### Reporting & Opinion
+
+<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['Category, by default `all`']">
+
+Generates full-text feeds that the official feed doesn't provide.
+
+| All | The China NGO Project |
+| --- | --------------------- |
+| all | ngo                   |
 
 </RouteEn>
 
@@ -148,6 +176,7 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
 
 </RouteEn>
+
 ## The Economist
 
 ### Category
@@ -157,6 +186,14 @@ See the [official RSS page](https://www.scmp.com/rss) to get the ID of each cate
 ### GRE Vocabulary
 
 <RouteEn author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+
+### Download
+
+<RouteEn author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+
+The download site: http://www.cgx02.xyz/index.php?dir=/te
+
+</RouteEn>
 
 ## The Guardian
 
@@ -183,6 +220,16 @@ Provides a better reading experience (full text articles) over the official one.
 | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
 | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
 | (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+
+</RouteEn>
+
+## The Wall Street Journal (WSJ)
+
+### News
+
+<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['Language, `en-us` only for now', 'Category, see [RSS feeds in WSJ.com](https://www.wsj.com/news/rss-news-and-feeds)']">
+
+Provide full article RSS for WSJ topics.
 
 </RouteEn>
 
