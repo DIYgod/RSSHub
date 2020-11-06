@@ -219,3 +219,6 @@ Website: https://news.ycombinator.com/
 | featured | trending        | trending_m       | trending_d     | popular      | new            |
 
 </RouteEn>
+
+## JavaScript Weekly
+<RouteEn author="laampui" example="/javascriptweekly" path="/javascriptweekly"/>
