@@ -21,7 +21,7 @@ describe('got', () => {
             .times(config.requestRetry + 1)
             .reply(function () {
                 requestRun();
-                return [404, '0'];
+                return [503, '0'];
             });
 
         try {

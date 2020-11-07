@@ -34,13 +34,52 @@ pageClass: routes
 
 ### 深度
 
-<Route author="nczitzk" example="/cls/depth" path="/cls/depth"/>
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:caty" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+
+| 要闻 | 股市 | 环球 | 公司 | 地产 | 券商 | 金融 | 汽车 | 科创版 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
+| 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111   |
+
+</Route>
 
 ## 富途牛牛
 
 ### 要闻
 
 <Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
+
+## 格隆汇
+
+### 用户文章
+
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']"/>
+
+### 主题文章
+
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']"/>
+
+### 搜索关键字
+
+&lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
+
+## 金十数据
+
+<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+## 世界经济论坛
+
+### 报告
+
+<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" :paramsDesc="['语言，见下表，默认为 `en`', '年份，对应年份过滤条件，默认为 `所有`', '平台，对应平台过滤条件，默认为 `所有`']">
+
+语言
+
+| English | Español | Français | 中文 | 日本語 |
+| ------- | ------- | -------- | ---- | ------ |
+| en      | es      | fr       | cn   | jp     |
+
+年份 和 平台 这两个参数请参见 [报告页](https://www.weforum.org/reports) 过滤条件处。
+
+</Route>
 
 ## 淘股吧股票论坛
 
@@ -99,6 +138,38 @@ pageClass: routes
 | 公告         | 新闻 | 研报     |
 | ------------ | ---- | -------- |
 | announcement | news | research |
+
+</Route>
+
+## 证券时报网
+
+### 要闻
+
+<Route author="nczitzk" example="/stcn/news" path="/stcn/news/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+
+| 要闻 | 滚动 | 深度 | 评论 |
+| ---- | ---- | ---- | ---- |
+| news | gd   | sd   | pl   |
+
+</Route>
+
+### 数据
+
+<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
+
+| 数据 | 机器人新闻 |
+| ---- | ---------- |
+| data | jqrxw      |
+
+</Route>
+
+### 快讯
+
+<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+
+| 快讯 | e 公司 | 研报 | 时事 | 财经 |
+| ---- | ------ | ---- | ---- | ---- |
+|      | egs    | yb   | ss   | cj   |
 
 </Route>
 

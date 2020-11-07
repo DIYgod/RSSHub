@@ -4,6 +4,12 @@ pageClass: routes
 
 # Application Updates
 
+## Anki
+
+### Changes
+
+<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+
 ## Apkpure
 
 ### Versions
@@ -28,7 +34,7 @@ pageClass: routes
 
 ### New Dropzone Actions
 
-<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
+<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
 
 ## Chocolatey
 
@@ -98,6 +104,10 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']"/>
 
+## ManicTime
+
+<RouteEn author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
+
 ## Microsoft Edge
 
 ### Addons Update
@@ -149,6 +159,18 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#playstation](/game.html#playstation)
 
+## QNAP
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" :paramsDesc="['OS id, see below']">
+
+| QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
+| --- | --------- | --------- | ------------------ | --- | --- | ------ |
+| qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
+
+</RouteEn>
+
 ## RSSHub
 
 ### New routes
@@ -157,7 +179,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New sponsors
 
-<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
 ## sketch.com
 
