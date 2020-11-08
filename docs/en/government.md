@@ -10,6 +10,12 @@ pageClass: routes
 
 <RouteEn author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
+## Supreme Court of the United States
+
+### Arguments Audios
+
+<RouteEn author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['Year, current year by default']"/>
+
 ## United Nations
 
 ### Security Council Vetoed a Resolution
