@@ -633,6 +633,18 @@ Supported sub-sites:
 
 ## 得到
 
+### 新闻
+
+<Route author="nczitzk" example="/dedao/news" path="/dedao/news"/>
+
+### 人物故事
+
+<Route author="nczitzk" example="/dedao/figure" path="/dedao/figure"/>
+
+### 视频
+
+<Route author="nczitzk" example="/dedao/video" path="/dedao/video"/>
+
 ### 知识城邦
 
 <Route author="nczitzk" example="/dedao/knowledge" path="/dedao/knowledge/:topic?/:type?" :paramsDesc="['话题 id，可在话题页 URL 中找到', '分享类型，`true` 指精选，`false` 指最新，默认为精选']"/>
