@@ -1419,6 +1419,18 @@ column 为 third 时可选的 category:
 
 <Route author="HenryQW" example="/wikipedia/mainland" path="/wikipedia/mainland"/>
 
+## 未名新闻
+
+### 分类
+
+<Route author="nczitzk" example="/mitbbs" path="/mitbbs/:caty?" :paramsDesc="['新闻分类，参见下表，默认为“新闻大杂烩”']">
+
+| 新闻大杂烩 | 军事     | 国际   | 体育 | 娱乐 | 科技 | 财经    |
+| ---------- | -------- | ------ | ---- | ---- | ---- | ------- |
+|            | zhongguo | haiwai | tiyu | yule | keji | caijing |
+
+</Route>
+
 ## 微信
 
 ::: tip 提示
