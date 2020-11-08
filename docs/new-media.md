@@ -631,6 +631,12 @@ Supported sub-sites:
 
 <Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
 
+## 得到
+
+### 首页
+
+<Route author="nczitzk" example="/dedao/list/年度日更" path="/dedao/list/:caty?" :paramsDesc="['分类名，默认为年度日更']"/>
+
 ## 电商报
 
 ### 分区
