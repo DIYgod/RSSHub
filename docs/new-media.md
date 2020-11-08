@@ -633,6 +633,10 @@ Supported sub-sites:
 
 ## 得到
 
+### 首页
+
+<Route author="nczitzk" example="/dedao/list/年度日更" path="/dedao/list/:caty?" :paramsDesc="['分类名，默认为年度日更']"/>
+
 ### 新闻
 
 <Route author="nczitzk" example="/dedao/news" path="/dedao/news"/>
