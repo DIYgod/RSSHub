@@ -1930,6 +1930,9 @@ type 列表：
 
 ## 中国地质大学 (武汉)
 
+### 今日新闻
+<Route author="Dorad" example="/cug/news" path="/cug/news" />
+
 ### 研究生院综合通知公告
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
