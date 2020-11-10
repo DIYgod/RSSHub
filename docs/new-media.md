@@ -797,6 +797,16 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+### 观学院
+
+<Route author="nczitzk" example="/guancha/member/recommend" path="/guancha/member/:caty?" :paramsDesc="['分类，见下表']">
+
+| 精选      | 观书堂 | 在线课  | 观学院   |
+| --------- | ------ | ------- | -------- |
+| recommend | books  | courses | huodongs |
+
+</Route>
+
 ### 风闻话题
 
 <Route author="occupy5 nczitzk" example="/guancha/topic/110/1" path="/guancha/topic/:id?/:order?" :paramsDesc="['话题 id，可在URL中找到，默认为全部，即为 `0`', '排序参数，见下表']">
