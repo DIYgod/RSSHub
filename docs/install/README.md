@@ -566,6 +566,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `INITIUM_USERNAME`: 端传媒用户名 （邮箱）
     -   `INITIUM_PASSWORD`: 端传媒密码
 
+-   Instagram：
+
+    -   `IG_USERNAME`: Instagram 用户名。
+    -   `IG_PASSWORD`: Instagram 密码。
+
+    注意，暂不支持两步验证。
+
 -   BTBYR
 
     -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
