@@ -16,6 +16,12 @@ pageClass: routes
 
 <RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## Konami
+
+### PES Mobile Announcement
+
+<RouteEn author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" :paramsDesc="['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system，iOS or Android']"/>
+
 ## Metacritic
 
 ### Game Releases
