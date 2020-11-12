@@ -777,6 +777,10 @@ area 分区选项
 
 ## 观察者网
 
+### 头条
+
+<Route author="nczitzk" example="/guancha/headline" path="/guancha/headline" />
+
 ### 首页
 
 <Route author="nczitzk Jeason0228" example="/guancha" path="/guancha/:caty?" :paramsDesc="['分类，见下表，默认为全部']">
