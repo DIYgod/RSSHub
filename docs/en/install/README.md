@@ -458,6 +458,13 @@ See docs of specified route and `lib/config.js` for detail information.
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
+-   Instagram：
+
+    -   `IG_USERNAME`: Your Instagram username
+    -   `IG_PASSWORD`: Your Instagram password
+
+    Warning: Two Factor Authentication is *not* supported.
+
 -   mail:
 
     -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. The value is in the format of `password=password&host=server&port=port`, eg:
