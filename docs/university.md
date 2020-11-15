@@ -226,7 +226,7 @@ pageClass: routes
 
 ### BTBYR 趣味盒
 
-<Route author="prnake" example="/bupt/funbox" path="/bupt/funbox" />
+<Route author="prnake" example="/bupt/funbox" path="/bupt/funbox" selfhost="1"/>
 ::: warning 注意
 
 由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。

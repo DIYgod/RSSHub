@@ -75,7 +75,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/en/install)
 
-<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" />
+<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" selfhost="1"/>
 
 ## Emi Nitta official website
 

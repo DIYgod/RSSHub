@@ -704,7 +704,7 @@ pageClass: routes
 
 ### 专辑
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1" rssbud="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1" rssbud="1" selfhost="1">
 
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
@@ -724,7 +724,7 @@ pageClass: routes
 
 ### 发现
 
-<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou">
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" selfhost="1">
 
 ::: warning 注意
 
