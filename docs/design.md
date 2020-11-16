@@ -122,6 +122,16 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
 
+## 优设网
+
+### 细节猎人
+
+<Route author="nczitzk" example="/uisdc/topic/all" path="/uisdc/topic/:title?/:sort?" :paramsDesc="['标签名称，可在标签页的 URL 中找到', '排序方式，`hot` 指最热门，默认为最新鲜']">
+
+更多细节标签请参见 [全部标签](https://www.uisdc.com/alltopics)
+
+</Route>
+
 ## 站酷
 
 ### 推荐
