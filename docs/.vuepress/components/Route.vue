@@ -64,6 +64,10 @@ export default {
       type: String,
       default: null
     },
+    selfhost: {
+      type: String,
+      default: null
+    },
   },
   methods: {
     renderMarkdown(item) {
