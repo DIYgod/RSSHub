@@ -132,6 +132,10 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
+### 优设读报
+
+<Route author="nczitzk" example="/uisdc/news" path="/uisdc/news"/>
+
 ## 站酷
 
 ### 推荐
