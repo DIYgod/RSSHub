@@ -132,6 +132,16 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
+### 行业新闻
+
+<Route author="nczitzk" example="/uisdc/hangye" path="/uisdc/hangye/:caty?" :paramsDesc="['分类，见下表，默认为全部新闻']">
+
+| 全部新闻 | 活动赛事        | 品牌资讯   | 新品推荐     |
+| -------- | --------------- | ---------- | ------------ |
+|          | events-activity | brand-news | new-products |
+
+</Route>
+
 ## 站酷
 
 ### 推荐
