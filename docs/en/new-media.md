@@ -133,6 +133,16 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
 
+## Morning Brew
+
+<RouteEn author="laampui" example="/morningbrew/emerging-tech" path="/morningbrew/:category?" :paramsDesc="['default is daily']">
+
+|MORNING|EMERGING TECH|RETAIL|MARKETING|
+|-|-|-|-|
+|daily|emerging-tech|retail|marketing|
+
+</RouteEn>
+
 ## Nautilus
 
 ### Topics
