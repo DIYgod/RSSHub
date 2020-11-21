@@ -469,7 +469,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 提问箱新回答
 
-<Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" radar="1" rssbud="1"/>
+<Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" />
 
 ## Telegram
 
