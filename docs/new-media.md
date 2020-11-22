@@ -156,6 +156,12 @@ pageClass: routes
 
 </Route>
 
+## Esquirehk
+
+### Tag
+
+<Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" :paramsDesc="['标签，可在对应标签页 URL 中找到']" />
+
 ## GQ
 
 ### GQ 台湾
