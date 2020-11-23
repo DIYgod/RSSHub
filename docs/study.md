@@ -73,6 +73,31 @@ pageClass: routes
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
+## Mind42
+
+### 分类
+
+<Route author="nczitzk" example="/mind42" path="/mind42/:caty?" :paramsDesc="['分类，见下表，默认为 Overview']">
+
+| Overview | Popular | All    |
+| -------- | ------- | ------ |
+| mindmaps | popular | public |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表]">
+
+| in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
+| -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
+
 ## NEEA 中国教育考试网
 
 ### 国家教育考试
