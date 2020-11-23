@@ -102,6 +102,26 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+## ProcessOn
+
+### 推荐
+
+<Route author="nczitzk" example="/processon/popular" path="/processon/popular/:cate?/:sort?" :paramsDesc="['分类，见下表，默认为所有类型', '排序，见下表，默认为人气']">
+
+分类
+
+| 所有类型 | 流程图 | BPMN | 思维导图 | UI 原型图 | UML | Org 组织结构图 | 网络拓扑图 | 韦恩图  |      |
+| -------- | ------ | ---- | -------- | --------- | --- | -------------- | ---------- | ------- | ---- |
+|          | es     | flow | bpmn     | mind_free | ui  | uml            | org        | network | venn |
+
+排序
+
+| 人气 | 最多人赞  | 最多收藏       | 最多浏览  | 最新发布    |
+| ---- | --------- | -------------- | --------- | ----------- |
+|      | likeCount | favouriteCount | viewCount | publishTime |
+
+</Route>
+
 ## X-MOL 平台
 
 ### 新闻
