@@ -160,6 +160,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
 
+## Mathpix
+
+<Route author="nczitzk" example="/mathpix/blog" path="/mathpix/blog"/>
+
 ## Microsoft Edge
 
 ### 外接程序更新
