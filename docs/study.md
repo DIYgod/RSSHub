@@ -370,3 +370,7 @@ pageClass: routes
 ### 通知公告
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
+
+### 幕布精选
+
+<Route author="laampui" example="/mubu/explore/16" path="/mubu/explore/:tagId" :paramsDesc="['标签 id']" />
