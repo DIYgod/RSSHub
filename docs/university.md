@@ -837,7 +837,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 暨南要闻
 
-<Route author="hang333" example="/jnu/yw/tt" path="/jnu/yw/:type?" :paramDesc="['暨南要闻类型，默认为 `yw`']">
+<Route author="hang333" example="/jnu/yw/tt" path="/jnu/yw/:type?" :paramDesc="['暨南要闻类型，默认为 `yw`']"/>
 
 | 暨大头条 | 暨南要闻 |
 | -------- | -------- |
@@ -845,7 +845,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 暨南大学校园时讯
 
-<Route author="hang333" example="/jnu/xysx/yxsd" path="/jnu/xysx/:type" :paramDesc="['校园时讯类型']">
+<Route author="hang333" example="/jnu/xysx/yxsd" path="/jnu/xysx/:type" :paramDesc="['校园时讯类型']"/>
 
 | 院系速递 | 部门快讯 |
 | -------- | -------- |
@@ -1978,7 +1978,7 @@ type 列表：
 
 ### 官网通知公告
 
-<Route author="hang333" example="/ustc/news/gl" path="/ustc/news/:type?" :paramsDesc="['可选，默认为 gl']">
+<Route author="hang333" example="/ustc/news/gl" path="/ustc/news/:type?" :paramsDesc="['可选，默认为 gl']"/>
 
 | 教学类 | 科研类 | 管理类 | 服务类 |
 | ------ | ------ | ------ | ------ |
@@ -1986,7 +1986,7 @@ type 列表：
 
 ### 教务处通知新闻
 
-<Route author="hang333" example="/ustc/jwc/info" path="/ustc/jwc/:type?" :paramsDesc="['可选，默认显示所有种类']">
+<Route author="hang333" example="/ustc/jwc/info" path="/ustc/jwc/:type?" :paramsDesc="['可选，默认显示所有种类']"/>
 
 | 信息 | 教学     | 考试 | 交流     |
 | ---- | -------- | ---- | -------- |
