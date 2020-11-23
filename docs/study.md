@@ -87,7 +87,7 @@ pageClass: routes
 
 ### 标签
 
-<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表]">
+<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表']">
 
 | in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
 | -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
