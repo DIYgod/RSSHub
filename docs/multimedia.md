@@ -700,6 +700,12 @@ pageClass: routes
 
 <Route author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']" supportPodcast="1" />
 
+## 西瓜视频
+
+### 用户视频投稿
+
+<Route author="FlashWingShadow" example="/ixigua/user/video/4234740937" path="/ixigua/user/video/:uid" :paramsDesc="['用户 id, 可在用户主页中找到']"/>
+
 ## 喜马拉雅
 
 ### 专辑
