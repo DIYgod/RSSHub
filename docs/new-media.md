@@ -296,36 +296,30 @@ Tag
 
 ### 最热作品
 
-<Route author="whyouare111" example="/matataki/posts/scoreranking" path="/matataki/posts/scoreranking" radar="1"/>
+<Route author="whyouare111" example="/matataki/posts/hot" path="/matataki/posts/hot/:ipfsFlag?" :paramsDesc="['IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1"/>
 
 ### 最新作品
 
-<Route author="whyouare111" example="/matataki/posts/scoreranking" path="/matataki/posts/timeranking" radar="1"/>
+<Route author="whyouare111" example="/matataki/posts/latest/ipfs" path="/matataki/posts/latest/:ipfsFlag?" :paramsDesc="['IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1"/>
 
 ### 作者创作
 
-<Route author="whyouare111" example="/matataki/user/9/posts" path="/matataki/user/:authorId/posts" :paramsDesc="['作者ID']"  radar="1"/>
+<Route author="whyouare111" example="/matataki/users/9/posts" path="/matataki/users/:authorId/posts/:ipfsFlag?" :paramsDesc="['作者ID', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
 
 ### Fan票关联作品
 
-<Route author="whyouare111" example="/matataki/minetoken/22/related/3" path="/matataki/minetoken/:tokenId/related/:filterCode" :paramsDesc="['Fan票ID', '过滤条件 1: 需持票; 2: 需支付; 3: 全部 ']" radar="1"/>
+<Route author="whyouare111" example="/matataki/tokens/22/posts/3" path="/matataki/tokens/:tokenId/posts/:filterCode/:ipfsFlag?" :paramsDesc="['Fan票ID', '过滤条件,见下表', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1">
 
+| 需持票 | 需支付 | 全部 | 
+| ----  | ----- | --- |
+| 1     | 2     | 3   | 
 
-### 最热作品 (IPFS)
+</Route>
 
-<Route author="whyouare111" example="/ipfs/matataki/posts/scoreranking" path="/ipfs/matataki/posts/scoreranking" />
+### 标签关联作品
 
-### 最新作品 (IPFS)
+<Route author="whyouare111" example="/matataki/tags/150/区块链/posts" path="/matataki/tags/:tagId/:tagName/posts/:ipfsFlag?" :paramsDesc="['标签ID', '标签名称','IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
 
-<Route author="whyouare111" example="/ipfs/matataki/posts/scoreranking" path="/ipfs/matataki/posts/timeranking" />
-
-### 作者创作 (IPFS)
-
-<Route author="whyouare111" example="/ipfs/matataki/user/9/posts" path="/ipfs/matataki/user/:authorId/posts" :paramsDesc="['作者ID']" />
-
-### Fan票关联作品 (IPFS)
-
-<Route author="whyouare111" example="/ipfs/matataki/minetoken/22/related/3" path="/ipfs/matataki/minetoken/:tokenId/related/:filterCode" :paramsDesc="['Fan票ID', '过滤条件 1: 需持票; 2: 需支付; 3: 全部 ']" />
 
 ## Matters
 

@@ -2337,25 +2337,35 @@
                 title: '最热作品',
                 docs: 'https://docs.rsshub.app/new-media.html#matataki',
                 source: '/article/',
-                target: '/matataki/posts/scoreranking'
+                target: '/matataki/posts/hot'
             },
             {
                 title: '最新作品',
                 docs: 'https://docs.rsshub.app/new-media.html#matataki',
                 source: '/article/latest',
-                target: '/matataki/posts/timeranking'
+                target: '/matataki/posts/latest'
             },
             {
                 title: '作者创作',
                 docs: 'https://docs.rsshub.app/new-media.html#matataki',
                 source: '/user/:uid',
-                target: (params) => `/matataki/user/${params.uid}/posts`
+                target: (params) => `/matataki/users/${params.uid}/posts`
             },
             {
                 title: 'Fan票关联作品',
                 docs: 'https://docs.rsshub.app/new-media.html#matataki',
-                source: ['/token/:tid', '/token/:tid/circle'],
-                target: (params) => `/matataki/minetoken/${params.tid}/circle`
+                source: ['/token/:tokenId', '/token/:tokenId/circle'],
+                target: (params) => `/matataki/tokens/${params.tokenId}/posts`
+            },
+            {
+                title: '标签关联作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: ['/tag/:tagId'],
+                target: (params, url) => {
+                    const tagName = new URL(url).searchParams.get('name');
+                    return `/matataki/tags/${params.tagId}/${tagName}/posts`;
+                }
+
             }
         ]
 
