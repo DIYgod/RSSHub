@@ -41,9 +41,9 @@ pageClass: routes
 
 ### 查询国内外 CTF 赛事信息
 
-<Route author="frankli0324" example="/ctfhub/calendar" 
-    path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
-    :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
+<Route author="frankli0324" example="/ctfhub/search" 
+    path="/ctfhub/search/:limit?/:form?/:class?/:title?" 
+    :paramsDesc="['一个整数，筛选最新的limit场比赛，默认为10', '比赛形式', '比赛类型', '通过CTF赛事名称过滤']">
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
@@ -60,6 +60,14 @@ pageClass: routes
 | :-----: | ------ |
 |    0    | 线上赛 |
 |    1    | 线下赛 |
+
+</Route>
+
+### 查询近期赛事
+
+<Route author="frankli0324" example="/ctfhub/upcoming" 
+    path="/ctfhub/upcoming/:limit?" 
+    :paramsDesc="['一个整数，筛选最近的limit场比赛，默认为5']">
 
 </Route>
 
