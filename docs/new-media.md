@@ -304,6 +304,13 @@ Tag
 
 ## Matataki
 
+::: tip 提示
+
+在Matataki发表的文章会上传到星际文件系统（IPFS），永久保存。即使站内文章因为各种原因消失，用RSS获取过带IPFS连接的Feed Item的话，还是可以从RSS阅读器找回文章的。
+IPFS网关有可能失效，那时候换成其他网关。
+
+:::
+
 ### 最热作品
 
 <Route author="whyouare111" example="/matataki/posts/hot" path="/matataki/posts/hot/:ipfsFlag?" :paramsDesc="['IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1"/>
