@@ -6,9 +6,9 @@ pageClass: routes
 
 ## 60-Second Science - Scientific American
 
-### Transcript
+<RouteEn author="emdoe" example="/60s-science" path="/60s-science"/>
 
-<RouteEn author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+Full transcript support for better user experience.
 
 ## 99% Invisible
 
@@ -38,7 +38,7 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Videos
 
-<RouteEn author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['video type']" radar="1" >
+<RouteEn author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['video type']" radar="1" rssbud="1">
 |New Comments|New Release|New Entries|Most Wanted|Best Rated|
 |-----|------|------|-----|------|
 |update|newrelease|newentries|mostwanted|bestrated|
@@ -46,11 +46,11 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Stars
 
-<RouteEn author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['star id, find it from link']" radar="1" />
+<RouteEn author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['star id, find it from link']" radar="1" rssbud="1"/>
 
 ### Users
 
-<RouteEn author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" radar="1" >
+<RouteEn author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" radar="1" rssbud="1">
 |User wanted|User watched|User owned|User posts|
 |-----|------|------|-----|
 |userwanted|userwatched|userowned|userposts|
@@ -58,7 +58,7 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Bestreviews
 
-<RouteEn author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" />
+<RouteEn author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" rssbud="1"/>
 
 ## Nyaa
 
@@ -113,6 +113,6 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['User name']" />
 
-## Youtube
+## YouTube
 
 Refer to [#youtube](/en/social-media.html#youtube)

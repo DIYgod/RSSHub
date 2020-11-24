@@ -10,6 +10,18 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## Kindle Unlimited
+
+### 会员限时免费读书单
+
+<Route author="nczitzk" example="/amazon/ku/this" path="/amazon/ku/:type?" :paramsDesc="['书单类型，见下表']">
+
+| 本月书单 | 好评返场 | 次月预告 |
+| -------- | -------- | -------- |
+| this     | back     | next     |
+
+</Route>
+
 ## Mobilism
 
 ### eBook Releases
@@ -58,7 +70,7 @@ pageClass: routes
 
 ### biquge5200.com
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
 
 ::: tip 提示
 
@@ -68,7 +80,7 @@ pageClass: routes
 
 ### biquge.info
 
-<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
 
 ::: tip 提示
 
@@ -268,7 +280,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 最新章节
 
-<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1">
+<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1" rssbud="1">
 
 举例网址：<https://www.zhaishuyuan.com/book/17858>
 

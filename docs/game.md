@@ -58,6 +58,48 @@ pageClass: routes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
+## GameRes 游资网
+
+### 热点推荐
+
+<Route author="nczitzk" example="/gameres/hot" path="/gameres/hot"/>
+
+### 列表
+
+<Route author="nczitzk" example="/gameres/list/26" path="/gameres/list/:id" :paramsDesc="['列表 id']">
+
+产业
+
+| 厂商・专访 | 观察・投资 | 产品 | 政策 | 电子竞技 | 直播 | 区块链 |
+| ---------- | ---------- | ---- | ---- | -------- | ---- | ------ |
+| 1          | 11         | 6    | 45   | 14       | 42   | 41     |
+
+平台
+
+| 手游 | 页游・H5 | 端游・PC | 主机 | 虚拟・VR・AR | 云游戏 |
+| ---- | -------- | -------- | ---- | ------------ | ------ |
+| 5    | 17       | 18       | 21   | 16           | 48     |
+
+研发
+
+| 拆解分析 | 策划 | 程序・引擎 | 美术 | 音乐 | 测试 |
+| -------- | ---- | ---------- | ---- | ---- | ---- |
+| 24       | 25   | 26         | 27   | 28   | 29   |
+
+市场
+
+| 职场・创业 | 运营・渠道 | 海外 | 数据・报告 | App Store | Steam |
+| ---------- | ---------- | ---- | ---------- | --------- | ----- |
+| 38         | 34         | 47   | 33         | 46        | 40    |
+
+其他
+
+| 原创 | 硬件・周边 | 八卦 | 活动 | 综合 |
+| ---- | ---------- | ---- | ---- | ---- |
+| 43   | 44         | 15   | 22   | 39   |
+
+</Route>
+
 ## GNN.tw 游戏新闻
 
 ### GNN.tw 游戏新闻
@@ -69,6 +111,18 @@ pageClass: routes
 ### indienova 文章
 
 <Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
+
+## Konami
+
+### PES Mobile 公告
+
+<Route author="HenryQW" example="/konami/pesmobile/zh-cn/ios" path="/konami/pesmobile/:lang?/:os?" :paramsDesc="['语言，在URL中获得，如zh-cn, zh-tw, en', '操作系统，iOS 或 Android']"/>
+
+## Liquipedia
+
+### Dota2 战队最近比赛结果
+
+<Route author="wzekin" example="/liquipedia/dota2/matches/Team_Aster" path="liquipedia/dota2/matches/:id" :paramsDesc="['战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster']"/>
 
 ## Maxjia News
 
@@ -138,7 +192,7 @@ pageClass: routes
 
 ### PlayStation Store 游戏列表
 
-<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']" radar="1">
+<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']" radar="1" rssbud="1">
 
 适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
 
@@ -146,7 +200,7 @@ pageClass: routes
 
 ### PlayStation Store 游戏折扣 | 价格
 
-<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['地区语言','游戏的 grid 名']" radar="1">
+<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['地区语言','游戏的 grid 名']" radar="1" rssbud="1">
 
 地区语言如 `zh-hans-hk` 代表香港区简体中文， `zh-hant-tw` 为台湾繁体中文。不同地区游戏 gridName 不同，非中文地区使用英文提示。
 
@@ -158,11 +212,11 @@ pageClass: routes
 
 ### PlayStation Network 用户奖杯
 
-<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']" radar="1"/>
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']" radar="1" rssbud="1"/>
 
 ### PlayStation 4 系统更新纪录
 
-<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1"/>
+<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
 ## psnine
 
@@ -206,7 +260,7 @@ pageClass: routes
 
 ### Steam search
 
-<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1">
+<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
 
 参数 params 请从 Steam 的 URL 取得
 
@@ -216,7 +270,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### Steam news
 
-<Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1"/>
+<Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1" rssbud="1"/>
 
 ## SteamGifts
 
@@ -251,6 +305,22 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | 最新   | 最热 | 游戏时长 |
 | ------ | ---- | -------- |
 | update | hot  | spent    |
+
+## 巴哈姆特
+
+### GNN 新聞
+
+<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
+
+| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
+| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+
+| Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
+| ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
+| ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |
+
+</Route>
 
 ## 二柄 APP
 
@@ -292,11 +362,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 更新情报
 
-<Route author="DIYgod" example="/mhw/update" path="/mhw/update" radar="1"/>
+<Route author="DIYgod" example="/mhw/update" path="/mhw/update" radar="1" rssbud="1"/>
 
 ### 最新消息
 
-<Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1"/>
+<Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1" rssbud="1"/>
 
 ## 剑网 3
 
@@ -358,7 +428,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 元素文章
 
-<Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" />
+<Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 网易大神
 
@@ -370,7 +440,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 新闻中心
 
-<Route author="Jeason0228" example="/pvp/newsindex/all" path="/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
+<Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
 
 ## 小黑盒
 
@@ -430,15 +500,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 游戏时光新闻
 
-<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news" radar="1"/>
+<Route author="MyFaith" example="/vgtime/news" path="/vgtime/news" radar="1" rssbud="1"/>
 
 ### 游戏时光游戏发售表
 
-<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release" radar="1"/>
+<Route author="MyFaith" example="/vgtime/release" path="/vgtime/release" radar="1" rssbud="1"/>
 
 ### 关键词资讯
 
-<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1"/>
+<Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
 
 ## 游研社
 
@@ -452,6 +522,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 原神
+
+### 新闻
+
+<Route author="nczitzk" example="/yuanshen" path="/yuanshen/:location?/:category?" :paramsDesc="['区域，可选 zh_CN 或 zh_TW', '分类，见下表，默认为最新']">
+
+| 最新   | 新闻 | 公告   | 活动     |
+| ------ | ---- | ------ | -------- |
+| latest | news | notice | activity |
+
+</Route>
+
 ## 掌上英雄联盟
 
 ### 推荐
@@ -462,11 +544,26 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 最终幻想 14 国服
 
-<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']"/>
+<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']">
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
 | ---- | -------- | ------ | --------- | ---- |
 | news | announce | events | advertise | all  |
+
+</Route>
+
+### 最终幻想 14 国际服 （Lodestone）
+
+<Route author="chengyuhui" example="/ff14/ff14_global/na/all" path="/ff14/ff14_global/:lang/:type" :paramsDesc="['地区', '分类名']">
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| ---- | ------------ | ---- | ---- | ---- |
+| na   | eu           | fr   | de   | jp   |
+
+| 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
+| ------ | ------- | ----------- | ------- | -------- | ---------- |
+| topics | notices | maintenance | updates | status   | developers |
+
+</Route>
 
 ## きららファンタジア｜奇拉拉幻想曲
 

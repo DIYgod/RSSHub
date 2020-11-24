@@ -46,15 +46,25 @@ pageClass: routes
 
 <Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
 
+## Citavi 中文网站论坛
+
+<Route author="nczitzk" example="/citavi" path="/citavi/:caty" :paramsDesc="['分类名，可在对应分类页 URL 中找到，默认为全部']">
+
+| 全部 | 下载安装   | 许可证  | 入门指南       | 升级更新 | 教程           | 新闻资讯 | 技巧分享 | 账户插件      | 其他   |        |
+| ---- | ---------- | ------- | -------------- | -------- | -------------- | -------- | -------- | ------------- | ------ | ------ |
+|      | Installing | License | GettingStarted | Update   | CitaviinDetail | News     | Share    | CitaviAccount | Addons | Others |
+
+</Route>
+
 ## Dcard
 
 ### 首頁帖子
 
-<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']" radar="1"/>
+<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1"/>
 
 ### 板塊帖子
 
-<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']" radar="1"/>
+<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1"/>
 
 ## Discuz
 
@@ -86,7 +96,7 @@ pageClass: routes
 
 ### 主题贴
 
-<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" />
+<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" rssbud="1"/>
 
 ## LearnKu
 
@@ -112,11 +122,11 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']" radar="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']" radar="1" rssbud="1"/>
 
 ### 帖子
 
-<Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1"/>
+<Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
 
 ## Quicker
 
@@ -177,6 +187,12 @@ pageClass: routes
 ### 标签
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
+
+## 巴哈姆特電玩資訊站
+
+### 熱門推薦
+
+<Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
 
 ## 才符
 
@@ -245,6 +261,26 @@ pageClass: routes
 | 中国足球 | soccer-china |
 | CBA      | cba          |
 | 电竞     | gg           |
+
+</Route>
+
+## 华为心声社区
+
+### 华为家事
+
+<Route author="nczitzk" example="/huawei/xinsheng" path="/huawei/xinsheng/:caty?/:order?/:keyword?" :paramsDesc="['分区 ID, 见下表，默认为全部帖子', '排序方式, 见下表，默认为最新回复', '关键词，默认为空']">
+
+分区 ID
+
+| 全部帖子 | 公司文件 | 管理思考 | 产品改进 | 版务公告 |
+| -------- | -------- | -------- | -------- | -------- |
+|          | 155      | 415      | 427      | 419      |
+
+排序方式
+
+| 最新发帖 | 最新回复 | 最多回复   | 最多点击  |
+| -------- | -------- | ---------- | --------- |
+| cTime    | rTime    | replycount | viewcount |
 
 </Route>
 
@@ -403,6 +439,12 @@ pageClass: routes
 
 <Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
 
+### 用户帖子
+
+<Route author="humpylin" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" />
+
+用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
+
 ## 万维读者
 
 ### 焦点新闻
@@ -413,21 +455,25 @@ pageClass: routes
 
 ### 博客
 
-<Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" :paramsDesc="['博客 ID, 可在 URL 中找到']" radar="1" />
+<Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" :paramsDesc="['博客 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 最热主题
 
-<Route author="changlan" example="/wenxuecity/hot/9" path="/wenxuecity/hot/:cid" :paramsDesc="['版面 ID, 可在 URL 中找到']" radar="1" />
+<Route author="changlan" example="/wenxuecity/hot/9" path="/wenxuecity/hot/:cid" :paramsDesc="['版面 ID, 可在 URL 中找到']" radar="1"/>
 
 ### 最新主题
 
-<Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" :paramsDesc="['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']" radar="1" />
+<Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" :paramsDesc="['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']" radar="1" rssbud="1"/>
+
+### 焦点新闻
+
+<Route author="nczitzk" example="/wenxuecity/news" path="/wenxuecity/news" />
 
 ## 小米社区
 
 ### 圈子
 
-<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" :paramsDesc="['圈子 id，可在圈子 URL 找到']" radar="1"/>
+<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" :paramsDesc="['圈子 id，可在圈子 URL 找到']" radar="1" rssbud="1"/>
 
 ## 一亩三分地
 
