@@ -326,6 +326,16 @@ pageClass: routes
 
 <Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
+## 有道云笔记
+
+### 学霸感悟
+
+<Route author="nczitzk" example="/youdao/xueba" path="/youdao/xueba" />
+
+### 笔记最新动态
+
+<Route author="nczitzk" example="/youdao/latest" path="/youdao/latest" />
+
 ## 语雀
 
 ### 知识库
