@@ -2366,7 +2366,13 @@
                     return `/matataki/tags/${params.tagId}/${tagName}/posts`;
                 }
 
-            }
+            },
+            {
+                title: '收藏夹',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/user/:uid/favlist/:fid',
+                target: (params) => `/matataki/users/${params.uid}/favorites/${params.fid}/posts`
+            },
         ]
 
     },
