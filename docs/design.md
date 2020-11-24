@@ -124,6 +124,14 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ## 优设网
 
+### 设计专题
+
+<Route author="nczitzk" example="/uisdc/zt/design-history" path="/uisdc/zt/:title?" :paramsDesc="['专题名称，可在标签页的 URL 中找到，如 `design-history`；也可填入 `hot` 展示最热门专题，默认展示最新鲜专题']">
+
+更多设计专题请参见 [优设专题](https://www.uisdc.com/zt)
+
+</Route>
+
 ### 细节猎人
 
 <Route author="nczitzk" example="/uisdc/topic/all" path="/uisdc/topic/:title?/:sort?" :paramsDesc="['标签名称，可在标签页的 URL 中找到', '排序方式，`hot` 指最热门，默认为最新鲜']">
@@ -141,6 +149,10 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 |          | events-activity | brand-news | new-products |
 
 </Route>
+
+### 优设读报
+
+<Route author="nczitzk" example="/uisdc/news" path="/uisdc/news"/>
 
 ## 站酷
 
