@@ -148,10 +148,8 @@ pageClass: routes
 
 -   `:option?` 可开启的选项：
 
-    -   `nooption`: 全文纯文字输出
+    -   `plain`: 全文输出（纯文字）
     -   `withphoto`: 全文输出 (含题图) **(不指定 `:option?` 时将预设为此项)**
-    -   `withlink`: 全文输出（文末包含用于 web 及 app 打开的链接）
-    -   `alloption`: 同时开启 `withphoto` 与 `withlink` 两项功能
 
 -   全文输出转换为简体字: `?opencc=t2s`  
     (`opencc` 是 RSSHub 的通用参数，详情请参阅[「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
