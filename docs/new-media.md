@@ -1308,6 +1308,18 @@ column 为 third 时可选的 category:
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
 
+## 生命时报
+
+### 栏目
+
+<Route author="nczitzk" example="/lifetimes" path="/lifetimes/:category?" :paramsDesc="['栏目，见下表，默认为新闻']">
+
+| 新闻 | 医药     | 养生            | 生活 | 母亲行动 | 长寿      | 视频  | 时评         | 调查    | 产业经济 |
+| ---- | -------- | --------------- | ---- | -------- | --------- | ----- | ------------ | ------- | -------- |
+| news | medicine | healthpromotion | life | mothers  | longevity | video | news-comment | hotspot | industry |
+
+</Route>
+
 ## 生物谷
 
 ### 最新资讯
