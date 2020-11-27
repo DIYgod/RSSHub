@@ -1222,6 +1222,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 求是网
+
+### 头条
+
+<Route author="nczitzk" example="/qstheory" path="/qstheory/index"/>
+
 ## 趣头条
 
 ### 分类
