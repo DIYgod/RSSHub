@@ -308,6 +308,12 @@ pageClass: routes
 
 <Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1" rssbud="1"/>
 
+## 特斯拉系统更新
+
+### 版本详细信息
+
+<Route author="mrbruce516" example="/tesla" path="/tesla/update"/>
+
 ## 腾讯柠檬 Lab
 
 ### 柠檬精选 Mac Apps
