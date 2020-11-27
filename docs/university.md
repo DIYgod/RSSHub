@@ -440,12 +440,6 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
-## 复旦大学继续教育学院
-
-### 成人夜大通知公告
-
-<Route author="mrbruce516" example="/fudancce" path="/fudancce/index" />
-
 ## 福州大学
 
 ### 教务处教学通知
