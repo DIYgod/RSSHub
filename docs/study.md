@@ -304,11 +304,37 @@ pageClass: routes
 
 </Route>
 
+## 印象识堂
+
+### 印象剪藏
+
+<Route author="nczitzk" example="/yinxiang/note" path="/yinxiang/note" />
+
+### 卡片清单
+
+<Route author="nczitzk" example="/yinxiang/card/32" path="/yinxiang/card/:id?" :paramsDesc="['卡片 id，见下表，默认为每周收藏排行榜・TOP5']">
+
+| 每周收藏排行榜・TOP5 | 每周热门「读书笔记」榜 TOP5 | 【印象话题】如何提高记忆力？ | 【印象话题】选择的悖论 | 【印象专题】如何一秒洞察问题本质？ | 「识堂开讲」5 位嘉宾精华笔记大放送 | 【印象话题】培养专注力的 5 个步骤 | 🎁购物清单主题活动获奖结果 |
+| -------------------- | --------------------------- | ---------------------------- | ---------------------- | ---------------------------------- | ---------------------------------- | --------------------------------- | -------------------------- |
+| 32                   | 33                          | 100                          | 101                    | 103                                | 104                                | 105                               | 106                        |
+
+</Route>
+
 ## 英中协会
 
 ### 奖学金
 
 <Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
+## 有道云笔记
+
+### 学霸感悟
+
+<Route author="nczitzk" example="/youdao/xueba" path="/youdao/xueba" />
+
+### 笔记最新动态
+
+<Route author="nczitzk" example="/youdao/latest" path="/youdao/latest" />
 
 ## 语雀
 

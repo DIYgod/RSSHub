@@ -512,7 +512,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 游研社
 
-### 游研社
+### 游研社 - 分类文章
 
 <Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
@@ -521,6 +521,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | recommend | history | big    | culture | news | retro    |
 
 </Route>
+
+### 游研社 - 全部文章
+
+<Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
 
 ## 原神
 
