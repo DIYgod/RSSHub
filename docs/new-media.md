@@ -1224,9 +1224,15 @@ column 为 third 时可选的 category:
 
 ## 求是网
 
-### 头条
+### 分类
 
-<Route author="nczitzk" example="/qstheory" path="/qstheory/index"/>
+<Route author="nczitzk" example="/qstheory" path="/qstheory/:category?" :paramsDesc="['分类，见下表']">
+
+| 网评 | 视频 | 原创   | 经济    | 政治     | 文化    | 社会    | 党建 | 科教    | 生态    | 国防    | 国际          | 图书  | 学习笔记 |
+| ---- | ---- | ------ | ------- | -------- | ------- | ------- | ---- | ------- | ------- | ------- | ------------- | ----- | -------- |
+| qswp | qssp | qslgxd | economy | politics | culture | society | cpc  | science | zoology | defense | international | books | xxbj     |
+
+</Route>
 
 ## 趣头条
 
