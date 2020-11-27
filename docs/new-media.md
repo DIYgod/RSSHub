@@ -304,13 +304,19 @@ Tag
 
 ## Matters
 
-### 最新排序
-
-<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1" rssbud="1"/>
-
 ### 熱門文章
 
 <Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1" rssbud="1"/>
+
+### 最新、熱議、精華
+
+<Route author="xyqfer Cerebrater" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
+
+| 最新   | 熱議 | 精華    |
+| ------ | ---- | ------- |
+| latest | heat | essence |
+
+</Route>
 
 ### 标签
 
