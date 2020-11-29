@@ -197,16 +197,6 @@ Solidot 提供的 feed:
 
 </Route>
 
-## The Wall Street Journal (WSJ)
-
-### 新闻
-
-<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['语言，暂时仅限 `en-us`', '分类，见[WSJ 官网 RSS 分类](https://www.wsj.com/news/rss-news-and-feeds)']">
-
-通过提取文章全文，以提供比官方源更佳的阅读体验。
-
-</Route>
-
 ## UDN
 
 ### 轉角國際
@@ -375,6 +365,16 @@ Type 栏目:
 | 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
 | ------ | ------- | -------- | -------- | ----- | --------- | --------- |
 | global | a-stock | us-stock | hk-stock | forex | commodity | financing |
+
+</Route>
+
+## 华尔街日报 The Wall Street Journal (WSJ)
+
+### 新闻
+
+<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['语言，支持 `en-us`、`zh-cn`、`zh-tw`', '分类，仅 `en-us` 支持分类订阅。支持 `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`。']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 </Route>
 
@@ -573,6 +573,7 @@ category 对应的关键词有
 | 2    | 4    | 3      | 453      |
 
 </Route>
+
 ## 齐鲁晚报
 
 ### 新闻
@@ -644,18 +645,6 @@ category 对应的关键词有
 | 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | aall | aipl | aopl | acn  | aie  | asc  | ait  | ahel | asoc | aloc | acul | aspt | amov |
-
-</Route>
-
-## 网易新闻专栏
-
-### 栏目
-
-<Route author="Solist-X" example="/netease/news/special/1" path="/netease/news/special/:type?" :paramsDesc="['栏目']">
-
-| 轻松一刻 | 槽值 | 人间 | 大国小民 | 三三有梗 | 数读 | 看客 | 下划线 | 谈心社 | 哒哒 | 胖编怪聊 | 曲一刀 | 今日之声 | 浪潮 | 沸点 |
-| -------- | ---- | ---- | -------- | -------- | ---- | ---- | ------ | ------ | ---- | -------- | ------ | -------- | ---- | ---- |
-| 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |
 
 </Route>
 
