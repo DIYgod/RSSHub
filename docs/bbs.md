@@ -475,6 +475,18 @@ pageClass: routes
 
 <Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" :paramsDesc="['圈子 id，可在圈子 URL 找到']" radar="1" rssbud="1"/>
 
+## 小木虫论坛
+
+### 期刊点评
+
+<Route author="nczitzk" example="/muchong/journal" path="/muchong/journal/:type?" :paramsDesc="['类型，见下表']"/>
+
+| SCI 期刊 | 中文期刊 |
+| -------- | -------- |
+|          | cn       |
+
+</Route>
+
 ## 一亩三分地
 
 ### 主题帖
