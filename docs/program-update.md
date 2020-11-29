@@ -200,6 +200,12 @@ pageClass: routes
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## OneNote Gem Add-Ins
+
+### Release History
+
+<Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
+
 ## PlayStation
 
 ### PlayStation 4 系统更新纪录
