@@ -132,6 +132,10 @@ R18 显示
 
 </Route>
 
+### 用户投稿
+
+<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" :paramsDesc="['用户 id，可在用户页 URL 中找到']" />
+
 ## GirlImg
 
 ### album
