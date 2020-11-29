@@ -170,6 +170,10 @@ pageClass: routes
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
+## 幕布精选
+
+<Route author="laampui" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:tagId/:title?" :paramsDesc="['标签 id', '显示标题']" />
+
 ## 扇贝
 
 ### 用户打卡
