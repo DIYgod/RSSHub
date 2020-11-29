@@ -73,6 +73,31 @@ pageClass: routes
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
+## Mind42
+
+### 分类
+
+<Route author="nczitzk" example="/mind42" path="/mind42/:caty?" :paramsDesc="['分类，见下表，默认为 Overview']">
+
+| Overview | Popular | All    |
+| -------- | ------- | ------ |
+| mindmaps | popular | public |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表']">
+
+| in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
+| -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
+
 ## NEEA 中国教育考试网
 
 ### 国家教育考试
@@ -120,6 +145,12 @@ pageClass: routes
 
 </Route>
 
+## 杭州市国家普通话测试网报信息
+
+### 考试信息
+
+<Route author="ChaosTong" example="/putonghua" path="/putonghua" />
+
 ## 唧唧堂
 
 ### 论文
@@ -163,6 +194,10 @@ pageClass: routes
 ### issues
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
+
+## 幕布精选
+
+<Route author="laampui" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:tagId/:title?" :paramsDesc="['标签 id', '显示标题']" />
 
 ## 扇贝
 
@@ -304,11 +339,37 @@ pageClass: routes
 
 </Route>
 
+## 印象识堂
+
+### 印象剪藏
+
+<Route author="nczitzk" example="/yinxiang/note" path="/yinxiang/note" />
+
+### 卡片清单
+
+<Route author="nczitzk" example="/yinxiang/card/32" path="/yinxiang/card/:id?" :paramsDesc="['卡片 id，见下表，默认为每周收藏排行榜・TOP5']">
+
+| 每周收藏排行榜・TOP5 | 每周热门「读书笔记」榜 TOP5 | 【印象话题】如何提高记忆力？ | 【印象话题】选择的悖论 | 【印象专题】如何一秒洞察问题本质？ | 「识堂开讲」5 位嘉宾精华笔记大放送 | 【印象话题】培养专注力的 5 个步骤 | 🎁购物清单主题活动获奖结果 |
+| -------------------- | --------------------------- | ---------------------------- | ---------------------- | ---------------------------------- | ---------------------------------- | --------------------------------- | -------------------------- |
+| 32                   | 33                          | 100                          | 101                    | 103                                | 104                                | 105                               | 106                        |
+
+</Route>
+
 ## 英中协会
 
 ### 奖学金
 
 <Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
+## 有道云笔记
+
+### 学霸感悟
+
+<Route author="nczitzk" example="/youdao/xueba" path="/youdao/xueba" />
+
+### 笔记最新动态
+
+<Route author="nczitzk" example="/youdao/latest" path="/youdao/latest" />
 
 ## 语雀
 
