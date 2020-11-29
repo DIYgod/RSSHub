@@ -131,6 +131,30 @@ pageClass: routes
 
 </Route>
 
+## i-CABLE 有線新聞
+
+<Route author="tpnonthealps" example="/icable/all" path="/icable/:category/:option?" :paramsDesc="['栏目', '选项（不指定时预设为「全文输出 (含题图)」的 `withphoto` ）']">
+
+细则:
+
+-   `:category` 栏目参数：
+
+    -   `all`: 全站
+    -   `local`: 本地（港聞）
+    -   `international`: 國際（兩岸國際）
+    -   `finance`: 財經
+    -   `china`: 兩岸（有線中國組）
+    -   `sports`: 體育
+
+-   `:option?` 可开启的选项：
+
+    -   `plain`: 全文输出（纯文字）
+    -   `withphoto`: 全文输出 (含题图) **(不指定 `:option?` 时将预设为此项)**
+
+-   全文输出转换为简体字: `?opencc=t2s`  
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅[「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+
+</Route>
 ## NHK
 
 ### News Web Easy
@@ -645,18 +669,6 @@ category 对应的关键词有
 | 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | aall | aipl | aopl | acn  | aie  | asc  | ait  | ahel | asoc | aloc | acul | aspt | amov |
-
-</Route>
-
-## 网易新闻专栏
-
-### 栏目
-
-<Route author="Solist-X" example="/netease/news/special/1" path="/netease/news/special/:type?" :paramsDesc="['栏目']">
-
-| 轻松一刻 | 槽值 | 人间 | 大国小民 | 三三有梗 | 数读 | 看客 | 下划线 | 谈心社 | 哒哒 | 胖编怪聊 | 曲一刀 | 今日之声 | 浪潮 | 沸点 |
-| -------- | ---- | ---- | -------- | -------- | ---- | ---- | ------ | ------ | ---- | -------- | ------ | -------- | ---- | ---- |
-| 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |
 
 </Route>
 
