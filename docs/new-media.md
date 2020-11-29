@@ -1413,6 +1413,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 晚点 LatePost
+
+### 最新报道
+
+<Route author="HaitianLiu" example="/latepost" path="/latepost"/>
+
 ## 万联网
 
 ### 资讯
