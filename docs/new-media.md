@@ -310,13 +310,19 @@ Tag
 
 ## Matters
 
-### 最新排序
-
-<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1" rssbud="1"/>
-
 ### 熱門文章
 
 <Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1" rssbud="1"/>
+
+### 最新、熱議、精華
+
+<Route author="xyqfer Cerebrater" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
+
+| 最新   | 熱議 | 精華    |
+| ------ | ---- | ------- |
+| latest | heat | essence |
+
+</Route>
 
 ### 标签
 
@@ -1460,6 +1466,20 @@ column 为 third 时可选的 category:
 | whole | news | entertainment | sports | money | tech | auto | lady | house | game | travel | edu  |
 
 </Route>
+
+### 专栏
+
+<Route author="Solist-X" example="/netease/news/special/1" path="/netease/news/special/:type?" :paramsDesc="['栏目']">
+
+| 轻松一刻 | 槽值 | 人间 | 大国小民 | 三三有梗 | 数读 | 看客 | 下划线 | 谈心社 | 哒哒 | 胖编怪聊 | 曲一刀 | 今日之声 | 浪潮 | 沸点 |
+| -------- | ---- | ---- | -------- | -------- | ---- | ---- | ------ | ------ | ---- | -------- | ------ | -------- | ---- | ---- |
+| 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |
+
+</Route>
+
+### 数读
+
+<Route author="laampui" example="/netease/news/data" path="/netease/news/data"/>
 
 ## 维基百科
 
