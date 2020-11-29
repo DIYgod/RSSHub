@@ -63,10 +63,6 @@ pageClass: routes
 
 </Route>
 
-## 归档
-
-<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
-
 ## UU 看书
 
 ### 小说更新
@@ -195,6 +191,10 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
 ## 观止（每日一文）
+
+## 归档
+
+<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
 
 ## 孔夫子旧书网
 
