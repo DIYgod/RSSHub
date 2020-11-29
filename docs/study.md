@@ -120,6 +120,12 @@ pageClass: routes
 
 </Route>
 
+## 杭州市国家普通话测试网报信息
+
+### 考试信息
+
+<Route author="ChaosTong" example="/putonghua" path="/putonghua" />
+
 ## 唧唧堂
 
 ### 论文
@@ -396,9 +402,3 @@ pageClass: routes
 ### 通知公告
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
-
-## 杭州市国家普通话测试网报信息
-
-### 考试信息
-
-<Route author="ChaosTong" example="/putonghua" path="/putonghua" />
