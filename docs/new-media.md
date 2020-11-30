@@ -308,6 +308,46 @@ Tag
 
 <Route author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
+## Matataki
+
+::: tip 提示
+
+在Matataki发表的文章会上传到星际文件系统（IPFS），永久保存。即使站内文章因为各种原因消失，用RSS获取过带IPFS连接的Feed Item的话，还是可以从RSS阅读器找回文章的。
+IPFS网关有可能失效，那时候换成其他网关。
+
+:::
+
+### 最热作品
+
+<Route author="whyouare111" example="/matataki/posts/hot" path="/matataki/posts/hot/:ipfsFlag?" :paramsDesc="['IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1"/>
+
+### 最新作品
+
+<Route author="whyouare111" example="/matataki/posts/latest/ipfs" path="/matataki/posts/latest/:ipfsFlag?" :paramsDesc="['IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1"/>
+
+### 作者创作
+
+<Route author="whyouare111" example="/matataki/users/9/posts" path="/matataki/users/:authorId/posts/:ipfsFlag?" :paramsDesc="['作者ID', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
+
+### Fan票关联作品
+
+<Route author="whyouare111" example="/matataki/tokens/22/posts/3" path="/matataki/tokens/:tokenId/posts/:filterCode/:ipfsFlag?" :paramsDesc="['Fan票ID', '过滤条件,见下表', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1">
+
+| 需持票 | 需支付 | 全部 | 
+| ----  | ----- | --- |
+| 1     | 2     | 3   | 
+
+</Route>
+
+### 标签关联作品
+
+<Route author="whyouare111" example="/matataki/tags/150/区块链/posts" path="/matataki/tags/:tagId/:tagName/posts/:ipfsFlag?" :paramsDesc="['标签ID', '标签名称','IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
+
+
+### 收藏夹
+
+<Route author="whyouare111" example="/matataki/users/3017/favorites/155/posts" path="/matataki/users/:userId/favorites/:favoriteListId/posts/:ipfsFlag?" :paramsDesc="['用户ID', '收藏夹ID','IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
+
 ## Matters
 
 ### 熱門文章
