@@ -322,6 +322,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 触乐
+
+<Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" :paramsDesc="['默认为 night']">
+
+| 每日聚焦 | 最好玩 | 触乐夜话 | 动态资讯 |
+| -------- | ------ | -------- | -------- |
+| daily    | pcz    | night    | news     |
+
+</Route>
 ## 二柄 APP
 
 ### 新闻
@@ -512,7 +521,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 游研社
 
-### 游研社
+### 游研社 - 分类文章
 
 <Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
@@ -521,6 +530,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | recommend | history | big    | culture | news | retro    |
 
 </Route>
+
+### 游研社 - 全部文章
+
+<Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
 
 ## 原神
 
