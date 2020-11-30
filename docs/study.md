@@ -41,9 +41,9 @@ pageClass: routes
 
 ### 查询国内外 CTF 赛事信息
 
-<Route author="frankli0324" example="/ctfhub/calendar" 
-    path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
-    :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
+<Route author="frankli0324" example="/ctfhub/search" 
+    path="/ctfhub/search/:limit?/:form?/:class?/:title?" 
+    :paramsDesc="['一个整数，筛选最新的limit场比赛，默认为10', '比赛形式', '比赛类型', '通过CTF赛事名称过滤']">
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
@@ -63,6 +63,14 @@ pageClass: routes
 
 </Route>
 
+### 查询近期赛事
+
+<Route author="frankli0324" example="/ctfhub/upcoming" 
+    path="/ctfhub/upcoming/:limit?" 
+    :paramsDesc="['一个整数，筛选最近的limit场比赛，默认为5']">
+
+</Route>
+
 ## gradCafe
 
 ### gradCafe result
@@ -72,6 +80,31 @@ pageClass: routes
 ### gradCafe result by key words
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+
+## Mind42
+
+### 分类
+
+<Route author="nczitzk" example="/mind42" path="/mind42/:caty?" :paramsDesc="['分类，见下表，默认为 Overview']">
+
+| Overview | Popular | All    |
+| -------- | ------- | ------ |
+| mindmaps | popular | public |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表']">
+
+| in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
+| -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
 
 ## NEEA 中国教育考试网
 
@@ -102,6 +135,26 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+## ProcessOn
+
+### 推荐
+
+<Route author="nczitzk" example="/processon/popular" path="/processon/popular/:cate?/:sort?" :paramsDesc="['分类，见下表，默认为所有类型', '排序，见下表，默认为人气']">
+
+分类
+
+| 所有类型 | 流程图 | BPMN | 思维导图 | UI 原型图 | UML | Org 组织结构图 | 网络拓扑图 | 韦恩图  |      |
+| -------- | ------ | ---- | -------- | --------- | --- | -------------- | ---------- | ------- | ---- |
+|          | es     | flow | bpmn     | mind_free | ui  | uml            | org        | network | venn |
+
+排序
+
+| 人气 | 最多人赞  | 最多收藏       | 最多浏览  | 最新发布    |
+| ---- | --------- | -------------- | --------- | ----------- |
+|      | likeCount | favouriteCount | viewCount | publishTime |
+
+</Route>
+
 ## X-MOL 平台
 
 ### 新闻
@@ -119,6 +172,22 @@ pageClass: routes
 | en      | es      | de      | fr       | zh   | jp     |
 
 </Route>
+
+## zhimap 思维导图社区
+
+<Route author="laampui" example="/zhimap/820156a42e9a490796c7fd56916aa95b/1" path="/zhimap/:categoryUuid?/:recommend?" :paramsDesc="['分类 uuid，见下表，默认为33b67d1bad1d4e37812f71d42764af34', '1 为按推荐排序，0 为按最新排序，默认为 0']">
+
+| 热门                             | 学科                             | 学习                             | 语言                             | 工作                             | 提升                             | 生活                             | 互联网                           | 教育                             | 其他                             | 行业                             | 服务发布                         | 医疗                             |
+| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| 33b67d1bad1d4e37812f71d42764af34 | 9434268e893a46aa9a1a231059849984 | 820156a42e9a490796c7fd56916aa95b | 959c81f606ca495c882c7e461429eb2a | 5af4bca5496e4733a2d582690627e25f | 5300988dff564756b5d462cea8a865b7 | 02fdcc2ab6374bc6b9b9717e70c87723 | 437d434fe9eb410a94dcefb889994e2b | 9747cbf78f96492c973aa6ab23925eee | d4c3a92a9cf64da7b187763211dc6ff6 | 58231ab9cef34af7819c3f6e2160c007 | 73d89972bee0457997c983d7fca19f9f | 853ce8b3a4c24b87a03f66af95c5e06c |
+
+</Route>
+
+## 杭州市国家普通话测试网报信息
+
+### 考试信息
+
+<Route author="ChaosTong" example="/putonghua" path="/putonghua" />
 
 ## 唧唧堂
 
@@ -163,6 +232,10 @@ pageClass: routes
 ### issues
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
+
+## 幕布精选
+
+<Route author="laampui" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:tagId/:title?" :paramsDesc="['标签 id', '显示标题']" />
 
 ## 扇贝
 
