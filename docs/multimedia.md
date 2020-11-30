@@ -472,6 +472,9 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
+## subHD.tv - 最新字幕
+
+<Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
 ## Yahoo! テレビ
 
 ### 番組検索
