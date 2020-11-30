@@ -308,6 +308,10 @@ Tag
 
 <Route author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
+## MakeUseOf
+
+<Route author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['分类，默认为 Trending']"/>
+
 ## Matataki
 
 ::: tip 提示
