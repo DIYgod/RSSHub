@@ -477,6 +477,14 @@ pageClass: routes
 
 ## 小木虫论坛
 
+### 期刊点评
+
+<Route author="nczitzk" example="/muchong/journal" path="/muchong/journal/:type?" :paramsDesc="['类型，见下表']"/>
+
+| SCI 期刊 | 中文期刊 |
+| -------- | -------- |
+|          | cn       |
+
 ### 分类
 
 <Route author="nczitzk" example="/muchong/290" path="/muchong/:id/:type?/:sort?" :paramsDesc="['板块 id，可在板块页 URL 中找到', '子类别 id，可在板块页导航栏中找到，默认为 `all` 即 全部', '排序，可选 `order-tid` 即 发表排序，默认为 回帖排序']">
