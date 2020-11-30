@@ -46,7 +46,7 @@ If you don't want to setup credentials, use Picuki.
 
 ### User Profile
 
-<RouteEn author="oppilate" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category. Only user category is supported for now.','Key for such category. E.g. username/ID for user feed']" selfhost="1"/>
+<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category. Only user category is supported for now.','Key for such category. E.g. username/ID for user feed']" radar="1"/>
 
 ## Lofter
 
