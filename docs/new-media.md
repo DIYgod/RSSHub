@@ -332,6 +332,18 @@ Tag
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## OpenAI
+
+### Blog
+
+<Route author="ncziztk" example="/openai/blog" path="/openai/blog/:tag" :paramsDesc="['标签，见下表，默认为 All']">
+
+| All | Research | Announcements | Events | Milestones |
+| --- | -------- | ------------- | ------ | ---------- |
+|     | research | announcements | events | milestones |
+
+</Route>
+
 ## PMCAFF
 
 ### 今日推荐 / 精选
