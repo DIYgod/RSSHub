@@ -118,6 +118,17 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## DeepMind
+
+### Blog
+
+<Route author="nczitzk" example="/deepmind/blog" path="/deepmind/blog/:category?" :paramsDesc="['分类，见下表']">
+
+| All | Podcasts | Research | News |
+| --- | -------- | -------- | ---- |
+
+</Route>
+
 ## Deutsche Welle 德国之声
 
 <Route author="nczitzk" example="/dw/zh" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
