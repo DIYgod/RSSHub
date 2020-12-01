@@ -444,7 +444,7 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ### 成人夜大通知公告
 
-<Route author="mrbruce516" example="/fudancce" path="/fudancce/index" />
+<Route author="mrbruce516" example="/fudan/cce" path="/fudan/cce" />
 
 ## 福州大学
 
