@@ -2366,6 +2366,50 @@
             },
         ],
     },
+    'matataki.io': {
+        _name: 'matataki',
+        www: [
+            {
+                title: '最热作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/article/',
+                target: '/matataki/posts/hot',
+            },
+            {
+                title: '最新作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/article/latest',
+                target: '/matataki/posts/latest',
+            },
+            {
+                title: '作者创作',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/user/:uid',
+                target: (params) => `/matataki/users/${params.uid}/posts`,
+            },
+            {
+                title: 'Fan票关联作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: ['/token/:tokenId', '/token/:tokenId/circle'],
+                target: (params) => `/matataki/tokens/${params.tokenId}/posts`,
+            },
+            {
+                title: '标签关联作品',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: ['/tag/:tagId'],
+                target: (params, url) => {
+                    const tagName = new URL(url).searchParams.get('name');
+                    return `/matataki/tags/${params.tagId}/${tagName}/posts`;
+                },
+            },
+            {
+                title: '收藏夹',
+                docs: 'https://docs.rsshub.app/new-media.html#matataki',
+                source: '/user/:uid/favlist/:fid',
+                target: (params) => `/matataki/users/${params.uid}/favorites/${params.fid}/posts`,
+            },
+        ],
+    },
     'eventernote.com': {
         _name: 'Eventernote',
         www: [
