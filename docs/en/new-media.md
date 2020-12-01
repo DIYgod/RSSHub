@@ -115,6 +115,10 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
+## MakeUseOf
+
+<RouteEn author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['Category, Trending by default']"/>
+
 ## Matters
 
 ### Latest
