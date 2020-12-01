@@ -108,6 +108,20 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 </RouteEn>
 
+## ChinaFile
+
+### Reporting & Opinion
+
+<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['Category, by default `all`']">
+
+Generates full-text feeds that the official feed doesn't provide.
+
+| All | The China NGO Project |
+| --- | --------------------- |
+| all | ngo                   |
+
+</RouteEn>
+
 ## NHK
 
 ### News Web Easy
@@ -213,11 +227,11 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### News
 
-<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category" :paramsDesc="['Language, `en-us` only for now', 'Category, see [RSS feeds in WSJ.com](https://www.wsj.com/news/rss-news-and-feeds)']">
+<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw` are supported', 'Category, only supported in `en-us`. Supports `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`.']">
 
 Provide full article RSS for WSJ topics.
 
-</Route>
+</RouteEn>
 
 ## Yahoo
 

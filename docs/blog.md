@@ -10,6 +10,10 @@ pageClass: routes
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Benedict Evans
+
+<Route author="emdoe" example="/benedictevans" path="/benedictevans"/>
+
 ## Google Sites
 
 ### 文章更新

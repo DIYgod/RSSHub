@@ -1,7 +1,7 @@
 <template>
 <div class="routeBlock" :id="path">
   <p class="badge">
-    <Badge text="support BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="support podcast" type="tip" vertical="middle" v-if="supportPodcast"/> <a target="_blank" href="/en/faq.html" v-if="anticrawler"><Badge text="strict anti-crawler policy" vertical="middle" type="warn"/></a> <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="support browser extension" vertical="middle" type="tip"/></a> <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud" v-if="rssbud"><Badge text="support rssbud" vertical="middle" type="tip"/></a>
+    <Badge text="support BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="support podcast" type="tip" vertical="middle" v-if="supportPodcast"/> <a target="_blank" href="/en/faq.html" v-if="anticrawler"><Badge text="strict anti-crawler policy" vertical="middle" type="warn"/></a> <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="support browser extension" vertical="middle" type="tip"/></a> <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud" v-if="rssbud"><Badge text="support rssbud" vertical="middle" type="tip"/></a> <a target="_blank" href="https://docs.rsshub.app/en/install/" v-if="selfhost"><Badge text="self-host only" vertical="middle" type="warn"/></a>
   </p>
   <p class="author">
     Author: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
@@ -60,6 +60,10 @@ export default {
       type: String,
       default: null
     },
+    selfhost: {
+      type: String,
+      default: null
+    },
   },
   methods: {
     renderMarkdown(item) {
@@ -71,14 +75,3 @@ export default {
   }
 }
 </script>
-<style>
-li.params p {
-  display: inline;
-  }
-.routeBlock {
-  margin: 1rem 0 2rem;
-}
-#app .page .badge.tip {
-  background-color: #FFB74D;
-}
-</style>

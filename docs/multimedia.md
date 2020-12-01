@@ -12,9 +12,9 @@ pageClass: routes
 
 ## 60-Second Science - Scientific American
 
-### Transcript
+<Route author="emdoe" example="/60s-science" path="/60s-science"/>
 
-<Route author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+输出 Transcript 从而提供比官方（podcast）更好的使用体验。
 
 ## 99% Invisible
 
@@ -62,6 +62,25 @@ pageClass: routes
 可空，默认为 base
 
 :::
+
+## CNTV 栏目
+
+::: tip 提示
+
+栏目 ID 查找示例: 
+打开栏目具体某一期页面，F12 控制台输入`column_id`得到栏目 ID。
+
+:::
+
+<Route author="WhoIsSure" example="/cntv/TOPC1451528971114112" path="/cntv/:column" :paramsDesc="['栏目ID, 可在对应CNTV栏目页面找到']">
+
+栏目
+
+| 新闻联播             | 新闻周刊             | 天下足球             |
+| -------------------- | -------------------- | -------------------- |
+| TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |
+
+</Route>
 
 ## EZTV
 
@@ -453,13 +472,16 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
+## subHD.tv - 最新字幕
+
+<Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
 ## Yahoo! テレビ
 
 ### 番組検索
 
 <Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
 
-## Youtube
+## YouTube
 
 见 [#youtube](/social-media.html#youtube)
 
@@ -685,7 +707,7 @@ pageClass: routes
 
 ### 专辑
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1" rssbud="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1" rssbud="1" selfhost="1">
 
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
@@ -705,7 +727,7 @@ pageClass: routes
 
 ### 发现
 
-<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou">
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" selfhost="1">
 
 ::: warning 注意
 

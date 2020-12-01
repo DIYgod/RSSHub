@@ -156,6 +156,14 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
 
+## ManicTime
+
+<Route author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
+
+## Mathpix
+
+<Route author="nczitzk" example="/mathpix/blog" path="/mathpix/blog"/>
+
 ## Microsoft Edge
 
 ### 外接程序更新
@@ -195,6 +203,12 @@ pageClass: routes
 ### 更新日志
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+
+## OneNote Gem Add-Ins
+
+### Release History
+
+<Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
 
 ## PlayStation
 
@@ -303,6 +317,12 @@ pageClass: routes
 ### app 更新
 
 <Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1" rssbud="1"/>
+
+## 特斯拉系统更新
+
+### 版本详细信息
+
+<Route author="mrbruce516" example="/tesla" path="/tesla/update"/>
 
 ## 腾讯柠檬 Lab
 
