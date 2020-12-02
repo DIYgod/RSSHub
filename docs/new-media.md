@@ -126,6 +126,7 @@ pageClass: routes
 
 | All | Podcasts | Research | News |
 | --- | -------- | -------- | ---- |
+|     | Podcasts | Research | News |
 
 </Route>
 
