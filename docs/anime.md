@@ -332,6 +332,10 @@ pageClass: routes
 
 <Route author="KenMizz" example="/ssmh" path="/ssmh/" />
 
+### 分类更新
+
+<Route author="Gandum2077" example="/ssmh/category/6" path="/ssmh/category/:cid" :paramsDesc="['分类的id，即对应 URL 中的数字']" />
+
 ## 鼠绘漫画
 
 ### 鼠绘漫画

@@ -115,6 +115,10 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
+## MakeUseOf
+
+<RouteEn author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['Category, Trending by default']"/>
+
 ## Matters
 
 ### Latest
@@ -140,6 +144,18 @@ Provides a better reading experience (full text articles) over the official one.
 <RouteEn author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['topic']">
 
 This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](http://nautil.us) and click `Topics` to acquire whole topic list.
+
+</RouteEn>
+
+## OpenAI
+
+### Blog
+
+<RouteEm author="ncziztk" example="/openai/blog" path="/openai/blog/:tag" :paramsDesc="['Tag, see below, All by default']">
+
+| All | Research | Announcements | Events | Milestones |
+| --- | -------- | ------------- | ------ | ---------- |
+|     | research | announcements | events | milestones |
 
 </RouteEn>
 

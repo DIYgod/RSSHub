@@ -77,6 +77,12 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 美国联邦最高法院
+
+### 辩论音频
+
+<Route author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['年份，默认为当前年份']"/>
+
 ## 泉州市跨境电子商务协会
 
 ### 新闻动态
