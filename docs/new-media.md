@@ -230,6 +230,12 @@ Tag
 
 </Route>
 
+## 国际教育研究所
+
+### Blog
+
+<Route author="nczitzk" example="/iie/blog" path="/iie/blog" />
+
 ## InfoQ 中文
 
 ### 推荐

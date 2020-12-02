@@ -105,6 +105,12 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+## Institute of International Education
+
+### Blog
+
+<RouteEn author="nczitzk" example="/iie/blog" path="/iie/blog" />
+
 ## Letterboxd
 
 ### User diary
