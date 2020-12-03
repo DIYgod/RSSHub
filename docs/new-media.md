@@ -1679,3 +1679,19 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 晚点
+
+### 首页
+
+<Route author="nczitzk" example="/latepost" path="/latepost"/>
+
+### 栏目
+
+<Route author="nczitzk" example="/latepost/1" path="/latepost/:proma?" :paramsDesc="['栏目 id，见下表，默认为首页']">
+
+| 首页 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
+| ---- | -------- | -------- | ---------- | ------ |
+|      | 1        | 2        | 3          | 4      |
+
+</Route>
