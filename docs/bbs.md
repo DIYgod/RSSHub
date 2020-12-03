@@ -204,6 +204,22 @@ pageClass: routes
 
 <Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" :paramsDesc="['驿站ID，在 URL 可以找到']"/>
 
+## 超理论坛
+
+### 板块
+
+<Route author="nczitzk" example="/chaoli" path="/chaoli/:channel?" :paramsDesc="['板块，见下表，默认为全部']">
+
+| 数学 | 物理    | 化学 | 生物    | 天文  | 技术 | 管理  | 公告   |
+| ---- | ------- | ---- | ------- | ----- | ---- | ----- | ------ |
+| math | physics | chem | biology | astro | tech | admin | announ |
+
+| 其他   | 语言 | 社科   | 科幻   | 辑录        |
+| ------ | ---- | ------ | ------ | ----------- |
+| others | lang | socsci | sci-fi | collections |
+
+</Route>
+
 ## 电鸭社区
 
 ### 工作机会
