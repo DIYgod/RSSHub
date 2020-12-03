@@ -214,3 +214,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Module Update
 
 <RouteEn author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>
+
+## XYplorer
+
+### What's New
+
+<RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
