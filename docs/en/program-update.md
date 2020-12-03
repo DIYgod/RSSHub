@@ -171,6 +171,18 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 </RouteEn>
 
+## RescueTime
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
+
+| Mac OS | Windows |
+| - | - |
+| mac | windows |
+
+</RouteEn>
+
 ## RSSHub
 
 ### New routes

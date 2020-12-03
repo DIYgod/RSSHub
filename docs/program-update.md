@@ -224,6 +224,18 @@ pageClass: routes
 
 <Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
 
+## RescueTime
+
+### Release Notes
+
+<Route author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id，见下表']">
+
+| Mac OS | Windows |
+| ------ | ------- |
+| mac    | windows |
+
+</Route>
+
 ## RSSHub
 
 ### 有新路由啦
