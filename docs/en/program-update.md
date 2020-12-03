@@ -92,6 +92,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
 
+## Total Commander
+
+### What's New
+
+<RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
 ## Greasy Fork
 
 ### Script Update

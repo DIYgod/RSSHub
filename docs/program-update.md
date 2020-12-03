@@ -256,6 +256,12 @@ pageClass: routes
 
 <Route author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
+## Total Commander
+
+### What's New
+
+<Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
 ## Typora
 
 ### Changelog
