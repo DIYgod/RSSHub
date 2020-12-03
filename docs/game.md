@@ -322,6 +322,15 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 触乐
+
+<Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" :paramsDesc="['默认为 night']">
+
+| 每日聚焦 | 最好玩 | 触乐夜话 | 动态资讯 |
+| -------- | ------ | -------- | -------- |
+| daily    | pcz    | night    | news     |
+
+</Route>
 ## 二柄 APP
 
 ### 新闻
