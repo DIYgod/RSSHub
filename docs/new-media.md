@@ -118,6 +118,24 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## DeepMind
+
+### Blog
+
+<Route author="nczitzk" example="/deepmind/blog" path="/deepmind/blog/:category?" :paramsDesc="['分类，见下表']">
+
+| All | Podcasts | Research | News |
+| --- | -------- | -------- | ---- |
+|     | Podcasts | Research | News |
+
+</Route>
+
+## DeepL
+
+### Blog
+
+<Route author="nczitzk" example="/deepl/blog" path="/deepl/blog/:lang?" :paramsDesc="['语言，可选 `en` 指 英语 和 `zh` 指 汉语，默认为 en']"/>
+
 ## Deutsche Welle 德国之声
 
 <Route author="nczitzk" example="/dw/zh" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
@@ -155,6 +173,12 @@ pageClass: routes
 | chinese  | cn       | us | japanese |
 
 </Route>
+
+## Esquirehk
+
+### Tag
+
+<Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" :paramsDesc="['标签，可在对应标签页 URL 中找到']" />
 
 ## GQ
 
@@ -302,15 +326,64 @@ Tag
 
 <Route author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
+## MakeUseOf
+
+<Route author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['分类，默认为 Trending']"/>
+
+## Matataki
+
+::: tip 提示
+
+在 Matataki 发表的文章会上传到星际文件系统（IPFS），永久保存。即使站内文章因为各种原因消失，用 RSS 获取过带 IPFS 连接的 Feed Item 的话，还是可以从 RSS 阅读器找回文章的。
+IPFS 网关有可能失效，那时候换成其他网关。
+
+:::
+
+### 最热作品
+
+<Route author="whyouare111" example="/matataki/posts/hot" path="/matataki/posts/hot/:ipfsFlag?" :paramsDesc="['IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1"/>
+
+### 最新作品
+
+<Route author="whyouare111" example="/matataki/posts/latest/ipfs" path="/matataki/posts/latest/:ipfsFlag?" :paramsDesc="['IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1"/>
+
+### 作者创作
+
+<Route author="whyouare111" example="/matataki/users/9/posts" path="/matataki/users/:authorId/posts/:ipfsFlag?" :paramsDesc="['作者ID', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
+
+### Fan 票关联作品
+
+<Route author="whyouare111" example="/matataki/tokens/22/posts/3" path="/matataki/tokens/:tokenId/posts/:filterCode/:ipfsFlag?" :paramsDesc="['Fan票ID', '过滤条件,见下表', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']" radar="1">
+
+| 需持票 | 需支付 | 全部 |
+| ------ | ------ | ---- |
+| 1      | 2      | 3    |
+
+</Route>
+
+### 标签关联作品
+
+<Route author="whyouare111" example="/matataki/tags/150/区块链/posts" path="/matataki/tags/:tagId/:tagName/posts/:ipfsFlag?" :paramsDesc="['标签ID', '标签名称','IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
+
+### 收藏夹
+
+<Route author="whyouare111" example="/matataki/users/3017/favorites/155/posts" path="/matataki/users/:userId/favorites/:favoriteListId/posts/:ipfsFlag?" :paramsDesc="['用户ID', '收藏夹ID','IPFS标识，置空item指向主站，有值item指向IPFS网关']"  radar="1"/>
+
 ## Matters
-
-### 最新排序
-
-<Route author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1" rssbud="1"/>
 
 ### 熱門文章
 
 <Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1" rssbud="1"/>
+
+### 最新、熱議、精華
+
+<Route author="xyqfer Cerebrater" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
+
+| 最新   | 熱議 | 精華    |
+| ------ | ---- | ------- |
+| latest | heat | essence |
+
+</Route>
 
 ### 标签
 
@@ -331,6 +404,18 @@ Tag
 ### 话题
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+
+## OpenAI
+
+### Blog
+
+<Route author="ncziztk" example="/openai/blog" path="/openai/blog/:tag" :paramsDesc="['标签，见下表，默认为 All']">
+
+| All | Research | Announcements | Events | Milestones |
+| --- | -------- | ------------- | ------ | ---------- |
+|     | research | announcements | events | milestones |
+
+</Route>
 
 ## PMCAFF
 
@@ -718,6 +803,69 @@ area 分区选项
 ### 球员新闻
 
 <Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
+
+## 东西智库
+
+### 分类
+
+<Route author="nczitzk" example="/dx2025" path="/dx2025/:type?/:category?" :paramsDesc="['内容类别，见下表，默认为空', '行业分类，见下表，默认为空']">
+
+内容类别
+
+| 产业观察             | 行业报告         | 政策 & 成效        |
+| -------------------- | ---------------- | ------------------ |
+| industry-observation | industry-reports | policy-achievement |
+
+行业分类
+
+| 行业                 | 行业名称                                                          |
+| -------------------- | ----------------------------------------------------------------- |
+| 新一代信息技术       | next-generation-information-technology-industry-reports           |
+| 高档数控机床和机器人 | high-grade-cnc-machine-tools-and-robots-industry-reports          |
+| 航空航天装备         | aerospace-equipment-industry-reports                              |
+| 海工装备及高技术船舶 | marine-engineering-equipment-and-high-tech-ships-industry-reports |
+| 先进轨道交通装备     | advanced-rail-transportation-equipment-industry-reports           |
+| 节能与新能源汽车     | energy-saving-and-new-energy-vehicles-industry-reports            |
+| 电力装备             | electric-equipment-industry-reports                               |
+| 农机装备             | agricultural-machinery-equipment-industry-reports                 |
+| 新材料               | new-material-industry-reports                                     |
+| 生物医药及医疗器械   | biomedicine-and-medical-devices-industry-reports                  |
+| 现代服务业           | modern-service-industry-industry-reports                          |
+| 制造业人才           | manufacturing-talent-industry-reports                             |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/dx2025/tag/3d_printing" path="/dx2025/tag/:category" :paramsDesc="['标签分类，见下表，默认为空']">
+
+| 分类       | 分类名                            | 分类           | 分类名                    |
+| ---------- | --------------------------------- | -------------- | ------------------------- |
+| 3D 打印    | 3d_printing                       | 大数据         | dashuju                   |
+| 5G         | 5g                                | 大湾区         | d_w_q                     |
+| AI         | AI                                | 宏观经济       | macro_economy             |
+| 世界经济   | world_economy                     | 工业互联网     | industrial_internet       |
+| 云计算     | cloud_computing                   | 工业软件       | g_y_r_j                   |
+| 人工智能   | rengongzhineng                    | 数字化转型     | digital_transformation    |
+| 人才       | personnel                         | 数字孪生       | digital_twin              |
+| 企业研究   | enterprise_research               | 数字经济       | digital_economy           |
+| 信息安全   | information_safety                | 数字货币       | digital-currency          |
+| 创新       | innovate                          | 数据中心       | data_center               |
+| 制造业     | manufacturing                     | 数据安全       | data_security             |
+| 动力电池   | power_battery                     | 新一代信息技术 | x_y_d_x_x_j_s             |
+| 区块链     | qukuailian                        | 新基建         | new_infrastructure        |
+| 医疗器械   | medical_apparatus_and_instruments | 新材料         | x_c_l                     |
+| 半导体芯片 | semiconductor_chip                | 新能源         | x_n_y                     |
+| 新能源汽车 | new_energy_vehicles               | 智能制造       | intelligent_manufacturing |
+| 机器人     | robot                             | 机床           | machine_tool              |
+| 海工装备   | marine_engineering_equipment      | 物联网         | wulianwang                |
+| 现代服务   | x_d_f_w                           | 生物医药       | biomedicine               |
+| 电力装备   | electric_equipment                | 网络安全       | wangluoanquan             |
+| 航空航天   | aerospace                         | 虚拟现实       | virtual_reality           |
+| 装备制造业 | equipment_manufacturing_industry  | 赋能           | empowerment               |
+| 轨道交通   | rail_transit                      |                |                           |
+
+</Route>
 
 ## 多知网
 
@@ -1222,6 +1370,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 求是网
+
+### 分类
+
+<Route author="nczitzk" example="/qstheory" path="/qstheory/:category?" :paramsDesc="['分类，见下表']">
+
+| 网评 | 视频 | 原创   | 经济    | 政治     | 文化    | 社会    | 党建 | 科教    | 生态    | 国防    | 国际          | 图书  | 学习笔记 |
+| ---- | ---- | ------ | ------- | -------- | ------- | ------- | ---- | ------- | ------- | ------- | ------------- | ----- | -------- |
+| qswp | qssp | qslgxd | economy | politics | culture | society | cpc  | science | zoology | defense | international | books | xxbj     |
+
+</Route>
+
 ## 趣头条
 
 ### 分类
@@ -1307,6 +1467,18 @@ column 为 third 时可选的 category:
 ### 标签订阅
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
+
+## 生命时报
+
+### 栏目
+
+<Route author="nczitzk" example="/lifetimes" path="/lifetimes/:category?" :paramsDesc="['栏目，见下表，默认为新闻']">
+
+| 新闻 | 医药     | 养生            | 生活 | 母亲行动 | 长寿      | 视频  | 时评         | 调查    | 产业经济 |
+| ---- | -------- | --------------- | ---- | -------- | --------- | ----- | ------------ | ------- | -------- |
+| news | medicine | healthpromotion | life | mothers  | longevity | video | news-comment | hotspot | industry |
+
+</Route>
 
 ## 生物谷
 
@@ -1454,6 +1626,20 @@ column 为 third 时可选的 category:
 | whole | news | entertainment | sports | money | tech | auto | lady | house | game | travel | edu  |
 
 </Route>
+
+### 专栏
+
+<Route author="Solist-X" example="/netease/news/special/1" path="/netease/news/special/:type?" :paramsDesc="['栏目']">
+
+| 轻松一刻 | 槽值 | 人间 | 大国小民 | 三三有梗 | 数读 | 看客 | 下划线 | 谈心社 | 哒哒 | 胖编怪聊 | 曲一刀 | 今日之声 | 浪潮 | 沸点 |
+| -------- | ---- | ---- | -------- | -------- | ---- | ---- | ------ | ------ | ---- | -------- | ------ | -------- | ---- | ---- |
+| 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |
+
+</Route>
+
+### 数读
+
+<Route author="laampui" example="/netease/news/data" path="/netease/news/data"/>
 
 ## 维基百科
 
@@ -1656,6 +1842,15 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 遠見
+
+<Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
+
+| 最新文章 | 你可能會喜歡 | 名家專欄 | 專題  | 時事熱點 | 政治     | 社會    | 人物報導 | 國際  | 全球焦點    | 兩岸                  | 金融理財 | 投資理財   | 保險規劃  | 退休理財 | 金融 Fintech | 房地產      | 總體經濟 | 科技 | 科技趨勢   | 能源   | 產經     | 傳產     | 消費服務 | 生技醫藥 | 傳承轉型                   | 創業新創 | 管理       | 農業        | 教育      | 高教             | 技職          | 親子教育 | 國際文教        | 體育   | 好享生活 | 時尚設計 | 心靈成長    | 藝文影視 | 旅遊   | 環境生態    | 健康   | 美食 | 職場生涯 | 調查   | 縣市   | CSR |
+| -------- | ------------ | -------- | ----- | -------- | -------- | ------- | -------- | ----- | ----------- | --------------------- | -------- | ---------- | --------- | -------- | ------------ | ----------- | -------- | ---- | ---------- | ------ | -------- | -------- | -------- | -------- | -------------------------- | -------- | ---------- | ----------- | --------- | ---------------- | ------------- | -------- | --------------- | ------ | -------- | -------- | ----------- | -------- | ------ | ----------- | ------ | ---- | -------- | ------ | ------ | --- |
+| newest   | recommend    | opinion  | topic | news     | politics | society | figure   | world | world_focus | cross_strait_politics | money    | investment | insurance | retire   | fintech      | real_estate | economy  | tech | tech_trend | energy | business | industry | service  | medical  | family_business_succession | startup  | management | agriculture | education | higher_education | technological | parent   | world_education | sports | life     | art      | self_growth | film     | travel | environment | health | food | career   | survey | county | csr |
+
+</Route>
 ## 装备前线
 
 ### 首页最新帖子

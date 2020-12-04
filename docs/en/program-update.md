@@ -92,6 +92,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
 
+## Total Commander
+
+### What's New
+
+<RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
 ## Greasy Fork
 
 ### Script Update
@@ -171,6 +177,18 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 </RouteEn>
 
+## RescueTime
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
+
+| Mac OS | Windows |
+| - | - |
+| mac | windows |
+
+</RouteEn>
+
 ## RSSHub
 
 ### New routes
@@ -214,3 +232,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Module Update
 
 <RouteEn author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>
+
+## XYplorer
+
+### What's New
+
+<RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
