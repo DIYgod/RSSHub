@@ -74,6 +74,68 @@ pageClass: routes
 
 </Route>
 
+## Fantia
+
+### 搜索
+
+<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:peroid?/:order?/:rating?/:keyword?" :paramsDesc="['类型，见下表，默认为 posts','分类，见下表，也可在搜索页的 URL 中找到，默认为 すべてのクリエイター', '排行时段，见下表，填写该字段即返回排行榜，默认为空，即不排名' ,'排序，见下表，默认为 更新の新しい順', 'R18显示，见下表，默认为 すべて', '关键字，默认为空']">
+
+类型
+
+| クリエイター | 投稿  | 商品     | コミッション |
+| ------------ | ----- | -------- | ------------ |
+| fanclubs     | posts | products | commissions  |
+
+分类
+
+| 分类                   | 分类名     |
+| ---------------------- | ---------- |
+| イラスト               | illust     |
+| 漫画                   | comic      |
+| コスプレ               | cosplay    |
+| YouTuber・配信者       | youtuber   |
+| Vtuber                 | vtuber     |
+| 音声作品・ASMR         | voice      |
+| 声優・歌い手           | voiceactor |
+| アイドル               | idol       |
+| アニメ・映像・写真     | anime      |
+| 3D                     | 3d         |
+| ゲーム制作             | game       |
+| 音楽                   | music      |
+| 小説                   | novel      |
+| ドール                 | doll       |
+| アート・デザイン       | art        |
+| プログラム             | program    |
+| 創作・ハンドメイド     | handmade   |
+| 歴史・評論・情報       | history    |
+| 鉄道・旅行・ミリタリー | railroad   |
+| ショップ               | shop       |
+| その他                 | other      |
+
+排行时段
+
+| デイリー | ウィークリー | マンスリー | 全期間 |
+| -------- | ------------ | ---------- | ------ |
+| daily    | weekly       | monthly    | all    |
+
+排序
+
+| 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
+| -------------- | ------------ | -------------- | ------------ | -------------- |
+| updater        | update_old   | newer          | create_old   | popular        |
+
+R18 显示
+
+| すべて | 一般のみ | R18 のみ |
+| ------ | -------- | -------- |
+| all    | general  | adult    |
+
+</Route>
+
+### 用户投稿
+
+<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" :paramsDesc="['用户 id，可在用户页 URL 中找到']" />
+
 ## GirlImg
 
 ### album
