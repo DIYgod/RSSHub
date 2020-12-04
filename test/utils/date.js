@@ -74,6 +74,14 @@ describe('date', () => {
         expect(+new Date(parseDate('2月3日'))).toBe(+new Date('2019-2-3 00:00'));
     });
 
+    it('M月D号', async () => {
+        expect(+new Date(parseDate('2月3号'))).toBe(+new Date('2019-2-3 00:00'));
+    });
+
+    it('M/D', async () => {
+        expect(+new Date(parseDate('2/3'))).toBe(+new Date('2019-2-3 00:00'));
+    });
+
     it('Y-M-D', async () => {
         expect(+new Date(parseDate('2018-4-2'))).toBe(+new Date('2018-4-2'));
     });
@@ -82,8 +90,8 @@ describe('date', () => {
         expect(+new Date(parseDate('4-2'))).toBe(+new Date('2019-4-2'));
     });
 
-    it('M-D', async () => {
-        expect(+new Date(parseDate('4-2'))).toBe(+new Date('2019-4-2'));
+    it('H:m', async () => {
+        expect(+new Date(parseDate('4:2'))).toBe(+new Date('2019-1-1 04:02'));
     });
 
     it('刚刚', async () => {

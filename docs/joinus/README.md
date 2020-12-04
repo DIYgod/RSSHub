@@ -15,21 +15,31 @@ sidebar: auto
 
 开始编写 RSS 源前请确认源站没有提供 RSS，部分网页会在 HTML 头部包含 type 为 `application/atom+xml` 或 `application/rss+xml` 的 link 元素来指明 RSS 链接
 
-### 步骤 1: 编写脚本
+### 调试
+
+首先 `yarn` 或者 `npm install` 安装依赖，然后执行 `yarn dev` 或者 `npm run dev`，打开 `http://localhost:1200` 就可以看到效果，修改文件也会自动刷新
+
+### 添加脚本路由
+
+在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
+
+### 编写脚本
 
 在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
 
 #### 获取源数据
 
 -   获取源数据的主要手段为使用 [got](https://github.com/sindresorhus/got) 发起 HTTP 请求（请求接口或请求网页）获取数据
+
 -   个别情况需要使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 模拟浏览器渲染目标页面并获取数据
 
 -   返回的数据一般为 JSON 或 HTML 格式
+
 -   对于 HTML 格式的数据，使用 [cheerio](https://github.com/cheeriojs/cheerio) 进行处理
 
 -   以下三种获取数据方法按 **「推荐优先级」** 排列：
 
-    1. **使用 got 从接口获取数据**
+    1.  **使用 got 从接口获取数据**
 
     样例：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
@@ -82,7 +92,7 @@ sidebar: auto
             // 文章标题
             title: item.title,
             // 文章正文
-            description: `${item.desc}<br><img referrerpolicy="no-referrer" src="${item.pic}">`,
+            description: `${item.desc}<br><img src="${item.pic}">`,
             // 文章发布时间
             pubDate: new Date(item.time * 1000).toUTCString(),
             // 文章链接
@@ -93,7 +103,7 @@ sidebar: auto
     // 至此本路由结束
     ```
 
-    2. **使用 got 从 HTML 获取数据**
+    2.  **使用 got 从 HTML 获取数据**
 
     有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/douban/explore.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)。
 
@@ -114,7 +124,7 @@ sidebar: auto
     ```js
     const $ = cheerio.load(data); // 使用 cheerio 加载返回的 HTML
     const list = $('div[data-item_id]');
-    // 使用 cheerio 选择器，选择 class="list-item" 的所有元素，返回 cheerio node 对象数组
+    // 使用 cheerio 选择器，选择带有 data-item_id 属性的所有 div 元素，返回 cheerio node 对象数组
 
     // 注：每一个 cheerio node 对应一个 HTML DOM
     // 注：cheerio 选择器与 jquery 选择器几乎相同
@@ -134,14 +144,8 @@ sidebar: auto
                     item = $(item);
                     itemPicUrl = `${item.find('a.cover').attr('style')}`.replace('background-image:url(', '').replace(')', '');
                     return {
-                        title: item
-                            .find('.title a')
-                            .first()
-                            .text(),
-                        description: `作者：${item
-                            .find('.usr-pic a')
-                            .last()
-                            .text()}<br>描述：${item.find('.content p').text()}<br><img referrerpolicy="no-referrer" src="${itemPicUrl}">`,
+                        title: item.find('.title a').first().text(),
+                        description: `作者：${item.find('.usr-pic a').last().text()}<br>描述：${item.find('.content p').text()}<br><img src="${itemPicUrl}">`,
                         link: item.find('.title a').attr('href'),
                     };
                 })
@@ -151,7 +155,7 @@ sidebar: auto
     // 至此本路由结束
     ```
 
-    3. **使用 puppeteer 渲染页面获取数据**
+    3.  **使用 puppeteer 渲染页面获取数据**
 
     ::: tip 提示
 
@@ -197,22 +201,11 @@ sidebar: auto
         item: list
             .map((i, item) => ({
                 // 文章标题
-                title: $(item)
-                    .find('.item-title a')
-                    .text()
-                    .trim(),
+                title: $(item).find('.item-title a').text().trim(),
                 // 文章链接
-                link: url.resolve(
-                    link,
-                    $(item)
-                        .find('.item-title a')
-                        .attr('href')
-                ),
+                link: url.resolve(link, $(item).find('.item-title a').attr('href')),
                 // 文章作者
-                author: $(item)
-                    .find('.item-author')
-                    .text()
-                    .trim(),
+                author: $(item).find('.item-author').text().trim(),
             }))
             .get(), // cheerio get() 方法将 cheerio node 对象数组转换为 node 对象数组
     };
@@ -222,26 +215,26 @@ sidebar: auto
     // 注：由于此路由只是起到一个新专栏上架提醒的作用，无法访问付费文章，因此没有文章正文
     ```
 
-    4. **使用通用配置型路由**
+    4.  **使用通用配置型路由**
 
     很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
-    通用配置即通过 cherrio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
+    通用配置即通过 cheerio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
 
     首先我们需要几个数据：
 
-    1. RSS 来源链接
-    2. 数据来源链接
-    3. RSS 标题（非 item 标题）
+    1.  RSS 来源链接
+    2.  数据来源链接
+    3.  RSS 标题（非 item 标题）
 
     ```js
     const buildData = require('@/utils/common-config');
     module.exports = async (ctx) => {
         ctx.state.data = await buildData({
-            link: RSS来源链接,
-            url: 数据来源链接,
-            title: '%title%', //这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
+            link: '', // RSS来源链接
+            url: '', // 数据来源链接
+            title: '%title%', // 这里使用了变量，形如 **%xxx%** 这样的会被解析为变量，值为 **params** 下的同名值
             params: {
-                title: RSS标题,
+                title: '', // RSS标题
             },
         });
     };
@@ -264,8 +257,8 @@ sidebar: auto
             },
             item: {
                 item: '.content-main .stream .stream-item',
-                title: `$('.post-account-group').text() + ' - %title%'`, //只支持$().xxx()这样的js语句，也足够使用
-                link: `$('.post-account-group').attr('href')`, //.text()代表获取元素的文本，attr()表示获取指定属性
+                title: `$('.post-account-group').text() + ' - %title%'`, // 只支持$().xxx()这样的js语句，也足够使用
+                link: `$('.post-account-group').attr('href')`, // .text()代表获取元素的文本，.attr()表示获取指定属性
                 description: `$('.post .context').html()`, // .html()代表获取元素的html代码
                 pubDate: `new Date($('.post-time').attr('datetime')).toUTCString()`, // 日期的格式多种多样，可以尝试使用**/utils/date**
                 guid: `new Date($('.post-time').attr('datetime')).getTime()`, // guid必须唯一，这是RSS的不同item的标志
@@ -276,7 +269,7 @@ sidebar: auto
 
     至此我们完成了一个最简单的路由
 
----
+* * *
 
 #### 使用缓存
 
@@ -291,7 +284,7 @@ const description = await ctx.cache.tryGet(link, async () => {
     const result = await got.get(link);
 
     const $ = cheerio.load(result.data);
-    $('img').each(function(i, e) {
+    $('img').each(function (i, e) {
         $(e).attr('src', $(e).attr('data-src'));
     });
 
@@ -301,7 +294,7 @@ const description = await ctx.cache.tryGet(link, async () => {
 
 tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache.js#L128)，第一个参数为缓存的 key，第二个参数为缓存数据获取方法，第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)，且每次访问缓存会重新计算过期时间
 
----
+* * *
 
 #### 生成 RSS 源
 
@@ -313,6 +306,7 @@ ctx.state.data = {
     link: '', // 指向项目的链接
     description: '', // 描述项目
     language: '', // 频道语言
+    allowEmpty: false, // 默认 false，设为 true 可以允许 item 为空
     item: [
         // 其中一篇文章或一项内容
         {
@@ -349,7 +343,7 @@ ctx.state.data = {
 };
 ```
 
-##### BT/磁力源
+##### BT / 磁力源
 
 用于下载类 RSS，**额外**添加这些字段能使你的 RSS 被 BT 客户端识别并自动下载：
 
@@ -365,71 +359,48 @@ ctx.state.data = {
 };
 ```
 
----
+##### 媒体源
 
-### 步骤 2: 添加脚本路由
+**额外**添加这些字段能使你的 RSS 被支持 [Media RSS](http://www.rssboard.org/media-rss) 的软件订阅：
 
-在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
+示例：
 
-#### 举例
+```js
+ctx.state.data = {
+    item: [
+        {
+            media: {
+                content: {
+                    url: post.file_url,
+                    type: `image/${mime[post.file_ext]}`,
+                },
+                thumbnail: {
+                    url: post.preview_url,
+                },
+            },
+        },
+    ],
+};
+```
 
-1. [bilibili/bangumi](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/bangumi.js)
+* * *
 
-| 名称                       | 说明                                                                               |
-| -------------------------- | ---------------------------------------------------------------------------------- |
-| 路由                       | `/bilibili/bangumi/:seasonid`                                                      |
-| 数据来源                   | bilibili                                                                           |
-| 路由名称                   | bangumi                                                                            |
-| 参数 1                     | :seasonid 必选                                                                     |
-| 参数 2                     | 无                                                                                 |
-| 参数 3                     | 无                                                                                 |
-| 脚本路径                   | `./routes/bilibili/bangumi`                                                        |
-| lib/router.js 中的完整代码 | `router.get('/bilibili/bangumi/:seasonid', require('./routes/bilibili/bangumi'));` |
+### 添加脚本文档
 
-2. [github/issue](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/github/issue.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/github/issue/:user/:repo`                                                  |
-| 数据来源                   | github                                                                       |
-| 路由名称                   | issue                                                                        |
-| 参数 1                     | :user 必选                                                                   |
-| 参数 2                     | :repo 必选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/github/issue`                                                      |
-| lib/router.js 中的完整代码 | `router.get('/github/issue/:user/:repo', require('./routes/github/issue'));` |
-
-3. [embassy](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/embassy/index.js)
-
-| 名称                       | 说明                                                                         |
-| -------------------------- | ---------------------------------------------------------------------------- |
-| 路由                       | `/embassy/:country/:city?`                                                   |
-| 数据来源                   | embassy                                                                      |
-| 路由名称                   | 无                                                                           |
-| 参数 1                     | :country 必选                                                                |
-| 参数 2                     | ?city 可选                                                                   |
-| 参数 3                     | 无                                                                           |
-| 脚本路径                   | `./routes/embassy/index`                                                     |
-| lib/router.js 中的完整代码 | `router.get('/embassy/:country/:city?', require('./routes/embassy/index'));` |
-
----
-
-### 步骤 3: 添加脚本文档
-
-1.  更新 [文档 (/docs/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/README.md), 可以执行 `npm run docs:dev` 查看文档效果
+1.  更新 [文档 (/docs/) ](https://github.com/DIYgod/RSSHub/blob/master/docs/) 目录内对应的文档，可以执行 `npm run docs:dev` 查看文档效果
 
     -   文档采用 vue 组件形式，格式如下：
         -   `author`: 路由作者，多位作者使用单个空格分隔
         -   `example`: 路由举例
         -   `path`: 路由路径
         -   `:paramsDesc`: 路由参数说明，数组，支持 markdown
-            1. 参数说明必须对应其在路径中出现的顺序
-            1. 如缺少说明将会导致`npm run docs:dev`报错
-            1. 说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
-            1. 不必在说明中标注`可选/必选`，组件会根据路由`?`自动判断
+            1.  参数说明必须对应其在路径中出现的顺序
+            2.  如缺少说明将会导致`npm run docs:dev`报错
+            3.  说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
+            4.  不必在说明中标注`可选 / 必选`，组件会根据路由`?`自动判断
     -   文档样例：
 
-        1. 无参数:
+        1.  无参数:
 
         ```vue
         <Route author="HenryQW" example="/sspai/series" path="/sspai/series" />
@@ -437,13 +408,13 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
-        ***
+        * * *
 
-        2. 多参数：
+        2.  多参数：
 
         ```vue
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
@@ -451,11 +422,11 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
-        ***
+        * * *
 
 
         3. 复杂说明支持 slot:
@@ -486,9 +457,15 @@ ctx.state.data = {
 
 1.  请一定要注意把`<Route>`的标签关闭！
 
-1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
+2.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
 
 ## 提交新的 RSSHub Radar 规则
+
+### 调试
+
+打开浏览器扩展设置页，切换到规则列表页，下拉页面可以看到一个文本框，把新规则复制到文本框里就可以用来调试
+
+### 编写规则
 
 在 [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 里添加规则
 
@@ -500,7 +477,7 @@ ctx.state.data = {
         _name: 'bilibili',
         www: [{
             title: '分区视频',
-            description: 'https://docs.rsshub.app/social-media.html#bilibili',
+            docs: 'https://docs.rsshub.app/social-media.html#bilibili',
             source: '/v/*tpath',
             target: (params) => {
                 let tid;
@@ -519,17 +496,20 @@ ctx.state.data = {
         _name: 'Twitter',
         '.': [{  // for twitter.com
             title: '用户时间线',
-            description: 'https://docs.rsshub.app/social-media.html#twitter',
+            docs: 'https://docs.rsshub.app/social-media.html#twitter',
             source: '/:id',
-            target: '/twitter/user/:id',
-            verification: (params) => (params.id !== 'home'),
+            target: (params) => {
+                if (params.id !== 'home') {
+                    return '/twitter/user/:id';
+                }
+            },
         }],
     },
     'pixiv.net': {
         _name: 'Pixiv',
         'www': [{
             title: '用户收藏',
-            description: 'https://docs.rsshub.app/social-media.html#pixiv',
+            docs: 'https://docs.rsshub.app/social-media.html#pixiv',
             source: '/bookmark.php',
             target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
         }],
@@ -538,11 +518,12 @@ ctx.state.data = {
         _name: '微博',
         '.': [{
             title: '博主',
-            description: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+            docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
             source: ['/u/:id', '/:id'],
-            target: '/weibo/user/:uid',
-            script: '({uid: document.querySelector(\'head\').innerHTML.match(/\\$CONFIG\\[\'uid\']=\'(\\d+)\'/)[1]})',
-            verification: (params) => params.uid,
+            target: (params, url, document) => {
+                const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                return uid ? `/weibo/user/${uid}` : '';
+            },
         }],
     },
 }
@@ -550,29 +531,31 @@ ctx.state.data = {
 
 下面详细说明这些字段的含义及用法
 
-### title
+#### title
 
 必填，路由名称
 
 对应 RSSHub 文档中的名称，如 `Twitter 用户时间线` 规则的 `title` 为 `用户时间线`
 
-### docs
+#### docs
 
 必填，文档地址
 
 如 `Twitter 用户时间线` 规则的 `docs` 为 `https://docs.rsshub.app/social-media.html#twitter`
 
-而不是 `https://docs.rsshub.app/social-media.html#用户时间线`，因为 `#用户时间线` 不唯一而 `#twitter` 唯一
+注意不是 `https://docs.rsshub.app/social-media.html#yong-hu-shi-jian-xian`，hash 应该定位到一级标题
 
-### source
+#### source
 
 可选，源站路径，留空则永远不会匹配成功，只会在 `当前网站适用的 RSSHub 中出现`
 
 如 `Twitter 用户时间线` 规则的 `source` 为 `/:id`
 
-比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` `script` `verification` 字段生成 RSSHub 地址
+比如我们现在在 `https://twitter.com/DIYgod` 这个页面，`twitter.com/:id` 匹配成功，结果 params 为 `{id: 'DIYgod'}`，下一步中插件就会根据 params `target` 字段生成 RSSHub 地址
 
-### target
+请注意 `source` 只可以匹配 URL Path，如果参数在 URL Param 和 URL Hash 里请使用 `target`
+
+#### target
 
 可选，RSSHub 路径，留空则不会生成 RSSHub 路径
 
@@ -580,71 +563,22 @@ ctx.state.data = {
 
 上一步中源站路径匹配出 `id` 为 `DIYgod`，则 RSSHub 路径中的 `:id` 会被替换成 `DIYgod`，匹配结果为 `/twitter/user/DIYgod`，就是我们想要的结果
 
-进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 params 和 url 两个参数
+进一步，如果源站路径无法匹配出想要的参数，这时我们可以把 `target` 设为一个函数，函数有 `params` 、 `url` 和 `document` 三个参数
 
-如 `bilibili 分区视频` 规则，把 `https://www.bilibili.com/v/douga/mad/` 匹配为 `/bilibili/partion/24`
+`params` 为上一步 `source` 匹配出来的参数，`url` 为页面 url，`document` 为页面 document
 
-又如 `Pixiv 用户收藏` 规则，把 `https://www.pixiv.net/bookmark.php?id=15288095` 匹配为 `/pixiv/user/bookmarks/15288095`
+请注意，`target` 方法运行在沙盒中，对 `document` 的任何修改都不会反应到页面中
 
-### script
+### RSSBud
 
-可选，执行脚本
+[RSSBud](https://github.com/Cay-Zhang/RSSBud) 支持 RSSHub Radar 的规则并且也会自动更新，但是请注意：
 
-有时候我们需要的参数不在 URL 中，无法通过上述方法获取，这时可以通过这个参数在页面执行脚本
+-   在 Radar 的规则中使用 `'.'` 子域名可以让 RSSBud 适配 `m` / `mobile` 等常见移动端子域名
 
-请注意，由于插件权限限制，无法访问页面的 window 对象
+-   在 `target` 中使用 `document` 的规则并不适用 RSSBud：RSSBud 并不是一个浏览器插件，他只获取并分析网站的 URL
 
-如 `微博博主` 规则
+### 补充文档
 
-### verification
+在 RSSHub 文档里给对应路径加上 `radar="1"`，这样就会显示一个 `支持浏览器扩展` 标记
 
-可选，验证源站路径
-
-`verification` 为一个函数，函数有 params 参数
-
-这个参数用于解决 `source` 匹配成功了，但不是我们想要的页面 的问题
-
-比如 `twitter.com/:id` 可以匹配 `https://twitter.com/DIYgod`，也可以匹配 Twitter 主页 `https://twitter.com/home`，后者显然不是我们想匹配的，就用 `verification` 把 `id` 为 `home` 时排除掉
-
-## 一些开发 tips
-
-### VS Code 调试配置
-
-`.vscode/launch.js`
-
-#### 使用 nodemon 调试
-
-在终端使用 `npm run dev` 或 `yarn dev` 开始调试。
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "attach",
-            "name": "Node: Nodemon",
-            "processId": "${command:PickProcess}",
-            "restart": true,
-            "protocol": "inspector"
-        }
-    ]
-}
-```
-
-#### 不使用 nodemon 调试
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/lib/index.js",
-            "env": { "NODE_ENV": "dev" }
-        }
-    ]
-}
-```
+如果也支持 RSSBud，再加上 `rssbud="1"`，会显示 `支持 RSSBud` 标记
