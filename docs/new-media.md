@@ -792,6 +792,69 @@ area 分区选项
 
 <Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
 
+## 东西智库
+
+### 分类
+
+<Route author="nczitzk" example="/dx2025" path="/dx2025/:type?/:category?" :paramsDesc="['内容类别，见下表，默认为空', '行业分类，见下表，默认为空']">
+
+内容类别
+
+| 产业观察             | 行业报告         | 政策 & 成效        |
+| -------------------- | ---------------- | ------------------ |
+| industry-observation | industry-reports | policy-achievement |
+
+行业分类
+
+| 行业                 | 行业名称                                                          |
+| -------------------- | ----------------------------------------------------------------- |
+| 新一代信息技术       | next-generation-information-technology-industry-reports           |
+| 高档数控机床和机器人 | high-grade-cnc-machine-tools-and-robots-industry-reports          |
+| 航空航天装备         | aerospace-equipment-industry-reports                              |
+| 海工装备及高技术船舶 | marine-engineering-equipment-and-high-tech-ships-industry-reports |
+| 先进轨道交通装备     | advanced-rail-transportation-equipment-industry-reports           |
+| 节能与新能源汽车     | energy-saving-and-new-energy-vehicles-industry-reports            |
+| 电力装备             | electric-equipment-industry-reports                               |
+| 农机装备             | agricultural-machinery-equipment-industry-reports                 |
+| 新材料               | new-material-industry-reports                                     |
+| 生物医药及医疗器械   | biomedicine-and-medical-devices-industry-reports                  |
+| 现代服务业           | modern-service-industry-industry-reports                          |
+| 制造业人才           | manufacturing-talent-industry-reports                             |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/dx2025/tag/3d_printing" path="/dx2025/tag/:category" :paramsDesc="['标签分类，见下表，默认为空']">
+
+| 分类       | 分类名                            | 分类           | 分类名                    |
+| ---------- | --------------------------------- | -------------- | ------------------------- |
+| 3D 打印    | 3d_printing                       | 大数据         | dashuju                   |
+| 5G         | 5g                                | 大湾区         | d_w_q                     |
+| AI         | AI                                | 宏观经济       | macro_economy             |
+| 世界经济   | world_economy                     | 工业互联网     | industrial_internet       |
+| 云计算     | cloud_computing                   | 工业软件       | g_y_r_j                   |
+| 人工智能   | rengongzhineng                    | 数字化转型     | digital_transformation    |
+| 人才       | personnel                         | 数字孪生       | digital_twin              |
+| 企业研究   | enterprise_research               | 数字经济       | digital_economy           |
+| 信息安全   | information_safety                | 数字货币       | digital-currency          |
+| 创新       | innovate                          | 数据中心       | data_center               |
+| 制造业     | manufacturing                     | 数据安全       | data_security             |
+| 动力电池   | power_battery                     | 新一代信息技术 | x_y_d_x_x_j_s             |
+| 区块链     | qukuailian                        | 新基建         | new_infrastructure        |
+| 医疗器械   | medical_apparatus_and_instruments | 新材料         | x_c_l                     |
+| 半导体芯片 | semiconductor_chip                | 新能源         | x_n_y                     |
+| 新能源汽车 | new_energy_vehicles               | 智能制造       | intelligent_manufacturing |
+| 机器人     | robot                             | 机床           | machine_tool              |
+| 海工装备   | marine_engineering_equipment      | 物联网         | wulianwang                |
+| 现代服务   | x_d_f_w                           | 生物医药       | biomedicine               |
+| 电力装备   | electric_equipment                | 网络安全       | wangluoanquan             |
+| 航空航天   | aerospace                         | 虚拟现实       | virtual_reality           |
+| 装备制造业 | equipment_manufacturing_industry  | 赋能           | empowerment               |
+| 轨道交通   | rail_transit                      |                |                           |
+
+</Route>
+
 ## 多知网
 
 ### 首页
