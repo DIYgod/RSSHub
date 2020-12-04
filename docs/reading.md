@@ -295,6 +295,16 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 </Route>
 
+## 书趣阁
+
+### 小说更新
+
+<Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']">
+
+举例网址：<http://www.shuquge.com/txt/8659/index.html>
+
+</Route>
+
 ## 文学迷
 
 ### 小说更新
@@ -336,13 +346,3 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页
 
 <Route author="kt286" example="/zreading" path="/zreading" />
-
-## 书趣阁
-
-### 小说更新
-
-<Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']">
-
-举例网址：http://www.shuquge.com/txt/8659/index.html
-
-</Route>
