@@ -118,6 +118,12 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## DeepL
+
+### Blog
+
+<Route author="nczitzk" example="/deepl/blog" path="/deepl/blog/:lang?" :paramsDesc="['语言，可选 `en` 指 英语 和 `zh` 指 汉语，默认为 en']"/>
+
 ## DeepMind
 
 ### Blog
@@ -129,12 +135,6 @@ pageClass: routes
 |     | Podcasts | Research | News |
 
 </Route>
-
-## DeepL
-
-### Blog
-
-<Route author="nczitzk" example="/deepl/blog" path="/deepl/blog/:lang?" :paramsDesc="['语言，可选 `en` 指 英语 和 `zh` 指 汉语，默认为 en']"/>
 
 ## Deutsche Welle 德国之声
 
@@ -434,6 +434,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 ### 用户文章
 
 <Route author="SChen1024" example="/pmcaff/user/Oak7mqnEQJ" path="/pmcaff/user/:userid" :paramsDesc="['用户 id, 用户界面对应的 URL 最后面的字符']"/>
+
+## Polar
+
+### Blog
+
+<Route author="nczitzk" example="/polar/blog" path="/polar/blog"/>
 
 ## Quanta Magazine
 
@@ -1874,9 +1880,3 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## Polar
-
-### Blog
-
-<Route author="nczitzk" example="/polar/blog" path="/polar/blog"/>
