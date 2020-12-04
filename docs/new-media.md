@@ -118,6 +118,18 @@ pageClass: routes
 
 <Route author="kt286" example="/cnbeta" path="/cnbeta"/>
 
+## DeepMind
+
+### Blog
+
+<Route author="nczitzk" example="/deepmind/blog" path="/deepmind/blog/:category?" :paramsDesc="['分类，见下表']">
+
+| All | Podcasts | Research | News |
+| --- | -------- | -------- | ---- |
+|     | Podcasts | Research | News |
+
+</Route>
+
 ## DeepL
 
 ### Blog
