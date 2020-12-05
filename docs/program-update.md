@@ -234,6 +234,18 @@ pageClass: routes
 
 <Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
 
+## RescueTime
+
+### Release Notes
+
+<Route author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id，见下表']">
+
+| Mac OS | Windows |
+| ------ | ------- |
+| mac    | windows |
+
+</Route>
+
 ## RSSHub
 
 ### 有新路由啦
@@ -266,6 +278,12 @@ pageClass: routes
 
 <Route author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
+## Total Commander
+
+### What's New
+
+<Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
 ## Typora
 
 ### Changelog
@@ -293,6 +311,12 @@ pageClass: routes
 ### Module 更新
 
 <Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['模块包名, 模块页中的 Package 字段']"/>
+
+## XYplorer
+
+### What's New
+
+<Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 
 ## 怪物猎人世界
 
