@@ -163,7 +163,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### Blog
 
-<RouteEm author="ncziztk" example="/openai/blog" path="/openai/blog/:tag" :paramsDesc="['Tag, see below, All by default']">
+<RouteEn author="ncziztk" example="/openai/blog" path="/openai/blog/:tag" :paramsDesc="['Tag, see below, All by default']">
 
 | All | Research | Announcements | Events | Milestones |
 | --- | -------- | ------------- | ------ | ---------- |

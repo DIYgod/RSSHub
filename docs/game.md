@@ -44,7 +44,7 @@ pageClass: routes
 
 ### News
 
-<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['语言代码，见下表，默认为 en-US'， '分类，见下表，默认为全部新闻']">
+<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['语言代码，见下表，默认为 en-US', '分类，见下表，默认为全部新闻']">
 
 分类
 
@@ -376,6 +376,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | daily    | pcz    | night    | news     |
 
 </Route>
+
 ## 二柄 APP
 
 ### 新闻
