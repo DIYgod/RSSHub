@@ -4,6 +4,11 @@ pageClass: routes
 
 # Goverment
 
+## Central Intelligence Agency
+
+### Annual FOIA Reports
+
+<RouteEn author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 ## Ministry of Foreign Affairs of Japan
 
 ### Press conference
@@ -27,9 +32,3 @@ pageClass: routes
 ### Dispute settlement news
 
 <RouteEn author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" :paramsDesc="['Year, current year by default']"/>
-
-## Central Intelligence Agency
-
-### Annual FOIA Reports
-
-<RouteEn author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>

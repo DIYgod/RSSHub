@@ -254,12 +254,6 @@ Tag
 
 </Route>
 
-## 国际教育研究所
-
-### Blog
-
-<Route author="nczitzk" example="/iie/blog" path="/iie/blog" />
-
 ## InfoQ 中文
 
 ### 推荐
@@ -1002,6 +996,12 @@ others = 热点新闻 + 滚动新闻
 | info     | creative |
 
 </Route>
+
+## 国际教育研究所
+
+### Blog
+
+<Route author="nczitzk" example="/iie/blog" path="/iie/blog" />
 
 ## 果壳网
 
@@ -1873,6 +1873,24 @@ column 为 third 时可选的 category:
 | newest   | recommend    | opinion  | topic | news     | politics | society | figure   | world | world_focus | cross_strait_politics | money    | investment | insurance | retire   | fintech      | real_estate | economy  | tech | tech_trend | energy | business | industry | service  | medical  | family_business_succession | startup  | management | agriculture | education | higher_education | technological | parent   | world_education | sports | life     | art      | self_growth | film     | travel | environment | health | food | career   | survey | county | csr |
 
 </Route>
+## 中国劳工观察
+
+### 调查报告
+
+<Route author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" :paramsDesc="['语言，默认为英语，可选 `cn` 即 简体中文', '行业 id，见下表，默认为全部']">
+
+| 全部 | 制鞋 | 印刷 | 厨具 | 家具 | 服饰 | 汽车制造 | 玩具 | 电子产品 | 综合 | 零售 |
+| ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | -------- | ---- | ---- |
+|      | 2    | 6    | 14   | 3    | 4    | 10       | 8    | 1        | 9    | 7    |
+
+</Route>
+
+## 中国劳工通讯
+
+### 评论与特写
+
+<Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
+
 ## 装备前线
 
 ### 首页最新帖子
@@ -1896,21 +1914,3 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## 中国劳工观察
-
-### 调查报告
-
-<Route author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" :paramsDesc="['语言，默认为英语，可选 `cn` 即 简体中文', '行业 id，见下表，默认为全部']">
-
-| 全部 | 制鞋 | 印刷 | 厨具 | 家具 | 服饰 | 汽车制造 | 玩具 | 电子产品 | 综合 | 零售 |
-| ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | -------- | ---- | ---- |
-|      | 2    | 6    | 14   | 3    | 4    | 10       | 8    | 1        | 9    | 7    |
-
-</Route>
-
-## 中国劳工通讯
-
-### 评论与特写
-
-<Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
