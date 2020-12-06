@@ -603,6 +603,10 @@ pageClass: routes
 
 <Route author="FlashWingShadow" example="/missevan/drama/28499" path="/missevan/drama/:id" :paramsDesc="['剧集 id，在剧集主页 URL 中可以找到']"/>
 
+### 最新广播剧
+
+<Route author="nczitzk" example="/missevan/drama/latest" path="/missevan/drama/latest"/>
+
 ## 猫眼电影
 
 ### 正在热映
