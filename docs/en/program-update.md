@@ -70,6 +70,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 :::
 
+## Everything
+
+### Changes
+
+<RouteEn author="nczitzk" example="/everything/changes" path="/everything/changes"/>
+
 ## F-Droid
 
 ### App Update
