@@ -116,7 +116,7 @@ pageClass: routes
 
 ### 最新
 
-<Route author="kt286" example="/cnbeta" path="/cnbeta"/>
+<Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
 
 ## DeepL
 
@@ -1582,6 +1582,16 @@ column 为 third 时可选的 category:
 | 全部 | 新闻 | 金融    | 区块链     | 互联网   | 科技 | 新媒体   | 商业思考 | 行业 100 强 | 电商      | 娱乐          | 生活 |
 | ---- | ---- | ------- | ---------- | -------- | ---- | -------- | -------- | ----------- | --------- | ------------- | ---- |
 | all  | news | finance | blockchain | internet | tech | newmedia | business | hundred     | ecommerce | entertainment | life |
+
+</Route>
+
+## 晚点 LatePost
+
+<Route author="HaitianLiu nczitzk" example="/latepost" path="/latepost/:proma?" :paramsDesc="['栏目 id，见下表，默认为最新报道']">
+
+| 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
+| -------- | -------- | -------- | ---------- | ------ |
+|          | 1        | 2        | 3          | 4      |
 
 </Route>
 
