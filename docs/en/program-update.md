@@ -70,6 +70,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 :::
 
+## Everything
+
+### Changes
+
+<RouteEn author="nczitzk" example="/everything/changes" path="/everything/changes"/>
+
 ## F-Droid
 
 ### App Update
@@ -171,6 +177,18 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 </RouteEn>
 
+## RescueTime
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
+
+| Mac OS | Windows |
+| - | - |
+| mac | windows |
+
+</RouteEn>
+
 ## RSSHub
 
 ### New routes
@@ -197,6 +215,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
+## Total Commander
+
+### What's New
+
+<RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
 ## Typora
 
 ### Changelog
@@ -214,3 +238,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Module Update
 
 <RouteEn author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>
+
+## XYplorer
+
+### What's New
+
+<RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
