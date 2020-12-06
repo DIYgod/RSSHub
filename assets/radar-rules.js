@@ -427,7 +427,7 @@
     },
     'ximalaya.com': {
         _name: '喜马拉雅',
-        www: [
+        '.': [
             {
                 title: '专辑',
                 docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
@@ -1710,7 +1710,7 @@
     },
     'zhaishuyuan.com': {
         _name: '斋书苑',
-        www: [
+        '.': [
             {
                 title: '最新章节',
                 docs: 'https://docs.rsshub.app/reading.html#zhai-shu-yuan',
