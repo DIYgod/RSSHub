@@ -4,6 +4,52 @@ pageClass: routes
 
 # Gaming
 
+## Blizzard
+
+### News
+
+<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['Language code, see below, en-US by default', 'Category, see below, All News by default']">
+
+Categories
+
+| Category               | Slug                |
+| ---------------------- | ------------------- |
+| All News               |                     |
+| Diablo III             | diablo3             |
+| Diablo IV              | diablo4             |
+| Diablo: Immortal       | diablo-immortal     |
+| Hearthstone            | hearthstone         |
+| Heroes of the Storm    | heroes-of-the-storm |
+| Overwatch              | overwatch           |
+| StarCraft: Remastered  | starcraft           |
+| StarCraft II           | starcraft2          |
+| World of Warcraft      | world-of-warcraft   |
+| Warcraft III: Reforged | warcraft3           |
+| BlizzCon               | blizzcon            |
+| Inside Blizzard        | blizzard            |
+
+Language codes
+
+| Language       | Code  |
+| -------------- | ----- |
+| Deutsch        | de-de |
+| English (US)   | en-us |
+| English (EU)   | en-gb |
+| Español (EU)   | es-es |
+| Español (AL)   | es-mx |
+| Français       | fr-fr |
+| Italiano       | it-it |
+| Português (AL) | pt-br |
+| Polski         | pl-pl |
+| Русский        | ru-ru |
+| 한국어         | ko-kr |
+| ภาษาไทย        | th-th |
+| 日本語         | ja-jp |
+| 繁體中文       | zh-tw |
+| 简体中文       | zh-cn |
+
+</RouteEn>
+
 ## dekudeals
 
 ### Category
