@@ -65,6 +65,15 @@ pageClass: routes
 ## 金十数据
 
 <Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+## 麦肯锡中国
+
+<Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">
+
+| 汽车  | 金融服务          | 数字化              | 消费者    | 医药与医疗                 | 麦肯锡全球研究院          | 全球基础材料 | 创新       | 宏观经济     | 制造业        | 人才与领导力      | 技术，媒体与通信             | 城市化与可持续发展          | 资本项目和基础设施              | 旅游、运输和物流 |
+| ----- | ----------------- | ------------------- | --------- | -------------------------- | ------------------------- | ------------ | ---------- | ------------ | ------------- | ----------------- | ---------------------------- | --------------------------- | ------------------------------- | ---------------- |
+| autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流   |
+
+</Route>
 ## 世界经济论坛
 
 ### 报告
