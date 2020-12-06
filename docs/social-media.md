@@ -328,7 +328,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ## Instagram
 
-::: 注意
+::: warning 注意
 
 由于 Instagram API 限制，必须在服务器上设置你的用户名和密码。暂不支持两步验证。步骤见部署指南。
 
@@ -338,7 +338,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户
 
-<Route author="oppilate" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['时间线类别，目前仅支持用户时间线','针对该类别的索引，例如用户时间线里是用户名或用户 ID']"/>
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['时间线类别，目前仅支持用户时间线','针对该类别的索引，例如用户时间线里是用户名或用户 ID']" radar="1"/>
 
 ## Keep
 
@@ -464,6 +464,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ### 热门瞬间
 
 <Route author="BugWriter2" example="/soul/posts/hot" path="/soul/posts/hot" radar="1" rssbud="1"></Route>
+
+## Tape 小纸条
+
+### 提问箱新回答
+
+<Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" />
 
 ## Telegram
 
@@ -791,6 +797,23 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | 电影 | 电视剧 | 图书 | 唱片 |
 | ---- | ------ | ---- | ---- |
 | 0    | 1      | 2    | 3    |
+
+</Route>
+
+### 用户想看
+
+<Route author="exherb" example="/douban/people/exherb/wish/torrentProvider=1337x" path="/douban/people/:userid/wish/:routeParams?" :paramsDesc="['用户id','额外参数；见下']">
+
+对于豆瓣用户想看的内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式
+
+| 键               | 含义                                                       | 接受的值                        | 默认值 |
+| ---------------- | ---------------------------------------------------------- | ------------------------------- | ------ |
+| pagesCount       | 查询页面数                                                 |                                 | 1      |
+| torrentProvider  | 启用 torrent 搜索                                          | all/1337x/Eztv/Rarbg/Yts/HDHome |        |
+| passkey          | HDHome 密钥，当 torrentProvider 为 `all` 或  `HDHome` 必填 |                                 |        |
+| torrentQuery     | 额外关键词，如 `1080p`， 逗号分割                          |                                 |        |
+| torrentMinSeeds  | 最小 seeds 数                                              |                                 | 1      |
+| torrentMinRating | 种子和电影标题最小匹配度                                   |                                 | 0.5    |
 
 </Route>
 
