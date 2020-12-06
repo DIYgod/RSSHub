@@ -1897,6 +1897,18 @@ QueryString:
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
 
+## 中国劳工观察
+
+### 调查报告
+
+<Route author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" :paramsDesc="['语言，默认为英语，可选 `cn` 即 简体中文', '行业 id，见下表，默认为全部']">
+
+| 全部 | 制鞋 | 印刷 | 厨具 | 家具 | 服饰 | 汽车制造 | 玩具 | 电子产品 | 综合 | 零售 |
+| ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | -------- | ---- | ---- |
+|      | 2    | 6    | 14   | 3    | 4    | 10       | 8    | 1        | 9    | 7    |
+
+</Route>
+
 ## 中国劳工通讯
 
 ### 评论与特写

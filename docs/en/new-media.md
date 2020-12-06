@@ -260,3 +260,15 @@ Provides a better reading experience (full text articles) over the official one.
 ### Newsroom
 
 <RouteEn author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
+
+## China Labour Watch
+
+### Reports
+
+<RouteEn author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" :paramsDesc="['Language, English by default, or `cn` as Simplified Chinese', 'Industry id, see below, all by default']">
+
+| All | Automotive | Cookware | Electronics | Footwear | Furniture | Garment | General | Printing | Retail | Toys |
+| - | - | - | - | - | - | - | - | - | - | - |
+| | 2 | 6 | 14 | 3 | 4 | 10 | 8 | 1 | 9 | 7 |
+
+</RouteEn>
