@@ -10,11 +10,19 @@ pageClass: routes
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Benedict Evans
+
+<Route author="emdoe" example="/benedictevans" path="/benedictevans"/>
+
 ## Google Sites
 
 ### 文章更新
 
 <Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+## Gwern Branwen
+
+<Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
 
 ## Hedwig.pub
 

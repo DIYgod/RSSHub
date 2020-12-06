@@ -20,6 +20,6 @@ Recurring donors will be rewarded via express issue response, or even have your 
 
 We accept donations via the following ways:
 
--   [WeChat Pay](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
--   [Alipay](https://i.loli.net/2019/03/23/5c950ebbc980e.png)
+-   [WeChat Pay](https://diygod.me/images/wx.jpg)
+-   [Alipay](https://diygod.me/images/zfb.jpg)
 -   [Paypal](https://www.paypal.me/DIYgod)

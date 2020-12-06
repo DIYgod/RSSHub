@@ -12,9 +12,9 @@ pageClass: routes
 
 ## 60-Second Science - Scientific American
 
-### Transcript
+<Route author="emdoe" example="/60s-science" path="/60s-science"/>
 
-<Route author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+输出 Transcript 从而提供比官方（podcast）更好的使用体验。
 
 ## 99% Invisible
 
@@ -62,6 +62,25 @@ pageClass: routes
 可空，默认为 base
 
 :::
+
+## CNTV 栏目
+
+::: tip 提示
+
+栏目 ID 查找示例: 
+打开栏目具体某一期页面，F12 控制台输入`column_id`得到栏目 ID。
+
+:::
+
+<Route author="WhoIsSure" example="/cntv/TOPC1451528971114112" path="/cntv/:column" :paramsDesc="['栏目ID, 可在对应CNTV栏目页面找到']">
+
+栏目
+
+| 新闻联播             | 新闻周刊             | 天下足球             |
+| -------------------- | -------------------- | -------------------- |
+| TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |
+
+</Route>
 
 ## EZTV
 
@@ -411,6 +430,16 @@ pageClass: routes
 
 <Route author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['相对路径, `pornhub.com/` 后的部分, 需手动 URL 编码']"/>
 
+## Prestige 蚊香社
+
+### 系列作品
+
+<Route author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" :paramsDesc="['系列编号', '排序方式，缺省为 near（最新）']"/>
+
+| 人气    | 最新 | 发售日期 | 标题顺序 | 价格升序 | 价格降序 |
+| ------- | ---- | -------- | -------- | -------- | -------- |
+| popular | near | date     | title    | low      | high     |
+
 ## rs05 人生 05 电影
 
 ### rs05 电影列表
@@ -443,13 +472,16 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
+## subHD.tv - 最新字幕
+
+<Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
 ## Yahoo! テレビ
 
 ### 番組検索
 
 <Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
 
-## Youtube
+## YouTube
 
 见 [#youtube](/social-media.html#youtube)
 
@@ -671,11 +703,23 @@ pageClass: routes
 
 <Route author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']" supportPodcast="1" />
 
+## 西瓜视频
+
+::: tip Tiny Tiny RSS 用户请注意
+
+Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载西瓜视频内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
+
+:::
+
+### 用户视频投稿
+
+<Route author="FlashWingShadow" example="/ixigua/user/video/4234740937" path="/ixigua/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在用户主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+
 ## 喜马拉雅
 
 ### 专辑
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1" rssbud="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，默认不获取，填入该字段则视为获取']" supportPodcast="1" radar="1" rssbud="1" selfhost="1">
 
 ::: warning 注意
 专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
@@ -695,7 +739,7 @@ pageClass: routes
 
 ### 发现
 
-<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou">
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" selfhost="1">
 
 ::: warning 注意
 

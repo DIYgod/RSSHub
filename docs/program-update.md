@@ -156,6 +156,14 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
 
+## ManicTime
+
+<Route author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
+
+## Mathpix
+
+<Route author="nczitzk" example="/mathpix/blog" path="/mathpix/blog"/>
+
 ## Microsoft Edge
 
 ### 外接程序更新
@@ -196,6 +204,12 @@ pageClass: routes
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## OneNote Gem Add-Ins
+
+### Release History
+
+<Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
+
 ## PlayStation
 
 ### PlayStation 4 系统更新纪录
@@ -219,6 +233,18 @@ pageClass: routes
 ### 版本更新
 
 <Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
+
+## RescueTime
+
+### Release Notes
+
+<Route author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id，见下表']">
+
+| Mac OS | Windows |
+| ------ | ------- |
+| mac    | windows |
+
+</Route>
 
 ## RSSHub
 
@@ -252,6 +278,12 @@ pageClass: routes
 
 <Route author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
+## Total Commander
+
+### What's New
+
+<Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
 ## Typora
 
 ### Changelog
@@ -280,6 +312,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['模块包名, 模块页中的 Package 字段']"/>
 
+## XYplorer
+
+### What's New
+
+<Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+
 ## 怪物猎人世界
 
 ### 更新
@@ -303,6 +341,12 @@ pageClass: routes
 ### app 更新
 
 <Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1" rssbud="1"/>
+
+## 特斯拉系统更新
+
+### 版本详细信息
+
+<Route author="mrbruce516" example="/tesla" path="/tesla/update"/>
 
 ## 腾讯柠檬 Lab
 
