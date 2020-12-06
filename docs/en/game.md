@@ -8,7 +8,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['Language code, see below, en-US by default'， 'Category, see below, All News by default']">
+<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['Language code, see below, en-US by default', 'Category, see below, All News by default']">
 
 Categories
 
