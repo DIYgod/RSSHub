@@ -1753,6 +1753,30 @@ column 为 third 时可选的 category:
 
 <Route author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
 
+## 无产者评论
+
+### 分类
+
+<Route author="nczitzk" example="/proletar" path="/proletar/categories/:id?" :paramsDesc="['分类，见下表，默认为全部文章']">
+
+| 全部文章 | 中流击水 | 革命文艺 | 当代中国 | 理论视野 | 国际观察 | 史海沉钩 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|          | 中流击水 | 革命文艺 | 当代中国 | 理论视野 | 国际观察 | 史海沉钩 |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/proletar" path="/proletar/tags/:id?" :paramsDesc="['标签，默认为全部文章']">
+
+::: tip 提示
+
+标签名参见 [所有标签](https://review.proletar.ink/tags)
+
+:::
+
+</Route>
+
 ## 西祠胡同
 
 ### 频道
