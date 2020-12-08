@@ -29,3 +29,9 @@ pageClass: routes
 | x               | 7                 |
 
 </RouteEn>
+
+## LowEndTalk
+
+### Discussion
+
+<RouteEn author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" :paramsDesc="['Discussion id']"/>
