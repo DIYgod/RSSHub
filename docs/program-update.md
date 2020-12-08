@@ -234,6 +234,12 @@ pageClass: routes
 
 </Route>
 
+## QTTabBar
+
+### Change Log
+
+<Route author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
+
 ## Quicker
 
 ### 版本更新

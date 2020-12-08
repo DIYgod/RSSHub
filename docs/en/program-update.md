@@ -177,6 +177,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 </RouteEn>
 
+## QTTabBar
+
+### Change Log
+
+<RouteEn author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
+
 ## RescueTime
 
 ### Release Notes
