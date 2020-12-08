@@ -69,6 +69,7 @@
     "@sentry/node": "5.28.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
+    "bbcodejs": "0.0.4",
     "cheerio": "1.0.0-rc.3",
     "chrono-node": "2.1.10",
     "co-redis": "2.1.1",

@@ -617,21 +617,21 @@ pageClass: routes
 
 ## 一亩三分地
 
-### 主题帖
+### 帖子
+
+<Route author="NavePnow DIYgod" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+
+| 热门帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
+### 用户主题帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/threads" path="/1point3acres/user/:id/threads" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
 
-### 回帖
+### 用户回帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
-
-### 帖子 (手机端的最热与最新 Tab)
-
-<Route author="NavePnow" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
-
-| 最热帖子 | 最新帖子 |
-| -------- | -------- |
-| hot      | new      |
 
 ### 录取结果
 
