@@ -116,7 +116,7 @@ pageClass: routes
 
 ### 最新
 
-<Route author="kt286" example="/cnbeta" path="/cnbeta"/>
+<Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
 
 ## DeepL
 
@@ -997,6 +997,12 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+## 国际教育研究所
+
+### Blog
+
+<Route author="nczitzk" example="/iie/blog" path="/iie/blog" />
+
 ## 果壳网
 
 ### 科学人
@@ -1585,6 +1591,16 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 晚点 LatePost
+
+<Route author="HaitianLiu nczitzk" example="/latepost" path="/latepost/:proma?" :paramsDesc="['栏目 id，见下表，默认为最新报道']">
+
+| 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
+| -------- | -------- | -------- | ---------- | ------ |
+|          | 1        | 2        | 3          | 4      |
+
+</Route>
+
 ## 万联网
 
 ### 资讯
@@ -1857,6 +1873,24 @@ column 为 third 时可选的 category:
 | newest   | recommend    | opinion  | topic | news     | politics | society | figure   | world | world_focus | cross_strait_politics | money    | investment | insurance | retire   | fintech      | real_estate | economy  | tech | tech_trend | energy | business | industry | service  | medical  | family_business_succession | startup  | management | agriculture | education | higher_education | technological | parent   | world_education | sports | life     | art      | self_growth | film     | travel | environment | health | food | career   | survey | county | csr |
 
 </Route>
+## 中国劳工观察
+
+### 调查报告
+
+<Route author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" :paramsDesc="['语言，默认为英语，可选 `cn` 即 简体中文', '行业 id，见下表，默认为全部']">
+
+| 全部 | 制鞋 | 印刷 | 厨具 | 家具 | 服饰 | 汽车制造 | 玩具 | 电子产品 | 综合 | 零售 |
+| ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | -------- | ---- | ---- |
+|      | 2    | 6    | 14   | 3    | 4    | 10       | 8    | 1        | 9    | 7    |
+
+</Route>
+
+## 中国劳工通讯
+
+### 评论与特写
+
+<Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
+
 ## 装备前线
 
 ### 首页最新帖子

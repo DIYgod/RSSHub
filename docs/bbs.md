@@ -611,21 +611,21 @@ pageClass: routes
 
 ## 一亩三分地
 
-### 主题帖
+### 帖子
+
+<Route author="NavePnow DIYgod" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+
+| 热门帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
+### 用户主题帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/threads" path="/1point3acres/user/:id/threads" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
 
-### 回帖
+### 用户回帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
-
-### 帖子 (手机端的最热与最新 Tab)
-
-<Route author="NavePnow" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
-
-| 最热帖子 | 最新帖子 |
-| -------- | -------- |
-| hot      | new      |
 
 ### 录取结果
 
@@ -640,6 +640,37 @@ pageClass: routes
 6.  找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
 
 :::
+</Route>
+
+### 博客
+
+<Route author="nczitzk" example="/1point3acres/blog" path="/1point3acres/blog/:category?" :paramsDesc="['分类，见下表，可在对应分类页 URL 中找到']">
+
+| 分类       | 分类名                                                                |
+| ---------- | --------------------------------------------------------------------- |
+| 全部       |                                                                       |
+| 一亩三分地 | 一亩三分地                                                            |
+| 论坛精华   | 一亩三分地 - 论坛精华                                                 |
+| 咨询服务   | 咨询服务                                                              |
+| 学校院系   | 学校院系信息                                                          |
+| 找工求职   | 如何找工作                                                            |
+| 美国经济   | 如何找工作 - 美国经济与就业                                           |
+| 杂谈其他   | 其他类别                                                              |
+| 抄袭       | 其他类别 - 抄袭                                                       |
+| 直播       | 其他类别 - 直播                                                       |
+| 热门专业   | eecsmis 统计金工等热门专业                                            |
+| EECSMIS    | eecsmis 统计金工等热门专业 - eecsmis 专业                             |
+| 数据科学   | eecsmis 统计金工等热门专业 - 数据科学                                 |
+| 统计金工   | eecsmis 统计金工等热门专业 - 生物统计金融工程公共健康生物技术制药行业 |
+| 留学申请   | 留学申请信息                                                          |
+| GT 考试    | 留学申请信息 - gt 考试                                                |
+| 定位       | 留学申请信息 - 定位                                                   |
+| 文书写作   | 留学申请信息 - 文书写作                                               |
+| 面试       | 留学申请信息 - 面试                                                   |
+| 移民绿卡   | 移民办绿卡                                                            |
+| 美国学习   | 美国学习                                                              |
+| 美国生活   | 美国生活                                                              |
+
 </Route>
 
 ## 直播吧

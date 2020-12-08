@@ -83,6 +83,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['年份，默认为当前年份']"/>
 
+## 美国中央情报局
+
+### 年度信息自由法报告
+
+<Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
+
 ## 泉州市跨境电子商务协会
 
 ### 新闻动态

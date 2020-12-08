@@ -116,6 +116,12 @@ pageClass: routes
 
 :::
 
+## Everything
+
+### Changes
+
+<Route author="nczitzk" example="/everything/changes" path="/everything/changes"/>
+
 ## F-Droid
 
 ### App 更新

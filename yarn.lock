@@ -2822,6 +2822,11 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
 
+bbcodejs@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/bbcodejs/-/bbcodejs-0.0.4.tgz#85f081738c9b6e71ec58a32a419734c987bf8305"
+  integrity sha1-hfCBc4ybbnHsWKMqQZc0yYe/gwU=
+
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"

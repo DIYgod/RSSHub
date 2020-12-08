@@ -4,6 +4,11 @@ pageClass: routes
 
 # Goverment
 
+## Central Intelligence Agency
+
+### Annual FOIA Reports
+
+<RouteEn author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 ## Ministry of Foreign Affairs of Japan
 
 ### Press conference
