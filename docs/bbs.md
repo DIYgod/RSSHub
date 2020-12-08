@@ -108,6 +108,12 @@ pageClass: routes
 | ---- | ------------ | ---- | ----- |
 | jobs | translations | qa   | links |
 
+## LowEndTalk
+
+### Discussion
+
+<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" :paramsDesc="['讨论 id']"/>
+
 ## MCBBS
 
 ### 版块
