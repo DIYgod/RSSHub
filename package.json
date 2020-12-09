@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "@types/cheerio": "0.22.22",
+    "@types/cheerio": "0.22.23",
     "@types/got": "9.6.11",
     "@types/koa": "2.11.6",
     "@vuepress/plugin-back-to-top": "1.7.1",
@@ -66,7 +66,7 @@
   "dependencies": {
     "@koa/router": "10.0.0",
     "@postlight/mercury-parser": "2.2.0",
-    "@sentry/node": "5.28.0",
+    "@sentry/node": "5.29.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -100,7 +100,7 @@
     "lru-cache": "6.0.0",
     "lz-string": "1.4.4",
     "mailparser": "3.0.1",
-    "markdown-it": "12.0.2",
+    "markdown-it": "12.0.3",
     "module-alias": "2.2.2",
     "opencc": "1.1.1",
     "parse-torrent": "9.1.0",
