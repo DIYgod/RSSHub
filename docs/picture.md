@@ -332,6 +332,16 @@ R18 显示
 | ------ | ---------- | ---------- |
 | pic    | top        | top-4h     |
 
+## 绝对领域
+
+### 图集文章
+
+<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
+
+| 图集 | 文章 |
+| ---- | ---- |
+| tuji | as   |
+
 ## 酷 18
 
 ### 分站
@@ -365,16 +375,6 @@ R18 显示
 | 妹子图 | 妹子图热榜 |
 | ------ | ---------- |
 | ooxx   | top-ooxx   |
-
-## 绝对领域
-
-### 图集文章
-
-<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
-
-| 图集 | 文章 |
-| ---- | ---- |
-| tuji | as   |
 
 ## 妹子图
 
