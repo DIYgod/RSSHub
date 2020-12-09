@@ -21,6 +21,20 @@ pageClass: routes
 
 <RouteEn author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['Year, current year by default']"/>
 
+## The United States Trade Representative
+
+### Press Release
+
+<RouteEn author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" :paramsDesc="['Year, current year by default', 'Month, empty by default, show contents in all year']">
+
+::: tip Tip
+
+Fill in the English expression for the month in the Month field, eg `December` for the 12th Month。
+
+:::
+
+</RouteEn>
+
 ## United Nations
 
 ### Security Council Vetoed a Resolution
