@@ -2436,4 +2436,15 @@
             },
         ],
     },
+    'huya.com': {
+        _name: '虎牙直播',
+        '.': [
+            {
+                title: '直播间开播',
+                docs: 'https://docs.rsshub.app/live.html#hu-ya-zhi-bo-zhi-bo-jian-kai-bo',
+                source: '/:id',
+                target: '/huya/live/:id',
+            },
+        ],
+    },
 });
