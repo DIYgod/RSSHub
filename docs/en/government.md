@@ -35,12 +35,6 @@ Fill in the English expression for the month in the Month field, eg `December` f
 
 </RouteEn>
 
-## United Nations
-
-### Security Council Vetoed a Resolution
-
-<RouteEn author="HenryQW" example="/un/scveto" path="/un/scveto"/>
-
 ## U.S. Department of the Treasury
 
 ### Press Releases
@@ -54,6 +48,12 @@ Category
 | all            | statements-remarks   | readouts | testimonies |
 
 </RouteEn>
+
+## United Nations
+
+### Security Council Vetoed a Resolution
+
+<RouteEn author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
 ## World Trade Organization
 

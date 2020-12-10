@@ -54,16 +54,6 @@ pageClass: routes
 
 <Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['填写任意值，将会同时包括非官方的 Dropzone 动作']"/>
 
-## Bilibili
-
-### 更新情报
-
-<Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" :paramsDesc="['客户端 id，见下表，默认为安卓版']">
-
-| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版          |
-| ------- | --------- | ---------- | ------ | -------------- |
-| android | iphone    | ipad       | win    | android_tv_yst |
-
 ## Bandisoft
 
 ### 更新记录
@@ -101,6 +91,16 @@ pageClass: routes
 | 한국어 | kr |
 
 </Route>
+
+## Bilibili
+
+### 更新情报
+
+<Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" :paramsDesc="['客户端 id，见下表，默认为安卓版']">
+
+| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版          |
+| ------- | --------- | ---------- | ------ | -------------- |
+| android | iphone    | ipad       | win    | android_tv_yst |
 
 ## Bugly SDK
 
