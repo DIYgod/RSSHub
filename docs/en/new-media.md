@@ -266,6 +266,18 @@ Compared to the official one, this feed:
 
 </RouteEn>
 
+## The Brain
+
+### Blog
+
+<RouteEn author="nczitzk" example="/thebrain/blog" path="/thebrain/blog/:category?" :paramsDesc="['Category, see below, Blog by default']">
+
+| Blog | Recorded Events | Big Thinkers |
+| ---- | ---- | ---- |
+| blog | recorded-events | big-thinkers |
+
+</RouteEn>
+
 ## The Verge
 
 <RouteEn author="HenryQW" example="/verge" path="/verge">
