@@ -140,6 +140,18 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="nczitzk" example="/iie/blog" path="/iie/blog" />
 
+## International Energy Agency
+
+### News and events
+
+<RouteEn author="nczitzk" example="/iea/news-and-events" path="/iea/:category?" :paramsDesc="['Category, see below, Featured by default']">
+
+| Featured        | News | Calendar | Past events |
+| --------------- | ---- | -------- | ----------- |
+| news-and-events | news | calendar | past-events |
+
+</RouteEn>
+
 ## Letterboxd
 
 ### User diary

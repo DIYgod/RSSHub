@@ -1003,6 +1003,18 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="nczitzk" example="/iie/blog" path="/iie/blog" />
 
+## 国际能源署
+
+### 新闻及活动
+
+<Route author="nczitzk" example="/iea/news-and-events" path="/iea/:category?" :paramsDesc="['分类，见下表，默认为 Featured']">
+
+| Featured        | News | Calendar | Past events |
+| --------------- | ---- | -------- | ----------- |
+| news-and-events | news | calendar | past-events |
+
+</Route>
+
 ## 果壳网
 
 ### 科学人
