@@ -116,6 +116,12 @@ pageClass: routes
 
 :::
 
+## Everything
+
+### Changes
+
+<Route author="nczitzk" example="/everything/changes" path="/everything/changes"/>
+
 ## F-Droid
 
 ### App 更新
@@ -227,6 +233,12 @@ pageClass: routes
 | qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
 
 </Route>
+
+## QTTabBar
+
+### Change Log
+
+<Route author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
 
 ## Quicker
 

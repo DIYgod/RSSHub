@@ -4,6 +4,11 @@ pageClass: routes
 
 # Goverment
 
+## Central Intelligence Agency
+
+### Annual FOIA Reports
+
+<RouteEn author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 ## Ministry of Foreign Affairs of Japan
 
 ### Press conference
@@ -15,6 +20,20 @@ pageClass: routes
 ### Arguments Audios
 
 <RouteEn author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['Year, current year by default']"/>
+
+## The United States Trade Representative
+
+### Press Release
+
+<RouteEn author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" :paramsDesc="['Year, current year by default', 'Month, empty by default, show contents in all year']">
+
+::: tip Tip
+
+Fill in the English expression for the month in the Month field, eg `December` for the 12th Month。
+
+:::
+
+</RouteEn>
 
 ## United Nations
 

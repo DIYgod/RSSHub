@@ -83,6 +83,26 @@ pageClass: routes
 
 <Route author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['年份，默认为当前年份']"/>
 
+## 美国贸易代表办公室
+
+### 新闻稿
+
+<Route author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" :paramsDesc="['年份，默认为当前年份', '月份，默认为空，即全年']">
+
+::: tip 提示
+
+月份处填写该月的英语表达，如 12 月 应填入 `December`。
+
+:::
+
+</Route>
+
+## 美国中央情报局
+
+### 年度信息自由法报告
+
+<Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
+
 ## 泉州市跨境电子商务协会
 
 ### 新闻动态
