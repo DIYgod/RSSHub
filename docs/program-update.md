@@ -54,6 +54,54 @@ pageClass: routes
 
 <Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['填写任意值，将会同时包括非官方的 Dropzone 动作']"/>
 
+## Bandisoft
+
+### 更新记录
+
+<Route author="nczitzk" example="/bandisoft/bandizip" path="/bandisoft/:id?/:lang?" :paramsDesc="['软件 id，见下表，默认为 Bandizip', '语言，见下表，默认为英语']">
+
+软件 id
+
+| Bandizip (Win) | Bandizip (Mac) | Honeycam | Honeyview |
+| -------------- | -------------- | -------- | --------- |
+| bandizip       | bandizip.mac   | honeycam | honeyview |
+
+语言
+
+| English | en |
+| 中文 (简体) | cn |
+| 中文 (繁體) | tw |
+| 日本語 | jp |
+| Русский | ru |
+| Español | es |
+| Français | fr |
+| Deutsch | de |
+| Italiano | it |
+| Slovenčina | sk |
+| Українська | uk |
+| Беларуская | be |
+| Dansk | da |
+| Polski | pl |
+| Português Brasileiro | br |
+| Čeština | cs |
+| Nederlands | nl |
+| Slovenščina| sl |
+| Türkçe| tr  |
+| ภาษาไทย | th |
+| 한국어 | kr |
+
+</Route>
+
+## Bilibili
+
+### 更新情报
+
+<Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" :paramsDesc="['客户端 id，见下表，默认为安卓版']">
+
+| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版          |
+| ------- | --------- | ---------- | ------ | -------------- |
+| android | iphone    | ipad       | win    | android_tv_yst |
+
 ## Bugly SDK
 
 ### 更新日志

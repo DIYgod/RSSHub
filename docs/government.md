@@ -77,6 +77,20 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 美国财政部
+
+### 新闻稿
+
+<Route author="nczitzk" example="/treasury/press-releases" path="/treasury/press-releases/:category?/:title?" :paramsDesc="['分类，见下表，默认为全部', '标题关键字，默认为空']">
+
+分类
+
+| Press Releases | Statements & Remarks | Readouts | Testimonies |
+| -------------- | -------------------- | -------- | ----------- |
+| all            | statements-remarks   | readouts | testimonies |
+
+</Route>
+
 ## 美国联邦最高法院
 
 ### 辩论音频
