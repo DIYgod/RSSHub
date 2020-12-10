@@ -511,6 +511,18 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## The Brain
+
+### Blog
+
+<Route author="nczitzk" example="/thebrain/blog" path="/thebrain/blog/:category?" :paramsDesc="['分类, 见下表，默认为 Blog']">
+
+| Blog | Recorded Events | Big Thinkers |
+| ---- | --------------- | ------------ |
+| blog | recorded-events | big-thinkers |
+
+</Route>
+
 ## The Verge
 
 ### The Verge
