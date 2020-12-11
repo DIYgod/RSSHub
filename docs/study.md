@@ -81,6 +81,17 @@ pageClass: routes
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
+## MarginNote
+
+### 标签
+
+<Route author="nczitzk" example="/marginnote/tag/经验分享" path="/marginnote/tag/:id?" :paramsDesc="['标签名，见下表，默认为 经验分享']">
+
+| 经验分享 | 论坛精华 | 待跟进反馈 | 优秀建议 | 精选回答 | 官方签名 | 自动更新 | 3674 以上版本支持 | 368 以上版本支持 | 未经验证的安全风险 | 笔记本分享 | 关键反馈 | 精选话题讨论 | 灵感盒 | 引用 |
+| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | ----------------- | ---------------- | ------------------ | ---------- | -------- | ------------ | ------ | ---- |
+
+</Route>
+
 ## Mind42
 
 ### 分类
