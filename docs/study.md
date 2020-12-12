@@ -410,6 +410,18 @@ pageClass: routes
 
 </Route>
 
+### 用户公开笔记
+
+<Route author="nczitzk" example="/yinxiang/personal/ZUhuRTmW5SKE7vvHPqI7cg" path="/yinxiang/personal/:id" :paramsDesc="['用户 id，可在用户页 URL 中找到']" />
+
+### 笔记分类
+
+<Route author="nczitzk" example="/yinxiang/category/28" path="/yinxiang/category/:id" :paramsDesc="['分类 id，可在分类页 URL 中找到']" />
+
+### 笔记标签
+
+<Route author="nczitzk" example="/yinxiang/tag/人生算法" path="/yinxiang/tag/:id" :paramsDesc="['标签名，可在标签页中找到']" />
+
 ## 英中协会
 
 ### 奖学金

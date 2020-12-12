@@ -1934,6 +1934,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 中国机械工程学会
+
+### 学会新闻
+
+<Route author="nczitzk" example="/cmes/news" path="/cmes/news/:category?" :paramsDesc="['分类，见下表，默认为 学会要闻']">
+
+| 学会要闻    | 学会动态 | 科技新闻 |
+| ----------- | -------- | -------- |
+| Information | Dynamics | TechNews |
+
+</Route>
+
 ## 中国劳工观察
 
 ### 调查报告
