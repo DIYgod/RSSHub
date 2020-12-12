@@ -90,6 +90,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
 
+## ASML 阿斯麦
+
+### Press releases & announcements
+
+<Route author="nczitzk" example="/asml/press-releases" path="/asml/press-releases"/>
+
 ## BOF
 
 ### 首页
