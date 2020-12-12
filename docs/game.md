@@ -551,6 +551,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+## 游戏动力
+
+### 游戏资讯
+
+<Route author="wy916787036" example="/vgn" path="/vgn/:platform?" :paramsDesc="['平台，见下表，默认为全部']">
+| Switch | PS4 | PC | Xbox |
+| -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        |
+</Route>
+
 ## 游戏时光
 
 ### 游戏时光新闻
