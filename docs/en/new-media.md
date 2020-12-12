@@ -140,6 +140,18 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="nczitzk" example="/iie/blog" path="/iie/blog" />
 
+## International Energy Agency
+
+### News and events
+
+<RouteEn author="nczitzk" example="/iea/news-and-events" path="/iea/:category?" :paramsDesc="['Category, see below, Featured by default']">
+
+| Featured        | News | Calendar | Past events |
+| --------------- | ---- | -------- | ----------- |
+| news-and-events | news | calendar | past-events |
+
+</RouteEn>
+
 ## Letterboxd
 
 ### User diary
@@ -251,6 +263,18 @@ Compared to the official one, this feed:
 - Soomal offers official RSS subscriptions
   - Soomal website：[http://www.soomal.com/doc/101.rss.xml](http://www.soomal.com/doc/101.rss.xml)
   - Soomal forum and comments：[http://www.soomal.com/bbs/101.rss.xml](http://www.soomal.com/bbs/101.rss.xml)
+
+</RouteEn>
+
+## The Brain
+
+### Blog
+
+<RouteEn author="nczitzk" example="/thebrain/blog" path="/thebrain/blog/:category?" :paramsDesc="['Category, see below, Blog by default']">
+
+| Blog | Recorded Events | Big Thinkers |
+| ---- | ---- | ---- |
+| blog | recorded-events | big-thinkers |
 
 </RouteEn>
 
