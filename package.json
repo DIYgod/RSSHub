@@ -65,6 +65,7 @@
   },
   "dependencies": {
     "@koa/router": "10.0.0",
+    "@monibrand/user-agents": "1.1.1",
     "@postlight/mercury-parser": "2.2.0",
     "@sentry/node": "5.29.0",
     "aes-js": "3.1.2",
