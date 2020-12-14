@@ -36,6 +36,19 @@ pageClass: routes
 
 </Route>
 
+## Craigslist
+
+### 商品搜索
+
+<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['位置，即Craigslist的子域，如sfbay', '搜索类型，如sso']"/>
+
+> 由于 Craigslist 取消了 RSS 订阅搜索功能，因此用 RSSHub 来实现了类似效果。
+> 一个完整原始搜索会像这样：
+> <https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel>
+>
+> /search/xxx 后跟的 "xxx" 为搜索类型，直接参考原始请求即可。
+> query string 是实际的搜索内容。
+
 ## Furstar
 
 ### 最新售卖角色列表

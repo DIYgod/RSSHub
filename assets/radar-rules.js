@@ -2447,6 +2447,15 @@
             },
         ],
     },
+    'craigslist.org': {
+        _name: 'Craigslist',
+        '.': [
+            {
+                title: '商品搜索列表',
+                docs: 'https://docs.rsshub.app/shopping.html#craigslist',
+            },
+        ],
+    },
     'saraba1st.com': {
         _name: 'Saraba1st',
         bbs: [
