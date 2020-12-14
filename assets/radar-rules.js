@@ -2455,6 +2455,7 @@
                 docs: 'https://docs.rsshub.app/shopping.html#craigslist',
             },
         ],
+    },
     'saraba1st.com': {
         _name: 'Saraba1st',
         bbs: [
@@ -2465,7 +2466,8 @@
                 target: (params) => {
                     const id = params.id.includes('thread') ? params.id.split('-')[1] : '';
                     return id ? `/saraba1st/thread/${id}` : '';
-             },
-       ],
+                },
+            },
+        ],
     },
 });
