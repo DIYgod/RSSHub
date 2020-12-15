@@ -1912,6 +1912,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 有趣天文奇观
+
+### 首页
+
+<Route author="nczitzk" example="/interesting-sky" path="/interesting-sky"/>
+
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
