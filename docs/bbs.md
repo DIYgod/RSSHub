@@ -108,6 +108,12 @@ pageClass: routes
 | ---- | ------------ | ---- | ----- |
 | jobs | translations | qa   | links |
 
+## LowEndTalk
+
+### Discussion
+
+<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" :paramsDesc="['讨论 id']"/>
+
 ## MCBBS
 
 ### 版块
@@ -168,7 +174,7 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']">
+<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
 
 帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
 
@@ -203,6 +209,22 @@ pageClass: routes
 ### 驿站帖子
 
 <Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" :paramsDesc="['驿站ID，在 URL 可以找到']"/>
+
+## 超理论坛
+
+### 板块
+
+<Route author="nczitzk" example="/chaoli" path="/chaoli/:channel?" :paramsDesc="['板块，见下表，默认为全部']">
+
+| 数学 | 物理    | 化学 | 生物    | 天文  | 技术 | 管理  | 公告   |
+| ---- | ------- | ---- | ------- | ----- | ---- | ----- | ------ |
+| math | physics | chem | biology | astro | tech | admin | announ |
+
+| 其他   | 语言 | 社科   | 科幻   | 辑录        |
+| ------ | ---- | ------ | ------ | ----------- |
+| others | lang | socsci | sci-fi | collections |
+
+</Route>
 
 ## 电鸭社区
 
@@ -595,21 +617,21 @@ pageClass: routes
 
 ## 一亩三分地
 
-### 主题帖
+### 帖子
+
+<Route author="NavePnow DIYgod" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+
+| 热门帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
+### 用户主题帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/threads" path="/1point3acres/user/:id/threads" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
 
-### 回帖
+### 用户回帖
 
 <Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
-
-### 帖子 (手机端的最热与最新 Tab)
-
-<Route author="NavePnow" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
-
-| 最热帖子 | 最新帖子 |
-| -------- | -------- |
-| hot      | new      |
 
 ### 录取结果
 
@@ -624,6 +646,37 @@ pageClass: routes
 6.  找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
 
 :::
+</Route>
+
+### 博客
+
+<Route author="nczitzk" example="/1point3acres/blog" path="/1point3acres/blog/:category?" :paramsDesc="['分类，见下表，可在对应分类页 URL 中找到']">
+
+| 分类       | 分类名                                                                |
+| ---------- | --------------------------------------------------------------------- |
+| 全部       |                                                                       |
+| 一亩三分地 | 一亩三分地                                                            |
+| 论坛精华   | 一亩三分地 - 论坛精华                                                 |
+| 咨询服务   | 咨询服务                                                              |
+| 学校院系   | 学校院系信息                                                          |
+| 找工求职   | 如何找工作                                                            |
+| 美国经济   | 如何找工作 - 美国经济与就业                                           |
+| 杂谈其他   | 其他类别                                                              |
+| 抄袭       | 其他类别 - 抄袭                                                       |
+| 直播       | 其他类别 - 直播                                                       |
+| 热门专业   | eecsmis 统计金工等热门专业                                            |
+| EECSMIS    | eecsmis 统计金工等热门专业 - eecsmis 专业                             |
+| 数据科学   | eecsmis 统计金工等热门专业 - 数据科学                                 |
+| 统计金工   | eecsmis 统计金工等热门专业 - 生物统计金融工程公共健康生物技术制药行业 |
+| 留学申请   | 留学申请信息                                                          |
+| GT 考试    | 留学申请信息 - gt 考试                                                |
+| 定位       | 留学申请信息 - 定位                                                   |
+| 文书写作   | 留学申请信息 - 文书写作                                               |
+| 面试       | 留学申请信息 - 面试                                                   |
+| 移民绿卡   | 移民办绿卡                                                            |
+| 美国学习   | 美国学习                                                              |
+| 美国生活   | 美国生活                                                              |
+
 </Route>
 
 ## 直播吧

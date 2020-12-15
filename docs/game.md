@@ -40,6 +40,51 @@ pageClass: routes
 
 <Route author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
 
+## Blizzard
+
+### News
+
+<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['语言代码，见下表，默认为 en-US', '分类，见下表，默认为全部新闻']">
+
+分类
+
+| 分类                 | 分类名              |
+| -------------------- | ------------------- |
+| 所有新闻             |                     |
+| 暗黑破坏神 III       | diablo3             |
+| 暗黑破坏神：不朽     | diablo-immortal     |
+| 炉石传说             | hearthstone         |
+| 风暴英雄             | heroes-of-the-storm |
+| 守望先锋             | overwatch           |
+| 星际争霸：重制版     | starcraft           |
+| 星际争霸 II          | starcraft2          |
+| 魔兽世界             | world-of-warcraft   |
+| 魔兽争霸 III：重制版 | warcraft3           |
+| 暴雪嘉年华           | blizzcon            |
+| 走进暴雪             | blizzard            |
+
+语言代码
+
+| 语言           | 语言代码 |
+| -------------- | -------- |
+| Deutsch        | de-de    |
+| English (US)   | en-us    |
+| English (EU)   | en-gb    |
+| Español (EU)   | es-es    |
+| Español (AL)   | es-mx    |
+| Français       | fr-fr    |
+| Italiano       | it-it    |
+| Português (AL) | pt-br    |
+| Polski         | pl-pl    |
+| Русский        | ru-ru    |
+| 한국어         | ko-kr    |
+| ภาษาไทย        | th-th    |
+| 日本語         | ja-jp    |
+| 繁體中文       | zh-tw    |
+| 简体中文       | zh-cn    |
+
+</Route>
+
 ## dekudeals
 
 ### 分类
@@ -331,6 +376,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | daily    | pcz    | night    | news     |
 
 </Route>
+
 ## 二柄 APP
 
 ### 新闻
@@ -503,6 +549,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
 | new            | hot                | hot_chinese            | low            | low_chinese            |
 
+</Route>
+
+## 游戏动力
+
+### 游戏资讯
+
+<Route author="wy916787036" example="/vgn" path="/vgn/:platform?" :paramsDesc="['平台，见下表，默认为全部']">
+| Switch | PS4 | PC | Xbox |
+| -------- | -------- | -------- | -------- |
+| 1        | 2        | 3        | 4        |
 </Route>
 
 ## 游戏时光
