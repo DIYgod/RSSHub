@@ -90,6 +90,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
 
+## ASML 阿斯麦
+
+### Press releases & announcements
+
+<Route author="nczitzk" example="/asml/press-releases" path="/asml/press-releases"/>
+
 ## BOF
 
 ### 首页
@@ -1912,6 +1918,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 有趣天文奇观
+
+### 首页
+
+<Route author="nczitzk" example="/interesting-sky" path="/interesting-sky"/>
+
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
@@ -1931,6 +1943,18 @@ column 为 third 时可选的 category:
 | CCF 新闻   | CCF 聚焦 | ACM 信息 |
 | ---------- | -------- | -------- |
 | Media_list | Focus    | ACM_News |
+
+</Route>
+
+## 中国机械工程学会
+
+### 学会新闻
+
+<Route author="nczitzk" example="/cmes/news" path="/cmes/news/:category?" :paramsDesc="['分类，见下表，默认为 学会要闻']">
+
+| 学会要闻    | 学会动态 | 科技新闻 |
+| ----------- | -------- | -------- |
+| Information | Dynamics | TechNews |
 
 </Route>
 
