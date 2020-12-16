@@ -7,7 +7,7 @@
     作者: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
   </p>
   <p class="example">
-    举例: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
+    <span>举例:</span> <a :href="demoUrl" target="_blank">{{demoUrl}}</a> <img :src="'https://img.shields.io/website?label=status&style=flat-square&url=' + encodeURIComponent(encodeURI(demoUrl))">
   </p>
   <p class="path">
     路由: <code>{{ path }}</code>
@@ -76,6 +76,11 @@ export default {
     });
         return md.render(item);
     },
+  },
+  computed: {
+      demoUrl: function () {
+          return 'https://rsshub.app'+ this.example
+      }
   }
 }
 </script>
