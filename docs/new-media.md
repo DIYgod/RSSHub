@@ -1033,6 +1033,12 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+## 国际数学联合会
+
+### 菲尔兹奖
+
+<Route author="nczitzk" example="/mathunion/fields-medal" path="/mathunion/fields-medal"/>
+
 ## 果壳网
 
 ### 科学人

@@ -158,6 +158,12 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+## International Mathematical Union
+
+### Fields Medal
+
+<RouteEn author="nczitzk" example="/mathunion/fields-medal" path="/mathunion/fields-medal"/>
+
 ## Letterboxd
 
 ### User diary
