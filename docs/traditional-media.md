@@ -162,6 +162,12 @@ pageClass: routes
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Phoronix
+
+### 新闻与评测
+
+<Route author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['页面', '对 `category` 页面是分类项目 `item`，对其它页面是主题 `q`，可以在网站顶部导航栏各项目链接里找出。如 `https://www.phoronix.com/scan.php?page=category&item=Computers` 对应 `/phoronix/category/Computers`']" />
+
 ## Solidot
 
 ### 最新消息
