@@ -128,6 +128,12 @@ Generates full-text feeds that the official feed doesn't provide.
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Phoronix
+
+### News & Reviews
+
+<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" />
+
 ## Reuters
 
 ### Channel
