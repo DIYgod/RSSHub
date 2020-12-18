@@ -4,6 +4,12 @@ pageClass: routes
 
 # 编程
 
+## ACM
+
+### 图灵奖获得者
+
+<Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
+
 ## AI 研习社
 
 ### 首页
