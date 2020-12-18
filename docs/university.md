@@ -28,6 +28,12 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## UTDallas
+
+### International Student Services
+
+<Route author="Chang4Tech" example="/utdallas/isso" path="/utdallas/isso" />
+
 ## 安徽工业大学
 
 ### 教务处

@@ -66,7 +66,7 @@
   "dependencies": {
     "@koa/router": "10.0.0",
     "@postlight/mercury-parser": "2.2.0",
-    "@sentry/node": "5.29.0",
+    "@sentry/node": "5.29.2",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -84,7 +84,6 @@
     "googleapis": "66.0.0",
     "got": "11.8.1",
     "he": "1.2.0",
-    "hooman": "1.2.6",
     "https-proxy-agent": "5.0.0",
     "iconv-lite": "0.6.2",
     "instagram-private-api": "1.43.3",

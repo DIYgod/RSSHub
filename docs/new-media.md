@@ -1930,6 +1930,14 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/interesting-sky" path="/interesting-sky"/>
 
+### 年度天象（天文年历）
+
+<Route author="nczitzk" example="/interesting-sky/astronomical_events" path="/interesting-sky/astronomical_events/:year?" :paramsDesc="['年份，默认为当前年份']"/>
+
+### 近期事件专题
+
+<Route author="nczitzk" example="/interesting-sky/recent-interesting" path="/interesting-sky/recent-interesting"/>
+
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
