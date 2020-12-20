@@ -1653,7 +1653,7 @@ column 为 third 时可选的 category:
 
 ### 天象預報
 
-<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast">
+<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast"/>
 
 ## 网易号
 
