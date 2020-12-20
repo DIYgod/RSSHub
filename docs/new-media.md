@@ -1649,6 +1649,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 網路天文館
+
+### 天象預報
+
+<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast">
+
 ## 网易号
 
 ### 更新
