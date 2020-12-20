@@ -315,7 +315,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### Steam news
 
-<Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1" rssbud="1"/>
+<Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appid" :paramsDesc="['游戏 id']" radar="1" rssbud="1"/>
 
 ## SteamGifts
 
