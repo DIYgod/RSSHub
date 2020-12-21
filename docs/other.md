@@ -4,6 +4,18 @@ pageClass: routes
 
 # 其他
 
+## 4399 论坛
+
+### 4399 论坛
+
+<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" :paramsDesc="['mtag,必选-论坛网址最后的mtag字段']" selfhost="1"/>
+::: warning 注意
+
+需要用户 cookie 值，详情见部署页面的配置模块。
+
+:::
+</Route>
+
 ## acwifi 路由器交流
 
 ### 新闻
@@ -350,6 +362,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 洞察
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
+
+## 滴答清单
+
+### 习惯打卡
+
+::: warning 注意
+
+需要账号密码，详情见部署文档部分 RSS 模块配置
+
+:::
+
+<Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
 
 ## 东莞教研网
 
@@ -919,13 +943,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-### 4399 论坛
-
-<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" :paramsDesc="['mtag,必选-论坛网址最后的mtag字段']" selfhost="1"/>
-::: warning 注意
-
-需要用户 cookie 值，详情见部署页面的配置模块。
-
-:::
-</Route>
