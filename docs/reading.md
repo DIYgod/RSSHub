@@ -10,17 +10,64 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## Kindle Unlimited
+
+### 会员限时免费读书单
+
+<Route author="nczitzk" example="/amazon/ku/this" path="/amazon/ku/:type?" :paramsDesc="['书单类型，见下表']">
+
+| 本月书单 | 好评返场 | 次月预告 |
+| -------- | -------- | -------- |
+| this     | back     | next     |
+
+</Route>
+
 ## Mobilism
 
 ### eBook Releases
 
 <Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
 
+## SoBooks
+
+### 首页
+
+<Route author="nczitzk" example="/sobooks" path="/sobooks/:category?" :paramsDesc="['分类, 见下表']">
+
+| 分类     | 分类名           |
+| -------- | ---------------- |
+| 小说文学 | xiaoshuowenxue   |
+| 历史传记 | lishizhuanji     |
+| 人文社科 | renwensheke      |
+| 励志成功 | lizhichenggong   |
+| 经济管理 | jingjiguanli     |
+| 学习教育 | xuexijiaoyu      |
+| 生活时尚 | shenghuoshishang |
+| 英文原版 | yingwenyuanban   |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/sobooks/tag/小说" path="/sobooks/tag/:id?" :paramsDesc="['标签, 见下表，默认为小说']">
+
+热门标签
+
+| 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
+| 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |
+| 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |
+| 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |
+| 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |
+| 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |
+
+</Route>
+
 ## UU 看书
 
 ### 小说更新
 
-<Route author="jacky2001114" example="/novel/uukanshu/49621>" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<Route author="jacky2001114" example="/novel/uukanshu/49621" path="/novel/uukanshu/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ## 爱思想
 
@@ -58,7 +105,7 @@ pageClass: routes
 
 ### biquge5200.com
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
 
 ::: tip 提示
 
@@ -68,7 +115,7 @@ pageClass: routes
 
 ### biquge.info
 
-<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
 
 ::: tip 提示
 
@@ -145,9 +192,44 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ## 观止（每日一文）
 
-### 观止
+<route name="观止" author="Andiedie" example="/guanzhi" path="/guanzhi"/>
 
-<Route author="Andiedie" example="/guanzhi" path="/guanzhi"/>
+## 归档
+
+<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
+
+## 禁忌书屋
+
+### 首页
+
+<Route author="nczitzk" example="/cool18/bbs4" path="/cool18/bbs4"/>
+
+### 精华区
+
+<Route author="nczitzk" example="/cool18/bbs4/gold" path="/cool18/bbs4/gold"/>
+
+### 栏目分类
+
+<Route author="nczitzk" example="/cool18/bbs4/type/都市" path="/cool18/bbs4/type/:keyword?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 都市 | 校园 | 乡野 | 古风 | 异国 | 玄幻 | 红杏 | 伦理 | 浪漫 | 暴虐 | 摄心 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/cool18/bbs4/keywords/都市" path="/cool18/bbs4/keywords/:keyword?" :paramsDesc="['关键字']"/>
+
+## 孔夫子旧书网
+
+### 用户动态
+
+<Route author="nczitzk" example="/kongfz/people/5032170" path="/kongfz/people/:id" :paramsDesc="['用户 id, 可在对应用户页 URL 中找到']"/>
+
+### 店铺上架
+
+<Route author="nczitzk" example="/kongfz/shop/238901/1" path="/kongfz/shop/:id/:cat?" :paramsDesc="['店铺 id, 可在对应店铺页 URL 中找到', '分类 id，可在对应分类页 URL 中找到，默认为店铺最新上架']"/>
 
 ## 快眼看书
 
@@ -222,7 +304,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" :paramsDesc="['分栏代码, 可在 URL 找到']" />
 
-具体栏目编号，去网站上看标签 
+具体栏目编号，去网站上看标签
 
 | 网址                            | 对应路由           |
 | ------------------------------- | ------------------ |
@@ -262,7 +344,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 最新章节
 
-<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1">
+<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1" rssbud="1">
 
 举例网址：<https://www.zhaishuyuan.com/book/17858>
 

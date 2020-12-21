@@ -39,7 +39,7 @@ pageClass: routes
 
 ### theses
 
-<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. subject=生物']"/>
+<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']"/>
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
@@ -53,6 +53,18 @@ pageClass: routes
 ### News
 
 <RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
+## XMind
+
+### Mindmap Gallery
+
+<RouteEn author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['language code, all languages by default']">
+
+| English | Español | Deutsch | Français | 中文 | 日本語 |
+| ------- | ------- | ------- | -------- | ---- | ------ |
+| en      | es      | de      | fr       | zh   | jp     |
+
+</RouteEn>
 
 ## ZhiShiFenZi
 

@@ -38,17 +38,29 @@ pageClass: routes
 
 <Route author="DIYgod" example="/douyu/room/24422" path="/douyu/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
+## 黑白直播
+
+### 直播间开播
+
+<Route author="laampui" example="/heibaizhibo/room/195976" path="/heibaizhibo/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
 ## 虎牙直播
 
 ### 直播间开播
 
-<Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+<Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']" radar="1" rssbud="1"/>
 
 ## 浪 Play (原 kingkong) 直播
 
 ### 直播间开播
 
 <Route author="MittWillson" example="/langlive/room/666666" path="/langlive/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
+## 猎趣 TV
+
+### 直播间开播
+
+<Route author="hoilc" example="/liequtv/room/175435" path="/liequtv/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 企鹅电竞
 

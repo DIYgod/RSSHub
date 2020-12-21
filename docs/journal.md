@@ -4,6 +4,25 @@ pageClass: routes
 
 # 科学期刊
 
+## Academy of Management
+
+### Journal
+
+<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['期刊 id，见下表']" supportScihub="1">
+
+| Id        | 名称                                       |
+| --------- | ------------------------------------------ |
+| annals    | Academy of Management Annals               |
+| amd       | Academy of Management Discoveries          |
+| amgblproc | Academy of Management Global Proceedings   |
+| amj       | Academy of Management Journal              |
+| amle      | Academy of Management Learning & Education |
+| amp       | Academy of Management Perspectives         |
+| amproc    | Academy of Management Proceedings          |
+| amr       | Academy of Management Review               |
+
+</Route>
+
 ## arXiv
 
 ### 搜索关键字
@@ -36,6 +55,16 @@ pageClass: routes
 订阅 Cell 系列杂志的封面图片，并及时获取刊物更新状态。
 
 包含了： 'cell'、 'cancer-cell'、 'cell-chemical-biology'、 'cell-host-microbe'、 'cell-metabolism'、 'cell-reports'、 'cell-reports-physical-science'、 'cell-stem-cell'、 'cell-systems'、 'chem'、 'current-biology'、 'developmental-cell'、 'immunity'、 'joule'、 'matter'、 'molecular-cell'、 'neuron'、 'one-earth' 和'structure'。
+
+</Route>
+
+## Deloitte
+
+<Route author="laampui" example="/deloitte/industries/consumer" path="/deloitte/industries/:category?" :paramsDesc="['默认为 energy-resources-industrials']">
+
+| 消费行业 | 能源、资源及工业行业         | 金融服务行业       | 政府及公共服务             | 生命科学与医疗行业       | 科技、传媒及电信行业                |
+| -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
+| consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
 
 </Route>
 
@@ -123,7 +152,7 @@ pageClass: routes
 
 ### 最新文章（可筛选领域）
 
-<Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+<Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
 
 -   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
     若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
