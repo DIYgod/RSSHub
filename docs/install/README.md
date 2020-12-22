@@ -372,6 +372,10 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码，默认为 `passw0rd`，请务必修改
 
+### 跨域请求
+
+RSSHub 默认对跨域请求限制为当前连接所在的域名, 即不允许跨域。可以通过 `ALLOW_ORIGIN: *` 或者 `ALLOW_ORIGIN: www.example.com` 以对跨域访问进行修改
+
 ### 访问控制配置
 
 RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
