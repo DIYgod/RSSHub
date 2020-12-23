@@ -333,6 +333,9 @@ Partial routes have a strict anti-crawler policy, and can be configured to use p
 `PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
+### CORS Request
+
+RSSHub by default reject CORS requests. This behavior can be modified via setting `ALLOW_ORIGIN: *` or `ALLOW_ORIGIN: www.example.com`.
 
 ### User Authentication Configurations
 
