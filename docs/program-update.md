@@ -152,6 +152,12 @@ pageClass: routes
 
 </Route>
 
+## Ditto clipboard manager
+
+### Changes
+
+<Route author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" :paramsDesc="['类型，可选 `beta`']"/>
+
 ## Docker Hub
 
 ### 镜像有新 Build
