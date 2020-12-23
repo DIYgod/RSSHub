@@ -124,6 +124,12 @@ pageClass: routes
 
 <Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
 
+## Day One
+
+### Blog
+
+<Route author="nczitzk" example="/dayone/blog" path="/dayone/blog"/>
+
 ## DeepL
 
 ### Blog
