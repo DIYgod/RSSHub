@@ -256,6 +256,12 @@ Tag
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
+## iDaily 每日环球视野
+
+### 今日 Timeline
+
+<Route author="zphw" example="/idaily/today" path="/idaily/today" />
+
 ## iDownloadBlog
 
 ### blog
