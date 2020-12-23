@@ -124,6 +124,12 @@ pageClass: routes
 
 <Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
 
+## Day One
+
+### Blog
+
+<Route author="nczitzk" example="/dayone/blog" path="/dayone/blog"/>
+
 ## DeepL
 
 ### Blog
@@ -249,6 +255,12 @@ Tag
 ### Posts
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
+
+## iDaily 每日环球视野
+
+### 今日 Timeline
+
+<Route author="zphw" example="/idaily/today" path="/idaily/today" />
 
 ## iDownloadBlog
 
@@ -659,6 +671,16 @@ Supported sub-sites:
 ### 分类
 
 <Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" :paramsDesc="['分类（议题）名称，于主页获取']"/>
+
+## 北屋
+
+<Route author="nczitzk" example="/northhouse" path="/northhouse/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 首页 | 最新资讯和灾难信息 | 生存主义 survival | 运动户外 | 玩物尚志 | 分享下载 | 知行生活 | 商务服务 |
+| ---- | ------------------ | ----------------- | -------- | -------- | -------- | -------- | -------- |
+|      | 最新资讯和灾难信息 | 生存主义 survival | 运动户外 | 玩物尚志 | 分享下载 | 知行生活 | 商务服务 |
+
+</Route>
 
 ## 本地宝
 
@@ -1648,6 +1670,12 @@ column 为 third 时可选的 category:
 | (空) | My01     | My02     | My03     | My04     |
 
 </Route>
+
+## 網路天文館
+
+### 天象預報
+
+<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast"/>
 
 ## 网易号
 

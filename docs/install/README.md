@@ -372,6 +372,10 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码，默认为 `passw0rd`，请务必修改
 
+### 跨域请求
+
+RSSHub 默认对跨域请求限制为当前连接所在的域名，即不允许跨域。可以通过 `ALLOW_ORIGIN: *` 或者 `ALLOW_ORIGIN: www.example.com` 以对跨域访问进行修改。
+
 ### 访问控制配置
 
 RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
@@ -520,8 +524,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
 -   MiniFlux 全部路由：
-    -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的[付费服务地址](https://reader.miniflux.app)
-    -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取
+    -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的 [付费服务地址](https://reader.miniflux.app)
+    -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API 密钥` -> `创建一个新的 API 密钥` 处获取
 
 -   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
@@ -610,3 +614,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         1.  在 4399 首页登录。
         2.  打开开发者工具，切换到 Network 面板，刷新
         3.  查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.
+
+-   滴答清单
+
+    -   `DIDA365_USERNAME`: 滴答清单用户名
+    -   `DIDA365_PASSWORD`: 滴答清单密码
