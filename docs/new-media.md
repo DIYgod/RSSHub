@@ -2000,6 +2000,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 中国科学院青年创新促进会
+
+### 最新博文
+
+<Route author="nczitzk" example="/yicas/blog" path="/yicas/blog"/>
+
 ## 中国劳工观察
 
 ### 调查报告
