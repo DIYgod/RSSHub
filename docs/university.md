@@ -394,7 +394,7 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ### 研究生院
 
-<Route author="huyyi" example="/uestc/gr" path="/uestc/gr"></Route>
+<Route author="huyyi" example="/uestc/gr" path="/uestc/gr" />
 
 ## 东北大学
 
