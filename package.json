@@ -65,7 +65,6 @@
   },
   "dependencies": {
     "@koa/router": "10.0.0",
-    "@monibrand/user-agents": "1.1.1",
     "@postlight/mercury-parser": "2.2.0",
     "@sentry/node": "5.29.0",
     "aes-js": "3.1.2",
@@ -109,6 +108,7 @@
     "plist": "3.0.1",
     "puppeteer": "5.5.0",
     "query-string": "6.13.7",
+    "random-useragent": "0.5.0",
     "redis": "3.0.2",
     "require-all": "3.0.0",
     "rss-parser": "3.9.0",
