@@ -96,6 +96,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/asml/press-releases" path="/asml/press-releases"/>
 
+## Bell Labs
+
+### Event and News
+
+<Route author="nczitzk" example="/bell-labs/events-news" path="/bell-labs/events-news/:category?" :paramsDesc="['分类，见下表，默认为 Press releases']">
+
+| Featured events | Latest recognition   | Press releases |
+| --------------- | -------------------- | -------------- |
+| events          | industry-recognition | press-releases |
+
+</Route>
+
 ## BOF
 
 ### 首页
