@@ -315,7 +315,13 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### Steam news
 
-<Route author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['游戏 id']" radar="1" rssbud="1"/>
+<Route author="maple3142" example="/steam/news/1091500/schinese" path="/steam/news/:appid/:language?" :paramsDesc="['游戏 id', '语言,默认简体中文']" radar="1" rssbud="1">
+
+| 语言 (Language) | 简体中文 (Simplified Chinese) | 繁體中文 (Traditional Chinese) | 日本語 (Japanese) | 한국어 (Korean) | Български (Bulgarian) | Čeština (Czech) | Dansk (Danish) | Deutsch (German) | Español - España (Spanish - Spain) | Español - Latinoamérica (Spanish - Latin America), | Ελληνικά (Greek) | Français (French) | Italiano (Italian) | Magyar (Hungarian) | Nederlands (Dutch) | Norsk (Norwegian) | Polski (Polish) | Português (Portuguese) | Português - Brasil (Portuguese - Brazil) | Română (Romanian) | Русский (Russian) | Suomi (Finnish) | Svenska (Swedish) | Türkçe (Turkish) | Tiếng Việt (Vietnamese) | Українська (Ukrainian) |
+| --------------- | ----------------------------- | ------------------------------ | ----------------- | --------------- | --------------------- | --------------- | -------------- | ---------------- | ---------------------------------- | -------------------------------------------------- | ---------------- | ----------------- | ------------------ | ------------------ | ------------------ | ----------------- | --------------- | ---------------------- | ---------------------------------------- | ----------------- | ----------------- | --------------- | ----------------- | ---------------- | ----------------------- | ---------------------- |
+|                 | schinese                      | tchinese                       | japanese          | koreana         | bulgarian             | czech           | danish         | german           | spanish                            | latam                                              | greek            | french            | italian            | hungarian          | dutch              | norwegian         | polish          | portuguese             | brazilian                                | romanian          | russian           | finnish         | swedish           | turkish          | vietnamese              | ukrainian              |
+
+</Route>
 
 ## SteamGifts
 

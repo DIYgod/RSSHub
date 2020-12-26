@@ -68,27 +68,9 @@ pageClass: routes
 
 语言
 
-| English | en |
-| 中文 (简体) | cn |
-| 中文 (繁體) | tw |
-| 日本語 | jp |
-| Русский | ru |
-| Español | es |
-| Français | fr |
-| Deutsch | de |
-| Italiano | it |
-| Slovenčina | sk |
-| Українська | uk |
-| Беларуская | be |
-| Dansk | da |
-| Polski | pl |
-| Português Brasileiro | br |
-| Čeština | cs |
-| Nederlands | nl |
-| Slovenščina| sl |
-| Türkçe| tr  |
-| ภาษาไทย | th |
-| 한국어 | kr |
+| English | 中文 (简体) | 中文 (繁體) | 日本語 | Русский | Español | Français | Deutsch | Italiano | Slovenčina | Українська | Беларуская | Dansk | Polski | Português Brasileiro | Čeština | Nederlands | Slovenščina | Türkçe | ภาษาไทย | 한국어 |
+| ------- | ----------- | ----------- | ------ | ------- | ------- | -------- | ------- | -------- | ---------- | ---------- | ---------- | ----- | ------ | -------------------- | ------- | ---------- | ----------- | ------ | ------- | ------ |
+| en      | cn          | tw          | jp     | ru      | es      | fr       | de      | it       | sk         | uk         | be         | da    | pl     | br                   | cs      | nl         | sl          | tr     | th      | kr     |
 
 </Route>
 
