@@ -1897,6 +1897,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 橡树岭国家实验室
+
+### 新闻
+
+<Route author="nczitzk" example="/ornl/news" path="/ornl/news"/>
+
 ## 香水时代
 
 ### 首页

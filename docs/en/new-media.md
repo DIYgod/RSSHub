@@ -225,6 +225,12 @@ This route provides a flexible plan with full text content to subscribe specific
 
 </RouteEn>
 
+## Oak Ridge National Laboratory
+
+### News
+
+<RouteEn author="nczitzk" example="/ornl/news" path="/ornl/news"/>
+
 ## OpenAI
 
 ### Blog
