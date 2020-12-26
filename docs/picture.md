@@ -66,6 +66,10 @@ pageClass: routes
 | ---- | --------- | ------ |
 | hot  | recommend | recent |
 
+## DailyArt 每日艺术
+
+<Route author="zphw" example="/dailyart/zh" path="/dailyart/:language?" :paramsDesc="['语言，支持 en, zh, jp 等，默认为 en']" />
+
 ## Dilbert Comic Strip
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
