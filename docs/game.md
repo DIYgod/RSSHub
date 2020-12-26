@@ -269,16 +269,37 @@ pageClass: routes
 
 <Route author="LightStrawberry" example="/psnine/index" path="/psnine/index"/>
 
-### 新闻 - 游戏资讯
+### 节点
 
-<Route author="LightStrawberry" example="/psnine/news" path="/psnine/news"/>
-### 数折-折扣信息推送
+<Route author="nczitzk" example="/psnine/node/news" path="/psnine/node/:id?/:order?" :paramsDesc="['节点 id，见下表，默认为 news', '排序，可选 `date` 即最新，默认为 `obdate` 即综合排序']">
+
+| 站务 | 活动  | 旅记   | 折扣 | 会免 |
+| ---- | ----- | ------ | ---- | ---- |
+| p9   | event | travel | off  | plus |
+
+| 新闻 | 攻略  | 测评   | 心得 | 开箱    |
+| ---- | ----- | ------ | ---- | ------- |
+| news | guide | review | exp  | openbox |
+
+| 游列     | 游计     | Ps4 | Ps5 |
+| -------- | -------- | --- | --- |
+| gamelist | planlist | ps4 | ps5 |
+
+| 发米通  | Ign | Ucg |
+| ------- | --- | --- |
+| famitsu | ign | ucg |
+
+</Route>
+
+### 数折 - 折扣信息推送
 
 <Route author="LightStrawberry" example="/psnine/shuzhe" path="/psnine/shuzhe"/>
-### 闲游-二手盘信息
+
+### 闲游 - 二手盘信息
 
 <Route author="LightStrawberry" example="/psnine/trade" path="/psnine/trade"/>
-### 游戏-新游戏奖杯信息
+
+### 游戏 - 新游戏奖杯信息
 
 <Route author="LightStrawberry" example="/psnine/game" path="/psnine/game"/>
 
