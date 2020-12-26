@@ -42,6 +42,10 @@ pageClass: routes
 
 <RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
+## DailyArt
+
+<RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
+
 ## Dilbert Comic Strip
 
 <RouteEn name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip"/>
