@@ -158,9 +158,9 @@ pageClass: routes
 
 分类
 
-| 有碼     | 無碼       | 歐美    | FC2 |
-| -------- | ---------- | ------- | --- |
-| censored | uncensored | western | fc2 |
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |
 
 排序
 
@@ -190,9 +190,9 @@ pageClass: routes
 
 分类
 
-| 有碼     | 無碼       | 歐美    | FC2 |
-| -------- | ---------- | ------- | --- |
-| censored | uncensored | western | fc2 |
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |
 
 </Route>
 
@@ -202,9 +202,9 @@ pageClass: routes
 
 分类
 
-| 有碼     | 無碼       | 歐美    | FC2 |
-| -------- | ---------- | ------- | --- |
-| censored | uncensored | western | fc2 |
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |
 
 时间
 
@@ -602,6 +602,10 @@ pageClass: routes
 ### 广播剧 / 有声漫画
 
 <Route author="FlashWingShadow" example="/missevan/drama/28499" path="/missevan/drama/:id" :paramsDesc="['剧集 id，在剧集主页 URL 中可以找到']"/>
+
+### 最新广播剧
+
+<Route author="nczitzk" example="/missevan/drama/latest" path="/missevan/drama/latest"/>
 
 ## 猫眼电影
 

@@ -7,7 +7,7 @@
     Author: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
   </p>
   <p  class="example">
-    Example: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
+    <span>Example:</span> <a :href="demoUrl" target="_blank">{{demoUrl}}</a> <img :src="'https://img.shields.io/website?label=status&style=flat-square&url=' + encodeURIComponent(encodeURI(demoUrl))">
   </p>
   <p class="path">
     Route: <code>{{ path }}</code>
@@ -72,6 +72,11 @@ export default {
     });
         return md.render(item);
     },
+  },
+  computed: {
+      demoUrl: function () {
+          return 'https://rsshub.app'+ this.example
+      }
   }
 }
 </script>

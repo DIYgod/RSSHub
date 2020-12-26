@@ -427,7 +427,7 @@
     },
     'ximalaya.com': {
         _name: '喜马拉雅',
-        www: [
+        '.': [
             {
                 title: '专辑',
                 docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
@@ -460,7 +460,7 @@
             },
         ],
     },
-    'juejin.im': {
+    'juejin.cn': {
         _name: '掘金',
         '.': [
             {
@@ -1710,7 +1710,7 @@
     },
     'zhaishuyuan.com': {
         _name: '斋书苑',
-        www: [
+        '.': [
             {
                 title: '最新章节',
                 docs: 'https://docs.rsshub.app/reading.html#zhai-shu-yuan',
@@ -2432,6 +2432,40 @@
                     if (params.id !== 'explore' && params.id !== 'developer') {
                         return '/instagram/user/:id';
                     }
+                },
+            },
+        ],
+    },
+    'huya.com': {
+        _name: '虎牙直播',
+        '.': [
+            {
+                title: '直播间开播',
+                docs: 'https://docs.rsshub.app/live.html#hu-ya-zhi-bo-zhi-bo-jian-kai-bo',
+                source: '/:id',
+                target: '/huya/live/:id',
+            },
+        ],
+    },
+    'craigslist.org': {
+        _name: 'Craigslist',
+        '.': [
+            {
+                title: '商品搜索列表',
+                docs: 'https://docs.rsshub.app/shopping.html#craigslist',
+            },
+        ],
+    },
+    'saraba1st.com': {
+        _name: 'Saraba1st',
+        bbs: [
+            {
+                title: '帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#saraba1st',
+                source: '/2b/:id',
+                target: (params) => {
+                    const id = params.id.includes('thread') ? params.id.split('-')[1] : '';
+                    return id ? `/saraba1st/thread/${id}` : '';
                 },
             },
         ],
