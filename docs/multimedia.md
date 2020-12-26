@@ -158,9 +158,9 @@ pageClass: routes
 
 分类
 
-| 有碼     | 無碼       | 歐美    | FC2 |
-| -------- | ---------- | ------- | --- |
-| censored | uncensored | western | fc2 |
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |
 
 排序
 
@@ -190,9 +190,9 @@ pageClass: routes
 
 分类
 
-| 有碼     | 無碼       | 歐美    | FC2 |
-| -------- | ---------- | ------- | --- |
-| censored | uncensored | western | fc2 |
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |
 
 </Route>
 
@@ -202,9 +202,9 @@ pageClass: routes
 
 分类
 
-| 有碼     | 無碼       | 歐美    | FC2 |
-| -------- | ---------- | ------- | --- |
-| censored | uncensored | western | fc2 |
+| 有碼     | 無碼       | 歐美    |
+| -------- | ---------- | ------- |
+| censored | uncensored | western |
 
 时间
 
