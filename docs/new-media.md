@@ -164,9 +164,9 @@ pageClass: routes
 
 <Route author="HenryQW" example="/donews" path="/donews/:column?" :paramsDesc="['栏目代码, 默认为首页.']">
 
-| 首页 | 商业    | 创业     | 互娱 | 科技       | 专栏    |
-| ---- | ------- | -------- | ---- | ---------- | ------- |
-| (空) | company | business | ent  | technology | idonews |
+| 首页 | 商业    | 创业     | 互娱 | 科技    | 专栏    |
+| ---- | ------- | -------- | ---- | ------- | ------- |
+| (空) | company | business | ent  | digital | idonews |
 
 </Route>
 
