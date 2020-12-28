@@ -1404,6 +1404,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 美国大学和雇主协会
+
+### 博客
+
+<Route author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['排序，见下表，默认为 Most Recent']">
+
+| Most Recent | Top Rated | Most Read     |
+| ----------- | --------- | ------------- |
+|             | top-blogs | mostreadblogs |
+
+</Route>
+
 ## 梅斯医学 MedSci
 
 ### 推荐

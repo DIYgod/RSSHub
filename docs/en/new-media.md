@@ -215,6 +215,18 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
 
+## National Association of Colleges and Employers
+
+### Blog
+
+<RouteEn author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['Sort, see below, Most Recent by default']">
+
+| Most Recent | Top Rated | Most Read |
+| - | - | - |
+| | top-blogs | mostreadblogs |
+
+</RouteEn>
+
 ## Nautilus
 
 ### Topics
