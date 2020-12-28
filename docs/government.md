@@ -280,6 +280,20 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
 
+## 中国证券监督管理委员会
+
+### 发审委公告
+
+<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
+
+### 证监会消息
+
+<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+
+### 申请事项进度
+
+<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
+
 ## 中国政协网
 
 ### 栏目
@@ -370,20 +384,6 @@ pageClass: routes
 |   news   | department | district | livelihood |
 
 </Route>
-
-## 中国证券监督管理委员会
-
-### 发审委公告
-
-<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
-
-### 证监会消息
-
-<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
-
-### 申请事项进度
-
-<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国驻外使领馆
 
