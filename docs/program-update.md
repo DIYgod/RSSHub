@@ -413,3 +413,23 @@ pageClass: routes
 ### 金米奖
 
 <Route author="nczitzk" example="/mi/golden" path="/mi/golden"/>
+
+## 猿料
+
+### 标签
+
+<Route author="nczitzk" example="/yuanliao" path="/yuanliao/:tag/:sort?" :paramsDesc="['标签，见下表，默认为 `utools`', '排序，见下表，默认为最新回复']">
+
+标签
+
+| uTools | 插件发布 |
+| ------ | -------- |
+| utools | plugins  |
+
+排序
+
+| 最新回复 | 热门回复      | 新鲜出炉   | 陈年旧贴  |
+| -------- | ------------- | ---------- | --------- |
+|          | -commentCount | -createdAt | createdAt |
+
+</Route>
