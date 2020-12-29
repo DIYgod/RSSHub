@@ -957,3 +957,20 @@ category 对应的关键词有
 ### 九江新闻
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
+
+### RTHK 傳媒透視
+
+<Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
+
+细则: 
+
+-   `:range` 时间范围参数  
+    (可为 `latest` 或 `四位数字的年份`)
+
+    -   `latest`: 最新的 50 篇文章
+    -   `2020`: 2020 年的所有文章
+
+-   全文输出转换为简体字: `?opencc=t2s`  
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+
+</Route>
