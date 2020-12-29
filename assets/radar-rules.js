@@ -2470,4 +2470,18 @@
             },
         ],
     },
+    'scboy.com': {
+        _name: 'scboy 论坛',
+        www: [
+            {
+                title: '帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#scboy',
+                source: '',
+                target: (params, url) => {
+                    const id = url.includes('thread') ? url.split('-')[1].split('.')[0] : '';
+                    return id ? `/scboy/thread/${id}` : '';
+                },
+            },
+        ],
+    },
 });
