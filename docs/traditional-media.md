@@ -328,6 +328,14 @@ Category 列表：
 
 <Route author="EsuRt"  example="/caixin/article" path="/caixin/article"/>
 
+### 最新文章
+
+<Route author="tpnonthealps" example="/caixin/latest" path="/caixin/latest">
+
+说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。
+
+</Route>
+
 ## 第一财经
 
 ### 直播区
