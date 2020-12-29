@@ -965,3 +965,15 @@ category 对应的关键词有
 ### 九江新闻
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
+
+## 自由亚洲电台
+
+<Route author="zphw" example="/rfa/mandarin" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['语言，默认 English', '频道', '子频道（如存在）']" />
+
+通过指定频道参数，提供比官方源更佳的阅读体验。
+
+参数均可在官网获取，如：
+
+`https://www.rfa.org/cantonese/news` 对应 `/rfa/cantonese/news`
+
+`https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`
