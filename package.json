@@ -109,7 +109,7 @@
     "query-string": "6.13.8",
     "redis": "3.0.2",
     "require-all": "3.0.0",
-    "rss-parser": "3.9.0",
+    "rss-parser": "3.10.0",
     "showdown": "1.9.1",
     "socks-proxy-agent": "5.0.0",
     "string-similarity": "^4.0.3",
