@@ -4304,10 +4304,10 @@ date-now@^0.1.4:
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
   integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
 
-dayjs@1.10.0, dayjs@^1.8.29:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.0.tgz#41ae4c1a5116c446738c4ec7e9f4f10e937e698b"
-  integrity sha512-U/yusl5TQPvU1Tlhsu3A82Ebn4BNKHJMIk9AePYHCmGtTXcuPkODiEhkzqA8mnQ0bbgoR6+oha2ioZEewOiP2A==
+dayjs@1.10.1, dayjs@^1.8.29:
+  version "1.10.1"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.10.1.tgz#114f678624842035396667a24eb1436814bc16fd"
+  integrity sha512-2xg7JrHQeLBQFkvTumLoy62x1siyeocc98QwjtURgvRqOPYmAkMUdmSjrOA+MlmL6QMQn5MUhDf6rNZNuPc1LQ==
 
 de-indent@^1.0.2:
   version "1.0.2"
