@@ -96,6 +96,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/asml/press-releases" path="/asml/press-releases"/>
 
+## Bell Labs
+
+### Event and News
+
+<Route author="nczitzk" example="/bell-labs/events-news" path="/bell-labs/events-news/:category?" :paramsDesc="['分类，见下表，默认为 Press releases']">
+
+| Featured events | Latest recognition   | Press releases |
+| --------------- | -------------------- | -------------- |
+| events          | industry-recognition | press-releases |
+
+</Route>
+
 ## BOF
 
 ### 首页
@@ -123,6 +135,12 @@ pageClass: routes
 ### 最新
 
 <Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
+
+## Day One
+
+### Blog
+
+<Route author="nczitzk" example="/dayone/blog" path="/dayone/blog"/>
 
 ## DeepL
 
@@ -158,9 +176,9 @@ pageClass: routes
 
 <Route author="HenryQW" example="/donews" path="/donews/:column?" :paramsDesc="['栏目代码, 默认为首页.']">
 
-| 首页 | 商业    | 创业     | 互娱 | 科技       | 专栏    |
-| ---- | ------- | -------- | ---- | ---------- | ------- |
-| (空) | company | business | ent  | technology | idonews |
+| 首页 | 商业    | 创业     | 互娱 | 科技    | 专栏    |
+| ---- | ------- | -------- | ---- | ------- | ------- |
+| (空) | company | business | ent  | digital | idonews |
 
 </Route>
 
@@ -249,6 +267,12 @@ Tag
 ### Posts
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
+
+## iDaily 每日环球视野
+
+### 今日 Timeline
+
+<Route author="zphw" example="/idaily/today" path="/idaily/today" />
 
 ## iDownloadBlog
 
@@ -659,6 +683,16 @@ Supported sub-sites:
 ### 分类
 
 <Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" :paramsDesc="['分类（议题）名称，于主页获取']"/>
+
+## 北屋
+
+<Route author="nczitzk" example="/northhouse" path="/northhouse/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 首页 | 最新资讯和灾难信息 | 生存主义 survival | 运动户外 | 玩物尚志 | 分享下载 | 知行生活 | 商务服务 |
+| ---- | ------------------ | ----------------- | -------- | -------- | -------- | -------- | -------- |
+|      | 最新资讯和灾难信息 | 生存主义 survival | 运动户外 | 玩物尚志 | 分享下载 | 知行生活 | 商务服务 |
+
+</Route>
 
 ## 本地宝
 
@@ -1189,6 +1223,12 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+## 九三学社
+
+### 分类
+
+<Route author="nczitzk" example="/93/lxzn-yzjy" path="/93/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到']"/>
+
 ## 巨潮资讯
 
 <Route author="LogicJake hillerliao laampui nczitzk" example="/cninfo/announcement/szse/000002/gssz0000002/category_ndbg_szsh" path="/cninfo/announcement/:column/:code/:orgId/:category?/:search?" :paramsDesc="['szse 深圳证券交易所; sse 上海证券交易所; third 新三板; hke 港股; fund 基金', '股票或基金代码', 'orgId 组织 id', '公告分类，A 股及新三板，见下表，默认为全部', '标题关键字，默认为空']">
@@ -1236,6 +1276,32 @@ column 为 third 时可选的 category:
 | 全部 | 文章    | Podcast |
 | ---- | ------- | ------- |
 | all  | article | podcast |
+
+</Route>
+
+## 科学网
+
+### 博客
+
+<Route author="nczitzk" example="/sciencenet/blog" path="/sciencenet/blog/:type?/:time?/:sort?" :paramsDesc="['类型，见下表，默认为推荐', '时间，见下表，默认为所有时间', '排序，见下表，默认为按发表时间排序']">
+
+类型
+
+| 精选      | 最新 | 热门 |
+| --------- | ---- | ---- |
+| recommend | new  | hot  |
+
+时间
+
+| 36 小时内精选博文 | 一周内精选博文 | 一月内精选博文 | 半年内精选博文 | 所有时间精选博文 |
+| ----------------- | -------------- | -------------- | -------------- | ---------------- |
+| 1                 | 2              | 3              | 4              | 5                |
+
+排序
+
+| 按发表时间排序 | 按评论数排序 | 按点击数排序 |
+| -------------- | ------------ | ------------ |
+| 1              | 2            | 3            |
 
 </Route>
 
@@ -1301,6 +1367,18 @@ column 为 third 时可选的 category:
 | 最新 | 推薦 | 熱門 |
 | ---- | ---- | ---- |
 | 1    | 2    | 3    |
+
+</Route>
+
+## 美国大学和雇主协会
+
+### 博客
+
+<Route author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['排序，见下表，默认为 Most Recent']">
+
+| Most Recent | Top Rated | Most Read     |
+| ----------- | --------- | ------------- |
+|             | top-blogs | mostreadblogs |
 
 </Route>
 
@@ -1649,6 +1727,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 網路天文館
+
+### 天象預報
+
+<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast"/>
+
 ## 网易号
 
 ### 更新
@@ -1825,6 +1909,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 橡树岭国家实验室
+
+### 新闻
+
+<Route author="nczitzk" example="/ornl/news" path="/ornl/news"/>
+
 ## 香水时代
 
 ### 首页
@@ -1971,6 +2061,12 @@ column 为 third 时可选的 category:
 | Information | Dynamics | TechNews |
 
 </Route>
+
+## 中国科学院青年创新促进会
+
+### 最新博文
+
+<Route author="nczitzk" example="/yicas/blog" path="/yicas/blog"/>
 
 ## 中国劳工观察
 

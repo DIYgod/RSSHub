@@ -96,6 +96,12 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 
 </RouteEn>
 
+## Ditto clipboard manager
+
+### Changes
+
+<RouteEn author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" :paramsDesc="['Type, `beta` is an option']"/>
+
 ## Docker Hub
 
 ### Image New Build
