@@ -569,6 +569,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
 
+## VOA News
+
+### Day in Photos
+
+<Route author="nczitzk" example="/voa/day-photos" path="/voa/day-photos">
+
 ## Vulture
 
 <Route author="loganrockmore" example="/vulture/movies" path="/vulture/:type/:excludetags?" :paramsDesc="['The sub-site name', '逗号分隔的标签列表。 如果文章包含这些标签之一，则该文章将从RSS feed中排除']">
