@@ -339,7 +339,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Day in Photos
 
-<RouteEn author="nczitzk" example="/voa/day-photos" path="/voa/day-photos">
+<RouteEn author="nczitzk" example="/voa/day-photos" path="/voa/day-photos"/>
 
 ## Vulture
 

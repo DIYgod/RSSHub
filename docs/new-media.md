@@ -573,7 +573,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### Day in Photos
 
-<Route author="nczitzk" example="/voa/day-photos" path="/voa/day-photos">
+<Route author="nczitzk" example="/voa/day-photos" path="/voa/day-photos"/>
 
 ## Vulture
 
