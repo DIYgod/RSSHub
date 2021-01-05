@@ -38,7 +38,7 @@
     "@types/cheerio": "0.22.23",
     "@types/got": "9.6.11",
     "@types/koa": "2.11.6",
-    "@vuepress/plugin-back-to-top": "1.7.1",
+    "@vuepress/plugin-back-to-top": "1.8.0",
     "@vuepress/plugin-google-analytics": "1.7.1",
     "@vuepress/plugin-pwa": "1.7.1",
     "cross-env": "7.0.3",
