@@ -619,3 +619,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `DIDA365_USERNAME`: 滴答清单用户名
     -   `DIDA365_PASSWORD`: 滴答清单密码
+
+-   知乎用户关注时间线
+
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
