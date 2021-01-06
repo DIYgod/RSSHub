@@ -260,6 +260,7 @@ This route provides a flexible plan with full text content to subscribe specific
 ### Blog
 
 <RouteEn author="nczitzk" example="/polar/blog" path="/polar/blog"/>
+
 ## Quanta Magazine
 
 ### Archive
@@ -272,6 +273,12 @@ Compared to the official one, this feed:
 2. displays all pictures in the article (except those print-hidden multimedia materials).
 
 </RouteEn>
+
+## Semiconductor Industry Association
+
+### Latest News
+
+<RouteEn author="nczitzk" example="/semiconductors/latest-news" path="/semiconductors/latest-news"/>
 
 ## Simons Foundation
 
