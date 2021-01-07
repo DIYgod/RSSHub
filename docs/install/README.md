@@ -108,7 +108,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 ## Ansible 部署
 
-[该 Ansible playbook](https://github.com/k-t-corp/RSSHub-ansible) 包括了 RSSHub, Redis, browserless 以及 Caddy 的安装
+[该 Ansible playbook](https://github.com/k-t-corp/RSSHub-ansible) 包括了 RSSHub, Redis, browserless 以及 Caddy 2
 
 该 Ansible playbook 目前只支持 Ubuntu 20.04
 
