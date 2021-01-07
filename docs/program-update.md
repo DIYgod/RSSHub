@@ -439,3 +439,6 @@ pageClass: routes
 ### 消息通知
 
 <Route author="zytomorrow" example="/simpread/notice" path="/yuanliao/notice">
+
+### 更新日志
+<Route author="zytomorrow" example="/simpread/changelog" path="/yuanliao/changelog">
