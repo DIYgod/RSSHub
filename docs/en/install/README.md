@@ -104,6 +104,36 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 To configure more options please refer to [Configuration](#configuration).
 
+# Ansible Deployment
+
+[This Ansible playbook](https://github.com/k-t-corp/RSSHub-ansible) includes RSSHub, Redis, browserless and Caddy
+
+This Ansible playbook currently only support Ubuntu 20.04
+
+### Install
+
+```bash
+sudo apt update
+sudo apt install ansible
+cd ~
+git clone https://github.com/k-t-corp/RSSHub-ansible.git
+cd RSSHub-ansible
+ansible-playbook rsshub.yaml
+# When prompt to enter a domain name, enter the domain name that this machine/VM will use
+# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+```
+
+### Update
+
+```bash
+cd ~
+git clone https://github.com/k-t-corp/RSSHub-ansible.git
+cd RSSHub-ansible
+ansible-playbook rsshub.yaml
+# When prompt to enter a domain name, enter the domain name that this machine/VM will use
+# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+```
+
 ## Manual Deployment
 
 The most direct way to deploy `RSSHub`, you can follow the steps below to deploy`RSSHub` on your computer, server or anywhere.
