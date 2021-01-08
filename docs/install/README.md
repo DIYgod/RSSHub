@@ -108,19 +108,20 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 ## Ansible 部署
 
-[该 Ansible playbook](https://github.com/k-t-corp/RSSHub-ansible) 包括了 RSSHub, Redis, browserless 以及 Caddy 2
+这个 Ansible playbook 包括了 RSSHub, Redis, browserless 以及 Caddy 2
 
-该 Ansible playbook 目前只支持 Ubuntu 20.04
+目前只支持 Ubuntu 20.04
+
+需要 sudo 权限
 
 ### 安装
 
 ```bash
 sudo apt update
 sudo apt install ansible
-cd ~
-git clone https://github.com/k-t-corp/RSSHub-ansible.git
-cd RSSHub-ansible
-ansible-playbook rsshub.yaml
+git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
 # 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
 ```
@@ -128,10 +129,8 @@ ansible-playbook rsshub.yaml
 ### 更新
 
 ```bash
-cd ~
-git clone https://github.com/k-t-corp/RSSHub-ansible.git
-cd RSSHub-ansible
-ansible-playbook rsshub.yaml
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
 # 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
 ```

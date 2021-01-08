@@ -106,19 +106,20 @@ To configure more options please refer to [Configuration](#configuration).
 
 # Ansible Deployment
 
-[This Ansible playbook](https://github.com/k-t-corp/RSSHub-ansible) includes RSSHub, Redis, browserless and Caddy 2
+This Ansible playbook includes RSSHub, Redis, browserless and Caddy 2
 
-This Ansible playbook currently only support Ubuntu 20.04
+Currently only support Ubuntu 20.04
+
+Requires sudo privilege
 
 ### Install
 
 ```bash
 sudo apt update
 sudo apt install ansible
-cd ~
-git clone https://github.com/k-t-corp/RSSHub-ansible.git
-cd RSSHub-ansible
-ansible-playbook rsshub.yaml
+git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
 # When prompt to enter a domain name, enter the domain name that this machine/VM will use
 # For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
 ```
@@ -126,10 +127,8 @@ ansible-playbook rsshub.yaml
 ### Update
 
 ```bash
-cd ~
-git clone https://github.com/k-t-corp/RSSHub-ansible.git
-cd RSSHub-ansible
-ansible-playbook rsshub.yaml
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
 # When prompt to enter a domain name, enter the domain name that this machine/VM will use
 # For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
 ```
