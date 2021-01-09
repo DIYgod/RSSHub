@@ -110,7 +110,7 @@ This Ansible playbook includes RSSHub, Redis, browserless (uses Docker) and Cadd
 
 Currently only support Ubuntu 20.04
 
-Requires sudo privilege
+Requires sudo privilege and virtualization capability (Docker will be automatically installed)
 
 ### Install
 

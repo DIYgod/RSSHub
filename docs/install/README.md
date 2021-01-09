@@ -112,7 +112,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 目前只支持 Ubuntu 20.04
 
-需要 sudo 权限
+需要 sudo 权限和虚拟化能力（Docker 将会被自动安装）
 
 ### 安装
 
