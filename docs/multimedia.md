@@ -14,7 +14,7 @@ pageClass: routes
 
 ### 141JAV BT
 
-<Route author="monsterxcn" example="/141jav/popular/30" path="/141jav/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
+<Route author="cgkings" example="/141jav/popular/30" path="/141jav/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
 
 **类型**
 
@@ -62,7 +62,7 @@ pageClass: routes
 
 ### 141JAV BT
 
-<Route author="monsterxcn" example="/141ppv/popular/30" path="/141ppv/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
+<Route author="cgkings" example="/141ppv/popular/30" path="/141ppv/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
 
 **类型**
 
