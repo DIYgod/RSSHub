@@ -106,7 +106,7 @@ To configure more options please refer to [Configuration](#configuration).
 
 # Ansible Deployment
 
-This Ansible playbook includes RSSHub, Redis, browserless and Caddy 2
+This Ansible playbook includes RSSHub, Redis, browserless (uses Docker) and Caddy 2
 
 Currently only support Ubuntu 20.04
 
