@@ -20,14 +20,18 @@ Please go over the checklist below before PR: this improve your PR pass rate.
 
 Reference: https://docs.rsshub.app/en/joinus/
 
-请在提交PR前检查以下事项: 这可以提升PR通过率
+请在提交PR前检查以下事项: 这可以大大提升通过率
+
+这些就是我们在审核时主要关注的事项, 敬请留意
 
 参考: https://docs.rsshub.app/joinus
 
 -->
 
-- [ ] 这是在提交一个新的RSS吗? Is this a new RSS Script?
-  - **如果不是, 请留空本列表**. **LEAVE BLANK** if it is not a submitting new RSS Script
+- [ ] 这个PR中包含了新的路由吗? Does this PR add new route?
+  - 如果有, 请完成检查列表. If yes, please finish the check list
+  - **如果你的PR符合下方某个事项, 也请注明. If any of the checklist item meets your PR, please fill it out.**
+  - [x] <- 这样打勾
 - [ ] 是否提供了文档? Documentation provided?
   - [ ] 是否提供了英文文档? EN Documentation provided?
 - [ ] 是否支持全文获取? Is this RSS Script support fulltext?
