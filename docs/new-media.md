@@ -2116,3 +2116,15 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 眾新聞
+
+### 眾聞
+
+<Route author="nczitzk" example="/hkcnews/news" path="/hkcnews/news/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 經濟 | 社會 | 生活 | 政治 | 國際 | 台灣 | 人物 | 中國 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|      | 13   | 15   | 14   | 12   | 16   | 20   | 21   | 19   |
+
+</Route>
