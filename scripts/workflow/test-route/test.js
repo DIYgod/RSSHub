@@ -1,19 +1,19 @@
 module.exports = async ({github, context}, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
-        return
+        return;
     }
 
-    const links = routes.map(e => {
-        const l = e.startsWith('/') ? e : `/${e}`
-        return `${baseUrl}${l}`
-    })
+    const links = routes.map((e) => {
+        const l = e.startsWith('/') ? e : `/${e}`;
+        return `${baseUrl}${l}`;
+    });
 
-    let com = 'Successfully generated as following:\n\n'
+    let com = 'Successfully generated as following:\n\n';
 
     for (const lks of links) {
-        console.log("testing route: ", lks)
-        const res = await github.request(`GET ${lks}`).catch(err => {
-            com+= `
+        console.log("testing route: ", lks);
+        const res = await github.request(`GET ${lks}`).catch((err) => {
+            com += `
 
 <details>
     <summary><a href="${lks}">${lks}</a>  - **Failed**</summary>
@@ -23,10 +23,10 @@ module.exports = async ({github, context}, baseUrl, routes, number) => {
 \`\`\`
 </details>
 
-`
-        })
+`;
+        });
         if (res && res.data) {
-            const { data } = res
+            const { data } = res;
             com += `
 <details>
     <summary><a href="${lks}">${lks}</a>  - Success</summary>
@@ -36,7 +36,7 @@ module.exports = async ({github, context}, baseUrl, routes, number) => {
 \`\`\`
 </details>
 
-`
+`;
         }
     }
     github.issues.addLabels({
@@ -44,11 +44,11 @@ module.exports = async ({github, context}, baseUrl, routes, number) => {
         owner: context.repo.owner,
         repo: context.repo.repo,
         labels: ['Auto: Route Test Complete']
-    })
+    });
     github.issues.createComment({
         issue_number: number,
         owner: context.repo.owner,
         repo: context.repo.repo,
         body: com
     });
-}
+};
