@@ -28,6 +28,16 @@ pageClass: routes
 
 </Route>
 
+### 广东省深圳市人民政府
+
+<Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
+
+| 通知公告 | 政府采购 | 资金信息 | 重大项目 | 
+| :------: | :------: | :------: | :------: | 
+|   tzgg   |   zfcg   |   zjxx   |   zdxm   |
+
+</Route>
+
 ## 国家税务总局
 
 ### 最新文件
