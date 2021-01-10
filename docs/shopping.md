@@ -36,6 +36,12 @@ pageClass: routes
 
 </Route>
 
+## booth.pm
+
+### 店铺
+
+<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['店铺子域名']" />
+
 ## Craigslist
 
 ### 商品搜索
