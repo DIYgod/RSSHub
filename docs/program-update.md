@@ -439,3 +439,12 @@ pageClass: routes
 |          | -commentCount | -createdAt | createdAt |
 
 </Route>
+
+## simpread
+
+### 消息通知
+
+<Route author="zytomorrow" example="/simpread/notice" path="/simpread/notice"/>
+
+### 更新日志
+<Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
