@@ -164,6 +164,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['Addon id, can be found in addon url']"/>
 
+## Microsoft Store
+
+### Updates
+
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['`Share` - `Copy Link` in the Store', '`CN` as default']" />
+
 ## Minecraft
 
 Refer to [#minecraft](/en/game.html#minecraft)
