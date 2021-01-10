@@ -316,6 +316,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
 
+## simpread
+
+### 消息通知
+
+<Route author="zytomorrow" example="/simpread/notice" path="/simpread/notice"/>
+
+### 更新日志
+
+<Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
+
 ## sketch.com
 
 ### beta 更新
@@ -439,12 +449,3 @@ pageClass: routes
 |          | -commentCount | -createdAt | createdAt |
 
 </Route>
-
-## simpread
-
-### 消息通知
-
-<Route author="zytomorrow" example="/simpread/notice" path="/simpread/notice"/>
-
-### 更新日志
-<Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
