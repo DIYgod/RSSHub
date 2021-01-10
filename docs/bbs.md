@@ -395,6 +395,24 @@ pageClass: routes
 
 </Route>
 
+## 品葱
+
+### 发现
+
+<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']" anticrawler="1" />
+
+| 最新 | 推荐      | 热门 |
+| ---- | --------- | ---- |
+| new  | recommend | hot  |
+
+### 精选
+
+<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']" anticrawler="1" />
+
+### 话题
+
+<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" />
+
 ## 三星盖乐世社区
 
 ### 最新帖子
