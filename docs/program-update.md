@@ -20,6 +20,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
 
+## AnyTXT
+
+### Release Notes
+
+<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+
 ## Apkpure
 
 ### Versions
