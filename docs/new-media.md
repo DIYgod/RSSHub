@@ -2032,6 +2032,9 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/interesting-sky/recent-interesting" path="/interesting-sky/recent-interesting"/>
 
+## 鱼塘热榜
+
+<Route author="TheresaQWQ" example="/mofish/2" path="/mofish/:id" :paramsDesc="['分类id，可以在 https://api.tophub.fun/GetAllType 获取']" />
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
@@ -2113,7 +2116,3 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## 鱼塘热榜
-
-<Route author="TheresaQWQ" example="/mofish/2" path="/mofish/:id" :paramsDesc="['分类id，可以在 https://api.tophub.fun/GetAllType 获取']" />
