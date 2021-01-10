@@ -26,6 +26,10 @@ pageClass: routes
 
 ## AP News
 
+### 首页头条
+
+<Route author="zphw" example="/apnews" path="/apnews" />
+
 ### 话题
 
 <Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']" radar="1" rssbud="1"/>
@@ -181,6 +185,23 @@ pageClass: routes
 
 <Route author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['页面', '对 `category` 页面是分类项目 `item`，对其它页面是主题 `q`，可以在网站顶部导航栏各项目链接里找出。如 `https://www.phoronix.com/scan.php?page=category&item=Computers` 对应 `/phoronix/category/Computers`']" />
 
+## RTHK 傳媒透視
+
+<Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
+
+细则: 
+
+-   `:range` 时间范围参数  
+    (可为 `latest` 或 `四位数字的年份`)
+
+    -   `latest`: 最新的 50 篇文章
+    -   `2020`: 2020 年的所有文章
+
+-   全文输出转换为简体字: `?opencc=t2s`  
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+
+</Route>
+
 ## Solidot
 
 ### 最新消息
@@ -310,6 +331,14 @@ Category 列表：
 ### 首页新闻
 
 <Route author="EsuRt"  example="/caixin/article" path="/caixin/article"/>
+
+### 最新文章
+
+<Route author="tpnonthealps" example="/caixin/latest" path="/caixin/latest">
+
+说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。
+
+</Route>
 
 ## 第一财经
 
@@ -957,3 +986,15 @@ category 对应的关键词有
 ### 九江新闻
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
+
+## 自由亚洲电台
+
+<Route author="zphw" example="/rfa/mandarin" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['语言，默认 English', '频道', '子频道（如存在）']" />
+
+通过指定频道参数，提供比官方源更佳的阅读体验。
+
+参数均可在官网获取，如：
+
+`https://www.rfa.org/cantonese/news` 对应 `/rfa/cantonese/news`
+
+`https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`

@@ -396,6 +396,10 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 <Route author="huyyi" example="/uestc/gr" path="/uestc/gr" />
 
+### 信息与通信工程学院
+
+<Route author="huyyi" example="/uestc/sice" path="/uestc/sice" />
+
 ## 东北大学
 
 ### 东北大学新闻网

@@ -122,6 +122,10 @@ pageClass: routes
 
 ## CGTN
 
+### Opinions
+
+<Route author="nczitzk" example="/cgtn/opinions" path="/cgtn/opinions"/>
+
 ### Most Read & Most Share
 
 <Route author="nczitzk" example="/cgtn/most/read/day" path="/cgtn/most/:type?/:time?" :paramsDesc="['类型，`read` 指最多阅读，`share` 指最多分享，默认为 `read`', '时间，`all` 指所有时间，`day` 指今天，`week` 指本周，`month` 指本月，`year` 指今年，默认为 `all`']"/>
@@ -1370,6 +1374,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 美国大学和雇主协会
+
+### 博客
+
+<Route author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['排序，见下表，默认为 Most Recent']">
+
+| Most Recent | Top Rated | Most Read     |
+| ----------- | --------- | ------------- |
+|             | top-blogs | mostreadblogs |
+
+</Route>
+
 ## 梅花网
 
 ### 作品
@@ -2016,6 +2032,9 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/interesting-sky/recent-interesting" path="/interesting-sky/recent-interesting"/>
 
+## 鱼塘热榜
+
+<Route author="TheresaQWQ" example="/mofish/2" path="/mofish/:id" :paramsDesc="['分类id，可以在 https://api.tophub.fun/GetAllType 获取']" />
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">

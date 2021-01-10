@@ -212,6 +212,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
 
+## Microsoft Store
+
+### Updates
+
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['在 Store 中点击 `分享` - `复制链接` 即可获得', '默认为 `CN`']" />
+
 ## Minecraft
 
 见 [#minecraft](/game.html#minecraft)
@@ -309,6 +315,16 @@ pageClass: routes
 ### Release Notes
 
 <Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
+
+## simpread
+
+### 消息通知
+
+<Route author="zytomorrow" example="/simpread/notice" path="/simpread/notice"/>
+
+### 更新日志
+
+<Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
 
 ## sketch.com
 
@@ -413,3 +429,23 @@ pageClass: routes
 ### 金米奖
 
 <Route author="nczitzk" example="/mi/golden" path="/mi/golden"/>
+
+## 猿料
+
+### 标签
+
+<Route author="nczitzk" example="/yuanliao" path="/yuanliao/:tag/:sort?" :paramsDesc="['标签，见下表，默认为 `utools`', '排序，见下表，默认为最新回复']">
+
+标签
+
+| uTools | 插件发布 |
+| ------ | -------- |
+| utools | plugins  |
+
+排序
+
+| 最新回复 | 热门回复      | 新鲜出炉   | 陈年旧贴  |
+| -------- | ------------- | ---------- | --------- |
+|          | -commentCount | -createdAt | createdAt |
+
+</Route>
