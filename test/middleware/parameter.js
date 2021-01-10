@@ -184,6 +184,20 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title2');
         expect(parsed.items[2].title).toBe('Title3');
     });
+
+    it(`filter combination`, async () => {
+        const response = await request.get('/test/filter?filter_title=Filter&filter_description=Description1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(1);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+    });
+
+    it(`filterout combination`, async () => {
+        const response = await request.get('/test/filter?filterout_title=Filter&filterout_description=Description1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(4);
+        expect(parsed.items[0].title).toBe('Title2');
+    });
 });
 
 describe('limit', () => {
@@ -285,5 +299,14 @@ describe('mess parameter', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].pubDate).toBe('Mon, 31 Dec 2018 16:00:00 GMT');
         expect(parsed.items[0].link).toBe('https://github.com/DIYgod/RSSHub/issues/0');
+    });
+});
+
+describe('opencc', () => {
+    it(`opencc`, async () => {
+        const response = await request.get('/test/opencc?opencc=t2s');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].title).toBe('小可爱');
+        expect(parsed.items[0].content).toBe('宇宙无敌');
     });
 });

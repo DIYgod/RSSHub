@@ -20,18 +20,18 @@ pageClass: routes
 
 ### 番剧
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']"/>
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']" radar="1" rssbud="1"/>
 
 ::: tip 提示
 
 番剧 id 不包含开头的 aa。
-例如：http://www.acfun.cn/bangumi/aa5022158 的番剧 id 是 5022158，不包括开头的 aa。
+例如：<http://www.acfun.cn/bangumi/aa5022158> 的番剧 id 是 5022158，不包括开头的 aa。
 
 :::
 
 ### 用户投稿
 
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']"/>
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
 ## AGE 动漫
 
@@ -43,15 +43,15 @@ pageClass: routes
 
 ### 動畫
 
-<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
+<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1" rssbud="1">
 
-时间和动画名称请自己从网址取得: <https://anime1.me/category/2018年秋季/刀劍神域-alicization>
+时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
 
 </Route>
 
 ### 搜尋
 
-<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']" radar="1"/>
+<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']" radar="1" rssbud="1"/>
 
 ## Animen 动漫平台
 
@@ -105,6 +105,10 @@ pageClass: routes
 
 <Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
 
+### 用户日志
+
+<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
@@ -115,9 +119,9 @@ pageClass: routes
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
-| 同人 | 漫画  | 软件 | 同人(R18) | 漫画(R18) | 美少女游戏 | 乙女  | BL  |
-| ---- | ----- | ---- | --------- | --------- | ---------- | ----- | --- |
-| home | comic | soft | maniax    | books     | pro        | girls | bl  |
+| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL |
+| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | -- |
+| home | comic | soft | maniax     | books      | pro        | girls | bl |
 
 </Route>
 
@@ -131,6 +135,12 @@ pageClass: routes
 ### ebb
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
+
+## Eventernote
+
+### 声优活动及演唱会
+
+<Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" :paramsDesc="['声优姓名', '声优 ID']" radar="1" rssbud="1"/>
 
 ## Hanime.tv
 
@@ -196,7 +206,7 @@ pageClass: routes
 
 <Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" :paramsDesc="['语言','类别','名称','ID']"/>
 
-比如漫画公主彻夜未眠的网址为https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
+比如漫画公主彻夜未眠的网址为<https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894>, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
 
 ### [Naver](https://comic.naver.com)
 
@@ -208,8 +218,8 @@ pageClass: routes
 
 <Route author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" :paramsDesc="['番剧id']">
 
-请打开对应番剧的纵览页(非具体某集),从 url 中最后一位查看番剧 id.(一般为英文)
-除去'海贼'此类具有特殊页面的超长番剧,绝大多数页面都可以解析.
+请打开对应番剧的纵览页 (非具体某集), 从 url 中最后一位查看番剧 id.(一般为英文)
+除去 ' 海贼 ' 此类具有特殊页面的超长番剧，绝大多数页面都可以解析.
 最适合用来追新番
 
 </Route>
@@ -223,6 +233,32 @@ pageClass: routes
 | All | PlayStation | Nintendo | Xbox      | PC  | Girl’sStyle | Arcade Web | App | Anime | Review | Rank |
 | --- | ----------- | -------- | --------- | --- | ----------- | ---------- | --- | ----- | ------ | ---- |
 |     | dps         | nintendo | microsoft | dpc | gstyle      | arcade     | app | anime | review | rank |
+
+</Route>
+
+## 东方我乐多丛志
+
+### 文章
+
+<Route author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/cn/index" :paramsDesc="['语言', '类型']">
+
+语言
+
+| 中文 | 日文 | 韩文 |
+| ---- | ---- | ---- |
+| cn   | ja   | ko   |
+
+类型
+
+| 最新情报 | 连载   | 特辑       | 小说   | 漫画   | 新闻 |
+| -------- | ------ | ---------- | ------ | ------ | ---- |
+| index    | series | interviews | novels | comics | news |
+
+| 音乐点评     | 游戏测评    | 同人作品感想 | 关于本站      |
+| ------------ | ----------- | ------------ | ------------- |
+| music_review | game_review | book_review  | where_are_you |
+
+**注：** 最新情报包括后面所有类型的文章，内容较多，谨慎使用。
 
 </Route>
 
@@ -248,11 +284,17 @@ pageClass: routes
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
+## 风之动漫
+
+### 风之动漫
+
+<Route author="geeeeoff" path="/fzdm/manhua/:id" example="/fzdm/manhua/39" :paramsDesc="['漫画ID']"/>
+
 ## 海猫吧
 
 ### 漫画更新
 
-<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
+<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
 ## 看漫画
 
@@ -266,23 +308,39 @@ pageClass: routes
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
 
+## 漫画堆
+
+### 漫画
+
+<Route author="geeeeoff" path="/manhuadui/manhua/:name/:serial?" example="/manhuadui/manhua/yiquanchaoren/1" :paramsDesc="['漫画名称', '内容序号，部分漫画存在最新章节、原作、番外，根据页面顺序从1开始排序']"/>
+
+## 漫小肆
+
+### 漫画更新
+
+<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1" rssbud="1"/>
+
 ## 三界异次元
 
 ### 三界异次元
 
-<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1" rssbud="1"/>
 
 ## 紳士漫畫
 
 ### 最新
 
-<Route author="KenMizz" example="/ssmh" path="/ssmh/">
+<Route author="KenMizz" example="/ssmh" path="/ssmh/" />
+
+### 分类更新
+
+<Route author="Gandum2077" example="/ssmh/category/6" path="/ssmh/category/:cid" :paramsDesc="['分类的id，即对应 URL 中的数字']" />
 
 ## 鼠绘漫画
 
 ### 鼠绘漫画
 
-<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
+<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
 ## 忧郁的 loli
 

@@ -30,14 +30,16 @@ sidebar: auto
 #### 获取源数据
 
 -   获取源数据的主要手段为使用 [got](https://github.com/sindresorhus/got) 发起 HTTP 请求（请求接口或请求网页）获取数据
+
 -   个别情况需要使用 [puppeteer](https://github.com/GoogleChrome/puppeteer) 模拟浏览器渲染目标页面并获取数据
 
 -   返回的数据一般为 JSON 或 HTML 格式
+
 -   对于 HTML 格式的数据，使用 [cheerio](https://github.com/cheeriojs/cheerio) 进行处理
 
 -   以下三种获取数据方法按 **「推荐优先级」** 排列：
 
-    1. **使用 got 从接口获取数据**
+    1.  **使用 got 从接口获取数据**
 
     样例：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
@@ -101,7 +103,7 @@ sidebar: auto
     // 至此本路由结束
     ```
 
-    2. **使用 got 从 HTML 获取数据**
+    2.  **使用 got 从 HTML 获取数据**
 
     有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/douban/explore.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)。
 
@@ -153,7 +155,7 @@ sidebar: auto
     // 至此本路由结束
     ```
 
-    3. **使用 puppeteer 渲染页面获取数据**
+    3.  **使用 puppeteer 渲染页面获取数据**
 
     ::: tip 提示
 
@@ -213,16 +215,16 @@ sidebar: auto
     // 注：由于此路由只是起到一个新专栏上架提醒的作用，无法访问付费文章，因此没有文章正文
     ```
 
-    4. **使用通用配置型路由**
+    4.  **使用通用配置型路由**
 
     很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
     通用配置即通过 cheerio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
 
     首先我们需要几个数据：
 
-    1. RSS 来源链接
-    2. 数据来源链接
-    3. RSS 标题（非 item 标题）
+    1.  RSS 来源链接
+    2.  数据来源链接
+    3.  RSS 标题（非 item 标题）
 
     ```js
     const buildData = require('@/utils/common-config');
@@ -267,7 +269,7 @@ sidebar: auto
 
     至此我们完成了一个最简单的路由
 
----
+* * *
 
 #### 使用缓存
 
@@ -292,7 +294,7 @@ const description = await ctx.cache.tryGet(link, async () => {
 
 tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache.js#L128)，第一个参数为缓存的 key，第二个参数为缓存数据获取方法，第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)，且每次访问缓存会重新计算过期时间
 
----
+* * *
 
 #### 生成 RSS 源
 
@@ -341,7 +343,7 @@ ctx.state.data = {
 };
 ```
 
-##### BT/磁力源
+##### BT / 磁力源
 
 用于下载类 RSS，**额外**添加这些字段能使你的 RSS 被 BT 客户端识别并自动下载：
 
@@ -381,24 +383,24 @@ ctx.state.data = {
 };
 ```
 
----
+* * *
 
 ### 添加脚本文档
 
-1.  更新 [文档 (/docs/) ](https://github.com/DIYgod/RSSHub/blob/master/docs/) 目录内对应的文档, 可以执行 `npm run docs:dev` 查看文档效果
+1.  更新 [文档 (/docs/) ](https://github.com/DIYgod/RSSHub/blob/master/docs/) 目录内对应的文档，可以执行 `npm run docs:dev` 查看文档效果
 
     -   文档采用 vue 组件形式，格式如下：
         -   `author`: 路由作者，多位作者使用单个空格分隔
         -   `example`: 路由举例
         -   `path`: 路由路径
         -   `:paramsDesc`: 路由参数说明，数组，支持 markdown
-            1. 参数说明必须对应其在路径中出现的顺序
-            1. 如缺少说明将会导致`npm run docs:dev`报错
-            1. 说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
-            1. 不必在说明中标注`可选/必选`，组件会根据路由`?`自动判断
+            1.  参数说明必须对应其在路径中出现的顺序
+            2.  如缺少说明将会导致`npm run docs:dev`报错
+            3.  说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
+            4.  不必在说明中标注`可选 / 必选`，组件会根据路由`?`自动判断
     -   文档样例：
 
-        1. 无参数:
+        1.  无参数:
 
         ```vue
         <Route author="HenryQW" example="/sspai/series" path="/sspai/series" />
@@ -406,13 +408,13 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
-        ***
+        * * *
 
-        2. 多参数：
+        2.  多参数：
 
         ```vue
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
@@ -420,11 +422,11 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
 
-        ***
+        * * *
 
 
         3. 复杂说明支持 slot:
@@ -455,7 +457,7 @@ ctx.state.data = {
 
 1.  请一定要注意把`<Route>`的标签关闭！
 
-1.  执行 `npm run format` 自动标准化代码格式，提交代码, 然后提交 pull request
+2.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
 
 ## 提交新的 RSSHub Radar 规则
 
@@ -567,6 +569,16 @@ ctx.state.data = {
 
 请注意，`target` 方法运行在沙盒中，对 `document` 的任何修改都不会反应到页面中
 
+### RSSBud
+
+[RSSBud](https://github.com/Cay-Zhang/RSSBud) 支持 RSSHub Radar 的规则并且也会自动更新，但是请注意：
+
+-   在 Radar 的规则中使用 `'.'` 子域名可以让 RSSBud 适配 `m` / `mobile` 等常见移动端子域名
+
+-   在 `target` 中使用 `document` 的规则并不适用 RSSBud：RSSBud 并不是一个浏览器插件，他只获取并分析网站的 URL
+
 ### 补充文档
 
 在 RSSHub 文档里给对应路径加上 `radar="1"`，这样就会显示一个 `支持浏览器扩展` 标记
+
+如果也支持 RSSBud，再加上 `rssbud="1"`，会显示 `支持 RSSBud` 标记

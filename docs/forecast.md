@@ -32,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 国家突发事件预警信息发布网
+
+### 当前生效预警
+
+<Route author="nczitzk" example="/12379" path="/12379/index"/>
+
 ## 国家应急广播网
 
 ### 预警信息
@@ -42,11 +48,21 @@ pageClass: routes
 
 <Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
 
+## 上海市生态环境局
+
+### 空气质量
+
+<Route author="nczitzk" example="/gov/shanghai/sthj" path="/gov/shanghai/sthj"/>
+
 ## 停电通知
+
+### 95598 停电查询网
+
+<Route author="mjysci" example="/tingdiantz/95598/hb1/wh/wc/" path="/tingdiantz/95598/:province/:city/:district?" :paramsDesc="['省，2~3位拼音缩写，详情见http://www.sttcq.com/td/','市，同上', '区，同上']"/>  
 
 ### 南京市
 
-<Route author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>
+<Route author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>  
 
 ## 停水通知
 
@@ -98,7 +114,7 @@ pageClass: routes
 
 ### 全国气象预警
 
-<Route author="ylc395" example="/weatheralarm" path="/weatheralarm">
+<Route author="ylc395" example="/weatheralarm/广东省" path="/weatheralarm/:province?" :paramsDesc="['省份']">
 
 可通过全局过滤参数订阅您感兴趣的地区.
 

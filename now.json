@@ -1,0 +1,7 @@
+{
+    "version": 2,
+    "routes": [
+        { "src": "/api/.*", "dest": "/api/now.js" },
+        { "src": "/.*", "dest": "/api/now.js" }
+    ]
+}
