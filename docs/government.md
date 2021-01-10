@@ -185,6 +185,18 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
 
+## 中国农工民主党
+
+### 新闻中心
+
+<Route author="nczitzk" example="/ngd" path="/ngd/:slug?" :paramsDesc="['见下文']">
+
+将目标栏目的网址拆解为 `http://www.ngd.org.cn/` 和后面的字段，去掉 `.htm` 后，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+
+如：(要闻动态)[http://www.ngd.org.cn/xwzx/ywdt/index.htm] 的网址在 `http://www.ngd.org.cn/` 后的字段是 `xwzx/ywdt/index.htm`，则对应的 slug 为 `xwzx-ywdt-index`，对应的路由即为 `/ngd/xwzx-ywdt-index`
+
+</Route>
+
 ## 中国人大网
 
 <Route author="233yeee" example="/npc/c183" path="/npc/:caty" :paramsDesc="['分类名，支持形如`http://www.npc.gov.cn/npc/*/list.shtml`的网站，传入 npc 之后的参数']">
