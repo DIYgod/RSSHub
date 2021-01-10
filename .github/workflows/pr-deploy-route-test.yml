@@ -1,0 +1,37 @@
+name: PR route test
+
+on: pull_request
+
+jobs:
+  testRoute:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Fetch affected routes
+        id: fetchRoute
+        uses: actions/github-script@v3
+        with:
+          # by default, JSON format returned
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const body = context.payload.pull_request.body
+            const number = context.payload.pull_request.number
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
+            return script({github, context}, body, number)
+      - name: Waiting for 200 from the Vercel Preview
+        uses: patrickedqvist/wait-for-vercel-preview@master
+        id: waitFor200
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 120
+      # fetch link from pr and test link
+      - name: Generate previews
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const link = context.steps.waitFor200.outputs.url
+            const routes = JSON.parse(context.steps.fetchRoute.outputs.result)
+            const number = context.payload.pull_request.number
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
+            return await script({github, context}, link, routes, number)

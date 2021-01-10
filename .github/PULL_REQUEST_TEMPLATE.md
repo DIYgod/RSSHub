@@ -5,12 +5,28 @@ Close #
 ## 完整路由地址 / Example for the proposed route(s)
 
 <!--
-
 为方便测试，请附上完整路由地址，包括所有必选与可选参数，否则将导致 PR 被关闭。
-
 To simplify the testing workflow, please include the complete route, with all required and optional parameters, otherwise your pull request will be closed.
 
+请按照如下格式填写`routes`区域: 我们将会根据你的参数展开自动测试. 一行一个路由
+Please fill the `routes` block follow the format below, as we will perform automatic test based on this information. one route per line.
+
+```
+/some/route
+/some/other/route
+```
+
+如果与路由无关, 请写`NOROUTE`
+
+```
+NOROUTE
+```
 -->
+
+<!-- FILL HERE -->
+```routes
+```
+
 
 ## 新RSS检查列表 / New RSS Script Checklist
 
