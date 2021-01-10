@@ -1141,3 +1141,12 @@ rule
 ### 知乎书店 - 知乎周刊
 
 <Route author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" anticrawler="1" radar="1" rssbud="1"/>
+
+### 用户关注时间线
+
+<Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1"/>
+::: warning 注意
+
+用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
