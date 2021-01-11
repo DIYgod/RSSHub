@@ -67,14 +67,16 @@ Auto Route test failed, please check your PR body format and reopen pull request
         .catch((e) => {
             core.warning(e);
         });
-    await github.pulls.update({
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        pull_nulber: number,
-        state: "closed"
-    }).catch((e) => {
-        core.warning(e);
-    });
+    await github.pulls
+        .update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_nulber: number,
+            state: 'closed',
+        })
+        .catch((e) => {
+            core.warning(e);
+        });
 
     throw 'Please follow the PR rules: failed to detect route';
 };
