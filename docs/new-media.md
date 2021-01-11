@@ -1347,12 +1347,66 @@ column 为 third 时可选的 category:
 ### 首页
 
 <Route author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
-### 24小时热门
+
+### 24 小时热门
 
 <Route author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
+
 ### 节目
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
+
+## 留园网
+
+### 分站
+
+<Route author="nczitzk" example="/6park" path="/6park/:id?" :paramsDesc="['分站，见下表，默认为史海钩沉']">
+
+| 婚姻家庭 | 魅力时尚 | 女性频道 | 生活百态 | 美食厨房 | 非常影音 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| life9    | life1    | chan10   | life2    | life6    | fr       |
+
+| 车迷沙龙 | 游戏天地 | 卡通漫画 | 体坛纵横 | 运动健身 | 电脑前线 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| enter7   | enter3   | enter6   | enter5   | sport    | know1    |
+
+| 数码家电 | 旅游风向 | 摄影部落 | 奇珍异宝 | 笑口常开 | 娱乐八卦 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| chan6    | life7    | chan8    | page     | enter1   | enter8   |
+
+| 吃喝玩乐 | 文化长廊 | 军事纵横 | 百家论坛 | 科技频道 | 爱子情怀 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| netstar  | life10   | nz       | other    | chan2    | chan5    |
+
+| 健康人生 | 博论天下 | 史海钩沉 | 网际谈兵 | 经济观察 | 谈股论金 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| life5    | bolun    | chan1    | military | finance  | chan4    |
+
+| 杂论闲侃 | 唯美乐园 | 学习园地 | 命理玄机 | 宠物情缘 | 网络歌坛 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| pk       | gz1      | gz2      | gz3      | life8    | chan7    |
+
+| 音乐殿堂 | 情感世界 |
+| -------- | -------- |
+| enter4   | life3    |
+
+::: tip 提示
+
+酷 18 文档参见 [此处](https://docs.rsshub.app/picture.html#ku-18)
+
+禁忌书屋文档参见 [此处](https://docs.rsshub.app/reading.html#jin-ji-shu-wu)
+
+:::
+
+</Route>
+
+### 精华区
+
+<Route author="nczitzk" example="/6park/chan1/gold" path="/6park/:id/gold" :paramsDesc="['分站，见上表']"/>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/6park/chan1/keywords/都市" path="/6park/:id/keywords/:keyword?" :paramsDesc="['分站，见上表', '关键字']"/>
 
 ## 妈咪帮
 
