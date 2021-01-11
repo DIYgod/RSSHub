@@ -122,6 +122,10 @@ pageClass: routes
 
 ## CGTN
 
+### Opinions
+
+<Route author="nczitzk" example="/cgtn/opinions" path="/cgtn/opinions"/>
+
 ### Most Read & Most Share
 
 <Route author="nczitzk" example="/cgtn/most/read/day" path="/cgtn/most/:type?/:time?" :paramsDesc="['类型，`read` 指最多阅读，`share` 指最多分享，默认为 `read`', '时间，`all` 指所有时间，`day` 指今天，`week` 指本周，`month` 指本月，`year` 指今年，默认为 `all`']"/>
@@ -2028,6 +2032,9 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/interesting-sky/recent-interesting" path="/interesting-sky/recent-interesting"/>
 
+## 鱼塘热榜
+
+<Route author="TheresaQWQ" example="/mofish/2" path="/mofish/:id" :paramsDesc="['分类id，可以在 https://api.tophub.fun/GetAllType 获取']" />
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
@@ -2085,6 +2092,18 @@ column 为 third 时可选的 category:
 ### 评论与特写
 
 <Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
+
+## 眾新聞
+
+### 眾聞
+
+<Route author="nczitzk" example="/hkcnews/news" path="/hkcnews/news/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 經濟 | 社會 | 生活 | 政治 | 國際 | 台灣 | 人物 | 中國 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|      | 13   | 15   | 14   | 12   | 16   | 20   | 21   | 19   |
+
+</Route>
 
 ## 装备前线
 

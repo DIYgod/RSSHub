@@ -20,6 +20,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
 
+## AnyTXT
+
+### Release Notes
+
+<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+
 ## Apkpure
 
 ### Versions
@@ -212,6 +218,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
 
+## Microsoft Store
+
+### Updates
+
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['在 Store 中点击 `分享` - `复制链接` 即可获得', '默认为 `CN`']" />
+
 ## Minecraft
 
 见 [#minecraft](/game.html#minecraft)
@@ -309,6 +321,16 @@ pageClass: routes
 ### Release Notes
 
 <Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
+
+## simpread
+
+### 消息通知
+
+<Route author="zytomorrow" example="/simpread/notice" path="/simpread/notice"/>
+
+### 更新日志
+
+<Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
 
 ## sketch.com
 

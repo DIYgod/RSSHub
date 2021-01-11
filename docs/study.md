@@ -388,6 +388,18 @@ pageClass: routes
 
 </Route>
 
+## 阳光高考
+
+### 教育部阳光高考信息公开平台招生政策规定
+
+<Route author="nczitzk" example="/chsi/zszcgd" path="/chsi/zszcgd/:category?" :paramsDesc="['分类，默认为招生政策']">
+
+| 招生政策 | 深化考试招生制度改革 | 教育法律法规 |
+| -------- | -------------------- | ------------ |
+| dnzszc   | zdgg                 | jyflfg       |
+
+</Route>
+
 ## 印象识堂
 
 ### 印象剪藏

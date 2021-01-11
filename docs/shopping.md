@@ -36,6 +36,12 @@ pageClass: routes
 
 </Route>
 
+## booth.pm
+
+### 店铺
+
+<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['店铺子域名']" />
+
 ## Craigslist
 
 ### 商品搜索
@@ -165,6 +171,18 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 礼物说
 
 <Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
+
+## 麦当劳
+
+### 麦当劳活动资讯
+
+<Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" :paramsDesc="['分类名（可用+连接多个分类）']">
+
+| 全部分类  | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
+| --------- | -------------- | -------- | -------- | ----- | -------- | -------- |
+| news_list | responsibility | brand    | product  | sales | culture  | event    |
+
+</Route>
 
 ## 缺书网
 
