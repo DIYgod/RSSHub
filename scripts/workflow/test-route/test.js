@@ -47,20 +47,11 @@ module.exports = async ({github, context}, baseUrl, routes, number) => {
         owner: context.repo.owner,
         repo: context.repo.repo,
         labels: ['Auto: Route Test Complete']
-<<<<<<< HEAD
     }).catch((e) => { core.warning(e) })
-=======
-    });
->>>>>>> 036796e716f578efe821da8efcd3695376daa635
     github.issues.createComment({
         issue_number: number,
         owner: context.repo.owner,
         repo: context.repo.repo,
         body: com
-<<<<<<< HEAD
     }).catch((e) => { core.warning(e) })
 }
-=======
-    });
-};
->>>>>>> 036796e716f578efe821da8efcd3695376daa635
