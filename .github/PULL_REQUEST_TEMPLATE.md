@@ -1,6 +1,6 @@
 <!-- 
 
-请不要删除, 自行修改已有结构, 这会导致自动检测失败；不符合要求的部分留空即可
+请不要删除, 自行修改已有结构/注释, 这会导致自动检测失败；不符合要求的部分留空即可
 
 Do not remove existing titles or structures: it breaks CI
 
@@ -25,10 +25,6 @@ Please fill the `routes` block follow the format below, as we will perform autom
 ```
 
 如果与路由无关, 请写`NOROUTE`
-
-```
-NOROUTE
-```
 -->
 
 <!-- 在下方填写, 请不要删除`routes`标识: CI验证需要. FILL BELOW and keep `routes` keyword -->
