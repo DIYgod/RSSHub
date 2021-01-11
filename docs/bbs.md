@@ -337,6 +337,7 @@ pageClass: routes
 | CrackMe      | crackme    |
 | Pwn          | pwn        |
 | WEB 安全     | web        |
+| 外文翻译     | translate  |
 | 全站         | all        |
 
 | 类型     | type   |
