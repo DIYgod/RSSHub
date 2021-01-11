@@ -13,8 +13,8 @@ module.exports = ({github, context, core}, body, number) => {
             owner: context.repo.owner,
             repo: context.repo.repo,
             name: noFound
-        }).catch((e) => { core.warning(e) })
-    }
+        }).catch((e) => { core.warning(e); });
+    };
 
     if (m && m[1]) {
         res = m[1].trim().split("\r\n");
@@ -28,7 +28,7 @@ module.exports = ({github, context, core}, body, number) => {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 labels: ['Auto: No Route Needed']
-            }).catch((e) => { core.warning(e) })
+            }).catch((e) => { core.warning(e); });
 
             return;
         } else if (res.length > 0) {
