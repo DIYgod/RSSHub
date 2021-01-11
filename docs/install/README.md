@@ -603,6 +603,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `IG_USERNAME`: Instagram 用户名。
     -   `IG_PASSWORD`: Instagram 密码。
+    -   `IG_PROXY`: Instagram 代理URL。
 
     注意，暂不支持两步验证。
 

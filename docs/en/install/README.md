@@ -494,6 +494,7 @@ See docs of specified route and `lib/config.js` for detail information.
 
     -   `IG_USERNAME`: Your Instagram username
     -   `IG_PASSWORD`: Your Instagram password
+    -   `IG_PROXY`: Proxy URL for Instagram
 
     Warning: Two Factor Authentication is *not* supported.
 
