@@ -268,6 +268,26 @@ Solidot 提供的 feed:
 
 <Route author="emdoe" example="/udn/global/鏡頭背後" path="/udn/global/:tid" :paramsDesc="['標籤名稱，請在轉角國際首頁獲取；如果選擇輸入 `newest` 則輸出最新文章']">
 
+## Voice of America (VOA)
+
+透過提取全文，以獲得更好的閱讀體驗
+
+<Route author="zphw" example="/voa/cantonese/zprtie-ttp" path="/voa/:language/:channel?" :paramsDesc="['語言','頻道，可於官網獲取']">
+
+`语言`
+
+| 粵語      | 中文    | 藏語    |
+| --------- | ------- | ------- |
+| cantonese | chinese | tibetan |
+
+`频道`
+
+可於各語言官網聚合新聞處 (如 <https://www.voacantonese.com/rssfeeds>) 獲取
+
+例如 `https://www.voacantonese.com/api/zyrtyequty` 將對應 `/voa/cantonese/zyrtyequty`
+
+</Route>
+
 ## Yahoo
 
 ### 新聞
