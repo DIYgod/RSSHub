@@ -134,6 +134,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cgtn/top" path="/cgtn/top"/>
 
+### Editors' Pick
+
+<Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick"/>
+
 ## cnBeta
 
 ### 最新
