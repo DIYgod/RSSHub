@@ -37,6 +37,6 @@ jobs:
             const link = process.env.TEST_BASEURL
             const routes = JSON.parse(process.env.TEST_ROUTES)
             const number = context.payload.pull_request.number
-            console.log(link, routes, number)
+            core.info(`${link}, ${routes}, ${number}`)
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return await script({github, context}, link, routes, number)
+            return await script({github, context, core}, link, routes, number)

@@ -1,3 +1,11 @@
+<!-- 
+
+请不要删除, 自行修改已有结构, 这会导致自动检测失败；不符合要求的部分留空即可
+
+Do not remove existing titles or structures: it breaks CI
+
+-->
+
 ## 该 PR 相关 Issue / Involved issue
 
 Close #
@@ -23,7 +31,7 @@ NOROUTE
 ```
 -->
 
-<!-- FILL HERE -->
+<!-- 在下方填写 FILL BELOW -->
 ```routes
 ```
 
