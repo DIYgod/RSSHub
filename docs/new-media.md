@@ -2128,3 +2128,13 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+
+## 游戏葡萄
+无文章正文，仅有目录索引。
+### 全部文章
+
+<Route author="KotoriK" example="/gamegrape" path="/gamegrape/index"/>
+
+### 分类
+例子对应[深度分类](http://youxiputao.com/article/index/id/13)
+<Route author="KotoriK" example="/gamegrape/13" path="/gamegrape/:id?"/>
