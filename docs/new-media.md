@@ -134,6 +134,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cgtn/top" path="/cgtn/top"/>
 
+### Editors' Pick
+
+<Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick"/>
+
 ## cnBeta
 
 ### 最新
@@ -2031,6 +2035,19 @@ column 为 third 时可选的 category:
 ### 近期事件专题
 
 <Route author="nczitzk" example="/interesting-sky/recent-interesting" path="/interesting-sky/recent-interesting"/>
+
+## 游戏葡萄
+
+无文章正文，仅有目录索引。
+
+### 全部文章
+
+<Route author="KotoriK" example="/gamegrape" path="/gamegrape/index"/>
+
+### 分类
+
+例子对应[深度分类](http://youxiputao.com/article/index/id/13)
+<Route author="KotoriK" example="/gamegrape/13" path="/gamegrape/:id?"/>
 
 ## 鱼塘热榜
 

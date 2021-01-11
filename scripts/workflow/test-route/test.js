@@ -35,7 +35,7 @@ module.exports = async ({github, context}, baseUrl, routes, number) => {
     <summary><a href="${lks}">${lks}</a>  - Success</summary>
 
 \`\`\`
-    ${data.split("\n").slice(0, 30).join("\n")}
+    ${data.split('\n').slice(0, 30).join('\n')}
 \`\`\`
 </details>
 
