@@ -12,13 +12,12 @@ jobs:
         uses: actions/github-script@v3
         with:
           # by default, JSON format returned
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(context)
             const body = context.payload.pull_request.body
             const number = context.payload.pull_request.number
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return script({github, context, core}, body, number)
+            return await script({github, context, core}, body, number)
       - name: Waiting for 200 from the Vercel Preview
         if: (env.TEST_CONTINUE)
         uses: patrickedqvist/wait-for-vercel-preview@master

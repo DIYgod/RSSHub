@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-module.exports = async ({ github, context }, baseUrl, routes, number) => {
+module.exports = async ({github, context}, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
         return;
     }
@@ -13,10 +13,10 @@ module.exports = async ({ github, context }, baseUrl, routes, number) => {
     let com = 'Successfully generated as following:\n\n';
 
     for (const lks of links) {
-        console.log('testing route: ', lks);
+        console.log("testing route: ", lks)
         // Intended, one at a time
-        const res = await github.request(`GET ${lks}`).catch((err) => {
-            com += `
+        const res = await github.request(`GET ${lks}`).catch(err => {
+            com+= `
 
 <details>
     <summary><a href="${lks}">${lks}</a>  - **Failed**</summary>
@@ -42,24 +42,16 @@ module.exports = async ({ github, context }, baseUrl, routes, number) => {
 `;
         }
     }
-    github.issues
-        .addLabels({
-            issue_number: number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            labels: ['Auto: Route Test Complete'],
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
-    github.issues
-        .createComment({
-            issue_number: number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: com,
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
-};
+    github.issues.addLabels({
+        issue_number: number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        labels: ['Auto: Route Test Complete']
+    }).catch((e) => { core.warning(e) })
+    github.issues.createComment({
+        issue_number: number,
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        body: com
+    }).catch((e) => { core.warning(e) })
+}
