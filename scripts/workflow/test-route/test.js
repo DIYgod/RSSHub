@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-module.exports = async ({ github, context }, baseUrl, routes, number) => {
+module.exports = async ({ github, context, core}, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
         return;
     }
@@ -13,7 +13,7 @@ module.exports = async ({ github, context }, baseUrl, routes, number) => {
     let com = 'Successfully generated as following:\n\n';
 
     for (const lks of links) {
-        console.log('testing route: ', lks);
+        core.info(`testing route:  ${lks}`);
         // Intended, one at a time
         const res = await github.request(`GET ${lks}`).catch((err) => {
             com += `
