@@ -1,6 +1,9 @@
 name: PR route test
 
-on: pull_request
+# https://github.com/actions/first-interaction/issues/10#issuecomment-670968624
+# https://github.com/actions/first-interaction/issues/10#issuecomment-752360668
+on:
+- pull_request_target
 
 jobs:
   testRoute:
