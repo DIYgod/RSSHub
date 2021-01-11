@@ -74,6 +74,21 @@ pageClass: routes
 | autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流   |
 
 </Route>
+
+## 上海证券交易所
+
+### 本所业务规则
+
+<Route author="nczitzk" example="/sse/sserules" path="/sse/sserules/:slug?" :paramsDesc="['见下文，默认为 latest']">
+
+将目标栏目的网址拆解为 `http://www.sse.com.cn/lawandrules/sserules/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+
+如：(最新规则)[http://www.sse.com.cn/lawandrules/sserules/latest] 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/sserules/latest`
+
+又如：(设立科创板并试点注册制规则 - 发行上市审核类)[http://www.sse.com.cn/lawandrules/sserules/tib/review] 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `tib/review`，则对应的 slug 为 `tib-review`，对应的路由即为 `/sse/sserules/tib-review`
+
+</Route>
+
 ## 世界经济论坛
 
 ### 报告

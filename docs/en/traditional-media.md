@@ -20,6 +20,10 @@ Site
 
 ## AP News
 
+### Top Stories
+
+<RouteEn author="zphw" example="/apnews" path="/apnews" />
+
 ### Topics
 
 <RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1"/>
@@ -148,6 +152,18 @@ Generates full-text feeds that the official feed doesn't provide.
 ### News & Reviews
 
 <RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" />
+
+## Radio Free Asia (RFA)
+
+<RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['language, English by default', 'channel', 'subchannel, where applicable']" />
+
+Delivers a better experience by supporting parameter specification. 
+
+Parameters can be obtained from the official website, for instance:
+
+`https://www.rfa.org/cantonese/news` corresponds to `/rfa/cantonese/news`
+
+`https://www.rfa.org/cantonese/news/htm` corresponds to `/rfa/cantonese/news/htm`
 
 ## Reuters
 
