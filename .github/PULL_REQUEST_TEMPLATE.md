@@ -31,7 +31,7 @@ NOROUTE
 ```
 -->
 
-<!-- 在下方填写 FILL BELOW -->
+<!-- 在下方填写, 请不要删除routes标识: CI验证需要. FILL BELOW and keep routes keyword: CI Key -->
 ```routes
 ```
 
