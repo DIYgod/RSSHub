@@ -343,6 +343,12 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+## VOA News
+
+### Day in Photos
+
+<RouteEn author="nczitzk" example="/voa/day-photos" path="/voa/day-photos"/>
+
 ## Vulture
 
 <RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:tag/:excludetags?" :paramsDesc="['Tag', 'Comma-delimited list of tags. If an article includes one of these tags, it will be excluded from the RSS feed.']" />
