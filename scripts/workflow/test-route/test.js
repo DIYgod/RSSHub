@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 module.exports = async ({github, context}, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
         return
@@ -12,6 +14,7 @@ module.exports = async ({github, context}, baseUrl, routes, number) => {
 
     for (const lks of links) {
         console.log("testing route: ", lks)
+        // Intended, one at a time
         const res = await github.request(`GET ${lks}`).catch(err => {
             com+= `
 
@@ -44,11 +47,11 @@ module.exports = async ({github, context}, baseUrl, routes, number) => {
         owner: context.repo.owner,
         repo: context.repo.repo,
         labels: ['Auto: Route Test Complete']
-    })
+    }).catch((e) => { core.warning(e) })
     github.issues.createComment({
         issue_number: number,
         owner: context.repo.owner,
         repo: context.repo.repo,
         body: com
-    });
+    }).catch((e) => { core.warning(e) })
 }
