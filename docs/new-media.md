@@ -1438,6 +1438,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 美国半导体行业协会
+
+### 新闻
+
+<Route author="nczitzk" example="/semiconductors/latest-news" path="/semiconductors/latest-news"/>
+
 ## 美国大学和雇主协会
 
 ### 博客
