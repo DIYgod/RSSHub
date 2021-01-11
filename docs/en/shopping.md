@@ -36,6 +36,12 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 </RouteEn>
 
+## booth.pm
+
+### Shop
+
+<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['Shop subdomain']" />
+
 ## Guiltfree.pl
 
 ### Onsale
