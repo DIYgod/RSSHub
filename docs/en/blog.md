@@ -31,3 +31,9 @@ pageClass: routes
 ### Essays
 
 <RouteEn author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
+
+## Phrack Magazine
+
+### 文章
+
+<Route author="CitrusIce" example="/phrack" path="/phrack" />
