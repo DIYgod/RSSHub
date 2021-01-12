@@ -4,6 +4,18 @@ pageClass: routes
 
 # Application Updates
 
+## Anki
+
+### Changes
+
+<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+
+## AnyTXT
+
+### Release Notes
+
+<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+
 ## Apkpure
 
 ### Versions
@@ -30,6 +42,44 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
 
+## Bandisoft
+
+### History
+
+<RouteEn author="nczitzk" example="/bandisoft/bandizip" path="/bandisoft/:id?/:lang?" :paramsDesc="['Software id, see below, Bandizip by default', 'Language, see below, English by default']">
+
+Software id
+
+| Bandizip (Win) | Bandizip (Mac) | Honeycam | Honeyview |
+| -------------- | -------------- | -------- | --------- |
+| bandizip       | bandizip.mac   | honeycam | honeyview |
+
+Language
+
+| English | en |
+| 中文 (简体) | cn |
+| 中文 (繁體) | tw |
+| 日本語 | jp |
+| Русский | ru |
+| Español | es |
+| Français | fr |
+| Deutsch | de |
+| Italiano | it |
+| Slovenčina | sk |
+| Українська | uk |
+| Беларуская | be |
+| Dansk | da |
+| Polski | pl |
+| Português Brasileiro | br |
+| Čeština | cs |
+| Nederlands | nl |
+| Slovenščina| sl |
+| Türkçe| tr  |
+| ภาษาไทย | th |
+| 한국어 | kr |
+
+</RouteEn>
+
 ## Chocolatey
 
 ### Software Update
@@ -52,6 +102,12 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 
 </RouteEn>
 
+## Ditto clipboard manager
+
+### Changes
+
+<RouteEn author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" :paramsDesc="['Type, `beta` is an option']"/>
+
 ## Docker Hub
 
 ### Image New Build
@@ -63,6 +119,12 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
 
 :::
+
+## Everything
+
+### Changes
+
+<RouteEn author="nczitzk" example="/everything/changes" path="/everything/changes"/>
 
 ## F-Droid
 
@@ -98,11 +160,21 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']"/>
 
+## ManicTime
+
+<RouteEn author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
+
 ## Microsoft Edge
 
 ### Addons Update
 
 <RouteEn author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['Addon id, can be found in addon url']"/>
+
+## Microsoft Store
+
+### Updates
+
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['`Share` - `Copy Link` in the Store', '`CN` as default']" />
 
 ## Minecraft
 
@@ -149,6 +221,36 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#playstation](/game.html#playstation)
 
+## QNAP
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" :paramsDesc="['OS id, see below']">
+
+| QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
+| --- | --------- | --------- | ------------------ | --- | --- | ------ |
+| qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
+
+</RouteEn>
+
+## QTTabBar
+
+### Change Log
+
+<RouteEn author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
+
+## RescueTime
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
+
+| Mac OS | Windows |
+| - | - |
+| mac | windows |
+
+</RouteEn>
+
 ## RSSHub
 
 ### New routes
@@ -157,7 +259,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New sponsors
 
-<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
 ## sketch.com
 
@@ -174,6 +276,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
+
+## Total Commander
+
+### What's New
+
+<RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
 ## Typora
 
@@ -192,3 +300,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Module Update
 
 <RouteEn author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>
+
+## XYplorer
+
+### What's New
+
+<RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>

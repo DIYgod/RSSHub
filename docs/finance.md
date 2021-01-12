@@ -62,6 +62,33 @@ pageClass: routes
 
 &lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
 
+## 金十数据
+
+<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+## 麦肯锡中国
+
+<Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">
+
+| 汽车  | 金融服务          | 数字化              | 消费者    | 医药与医疗                 | 麦肯锡全球研究院          | 全球基础材料 | 创新       | 宏观经济     | 制造业        | 人才与领导力      | 技术，媒体与通信             | 城市化与可持续发展          | 资本项目和基础设施              | 旅游、运输和物流 |
+| ----- | ----------------- | ------------------- | --------- | -------------------------- | ------------------------- | ------------ | ---------- | ------------ | ------------- | ----------------- | ---------------------------- | --------------------------- | ------------------------------- | ---------------- |
+| autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流   |
+
+</Route>
+
+## 上海证券交易所
+
+### 本所业务规则
+
+<Route author="nczitzk" example="/sse/sserules" path="/sse/sserules/:slug?" :paramsDesc="['见下文，默认为 latest']">
+
+将目标栏目的网址拆解为 `http://www.sse.com.cn/lawandrules/sserules/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+
+如：(最新规则)[http://www.sse.com.cn/lawandrules/sserules/latest] 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/sserules/latest`
+
+又如：(设立科创板并试点注册制规则 - 发行上市审核类)[http://www.sse.com.cn/lawandrules/sserules/tib/review] 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `tib/review`，则对应的 slug 为 `tib-review`，对应的路由即为 `/sse/sserules/tib-review`
+
+</Route>
+
 ## 世界经济论坛
 
 ### 报告
@@ -135,6 +162,38 @@ pageClass: routes
 | 公告         | 新闻 | 研报     |
 | ------------ | ---- | -------- |
 | announcement | news | research |
+
+</Route>
+
+## 证券时报网
+
+### 要闻
+
+<Route author="nczitzk" example="/stcn/news" path="/stcn/news/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+
+| 要闻 | 滚动 | 深度 | 评论 |
+| ---- | ---- | ---- | ---- |
+| news | gd   | sd   | pl   |
+
+</Route>
+
+### 数据
+
+<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
+
+| 数据 | 机器人新闻 |
+| ---- | ---------- |
+| data | jqrxw      |
+
+</Route>
+
+### 快讯
+
+<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+
+| 快讯 | e 公司 | 研报 | 时事 | 财经 |
+| ---- | ------ | ---- | ---- | ---- |
+|      | egs    | yb   | ss   | cj   |
 
 </Route>
 

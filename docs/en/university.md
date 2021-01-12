@@ -6,6 +6,10 @@ pageClass: routes
 
 ## MIT
 
+### MIT OCW Most popular courses of the month
+
+<RouteEn author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
+
 ### MIT graduateadmissions's all blogs
 
 <RouteEn author="LogicJake" example="/mit/graduateadmissions/index/all" path="/mit/graduateadmissions/index/all"/>
@@ -28,18 +32,18 @@ pageClass: routes
 
 ### College of Electrical and Computer Engineering News
 
-<RouteEn author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1"/>
+<RouteEn author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
 
 ### College of Information & Computer Sciences News
 
-<RouteEn author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1"/>
+<RouteEn author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
 
 ### International Programs Office
 
 #### Events
 
-<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1"/>
+<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
 
 #### Featured Stories
 
-<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1"/>
+<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>

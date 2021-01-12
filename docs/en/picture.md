@@ -40,11 +40,23 @@ pageClass: routes
 
 ### Daily Wallpaper
 
-<RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1"/>
+<RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
+
+## ComicsKingdom Comic Strips
+
+<RouteEn author="stjohnjohnson" example="/comicskingdom/baby-blues" path="/comicskingdom/:strip" :paramsDesc="['URL path of the strip on comicskingdom.com']" />
+
+## DailyArt
+
+<RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
 
 ## Dilbert Comic Strip
 
 <RouteEn name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip"/>
+
+## GoComics Comic Strips
+
+<RouteEn author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" :paramsDesc="['URL path of the strip on gocomics.com']" />
 
 ## Google Doodles
 
@@ -56,7 +68,7 @@ pageClass: routes
 
 ### Public Albums
 
-<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']" radar="1" />
+<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']" radar="1"/>
 
 ## Konachan Anime Wallpapers
 
