@@ -4,6 +4,102 @@ pageClass: routes
 
 # 音视频
 
+## 141JAV
+
+::: tip 提示
+
+官方提供的订阅源不支持 BT 下载订阅，地址为 <https://141jav.com/feeds/>
+
+:::
+
+### 141JAV BT
+
+<Route author="cgkings" example="/141jav/popular/30" path="/141jav/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
+
+**类型**
+
+| 最新 | 热门    | 随机   | 指定演员 | 指定标签 | 指定日期 |
+| ---- | ------- | ------ | -------- | -------- | -------- |
+| new  | popular | random | actress  | tag      | day      |
+
+**关键词**
+
+| 空 | 日期范围    | 演员名       | 标签名         | 日期     |
+| -- | ----------- | ------------ | -------------- | -------- |
+|    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
+
+**示例说明**
+
+-   `/141jav/new`
+
+    仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
+
+-   `/141jav/popular/30`
+
+    `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
+
+-   `/141jav/actress/Yua%20Mikami`
+
+    `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141jav.com/actress/) 演员单页链接中获取
+
+-   `/141jav/tag/Adult%20Awards`
+
+    `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141jav.com/tag/) 标签单页链接中获取
+
+-   `/141jav/day/20200730`
+
+    `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
+
+</Route>
+
+## 141PPV
+
+::: tip 提示
+
+官方提供的订阅源不支持 BT 下载订阅，地址为 <https://141ppv.com/feeds/>
+
+:::
+
+### 141PPV BT
+
+<Route author="cgkings" example="/141ppv/popular/30" path="/141ppv/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
+
+**类型**
+
+| 最新 | 热门    | 随机   | 指定演员 | 指定标签 | 指定日期 |
+| ---- | ------- | ------ | -------- | -------- | -------- |
+| new  | popular | random | actress  | tag      | day      |
+
+**关键词**
+
+| 空 | 日期范围    | 演员名       | 标签名         | 日期     |
+| -- | ----------- | ------------ | -------------- | -------- |
+|    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
+
+**示例说明**
+
+-   `/141ppv/new`
+
+    仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
+
+-   `/141ppv/popular/30`
+
+    `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
+
+-   `/141ppv/actress/Yua%20Mikami`
+
+    `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141ppv.com/actress/) 演员单页链接中获取
+
+-   `/141ppv/tag/Adult%20Awards`
+
+    `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141ppv.com/tag/) 标签单页链接中获取
+
+-   `/141ppv/day/20200730`
+
+    `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
+
+</Route>
+
 ## 2048 核基地
 
 ### 论坛更新
@@ -344,6 +440,18 @@ pageClass: routes
 
 <Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" :paramsDesc="['标签名称, 可参考`https://mqube.net/search/tag`']" radar="1" rssbud="1"/>
 
+## NEW 字幕组
+
+### 分类
+
+<Route author="nczitzk" example="/newzmz" path="/newzmz/:category?" :paramsDesc="['分类，见下表，默认为最近更新']">
+
+| 最近更新 | 剧集推荐 | 电影推荐 | 纪录片推荐 | 动画推荐 | 真人秀推荐 |
+| -------- | -------- | -------- | ---------- | -------- | ---------- |
+| 1        | 2        | 3        | 4          | 5        | 6          |
+
+</Route>
+
 ## Nyaa
 
 ### 搜索结果
@@ -494,6 +602,74 @@ pageClass: routes
 ### 动漫
 
 <Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
+
+## 哔嘀影视
+
+### 首页
+
+<Route author="nczitzk" example="/bde4" path="/bde4/:type?/:caty?/:area?/:year?/:order?" :paramsDesc="['资源分类，见下表，默认为 `all` 即不限', '影视类型，见下表，默认为 `all` 即不限','制片地区，见下表，默认为 `all` 即不限','上映时间，此处填写年份不小于2000，默认为 `all` 即不限','影视排序，见下表，默认为更新时间']">
+
+#### 资源分类
+
+| 不限 | 电影 | 电视剧 |
+| ---- | ---- | ------ |
+| all  | 0    | 1      |
+
+#### 影视类型
+
+| 不限 | 动作    | 爱情   | 喜剧 | 科幻   | 恐怖   |
+| ---- | ------- | ------ | ---- | ------ | ------ |
+| all  | dongzuo | aiqing | xiju | kehuan | kongbu |
+
+| 战争      | 武侠  | 魔幻   | 剧情   | 动画    | 惊悚     |
+| --------- | ----- | ------ | ------ | ------- | -------- |
+| zhanzheng | wuxia | mohuan | juqing | donghua | jingsong |
+
+| 3D | 灾难   | 悬疑   | 警匪    | 文艺  | 青春     |
+| -- | ------ | ------ | ------- | ----- | -------- |
+| 3D | zainan | xuanyi | jingfei | wenyi | qingchun |
+
+| 冒险    | 犯罪   | 纪录 | 古装     | 奇幻   | 国语  |
+| ------- | ------ | ---- | -------- | ------ | ----- |
+| maoxian | fanzui | jilu | guzhuang | qihuan | guoyu |
+
+| 综艺   | 历史  | 运动    | 原创压制   |
+| ------ | ----- | ------- | ---------- |
+| zongyi | lishi | yundong | yuanchuang |
+
+| 美剧  | 韩剧  | 国产电视剧 | 日剧 | 英剧   | 德剧 |
+| ----- | ----- | ---------- | ---- | ------ | ---- |
+| meiju | hanju | guoju      | riju | yingju | deju |
+
+| 俄剧 | 巴剧 | 加剧  | 西剧 | 意大利剧 | 泰剧  |
+| ---- | ---- | ----- | ---- | -------- | ----- |
+| eju  | baju | jiaju | xiju | yidaliju | taiju |
+
+| 港台剧    | 法剧 | 澳剧 |
+| --------- | ---- | ---- |
+| gangtaiju | faju | aoju |
+
+#### 制片地区
+
+| 大陆 | 中国香港 | 中国台湾 |
+| ---- | -------- | -------- |
+
+| 美国 | 英国 | 日本 | 韩国 | 法国 |
+| ---- | ---- | ---- | ---- | ---- |
+
+| 印度 | 德国 | 西班牙 | 意大利 | 澳大利亚 |
+| ---- | ---- | ------ | ------ | -------- |
+
+| 比利时 | 瑞典 | 荷兰 | 丹麦 | 加拿大 | 俄罗斯 |
+| ------ | ---- | ---- | ---- | ------ | ------ |
+
+#### 影视排序
+
+| 更新时间 | 豆瓣评分 |
+| -------- | -------- |
+| 0        | 1        |
+
+</Route>
 
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 

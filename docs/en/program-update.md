@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
 
+## AnyTXT
+
+### Release Notes
+
+<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+
 ## Apkpure
 
 ### Versions
@@ -163,6 +169,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 ### Addons Update
 
 <RouteEn author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['Addon id, can be found in addon url']"/>
+
+## Microsoft Store
+
+### Updates
+
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['`Share` - `Copy Link` in the Store', '`CN` as default']" />
 
 ## Minecraft
 

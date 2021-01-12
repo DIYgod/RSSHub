@@ -106,6 +106,35 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 更多配置项请看 [#配置](#pei-zhi)
 
+## Ansible 部署
+
+这个 Ansible playbook 包括了 RSSHub, Redis, browserless (依赖 Docker) 以及 Caddy 2
+
+目前只支持 Ubuntu 20.04
+
+需要 sudo 权限和虚拟化能力（Docker 将会被自动安装）
+
+### 安装
+
+```bash
+sudo apt update
+sudo apt install ansible
+git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# 当提示输入 domain name 的时候，输入该主机所使用的域名
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+```
+
+### 更新
+
+```bash
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# 当提示输入 domain name 的时候，输入该主机所使用的域名
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+```
+
 ## 手动部署
 
 部署 `RSSHub` 最直接的方式，您可以按照以下步骤将 `RSSHub` 部署在您的电脑、服务器或者其他任何地方
@@ -491,7 +520,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
         1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
         2.  打开控制台，切换到 Network 面板，刷新
-        3.  点击 dynamic_new 请求，找到 Cookie
+        3.  点击 dynamic_new 请求，找到 Cookie。(Key：`SESSDATA`)
 
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
@@ -574,6 +603,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `IG_USERNAME`: Instagram 用户名。
     -   `IG_PASSWORD`: Instagram 密码。
+    -   `IG_PROXY`: Instagram 代理 URL。
 
     注意，暂不支持两步验证。
 
@@ -619,3 +649,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `DIDA365_USERNAME`: 滴答清单用户名
     -   `DIDA365_PASSWORD`: 滴答清单密码
+
+-   知乎用户关注时间线
+
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.

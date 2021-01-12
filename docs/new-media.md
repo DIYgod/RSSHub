@@ -122,6 +122,10 @@ pageClass: routes
 
 ## CGTN
 
+### Opinions
+
+<Route author="nczitzk" example="/cgtn/opinions" path="/cgtn/opinions"/>
+
 ### Most Read & Most Share
 
 <Route author="nczitzk" example="/cgtn/most/read/day" path="/cgtn/most/:type?/:time?" :paramsDesc="['类型，`read` 指最多阅读，`share` 指最多分享，默认为 `read`', '时间，`all` 指所有时间，`day` 指今天，`week` 指本周，`month` 指本月，`year` 指今年，默认为 `all`']"/>
@@ -129,6 +133,10 @@ pageClass: routes
 ### Top News
 
 <Route author="nczitzk" example="/cgtn/top" path="/cgtn/top"/>
+
+### Editors' Pick
+
+<Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick"/>
 
 ## cnBeta
 
@@ -568,6 +576,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 ### 分类
 
 <Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
+
+## VOA News
+
+### Day in Photos
+
+<Route author="nczitzk" example="/voa/day-photos" path="/voa/day-photos"/>
 
 ## Vulture
 
@@ -1339,12 +1353,66 @@ column 为 third 时可选的 category:
 ### 首页
 
 <Route author="xyqfer" example="/laosiji/feed" path="/laosiji/feed"/>
-### 24小时热门
+
+### 24 小时热门
 
 <Route author="xyqfer" example="/laosiji/hot" path="/laosiji/hot"/>
+
 ### 节目
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
+
+## 留园网
+
+### 分站
+
+<Route author="nczitzk" example="/6park" path="/6park/:id?" :paramsDesc="['分站，见下表，默认为史海钩沉']">
+
+| 婚姻家庭 | 魅力时尚 | 女性频道 | 生活百态 | 美食厨房 | 非常影音 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| life9    | life1    | chan10   | life2    | life6    | fr       |
+
+| 车迷沙龙 | 游戏天地 | 卡通漫画 | 体坛纵横 | 运动健身 | 电脑前线 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| enter7   | enter3   | enter6   | enter5   | sport    | know1    |
+
+| 数码家电 | 旅游风向 | 摄影部落 | 奇珍异宝 | 笑口常开 | 娱乐八卦 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| chan6    | life7    | chan8    | page     | enter1   | enter8   |
+
+| 吃喝玩乐 | 文化长廊 | 军事纵横 | 百家论坛 | 科技频道 | 爱子情怀 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| netstar  | life10   | nz       | other    | chan2    | chan5    |
+
+| 健康人生 | 博论天下 | 史海钩沉 | 网际谈兵 | 经济观察 | 谈股论金 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| life5    | bolun    | chan1    | military | finance  | chan4    |
+
+| 杂论闲侃 | 唯美乐园 | 学习园地 | 命理玄机 | 宠物情缘 | 网络歌坛 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| pk       | gz1      | gz2      | gz3      | life8    | chan7    |
+
+| 音乐殿堂 | 情感世界 |
+| -------- | -------- |
+| enter4   | life3    |
+
+::: tip 提示
+
+酷 18 文档参见 [此处](https://docs.rsshub.app/picture.html#ku-18)
+
+禁忌书屋文档参见 [此处](https://docs.rsshub.app/reading.html#jin-ji-shu-wu)
+
+:::
+
+</Route>
+
+### 精华区
+
+<Route author="nczitzk" example="/6park/chan1/gold" path="/6park/:id/gold" :paramsDesc="['分站，见上表']"/>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/6park/chan1/keywords/都市" path="/6park/:id/keywords/:keyword?" :paramsDesc="['分站，见上表', '关键字']"/>
 
 ## 妈咪帮
 
@@ -1367,6 +1435,24 @@ column 为 third 时可选的 category:
 | 最新 | 推薦 | 熱門 |
 | ---- | ---- | ---- |
 | 1    | 2    | 3    |
+
+</Route>
+
+## 美国半导体行业协会
+
+### 新闻
+
+<Route author="nczitzk" example="/semiconductors/latest-news" path="/semiconductors/latest-news"/>
+
+## 美国大学和雇主协会
+
+### 博客
+
+<Route author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['排序，见下表，默认为 Most Recent']">
+
+| Most Recent | Top Rated | Most Read     |
+| ----------- | --------- | ------------- |
+|             | top-blogs | mostreadblogs |
 
 </Route>
 
@@ -1401,18 +1487,6 @@ column 为 third 时可选的 category:
 | 最新文章 | 行业快讯 | 行业观察 | 镁客请讲 | 硬科技 100 人 | 投融界   | 万象       |
 | -------- | -------- | -------- | -------- | ------------- | -------- | ---------- |
 | 默认空   | fresh    | industry | talk     | intech        | investor | everything |
-
-</Route>
-
-## 美国大学和雇主协会
-
-### 博客
-
-<Route author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['排序，见下表，默认为 Most Recent']">
-
-| Most Recent | Top Rated | Most Read     |
-| ----------- | --------- | ------------- |
-|             | top-blogs | mostreadblogs |
 
 </Route>
 
@@ -2028,6 +2102,22 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/interesting-sky/recent-interesting" path="/interesting-sky/recent-interesting"/>
 
+## 游戏葡萄
+
+无文章正文，仅有目录索引。
+
+### 全部文章
+
+<Route author="KotoriK" example="/gamegrape" path="/gamegrape/index"/>
+
+### 分类
+
+例子对应[深度分类](http://youxiputao.com/article/index/id/13)
+<Route author="KotoriK" example="/gamegrape/13" path="/gamegrape/:id?"/>
+
+## 鱼塘热榜
+
+<Route author="TheresaQWQ" example="/mofish/2" path="/mofish/:id" :paramsDesc="['分类id，可以在 https://api.tophub.fun/GetAllType 获取']" />
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
@@ -2085,6 +2175,18 @@ column 为 third 时可选的 category:
 ### 评论与特写
 
 <Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
+
+## 眾新聞
+
+### 眾聞
+
+<Route author="nczitzk" example="/hkcnews/news" path="/hkcnews/news/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 經濟 | 社會 | 生活 | 政治 | 國際 | 台灣 | 人物 | 中國 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|      | 13   | 15   | 14   | 12   | 16   | 20   | 21   | 19   |
+
+</Route>
 
 ## 装备前线
 
