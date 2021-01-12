@@ -36,4 +36,4 @@ pageClass: routes
 
 ### 文章
 
-<Route author="CitrusIce" example="/phrack" path="/phrack" />
+<RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
