@@ -34,6 +34,16 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
+## Gab
+
+### User's Posts
+
+<RouteEn author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" :paramsDesc="['Username']" />
+
+### Popular Posts
+
+<RouteEn author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" :paramsDesc="['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']" />
+
 ## Instagram
 
 ::: warning

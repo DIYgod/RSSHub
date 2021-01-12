@@ -320,6 +320,16 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']" anticrawler="1"/>
 
+## Gab
+
+### 用戶時間線
+
+<Route author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" :paramsDesc="['用戶名']" />
+
+### 熱門
+
+<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" :paramsDesc="['排序方式, `hot` 為 Hot Posts, `top` 為 Top Posts。默認為 hot']" />
+
 ## iCity
 
 ### 用户动态

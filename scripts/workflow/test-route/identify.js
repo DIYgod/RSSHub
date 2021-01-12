@@ -44,7 +44,7 @@ module.exports = async ({ github, context, core }, body, number) => {
         }
     }
 
-    core.info('seems no route found, failing');
+    core.warning('seems no route found, failing');
 
     await github.issues
         .addLabels({
@@ -52,6 +52,27 @@ module.exports = async ({ github, context, core }, body, number) => {
             owner: context.repo.owner,
             repo: context.repo.repo,
             labels: [noFound],
+        })
+        .catch((e) => {
+            core.warning(e);
+        });
+    await github.issues
+        .createComment({
+            issue_number: number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `自动检测失败, 请确认PR正文部分符合格式规范并重新开启, 详情请检查日志
+Auto Route test failed, please check your PR body format and reopen pull request. Check logs for more details`,
+        })
+        .catch((e) => {
+            core.warning(e);
+        });
+    await github.pulls
+        .update({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_nulber: number,
+            state: 'closed',
         })
         .catch((e) => {
             core.warning(e);
