@@ -440,6 +440,18 @@ pageClass: routes
 
 <Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" :paramsDesc="['标签名称, 可参考`https://mqube.net/search/tag`']" radar="1" rssbud="1"/>
 
+## NEW 字幕组
+
+### 分类
+
+<Route author="nczitzk" example="/newzmz" path="/newzmz/:category?" :paramsDesc="['分类，见下表，默认为最近更新']">
+
+| 最近更新 | 剧集推荐 | 电影推荐 | 纪录片推荐 | 动画推荐 | 真人秀推荐 |
+| -------- | -------- | -------- | ---------- | -------- | ---------- |
+| 1        | 2        | 3        | 4          | 5        | 6          |
+
+</Route>
+
 ## Nyaa
 
 ### 搜索结果
