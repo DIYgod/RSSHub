@@ -4,6 +4,12 @@ pageClass: routes
 
 # 编程
 
+## ACM
+
+### 图灵奖获得者
+
+<Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
+
 ## AI 研习社
 
 ### 首页
@@ -28,7 +34,7 @@ pageClass: routes
 
 ### TheBatch 周报
 
-<Route author="nczitzk" example="/deeplearning/thebatch" path="/deeplearning/thebatch"/>
+<Route author="nczitzk" example="/deeplearningai/thebatch" path="/deeplearningai/thebatch"/>
 
 ## Dockone
 
@@ -472,19 +478,25 @@ GitHub 官方也提供了一些 RSS:
 
 ### 沸点
 
-<Route author="xyqfer" example="/juejin/pins" path="/juejin/pins"/>
+<Route author="xyqfer laampui" example="/juejin/pins/6824710202487472141" :paramsDesc="['默认为 recommend，见下表']" path="/juejin/pins/:type?">
+
+| 推荐      | 热门 | 上班摸鱼            | 内推招聘            | 一图胜千言          | 今天学到了          | 每天一道算法题      | 开发工具推荐        | 树洞一下            |
+| --------- | ---- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
+| recommend | hot  | 6824710203301167112 | 6819970850532360206 | 6824710202487472141 | 6824710202562969614 | 6824710202378436621 | 6824710202000932877 | 6824710203112423437 |
+
+</Route>
 
 ### 专栏
 
-<Route author="Maecenas" example="/juejin/posts/56852b2460b2a099cdc1d133" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="Maecenas" example="/juejin/posts/3051900006845944" path="/juejin/posts/:id" :paramsDesc="['用户 id, 可在用户页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 收藏集
 
-<Route author="isQ" example="/juejin/collections/5791879979bc440066171bdb" path="/juejin/collections/:userId" :paramsDesc="['用户唯一标志符, 在浏览器地址栏URL中能够找到']"/>
+<Route author="isQ" example="/juejin/collections/1697301682482439" path="/juejin/collections/:userId" :paramsDesc="['用户唯一标志符, 在浏览器地址栏URL中能够找到']"/>
 
 ### 单个收藏夹
 
-<Route author="isQ" example="/juejin/collection/5cbf079df265da03462270f9" path="/juejin/collection/:collectionId" :paramsDesc="['收藏夹唯一标志符, 在浏览器地址栏URL中能够找到']"/>
+<Route author="isQ" example="/juejin/collection/6845243180586123271" path="/juejin/collection/:collectionId" :paramsDesc="['收藏夹唯一标志符, 在浏览器地址栏URL中能够找到']"/>
 
 ### 分享
 

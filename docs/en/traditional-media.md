@@ -20,6 +20,10 @@ Site
 
 ## AP News
 
+### Top Stories
+
+<RouteEn author="zphw" example="/apnews" path="/apnews" />
+
 ### Topics
 
 <RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1"/>
@@ -108,11 +112,58 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 </RouteEn>
 
+## ChinaFile
+
+### Reporting & Opinion
+
+<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['Category, by default `all`']">
+
+Generates full-text feeds that the official feed doesn't provide.
+
+| All | The China NGO Project |
+| --- | --------------------- |
+| all | ngo                   |
+
+</RouteEn>
+
+## Financial Times
+
+### myFT personal RSS
+
+<RouteEn author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" :paramsDesc="['the last part of myFT personal RSS address']">
+
+::: tip tips
+
+-   Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
+-   Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`
+
+:::
+
+</RouteEn>
+
 ## NHK
 
 ### News Web Easy
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+## Phoronix
+
+### News & Reviews
+
+<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" />
+
+## Radio Free Asia (RFA)
+
+<RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['language, English by default', 'channel', 'subchannel, where applicable']" />
+
+Delivers a better experience by supporting parameter specification. 
+
+Parameters can be obtained from the official website, for instance:
+
+`https://www.rfa.org/cantonese/news` corresponds to `/rfa/cantonese/news`
+
+`https://www.rfa.org/cantonese/news/htm` corresponds to `/rfa/cantonese/news/htm`
 
 ## Reuters
 
@@ -206,6 +257,16 @@ Provides a better reading experience (full text articles) over the official one.
 | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
 | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
 | (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+
+</RouteEn>
+
+## The Wall Street Journal (WSJ)
+
+### News
+
+<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw` are supported', 'Category, only supported in `en-us`. Supports `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`.']">
+
+Provide full article RSS for WSJ topics.
 
 </RouteEn>
 

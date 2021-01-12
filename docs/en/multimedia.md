@@ -6,9 +6,9 @@ pageClass: routes
 
 ## 60-Second Science - Scientific American
 
-### Transcript
+<RouteEn author="emdoe" example="/60s-science" path="/60s-science"/>
 
-<RouteEn author="emdoe" example="/60s-science/transcript" path="/60s-science/transcript"/>
+Full transcript support for better user experience.
 
 ## 99% Invisible
 
@@ -113,6 +113,6 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['User name']" />
 
-## Youtube
+## YouTube
 
 Refer to [#youtube](/en/social-media.html#youtube)

@@ -11,7 +11,7 @@
 
 ## Introduction
 
-RSSHub is an open source, easy to use, and extensible RSS feed aggregator, it's capable of generating RSS feeds from pretty much everything.
+RSSHub is an open source, easy to use, and extensible RSS feed generator. It's capable of generating RSS feeds from pretty much everything.
 
 RSSHub delivers millions of contents aggregated from all kinds of sources, our vibrant open source community is ensuring the deliver of RSSHub's new routes, new features and bug fixes.
 
@@ -32,7 +32,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 ### Special Sponsors
 
 <div>
-<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>
+<a href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://www.duohui.cn?utm_source=rsshub" title="多会 - 专业活动管理系统" target="_blank"><img height="60px" alt="多会" src="https://docs.duohui.cn/brand_source/img/std.svg"></a>
 </div>
 
 ### Sponsors
@@ -92,8 +92,8 @@ Recurring donors will be rewarded via express issue response, or even have your 
 
 We accept donations via the following ways:
 
--   [WeChat Pay](https://i.loli.net/2019/03/23/5c950ebbc373e.png)
--   [Alipay](https://i.loli.net/2019/03/23/5c950ebbc980e.png)
+-   [WeChat Pay](https://diygod.me/images/wx.jpg)
+-   [Alipay](https://diygod.me/images/zfb.jpg)
 -   [Paypal](https://www.paypal.me/DIYgod)
 
 ## Author
