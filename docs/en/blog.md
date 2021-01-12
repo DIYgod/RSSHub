@@ -34,6 +34,6 @@ pageClass: routes
 
 ## Phrack Magazine
 
-### 文章
+### Article
 
 <RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
