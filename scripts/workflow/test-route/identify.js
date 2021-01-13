@@ -71,7 +71,7 @@ Auto Route test failed, please check your PR body format and reopen pull request
         .update({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            pull_nulber: number,
+            pull_number: number,
             state: 'closed',
         })
         .catch((e) => {
