@@ -2200,6 +2200,10 @@ type 列表：
 
 <Route author="Colin-XKL" example="/cqut/news" path="/cqut/news" radar="1"/>
 
+### 图书馆通知
+
+<Route author="Colin-XKL" example="/cqut/libnews" path="/cqut/libnews" radar="1"/>
+
 ## 中山大学
 
 ### 数据科学与计算机学院动态
