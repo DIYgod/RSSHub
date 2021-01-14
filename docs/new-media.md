@@ -1755,6 +1755,18 @@ column 为 third 时可选的 category:
 
 <Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
 
+## 通識・現代中國
+
+### 議題熱話
+
+<Route author="nczitzk" example="/chiculture/topic" path="/chiculture/topic/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 現代中國 | 今日香港 | 全球化 | 一周時事通識 |
+| ---- | -------- | -------- | ------ | ------------ |
+|      | 76       | 479      | 480    | 379          |
+
+</Route>
+
 ## 推酷
 
 ### 周刊
