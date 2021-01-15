@@ -2590,4 +2590,21 @@
             },
         ],
     },
+    'cqut.edu.cn': {
+        _name: '重庆理工大学',
+        tz: [
+            {
+                title: '通知',
+                docs: 'https://docs.rsshub.app/university.html#chong-qing-li-gong-da-xue',
+                source: '/*',
+            },
+        ],
+        lib: [
+            {
+                title: '图书馆通知',
+                docs: 'https://docs.rsshub.app/university.html#chong-qing-li-gong-da-xue',
+                source: '/*',
+            },
+        ],
+    },
 });
