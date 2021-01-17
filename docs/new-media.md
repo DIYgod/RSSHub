@@ -684,6 +684,18 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
+## 半月谈
+
+### 时事大事库
+
+<Route author="nczitzk" example="/banyuetan/byt" path="/banyuetan/byt/:time?" :paramsDesc="['时间，见下表，默认为每周']">
+
+| 每周          | 每月  |
+| ------------- | ----- |
+| shishidashiku | yiyue |
+
+</Route>
+
 ## 報導者
 
 ### 最新
