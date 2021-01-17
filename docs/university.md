@@ -2172,6 +2172,18 @@ type 列表：
 
 </Route>
 
+## 重庆文理学院
+
+### 通知公告
+
+<Route author="Fatpandac" example="/cqwu/news/academiceve" path="/cqwu/news/:type?" :paramsDesc="['可选，默认为 academiceve ']" radar="1">
+
+| 通知公告 | 学术活动公告 |
+| ------- | ----------- |
+| notify  | academiceve |
+
+</Route>
+
 ## 重庆科技学院
 
 ### 教务处公告
