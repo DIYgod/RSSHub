@@ -283,3 +283,13 @@ Provide full article RSS for WSJ topics.
 | (Empty) | world | business | entertainment | sports | health |
 
 </RouteEn>
+
+## Yahoo! by Author
+
+### News
+
+<RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
+
+Provides all of the articles by the specified Yahoo! author.
+
+</RouteEn>
