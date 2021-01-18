@@ -2615,8 +2615,7 @@
                 docs: 'https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan',
                 source: '/:type',
                 target: (params) => {
-                    if (params.type === 'channel_7721.html')
-                    {
+                    if (params.type === 'channel_7721.html') {
                         return '/cqwu/news/notify';
                     }
                 },
@@ -2626,12 +2625,11 @@
                 docs: 'https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan',
                 source: '/:type',
                 target: (params) => {
-                    if (params.type === 'channel_7722.html')
-                    {
+                    if (params.type === 'channel_7722.html') {
                         return '/cqwu/news/academiceve';
                     }
                 },
             },
-        ]
+        ],
     },
 });
