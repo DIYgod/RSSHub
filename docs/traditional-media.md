@@ -304,6 +304,16 @@ Solidot 提供的 feed:
 
 </Route>
 
+## Yahoo! by Author
+
+### 新聞
+
+<RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
+
+Provides all of the articles by the specified Yahoo! author.
+
+</RouteEn>
+
 ## 半月谈
 
 ### 板块
