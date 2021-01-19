@@ -571,6 +571,14 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## Thrillist
+
+<RouteEn author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" :paramsDesc="['Tag']">
+
+Provides all of the Thrillist articles with the specified tag.
+
+</RouteEn>
+
 ## TOPYS
 
 ### 分类

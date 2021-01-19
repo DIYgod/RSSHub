@@ -350,6 +350,14 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+## Thrillist
+
+<RouteEn author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" :paramsDesc="['Tag']">
+
+Provides all of the Thrillist articles with the specified tag.
+
+</RouteEn>
+
 ## VOA News
 
 ### Day in Photos
