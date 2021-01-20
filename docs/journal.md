@@ -58,6 +58,16 @@ pageClass: routes
 
 </Route>
 
+## Deloitte
+
+<Route author="laampui" example="/deloitte/industries/consumer" path="/deloitte/industries/:category?" :paramsDesc="['默认为 energy-resources-industrials']">
+
+| 消费行业 | 能源、资源及工业行业         | 金融服务行业       | 政府及公共服务             | 生命科学与医疗行业       | 科技、传媒及电信行业                |
+| -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
+| consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
+
+</Route>
+
 ## elife
 
 ### 最新成果

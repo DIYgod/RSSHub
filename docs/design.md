@@ -122,6 +122,42 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
 
+## 优设网
+
+### 设计专题
+
+<Route author="nczitzk" example="/uisdc/zt/design-history" path="/uisdc/zt/:title?" :paramsDesc="['专题名称，可在标签页的 URL 中找到，如 `design-history`；也可填入 `hot` 展示最热门专题，默认展示最新鲜专题']">
+
+更多设计专题请参见 [优设专题](https://www.uisdc.com/zt)
+
+</Route>
+
+### 细节猎人
+
+<Route author="nczitzk" example="/uisdc/topic/all" path="/uisdc/topic/:title?/:sort?" :paramsDesc="['标签名称，可在标签页的 URL 中找到', '排序方式，`hot` 指最热门，默认为最新鲜']">
+
+更多细节标签请参见 [全部标签](https://www.uisdc.com/alltopics)
+
+</Route>
+
+### 设计话题
+
+<Route author="nczitzk" example="/uisdc/talk" path="/uisdc/talk/:sort?" :paramsDesc="['排序方式，`hot` 指最热门，默认为最新鲜']"/>
+
+### 行业新闻
+
+<Route author="nczitzk" example="/uisdc/hangye" path="/uisdc/hangye/:caty?" :paramsDesc="['分类，见下表，默认为全部新闻']">
+
+| 全部新闻 | 活动赛事        | 品牌资讯   | 新品推荐     |
+| -------- | --------------- | ---------- | ------------ |
+|          | events-activity | brand-news | new-products |
+
+</Route>
+
+### 优设读报
+
+<Route author="nczitzk" example="/uisdc/news" path="/uisdc/news"/>
+
 ## 站酷
 
 ### 推荐
@@ -157,5 +193,15 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 站酷的个人主页 `https://baiyong.zcool.com.cn` 对应 rss 路径 `/zcool/user/baiyong`
 
 站酷的个人主页 `https://www.zcool.com.cn/u/568339` 对应 rss 路径 `/zcool/user/568339`
+
+</Route>
+
+### 发现
+
+<Route author="nczitzk" example="/zcool/discovery" path="/zcool/discovery/:query?" :paramsDesc="['查询参数']" radar="1" rssbud="1">
+
+在 [发现页](https://www.zcool.com.cn/discover) 中选择查询参数后会跳转到对应搜索结果页面。此时地址栏 `https://www.zcool.com.cn/discover/` 后的字段即为查询参数。
+
+如：<https://www.zcool.com.cn/discover/0!0!0!0!0!!!!2!-1!1> 查询参数为 `0!0!0!0!0!!!!2!-1!1`
 
 </Route>
