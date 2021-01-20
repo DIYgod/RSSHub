@@ -308,11 +308,11 @@ Solidot 提供的 feed:
 
 ### 新聞
 
-<RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
+<Route author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
 
 Provides all of the articles by the specified Yahoo! author.
 
-</RouteEn>
+</Route>
 
 ## 半月谈
 
