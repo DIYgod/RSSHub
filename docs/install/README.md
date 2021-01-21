@@ -451,7 +451,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `REQUEST_RETRY`: 请求失败重试次数，默认 `2`
 
-`DEBUG_INFO`: 是否在首页显示路由信息，默认 `false`
+`DEBUG_INFO`: 是否在首页显示路由信息，默认 `true`
 
 `NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
 
