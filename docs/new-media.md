@@ -435,7 +435,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 首页
 
-<Route author="EsuRt" example="/mittrchina/article" path="/mittrchina"/>
+<Route author="EsuRt queensferryme" example="/mittrchina/hot" path="/mittrchina/:type" :paramsDesc="['类型 type，可以是 index（首页资讯）或 hot（本周热榜）']"/>
 
 ## Nautilus
 
