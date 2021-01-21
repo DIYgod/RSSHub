@@ -52,6 +52,9 @@ describe('debug', () => {
                 case 'Hot Paths:':
                     expect(value).toBe('3  /test/1<br>2  /test/2<br>2  /test/empty<br>1  /<br>');
                     break;
+                case 'Hot IP:':
+                    expect(value).toBe('5  233.233.233.233<br>3  233.233.233.234<br>');
+                    break;
                 case 'Hot Error Routes:':
                     expect(value).toBe('1  /test/:id<br>');
                     break;
