@@ -423,7 +423,7 @@ See the relation between access key/code and white/blacklisting.
 
 `REQUEST_RETRY`: retries allowed for failed requests, default to `2`
 
-`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `false`
+`DEBUG_INFO`: display route information on homepage for debugging purpose. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `false`
 
 `NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
 
