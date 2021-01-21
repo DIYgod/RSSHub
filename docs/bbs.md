@@ -189,6 +189,7 @@ pageClass: routes
 帖子网址如果为 <https://www.scboy.com/?thread-188673.htm> 那么帖子 tid 就是 `1789863`。
 
 访问水区需要添加环境变量 `SCBOY_BBS_TOKEN`, 详情见部署页面的配置模块。 `SCBOY_BBS_TOKEN`在 cookies 的`bbs_token`中。
+
 </Route>
 
 ## V2EX
@@ -259,7 +260,11 @@ pageClass: routes
 
 ### 虎扑 BBS 论坛
 
-<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
+<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']">
+
+此路由与旧的 `/hupu/bxj/:id/:order?` 等价，但推荐使用 `/hupu/bbs/:id/:order?`，旧路由可能会在未来被删除。
+
+</Route>
 
 ### 分类
 
