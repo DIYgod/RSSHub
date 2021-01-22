@@ -322,9 +322,10 @@
             {
                 title: '用户文章',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
-                source: '/people/:id/posts',
-                target: '/zhihu/people/posts/:id',
+                source: '/:usertype/:id/posts',
+                target: '/zhihu/posts/:usertype/:id',
             },
+
             {
                 title: '热榜',
                 docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
