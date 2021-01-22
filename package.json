@@ -102,7 +102,7 @@
     "markdown-it": "12.0.4",
     "module-alias": "2.2.2",
     "opencc": "1.1.1",
-    "parse-torrent": "9.1.0",
+    "parse-torrent": "9.1.1",
     "pidusage": "2.0.21",
     "plist": "3.0.1",
     "puppeteer": "5.5.0",

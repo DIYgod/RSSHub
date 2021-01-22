@@ -9739,10 +9739,10 @@ parse-json@^5.0.0:
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
 
-parse-torrent@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.1.0.tgz#41cc544b0cba3b50f0e1cc6fffc1dcbd8e5ca5c9"
-  integrity sha512-TVht2kv44bTHEd55KgmfEHyDh5djIBZMhaD6uFWnxLhJWUXy8lrIOsjPSs4Tfzs9PTGIgGM0k+UG6CFphHgOZQ==
+parse-torrent@9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.1.1.tgz#01bbaba8151412b25d3fc0c9b10512cf2dda7e4d"
+  integrity sha512-QQePPIN0cX6bEjwAT6x2o5fUgOsz2SwXlZqzz2uvt12+uiCrgU4WYAsy3wEthQWLZQpn1utMbSbHCRDvjAnhMA==
   dependencies:
     bencode "^2.0.1"
     blob-to-buffer "^1.2.9"
