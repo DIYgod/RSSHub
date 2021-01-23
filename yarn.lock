@@ -4259,10 +4259,10 @@ cssstyle@^2.2.0:
   dependencies:
     cssom "~0.3.6"
 
-currency-symbol-map@4.0.4:
-  version "4.0.4"
-  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-4.0.4.tgz#3cfba625974dd3f86822d327ecbd10248695e95e"
-  integrity sha512-hkSCCopJXVsvIZIiumJc6FoNXR5LQ646c3ufzF0yfv3155PYygysHw24JuzPSg4j86EFpvtgeX+vEhzRtcJ5Ag==
+currency-symbol-map@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-5.0.0.tgz#21aa9bceeea48009f50107e89286a014fa5ec215"
+  integrity sha512-CmGlRRdd16+6CY7zbDoHaLdQvOM51e3EE5zL0l5REI2mIjpgp4wYirzNFxmcsNLpL99gtsVcA9XoeYNHoHKE8g==
 
 cyclist@~0.2.2:
   version "0.2.2"
