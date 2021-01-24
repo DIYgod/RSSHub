@@ -28,7 +28,7 @@ Site
 
 ### BBC
 
-<RouteEn author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+<RouteEn author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
 Provides a better reading experience (full text articles) over the official ones.
 

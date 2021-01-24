@@ -34,7 +34,7 @@ pageClass: routes
 
 ### BBC 英文
 
-<Route author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道，缺省为热门']">
+<Route author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道，缺省为热门']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
