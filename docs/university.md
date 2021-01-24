@@ -1636,7 +1636,7 @@ type 列表：
 
 ### 信息门户公告
 
-<Route author="SweetDumpling" example="/wtu/2" path="/wtu/:type"
+<Route author="Loyio" example="/wtu/2" path="/wtu/:type"
 :paramsDesc="['公告类型, 详见表格']">
 
 | 公告类型 | 通知公告 | 教务信息 | 科研动态 |
