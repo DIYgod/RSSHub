@@ -19,8 +19,8 @@ module.exports = async ({ github, context, core }, body, number) => {
             .catch((e) => {
                 core.warning(e);
             });
-    
-     if (whiteListedUser.includes(context.payload.sender.login)) {
+
+    if (whiteListedUser.includes(context.payload.sender.login)) {
         core.info('PR created by a whitelisted user, passing');
         await removeLabel();
         await github.issues
@@ -40,7 +40,7 @@ module.exports = async ({ github, context, core }, body, number) => {
         res = m[1].trim().split('\r\n');
         core.info(`routes detected: ${res}`);
 
-        if ((res.length > 0 && res[0] === 'NOROUTE')) {
+        if (res.length > 0 && res[0] === 'NOROUTE') {
             core.info('PR stated no route, passing');
             await removeLabel();
             await github.issues
