@@ -217,6 +217,12 @@ pageClass: routes
 
 </Route>
 
+## 中国庭审公开网
+
+### 开庭信息
+
+<Route author="Fatpandac" example="/tingshen" path="/tingshen"/>
+
 ## 中国信息通信研究院
 
 ### 白皮书
