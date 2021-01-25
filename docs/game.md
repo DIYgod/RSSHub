@@ -432,22 +432,6 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn"/>
 
-## 篝火营地
-
-### 游戏资讯
-
-<Route author="sintak" example="/gouhuo/news/switch" path="/gouhuo/news/:category" :paramsDesc="['资讯类型']">
-
-| 精选       | 海外     | 原创    | PS4 | Xboxone | PC | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
-| ---------- | -------- | ------- | --- | ------- | -- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
-| choiceness | overseas | orignal | ps4 | xboxone | pc | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
-
-</Route>
-
-### 游戏攻略
-
-<Route author="sintak" example="/gouhuo/strategy" path="/gouhuo/strategy"/>
-
 ## 怪物猎人世界
 
 ### 更新情报

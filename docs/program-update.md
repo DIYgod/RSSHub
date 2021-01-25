@@ -418,12 +418,6 @@ pageClass: routes
 
 <Route author="mrbruce516" example="/tesla" path="/tesla/update"/>
 
-## 腾讯柠檬 Lab
-
-### 柠檬精选 Mac Apps
-
-<Route author="HenryQW" example="/tencent/lemon" path="/tencent/lemon"/>
-
 ## 腾讯云移动直播 SDK
 
 ### 更新日志

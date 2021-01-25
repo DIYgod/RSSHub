@@ -1936,10 +1936,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 数读
-
-<Route author="laampui" example="/netease/news/data" path="/netease/news/data"/>
-
 ## 维基百科
 
 ### 中国大陆新闻动态
