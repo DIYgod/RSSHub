@@ -59,7 +59,7 @@
     "remark-preset-prettier": "0.4.0",
     "staged-git-files": "1.2.0",
     "string-width": "4.2.0",
-    "supertest": "6.0.1",
+    "supertest": "6.1.3",
     "vuepress": "1.8.0",
     "yorkie": "2.0.0"
   },
