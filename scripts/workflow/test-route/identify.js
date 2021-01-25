@@ -19,7 +19,7 @@ module.exports = async ({ github, context, core }, body, number) => {
             .catch((e) => {
                 core.warning(e);
             });
-    
+
      if (whiteListedUser.includes(context.payload.sender.login)) {
         core.info('PR created by a whitelisted user, passing');
         await removeLabel();
