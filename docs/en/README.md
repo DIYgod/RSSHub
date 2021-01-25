@@ -25,7 +25,7 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 
 ### Special Sponsors
 
-<a style="margin-right: 10px;" href="https://sa.net/" target="_blank"><img height="60px" src="https://i.imgur.com/zlYlVaK.png"></a><a style="margin-right: 10px;" href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>
+<a style="margin-right: 10px;" href="https://sa.net/" target="_blank"><img height="60px" src="https://i.imgur.com/3rM8nWI.png"></a><a style="margin-right: 10px;" href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>
 
 ### Sponsors
 

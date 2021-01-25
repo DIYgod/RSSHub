@@ -32,7 +32,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 ### Special Sponsors
 
 <div>
-<a href="https://sa.net/" target="_blank"><img height="60px" src="https://i.imgur.com/zlYlVaK.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>
+<a href="https://sa.net/" target="_blank"><img height="60px" src="https://i.imgur.com/3rM8nWI.png"></a>&nbsp;&nbsp;&nbsp;<a href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>
 </div>
 
 ### Sponsors
