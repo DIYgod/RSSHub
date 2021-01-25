@@ -23,7 +23,7 @@ module.exports = async ({ github, context, core }, body, number) => {
         res = m[1].trim().split('\r\n');
         core.info(`routes detected: ${res}`);
 
-        if ((res.length > 0 && res[0] === 'NOROUTE') || context.payload.sender.login === 'dependabot-preview') {
+        if ((res.length > 0 && res[0] === 'NOROUTE') || context.payload.sender.login === 'dependabot-preview[bot]') {
             core.info('PR stated no route, passing');
             await removeLabel();
             await github.issues
