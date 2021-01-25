@@ -336,6 +336,10 @@ R18 显示
 | ------ | ---------- | ---------- |
 | pic    | top        | top-4h     |
 
+### 首页
+
+<Route author="lonelykid" example="/jandan/article" path="/jandan/article"/>
+
 ## 绝对领域
 
 ### 图集文章
