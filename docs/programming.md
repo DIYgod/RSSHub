@@ -93,6 +93,20 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1" rssbud="1"/>
 
+### Topics
+
+<Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" :paramsDesc="['名称，可以在相关 [Topics 页](https://github.com/topics/framework) URL 中找到', '过滤规则，形如 `l=php&o=desc&s=stars`，详见下表']" radar="1" rssbud="1">
+
+| 参数名 | 描述     | 可选值                                                                                    |
+| ------ | -------- | ----------------------------------------------------------------------------------------- |
+| `l`    | 编程语言 | 例如 `php`，可以在相关 [Topics 页](https://github.com/topics/framework?l=php) URL 中找到  |
+| `o`    | 排序方法 | `asc`（升序）<br>`desc`（降序）                                                           |
+| `s`    | 排序标准 | `stars`（按 star 数量排序）<br>`forks`（按 fork 数量排序）<br>`updated`（按更新日期排序） |
+
+例如 `/github/topics/framework/l=php&o=desc&s=stars` 会生成对应[此页面](https://github.com/topics/framework?l=php&o=desc&s=stars)的 RSS。
+
+</Route>
+
 ### 仓库 Issues
 
 <Route author="HenryQW AndreyMZ" example="/github/issue/DIYgod/RSSHub/open/RSS%20wanted" path="/github/issue/:user/:repo/:state?/:labels?" :paramsDesc="['用户名', '仓库名', 'issue 状态，可选`open`,`closed`或`all`，默认为`open`', '标签列表，以逗号分隔']" radar="1" rssbud="1"/>
