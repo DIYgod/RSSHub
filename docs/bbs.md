@@ -498,7 +498,7 @@ pageClass: routes
 
 ### 用户帖子
 
-<Route author="humpylin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" />
+<Route author="igxlin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" />
 
 用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
 
