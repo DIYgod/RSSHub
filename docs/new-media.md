@@ -1900,7 +1900,8 @@ column 为 third 时可选的 category:
 ## 网易号（通用）
 
 优先使用方法一，若是网易号搜索页面搜不到的小众网易号（文章页面不含`data-wemediaid`）则可使用此法。
-<Route author="mjysci" example="netease/dy2/T1555591616739" path="/netease/dy2/:id" :paramsDesc="['id，该网易号主页网址最后一项html的文件名']"/> 
+触发反爬会只抓取到标题，建议自建。
+<Route author="mjysci" example="/netease/dy2/T1555591616739" path="/netease/dy2/:id" :paramsDesc="['id，该网易号主页网址最后一项html的文件名']" anticrawler="1"/> 
 
 ## 网易新闻
 
