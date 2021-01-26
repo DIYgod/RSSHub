@@ -249,6 +249,12 @@
                 target: '/github/trending/:since',
             },
             {
+                title: 'Trending',
+                docs: 'https://docs.rsshub.app/programming.html#github',
+                source: '/topics',
+                target: '/github/topics/:name/:qs?',
+            },
+            {
                 title: '仓库 Issue',
                 docs: 'https://docs.rsshub.app/programming.html#github',
                 source: ['/:user/:repo/issues', '/:user/:repo/issues/:id', '/:user/:repo'],
