@@ -88,15 +88,7 @@ pageClass: routes
 
 ## WordPress
 
-<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?/:cdn?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`', '用https协议的cdn链接代理http图片，见下表']"/>
-
-| cdn    | url                                      |
-| ------ | ---------------------------------------- |
-| 0      | <https://imageproxy.pimg.tw/resize?url=> |
-| 1      | <https://images.weserv.nl/?url=>         |
-| 2      | <https://pic1.xuehuaimg.com/proxy/>      |
-| 3      | <https://cors.netnr.workers.dev/>        |
-| 自定义 | 需要 urlencode                           |
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?/:cdn?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`', '用 https 协议的 cdn 链接代理 http 图片;使用 WORDPRESS_CDN 环境变量自定义']"/>
 
 ## 阿里云系统组技术博客
 

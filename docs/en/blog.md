@@ -37,3 +37,8 @@ pageClass: routes
 ### Article
 
 <RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
+
+## WordPress
+
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?/:cdn?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http`或`https`', 'use cdn to proxy http image urls. Customize CDN used with WORDPRESS_CDN environment variable']"/>
+
