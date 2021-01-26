@@ -104,6 +104,35 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 To configure more options please refer to [Configuration](#configuration).
 
+# Ansible Deployment
+
+This Ansible playbook includes RSSHub, Redis, browserless (uses Docker) and Caddy 2
+
+Currently only support Ubuntu 20.04
+
+Requires sudo privilege and virtualization capability (Docker will be automatically installed)
+
+### Install
+
+```bash
+sudo apt update
+sudo apt install ansible
+git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# When prompt to enter a domain name, enter the domain name that this machine/VM will use
+# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+```
+
+### Update
+
+```bash
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# When prompt to enter a domain name, enter the domain name that this machine/VM will use
+# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+```
+
 ## Manual Deployment
 
 The most direct way to deploy `RSSHub`, you can follow the steps below to deploy`RSSHub` on your computer, server or anywhere.
@@ -333,6 +362,9 @@ Partial routes have a strict anti-crawler policy, and can be configured to use p
 `PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
+### CORS Request
+
+RSSHub by default reject CORS requests. This behavior can be modified via setting `ALLOW_ORIGIN: *` or `ALLOW_ORIGIN: www.example.com`.
 
 ### User Authentication Configurations
 
@@ -391,7 +423,7 @@ See the relation between access key/code and white/blacklisting.
 
 `REQUEST_RETRY`: retries allowed for failed requests, default to `2`
 
-`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
+`DEBUG_INFO`: display route information on homepage for debugging purpose. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `true`
 
 `NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
 
@@ -462,6 +494,7 @@ See docs of specified route and `lib/config.js` for detail information.
 
     -   `IG_USERNAME`: Your Instagram username
     -   `IG_PASSWORD`: Your Instagram password
+    -   `IG_PROXY`: Proxy URL for Instagram
 
     Warning: Two Factor Authentication is *not* supported.
 

@@ -106,6 +106,35 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 更多配置项请看 [#配置](#pei-zhi)
 
+## Ansible 部署
+
+这个 Ansible playbook 包括了 RSSHub, Redis, browserless (依赖 Docker) 以及 Caddy 2
+
+目前只支持 Ubuntu 20.04
+
+需要 sudo 权限和虚拟化能力（Docker 将会被自动安装）
+
+### 安装
+
+```bash
+sudo apt update
+sudo apt install ansible
+git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# 当提示输入 domain name 的时候，输入该主机所使用的域名
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+```
+
+### 更新
+
+```bash
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# 当提示输入 domain name 的时候，输入该主机所使用的域名
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+```
+
 ## 手动部署
 
 部署 `RSSHub` 最直接的方式，您可以按照以下步骤将 `RSSHub` 部署在您的电脑、服务器或者其他任何地方
@@ -372,6 +401,10 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码，默认为 `passw0rd`，请务必修改
 
+### 跨域请求
+
+RSSHub 默认对跨域请求限制为当前连接所在的域名，即不允许跨域。可以通过 `ALLOW_ORIGIN: *` 或者 `ALLOW_ORIGIN: www.example.com` 以对跨域访问进行修改。
+
 ### 访问控制配置
 
 RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
@@ -418,7 +451,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `REQUEST_RETRY`: 请求失败重试次数，默认 `2`
 
-`DEBUG_INFO`: 是否在首页显示路由信息，默认 `true`
+`DEBUG_INFO`: 是否在首页显示路由信息。值为非 `true` `false` 时，在请求中带上参数 `debug` 开启显示，例如：<https://rsshub.app/?debug=value_of_DEBUG_INFO> 。默认 `true`
 
 `NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
 
@@ -487,7 +520,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
         1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
         2.  打开控制台，切换到 Network 面板，刷新
-        3.  点击 dynamic_new 请求，找到 Cookie
+        3.  点击 dynamic_new 请求，找到 Cookie。(Key：`SESSDATA`)
 
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
@@ -520,8 +553,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
 -   MiniFlux 全部路由：
-    -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的[付费服务地址](https://reader.miniflux.app)
-    -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取
+    -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的 [付费服务地址](https://reader.miniflux.app)
+    -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API 密钥` -> `创建一个新的 API 密钥` 处获取
 
 -   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
 
@@ -570,6 +603,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `IG_USERNAME`: Instagram 用户名。
     -   `IG_PASSWORD`: Instagram 密码。
+    -   `IG_PROXY`: Instagram 代理 URL。
 
     注意，暂不支持两步验证。
 
@@ -610,3 +644,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         1.  在 4399 首页登录。
         2.  打开开发者工具，切换到 Network 面板，刷新
         3.  查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.
+
+-   滴答清单
+
+    -   `DIDA365_USERNAME`: 滴答清单用户名
+    -   `DIDA365_PASSWORD`: 滴答清单密码
+
+-   知乎用户关注时间线
+
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.

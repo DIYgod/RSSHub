@@ -25,7 +25,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Special Sponsors
 
-<a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img alt="rixCloud" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rixcloud.png"></a><a style="margin-right: 10px;" href="https://km.bytell.cn/wxcollect" target="_blank"><img alt="知拾收藏" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/bytell.png"></a><a href="https://www.duohui.cn?utm_source=rsshub" title="多会 - 专业活动管理系统" style="margin-right:10px;" target="_blank"><img height="60px" alt="多会" src="https://docs.duohui.cn/brand_source/img/std.svg"></a>
+<a style="margin-right: 10px;" href="https://sa.net/" target="_blank"><img alt="Riven Cloud" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rivencloudd.png"></a><a style="margin-right: 10px;" href="https://km.bytell.cn/wxcollect" target="_blank"><img alt="知拾收藏" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/bytell.png"></a>
 
 ### Sponsors
 

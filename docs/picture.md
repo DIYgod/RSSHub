@@ -66,6 +66,10 @@ pageClass: routes
 | ---- | --------- | ------ |
 | hot  | recommend | recent |
 
+## DailyArt 每日艺术
+
+<Route author="zphw" example="/dailyart/zh" path="/dailyart/:language?" :paramsDesc="['语言，支持 en, zh, jp 等，默认为 en']" />
+
 ## Dilbert Comic Strip
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
@@ -332,13 +336,9 @@ R18 显示
 | ------ | ---------- | ---------- |
 | pic    | top        | top-4h     |
 
-### 妹子图
+### 首页
 
-<Route author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
-
-| 妹子图 | 妹子图热榜 |
-| ------ | ---------- |
-| ooxx   | top-ooxx   |
+<Route author="lonelykid" example="/jandan/article" path="/jandan/article"/>
 
 ## 绝对领域
 
@@ -349,6 +349,42 @@ R18 显示
 | 图集 | 文章 |
 | ---- | ---- |
 | tuji | as   |
+
+## 酷 18
+
+### 分站
+
+<Route author="nczitzk" example="/cool18" path="/cool18/:id?" :paramsDesc="['分站，见下表，默认为禁忌书屋']">
+
+| 性趣贴图 | 色色动漫 | 情色靓影 | 私房自拍 | 禁忌书屋 | 性趣论坛 | 情色无忌 | 成人影视 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| bbs      | bbs7     | bbs2     | bbs6     | bbs4     | bj       | bbs5     | bbs3     |
+
+::: tip 提示
+
+留园网文档参见 [此处](https://docs.rsshub.app/new-media.html#liu-yuan-wang)
+
+禁忌书屋文档参见 [此处](https://docs.rsshub.app/reading.html#jin-ji-shu-wu)
+
+:::
+
+</Route>
+
+### 精华区
+
+<Route author="nczitzk" example="/cool18/bbs/gold" path="/cool18/:id/gold" :paramsDesc="['分站，见上表，默认为禁忌书屋']"/>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
+
+### 妹子图
+
+<Route author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+
+| 妹子图 | 妹子图热榜 |
+| ------ | ---------- |
+| ooxx   | top-ooxx   |
 
 ## 妹子图
 

@@ -34,6 +34,16 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
+## Gab
+
+### User's Posts
+
+<RouteEn author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" :paramsDesc="['Username']" />
+
+### Popular Posts
+
+<RouteEn author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" :paramsDesc="['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']" />
+
 ## Instagram
 
 ::: warning
@@ -46,7 +56,7 @@ If you don't want to setup credentials, use Picuki.
 
 ### User Profile
 
-<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category. Only user category is supported for now.','Key for such category. E.g. username/ID for user feed']" radar="1"/>
+<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category. Only user category is supported for now.','Key for such category. E.g. username/ID for user feed']" radar="1" anticrawler="1"/>
 
 ## Lofter
 

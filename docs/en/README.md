@@ -25,7 +25,7 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 
 ### Special Sponsors
 
-<a style="margin-right: 10px;" href="https://rixcloud.app/rsshub" target="_blank"><img height="60px" src="https://i.imgur.com/TrgP3S1.png"></a><a style="margin-right: 10px;" href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a><a href="https://www.duohui.cn?utm_source=rsshub" title="多会 - 专业活动管理系统" style="margin-right:10px;" target="_blank"><img height="60px" alt="多会" src="https://docs.duohui.cn/brand_source/img/std.svg"></a>
+<a style="margin-right: 10px;" href="https://sa.net/" target="_blank"><img height="60px" src="https://i.imgur.com/3rM8nWI.png"></a><a style="margin-right: 10px;" href="https://km.bytell.cn/wxcollect" target="_blank"><img height="60px" src="https://i.imgur.com/7sNM1yi.png"></a>
 
 ### Sponsors
 

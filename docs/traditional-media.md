@@ -8,7 +8,7 @@ pageClass: routes
 
 ### 频道
 
-<Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在[https://m.21jingji.com/](https://m.21jingji.com/)页面URL中找到']"/>
+<Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" :paramsDesc="['频道名称，可在 [https://m.21jingji.com/](https://m.21jingji.com/) 页面 URL 中找到']"/>
 
 ## ABC News
 
@@ -34,11 +34,11 @@ pageClass: routes
 
 ### BBC 英文
 
-<Route author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道, 缺省为热门']">
+<Route author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道，缺省为热门']">
 
-通过提取文章全文，以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-支持大部分频道，频道名称见[BBC 官方 RSS](https://www.bbc.co.uk/news/10628494)。
+支持大部分频道，频道名称见 [BBC 官方 RSS](https://www.bbc.co.uk/news/10628494)。
 
 -   频道为单一路径，如 `https://feeds.bbci.co.uk/news/business/rss.xml` 则为 `/bbc/business`.
 -   频道包含多重路径，如 `https://feeds.bbci.co.uk/news/world/asia/rss.xml` 则替换 `/` 为 `-` `/bbc/world-asia`.
@@ -47,11 +47,11 @@ pageClass: routes
 
 ### BBC 中文网
 
-<Route author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['简体或繁体','频道, 缺省为热门']">
+<Route author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['简体或繁体','频道，缺省为热门']">
 
-通过提取文章全文，以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-支持大部分频道，频道名称见[BBC 中文网官方 RSS](https://www.bbc.com/zhongwen/simp/services/2009/09/000000_rss)。
+支持大部分频道，频道名称见 [BBC 中文网官方 RSS](https://www.bbc.com/zhongwen/simp/services/2009/09/000000_rss)。
 
 简体版：
 
@@ -87,7 +87,7 @@ pageClass: routes
 <Route author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['目录分类', '子分类']">
 
 相比官方 RSS，多提供全文。
-目录分类[见其网站](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html)。例如，`https://www.chicagotribune.com/arcio/rss/category/nation-world/` 对应的 RSSHub 路由是 `/chicagotribune/nation-world`。由于官方源的部分路由有两级，因此这里也相应需要填写子分类。
+目录分类 [见其网站](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html)。例如，`https://www.chicagotribune.com/arcio/rss/category/nation-world/` 对应的 RSSHub 路由是 `/chicagotribune/nation-world`。由于官方源的部分路由有两级，因此这里也相应需要填写子分类。
 
 </Route>
 
@@ -109,33 +109,46 @@ pageClass: routes
 
 <Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
 
-## FT 中文网
+## Financial Times
 
 ### FT 中文网
 
-<Route author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道, 缺省为每日更新']">
+<Route author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道，缺省为每日更新']">
 
 ::: tip 提示
 
--   不支持付费文章.
--   由于未知原因 FT 中文网的 SSL 证书不被信任 (参见[SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取.
+-   不支持付费文章。
+-   由于未知原因 FT 中文网的 SSL 证书不被信任 （参见 [SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取。
 
 :::
 
-通过提取文章全文，以提供比官方源更佳的阅读体验.
+通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-支持所有频道，频道名称见[官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
+支持所有频道，频道名称见 [官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
 
 -   频道为单一路径，如 `http://www.ftchinese.com/rss/news` 则为 `/ft/chinese/news`.
 -   频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
 
 </Route>
 
+### myFT 个人 RSS
+
+<Route author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" :paramsDesc="['myFT 个人 RSS 地址末尾的字符串']">
+
+::: tip 提示
+
+-   在 ft.com -> myFT -> Contact Preferences 中开启个人 RSS feed，见 [官方说明](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
+-   从 RSS 地址结尾的字符串中获取 key，格式为 `12345678-abcd-4036-82db-vdv20db024b8`
+
+:::
+
+</Route>
+
 ## i-CABLE 有線新聞
 
-<Route author="tpnonthealps" example="/icable/all" path="/icable/:category/:option?" :paramsDesc="['栏目', '选项（不指定时预设为「全文输出 (含题图)」的 `withphoto` ）']">
+<Route author="tpnonthealps" example="/icable/all" path="/icable/:category/:option?" :paramsDesc="['栏目', '选项（不指定时预设为「全文输出 （含题图）」的 `withphoto` ）']">
 
-细则:
+细则：
 
 -   `:category` 栏目参数：
 
@@ -149,23 +162,47 @@ pageClass: routes
 -   `:option?` 可开启的选项：
 
     -   `plain`: 全文输出（纯文字）
-    -   `withphoto`: 全文输出 (含题图) **(不指定 `:option?` 时将预设为此项)**
+    -   `withphoto`: 全文输出 （含题图） **（不指定 `:option?` 时将预设为此项）**
 
--   全文输出转换为简体字: `?opencc=t2s`  
-    (`opencc` 是 RSSHub 的通用参数，详情请参阅[「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+-   全文输出转换为简体字：`?opencc=t2s`  
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
 
 </Route>
+
 ## NHK
 
 ### News Web Easy
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Phoronix
+
+### 新闻与评测
+
+<Route author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['页面', '对 `category` 页面是分类项目 `item`，对其它页面是主题 `q`，可以在网站顶部导航栏各项目链接里找出。如 `https://www.phoronix.com/scan.php?page=category&item=Computers` 对应 `/phoronix/category/Computers`']" />
+
+## RTHK 傳媒透視
+
+<Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
+
+细则: 
+
+-   `:range` 时间范围参数  
+    (可为 `latest` 或 `四位数字的年份`)
+
+    -   `latest`: 最新的 50 篇文章
+    -   `2020`: 2020 年的所有文章
+
+-   全文输出转换为简体字: `?opencc=t2s`  
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+
+</Route>
+
 ## Solidot
 
 ### 最新消息
 
-<Route author="sgqy" example="/solidot/linux" path="/solidot/:type?" :paramsDesc="['消息类型. 默认为 www. 在网站上方选择后复制子域名即可']">
+<Route author="sgqy" example="/solidot/linux" path="/solidot/:type?" :paramsDesc="['消息类型。默认为 www. 在网站上方选择后复制子域名即可']">
 
 ::: tip 提示
 
@@ -185,7 +222,7 @@ Solidot 提供的 feed:
 
 ### News
 
-<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?/:keyword?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限', '搜索关键字']">
+<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限']">
 
 可选分类如下
 
@@ -200,6 +237,24 @@ Solidot 提供的 feed:
 [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
 
 :::
+
+</Route>
+
+### Search
+
+<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" :paramsDesc="['关键词', '公司名，默认为不限', '排序，见下表，默认为 Date Descending', '发表在时间段内，默认为 12 months']">
+
+排序
+
+| Date Ascending | Date Descending |
+| -------------- | --------------- |
+| 1              | 2               |
+
+发表在时间段内
+
+| 1 month | 3 months | 6 months | 12 months | 24 months |
+| ------- | -------- | -------- | --------- | --------- |
+| 1       | 3        | 6        | 12        | 24        |
 
 </Route>
 
@@ -227,6 +282,26 @@ Solidot 提供的 feed:
 
 <Route author="emdoe" example="/udn/global/鏡頭背後" path="/udn/global/:tid" :paramsDesc="['標籤名稱，請在轉角國際首頁獲取；如果選擇輸入 `newest` 則輸出最新文章']">
 
+## Voice of America (VOA)
+
+透過提取全文，以獲得更好的閱讀體驗
+
+<Route author="zphw" example="/voa/cantonese/zprtie-ttp" path="/voa/:language/:channel?" :paramsDesc="['語言','頻道，可於官網獲取']">
+
+`语言`
+
+| 粵語      | 中文    | 藏語    |
+| --------- | ------- | ------- |
+| cantonese | chinese | tibetan |
+
+`频道`
+
+可於各語言官網聚合新聞處 (如 <https://www.voacantonese.com/rssfeeds>) 獲取
+
+例如 `https://www.voacantonese.com/api/zyrtyequty` 將對應 `/voa/cantonese/zyrtyequty`
+
+</Route>
+
 ## Yahoo
 
 ### 新聞
@@ -243,7 +318,17 @@ Solidot 提供的 feed:
 
 | 新聞總集 | 兩岸國際 | 財經     | 娛樂          | 體育   | 健康   |
 | -------- | -------- | -------- | ------------- | ------ | ------ |
-| (空)     | world    | business | entertainment | sports | health |
+| （空）   | world    | business | entertainment | sports | health |
+
+</Route>
+
+## Yahoo! by Author
+
+### 新聞
+
+<Route author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
+
+Provides all of the articles by the specified Yahoo! author.
 
 </Route>
 
@@ -261,25 +346,25 @@ Solidot 提供的 feed:
 
 ## 财新网
 
-> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容.
+> 网站部分内容需要付费订阅，RSS 仅做更新提醒，不含付费内容。
 
 ### 新闻分类
 
 <Route author="idealclover" example="/caixin/finance/regulation" path="/caixin/:column/:category" :paramsDesc="['栏目名', '栏目下的子分类名']">
 
-Column 列表:
+Column 列表：
 
 | 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
 | ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
 | economy | finance | china | science | international | opinion | culture | weekly |
 
-以金融板块为例的 category 列表: （其余 column 以类似方式寻找）
+以金融板块为例的 category 列表：（其余 column 以类似方式寻找）
 
 | 监管       | 银行 | 证券基金 | 信托保险        | 投资       | 创新       | 市场   |
 | ---------- | ---- | -------- | --------------- | ---------- | ---------- | ------ |
 | regulation | bank | stock    | insurance_trust | investment | innovation | market |
 
-Category 列表:
+Category 列表：
 
 | 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
 | ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
@@ -290,6 +375,14 @@ Category 列表:
 ### 首页新闻
 
 <Route author="EsuRt"  example="/caixin/article" path="/caixin/article"/>
+
+### 最新文章
+
+<Route author="tpnonthealps" example="/caixin/latest" path="/caixin/latest">
+
+说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。
+
+</Route>
 
 ## 第一财经
 
@@ -331,7 +424,7 @@ Category 列表:
 
 <Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
-Type 栏目:
+Type 栏目：
 
 | 最新   | 深度    | What’s New | 广场              | 科技       | 风物    | 特约    | ... |
 | ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
@@ -343,11 +436,11 @@ Type 栏目:
 
 ### 话题・标签
 
-<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题ID，可从话题页URL中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题 ID，可从话题页 URL 中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
 ### 作者
 
-<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="theinitium/author/:type/:language?" :paramsDesc="['作者ID，可从作者主页URL中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="theinitium/author/:type/:language?" :paramsDesc="['作者 ID，可从作者主页 URL 中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
 
 ### 个人订阅追踪动态
 
@@ -438,7 +531,7 @@ category 对应的关键词有
 
 ### 即时新闻
 
-<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类, 缺省为 china']">
+<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类，缺省为 china']">
 
 | 中国  | 新加坡    | 国际  | 财经     |
 | ----- | --------- | ----- | -------- |
@@ -448,7 +541,7 @@ category 对应的关键词有
 
 ### 新闻
 
-<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类, 缺省为 china']">
+<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类，缺省为 china']">
 
 | 中国  | 新加坡    | 东南亚 | 国际  | 体育   | 早报现在 |
 | ----- | --------- | ------ | ----- | ------ | -------- |
@@ -484,19 +577,19 @@ category 对应的关键词有
 
 -   中国分站 `cn`：
 
-    -   主频道:
+    -   主频道：
 
     | 深度分析 | 时事要闻    | 生活 | 投资      |
     | -------- | ----------- | ---- | --------- |
     | analyses | generalnews | life | investing |
 
-    -   资讯子频道:
+    -   资讯子频道：
 
     | 中国财经 | 国际财经              | 新闻人物  | 财经视点 |
     | -------- | --------------------- | --------- | -------- |
     | china    | internationalbusiness | newsmaker | opinions |
 
-    -   专栏子频道:
+    -   专栏子频道：
 
     | 中国财经专栏 | 国际财经专栏 | 大宗商品专栏 |
     | ------------ | ------------ | ------------ |
@@ -504,7 +597,7 @@ category 对应的关键词有
 
 -   美国分站 `us`：
 
-    -   主频道:
+    -   主频道：
 
     | Business | Markets | World | Politics | Tech       | Breakingviews | Wealth | Life      |
     | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
@@ -512,7 +605,7 @@ category 对应的关键词有
 
 -   英国分站 `uk`：
 
-    -   主频道:
+    -   主频道：
 
     | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
     | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
@@ -530,9 +623,9 @@ category 对应的关键词有
 
 ### 新闻分类
 
-<Route author="ranpox xyqfer" example="/infzm/2" path="/infzm/:id" :paramsDesc="['南方周末内容分区 id, 可在该内容分区的 URL 中找到(即 https://www.infzm.com/contents?term_id=:id)']">
+<Route author="ranpox xyqfer" example="/infzm/2" path="/infzm/:id" :paramsDesc="['南方周末内容分区 id, 可在该内容分区的 URL 中找到（即 https://www.infzm.com/contents?term_id=:id)']">
 
-下面给出部分参考:
+下面给出部分参考：
 
 | 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -546,7 +639,7 @@ category 对应的关键词有
 
 <Route author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['栏目分类']">
 
-栏目分类对应的数字编号见[官方 RSS](https://www.scmp.com/rss)。相比官方提供的 RSS，多提供了全文输出。
+栏目分类对应的数字编号见 [官方 RSS](https://www.scmp.com/rss)。相比官方提供的 RSS，多提供了全文输出。
 
 </Route>
 
@@ -554,13 +647,13 @@ category 对应的关键词有
 
 ### 新闻
 
-<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言, 缺省中文']">
+<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言，缺省中文']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| 默认中文 | 中英对照 | 英文 | 中英对照 (繁体中文)     | 繁体中文           |
+| 默认中文 | 中英对照 | 英文 | 中英对照 （繁体中文）   | 繁体中文           |
 | -------- | -------- | ---- | ----------------------- | ------------------ |
-| (空)     | dual     | en   | dual-traditionalchinese | traditionalchinese |
+| （空）   | dual     | en   | dual-traditionalchinese | traditionalchinese |
 
 </Route>
 
@@ -618,21 +711,21 @@ category 对应的关键词有
 
 ### 观点
 
-<Route author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
+<Route author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
 
 ### 环保频道
 
-<Route author="zsimple"  example="/people/env/74877" path="/people/env/:id" :paramsDesc="['板块id，可在 URL 中找到']"/>
+<Route author="zsimple"  example="/people/env/74877" path="/people/env/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
 
 ### 习近平系列重要讲话
 
-<Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认all']"/>
+<Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认 all']"/>
 
 ## 人民日报社 国际金融报
 
 ### 栏目
 
-<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目ID']">
+<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
 
 `cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
 
@@ -650,7 +743,7 @@ category 对应的关键词有
 
 ### 新聞
 
-<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块','文章类型，free仅无料全文，缺省为无料全文、有料非全文']">
+<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块','文章类型，free 仅无料全文，缺省为无料全文、有料非全文']">
 
 综合页文章标题添加板块标签
 
@@ -688,7 +781,7 @@ category 对应的关键词有
 
 ### 分类
 
-<Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名, 可在该分类的 URL 中找到(即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
+<Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名，可在该分类的 URL 中找到（即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
 
 ## 香港 01
 
@@ -698,19 +791,19 @@ category 对应的关键词有
 
 ### 栏目
 
-<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目id, 可在URL中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 子栏目
 
-<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目id, 可在URL中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 专题
 
-<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题id, 可在URL中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 标签
 
-<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签id, 可在URL中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 香港電台
 
@@ -732,11 +825,11 @@ category 对应的关键词有
 
 ### 栏目
 
-<Route author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名, 点击对应栏目后在地址栏找到']"/>
+<Route author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" :paramsDesc="['新京报的栏目名，点击对应栏目后在地址栏找到']"/>
 
 ### 电子报
 
-<Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`,特刊为`special`']"/>
+<Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`, 特刊为`special`']"/>
 
 ## 新浪科技
 
@@ -780,7 +873,7 @@ category 对应的关键词有
 
 ### 新闻专题
 
-<Route author="nczitzk" example="/cctv-special/315" path="/cctv-special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15晚会']">
+<Route author="nczitzk" example="/cctv-special/315" path="/cctv-special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']">
 
 ::: tip 提示
 
@@ -937,3 +1030,15 @@ category 对应的关键词有
 ### 九江新闻
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
+
+## 自由亚洲电台
+
+<Route author="zphw" example="/rfa/mandarin" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['语言，默认 English', '频道', '子频道（如存在）']" />
+
+通过指定频道参数，提供比官方源更佳的阅读体验。
+
+参数均可在官网获取，如：
+
+`https://www.rfa.org/cantonese/news` 对应 `/rfa/cantonese/news`
+
+`https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`

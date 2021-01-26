@@ -190,11 +190,32 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
-## 观止（每日一文）
-
 ## 归档
 
 <Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
+
+## 禁忌书屋
+
+### 首页
+
+<Route author="nczitzk" example="/cool18/bbs4" path="/cool18/bbs4"/>
+
+### 精华区
+
+<Route author="nczitzk" example="/cool18/bbs4/gold" path="/cool18/bbs4/gold"/>
+
+### 栏目分类
+
+<Route author="nczitzk" example="/cool18/bbs4/type/都市" path="/cool18/bbs4/type/:keyword?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 都市 | 校园 | 乡野 | 古风 | 异国 | 玄幻 | 红杏 | 伦理 | 浪漫 | 暴虐 | 摄心 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/cool18/bbs4/keywords/都市" path="/cool18/bbs4/keywords/:keyword?" :paramsDesc="['关键字']"/>
 
 ## 孔夫子旧书网
 
