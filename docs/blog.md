@@ -88,7 +88,17 @@ pageClass: routes
 
 ## WordPress
 
-<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?/:cdn?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`', '用 https 协议的 cdn 链接代理 http 图片;使用 WORDPRESS_CDN 环境变量自定义']"/>
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
+
+可通过`WORDPRESS_CDN`定义链接，替换 http 图片链接为 https 链接，可供考虑的服务有:
+
+| url                                      | backbone     |
+| ---------------------------------------- | ------------ |
+| <https://imageproxy.pimg.tw/resize?url=> | akamai       |
+| <https://images.weserv.nl/?url=>         | cloudflare   |
+| <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
+| <https://cors.netnr.workers.dev/>        | cloudflare   |
+| <https://netnr-proxy.openode.io/>        | digitalocean |
 
 ## 阿里云系统组技术博客
 
