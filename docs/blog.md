@@ -90,16 +90,6 @@ pageClass: routes
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
-可通过`WORDPRESS_CDN`定义链接，替换 http 图片链接为 https 链接，可供考虑的服务有:
-
-| url                                      | backbone     |
-| ---------------------------------------- | ------------ |
-| <https://imageproxy.pimg.tw/resize?url=> | akamai       |
-| <https://images.weserv.nl/?url=>         | cloudflare   |
-| <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
-| <https://cors.netnr.workers.dev/>        | cloudflare   |
-| <https://netnr-proxy.openode.io/>        | digitalocean |
-
 ## 阿里云系统组技术博客
 
 ### 首页
