@@ -351,8 +351,6 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `REDIS_URL`: Redis 连接地址（redis 缓存类型时有效），默认为 `redis://localhost:6379/`
 
-`REDIS_PASSWORD`: Redis 连接密码（redis 缓存类型时有效）
-
 ### 代理配置
 
 部分路由反爬严格，可以配置使用代理抓取。

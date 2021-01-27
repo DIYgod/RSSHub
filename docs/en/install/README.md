@@ -347,8 +347,6 @@ RSSHub supports two caching methods: memory and redis
 
 `REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
 
-`REDIS_PASSWORD`: Redis password（invalid when `CACHE_TYPE` is set to memory)
-
 ### Proxy Configurations
 
 Partial routes have a strict anti-crawler policy, and can be configured to use proxy
