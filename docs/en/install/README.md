@@ -522,3 +522,15 @@ See docs of specified route and `lib/config.js` for detail information.
 -   Sci-hub for scientific journal routes:
 
     -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.se`.
+
+-   Wordpress:
+    -   `WORDPRESS_CDN`: Proxy http image link with https link. Consider using:
+
+        | url                                      | backbone     |
+        | ---------------------------------------- | ------------ |
+        | https://imageproxy.pimg.tw/resize?url=   | akamai       |
+        | https://images.weserv.nl/?url=           | cloudflare   |
+        | https://pic1.xuehuaimg.com/proxy/        | cloudflare   |
+        | https://cors.netnr.workers.dev/          | cloudflare   |
+        | https://netnr-proxy.openode.io/          | digitalocean |
+

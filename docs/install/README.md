@@ -654,3 +654,15 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
+
+-   Wordpress
+
+    -   `WORDPRESS_CDN`: 用于中转 http 图片链接。可供考虑的服务见下表：
+
+        | url                                      | backbone     |
+        | ---------------------------------------- | ------------ |
+        | <https://imageproxy.pimg.tw/resize?url=> | akamai       |
+        | <https://images.weserv.nl/?url=>         | cloudflare   |
+        | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
+        | <https://cors.netnr.workers.dev/>        | cloudflare   |
+        | <https://netnr-proxy.openode.io/>        | digitalocean |
