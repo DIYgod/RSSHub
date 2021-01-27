@@ -575,6 +575,18 @@ pageClass: routes
 
 <Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
 
+## 中华人民共和国人力资源和社会保障部
+
+### 社保减免
+
+<Route author="ncziztk" example="/gov/mohrss/sbjm" path="/gov/mohrss/sbjm/:category?" :paramsDesc="['分类，见下表']">
+
+| 要点新闻 | 政策文件 | 工作动态 | 媒体报道 | 图片新闻 |
+| -------- | -------- | -------- | -------- | -------- |
+| ydxw     | zcwj     | gzdt     | mtbd     | tpxw     |
+
+</Route>
+
 ## 中华人民共和国商务部
 
 ### 政务公开
