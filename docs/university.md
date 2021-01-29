@@ -966,11 +966,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 马萨诸塞大学 阿默斯特分校 (UMASS Amherst)
+## 麻省大学 阿默斯特分校 (UMASS Amherst)
 
-### 电子与计算机工程系新闻
+### 电子与计算机工程系
+
+#### 新闻
 
 <Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
+
+#### 研讨会
+
+<Route author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
 
 ### 信息与计算机科学系新闻
 

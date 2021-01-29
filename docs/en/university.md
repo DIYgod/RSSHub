@@ -30,9 +30,15 @@ pageClass: routes
 
 ## UMASS Amherst
 
-### College of Electrical and Computer Engineering News
+### College of Electrical and Computer Engineering
+
+#### News
 
 <RouteEn author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
+
+#### Seminar
+
+<RouteEn author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
 
 ### College of Information & Computer Sciences News
 
