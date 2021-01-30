@@ -919,7 +919,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 专辑（输出 ShowNote）
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146/0/1" path="/ximalaya/album/:id/:all/:shownote?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true` 视为获取']" supportPodcast="1" selfhost="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/album/:id/:all/:shownote?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']" supportPodcast="1" selfhost="1">
 
 </Route>
 
