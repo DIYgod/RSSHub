@@ -859,6 +859,12 @@ pageClass: routes
 
 </Route>
 
+## 深影译站
+
+### 最新作品
+
+<Route author="nczitzk" example="/shinybbs/latest" path="/shinybbs/latest" />
+
 ## 腾讯视频
 
 ### 播放列表
