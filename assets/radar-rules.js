@@ -2165,6 +2165,12 @@
                 source: '/news',
                 target: '/umass/amherst/ecenews',
             },
+            {
+                title: 'ECE Seminar',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/seminars',
+                target: '/umass/amherst/eceseminar',
+            },
         ],
         'www.cics': [
             {
