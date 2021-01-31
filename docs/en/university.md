@@ -40,6 +40,8 @@ pageClass: routes
 
 <RouteEn author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
 
+Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's no upcoming seminars. This is normal and will cause rsshub fail to fetch this feed.
+
 ### College of Information & Computer Sciences News
 
 <RouteEn author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
