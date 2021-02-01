@@ -449,6 +449,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `REQUEST_RETRY`: 请求失败重试次数，默认 `2`
 
+`REQUEST_TIMEOUT`: 请求超时毫秒数，默认 `3000`
+
 `DEBUG_INFO`: 是否在首页显示路由信息。值为非 `true` `false` 时，在请求中带上参数 `debug` 开启显示，例如：<https://rsshub.app/?debug=value_of_DEBUG_INFO> 。默认 `true`
 
 `NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
@@ -460,6 +462,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 `PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
+
+`SENTRY_ROUTE_TIMEOUT`: 路由耗时超过此毫秒值上报 Sentry，默认 `3000`
 
 `DISALLOW_ROBOT`: 阻止搜索引擎收录，默认开启，设置 false 或 0 关闭
 
