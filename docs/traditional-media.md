@@ -903,6 +903,10 @@ category 对应的关键词有
 
 <Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
 
+### 央视网图片《镜象》
+
+<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" />
+
 ## 朝日新聞中文網（繁體中文版）
 
 ### 新聞分類
