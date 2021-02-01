@@ -111,6 +111,18 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 </RouteEn>
 
+## King Arthur
+
+### Baking
+
+<RouteEn author="loganrockmore" example="/kingarthur/story" path="/instapaper/:category">
+
+| Story | Recipes | Tips and Techniques |
+| ----- | ------- | ------------------- |
+| story | recipes | tips-and-techniques |
+
+</RouteEn>
+
 ## MITRE
 
 ### All Publications
