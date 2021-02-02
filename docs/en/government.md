@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# Goverment
+# Government
 
 ## Central Intelligence Agency
 
