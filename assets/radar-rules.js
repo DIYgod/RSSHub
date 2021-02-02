@@ -123,6 +123,17 @@
             },
         ],
     },
+    'weibo.cn': {
+        _name: '微博',
+        'm': [
+            {
+                title: '博主',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
+                source: ['/u/:uid', '/profile/:uid'],
+                target: '/weibo/user/:uid',
+            }
+        ]
+    },
     'pixiv.net': {
         _name: 'Pixiv',
         www: [
