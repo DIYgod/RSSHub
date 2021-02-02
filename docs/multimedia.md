@@ -861,6 +861,20 @@ pageClass: routes
 
 ## 深影译站
 
+### 首页
+
+<Route author="nczitzk" example="/shinybbs" path="/shinybbs" />
+
+### 剧集类型
+
+<Route author="nczitzk" example="/shinybbs/62" path="/shinybbs/:id?" :paramsDesc="['类型 id，见下表']">
+
+| 英美剧 | 日韩剧 | 小语种 |
+| ------ | ------ | ------ |
+| 62     | 140    | 2      |
+
+</Route>
+
 ### 最新作品
 
 <Route author="nczitzk" example="/shinybbs/latest" path="/shinybbs/latest" />
