@@ -758,7 +758,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 热门搜索
 
-<Route author="nczitzk" example="/tianyancha/hot" path="/tianyancha/hot"/>
+<Route author="nczitzk" example="/tianyancha/hot" path="/tianyancha/hot" anticrawler="1"/>
 
 ## 无讼案例
 
