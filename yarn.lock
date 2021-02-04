@@ -10572,10 +10572,10 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-7.0.0.tgz#be25ebf53edc1ecc09cb40af4a15f21fd1d38637"
-  integrity sha512-YNzucQMH7rKJAeISy9RB1nI72EMShlbT9vGT3E6UqElzOC4OuhFdIa3oirV4/57d/YIK5KO6qLM6UroCcyOVhw==
+puppeteer@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-7.0.1.tgz#de0c2602e27bf9b12d7540aae52d6ed121a81884"
+  integrity sha512-04V05BKQdloUCOa7JyQBaNXPIiVByz1eAFAElcrpMHIQkfu22J0RKFhRWkXZGXdl03yoHuaZwqyB/qG7YJu5Ew==
   dependencies:
     debug "^4.1.0"
     devtools-protocol "0.0.847576"
