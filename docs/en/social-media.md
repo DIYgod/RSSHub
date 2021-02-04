@@ -264,6 +264,12 @@ Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a re
 
 ### Channel
 
+::: tip
+
+YouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.
+
+:::
+
 <RouteEn path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
 ### Playlist
