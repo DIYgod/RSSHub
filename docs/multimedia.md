@@ -879,6 +879,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/shinybbs/latest" path="/shinybbs/latest" />
 
+### 指定剧集
+
+<Route author="nczitzk" example="/shinybbs/p/1790" path="/shinybbs/p/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
+
 ## 腾讯视频
 
 ### 播放列表
