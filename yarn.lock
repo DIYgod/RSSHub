@@ -6797,10 +6797,10 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-ioredis@4.20.0:
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.20.0.tgz#dae12b6f6dcbfc2ce59fd073a18af8e1ee1126c3"
-  integrity sha512-UQt662u4/n+9jIWKHcszAA7TaiXCOCc/kVX2QbnVzrtNiCTg2DVQBY4jte6MfbVwZXxAkWHHBFSDlR2wcnCiVA==
+ioredis@4.21.0:
+  version "4.21.0"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.21.0.tgz#763ee176cb0be31b94edc3202786aa7a5ae5004a"
+  integrity sha512-+JFMyRqN56DsEj2OTKp+dukEGv1AmPOvieE1S8rB2czRZFpnAS7HGhHm5/KUa+HoajJdmz14wu7cdv48xL9e0g==
   dependencies:
     cluster-key-slot "^1.1.0"
     debug "^4.1.1"
@@ -6808,7 +6808,7 @@ ioredis@4.20.0:
     lodash.defaults "^4.2.0"
     lodash.flatten "^4.4.0"
     p-map "^2.1.0"
-    redis-commands "1.6.0"
+    redis-commands "1.7.0"
     redis-errors "^1.2.0"
     redis-parser "^3.0.0"
     standard-as-callback "^2.0.1"
@@ -10806,10 +10806,10 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-redis-commands@1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.6.0.tgz#36d4ca42ae9ed29815cdb30ad9f97982eba1ce23"
-  integrity sha512-2jnZ0IkjZxvguITjFTrGiLyzQZcTvaw8DAaCXxZq/dsHXz7KfMQ3OUJy7Tz9vnRtZRVz6VRCPDvruvU8Ts44wQ==
+redis-commands@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.7.0.tgz#15a6fea2d58281e27b1cd1acfb4b293e278c3a89"
+  integrity sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==
 
 redis-errors@^1.0.0, redis-errors@^1.2.0:
   version "1.2.0"
