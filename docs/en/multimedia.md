@@ -78,7 +78,7 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Users
 
-<RouteEn author="I2IMk queensferryme" example="/pornhub/users/0maru0" path="/pornhub/:language?/users/:username" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/users/0maru0`']" />
+<RouteEn author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`']" />
 
 ### Verified amateur / Model
 
