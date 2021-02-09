@@ -10488,10 +10488,10 @@ proxy-agent@^4.0.0:
     proxy-from-env "^1.0.0"
     socks-proxy-agent "^5.0.0"
 
-proxy-from-env@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.0.0.tgz#33c50398f70ea7eb96d21f7b817630a55791c7ee"
-  integrity sha1-M8UDmPcOp+uW0h97gXYwpVeRx+4=
+proxy-from-env@^1.0.0, proxy-from-env@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
+  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
 prr@~1.0.1:
   version "1.0.1"
@@ -10577,10 +10577,10 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-7.0.1.tgz#de0c2602e27bf9b12d7540aae52d6ed121a81884"
-  integrity sha512-04V05BKQdloUCOa7JyQBaNXPIiVByz1eAFAElcrpMHIQkfu22J0RKFhRWkXZGXdl03yoHuaZwqyB/qG7YJu5Ew==
+puppeteer@7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-7.0.3.tgz#07375e80de6bb0703ab5461672ba99f386661d1c"
+  integrity sha512-fm3hANYhcDB9JTfOb6eNCYOv0qIypIC857Bk6zd3Xr1uXlqvg53SOeDAlLG9ne9DsUGb5qDs+hDrlB+3Zjw6ag==
   dependencies:
     debug "^4.1.0"
     devtools-protocol "0.0.847576"
@@ -10589,7 +10589,7 @@ puppeteer@7.0.1:
     node-fetch "^2.6.1"
     pkg-dir "^4.2.0"
     progress "^2.0.1"
-    proxy-from-env "^1.0.0"
+    proxy-from-env "^1.1.0"
     rimraf "^3.0.2"
     tar-fs "^2.0.0"
     unbzip2-stream "^1.3.3"
