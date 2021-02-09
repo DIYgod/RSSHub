@@ -53,9 +53,9 @@
         {{ /if }}
 
         {{ if $e.content }}
-        <content type="html" src="{{ $e.link }}"><![CDATA[{{@ $e.content.html || $e.content.text }}]]></content>
+        <content type="html" src="{{ $e.link }}">{{ $e.content.html || $e.content.text }}</content>
         {{ else if $e.description }}
-        <content type="html" src="{{ $e.link }}"><![CDATA[{{@ $e.description }}]]></content>
+        <content type="html" src="{{ $e.link }}">{{ $e.description }}</content>
         {{ /if }}
 
         {{ if typeof $e.category === 'string' }}

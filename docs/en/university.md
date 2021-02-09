@@ -30,9 +30,17 @@ pageClass: routes
 
 ## UMASS Amherst
 
-### College of Electrical and Computer Engineering News
+### College of Electrical and Computer Engineering
+
+#### News
 
 <RouteEn author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
+
+#### Seminar
+
+<RouteEn author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
+
+Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's no upcoming seminars. This is normal and will cause rsshub fail to fetch this feed.
 
 ### College of Information & Computer Sciences News
 
