@@ -9733,15 +9733,16 @@ parse-json@^5.0.0:
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
 
-parse-torrent@9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.1.0.tgz#41cc544b0cba3b50f0e1cc6fffc1dcbd8e5ca5c9"
-  integrity sha512-TVht2kv44bTHEd55KgmfEHyDh5djIBZMhaD6uFWnxLhJWUXy8lrIOsjPSs4Tfzs9PTGIgGM0k+UG6CFphHgOZQ==
+parse-torrent@9.1.3:
+  version "9.1.3"
+  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.1.3.tgz#9b4bc8dca243b356bf449938d6d38a259a2a707c"
+  integrity sha512-/Yr951CvJM8S6TjMaqrsmMxeQEAjDeCX+MZ3hGXXc7DG2wqzp/rzOsHtDzIVqN6NsFRCqy6wYLF/W7Sgvq7bXw==
   dependencies:
     bencode "^2.0.1"
     blob-to-buffer "^1.2.9"
     get-stdin "^8.0.0"
     magnet-uri "^6.0.0"
+    queue-microtask "^1.2.2"
     simple-get "^4.0.0"
     simple-sha1 "^3.0.1"
 
@@ -10653,10 +10654,10 @@ querystringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.1.1.tgz#60e5a5fd64a7f8bfa4d2ab2ed6fdf4c85bad154e"
   integrity sha512-w7fLxIRCRT7U8Qu53jQnJyPkYZIaR4n5151KMfcJlO/A9397Wxb1amJvROTK6TOnp7PfoAmg/qXiNHI+08jRfA==
 
-queue-microtask@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.1.2.tgz#139bf8186db0c545017ec66c2664ac646d5c571e"
-  integrity sha512-F9wwNePtXrzZenAB3ax0Y8TSKGvuB7Qw16J30hspEUTbfUM+H827XyN3rlpwhVmtm5wuZtbKIHjOnwDn7MUxWQ==
+queue-microtask@^1.1.2, queue-microtask@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.2.tgz#abf64491e6ecf0f38a6502403d4cda04f372dfd3"
+  integrity sha512-dB15eXv3p2jDlbOiNLyMabYg1/sXvppd8DP2J3EOCQ0AkuSXCW2tP7mnVouVLJKgUMY6yP0kcQDVpLCN13h4Xg==
 
 quick-lru@^5.1.1:
   version "5.1.1"
