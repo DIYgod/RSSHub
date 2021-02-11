@@ -60,7 +60,7 @@ pageClass: routes
 
 ### 搜索关键字
 
-&lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
+<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
 
 ## 金十数据
 
@@ -74,6 +74,22 @@ pageClass: routes
 | autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流   |
 
 </Route>
+
+## 每经网
+
+### 分类
+
+<Route author="nczitzk" example="/nbd" path="/nbd/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+
+| 头条 | 要闻 | 图片新闻 | 推荐 |
+| ---- | ---- | -------- | ---- |
+| 2    | 3    | 4        | 5    |
+
+</Route>
+
+### 重磅原创
+
+<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily"/>
 
 ## 上海证券交易所
 
