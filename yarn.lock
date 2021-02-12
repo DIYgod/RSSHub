@@ -1691,10 +1691,10 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa@*", "@types/koa@2.11.7":
-  version "2.11.7"
-  resolved "https://registry.yarnpkg.com/@types/koa/-/koa-2.11.7.tgz#3b38f3b9faa66315a84890a771d166fb36463100"
-  integrity sha512-1iXJZZWCePoMe9LGSIPWsu5k5RI4ooXijW78c+nljMn3YbUts8PXoEESu1OeFmrazLPl1l97vTxzwvmH32TWVQ==
+"@types/koa@*", "@types/koa@2.11.8":
+  version "2.11.8"
+  resolved "https://registry.yarnpkg.com/@types/koa/-/koa-2.11.8.tgz#b3fa4bf0baa518b71cb0c14b8a354b6292bea883"
+  integrity sha512-8LJHhlEjxvEb9MR06zencOxZyxpTHG2u6pcvJbSBN9DRBc+GYQ9hFI8sSH7dvYoITKeAGWo2eVPKx1Z/zX/yKw==
   dependencies:
     "@types/accepts" "*"
     "@types/content-disposition" "*"
