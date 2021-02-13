@@ -613,12 +613,6 @@ category 对应的关键词有
 
 </Route>
 
-## 每经网
-
-### 重磅原创
-
-<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily" />
-
 ## 南方周末
 
 ### 新闻分类
