@@ -1221,7 +1221,7 @@ rule
 
 ### 用户的Shouts留言
 
-<Route author="TigerCubDen" example="/furaffinity/shouts/tiger-jungle" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
 
 ### 用户的创作画廊
 
