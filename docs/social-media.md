@@ -1185,7 +1185,7 @@ rule
 
 ### 主页
 
-<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['类型，默认为artwork', 'NSFW开关, 当内容为 1 时不对NSFW内容过滤']">
+<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['类型，默认为artwork', 'NSFW开关, 当值为 1 时不对NSFW内容过滤']">
 
 类型 type
 
@@ -1197,7 +1197,7 @@ rule
 
 ### 浏览
 
-<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW开关, 当内容为 1 时不对NSFW内容过滤']"/>
+<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW开关, 当值为 1 时不对NSFW内容过滤']"/>
 
 ### 站点状态
 
@@ -1205,7 +1205,7 @@ rule
 
 ### 搜索
 
-<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['搜索关键词，仅限英文搜索', 'NSFW开关, 当内容为 1 时不对NSFW内容过滤']"/>
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['搜索关键词，仅限英文搜索', 'NSFW开关, 当值为 1 时不对NSFW内容过滤']"/>
 
 ### 用户关注列表
 
@@ -1225,12 +1225,12 @@ rule
 
 ### 用户的创作画廊
 
-<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当内容为 1 时不对NSFW内容过滤']"/>
+<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不对NSFW内容过滤']"/>
 
 ### 用户的零碎(非正式)作品
 
-<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当内容为 1 时不对NSFW内容过滤']"/>
+<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不对NSFW内容过滤']"/>
 
 ### 用户的喜爱列表
 
-<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当内容为 1 时不对NSFW内容过滤']"/>
+<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不对NSFW内容过滤']"/>
