@@ -1227,7 +1227,7 @@ rule
 
 <Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当内容为 1 时不对NSFW内容过滤']"/>
 
-### 用户的废弃(非正式)作品
+### 用户的零碎(非正式)作品
 
 <Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当内容为 1 时不对NSFW内容过滤']"/>
 
