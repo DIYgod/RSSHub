@@ -163,7 +163,7 @@ pageClass: routes
 
 ::: tip 提示
 
-栏目 ID 查找示例: 
+栏目 ID 查找示例:
 打开栏目具体某一期页面，F12 控制台输入`column_id`得到栏目 ID。
 
 :::
@@ -518,15 +518,15 @@ pageClass: routes
 
 ### 用户
 
-<Route author="I2IMk" example="/pornhub/users/0maru0" path="/pornhub/users/:username" :paramsDesc="['用户名, 对应其专页地址的后面部分, 如 `pornhub.com/users/0maru0`']" />
+<Route author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" :paramsDesc="['语言，下文会提到', '用户名, 对应其专页地址的后面部分, 如 `pornhub.com/users/pornhubmodels`']" />
 
-### 素人（Verified amateur /model）
+### 素人（Verified amateur / Model）
 
-<Route author="I2IMk" example="/pornhub/model/stacy-starando" path="/pornhub/model/:username/:sort?" :paramsDesc="['用户名, 对应其专页地址的后面部分, 如 `pornhub.com/model/stacy-starando`', '排序方式, 下文会提到']" />
+<Route author="I2IMk queensferryme" example="/pornhub/model/stacy-starando" path="/pornhub/:language?/model/:username/:sort?" :paramsDesc="['语言，下文会提到', '用户名, 对应其专页地址的后面部分, 如 `pornhub.com/model/stacy-starando`', '排序方式, 下文会提到']" />
 
-### 色情明星（Verified model /pornstar）
+### 色情明星（Verified model / Pornstar）
 
-<Route author="I2IMk" example="/pornhub/pornstar/june-liu" path="/pornhub/pornstar/:username/:sort?" :paramsDesc="['用户名, 对应其专页地址的后面部分, 如 `pornhub.com/pornstar/june-liu`', '排序方式, 下文会提到']" />
+<Route author="I2IMk queensferryme" example="/pornhub/pornstar/june-liu" path="/pornhub/:language?/pornstar/:username/:sort?" :paramsDesc="['语言，下文会提到', '用户名, 对应其专页地址的后面部分, 如 `pornhub.com/pornstar/june-liu`', '排序方式, 下文会提到']" />
 
 **排序方式 `sort`**
 
@@ -536,7 +536,14 @@ pageClass: routes
 
 ### 视频列表
 
-<Route author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['相对路径, `pornhub.com/` 后的部分, 需手动 URL 编码']"/>
+<Route author="I2IMk queensferryme" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/:language?/category_url/:url?" :paramsDesc="['语言，下文会提到', '相对路径, `pornhub.com/` 后的部分, 需手动 URL 编码']"/>
+
+**语言 `language`**
+
+参见 [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-)，放空则默认为英文。常见的有：
+
+-   `cn`（中文），对应中文站 <https://cn.pornhub.com/>；
+-   `jp`（日语），对应日语站 <https://jp.pornhub.com/> 等。
 
 ## Prestige 蚊香社
 
