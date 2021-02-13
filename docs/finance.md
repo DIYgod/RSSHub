@@ -105,6 +105,18 @@ pageClass: routes
 
 </Route>
 
+## DT 财经
+
+### 数据侠专栏
+
+<Route author="nczitzk" example="/dtcj/datahero" path="/dtcj/datahero/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 侠创 | 纽约数据科学学院 | RS 实验所 | 阿里云天池 |
+| ---- | ---------------- | --------- | ---------- |
+| 5    | 6                | 9         | 10         |
+
+</Route>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
