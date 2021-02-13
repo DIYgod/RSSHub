@@ -30,11 +30,17 @@ pageClass: routes
 
 ### 电报
 
-<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph"/>
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表']">
+
+| 看盘  | 公告         | 解读    | 加红 | 推送  | 提醒   | 基金 |
+| ----- | ------------ | ------- | ---- | ----- | ------ | ---- |
+| watch | announcement | explain | red  | jpush | remind | fund |
+
+</Route>
 
 ### 深度
 
-<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:caty" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
 
 | 要闻 | 股市 | 环球 | 公司 | 地产 | 券商 | 金融 | 汽车 | 科创版 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
