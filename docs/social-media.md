@@ -1242,3 +1242,11 @@ rule
 ### 用户的喜爱列表
 
 <Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不过滤NSFW内容']"/>
+
+### 作品评论区
+
+<Route author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" :paramsDesc="['id, 可在作品所在页面对应的链接处找到']"/>
+
+### 日记评论区
+
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" :paramsDesc="['id, 可在作品所在页面对应的链接处找到']"/>
