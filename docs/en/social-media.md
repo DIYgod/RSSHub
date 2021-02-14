@@ -298,6 +298,10 @@ Type
 
 <Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status"/>
 
+### Userpage Profile
+
+<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['Enter any words you want to search, require English']"/>
+
 ### Search
 
 <Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']"/>
