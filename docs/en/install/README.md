@@ -453,7 +453,7 @@ See docs of specified route and `lib/config.js` for detail information.
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_PIXIV_REFRESHTOKEN`: Please refer to [this article](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to get a `refresh_token`
+    -   `PIXIV_REFRESHTOKEN`: Please refer to [this article](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to get a `refresh_token`
     
     -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
 
