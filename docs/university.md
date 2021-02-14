@@ -865,6 +865,28 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="276562578" example="/jlu/oa" path="/jlu" />
 
+## 吉林工商学院
+
+### 主页
+
+<Route author="nczitzk" example="/jlbtc" path="/jlbtc/:category?" :paramDesc="['分类，见下表，默认为通知公告']">
+
+| 学院新闻 | 通知公告 | 媒体工商 | 博学讲堂 | 师生风采 |
+| -------- | -------- | -------- | -------- | -------- |
+| xyxw     | tzgg     | mtgs     | bxjt     | ssfc     |
+
+</Route>
+
+### 科研处
+
+<Route author="nczitzk" example="/jlbtc/kyc" path="/jlbtc/kyc/:category?" :paramDesc="['分类，见下表，默认为通知公告']">
+
+| 通知公告 | 新闻动态 |
+| -------- | -------- |
+| tzgg     | xwdt     |
+
+</Route>
+
 ## 暨南大学
 
 ## 暨南要闻
