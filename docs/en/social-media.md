@@ -304,7 +304,7 @@ Type
 
 ### Search
 
-<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']"/>
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['keyword, Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']"/>
 
 ### User's Watching List
 
@@ -337,3 +337,11 @@ Type
 ### User's Favorites
 
 <Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
+
+### Submission Comments
+
+<Route author="TigerCubDen" example="/furaffinity/submission_comments/tiger-jungle" path="/furaffinity/submission_comments/:id" :paramsDesc="['id, Can find in URL of submission page']"/>
+
+### Journal Comments
+
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/tiger-jungle" path="/furaffinity/journal_comments/:id" :paramsDesc="['id, Can find in URL of journal page']"/>
