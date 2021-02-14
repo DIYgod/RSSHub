@@ -1227,6 +1227,10 @@ rule
 
 <Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
 
+### 用户的日记
+
+<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+
 ### 用户的创作画廊
 
 <Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不过滤NSFW内容']"/>
