@@ -1207,6 +1207,10 @@ rule
 
 <Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['搜索关键词，仅限英文搜索', 'NSFW开关, 当值为 1 时不对NSFW内容过滤']"/>
 
+### 搜索
+
+<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+
 ### 用户关注列表
 
 <Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
