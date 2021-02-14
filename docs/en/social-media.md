@@ -322,6 +322,10 @@ Type
 
 <Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['Username, Can find in userpage']"/>
 
+### User's Journals
+
+<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" :paramsDesc="['Username, Can find in userpage']"/>
+
 ### User's Gallery
 
 <Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
