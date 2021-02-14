@@ -1046,6 +1046,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="sushengmao" example="/sustyjs" path="/sustyjs" />
 
+### 南方科技大学新闻网（中文）
+
+<Route author="sparkcyf" example="/sustech/newshub-zh" path="/sustech/newshub-zh" />
+
+### 南方科技大学采购与招标管理部
+
+<Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
+
 ## 南京工业大学
 
 ### 南京工业大学教务处
