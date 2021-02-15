@@ -825,7 +825,7 @@ category 对应的关键词有
 
 ### PDF 版
 
-<Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf/:date?" :paramsDesc="['日期，可填入指定日期格式，如 `2021年2月1日` 即 `20210201`，默认为当天']"/>
+<Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
 
 ## 新京报
 
