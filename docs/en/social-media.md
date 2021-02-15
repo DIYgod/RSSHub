@@ -304,7 +304,7 @@ Type
 
 ### Search
 
-<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['Searcn keyword, Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['Search keyword, Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']" radar="1"/>
 
 ### User's Watching List
 
