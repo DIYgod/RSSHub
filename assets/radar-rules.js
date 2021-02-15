@@ -2734,7 +2734,7 @@
                 title: '搜索',
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/search/',
-                target: (url) => `/furaffinity/search/${new URL(url).searchParams.get('q')}`,
+                target: (params, url) => `/furaffinity/search/${new URL(url).searchParams.get('q')}`,
             },
             {
                 title: '用户主页简介',
