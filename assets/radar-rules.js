@@ -1156,6 +1156,44 @@
                 target: '/open163/latest',
             },
         ],
+        music: [
+            {
+                title: '云音乐 - 用户歌单',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/home\?id=(.*)/)[1];
+                    return id ? `/ncm/user/playlist/${id}` : '';
+                }
+            },
+            {
+                title: '云音乐 - 歌单歌曲',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/playlist\?id=(.*)/)[1];
+                    return id ? `/ncm/playlist/${id}` : '';
+                }
+            },
+            {
+                title: '云音乐 - 歌手专辑',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/album\?id=(.*)/)[1];
+                    return id ? `/ncm/artist/${id}` : '';
+                }
+            },
+            {
+                title: '云音乐 - 电台节目',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/djradio\?id=(.*)/)[1];
+                    return id ? `/ncm/djradio/${id}` : '';
+                }
+            },
+        ],
     },
     'suzhou.gov.cn': {
         _name: '苏州市政府',
@@ -1935,6 +1973,17 @@
                 },
             },
         ],
+        v: [
+            {
+                title: '视频 - 播放列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
+                source: '/detail/:type/:id',
+                target: (params) => {
+                    const id = params.id.match('(.*).html')[1];
+                    return id ? `/tencentvideo/playlist/${id}` : '';
+                }
+            },
+        ]
     },
     'javbus.com': {
         _name: 'JavBus',
