@@ -2803,5 +2803,5 @@
                 target: '/furaffinity/journal_comments/:id',
             },
         ],
-    },    
+    },
 });
