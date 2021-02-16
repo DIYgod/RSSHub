@@ -1191,7 +1191,7 @@ rule
 
 类型 type
 
-| 艺术品 | 手工 | 音乐 | 文学 | 
+| 艺术品 | 手工 | 音乐 | 写作 | 
 | ---- | ---- | ---- | ---- | 
 | artwork | crafts | music | writing |
 
@@ -1251,4 +1251,4 @@ rule
 
 ### 日记评论区
 
-<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" :paramsDesc="['日记id, 可在作品所在页面对应的链接处找到']" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" :paramsDesc="['日记id, 可在日记所在页面对应的链接处找到']" radar="1"/>
