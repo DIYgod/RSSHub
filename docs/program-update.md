@@ -210,6 +210,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
 
+## MacKed
+
+### 应用更新
+
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
+
 ## ManicTime
 
 <Route author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>

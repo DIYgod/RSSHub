@@ -166,6 +166,12 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
 
+## MacKed
+
+### APP Update
+
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be find in URL']"/>
+
 ## ManicTime
 
 <RouteEn author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
@@ -312,3 +318,4 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### What's New
 
 <RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+
