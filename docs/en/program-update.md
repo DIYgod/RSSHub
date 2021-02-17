@@ -313,3 +313,8 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 
+## Eagle
+
+### Changelog
+
+<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog" radar="1"/>
