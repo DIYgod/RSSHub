@@ -2708,4 +2708,15 @@
             },
         ],
     },
+    'eagle.cool': {
+        _name: 'Eagle',
+        cn: [
+            {
+                title: '更新日志',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/changelog',
+                target: '/eagle/changelog',
+            },
+        ],
+    },    
 });
