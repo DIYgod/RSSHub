@@ -2718,5 +2718,5 @@
                 target: '/eagle/changelog',
             },
         ],
-    },    
+    },
 });
