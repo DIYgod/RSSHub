@@ -634,9 +634,15 @@
                 target: '/sspai/column/:id',
             },
             {
+                title: '作者动态',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/u/:id/updates',
+                target: '/sspai/activity/:id',
+            },
+            {
                 title: '作者已发布文章',
                 docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
-                source: ['/user/:id/posts', '/user/:id/updates'],
+                source: '/u/:id/posts',
                 target: '/sspai/author/:id',
             },
             {
