@@ -258,6 +258,12 @@ pageClass: routes
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## Obsidian
+
+### Announcements
+
+<Route author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
+
 ## OneNote Gem Add-Ins
 
 ### Release History
