@@ -2010,12 +2010,12 @@
   dependencies:
     nprogress "^0.2.0"
 
-"@vuepress/plugin-pwa@1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.8.1.tgz#00cd93b4e559d79c786499e1561cf6d1e58b03ef"
-  integrity sha512-971PgsWiUHXTzA9zN2sXVax7oepgKZmCLUdfIotTVp8b9TI6SLEtXGXn/X8+6F60AisVLDG2S09S+kim1e5GCA==
+"@vuepress/plugin-pwa@1.8.2":
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.8.2.tgz#a82ecaa9f920bfc79f283fb3c224a42540109e19"
+  integrity sha512-6dQXMI+oqTQtHK22Ba+crhzP5yyAf+V1qVfapgPb8JxLXUasOhr+083VRz5LMYqDzu6CAXM+P8cUgSSBNjifXw==
   dependencies:
-    "@vuepress/shared-utils" "1.8.1"
+    "@vuepress/shared-utils" "1.8.2"
     register-service-worker "^1.7.0"
     workbox-build "^4.3.1"
 
@@ -2030,21 +2030,6 @@
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/@vuepress/plugin-search/-/plugin-search-1.8.2.tgz#74b92f663acf6b4560e15dc0442a84c4e874e206"
   integrity sha512-JrSJr9o0Kar14lVtZ4wfw39pplxvvMh8vDBD9oW09a+6Zi/4bySPGdcdaqdqGW+OHSiZNvG+6uyfKSBBBqF6PA==
-
-"@vuepress/shared-utils@1.8.1":
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.8.1.tgz#39fa9c41ff60f13578037ea6d554ab25975533bb"
-  integrity sha512-EjxK9d02yIAfNsRWTR6sCwJCv4HGmO5eWDhEA8nRHyGK5LHjuCGJ6q0kMg38KRf8UexJAZxToEfvuaiRv1Dz5g==
-  dependencies:
-    chalk "^2.3.2"
-    escape-html "^1.0.3"
-    fs-extra "^7.0.1"
-    globby "^9.2.0"
-    gray-matter "^4.0.1"
-    hash-sum "^1.0.2"
-    semver "^6.0.0"
-    toml "^3.0.0"
-    upath "^1.1.0"
 
 "@vuepress/shared-utils@1.8.2":
   version "1.8.2"
