@@ -317,4 +317,11 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Changelog
 
-<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog" radar="1"/>
+<Route author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
+  
+Language
+
+| Simplified Chinese | Traditional Chinese | English |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
+    
