@@ -34,6 +34,76 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
+## Fur Affinity
+
+### Home
+
+<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['Type，Default to be artwork', 'NSFW Mode, do not filter NSFW Contents when value set to 1']">
+
+Type
+
+| artwork | crafts | music | writing | 
+| ---- | ---- | ---- | ---- | 
+| artwork | crafts | music | writing |
+
+</Route>
+
+### Browse
+
+<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
+
+### Website Status
+
+<Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status"/>
+
+### Userpage Profile
+
+<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['Username, Can find in userpage']"/>
+
+### Search
+
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['keyword, Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']"/>
+
+### User's Watching List
+
+<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" :paramsDesc="['Username, Can find in userpage']"/>
+
+### User's Watcher List
+
+<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" :paramsDesc="['Username, Can find in userpage']"/>
+
+### User's Commission Information 
+
+<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" :paramsDesc="['Username, Can find in userpage']"/>
+
+### User's Shouts
+
+<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['Username, Can find in userpage']"/>
+
+### User's Journals
+
+<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" :paramsDesc="['Username, Can find in userpage']"/>
+
+### User's Gallery
+
+<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
+
+### User's Scraps
+
+<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
+
+### User's Favorites
+
+<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
+
+### Submission Comments
+
+<Route author="TigerCubDen" example="/furaffinity/submission_comments/tiger-jungle" path="/furaffinity/submission_comments/:id" :paramsDesc="['id, Can find in URL of submission page']"/>
+
+### Journal Comments
+
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/tiger-jungle" path="/furaffinity/journal_comments/:id" :paramsDesc="['id, Can find in URL of journal page']"/>
+
 ## Gab
 
 ### User's Posts
@@ -275,73 +345,3 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 ### Playlist
 
 <RouteEn path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
-
-## Fur Affinity
-
-### Home
-
-<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['Type，Default to be artwork', 'NSFW Mode, do not filter NSFW Contents when value set to 1']">
-
-Type
-
-| artwork | crafts | music | writing | 
-| ---- | ---- | ---- | ---- | 
-| artwork | crafts | music | writing |
-
-</Route>
-
-### Browse
-
-<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
-
-### Website Status
-
-<Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status"/>
-
-### Userpage Profile
-
-<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['Username, Can find in userpage']"/>
-
-### Search
-
-<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['keyword, Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']"/>
-
-### User's Watching List
-
-<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" :paramsDesc="['Username, Can find in userpage']"/>
-
-### User's Watcher List
-
-<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" :paramsDesc="['Username, Can find in userpage']"/>
-
-### User's Commission Information 
-
-<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" :paramsDesc="['Username, Can find in userpage']"/>
-
-### User's Shouts
-
-<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['Username, Can find in userpage']"/>
-
-### User's Journals
-
-<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" :paramsDesc="['Username, Can find in userpage']"/>
-
-### User's Gallery
-
-<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
-
-### User's Scraps
-
-<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
-
-### User's Favorites
-
-<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']"/>
-
-### Submission Comments
-
-<Route author="TigerCubDen" example="/furaffinity/submission_comments/tiger-jungle" path="/furaffinity/submission_comments/:id" :paramsDesc="['id, Can find in URL of submission page']"/>
-
-### Journal Comments
-
-<Route author="TigerCubDen" example="/furaffinity/journal_comments/tiger-jungle" path="/furaffinity/journal_comments/:id" :paramsDesc="['id, Can find in URL of journal page']"/>
