@@ -280,7 +280,7 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 ### Home
 
-<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['Art Type，Default to be artwork', 'NSFW Mode, do not filter NSFW Contents when value set to 1']" radar="1">
+<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['Art Type，Default to be artwork', 'NSFW Mode, do not filter NSFW Contents when value set to `1`']" radar="1">
 
 Type
 
@@ -292,7 +292,7 @@ Type
 
 ### Browse
 
-<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW Mode, do not filter NSFW Contents when value set to 1']" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW Mode, do not filter NSFW Contents when value set to `1`']" radar="1"/>
 
 ### Website Status
 
@@ -304,7 +304,7 @@ Type
 
 ### Search
 
-<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['Search keyword, Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to 1']" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['Search keyword, Enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW Contents when value set to `1`']" radar="1"/>
 
 ### User's Watching List
 
@@ -328,15 +328,15 @@ Type
 
 ### User's Gallery
 
-<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to `1`']" radar="1"/>
 
 ### User's Scraps
 
-<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to `1`']" radar="1"/>
 
 ### User's Favorites
 
-<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to 1']" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['Username, Can find in userpage', 'NSFW Mode, do not filter NSFW Contents when value set to `1`']" radar="1"/>
 
 ### Submission Comments
 
