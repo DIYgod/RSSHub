@@ -460,4 +460,12 @@ pageClass: routes
 
 ### 更新日志
 
-<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog" radar="1"/>
+<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog/:language?" :paramsDesc="['语言，选项见下表，默认为 `cn`']" radar="1">
+    
+语言
+
+| 简体中文 | 繁体中文 | 英文 |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
+
+</Route>
