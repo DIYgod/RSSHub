@@ -317,7 +317,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Changelog
 
-<Route author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
+<RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
   
 Language
 
@@ -325,4 +325,4 @@ Language
 | ------ | -------- | -------- |
 |  cn  |  tw  |  en  |
     
-<Route/>
+<RouteEn/>
