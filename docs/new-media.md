@@ -1522,6 +1522,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 美国劳工联合会 - 产业工会联合会
+
+### 博客
+
+<Route author="nczitzk" example="/aflcio/blog" path="/aflcio/blog"/>
+
 ## 梅花网
 
 ### 作品
