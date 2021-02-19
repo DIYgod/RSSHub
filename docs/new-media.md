@@ -1183,9 +1183,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 推荐文章
 
-<Route author="q33q33q33q" example="/szhgh/isgood" path="/szhgh/isgood" />
-
-</Route>
+<Route author="q33q33q33q" example="/szhgh/isgood" path="/szhgh/isgood"/>
 
 ## 后续
 
