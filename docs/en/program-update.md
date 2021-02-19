@@ -326,3 +326,4 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### What's New
 
 <RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+
