@@ -1179,12 +1179,6 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-## 红歌会网
-
-### 推荐文章
-
-<Route author="q33q33q33q" example="/szhgh/isgood" path="/szhgh/isgood" />
-
 ## 后续
 
 ### Live
