@@ -10,6 +10,18 @@ pageClass: routes
 
 <Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
+## DT 财经
+
+### 数据侠专栏
+
+<Route author="nczitzk" example="/dtcj/datahero" path="/dtcj/datahero/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 侠创 | 纽约数据科学学院 | RS 实验所 | 阿里云天池 |
+| ---- | ---------------- | --------- | ---------- |
+| 5    | 6                | 9         | 10         |
+
+</Route>
+
 ## finviz
 
 ### 美股股票新闻
@@ -124,18 +136,6 @@ pageClass: routes
 | en      | es      | fr       | cn   | jp     |
 
 年份 和 平台 这两个参数请参见 [报告页](https://www.weforum.org/reports) 过滤条件处。
-
-</Route>
-
-## DT 财经
-
-### 数据侠专栏
-
-<Route author="nczitzk" example="/dtcj/datahero" path="/dtcj/datahero/:category?" :paramsDesc="['分类，见下表，默认为全部']">
-
-| 侠创 | 纽约数据科学学院 | RS 实验所 | 阿里云天池 |
-| ---- | ---------------- | --------- | ---------- |
-| 5    | 6                | 9         | 10         |
 
 </Route>
 
