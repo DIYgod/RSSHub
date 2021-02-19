@@ -158,6 +158,20 @@ pageClass: routes
 
 :::
 
+## Eagle
+
+### 更新日志
+
+<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog/:language?" :paramsDesc="['语言，选项见下表，默认为 `cn`']" radar="1">
+    
+语言
+
+| 简体中文 | 繁体中文 | 英文 |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
+
+</Route>
+
 ## Everything
 
 ### Changes
@@ -453,19 +467,5 @@ pageClass: routes
 | 最新回复 | 热门回复      | 新鲜出炉   | 陈年旧贴  |
 | -------- | ------------- | ---------- | --------- |
 |          | -commentCount | -createdAt | createdAt |
-
-</Route>
-
-## Eagle
-
-### 更新日志
-
-<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog/:language?" :paramsDesc="['语言，选项见下表，默认为 `cn`']" radar="1">
-    
-语言
-
-| 简体中文 | 繁体中文 | 英文 |
-| ------ | -------- | -------- |
-|  cn  |  tw  |  en  |
 
 </Route>
