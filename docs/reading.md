@@ -123,6 +123,12 @@ pageClass: routes
 
 :::
 
+## 博客来
+
+### 新书出版
+
+<Route author="CokeMine" example="/bookscomtw/newbooks/books_nbtopm_15" path="/bookscomtw/newbooks/:category" :paramsDesc="['书籍类型 category, 可在对应博客来新书页 URL 中找到']"/>
+
 ## 吹牛部落
 
 ### 栏目
