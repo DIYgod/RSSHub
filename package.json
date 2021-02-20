@@ -12,6 +12,7 @@
     "profiling": "NODE_ENV=production node --prof lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "lint": "eslint .",
     "format": "eslint \"**/*.js\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
     "format:staged": "eslint \"**/*.js\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json}\"",
