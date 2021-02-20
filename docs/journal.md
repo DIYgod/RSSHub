@@ -35,6 +35,12 @@ pageClass: routes
 
 </Route>
 
+## BioOne
+
+### Featured articles
+
+<Route author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
+
 ## Cell
 
 ### 主刊
