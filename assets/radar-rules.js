@@ -2738,6 +2738,9 @@
                 docs: 'https://docs.rsshub.app/program-update.html#eagle',
                 source: '/changelog',
                 target: '/eagle/changelog/en',
+            },
+        ],
+    },                
     'furaffinity.net': {
         _name: 'Fur Affinity',
         www: [
