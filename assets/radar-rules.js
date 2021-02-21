@@ -657,6 +657,12 @@
                 source: '/topic/:id',
                 target: '/sspai/topic/:id',
             },
+            {
+                title: '标签订阅',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/tag/:keyword',
+                target: '/sspai/tag/:keyword',
+            },
         ],
         shortcuts: [
             {
