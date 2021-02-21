@@ -2740,7 +2740,7 @@
                 target: '/eagle/changelog/en',
             },
         ],
-    },                
+    },
     'furaffinity.net': {
         _name: 'Fur Affinity',
         www: [
