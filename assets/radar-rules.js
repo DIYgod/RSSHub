@@ -634,9 +634,15 @@
                 target: '/sspai/column/:id',
             },
             {
+                title: '作者动态',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/u/:id/updates',
+                target: '/sspai/activity/:id',
+            },
+            {
                 title: '作者已发布文章',
                 docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
-                source: ['/user/:id/posts', '/user/:id/updates'],
+                source: '/u/:id/posts',
                 target: '/sspai/author/:id',
             },
             {
@@ -2732,6 +2738,99 @@
                 docs: 'https://docs.rsshub.app/program-update.html#eagle',
                 source: '/changelog',
                 target: '/eagle/changelog/en',
+    'furaffinity.net': {
+        _name: 'Fur Affinity',
+        www: [
+            {
+                title: '主页',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/',
+                target: '/furaffinity/home',
+            },
+            {
+                title: '浏览',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/browse/',
+                target: '/furaffinity/browse',
+
+            },
+            {
+                title: '站点状态',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/',
+                target: '/furaffinity/status',
+            },
+            {
+                title: '搜索',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/search/',
+                target: (params, url) => `/furaffinity/search/${new URL(url).searchParams.get('q')}`,
+            },
+            {
+                title: '用户主页简介',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/user/:username/',
+                target: '/furaffinity/user/:username',
+            },
+            {
+                title: '用户关注列表',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/watchlist/by/:username/',
+                target: '/furaffinity/watching/:username',
+            },
+            {
+                title: '用户被关注列表',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/watchlist/to/:username/',
+                target: '/furaffinity/watchers/:username',
+            },
+            {
+                title: '用户接受委托信息',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/commissions/:username/',
+                target: '/furaffinity/commissions/:username',
+            },
+            {
+                title: '用户的Shouts留言',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/user/:username/',
+                target: '/furaffinity/user/:username',
+            },
+            {
+                title: '用户的日记',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/journals/:username/',
+                target: '/furaffinity/journals/:username',
+            },
+            {
+                title: '用户的创作画廊',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/gallery/:username/',
+                target: '/furaffinity/gallery/:username',
+            },
+            {
+                title: '用户非正式作品',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/scraps/:username/',
+                target: '/furaffinity/scraps/:username',
+            },
+            {
+                title: '用户的喜爱列表',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/favorites/:username/',
+                target: '/furaffinity/favorites/:username',
+            },
+            {
+                title: '作品评论区',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/view/:id/',
+                target: '/furaffinity/submission_comments/:id',
+            },
+            {
+                title: '日记评论区',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/journal/:id/',
+                target: '/furaffinity/journal_comments/:id',
             },
         ],
     },
