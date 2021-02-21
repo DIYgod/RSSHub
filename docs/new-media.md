@@ -1522,6 +1522,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 美国劳工联合会 - 产业工会联合会
+
+### 博客
+
+<Route author="nczitzk" example="/aflcio/blog" path="/aflcio/blog"/>
+
 ## 梅花网
 
 ### 作品
@@ -1692,7 +1698,7 @@ column 为 third 时可选的 category:
 
 ### 最新上架付费专栏
 
-<Route author="HenryQW" example="/sspai/series" path="/sspai/series">
+<Route author="HenryQW" example="/sspai/series" path="/sspai/series" radar="1">
 
 > 少数派专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
@@ -1700,27 +1706,27 @@ column 为 third 时可选的 category:
 
 ### Shortcuts Gallery
 
-<Route author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
+<Route author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" radar="1"/>
 
 ### Matrix
 
-<Route author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" />
+<Route author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" radar="1"/>
 
 ### 专栏
 
-<Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
+<Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']" radar="1"/>
 
 ### 作者
 
-<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']" radar="1"/>
 
 ### 作者动态
 
-<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']"/>
+<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']" radar="1"/>
 
 ### 专题
 
-<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
+<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics" radar="1">
 
 此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！
 
@@ -1728,7 +1734,7 @@ column 为 third 时可选的 category:
 
 ### 专题内文章更新
 
-<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
+<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']" radar="1"/>
 
 ### 标签订阅
 
