@@ -58,7 +58,7 @@ Type
 
 ### Userpage Profile
 
-<RouteEn author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['Username, can find in userpage' radar="1"]"/>
+<RouteEn author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
 
 ### Search
 
