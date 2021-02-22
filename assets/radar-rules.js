@@ -2770,7 +2770,7 @@
                 title: '用户的Shouts留言',
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/user/:username/',
-                target: '/furaffinity/user/:username',
+                target: '/furaffinity/shouts/:username',
             },
             {
                 title: '用户的日记',
