@@ -2767,7 +2767,7 @@
                 target: '/furaffinity/commissions/:username',
             },
             {
-                title: '用户的Shouts留言',
+                title: '用户的 Shouts 留言',
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/user/:username/',
                 target: '/furaffinity/shouts/:username',
