@@ -1738,7 +1738,7 @@ column 为 third 时可选的 category:
 
 ### 标签订阅
 
-<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
+<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']" radar="1"/>
 
 ## 生命时报
 
