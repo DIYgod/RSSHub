@@ -704,6 +704,17 @@
                 source: '/p/:id',
                 target: '/tieba/post/lz/:id',
             },
+            {
+                title: '用户帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: '/home/main',
+                target: (params, url) => {
+                    const uid = new URL(url).searchParams.get('un');
+                    if (uid) {
+                        return `/tieba/user/${uid}`;
+                    }
+                },
+            },
         ],
     },
     'wineyun.com': {
