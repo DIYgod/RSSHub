@@ -2757,7 +2757,12 @@
                 title: '搜索',
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/search/',
-                target: (params, url) => `/furaffinity/search/${new URL(url).searchParams.get('q')}`,
+                target: (params, url) => {
+                    const keyword = new URL(url).searchParams.get('q');
+                    if (keyword) {
+                        return `/furaffinity/search/${keyword}`;
+                    }
+                },
             },
             {
                 title: '用户主页简介',
@@ -2784,10 +2789,10 @@
                 target: '/furaffinity/commissions/:username',
             },
             {
-                title: '用户的Shouts留言',
+                title: '用户的 Shouts 留言',
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/user/:username/',
-                target: '/furaffinity/user/:username',
+                target: '/furaffinity/shouts/:username',
             },
             {
                 title: '用户的日记',
