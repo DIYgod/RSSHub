@@ -221,6 +221,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## Obsidian
+
+### Announcements
+
+<RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
+
 ## PlayStation
 
 ### PlayStation 4 System Update
