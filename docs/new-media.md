@@ -2174,6 +2174,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 亿欧网
+
+### 资讯
+
+<Route author="WenryXu" example="/iyiou" path="/iyiou"/>
+
 ## 有趣天文奇观
 
 ### 首页
@@ -2297,9 +2303,3 @@ QueryString:
 ### 全文
 
 <Route author="HenryQW" example="/zzz" path="/zzz/index"/>
-
-## 亿欧网
-
-### 资讯
-
-<Route author="WenryXu" example="/iyiou" path="/iyiou"/>

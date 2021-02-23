@@ -1187,7 +1187,7 @@
                 target: (params, url) => {
                     const id = new URL(url).hash.match(/home\?id=(.*)/)[1];
                     return id ? `/ncm/user/playlist/${id}` : '';
-                }
+                },
             },
             {
                 title: '云音乐 - 歌单歌曲',
@@ -1196,7 +1196,7 @@
                 target: (params, url) => {
                     const id = new URL(url).hash.match(/playlist\?id=(.*)/)[1];
                     return id ? `/ncm/playlist/${id}` : '';
-                }
+                },
             },
             {
                 title: '云音乐 - 歌手专辑',
@@ -1205,7 +1205,7 @@
                 target: (params, url) => {
                     const id = new URL(url).hash.match(/album\?id=(.*)/)[1];
                     return id ? `/ncm/artist/${id}` : '';
-                }
+                },
             },
             {
                 title: '云音乐 - 电台节目',
@@ -1214,7 +1214,7 @@
                 target: (params, url) => {
                     const id = new URL(url).hash.match(/djradio\?id=(.*)/)[1];
                     return id ? `/ncm/djradio/${id}` : '';
-                }
+                },
             },
         ],
     },
@@ -2004,9 +2004,9 @@
                 target: (params) => {
                     const id = params.id.match('(.*).html')[1];
                     return id ? `/tencentvideo/playlist/${id}` : '';
-                }
+                },
             },
-        ]
+        ],
     },
     'javbus.com': {
         _name: 'JavBus',
@@ -2745,7 +2745,6 @@
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/browse/',
                 target: '/furaffinity/browse',
-
             },
             {
                 title: '站点状态',

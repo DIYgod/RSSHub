@@ -118,12 +118,6 @@ pageClass: routes
 
 <Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" rssbud="1"/>
 
-## 敬维博客
-
-### 文章
-
-<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
-
 ## 劍心．回憶
 
 ### 分类
@@ -171,6 +165,12 @@ pageClass: routes
 | drama_deep | drama_rating | drama_column | drama_interactive |
 
 </Route>
+
+## 敬维博客
+
+### 文章
+
+<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
 
 ## 每日安全
 
