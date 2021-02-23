@@ -387,6 +387,12 @@
                 source: '/pub/weekly',
                 target: '/zhihu/weekly',
             },
+            {
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
+                source: '/column/:id',
+                target: '/zhihu/zhuanlan/:id',
+            },
         ],
         zhuanlan: [
             {
