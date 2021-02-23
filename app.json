@@ -14,10 +14,7 @@
             "value": "80",
             "required": false
         },
-        "PIXIV_USERNAME": {
-            "required": false
-        },
-        "PIXIV_PASSWORD": {
+        "PIXIV_REFRESHTOKEN": {
             "required": false
         },
         "DISQUS_API_KEY": {
