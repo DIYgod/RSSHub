@@ -330,71 +330,71 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 主页
 
-<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['类型，默认为artwork', 'NSFW开关, 当值为 1 时不过滤NSFW内容']">
+<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['类型，默认为 `artwork`', 'NSFW开关, 当值为 `1` 时不过滤NSFW内容']" radar="1">
 
 类型 type
 
-| 艺术品  | 手工制品 | 音乐  | 文学    |
-| ------- | -------- | ----- | ------- |
-| artwork | crafts   | music | writing |
+| 艺术品  | 手工   | 音乐  | 写作    |
+| ------- | ------ | ----- | ------- |
+| artwork | crafts | music | writing |
 
 </Route>
 
 ### 浏览
 
-<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW开关, 当值为 1 时不过滤NSFW内容']"/>
+<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW开关, 当值为 `1` 时不过滤NSFW内容']" radar="1"/>
 
 ### 站点状态
 
-<Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status"/>
+<Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status" radar="1"/>
 
 ### 搜索
 
-<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['搜索关键词，仅限英文搜索', 'NSFW开关, 当值为 1 时不过滤NSFW内容']"/>
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['搜索关键词，仅限英文搜索', 'NSFW开关, 当值为 `1` 时不过滤NSFW内容']" radar="1"/>
 
 ### 用户主页简介
 
-<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
 
 ### 用户关注列表
 
-<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
 
 ### 用户被关注列表
 
-<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
 
 ### 用户接受委托信息
 
-<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
 
 ### 用户的 Shouts 留言
 
-<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
 
 ### 用户的日记
 
-<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
 
 ### 用户的创作画廊
 
-<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不过滤NSFW内容']"/>
+<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']" radar="1"/>
 
 ### 用户的零碎 (非正式) 作品
 
-<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不过滤NSFW内容']"/>
+<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']" radar="1"/>
 
 ### 用户的喜爱列表
 
-<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 1 时不过滤NSFW内容']"/>
+<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']" radar="1"/>
 
 ### 作品评论区
 
-<Route author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" :paramsDesc="['作品id, 可在作品所在页面对应的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" :paramsDesc="['作品id, 可在作品所在页面对应的链接处找到']" radar="1"/>
 
 ### 日记评论区
 
-<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" :paramsDesc="['日记id, 可在作品所在页面对应的链接处找到']"/>
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" :paramsDesc="['日记id, 可在日记所在页面对应的链接处找到']" radar="1"/>
 
 ## Gab
 
@@ -1250,9 +1250,11 @@ rule
 
 ### 用户关注时间线
 
-<Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1"/>
+<Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1">
 ::: warning 注意
 
 用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
 :::
+
+</Route>

@@ -120,6 +120,20 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 :::
 
+## Eagle
+
+### Changelog
+
+<RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
+  
+Language
+
+| Simplified Chinese | Traditional Chinese | English |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
+    
+<RouteEn/>
+
 ## Everything
 
 ### Changes
@@ -220,6 +234,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+
+## Obsidian
+
+### Announcements
+
+<RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
 ## PlayStation
 
