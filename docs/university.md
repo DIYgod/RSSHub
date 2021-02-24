@@ -482,6 +482,16 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 广州航海学院
+
+## 广州航海学院教务处通知公告
+
+<Route author="skyedai910" example="/gzmtu/jwc" path="/gzmtu/jwc" />
+
+## 广州航海学院图书馆通知公告
+
+<Route author="skyedai910" example="/gzmtu/tsg" path="/gzmtu/tsg" />
+
 ## 广州大学
 
 ## 广州大学研招网通知公告
