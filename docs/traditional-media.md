@@ -815,6 +815,12 @@ category 对应的关键词有
 
 </Route>
 
+## 香港商报
+
+### PDF 版
+
+<Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
+
 ## 新京报
 
 ### 栏目
