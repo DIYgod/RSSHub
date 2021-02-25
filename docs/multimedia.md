@@ -923,6 +923,10 @@ pageClass: routes
 
 ## 网易云音乐
 
+### 歌手歌曲
+
+<Route author="ZhongMingKun" example="/ncm/artist_songs/12039226/10" path="/ncm/artist_songs/:id/:limit?" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到', '请求数量,默认10条']" radar="1" />
+
 ### 歌单歌曲
 
 <Route author="DIYgod" example="/ncm/playlist/35798529" path="/ncm/playlist/:id" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']" radar="1" />
