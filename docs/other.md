@@ -932,6 +932,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" rssbud="1"/>
 
+## 中化新网
+
+### 新闻分类
+
+<Route author="vanishcode" example="/ccin/int_main" path="/ccin/:category" :paramsDesc="['新闻分类']">
+
+| 国际化工 | 国内化工       | 综合要闻   | 市场信息     |
+| -------- | -------------- | ---------- | ------------ |
+| int_main | index_domestic | index_news | index_market |
+
+理论上支持任何与上面四个页面相同样式的页面路由，如 科技创新：`index_tech`
+
+</Route>
+
 ## 自如
 
 ### 房源
