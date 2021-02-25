@@ -322,6 +322,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
 
+## Shuax
+
+### Project
+
+<Route author="nczitzk" example="/shuax/project/chrome" path="/shuax/project"  :paramsDesc="['项目名，见下表，默认为 MouseInc']">
+
+| MouseInc | Chrome | Edge |
+| -------- | ------ | ---- |
+| mouseinc | chrome | edge |
+
+</Route>
+
 ## simpread
 
 ### 消息通知
