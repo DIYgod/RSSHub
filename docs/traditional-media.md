@@ -758,3 +758,7 @@ category 对应的关键词有
 ### 九江新闻
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
+
+### 江西新闻
+
+<Route author="jjlzg" example="/fjnews/jxnews" path="/fjnews/jxnews"/>
