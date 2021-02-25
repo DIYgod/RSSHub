@@ -30,6 +30,11 @@ pageClass: routes
 
 <Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']" radar="1" rssbud="1"/>
 
+### 话题 2
+
+<Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/ap-top-news](https://apnews.com/ap-top-news) 的话题为 `apf-topnews`']"  anticrawler="1"/>
+采用了`puppeteer`规避`Project Shield`，无全文抓取，建议自建。  
+
 ## BBC
 
 ### BBC 英文
