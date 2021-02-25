@@ -236,13 +236,3 @@ _仅支持 Science 主刊_
 路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 <https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ> 中 user= 后的 mlmE4JMAAAAJ。
 
 </Route>
-
-## 人体艺术
-
-### 最近更新
-
-<Route author="magictomagic"  example="/elitebabes/recent" path="/elitebabes/recent">
-
-示例即用法
-
-</Route>
