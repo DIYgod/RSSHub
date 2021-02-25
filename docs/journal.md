@@ -241,7 +241,7 @@ _仅支持 Science 主刊_
 
 ### 最近更新
 
-&lt;Route author="magictomagic" /elitebabes/recent" path="/elitebabes/recent" anticrawler="1">
+<Route author="magictomagic" example="/elitebabes/recent" path="/elitebabes/recent">
 
 路由参数只有一个 recent
 
