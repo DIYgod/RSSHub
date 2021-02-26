@@ -96,7 +96,7 @@ Language
 
 ### File Update
 
-<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']"/>
+<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']">
 
 For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
 
@@ -132,7 +132,7 @@ Language
 | ------ | -------- | -------- |
 |  cn  |  tw  |  en  |
     
-<RouteEn/>
+</RouteEn>
 
 ## Everything
 
