@@ -1734,6 +1734,12 @@ column 为 third 时可选的 category:
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
 
+## 深圳新闻网
+
+### 排行榜
+
+<Route author="nczitzk" example="/sznews/ranking" path="/sznews/ranking"/>
+
 ## 生命时报
 
 ### 栏目
