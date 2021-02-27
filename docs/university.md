@@ -488,6 +488,16 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 <Route author="sushengmao" example="/gzyjs" path="/gzyjs" />
 
+## 广州航海学院
+
+## 广州航海学院教务处通知公告
+
+<Route author="skyedai910" example="/gzmtu/jwc" path="/gzmtu/jwc" />
+
+## 广州航海学院图书馆通知公告
+
+<Route author="skyedai910" example="/gzmtu/tsg" path="/gzmtu/tsg" />
+
 ## 桂林电子科技大学
 
 ### 新闻资讯
@@ -1055,6 +1065,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 南方科技大学研究生网通知公告
 
 <Route author="sushengmao" example="/sustyjs" path="/sustyjs" />
+
+### 南方科技大学新闻网（中文）
+
+<Route author="sparkcyf" example="/sustech/newshub-zh" path="/sustech/newshub-zh" />
+
+### 南方科技大学采购与招标管理部
+
+<Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
 
 ## 南京工业大学
 

@@ -613,12 +613,6 @@ category 对应的关键词有
 
 </Route>
 
-## 每经网
-
-### 重磅原创
-
-<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily" />
-
 ## 南方周末
 
 ### 新闻分类
@@ -757,7 +751,7 @@ category 对应的关键词有
 
 ### 分类
 
-<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id，见下表，默认为 aall']">
+<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id 或新闻专题 id。分类 id 见下表，新闻专题 id 為 https://www.cna.com.tw/list/newstopic.aspx 中，連結的數字部份。此參數默认为 aall']">
 
 | 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -820,6 +814,12 @@ category 对应的关键词有
 | 本地新聞 | 大中華新聞   | 國際新聞      | 財經新聞 | 體育新聞 |
 
 </Route>
+
+## 香港商报
+
+### PDF 版
+
+<Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
 
 ## 新京报
 
