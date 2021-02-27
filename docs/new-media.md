@@ -1664,7 +1664,17 @@ column 为 third 时可选的 category:
 
 ## 全现在
 
+### 专栏
+
 <Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
+
+### 话题
+
+<Route author="nczitzk" example="/allnow/tag/678" path="/allnow/tag/:id" :paramsDesc="['话题 id']"/>
+
+### 用户
+
+<Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" :paramsDesc="['用户 id']"/>
 
 ## 人人都是产品经理
 
