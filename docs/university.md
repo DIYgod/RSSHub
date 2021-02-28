@@ -1528,6 +1528,15 @@ type 列表：
 
 <Route author="NeverBehave" example="/slu/tyyjkxy/14754" path="/slu/tyyjkxy/:id" :paramsDesc="['类别ID']" />
 
+## 上海外国语大学
+
+### 上外新闻
+
+<Route author="Bezhuang" example="/shisu/news" path="/shisu/:type?" :paramsDesc="['消息类型,默认为`news`']">
+
+| 新闻 |   学术   |   公告   |
+| ---- | -------- | -------- |
+| news | research | notice   |
 ## 深圳大学
 
 #### 深圳大学研究生招生网通知公告
