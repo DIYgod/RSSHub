@@ -2889,12 +2889,7 @@ bluebird@^2.6.2:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-2.11.0.tgz#534b9033c022c9579c56ba3b3e5a5caafbb650e1"
   integrity sha1-U0uQM8AiyVecVro7Plpcqvu2UOE=
 
-bluebird@^3.1.1, bluebird@^3.1.5, bluebird@^3.5.0, bluebird@^3.5.3:
-  version "3.5.5"
-  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"
-  integrity sha512-5am6HnnfN+urzt4yfg7IgTbotDjIT/u8AJpEt0sIU9FtXfVeezXAPKswrG+xKUCOYAINpSdgZVDU6QFh+cuH3w==
-
-bluebird@^3.5.1, bluebird@^3.7.1:
+bluebird@^3.1.1, bluebird@^3.1.5, bluebird@^3.5.0, bluebird@^3.5.1, bluebird@^3.5.3, bluebird@^3.7.1:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
@@ -6746,10 +6741,10 @@ ini@^1.3.5, ini@~1.3.0:
   resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.7.tgz#a09363e1911972ea16d7a8851005d84cf09a9a84"
   integrity sha512-iKpRpXP+CrP2jyrxvg1kMUpXDyRUFDWurxbnVT1vQPx+Wz9uCYsMIqYuSBLV+PAaZG/d7kRLKRFc9oDMsH+mFQ==
 
-instagram-private-api@1.43.3:
-  version "1.43.3"
-  resolved "https://registry.yarnpkg.com/instagram-private-api/-/instagram-private-api-1.43.3.tgz#3c9abdb8e774f95f142258bc7cebfd0cbcc4771c"
-  integrity sha512-ciTQBEFrM1FkAFq0dJ8RuU0OkrRQCU4MamZniIrFgxMGdgRmG24jW0xiNzGwFR9MLRWgdl0fHfcWLjTCzmpqwg==
+instagram-private-api@1.43.4:
+  version "1.43.4"
+  resolved "https://registry.yarnpkg.com/instagram-private-api/-/instagram-private-api-1.43.4.tgz#d5678dde7028844cb784fde40de67b4d596190c5"
+  integrity sha512-YvAITVGn9Jw7V9dxo3vNXGipUFnE+k01H8ESvhmVTvhuUju6SZeto8QJbkXEXBABvbJRV57keomx6StxBS/6FA==
   dependencies:
     "@lifeomic/attempt" "^3.0.0"
     "@types/chance" "^1.0.2"
@@ -11039,17 +11034,7 @@ request-promise-native@^1.0.5, request-promise-native@^1.0.8:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request-promise@^4.2.2:
-  version "4.2.5"
-  resolved "https://registry.npm.taobao.org/request-promise/download/request-promise-4.2.5.tgz?cache=0&sync_timestamp=1572828627911&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Frequest-promise%2Fdownload%2Frequest-promise-4.2.5.tgz#186222c59ae512f3497dfe4d75a9c8461bd0053c"
-  integrity sha1-GGIixZrlEvNJff5NdanIRhvQBTw=
-  dependencies:
-    bluebird "^3.5.0"
-    request-promise-core "1.1.3"
-    stealthy-require "^1.1.1"
-    tough-cookie "^2.3.3"
-
-request-promise@^4.2.4:
+request-promise@^4.2.2, request-promise@^4.2.4:
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/request-promise/-/request-promise-4.2.6.tgz#7e7e5b9578630e6f598e3813c0f8eb342a27f0a2"
   integrity sha512-HCHI3DJJUakkOr8fNoCc73E5nU5bqITjOYFMDrKHYOXWXrgD/SBaC7LjwuPymUprRyuF06UK7hd/lMHkmUXglQ==
