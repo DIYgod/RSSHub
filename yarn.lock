@@ -8948,17 +8948,7 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.12.1, nan@^2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
-  integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
-
-nan@^2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.1.tgz#d7be34dfa3105b91494c3147089315eff8874b01"
-  integrity sha512-isWHgVjnFjh2x2yuJ/tj3JbwoHu3UC2dX5G/88Cm24yB6YopVgxvBObDY7n5xW6ExmFhJpSEQqFPvq9zaXc8Jw==
-
-nan@^2.14.2:
+nan@^2.12.1, nan@^2.14.0, nan@^2.14.2:
   version "2.14.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
   integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
@@ -9449,12 +9439,12 @@ only@~0.0.2:
   resolved "https://registry.yarnpkg.com/only/-/only-0.0.2.tgz#2afde84d03e50b9a8edc444e30610a70295edfb4"
   integrity sha1-Kv3oTQPlC5qO3EROMGEKcCle37Q=
 
-opencc@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/opencc/-/opencc-1.1.1.tgz#94776e515ef13b23e00065caa04a69e9529d460e"
-  integrity sha512-t/4FIL43esdrUDfQejqHPhZyWdDVRfwMxsNBkA/2NjIEQv33mG80WHXcmEJ+KMd6T8bjbtx+EiJzPiybE8SPeg==
+opencc@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/opencc/-/opencc-1.1.2.tgz#63e611d946873cc8d4351118ba620349f08ec028"
+  integrity sha512-xsuoBDM5O3Qt+ctLcI97a5A/Ta+js3pa0cPodz05cQqAB27D95Sq8S+WRPZYdlShzw0xav1d+rKuaUdGksMB6Q==
   dependencies:
-    nan "^2.14.1"
+    nan "^2.14.2"
     node-pre-gyp "^0.14.0"
 
 opencollective-postinstall@^2.0.2:
