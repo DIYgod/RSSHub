@@ -46,6 +46,22 @@ pageClass: routes
 
 <Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
 
+## BabeHub
+
+### 分类
+
+<Route author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| Home | Most Viewed | Picture Archive | Video Archive |
+| ---- | ----------- | --------------- | ------------- |
+|      | most-viewed | picture         | video         |
+
+</Route>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
+
 ## Bing 壁纸
 
 ### 每日壁纸

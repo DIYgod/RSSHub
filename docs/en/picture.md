@@ -36,6 +36,22 @@ pageClass: routes
 
 </RouteEn>
 
+## BabeHub
+
+### Category
+
+<RouteEn author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['Category, see below, Home by default']">
+
+| Home | Most Viewed | Picture Archive | Video Archive |
+| - | - | - | - |
+| | most-viewed | picture | video |
+
+</RouteEn>
+
+### Search
+
+<RouteEn author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
+
 ## Bing Wallpaper
 
 ### Daily Wallpaper
