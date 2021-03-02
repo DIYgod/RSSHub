@@ -2731,6 +2731,17 @@
             },
         ],
     },
+    'trakt.tv': {
+        _name: 'Trakt.tv',
+        '.': [
+            {
+                title: '用户收藏',
+                docs: 'https://docs.rsshub.app/multimedia.html#trakt-tv-yong-hu-shou-cang',
+                source: ['/users/:username/collection/:type/added', '/users/:username/collection'],
+                target: (params) => `/trakt/collection/${params.username}/${params.type || 'all'}`,
+            },
+          ],
+    },
     'eagle.cool': {
         _name: 'Eagle',
         cn: [
