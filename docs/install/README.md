@@ -479,9 +479,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv 用户名
-
-    -   `PIXIV_PASSWORD`: Pixiv 密码
+    -   `PIXIV_REFRESHTOKEN`: Pixiv Refresh Token, 请参考 [此文](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 获取，或自行对客户端抓包获取
 
     -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
 
