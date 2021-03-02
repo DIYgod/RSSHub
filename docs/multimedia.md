@@ -477,6 +477,14 @@ pageClass: routes
 
 </Route>
 
+### 指定剧集
+
+<Route author="nczitzk" example="/newzmz/view/qEzRyY3v" path="/newzmz/view/:id?" :paramsDesc="['剧集 id，可在剧集下载页 URL 中找到']">
+
+如：雪国列车（剧版）的下载页 URL 为 `https://ysfx.tv/view/qEzRyY3v.html`，即剧集 id 为 `qEzRyY3v`。
+
+</Route>
+
 ## Nyaa
 
 ### 搜索结果
@@ -615,6 +623,12 @@ pageClass: routes
 ## subHD.tv - 最新字幕
 
 <Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
+## Trakt.tv
+
+### 用户收藏
+
+<Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['用户名','收藏类型，可选`movies`,`shows`,`episodes`,`all`，默认为`all`']" radar="1" rssbud="1" />
+
 ## Yahoo! テレビ
 
 ### 番組検索

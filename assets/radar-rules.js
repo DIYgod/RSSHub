@@ -387,6 +387,12 @@
                 source: '/pub/weekly',
                 target: '/zhihu/weekly',
             },
+            {
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
+                source: '/column/:id',
+                target: '/zhihu/zhuanlan/:id',
+            },
         ],
         zhuanlan: [
             {
@@ -2731,6 +2737,17 @@
             },
         ],
     },
+    'trakt.tv': {
+        _name: 'Trakt.tv',
+        '.': [
+            {
+                title: '用户收藏',
+                docs: 'https://docs.rsshub.app/multimedia.html#trakt-tv-yong-hu-shou-cang',
+                source: ['/users/:username/collection/:type/added', '/users/:username/collection'],
+                target: (params) => `/trakt/collection/${params.username}/${params.type || 'all'}`,
+            },
+        ],
+    },
     'eagle.cool': {
         _name: 'Eagle',
         cn: [
@@ -2855,6 +2872,35 @@
                 docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
                 source: '/journal/:id/',
                 target: '/furaffinity/journal_comments/:id',
+            },
+        ],
+    },
+    'gcores.com': {
+        _name: '机核网',
+        www: [
+            {
+                title: '资讯',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/news',
+                target: '/gcores/category/news',
+            },
+            {
+                title: '视频',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/videos',
+                target: '/gcores/category/videos',
+            },
+            {
+                title: '电台',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/radios',
+                target: '/gcores/category/radios',
+            },
+            {
+                title: '文章',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/articles',
+                target: '/gcores/category/articles',
             },
         ],
     },

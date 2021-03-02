@@ -218,6 +218,12 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
 
+## Logseq
+
+### Changelog
+
+<Route author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+
 ## MacKed
 
 ### 应用更新
@@ -347,6 +353,18 @@ pageClass: routes
 ### Release Notes
 
 <Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
+
+## Shuax
+
+### Project
+
+<Route author="nczitzk" example="/shuax/project/chrome" path="/shuax/project"  :paramsDesc="['项目名，见下表，默认为 MouseInc']">
+
+| MouseInc | Chrome | Edge |
+| -------- | ------ | ---- |
+| mouseinc | chrome | edge |
+
+</Route>
 
 ## simpread
 

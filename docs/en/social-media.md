@@ -38,7 +38,7 @@ pageClass: routes
 
 ### Home
 
-<RouteEn author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/:type?/:nsfw?" :paramsDesc="['Art Type, default to be `artwork`', 'NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1">
+<RouteEn author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/home/:type?/:nsfw?" :paramsDesc="['Art Type, default to be `artwork`', 'NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1">
 
 Type
 
@@ -50,7 +50,7 @@ Type
 
 ### Browse
 
-<RouteEn author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/:nsfw?" :paramsDesc="['NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1"/>
+<RouteEn author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/browse/:nsfw?" :paramsDesc="['NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1"/>
 
 ### Website Status
 
@@ -62,7 +62,7 @@ Type
 
 ### Search
 
-<RouteEn author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/:keyword/:nsfw?" :paramsDesc="['Search keyword, enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW contents when value set to `1`']" radar="1"/>
+<RouteEn author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/search/:keyword/:nsfw?" :paramsDesc="['Search keyword, enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW contents when value set to `1`']" radar="1"/>
 
 ### User's Watching List
 
