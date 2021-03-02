@@ -387,6 +387,12 @@
                 source: '/pub/weekly',
                 target: '/zhihu/weekly',
             },
+            {
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
+                source: '/column/:id',
+                target: '/zhihu/zhuanlan/:id',
+            },
         ],
         zhuanlan: [
             {
@@ -2728,6 +2734,44 @@
                         return '/cqwu/news/academiceve';
                     }
                 },
+            },
+        ],
+    },
+    'trakt.tv': {
+        _name: 'Trakt.tv',
+        '.': [
+            {
+                title: '用户收藏',
+                docs: 'https://docs.rsshub.app/multimedia.html#trakt-tv-yong-hu-shou-cang',
+                source: ['/users/:username/collection/:type/added', '/users/:username/collection'],
+                target: (params) => `/trakt/collection/${params.username}/${params.type || 'all'}`,
+            },
+          ],
+    },
+    'eagle.cool': {
+        _name: 'Eagle',
+        cn: [
+            {
+                title: '更新日志',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/changelog',
+                target: '/eagle/changelog/cn',
+            },
+        ],
+        tw: [
+            {
+                title: '更新日誌',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/changelog',
+                target: '/eagle/changelog/tw',
+            },
+        ],
+        en: [
+            {
+                title: 'Release Notes',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/changelog',
+                target: '/eagle/changelog/en',
             },
         ],
     },
