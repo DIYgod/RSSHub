@@ -1668,6 +1668,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 全球化智库
+
+### 分类
+
+<Route author="nczitzk" example="/ccg" path="/ccg/:category?" :paramsDesc="['分类，见下表']">
+
+| 新闻动态 | 媒体报道 | 观点 |
+| -------- | -------- | ---- |
+| news     | mtbd     | view |
+
+</Route>
+
 ## 全现在
 
 <Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
