@@ -1241,7 +1241,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 分类
 
-<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']">
+<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']" radar="1">
 
 | 资讯 | 视频   | 电台   | 文章     |
 | ---- | ------ | ------ | -------- |
