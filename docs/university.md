@@ -155,8 +155,8 @@ pageClass: routes
 <Route author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" :paramsDesc="['文章类别']">
 
 | 所有文章 | 通知公告 | 新闻动态 | 招生宣传 | 培养 | 学位 | 招生 | 硕士招生 | 博士招生 | 招生简章 | 招生政策法规 | 研工部通知公告 | 研工部新闻动态 |
-| ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
-| all  | noti     | news    | zsxc       | py       | xw      | zs     | sszs    | bszs      | zsjz    | zcfg    | ygbtzgg    | ygbnews    |
+| -------- | -------- | -------- | -------- | ---- | ---- | ---- | -------- | -------- | -------- | ------------ | -------------- | -------------- |
+| all      | noti     | news     | zsxc     | py   | xw   | zs   | sszs     | bszs     | zsjz     | zcfg         | ygbtzgg        | ygbnews        |
 
 </Route>
 

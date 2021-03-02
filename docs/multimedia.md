@@ -623,17 +623,17 @@ pageClass: routes
 ## subHD.tv - 最新字幕
 
 <Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
-## Yahoo! テレビ
-
-### 番組検索
-
-<Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
-
 ## Trakt.tv
 
 ### 用户收藏
 
 <Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['用户名','收藏类型，可选`movies`,`shows`,`episodes`,`all`，默认为`all`']" radar="1" rssbud="1" />
+
+## Yahoo! テレビ
+
+### 番組検索
+
+<Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
 
 ## YouTube
 

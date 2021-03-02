@@ -2746,7 +2746,7 @@
                 source: ['/users/:username/collection/:type/added', '/users/:username/collection'],
                 target: (params) => `/trakt/collection/${params.username}/${params.type || 'all'}`,
             },
-          ],
+        ],
     },
     'eagle.cool': {
         _name: 'Eagle',
