@@ -477,6 +477,14 @@ pageClass: routes
 
 </Route>
 
+### 指定剧集
+
+<Route author="nczitzk" example="/newzmz/view/qEzRyY3v" path="/newzmz/view/:id?" :paramsDesc="['剧集 id，可在剧集下载页 URL 中找到']">
+
+如：雪国列车（剧版）的下载页 URL 为 `https://ysfx.tv/view/qEzRyY3v.html`，即剧集 id 为 `qEzRyY3v`。
+
+</Route>
+
 ## Nyaa
 
 ### 搜索结果
@@ -615,6 +623,12 @@ pageClass: routes
 ## subHD.tv - 最新字幕
 
 <Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
+## Trakt.tv
+
+### 用户收藏
+
+<Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['用户名','收藏类型，可选`movies`,`shows`,`episodes`,`all`，默认为`all`']" radar="1" rssbud="1" />
+
 ## Yahoo! テレビ
 
 ### 番組検索
@@ -750,6 +764,28 @@ pageClass: routes
 ### 今日精选
 
 <Route author="Wenmoux" example="/changku" path="/changku"/>
+
+### 分类
+
+<Route author="Wenmoux" example="/changku/cate/12" path="/changku/cate/:cateid" :paramsDesc="['分类id']">
+
+| 创意 | 励志 | 搞笑 | 广告 | 汽车 | 旅行 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 6    | 7    | 8    | 13   | 92   | 11   |
+
+| 爱情 | 剧情 | 运动 | 动画 | 音乐 | 科幻 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 12   | 17   | 10   | 16   | 18   | 23   |
+
+| 预告 | 记录 | 混剪 | 游戏 | 时尚 | 实验 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 43   | 24   | 44   | 104  | 88   | 45   |
+
+| 生活 |
+| ---- |
+| 78   |
+
+</Route>
 
 ## 低端影视
 
