@@ -594,6 +594,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
 
+## 游讯网
+
+### 精彩推荐
+
+<Route author="nczitzk" example="/yxdown/recommend" path="/yxdown/recommend"/>
+
 ## 游研社
 
 ### 游研社 - 分类文章
