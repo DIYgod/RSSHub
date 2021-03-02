@@ -96,7 +96,7 @@ Language
 
 ### File Update
 
-<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']"/>
+<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']">
 
 For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
 
@@ -119,6 +119,20 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
 
 :::
+
+## Eagle
+
+### Changelog
+
+<RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
+  
+Language
+
+| Simplified Chinese | Traditional Chinese | English |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
+    
+</RouteEn>
 
 ## Everything
 
@@ -226,6 +240,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+
+## Obsidian
+
+### Announcements
+
+<RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
 ## PlayStation
 

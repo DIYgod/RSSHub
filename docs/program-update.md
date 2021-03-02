@@ -158,6 +158,20 @@ pageClass: routes
 
 :::
 
+## Eagle
+
+### 更新日志
+
+<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog/:language?" :paramsDesc="['语言，选项见下表，默认为 `cn`']" radar="1">
+    
+语言
+
+| 简体中文 | 繁体中文 | 英文 |
+| -------- | -------- | ---- |
+| cn       | tw       | en   |
+
+</Route>
+
 ## Everything
 
 ### Changes
@@ -269,6 +283,12 @@ pageClass: routes
 ### 更新日志
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+
+## Obsidian
+
+### Announcements
+
+<Route author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
 ## OneNote Gem Add-Ins
 
