@@ -174,6 +174,12 @@ Language
 
 <RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']"/>
 
+## Logseq
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+
 ## MacKed
 
 ### APP Update
