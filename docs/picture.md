@@ -94,6 +94,32 @@ pageClass: routes
 
 </Route>
 
+## Elite Babes
+
+### Home
+
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']">
+
+| Home | Hot | Popular | Recent |
+| ---- | --- | ------- | ------ |
+|      | hot | popular | recent |
+
+</Route>
+
+### Videos
+
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']">
+
+| Popular | Recent |
+| ------- | ------ |
+| popular | recent |
+
+</Route>
+
+### Search
+
+<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['关键字']"/>
+
 ## Fantia
 
 ### 搜索

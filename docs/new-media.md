@@ -1241,7 +1241,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 分类
 
-<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']">
+<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']" radar="1">
 
 | 资讯 | 视频   | 电台   | 文章     |
 | ---- | ------ | ------ | -------- |
@@ -1522,6 +1522,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 美国劳工联合会 - 产业工会联合会
+
+### 博客
+
+<Route author="nczitzk" example="/aflcio/blog" path="/aflcio/blog"/>
+
 ## 梅花网
 
 ### 作品
@@ -1662,9 +1668,31 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 全球化智库
+
+### 分类
+
+<Route author="nczitzk" example="/ccg" path="/ccg/:category?" :paramsDesc="['分类，见下表']">
+
+| 新闻动态 | 媒体报道 | 观点 |
+| -------- | -------- | ---- |
+| news     | mtbd     | view |
+
+</Route>
+
 ## 全现在
 
+### 专栏
+
 <Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
+
+### 话题
+
+<Route author="nczitzk" example="/allnow/tag/678" path="/allnow/tag/:id" :paramsDesc="['话题 id']"/>
+
+### 用户
+
+<Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" :paramsDesc="['用户 id']"/>
 
 ## 人人都是产品经理
 
@@ -1692,7 +1720,7 @@ column 为 third 时可选的 category:
 
 ### 最新上架付费专栏
 
-<Route author="HenryQW" example="/sspai/series" path="/sspai/series">
+<Route author="HenryQW" example="/sspai/series" path="/sspai/series" radar="1">
 
 > 少数派专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
@@ -1700,27 +1728,27 @@ column 为 third 时可选的 category:
 
 ### Shortcuts Gallery
 
-<Route author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
+<Route author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" radar="1"/>
 
 ### Matrix
 
-<Route author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" />
+<Route author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" radar="1"/>
 
 ### 专栏
 
-<Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
+<Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']" radar="1"/>
 
 ### 作者
 
-<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']" radar="1"/>
 
 ### 作者动态
 
-<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']"/>
+<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']" radar="1"/>
 
 ### 专题
 
-<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
+<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics" radar="1">
 
 此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！
 
@@ -1728,11 +1756,17 @@ column 为 third 时可选的 category:
 
 ### 专题内文章更新
 
-<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
+<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']" radar="1"/>
 
 ### 标签订阅
 
-<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
+<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']" radar="1"/>
+
+## 深圳新闻网
+
+### 排行榜
+
+<Route author="nczitzk" example="/sznews/ranking" path="/sznews/ranking"/>
 
 ## 生命时报
 
@@ -1899,9 +1933,10 @@ column 为 third 时可选的 category:
 
 ## 网易号（通用）
 
-优先使用方法一，若是网易号搜索页面搜不到的小众网易号（文章页面不含`data-wemediaid`）则可使用此法。
-触发反爬会只抓取到标题，建议自建。
-<Route author="mjysci" example="/netease/dy2/T1555591616739" path="/netease/dy2/:id" :paramsDesc="['id，该网易号主页网址最后一项html的文件名']" anticrawler="1"/> 
+<Route author="mjysci" example="/netease/dy2/T1555591616739" path="/netease/dy2/:id" :paramsDesc="['id，该网易号主页网址最后一项html的文件名']" anticrawler="1"/>
+
+优先使用方法一，若是网易号搜索页面搜不到的小众网易号（文章页面不含`data-wemediaid`）则可使用此法。  
+触发反爬会只抓取到标题，建议自建。  
 
 ## 网易新闻
 
@@ -2167,6 +2202,12 @@ column 为 third 时可选的 category:
 | default | hot  | new  |
 
 </Route>
+
+## 亿欧网
+
+### 资讯
+
+<Route author="WenryXu" example="/iyiou" path="/iyiou"/>
 
 ## 有趣天文奇观
 
