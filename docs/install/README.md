@@ -359,7 +359,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 #### 代理 URI
 
-`PROXY_URI`: 代理 URI，支持 socks4, socks5h（传域名的 SOCKS5）, http, https
+`PROXY_URI`: 代理 URI，支持 socks4, socks5, socks5h（传域名的 SOCKS5，推荐使用）, http, https
 
 > 代理 URI 的格式为：
 >
@@ -370,6 +370,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 >
 > -   `socks4://127.0.0.1:1080`
 > -   `socks5h://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
+> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`，非 `socks5h`，不推荐使用)
 > -   `http://127.0.0.1:8080`
 > -   `http://user:pass@127.0.0.1:8080`
 > -   `https://127.0.0.1:8443`
