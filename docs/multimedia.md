@@ -66,15 +66,15 @@ pageClass: routes
 
 **类型**
 
-| 最新 | 热门    | 随机   | 指定演员 | 指定标签 | 指定日期 |
+| 最新 | 热门    | 随机   | ~~指定演员~~ | ~~指定标签~~ | 指定日期 |
 | ---- | ------- | ------ | -------- | -------- | -------- |
-| new  | popular | random | actress  | tag      | day      |
+| new  | popular | random | ~~actress~~  | ~~tag~~      | day      |
 
 **关键词**
 
-| 空 | 日期范围    | 演员名       | 标签名         | 日期     |
+| 空 | 日期范围    | ~~演员名~~       | ~~标签名~~         | 日期     |
 | -- | ----------- | ------------ | -------------- | -------- |
-|    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
+|    | 7 / 30 / 60 | ~~Yua%20Mikami~~ | ~~Adult%20Awards~~ | YYYYMMDD |
 
 **示例说明**
 
@@ -86,13 +86,15 @@ pageClass: routes
 
     `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
 
--   `/141ppv/actress/Yua%20Mikami`
+-   目前该网站没有演员和标签内容
 
-    `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141ppv.com/actress/) 演员单页链接中获取
+-   ~~`/141ppv/actress/Yua%20Mikami`~~
 
--   `/141ppv/tag/Adult%20Awards`
+    ~~`actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141ppv.com/actress/) 演员单页链接中获取~~
 
-    `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141ppv.com/tag/) 标签单页链接中获取
+-   ~~`/141ppv/tag/Adult%20Awards`~~
+
+    ~~`tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141ppv.com/tag/) 标签单页链接中获取~~
 
 -   `/141ppv/day/20200730`
 
