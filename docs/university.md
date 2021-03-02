@@ -1614,12 +1614,6 @@ type 列表：
 
 <Route author="2PoL" example="/tynu" path="/tynu" />
 
-## 台州学院
-
-### 通知公告
-
-<Route author="xizeyoupan" example="/tzc/tzgg" path="/tzc/tzgg" />
-
 ## 天津大学
 
 ### 天津大学教务处
