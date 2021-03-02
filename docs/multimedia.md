@@ -126,6 +126,31 @@ pageClass: routes
 
 见 [#AGE 动漫](/anime.html#age-dong-man)
 
+## AV01（av01.tv）
+
+### 演员
+
+::: tip 提示
+当没有给定排序类型时，默认为按上传时间排序及 mr
+
+:::
+
+<Route author="HXHL" example="/av01/actor/七沢みあ" path="/av01/actor/:name/:type?" :paramsDesc="['女优名,必选-仅限日语,可直接在网站上找到','排序顺序,可选-可以是`mr` `rd` `bw` `tr` `lg`']">
+
+| 按上传时间排序 | 按上市时间排序 | 按观看次数排序 | 按评分排序 | 按时长排序 |
+| -------------- | -------------- | -------------- | ---------- | ---------- |
+| mr             | rd             | bw             | tr         | lg         |
+
+</Route>
+
+### 分类
+
+<Route author="HXHL" example="/av01/tag/中出し" path="/av01/tag/:name/:type?" :paramsDesc="['分类名,必选-仅限日语,可直接在网站上找到','排序顺序,可选-可以是`mr` `rd` `bw` `tr` `lg`']">
+
+例如，路由 `/av01/tag/中出し` 应该输出 <https://www.av01.tv/tag/%E4%B8%AD%E5%87%BA%E3%81%97> 的排行榜单
+
+</Route>
+
 ## Avgle
 
 ### 视频列表
@@ -596,6 +621,12 @@ pageClass: routes
 
 <Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
 
+## Trakt.tv
+
+### 用户收藏
+
+<Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['用户名','收藏类型，可选`movies`,`shows`,`episodes`,`all`，默认为`all`']" radar="1" rssbud="1" />
+
 ## YouTube
 
 见 [#youtube](/social-media.html#youtube)
@@ -1021,31 +1052,5 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 <Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']">
 
 例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
-
-</Route>
-
-## AV01（av01.tv）
-
-### 演员
-
-::: tip 提示
-当没有给定排序类型时,默认为按上传时间排序及mr
-
-:::
-
-<Route author="HXHL" example="/av01/actor/七沢みあ" path="/av01/actor/:name/:type?" :paramsDesc="['女优名,必选-仅限日语,可直接在网站上找到','排序顺序,可选-可以是`mr` `rd` `bw` `tr` `lg`']">
-
-
-| 按上传时间排序  | 按上市时间排序 | 按观看次数排序| 按评分排序|按时长排序|
-| --------     | --------    |--------     |--------  |--------|
-|    mr        |     rd      |   bw        |  tr      |  lg  |
-</Route>
-
-
-### 分类
-
-<Route author="HXHL" example="/av01/tag/中出し" path="/av01/tag/:name/:type?" :paramsDesc="['分类名,必选-仅限日语,可直接在网站上找到','排序顺序,可选-可以是`mr` `rd` `bw` `tr` `lg`']">
-
-例如，路由 `/av01/tag/中出し` 应该输出 <https://www.av01.tv/tag/%E4%B8%AD%E5%87%BA%E3%81%97> 的排行榜单
 
 </Route>
