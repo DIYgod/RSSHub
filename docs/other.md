@@ -4,6 +4,18 @@ pageClass: routes
 
 # 其他
 
+## 4399 论坛
+
+### 4399 论坛
+
+<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" :paramsDesc="['mtag,必选-论坛网址最后的mtag字段']" selfhost="1"/>
+::: warning 注意
+
+需要用户 cookie 值，详情见部署页面的配置模块。
+
+:::
+</Route>
+
 ## acwifi 路由器交流
 
 ### 新闻
@@ -137,7 +149,7 @@ pageClass: routes
 
 ### 订阅列表
 
-<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" :paramsDesc="['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']">
+<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" :paramsDesc="['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']" selfhost="1">
 
 1.  如无指定参数，默认输出全部订阅源
 2.  分类 ID 或订阅源 ID 请于`分类`（快捷键 `g` `c`）或`源`（快捷键 `g` `f`）页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。
@@ -149,7 +161,7 @@ pageClass: routes
 
 ### 获取订阅源内容
 
-<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" :paramsDesc="['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']">
+<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" :paramsDesc="['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']" selfhost="1">
 
 1.  支持获取全部内容：即可通过 `/miniflux/all` 或 `/miniflux/default` 等关键字获取全部订阅源下的内容。
 2.  支持通过订阅源的 ID 获取指定订阅源的订阅内容，订阅源 ID 请于`源`（快捷键 `g` `f`）所在的页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。而格式上有如下选择：
@@ -351,6 +363,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 滴答清单
+
+### 习惯打卡
+
+::: warning 注意
+
+需要账号密码，详情见部署文档部分 RSS 模块配置
+
+:::
+
+<Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
+
 ## 东莞教研网
 
 ### 信息公开
@@ -367,7 +391,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 福利资源 - met.red
 
-<Route author="junfengP" example="/metred/fuli" path="/metred/fuli" />
+<Route author="junfengP queensferryme" example="/metred/fuli" path="/metred/fuli" />
 
 ## 古诗文网
 
@@ -730,6 +754,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
 
+## 天眼查
+
+### 热门搜索
+
+<Route author="nczitzk" example="/tianyancha/hot" path="/tianyancha/hot" anticrawler="1"/>
+
 ## 无讼案例
 
 ### 案例
@@ -812,7 +842,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
-<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" />
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" selfhost="1"/>
 
 ## 源仓库
 
@@ -919,13 +949,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-### 4399 论坛
-
-<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" :paramsDesc="['mtag,必选-论坛网址最后的mtag字段']"/>
-::: warning 注意
-
-需要用户 cookie 值，详情见部署页面的配置模块。
-
-:::
-</Route>

@@ -28,6 +28,16 @@ pageClass: routes
 
 </Route>
 
+### 广东省深圳市人民政府
+
+<Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
+
+| 通知公告 | 政府采购 | 资金信息 | 重大项目 |
+| :------: | :------: | :------: | :------: |
+|   tzgg   |   zfcg   |   zjxx   |   zdxm   |
+
+</Route>
+
 ## 国家税务总局
 
 ### 最新文件
@@ -76,6 +86,46 @@ pageClass: routes
 ### 安理会否决了决议
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+## 美国财政部
+
+### 新闻稿
+
+<Route author="nczitzk" example="/treasury/press-releases" path="/treasury/press-releases/:category?/:title?" :paramsDesc="['分类，见下表，默认为全部', '标题关键字，默认为空']">
+
+分类
+
+| Press Releases | Statements & Remarks | Readouts | Testimonies |
+| -------------- | -------------------- | -------- | ----------- |
+| all            | statements-remarks   | readouts | testimonies |
+
+</Route>
+
+## 美国联邦最高法院
+
+### 辩论音频
+
+<Route author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['年份，默认为当前年份']"/>
+
+## 美国贸易代表办公室
+
+### 新闻稿
+
+<Route author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" :paramsDesc="['年份，默认为当前年份', '月份，默认为空，即全年']">
+
+::: tip 提示
+
+月份处填写该月的英语表达，如 12 月 应填入 `December`。
+
+:::
+
+</Route>
+
+## 美国中央情报局
+
+### 年度信息自由法报告
+
+<Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 
 ## 泉州市跨境电子商务协会
 
@@ -145,6 +195,18 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
 
+## 中国农工民主党
+
+### 新闻中心
+
+<Route author="nczitzk" example="/ngd" path="/ngd/:slug?" :paramsDesc="['见下文']">
+
+将目标栏目的网址拆解为 `http://www.ngd.org.cn/` 和后面的字段，去掉 `.htm` 后，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+
+如：(要闻动态)[http://www.ngd.org.cn/xwzx/ywdt/index.htm] 的网址在 `http://www.ngd.org.cn/` 后的字段是 `xwzx/ywdt/index.htm`，则对应的 slug 为 `xwzx-ywdt-index`，对应的路由即为 `/ngd/xwzx-ywdt-index`
+
+</Route>
+
 ## 中国人大网
 
 <Route author="233yeee" example="/npc/c183" path="/npc/:caty" :paramsDesc="['分类名，支持形如`http://www.npc.gov.cn/npc/*/list.shtml`的网站，传入 npc 之后的参数']">
@@ -154,6 +216,12 @@ pageClass: routes
 | c183 | c184 | c185 | c189 | c12435   | c10134   |
 
 </Route>
+
+## 中国庭审公开网
+
+### 开庭信息
+
+<Route author="Fatpandac" example="/tingshen" path="/tingshen"/>
 
 ## 中国信息通信研究院
 
@@ -240,6 +308,32 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
 
+## 中国证券监督管理委员会
+
+### 发审委公告
+
+<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
+
+### 证监会消息
+
+<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+
+### 申请事项进度
+
+<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
+
+## 中国政协网
+
+### 栏目
+
+<Route author="nczitzk" example="/cppcc" path="/cppcc/:slug?" :paramsDesc="['见下文']">
+
+将目标栏目的网址拆解为 `http://www.cppcc.gov.cn/` 和后面的字段，去掉 `.shtml` 后，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+
+如：(委员建言)[http://www.cppcc.gov.cn/zxww/newcppcc/wyjy/index.shtml] 的网址在 `http://www.cppcc.gov.cn/` 后的字段是 `zxww/newcppcc/wyjy/index.shtml`，则对应的 slug 为 `zxww-newcppcc-wyjy-index`，对应的路由即为 `/cppcc/zxww-newcppcc-wyjy-index`
+
+</Route>
+
 ### 北京市人民政府
 
 #### 北京教育考试院
@@ -318,20 +412,6 @@ pageClass: routes
 |   news   | department | district | livelihood |
 
 </Route>
-
-## 中国证券监督管理委员会
-
-### 发审委公告
-
-<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
-
-### 证监会消息
-
-<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
-
-### 申请事项进度
-
-<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国驻外使领馆
 
@@ -494,6 +574,18 @@ pageClass: routes
 ### 数据 - 最新发布
 
 <Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
+
+## 中华人民共和国人力资源和社会保障部
+
+### 社保减免
+
+<Route author="ncziztk" example="/gov/mohrss/sbjm" path="/gov/mohrss/sbjm/:category?" :paramsDesc="['分类，见下表']">
+
+| 要点新闻 | 政策文件 | 工作动态 | 媒体报道 | 图片新闻 |
+| -------- | -------- | -------- | -------- | -------- |
+| ydxw     | zcwj     | gzdt     | mtbd     | tpxw     |
+
+</Route>
 
 ## 中华人民共和国商务部
 

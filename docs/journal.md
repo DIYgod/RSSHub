@@ -35,6 +35,12 @@ pageClass: routes
 
 </Route>
 
+## BioOne
+
+### Featured articles
+
+<Route author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
+
 ## Cell
 
 ### 主刊
@@ -55,6 +61,16 @@ pageClass: routes
 订阅 Cell 系列杂志的封面图片，并及时获取刊物更新状态。
 
 包含了： 'cell'、 'cancer-cell'、 'cell-chemical-biology'、 'cell-host-microbe'、 'cell-metabolism'、 'cell-reports'、 'cell-reports-physical-science'、 'cell-stem-cell'、 'cell-systems'、 'chem'、 'current-biology'、 'developmental-cell'、 'immunity'、 'joule'、 'matter'、 'molecular-cell'、 'neuron'、 'one-earth' 和'structure'。
+
+</Route>
+
+## Deloitte
+
+<Route author="laampui" example="/deloitte/industries/consumer" path="/deloitte/industries/:category?" :paramsDesc="['默认为 energy-resources-industrials']">
+
+| 消费行业 | 能源、资源及工业行业         | 金融服务行业       | 政府及公共服务             | 生命科学与医疗行业       | 科技、传媒及电信行业                |
+| -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
+| consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
 
 </Route>
 

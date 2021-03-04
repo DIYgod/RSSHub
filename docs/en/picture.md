@@ -36,15 +36,69 @@ pageClass: routes
 
 </RouteEn>
 
+## BabeHub
+
+### Category
+
+<RouteEn author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['Category, see below, Home by default']">
+
+| Home | Most Viewed | Picture Archive | Video Archive |
+| - | - | - | - |
+| | most-viewed | picture | video |
+
+</RouteEn>
+
+### Search
+
+<RouteEn author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
+
 ## Bing Wallpaper
 
 ### Daily Wallpaper
 
 <RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
+## ComicsKingdom Comic Strips
+
+<RouteEn author="stjohnjohnson" example="/comicskingdom/baby-blues" path="/comicskingdom/:strip" :paramsDesc="['URL path of the strip on comicskingdom.com']" />
+
+## DailyArt
+
+<RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
+
 ## Dilbert Comic Strip
 
 <RouteEn name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip"/>
+
+## Elite Babes
+
+### Home
+
+<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['Category, see below, Home by default']">
+
+| Home | Hot | Popular | Recent |
+| ---- | --- | ------- | ------ |
+|      | hot | popular | recent |
+
+</Route>
+
+### Videos
+
+<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['Sort, see below, Popular by default']">
+
+| Popular | Recent |
+| ------- | ------ |
+| popular | recent |
+
+</Route>
+
+### Search
+
+<RouteEn author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['Keyword']"/>
+
+## GoComics Comic Strips
+
+<RouteEn author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" :paramsDesc="['URL path of the strip on gocomics.com']" />
 
 ## Google Doodles
 

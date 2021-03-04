@@ -288,7 +288,7 @@ pageClass: routes
 
 ### 风之动漫
 
-<Route author="geeeeoff" path="/fzdm/manhua/:id" example="/fzdm/manhua/39" :paramsDesc="['漫画ID']"/>
+<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id/:nums?" example="/fzdm/manhua/39/2" :paramsDesc="['漫画ID', '最新的n话, 默认为最新1话']" anticrawler="1"/>
 
 ## 海猫吧
 
@@ -331,6 +331,10 @@ pageClass: routes
 ### 最新
 
 <Route author="KenMizz" example="/ssmh" path="/ssmh/" />
+
+### 分类更新
+
+<Route author="Gandum2077" example="/ssmh/category/6" path="/ssmh/category/:cid" :paramsDesc="['分类的id，即对应 URL 中的数字']" />
 
 ## 鼠绘漫画
 

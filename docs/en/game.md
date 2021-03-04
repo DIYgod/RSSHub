@@ -4,6 +4,52 @@ pageClass: routes
 
 # Gaming
 
+## Blizzard
+
+### News
+
+<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['Language code, see below, en-US by default', 'Category, see below, All News by default']">
+
+Categories
+
+| Category               | Slug                |
+| ---------------------- | ------------------- |
+| All News               |                     |
+| Diablo III             | diablo3             |
+| Diablo IV              | diablo4             |
+| Diablo: Immortal       | diablo-immortal     |
+| Hearthstone            | hearthstone         |
+| Heroes of the Storm    | heroes-of-the-storm |
+| Overwatch              | overwatch           |
+| StarCraft: Remastered  | starcraft           |
+| StarCraft II           | starcraft2          |
+| World of Warcraft      | world-of-warcraft   |
+| Warcraft III: Reforged | warcraft3           |
+| BlizzCon               | blizzcon            |
+| Inside Blizzard        | blizzard            |
+
+Language codes
+
+| Language       | Code  |
+| -------------- | ----- |
+| Deutsch        | de-de |
+| English (US)   | en-us |
+| English (EU)   | en-gb |
+| Español (EU)   | es-es |
+| Español (AL)   | es-mx |
+| Français       | fr-fr |
+| Italiano       | it-it |
+| Português (AL) | pt-br |
+| Polski         | pl-pl |
+| Русский        | ru-ru |
+| 한국어         | ko-kr |
+| ภาษาไทย        | th-th |
+| 日本語         | ja-jp |
+| 繁體中文       | zh-tw |
+| 简体中文       | zh-cn |
+
+</RouteEn>
+
 ## dekudeals
 
 ### Category
@@ -15,6 +61,12 @@ pageClass: routes
 ### Free games
 
 <RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+
+## Konami
+
+### PES Mobile Announcement
+
+<RouteEn author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" :paramsDesc="['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system，iOS or Android']"/>
 
 ## Metacritic
 
@@ -51,6 +103,14 @@ Sorting types, default to `date`:
 ### CurseForge Mod Update
 
 <RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for exmaple `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
+
+### Feed The Beast Modpack Updates
+
+<RouteEn author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" :paramsDesc="['entry name of modpack.']">
+| param | description |
+| ------| ------------ |
+| modpackEntry | The entry name of modpack, can be found in modpack\'s page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
+</RouteEn>
 
 ## Nintendo
 
@@ -113,6 +173,18 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 ### Steam news
 
 <RouteEn author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['game id']" radar="1" rssbud="1"/>
+
+
+::: tip
+
+Steam provides some official RSS feeds:
+
+-   Game News: https://store.steampowered.com/feeds/news/app/412830/
+-   Curator/Group/Publisher/Developer News: https://store.steampowered.com/feeds/news/group/35143931/
+
+Game News use the AppID while the rest are only available in the Steam News UI, it seems.
+
+:::
 
 ## SteamGifts
 

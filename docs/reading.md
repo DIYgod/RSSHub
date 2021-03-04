@@ -28,6 +28,41 @@ pageClass: routes
 
 <Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
 
+## SoBooks
+
+### 首页
+
+<Route author="nczitzk" example="/sobooks" path="/sobooks/:category?" :paramsDesc="['分类, 见下表']">
+
+| 分类     | 分类名           |
+| -------- | ---------------- |
+| 小说文学 | xiaoshuowenxue   |
+| 历史传记 | lishizhuanji     |
+| 人文社科 | renwensheke      |
+| 励志成功 | lizhichenggong   |
+| 经济管理 | jingjiguanli     |
+| 学习教育 | xuexijiaoyu      |
+| 生活时尚 | shenghuoshishang |
+| 英文原版 | yingwenyuanban   |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/sobooks/tag/小说" path="/sobooks/tag/:id?" :paramsDesc="['标签, 见下表，默认为小说']">
+
+热门标签
+
+| 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
+| 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |
+| 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |
+| 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |
+| 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |
+| 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |
+
+</Route>
+
 ## UU 看书
 
 ### 小说更新
@@ -87,6 +122,12 @@ pageClass: routes
 由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge.info`](http://www.biquge.info/)中的小说 id.
 
 :::
+
+## 博客来
+
+### 新书出版
+
+<Route author="CokeMine" example="/bookscomtw/newbooks/books_nbtopm_15" path="/bookscomtw/newbooks/:category" :paramsDesc="['书籍类型 category, 可在对应博客来新书页 URL 中找到']"/>
 
 ## 吹牛部落
 
@@ -155,7 +196,32 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
-## 观止（每日一文）
+## 归档
+
+<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
+
+## 禁忌书屋
+
+### 首页
+
+<Route author="nczitzk" example="/cool18/bbs4" path="/cool18/bbs4"/>
+
+### 精华区
+
+<Route author="nczitzk" example="/cool18/bbs4/gold" path="/cool18/bbs4/gold"/>
+
+### 栏目分类
+
+<Route author="nczitzk" example="/cool18/bbs4/type/都市" path="/cool18/bbs4/type/:keyword?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 都市 | 校园 | 乡野 | 古风 | 异国 | 玄幻 | 红杏 | 伦理 | 浪漫 | 暴虐 | 摄心 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/cool18/bbs4/keywords/都市" path="/cool18/bbs4/keywords/:keyword?" :paramsDesc="['关键字']"/>
 
 ## 孔夫子旧书网
 

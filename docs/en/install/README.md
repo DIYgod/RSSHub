@@ -104,6 +104,35 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 To configure more options please refer to [Configuration](#configuration).
 
+# Ansible Deployment
+
+This Ansible playbook includes RSSHub, Redis, browserless (uses Docker) and Caddy 2
+
+Currently only support Ubuntu 20.04
+
+Requires sudo privilege and virtualization capability (Docker will be automatically installed)
+
+### Install
+
+```bash
+sudo apt update
+sudo apt install ansible
+git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# When prompt to enter a domain name, enter the domain name that this machine/VM will use
+# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+```
+
+### Update
+
+```bash
+cd ~/RSSHub/scripts/ansible
+sudo ansible-playbook rsshub.yaml
+# When prompt to enter a domain name, enter the domain name that this machine/VM will use
+# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+```
+
 ## Manual Deployment
 
 The most direct way to deploy `RSSHub`, you can follow the steps below to deploy`RSSHub` on your computer, server or anywhere.
@@ -318,8 +347,6 @@ RSSHub supports two caching methods: memory and redis
 
 `REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
 
-`REDIS_PASSWORD`: Redis password（invalid when `CACHE_TYPE` is set to memory)
-
 ### Proxy Configurations
 
 Partial routes have a strict anti-crawler policy, and can be configured to use proxy
@@ -333,6 +360,9 @@ Partial routes have a strict anti-crawler policy, and can be configured to use p
 `PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
+### CORS Request
+
+RSSHub by default reject CORS requests. This behavior can be modified via setting `ALLOW_ORIGIN: *` or `ALLOW_ORIGIN: www.example.com`.
 
 ### User Authentication Configurations
 
@@ -391,7 +421,9 @@ See the relation between access key/code and white/blacklisting.
 
 `REQUEST_RETRY`: retries allowed for failed requests, default to `2`
 
-`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `true`
+`REQUEST_TIMEOUT`: milliseconds to wait for the server to end the response before aborting the request with error, default to `3000`
+
+`DEBUG_INFO`: display route information on homepage for debugging purpose. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `true`
 
 `NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
 
@@ -402,6 +434,8 @@ See the relation between access key/code and white/blacklisting.
 `PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
+
+`SENTRY_ROUTE_TIMEOUT`: Report Sentry if route execution takes more than this milliseconds, default to `3000`
 
 `DISALLOW_ROBOT`: prevent indexing by search engine, default to enable, set false or 0 to disable
 
@@ -419,16 +453,13 @@ See docs of specified route and `lib/config.js` for detail information.
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv username
-
-    -   `PIXIV_PASSWORD`: Pixiv password
-    
+    -   `PIXIV_REFRESHTOKEN`: Please refer to [this article](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to get a `refresh_token`
+ 
     -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
 
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
     
     -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
-    
 
 -   pixiv fanbox: Get paid content
 
@@ -444,7 +475,7 @@ See docs of specified route and `lib/config.js` for detail information.
 
     -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret, support multiple keys, split them with `,`
 
-    -   `TWITTER_TOKEN_{id}`: Twitter token's corresponding id, replace `{id}` with the id, the value is a combination of `consumer_key consumer_secret access_token access_token_secret` by a comma `,`. Eg. `{consumer_key},{consumer_secret},{access_token},{access_token_secret}`.
+    -   `TWITTER_TOKEN_{handler}`: The token generated by the corresponding Twitter handler, replace `{handler}` with the Twitter handler, the value is a combination of `Twitter API key, Twitter API key secret, Access token, Access token secret` connected by a comma `,`. Eg. `TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`.
 
 -   youtube: [API Key application](https://console.developers.google.com/)
 
@@ -457,6 +488,14 @@ See docs of specified route and `lib/config.js` for detail information.
 -   github: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+
+-   Instagram：
+
+    -   `IG_USERNAME`: Your Instagram username
+    -   `IG_PASSWORD`: Your Instagram password
+    -   `IG_PROXY`: Proxy URL for Instagram
+
+    Warning: Two Factor Authentication is *not* supported.
 
 -   mail:
 
@@ -481,4 +520,16 @@ See docs of specified route and `lib/config.js` for detail information.
 
 -   Sci-hub for scientific journal routes:
 
-    -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.tw`.
+    -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.se`.
+
+-   Wordpress:
+    -   `WORDPRESS_CDN`: Proxy http image link with https link. Consider using:
+
+        | url                                      | backbone     |
+        | ---------------------------------------- | ------------ |
+        | https://imageproxy.pimg.tw/resize?url=   | akamai       |
+        | https://images.weserv.nl/?url=           | cloudflare   |
+        | https://pic1.xuehuaimg.com/proxy/        | cloudflare   |
+        | https://cors.netnr.workers.dev/          | cloudflare   |
+        | https://netnr-proxy.openode.io/          | digitalocean |
+

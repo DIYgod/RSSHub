@@ -36,6 +36,25 @@ pageClass: routes
 
 </Route>
 
+## booth.pm
+
+### 店铺
+
+<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['店铺子域名']" />
+
+## Craigslist
+
+### 商品搜索
+
+<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['位置，即Craigslist的子域，如sfbay', '搜索类型，如sso']"/>
+
+> 由于 Craigslist 取消了 RSS 订阅搜索功能，因此用 RSSHub 来实现了类似效果。
+> 一个完整原始搜索会像这样：
+> <https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel>
+>
+> /search/xxx 后跟的 "xxx" 为搜索类型，直接参考原始请求即可。
+> query string 是实际的搜索内容。
+
 ## Furstar
 
 ### 最新售卖角色列表
@@ -152,6 +171,18 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 礼物说
 
 <Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
+
+## 麦当劳
+
+### 麦当劳活动资讯
+
+<Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" :paramsDesc="['分类名（可用+连接多个分类）']">
+
+| 全部分类  | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
+| --------- | -------------- | -------- | -------- | ----- | -------- | -------- |
+| news_list | responsibility | brand    | product  | sales | culture  | event    |
+
+</Route>
 
 ## 缺书网
 
@@ -301,7 +332,13 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 小米有品每日上新
 
-<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new"/>
+<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
+
+| 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
+| ---------- | -------------- | -------------- | ------------------ |
+| 0          | 1              | 2              | 3                  |
+
+</Route>
 
 ## 宜家 IKEA
 
