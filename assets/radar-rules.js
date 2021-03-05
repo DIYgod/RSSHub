@@ -2418,6 +2418,26 @@
                 target: '/jike/topic/text/:id',
             },
         ],
+        web: [
+            {
+                title: '用户动态',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-yong-hu-dong-tai',
+                source: '/u/:id',
+                target: '/jike/user/:id',
+            },
+            {
+                title: '圈子',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-quan-zi',
+                source: '/topic/:id',
+                target: '/jike/topic/:id',
+            },
+            {
+                title: '圈子 - 纯文字',
+                docs: 'https://docs.rsshub.app/social-media.html#ji-ke-quan-zi-chun-wen-zi',
+                source: '/topic/:id',
+                target: '/jike/topic/text/:id',
+            },
+        ],
     },
     'ems.com.cn': {
         _name: '中国邮政速递物流',
