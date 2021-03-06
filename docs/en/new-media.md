@@ -215,11 +215,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Latest
 
-<RouteEn author="xyqfer Cerebrater" example="/matters/latest" path="/matters/latest" radar="1" rssbud="1"/>
-
-### Hot
-
-<RouteEn author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1" rssbud="1"/>
+<RouteEn author="xyqfer Cerebrater xosdy" example="/matters/latest" path="/matters/latest" radar="1" rssbud="1"/>
 
 ### Tags
 
