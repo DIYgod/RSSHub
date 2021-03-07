@@ -350,6 +350,24 @@ pageClass: routes
 | 最新主题 | latest |
 | 精华主题 | digest |
 
+## 梨园
+
+### 主题帖（全站）
+
+<Route author="WooMai" example="/liyuan-forums/threads" path="/liyuan-forums/threads" />
+
+### 主题帖（板块）
+
+<Route author="WooMai" example="/liyuan-forums/threads/forum/:forum_id" path="/liyuan-forums/threads/forum/1" :paramsDesc="['板块 ID']" />
+
+### 主题帖（专题）
+
+<Route author="WooMai" example="/liyuan-forums/threads/topic/:topic_id" path="/liyuan-forums/threads/topic/1" :paramsDesc="['专题 ID']" />
+
+### 主题帖（用户）
+
+<Route author="WooMai" example="/liyuan-forums/threads/user/:user_id" path="/liyuan-forums/threads/user/1" :paramsDesc="['用户 ID, 仅支持数字 ID']" />
+
 ## 龙空
 
 ### 分区
