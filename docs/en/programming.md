@@ -221,6 +221,12 @@ Website: https://news.ycombinator.com/
 
 <RouteEn author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
+## react
+
+### react-native
+
+<RouteEn author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
+
 ## Scala
 
 ### Scala Blog
@@ -239,9 +245,3 @@ Website: https://news.ycombinator.com/
 | featured | trending        | trending_m       | trending_d     | popular      | new            |
 
 </RouteEn>
-
-## react
-
-### react-native
-
-<RouteEn author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
