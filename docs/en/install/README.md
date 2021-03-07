@@ -351,7 +351,7 @@ RSSHub supports two caching methods: memory and redis
 
 Partial routes have a strict anti-crawler policy, and can be configured to use proxy
 
-`PROXY_PROTOCOL`: Using proxy, Supports socks, http, https
+`PROXY_PROTOCOL`: Using proxy, Supports socks, socks5, socks5h, http, https, etc. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page and [source](https://github.com/TooTallNate/node-socks-proxy-agent/blob/master/src/agent.ts) for what these protocols mean. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/) for reference.
 
 `PROXY_HOST`: host or IP of the proxy
 
