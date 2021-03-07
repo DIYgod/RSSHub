@@ -212,6 +212,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" :paramsDesc="['标签，可在对应标签页 URL 中找到']" />
 
+## ezone.hk
+
+### 分类
+
+<Route author="nczitzk" example="/ezone" path="/ezone/:category?" :paramsDesc="['分类，见下表，默认为最新内容']">
+
+| 科技焦點 | 網絡生活 | 教學評測 | IT Times |
+| -------- | -------- | -------- | -------- |
+| srae001  | srae008  | srae017  | srae021  |
+
+</Route>
+
 ## GQ
 
 ### GQ 台湾
@@ -1907,7 +1919,7 @@ column 为 third 时可选的 category:
 
 ### 排行榜
 
-<Route author="nczitzk" example="/netease/news/rank/whole/click/day" path="/netease/news/rank/:category?/:type?/:time?" :paramsDesc="['新闻分类，参见下表，默认为“全站”','排行榜类型，“点击榜”对应`click`，“跟贴榜”对应`follow`，默认为“点击榜”','统计时间，“1小时”对应`hour`，“24小时”对应`day`，“本周”对应`week`，“本月”对应`month`，默认为“24小时”']">
+<Route author="nczitzk" example="/netease/news/rank/whole/click/day" path="/netease/news/rank/:category?/:type?/:time?" :paramsDesc="['新闻分类，参见下表，默认为“全站”','排行榜类型，“点击榜”对应`click`，“跟贴榜”对应`follow`，默认为“点击榜”','统���时间，“1小时”对应`hour`，“24小时”对应`day`，“本周”对应`week`，“本月”对应`month`，默认为“24小时”']">
 
 ::: tip 提示
 
