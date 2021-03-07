@@ -386,7 +386,7 @@ RSSHub supports access control via access key/code, whitelisting and blacklistin
 
 -   `BLACKLIST`: the blacklist
 
-White/blacklisting support IP and route as values. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+White/blacklisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### Access Key/Code
 
