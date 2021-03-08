@@ -734,7 +734,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']">
+<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']"> 
 
 | 编辑推荐 | 奇闻异事   | 鬼话连篇       |
 | -------- | ---------- | -------------- |
