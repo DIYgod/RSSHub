@@ -35,6 +35,10 @@ pageClass: routes
 
 ## AGE 动漫
 
+### 最近更新
+
+<Route author="nczitzk" example="/agefans/update" path="/agefans/update"/>
+
 ### 番剧详情
 
 <Route author="s2marine" example="/agefans/detail/20200035" path="/agefans/detail/:id" :paramsDesc="['番剧 id，对应详情 URL 中找到']"/>
