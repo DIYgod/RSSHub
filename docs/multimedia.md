@@ -867,7 +867,7 @@ pageClass: routes
 
 ### 剧集类型
 
-<Route author="nczitzk" example="/shinybbs/62" path="/shinybbs/:id?" :paramsDesc="['类型 id，见下表']">
+<Route author="nczitzk" example="/shinybbs/page/62" path="/shinybbs/page/:id?" :paramsDesc="['类型 id，见下表']">
 
 | 英美剧 | 日韩剧 | 小语种 |
 | ------ | ------ | ------ |
