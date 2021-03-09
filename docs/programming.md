@@ -30,6 +30,16 @@ pageClass: routes
 
 <Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词']" />
 
+## dbaplus 社群
+
+<Route author="nczitzk" example="/dbaplus" path="/dbaplus/:tab?" :paramsDesc="['栏目，见下表，默认为全部']">
+
+| 全部 | 数据库 | 运维 | 大数据 | 架构 | PaaS 云 | 职场生涯 | 这里有毒 |
+| ---- | ------ | ---- | ------ | ---- | ------- | -------- | -------- |
+| All  | 153    | 134  | 73     | 141  | 72      | 149      | 21       |
+
+</Route>
+
 ## deeplearning.ai
 
 ### TheBatch 周报
