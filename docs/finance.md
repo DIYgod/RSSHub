@@ -10,6 +10,18 @@ pageClass: routes
 
 <Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
+## DT 财经
+
+### 数据侠专栏
+
+<Route author="nczitzk" example="/dtcj/datahero" path="/dtcj/datahero/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 侠创 | 纽约数据科学学院 | RS 实验所 | 阿里云天池 |
+| ---- | ---------------- | --------- | ---------- |
+| 5    | 6                | 9         | 10         |
+
+</Route>
+
 ## finviz
 
 ### 美股股票新闻
@@ -30,11 +42,17 @@ pageClass: routes
 
 ### 电报
 
-<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph"/>
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表']">
+
+| 看盘  | 公告         | 解读    | 加红 | 推送  | 提醒   | 基金 |
+| ----- | ------------ | ------- | ---- | ----- | ------ | ---- |
+| watch | announcement | explain | red  | jpush | remind | fund |
+
+</Route>
 
 ### 深度
 
-<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:caty" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
 
 | 要闻 | 股市 | 环球 | 公司 | 地产 | 券商 | 金融 | 汽车 | 科创版 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
@@ -60,7 +78,7 @@ pageClass: routes
 
 ### 搜索关键字
 
-&lt;Route author="nczitzk" example="/gelonghui/keyword/ 早报" path="/gelonghui/keyword/:keyword" :paramsDesc="[' 搜索关键字']/>
+<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
 
 ## 金十数据
 
@@ -74,6 +92,22 @@ pageClass: routes
 | autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流   |
 
 </Route>
+
+## 每经网
+
+### 分类
+
+<Route author="nczitzk" example="/nbd" path="/nbd/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+
+| 头条 | 要闻 | 图片新闻 | 推荐 |
+| ---- | ---- | -------- | ---- |
+| 2    | 3    | 4        | 5    |
+
+</Route>
+
+### 重磅原创
+
+<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily"/>
 
 ## 上海证券交易所
 
