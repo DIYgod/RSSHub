@@ -332,6 +332,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
+## react
+
+### react-native
+
+<Route author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
+
 ## Scala
 
 ### Scala Blog

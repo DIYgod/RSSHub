@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# Multimedia 
+# Multimedia
 
 ## 60-Second Science - Scientific American
 
@@ -78,15 +78,15 @@ Official RSS: https://eztv.io/ezrss.xml
 
 ### Users
 
-<RouteEn author="I2IMk" example="/pornhub/users/0maru0" path="/pornhub/users/:username" :paramsDesc="['username, part of the url e.g. `pornhub.com/users/0maru0`']" />
+<RouteEn author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`']" />
 
 ### Verified amateur / Model
 
-<RouteEn author="I2IMk" example="/pornhub/model/stacy-starando" path="/pornhub/model/:username/:sort?" :paramsDesc="['username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']" />
+<RouteEn author="I2IMk queensferryme" example="/pornhub/model/stacy-starando" path="/pornhub/:language?/model/:username/:sort?" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']" />
 
 ### Verified model / Pornstar
 
-<RouteEn author="I2IMk" example="/pornhub/pornstar/june-liu" path="/pornhub/pornstar/:username/:sort?" :paramsDesc="['username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']" />
+<RouteEn author="I2IMk queensferryme" example="/pornhub/pornstar/june-liu" path="/pornhub/:language?/pornstar/:username/:sort?" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']" />
 
 **`sort`**
 
@@ -94,12 +94,15 @@ Official RSS: https://eztv.io/ezrss.xml
 | ----------- | ----------- | --------- | ------- | ------ |
 | Most Recent | Most Viewed | Top Rated | Longest | Newest |
 
-
-
 ### Video List
 
-<RouteEn author="I2IMk" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/category_url/:url?" :paramsDesc="['relative path after `pornhub.com/`, need to be URL encoded']"/>
+<RouteEn author="I2IMk queensferryme" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/:language?/category_url/:url?" :paramsDesc="['language, see below', 'relative path after `pornhub.com/`, need to be URL encoded']"/>
 
+**`language`**
+
+Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
+- `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
+- `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
 ## Sankaku Complex
 
@@ -112,6 +115,12 @@ Official RSS: https://eztv.io/ezrss.xml
 ### Tracks
 
 <RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['User name']" />
+
+## Trakt.tv
+
+### User Collection
+
+<Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
 
 ## YouTube
 
