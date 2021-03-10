@@ -79,7 +79,7 @@ pageClass: routes
 
 ### 条目的章节
 
-<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/ep/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
 
 ### 条目的吐槽箱
 
