@@ -1,9 +1,8 @@
 <!-- 
-
-请不要删除, 自行修改已有结构/注释, 这会导致自动检测失败；不符合要求的部分留空即可
-
+请不要删除已有内容（注释除外）, 这会导致自动检测失败；不符合要求保留默认内容即可
 Do not remove existing titles or structures: it breaks CI
-
+如果有疑问，可以参考已经合并的PR格式
+Reference to merged PR if you have question over PR format
 -->
 
 ## 该 PR 相关 Issue / Involved issue
@@ -13,10 +12,10 @@ Close #
 ## 完整路由地址 / Example for the proposed route(s)
 
 <!--
-为方便测试，请附上完整路由地址，包括所有必选与可选参数，否则将导致 PR 被关闭。
-To simplify the testing workflow, please include the complete route, with all required and optional parameters, otherwise your pull request will be closed.
-
+为方便测试，请附上完整路由地址（可以真正访问的地址），否则将导致 PR 被关闭
 请按照如下格式填写`routes`区域: 我们将会根据你的参数展开自动测试. 一行一个路由
+如果路由包含在文档中列出可以完全穷举的参数（例如分类），请依次全部列出
+To simplify the testing workflow, please include COMPLETE route URL, with all required and optional parameters, otherwise your pull request will be closed.
 Please fill the `routes` block follow the format below, as we will perform automatic test based on this information. one route per line.
 
 ```
@@ -25,9 +24,11 @@ Please fill the `routes` block follow the format below, as we will perform autom
 ```
 
 如果与路由无关, 请写`NOROUTE`
+请不要删除代码块`routes`标识 
+If it is not related to route, use `NOROUTE` to bypass CI
+FILL BELOW and keep `routes` keyword
 -->
 
-<!-- 在下方填写, 请不要删除`routes`标识: CI验证需要. FILL BELOW and keep `routes` keyword -->
 ```routes
 ```
 
@@ -35,17 +36,11 @@ Please fill the `routes` block follow the format below, as we will perform autom
 ## 新RSS检查列表 / New RSS Script Checklist
 
 <!-- 
-
 Please go over the checklist below before PR: this improve your PR pass rate.
-
 Reference: https://docs.rsshub.app/en/joinus/
-
 请在提交PR前检查以下事项: 这可以大大提升通过率
-
 这些就是我们在审核时主要关注的事项, 敬请留意
-
 参考: https://docs.rsshub.app/joinus
-
 -->
 
 - [ ] 这个PR中包含了新的路由吗? Does this PR add new route?
@@ -66,11 +61,7 @@ Reference: https://docs.rsshub.app/en/joinus/
   
 
 ## 说明 / Note
-
 <!-- 
-
 Please state your reason/note here 
-
 请在这里描述你的原因或留下其他相关的说明
-
 -->
