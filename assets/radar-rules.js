@@ -2917,7 +2917,7 @@
                 title: '小组话题的新回复',
                 docs: 'https://docs.rsshub.app/anime.html#bangumi',
                 source: '/group/topic/:id',
-                target: '/bangumi/topic/:id',//已单独测试不报错
+                target: '/bangumi/topic/:id',
             },
             {
                 title: '现实人物的新作品',
@@ -2941,7 +2941,7 @@
                 title: '条目的评论',
                 docs: 'https://docs.rsshub.app/anime.html#bangumi',
                 source: '/subject/:id',
-                target: '/bangumi/subject/:id/blogs',//失效
+                target: '/bangumi/subject/:id/blogs',
             },
             {
                 title: '条目的章节',
