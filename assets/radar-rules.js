@@ -2914,6 +2914,12 @@
                 target: '/bangumi/group/:id',
             },
             {
+                title: '小组话题的新回复',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/group/topic/:id',
+                target: '/bangumi/topic/:id',//已单独测试不报错
+            },
+            {
                 title: '现实人物的新作品',
                 docs: 'https://docs.rsshub.app/anime.html#bangumi',
                 source: '/person/:id',
@@ -2930,6 +2936,12 @@
                 docs: 'https://docs.rsshub.app/anime.html#bangumi',
                 source: '/subject/:id',
                 target: '/bangumi/subject/:id/topics',
+            },
+            {
+                title: '条目的评论',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id/blogs',//失效
             },
             {
                 title: '条目的章节',
