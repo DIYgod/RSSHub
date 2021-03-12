@@ -96,7 +96,7 @@ Language
 
 ### File Update
 
-<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']"/>
+<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']">
 
 For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
 
@@ -119,6 +119,20 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
 
 :::
+
+## Eagle
+
+### Changelog
+
+<RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
+  
+Language
+
+| Simplified Chinese | Traditional Chinese | English |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
+    
+</RouteEn>
 
 ## Everything
 
@@ -159,6 +173,18 @@ The owner of the official image fills in the library, for example: https://rsshu
 ### Apple Firmware Update-IPSWs/OTAs version
 
 <RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']"/>
+
+## Logseq
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+
+## MacKed
+
+### APP Update
+
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be find in URL']"/>
 
 ## ManicTime
 
@@ -214,6 +240,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+
+## Obsidian
+
+### Announcements
+
+<RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
 ## PlayStation
 
@@ -306,3 +338,4 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### What's New
 
 <RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+

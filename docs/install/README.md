@@ -359,7 +359,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 #### 代理 URI
 
-`PROXY_URI`: 代理 URI，支持 socks4, socks5, http, https
+`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以[socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考[curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
 
 > 代理 URI 的格式为：
 >
@@ -369,8 +369,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 > 一些示例：
 >
 > -   `socks4://127.0.0.1:1080`
-> -   `socks5://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
-> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`)
+> -   `socks5h://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
+> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5h`)
 > -   `http://127.0.0.1:8080`
 > -   `http://user:pass@127.0.0.1:8080`
 > -   `https://127.0.0.1:8443`
@@ -413,7 +413,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   `BLACKLIST`: 黑名单
 
-黑白名单支持 IP 和路由，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+黑白名单支持 IP、路由和 UA，模糊匹配，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### 访问密钥 / 码
 
@@ -479,9 +479,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv 用户名
-
-    -   `PIXIV_PASSWORD`: Pixiv 密码
+    -   `PIXIV_REFRESHTOKEN`: Pixiv Refresh Token, 请参考 [此文](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 获取，或自行对客户端抓包获取
 
     -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
 

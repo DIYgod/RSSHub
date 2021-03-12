@@ -4,6 +4,20 @@ pageClass: routes
 
 # University
 
+## Beijing Jiaotong University
+
+### BJTU Graduate School
+
+<RouteEn author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" :paramsDesc="['Type of articles']">
+
+| All articles | Notification | News | Admissions Promotion | Training | Degrees | Admissions | Master Admissions | PhD Admissions | Admissions Brochure | Admissions Policies and Regulations | Notice from Graduate Student Work Department | News from Graduate Student Work Department |
+| ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
+| all  | noti     | news    | zsxc       | py       | xw      | zs     | sszs    | bszs      | zsjz    | zcfg    | ygbtzgg    | ygbnews    |
+
+</RouteEn>
+
+Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chinese.
+
 ## MIT
 
 ### MIT OCW Most popular courses of the month
@@ -21,6 +35,10 @@ pageClass: routes
 ### MIT graduateadmissions's blogs by category
 
 <RouteEn author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
+
+### MIT CSAIL
+
+<RouteEn author="nczitzk" example="/mit/csail/news" path="/mit/csail/news"/>
 
 ## Polimi
 
