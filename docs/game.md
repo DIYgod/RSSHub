@@ -470,7 +470,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-### 用户帖子
+### 用户的帖子
 
 <Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:uid" :paramsDesc="['用户 id']"/>
 
