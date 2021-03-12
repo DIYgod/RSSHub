@@ -530,7 +530,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如：
         -   Linux 环境变量：`EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
-        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
+        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456/&host=imap.qq.com/&port=993`，请勿添加引号 `'`，`"`，不存在`&`单独出现的情况，只有`/&`同时出现的情况。
 
 -   吹牛部落 栏目更新
 
