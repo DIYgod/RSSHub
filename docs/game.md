@@ -474,6 +474,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:uid" :paramsDesc="['用户 id']"/>
 
+可以在用户主页的 URL 中找到
+
+Example：`https://www.iyingdi.com/web/personal/home?id=55547` ，uid 是`55547`
+
 ## 米哈游
 
 ### 崩坏 2 - 游戏公告
