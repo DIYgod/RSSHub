@@ -3473,10 +3473,10 @@ chrome-trace-event@^1.0.0:
   dependencies:
     tslib "^1.9.0"
 
-chrono-node@2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.2.3.tgz#d600f2ffce69444b493a4cfc8b5261bd0ee7d58d"
-  integrity sha512-2CFyIEVdRmgOdtZqJ1F3C+gaex81h9QXr4HuSyPjVFWFs2kgrCDgUitxBwC7NM2ia8ZeBBGkQ1Jq1RZCaW76Wg==
+chrono-node@2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.2.4.tgz#0fa169e1d158935bb1d541010046f6107576347d"
+  integrity sha512-58ERHGfWtWzBxckF9ZyFuwJjcreLDr7C79lHEynSqZ7J8y1JfMa8ok1TvCCf/TOZmkGME1ZSaEEb0DqqWaNFHg==
   dependencies:
     dayjs "^1.10.0"
 
@@ -10953,10 +10953,10 @@ remark-parse@^8.0.0:
     vfile-location "^3.0.0"
     xtend "^4.0.1"
 
-remark-preset-prettier@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/remark-preset-prettier/-/remark-preset-prettier-0.4.0.tgz#b0edae6b46286c255ca897d44901145867585ab3"
-  integrity sha512-Y0lwBg/xRyE8/yF4IYJVJxrUHSVE8WThbsnKS5/fE4lSAoX/s0yuiEl7gv/+OWA1G7r5o0xKLZPW3rJjhvfvpw==
+remark-preset-prettier@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/remark-preset-prettier/-/remark-preset-prettier-0.4.1.tgz#9b55d2a71d16931eeea365724b5b1a09c9a0f6ef"
+  integrity sha512-m+yzI9LN/dkVq/HUYR3aEAjvDBO4hZMwgq245RBYUzSKXZPboMTlxBTgBuK7Tcw5CKJphjoL31slQQcDu1KGZQ==
 
 remark-stringify@^8.0.0:
   version "8.0.0"
