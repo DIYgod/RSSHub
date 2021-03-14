@@ -20,7 +20,7 @@ describe('access-control', () => {
     it(`blacklist`, async () => {
         const key = '1L0veRSSHub';
         const code = md5('/test/2' + key);
-        process.env.BLACKLIST = '/test/1,233.233.233.233';
+        process.env.BLACKLIST = 'est/1,233.233.233.,black';
         process.env.ACCESS_KEY = key;
         server = require('../../lib/index');
         const request = supertest(server);
@@ -31,11 +31,17 @@ describe('access-control', () => {
         const response12 = await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
         checkBlock(response12);
 
+        const response13 = await request.get('/test/1').set('user-agent', 'blackua');
+        checkBlock(response13);
+
         const response21 = await request.get('/test/2');
         expect(response21.status).toBe(200);
 
         const response22 = await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         checkBlock(response22);
+
+        const response23 = await request.get('/test/2').set('user-agent', 'blackua');
+        checkBlock(response23);
 
         // wrong key/code, not on blacklist
         const response311 = await request.get(`/test/2?key=wrong+${key}`);
@@ -62,7 +68,7 @@ describe('access-control', () => {
     it(`whitelist`, async () => {
         const key = '1L0veRSSHub';
         const code = md5('/test/2' + key);
-        process.env.WHITELIST = '/test/1,233.233.233.233';
+        process.env.WHITELIST = 'est/1,233.233.233.,white';
         process.env.ACCESS_KEY = key;
         server = require('../../lib/index');
         const request = supertest(server);
@@ -79,11 +85,17 @@ describe('access-control', () => {
         const response12 = await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
         expect(response12.status).toBe(200);
 
+        const response13 = await request.get('/test/1').set('user-agent', 'whiteua');
+        expect(response13.status).toBe(200);
+
         const response21 = await request.get('/test/2');
         checkBlock(response21);
 
         const response22 = await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         expect(response22.status).toBe(200);
+
+        const response23 = await request.get('/test/2').set('user-agent', 'whiteua');
+        expect(response23.status).toBe(200);
 
         // wrong key/code, not on whitelist
         const response311 = await request.get(`/test/2?code=wrong+${code}`);

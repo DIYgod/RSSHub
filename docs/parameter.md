@@ -79,7 +79,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 ## 中文简繁体转换
 
--   opencc: s2t 简体转繁体、t2s 繁体转简体，其它可选值见 [OpenCC - Configurations](https://github.com/BYVoid/OpenCC#configurations-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+-   opencc: s2t 简体转繁体、t2s 繁体转简体，其它可选值见 [simple-wasm - Configurations](https://github.com/fengkx/simplecc-wasm#%E9%85%8D%E7%BD%AE-configurations)
 
 举例: <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
