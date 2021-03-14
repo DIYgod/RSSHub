@@ -54,7 +54,7 @@ $ docker-compose down
 拉取最新镜像
 
 ```bash
-docker pull diygod/rsshub
+$ docker pull diygod/rsshub
 ```
 
 然后重复安装步骤
