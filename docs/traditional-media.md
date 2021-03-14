@@ -716,6 +716,10 @@ category 对应的关键词有
 
 <Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认 all']"/>
 
+### 中国共产党新闻网 24 小时滚动新闻
+
+<Route author="nczitzk" example="/people/cpc/24h" path="/people/cpc/24h"/>
+
 ## 人民日报社 国际金融报
 
 ### 栏目
