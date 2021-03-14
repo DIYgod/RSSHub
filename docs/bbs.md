@@ -322,6 +322,16 @@ pageClass: routes
 
 </Route>
 
+## 集思录
+
+### 用户回复
+
+<Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+
+### 用户主题
+
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+
 ## 看雪
 
 ### 论坛
