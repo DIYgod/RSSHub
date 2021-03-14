@@ -51,6 +51,12 @@ Remove old containers
 $ docker-compose down
 ```
 
+Pull the latest image
+
+```bash
+$ docker pull diygod/rsshub
+```
+
 Then repeat the installation steps
 
 ### Configuration
