@@ -11,8 +11,7 @@ RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git d
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY package.json yarn.lock /app/
-COPY tools /app/tools
+COPY . /app
 
 RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
   echo 'use npm mirror'; yarn config set registry https://registry.npm.taobao.org; \
@@ -28,10 +27,10 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get purge --auto-remove -y wget\
   && rm -rf /src/*.deb \
-  && yarn install && node tools/minify-docker.js && sh ./clean-nm.sh;\
+  && yarn install && node tools/minify-docker.js && sh tools/clean-nm.sh;\
   else \
   export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && \
-  yarn install && node tools/minify-docker.js && sh ./clean-nm.sh;\
+  yarn install && node tools/minify-docker.js && sh tools/clean-nm.sh;\
   fi;
 
 FROM node:14-slim as app
