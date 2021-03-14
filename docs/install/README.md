@@ -51,6 +51,12 @@ $ docker-compose up -d
 $ docker-compose down
 ```
 
+拉取最新镜像
+
+```bash
+docker pull diygod/rsshub
+```
+
 然后重复安装步骤
 
 ### 添加配置
