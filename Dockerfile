@@ -32,10 +32,10 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get purge --auto-remove -y wget\
   && rm -rf /src/*.deb \
-  && npm install --production && sh ./clean-nm.sh;\
+  && npm install && node tools/minify-docker.js && sh ./clean-nm.sh;\
   else \
   export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && \
-  npm install --production && sh ./clean-nm.sh;\
+  npm install && node tools/minify-docker.js && sh ./clean-nm.sh;\
   fi;
 
 COPY . /app
