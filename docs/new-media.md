@@ -1682,7 +1682,17 @@ column 为 third 时可选的 category:
 
 ## 全现在
 
+### 专栏
+
 <Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
+
+### 话题
+
+<Route author="nczitzk" example="/allnow/tag/678" path="/allnow/tag/:id" :paramsDesc="['话题 id']"/>
+
+### 用户
+
+<Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" :paramsDesc="['用户 id']"/>
 
 ## 人人都是产品经理
 
@@ -1751,6 +1761,12 @@ column 为 third 时可选的 category:
 ### 标签订阅
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']" radar="1"/>
+
+## 深圳新闻网
+
+### 排行榜
+
+<Route author="nczitzk" example="/sznews/ranking" path="/sznews/ranking"/>
 
 ## 生命时报
 
@@ -1874,6 +1890,12 @@ column 为 third 时可选的 category:
 | all  | news | finance | blockchain | internet | tech | newmedia | business | hundred     | ecommerce | entertainment | life |
 
 </Route>
+
+## 歪脑 wainao.me
+
+### 所有文章
+
+<Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
 
 ## 晚点 LatePost
 
