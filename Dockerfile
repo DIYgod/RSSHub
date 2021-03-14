@@ -14,7 +14,7 @@ WORKDIR /app
 COPY . /app
 
 RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-  echo 'use npm mirror'; yarn config set registry https://registry.npm.taobao.org; \
+  echo 'use npm mirror'; npm config set registry https://registry.npm.taobao.org; \
   fi;
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
@@ -32,7 +32,7 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   fi;
 
 RUN npm i -g npm
-RUN yarn install
+RUN npm install
 RUN node tools/minify-docker.js && sh tools/clean-nm.sh
 
 FROM node:14-slim as app
