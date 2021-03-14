@@ -2303,6 +2303,12 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
 
+## 中国橡胶网
+
+### 新闻资讯
+
+<Route author="nczitzk" example="/cria/news/1" path="/cria/news/:id?" :paramsDesc="['列表 id，可在列表页的 URL 中找到，默认为首页']"/>
+
 ## 眾新聞
 
 ### 眾聞
