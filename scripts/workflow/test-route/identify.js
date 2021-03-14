@@ -1,6 +1,8 @@
 const noFound = 'Auto: Route No Found';
+const whiteListedUser = ['dependabot-preview[bot]'];
 
 module.exports = async ({ github, context, core }, body, number) => {
+    core.debug(`sender: ${context.payload.sender.login}`);
     core.debug(`body: ${body}`);
     const m = body.match(/```routes\r\n((.|\r\n)*)```/);
     core.debug(`match: ${m}`);
@@ -17,6 +19,22 @@ module.exports = async ({ github, context, core }, body, number) => {
             .catch((e) => {
                 core.warning(e);
             });
+
+    if (whiteListedUser.includes(context.payload.sender.login)) {
+        core.info('PR created by a whitelisted user, passing');
+        await removeLabel();
+        await github.issues
+            .addLabels({
+                issue_number: number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['Auto: whitelisted'],
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+        return;
+    }
 
     if (m && m[1]) {
         res = m[1].trim().split('\r\n');

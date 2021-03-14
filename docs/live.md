@@ -38,12 +38,6 @@ pageClass: routes
 
 <Route author="DIYgod" example="/douyu/room/24422" path="/douyu/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
-## 黑白直播
-
-### 直播间开播
-
-<Route author="laampui" example="/heibaizhibo/room/195976" path="/heibaizhibo/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
-
 ## 虎牙直播
 
 ### 直播间开播

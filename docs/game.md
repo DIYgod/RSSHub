@@ -432,22 +432,6 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn"/>
 
-## 篝火营地
-
-### 游戏资讯
-
-<Route author="sintak" example="/gouhuo/news/switch" path="/gouhuo/news/:category" :paramsDesc="['资讯类型']">
-
-| 精选       | 海外     | 原创    | PS4 | Xboxone | PC | Switch | 掌机     | 手游       | 新闻 | 评测   | 文化    | 视频  | 音频  | 折扣     |
-| ---------- | -------- | ------- | --- | ------- | -- | ------ | -------- | ---------- | ---- | ------ | ------- | ----- | ----- | -------- |
-| choiceness | overseas | orignal | ps4 | xboxone | pc | switch | handheld | mobilegame | news | review | culture | video | audio | discount |
-
-</Route>
-
-### 游戏攻略
-
-<Route author="sintak" example="/gouhuo/strategy" path="/gouhuo/strategy"/>
-
 ## 怪物猎人世界
 
 ### 更新情报
@@ -519,6 +503,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 元素文章
 
 <Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+## 少女前线
+
+### 新闻
+
+<Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" :paramsDesc="['分类，见下表，默认为新闻']">
+
+| 新闻 | 公告 |
+| ---- | ---- |
+| 1    | 3    |
+
+</Route>
 
 ## 网易大神
 
@@ -609,6 +605,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 关键词资讯
 
 <Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
+
+## 游讯网
+
+### 精彩推荐
+
+<Route author="nczitzk" example="/yxdown/recommend" path="/yxdown/recommend"/>
 
 ## 游研社
 

@@ -37,3 +37,8 @@ pageClass: routes
 ### Article
 
 <RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
+
+## WordPress
+
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
+

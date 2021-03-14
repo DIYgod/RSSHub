@@ -435,7 +435,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 首页
 
-<Route author="EsuRt" example="/mittrchina/article" path="/mittrchina"/>
+<Route author="EsuRt queensferryme" example="/mittrchina/hot" path="/mittrchina/:type" :paramsDesc="['类型 type，可以是 index（首页资讯）或 hot（本周热榜）']"/>
 
 ## Nautilus
 
@@ -571,6 +571,14 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## Thrillist
+
+<Route author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" :paramsDesc="['Tag']">
+
+Provides all of the Thrillist articles with the specified tag.
+
+</Route>
+
 ## TOPYS
 
 ### 分类
@@ -684,6 +692,18 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
 
+## 半月谈
+
+### 时事大事库
+
+<Route author="nczitzk" example="/banyuetan/byt" path="/banyuetan/byt/:time?" :paramsDesc="['时间，见下表，默认为每周']">
+
+| 每周          | 每月  |
+| ------------- | ----- |
+| shishidashiku | yiyue |
+
+</Route>
+
 ## 報導者
 
 ### 最新
@@ -762,6 +782,30 @@ Supported sub-sites:
 
 </Route>
 
+## 城农 Growin' City
+
+### 城农资讯观点
+
+<Route author="nczitzk" example="/growincity/news" path="/growincity/news/:id?" anticrawler="1" :paramsDesc="['分类 id，见下表，默认为原创内容']">
+
+| 原创内容 | 商业投资 | 观点评论 | 农业科技 |
+| -------- | -------- | -------- | -------- |
+| 48       | 55       | 88       | 98       |
+
+| 农艺管理 | 农业机械 | 设施农业 | 畜牧水产 |
+| -------- | -------- | -------- | -------- |
+| 101      | 83       | 85       | 87       |
+
+| 食品科技 | 科技产品 | 食品创新 | 研究报告 |
+| -------- | -------- | -------- | -------- |
+| 86       | 100      | 99       | 76       |
+
+| 教育拓展 | 展会培训 | 业界访谈 |
+| -------- | -------- | -------- |
+| 61       | 77       | 72       |
+
+</Route>
+
 ## 抽屉新热榜
 
 ### 最新
@@ -827,6 +871,28 @@ area 分区选项
 ### 电商在线
 
 <Route author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" :paramsDesc="['类别id，可在 URL 中找到']" />
+
+## 丁香园
+
+### 新冠疫苗实时动态
+
+<Route author="nczitzk" example="/dxy/vaccine/北京" path="/dxy/vaccine/:province?/:city?/:location?" :paramsDesc="['省', '市', '区']">
+
+查看北京市的新冠疫苗接种点，路由为 `/dxy/vaccine/北京`；
+
+查看北京市朝阳区的新冠疫苗接种点，路由为 `/dxy/vaccine/北京/北京/朝阳区`；
+
+查看湖北省武汉市的新冠疫苗接种点，路由为 `/dxy/vaccine/湖北/武汉`；
+
+查看湖北省武汉市武昌区的新冠疫苗接种点，路由为 `/dxy/vaccine/湖北/武汉/武昌区`。
+
+::: tip 提示
+
+若参数为空，则返回全国所有新冠疫苗接种点。
+
+:::
+
+</Route>
 
 ## 懂球帝
 
@@ -1175,7 +1241,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 分类
 
-<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']">
+<Route author="MoguCloud" example="/gcores/category/news" path="/gcores/category/:category" :paramsDesc="['分类名']" radar="1">
 
 | 资讯 | 视频   | 电台   | 文章     |
 | ---- | ------ | ------ | -------- |
@@ -1456,6 +1522,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 美国劳工联合会 - 产业工会联合会
+
+### 博客
+
+<Route author="nczitzk" example="/aflcio/blog" path="/aflcio/blog"/>
+
 ## 梅花网
 
 ### 作品
@@ -1596,9 +1668,31 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 全球化智库
+
+### 分类
+
+<Route author="nczitzk" example="/ccg" path="/ccg/:category?" :paramsDesc="['分类，见下表']">
+
+| 新闻动态 | 媒体报道 | 观点 |
+| -------- | -------- | ---- |
+| news     | mtbd     | view |
+
+</Route>
+
 ## 全现在
 
+### 专栏
+
 <Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
+
+### 话题
+
+<Route author="nczitzk" example="/allnow/tag/678" path="/allnow/tag/:id" :paramsDesc="['话题 id']"/>
+
+### 用户
+
+<Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" :paramsDesc="['用户 id']"/>
 
 ## 人人都是产品经理
 
@@ -1626,7 +1720,7 @@ column 为 third 时可选的 category:
 
 ### 最新上架付费专栏
 
-<Route author="HenryQW" example="/sspai/series" path="/sspai/series">
+<Route author="HenryQW" example="/sspai/series" path="/sspai/series" radar="1">
 
 > 少数派专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
@@ -1634,27 +1728,27 @@ column 为 third 时可选的 category:
 
 ### Shortcuts Gallery
 
-<Route author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" />
+<Route author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" radar="1"/>
 
 ### Matrix
 
-<Route author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" />
+<Route author="feigaoxyz" example="/sspai/matrix" path="/sspai/matrix" radar="1"/>
 
 ### 专栏
 
-<Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']"/>
+<Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']" radar="1"/>
 
 ### 作者
 
-<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']"/>
+<Route author="SunShinenny hoilc" example="/sspai/author/796518" path="/sspai/author/:id"  :paramsDesc="['作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容']" radar="1"/>
 
 ### 作者动态
 
-<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']"/>
+<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']" radar="1"/>
 
 ### 专题
 
-<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics">
+<Route author="SunShinenny" example="/sspai/topics" path="/sspai/topics" radar="1">
 
 此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！
 
@@ -1662,11 +1756,17 @@ column 为 third 时可选的 category:
 
 ### 专题内文章更新
 
-<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']"/>
+<Route author="SunShinenny" example="/sspai/topic/250" path="/sspai/topic/:id"  :paramsDesc="['专题 id，可在专题主页URL中找到']" radar="1"/>
 
 ### 标签订阅
 
-<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']"/>
+<Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']" radar="1"/>
+
+## 深圳新闻网
+
+### 排行榜
+
+<Route author="nczitzk" example="/sznews/ranking" path="/sznews/ranking"/>
 
 ## 生命时报
 
@@ -1755,6 +1855,18 @@ column 为 third 时可选的 category:
 
 <Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
 
+## 通識・現代中國
+
+### 議題熱話
+
+<Route author="nczitzk" example="/chiculture/topic" path="/chiculture/topic/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 現代中國 | 今日香港 | 全球化 | 一周時事通識 |
+| ---- | -------- | -------- | ------ | ------------ |
+|      | 76       | 479      | 480    | 379          |
+
+</Route>
+
 ## 推酷
 
 ### 周刊
@@ -1778,6 +1890,12 @@ column 为 third 时可选的 category:
 | all  | news | finance | blockchain | internet | tech | newmedia | business | hundred     | ecommerce | entertainment | life |
 
 </Route>
+
+## 歪脑 wainao.me
+
+### 所有文章
+
+<Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
 
 ## 晚点 LatePost
 
@@ -1819,6 +1937,13 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 网易号（通用）
+
+<Route author="mjysci" example="/netease/dy2/T1555591616739" path="/netease/dy2/:id" :paramsDesc="['id，该网易号主页网址最后一项html的文件名']" anticrawler="1"/>
+
+优先使用方法一，若是网易号搜索页面搜不到的小众网易号（文章页面不含`data-wemediaid`）则可使用此法。  
+触发反爬会只抓取到标题，建议自建。  
+
 ## 网易新闻
 
 ### 排行榜
@@ -1852,10 +1977,6 @@ column 为 third 时可选的 category:
 | 1        | 2    | 3    | 4        | 5        | 6    | 7    | 8      | 9      | 10   | 11       | 12     | 13       | 14   | 15   |
 
 </Route>
-
-### 数读
-
-<Route author="laampui" example="/netease/news/data" path="/netease/news/data"/>
 
 ## 维基百科
 
@@ -2087,6 +2208,12 @@ column 为 third 时可选的 category:
 | default | hot  | new  |
 
 </Route>
+
+## 亿欧网
+
+### 资讯
+
+<Route author="WenryXu" example="/iyiou" path="/iyiou"/>
 
 ## 有趣天文奇观
 
