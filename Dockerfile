@@ -32,7 +32,7 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   fi;
 
 RUN npm i -g npm
-RUN npm install
+RUN yarn install
 RUN node tools/minify-docker.js && sh tools/clean-nm.sh
 
 FROM node:14-slim as app
