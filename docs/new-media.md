@@ -2231,16 +2231,15 @@ column 为 third 时可选的 category:
 
 ## 游戏葡萄
 
-无文章正文，仅有目录索引。
+### 文章
 
-### 全部文章
+<Route author="KotoriK nczitzk" example="/gamegrape/13" path="/gamegrape/:id?" :paramsDesc="['分类 id，见下表，默认为全部']">
 
-<Route author="KotoriK" example="/gamegrape" path="/gamegrape/index"/>
+| 全部 | 深度 | 资讯 | DemoWall | 酷玩 | 海外 | 专栏 | 葡萄观察 |
+| ---- | ---- | ---- | -------- | ---- | ---- | ---- | -------- |
+|      | 13   | 14   | 15       | 16   | 17   | 18   | 19       |
 
-### 分类
-
-例子对应[深度分类](http://youxiputao.com/article/index/id/13)
-<Route author="KotoriK" example="/gamegrape/13" path="/gamegrape/:id?"/>
+</Route>
 
 ## 鱼塘热榜
 
