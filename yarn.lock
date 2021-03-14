@@ -9441,14 +9441,6 @@ only@~0.0.2:
   resolved "https://registry.yarnpkg.com/only/-/only-0.0.2.tgz#2afde84d03e50b9a8edc444e30610a70295edfb4"
   integrity sha1-Kv3oTQPlC5qO3EROMGEKcCle37Q=
 
-opencc@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/opencc/-/opencc-1.1.2.tgz#63e611d946873cc8d4351118ba620349f08ec028"
-  integrity sha512-xsuoBDM5O3Qt+ctLcI97a5A/Ta+js3pa0cPodz05cQqAB27D95Sq8S+WRPZYdlShzw0xav1d+rKuaUdGksMB6Q==
-  dependencies:
-    nan "^2.14.2"
-    node-pre-gyp "^0.14.0"
-
 opencollective-postinstall@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.2.tgz#5657f1bede69b6e33a45939b061eb53d3c6c3a89"
@@ -11529,6 +11521,11 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+simplecc-wasm@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/simplecc-wasm/-/simplecc-wasm-0.1.1.tgz#62f64f3cb561974c73be549595874a5e562ac1ff"
+  integrity sha512-ywhXmfcvsyf0fGzP9Mhxe9i079ed4C9/OSpVkgszmNUuFcHjuN8/O/ftisg308EmgQ1H3+ULigupoz+wZoe4nA==
 
 sisteransi@^1.0.0:
   version "1.0.0"
