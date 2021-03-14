@@ -26,14 +26,19 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   --no-install-recommends \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get purge --auto-remove -y wget\
-  && rm -rf /src/*.deb \
-  && yarn install && node tools/minify-docker.js && sh tools/clean-nm.sh;\
+  && rm -rf /src/*.deb;\
   else \
-  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && \
-  yarn install && node tools/minify-docker.js && sh tools/clean-nm.sh;\
+  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true;\
   fi;
 
+RUN yarn install
+RUN node tools/minify-docker.js && sh tools/clean-nm.sh
+
 FROM node:14-slim as app
+
+ENV NODE_ENV production
+ENV TZ Asia/Shanghai
+
 COPY . /app
 COPY --from=dep-builder /app/node_modules /app/node_modules
 COPY --from=dep-builder /usr/bin/dumb-init /usr/bin/dumb-init
