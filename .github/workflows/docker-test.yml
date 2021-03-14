@@ -10,6 +10,7 @@ on:
     push:
         branches: '*'
         paths:
+            - '.github/workflows/**'
             - 'lib/**'
             - 'Dockerfile'
             - 'package.json'
