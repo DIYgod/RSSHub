@@ -40,6 +40,7 @@ FROM node:14-slim as app
 ENV NODE_ENV production
 ENV TZ Asia/Shanghai
 
+WORKDIR /app
 COPY . /app
 COPY --from=dep-builder /app/node_modules /app/node_modules
 COPY --from=dep-builder /usr/bin/dumb-init /usr/bin/dumb-init
