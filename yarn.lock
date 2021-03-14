@@ -6805,10 +6805,10 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-ioredis@4.23.0:
-  version "4.23.0"
-  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.23.0.tgz#f61b65633a25c93f43fccebcacac2f4342e418f9"
-  integrity sha512-R5TDCODwnEH3J3A5TSoB17+6a+SeJTtIOW6vsy5Q1yag/AM8FejHjZC5R2O1QepSXV8hwOnGSm/4buJc/LeXTQ==
+ioredis@4.23.1:
+  version "4.23.1"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.23.1.tgz#a758949c7c9a88e0088b107a3e13f49528a40836"
+  integrity sha512-CSRSx8xOwWZJ1Jm9nONJ67NydO5YrM2GN+wIL+HNo+2BDXGmL8t1exzmB/k+lmk/9lcWAl3rePh/PbgVG40KAA==
   dependencies:
     cluster-key-slot "^1.1.0"
     debug "^4.1.1"
@@ -7741,10 +7741,10 @@ jsbn@~0.1.0:
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
   integrity sha1-peZUwuWi3rXyAdls77yoDA7y9RM=
 
-jsdom@16.5.0, jsdom@^16.4.0:
-  version "16.5.0"
-  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-16.5.0.tgz#9e453505600cc5a70b385750d35256f380730cc4"
-  integrity sha512-QxZH0nmDTnTTVI0YDm4RUlaUPl5dcyn62G5TMDNfMmTW+J1u1v9gCR8WR+WZ6UghAa7nKJjDOFaI00eMMWvJFQ==
+jsdom@16.5.1, jsdom@^16.4.0:
+  version "16.5.1"
+  resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-16.5.1.tgz#4ced6bbd7b77d67fb980e64d9e3e6fb900f97dd6"
+  integrity sha512-pF73EOsJgwZekbDHEY5VO/yKXUkab/DuvrQB/ANVizbr6UAHJsDdHXuotZYwkJSGQl1JM+ivXaqY+XBDDL4TiA==
   dependencies:
     abab "^2.0.5"
     acorn "^8.0.5"
@@ -9440,14 +9440,6 @@ only@~0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/only/-/only-0.0.2.tgz#2afde84d03e50b9a8edc444e30610a70295edfb4"
   integrity sha1-Kv3oTQPlC5qO3EROMGEKcCle37Q=
-
-opencc@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/opencc/-/opencc-1.1.2.tgz#63e611d946873cc8d4351118ba620349f08ec028"
-  integrity sha512-xsuoBDM5O3Qt+ctLcI97a5A/Ta+js3pa0cPodz05cQqAB27D95Sq8S+WRPZYdlShzw0xav1d+rKuaUdGksMB6Q==
-  dependencies:
-    nan "^2.14.2"
-    node-pre-gyp "^0.14.0"
 
 opencollective-postinstall@^2.0.2:
   version "2.0.2"
@@ -11529,6 +11521,11 @@ simple-swizzle@^0.2.2:
   integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
   dependencies:
     is-arrayish "^0.3.1"
+
+simplecc-wasm@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/simplecc-wasm/-/simplecc-wasm-0.1.1.tgz#62f64f3cb561974c73be549595874a5e562ac1ff"
+  integrity sha512-ywhXmfcvsyf0fGzP9Mhxe9i079ed4C9/OSpVkgszmNUuFcHjuN8/O/ftisg308EmgQ1H3+ULigupoz+wZoe4nA==
 
 sisteransi@^1.0.0:
   version "1.0.0"
