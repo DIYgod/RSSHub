@@ -38,7 +38,7 @@ pageClass: routes
 
 ### Next 主题博客
 
-<Route author="fengkx" example="/hexo/next/fengkx.top" path="/hexo/next/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+<Route author="fengkx" example="/hexo/next/diygod.me" path="/hexo/next/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
 ### Yilia 主题博客
 

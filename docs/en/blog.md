@@ -20,7 +20,7 @@ pageClass: routes
 
 ### Blog using Next theme
 
-<RouteEn author="fengkx" path="/hexo/next/:url" example="/hexo/next/fengkx.top" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+<RouteEn author="fengkx" path="/hexo/next/:url" example="/hexo/next/diygod.me" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
 ### Blog using Yilia theme
 
