@@ -16,7 +16,6 @@ on:
 
 jobs:
     test:
-        if: github.repository == 'DIYgod/RSSHub'
         runs-on: ubuntu-latest
         steps:
         -
