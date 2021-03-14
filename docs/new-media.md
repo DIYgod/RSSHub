@@ -212,6 +212,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" :paramsDesc="['标签，可在对应标签页 URL 中找到']" />
 
+## ezone.hk
+
+### 分类
+
+<Route author="nczitzk" example="/ezone" path="/ezone/:category?" :paramsDesc="['分类，见下表，默认为最新内容']">
+
+| 科技焦點 | 網絡生活 | 教學評測 | IT Times |
+| -------- | -------- | -------- | -------- |
+| srae001  | srae008  | srae017  | srae021  |
+
+</Route>
+
 ## GQ
 
 ### GQ 台湾
