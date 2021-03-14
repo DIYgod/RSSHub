@@ -87,7 +87,7 @@
     "https-proxy-agent": "5.0.0",
     "iconv-lite": "0.6.2",
     "instagram-private-api": "1.44.0",
-    "ioredis": "4.23.0",
+    "ioredis": "4.23.1",
     "ip-regex": "4.2.0",
     "is-localhost-ip": "1.4.0",
     "jsdom": "16.5.0",

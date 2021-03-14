@@ -6805,10 +6805,10 @@ invert-kv@^2.0.0:
   resolved "https://registry.yarnpkg.com/invert-kv/-/invert-kv-2.0.0.tgz#7393f5afa59ec9ff5f67a27620d11c226e3eec02"
   integrity sha512-wPVv/y/QQ/Uiirj/vh3oP+1Ww+AWehmi1g5fFWGPF6IpCBCDVrhgHRMvrLfdYcwDh3QJbGXDW4JAuzxElLSqKA==
 
-ioredis@4.23.0:
-  version "4.23.0"
-  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.23.0.tgz#f61b65633a25c93f43fccebcacac2f4342e418f9"
-  integrity sha512-R5TDCODwnEH3J3A5TSoB17+6a+SeJTtIOW6vsy5Q1yag/AM8FejHjZC5R2O1QepSXV8hwOnGSm/4buJc/LeXTQ==
+ioredis@4.23.1:
+  version "4.23.1"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-4.23.1.tgz#a758949c7c9a88e0088b107a3e13f49528a40836"
+  integrity sha512-CSRSx8xOwWZJ1Jm9nONJ67NydO5YrM2GN+wIL+HNo+2BDXGmL8t1exzmB/k+lmk/9lcWAl3rePh/PbgVG40KAA==
   dependencies:
     cluster-key-slot "^1.1.0"
     debug "^4.1.1"
