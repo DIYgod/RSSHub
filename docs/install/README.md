@@ -51,7 +51,7 @@ $ docker-compose up -d
 $ docker-compose down
 ```
 
-拉取最新镜像
+如果你之前安装下载了旧镜像，[RSSHub](https://github.com/DIYgod/RSSHub)现在已经有所更新，那么拉取最新镜像
 
 ```bash
 $ docker pull diygod/rsshub
