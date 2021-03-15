@@ -51,7 +51,7 @@ Remove old containers
 $ docker-compose down
 ```
 
-Pull the latest image
+Pull the latest image if [RSSHub](https://github.com/DIYgod/RSSHub) has been updated and you downloaded the older image previously
 
 ```bash
 $ docker pull diygod/rsshub
