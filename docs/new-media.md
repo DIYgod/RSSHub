@@ -1588,6 +1588,10 @@ column 为 third 时可选的 category:
 
 ## 鸟哥笔记
 
+### 首页
+
+<Route author="WenryXu" example="/ngbj" path="/ngbj"/>
+
 ### 今日事
 
 <Route author="KotoriK" example="/ngbj/today" path="/ngbj/today"/>
