@@ -656,6 +656,20 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']"/>
 
+## xhu
+
+### 收藏夹
+
+<Route author="hellodword" example="/xhu/collection/26444956" path="/xhu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']" />
+
+### 专栏
+
+<Route author="hellodword" example="/xhu/zhuanlan/googledevelopers" path="/xhu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']" />
+
+### 话题
+
+<Route author="hellodword" example="/xhu/topic/19828946" path="/xhu/topic/:topicId" :paramsDesc="['话题 id']" />
+
 ## YouTube
 
 ::: tip Tiny Tiny RSS 用户请注意
