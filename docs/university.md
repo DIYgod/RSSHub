@@ -478,13 +478,13 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ## 福州大学
 
-### 教务处教学通知
+### 教务处通知
 
-<Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/jxtz"/>
+<Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/:type" :paramsDesc="['分类见下表']"/>
 
-### 教务处专家讲座
-
-<Route author="Lao-Liu233" example="/fzu/zjjz" path="/fzu/zjjz"/>
+| 教学通知 | 专家讲座 |
+| -------- | -------- |
+| jxtz     | zjjz     |
 
 ## 广东工业大学
 
