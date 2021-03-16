@@ -421,13 +421,9 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## Matters
 
-### 熱門文章
-
-<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1" rssbud="1"/>
-
 ### 最新、熱議、精華
 
-<Route author="xyqfer Cerebrater" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
+<Route author="xyqfer Cerebrater xosdy" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
 
 | 最新   | 熱議 | 精華    |
 | ------ | ---- | ------- |
