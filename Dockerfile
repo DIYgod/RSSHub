@@ -24,7 +24,7 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm install ;\
   fi;
 
-RUN node tools/minify-docker.js && sh tools/clean-nm.sh
+RUN node tools/minify-docker.js
 
 FROM node:14-slim as app
 

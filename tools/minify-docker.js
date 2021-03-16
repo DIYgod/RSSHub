@@ -3,13 +3,24 @@ const path = require('path');
 const globby = require('globby');
 const { nodeFileTrace } = require('@vercel/nft');
 const files = ['lib/index.js', 'api/now.js'];
-const exclude = [/cross-env/, /\.wasm$/];
+const exclude = [];
 
 (async () => {
     const { fileList } = await nodeFileTrace(files, {
         base: path.resolve(path.join(__dirname, '..')),
     });
-    const deps = await globby('node_modules');
+    // console.log(fileList.join('\n'))
+    const deps = await globby('node_modules/**/*', { dot: true, onlyFiles: false });
+    // console.log(deps.join('\n'))
     const toDel = deps.filter((f) => exclude.every((re) => !re.test(f)) && !fileList.includes(f));
-    await Promise.all(toDel.map((f) => fs.unlink(f)));
+    await Promise.all(
+        toDel.map(async (f) => {
+            const stat = await fs.lstat(f);
+            if (stat.isDirectory()) {
+                return fs.rmdir(f, { recursive: true });
+            } else {
+                return fs.unlink(f);
+            }
+        })
+    );
 })();
