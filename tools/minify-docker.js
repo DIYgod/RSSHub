@@ -9,9 +9,7 @@ const exclude = [];
     const { fileList } = await nodeFileTrace(files, {
         base: path.resolve(path.join(__dirname, '..')),
     });
-    // console.log(fileList.join('\n'))
     const deps = await globby('node_modules/**/*', { dot: true, onlyFiles: false });
-    // console.log(deps.join('\n'))
     const toDel = deps.filter((f) => exclude.every((re) => !re.test(f)) && !fileList.includes(f));
     await Promise.all(
         toDel.map(async (f) => {
