@@ -9,6 +9,13 @@ pageClass: routes
 ### Annual FOIA Reports
 
 <RouteEn author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
+
+## Constitutional Court of Baden-Württemberg (Germany)
+
+### Press releases
+
+<RouteEn author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" :paramsDesc="['Keyword']"/>
+
 ## Ministry of Foreign Affairs of Japan
 
 ### Press conference

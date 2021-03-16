@@ -248,11 +248,11 @@ pageClass: routes
 
 ### 子论坛
 
-<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:caty" :paramsDesc="['子论坛']">
+<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:category?" :paramsDesc="['子论坛，默认为首页']">
 
-| 首页  | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
-| ----- | -------- | -------- | ------- | -------- | -------- | -------- |
-| index | qna      | lowshine | it      | finance  | startup  | city     |
+| 首页 | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
+| ---- | -------- | -------- | ------- | -------- | -------- | -------- |
+|      | qna      | lowshine | it      | finance  | startup  | city     |
 
 </Route>
 
@@ -321,6 +321,16 @@ pageClass: routes
 | cTime    | rTime    | replycount | viewcount |
 
 </Route>
+
+## 集思录
+
+### 用户回复
+
+<Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+
+### 用户主题
+
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
 ## 看雪
 
@@ -747,3 +757,19 @@ pageClass: routes
 ### 滚动新闻
 
 <Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>
+
+## 中国灵异网
+
+### 分类
+
+<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']"> 
+
+| 编辑推荐 | 奇闻异事   | 鬼话连篇       |
+| -------- | ---------- | -------------- |
+| tuijian  | qiwenyishi | guihualianpian |
+
+| 灵异事件      | 灵异图片     | 民间奇谈     |
+| ------------- | ------------ | ------------ |
+| lingyishijain | lingyitupian | minjianqitan |
+
+</Route>
