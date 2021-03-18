@@ -6068,10 +6068,10 @@ googleapis-common@^5.0.1:
     url-template "^2.0.8"
     uuid "^8.0.0"
 
-googleapis@67.1.1:
-  version "67.1.1"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-67.1.1.tgz#e67690ca0ed08b84c54b5eb9d66a89e3a80abde4"
-  integrity sha512-WLYk8R4dpW/oIxXhj0PQGhu+eOUpQbtWYTCxx/jeENr4arE9UmV5qmz0h1Gs1SPF/O/8PjCQIsPwOuHAlj78GA==
+googleapis@68.0.0:
+  version "68.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-68.0.0.tgz#39ed4f189307863ba3f58f31760f4a384a72cc08"
+  integrity sha512-yleU83x5F314e+YHt6cq2x1afMRFUPiNFW35buDH7BStOUhS1dRvEiV8b0IudoyuOIOWylBc1FPg8evcxcDj7g==
   dependencies:
     google-auth-library "^7.0.2"
     googleapis-common "^5.0.1"
