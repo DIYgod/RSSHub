@@ -2266,6 +2266,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 中国纺织经济信息网
+
+### 资讯
+
+<Route author="nczitzk" example="/ctei/news/bwzq" path="/ctei/news/:id?" :paramsDesc="['分类 id，可在分类页的 URL 中找到，默认为本网专区']">
+
+| 要闻   | 国内     | 国际     | 企业    | 品牌  | 外贸  | 政策   | 科技       | 流行    | 服装    | 家纺    |
+| ------ | -------- | -------- | ------- | ----- | ----- | ------ | ---------- | ------- | ------- | ------- |
+| newsyw | domestic | internal | company | brand | trade | policy | Technology | fashion | apparel | hometex |
+
+</Route>
+
 ## 中国计算机学会
 
 ### 新闻
