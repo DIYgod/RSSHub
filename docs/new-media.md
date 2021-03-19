@@ -2266,6 +2266,36 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 中国化工报中化新网
+
+### 分类
+
+<Route author="nczitzk" example="/ccin/index" path="/ccf/:category?" :paramsDesc="['分类，可在分类页 URL 中找到，默认为首页']">
+
+| 首页  | 综合要闻   | 国内化工       | 国际化工 | 科技创新   | 企业报道         | 会议活动 | 市场信息     | 化工号 |
+| ----- | ---------- | -------------- | -------- | ---------- | ---------------- | -------- | ------------ | ------ |
+| index | index_news | index_domestic | int      | index_tech | index_enterprise | activity | index_market | mp     |
+
+化工号
+
+| 煤化工   | 中国・责任关怀 | 化工新材料 | 智能制造 | 化工园区 | 环氧丙烷・碳酸酯产业 | 硝基肥高质量发展行动 | 油气   | 染料    | 生物化工             | 农资                  |
+| -------- | -------------- | ---------- | -------- | -------- | -------------------- | -------------------- | ------ | ------- | -------------------- | --------------------- |
+| ind_coal | ind_safety     | ind_mater  | ind_eqp  | ind_park | ind_crbonate         | ind_nitrogen         | ind_ne | ind_dye | ind_more_biochemical | ind_more_agricultural |
+
+重点行业
+
+| 监控化学品 | 节能       | 工业清洗     | 硫酸             | 磷复肥        | 氮肥         | 化学品安全         | 膜工业       | 纯碱        | 自动化应用 | 工业防腐           | 化工教育 | 山东地炼       | 腐植酸        | 无机盐            |
+| ---------- | ---------- | ------------ | ---------------- | ------------- | ------------ | ------------------ | ------------ | ----------- | ---------- | ------------------ | -------- | -------------- | ------------- | ----------------- |
+| key_mon    | key_saving | key_cleaning | key_sulfuricAcid | key_phosphate | key_nitrogen | key_chemicalSafety | key_membrane | key_sodaAsh | key_auto   | key_anti-corrosion | key_edu  | key_sdRefining | key_humicAcid | key_inorganicSalt |
+
+融媒体号
+
+| 南通市安全生产管理协会 - 化工号 | 氯碱产业    | 海湾集团 - 化工号 | 神木煤化工产业有限公司 - 化工号 | 如东洋口化学工业园 — 化工号 | 安元科技 - 化工号 | 哈尔滨石化 - 化工号 |
+| ------------------------------- | ----------- | ----------------- | ------------------------------- | --------------------------- | ----------------- | ------------------- |
+| ntaqpx                          | chlorAlkali | qdhw              | smmhg                           | rdyk                        | safirst           | hebsh               |
+
+</Route>
+
 ## 中国计算机学会
 
 ### 新闻
