@@ -615,6 +615,16 @@ Supported sub-sites:
 
 </Route>
 
+## World Happiness
+
+### Blog
+
+<Route author="nczitzk" example="/worldhappiness/blog" path="/worldhappiness/blog"/>
+
+### Archive
+
+<Route author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
+
 ## ZAKER
 
 ### source

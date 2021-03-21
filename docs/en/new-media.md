@@ -386,6 +386,16 @@ Provides all of the Thrillist articles with the specified tag.
 
 <RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:tag/:excludetags?" :paramsDesc="['Tag', 'Comma-delimited list of tags. If an article includes one of these tags, it will be excluded from the RSS feed.']" />
 
+## World Happiness
+
+### Blog
+
+<RouteEn author="nczitzk" example="/worldhappiness/blog" path="/worldhappiness/blog"/>
+
+### Archive
+
+<RouteEn author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
+
 ## World Health Organization | WHO
 
 ### Newsroom
