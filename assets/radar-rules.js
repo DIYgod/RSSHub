@@ -2385,6 +2385,24 @@
                     return uid ? `/douban/people/${uid}/status` : '';
                 },
             },
+            {
+                title: '小组-最新',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid',
+            },
+            {
+                title: '小组-最热',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/essence',
+            },
+            {
+                title: '小组-精华',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/elite',
+            },
         ],
     },
     'okjike.com': {
