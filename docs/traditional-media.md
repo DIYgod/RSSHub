@@ -686,6 +686,10 @@ category 对应的关键词有
 
 </Route>
 
+### 澎湃号
+
+<Route author="WenhuWee" example="/thepaper/user/5221402" path="/thepaper/user/:id" :paramsDesc="['澎湃号 id，可在主页 URL 中找到']"/>
+
 ## 齐鲁晚报
 
 ### 新闻
