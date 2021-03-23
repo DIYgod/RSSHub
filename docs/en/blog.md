@@ -16,6 +16,10 @@ pageClass: routes
 
 <RouteEn author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, can be found in URL']" />
 
+### Recent Changes
+
+<RouteEn author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" :paramsDesc="['Site ID, can be found in URL']"/>
+
 ## Hexo Blog
 
 ### Blog using Next theme
