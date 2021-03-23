@@ -385,6 +385,10 @@ Category 列表：
 
 </Route>
 
+### 财新数据通
+
+<Route author="nczitzk" example="/caixin/database" path="/caixin/database"/>
+
 ## 第一财经
 
 ### 直播区
