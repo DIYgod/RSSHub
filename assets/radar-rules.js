@@ -1804,12 +1804,6 @@
                 target: '/matters/latest',
             },
             {
-                title: '熱門文章',
-                docs: 'https://docs.rsshub.app/new-media.html#matters',
-                source: '',
-                target: '/matters/hot',
-            },
-            {
                 title: '标签',
                 docs: 'https://docs.rsshub.app/new-media.html#matters',
                 source: '/tags/:tid',
@@ -2390,6 +2384,24 @@
                     const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
                     return uid ? `/douban/people/${uid}/status` : '';
                 },
+            },
+            {
+                title: '小组-最新',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid',
+            },
+            {
+                title: '小组-最热',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/essence',
+            },
+            {
+                title: '小组-精华',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/elite',
             },
         ],
     },
