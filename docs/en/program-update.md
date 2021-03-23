@@ -168,6 +168,12 @@ Language
 
 <RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
 
+## Hugo
+
+### Release News
+
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
 ## IPSW.me
 
 ### Apple Firmware Update-IPSWs/OTAs version
