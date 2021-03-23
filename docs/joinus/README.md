@@ -569,6 +569,16 @@ ctx.state.data = {
 
 请注意，`target` 方法运行在沙盒中，对 `document` 的任何修改都不会反应到页面中
 
+### RSSBud
+
+[RSSBud](https://github.com/Cay-Zhang/RSSBud) 支持 RSSHub Radar 的规则并且也会自动更新，但是请注意：
+
+-   在 Radar 的规则中使用 `'.'` 子域名可以让 RSSBud 适配 `m` / `mobile` 等常见移动端子域名
+
+-   在 `target` 中使用 `document` 的规则并不适用 RSSBud：RSSBud 并不是一个浏览器插件，他只获取并分析网站的 URL
+
 ### 补充文档
 
 在 RSSHub 文档里给对应路径加上 `radar="1"`，这样就会显示一个 `支持浏览器扩展` 标记
+
+如果也支持 RSSBud，再加上 `rssbud="1"`，会显示 `支持 RSSBud` 标记
