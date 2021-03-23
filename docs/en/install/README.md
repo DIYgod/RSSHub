@@ -51,7 +51,7 @@ Remove old containers
 $ docker-compose down
 ```
 
-Pull the latest image if [RSSHub](https://github.com/DIYgod/RSSHub) has been updated and you downloaded the older image previously
+Repull the latest image if you have downloaded the image before. It is helpful to resolve some issues.
 
 ```bash
 $ docker pull diygod/rsshub
@@ -538,4 +538,3 @@ See docs of specified route and `lib/config.js` for detail information.
         | https://pic1.xuehuaimg.com/proxy/        | cloudflare   |
         | https://cors.netnr.workers.dev/          | cloudflare   |
         | https://netnr-proxy.openode.io/          | digitalocean |
-
