@@ -364,7 +364,7 @@ Compared to the official one, this feed:
 
 ### Resources
 
-<RouteEn author="nczitzk" example="/partnershiponai/resource" path="/partnershiponai/resource"/>
+<RouteEn author="nczitzk" example="/partnershiponai/resources" path="/partnershiponai/resources"/>
 
 ## The Verge
 

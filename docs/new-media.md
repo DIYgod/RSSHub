@@ -577,7 +577,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### Resources
 
-<Route author="nczitzk" example="/partnershiponai/resource" path="/partnershiponai/resource"/>
+<Route author="nczitzk" example="/partnershiponai/resources" path="/partnershiponai/resources"/>
 
 ## The Verge
 
