@@ -174,9 +174,9 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
+<Route author="zengxs" example="/saraba1st/thread/1842868" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
 
-帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
+帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1842868-1-1.html> 那么帖子 id 就是 `1789863`。
 
 </Route>
 
