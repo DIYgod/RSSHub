@@ -174,9 +174,9 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
+<Route author="zengxs" example="/saraba1st/thread/1842868" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
 
-帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
+帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1842868-1-1.html> 那么帖子 id 就是 `1789863`。
 
 </Route>
 
@@ -248,11 +248,11 @@ pageClass: routes
 
 ### 子论坛
 
-<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:caty" :paramsDesc="['子论坛']">
+<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:category?" :paramsDesc="['子论坛，默认为首页']">
 
-| 首页  | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
-| ----- | -------- | -------- | ------- | -------- | -------- | -------- |
-| index | qna      | lowshine | it      | finance  | startup  | city     |
+| 首页 | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
+| ---- | -------- | -------- | ------- | -------- | -------- | -------- |
+|      | qna      | lowshine | it      | finance  | startup  | city     |
 
 </Route>
 
@@ -322,6 +322,16 @@ pageClass: routes
 
 </Route>
 
+## 集思录
+
+### 用户回复
+
+<Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+
+### 用户主题
+
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+
 ## 看雪
 
 ### 论坛
@@ -349,6 +359,24 @@ pageClass: routes
 | -------- | ------ |
 | 最新主题 | latest |
 | 精华主题 | digest |
+
+## 梨园
+
+### 主题帖（全站）
+
+<Route author="WooMai" example="/liyuan-forums/threads" path="/liyuan-forums/threads" />
+
+### 主题帖（板块）
+
+<Route author="WooMai" example="/liyuan-forums/threads/forum/:forum_id" path="/liyuan-forums/threads/forum/1" :paramsDesc="['板块 ID']" />
+
+### 主题帖（专题）
+
+<Route author="WooMai" example="/liyuan-forums/threads/topic/:topic_id" path="/liyuan-forums/threads/topic/1" :paramsDesc="['专题 ID']" />
+
+### 主题帖（用户）
+
+<Route author="WooMai" example="/liyuan-forums/threads/user/:user_id" path="/liyuan-forums/threads/user/1" :paramsDesc="['用户 ID, 仅支持数字 ID']" />
 
 ## 龙空
 
@@ -729,3 +757,19 @@ pageClass: routes
 ### 滚动新闻
 
 <Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>
+
+## 中国灵异网
+
+### 分类
+
+<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']"> 
+
+| 编辑推荐 | 奇闻异事   | 鬼话连篇       |
+| -------- | ---------- | -------------- |
+| tuijian  | qiwenyishi | guihualianpian |
+
+| 灵异事件      | 灵异图片     | 民间奇谈     |
+| ------------- | ------------ | ------------ |
+| lingyishijain | lingyitupian | minjianqitan |
+
+</Route>
