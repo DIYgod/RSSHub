@@ -75,39 +75,39 @@ pageClass: routes
 
 ### 放送列表
 
-<Route author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today"/>
+<Route author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today" radar="1"/>
 
 ### 条目的章节
 
-<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/ep/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的吐槽箱
 
-<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']"/>
+<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']" radar="1"/>
 
 ### 条目的评论
 
-<Route author="ylc395" example="/bangumi/subject/214265/blogs" path="/bangumi/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/subject/214265/blogs" path="/bangumi/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的讨论
 
-<Route author="ylc395" example="/bangumi/subject/214265/topics" path="/bangumi/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/subject/214265/topics" path="/bangumi/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 现实人物的新作品
 
-<Route author="ylc395" example="/bangumi/person/32943" path="/bangumi/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/person/32943" path="/bangumi/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']" radar="1"/>
 
 ### 小组话题的新回复
 
-<Route author="ylc395" example="/bangumi/topic/24657" path="/bangumi/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/topic/24657" path="/bangumi/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
 
 ### 小组话题
 
-<Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
+<Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']" radar="1"/>
 
 ### 用户日志
 
-<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']"/>
+<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']" radar="1"/>
 
 ## bilibili
 
