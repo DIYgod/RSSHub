@@ -973,3 +973,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
+## 事业编信息网
+
+### 招聘信息
+
+<Route author="星索" example="/shiyebian/shandong" path="/shiyebian/:province/:city?" :paramsDesc="['省份', '城市名称, 地级市以上']" >
+::: warning 注意
+
+省份、地级市名称拼音以http://www.shiyebian.net/为准
+
+:::
+</Route>
