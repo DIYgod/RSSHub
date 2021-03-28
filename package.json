@@ -90,7 +90,7 @@
     "ioredis": "4.24.4",
     "ip-regex": "4.2.0",
     "is-localhost-ip": "1.4.0",
-    "jsdom": "16.5.1",
+    "jsdom": "16.5.2",
     "json-bigint": "1.0.0",
     "json5": "2.2.0",
     "koa": "2.13.1",
