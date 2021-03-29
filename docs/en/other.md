@@ -175,6 +175,14 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 </RouteEn>
 
+## Reverse Proxy
+
+<Route author="ccat3z"
+    example="/reverse-proxy/https%3A%2F%2Frsshub.app%2Frsshub%2Froutes"
+    path="/reverse-proxy/:url"
+    :paramsDesc="['URL encoded rss/atom URL']"
+/>
+
 ## SANS Institute
 
 ### Latest conference materials

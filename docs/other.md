@@ -387,6 +387,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 反向代理
+
+<Route author="ccat3z"
+    example="/reverse-proxy/https%3A%2F%2Frsshub.app%2Frsshub%2Froutes"
+    path="/reverse-proxy/:url"
+    :paramsDesc="['URL编码的RSS/Atom地址']"
+/>
+
 ## 福利资源 - met.red
 
 ### 福利资源 - met.red
