@@ -51,7 +51,7 @@ $ docker-compose up -d
 $ docker-compose down
 ```
 
-如果之前已经下载/使用过镜像，下方命令可以帮助你获取最新版本：这可能可以解决一些问题。
+如果之前已经下载 / 使用过镜像，下方命令可以帮助你获取最新版本：这可能可以解决一些问题。
 
 ```bash
 $ docker pull diygod/rsshub
