@@ -2266,6 +2266,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 中国工人出版社
+
+### 新闻中心
+
+<Route author="nczitzk" example="/wp-china/news" path="/wp-china/news/:category?" :paramsDesc="['分类，见下表，默认为最新资讯']">
+
+| 最新资讯 | 专题报道 |
+| -------- | -------- |
+| latest   | stories  |
+
+</Route>
+
 ## 中国计算机学会
 
 ### 新闻
