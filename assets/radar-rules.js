@@ -1928,6 +1928,16 @@
                 source: ['/u/:id'],
                 target: `/zcoo/user/:id`,
             },
+            {
+                title: '发现',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: ['/discover'],
+                target: (params, url) => {
+                    const cate = new URL(url).searchParams.get('cate');
+                    const subCate = new URL(url).searchParams.get('subCate');
+                    return `/zcool/discover/${cate}/${subCate}`;
+                },
+            },
         ],
     },
     't.me': {
