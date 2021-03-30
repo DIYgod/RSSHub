@@ -198,7 +198,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 发现
 
-<Route author="nczitzk" example="/zcool/discover/0/0/0/中国/0/2/0" path="/zcool/discover/:cate?/:subCate?/:hasVideo?/:city?/:collage?/:recommendLevel?/:sort?" :paramsDesc="['分类，见下表，默认为精选', '子分类，见下表，默认为该父分类全部', '是否为视频，`0` 指非视频，`1` 指视频，默认为非视频内容', '地区代码，填入发现页中 `选择城市` 中的各级地名，如 `亚洲`、`中国`、`北京`、`纽约`、`巴黎`等', '学校名称，默认为 `0`，即全部学校', '推荐等级，见下表，默认为编辑推荐', '排序方式，`0` 指最新排序，`9` 指默认排序，默认为最新排序']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/zcool/discover/0/0/0/中国/0/2/0" path="/zcool/discover/:cate?/:subCate?/:hasVideo?/:city?/:collage?/:recommendLevel?/:sort?" :paramsDesc="['分类，见下表，默认为精选', '子分类，见下表，默认为该父分类全部', '是否为视频，`0` 指非视频，`1` 指视频，默认为非视频内容', '地区代码，填入发现页中 `选择城市` 中的各级地名，如 `亚洲`、`中国`、`北京`、`纽约`、`巴黎`等', '学校名称，默认为 `0`，即全部学校', '推荐等级，见下表，默认为编辑推荐', '排序方式，`0` 指最新排序，`9` 指默认排序']" radar="1" rssbud="1">
 
 以下是两个例子：
 
