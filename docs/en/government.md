@@ -42,6 +42,18 @@ Fill in the English expression for the month in the Month field, eg `December` f
 
 </RouteEn>
 
+## The White House
+
+### Briefing Room
+
+<RouteEn author="nczitzk" example="/whitehouse/briefing-room" path="/whitehouse/briefing-room/:category?" :paramsDesc="['Category, see below, all by default']">
+
+| All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |
+| - | - | - | - | - | - | - |
+| | blog | legislation | presidential-actions | press-briefings | speeches-remarks | statements-releases |
+
+</RouteEn>
+
 ## U.S. Department of the Treasury
 
 ### Press Releases
