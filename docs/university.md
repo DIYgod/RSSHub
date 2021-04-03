@@ -1614,6 +1614,28 @@ type 列表：
 
 <Route author="talenHuang" example="/sctu/jwc/13/645" path="/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']"/>
 
+## 四川农业大学
+
+### 研究生院
+
+<Route author="nczitzk" example="/sicau/yan/xwgg" path="/sicau/yan/:category?" :paramsDesc="['分类，见下表，默认为新闻公告']">
+
+| 新闻公告 | 学术报告 |
+| -------- | -------- |
+| xwgg     | xsbg     |
+
+</Route>
+
+### 动物科技学院
+
+<Route author="nczitzk" example="/sicau/dky/xwgg" path="/sicau/dky/:category?" :paramsDesc="['分类，见下表，默认为通知公告']">
+
+| 通知公告 | 学院动态 | 教学管理 | 动科大讲堂 | 就业信息 |
+| -------- | -------- | -------- | ---------- | -------- |
+| tzgg     | xydt     | jxgl     | dkdjt      | zpxx     |
+
+</Route>
+
 ## 四川职业技术学院
 
 ### 学院公告
