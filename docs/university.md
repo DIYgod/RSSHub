@@ -1628,7 +1628,7 @@ type 列表：
 
 ### 动物科技学院
 
-<Route author="nczitzk" example="/sicau/dky/xwgg" path="/sicau/dky/:category?" :paramsDesc="['分类，见下表，默认为通知公告']">
+<Route author="nczitzk" example="/sicau/dky/tzgg" path="/sicau/dky/:category?" :paramsDesc="['分类，见下表，默认为通知公告']">
 
 | 通知公告 | 学院动态 | 教学管理 | 动科大讲堂 | 就业信息 |
 | -------- | -------- | -------- | ---------- | -------- |
