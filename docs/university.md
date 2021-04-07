@@ -695,6 +695,10 @@ category 列表：
 
 <Route author="log-e" example="/hfut/tzgg" path="/hfut/tzgg"/>
 
+### 宣城校区通知公告
+
+<Route author="fzxiao233" example="/hfut/xuanchen_news" path="/hfut/xuanchen_news"/>
+
 ## 河海大学
 
 ### 河海大学图书馆 - 新闻动态
