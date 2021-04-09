@@ -1614,6 +1614,18 @@ type 列表：
 
 <Route author="talenHuang" example="/sctu/jwc/13/645" path="/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']"/>
 
+## 四川农业大学
+
+### 招生就业
+
+<Route author="nczitzk" example="/sicau/zsjy/bkszs" path="/sicau/zsjy/:category?" :paramsDesc="['分类，见下表，默认为本科生招生']">
+
+| 本科生招生 | 研究生招生 | 毕业生选录指南 |
+| ---------- | ---------- | -------------- |
+| bkszs      | yjszs      | bysxlzn        |
+
+</Route>
+
 ## 四川职业技术学院
 
 ### 学院公告
