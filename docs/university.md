@@ -1392,6 +1392,28 @@ type 列表：
 
 </Route>
 
+## 山东师范大学
+
+### 教务处
+
+<Route author="starsareintherose" example="/universities/sdnu/bkjy/xszq" path="/universities/sdnu/bkjy/:type" :paramsDesc="['类别']">
+
+| 综合新闻 | 通知公告 | 教师专区 | 学生专区 |
+| ------- | ------- | ------- | ------- |
+| zhxw | tzgg | jszq | xszq |
+
+</Route>
+
+### 生命科学学院
+
+<Route author="starsareintherose" example="/universities/sdnu/lsc/ggtz" path="/universities/sdnu/lsc/:type" :paramsDesc="['类别']">
+
+| 综合新闻 | 公告通知 | 学术动态 | 学术报告 | 视频在线 |
+| ------- | ------- | ------- | ------- | ------- |
+| zhxw | ggtz | xsdt | xsbg | spzz |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学官网信息
