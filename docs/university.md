@@ -1410,7 +1410,7 @@ type 列表：
 
 | 综合新闻 | 公告通知 | 学术动态 | 学术报告 | 视频在线 |
 | ------- | ------- | ------- | ------- | ------- |
-| zhxw | ggtz | xsdt | xsbg | spzz |
+| zhxw | ggtz | xsdt | xsbg | spzx |
 
 </Route>
 
