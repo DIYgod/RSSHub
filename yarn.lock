@@ -9870,10 +9870,10 @@ pinkie@^2.0.0:
   resolved "https://registry.yarnpkg.com/pinkie/-/pinkie-2.0.4.tgz#72556b80cfa0d48a974e80e77248e80ed4f7f870"
   integrity sha1-clVrgM+g1IqXToDnckjoDtT3+HA=
 
-pinyin@2.10.1:
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/pinyin/-/pinyin-2.10.1.tgz#01a3d65787edf068e5fdf084d3e556e7a93ed553"
-  integrity sha512-cKHPGgG7D+ULawHwxTNWE7vpLpgU1I/hWVhgQZWZmaf+SG3pPUyOn3KGJSYuos9yTJXDGHV06iaGFejPQ6PNpg==
+pinyin@2.10.2:
+  version "2.10.2"
+  resolved "https://registry.yarnpkg.com/pinyin/-/pinyin-2.10.2.tgz#93e3b3cb4430009925163bad10c741778c85b013"
+  integrity sha512-qAcp7+2vnjm6sAd0B9pp5JpyvHbYoQO1v9zCeJQMEgyw2VeRi02l0gR22ZBgfjjvZ1c2EGoVjJHJ1h0rwr34Ug==
   dependencies:
     commander "~1.1.1"
     object-assign "^4.0.1"
