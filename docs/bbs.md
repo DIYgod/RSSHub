@@ -244,6 +244,12 @@ pageClass: routes
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 
+## 恩山无线论坛
+
+### 板块
+
+<Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
+
 ## 光谷社区
 
 ### 子论坛
