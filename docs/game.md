@@ -592,6 +592,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | 1        | 2        | 3        | 4        |
 </Route>
 
+## 游戏年轮
+
+### 分类
+
+<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" :paramsDesc="['分类，见下表，默认为PC游戏', '类型，可在各分类页中导航栏中找到']">
+
+| PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
+| ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
+| pcgame  | ps4      | sgame       | nsaita      | ps      | bt      | 3ds      | psv      | jiaocheng    | ps3yx    | zhangji  |
+
+</Route>
+
 ## 游戏时光
 
 ### 游戏时光新闻
