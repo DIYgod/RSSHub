@@ -51,6 +51,12 @@ Remove old containers
 $ docker-compose down
 ```
 
+Repull the latest image if you have downloaded the image before. It is helpful to resolve some issues.
+
+```bash
+$ docker pull diygod/rsshub
+```
+
 Then repeat the installation steps
 
 ### Configuration
@@ -351,7 +357,7 @@ RSSHub supports two caching methods: memory and redis
 
 Partial routes have a strict anti-crawler policy, and can be configured to use proxy
 
-`PROXY_PROTOCOL`: Using proxy, Supports socks, http, https
+`PROXY_PROTOCOL`: Using proxy, Supports socks, socks5, socks5h, http, https, etc. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page and [source](https://github.com/TooTallNate/node-socks-proxy-agent/blob/master/src/agent.ts) for what these protocols mean. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/) for reference.
 
 `PROXY_HOST`: host or IP of the proxy
 
@@ -386,7 +392,7 @@ RSSHub supports access control via access key/code, whitelisting and blacklistin
 
 -   `BLACKLIST`: the blacklist
 
-White/blacklisting support IP and route as values. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+White/blacklisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### Access Key/Code
 
@@ -453,16 +459,13 @@ See docs of specified route and `lib/config.js` for detail information.
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv username
-
-    -   `PIXIV_PASSWORD`: Pixiv password
-    
+    -   `PIXIV_REFRESHTOKEN`: Please refer to [this article](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to get a `refresh_token`
+ 
     -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
 
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
     
     -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
-    
 
 -   pixiv fanbox: Get paid content
 
@@ -535,4 +538,3 @@ See docs of specified route and `lib/config.js` for detail information.
         | https://pic1.xuehuaimg.com/proxy/        | cloudflare   |
         | https://cors.netnr.workers.dev/          | cloudflare   |
         | https://netnr-proxy.openode.io/          | digitalocean |
-
