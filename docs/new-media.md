@@ -1025,6 +1025,18 @@ area 分区选项
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
+## 费米实验室
+
+### 新闻
+
+<Route author="nczitzk" example="/fnal/news" path="/fnal/news/:category?" :paramsDesc="['分类，见下表，默认为 All News']">
+
+| All News | Fermilab features | Press releases | Symmetry features |
+| -------- | ----------------- | -------------- | ----------------- |
+| allnews  | 269               | 55             | 12580             |
+
+</Route>
+
 ## 飞雪娱乐网
 
 <Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']">
