@@ -44,6 +44,10 @@ pageClass: routes
 
 <Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
+### Butterfly 主题博客
+
+<Route author="Baran" example="/hexo/butterfly/cxvh.com" path="/hexo/butterfly/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+
 ## Hi, DIYgod
 
 ### DIYgod 的动森日记
