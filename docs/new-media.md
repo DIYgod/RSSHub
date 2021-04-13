@@ -487,6 +487,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="nczitzk" example="/polar/blog" path="/polar/blog"/>
 
+## PolkaWorld
+
+### 最新
+
+<Route author="klouskingsley" example="/polkaworld/new" path="/polkaworld/new"/>
+
 ## Quanta Magazine
 
 ### 全部
