@@ -110,7 +110,7 @@
     "require-all": "3.0.0",
     "rss-parser": "3.10.0",
     "showdown": "1.9.1",
-    "simplecc-wasm": "0.1.2",
+    "simplecc-wasm": "0.1.4",
     "socks-proxy-agent": "5.0.0",
     "string-similarity": "^4.0.3",
     "tiny-async-pool": "1.2.0",

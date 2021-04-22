@@ -11527,10 +11527,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-simplecc-wasm@0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/simplecc-wasm/-/simplecc-wasm-0.1.2.tgz#c8e68335783f2ab8b52524bf322a77dae970f99b"
-  integrity sha512-fGzaNVIZn3Z50ta8+F3JIX71NX9CXTo5VaRd8ZmH8XCXTwYLMkFYtIIfTTLT6djEArtg75S0w3uFrTlP2OneMQ==
+simplecc-wasm@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/simplecc-wasm/-/simplecc-wasm-0.1.4.tgz#8da038e858fe8846f9ea0e8b490ced85513ab7ae"
+  integrity sha512-MSEGfvYjilmicNJ4YvDHpqNxHxOnZp1afDpoeLUiqbDROv0i/DJqrz7tMS3m22HDQbHeZaS6j/SHuDSkRoCD5g==
 
 sisteransi@^1.0.0:
   version "1.0.0"
