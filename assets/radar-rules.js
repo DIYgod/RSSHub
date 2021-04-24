@@ -1946,14 +1946,14 @@
             },
         ],
     },
-    'zhuixinfan.com': {
-        _name: '追新番日剧站',
+    'fanxinzhui.com': {
+        _name: '追新番',
         '.': [
             {
-                title: '更新列表',
-                docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan-ri-ju-zhan',
-                source: ['/main.php'],
-                target: '/zhuixinfan/list',
+                title: '最新影视',
+                docs: 'https://docs.rsshub.app/multimedia.html#zhui-xin-fan',
+                source: '',
+                target: '/fanxinzhui/list',
             },
         ],
     },
