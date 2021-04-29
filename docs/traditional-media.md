@@ -652,7 +652,14 @@ category 对应的关键词有
 
 </Route>
 
+### 新闻简报
+
+<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese"/>
+网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
+
 ### 每日简报
+
+> `每日简报`已停止更新，请使用上述的`新闻简报`。
 
 <Route author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
 
