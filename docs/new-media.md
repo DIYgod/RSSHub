@@ -2320,6 +2320,18 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
 
+## 中国收入分配研究院
+
+### 分类
+
+<Route author="nczitzk" example="/ciidbnu" path="/ciidbnu/:id?" :paramsDesc="['分类 id，可在分类页地址栏 URL 中找到']">
+
+| 社会动态 | 院内新闻 | 学术观点 | 文献书籍 | 工作论文 | 专题讨论 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 1        | 5        | 3        | 4        | 6        | 8        |
+
+</Route>
+
 ## 中国橡胶网
 
 ### 新闻资讯
