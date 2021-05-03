@@ -476,7 +476,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 可以在用户主页的 URL 中找到
 
-Example：`https://www.iyingdi.com/web/personal/home?id=55547` ，id 是`55547`
+Example：`https://www.iyingdi.com/tz/people/55547` ，id 是`55547`
 
 ## 米哈游
 
