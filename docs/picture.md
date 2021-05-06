@@ -368,6 +368,10 @@ R18 显示
 
 <Route author="LogicJake" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
+### 每日精选
+
+<Route author="OrangeEd1t" example="/natgeo/dailyselection" path="/natgeo/dailyselection"/>
+
 ## 煎蛋
 
 ### 无聊图
