@@ -9,7 +9,7 @@ module.exports = [
         items: [
             {
                 text: 'Getting Started',
-                link: '/joinus/',
+                link: '/joinus/quick-start',
             },
             {
                 text: 'More details',

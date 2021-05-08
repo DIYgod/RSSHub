@@ -9,7 +9,7 @@ module.exports = [
         items: [
             {
                 text: '快速开始',
-                link: '/joinus/',
+                link: '/joinus/quick-start',
             },
             {
                 text: '详细规范',
