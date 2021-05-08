@@ -54,6 +54,10 @@ Reference: https://docs.rsshub.app/en/joinus/
   - [缓存说明](https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-gui-ze-bian-xie-jiao-ben-shi-yong-huan-cun) | [How to use cache](https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-gui-ze-bian-xie-jiao-ben-shi-yong-huan-cun)
 - [ ] 目标是否有明显的反爬/频率限制? Is there any sign of anti-bot or rate limit?
   - [ ] 如果有, 是否有对应的措施? (延长缓存时间, 写文档说明, etc.) If yes, do your code reflect this sign? (e.g. write documentations, use long cache time)
+- [ ] 目标是否有提供日期？ Is there a date in the source?
+  - [ ] 如果有，包是否正确解析？ If there is, can this script provide this info?
+  - [ ] 如果有提供解析能力，时区是否正确调整？ Is the timezone correctly provided?
+  - 如果有提供日期，但是没有提供解析，请说明原因 If there is a date but this script does not parse, please provide your reason.
 - [ ] 是否引入的新的包? Any new package introduced?
   - 如果有, 请说明原因. If yes, please state your reason
 - [ ] 是否使用了`Puppeteer`? Make use of `Puppeteer`?

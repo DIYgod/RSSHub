@@ -157,10 +157,10 @@ Execute the following commands to install dependencies
 Using `npm`
 
 ```bash
-$ npm install
+$ npm ci
 ```
 
-Or `yarn`
+Or `yarnv1` (not recommended)
 
 ```bash
 $ yarn
