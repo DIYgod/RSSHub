@@ -478,13 +478,13 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ## 福州大学
 
-### 教务处教学通知
+### 教务处通知
 
-<Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/jxtz"/>
+<Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/:type" :paramsDesc="['分类见下表']"/>
 
-### 教务处专家讲座
-
-<Route author="Lao-Liu233" example="/fzu/zjjz" path="/fzu/zjjz"/>
+| 教学通知 | 专家讲座 |
+| -------- | -------- |
+| jxtz     | zjjz     |
 
 ## 广东工业大学
 
@@ -1498,9 +1498,9 @@ type 列表：
 
 <Route author="SeanChao" example="/sjtu/tongqu/lecture" path="/sjtu/tongqu/:type?" :paramsDesc="['类型，默认为全部']">
 
-| 全部 | 最新   | 招新        | 讲座    | 户外      | 招聘 | 游学       | 比赛         | 公益           | 广告 | 其他   |
-| ---- | ------ | ----------- | ------- | --------- | ---- | ---------- | ------------ | -------------- | ---- | ------ |
-| all  | newest | recruitment | lecture | outdoords | jobs | studyTours | competitions | publicWarefare | ads  | others |
+| 全部 | 最新   | 招新        | 讲座    | 户外      | 招聘 | 游学       | 比赛         | 公益           | 主题党日 | 学生事务       | 广告 | 其他   |
+| ---- | ------ | ----------- | ------- | --------- | ---- | ---------- | ------------ | -------------- | -------- | -------------- | ---- | ------ |
+| all  | newest | recruitment | lecture | outdoords | jobs | studyTours | competitions | publicWarefare | partyDay | studentAffairs | ads  | others |
 
 </Route>
 
