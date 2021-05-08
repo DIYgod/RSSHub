@@ -4,6 +4,12 @@ pageClass: routes
 
 # University
 
+## Air University
+
+### News
+
+<RouteEn author="Zulqarnain-cc34" example="/au/news" path="/au/news" />
+
 ## Beijing Jiaotong University
 
 ### BJTU Graduate School
