@@ -76,7 +76,7 @@
     "crypto-js": "4.0.0",
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.10.3",
-    "dotenv": "8.5.1",
+    "dotenv": "9.0.0",
     "emailjs-imap-client": "3.1.0",
     "entities": "2.1.0",
     "etag": "1.8.1",
