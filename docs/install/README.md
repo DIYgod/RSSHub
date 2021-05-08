@@ -159,10 +159,10 @@ $ cd RSSHub
 使用 `npm`
 
 ```bash
-$ npm install --production
+$ npm ci --production
 ```
 
-或 `yarn`
+或 `yarnv1` (不推荐)
 
 ```bash
 $ yarn install --production
