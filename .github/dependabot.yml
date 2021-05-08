@@ -1,0 +1,51 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "21:00"
+  open-pull-requests-limit: 10
+  reviewers:
+  - DIYgod
+  labels:
+  - dependencies
+  ignore:
+  - dependency-name: cheerio
+    versions:
+    - "> 1.0.0-rc.5"
+  - dependency-name: remark
+    versions:
+    - "> 12.0.1"
+  - dependency-name: remark
+    versions:
+    - "> 13.0.0, < 13.1"
+  - dependency-name: remark-frontmatter
+    versions:
+    - "> 2.0.0"
+  - dependency-name: remark-frontmatter
+    versions:
+    - ">= 3.0.a, < 3.1"
+  - dependency-name: "@sentry/node"
+    versions:
+    - 6.0.4
+    - 6.2.3
+    - 6.3.1
+  - dependency-name: eslint
+    versions:
+    - 7.24.0
+  - dependency-name: ioredis
+    versions:
+    - 4.24.1
+  - dependency-name: string-width
+    versions:
+    - 4.2.1
+  - dependency-name: nock
+    versions:
+    - 13.0.8
+  - dependency-name: googleapis
+    versions:
+    - 67.1.0
+  - dependency-name: rss-parser
+    versions:
+    - 3.11.0
