@@ -108,7 +108,7 @@
     "puppeteer": "9.1.1",
     "query-string": "7.0.0",
     "require-all": "3.0.0",
-    "rss-parser": "3.10.0",
+    "rss-parser": "3.12.0",
     "showdown": "1.9.1",
     "simplecc-wasm": "0.1.2",
     "socks-proxy-agent": "5.0.0",
