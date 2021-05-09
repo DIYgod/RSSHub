@@ -20,7 +20,7 @@ Full transcript support for better user experience.
 
 ### Daily
 
-<RouteEn author="nczitzk" example="/bandcamp/daily/:category?" path="/bandcamp/daily" :paramsDesc="['Category, latest by default']"/>
+<RouteEn author="nczitzk" example="/bandcamp/daily" path="/bandcamp/daily/:category?" :paramsDesc="['Category, latest by default']"/>
 
 ## EZTV
 

@@ -165,7 +165,7 @@ pageClass: routes
 
 ### Daily
 
-<Route author="nczitzk" example="/bandcamp/daily/:category?" path="/bandcamp/daily" :paramsDesc="['分类，默认为 latest']"/>
+<Route author="nczitzk" example="/bandcamp/daily" path="/bandcamp/daily/:category?" :paramsDesc="['分类，默认为 latest']"/>
 
 ## bilibili
 
