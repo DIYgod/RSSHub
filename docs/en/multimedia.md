@@ -16,6 +16,12 @@ Full transcript support for better user experience.
 
 <RouteEn author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
 
+## Bandcamp
+
+### Daily
+
+<RouteEn author="nczitzk" example="/bandcamp/daily/:category?" path="/bandcamp/daily" :paramsDesc="['Category, latest by default']"/>
+
 ## EZTV
 
 ::: tip

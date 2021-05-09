@@ -161,6 +161,12 @@ pageClass: routes
 
 <Route author="I2IMk" example="/avgle/search/橋本ありな" path="/avgle/search/:keyword/:order?/:time?/:top?" :paramsDesc="['搜索的关键词', '视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg` 最长, 默认 `mr`', '视频的添加时间, `a` 所有 / `t` 今天 / `d` 本周 / `m` 本月, 默认 `a`', '按次序获取的视频数, 不大于 `250`, 默认 `30`']"/>
 
+## Bandcamp
+
+### Daily
+
+<Route author="nczitzk" example="/bandcamp/daily/:category?" path="/bandcamp/daily" :paramsDesc="['分类，默认为 latest']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
