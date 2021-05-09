@@ -14,6 +14,10 @@ pageClass: routes
 
 <Route author="emdoe" example="/benedictevans" path="/benedictevans"/>
 
+## Etymonline 词源
+
+<Route author="cyzs" example="/etymonline" path="/etymonline"/>
+
 ## Google Sites
 
 ### 文章更新
