@@ -212,6 +212,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" :paramsDesc="['标签，可在对应标签页 URL 中找到']" />
 
+## EU Disinfo Lab
+
+### Publications
+
+<Route author="nczitzk" example="/disinfo/publications" path="/disinfo/publications"/>
+
 ## ezone.hk
 
 ### 分类
