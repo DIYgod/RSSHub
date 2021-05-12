@@ -979,6 +979,22 @@ pageClass: routes
 
 <Route author="Andiedie" example="/tencentvideo/playlist/jx7g4sm320sqm7i" path="/tencentvideo/playlist/:id" :paramsDesc="['播放列表 ID，可以在 URL 中找到']" radar="1" />
 
+## 弯弯字幕组
+
+### 分类
+
+<Route author="nczitzk" example="/wanwansub/139" path="/wanwansub/:id?" :paramsDesc="['分类 id，见下表，默认为 ALL']" >
+
+| ALL | 英语小分队 | 日语小分队 | 韩语小分队 | 葡语小分队 | 西语小分队 | 法语小分队 | 意语小分队 | 德语小分队 | 泰语小分队 | 其他语种 |
+| --- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
+| 139 | 110        | 111        | 112        | 113        | 114        | 115        | 116        | 153        | 117        | 154      |
+
+</Route>
+
+### 剧集
+
+<Route author="nczitzk" example="/wanwansub/info/393" path="/wanwansub/info/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
+
 ## 网易云音乐
 
 ### 歌单歌曲
