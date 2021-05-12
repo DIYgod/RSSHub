@@ -217,6 +217,22 @@ pageClass: routes
 
 :::
 
+## FIX 字幕侠
+
+### 分类
+
+<Route author="nczitzk" example="/zimuxia" path="/zimuxia/:category?" :paramsDesc="['分类，见下表，默认为 ALL']" >
+
+| ALL | FIX 德语社 | 欧美剧集 | 欧美电影 | 综艺 & 纪录 | FIX 日语社 | FIX 韩语社 | FIX 法语社 |
+| --- | ---------- | -------- | -------- | ----------- | ---------- | ---------- | ---------- |
+|     | 昆仑德语社 | 欧美剧集 | 欧美电影 | 综艺纪录    | fix 日语社 | fix 韩语社 | fix 法语社 |
+
+</Route>
+
+### 剧集
+
+<Route author="nczitzk" example="/zimuxia/portfolio/我们这一天" path="/zimuxia/portfolio/:id" :paramsDesc="['剧集名，可在剧集页 URL 中找到']" />
+
 ### Lookup Torrents by IMDB ID
 
 <Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']" supportBT="1"/>
