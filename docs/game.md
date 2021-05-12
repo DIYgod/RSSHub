@@ -456,23 +456,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 旅法师营地
 
-### 旅法师营地
-
-<Route author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
-
-| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王 | 电子游戏 | 手机游戏 | 桌面游戏 |
-| -------- | -------- | ------ | ------ | ------ | -------- | -------- | -------- |
-| 1        | 2        | 3      | 14     | 16     | 4        | 22       | 9        |
-
-| 影之诗 | Artifact | 玩家杂谈 | 营地电台 | 2047 | 魂武 |
-| ------ | -------- | -------- | -------- | ---- | ---- |
-| 17     | 67       | 21       | 5        | 62   | 68   |
-
-</Route>
-
 ### 分区
 
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
@@ -486,7 +472,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### 用户的帖子
 
-<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" :paramsDesc="['用户 id']" radar="1" rssbud="1"/>
 
 可以在用户主页的 URL 中找到
 
