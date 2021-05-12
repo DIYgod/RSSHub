@@ -1804,6 +1804,18 @@ column 为 third 时可选的 category:
 
 <Route author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
 
+## 时事一点通
+
+### 资讯
+
+<Route author="nczitzk" example="/ssydt/article" path="/ssydt/article/:id?" :paramsDesc="['id，见下表，默认为推荐']">
+
+| 推荐 | 时事日报 | 时事专题 | 备考技巧 | 招考信息 | 时事月报 | 重要会议 | 领导讲话 | 时事周刊 | 官网公告 | 时事评论 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0    | 3        | 6        | 13       | 12       | 4        | 10       | 11       | 5        | 8        | 7        |
+
+</Route>
+
 ## 数英网
 
 ### 数英网最新文章
