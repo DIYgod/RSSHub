@@ -161,6 +161,12 @@ pageClass: routes
 
 <Route author="I2IMk" example="/avgle/search/橋本ありな" path="/avgle/search/:keyword/:order?/:time?/:top?" :paramsDesc="['搜索的关键词', '视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg` 最长, 默认 `mr`', '视频的添加时间, `a` 所有 / `t` 今天 / `d` 本周 / `m` 本月, 默认 `a`', '按次序获取的视频数, 不大于 `250`, 默认 `30`']"/>
 
+## Bandcamp
+
+### Tag
+
+<Route author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['标签，可在 URL 中找到']"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
@@ -210,6 +216,22 @@ pageClass: routes
 网站提供了全部种子的 RSS: <https://eztv.io/ezrss.xml>
 
 :::
+
+## FIX 字幕侠
+
+### 分类
+
+<Route author="nczitzk" example="/zimuxia" path="/zimuxia/:category?" :paramsDesc="['分类，见下表，默认为 ALL']" >
+
+| ALL | FIX 德语社 | 欧美剧集 | 欧美电影 | 综艺 & 纪录 | FIX 日语社 | FIX 韩语社 | FIX 法语社 |
+| --- | ---------- | -------- | -------- | ----------- | ---------- | ---------- | ---------- |
+|     | 昆仑德语社 | 欧美剧集 | 欧美电影 | 综艺纪录    | fix 日语社 | fix 韩语社 | fix 法语社 |
+
+</Route>
+
+### 剧集
+
+<Route author="nczitzk" example="/zimuxia/portfolio/我们这一天" path="/zimuxia/portfolio/:id" :paramsDesc="['剧集名，可在剧集页 URL 中找到']" />
 
 ### Lookup Torrents by IMDB ID
 
