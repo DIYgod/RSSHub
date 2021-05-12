@@ -28,6 +28,16 @@ pageClass: routes
 
 </Route>
 
+### 广东省教育考试院
+
+<Route author="icealtria" example="/gov/guangdong/eea/kszs" path="/gov/guangdong/eea/:caty" :paramsDesc="['资讯类别']">
+
+| 考试招生 | 社会考试 | 招考公示 | 报考指南 | 要闻动态 | 公开专栏 | 政策文件 | 政策解读 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   kszs   |   shks   |   zkgs   |   bkzn   |   news   |   gkzl   |   zcwj   |   zcjd   |
+
+</Route>
+
 ### 广东省深圳市人民政府
 
 <Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
