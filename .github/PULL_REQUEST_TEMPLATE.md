@@ -37,10 +37,10 @@ FILL BELOW and keep `routes` keyword
 
 <!-- 
 Please go over the checklist below before PR: this improve your PR pass rate.
-Reference: https://docs.rsshub.app/en/joinus/
+Reference: https://docs.rsshub.app/en/joinus/quick-start.html
 请在提交PR前检查以下事项: 这可以大大提升通过率
 这些就是我们在审核时主要关注的事项, 敬请留意
-参考: https://docs.rsshub.app/joinus
+参考: https://docs.rsshub.app/joinus/quick-start.html
 -->
 
 - [ ] 这个PR中包含了新的路由吗? Does this PR add new route?
@@ -51,7 +51,7 @@ Reference: https://docs.rsshub.app/en/joinus/
   - [ ] 是否提供了英文文档? EN Documentation provided?
 - [ ] 是否支持全文获取? Is this RSS Script support fulltext?
   - [ ] 如果全文获取中需要访问文章链接, 是否使用了缓存? If fulltext requires to fetch detail pages, is cache used in the process?
-  - [缓存说明](https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-gui-ze-bian-xie-jiao-ben-shi-yong-huan-cun) | [How to use cache](https://docs.rsshub.app/joinus/#ti-jiao-xin-de-rsshub-gui-ze-bian-xie-jiao-ben-shi-yong-huan-cun)
+  - [缓存说明](https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-gui-ze-bian-xie-jiao-ben-shi-yong-huan-cun) | [How to use cache](https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-gui-ze-bian-xie-jiao-ben-shi-yong-huan-cun)
 - [ ] 目标是否有明显的反爬/频率限制? Is there any sign of anti-bot or rate limit?
   - [ ] 如果有, 是否有对应的措施? (延长缓存时间, 写文档说明, etc.) If yes, do your code reflect this sign? (e.g. write documentations, use long cache time)
 - [ ] 目标是否有提供日期？ Is there a date in the source?
