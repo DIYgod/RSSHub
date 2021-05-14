@@ -817,6 +817,12 @@ pageClass: routes
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
+## 法国国际广播电台
+
+### 分类
+
+<Route author="nczitzk" example="/rfi" path="/rfi/:category?" :paramsDesc="['分类，可在分类页 URL 中找到']"/>
+
 ## 高清电台
 
 ### 最新电影
