@@ -14,5 +14,6 @@ tmp
 *.iml
 coverage
 .env
+yarn.lock
 
 .now
