@@ -18,33 +18,39 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 
+::: tip 关于视频清晰度
+
+内嵌视频的默认清晰度为 480P，如需解锁更高清晰度，请[点此](https://www.bilibili.com/blackboard/html5player.html?cid=253377437&aid=885203421&page=&as_wide=1)在下方登录以设置 Cookie，仅对当前浏览器生效
+
+:::
+
 ### 番剧
 
 <Route author="DIYgod" example="/bilibili/bangumi/media/9192" path="/bilibili/bangumi/media/:mediaid" :paramsDesc="['番剧媒体 id, 番剧主页 URL 中获取']"/>
 
 ### 用户追番列表
 
-<Route author="wdssmq" example="/bilibili/user/bangumi/208259" path="/bilibili/user/bangumi/:uid/:type?" :paramsDesc="['用户 id','1为番，2为剧，留空为1']"/>
+<Route author="wdssmq" example="/bilibili/user/bangumi/208259" path="/bilibili/user/bangumi/:uid/:type?" :paramsDesc="['用户 id','1为番，2为剧，留空为1']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### UP 主投稿
 
-<Route author="DIYgod" example="/bilibili/user/video/2267573" path="/bilibili/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
+<Route author="DIYgod" example="/bilibili/user/video/2267573" path="/bilibili/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### UP 主专栏
 
-<Route author="lengthmin" example="/bilibili/user/article/334958638" path="/bilibili/user/article/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
+<Route author="lengthmin" example="/bilibili/user/article/334958638" path="/bilibili/user/article/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### UP 主动态
 
-<Route author="DIYgod zytomorrow" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
+<Route author="DIYgod zytomorrow" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
 ### UP 主频道
 
-<Route author="HenryQW" example="/bilibili/user/channel/142821407/49017" path="/bilibili/user/channel/:uid/:cid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="HenryQW" example="/bilibili/user/channel/142821407/49017" path="/bilibili/user/channel/:uid/:cid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### UP 主默认收藏夹
 
-<Route author="DIYgod" example="/bilibili/user/fav/2267573" path="/bilibili/user/fav/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="DIYgod" example="/bilibili/user/fav/2267573" path="/bilibili/user/fav/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
 ### UP 主非默认收藏夹
 
@@ -52,19 +58,19 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### UP 主投币视频
 
-<Route author="DIYgod" example="/bilibili/user/coin/208259" path="/bilibili/user/coin/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="DIYgod" example="/bilibili/user/coin/208259" path="/bilibili/user/coin/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### UP 主粉丝
 
-<Route author="Qixingchen" example="/bilibili/user/followers/2267573" path="/bilibili/user/followers/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
+<Route author="Qixingchen" example="/bilibili/user/followers/2267573" path="/bilibili/user/followers/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" radar="1" rssbud="1"/>
 
 ### UP 主关注用户
 
-<Route author="Qixingchen" example="/bilibili/user/followings/2267573" path="/bilibili/user/followings/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']"/>
+<Route author="Qixingchen" example="/bilibili/user/followings/2267573" path="/bilibili/user/followings/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" radar="1" rssbud="1"/>
 
 ### 分区视频
 
-<Route author="DIYgod" example="/bilibili/partion/33" path="/bilibili/partion/:tid/:disableEmbed?" :paramsDesc="['分区 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1">
+<Route author="DIYgod" example="/bilibili/partion/33" path="/bilibili/partion/:tid/:disableEmbed?" :paramsDesc="['分区 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1">
 
 动画
 
@@ -206,9 +212,19 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="Symty" example="/bilibili/vsearch/藤原千花" path="/bilibili/vsearch/:kw/:order?/:disableEmbed?" :paramsDesc="['检索关键字', '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow', '默认为开启内嵌视频, 任意值为关闭']"/>
 
+### 用户关注动态
+
+<Route author="TigerCubDen" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:disableEmbed?" :paramsDesc="['用户 id', '默认为开启内嵌视频, 任意值为关闭']" selfhost="1">
+::: warning 注意
+
+用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+</Route>
+
 ### 用户关注视频动态
 
-<Route author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid/:disableEmbed?" :paramsDesc="['用户 id', '默认为开启内嵌视频, 任意值为关闭']">
+<Route author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid/:disableEmbed?" :paramsDesc="['用户 id', '默认为开启内嵌视频, 任意值为关闭']" selfhost="1">
 ::: warning 注意
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -218,7 +234,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户关注专栏
 
-<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']">
+<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']" selfhost="1">
 ::: warning 注意
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -286,6 +302,18 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="hoilc" example="/bilibili/manga/update/26009" path="/bilibili/manga/update/:comicid" :paramsDesc="['漫画 id, 可在 URL 中找到, 支持带有`mc`前缀']"/>
 
+## Dev.to
+
+### 最高职位
+
+<Route author="dwemerx" example="/dev.to/top/month" path="/dev.to/top/:period" :paramsDesc="['period']">
+
+| 开发到每周最高 | 开发至每月最高 | 开发年度最高 | 开发到有史以来最高职位 |
+| -------------- | -------------- | ------------ | ---------------------- |
+| week           | month          | year         | infinity               |
+
+</Route>
+
 ## Disqus
 
 ### 评论
@@ -297,6 +325,106 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ### 粉絲專頁
 
 <Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['專頁 id']" anticrawler="1"/>
+
+## Fur Affinity
+
+### 主页
+
+<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/home/:type?/:nsfw?" :paramsDesc="['类型，默认为 `artwork`', 'NSFW开关, 当值为 `1` 时不过滤NSFW内容']" radar="1">
+
+类型 type
+
+| 艺术品  | 手工   | 音乐  | 写作    |
+| ------- | ------ | ----- | ------- |
+| artwork | crafts | music | writing |
+
+</Route>
+
+### 浏览
+
+<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/browse/:nsfw?" :paramsDesc="['NSFW开关, 当值为 `1` 时不过滤NSFW内容']" radar="1"/>
+
+### 站点状态
+
+<Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status" radar="1"/>
+
+### 搜索
+
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/search/:keyword/:nsfw?" :paramsDesc="['搜索关键词，仅限英文搜索', 'NSFW开关, 当值为 `1` 时不过滤NSFW内容']" radar="1"/>
+
+### 用户主页简介
+
+<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
+
+### 用户关注列表
+
+<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
+
+### 用户被关注列表
+
+<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
+
+### 用户接受委托信息
+
+<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
+
+### 用户的 Shouts 留言
+
+<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
+
+### 用户的日记
+
+<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" :paramsDesc="['用户名, 可在用户主页的链接处找到']" radar="1"/>
+
+### 用户的创作画廊
+
+<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']" radar="1"/>
+
+### 用户的零碎 (非正式) 作品
+
+<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']" radar="1"/>
+
+### 用户的喜爱列表
+
+<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']" radar="1"/>
+
+### 作品评论区
+
+<Route author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" :paramsDesc="['作品id, 可在作品所在页面对应的链接处找到']" radar="1"/>
+
+### 日记评论区
+
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" :paramsDesc="['日记id, 可在日记所在页面对应的链接处找到']" radar="1"/>
+
+## Gab
+
+### 用戶時間線
+
+<Route author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" :paramsDesc="['用戶名']" />
+
+### 熱門
+
+<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" :paramsDesc="['排序方式, `hot` 為 Hot Posts, `top` 為 Top Posts。默認為 hot']" />
+
+## iCity
+
+### 用户动态
+
+<Route author="nczitzk" example="/icity/sai" path="/icity/:id" :paramsDesc="['用户 id']"/>
+
+## Instagram
+
+::: warning 注意
+
+由于 Instagram API 限制，必须在服务器上设置你的用户名和密码。暂不支持两步验证。步骤见部署指南。
+
+如需无登录的 feed，请用 Picuki。
+
+:::
+
+### 用户
+
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['时间线类别，目前仅支持用户时间线','针对该类别的索引，例如用户时间线里是用户名或用户 ID']" radar="1" anticrawler="1"/>
 
 ## Keep
 
@@ -363,21 +491,21 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户
 
-<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram 用户 id','是否显示视频，任意值为是，留空为否']" radar="1" />
+<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram 用户 id','是否显示视频，任意值为是，留空为否']" radar="1" rssbud="1"/>
 
 ## pixiv
 
 ### 用户收藏
 
-<Route author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" radar="1"/>
+<Route author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 用户动态
 
-<Route author="DIYgod" example="/pixiv/user/11" path="/pixiv/user/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" radar="1"/>
+<Route author="DIYgod" example="/pixiv/user/11" path="/pixiv/user/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 排行榜
 
-<Route author="EYHN" example="/pixiv/ranking/week" path="/pixiv/ranking/:mode/:date?" :paramsDesc="['排行榜类型' ,'日期, 取值形如 `2018-4-25`']" radar="1">
+<Route author="EYHN" example="/pixiv/ranking/week" path="/pixiv/ranking/:mode/:date?" :paramsDesc="['排行榜类型' ,'日期, 取值形如 `2018-4-25`']" radar="1" rssbud="1">
 
 | pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行 | pixiv 新人排行 |
 | ------------ | ------------ | ------------ | -------------------- | -------------------- | ------------------ | -------------- |
@@ -391,11 +519,11 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 关键词
 
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:r18?" :paramsDesc="['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序', '过滤 R18 内容，0 为不过滤，1 为只看非 R18 内容，2 为只看 R18 内容，默认为 0']" radar="1"/>
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:r18?" :paramsDesc="['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序', '过滤 R18 内容，0 为不过滤，1 为只看非 R18 内容，2 为只看 R18 内容，默认为 0']" radar="1" rssbud="1"/>
 
 ### 关注的新作品
 
-<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1"/>
+<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1"/>
 ::: warning 注意
 
 因为每个人关注的画师不同，所以只能自建。请不要将画师设为 “悄悄关注”，这样子画师的作品就不会出现在订阅里了。
@@ -411,23 +539,29 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 提问箱新回答
 
-<Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" radar="1"/>
+<Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" radar="1" rssbud="1"/>
 
 ## Soul
 
 ### 瞬间更新
 
-<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul/:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']" radar="1"></Route>
+<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul/:id" :paramsDesc="['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']" radar="1" rssbud="1"></Route>
 
 ### 热门瞬间
 
-<Route author="BugWriter2" example="/soul/posts/hot" path="/soul/posts/hot" radar="1"></Route>
+<Route author="BugWriter2" example="/soul/posts/hot" path="/soul/posts/hot" radar="1" rssbud="1"></Route>
+
+## Tape 小纸条
+
+### 提问箱新回答
+
+<Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" />
 
 ## Telegram
 
 ### 频道
 
-<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" path="/telegram/channel/:username/:searchQuery?" :paramsDesc="['频道 username', '搜索关键词, 如需搜索 tag 请用 `%23` 替代 `#`']" radar="1">
+<Route author="DIYgod" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" path="/telegram/channel/:username/:searchQuery?" :paramsDesc="['频道 username', '搜索关键词, 如需搜索 tag 请用 `%23` 替代 `#`']" radar="1" rssbud="1">
 
 ::: tip 提示
 
@@ -453,13 +587,44 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 
+对于推文内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制额外的功能
+
+| 键                           | 含义                                                                         | 接受的值       | 默认值                                   |
+| ---------------------------- | ---------------------------------------------------------------------------- | -------------- | ---------------------------------------- |
+| readable                     | 是否开启细节排版可读性优化                                                   | 0/1/true/false | false                                    |
+| authorNameBold               | 是否加粗作者名字                                                             | 0/1/true/false | false                                    |
+| showAuthorInTitle            | 是否在标题处显示作者                                                         | 0/1/true/false | false（`/twitter/followings` 中为 true） |
+| showAuthorInDesc             | 是否在正文处显示作者                                                         | 0/1/true/false | false（`/twitter/followings` 中为 true） |
+| showQuotedAuthorAvatarInDesc | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false                                    |
+| showAuthorAvatarInDesc       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）               | 0/1/true/false | false                                    |
+| showEmojiForRetweetAndReply  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                          | 0/1/true/false | false                                    |
+| showRetweetTextInTitle       | 在标题处显示转推评论（置为 false 则在标题只显示被转推推文）                  | 0/1/true/false | true                                     |
+| addLinkForPics               | 为图片添加可点击的链接                                                       | 0/1/true/false | false                                    |
+| showTimestampInDescription   | 在正文处显示推特的时间戳                                                     | 0/1/true/false | false                                    |
+| showQuotedInTitle            | 在标题处显示被引用的推文                                                     | 0/1/true/false | false                                    |
+| widthOfPics                  | 推文配图宽（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定                                   |
+| heightOfPics                 | 推文配图高（生效取决于阅读器）                                               | 不指定 / 数字  | 不指定                                   |
+| sizeOfAuthorAvatar           | 作者头像大小                                                                 | 数字           | 48                                       |
+| sizeOfQuotedAuthorAvatar     | 被转推推文作者头像大小                                                       | 数字           | 24                                       |
+| excludeReplies               | 排除回复，只在用户时间线有效                                                 | 0/1/true/false | false                                    |
+| includeRts                   | 包括转推，只在用户时间线有效                                                 | 0/1/true/false | true                                     |
+| count                        | 传递给 Twitter API 的 `count` 参数，只在用户时间线有效                       | 不指定 / 数字  | 不指定                                   |
+
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+
+    https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
+
+的效果为
+
+<img src="/readable-twitter.png" alt="Durov 的可读推特 RSS">
+
 ### 用户时间线
 
-<Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id/:type?" :paramsDesc="['用户名', '额外选项 `exclude_replies`去除回复，`exclude_rts`去除转推，`exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1"/>
+<Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=exclude_replies`时去除回复，`routeParams=exclude_rts`去除转推，`routeParams=exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1" rssbud="1"/>
 
 ### 用户关注时间线
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id" :paramsDesc="['用户名']" radar="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1" selfhost="1">
 
 ::: warning 注意
 
@@ -471,19 +636,19 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 列表时间线
 
-<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name" :paramsDesc="['用户名', 'list 名称']" radar="1"/>
+<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['用户名', 'list 名称', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
 
 ### 用户喜欢列表
 
-<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id" :paramsDesc="['用户名']" radar="1"/>
+<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
 
 ### 关键词
 
-<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword" :paramsDesc="['关键词']" radar="1"/>
+<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" :paramsDesc="['关键词', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
 
 ### Trends
 
-<Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Where On Earth ID. 默认 woeid=1 (World Wide)']" radar="1"/>
+<Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Where On Earth ID. 默认 woeid=1 (World Wide)']" radar="1" rssbud="1"/>
 
 ## VueVlog
 
@@ -491,25 +656,31 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']"/>
 
-## Youtube
+## YouTube
 
 ::: tip Tiny Tiny RSS 用户请注意
 
-Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载 Youtube 内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
+Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载 YouTube 内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
 
 :::
 
 ### 用户
 
-<Route author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:disableEmbed?" :paramsDesc="['用户名', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
+<Route author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:disableEmbed?" :paramsDesc="['用户名', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
 ### 频道
 
-<Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:disableEmbed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
+::: tip 提示
+
+YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>。
+
+:::
+
+<Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:disableEmbed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
 ### 播放列表
 
-<Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1"/>
+<Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
 ## 巴哈姆特
 
@@ -575,7 +746,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 一周口碑榜
 
-<Route author="umm233" example="/douban/movie/weekly" path="/douban/movie/weekly"/>
+<Route author="umm233 nczitzk" example="/douban/movie/weekly" path="/douban/movie/weekly/:type?" :paramsDesc="['分类，可在榜单页 URL 中找到，默认为一周口碑电影榜']">
+
+| 一周口碑电影榜    | 一周口碑剧集榜 | 华语口碑剧集榜         |
+| ----------------- | -------------- | ---------------------- |
+| movie_weekly_best | tv_weekly_best | tv_chinese_best_weekly |
+
+</Route>
 
 ### 豆瓣电影分类
 
@@ -593,7 +770,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 豆瓣小组
 
-<Route author="DIYgod" example="/douban/group/camera" path="/douban/group/:groupid" :paramsDesc="['豆瓣小组的 id']"/>
+<Route author="DIYgod" example="/douban/group/648102" path="/douban/group/:groupid/:type?" :paramsDesc="['豆瓣小组的 id', '缺省 最新，essence 最热，elite 精华']"/>
 
 ### 浏览发现
 
@@ -645,7 +822,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户广播
 
-<Route author="alfredcai" example="/douban/people/62759792/status" path="douban/people/:userid/status" :paramsDesc="['整数型用户 id']" radar="1">
+<Route author="alfredcai" example="/douban/people/62759792/status" path="douban/people/:userid/status/:routeParams" :paramsDesc="['整数型用户 id', '额外参数；见下']" radar="1">
 
 ::: tip 提示
 
@@ -655,11 +832,41 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 
+对于豆瓣用户广播内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式
+
+| 键                         | 含义                                                           | 接受的值       | 默认值 |
+| -------------------------- | -------------------------------------------------------------- | -------------- | ------ |
+| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false  |
+| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false  |
+| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |
+| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |
+| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |
+| showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |
+| showComments               | 在正文处显示评论                                               | 0/1/true/false | false  |
+| widthOfPics                | 广播配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| heightOfPics               | 广播配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定 |
+| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48     |
+
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+
+    https://rsshub.app/douban/people/113894409/status/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=1&addLinkForPics=1&showTimestampInDescription=1&showComments=1&widthOfPics=100
+
+的效果为
+
+<img src="/readable-douban.png" alt="豆瓣读书的可读豆瓣广播 RSS">
+
 </Route>
 
 ### 日记最新回应
 
 <Route author="nczitzk" example="/douban/replies/xiaoyaxiaoya" path="/douban/replies/:uid" :paramsDesc="['用户id，可在用户日记页 URL 中找到']"/>
+
+### 最新回应过的日记
+
+<Route author="nczitzk" example="/douban/replied/xiaoyaxiaoya" path="/douban/replied/:uid" :paramsDesc="['用户id，可在用户日记页 URL 中找到']"/>
 
 ### 话题
 
@@ -682,6 +889,23 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | 电影 | 电视剧 | 图书 | 唱片 |
 | ---- | ------ | ---- | ---- |
 | 0    | 1      | 2    | 3    |
+
+</Route>
+
+### 用户想看
+
+<Route author="exherb" example="/douban/people/exherb/wish/torrentProvider=1337x" path="/douban/people/:userid/wish/:routeParams?" :paramsDesc="['用户id','额外参数；见下']">
+
+对于豆瓣用户想看的内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式
+
+| 键               | 含义                                                       | 接受的值                        | 默认值 |
+| ---------------- | ---------------------------------------------------------- | ------------------------------- | ------ |
+| pagesCount       | 查询页面数                                                 |                                 | 1      |
+| torrentProvider  | 启用 torrent 搜索                                          | all/1337x/Eztv/Rarbg/Yts/HDHome |        |
+| passkey          | HDHome 密钥，当 torrentProvider 为 `all` 或  `HDHome` 必填 |                                 |        |
+| torrentQuery     | 额外关键词，如 `1080p`， 逗号分割                          |                                 |        |
+| torrentMinSeeds  | 最小 seeds 数                                              |                                 | 1      |
+| torrentMinRating | 种子和电影标题最小匹配度                                   |                                 | 0.5    |
 
 </Route>
 
@@ -729,11 +953,11 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 圈子
 
-<Route author="DIYgod prnake" example="/jike/topic/556688fae4b00c57d9dd46ee" path="/jike/topic/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']" radar="1"/>
+<Route author="DIYgod prnake" example="/jike/topic/556688fae4b00c57d9dd46ee" path="/jike/topic/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 圈子 - 纯文字
 
-<Route author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']" radar="1"/>
+<Route author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" :paramsDesc="['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 简书
 
@@ -823,9 +1047,35 @@ rule
 
 ## 微博
 
+对于微博内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制输出的样式
+
+| 键                         | 含义                                                           | 接受的值       | 默认值                              |
+| -------------------------- | -------------------------------------------------------------- | -------------- | ----------------------------------- |
+| readable                   | 是否开启细节排版可读性优化                                     | 0/1/true/false | false                               |
+| authorNameBold             | 是否加粗作者名字                                               | 0/1/true/false | false                               |
+| showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
+| showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false                               |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                                   | 0/1/true/false | false                               |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博）    | 0/1/true/false | true                                |
+| addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false                               |
+| showTimestampInDescription | 在正文处显示被转发微博的时间戳                                 | 0/1/true/false | false                               |
+| widthOfPics                | 微博配图宽（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定                              |
+| heightOfPics               | 微博配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定                              |
+| sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48                                  |
+| displayVideo               | 是否直接显示微博视频，只在博主 RSS 中有效                      | 0/1/true/false | true                                |
+
+指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+
+    https://rsshub.app/weibo/user/1642909335/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweet=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showTimestampInDescription=1&heightOfPics=150
+
+的效果为
+
+<img src="/readable-weibo.png" alt="微博小秘书的可读微博 RSS">
+
 ### 博主
 
-<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:displayVideo?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '是否直接显示微博视频, 缺省 `1` 显示, 若不需要显示则填 `0` ']" anticrawler="1" radar="1">
+<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']" anticrawler="1" radar="1" rssbud="1">
 
 部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
 
@@ -833,19 +1083,25 @@ rule
 
 ### 关键词
 
-<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword" :paramsDesc="['你想订阅的微博关键词']" anticrawler="1" radar="1"/>
+<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" :paramsDesc="['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 热搜榜
 
-<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1" radar="1"/>
+<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id" :paramsDesc="['超话ID']" anticrawler="1" radar="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id/:routeParams?" :paramsDesc="['超话ID', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 个人时间线
 
-<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']" anticrawler="1">
+::: warning 注意
+
+个人时间线暂不支持改善可读性。
+
+:::
+
+<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']" anticrawler="1" selfhost="1">
 
 ::: warning 注意
 
@@ -920,27 +1176,31 @@ rule
 
 ### 收藏夹
 
-<Route author="huruji" example="/zhihu/collection/26444956" path="/zhihu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="huruji Colin-XKL" example="/zhihu/collection/26444956" path="/zhihu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 用户动态
 
-<Route author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 用户回答
 
-<Route author="DIYgod" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="DIYgod prnake" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 用户文章
 
-<Route author="whtsky" example="/zhihu/people/posts/dcjanus" path="/zhihu/people/posts/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="whtsky Colin-XKL" example="/zhihu/posts/people/frederchen" path="/zhihu/posts/:usertype/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到', '用户类型usertype，参考用户主页的URL。目前有两种，见下表']" anticrawler="1" radar="1" rssbud="1"/>
+
+| 普通用户 | 机构用户 |
+| -------- | -------- |
+| people   | org      |
 
 ### 专栏
 
-<Route author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" :paramsDesc="['专栏 id, 可在专栏主页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 知乎日报
 
-<Route author="DHPO" example="/zhihu/daily" path="/zhihu/daily" anticrawler="1" radar="1"/>
+<Route author="DHPO" example="/zhihu/daily" path="/zhihu/daily" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 知乎日报 - 合集
 
@@ -948,32 +1208,53 @@ rule
 
 ### 知乎热榜
 
-<Route author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" anticrawler="1" radar="1"/>
+<Route author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" anticrawler="1" radar="1" rssbud="1"/>
+
+### 知乎分类热榜
+
+<Route author="nczitzk" example="/zhihu/hot" path="/zhihu/hot/:category?" :paramsDesc="['分类，见下表，默认为全站']" anticrawler="1" radar="1" rssbud="1">
+
+| 全站  | 国际  | 科学    | 汽车 | 视频   | 时尚    | 时事  | 数码    | 体育  | 校园   | 影视 |
+| ----- | ----- | ------- | ---- | ------ | ------- | ----- | ------- | ----- | ------ | ---- |
+| total | focus | science | car  | zvideo | fashion | depth | digital | sport | school | film |
+
+</Route>
 
 ### 知乎想法热榜
 
-<Route author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist" anticrawler="1" radar="1"/>
+<Route author="xyqfer" example="/zhihu/pin/hotlist" path="/zhihu/pin/hotlist" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 问题
 
-<Route author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']" anticrawler="1" radar="1"/>
+<Route author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 话题
 
-<Route author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']" anticrawler="1" radar="1"/>
+<Route author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" :paramsDesc="['话题 id']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 用户想法
 
-<Route author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1"/>
+<Route author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" :paramsDesc="['作者 id, 可在用户主页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 知乎书店 - 新书
 
-<Route author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" anticrawler="1" radar="1"/>
+<Route author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 知乎想法 - 24 小时新闻汇总
 
-<Route author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" anticrawler="1" radar="1"/>
+<Route author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 知乎书店 - 知乎周刊
 
-<Route author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" anticrawler="1" radar="1"/>
+<Route author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" anticrawler="1" radar="1" rssbud="1"/>
+
+### 用户关注时间线
+
+<Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1">
+::: warning 注意
+
+用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>

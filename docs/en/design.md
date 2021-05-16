@@ -20,7 +20,7 @@ Some tags are rarely used： `Script`, `direction`, `production`, `design-concep
 
 ### User Works
 
-<RouteEn author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user" :paramsDesc="['username']" radar="1">
+<RouteEn author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" :paramsDesc="['username', 'type, `projects` or `appreciated`, `projects` by default']" radar="1">
 
 Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be `mishapetrick`。
 

@@ -1,6 +1,11 @@
+process.env.REQUEST_TIMEOUT = '500';
 const got = require('../../lib/utils/got');
 const config = require('../../lib/config').value;
 const nock = require('nock');
+
+afterAll(() => {
+    delete process.env.REQUEST_TIMEOUT;
+});
 
 describe('got', () => {
     it('headers', async () => {
@@ -50,5 +55,21 @@ describe('got', () => {
         expect(response1.status).toBe(200);
         expect(response1.body).toBe('{"code": 0}');
         expect(response1.data.code).toBe(0);
+    });
+
+    it('timeout', async () => {
+        nock('http://rsshub.test')
+            .get('/timeout')
+            .delay(600)
+            .reply(function () {
+                return [200, '{"code": 0}'];
+            });
+
+        try {
+            await got.get('http://rsshub.test/timeout');
+            throw Error('Timeout Invalid');
+        } catch (error) {
+            expect(error.name).toBe('RequestError');
+        }
     });
 });
