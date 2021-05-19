@@ -16,16 +16,24 @@
 
 ### Parse Date
 
-这个是一个工具类用于使用[dayjs](https://github.com/iamkun/dayjs)。大部分情况下，应当可以直接使用他获取到正确的`Date Object`  
+这个是一个工具类用于使用[dayjs](https://github.com/iamkun/dayjs)。大部分情况下，应当可以直接使用他获取到正确的`Date Object`
 
 具体解析参数请参考dayjs github说明
 
 ```javascript
-const parseDate = require('@/utils/parse-date');
+const { parseDate } = require('@/utils/parse-date');
 
-const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD')
+const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
 
+如果你需要解析相对日期，请使用 `parseRelativeDate`。
+
+```javascript
+const { parseRelativeDate } = require('@/utils/parse-date');
+
+const pubDate = parseRelativeDate('2天前');
+const pubDate = parseRelativeDate('前天 15:36');
+```
 
 ### Timezone
 
