@@ -61,9 +61,9 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 We welcome all pull requests. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
 
-Refer to [Join Us](https://docs.rsshub.app/en/joinus/)
+Refer to [Join Us](https://docs.rsshub.app/en/joinus/quick-start.html)
 
-见 [参与我们](https://docs.rsshub.app/joinus/)
+见 [参与我们](https://docs.rsshub.app/joinus/quick-start.html)
 
 ## Deployment
 
