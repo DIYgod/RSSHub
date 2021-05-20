@@ -416,6 +416,16 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 <Route author="huyyi" example="/uestc/sice" path="/uestc/sice" />
 
+### 信息与软件工程学院
+
+<Route author="Yadomin" example="/uestc/is/" path="/uestc/is/:type?" :paramsDesc="['默认为 `latest`']" />
+
+| 最新   | 院办 | 组织 | 学生科 | 教务科 | 研管科 | 实验中心 | 企业技术服务中心 | 新工科中心 | 实习实训办公室 | 招聘 | 实习实训 |
+| ------ | ---- | ---- | ------ | ------ | ------ | -------- | ---------------- | ---------- | -------------- | ---- | -------- |
+| latest | yb   | zx   | xsk    | jwk    | ygk    | syzx     | qyjsfwzx         | xgkzx      | sxsxbgs        | zp   | sxsx     |
+
+注：可以使用 + 号来叠加，如 学生科 + 教务科 `/uestc/is/xsk+jwc`
+
 ## 东北大学
 
 ### 东北大学新闻网
@@ -1498,9 +1508,9 @@ type 列表：
 
 <Route author="SeanChao" example="/sjtu/tongqu/lecture" path="/sjtu/tongqu/:type?" :paramsDesc="['类型，默认为全部']">
 
-| 全部 | 最新   | 招新        | 讲座    | 户外      | 招聘 | 游学       | 比赛         | 公益           | 广告 | 其他   |
-| ---- | ------ | ----------- | ------- | --------- | ---- | ---------- | ------------ | -------------- | ---- | ------ |
-| all  | newest | recruitment | lecture | outdoords | jobs | studyTours | competitions | publicWarefare | ads  | others |
+| 全部 | 最新   | 招新        | 讲座    | 户外      | 招聘 | 游学       | 比赛         | 公益           | 主题党日 | 学生事务       | 广告 | 其他   |
+| ---- | ------ | ----------- | ------- | --------- | ---- | ---------- | ------------ | -------------- | -------- | -------------- | ---- | ------ |
+| all  | newest | recruitment | lecture | outdoords | jobs | studyTours | competitions | publicWarefare | partyDay | studentAffairs | ads  | others |
 
 </Route>
 
