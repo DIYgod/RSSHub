@@ -1692,6 +1692,24 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 全民健康网
+
+<Route author="nczitzk" example="/qm120/news" path="/qm120/news/:category?" :paramsDesc="['分类，见下表，默认为健康焦点']">
+
+| 健康焦点 | 行业动态 | 医学前沿 | 法规动态 |
+| -------- | -------- | -------- | -------- |
+| jdxw     | hydt     | yxqy     | fgdt     |
+
+| 食品安全 | 医疗事故 | 医药会展 | 医药信息 |
+| -------- | -------- | -------- | -------- |
+| spaq     | ylsg     | yyhz     | yyxx     |
+
+| 新闻专题 | 行业新闻 |
+| -------- | -------- |
+| zhuanti  | xyxw     |
+
+</Route>
+
 ## 全球化智库
 
 ### 分类
