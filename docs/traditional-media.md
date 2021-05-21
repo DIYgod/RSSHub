@@ -154,10 +154,9 @@ pageClass: routes
 -   `:category` 栏目参数：
 
     -   `all`: 全站
-    -   `local`: 本地（港聞）
-    -   `international`: 國際（兩岸國際）
-    -   `finance`: 財經
-    -   `china`: 兩岸（有線中國組）
+    -   `local`: 港聞
+    -   `international`: 兩岸國際
+    -   `china`: 有線中國組
     -   `sports`: 體育
 
 -   `:option?` 可开启的选项：
