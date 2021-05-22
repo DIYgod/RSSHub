@@ -470,6 +470,20 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
+### 分区
+
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']">
+
+| 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
+| :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
+|    17    |   18   |   16   |   19   |   20   |      329     |      221     |
+
+| 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
+| :------: | :------: | :------: | :------: | :------: | :----: |
+|    112   |    389   |    24    |    102   |    23    |   117  |
+
+</Route>
+
 ## 米哈游
 
 ### 崩坏 2 - 游戏公告
@@ -503,6 +517,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 元素文章
 
 <Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+## 少女前线
+
+### 新闻
+
+<Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" :paramsDesc="['分类，见下表，默认为新闻']">
+
+| 新闻 | 公告 |
+| ---- | ---- |
+| 1    | 3    |
+
+</Route>
 
 ## 网易大神
 
@@ -593,6 +619,12 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 ### 关键词资讯
 
 <Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
+
+## 游讯网
+
+### 精彩推荐
+
+<Route author="nczitzk" example="/yxdown/recommend" path="/yxdown/recommend"/>
 
 ## 游研社
 

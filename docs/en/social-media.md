@@ -34,6 +34,76 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
+## Fur Affinity
+
+### Home
+
+<RouteEn author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/home/:type?/:nsfw?" :paramsDesc="['Art Type, default to be `artwork`', 'NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1">
+
+Type
+
+| artwork | crafts | music | writing | 
+| ---- | ---- | ---- | ---- | 
+| artwork | crafts | music | writing |
+
+</RouteEn>
+
+### Browse
+
+<RouteEn author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/browse/:nsfw?" :paramsDesc="['NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1"/>
+
+### Website Status
+
+<RouteEn author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status" radar="1"/>
+
+### Userpage Profile
+
+<RouteEn author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
+
+### Search
+
+<RouteEn author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/search/:keyword/:nsfw?" :paramsDesc="['Search keyword, enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW contents when value set to `1`']" radar="1"/>
+
+### User's Watching List
+
+<RouteEn author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
+
+### User's Watcher List
+
+<RouteEn author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
+
+### User's Commission Information 
+
+<RouteEn author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
+
+### User's Shouts
+
+<RouteEn author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
+
+### User's Journals
+
+<RouteEn author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
+
+### User's Gallery
+
+<RouteEn author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" :paramsDesc="['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1"/>
+
+### User's Scraps
+
+<RouteEn author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" :paramsDesc="['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1"/>
+
+### User's Favorites
+
+<RouteEn author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" :paramsDesc="['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']" radar="1"/>
+
+### Submission Comments
+
+<RouteEn author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" :paramsDesc="['Submission id, can find in URL of submission page']" radar="1"/>
+
+### Journal Comments
+
+<RouteEn author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" :paramsDesc="['Journal id, can find in URL of journal page']" radar="1"/>
+
 ## Gab
 
 ### User's Posts
@@ -263,6 +333,12 @@ Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a re
 <RouteEn path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
 ### Channel
+
+::: tip
+
+YouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.
+
+:::
 
 <RouteEn path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 

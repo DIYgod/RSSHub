@@ -28,7 +28,8 @@ pageClass: routes
 
 ### 话题
 
-<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']" radar="1" rssbud="1"/>
+<Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
+采用了`puppeteer`规避`Project Shield`，无全文抓取，建议自建。  
 
 ## BBC
 
@@ -613,12 +614,6 @@ category 对应的关键词有
 
 </Route>
 
-## 每经网
-
-### 重磅原创
-
-<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily" />
-
 ## 南方周末
 
 ### 新闻分类
@@ -721,6 +716,10 @@ category 对应的关键词有
 
 <Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认 all']"/>
 
+### 中国共产党新闻网 24 小时滚动新闻
+
+<Route author="nczitzk" example="/people/cpc/24h" path="/people/cpc/24h"/>
+
 ## 人民日报社 国际金融报
 
 ### 栏目
@@ -757,7 +756,7 @@ category 对应的关键词有
 
 ### 分类
 
-<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id，见下表，默认为 aall']">
+<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id 或新闻专题 id。分类 id 见下表，新闻专题 id 為 https://www.cna.com.tw/list/newstopic.aspx 中，連結的數字部份。此參數默认为 aall']">
 
 | 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -820,6 +819,12 @@ category 对应的关键词有
 | 本地新聞 | 大中華新聞   | 國際新聞      | 財經新聞 | 體育新聞 |
 
 </Route>
+
+## 香港商报
+
+### PDF 版
+
+<Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
 
 ## 新京报
 
@@ -902,6 +907,10 @@ category 对应的关键词有
 ### 新闻联播文字版全文
 
 <Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
+
+### 央视网图片《镜象》
+
+<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" />
 
 ## 朝日新聞中文網（繁體中文版）
 

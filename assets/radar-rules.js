@@ -96,7 +96,10 @@
                 docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
                 source: ['/u/:id', '/:id'],
                 target: (params, url, document) => {
-                    const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                    let uid = document?.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)?.[1];
+                    if (!uid && !isNaN(params.id)) {
+                        uid = params.id;
+                    }
                     return uid ? `/weibo/user/${uid}` : '';
                 },
             },
@@ -117,6 +120,17 @@
                 docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
                 source: '/top/summary',
                 target: '/weibo/search/hot',
+            },
+        ],
+    },
+    'weibo.cn': {
+        _name: '微博',
+        m: [
+            {
+                title: '博主',
+                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
+                source: ['/u/:uid', '/profile/:uid'],
+                target: '/weibo/user/:uid',
             },
         ],
     },
@@ -373,6 +387,12 @@
                 source: '/pub/weekly',
                 target: '/zhihu/weekly',
             },
+            {
+                title: '专栏',
+                docs: 'https://docs.rsshub.app/social-media.html#zhi-hu',
+                source: '/column/:id',
+                target: '/zhihu/zhuanlan/:id',
+            },
         ],
         zhuanlan: [
             {
@@ -620,9 +640,15 @@
                 target: '/sspai/column/:id',
             },
             {
+                title: '作者动态',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/u/:id/updates',
+                target: '/sspai/activity/:id',
+            },
+            {
                 title: '作者已发布文章',
                 docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
-                source: ['/user/:id/posts', '/user/:id/updates'],
+                source: '/u/:id/posts',
                 target: '/sspai/author/:id',
             },
             {
@@ -636,6 +662,12 @@
                 docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
                 source: '/topic/:id',
                 target: '/sspai/topic/:id',
+            },
+            {
+                title: '标签订阅',
+                docs: 'https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai',
+                source: '/tag/:keyword',
+                target: '/sspai/tag/:keyword',
             },
         ],
         shortcuts: [
@@ -683,6 +715,17 @@
                 docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
                 source: '/p/:id',
                 target: '/tieba/post/lz/:id',
+            },
+            {
+                title: '用户帖子',
+                docs: 'https://docs.rsshub.app/bbs.html#tie-ba',
+                source: '/home/main',
+                target: (params, url) => {
+                    const uid = new URL(url).searchParams.get('un');
+                    if (uid) {
+                        return `/tieba/user/${uid}`;
+                    }
+                },
             },
         ],
     },
@@ -1140,6 +1183,44 @@
                 docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke',
                 source: '/',
                 target: '/open163/latest',
+            },
+        ],
+        music: [
+            {
+                title: '云音乐 - 用户歌单',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/home\?id=(.*)/)[1];
+                    return id ? `/ncm/user/playlist/${id}` : '';
+                },
+            },
+            {
+                title: '云音乐 - 歌单歌曲',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/playlist\?id=(.*)/)[1];
+                    return id ? `/ncm/playlist/${id}` : '';
+                },
+            },
+            {
+                title: '云音乐 - 歌手专辑',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/album\?id=(.*)/)[1];
+                    return id ? `/ncm/artist/${id}` : '';
+                },
+            },
+            {
+                title: '云音乐 - 电台节目',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/djradio\?id=(.*)/)[1];
+                    return id ? `/ncm/djradio/${id}` : '';
+                },
             },
         ],
     },
@@ -1723,12 +1804,6 @@
                 target: '/matters/latest',
             },
             {
-                title: '熱門文章',
-                docs: 'https://docs.rsshub.app/new-media.html#matters',
-                source: '',
-                target: '/matters/hot',
-            },
-            {
                 title: '标签',
                 docs: 'https://docs.rsshub.app/new-media.html#matters',
                 source: '/tags/:tid',
@@ -1845,7 +1920,7 @@
                 title: '用户作品',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: ['/u/:id'],
-                target: `/zcoo/user/:id`,
+                target: `/zcool/user/:id`,
             },
         ],
     },
@@ -1918,6 +1993,17 @@
                     if (params.id.match(/^\d+$/)) {
                         return '/egameqq/room/:id';
                     }
+                },
+            },
+        ],
+        v: [
+            {
+                title: '视频 - 播放列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
+                source: '/detail/:type/:id',
+                target: (params) => {
+                    const id = params.id.match('(.*).html')[1];
+                    return id ? `/tencentvideo/playlist/${id}` : '';
                 },
             },
         ],
@@ -2165,6 +2251,12 @@
                 source: '/news',
                 target: '/umass/amherst/ecenews',
             },
+            {
+                title: 'ECE Seminar',
+                docs: 'http://docs.rsshub.app/en/university.html#umass-amherst',
+                source: '/seminars',
+                target: '/umass/amherst/eceseminar',
+            },
         ],
         'www.cics': [
             {
@@ -2292,6 +2384,24 @@
                     const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
                     return uid ? `/douban/people/${uid}/status` : '';
                 },
+            },
+            {
+                title: '小组-最新',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid',
+            },
+            {
+                title: '小组-最热',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/essence',
+            },
+            {
+                title: '小组-精华',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/elite',
             },
         ],
     },
@@ -2636,6 +2746,232 @@
                         return '/cqwu/news/academiceve';
                     }
                 },
+            },
+        ],
+    },
+    'trakt.tv': {
+        _name: 'Trakt.tv',
+        '.': [
+            {
+                title: '用户收藏',
+                docs: 'https://docs.rsshub.app/multimedia.html#trakt-tv-yong-hu-shou-cang',
+                source: ['/users/:username/collection/:type/added', '/users/:username/collection'],
+                target: (params) => `/trakt/collection/${params.username}/${params.type || 'all'}`,
+            },
+        ],
+    },
+    'eagle.cool': {
+        _name: 'Eagle',
+        cn: [
+            {
+                title: '更新日志',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/changelog',
+                target: '/eagle/changelog/cn',
+            },
+        ],
+        tw: [
+            {
+                title: '更新日誌',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/changelog',
+                target: '/eagle/changelog/tw',
+            },
+        ],
+        en: [
+            {
+                title: 'Release Notes',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/changelog',
+                target: '/eagle/changelog/en',
+            },
+        ],
+    },
+    'furaffinity.net': {
+        _name: 'Fur Affinity',
+        www: [
+            {
+                title: '主页',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/',
+                target: '/furaffinity/home',
+            },
+            {
+                title: '浏览',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/browse/',
+                target: '/furaffinity/browse',
+            },
+            {
+                title: '站点状态',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/',
+                target: '/furaffinity/status',
+            },
+            {
+                title: '搜索',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/search/',
+                target: (params, url) => {
+                    const keyword = new URL(url).searchParams.get('q');
+                    if (keyword) {
+                        return `/furaffinity/search/${keyword}`;
+                    }
+                },
+            },
+            {
+                title: '用户主页简介',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/user/:username/',
+                target: '/furaffinity/user/:username',
+            },
+            {
+                title: '用户关注列表',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/watchlist/by/:username/',
+                target: '/furaffinity/watching/:username',
+            },
+            {
+                title: '用户被关注列表',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/watchlist/to/:username/',
+                target: '/furaffinity/watchers/:username',
+            },
+            {
+                title: '用户接受委托信息',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/commissions/:username/',
+                target: '/furaffinity/commissions/:username',
+            },
+            {
+                title: '用户的 Shouts 留言',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/user/:username/',
+                target: '/furaffinity/shouts/:username',
+            },
+            {
+                title: '用户的日记',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/journals/:username/',
+                target: '/furaffinity/journals/:username',
+            },
+            {
+                title: '用户的创作画廊',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/gallery/:username/',
+                target: '/furaffinity/gallery/:username',
+            },
+            {
+                title: '用户非正式作品',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/scraps/:username/',
+                target: '/furaffinity/scraps/:username',
+            },
+            {
+                title: '用户的喜爱列表',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/favorites/:username/',
+                target: '/furaffinity/favorites/:username',
+            },
+            {
+                title: '作品评论区',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/view/:id/',
+                target: '/furaffinity/submission_comments/:id',
+            },
+            {
+                title: '日记评论区',
+                docs: 'https://docs.rsshub.app/social-media.html#fur-affinity',
+                source: '/journal/:id/',
+                target: '/furaffinity/journal_comments/:id',
+            },
+        ],
+    },
+    'gcores.com': {
+        _name: '机核网',
+        www: [
+            {
+                title: '资讯',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/news',
+                target: '/gcores/category/news',
+            },
+            {
+                title: '视频',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/videos',
+                target: '/gcores/category/videos',
+            },
+            {
+                title: '电台',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/radios',
+                target: '/gcores/category/radios',
+            },
+            {
+                title: '文章',
+                docs: 'https://docs.rsshub.app/program-update.html#eagle',
+                source: '/articles',
+                target: '/gcores/category/articles',
+            },
+        ],
+    },
+    'bgm.tv': {
+        _name: 'Bangumi',
+        '.': [
+            {
+                title: '小组话题',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/group/:id',
+                target: '/bangumi/group/:id',
+            },
+            {
+                title: '小组话题的新回复',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/group/topic/:id',
+                target: '/bangumi/topic/:id',
+            },
+            {
+                title: '现实人物的新作品',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/person/:id',
+                target: '/bangumi/person/:id',
+            },
+            {
+                title: '用户日志',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/user/:id',
+                target: '/bangumi/user/blog/:id',
+            },
+            {
+                title: '条目的讨论',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id/topics',
+            },
+            {
+                title: '条目的评论',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id/blogs',
+            },
+            {
+                title: '条目的章节',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id',
+            },
+            {
+                title: '条目的吐槽箱',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id/comments',
+            },
+            {
+                title: '放送列表',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/calendar',
+                target: '/bangumi/calendar/today',
             },
         ],
     },

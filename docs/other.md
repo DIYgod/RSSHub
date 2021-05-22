@@ -475,37 +475,61 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 酷安
 
-### 图文 - 编辑精选
+### 图文
 
-<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen">
+<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen/:type?" :paramsDesc="['默认为hot']">
 
-::: tip
-每晚更新，更新较慢。
-:::
+| 参数名称 | 编辑精选 | 最新   |
+| -------- | -------- | ------ |
+| type     | hot      | latest |
 
 </Route>
 
-### 新鲜图文
+### 头条
 
-<Route author="xizeyoupan" example="/coolapk/tuwen-xinxian" path="/coolapk/tuwen-xinxian"/>
+<Route author="xizeyoupan" example="/coolapk/toutiao" path="/coolapk/toutiao/:type?" :paramsDesc="['默认为history']">
 
-### 看看号 - 图文 & 动态
+| 参数名称 | 历史头条 | 最新   |
+| -------- | -------- | ------ |
+| type     | history  | latest |
+
+</Route>
+
+### 看看号
 
 <Route author="xizeyoupan" example="/coolapk/dyh/1524" path="/coolapk/dyh/:dyhId" :paramsDesc="['看看号ID']">
 
 ::: tip
-仅限于采集**站内订阅**的看看号的**图文及动态**内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
+仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
 :::
 
 </Route>
 
-### 话题 - 图文 & 动态
+### 话题
 
 <Route author="xizeyoupan" example="/coolapk/huati/酷安夜话" path="/coolapk/huati/:tag" :paramsDesc="['话题名称']"/>
 
-### 用户 - 图文 & 动态
+### 用户
 
-<Route author="xizeyoupan" example="/coolapk/user/3177668/dynamic" path="/coolapk/user/:uid/dynamic" :paramsDesc="['uid,在个人界面右上分享-复制链接获取']"/>
+<Route author="xizeyoupan" example="/coolapk/user/3177668/dynamic" path="/coolapk/user/:uid/dynamic" :paramsDesc="['在个人界面右上分享-复制链接获取']"/>
+
+### 热榜
+
+<Route author="xizeyoupan" example="/coolapk/hot" path="/coolapk/hot/:type?/:period?" :paramsDesc="['默认为`jrrm`','默认为`daily`']">
+
+| 参数名称 | 今日热门 | 点赞榜 | 评论榜 | 收藏榜 | 酷图榜 |
+| -------- | -------- | ------ | ------ | ------ | ------ |
+| type     | jrrm     | dzb    | plb    | scb    | ktb    |
+
+| 参数名称 | 日榜  | 周榜   |
+| -------- | ----- | ------ |
+| period   | daily | weekly |
+
+::: tip
+今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
+:::
+
+</Route>
 
 ## 快递 100
 
@@ -753,6 +777,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 新闻动态
 
 <Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
+
+## 天眼查
+
+### 热门搜索
+
+<Route author="nczitzk" example="/tianyancha/hot" path="/tianyancha/hot" anticrawler="1"/>
 
 ## 无讼案例
 
