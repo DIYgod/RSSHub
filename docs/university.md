@@ -705,6 +705,10 @@ category 列表：
 
 <Route author="log-e" example="/hfut/tzgg" path="/hfut/tzgg"/>
 
+### 计算机与信息学院 - 通知公告
+
+<Route author="AKmoex" example="/hfut/jsj" path="/hfut/jsj"/>
+
 ## 河海大学
 
 ### 河海大学图书馆 - 新闻动态
