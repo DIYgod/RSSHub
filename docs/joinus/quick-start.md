@@ -116,7 +116,7 @@ sidebar: auto
         url: 'https://www.douban.com/explore',
     });
 
-    const data = response.data; // response.data 为 HTTP GET 请求返回的 HTML，也就是简书首页的所有 HTML
+    const data = response.data; // response.data 为 HTTP GET 请求返回的 HTML，也就是豆瓣首页的所有 HTML
     ```
 
     使用 cheerio 解析返回的 HTML:
