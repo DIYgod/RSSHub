@@ -727,6 +727,18 @@ category 列表：
 
 </Route>
 
+## 河南工业大学
+
+### 新闻中心
+
+<Route author="Revincx" example="/haut/news/tzgg" path="/haut/:type" :paramsDesc="['分类, 见下表']">
+
+| 学校要闻 | 综合信息 | 学术动态 | 通知公告 | 校内公告 |
+| -------- | -------- | -------- | -------- | -------- |
+| xxyw     | zhxx     | xsdt     | tzgg     | xngg     |
+
+</Route>
+
 ## 湖北大学
 
 ### 新闻通知
