@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <generator>RSSHub</generator>
-    <webMaster>i@diygod.me</webMaster>
+    <webMaster>i@diygod.me (DIYgod)</webMaster>
     <language>{{ language || 'zh-cn' }}</language>
     <id>{{ id || link }}</id>
     <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
@@ -34,7 +34,7 @@
 
     {{ each item $e }}
     <entry>
-        <id>{{ $e.id || $e.link }}</id>
+        <id>{{ $e.guid || $e.id || $e.link }}</id>
         <title><![CDATA[{{@ $e.title }}]]></title>
 
         <published>{{ $e.pubDate || $e.updated }}</published>
@@ -53,9 +53,9 @@
         {{ /if }}
 
         {{ if $e.content }}
-        <content type="html" src="{{ $e.link }}"><![CDATA[{{@ $e.content.html || $e.content.text }}]]></content>
+        <content type="html" src="{{ $e.link }}">{{ $e.content.html || $e.content.text }}</content>
         {{ else if $e.description }}
-        <content type="html" src="{{ $e.link }}"><![CDATA[{{@ $e.description }}]]></content>
+        <content type="html" src="{{ $e.link }}">{{ $e.description }}</content>
         {{ /if }}
 
         {{ if typeof $e.category === 'string' }}

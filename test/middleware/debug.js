@@ -1,5 +1,8 @@
+process.env.NODE_NAME = 'mock';
+
 const supertest = require('supertest');
-const { server } = require('../../lib/index');
+jest.mock('request-promise-native');
+const server = require('../../lib/index');
 const request = supertest(server);
 const cheerio = require('cheerio');
 let gitHash;
@@ -14,37 +17,46 @@ afterAll(() => {
 });
 
 describe('debug', () => {
-    it(`debug`, async () => {
-        await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
-        await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
+    it('debug', async () => {
+        const response1 = await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
+        const etag = response1.headers.etag;
+        await request.get('/test/1').set('If-None-Match', etag).set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/1').set('X-Forwarded-For', '233.233.233.234');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.234');
+        await request.get('/test/empty').set('X-Forwarded-For', '233.233.233.233');
+        await request.get('/test/empty').set('X-Forwarded-For', '233.233.233.234');
 
         const response = await request.get('/').set('X-Forwarded-For', '233.233.233.233');
 
         const $ = cheerio.load(response.text);
         $('.debug-item').each((index, item) => {
-            const key = $(item)
-                .find('.debug-key')
-                .html()
-                .trim();
-            const value = $(item)
-                .find('.debug-value')
-                .html()
-                .trim();
+            const key = $(item).find('.debug-key').html().trim();
+            const value = $(item).find('.debug-value').html().trim();
             switch (key) {
-                case 'git hash:':
+                case 'Node Name:':
+                    expect(value).toBe('mock');
+                    break;
+                case 'Git Hash:':
                     expect(value).toBe(gitHash);
                     break;
-                case '请求数:':
-                    expect(value).toBe('6');
+                case 'Request Amount:':
+                    expect(value).toBe('8');
                     break;
-                case '热门路由:':
-                    expect(value).toBe(`3&nbsp;&nbsp;/test/1<br>2&nbsp;&nbsp;/test/2<br>1&nbsp;&nbsp;/<br>`);
+                case 'ETag Matched:':
+                    expect(value).toBe('1');
                     break;
-                case '热门IP:':
-                    expect(value).toBe(`4&nbsp;&nbsp;233.233.233.233<br>2&nbsp;&nbsp;233.233.233.234<br>`);
+                case 'Hot Routes:':
+                    expect(value).toBe('3  /test/:id<br>');
+                    break;
+                case 'Hot Paths:':
+                    expect(value).toBe('3  /test/1<br>2  /test/2<br>2  /test/empty<br>1  /<br>');
+                    break;
+                case 'Hot Error Routes:':
+                    expect(value).toBe('1  /test/:id<br>');
+                    break;
+                case 'Hot Error Paths:':
+                    expect(value).toBe('2  /test/empty<br>');
                     break;
             }
         });

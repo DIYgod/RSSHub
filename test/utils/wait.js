@@ -8,6 +8,6 @@ describe('wait', () => {
 
         const endDate = new Date();
         expect(endDate - startDate).toBeGreaterThan(90);
-        expect(endDate - startDate).toBeLessThan(110);
+        expect(endDate - startDate).toBeLessThan(150);
     });
 });

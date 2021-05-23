@@ -42,12 +42,20 @@ describe('date', () => {
         expect(+new Date(parseDate('2018年4月2日1时'))).toBe(+new Date('2018-4-2 01:00'));
     });
 
+    it('Y年M月D日', async () => {
+        expect(+new Date(parseDate('2018年4月2日'))).toBe(+new Date('2018-4-2 00:00'));
+    });
+
     it('Y-M-D H:m', async () => {
         expect(+new Date(parseDate('2018-4-2 02:03'))).toBe(+new Date('2018-4-2 02:03'));
     });
 
     it('M-D H:m', async () => {
         expect(+new Date(parseDate('2-3 02:03'))).toBe(+new Date('2019-2-3 02:03'));
+    });
+
+    it('Y/M/D H:m:s', async () => {
+        expect(+new Date(parseDate('2018/4/2 02:03:04'))).toBe(+new Date('2018-4-2 02:03:04'));
     });
 
     it('Y/M/D H:m', async () => {
@@ -62,6 +70,18 @@ describe('date', () => {
         expect(+new Date(parseDate('2月3日 02:03'))).toBe(+new Date('2019-2-3 02:03'));
     });
 
+    it('M月D日', async () => {
+        expect(+new Date(parseDate('2月3日'))).toBe(+new Date('2019-2-3 00:00'));
+    });
+
+    it('M月D号', async () => {
+        expect(+new Date(parseDate('2月3号'))).toBe(+new Date('2019-2-3 00:00'));
+    });
+
+    it('M/D', async () => {
+        expect(+new Date(parseDate('2/3'))).toBe(+new Date('2019-2-3 00:00'));
+    });
+
     it('Y-M-D', async () => {
         expect(+new Date(parseDate('2018-4-2'))).toBe(+new Date('2018-4-2'));
     });
@@ -71,7 +91,14 @@ describe('date', () => {
     });
 
     it('H:m', async () => {
-        expect(+new Date(parseDate('02:03'))).toBe(+new Date('2019-1-1 02:03'));
+        expect(+new Date(parseDate('4:2'))).toBe(+new Date('2019-1-1 04:02'));
+    });
+
+    it('刚刚', async () => {
+        const result = +new Date(parseDate('刚刚'));
+        const now = +new Date();
+        expect(result - now).toBeLessThan(10);
+        expect(result - now).toBeGreaterThanOrEqual(0);
     });
 
     it('Invalid', async () => {

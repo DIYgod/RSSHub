@@ -1,9 +1,16 @@
+process.env.SOCKET = 'socket';
+
 const supertest = require('supertest');
-const { server } = require('../lib/index');
+jest.mock('request-promise-native');
+const server = require('../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
-const config = require('../lib/config');
+const config = require('../lib/config').value;
+
+afterAll(() => {
+    delete process.env.SOCKET;
+});
 
 async function checkRSS(response) {
     const checkDate = (date) => {
@@ -21,7 +28,7 @@ async function checkRSS(response) {
     expect(parsed.description).toEqual(expect.any(String));
     expect(parsed.link).toEqual(expect.any(String));
     expect(parsed.lastBuildDate).toEqual(expect.any(String));
-    expect(parsed.ttl).toEqual(config.cache.routeExpire + '');
+    expect(parsed.ttl).toEqual(((config.cache.routeExpire / 60) | 0) + '');
     expect(parsed.items).toEqual(expect.any(Array));
     checkDate(parsed.lastBuildDate);
 
@@ -63,6 +70,19 @@ describe('router', () => {
         expect(response.status).toBe(200);
 
         await checkRSS(response);
+    });
+
+    // robots.txt
+    it('/robots.txt', async () => {
+        config.disallowRobot = false;
+        const response404 = await request.get('/robots.txt');
+        expect(response404.status).toBe(404);
+
+        config.disallowRobot = true;
+        const response = await request.get('/robots.txt');
+        expect(response.status).toBe(200);
+        expect(response.text).toBe('User-agent: *\nDisallow: /');
+        expect(response.headers['content-type']).toBe('text/plain');
     });
 
     // api

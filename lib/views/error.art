@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Error in RSSHub!</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        .content {
+            width: 800px;
+            margin: 100px auto 0;
+            text-align: center;
+        }
+
+        .message {
+            white-space: pre-wrap;
+            text-align: left;
+        }
+
+        a {
+            color: #F5712C;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <p>
+            <img src="https://i.loli.net/2019/09/04/lmBbNQoLzrKGgiM.jpg" alt="RSSHub" width="120">
+        </p>
+
+        <h1>Looks like something went wrong</h1>
+
+        <pre class="message">Route requested: {{@ requestPath }}</pre>
+        <pre class="message">Error message: {{@ message }}</pre>
+
+        <div style="margin: 50px 0">
+            <p>在线文档与支持，请访问<a href="https://docs.rsshub.app/" target="_blank">docs.rsshub.app</a>。</p>
+            <p>For online documentation and support please refer to
+                <a href="https://docs.rsshub.app/" target="_blank">docs.rsshub.app</a>.</p>
+        </div>
+    </div>
+</body>
+
+</html>

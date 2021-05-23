@@ -1,10 +1,13 @@
 <template>
 <div class="routeBlock" :id="path">
-  <h4 :id=path class="name">{{name}} <Author :uid=author /> 
-    <a :href="'#'+path" aria-hidden="true" class="header-anchor">#</a>
-  </h4>
+  <p class="badge">
+    <Badge text="support BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="support podcast" type="tip" vertical="middle" v-if="supportPodcast"/> <a target="_blank" href="/en/faq.html" v-if="anticrawler"><Badge text="strict anti-crawler policy" vertical="middle" type="warn"/></a> <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="support browser extension" vertical="middle" type="tip"/></a> <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud" v-if="rssbud"><Badge text="support rssbud" vertical="middle" type="tip"/></a> <a target="_blank" href="https://docs.rsshub.app/en/install/" v-if="selfhost"><Badge text="self-host only" vertical="middle" type="warn"/></a>
+  </p>
+  <p class="author">
+    Author: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
+  </p>
   <p  class="example">
-    Example: <a :href="'https://rsshub.app'+ example " target="_blank">https://rsshub.app{{example}}</a>
+    <span>Example:</span> <a :href="demoUrl" target="_blank">{{demoUrl}}</a> <img :src="'https://img.shields.io/website?label=status&style=flat-square&url=' + encodeURIComponent(encodeURI(demoUrl))">
   </p>
   <p class="path">
     Route: <code>{{ path }}</code>
@@ -19,32 +22,48 @@
 </div>
 </template>
 <script>
-import Author from "./Author.vue"
 export default {
-  components:{
-      'Author': Author
-  },
   props: {
     author: {
       type: String,
       default: 'DIYgod'
     },
-    name: {
-      type: String,
-      required: true 
-    },
     path: {
       type: String,
-      required: true 
+      required: true
     },
     example: {
       type: String,
-      required: true 
+      required: true
     },
     paramsDesc: {
       type: [Array, String],
       default: 'N/A'
-    }
+    },
+    anticrawler: {
+      type: String,
+      default: null
+    },
+    supportBT: {
+      type: String,
+      default: null
+    },
+    supportPodcast: {
+      type: String,
+      default: null
+    },
+    radar: {
+      type: String,
+      default: null
+    },
+    rssbud: {
+      type: String,
+      default: null
+    },
+    selfhost: {
+      type: String,
+      default: null
+    },
   },
   methods: {
     renderMarkdown(item) {
@@ -53,14 +72,11 @@ export default {
     });
         return md.render(item);
     },
+  },
+  computed: {
+      demoUrl: function () {
+          return 'https://rsshub.app'+ this.example
+      }
   }
 }
 </script>
-<style>
-li.params p { 
-  display: inline;
-  }
-.routeBlock {
-  margin: 1rem 0 2rem;
-}
-</style>
