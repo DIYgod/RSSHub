@@ -517,6 +517,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## RSS3
+
+### Blog
+
+<Route author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
+
 ## Simons Foundation
 
 ### 文章

@@ -296,6 +296,12 @@ Compared to the official one, this feed:
 
 </RouteEn>
 
+## RSS3
+
+### Blog
+
+<RouteEn author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
+
 ## Semiconductor Industry Association
 
 ### Latest News
