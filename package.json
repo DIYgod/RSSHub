@@ -85,7 +85,7 @@
     "googleapis": "73.0.0",
     "got": "11.8.2",
     "https-proxy-agent": "5.0.0",
-    "iconv-lite": "0.6.2",
+    "iconv-lite": "0.6.3",
     "instagram-private-api": "1.44.1",
     "ioredis": "4.27.2",
     "ip-regex": "4.2.0",
