@@ -375,8 +375,8 @@ R18 显示
 <Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
 | 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 |
-| ------ | ---------- | ---------- | -------- | ---------- | ----------|
-| pic    | top        | top-4h     | girl     | ooxx       | top-ooxx  |
+| ------ | ---------- | ---------- | ---- | ------ | ---------- |
+| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   |
 
 ### 首页
 
