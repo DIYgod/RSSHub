@@ -385,6 +385,10 @@ Category 列表：
 
 </Route>
 
+### 财新一线
+
+<Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
+
 ## 第一财经
 
 ### 直播区

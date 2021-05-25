@@ -16,6 +16,12 @@ Full transcript support for better user experience.
 
 <RouteEn author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
 
+## Bandcamp
+
+### Tag
+
+<RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['Tag, can be found in URL']"/>
+
 ## EZTV
 
 ::: tip
