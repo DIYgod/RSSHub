@@ -664,19 +664,19 @@ category 对应的关键词有
 
 <Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
 
-| Category | 中文 |
-| -------- | -------- |
-| combined-print-and-e-book-nonfiction | 非虚构类 - 综合 |
-| hardcover-nonfiction| 非虚构类 - 精装本 |
-| paperback-nonfiction| 非虚构类 - 平装本 |
-| advice-how-to-and-miscellaneous| 工具类 |
-| combined-print-and-e-book-fiction| 虚构类 - 综合 |
-| hardcover-fiction| 虚构类 - 精装本 | 
-| trade-fiction-paperback| 虚构类 - 平装本 | 
-| childrens-middle-grade-hardcover| 儿童 - 中年级 |
-| picture-books| 儿童 - 绘本 | 
-| series-books| 儿童 - 系列图书 |
-| young-adult-hardcover| 青少年 |
+| Category                             | 中文              |
+| ------------------------------------ | ----------------- |
+| combined-print-and-e-book-nonfiction | 非虚构类 - 综合   |
+| hardcover-nonfiction                 | 非虚构类 - 精装本 |
+| paperback-nonfiction                 | 非虚构类 - 平装本 |
+| advice-how-to-and-miscellaneous      | 工具类            |
+| combined-print-and-e-book-fiction    | 虚构类 - 综合     |
+| hardcover-fiction                    | 虚构类 - 精装本   |
+| trade-fiction-paperback              | 虚构类 - 平装本   |
+| childrens-middle-grade-hardcover     | 儿童 - 中年级     |
+| picture-books                        | 儿童 - 绘本       |
+| series-books                         | 儿童 - 系列图书   |
+| young-adult-hardcover                | 青少年            |
 
 ## 澎湃新闻
 
