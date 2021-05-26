@@ -104,6 +104,14 @@ Sorting types, default to `date`:
 
 <RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for exmaple `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
 
+### Feed The Beast Modpack Updates
+
+<RouteEn author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" :paramsDesc="['entry name of modpack.']">
+| param | description |
+| ------| ------------ |
+| modpackEntry | The entry name of modpack, can be found in modpack\'s page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
+</RouteEn>
+
 ## Nintendo
 
 ### eShop New Game Releases
@@ -165,6 +173,18 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 ### Steam news
 
 <RouteEn author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['game id']" radar="1" rssbud="1"/>
+
+
+::: tip
+
+Steam provides some official RSS feeds:
+
+-   Game News: https://store.steampowered.com/feeds/news/app/412830/
+-   Curator/Group/Publisher/Developer News: https://store.steampowered.com/feeds/news/group/35143931/
+
+Game News use the AppID while the rest are only available in the Steam News UI, it seems.
+
+:::
 
 ## SteamGifts
 

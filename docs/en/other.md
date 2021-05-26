@@ -92,6 +92,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 ### HackerOne Hacker Activity
 
 <RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
+<RouteEn author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" :paramsDesc="['Search string']" radar="1" rssbud="1"/>
 
 ## Instapaper
 
@@ -108,6 +109,18 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 | Japanese | English |
 | -------- | ------- |
 | ja       | en      |
+
+</RouteEn>
+
+## King Arthur
+
+### Baking
+
+<RouteEn author="loganrockmore" example="/kingarthur/story" path="/instapaper/:category">
+
+| Story | Recipes | Tips and Techniques |
+| ----- | ------- | ------------------- |
+| story | recipes | tips-and-techniques |
 
 </RouteEn>
 

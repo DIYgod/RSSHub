@@ -51,6 +51,12 @@ Remove old containers
 $ docker-compose down
 ```
 
+Repull the latest image if you have downloaded the image before. It is helpful to resolve some issues.
+
+```bash
+$ docker pull diygod/rsshub
+```
+
 Then repeat the installation steps
 
 ### Configuration
@@ -151,10 +157,10 @@ Execute the following commands to install dependencies
 Using `npm`
 
 ```bash
-$ npm install
+$ npm ci
 ```
 
-Or `yarn`
+Or `yarnv1` (not recommended)
 
 ```bash
 $ yarn
@@ -347,13 +353,11 @@ RSSHub supports two caching methods: memory and redis
 
 `REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
 
-`REDIS_PASSWORD`: Redis password（invalid when `CACHE_TYPE` is set to memory)
-
 ### Proxy Configurations
 
 Partial routes have a strict anti-crawler policy, and can be configured to use proxy
 
-`PROXY_PROTOCOL`: Using proxy, Supports socks, http, https
+`PROXY_PROTOCOL`: Using proxy, Supports socks, socks5, socks5h, http, https, etc. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page and [source](https://github.com/TooTallNate/node-socks-proxy-agent/blob/master/src/agent.ts) for what these protocols mean. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/) for reference.
 
 `PROXY_HOST`: host or IP of the proxy
 
@@ -388,7 +392,7 @@ RSSHub supports access control via access key/code, whitelisting and blacklistin
 
 -   `BLACKLIST`: the blacklist
 
-White/blacklisting support IP and route as values. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+White/blacklisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### Access Key/Code
 
@@ -423,7 +427,9 @@ See the relation between access key/code and white/blacklisting.
 
 `REQUEST_RETRY`: retries allowed for failed requests, default to `2`
 
-`DEBUG_INFO`: display route information on homepage for debugging purpose, default to `false`
+`REQUEST_TIMEOUT`: milliseconds to wait for the server to end the response before aborting the request with error, default to `3000`
+
+`DEBUG_INFO`: display route information on homepage for debugging purpose. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `true`
 
 `NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
 
@@ -434,6 +440,8 @@ See the relation between access key/code and white/blacklisting.
 `PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
+
+`SENTRY_ROUTE_TIMEOUT`: Report Sentry if route execution takes more than this milliseconds, default to `3000`
 
 `DISALLOW_ROBOT`: prevent indexing by search engine, default to enable, set false or 0 to disable
 
@@ -451,16 +459,13 @@ See docs of specified route and `lib/config.js` for detail information.
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv username
-
-    -   `PIXIV_PASSWORD`: Pixiv password
-    
+    -   `PIXIV_REFRESHTOKEN`: Please refer to [this article](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to get a `refresh_token`
+ 
     -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
 
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
     
     -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
-    
 
 -   pixiv fanbox: Get paid content
 
@@ -494,6 +499,7 @@ See docs of specified route and `lib/config.js` for detail information.
 
     -   `IG_USERNAME`: Your Instagram username
     -   `IG_PASSWORD`: Your Instagram password
+    -   `IG_PROXY`: Proxy URL for Instagram
 
     Warning: Two Factor Authentication is *not* supported.
 
@@ -521,3 +527,14 @@ See docs of specified route and `lib/config.js` for detail information.
 -   Sci-hub for scientific journal routes:
 
     -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.se`.
+
+-   Wordpress:
+    -   `WORDPRESS_CDN`: Proxy http image link with https link. Consider using:
+
+        | url                                      | backbone     |
+        | ---------------------------------------- | ------------ |
+        | https://imageproxy.pimg.tw/resize?url=   | akamai       |
+        | https://images.weserv.nl/?url=           | cloudflare   |
+        | https://pic1.xuehuaimg.com/proxy/        | cloudflare   |
+        | https://cors.netnr.workers.dev/          | cloudflare   |
+        | https://netnr-proxy.openode.io/          | digitalocean |
