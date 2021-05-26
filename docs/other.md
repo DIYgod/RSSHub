@@ -973,3 +973,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
+## ORCID  
+<Route author="OrangeEd1t" example="orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['学术识别号']"/>
