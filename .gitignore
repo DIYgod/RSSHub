@@ -2,7 +2,6 @@ node_modules
 npm-debug.log
 error.log
 combined.log
-package-lock.json
 .vscode
 .idea
 .DS_Store
@@ -15,3 +14,6 @@ tmp
 *.iml
 coverage
 .env
+yarn.lock
+
+.now

@@ -31,6 +31,38 @@ pageClass: routes
 
 <RouteEn author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['Year-month of visa check，for example 2019-03']" />
 
+## Corona Virus Disease 2019
+
+### South China Morning Post - Coronavirus outbreak
+
+<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
+
+Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
+
+<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
+
+| Chinese | English | Portuguese |
+| ------- | ------- | ---------- |
+| ch      | en      | pt         |
+
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
+
+<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
+
+## Darwin Awards
+
+### Articles
+
+<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
+
+## dcinside
+
+### board
+
+<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
+
 ## DHL
 
 ### DHL express
@@ -43,7 +75,7 @@ pageClass: routes
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/en/install)
 
-<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" />
+<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" selfhost="1"/>
 
 ## Emi Nitta official website
 
@@ -59,7 +91,8 @@ pageClass: routes
 
 ### HackerOne Hacker Activity
 
-<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+<RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
+<RouteEn author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" :paramsDesc="['Search string']" radar="1" rssbud="1"/>
 
 ## Instapaper
 
@@ -71,11 +104,41 @@ pageClass: routes
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1">
+<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1" rssbud="1">
 
 | Japanese | English |
 | -------- | ------- |
 | ja       | en      |
+
+</RouteEn>
+
+## King Arthur
+
+### Baking
+
+<RouteEn author="loganrockmore" example="/kingarthur/story" path="/instapaper/:category">
+
+| Story | Recipes | Tips and Techniques |
+| ----- | ------- | ------------------- |
+| story | recipes | tips-and-techniques |
+
+</RouteEn>
+
+## MITRE
+
+### All Publications
+
+<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
+
+## Nobel Prize
+
+### List
+
+<RouteEn author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['Category, see below, all by default']">
+
+| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science |
+| ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
+| physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
 
 </RouteEn>
 
@@ -104,7 +167,7 @@ pageClass: routes
 
 ### Remote.work Job Information
 
-<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1">
+<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1" rssbud="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
@@ -157,23 +220,3 @@ Type
 | all | rec       |
 
 </RouteEn>
-
-## Wuhan coronavirus
-
-### South China Morning Post - China coronavirus outbreak
-
-<RouteEn author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
-
-### Macao Pagina Electrónica Especial Contra Epidemias: What’s New
-
-Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
-
-<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
-
-| Chinese | English | Portuguese |
-| ------- | ------- | ---------- |
-| ch      | en      | pt         |
-
-### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore
-
-<RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
