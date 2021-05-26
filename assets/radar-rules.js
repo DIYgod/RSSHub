@@ -2986,4 +2986,52 @@
             },
         ],
     },
+    'hust.edu.cn': {
+        _name: '华中科技大学',
+        life: [
+            {
+                title: '通知公告',
+                docs: 'https://docs.rsshub.app/university.html#hust',
+                source: '/tzgg.htm',
+                target: '/tzgg',
+            },
+            {
+                title: '科学研究',
+                docs: 'https://docs.rsshub.app/university.html#hust',
+                source: '/kxyj.htm',
+                target: '/kxyj',
+            },
+            {
+                title: '党建工作',
+                docs: 'https://docs.rsshub.app/university.html#hust',
+                source: '/djgz.htm',
+                target: '/djgz',
+            },
+            {
+                title: '学生工作',
+                docs: 'https://docs.rsshub.app/university.html#hust',
+                source: '/xsgz.htm',
+                target: '/xsgz',
+            },
+            {
+                title: '人事工作',
+                docs: 'https://docs.rsshub.app/university.html#hust',
+                source: '/rsgz.htm',
+                target: '/rsgz',
+            },
+            {
+                title: '本科生教育',
+                docs: 'https://docs.rsshub.app/university.html#hust',
+                source: '/bksjy.htm',
+                target: '/bksjy',
+            },
+            {
+                title: '研究生教育',
+                docs: 'https://docs.rsshub.app/university.html#hust',
+                source: '/yjsjy.htm',
+                target: '/yjsjy',
+            },
+            
+        ],
+    },
 });
