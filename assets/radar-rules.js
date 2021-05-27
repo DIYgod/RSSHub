@@ -3031,7 +3031,6 @@
                 source: '/yjsjy.htm',
                 target: '/yjsjy',
             },
-            
         ],
     },
 });
