@@ -611,6 +611,12 @@ Provides all of the Thrillist articles with the specified tag.
 
 </Route>
 
+## Topbook
+
+### 今天看什么
+
+<Route author="nczitzk" example="/topbook/today" path="/topbook/today"/>
+
 ## TOPYS
 
 ### 分类
