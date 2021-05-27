@@ -91,6 +91,12 @@ pageClass: routes
 
 <Route author="XYenon" example="/gov/harbin/kjj" path="/gov/harbin/kjj"/>
 
+## 湖北省人民政府
+
+### 武汉市人民政府
+
+<Route author="nczitzk" example="/gov/wuhan" path="/gov/wuhan"/>
+
 ## 联合国
 
 ### 安理会否决了决议
