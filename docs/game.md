@@ -626,6 +626,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="nczitzk" example="/yxdown/recommend" path="/yxdown/recommend"/>
 
+### 资讯分类
+
+<Route author="nczitzk" example="/yxdown" path="/yxdown/:category?" :paramsDesc="['资讯分类，默认为资讯首页']">
+
+| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |
+
+</Route>
+
 ## 游研社
 
 ### 游研社 - 分类文章
