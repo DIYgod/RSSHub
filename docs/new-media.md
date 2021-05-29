@@ -224,6 +224,32 @@ pageClass: routes
 
 </Route>
 
+## Fashion Network
+
+### Headline
+
+<Route author="nczitzk" example="/fashionnetwork/headline" path="/fashionnetwork/headline/:country?" :paramsDesc="['国家，见下表，默认为 `ww`']">
+
+Country
+
+| Latin America | Brazil | China | France |
+| ------------- | ------ | ----- | ------ |
+| pe            | br     | cn    | fr     |
+
+| Germany | India | Italy | Japan |
+| ------- | ----- | ----- | ----- |
+| de      | in    | it    | jp    |
+
+| Mexico | Portugal | Russia | Spain |
+| ------ | -------- | ------ | ----- |
+| mx     | pt       | ru     | es    |
+
+| Turkey | United Kingdom | USA | Worldwide |
+| ------ | -------------- | --- | --------- |
+| tr     | uk             | us  | ww        |
+
+</Route>
+
 ## GQ
 
 ### GQ 台湾
