@@ -72,7 +72,7 @@
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
     "cheerio": "1.0.0-rc.3",
-    "chrono-node": "2.2.6",
+    "chrono-node": "2.2.7",
     "crypto-js": "4.0.0",
     "currency-symbol-map": "4.0.4",
     "dayjs": "1.10.3",
