@@ -1064,6 +1064,7 @@ rule
 | heightOfPics               | 微博配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定                              |
 | sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48                                  |
 | displayVideo               | 是否直接显示微博视频，只在博主 RSS 中有效                      | 0/1/true/false | true                                |
+| showEmojiInDescription     | 是否展示正文中的emoji表情                                   | 0/1/true/false | true | 
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -1095,13 +1096,7 @@ rule
 
 ### 个人时间线
 
-::: warning 注意
-
-个人时间线暂不支持改善可读性。
-
-:::
-
-<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。']" anticrawler="1" selfhost="1">
+<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
 
 ::: warning 注意
 
