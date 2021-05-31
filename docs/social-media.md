@@ -1064,7 +1064,7 @@ rule
 | heightOfPics               | 微博配图高（生效取决于阅读器）                                 | 不指定 / 数字  | 不指定                              |
 | sizeOfAuthorAvatar         | 作者头像大小                                                   | 数字           | 48                                  |
 | displayVideo               | 是否直接显示微博视频，只在博主 RSS 中有效                      | 0/1/true/false | true                                |
-| showEmojiInDescription     | 是否展示正文中的emoji表情                                   | 0/1/true/false | true | 
+| showEmojiInDescription     | 是否展示正文中的 emoji 表情                                    | 0/1/true/false | true                                |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
