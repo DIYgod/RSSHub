@@ -1602,6 +1602,48 @@ type 列表：
 
 </Route>
 
+## 石家庄学院
+
+### 官网
+
+<Route author="ZanyRain" example="/sjzc/www/xxxw" path="/sjzc/www/:type?" :paramsDesc="['默认为通知公告']" >
+
+| 学校新闻 | 通知公告 | 学术交流 |
+| ------ | ------ | ------ |
+| xxxw   | tzgg   | xsjl   |
+
+</Route>
+
+### 教务处
+
+<Route author="ZanyRain" example="/sjzc/jwc/jwdt" path="/sjzc/jwc/:type?" :paramsDesc="['默认为通知公告']" >
+
+| 教务动态 | 通知公告 |
+| ------ | ------ |
+| jwdt   | tzgg   |
+
+</Route>
+
+### 图书馆
+
+<Route author="ZanyRain" example="/sjzc/lib/syzy" path="/sjzc/lib/:type?" :paramsDesc="['默认为通知公告']" >
+
+| 新闻动态 | 通知公告 | 试用资源 |
+| ------ | ------ | ------ |
+| xwdt   | tzgg   | syzy   |
+
+</Route>
+
+### 信息中心
+
+<Route author="ZanyRain" example="/sjzc/xxzx/tzgg" path="/sjzc/xxzx/:type?" :paramsDesc="['默认为通知公告']" >
+
+| 通知公告 |
+| ------ |
+| tzgg   |
+
+</Route>
+
 ## 四川大学
 
 ### 教务处通知公告
