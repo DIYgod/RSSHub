@@ -510,6 +510,10 @@ Type 栏目：
 
 ## 经济观察网
 
+### 快讯
+
+<Route author="nczitzk" example="/eeo/kuaixun" path="/eeo/kuaixun"/>
+
 ### 分类资讯
 
 <Route author="epirus" example="/eeo/15" path="/eeo/:category" :paramsDesc="['分类']">
