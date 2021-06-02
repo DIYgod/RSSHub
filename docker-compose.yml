@@ -16,7 +16,8 @@ services:
             - browserless
 
     browserless:
-        image: browserless/chrome
+        # See issue 6680
+        image: browserless/chrome:1.43-chrome-stable
         restart: always
 
     redis:

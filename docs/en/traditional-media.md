@@ -20,10 +20,6 @@ Site
 
 ## AP News
 
-### Top Stories
-
-<RouteEn author="zphw" example="/apnews" path="/apnews" />
-
 ### Topics
 
 <RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1"/>
@@ -32,7 +28,7 @@ Site
 
 ### BBC
 
-<RouteEn author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+<RouteEn author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
 
 Provides a better reading experience (full text articles) over the official ones.
 
@@ -260,6 +256,25 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+### Best Seller Books
+
+
+<RouteEn author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
+
+| Category | 
+| -------- | 
+| combined-print-and-e-book-nonfiction |
+| hardcover-nonfiction| 
+| paperback-nonfiction| 
+| advice-how-to-and-miscellaneous| 
+| combined-print-and-e-book-fiction|
+| hardcover-fiction|
+| trade-fiction-paperback| 
+| childrens-middle-grade-hardcover| 
+| picture-books|
+| series-books|
+| young-adult-hardcover| 
+
 ## The Wall Street Journal (WSJ)
 
 ### News
@@ -285,5 +300,15 @@ Provide full article RSS for WSJ topics.
 | All | World | Business | Entertainment | Sports | Health |
 | ------- | ----- | -------- | ------------- | ------ | ------ |
 | (Empty) | world | business | entertainment | sports | health |
+
+</RouteEn>
+
+## Yahoo! by Author
+
+### News
+
+<RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
+
+Provides all of the articles by the specified Yahoo! author.
 
 </RouteEn>

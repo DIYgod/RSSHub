@@ -26,19 +26,16 @@ pageClass: routes
 
 ## AP News
 
-### 首页头条
-
-<Route author="zphw" example="/apnews" path="/apnews" />
-
 ### 话题
 
-<Route author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) 的话题为 `apf-topnews`']" radar="1" rssbud="1"/>
+<Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
+采用了`puppeteer`规避`Project Shield`，无全文抓取，建议自建。  
 
 ## BBC
 
 ### BBC 英文
 
-<Route author="HenryQW" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道，缺省为热门']">
+<Route author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel" :paramsDesc="['频道，缺省为热门']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
@@ -226,7 +223,7 @@ Solidot 提供的 feed:
 
 ### News
 
-<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?/:keyword?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限', '搜索关键字']">
+<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限']">
 
 可选分类如下
 
@@ -241,6 +238,24 @@ Solidot 提供的 feed:
 [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
 
 :::
+
+</Route>
+
+### Search
+
+<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" :paramsDesc="['关键词', '公司名，默认为不限', '排序，见下表，默认为 Date Descending', '发表在时间段内，默认为 12 months']">
+
+排序
+
+| Date Ascending | Date Descending |
+| -------------- | --------------- |
+| 1              | 2               |
+
+发表在时间段内
+
+| 1 month | 3 months | 6 months | 12 months | 24 months |
+| ------- | -------- | -------- | --------- | --------- |
+| 1       | 3        | 6        | 12        | 24        |
 
 </Route>
 
@@ -308,6 +323,16 @@ Solidot 提供的 feed:
 
 </Route>
 
+## Yahoo! by Author
+
+### 新聞
+
+<Route author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
+
+Provides all of the articles by the specified Yahoo! author.
+
+</Route>
+
 ## 半月谈
 
 ### 板块
@@ -359,6 +384,10 @@ Category 列表：
 说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。
 
 </Route>
+
+### 财新一线
+
+<Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
 
 ## 第一财经
 
@@ -589,12 +618,6 @@ category 对应的关键词有
 
 </Route>
 
-## 每经网
-
-### 重磅原创
-
-<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily" />
-
 ## 南方周末
 
 ### 新闻分类
@@ -636,6 +659,24 @@ category 对应的关键词有
 ### 每日简报
 
 <Route author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+
+### 畅销书排行榜
+
+<Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
+
+| Category                             | 中文              |
+| ------------------------------------ | ----------------- |
+| combined-print-and-e-book-nonfiction | 非虚构类 - 综合   |
+| hardcover-nonfiction                 | 非虚构类 - 精装本 |
+| paperback-nonfiction                 | 非虚构类 - 平装本 |
+| advice-how-to-and-miscellaneous      | 工具类            |
+| combined-print-and-e-book-fiction    | 虚构类 - 综合     |
+| hardcover-fiction                    | 虚构类 - 精装本   |
+| trade-fiction-paperback              | 虚构类 - 平装本   |
+| childrens-middle-grade-hardcover     | 儿童 - 中年级     |
+| picture-books                        | 儿童 - 绘本       |
+| series-books                         | 儿童 - 系列图书   |
+| young-adult-hardcover                | 青少年            |
 
 ## 澎湃新闻
 
@@ -697,6 +738,10 @@ category 对应的关键词有
 
 <Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认 all']"/>
 
+### 中国共产党新闻网 24 小时滚动新闻
+
+<Route author="nczitzk" example="/people/cpc/24h" path="/people/cpc/24h"/>
+
 ## 人民日报社 国际金融报
 
 ### 栏目
@@ -733,7 +778,7 @@ category 对应的关键词有
 
 ### 分类
 
-<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id，见下表，默认为 aall']">
+<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id 或新闻专题 id。分类 id 见下表，新闻专题 id 為 https://www.cna.com.tw/list/newstopic.aspx 中，連結的數字部份。此參數默认为 aall']">
 
 | 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -796,6 +841,12 @@ category 对应的关键词有
 | 本地新聞 | 大中華新聞   | 國際新聞      | 財經新聞 | 體育新聞 |
 
 </Route>
+
+## 香港商报
+
+### PDF 版
+
+<Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
 
 ## 新京报
 
@@ -878,6 +929,10 @@ category 对应的关键词有
 ### 新闻联播文字版全文
 
 <Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
+
+### 央视网图片《镜象》
+
+<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" />
 
 ## 朝日新聞中文網（繁體中文版）
 

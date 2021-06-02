@@ -46,6 +46,22 @@ pageClass: routes
 
 <Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
 
+## BabeHub
+
+### 分类
+
+<Route author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| Home | Most Viewed | Picture Archive | Video Archive |
+| ---- | ----------- | --------------- | ------------- |
+|      | most-viewed | picture         | video         |
+
+</Route>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
+
 ## Bing 壁纸
 
 ### 每日壁纸
@@ -72,11 +88,37 @@ pageClass: routes
 
 ## Dilbert Comic Strip
 
-<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip" />
 
 通过提取漫画，提供比官方源更佳的阅读体验。
 
 </Route>
+
+## Elite Babes
+
+### Home
+
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']" />
+
+| Home | Hot | Popular | Recent |
+| ---- | --- | ------- | ------ |
+|      | hot | popular | recent |
+
+</Route>
+
+### Videos
+
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']"/>
+
+| Popular | Recent |
+| ------- | ------ |
+| popular | recent |
+
+</Route>
+
+### Search
+
+<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['关键字']"/>
 
 ## Fantia
 
@@ -332,9 +374,13 @@ R18 显示
 
 <Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 |
-| ------ | ---------- | ---------- |
-| pic    | top        | top-4h     |
+| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 |
+| ------ | ---------- | ---------- | ---- | ------ | ---------- |
+| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   |
+
+### 首页
+
+<Route author="lonelykid" example="/jandan/article" path="/jandan/article"/>
 
 ## 绝对领域
 

@@ -28,6 +28,16 @@ pageClass: routes
 
 </Route>
 
+### 广东省教育考试院
+
+<Route author="icealtria" example="/gov/guangdong/eea/kszs" path="/gov/guangdong/eea/:caty" :paramsDesc="['资讯类别']">
+
+| 考试招生 | 社会考试 | 招考公示 | 报考指南 | 要闻动态 | 公开专栏 | 政策文件 | 政策解读 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   kszs   |   shks   |   zkgs   |   bkzn   |   news   |   gkzl   |   zcwj   |   zcjd   |
+
+</Route>
+
 ### 广东省深圳市人民政府
 
 <Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
@@ -216,6 +226,12 @@ pageClass: routes
 | c183 | c184 | c185 | c189 | c12435   | c10134   |
 
 </Route>
+
+## 中国庭审公开网
+
+### 开庭信息
+
+<Route author="Fatpandac" example="/tingshen" path="/tingshen"/>
 
 ## 中国信息通信研究院
 
@@ -419,6 +435,18 @@ pageClass: routes
 
 ### 支持国家列表
 
+#### 加拿大 `CA`
+
+-   大使馆: `/embassy/ca`
+
+-   领事馆城市列表:
+
+| 城市     | 路由                   |
+| -------- | ---------------------- |
+| 蒙特利尔 | `/embassy/ca/montreal` |
+
+* * *
+
 #### 德国 `DE`
 
 -   大使馆: `/embassy/de`
@@ -568,6 +596,18 @@ pageClass: routes
 ### 数据 - 最新发布
 
 <Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
+
+## 中华人民共和国人力资源和社会保障部
+
+### 社保减免
+
+<Route author="ncziztk" example="/gov/mohrss/sbjm" path="/gov/mohrss/sbjm/:category?" :paramsDesc="['分类，见下表']">
+
+| 要点新闻 | 政策文件 | 工作动态 | 媒体报道 | 图片新闻 |
+| -------- | -------- | -------- | -------- | -------- |
+| ydxw     | zcwj     | gzdt     | mtbd     | tpxw     |
+
+</Route>
 
 ## 中华人民共和国商务部
 

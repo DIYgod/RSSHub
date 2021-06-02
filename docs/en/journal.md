@@ -35,6 +35,12 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 </RouteEn>
 
+## BioOne
+
+### Featured articles
+
+<RouteEn author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
+
 ## Cell Journal
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
