@@ -346,6 +346,12 @@ pageClass: routes
 
 <Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
+## 腾讯动漫
+
+### 最新 20 话
+
+<Route author="Yansy" example="/acqq/recent/:id" path="/acqq/recent/:id" :paramsDesc="['id']" />
+
 ## 忧郁的 loli
 
 ### 文章
