@@ -512,6 +512,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+### 塞壬唱片
+
+<Route author="rikkablue" example="/siren/news" path="/siren/news"/>
+
 ## 奶牛关
 
 ### 元素文章
