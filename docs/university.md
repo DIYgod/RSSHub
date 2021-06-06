@@ -242,9 +242,21 @@ pageClass: routes
 
 <Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
+::: warning 注意
+
+由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
+
+:::
+
 ### 校园新闻
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
+
+::: warning 注意
+
+由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
+
+:::
 
 ### BTBYR 趣味盒
 
