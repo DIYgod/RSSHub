@@ -390,13 +390,13 @@ pageClass: routes
 
 ## 龙腾网
 
-### 转译网贴
+### 网帖翻译
 
-<Route author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
+<Route author="sgqy nczitzk" example="/ltaaa" path="/ltaaa/:category?" :paramsDesc="['分类，见下表，默认为最新']">
 
-| 最新 | 每周 | 每月  | 全年 |
-| ---- | ---- | ----- | ---- |
-| (空) | week | month | year |
+| 最新 | 科技       | 娱乐  | 文化    | 社会      | 体育  | 历史    | 趣闻        | 图说世界 |
+| ---- | ---------- | ----- | ------- | --------- | ----- | ------- | ----------- | -------- |
+|      | technology | funny | culture | community | sport | history | curiosities | picture  |
 
 </Route>
 
