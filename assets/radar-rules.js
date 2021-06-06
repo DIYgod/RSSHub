@@ -597,6 +597,17 @@
             },
         ],
     },
+    'manhuagui.com': {
+        _name: '漫画柜',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua',
+                source: '/comic/:id/',
+                target: '/manhuagui/comic/:id',
+            },
+        ],
+    },
     'pgyer.com': {
         _name: '蒲公英应用分发',
         www: [

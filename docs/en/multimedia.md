@@ -66,6 +66,18 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" rssbud="1"/>
 
+## Melon
+
+### Chart
+
+<RouteEn author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" :paramsDesc="['Category, see below, 24H by default']">
+
+| 24H | 일간 | 주간 | 월간 |
+| - | - | - | - |
+| | day | week | month |
+
+</RouteEn>
+
 ## Nyaa
 
 ### Seatch Result
