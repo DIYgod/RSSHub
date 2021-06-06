@@ -1738,7 +1738,7 @@
                 target: (params, url) => {
                     const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
                     const locale = new URL(url).searchParams.get('locale').toLowerCase();
-                    if ((reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
+                    if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
                         return `/japanpost/track/${reqCode}/${locale}`;
                     }
                 },
