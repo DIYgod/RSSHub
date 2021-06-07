@@ -51,7 +51,7 @@
     "nock": "13.0.11",
     "nodemon": "2.0.7",
     "pinyin": "2.10.2",
-    "prettier": "2.2.1",
+    "prettier": "2.3.1",
     "prettier-check": "2.0.0",
     "pretty-quick": "3.1.0",
     "remark": "12.0.1",
