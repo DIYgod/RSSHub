@@ -512,6 +512,14 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+## 摩尔庄园
+
+<Route author="marcosteam" example="/mole/news" path="/mole/:category?" :paramsDesc="['分类名']">
+
+| 全部动态 | 游戏新闻 | 游戏公告 | 活动记录 |
+| -------- | -------- | -------- | -------- |
+| 无       | news     | notice   | activity |
+
 ## 奶牛关
 
 ### 元素文章
