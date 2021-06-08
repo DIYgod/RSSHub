@@ -889,6 +889,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="RayHY" example="/hust/aia/news" path="/hust/aia/news" />
 
+### 生命科学与技术学院
+
+<Route author="LiRJie" example="/hust/life/notice/tzgg" path="/hust/life/notice/:type?" :paramsDesc="['分区 type, 默认为通知公告']" radar="1">
+
+| 通知公告 | 科学研究 | 党建工作 | 学生工作 | 人事工作 | 本科生教育 | 研究生教育 |
+| ------ | ------ | ------ | ------ | ------ | ------ | -------- | -------- |
+| tzgg    | kxyj    | djgz    | xsgz    | rsgz    | bksjy      | yjsjy      |
+
+
 ## 华中师范大学
 
 ### 华中师范大学研究生通知公告
