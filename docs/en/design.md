@@ -105,3 +105,25 @@ Default is under 'https://www.methodstudios.com/en/features'.
 ### Films
 
 <RouteEn author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films type，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
+
+## Vimeo
+
+### User Profile
+
+<RouteEn author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" :paramsDesc="['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']">
+::: tip Special category name attention
+
+Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
+
+:::
+
+</RouteEn>
+
+### Channel
+
+<RouteEn author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" :paramsDesc="['channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .']" radar="1"/>
+
+
+### Category
+
+<RouteEn author="MisteryMonster" example="/vimeo/category/personal/stories/staffpicks" path="/vimeo/category/:subcategory?/:staffpicks?" :paramsDesc="['Category name can get from url like `personal` in [https://vimeo.com/categories/personal/stories/videos/](https://vimeo.com/categories/personal/stories/videos/) ', 'Subcategory name, get from url above like `stories` ', 'type `staffpicks` to sort with staffpicks']" radar="1"/>
