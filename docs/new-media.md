@@ -288,6 +288,12 @@ Tag
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
+## Harvard Health Publishing
+
+### Harvard Health Blog
+
+<Route author="nczitzk" example="/harvard/health/blog" path="/harvard/health/blog" />
+
 ## iDaily 每日环球视野
 
 ### 今日 Timeline
