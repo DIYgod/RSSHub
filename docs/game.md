@@ -183,9 +183,9 @@ pageClass: routes
 
 支持的主机平台:
 
-| PS 4 | Xbox One | Switch | PC | Wii U | 3DS | PS Vita | iOS |
-| ---- | -------- | ------ | -- | ----- | --- | ------- | --- |
-| ps4  | xboxone  | switch | pc | wii-u | 3ds | vita    | ios |
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
 
 发行类型，默认为 `new`:
 
@@ -392,9 +392,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
 
-| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+| 首頁 | PC  | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+| ---- | --- | ------- | -------- | ------ | -------- | -------- | ---- |
+| 缺省 | 1   | 3       | 4        | 5      | 9        | 11       | 13   |
 
 | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
 | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
@@ -456,33 +456,27 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 旅法师营地
 
-### 旅法师营地
-
-<Route author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
-
-| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王 | 电子游戏 | 手机游戏 | 桌面游戏 |
-| -------- | -------- | ------ | ------ | ------ | -------- | -------- | -------- |
-| 1        | 2        | 3      | 14     | 16     | 4        | 22       | 9        |
-
-| 影之诗 | Artifact | 玩家杂谈 | 营地电台 | 2047 | 魂武 |
-| ------ | -------- | -------- | -------- | ---- | ---- |
-| 17     | 67       | 21       | 5        | 62   | 68   |
-
-</Route>
-
 ### 分区
 
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
-|    17    |   18   |   16   |   19   |   20   |      329     |      221     |
+|    17    |   18   |   16   |   19   |   20   |     329      |     221      |
 
 | 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
 | :------: | :------: | :------: | :------: | :------: | :----: |
-|    112   |    389   |    24    |    102   |    23    |   117  |
+|   112    |   389    |    24    |   102    |    23    |  117   |
 
 </Route>
+
+### 用户的帖子
+
+<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" :paramsDesc="['用户 id']" radar="1" rssbud="1"/>
+
+可以在用户主页的 URL 中找到
+
+Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 米哈游
 

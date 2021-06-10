@@ -2986,4 +2986,29 @@
             },
         ],
     },
+    'iyingdi.com': {
+        _name: '旅法师营地',
+        www: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/tz/tag/:tag',
+                target: '/lfsyd/tag/:tag',
+            },
+            {
+                title: '用户发帖',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: ['/tz/people/:id', '/tz/people/:id/*'],
+                target: '/lfsyd/user/:id',
+            },
+        ],
+        mob: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/fine/:tag',
+                target: '/lfsyd/tag/:tag',
+            },
+        ],
+    },
 });
