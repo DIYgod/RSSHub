@@ -2195,6 +2195,24 @@ type 列表：
 
 <Route author="sushengmao" example="/cauele" path="/cauele" />
 
+## 中国石油大学（北京）
+### 中国石油大学（北京）通知公告
+<Route author="mrcangye" example="/cup" path="/cup" />
+
+### 中国石油大学（北京）研究生院通知公告
+<Route author="mrcangye" example="/cupyjs" path="/cupyjs" />
+
+### 中国石油大学（北京）人工智能学院通知公告
+<Route author="mrcangye" example="/cupai" path="/cupai" />
+
+### 中国石油大学（北京）学生工作部通知公告
+<Route author="mrcangye" example="/cupxgb" path="/cupxgb" />
+
+### 中国石油大学（北京）团委通知公告
+<Route author="mrcangye" example="/cuptw" path="/cuptw" />
+
+
+
 ## 中国石油大学（华东）
 
 ### 中国石油大学研究生院通知公告
