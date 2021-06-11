@@ -451,6 +451,26 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## Odaily 星球日报
+
+### 快讯
+
+<Route author="ncziztk" example="/odaily/newsflash" path="/odaily/newsflash"/>
+
+### 文章
+
+<Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为新品']">
+
+| 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
+| ---- | ---- | --- | ---- | ---- | ---- | ---- |
+| 333  | 331  | 334 | 332  | 330  | 297  | 296  |
+
+</Route>
+
+### 用户文章
+
+<Route author="ncziztk" example="/odaily/user/2147486902" path="/odaily/user/:id" :paramsDesc="['用户 id，可在用户页地址栏中找到']"/>
+
 ## OpenAI
 
 ### Blog
