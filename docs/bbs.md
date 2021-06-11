@@ -394,9 +394,9 @@ pageClass: routes
 
 <Route author="sgqy nczitzk" example="/ltaaa" path="/ltaaa/:category?" :paramsDesc="['分类，见下表，默认为最新']">
 
-| 最新 | 科技       | 娱乐  | 文化    | 社会      | 体育  | 历史    | 趣闻        | 图说世界 |
-| ---- | ---------- | ----- | ------- | --------- | ----- | ------- | ----------- | -------- |
-|      | technology | funny | culture | community | sport | history | curiosities | picture  |
+| 最新   | 科技       | 娱乐  | 文化    | 社会      | 体育  | 历史    | 趣闻        | 图说世界 |
+| ------ | ---------- | ----- | ------- | --------- | ----- | ------- | ----------- | -------- |
+| latest | technology | funny | culture | community | sport | history | curiosities | picture  |
 
 </Route>
 
