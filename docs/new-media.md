@@ -421,13 +421,9 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## Matters
 
-### 熱門文章
-
-<Route author="Cerebrater" example="/matters/hot" path="/matters/hot" radar="1" rssbud="1"/>
-
 ### 最新、熱議、精華
 
-<Route author="xyqfer Cerebrater" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
+<Route author="xyqfer Cerebrater xosdy" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
 
 | 最新   | 熱議 | 精華    |
 | ------ | ---- | ------- |
@@ -441,7 +437,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 作者
 
-<Route author="Cerebrater" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1" rssbud="1"/>
+<Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1" rssbud="1"/>
 
 ## MIT 科技评论
 
@@ -464,6 +460,18 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | All | Research | Announcements | Events | Milestones |
 | --- | -------- | ------------- | ------ | ---------- |
 |     | research | announcements | events | milestones |
+
+</Route>
+
+## OR
+
+### 频道
+
+<Route author="ncziztk" example="/or" path="/or/id?" :paramsDesc="['id，见下表，默认为首页']">
+
+| 首页 | 商业 | 金融  | 政经 | 社会与文化 | 领导力 | 生活时尚 | 视频   |
+| ---- | ---- | ----- | ---- | ---------- | ------ | -------- | ------ |
+|      | 7174 | 15176 | 8943 | 14910      | 11813  | 24138    | 324234 |
 
 </Route>
 
@@ -590,6 +598,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 Provides all of the Thrillist articles with the specified tag.
 
 </Route>
+
+## Topbook
+
+### 今天看什么
+
+<Route author="nczitzk" example="/topbook/today" path="/topbook/today"/>
 
 ## TOPYS
 
@@ -1598,6 +1612,10 @@ column 为 third 时可选的 category:
 
 ## 鸟哥笔记
 
+### 首页
+
+<Route author="WenryXu" example="/ngbj" path="/ngbj"/>
+
 ### 今日事
 
 <Route author="KotoriK" example="/ngbj/today" path="/ngbj/today"/>
@@ -1963,8 +1981,8 @@ column 为 third 时可选的 category:
 
 <Route author="mjysci" example="/netease/dy2/T1555591616739" path="/netease/dy2/:id" :paramsDesc="['id，该网易号主页网址最后一项html的文件名']" anticrawler="1"/>
 
-优先使用方法一，若是网易号搜索页面搜不到的小众网易号（文章页面不含`data-wemediaid`）则可使用此法。  
-触发反爬会只抓取到标题，建议自建。  
+优先使用方法一，若是网易号搜索页面搜不到的小众网易号（文章页面不含`data-wemediaid`）则可使用此法。
+触发反爬会只抓取到标题，建议自建。
 
 ## 网易新闻
 
@@ -2063,6 +2081,10 @@ column 为 third 时可选的 category:
 ### 公众号 (wxnmh.com 来源)
 
 <Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']"/>
+
+### 公众号 (wechat-feeds 来源)
+
+<Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
 ### 公众号栏目 (非推送 & 历史消息)
 
@@ -2171,6 +2193,12 @@ column 为 third 时可选的 category:
 | 106      | 107      | 108      | 109      | 110      | 111      | 113      |
 
 </Route>
+
+## 新华网
+
+### 新华社新闻
+
+<Route author="nczitzk" example="/news/whxw" path="/news/whxw"/>
 
 ## 新浪专栏
 

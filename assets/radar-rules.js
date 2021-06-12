@@ -597,6 +597,17 @@
             },
         ],
     },
+    'manhuagui.com': {
+        _name: '漫画柜',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua',
+                source: '/comic/:id/',
+                target: '/manhuagui/comic/:id',
+            },
+        ],
+    },
     'pgyer.com': {
         _name: '蒲公英应用分发',
         www: [
@@ -1722,13 +1733,13 @@
         'trackings.post': [
             {
                 title: '郵便・荷物の追跡',
-                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian',
+                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian-you-bian-zhui-ji-サービス',
                 source: '/services/srv/search/direct',
                 target: (params, url) => {
                     const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
                     const locale = new URL(url).searchParams.get('locale').toLowerCase();
-                    if ((reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
-                        return `/japanpost/${reqCode}/${locale}`;
+                    if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
+                        return `/japanpost/track/${reqCode}/${locale}`;
                     }
                 },
             },
@@ -1802,12 +1813,6 @@
                 docs: 'https://docs.rsshub.app/new-media.html#matters',
                 source: '',
                 target: '/matters/latest',
-            },
-            {
-                title: '熱門文章',
-                docs: 'https://docs.rsshub.app/new-media.html#matters',
-                source: '',
-                target: '/matters/hot',
             },
             {
                 title: '标签',
@@ -1926,7 +1931,7 @@
                 title: '用户作品',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: ['/u/:id'],
-                target: `/zcoo/user/:id`,
+                target: `/zcool/user/:id`,
             },
         ],
     },
@@ -2390,6 +2395,24 @@
                     const uid = document && document.querySelector('html').innerHTML.match(/"id":"([0-9]+)"/)[1];
                     return uid ? `/douban/people/${uid}/status` : '';
                 },
+            },
+            {
+                title: '小组-最新',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid',
+            },
+            {
+                title: '小组-最热',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/essence',
+            },
+            {
+                title: '小组-精华',
+                docs: 'https://docs.rsshub.app/social-media.html#dou-ban',
+                source: '/group/:groupid',
+                target: '/douban/group/:groupid/elite',
             },
         ],
     },
@@ -2901,6 +2924,90 @@
                 docs: 'https://docs.rsshub.app/program-update.html#eagle',
                 source: '/articles',
                 target: '/gcores/category/articles',
+            },
+        ],
+    },
+    'bgm.tv': {
+        _name: 'Bangumi',
+        '.': [
+            {
+                title: '小组话题',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/group/:id',
+                target: '/bangumi/group/:id',
+            },
+            {
+                title: '小组话题的新回复',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/group/topic/:id',
+                target: '/bangumi/topic/:id',
+            },
+            {
+                title: '现实人物的新作品',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/person/:id',
+                target: '/bangumi/person/:id',
+            },
+            {
+                title: '用户日志',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/user/:id',
+                target: '/bangumi/user/blog/:id',
+            },
+            {
+                title: '条目的讨论',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id/topics',
+            },
+            {
+                title: '条目的评论',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id/blogs',
+            },
+            {
+                title: '条目的章节',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id',
+            },
+            {
+                title: '条目的吐槽箱',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/subject/:id',
+                target: '/bangumi/subject/:id/comments',
+            },
+            {
+                title: '放送列表',
+                docs: 'https://docs.rsshub.app/anime.html#bangumi',
+                source: '/calendar',
+                target: '/bangumi/calendar/today',
+            },
+        ],
+    },
+    'iyingdi.com': {
+        _name: '旅法师营地',
+        www: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/tz/tag/:tag',
+                target: '/lfsyd/tag/:tag',
+            },
+            {
+                title: '用户发帖',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: ['/tz/people/:id', '/tz/people/:id/*'],
+                target: '/lfsyd/user/:id',
+            },
+        ],
+        mob: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/fine/:tag',
+                target: '/lfsyd/tag/:tag',
             },
         ],
     },
