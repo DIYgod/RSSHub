@@ -14,7 +14,7 @@
 
 **Q: The website I want is not supported QAQ**
 
-**A:** If you are a JavaScript developer, please follow [this guide](/en/joinus) for submitting a pull request, otherwise, follow the issue template to [submit a new issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_en.md), and patiently wait for Santa Claus. For priority responses, consider [sponsoring us](/en/support).
+**A:** If you are a JavaScript developer, please follow [this guide](/en/joinus/quick-start.html) for submitting a pull request, otherwise, follow the issue template to [submit a new issue](https://github.com/DIYgod/RSSHub/issues/new?template=rss_request_en.md), and patiently wait for Santa Claus. For priority responses, consider [sponsoring us](/en/support).
 
 **Q: Where do I get the changelog for RSSHub？**
 

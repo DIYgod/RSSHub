@@ -212,6 +212,12 @@ pageClass: routes
 
 <Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']"/>
 
+## Hugo
+
+### 更新日志
+
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
 ## IPSW.me
 
 ### 苹果固件更新 - IPSWs/OTAs 版本

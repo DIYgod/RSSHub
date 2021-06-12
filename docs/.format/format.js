@@ -24,11 +24,24 @@ const loopSideBar = (children, type, lang, prefix) =>
             lang,
         }));
 const loopNav = (nav, lang) =>
-    nav.map((e) => ({
-        path: path.resolve(__dirname, '..', e.link.slice(1), 'README.md'),
-        type: file.NAV_TYPE,
-        lang,
-    }));
+    nav.map((e) => {
+        if (e.items) {
+            return loopNav(e.items, lang);
+        }
+        if (e.link.endsWith('/')) {
+            return {
+                path: path.resolve(__dirname, '..', e.link.slice(1), 'README.md'),
+                type: file.NAV_TYPE,
+                lang,
+            };
+        } else {
+            return {
+                path: path.resolve(__dirname, '..', `${e.link}.md`),
+                type: file.NAV_TYPE,
+                lang,
+            };
+        }
+    });
 const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang, prefix).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang, prefix));
 
 /**

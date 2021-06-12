@@ -463,6 +463,18 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## OR
+
+### 频道
+
+<Route author="ncziztk" example="/or" path="/or/id?" :paramsDesc="['id，见下表，默认为首页']">
+
+| 首页 | 商业 | 金融  | 政经 | 社会与文化 | 领导力 | 生活时尚 | 视频   |
+| ---- | ---- | ----- | ---- | ---------- | ------ | -------- | ------ |
+|      | 7174 | 15176 | 8943 | 14910      | 11813  | 24138    | 324234 |
+
+</Route>
+
 ## PMCAFF
 
 ### 今日推荐 / 精选
@@ -586,6 +598,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 Provides all of the Thrillist articles with the specified tag.
 
 </Route>
+
+## Topbook
+
+### 今天看什么
+
+<Route author="nczitzk" example="/topbook/today" path="/topbook/today"/>
 
 ## TOPYS
 
@@ -2053,6 +2071,10 @@ column 为 third 时可选的 category:
 ### 公众号 (wxnmh.com 来源)
 
 <Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']"/>
+
+### 公众号 (wechat-feeds 来源)
+
+<Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
 ### 公众号栏目 (非推送 & 历史消息)
 

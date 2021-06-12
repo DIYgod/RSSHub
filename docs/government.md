@@ -28,6 +28,16 @@ pageClass: routes
 
 </Route>
 
+### 广东省教育考试院
+
+<Route author="icealtria" example="/gov/guangdong/eea/kszs" path="/gov/guangdong/eea/:caty" :paramsDesc="['资讯类别']">
+
+| 考试招生 | 社会考试 | 招考公示 | 报考指南 | 要闻动态 | 公开专栏 | 政策文件 | 政策解读 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   kszs   |   shks   |   zkgs   |   bkzn   |   news   |   gkzl   |   zcwj   |   zcjd   |
+
+</Route>
+
 ### 广东省深圳市人民政府
 
 <Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
@@ -424,6 +434,18 @@ pageClass: routes
 <Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
 
 ### 支持国家列表
+
+#### 加拿大 `CA`
+
+-   大使馆: `/embassy/ca`
+
+-   领事馆城市列表:
+
+| 城市     | 路由                   |
+| -------- | ---------------------- |
+| 蒙特利尔 | `/embassy/ca/montreal` |
+
+* * *
 
 #### 德国 `DE`
 

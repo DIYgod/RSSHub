@@ -86,24 +86,7 @@ module.exports = {
                 label: '简体中文',
                 editLinkText: '在 GitHub 上编辑此页',
                 lastUpdated: '上次更新',
-                nav: [
-                    {
-                        text: '指南',
-                        link: '/',
-                    },
-                    {
-                        text: '参与我们',
-                        link: '/joinus/',
-                    },
-                    {
-                        text: '部署',
-                        link: '/install/',
-                    },
-                    {
-                        text: '支持 RSSHub',
-                        link: '/support/',
-                    },
-                ],
+                nav: require('./nav/zh'),
                 sidebar: {
                     '/': [
                         {
@@ -150,24 +133,7 @@ module.exports = {
                 label: 'English',
                 editLinkText: 'Edit this page on GitHub',
                 lastUpdated: 'Last Updated',
-                nav: [
-                    {
-                        text: 'Guide',
-                        link: '/en/',
-                    },
-                    {
-                        text: 'Join us',
-                        link: '/en/joinus/',
-                    },
-                    {
-                        text: 'Deploy',
-                        link: '/en/install/',
-                    },
-                    {
-                        text: 'Support RSSHub',
-                        link: '/en/support/',
-                    },
-                ],
+                nav: require('./nav/en'),
                 sidebar: {
                     '/en/': [
                         {

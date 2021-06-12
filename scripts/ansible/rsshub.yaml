@@ -20,7 +20,6 @@
         state: present
       with_items:
         - https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-        - https://dl.yarnpkg.com/debian/pubkey.gpg
         - https://download.docker.com/linux/ubuntu/gpg
         - https://dl.cloudsmith.io/public/caddy/stable/cfg/gpg/gpg.155B6D79CA56EA34.key
     -
@@ -31,7 +30,6 @@
         update_cache: yes
       with_items:
         - deb https://deb.nodesource.com/node_12.x focal main
-        - deb https://dl.yarnpkg.com/debian/ stable main
         - deb https://download.docker.com/linux/ubuntu focal stable
         - deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
     -
@@ -39,7 +37,6 @@
       apt:
         name:
           - nodejs
-          - yarn
           - build-essential
           - python-is-python2
           - redis-server
@@ -101,9 +98,11 @@
         update: yes
     -
       name: Install repo dependencies
-      command: yarn install --production
+      command: npm ci --production
       args:
         chdir: /home/rsshub/app
+      environment:
+        PUPPETEER_SKIP_DOWNLOAD: true
     -
       name: Copy configuration
       copy:
