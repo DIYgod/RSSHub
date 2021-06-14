@@ -67,7 +67,7 @@
   "dependencies": {
     "@koa/router": "10.0.0",
     "@postlight/mercury-parser": "2.2.0",
-    "@sentry/node": "6.3.5",
+    "@sentry/node": "6.7.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
