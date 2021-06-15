@@ -140,14 +140,14 @@
             {
                 title: '用户收藏',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/bookmark.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+                source: '/users/:id/bookmarks/artworks',
+                target: '/pixiv/user/bookmarks/:id',
             },
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/member.php',
-                target: (params, url) => `/pixiv/user/${new URL(url).searchParams.get('id')}`,
+                source: '/users/:id',
+                target: '/pixiv/user/:id',
             },
             {
                 title: '排行榜',
