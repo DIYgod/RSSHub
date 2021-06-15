@@ -212,6 +212,16 @@ pageClass: routes
 
 </Route>
 
+### 信息学院通知
+
+<Route author="wzc-blog" example="/bjfu/it/xyxw" path="/bjfu/it/:type" :paramsDesc="['通知类别']">
+
+| 学院新闻 | 科研动态 | 本科生培养 | 研究生培养 |
+| -------- | -------- | ---------- | ---------- |
+| xyxw     | kydt     | pydt       | pydt2      |
+
+</Route>
+
 ## 北京物资学院
 
 ### 通知公告
