@@ -158,7 +158,8 @@
             {
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/search.php',
+                source: ['/tags/:keyword', '/tags/:keyword/:type?'],
+                target: (params, url) => `/pixiv/search/:keyword/${new URL(url).searchParams.get('order')}/${new URL(url).searchParams.get('mode')}`,
             },
             {
                 title: '关注的新作品',
