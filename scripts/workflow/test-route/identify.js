@@ -35,7 +35,7 @@ module.exports = async ({ github, context, core }, body, number) => {
             });
         return;
     } else {
-        core.debug('PR created by ' + context.payload.sender.login)
+        core.debug('PR created by ' + context.payload.sender.login);
     }
 
     if (m && m[1]) {
