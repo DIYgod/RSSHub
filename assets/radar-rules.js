@@ -153,6 +153,7 @@
                 title: '排行榜',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/ranking.php',
+                target: (params, url) => `/pixiv/ranking/${new URL(url).searchParams.get('mode') || 'daily'}`,
             },
             {
                 title: '关键词',
