@@ -386,19 +386,47 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | ------ | ---- | -------- |
 | update | hot  | spent    |
 
-## 巴哈姆特
+## 巴哈姆特電玩資訊站
+
+### 哈啦區熱門推薦
+
+<Route author="nczitzk" example="/gamer/forum/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
 
 ### GNN 新聞
 
-<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
+<Route author="Arracc nczitzk" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块，见下表，默认为 GNN 新聞']">
 
-| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+| GNN 新聞 | 手機 | PC | TV 掌機 | 動漫畫 | 電競 | 活動展覽 | 主題報導 |
+| -------- | ---- | -- | ------- | ------ | ---- | -------- | -------- |
+| (空)     | 4    | 1  | 3       | 5      | 13   | 11       | 9        |
 
-| Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
-| ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
-| ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |
+| Android | iOS | PC 線上 | PC 單機 | WEB |
+| ------- | --- | ------- | ------- | --- |
+| android | ios | online  | pc      | web |
+
+| PS5 | PS4 | PS3 | PS2 | PS |
+| --- | --- | --- | --- | -- |
+| ps5 | ps4 | ps3 | ps2 | ps |
+
+| Xbox SX | Xbox One | Xbox 360 | Xbox | Wii U |
+| ------- | -------- | -------- | ---- | ----- |
+| xboxsx  | xbone    | xbox360  | xbox | wiiu  |
+
+| Wii | N64 | NGC | SFC | SS |
+| --- | --- | --- | --- | -- |
+| wii | n64 | ngc | sfc | ss |
+
+| DC | Switch | Facebook |
+| -- | ------ | -------- |
+| dc | ns     | facebook |
+
+| PSV | PSP | 3DS | NDS | GBA |
+| --- | --- | --- | --- | --- |
+| psv | psp | 3ds | nds | gba |
+
+| 動畫  | 漫畫  | 輕小說 | 大型電玩 |
+| ----- | ----- | ------ | -------- |
+| anime | comic | novel  | arcade   |
 
 </Route>
 
