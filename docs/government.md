@@ -688,7 +688,7 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="tudou027" example="/gov/hubei/wehdz/tz" path="/gov/hubei/wehdz/:caty" :paramsDesc="['类别']">
+<Route author="tudou027" example="/gov/wuhan/wehdz/tz" path="/gov/wuhan/wehdz/:caty" :paramsDesc="['类别']">
 
 | 通知 | 公告 |
 | :--: | :--: |
@@ -700,7 +700,7 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="tudou027" example="/gov/hubei/wjj/tzgg" path="/gov/hubei/wjj/:caty" :paramsDesc="['类别']">
+<Route author="tudou027" example="/gov/wuhan/wjj/tzgg" path="/gov/wuhan/wjj/:caty" :paramsDesc="['类别']">
 
 | 通知公告 | 公示信息 |
 | :------: | :------: |
