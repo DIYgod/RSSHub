@@ -700,7 +700,7 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="tudou027" example="/gov/wuhan/wjj/tzgg" path="/gov/wuhan/wjj/:caty" :paramsDesc="['类别']">
+<Route author="tudou027" example="/gov/wuhan/kjj/tzgg" path="/gov/wuhan/kjj/:caty" :paramsDesc="['类别']">
 
 | 通知公告 | 公示信息 |
 | :------: | :------: |
