@@ -673,7 +673,7 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="tudou027" example="/gov/hubei/hbsia/:caty" path="/gov/hubei/hbsia/:caty" :paramsDesc="['类别']">
+<Route author="tudou027" example="/gov/hubei/hbsia/zxzx" path="/gov/hubei/hbsia/:caty" :paramsDesc="['类别']">
 
 | 具体栏目 | 参数 |
 | :------: | :--: |
