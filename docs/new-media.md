@@ -1794,6 +1794,10 @@ column 为 third 时可选的 category:
 
 ## 深圳新闻网
 
+### 深圳市政府新闻发布厅
+
+<Route author="nczitzk" example="/sznews/press" path="/sznews/press"/>
+
 ### 排行榜
 
 <Route author="nczitzk" example="/sznews/ranking" path="/sznews/ranking"/>
