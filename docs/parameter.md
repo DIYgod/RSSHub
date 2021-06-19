@@ -77,6 +77,12 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 举例: <https://rsshub.app/pnas/latest?scihub=1>
 
+## 中文简繁体转换
+
+-   opencc: s2t 简体转繁体、t2s 繁体转简体，其它可选值见 [simple-wasm - Configurations](https://github.com/fengkx/simplecc-wasm#%E9%85%8D%E7%BD%AE-configurations)
+
+举例: <https://rsshub.app/dcard/posts/popular?opencc=t2s>
+
 ## 输出格式
 
 RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式，缺省为 RSS 2.0

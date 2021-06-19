@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 预报预警
+***
 
 ## Outage.Report
 
@@ -13,6 +9,10 @@ pageClass: routes
 其中 name 参数, 请略过本地服务的区域码, 例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
 
 </Route>
+
+## pageClass: routes
+
+# 预报预警
 
 ## 地震速报
 
@@ -56,9 +56,13 @@ pageClass: routes
 
 ## 停电通知
 
+### 95598 停电查询网
+
+<Route author="mjysci" example="/tingdiantz/95598/hb1/wh/wc/" path="/tingdiantz/95598/:province/:city/:district?" :paramsDesc="['省，2~3位拼音缩写，详情见http://www.sttcq.com/td/','市，同上', '区，同上']"/>  
+
 ### 南京市
 
-<Route author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>
+<Route author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>  
 
 ## 停水通知
 

@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 学习
+***
 
 ## 51VOA 美国之音
 
@@ -42,8 +38,8 @@ pageClass: routes
 ### 查询国内外 CTF 赛事信息
 
 <Route author="frankli0324" example="/ctfhub/calendar" 
-    path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
-    :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
+path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
+:paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
@@ -63,6 +59,14 @@ pageClass: routes
 
 </Route>
 
+### 查询近期赛事
+
+<Route author="frankli0324" example="/ctfhub/upcoming" 
+    path="/ctfhub/upcoming/:limit?" 
+    :paramsDesc="['一个整数，筛选最近的limit场比赛，默认为5']">
+
+</Route>
+
 ## gradCafe
 
 ### gradCafe result
@@ -72,6 +76,42 @@ pageClass: routes
 ### gradCafe result by key words
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+
+## MarginNote
+
+### 标签
+
+<Route author="nczitzk" example="/marginnote/tag/经验分享" path="/marginnote/tag/:id?" :paramsDesc="['标签名，见下表，默认为 经验分享']">
+
+| 经验分享 | 论坛精华 | 待跟进反馈 | 优秀建议 | 精选回答 | 官方签名 | 自动更新 | 3674 以上版本支持 | 368 以上版本支持 | 未经验证的安全风险 | 笔记本分享 | 关键反馈 | 精选话题讨论 | 灵感盒 | 引用 |
+| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | ----------------- | ---------------- | ------------------ | ---------- | -------- | ------------ | ------ | ---- |
+
+</Route>
+
+## Mind42
+
+### 分类
+
+<Route author="nczitzk" example="/mind42" path="/mind42/:caty?" :paramsDesc="['分类，见下表，默认为 Overview']">
+
+| Overview | Popular | All    |
+| -------- | ------- | ------ |
+| mindmaps | popular | public |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表']">
+
+| in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
+| -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
 
 ## NEEA 中国教育考试网
 
@@ -102,6 +142,10 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+## pageClass: routes
+
+# 学习
+
 ## X-MOL 平台
 
 ### 新闻
@@ -119,6 +163,22 @@ pageClass: routes
 | en      | es      | de      | fr       | zh   | jp     |
 
 </Route>
+
+## zhimap 思维导图社区
+
+<Route author="laampui" example="/zhimap/820156a42e9a490796c7fd56916aa95b/1" path="/zhimap/:categoryUuid?/:recommend?" :paramsDesc="['分类 uuid，见下表，默认为33b67d1bad1d4e37812f71d42764af34', '1 为按推荐排序，0 为按最新排序，默认为 0']">
+
+| 热门                             | 学科                             | 学习                             | 语言                             | 工作                             | 提升                             | 生活                             | 互联网                           | 教育                             | 其他                             | 行业                             | 服务发布                         | 医疗                             |
+| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| 33b67d1bad1d4e37812f71d42764af34 | 9434268e893a46aa9a1a231059849984 | 820156a42e9a490796c7fd56916aa95b | 959c81f606ca495c882c7e461429eb2a | 5af4bca5496e4733a2d582690627e25f | 5300988dff564756b5d462cea8a865b7 | 02fdcc2ab6374bc6b9b9717e70c87723 | 437d434fe9eb410a94dcefb889994e2b | 9747cbf78f96492c973aa6ab23925eee | d4c3a92a9cf64da7b187763211dc6ff6 | 58231ab9cef34af7819c3f6e2160c007 | 73d89972bee0457997c983d7fca19f9f | 853ce8b3a4c24b87a03f66af95c5e06c |
+
+</Route>
+
+## 杭州市国家普通话测试网报信息
+
+### 考试信息
+
+<Route author="ChaosTong" example="/putonghua" path="/putonghua" />
 
 ## 唧唧堂
 
@@ -149,7 +209,7 @@ pageClass: routes
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['参数，如 subject=生物']"/>
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']"/>
 
 | `:param` | 举例            | 定义                                 |
 | -------- | --------------- | ------------------------------------ |
@@ -163,6 +223,10 @@ pageClass: routes
 ### issues
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
+
+## 幕布精选
+
+<Route author="laampui" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:tagId/:title?" :paramsDesc="['标签 id', '显示标题']" />
 
 ## 扇贝
 
@@ -234,11 +298,11 @@ pageClass: routes
 
 ### 精品课程
 
-<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" />
+<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" rssbud="1"/>
 
 ### 最新课程
 
-<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" />
+<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" rssbud="1"/>
 
 ## 下厨房
 
@@ -304,11 +368,67 @@ pageClass: routes
 
 </Route>
 
+## 阳光高考
+
+### 教育部阳光高考信息公开平台招生政策规定
+
+<Route author="nczitzk" example="/chsi/zszcgd" path="/chsi/zszcgd/:category?" :paramsDesc="['分类，默认为招生政策']">
+
+| 招生政策 | 深化考试招生制度改革 | 教育法律法规 |
+| -------- | -------------------- | ------------ |
+| dnzszc   | zdgg                 | jyflfg       |
+
+</Route>
+
+## 印象识堂
+
+### 印象剪藏
+
+<Route author="nczitzk" example="/yinxiang/note" path="/yinxiang/note" />
+
+### 卡片清单
+
+<Route author="nczitzk" example="/yinxiang/card/32" path="/yinxiang/card/:id?" :paramsDesc="['卡片 id，见下表，默认为每周收藏排行榜・TOP5']">
+
+::: tip 提示
+
+卡片对应的话题、专题等内容过期后，该卡片 id 也会失效，此时填入该卡片 id 将会报错。
+
+:::
+
+| 每周收藏排行榜・TOP5 | 每周热门「读书笔记」榜 TOP5 | 【印象话题】选择的悖论 | 【印象专题】如何一秒洞察问题本质？ | 「识堂开讲」5 位嘉宾精华笔记大放送 | 【印象话题】培养专注力的 5 个步骤 | 🎁购物清单主题活动获奖结果 |
+| -------------------- | --------------------------- | ---------------------- | ---------------------------------- | ---------------------------------- | --------------------------------- | -------------------------- |
+| 32                   | 33                          | 101                    | 103                                | 104                                | 105                               | 106                        |
+
+</Route>
+
+### 用户公开笔记
+
+<Route author="nczitzk" example="/yinxiang/personal/ZUhuRTmW5SKE7vvHPqI7cg" path="/yinxiang/personal/:id" :paramsDesc="['用户 id，可在用户页 URL 中找到']" />
+
+### 笔记分类
+
+<Route author="nczitzk" example="/yinxiang/category/28" path="/yinxiang/category/:id" :paramsDesc="['分类 id，可在分类页 URL 中找到']" />
+
+### 笔记标签
+
+<Route author="nczitzk" example="/yinxiang/tag/人生算法" path="/yinxiang/tag/:id" :paramsDesc="['标签名，可在标签页中找到']" />
+
 ## 英中协会
 
 ### 奖学金
 
 <Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
+## 有道云笔记
+
+### 学霸感悟
+
+<Route author="nczitzk" example="/youdao/xueba" path="/youdao/xueba" />
+
+### 笔记最新动态
+
+<Route author="nczitzk" example="/youdao/latest" path="/youdao/latest" />
 
 ## 语雀
 

@@ -6,7 +6,7 @@ on:
 
 jobs:
     rebase:
-        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
+        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
         runs-on: ubuntu-latest
         steps:
         -
@@ -16,6 +16,6 @@ jobs:
                 fetch-depth: 0
         -
             name: Automatic Rebase
-            uses: cirrus-actions/rebase@1.3.1
+            uses: cirrus-actions/rebase@1.4
             env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                GITHUB_TOKEN: ${{ secrets.TOKEN_SUPER }}

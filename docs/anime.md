@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 二次元
+***
 
 ## 005.tv
 
@@ -20,7 +16,7 @@ pageClass: routes
 
 ### 番剧
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']" radar="1"/>
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" :paramsDesc="['番剧 id']" radar="1" rssbud="1"/>
 
 ::: tip 提示
 
@@ -31,9 +27,13 @@ pageClass: routes
 
 ### 用户投稿
 
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1"/>
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
 ## AGE 动漫
+
+### 最近更新
+
+<Route author="nczitzk" example="/agefans/update" path="/agefans/update"/>
 
 ### 番剧详情
 
@@ -43,7 +43,7 @@ pageClass: routes
 
 ### 動畫
 
-<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1">
+<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" :paramsDesc="['时间', '动画名称']" radar="1" rssbud="1">
 
 时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
 
@@ -51,7 +51,7 @@ pageClass: routes
 
 ### 搜尋
 
-<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']" radar="1"/>
+<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']" radar="1" rssbud="1"/>
 
 ## Animen 动漫平台
 
@@ -75,39 +75,39 @@ pageClass: routes
 
 ### 放送列表
 
-<Route author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today"/>
+<Route author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today" radar="1"/>
 
 ### 条目的章节
 
-<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/ep/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的吐槽箱
 
-<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']"/>
+<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']" radar="1"/>
 
 ### 条目的评论
 
-<Route author="ylc395" example="/bangumi/subject/214265/blogs" path="/bangumi/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/subject/214265/blogs" path="/bangumi/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的讨论
 
-<Route author="ylc395" example="/bangumi/subject/214265/topics" path="/bangumi/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/subject/214265/topics" path="/bangumi/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 现实人物的新作品
 
-<Route author="ylc395" example="/bangumi/person/32943" path="/bangumi/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/person/32943" path="/bangumi/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']" radar="1"/>
 
 ### 小组话题的新回复
 
-<Route author="ylc395" example="/bangumi/topic/24657" path="/bangumi/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']"/>
+<Route author="ylc395" example="/bangumi/topic/24657" path="/bangumi/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
 
 ### 小组话题
 
-<Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']"/>
+<Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']" radar="1"/>
 
 ### 用户日志
 
-<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']"/>
+<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']" radar="1"/>
 
 ## bilibili
 
@@ -135,6 +135,12 @@ pageClass: routes
 ### ebb
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
+
+## Eventernote
+
+### 声优活动及演唱会
+
+<Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" :paramsDesc="['声优姓名', '声优 ID']" radar="1" rssbud="1"/>
 
 ## Hanime.tv
 
@@ -175,6 +181,10 @@ pageClass: routes
 | want | preorder | buy  | care | resell |
 
 </Route>
+
+## pageClass: routes
+
+# 二次元
 
 ## say 花火
 
@@ -282,19 +292,19 @@ pageClass: routes
 
 ### 风之动漫
 
-<Route author="geeeeoff" path="/fzdm/manhua/:id" example="/fzdm/manhua/39" :paramsDesc="['漫画ID']"/>
+<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id/:nums?" example="/fzdm/manhua/39/2" :paramsDesc="['漫画ID', '最新的n话, 默认为最新1话']" anticrawler="1"/>
 
 ## 海猫吧
 
 ### 漫画更新
 
-<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
+<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
 ## 看漫画
 
 ### 漫画更新
 
-<Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']"/>
+<Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
 ## 漫画 DB
 
@@ -312,13 +322,13 @@ pageClass: routes
 
 ### 漫画更新
 
-<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1"/>
+<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1" rssbud="1"/>
 
 ## 三界异次元
 
 ### 三界异次元
 
-<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1" rssbud="1"/>
 
 ## 紳士漫畫
 
@@ -326,11 +336,15 @@ pageClass: routes
 
 <Route author="KenMizz" example="/ssmh" path="/ssmh/" />
 
+### 分类更新
+
+<Route author="Gandum2077" example="/ssmh/category/6" path="/ssmh/category/:cid" :paramsDesc="['分类的id，即对应 URL 中的数字']" />
+
 ## 鼠绘漫画
 
 ### 鼠绘漫画
 
-<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1"/>
+<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
 ## 忧郁的 loli
 

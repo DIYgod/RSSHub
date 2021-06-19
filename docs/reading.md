@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 阅读
+***
 
 ## All Poetry
 
@@ -10,11 +6,27 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## Kindle Unlimited
+
+### 会员限时免费读书单
+
+<Route author="nczitzk" example="/amazon/ku/this" path="/amazon/ku/:type?" :paramsDesc="['书单类型，见下表']">
+
+| 本月书单 | 好评返场 | 次月预告 |
+| -------- | -------- | -------- |
+| this     | back     | next     |
+
+</Route>
+
 ## Mobilism
 
 ### eBook Releases
 
 <Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
+
+## pageClass: routes
+
+# 阅读
 
 ## UU 看书
 
@@ -58,7 +70,7 @@ pageClass: routes
 
 ### biquge5200.com
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
 
 ::: tip 提示
 
@@ -68,13 +80,19 @@ pageClass: routes
 
 ### biquge.info
 
-<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1"></Route>
+<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
 
 ::: tip 提示
 
 由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge.info`](http://www.biquge.info/)中的小说 id.
 
 :::
+
+## 博客来
+
+### 新书出版
+
+<Route author="CokeMine" example="/bookscomtw/newbooks/books_nbtopm_15" path="/bookscomtw/newbooks/:category" :paramsDesc="['书籍类型 category, 可在对应博客来新书页 URL 中找到']"/>
 
 ## 吹牛部落
 
@@ -129,6 +147,12 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="x1a0xv4n" example="/novel/d1bz/2/2608_6" path="/novel/d1bz/:category/:id" :paramsDesc="['小说分类，可在对应小说页 URL 中找到，例如`2`', '小说id，可在对应小说页 URL 中找到，例如`2608_6`']"/>
 
+## 东立出版
+
+### NEWS 资讯
+
+<Route author="CokeMine" example="/tongli/news/6" path="/tongli/news/:type" :paramsDesc="['分类, 可以在“話題新聞”链接中找到']"/>
+
 ## 飞地
 
 ### 分类
@@ -143,7 +167,32 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
-## 观止（每日一文）
+## 归档
+
+<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
+
+## 禁忌书屋
+
+### 首页
+
+<Route author="nczitzk" example="/cool18/bbs4" path="/cool18/bbs4"/>
+
+### 精华区
+
+<Route author="nczitzk" example="/cool18/bbs4/gold" path="/cool18/bbs4/gold"/>
+
+### 栏目分类
+
+<Route author="nczitzk" example="/cool18/bbs4/type/都市" path="/cool18/bbs4/type/:keyword?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 都市 | 校园 | 乡野 | 古风 | 异国 | 玄幻 | 红杏 | 伦理 | 浪漫 | 暴虐 | 摄心 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/cool18/bbs4/keywords/都市" path="/cool18/bbs4/keywords/:keyword?" :paramsDesc="['关键字']"/>
 
 ## 孔夫子旧书网
 
@@ -268,7 +317,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 最新章节
 
-<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1">
+<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']" radar="1" rssbud="1">
 
 举例网址：<https://www.zhaishuyuan.com/book/17858>
 

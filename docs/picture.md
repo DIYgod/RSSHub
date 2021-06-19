@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 图片
+***
 
 ## 1X
 
@@ -36,11 +32,37 @@ pageClass: routes
 
 </Route>
 
+## 8KCosplay
+
+### 最新
+
+<Route author="KotoriK" example="/8kcos/"  path="/8kcos/"/>
+
+### 分类
+
+<Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
+
+## BabeHub
+
+### 分类
+
+<Route author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| Home | Most Viewed | Picture Archive | Video Archive |
+| ---- | ----------- | --------------- | ------------- |
+|      | most-viewed | picture         | video         |
+
+</Route>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
+
 ## Bing 壁纸
 
 ### 每日壁纸
 
-<Route author="FHYunCai" example="/bing" path="/bing" radar="1"/>
+<Route author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
 ## CNU 视觉联盟
 
@@ -56,13 +78,105 @@ pageClass: routes
 | ---- | --------- | ------ |
 | hot  | recommend | recent |
 
+## DailyArt 每日艺术
+
+<Route author="zphw" example="/dailyart/zh" path="/dailyart/:language?" :paramsDesc="['语言，支持 en, zh, jp 等，默认为 en']" />
+
 ## Dilbert Comic Strip
 
-<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip" />
 
 通过提取漫画，提供比官方源更佳的阅读体验。
 
 </Route>
+
+## Elite Babes
+
+### Home
+
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']" />
+
+| Home | Hot | Popular | Recent |
+| ---- | --- | ------- | ------ |
+|      | hot | popular | recent |
+
+</Route>
+
+### Videos
+
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']"/>
+
+| Popular | Recent |
+| ------- | ------ |
+| popular | recent |
+
+</Route>
+
+### Search
+
+<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['关键字']"/>
+
+## Fantia
+
+### 搜索
+
+<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:peroid?/:order?/:rating?/:keyword?" :paramsDesc="['类型，见下表，默认为 posts','分类，见下表，也可在搜索页的 URL 中找到，默认为 すべてのクリエイター', '排行时段，见下表，填写该字段即返回排行榜，默认为空，即不排名' ,'排序，见下表，默认为 更新の新しい順', 'R18显示，见下表，默认为 すべて', '关键字，默认为空']">
+
+类型
+
+| クリエイター | 投稿  | 商品     | コミッション |
+| ------------ | ----- | -------- | ------------ |
+| fanclubs     | posts | products | commissions  |
+
+分类
+
+| 分类                   | 分类名     |
+| ---------------------- | ---------- |
+| イラスト               | illust     |
+| 漫画                   | comic      |
+| コスプレ               | cosplay    |
+| YouTuber・配信者       | youtuber   |
+| Vtuber                 | vtuber     |
+| 音声作品・ASMR         | voice      |
+| 声優・歌い手           | voiceactor |
+| アイドル               | idol       |
+| アニメ・映像・写真     | anime      |
+| 3D                     | 3d         |
+| ゲーム制作             | game       |
+| 音楽                   | music      |
+| 小説                   | novel      |
+| ドール                 | doll       |
+| アート・デザイン       | art        |
+| プログラム             | program    |
+| 創作・ハンドメイド     | handmade   |
+| 歴史・評論・情報       | history    |
+| 鉄道・旅行・ミリタリー | railroad   |
+| ショップ               | shop       |
+| その他                 | other      |
+
+排行时段
+
+| デイリー | ウィークリー | マンスリー | 全期間 |
+| -------- | ------------ | ---------- | ------ |
+| daily    | weekly       | monthly    | all    |
+
+排序
+
+| 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
+| -------------- | ------------ | -------------- | ------------ | -------------- |
+| updater        | update_old   | newer          | create_old   | popular        |
+
+R18 显示
+
+| すべて | 一般のみ | R18 のみ |
+| ------ | -------- | -------- |
+| all    | general  | adult    |
+
+</Route>
+
+### 用户投稿
+
+<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" :paramsDesc="['用户 id，可在用户页 URL 中找到']" />
 
 ## GirlImg
 
@@ -80,7 +194,7 @@ pageClass: routes
 
 ### 公开影集
 
-<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']" radar="1" />
+<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']" radar="1"/>
 
 ## Hentai Cosplay
 
@@ -117,6 +231,31 @@ pageClass: routes
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## MM 范
+
+### 分类
+
+<Route author="nczitzk" example="/95mm/tab/热门" path="/95mm/tab/:tab?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/95mm/tag/黑丝" path="/95mm/tag/:tag" :paramsDesc="['标签，可在对应标签页中找到']"/>
+
+### 集合
+
+<Route author="nczitzk" example="/95mm/category/1" path="/95mm/category/:category" :paramsDesc="['集合，见下表']">
+
+| 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |
+| -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |
+| 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |
+
+</Route>
+
 ## NASA 每日天文图片
 
 ### NASA
@@ -148,6 +287,10 @@ pageClass: routes
 ### 高级搜索
 
 <Route author="MegrezZhu hoilc" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 q= 后面的内容，也可直接输入。用法详见[官网](https://nhentai.net/info/)', '模式，`simple`为仅封面，`detail`会包括本子每一页，但对服务器负载大，`torrent`会包括磁力链接，需要登录，参见[部分 RSS 模块配置](/install/#bu-fen-rss-mo-kuai-pei-zhi)。默认为`simple`']" anticrawler="1" supportBT="1" />
+
+## pageClass: routes
+
+# 图片
 
 ## Porn Image XXX
 
@@ -231,17 +374,13 @@ pageClass: routes
 
 <Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 |
-| ------ | ---------- | ---------- |
-| pic    | top        | top-4h     |
+| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 |
+| ------ | ---------- | ---------- | ---- | ------ | ---------- |
+| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   |
 
-### 妹子图
+### 首页
 
-<Route author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
-
-| 妹子图 | 妹子图热榜 |
-| ------ | ---------- |
-| ooxx   | top-ooxx   |
+<Route author="lonelykid" example="/jandan/article" path="/jandan/article"/>
 
 ## 绝对领域
 
@@ -252,6 +391,42 @@ pageClass: routes
 | 图集 | 文章 |
 | ---- | ---- |
 | tuji | as   |
+
+## 酷 18
+
+### 分站
+
+<Route author="nczitzk" example="/cool18" path="/cool18/:id?" :paramsDesc="['分站，见下表，默认为禁忌书屋']">
+
+| 性趣贴图 | 色色动漫 | 情色靓影 | 私房自拍 | 禁忌书屋 | 性趣论坛 | 情色无忌 | 成人影视 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| bbs      | bbs7     | bbs2     | bbs6     | bbs4     | bj       | bbs5     | bbs3     |
+
+::: tip 提示
+
+留园网文档参见 [此处](https://docs.rsshub.app/new-media.html#liu-yuan-wang)
+
+禁忌书屋文档参见 [此处](https://docs.rsshub.app/reading.html#jin-ji-shu-wu)
+
+:::
+
+</Route>
+
+### 精华区
+
+<Route author="nczitzk" example="/cool18/bbs/gold" path="/cool18/:id/gold" :paramsDesc="['分站，见上表，默认为禁忌书屋']"/>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
+
+### 妹子图
+
+<Route author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+
+| 妹子图 | 妹子图热榜 |
+| ------ | ---------- |
+| ooxx   | top-ooxx   |
 
 ## 妹子图
 
