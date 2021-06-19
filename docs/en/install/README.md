@@ -21,6 +21,15 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker Image
+We recommend using the latest version of the docker image.  
+When the latest version is unavailable , you can use image with date tag. For example :
+```
+$ docker pull diygod/rsshub:2021-06-18
+```
+Your can back to the latest version when code has been fixed and rebuild the image.
+
+
 ## Docker Compose Deployment
 
 ### Install
