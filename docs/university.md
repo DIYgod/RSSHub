@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 大学通知
+***
 
 ## MIT
 
@@ -22,9 +18,9 @@ pageClass: routes
 
 <Route author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
 
-### MIT CSAIL
+## pageClass: routes
 
-<Route author="nczitzk" example="/mit/csail/news" path="/mit/csail/news"/>
+# 大学通知
 
 ## Polimi
 

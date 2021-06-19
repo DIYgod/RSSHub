@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 购物
+***
 
 ## Alter 中国
 
@@ -98,6 +94,10 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 所有品牌参见 [品牌清单](https://www.mercari.com/jp/brand/)
 
 </Route>
+
+## pageClass: routes
+
+# 购物
 
 ## Westore
 

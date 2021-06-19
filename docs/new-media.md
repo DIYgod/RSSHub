@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 新媒体
+***
 
 ## 199IT
 
@@ -451,29 +447,9 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
-## OpenAI
+## pageClass: routes
 
-### Blog
-
-<Route author="ncziztk" example="/openai/blog" path="/openai/blog/:tag" :paramsDesc="['标签，见下表，默认为 All']">
-
-| All | Research | Announcements | Events | Milestones |
-| --- | -------- | ------------- | ------ | ---------- |
-|     | research | announcements | events | milestones |
-
-</Route>
-
-## OR
-
-### 频道
-
-<Route author="ncziztk" example="/or" path="/or/id?" :paramsDesc="['id，见下表，默认为首页']">
-
-| 首页 | 商业 | 金融  | 政经 | 社会与文化 | 领导力 | 生活时尚 | 视频   |
-| ---- | ---- | ----- | ---- | ---------- | ------ | -------- | ------ |
-|      | 7174 | 15176 | 8943 | 14910      | 11813  | 24138    | 324234 |
-
-</Route>
+# 新媒体
 
 ## PMCAFF
 

@@ -1,104 +1,4 @@
----
-pageClass: routes
----
-
-# 音视频
-
-## 141JAV
-
-::: tip 提示
-
-官方提供的订阅源不支持 BT 下载订阅，地址为 <https://141jav.com/feeds/>
-
-:::
-
-### 141JAV BT
-
-<Route author="cgkings" example="/141jav/popular/30" path="/141jav/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
-
-**类型**
-
-| 最新 | 热门    | 随机   | 指定演员 | 指定标签 | 指定日期 |
-| ---- | ------- | ------ | -------- | -------- | -------- |
-| new  | popular | random | actress  | tag      | day      |
-
-**关键词**
-
-| 空 | 日期范围    | 演员名       | 标签名         | 日期     |
-| -- | ----------- | ------------ | -------------- | -------- |
-|    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
-
-**示例说明**
-
--   `/141jav/new`
-
-    仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
-
--   `/141jav/popular/30`
-
-    `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
-
--   `/141jav/actress/Yua%20Mikami`
-
-    `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141jav.com/actress/) 演员单页链接中获取
-
--   `/141jav/tag/Adult%20Awards`
-
-    `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141jav.com/tag/) 标签单页链接中获取
-
--   `/141jav/day/20200730`
-
-    `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
-
-</Route>
-
-## 141PPV
-
-::: tip 提示
-
-官方提供的订阅源不支持 BT 下载订阅，地址为 <https://141ppv.com/feeds/>
-
-:::
-
-### 141PPV BT
-
-<Route author="cgkings" example="/141ppv/popular/30" path="/141ppv/:type/:key?" :paramsDesc="['类型', '关键词']" supportBT="1" radar="1">
-
-**类型**
-
-| 最新 | 热门    | 随机   | 指定演员 | 指定标签 | 指定日期 |
-| ---- | ------- | ------ | -------- | -------- | -------- |
-| new  | popular | random | actress  | tag      | day      |
-
-**关键词**
-
-| 空 | 日期范围    | 演员名       | 标签名         | 日期     |
-| -- | ----------- | ------------ | -------------- | -------- |
-|    | 7 / 30 / 60 | Yua%20Mikami | Adult%20Awards | YYYYMMDD |
-
-**示例说明**
-
--   `/141ppv/new`
-
-    仅当类型为 `new` `popular` 或 `random` 时关键词可为 **空**
-
--   `/141ppv/popular/30`
-
-    `popular` `random` 类型的关键词可填写 `7` `30` 或 `60` 三个 **日期范围** 之一
-
--   `/141ppv/actress/Yua%20Mikami`
-
-    `actress` 类型的关键词必须填写 **演员名** ，可在 [此处](https://141ppv.com/actress/) 演员单页链接中获取
-
--   `/141ppv/tag/Adult%20Awards`
-
-    `tag` 类型的关键词必须填写 **标签名** 且标签中的 `/` 必须替换为 `%2F` ，可在 [此处](https://141ppv.com/tag/) 标签单页链接中获取
-
--   `/141ppv/day/20200730`
-
-    `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
-
-</Route>
+***
 
 ## 2048 核基地
 
@@ -185,7 +85,7 @@ pageClass: routes
 
 ::: tip 提示
 
-由于 BT 之家域名有多个。此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
+由于 BT 之家域名有多个。此 feed 对应 <`https://www.88btbtt.com`> 域名和 <`http://www.2btjia.com/`> 域名.
 可空，默认为 base
 
 :::
@@ -572,6 +472,10 @@ pageClass: routes
     `day` 类型的关键词必须填写 **日期** ，按照示例写成形如 `20200730` 的格式
 
 </Route>
+
+## pageClass: routes
+
+# 音视频
 
 ## PornHub
 

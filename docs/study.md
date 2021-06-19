@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 学习
+***
 
 ## 51VOA 美国之音
 
@@ -41,9 +37,9 @@ pageClass: routes
 
 ### 查询国内外 CTF 赛事信息
 
-<Route author="frankli0324" example="/ctfhub/search" 
-    path="/ctfhub/search/:limit?/:form?/:class?/:title?" 
-    :paramsDesc="['一个整数，筛选最新的limit场比赛，默认为10', '比赛形式', '比赛类型', '通过CTF赛事名称过滤']">
+<Route author="frankli0324" example="/ctfhub/calendar" 
+path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
+:paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
@@ -146,25 +142,9 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
-## ProcessOn
+## pageClass: routes
 
-### 推荐
-
-<Route author="nczitzk" example="/processon/popular" path="/processon/popular/:cate?/:sort?" :paramsDesc="['分类，见下表，默认为所有类型', '排序，见下表，默认为人气']">
-
-分类
-
-| 所有类型 | 流程图 | BPMN | 思维导图 | UI 原型图 | UML | Org 组织结构图 | 网络拓扑图 | 韦恩图  |      |
-| -------- | ------ | ---- | -------- | --------- | --- | -------------- | ---------- | ------- | ---- |
-|          | es     | flow | bpmn     | mind_free | ui  | uml            | org        | network | venn |
-
-排序
-
-| 人气 | 最多人赞  | 最多收藏       | 最多浏览  | 最新发布    |
-| ---- | --------- | -------------- | --------- | ----------- |
-|      | likeCount | favouriteCount | viewCount | publishTime |
-
-</Route>
+# 学习
 
 ## X-MOL 平台
 

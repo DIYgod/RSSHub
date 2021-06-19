@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 预报预警
+***
 
 ## Outage.Report
 
@@ -13,6 +9,10 @@ pageClass: routes
 其中 name 参数, 请略过本地服务的区域码, 例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
 
 </Route>
+
+## pageClass: routes
+
+# 预报预警
 
 ## 地震速报
 

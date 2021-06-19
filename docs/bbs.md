@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 论坛
+***
 
 ## A 岛匿名版
 
@@ -133,6 +129,10 @@ pageClass: routes
 ### 帖子
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
+
+## pageClass: routes
+
+# 论坛
 
 ## Quicker
 

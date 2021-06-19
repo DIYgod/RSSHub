@@ -1,14 +1,4 @@
----
-pageClass: routes
----
-
-# 编程
-
-## ACM
-
-### 图灵奖获得者
-
-<Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
+***
 
 ## AI 研习社
 
@@ -325,6 +315,10 @@ GitHub 官方也提供了一些 RSS:
 | 安全工具 | `tool`     |
 
 </Route>
+
+## pageClass: routes
+
+# 编程
 
 ## project-zero issues
 

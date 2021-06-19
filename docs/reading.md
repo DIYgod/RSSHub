@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 阅读
+***
 
 ## All Poetry
 
@@ -28,40 +24,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
 
-## SoBooks
+## pageClass: routes
 
-### 首页
-
-<Route author="nczitzk" example="/sobooks" path="/sobooks/:category?" :paramsDesc="['分类, 见下表']">
-
-| 分类     | 分类名           |
-| -------- | ---------------- |
-| 小说文学 | xiaoshuowenxue   |
-| 历史传记 | lishizhuanji     |
-| 人文社科 | renwensheke      |
-| 励志成功 | lizhichenggong   |
-| 经济管理 | jingjiguanli     |
-| 学习教育 | xuexijiaoyu      |
-| 生活时尚 | shenghuoshishang |
-| 英文原版 | yingwenyuanban   |
-
-</Route>
-
-### 标签
-
-<Route author="nczitzk" example="/sobooks/tag/小说" path="/sobooks/tag/:id?" :paramsDesc="['标签, 见下表，默认为小说']">
-
-热门标签
-
-| 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
-| 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |
-| 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |
-| 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |
-| 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |
-| 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |
-
-</Route>
+# 阅读
 
 ## UU 看书
 

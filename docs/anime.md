@@ -1,8 +1,4 @@
----
-pageClass: routes
----
-
-# 二次元
+***
 
 ## 005.tv
 
@@ -185,6 +181,10 @@ pageClass: routes
 | want | preorder | buy  | care | resell |
 
 </Route>
+
+## pageClass: routes
+
+# 二次元
 
 ## say 花火
 

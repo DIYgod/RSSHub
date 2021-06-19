@@ -1,20 +1,4 @@
----
-pageClass: routes
----
-
-# 其他
-
-## 4399 论坛
-
-### 4399 论坛
-
-<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" :paramsDesc="['mtag,必选-论坛网址最后的mtag字段']" selfhost="1"/>
-::: warning 注意
-
-需要用户 cookie 值，详情见部署页面的配置模块。
-
-:::
-</Route>
+***
 
 ## acwifi 路由器交流
 
@@ -223,6 +207,10 @@ pageClass: routes
 ### 图片文字问答
 
 <Route author="fengkx" example="/one" path="/one"/>
+
+## pageClass: routes
+
+# 其他
 
 ## Parcel Tracking
 
