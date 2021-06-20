@@ -1733,13 +1733,13 @@
         'trackings.post': [
             {
                 title: '郵便・荷物の追跡',
-                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian',
+                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian-you-bian-zhui-ji-サービス',
                 source: '/services/srv/search/direct',
                 target: (params, url) => {
                     const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
                     const locale = new URL(url).searchParams.get('locale').toLowerCase();
-                    if ((reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
-                        return `/japanpost/${reqCode}/${locale}`;
+                    if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
+                        return `/japanpost/track/${reqCode}/${locale}`;
                     }
                 },
             },
@@ -3011,6 +3011,28 @@
                         return `/ehentai/search/${keyword}`;
                     }
                 },
+    'iyingdi.com': {
+        _name: '旅法师营地',
+        www: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/tz/tag/:tag',
+                target: '/lfsyd/tag/:tag',
+            },
+            {
+                title: '用户发帖',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: ['/tz/people/:id', '/tz/people/:id/*'],
+                target: '/lfsyd/user/:id',
+            },
+        ],
+        mob: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/fine/:tag',
+                target: '/lfsyd/tag/:tag',
             },
         ],
     },
