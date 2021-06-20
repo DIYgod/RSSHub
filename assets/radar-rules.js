@@ -2986,4 +2986,32 @@
             },
         ],
     },
+    'e-hentai.org/': {
+        _name: 'E-Hentai',
+        '.': [
+            {
+                title: '收藏',
+                docs: 'https://docs.rsshub.app/picture.html#ehentai',
+                source: '/favorites.php',
+                target: '/ehentai/favorites',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/picture.html#ehentai',
+                source: '/tag/:tag',
+                target: '/ehentai/tag/:tag',
+            },
+            {
+                title: '搜索',
+                docs: 'https://docs.rsshub.app/picture.html#ehentai',
+                source: '/',
+                target: (params, url) => {
+                    const keyword = new URL(url).searchParams.toString();
+                    if (keyword) {
+                        return `/ehentai/search/${keyword}`;
+                    }
+                },
+            },
+        ],
+    },
 });
