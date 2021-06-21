@@ -28,12 +28,6 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
-## 新浪财经
-
-### 新浪财经－国內
-
-<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
-
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
 ### 资讯
@@ -160,6 +154,12 @@ pageClass: routes
 ### 用户动态
 
 <Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
+## 新浪财经
+
+### 新浪财经－国內
+
+<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
 
 ## 新浪财经
 
