@@ -696,6 +696,5 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   E-Hentai
     -   `EH_IPB_MEMBER_ID`: E站浏览器cookie中的`ipb_member_id`值
     -   `EH_IPB_PASS_HASH`: E站浏览器cookie中的`ipb_pass_hash`值
-    -   `EH_IPB_SESSION_ID`: E站浏览器cookie中的`ipd_session_id`值
     -   `EH_SK`: E站浏览器cookie中的`sk`值
     -   `EH_GET_BITTORRENT`: 设任意非空值时，爬取最新的种子链接放在RSS的enclosure中。如开启此项，一次请求大约消耗 5 Image Limits，务必慎用

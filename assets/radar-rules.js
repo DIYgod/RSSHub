@@ -3011,6 +3011,9 @@
                         return `/ehentai/search/${keyword}`;
                     }
                 },
+            },
+        ],
+    },
     'iyingdi.com': {
         _name: '旅法师营地',
         www: [
