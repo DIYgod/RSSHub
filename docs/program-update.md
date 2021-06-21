@@ -302,6 +302,30 @@ pageClass: routes
 
 <Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
 
+## Potplayer
+
+### 版本历史
+
+<Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['语言，见下表，默认为英语']">
+
+| 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
+| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
+| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
+
+</Route>
+
+## Potplayer
+
+### Version History
+
+<RouteEn author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['Language, see below, English by default']">
+
+| 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
+| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
+| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
+
+</RouteEn>
+
 ## PlayStation
 
 ### PlayStation 4 系统更新纪录
