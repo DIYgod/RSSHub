@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     services:
@@ -16,18 +15,18 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [12.x, 14.x]
 
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-python@v1
+    - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run : yarn install
-    - run: npm run test
+    - run: yarn install
+    - run: npm run jest
       env:
         REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
+    - run: npm run docs:build
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:

@@ -14,7 +14,7 @@ jobs:
         steps:
         -
             name: Checkout
-            uses: actions/checkout@v1
+            uses: actions/checkout@v2
         -
             name: Dockerhub login
             env:
@@ -27,7 +27,7 @@ jobs:
             id: buildx
             uses: crazy-max/ghaction-docker-buildx@v1
             with:
-                version: latest
+                buildx-version: latest
         -
             name: Build dockerfile (with push)
             env:
@@ -37,4 +37,5 @@ jobs:
                 --platform=linux/amd64,linux/arm/v7,linux/arm64 \
                 --output "type=image,push=true" \
                 --file ./Dockerfile . \
-                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/rsshub:latest
+                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/rsshub:latest \
+                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/rsshub:$(date +%Y)-$(date +%m)-$(date +%d)

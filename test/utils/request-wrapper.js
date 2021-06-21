@@ -6,6 +6,7 @@ let check = () => {};
 const simpleResponse = '<rss version="2.0"><channel><item></item></channel></rss>';
 
 afterEach(() => {
+    delete process.env.PROXY_URI;
     delete process.env.PROXY_PROTOCOL;
     delete process.env.PROXY_HOST;
     delete process.env.PROXY_PORT;
@@ -52,6 +53,67 @@ describe('got', () => {
         await got.get('http://api.rsshub.test');
 
         await parser.parseURL('http://api.rsshub.test/test');
+    });
+
+    it('proxy-uri socks', async () => {
+        process.env.PROXY_URI = 'socks5://user:pass@rsshub.proxy:2333';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('SocksProxyAgent');
+            expect(request.agent.proxy.host).toBe('rsshub.proxy');
+            expect(request.agent.proxy.port).toBe(2333);
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
+    });
+
+    it('proxy-uri http', async () => {
+        process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
+            expect(request.agent.proxy.auth).toBe('user:pass');
+            expect(request.agent.proxy.host).toBe('rsshub.proxy');
+            expect(request.agent.proxy.port).toBe(2333);
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
+    });
+
+    it('proxy-uri https', async () => {
+        process.env.PROXY_URI = 'https://rsshub.proxy:2333';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
+            expect(request.agent.proxy.host).toBe('rsshub.proxy');
+            expect(request.agent.proxy.port).toBe(2333);
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
     });
 
     it('proxy socks', async () => {

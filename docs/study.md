@@ -12,54 +12,62 @@ pageClass: routes
 
 | `:channel`  | 对应网站栏目                                 |
 | ----------- | -------------------------------------------- |
-| standard    | 常速英语(VOA Standard English )              |
-| archive     | 常速英语存档(VOA Standard English Archives ) |
-| technology  | 科技报道(Technology Report)                  |
-| daily       | 今日美国(This is America)                    |
-| sciences    | 科技报道(Science in the News)                |
-| health      | 健康报道(Health Report)                      |
-| education   | 教育报道(Education Report)                   |
-| economics   | 经济报道(Economics Report)                   |
-| culture     | 文化艺术(American Mosaic)                    |
-| events      | 时事新闻(In the News)                        |
-| stories     | 美国故事(American Stories)                   |
-| words       | 词汇掌故(Words And Their Stories)            |
-| trending    | 今日热点(Trending Today)                     |
-| magazine    | 新闻杂志(AS IT IS)                           |
-| grammar     | 日常语法(Everyday Grammar)                   |
-| queries     | 名师答疑(Ask a Teacher)                      |
-| history     | 美国历史(U.S. History)                       |
-| park        | 国家公园(America's National Parks)           |
-| president   | 美国总统(America's Presidents)               |
-| agriculture | 农业报道(Agriculture Report)                 |
-| exploration | 自然探索(Explorations)                       |
-| people      | 美国人物(People in America)                  |
-| bilingual   | 双语新闻(Bilingual News)                     |
-| address     | 总统演讲(President Address)                  |
+| standard    | 常速英语 (VOA Standard English)              |
+| archive     | 常速英语存档 (VOA Standard English Archives) |
+| technology  | 科技报道 (Technology Report)                 |
+| daily       | 今日美国 (This is America)                   |
+| sciences    | 科技报道 (Science in the News)               |
+| health      | 健康报道 (Health Report)                     |
+| education   | 教育报道 (Education Report)                  |
+| economics   | 经济报道 (Economics Report)                  |
+| culture     | 文化艺术 (American Mosaic)                   |
+| events      | 时事新闻 (In the News)                       |
+| stories     | 美国故事 (American Stories)                  |
+| words       | 词汇掌故 (Words And Their Stories)           |
+| trending    | 今日热点 (Trending Today)                    |
+| magazine    | 新闻杂志 (AS IT IS)                          |
+| grammar     | 日常语法 (Everyday Grammar)                  |
+| queries     | 名师答疑 (Ask a Teacher)                     |
+| history     | 美国历史 (U.S. History)                      |
+| park        | 国家公园 (America's National Parks)          |
+| president   | 美国总统 (America's Presidents)              |
+| agriculture | 农业报道 (Agriculture Report)                |
+| exploration | 自然探索 (Explorations)                      |
+| people      | 美国人物 (People in America)                 |
+| bilingual   | 双语新闻 (Bilingual News)                    |
+| address     | 总统演讲 (President Address)                 |
 
 ## CTFHub Calendar
 
 ### 查询国内外 CTF 赛事信息
 
-<Route author="frankli0324" example="/ctfhub/calendar" 
-    path="/ctfhub/calendar/:limit?/:form?/:class?/:title?" 
-    :paramsDesc="['通过CTF赛事名称过滤', '一个整数，筛选最近的limit场比赛', '比赛形式', '比赛类型']">
+<Route author="frankli0324" example="/ctfhub/search" 
+    path="/ctfhub/search/:limit?/:form?/:class?/:title?" 
+    :paramsDesc="['一个整数，筛选最新的limit场比赛，默认为10', '比赛形式', '比赛类型', '通过CTF赛事名称过滤']">
 
 | `:class` | 类型                             |
 | :------: | -------------------------------- |
-|    0     | Jeopardy[解题]                   |
-|    1     | Attack with Defense[AwD 攻防]    |
-|    2     | Robo Hacking Game[RHG AI 自动化] |
-|    3     | Real World[RW 真实世界]          |
-|    4     | King of The Hill[KoH 抢占山头]   |
-|    5     | Mix[混合]                        |
+|     0    | Jeopardy[解题]                   |
+|     1    | Attack with Defense[AwD 攻防]    |
+|     2    | Robo Hacking Game[RHG AI 自动化] |
+|     3    | Real World[RW 真实世界]          |
+|     4    | King of The Hill[KoH 抢占山头]   |
+|     5    | Mix[混合]                        |
 
-> class 以 https://api.ctfhub.com/User_API/Event/getType 的返回结果为准
+> class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
 
 | `:form` | 形式   |
 | :-----: | ------ |
 |    0    | 线上赛 |
 |    1    | 线下赛 |
+
+</Route>
+
+### 查询近期赛事
+
+<Route author="frankli0324" example="/ctfhub/upcoming" 
+    path="/ctfhub/upcoming/:limit?" 
+    :paramsDesc="['一个整数，筛选最近的limit场比赛，默认为5']">
 
 </Route>
 
@@ -72,6 +80,42 @@ pageClass: routes
 ### gradCafe result by key words
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+
+## MarginNote
+
+### 标签
+
+<Route author="nczitzk" example="/marginnote/tag/经验分享" path="/marginnote/tag/:id?" :paramsDesc="['标签名，见下表，默认为 经验分享']">
+
+| 经验分享 | 论坛精华 | 待跟进反馈 | 优秀建议 | 精选回答 | 官方签名 | 自动更新 | 3674 以上版本支持 | 368 以上版本支持 | 未经验证的安全风险 | 笔记本分享 | 关键反馈 | 精选话题讨论 | 灵感盒 | 引用 |
+| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | ----------------- | ---------------- | ------------------ | ---------- | -------- | ------------ | ------ | ---- |
+
+</Route>
+
+## Mind42
+
+### 分类
+
+<Route author="nczitzk" example="/mind42" path="/mind42/:caty?" :paramsDesc="['分类，见下表，默认为 Overview']">
+
+| Overview | Popular | All    |
+| -------- | ------- | ------ |
+| mindmaps | popular | public |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表']">
+
+| in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
+| -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
 
 ## NEEA 中国教育考试网
 
@@ -102,30 +146,107 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+## ProcessOn
+
+### 推荐
+
+<Route author="nczitzk" example="/processon/popular" path="/processon/popular/:cate?/:sort?" :paramsDesc="['分类，见下表，默认为所有类型', '排序，见下表，默认为人气']">
+
+分类
+
+| 所有类型 | 流程图 | BPMN | 思维导图 | UI 原型图 | UML | Org 组织结构图 | 网络拓扑图 | 韦恩图  |      |
+| -------- | ------ | ---- | -------- | --------- | --- | -------------- | ---------- | ------- | ---- |
+|          | es     | flow | bpmn     | mind_free | ui  | uml            | org        | network | venn |
+
+排序
+
+| 人气 | 最多人赞  | 最多收藏       | 最多浏览  | 最新发布    |
+| ---- | --------- | -------------- | --------- | ----------- |
+|      | likeCount | favouriteCount | viewCount | publishTime |
+
+</Route>
+
 ## X-MOL 平台
 
 ### 新闻
 
 <Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
 
+## XMind
+
+### Mindmap Gallery
+
+<Route author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['语言代码，见下表，默认为所有语言']">
+
+| English | Español | Deutsch | Français | 中文 | 日本語 |
+| ------- | ------- | ------- | -------- | ---- | ------ |
+| en      | es      | de      | fr       | zh   | jp     |
+
+</Route>
+
+## zhimap 思维导图社区
+
+<Route author="laampui" example="/zhimap/820156a42e9a490796c7fd56916aa95b/1" path="/zhimap/:categoryUuid?/:recommend?" :paramsDesc="['分类 uuid，见下表，默认为33b67d1bad1d4e37812f71d42764af34', '1 为按推荐排序，0 为按最新排序，默认为 0']">
+
+| 热门                             | 学科                             | 学习                             | 语言                             | 工作                             | 提升                             | 生活                             | 互联网                           | 教育                             | 其他                             | 行业                             | 服务发布                         | 医疗                             |
+| -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
+| 33b67d1bad1d4e37812f71d42764af34 | 9434268e893a46aa9a1a231059849984 | 820156a42e9a490796c7fd56916aa95b | 959c81f606ca495c882c7e461429eb2a | 5af4bca5496e4733a2d582690627e25f | 5300988dff564756b5d462cea8a865b7 | 02fdcc2ab6374bc6b9b9717e70c87723 | 437d434fe9eb410a94dcefb889994e2b | 9747cbf78f96492c973aa6ab23925eee | d4c3a92a9cf64da7b187763211dc6ff6 | 58231ab9cef34af7819c3f6e2160c007 | 73d89972bee0457997c983d7fca19f9f | 853ce8b3a4c24b87a03f66af95c5e06c |
+
+</Route>
+
+## 杭州市国家普通话测试网报信息
+
+### 考试信息
+
+<Route author="ChaosTong" example="/putonghua" path="/putonghua" />
+
+## 唧唧堂
+
+### 论文
+
+<Route author="xfangbao" example="/jijitang/publication" path="/jijitang/publication/" />
+
+### 文档
+
+<Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" :paramsDesc="['类别，latest 或者 recommand']"/>
+
+## 金山词霸
+
+### 每日一句
+
+<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['展示的条目数（最小1，最大7，默认1，只展示当天的条目）', '图片格式']">
+
+| `:img_type` | 图片格式 |
+| ----------- | -------- |
+| original    | 原图     |
+| medium      | 尺寸优化 |
+| thumbnail   | 缩略图   |
+| poster      | 文艺海报 |
+
+</Route>
+
 ## 领研
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['参数，如 subject=生物']"/>
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']"/>
 
 | `:param` | 举例            | 定义                                 |
 | -------- | --------------- | ------------------------------------ |
 | category | category=thesis | **必填**，theses/information/careers |
-| subject  | subject=生物    | 可置空                               |
-| columns  | columns=健康    | 可置空                               |
-| query    | query=病毒      | 可置空                               |
+| subject  | subject = 生物  | 可置空                               |
+| columns  | columns = 健康  | 可置空                               |
+| query    | query = 病毒    | 可置空                               |
 
 ## 码农周刊
 
 ### issues
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
+
+## 幕布精选
+
+<Route author="laampui nczitzk" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:category?/:title?" :paramsDesc="['分类 id', '显示标题']" />
 
 ## 扇贝
 
@@ -147,15 +268,61 @@ pageClass: routes
 
 </Route>
 
+## 思维导图社区
+
+### 热门导图
+
+<Route author="nczitzk" example="/edrawsoft/mindmap/1/PV/DESC/CN/1" path="/edrawsoft/mindmap/:classId?/:order?/:sort?/:lang?/:price?/:search?" :paramsDesc="['分类编号，见下表，默认为全部分类', '排序参数，`PV` 指 最多浏览，`TIME` 指 最新发布，`LIKE` 指 最多点赞，默认为 `PV` 即 最多浏览', '排序方式，`DESC` 指 降序，`ASC` 指 升序，默认为 `DESC` 即 降序', '模板语言，默认为 `CN`', '是否免费，`1` 指 全部，`2` 指 免费，`3` 指 付费，`4` 指 会员免费，默认为 `1` 即 全部', '搜索关键词，默认为空']">
+
+::: tip 提示
+
+不支持分类搜索和自定义搜索排序，即 `search` 参数不为空时，其他参数不起作用。
+
+:::
+
+分类编号如下表（选择全部则填入编号 0）
+
+| 职业技能 | 企业家 / 管理者 | 程序员 | 产品经理 | 运营 / 市场营销 | 人事 / 培训 / 行政 | 法律 / 法务 | 医学 / 药学 / 保健 | 银行 / 金融 / 证券 / 保险 | 电商 / 微商 / 零售 | 编辑 / 媒体 / 出版 | 机械 / 电子 / 制造业 | 城市 / 建筑 / 房地产 | 其他技能 |
+| -------- | --------------- | ------ | -------- | --------------- | ------------------ | ----------- | ------------------ | ------------------------- | ------------------ | ------------------ | -------------------- | -------------------- | -------- |
+| 1        | 7               | 8      | 9        | 10              | 11                 | 12          | 13                 | 14                        | 15                 | 16                 | 17                   | 58                   | 59       |
+
+| 考研考证 | 研究生考试 | 建考 | 法考 | 教师资格证 | 公考 | 英语 | 医考 | 会计师 | 计算机 | 专升本 |
+| -------- | ---------- | ---- | ---- | ---------- | ---- | ---- | ---- | ------ | ------ | ------ |
+| 2        | 18         | 19   | 20   | 21         | 22   | 23   | 24   | 25     | 26     | 27     |
+
+| 生活娱乐 | 体育 | 音乐 | 影视 | 旅游 | 游戏 | 兴趣 | 生活 |
+| -------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 3        | 29   | 30   | 31   | 32   | 33   | 34   | 56   |
+
+| 校园教育 | 大学 | 高中 | 初中 | 小学 | 教育 |
+| -------- | ---- | ---- | ---- | ---- | ---- |
+| 4        | 35   | 36   | 37   | 38   | 39   |
+
+| 读书笔记 | 文学作品 | 心灵成长 | 经管知识 | 终身学习 | 通用知识 | 知识栏目 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 5        | 40       | 41       | 42       | 43       | 44       | 45       |
+
+| 创意脑图 | 长图 | 鱼骨图 | 时间线 | 圆圈图 | 组织结构 | 树状图 | 流程图 |
+| -------- | ---- | ------ | ------ | ------ | -------- | ------ | ------ |
+| 6        | 46   | 47     | 48     | 49     | 50       | 51     | 57     |
+
+</Route>
+
+## 搜韵网
+
+### 诗词日历
+
+<Route author="nczitzk" example="/souyun/today" path="/souyun/today"/>
+
 ## 网易公开课
 
 ### 精品课程
 
-<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" />
+<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" rssbud="1"/>
 
 ### 最新课程
 
-<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" />
+<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" rssbud="1"/>
 
 ## 下厨房
 
@@ -215,17 +382,73 @@ pageClass: routes
 
 学科分类
 
-| 全部 | 计算机 | 经管·会计 | 创业 | 电子 | 工程 | 环境·地球 | 医学·健康 | 生命科学 | 数学 | 物理 | 化学 | 社科·法律 | 文学 | 历史 | 哲学 | 艺术·设计 | 外语 | 教育 | 其他 | 大学先修课 | 公共管理 | 建筑 | 职场 | 全球胜任力 |
-| ---- | ------ | --------- | ---- | ---- | ---- | --------- | --------- | -------- | ---- | ---- | ---- | --------- | ---- | ---- | ---- | --------- | ---- | ---- | ---- | ---------- | -------- | ---- | ---- | ---------- |
-| -1   | 117    | 118       | 119  | 120  | 121  | 122       | 123       | 124      | 125  | 126  | 127  | 128       | 129  | 130  | 131  | 132       | 133  | 134  | 135  | 201        | 2550     | 2783 | 2952 | 6200       |
+| 全部 | 计算机 | 经管・会计 | 创业 | 电子 | 工程 | 环境・地球 | 医学・健康 | 生命科学 | 数学 | 物理 | 化学 | 社科・法律 | 文学 | 历史 | 哲学 | 艺术・设计 | 外语 | 教育 | 其他 | 大学先修课 | 公共管理 | 建筑 | 职场 | 全球胜任力 |
+| ---- | ------ | ---------- | ---- | ---- | ---- | ---------- | ---------- | -------- | ---- | ---- | ---- | ---------- | ---- | ---- | ---- | ---------- | ---- | ---- | ---- | ---------- | -------- | ---- | ---- | ---------- |
+| -1   | 117    | 118        | 119  | 120  | 121  | 122        | 123        | 124      | 125  | 126  | 127  | 128        | 129  | 130  | 131  | 132        | 133  | 134  | 135  | 201        | 2550     | 2783 | 2952 | 6200       |
 
 </Route>
+
+## 阳光高考
+
+### 教育部阳光高考信息公开平台招生政策规定
+
+<Route author="nczitzk" example="/chsi/zszcgd" path="/chsi/zszcgd/:category?" :paramsDesc="['分类，默认为招生政策']">
+
+| 招生政策 | 深化考试招生制度改革 | 教育法律法规 |
+| -------- | -------------------- | ------------ |
+| dnzszc   | zdgg                 | jyflfg       |
+
+</Route>
+
+## 印象识堂
+
+### 印象剪藏
+
+<Route author="nczitzk" example="/yinxiang/note" path="/yinxiang/note" />
+
+### 卡片清单
+
+<Route author="nczitzk" example="/yinxiang/card/32" path="/yinxiang/card/:id?" :paramsDesc="['卡片 id，见下表，默认为每周收藏排行榜・TOP5']">
+
+::: tip 提示
+
+卡片对应的话题、专题等内容过期后，该卡片 id 也会失效，此时填入该卡片 id 将会报错。
+
+:::
+
+| 每周收藏排行榜・TOP5 | 每周热门「读书笔记」榜 TOP5 | 【印象话题】选择的悖论 | 【印象专题】如何一秒洞察问题本质？ | 「识堂开讲」5 位嘉宾精华笔记大放送 | 【印象话题】培养专注力的 5 个步骤 | 🎁购物清单主题活动获奖结果 |
+| -------------------- | --------------------------- | ---------------------- | ---------------------------------- | ---------------------------------- | --------------------------------- | -------------------------- |
+| 32                   | 33                          | 101                    | 103                                | 104                                | 105                               | 106                        |
+
+</Route>
+
+### 用户公开笔记
+
+<Route author="nczitzk" example="/yinxiang/personal/ZUhuRTmW5SKE7vvHPqI7cg" path="/yinxiang/personal/:id" :paramsDesc="['用户 id，可在用户页 URL 中找到']" />
+
+### 笔记分类
+
+<Route author="nczitzk" example="/yinxiang/category/28" path="/yinxiang/category/:id" :paramsDesc="['分类 id，可在分类页 URL 中找到']" />
+
+### 笔记标签
+
+<Route author="nczitzk" example="/yinxiang/tag/人生算法" path="/yinxiang/tag/:id" :paramsDesc="['标签名，可在标签页中找到']" />
 
 ## 英中协会
 
 ### 奖学金
 
 <Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
+## 有道云笔记
+
+### 学霸感悟
+
+<Route author="nczitzk" example="/youdao/xueba" path="/youdao/xueba" />
+
+### 笔记最新动态
+
+<Route author="nczitzk" example="/youdao/latest" path="/youdao/latest" />
 
 ## 语雀
 
@@ -276,8 +499,14 @@ pageClass: routes
 
 > 参数置空（`/zhishifenzi/innovation`）获取所有类别
 
-## 中国大学 MOOC(慕课)
+## 中国大学 MOOC (慕课)
 
 ### 最新
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
+
+## 中国人事考试网
+
+### 通知公告
+
+<Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />

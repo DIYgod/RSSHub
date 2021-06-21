@@ -20,11 +20,26 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
+## iciba
+
+### Daily English Sentence
+
+<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show（min = 1, max = 7, default = 1）', 'image style']">
+
+| `:img_type` | image style    |
+| ----------- | -------------- |
+| original    | Original size  |
+| medium      | Medium size    |
+| thumbnail   | Thumbnail size |
+| poster      | Art poster     |
+
+</Route>
+
 ## LinkResearch
 
 ### theses
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" :paramsDesc="['key=value，eg. subject=生物']"/>
+<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']"/>
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
@@ -38,6 +53,18 @@ pageClass: routes
 ### News
 
 <RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
+## XMind
+
+### Mindmap Gallery
+
+<RouteEn author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['language code, all languages by default']">
+
+| English | Español | Deutsch | Français | 中文 | 日本語 |
+| ------- | ------- | ------- | -------- | ---- | ------ |
+| en      | es      | de      | fr       | zh   | jp     |
+
+</RouteEn>
 
 ## ZhiShiFenZi
 
@@ -63,7 +90,7 @@ pageClass: routes
 
 ### innovation
 
-<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
+<RouteEn author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
 
 | `:type`       | type name     |
 | ------------- | ------------- |
