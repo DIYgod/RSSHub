@@ -255,13 +255,13 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ## Potplayer
 
-### Update
+### Version History
 
 <RouteEn author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['Language, see below, English by default']">
 
-| 한국어 | 中文(简体) | 中文(繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
-| - | - | - | - | - | - | - |
-| ko | zh_CN | zh_TW | en | uk | ru | pl |
+| 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
+| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
+| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
 
 </RouteEn>
 
