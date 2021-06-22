@@ -294,7 +294,7 @@ generates
 
 ### User media
 
-<RouteEn author="yindaheng98" path="/twitter/media/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
+<RouteEn author="yindaheng98" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
 
 ## User following timeline
 
