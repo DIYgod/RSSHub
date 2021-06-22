@@ -534,13 +534,17 @@ GitHub 官方也提供了一些 RSS:
 
 ## 开发者头条
 
-### 今天头条
+> 现在开发者头条网站官方提供了 RSS 输出，可直接使用
 
-<Route author="jjeejj" example="/toutiao/today" path="/toutiao/today"/>
+### 今日头条精选
+
+[https://toutiao.io/daily.xml](https://toutiao.io/daily.xml)
 
 ### 独家号
 
-<Route author="jjeejj" example="/toutiao/user/140544" path="/toutiao/user/:id" :paramsDesc="['独家号 id, 可在对应独家号页 URL 中找到']"/>
+`https://toutiao.io/subjects/{独家号ID}/feed`
+
+举例: [https://toutiao.io/subjects/4/feed](https://toutiao.io/subjects/4/feed)
 
 ## 开源中国
 
