@@ -242,9 +242,21 @@ pageClass: routes
 
 <Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
+::: warning 注意
+
+由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
+
+:::
+
 ### 校园新闻
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
+
+::: warning 注意
+
+由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
+
+:::
 
 ### BTBYR 趣味盒
 
@@ -698,6 +710,12 @@ category 列表：
 ### 今日工大 - 通知公告
 
 <Route author="raptazure" example="/hitwh/today" path="hitwh/today" />
+
+## 海南大学
+
+### 硕士研究生招生动态
+
+<Route author="OdinZhang" example="/hainanu/ssszs" path="hainanu/ssszs"/>
 
 ## 合肥工业大学
 

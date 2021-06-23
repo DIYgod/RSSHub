@@ -443,6 +443,18 @@ pageClass: routes
 
 <Route author="hoilc" example="/lastfm/top/spain" path="/lastfm/top/:country?" :paramsDesc="['国家或地区, 需要符合`ISO 3166-1`的英文全称, 可参考`https://zh.wikipedia.org/wiki/ISO_3166-1二位字母代码#正式分配代码`']" radar="1" rssbud="1"/>
 
+## Melon
+
+### Chart
+
+<Route author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" :paramsDesc="['分类，见下表，默认为24H']">
+
+| 24H | 일간 | 주간 | 월간  |
+| --- | ---- | ---- | ----- |
+|     | day  | week | month |
+
+</Route>
+
 ## Mp4Ba
 
 ### 影视分类
