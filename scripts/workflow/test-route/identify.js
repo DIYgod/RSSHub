@@ -1,5 +1,5 @@
 const noFound = 'Auto: Route No Found';
-const whiteListedUser = ['dependabot-preview[bot]'];
+const whiteListedUser = ['dependabot[bot]'];
 
 module.exports = async ({ github, context, core }, body, number) => {
     core.debug(`sender: ${context.payload.sender.login}`);
@@ -34,6 +34,8 @@ module.exports = async ({ github, context, core }, body, number) => {
                 core.warning(e);
             });
         return;
+    } else {
+        core.debug('PR created by ' + context.payload.sender.login);
     }
 
     if (m && m[1]) {
