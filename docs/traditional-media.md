@@ -333,6 +333,10 @@ Provides all of the articles by the specified Yahoo! author.
 
 </Route>
 
+## 澳門電台
+
+<Route author="tpnonthealps" example="/radiomacau" path="/radiomacau" anticrawler="1" />
+
 ## 半月谈
 
 ### 板块
@@ -1227,7 +1231,3 @@ IT・科学 tech_science
 `https://www.rfa.org/cantonese/news` 对应 `/rfa/cantonese/news`
 
 `https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`
-
-## 澳門電台
-
-<Route author="tpnonthealps" example="/radiomacau" path="/radiomacau" />
