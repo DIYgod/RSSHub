@@ -1133,23 +1133,6 @@
         ],
     },
 
-    'steampowered.com': {
-        _name: 'Steam',
-        store: [
-            {
-                title: 'search',
-                docs: 'https://docs.rsshub.app/game.html#steam',
-                source: '/search/',
-                target: (params, url) => `/steam/search/${new URL(url).searchParams}`,
-            },
-            {
-                title: 'news',
-                docs: 'https://docs.rsshub.app/game.html#steam',
-                source: '/news/',
-                target: (params, url) => `/steam/news/${new URL(url).searchParams.get('appids')}`,
-            },
-        ],
-    },
     'baijingapp.com': {
         _name: '白鲸出海',
         www: [
