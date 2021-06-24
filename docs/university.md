@@ -354,6 +354,18 @@ pageClass: routes
 
 </Route>
 
+## 大连理工大学
+
+### 教务处
+
+<Route author="beautyyuyanli" example="/dut/teach/zytg" path="/dut/teach/:type" :paramsDesc="['通知类型']">
+
+| 重要通告 | 教学文件       | 其他文件    |
+| -------- | -------------- | ----------- |
+| zytg     | jiaoxuewenjian | qitawenjian |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
