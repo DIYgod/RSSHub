@@ -360,9 +360,9 @@ pageClass: routes
 
 <Route author="beautyyuyanli" example="/dut/teach/zytg" path="/dut/teach/:type" :paramsDesc="['通知类型']">
 
-| 重要通告 | 教学文件       | 其他文件    |
-| -------- | -------------- | ----------- |
-| zytg     | jiaoxuewenjian | qitawenjian |
+| 重要通告 | 新闻快递 | 教学文件       | 其他文件    |
+| -------- | -------- | -------------- | ----------- |
+| zytg     | xwkd     | jiaoxuewenjian | qitawenjian |
 
 </Route>
 
