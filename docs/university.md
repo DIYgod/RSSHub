@@ -366,6 +366,16 @@ pageClass: routes
 
 </Route>
 
+### 体育场馆中心
+
+<Route author="beautyyuyanli" example="/dut/tycgzx/hdrc" path="/dut/tycgzx/:type" :paramsDesc="['通知类型']">
+
+| 通知公告 | 活动日程 | 新闻动态 |
+| -------- | -------- | -------- |
+| tzgg     | hdrc     | xwdt     |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
