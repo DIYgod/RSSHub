@@ -376,6 +376,16 @@ pageClass: routes
 
 </Route>
 
+### 国际处及港澳台办
+
+<Route author="beautyyuyanli" example="/dut/dutdice/xwsd" path="/dut/dutdice/:type" :paramsDesc="['通知类型']">
+
+| 学生通知   | 教师通知 | 新闻速递 |
+| ---------- | -------- | -------- |
+| xstong_zhi | jstz     | xwsd     |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
