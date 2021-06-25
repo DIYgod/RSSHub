@@ -720,6 +720,16 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" supportPodcast="1"/>
 
+## 全民 K 歌
+
+### 用户
+
+<Route author="zhangxiang012" example="/kge/639a9a86272c308e33" path="/kge/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" />
+
+### 评论动态
+
+<Route author="zhangxiang012" example="/kge/reply/OhXHMdO1VxLWQOOm" path="/kge/reply/:playId" :paramsDesc="['playId即音频页id, 可在对应页面的 URL 中找到']" />
+
 ## 大众点评
 
 ### 用户
