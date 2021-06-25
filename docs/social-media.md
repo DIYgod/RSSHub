@@ -722,13 +722,13 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ## 全民 K 歌
 
-### 用户
+### 用户作品列表
 
-<Route author="zhangxiang012" example="/kge/639a9a86272c308e33" path="/kge/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" />
+<Route author="zhangxiang012" example="/kge/639a9a86272c308e33" path="/kge/:userid" :paramsDesc="['用户 ID, 可在对应页面的 URL 中找到']" />
 
-### 评论动态
+### 用户作品评论动态
 
-<Route author="zhangxiang012" example="/kge/reply/OhXHMdO1VxLWQOOm" path="/kge/reply/:playId" :paramsDesc="['playId即音频页id, 可在对应页面的 URL 中找到']" />
+<Route author="zhangxiang012" example="/kge/reply/OhXHMdO1VxLWQOOm" path="/kge/reply/:playId" :paramsDesc="['playId 即音频页 id, 可在对应页面的 URL 中找到']" />
 
 ## 大众点评
 
