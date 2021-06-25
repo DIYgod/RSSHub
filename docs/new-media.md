@@ -288,6 +288,18 @@ Tag
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
+## HKEPC
+
+### HKEPC 電腦領域
+
+<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" :paramsDesc="['分類，見下表，默认为最新消息']">
+
+| 專題報導   | 新聞中心 | 新品快遞 | 超頻領域 | 流動數碼 | 生活娛樂      | 會員消息 | 腦場新聞 | 業界資訊 | 最新消息 |
+| ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
+| coverStory | news     | review   | ocLab    | digital  | entertainment | member   | price    | press    | latest   |
+
+</Route>
+
 ## iDaily 每日环球视野
 
 ### 今日 Timeline
@@ -604,6 +616,10 @@ Provides all of the Thrillist articles with the specified tag.
 ### Overview
 
 <Route author="nczitzk" example="/topbook/overview/24" path="/topbook/overview/:id?" :paramsDesc="['id，可在对应页面 URL 中找到，默认为今天看什么']"/>
+
+### 今天看什么
+
+<Route author="nczitzk" example="/topbook/today" path="/topbook/today"/>
 
 ## TOPYS
 

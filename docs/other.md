@@ -686,7 +686,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 郵便追跡サービス
 
-<Route author="tuzi3040" example="/japanpost/EJ123456789JP/ja" path="/japanpost/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1" rssbud="1">
+<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/ja" path="/japanpost/track/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1" rssbud="1">
 
 | 日语 | 英语 |
 | ---- | ---- |
@@ -973,3 +973,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
+### 澳門特別行政區政府各公共部門獎助貸學金服務平台
+
+官方網址：<https://www.bolsas.gov.mo/>
+
+<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
+
+| 中文 | 葡文 |
+| ---- | ---- |
+| ch   | pt   |
+
+ </Route>
