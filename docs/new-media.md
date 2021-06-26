@@ -290,13 +290,16 @@ Tag
 
 ## HKEPC
 
-### HKEPC 電腦領域
+### HKEPC 电脑领域
 
-<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" :paramsDesc="['分類，見下表，默认为最新消息']">
+<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" :paramsDesc="['分类，见下表，默认为最新消息']">
 
-| 專題報導   | 新聞中心 | 新品快遞 | 超頻領域 | 流動數碼 | 生活娛樂      | 會員消息 | 腦場新聞 | 業界資訊 | 最新消息 |
+| 专题报导   | 新闻中心 | 新品快递 | 超频领域 | 流动数码 | 生活娱乐      | 会员消息 | 脑场新闻 | 业界资讯 | 最新消息 |
 | ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
 | coverStory | news     | review   | ocLab    | digital  | entertainment | member   | price    | press    | latest   |
+
+-   全文输出转换为简体字：`?opencc=t2s`  
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
 
 </Route>
 
