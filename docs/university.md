@@ -2161,6 +2161,16 @@ type 列表：
 
 </Route>
 
+### 中国科学技术大学就业信息网
+
+<Route author="nczitzk" example="/ustc/job" path="/ustc/job/:category?" :paramsDesc="['分类，见下表，默认为招聘公告']">
+
+| 专场招聘会  | 校园双选会   | 空中宣讲  | 招聘公告 |
+| ----------- | ------------ | --------- | -------- |
+| RecruitList | Doublechoice | Broadcast | joblist2 |
+
+</Route>
+
 ## 中国科学院
 
 ### 成果转化
