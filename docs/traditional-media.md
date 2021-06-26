@@ -335,7 +335,7 @@ Provides all of the articles by the specified Yahoo! author.
 
 ## 澳門電台
 
-<Route author="tpnonthealps" example="/radiomacau" path="/radiomacau" anticrawler="1" />
+<Route author="tpnonthealps" example="/radiomacau" path="/radiomacau" />
 
 ## 半月谈
 
