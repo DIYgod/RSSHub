@@ -242,9 +242,21 @@ pageClass: routes
 
 <Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
+::: warning 注意
+
+由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
+
+:::
+
 ### 校园新闻
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
+
+::: warning 注意
+
+由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
+
+:::
 
 ### BTBYR 趣味盒
 
@@ -339,6 +351,38 @@ pageClass: routes
 | 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
 | :--------: | :--------: | :------------------: | :------------: |
 |    bsyjs   |    ssyjs   |      tdxlgdssxw      |     gatdqzs    |
+
+</Route>
+
+## 大连理工大学
+
+### 教务处
+
+<Route author="beautyyuyanli" example="/dut/teach/zytg" path="/dut/teach/:type" :paramsDesc="['通知类型']">
+
+| 重要通告 | 新闻快递 | 教学文件       | 其他文件    |
+| -------- | -------- | -------------- | ----------- |
+| zytg     | xwkd     | jiaoxuewenjian | qitawenjian |
+
+</Route>
+
+### 体育场馆中心
+
+<Route author="beautyyuyanli" example="/dut/tycgzx/hdrc" path="/dut/tycgzx/:type" :paramsDesc="['通知类型']">
+
+| 通知公告 | 活动日程 | 新闻动态 |
+| -------- | -------- | -------- |
+| tzgg     | hdrc     | xwdt     |
+
+</Route>
+
+### 国际处及港澳台办
+
+<Route author="beautyyuyanli" example="/dut/dutdice/xwsd" path="/dut/dutdice/:type" :paramsDesc="['通知类型']">
+
+| 学生通知   | 教师通知 | 新闻速递 |
+| ---------- | -------- | -------- |
+| xstong_zhi | jstz     | xwsd     |
 
 </Route>
 
@@ -698,6 +742,12 @@ category 列表：
 ### 今日工大 - 通知公告
 
 <Route author="raptazure" example="/hitwh/today" path="hitwh/today" />
+
+## 海南大学
+
+### 硕士研究生招生动态
+
+<Route author="OdinZhang" example="/hainanu/ssszs" path="hainanu/ssszs"/>
 
 ## 合肥工业大学
 
@@ -2140,6 +2190,16 @@ type 列表：
 | 信息 | 教学     | 考试 | 交流     |
 | ---- | -------- | ---- | -------- |
 | info | teaching | exam | exchange |
+
+</Route>
+
+### 中国科学技术大学就业信息网
+
+<Route author="nczitzk" example="/ustc/job" path="/ustc/job/:category?" :paramsDesc="['分类，见下表，默认为招聘公告']">
+
+| 专场招聘会  | 校园双选会   | 空中宣讲  | 招聘公告 |
+| ----------- | ------------ | --------- | -------- |
+| RecruitList | Doublechoice | Broadcast | joblist2 |
 
 </Route>
 

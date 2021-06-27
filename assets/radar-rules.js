@@ -140,24 +140,26 @@
             {
                 title: '用户收藏',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/bookmark.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+                source: '/users/:id/bookmarks/artworks',
+                target: '/pixiv/user/bookmarks/:id',
             },
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/member.php',
-                target: (params, url) => `/pixiv/user/${new URL(url).searchParams.get('id')}`,
+                source: '/users/:id',
+                target: '/pixiv/user/:id',
             },
             {
                 title: '排行榜',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/ranking.php',
+                target: (params, url) => `/pixiv/ranking/${new URL(url).searchParams.get('mode') || 'daily'}`,
             },
             {
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/search.php',
+                source: ['/tags/:keyword', '/tags/:keyword/:type?'],
+                target: (params, url) => `/pixiv/search/:keyword/${new URL(url).searchParams.get('order')}/${new URL(url).searchParams.get('mode')}`,
             },
             {
                 title: '关注的新作品',
@@ -594,6 +596,17 @@
                 docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba',
                 source: '/catalog/:id',
                 target: '/haimaoba/:id',
+            },
+        ],
+    },
+    'manhuagui.com': {
+        _name: '漫画柜',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua',
+                source: '/comic/:id/',
+                target: '/manhuagui/comic/:id',
             },
         ],
     },
@@ -1130,12 +1143,6 @@
                 docs: 'https://docs.rsshub.app/game.html#steam',
                 source: '/search/',
                 target: (params, url) => `/steam/search/${new URL(url).searchParams}`,
-            },
-            {
-                title: 'news',
-                docs: 'https://docs.rsshub.app/game.html#steam',
-                source: '/news/',
-                target: (params, url) => `/steam/news/${new URL(url).searchParams.get('appids')}`,
             },
         ],
     },
@@ -1722,13 +1729,13 @@
         'trackings.post': [
             {
                 title: '郵便・荷物の追跡',
-                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian',
+                docs: 'https://docs.rsshub.app/other.html#ri-ben-you-bian-you-bian-zhui-ji-サービス',
                 source: '/services/srv/search/direct',
                 target: (params, url) => {
                     const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
                     const locale = new URL(url).searchParams.get('locale').toLowerCase();
-                    if ((reqCode.search(/^(?:\d{12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
-                        return `/japanpost/${reqCode}/${locale}`;
+                    if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
+                        return `/japanpost/track/${reqCode}/${locale}`;
                     }
                 },
             },
@@ -2972,6 +2979,31 @@
                 docs: 'https://docs.rsshub.app/anime.html#bangumi',
                 source: '/calendar',
                 target: '/bangumi/calendar/today',
+            },
+        ],
+    },
+    'iyingdi.com': {
+        _name: '旅法师营地',
+        www: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/tz/tag/:tag',
+                target: '/lfsyd/tag/:tag',
+            },
+            {
+                title: '用户发帖',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: ['/tz/people/:id', '/tz/people/:id/*'],
+                target: '/lfsyd/user/:id',
+            },
+        ],
+        mob: [
+            {
+                title: '分区',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/fine/:tag',
+                target: '/lfsyd/tag/:tag',
             },
         ],
     },
