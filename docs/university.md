@@ -354,6 +354,38 @@ pageClass: routes
 
 </Route>
 
+## 大连理工大学
+
+### 教务处
+
+<Route author="beautyyuyanli" example="/dut/teach/zytg" path="/dut/teach/:type" :paramsDesc="['通知类型']">
+
+| 重要通告 | 新闻快递 | 教学文件       | 其他文件    |
+| -------- | -------- | -------------- | ----------- |
+| zytg     | xwkd     | jiaoxuewenjian | qitawenjian |
+
+</Route>
+
+### 体育场馆中心
+
+<Route author="beautyyuyanli" example="/dut/tycgzx/hdrc" path="/dut/tycgzx/:type" :paramsDesc="['通知类型']">
+
+| 通知公告 | 活动日程 | 新闻动态 |
+| -------- | -------- | -------- |
+| tzgg     | hdrc     | xwdt     |
+
+</Route>
+
+### 国际处及港澳台办
+
+<Route author="beautyyuyanli" example="/dut/dutdice/xwsd" path="/dut/dutdice/:type" :paramsDesc="['通知类型']">
+
+| 学生通知   | 教师通知 | 新闻速递 |
+| ---------- | -------- | -------- |
+| xstong_zhi | jstz     | xwsd     |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
@@ -2158,6 +2190,16 @@ type 列表：
 | 信息 | 教学     | 考试 | 交流     |
 | ---- | -------- | ---- | -------- |
 | info | teaching | exam | exchange |
+
+</Route>
+
+### 中国科学技术大学就业信息网
+
+<Route author="nczitzk" example="/ustc/job" path="/ustc/job/:category?" :paramsDesc="['分类，见下表，默认为招聘公告']">
+
+| 专场招聘会  | 校园双选会   | 空中宣讲  | 招聘公告 |
+| ----------- | ------------ | --------- | -------- |
+| RecruitList | Doublechoice | Broadcast | joblist2 |
 
 </Route>
 

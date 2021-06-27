@@ -342,15 +342,17 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-### Steam news
+### Steam 新闻中心
 
-<Route author="maple3142" example="/steam/news/1091500/schinese" path="/steam/news/:appid/:language?" :paramsDesc="['游戏 id', '语言,默认简体中文']" radar="1" rssbud="1">
+::: tip
 
-| 语言 (Language) | 简体中文 (Simplified Chinese) | 繁體中文 (Traditional Chinese) | 日本語 (Japanese) | 한국어 (Korean) | Български (Bulgarian) | Čeština (Czech) | Dansk (Danish) | Deutsch (German) | Español - España (Spanish - Spain) | Español - Latinoamérica (Spanish - Latin America), | Ελληνικά (Greek) | Français (French) | Italiano (Italian) | Magyar (Hungarian) | Nederlands (Dutch) | Norsk (Norwegian) | Polski (Polish) | Português (Portuguese) | Português - Brasil (Portuguese - Brazil) | Română (Romanian) | Русский (Russian) | Suomi (Finnish) | Svenska (Swedish) | Türkçe (Turkish) | Tiếng Việt (Vietnamese) | Українська (Ukrainian) |
-| --------------- | ----------------------------- | ------------------------------ | ----------------- | --------------- | --------------------- | --------------- | -------------- | ---------------- | ---------------------------------- | -------------------------------------------------- | ---------------- | ----------------- | ------------------ | ------------------ | ------------------ | ----------------- | --------------- | ---------------------- | ---------------------------------------- | ----------------- | ----------------- | --------------- | ----------------- | ---------------- | ----------------------- | ---------------------- |
-|                 | schinese                      | tchinese                       | japanese          | koreana         | bulgarian             | czech           | danish         | german           | spanish                            | latam                                              | greek            | french            | italian            | hungarian          | dutch              | norwegian         | polish          | portuguese             | brazilian                                | romanian          | russian           | finnish         | swedish           | turkish          | vietnamese              | ukrainian              |
+Steam 新闻中心支持官方的 RSS 订阅:
 
-</Route>
+-   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
+-   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english> 
+-   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss>	或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
+
+:::
 
 ## SteamGifts
 
