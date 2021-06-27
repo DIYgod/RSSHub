@@ -348,9 +348,9 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 Steam 新闻中心支持官方的 RSS 订阅:
 
--	新闻中心首页订阅地址为：[https://store.steampowered.com/feeds/news/?l=schinese](https://store.steampowered.com/feeds/news/?l=schinese) 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
--   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: [https://store.steampowered.com/news/app/648800/](https://store.steampowered.com/news/app/648800/) ，获取的订阅链接类似为： [https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english](https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english) 
--	STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: [https://steamcommunity.com/groups/SteamLabs/rss](https://steamcommunity.com/groups/SteamLabs/rss)	或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 [https://store.steampowered.com/feeds/news/group/35143931/](https://store.steampowered.com/feeds/news/group/35143931/)
+-   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
+-   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english> 
+-   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss>	或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
 
 :::
 
