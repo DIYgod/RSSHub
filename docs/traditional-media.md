@@ -333,6 +333,10 @@ Provides all of the articles by the specified Yahoo! author.
 
 </Route>
 
+## 澳門電台
+
+<Route author="tpnonthealps" example="/radiomacau" path="/radiomacau" />
+
 ## 半月谈
 
 ### 板块
