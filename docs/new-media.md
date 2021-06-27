@@ -298,9 +298,6 @@ Tag
 | ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
 | coverStory | news     | review   | ocLab    | digital  | entertainment | member   | price    | press    | latest   |
 
--   全文输出转换为简体字：`?opencc=t2s`  
-    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
-
 </Route>
 
 ## iDaily 每日环球视野
