@@ -354,6 +354,38 @@ pageClass: routes
 
 </Route>
 
+## 大连理工大学
+
+### 教务处
+
+<Route author="beautyyuyanli" example="/dut/teach/zytg" path="/dut/teach/:type" :paramsDesc="['通知类型']">
+
+| 重要通告 | 新闻快递 | 教学文件       | 其他文件    |
+| -------- | -------- | -------------- | ----------- |
+| zytg     | xwkd     | jiaoxuewenjian | qitawenjian |
+
+</Route>
+
+### 体育场馆中心
+
+<Route author="beautyyuyanli" example="/dut/tycgzx/hdrc" path="/dut/tycgzx/:type" :paramsDesc="['通知类型']">
+
+| 通知公告 | 活动日程 | 新闻动态 |
+| -------- | -------- | -------- |
+| tzgg     | hdrc     | xwdt     |
+
+</Route>
+
+### 国际处及港澳台办
+
+<Route author="beautyyuyanli" example="/dut/dutdice/xwsd" path="/dut/dutdice/:type" :paramsDesc="['通知类型']">
+
+| 学生通知   | 教师通知 | 新闻速递 |
+| ---------- | -------- | -------- |
+| xstong_zhi | jstz     | xwsd     |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
