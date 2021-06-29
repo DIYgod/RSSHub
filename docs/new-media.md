@@ -288,6 +288,18 @@ Tag
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
+## HKEPC
+
+### HKEPC 電腦領域
+
+<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" :paramsDesc="['分類，見下表，默认为最新消息']">
+
+| 專題報導   | 新聞中心 | 新品快遞 | 超頻領域 | 流動數碼 | 生活娛樂      | 會員消息 | 腦場新聞 | 業界資訊 | 最新消息 |
+| ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
+| coverStory | news     | review   | ocLab    | digital  | entertainment | member   | price    | press    | latest   |
+
+</Route>
+
 ## iDaily 每日环球视野
 
 ### 今日 Timeline
@@ -600,6 +612,10 @@ Provides all of the Thrillist articles with the specified tag.
 </Route>
 
 ## Topbook
+
+### Overview
+
+<Route author="nczitzk" example="/topbook/overview/24" path="/topbook/overview/:id?" :paramsDesc="['id，可在对应页面 URL 中找到，默认为今天看什么']"/>
 
 ### 今天看什么
 
@@ -1275,6 +1291,16 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+## 加美财经
+
+<Route author="nczitzk" example="/caus" path="/caus/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 要闻 | 商业 | 快讯 | 投资理财 | 生活 |
+| ---- | ---- | ---- | ---- | -------- | ---- |
+| 0    | 1    | 2    | 3    | 4        | 6    |
+
+</Route>
+
 ## 贾真的电商 108 将
 
 ### 「108 将」实战分享
@@ -1793,6 +1819,10 @@ column 为 third 时可选的 category:
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']" radar="1"/>
 
 ## 深圳新闻网
+
+### 深圳市政府新闻发布厅
+
+<Route author="nczitzk" example="/sznews/press" path="/sznews/press"/>
 
 ### 排行榜
 
