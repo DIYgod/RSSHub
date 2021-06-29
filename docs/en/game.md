@@ -172,17 +172,13 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 
 ### Steam news
 
-<RouteEn author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['game id']" radar="1" rssbud="1"/>
-
-
 ::: tip
 
 Steam provides some official RSS feeds:
 
--   Game News: https://store.steampowered.com/feeds/news/app/412830/
--   Curator/Group/Publisher/Developer News: https://store.steampowered.com/feeds/news/group/35143931/
-
-Game News use the AppID while the rest are only available in the Steam News UI, it seems.
+-	News home page: [https://store.steampowered.com/feeds/news/?l=english](https://store.steampowered.com/feeds/news/?l=english) the parameter `l=english` specifiy the language.
+-   Game news rss can get from the rss buttom in page like this: [https://store.steampowered.com/news/app/648800/](https://store.steampowered.com/news/app/648800/) , rss link will looks like： [https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english](https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english) 
+-	Steam group can add `/rss` behind Steam community URL to subscribe: [https://steamcommunity.com/groups/SteamLabs/rss](https://steamcommunity.com/groups/SteamLabs/rss)	or add the `/feeds` in Steam News : [https://store.steampowered.com/feeds/news/group/35143931/](https://store.steampowered.com/feeds/news/group/35143931/)
 
 :::
 

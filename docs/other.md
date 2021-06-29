@@ -310,6 +310,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 艾瑞
+
+### 产业研究报告
+
+<Route author="brilon" example="/iresearch/report" path="/iresearch/report"/>
+
 ## 爱 Q 生活网
 
 ### 最近更新
@@ -338,12 +344,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 用户动态
 
 <Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
-
-## 艾瑞
-
-### 产业研究报告
-
-<Route author="brilon" example="/iresearch/report" path="/iresearch/report"/>
 
 ## 百度搜索风云榜
 
@@ -854,12 +854,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
-## 油价
-
-### 今日油价
-
-<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
-
 ## 邮箱
 
 ### 邮件列表
@@ -867,6 +861,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" selfhost="1"/>
+
+## 油价
+
+### 今日油价
+
+<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
 ## 源仓库
 
