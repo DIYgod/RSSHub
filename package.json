@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
+    "@napi-rs/pinyin": "^1.6.1",
     "@types/cheerio": "0.22.24",
     "@types/got": "9.6.11",
     "@types/koa": "2.13.1",
@@ -50,7 +51,6 @@
     "mockdate": "3.0.5",
     "nock": "13.0.11",
     "nodemon": "2.0.7",
-    "pinyin": "2.10.2",
     "prettier": "2.2.1",
     "prettier-check": "2.0.0",
     "pretty-quick": "3.1.1",
