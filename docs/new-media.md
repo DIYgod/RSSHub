@@ -1584,6 +1584,12 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
 
+## 梅斯医学 MedSci
+
+### 推荐
+
+<Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
+
 ## 美国半导体行业协会
 
 ### 新闻
@@ -1619,12 +1625,6 @@ column 为 third 时可选的 category:
 | 默认空   | fresh    | industry | talk     | intech        | investor | everything |
 
 </Route>
-
-## 梅斯医学 MedSci
-
-### 推荐
-
-<Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
 
 ## 摩点
 
