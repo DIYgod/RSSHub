@@ -1594,6 +1594,42 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
 
+## 摩点
+
+### 众筹
+
+<Route author="nczitzk" example="/modian/zhongchou" path="/modian/zhongchou/:category?/:sort?/:status?" :paramsDesc="['分类，见下表，默认为全部', '排序，见下表，默认为最新上线', '状态，见下表，默认为全部']">
+
+分类
+
+| 全部 | 游戏  | 动漫   | 出版       | 桌游       |
+| ---- | ----- | ------ | ---------- | ---------- |
+| all  | games | comics | publishing | tablegames |
+
+| 潮玩模型 | 影视       | 音乐  | 活动       | 设计   |
+| -------- | ---------- | ----- | ---------- | ------ |
+| toys     | film-video | music | activities | design |
+
+| 科技       | 食品 | 爱心通道 | 动物救助 |
+| ---------- | ---- | -------- | -------- |
+| technology | food | charity  | animals  |
+
+| 个人愿望 | 其他   |
+| -------- | ------ |
+| wishes   | others |
+
+排序
+
+| 最新上线 | 金额最高 | 评论最多 |
+| -------- | -------- | -------- |
+
+状态
+
+| 全部 | 创意 | 预热 | 众筹中 | 众筹成功 |
+| ---- | ---- | ---- | ------ | -------- |
+
+</Route>
+
 ## 摩根大通研究所
 
 ### 新闻
