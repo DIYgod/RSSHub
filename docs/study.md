@@ -246,7 +246,7 @@ pageClass: routes
 
 ## 幕布精选
 
-<Route author="laampui" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:tagId/:title?" :paramsDesc="['标签 id', '显示标题']" />
+<Route author="laampui nczitzk" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:category?/:title?" :paramsDesc="['分类 id', '显示标题']" />
 
 ## 扇贝
 

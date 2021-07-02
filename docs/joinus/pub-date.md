@@ -8,7 +8,12 @@
 
 ## 规范
 
-`pubDate`接受一个[Date Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)。或者是可以被正确解析的字符串。这里**并不推荐直接返回字符串的方式**，因为其行为可能在不同环境下不一致，[Date.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse)
+`pubDate`必须是一个
+
+1. [Date Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)。
+2. **不推荐，用于兼容** 可以被正确解析的字符串。因为其行为可能在不同环境下不一致，[Date.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse)，请尽量避免
+
+同时，脚本传入的`pubDate`应当是对应**服务器所使用的时区/时间**。更多细节参阅下方工具类
 
 ## 使用工具类
 

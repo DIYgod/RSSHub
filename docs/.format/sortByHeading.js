@@ -1,6 +1,5 @@
 const file = require('./file');
-const pinyin = require('pinyin');
-
+const pinyinCompare = new Intl.Collator('zh-Hans-CN-u-co-pinyin').compare;
 const isASCII = (str) => /^[\x00-\x7F]*$/.test(str);
 
 module.exports = {
@@ -41,7 +40,7 @@ module.exports = {
                 } else if (ia || ib) {
                     return ia > ib ? -1 : 1;
                 } else {
-                    return pinyin.compare(a.title, b.title);
+                    return pinyinCompare(a.title, b.title);
                 }
             })
             .map((x) => x.content.join('\n'))
