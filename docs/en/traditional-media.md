@@ -211,9 +211,9 @@ Supported sub-sites:
     See [路透社中国分站](../traditional-media.html#lu-tou-she)
 
 -   US site `us`：
-    | Business | Markets | World | Politics | Tech | Breakingviews | Wealth | Life |
-    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
-    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+    | World | Business | Legal | Markets | Breakingviews | Technology | Investigates |  Lifestyle |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- | ------------ |  --------- |
+    | world | business | legal | markets | breakingviews | technology | investigates |  lifestyle |
 
 -   UK site `uk`：
     | Business | World | UK | Tech | Money | Breakingviews | Life |
