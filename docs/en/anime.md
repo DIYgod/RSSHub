@@ -4,6 +4,12 @@ pageClass: routes
 
 # ACG
 
+## Animixplay
+
+### New episode
+
+<Route author="youralmight" example="animixplay/update" path="/animixplay/update"/>
+
 ## Hanime.tv
 
 ### Recently updated
