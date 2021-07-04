@@ -2018,7 +2018,7 @@
                 docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
                 source: '/x/cover/:id/:detail',
                 target: '/tencentvideo/playlist/:id'
-            },  
+            }, 
         ],
     },
     'javbus.com': {
