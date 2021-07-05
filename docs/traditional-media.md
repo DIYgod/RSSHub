@@ -227,9 +227,9 @@ Solidot 提供的 feed:
 
 可选分类如下
 
-| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT  | INDUSTRY RESOURCES |
-| -------- | --------- | --------- | ------- | --- | ------------------ |
-| mobile   | internet  | boardcast | general | it  | industry-resources |
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | -- | ------------------ |
+| mobile   | internet  | boardcast | general | it | industry-resources |
 
 ::: tip 提示
 
@@ -822,9 +822,9 @@ category 对应的关键词有
 
     -   主频道：
 
-    | Business | Markets | World | UK  | Tech       | Money           | Breakingviews | Sport  | Life      |
-    | -------- | ------- | ----- | --- | ---------- | --------------- | ------------- | ------ | --------- |
-    | business | markets | world | uk  | technology | personalFinance | breakingviews | sports | lifestyle |
+    | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
+    | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
+    | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
 
 </Route>
 
