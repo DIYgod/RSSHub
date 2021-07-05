@@ -2,12 +2,13 @@
     "extends": ["eslint:recommended", "plugin:prettier/recommended"],
     "plugins": ["prettier"],
     "parserOptions": {
-        "ecmaVersion": 2018,
+        "ecmaVersion": 2020,
         "sourceType": "module"
     },
     "env": {
         "node": true,
-        "es6": true
+        "es6": true,
+        "browser": true
     },
     "rules": {
         "no-console": 2,
@@ -52,6 +53,7 @@
         "prettier/prettier": 0,
         "no-await-in-loop": 2,
         "require-atomic-updates": 0,
-        "no-prototype-builtins": 0
+        "no-prototype-builtins": 0,
+        "no-new-func": 2
     }
 }

@@ -174,9 +174,21 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="zengxs" example="/saraba1st/thread/1789863" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
+<Route author="zengxs" example="/saraba1st/thread/1842868" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
 
-帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1789863-1-1.html> 那么帖子 id 就是 `1789863`。
+帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1842868-1-1.html> 那么帖子 id 就是 `1789863`。
+
+</Route>
+
+## SCBOY 论坛
+
+### 帖子
+
+<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" :paramsDesc="['帖子 tid']" radar="1">
+
+帖子网址如果为 <https://www.scboy.com/?thread-188673.htm> 那么帖子 tid 就是 `1789863`。
+
+访问水区需要添加环境变量 `SCBOY_BBS_TOKEN`, 详情见部署页面的配置模块。 `SCBOY_BBS_TOKEN`在 cookies 的`bbs_token`中。
 
 </Route>
 
@@ -236,11 +248,11 @@ pageClass: routes
 
 ### 子论坛
 
-<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:caty" :paramsDesc="['子论坛']">
+<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:category?" :paramsDesc="['子论坛，默认为首页']">
 
-| 首页  | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
-| ----- | -------- | -------- | ------- | -------- | -------- | -------- |
-| index | qna      | lowshine | it      | finance  | startup  | city     |
+| 首页 | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
+| ---- | -------- | -------- | ------- | -------- | -------- | -------- |
+|      | qna      | lowshine | it      | finance  | startup  | city     |
 
 </Route>
 
@@ -248,7 +260,11 @@ pageClass: routes
 
 ### 虎扑 BBS 论坛
 
-<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']"/>
+<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']">
+
+此路由与旧的 `/hupu/bxj/:id/:order?` 等价，但推荐使用 `/hupu/bbs/:id/:order?`，旧路由可能会在未来被删除。
+
+</Route>
 
 ### 分类
 
@@ -306,6 +322,16 @@ pageClass: routes
 
 </Route>
 
+## 集思录
+
+### 用户回复
+
+<Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+
+### 用户主题
+
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+
 ## 看雪
 
 ### 论坛
@@ -326,12 +352,31 @@ pageClass: routes
 | CrackMe      | crackme    |
 | Pwn          | pwn        |
 | WEB 安全     | web        |
+| 外文翻译     | translate  |
 | 全站         | all        |
 
 | 类型     | type   |
 | -------- | ------ |
 | 最新主题 | latest |
 | 精华主题 | digest |
+
+## 梨园
+
+### 主题帖（全站）
+
+<Route author="WooMai" example="/liyuan-forums/threads" path="/liyuan-forums/threads" />
+
+### 主题帖（板块）
+
+<Route author="WooMai" example="/liyuan-forums/threads/forum/1" path="/liyuan-forums/threads/forum/:forum_id" :paramsDesc="['板块 ID, 支持多个, 使用英文逗号分隔']" />
+
+### 主题帖（专题）
+
+<Route author="WooMai" example="/liyuan-forums/threads/topic/1" path="/liyuan-forums/threads/topic/:topic_id" :paramsDesc="['专题 ID, 支持多个, 使用英文逗号分隔']" />
+
+### 主题帖（用户）
+
+<Route author="WooMai" example="/liyuan-forums/threads/user/1" path="/liyuan-forums/threads/user/:user_id" :paramsDesc="['用户 ID (仅支持数字 ID), 支持多个, 使用英文逗号分隔']" />
 
 ## 龙空
 
@@ -345,13 +390,13 @@ pageClass: routes
 
 ## 龙腾网
 
-### 转译网贴
+### 网帖翻译
 
-<Route author="sgqy" example="/ltaaa" path="/ltaaa/:type?" :paramsDesc="['热门类型.']">
+<Route author="sgqy nczitzk" example="/ltaaa" path="/ltaaa/:category?" :paramsDesc="['分类，见下表，默认为最新']">
 
-| 最新 | 每周 | 每月  | 全年 |
-| ---- | ---- | ----- | ---- |
-| (空) | week | month | year |
+| 最新   | 科技       | 娱乐  | 文化    | 社会      | 体育  | 历史    | 趣闻        | 图说世界 |
+| ------ | ---------- | ----- | ------- | --------- | ----- | ------- | ----------- | -------- |
+| latest | technology | funny | culture | community | sport | history | curiosities | picture  |
 
 </Route>
 
@@ -394,6 +439,24 @@ pageClass: routes
 | 1        | 2        | 3          |
 
 </Route>
+
+## 品葱
+
+### 发现
+
+<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']" anticrawler="1" />
+
+| 最新 | 推荐      | 热门 |
+| ---- | --------- | ---- |
+| new  | recommend | hot  |
+
+### 精选
+
+<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']" anticrawler="1" />
+
+### 话题
+
+<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" />
 
 ## 三星盖乐世社区
 
@@ -447,25 +510,27 @@ pageClass: routes
 
 ### 帖子列表
 
-<Route author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']"/>
+<Route author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
 
 ### 精品帖子
 
-<Route author="u3u" example="/tieba/forum/good/女图" path="/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']"/>
+<Route author="u3u" example="/tieba/forum/good/女图" path="/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
 
 ### 帖子动态
 
-<Route author="u3u" example="/tieba/post/5853240586" path="/tieba/post/:id" :paramsDesc="['帖子 ID']"/>
+<Route author="u3u" example="/tieba/post/5853240586" path="/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
 
 ### 楼主动态
 
-<Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']"/>
+<Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
 
 ### 用户帖子
 
-<Route author="humpylin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" />
+<Route author="igxlin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
 
 用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
+
+</Route>
 
 ## 万维读者
 
@@ -692,3 +757,19 @@ pageClass: routes
 ### 滚动新闻
 
 <Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>
+
+## 中国灵异网
+
+### 分类
+
+<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']"> 
+
+| 编辑推荐 | 奇闻异事   | 鬼话连篇       |
+| -------- | ---------- | -------------- |
+| tuijian  | qiwenyishi | guihualianpian |
+
+| 灵异事件      | 灵异图片     | 民间奇谈     |
+| ------------- | ------------ | ------------ |
+| lingyishijain | lingyitupian | minjianqitan |
+
+</Route>

@@ -16,6 +16,24 @@ pageClass: routes
 
 </Route>
 
+## 重庆市人民政府
+
+### 两江新区信息公开网
+
+#### 党务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
+
+#### 政务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" :paramsDesc="['分类名']">
+
+| 履职依据 | 公示公告 |
+| -------- | -------- |
+| lzyj     | gsgg     |
+
+</Route>
+
 ## 广东省人民政府
 
 ### 广东省教育厅
@@ -25,6 +43,26 @@ pageClass: routes
 | 通知公告 | 本厅信息 | 新闻发布 | 媒体聚焦 | 广东教育 | 教育动态 | 图片新闻 | 政声传递 |
 | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
 |   tzgg   |   btxx   |   xwfb   |   mtjj   |   gdjy   |   jydt   |   tpxw   |   zscd   |
+
+</Route>
+
+### 广东省教育考试院
+
+<Route author="icealtria" example="/gov/guangdong/eea/kszs" path="/gov/guangdong/eea/:caty" :paramsDesc="['资讯类别']">
+
+| 考试招生 | 社会考试 | 招考公示 | 报考指南 | 要闻动态 | 公开专栏 | 政策文件 | 政策解读 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   kszs   |   shks   |   zkgs   |   bkzn   |   news   |   gkzl   |   zcwj   |   zcjd   |
+
+</Route>
+
+### 广东省深圳市人民政府
+
+<Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
+
+| 通知公告 | 政府采购 | 资金信息 | 重大项目 |
+| :------: | :------: | :------: | :------: |
+|   tzgg   |   zfcg   |   zjxx   |   zdxm   |
 
 </Route>
 
@@ -185,6 +223,18 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
 
+## 中国农工民主党
+
+### 新闻中心
+
+<Route author="nczitzk" example="/ngd" path="/ngd/:slug?" :paramsDesc="['见下文']">
+
+将目标栏目的网址拆解为 `http://www.ngd.org.cn/` 和后面的字段，去掉 `.htm` 后，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+
+如：(要闻动态)[http://www.ngd.org.cn/xwzx/ywdt/index.htm] 的网址在 `http://www.ngd.org.cn/` 后的字段是 `xwzx/ywdt/index.htm`，则对应的 slug 为 `xwzx-ywdt-index`，对应的路由即为 `/ngd/xwzx-ywdt-index`
+
+</Route>
+
 ## 中国人大网
 
 <Route author="233yeee" example="/npc/c183" path="/npc/:caty" :paramsDesc="['分类名，支持形如`http://www.npc.gov.cn/npc/*/list.shtml`的网站，传入 npc 之后的参数']">
@@ -194,6 +244,12 @@ pageClass: routes
 | c183 | c184 | c185 | c189 | c12435   | c10134   |
 
 </Route>
+
+## 中国庭审公开网
+
+### 开庭信息
+
+<Route author="Fatpandac" example="/tingshen" path="/tingshen"/>
 
 ## 中国信息通信研究院
 
@@ -208,6 +264,20 @@ pageClass: routes
 ### CAICT 观点
 
 <Route author="nczitzk" example="/gov/caict/caictgd" path="/gov/caict/caictgd"/>
+
+## 中国证券监督管理委员会
+
+### 发审委公告
+
+<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
+
+### 证监会消息
+
+<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+
+### 申请事项进度
+
+<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国政府
 
@@ -279,20 +349,6 @@ pageClass: routes
 ### 吹风会
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
-
-## 中国证券监督管理委员会
-
-### 发审委公告
-
-<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
-
-### 证监会消息
-
-<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
-
-### 申请事项进度
-
-<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国政协网
 
@@ -397,6 +453,18 @@ pageClass: routes
 
 ### 支持国家列表
 
+#### 加拿大 `CA`
+
+-   大使馆: `/embassy/ca`
+
+-   领事馆城市列表:
+
+| 城市     | 路由                   |
+| -------- | ---------------------- |
+| 蒙特利尔 | `/embassy/ca/montreal` |
+
+* * *
+
 #### 德国 `DE`
 
 -   大使馆: `/embassy/de`
@@ -492,12 +560,6 @@ pageClass: routes
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
-## 中華民國國防部
-
-### 即時軍事動態
-
-<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
-
 ## 中华人民共和国国家发展和改革委员会
 
 ### 新闻动态
@@ -547,6 +609,18 @@ pageClass: routes
 
 <Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
 
+## 中华人民共和国人力资源和社会保障部
+
+### 社保减免
+
+<Route author="ncziztk" example="/gov/mohrss/sbjm" path="/gov/mohrss/sbjm/:category?" :paramsDesc="['分类，见下表']">
+
+| 要点新闻 | 政策文件 | 工作动态 | 媒体报道 | 图片新闻 |
+| -------- | -------- | -------- | -------- | -------- |
+| ydxw     | zcwj     | gzdt     | mtbd     | tpxw     |
+
+</Route>
+
 ## 中华人民共和国商务部
 
 ### 政务公开
@@ -583,23 +657,11 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/mohurd/policy" path="/gov/mohurd/policy"/>
 
-## 重庆市人民政府
+## 中華民國國防部
 
-### 两江新区信息公开网
+### 即時軍事動態
 
-#### 党务公开
-
-<Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
-
-#### 政务公开
-
-<Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" :paramsDesc="['分类名']">
-
-| 履职依据 | 公示公告 |
-| -------- | -------- |
-| lzyj     | gsgg     |
-
-</Route>
+<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
 
 ## 中央纪委国家监委
 
