@@ -29,7 +29,7 @@ pageClass: routes
 ### 话题
 
 <Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
-采用了`puppeteer`规避`Project Shield`，无全文抓取，建议自建。  
+采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
 
 ## BBC
 
@@ -186,7 +186,7 @@ pageClass: routes
 
 <Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
 
-细则: 
+细则：
 
 -   `:range` 时间范围参数  
     (可为 `latest` 或 `四位数字的年份`)
@@ -227,9 +227,9 @@ Solidot 提供的 feed:
 
 可选分类如下
 
-| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
-| -------- | --------- | --------- | ------- | -- | ------------------ |
-| mobile   | internet  | boardcast | general | it | industry-resources |
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT  | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | --- | ------------------ |
+| mobile   | internet  | boardcast | general | it  | industry-resources |
 
 ::: tip 提示
 
@@ -822,9 +822,9 @@ category 对应的关键词有
 
     -   主频道：
 
-    | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
-    | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
-    | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
+    | Business | Markets | World | UK  | Tech       | Money           | Breakingviews | Sport  | Life      |
+    | -------- | ------- | ----- | --- | ---------- | --------------- | ------------- | ------ | --------- |
+    | business | markets | world | uk  | technology | personalFinance | breakingviews | sports | lifestyle |
 
 </Route>
 
@@ -866,9 +866,10 @@ category 对应的关键词有
 
 </Route>
 
-### 每日简报
+### 新闻简报
 
-<Route author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese"/>
+网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
 
 ### 畅销书排行榜
 
