@@ -35,3 +35,15 @@ pageClass: routes
 ### Discussion
 
 <RouteEn author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" :paramsDesc="['Discussion id']"/>
+
+## SCBOY forum
+
+### Thread
+
+<RouteEn author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" :paramsDesc="['thread tid']" radar="1">
+
+If the url of the thread is <https://www.scboy.com/?thread-188673.htm> then tid would be `1789863`.
+
+When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See <https://docs.rsshub.app/en/install/#Deployment> for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
+
+</RouteEn>
