@@ -447,4 +447,5 @@ pageClass: routes
 <Route author="zytomorrow" example="/simpread/notice" path="/simpread/notice"/>
 
 ### 更新日志
+
 <Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
