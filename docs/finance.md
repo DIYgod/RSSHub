@@ -152,7 +152,7 @@ pageClass: routes
 
 ### 股票评论
 
-<Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id" :paramsDesc="['股票代码（需要带上交易所）']"/>
+<Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" :paramsDesc="['股票代码（需要带上交易所）', '标题长度']"/>
 
 ## 证券时报网
 
