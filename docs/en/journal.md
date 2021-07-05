@@ -35,6 +35,12 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 </RouteEn>
 
+## BioOne
+
+### Featured articles
+
+<RouteEn author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
+
 ## Cell Journal
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
@@ -89,6 +95,10 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 </RouteEn>
 
 ## MIT Technology Review
+
+<RouteEn author="zphw" example="/technologyreview" path="/technologyreview" />
+
+### Topics
 
 <RouteEn author="laampui" example="/technologyreview/humans-and-technology" path="/technologyreview/:category_name" :paramsDesc="['see below']" />
 

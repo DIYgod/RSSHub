@@ -21,6 +21,17 @@ sidebar: auto
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker 镜像
+
+默认推荐使用`diygod/rsshub`即`diygod/rsshub:latest`最新版镜像以获取最新路由.  
+当`diygod/rsshub:latest`存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
+
+```bash
+$ docker pull diygod/rsshub:2021-06-18
+```
+
+待最新镜像更新后在切换回`diygod/rsshub:latest`最新版镜像.
+
 ## Docker Compose 部署
 
 ### 安装
@@ -49,6 +60,12 @@ $ docker-compose up -d
 
 ```bash
 $ docker-compose down
+```
+
+如果之前已经下载 / 使用过镜像，下方命令可以帮助你获取最新版本：这可能可以解决一些问题。
+
+```bash
+$ docker pull diygod/rsshub
 ```
 
 然后重复安装步骤
@@ -153,10 +170,10 @@ $ cd RSSHub
 使用 `npm`
 
 ```bash
-$ npm install --production
+$ npm ci --production
 ```
 
-或 `yarn`
+或 `yarnv1` (不推荐)
 
 ```bash
 $ yarn install --production
@@ -351,8 +368,6 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `REDIS_URL`: Redis 连接地址（redis 缓存类型时有效），默认为 `redis://localhost:6379/`
 
-`REDIS_PASSWORD`: Redis 连接密码（redis 缓存类型时有效）
-
 ### 代理配置
 
 部分路由反爬严格，可以配置使用代理抓取。
@@ -361,7 +376,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 #### 代理 URI
 
-`PROXY_URI`: 代理 URI，支持 socks4, socks5, http, https
+`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以[socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考[curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
 
 > 代理 URI 的格式为：
 >
@@ -371,8 +386,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 > 一些示例：
 >
 > -   `socks4://127.0.0.1:1080`
-> -   `socks5://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
-> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5`)
+> -   `socks5h://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
+> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5h`)
 > -   `http://127.0.0.1:8080`
 > -   `http://user:pass@127.0.0.1:8080`
 > -   `https://127.0.0.1:8443`
@@ -415,7 +430,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   `BLACKLIST`: 黑名单
 
-黑白名单支持 IP 和路由，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+黑白名单支持 IP、路由和 UA，模糊匹配，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### 访问密钥 / 码
 
@@ -451,7 +466,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `REQUEST_RETRY`: 请求失败重试次数，默认 `2`
 
-`DEBUG_INFO`: 是否在首页显示路由信息，默认 `false`
+`REQUEST_TIMEOUT`: 请求超时毫秒数，默认 `3000`
+
+`DEBUG_INFO`: 是否在首页显示路由信息。值为非 `true` `false` 时，在请求中带上参数 `debug` 开启显示，例如：<https://rsshub.app/?debug=value_of_DEBUG_INFO> 。默认 `true`
 
 `NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
 
@@ -462,6 +479,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 `PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
+
+`SENTRY_ROUTE_TIMEOUT`: 路由耗时超过此毫秒值上报 Sentry，默认 `3000`
 
 `DISALLOW_ROBOT`: 阻止搜索引擎收录，默认开启，设置 false 或 0 关闭
 
@@ -477,9 +496,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
-    -   `PIXIV_USERNAME`: Pixiv 用户名
-
-    -   `PIXIV_PASSWORD`: Pixiv 密码
+    -   `PIXIV_REFRESHTOKEN`: Pixiv Refresh Token, 请参考 [此文](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 获取，或自行对客户端抓包获取
 
     -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
 
@@ -520,7 +537,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
         1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
         2.  打开控制台，切换到 Network 面板，刷新
-        3.  点击 dynamic_new 请求，找到 Cookie
+        3.  点击 dynamic_new 请求，找到 Cookie。(Key：`SESSDATA`)
 
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
@@ -528,9 +545,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   邮箱 邮件列表路由：
 
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如：
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
         -   Linux 环境变量：`EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
-        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
+        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
 
 -   吹牛部落 栏目更新
 
@@ -603,8 +620,18 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `IG_USERNAME`: Instagram 用户名。
     -   `IG_PASSWORD`: Instagram 密码。
+    -   `IG_PROXY`: Instagram 代理 URL。
 
     注意，暂不支持两步验证。
+
+-   BUPT
+
+    -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
+        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
+        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        3.  打开控制台，刷新
+        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        5.  找到请求头中的 Cookie
 
 -   BTBYR
 
@@ -653,3 +680,15 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
+
+-   Wordpress
+
+    -   `WORDPRESS_CDN`: 用于中转 http 图片链接。可供考虑的服务见下表：
+
+        | url                                      | backbone     |
+        | ---------------------------------------- | ------------ |
+        | <https://imageproxy.pimg.tw/resize?url=> | akamai       |
+        | <https://images.weserv.nl/?url=>         | cloudflare   |
+        | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
+        | <https://cors.netnr.workers.dev/>        | cloudflare   |
+        | <https://netnr-proxy.openode.io/>        | digitalocean |

@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    if: github.repository == "DIYgod/RSSHub"
+    if: github.repository == 'DIYgod/RSSHub'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
