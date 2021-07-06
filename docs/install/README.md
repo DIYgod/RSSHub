@@ -21,6 +21,17 @@ sidebar: auto
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker 镜像
+
+默认推荐使用`diygod/rsshub`即`diygod/rsshub:latest`最新版镜像以获取最新路由.  
+当`diygod/rsshub:latest`存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
+
+```bash
+$ docker pull diygod/rsshub:2021-06-18
+```
+
+待最新镜像更新后在切换回`diygod/rsshub:latest`最新版镜像.
+
 ## Docker Compose 部署
 
 ### 安装
