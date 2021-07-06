@@ -3007,4 +3007,15 @@
             },
         ],
     },
+    'macwk.com': {
+        _name: 'MacWk',
+        '.': [
+            {
+                title: '应用更新',
+                docs: 'https://docs.rsshub.app/program-update.html#macwk',
+                source: '/soft/:name',
+                target: '/macwk/soft/:name',
+            },
+        ],
+    },
 });
