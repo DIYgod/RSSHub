@@ -134,7 +134,9 @@ pageClass: routes
 
 :::
 
-</Route>
+### 北大法学院招生教学公告
+
+<Route author="linusboyle" example="/pku/law" path="/pku/law" />
 
 ## 北京航空航天大学
 
