@@ -178,6 +178,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/security/pulses" path="/security/pulses"/>
 
+## 每日安全提示
+
+### 文章
+
+<Route author="Yansy" example="/totaldefense/recent" path="/totaldefense/recent"/>
+
 ## 美团技术团队
 
 ### 最近更新
