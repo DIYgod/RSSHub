@@ -266,6 +266,12 @@ pageClass: routes
 
 </Route>
 
+## 咚漫
+
+### 漫画更新
+
+<Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
+
 ## 動畫瘋
 
 ### 最後更新
@@ -275,12 +281,6 @@ pageClass: routes
 ### 動畫
 
 <Route author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
-
-## 咚漫
-
-### 漫画更新
-
-<Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
 
 ## 動漫狂
 
