@@ -181,6 +181,16 @@
                 },
             },
             {
+                title: '用户媒体时间线',
+                docs: 'https://docs.rsshub.app/social-media.html#twitter',
+                source: '/:id/media',
+                target: (params) => {
+                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                        return '/twitter/media/:id';
+                    }
+                },
+            },
+            {
                 title: '用户关注时间线',
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
