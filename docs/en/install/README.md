@@ -21,6 +21,15 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker Image
+We recommend using the latest version of the docker image.  
+When the latest version is unavailable , you can use image with date tag. For example :
+```
+$ docker pull diygod/rsshub:2021-06-18
+```
+Your can back to the latest version when code has been fixed and rebuild the image.
+
+
 ## Docker Compose Deployment
 
 ### Install
@@ -49,6 +58,12 @@ Remove old containers
 
 ```bash
 $ docker-compose down
+```
+
+Repull the latest image if you have downloaded the image before. It is helpful to resolve some issues.
+
+```bash
+$ docker pull diygod/rsshub
 ```
 
 Then repeat the installation steps
@@ -151,10 +166,10 @@ Execute the following commands to install dependencies
 Using `npm`
 
 ```bash
-$ npm install
+$ npm ci
 ```
 
-Or `yarn`
+Or `yarnv1` (not recommended)
 
 ```bash
 $ yarn
@@ -532,4 +547,3 @@ See docs of specified route and `lib/config.js` for detail information.
         | https://pic1.xuehuaimg.com/proxy/        | cloudflare   |
         | https://cors.netnr.workers.dev/          | cloudflare   |
         | https://netnr-proxy.openode.io/          | digitalocean |
-
