@@ -1888,28 +1888,34 @@
         _name: '站酷',
         www: [
             {
-                title: '全部推荐',
+                title: '发现',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/all',
+                target: '/zcool/discover',
             },
             {
-                title: '首页推荐',
+                title: '发现 - 精选 - 全部推荐',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/home',
+                target: '/zcool/discover/all',
             },
             {
-                title: '编辑推荐',
+                title: '发现 - 精选 - 首页推荐',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/home',
+                target: '/zcool/discover/home',
             },
             {
-                title: '文章推荐',
+                title: '发现 - 精选 - 编辑精选',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/article',
+                target: '/zcool/discover/home',
+            },
+            {
+                title: '发现 - 精选 - 文章 - 编辑精选',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/discover/article',
             },
             {
                 title: '作品榜单',
