@@ -2317,6 +2317,22 @@ column 为 third 时可选的 category:
 
 <Route author="WenryXu" example="/iyiou" path="/iyiou"/>
 
+## TANC 艺术新闻
+
+### 分类
+
+<Route author="nczitzk" example="/tanchinese" path="/tanchinese/:category?" :paramsDesc="['分类，见下表，默认为 INDEX 首页']">
+
+| INDEX 首页 | ENGLISH 英文版 | NEWS 新闻 | MUSEUM 博物馆 | EXHIBITIONS 展览 |
+| ---------- | -------------- | --------- | ------------- | ---------------- |
+|            | english        | news      | museum        | exhibitions      |
+
+| COMMENTS 评论 | FEATURE 特写 | INTERVIEW 专访 | VIDEO 影像之选 | ART MARKET 艺术市场 |
+| ------------- | ------------ | -------------- | -------------- | ------------------- |
+| comments      | feature      | interview      | video          | art-market          |
+
+</Route>
+
 ## 异次元软件世界
 
 ### 首页
