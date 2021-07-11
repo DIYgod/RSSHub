@@ -194,6 +194,11 @@ pageClass: routes
 
 </Route>
 
+## 上海教育考试院自学考试通知公告
+
+<Route author="oyydd" example="/shanghai/self-study" path="/shanghai/self-study" />
+
+
 ## 杭州市国家普通话测试网报信息
 
 ### 考试信息
