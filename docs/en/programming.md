@@ -111,13 +111,17 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Explore
 
-<RouteEn author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">
+<RouteEn author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" :paramsDesc="['type', 'Gitlab instance hostname, default to gitlab.com']">
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
 
 </RouteEn>
+
+### Release
+
+<RouteEn author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" :paramsDesc="['owner or namespace', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
 
 ## Hacker News
 
