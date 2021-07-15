@@ -187,3 +187,9 @@ Steam provides some official RSS feeds:
 ### Discussions
 
 <RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['category name, default to All']"/>
+
+## ProjectSekai ｜ プロセカ
+
+### News
+
+<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>

@@ -712,3 +712,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游戏横幅
 
 <Route author="y2361547758" example="/magireco/event_banner" path="/magireco/event_banner"/>
+
+## 世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ
+
+### 公告
+
+<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
