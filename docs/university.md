@@ -1932,6 +1932,10 @@ type 列表：
 | -------- | -------------- | ------------ | -------- | ---------- |
 | zxtg     | xdsgwy         | gjzzsx       | xwzx     | hdyjz      |
 
+### 电气学院
+
+<Route author="DylanXie123" example="/xjtu/ee/1114" path="/xjtu/job/:id?" :paramsDesc="['栏目id，默认请求`1114`，可在 URL 中找到']"  />
+
 ## 西北工业大学
 
 ### 翱翔门户
