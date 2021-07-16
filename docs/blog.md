@@ -195,3 +195,13 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 政采云前端技术团队
+
+### 博客
+
+<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog"/>
+
+### 小报文章
+
+<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly"/>
