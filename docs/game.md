@@ -211,6 +211,8 @@ pageClass: routes
 
 <Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
 
+<Route author="JohnnyWoong" example="/minecraft/changelog" path="/minecraft/changelog" />
+
 ### Feed The Beast (FTB) 模组包更新
 
 <Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" :paramsDesc="['模组包的短名.']">
