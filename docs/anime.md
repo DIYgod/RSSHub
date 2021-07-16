@@ -69,6 +69,12 @@ pageClass: routes
 
 </Route>
 
+## Animixplay
+
+### 番剧更新
+
+<Route author="youralmight" example="animixplay/update" path="/animixplay/update"/>
+
 ## Anitama
 
 ### Anitama Channel
