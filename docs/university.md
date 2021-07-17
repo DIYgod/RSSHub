@@ -973,6 +973,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" />
 
+### 电子与信息学院 - 新闻速递
+
+<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" />
+
+::: warning 注意
+由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
+:::
+
 ## 华南师范大学
 
 ### 软件学院通知公告
@@ -1921,6 +1929,16 @@ type 列表：
 ### 研究生院通知公告
 
 <Route author="nczitzk" example="/xjtu/gs/tzgg" path="/xjtu/gs/tzgg" />
+
+### 就业创业中心
+
+<Route author="DylanXie123" example="/xjtu/job/xdsgwy" path="/xjtu/job/:subpath?" :paramsDesc="['栏目类型，默认请求`zxtg`，详见下方表格']"  />
+
+栏目类型
+
+| 中心通告 | 选调生及公务员 | 国际组织实习 | 新闻资讯 | 活动与讲座 |
+| -------- | -------------- | ------------ | -------- | ---------- |
+| zxtg     | xdsgwy         | gjzzsx       | xwzx     | hdyjz      |
 
 ## 西北工业大学
 
