@@ -2450,4 +2450,18 @@ QueryString:
 
 ### 全文
 
-<Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+<Route author="HenryQW nczitzk" example="/zzz" path="/zzz/:category?/:language?" :paramsDesc="['分类，见下表，默认为全部', '语言，见下表，默认为简体中文']">
+
+分类
+
+| 全部 | 房股财经     | 时事评论      | 每日一见    | 随心杂谈    | 精彩推荐       | 历史新撰     |
+| ---- | ------------ | ------------- | ----------- | ----------- | -------------- | ------------ |
+| all  | fangshigushi | shishipinglun | meiriyijian | suixinzatan | jingcaituijian | lishixinzuan |
+
+语言
+
+| 简体中文 | 港澳繁體 | 台灣正體 |
+| -------- | -------- | -------- |
+|          | zh-hk    | zh-tw    |
+
+</Route>
