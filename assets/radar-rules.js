@@ -1216,6 +1216,15 @@
         ],
         music: [
             {
+                title: '云音乐 - 歌手歌曲',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/',
+                target: (params, url) => {
+                    const id = new URL(url).hash.match(/artist\?id=(.*)/)[1];
+                    return id ? `/ncm/artist_songs/${id}` : '';
+                },
+            },
+            {
                 title: '云音乐 - 用户歌单',
                 docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
                 source: '/',
