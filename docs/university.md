@@ -973,6 +973,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" />
 
+### 电子与信息学院 - 新闻速递
+
+<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" />
+
+::: warning 注意
+由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
+:::
+
 ## 华南师范大学
 
 ### 软件学院通知公告

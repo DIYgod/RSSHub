@@ -306,6 +306,18 @@ pageClass: routes
 
 <Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
+## 看漫画镜像站
+
+### 漫画更新
+
+<Route author="btdwv" path="/mhgui/comic/:id" example="/mhgui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+
+## 看漫画台湾
+
+### 漫画更新
+
+<Route author="btdwv" path="/twmanhuagui/comic/:id" example="/twmanhuagui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+
 ## 漫画 DB
 
 ### 漫画 DB

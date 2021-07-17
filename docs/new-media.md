@@ -288,6 +288,12 @@ Tag
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
+## Harvard Health Publishing
+
+### Harvard Health Blog
+
+<Route author="nczitzk" example="/harvard/health/blog" path="/harvard/health/blog" />
+
 ## HKEPC
 
 ### HKEPC 電腦領域
