@@ -32,11 +32,23 @@ pageClass: routes
 
 ## dbaplus 社群
 
+### 栏目
+
 <Route author="nczitzk" example="/dbaplus" path="/dbaplus/:tab?" :paramsDesc="['栏目，见下表，默认为全部']">
 
 | 全部 | 数据库 | 运维 | 大数据 | 架构 | PaaS 云 | 职场生涯 | 这里有毒 |
 | ---- | ------ | ---- | ------ | ---- | ------- | -------- | -------- |
 | All  | 153    | 134  | 73     | 141  | 72      | 149      | 21       |
+
+</Route>
+
+### 活动
+
+<Route author="nczitzk" example="/dbaplus/activity" path="/dbaplus/activity/:type?" :paramsDesc="['分类，见下表，默认为线上分享']">
+
+| 线上分享 | 线下峰会 |
+| -------- | -------- |
+| online   | offline  |
 
 </Route>
 
