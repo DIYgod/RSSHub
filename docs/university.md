@@ -817,7 +817,7 @@ category 列表：
 
 ### 哈尔滨工业大学（深圳） - 新闻中心
 
-<Route author="yx1302317313" example="/hitsz/article/id-74" path="/hitsz/article/:category?" :paramsDesc="['分类名，默认为通知公告']" >
+<Route author="xandery-geek" example="/hitsz/article/id-74" path="/hitsz/article/:category?" :paramsDesc="['分类名，默认为通知公告']" >
 
 | 校区要闻 | 媒体报道 | 通知公告 | 综合新闻 | 校园动态 | 讲座论坛 | 热点专题 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
