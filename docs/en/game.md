@@ -158,6 +158,12 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 <RouteEn author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
+## ProjectSekai ｜ プロセカ
+
+### News
+
+<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
+
 ## Steam
 
 ### Steam search
