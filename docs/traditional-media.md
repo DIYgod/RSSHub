@@ -814,9 +814,9 @@ category 对应的关键词有
 
     -   主频道：
 
-    | Business | Markets | World | Politics | Tech       | Breakingviews | Wealth | Life      |
-    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
-    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+    | World | Business | Legal | Markets | Breakingviews | Technology | Investigates |  Lifestyle |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- | ------------ |  --------- |
+    | world | business | legal | markets | breakingviews | technology | investigates |  lifestyle |
 
 -   英国分站 `uk`：
 
