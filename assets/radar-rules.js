@@ -3041,4 +3041,14 @@
             },
         ],
     },
+    'zyshow.net': {
+        www: [
+            {
+                title: '',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/:name/',
+                target: '/zyshow/:name',
+            },
+        ],
+    },
 });
