@@ -2035,11 +2035,17 @@
             {
                 title: '视频 - 播放列表',
                 docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
-                source: '/detail/:type/:id',
+                source: '/x/cover/:id',
                 target: (params) => {
                     const id = params.id.match('(.*).html')[1];
                     return id ? `/tencentvideo/playlist/${id}` : '';
                 },
+            },
+           {
+                title: '视频 - 播放列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
+                source: '/x/cover/:id/:detail',
+                target: '/tencentvideo/playlist/:id'
             },
         ],
     },
