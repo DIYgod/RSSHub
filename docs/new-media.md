@@ -114,6 +114,18 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## CBNData
+
+### 看点
+
+<Route author="nczitzk" example="/cbndata/information" path="/cbndata/information/:category?" :paramsDesc="['分类，见下表，默认为看点']">
+
+| 看点 | 餐饮零售 | 美妆个护 | 服饰鞋包 | 家电数码 | 宠物 | 营销 |
+| ---- | -------- | -------- | -------- | -------- | ---- | ---- |
+|      | 2560     | 1        | 2559     | 59       | 2419 | 2484 |
+
+</Route>
+
 ## cfan
 
 ### 新闻
