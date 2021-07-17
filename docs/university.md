@@ -438,7 +438,7 @@ pageClass: routes
 
 | 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
 | :--------: | :--------: | :------------------: | :------------: |
-|    bsyjs   |    ssyjs   |      tdxlgdssxw      |     gatdqzs    |
+|   bsyjs    |   ssyjs    |      tdxlgdssxw      |    gatdqzs     |
 
 </Route>
 
@@ -972,6 +972,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 土木与交通学院 - 学工通知
 
 <Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" />
+
+### 电子与信息学院 - 新闻速递
+
+<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" />
+
+::: warning 注意
+由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
+:::
 
 ## 华南师范大学
 
@@ -1892,7 +1900,7 @@ type 列表：
 
 | 全部 | 教学信息 | 教学研究 | 实践教学 | 质量监控 | 通知公告 |
 | :--: | :------: | :------: | :------: | :------: | :------: |
-|  all |   jxxx   |   jxyj   |   sjjx   |   zljk   |   tzgg   |
+| all  |   jxxx   |   jxyj   |   sjjx   |   zljk   |   tzgg   |
 
 </Route>
 
