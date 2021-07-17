@@ -1097,9 +1097,23 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ## 追新番日剧站
 
-### 更新列表
+### 最新影视
 
-<Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" radar="1" rssbud="1"/>
+<Route author="mengx8 nczitzk" example="/fanxinzhui/list" path="/fanxinzhui/:channel?/:sort?" :paramsDesc="['频道，见下表，默认为全部', '排序，见下表，默认为按资源更新排序']" radar="1" rssbud="1">
+
+频道
+
+| 全部 | 日剧 | 电影  |
+| ---- | ---- | ----- |
+|      | tv   | movie |
+
+排序
+
+| 按资源更新排序 | 按发布时间排序 | 按首播时间排序 |
+| -------------- | -------------- | -------------- |
+|                | post           | release        |
+
+</Route>
 
 ## 字幕库
 
