@@ -740,7 +740,7 @@ category 对应的关键词有
 
 ### 新闻聚合
 
-<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>
+<Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
 
 ## 连线 Wired
 
