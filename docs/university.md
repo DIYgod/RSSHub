@@ -817,7 +817,7 @@ category 列表：
 
 ### 哈尔滨工业大学（深圳） - 新闻中心
 
-<Route author="yx1302317313" example="/hitsz/article/id-74" path="/hitsz/article/:category?" :paramsDesc="['分类名，默认为通知公告']" >
+<Route author="xandery-geek" example="/hitsz/article/id-74" path="/hitsz/article/:category?" :paramsDesc="['分类名，默认为通知公告']" >
 
 | 校区要闻 | 媒体报道 | 通知公告 | 综合新闻 | 校园动态 | 讲座论坛 | 热点专题 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -972,6 +972,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 土木与交通学院 - 学工通知
 
 <Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" />
+
+### 电子与信息学院 - 新闻速递
+
+<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" />
+
+::: warning 注意
+由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
+:::
 
 ## 华南师范大学
 
@@ -1931,6 +1939,10 @@ type 列表：
 | 中心通告 | 选调生及公务员 | 国际组织实习 | 新闻资讯 | 活动与讲座 |
 | -------- | -------------- | ------------ | -------- | ---------- |
 | zxtg     | xdsgwy         | gjzzsx       | xwzx     | hdyjz      |
+
+### 电气学院
+
+<Route author="DylanXie123" example="/xjtu/ee/1114" path="/xjtu/job/:id?" :paramsDesc="['栏目id，默认请求`1114`，可在 URL 中找到']"  />
 
 ## 西北工业大学
 
