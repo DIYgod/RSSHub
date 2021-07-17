@@ -158,6 +158,12 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 <RouteEn author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
+## ProjectSekai ｜ プロセカ
+
+### News
+
+<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
+
 ## Steam
 
 ### Steam search
@@ -187,9 +193,3 @@ Steam provides some official RSS feeds:
 ### Discussions
 
 <RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['category name, default to All']"/>
-
-## ProjectSekai ｜ プロセカ
-
-### News
-
-<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
