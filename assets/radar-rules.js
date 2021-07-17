@@ -610,6 +610,28 @@
             },
         ],
     },
+    'mhgui.com': {
+        _name: '漫画柜镜像站',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-jing-xiang-zhan',
+                source: '/comic/:id/',
+                target: '/mhgui/comic/:id',
+            },
+        ],
+    },
+    'tw.manhuagui.com': {
+        _name: '漫画柜台湾',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-tai-wan',
+                source: '/comic/:id/',
+                target: '/twmanhuagui/comic/:id',
+            },
+        ],
+    },
     'pgyer.com': {
         _name: '蒲公英应用分发',
         www: [
