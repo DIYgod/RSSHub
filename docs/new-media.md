@@ -114,6 +114,18 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## CBNData
+
+### 看点
+
+<Route author="nczitzk" example="/cbndata/information" path="/cbndata/information/:category?" :paramsDesc="['分类，见下表，默认为看点']">
+
+| 看点 | 餐饮零售 | 美妆个护 | 服饰鞋包 | 家电数码 | 宠物 | 营销 |
+| ---- | -------- | -------- | -------- | -------- | ---- | ---- |
+|      | 2560     | 1        | 2559     | 59       | 2419 | 2484 |
+
+</Route>
+
 ## cfan
 
 ### 新闻
@@ -287,6 +299,12 @@ Tag
 ### Posts
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
+
+## Harvard Health Publishing
+
+### Harvard Health Blog
+
+<Route author="nczitzk" example="/harvard/health/blog" path="/harvard/health/blog" />
 
 ## HKEPC
 
@@ -578,6 +596,22 @@ IPFS 网关有可能失效，那时候换成其他网关。
 -   Soomal 提供官方 RSS 订阅
     -   Soomal 网站更新：<http://www.soomal.com/doc/101.rss.xml>
     -   Soomal 论坛与留言系统的更新：<http://www.soomal.com/bbs/101.rss.xml>
+
+</Route>
+
+## TANC 艺术新闻
+
+### 分类
+
+<Route author="nczitzk" example="/tanchinese" path="/tanchinese/:category?" :paramsDesc="['分类，见下表，默认为 INDEX 首页']">
+
+| INDEX 首页 | ENGLISH 英文版 | NEWS 新闻 | MUSEUM 博物馆 | EXHIBITIONS 展览 |
+| ---------- | -------------- | --------- | ------------- | ---------------- |
+|            | english        | news      | museum        | exhibitions      |
+
+| COMMENTS 评论 | FEATURE 特写 | INTERVIEW 专访 | VIDEO 影像之选 | ART MARKET 艺术市场 |
+| ------------- | ------------ | -------------- | -------------- | ------------------- |
+| comments      | feature      | interview      | video          | art-market          |
 
 </Route>
 
