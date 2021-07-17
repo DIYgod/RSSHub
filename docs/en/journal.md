@@ -41,6 +41,10 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 <RouteEn author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
 
+### Journal
+
+<RouteEn author="nczitzk" example="/bioone/journal/acta-chiropterologica" path="/bioone/journal/:journal?" :paramsDesc="['Journal, can be found in URL']"/>
+
 ## Cell Journal
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />

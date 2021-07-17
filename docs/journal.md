@@ -41,6 +41,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
 
+### Journal
+
+<Route author="nczitzk" example="/bioone/journal/acta-chiropterologica" path="/bioone/journal/:journal?" :paramsDesc="['期刊名，可在期刊页地址栏中找到']"/>
+
 ## Cell
 
 ### 主刊
