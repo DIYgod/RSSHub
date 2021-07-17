@@ -17,3 +17,4 @@ coverage
 yarn.lock
 
 .now
+.vercel
