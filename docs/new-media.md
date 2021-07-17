@@ -1822,6 +1822,26 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" :paramsDesc="['用户 id']"/>
 
+## 人民论坛网
+
+### 思想理论
+
+<Route author="nczitzk" example="/rmlt/idea" path="/rmlt/idea/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 首页 | 独家连线   | 深度原创   | 中外思潮 | 时事洞察 |
+| ---- | ---------- | ---------- | -------- | -------- |
+|      | connection | yuanchuang | sichao   | dongcha  |
+
+| 中国声音 | 全球观察 | 思想名人堂  | 学术人生 |
+| -------- | -------- | ----------- | -------- |
+| shengyin | guancha  | mingrentang | xueshu   |
+
+| 前沿理论 | 比较研究 |
+| -------- | -------- |
+| lilun    | yanjiu   |
+
+</Route>
+
 ## 人人都是产品经理
 
 ### 热门文章
