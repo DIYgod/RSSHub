@@ -2,7 +2,10 @@ node_modules
 npm-debug.log
 error.log
 combined.log
+<<<<<<< HEAD
 yarn.lock
+=======
+>>>>>>> master
 .vscode
 .idea
 .DS_Store
@@ -15,5 +18,6 @@ tmp
 *.iml
 coverage
 .env
+yarn.lock
 
 .now
