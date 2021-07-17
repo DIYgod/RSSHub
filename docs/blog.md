@@ -90,34 +90,6 @@ pageClass: routes
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
-## 阿里云系统组技术博客
-
-### 首页
-
-<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index"/>
-
-## 财新博客
-
-### 用户博客
-
-<Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column" :paramsDesc="['博客名称，可在博客主页的 URL 找到']">
-
-通过提取文章全文，以提供比官方源更佳的阅读体验.
-
-</Route>
-
-## 大侠阿木
-
-### 首页
-
-<Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
-
-## 建宁闲谈
-
-### 文章
-
-<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" rssbud="1"/>
-
 ## 劍心．回憶
 
 ### 分类
@@ -166,6 +138,18 @@ pageClass: routes
 
 </Route>
 
+## 大侠阿木
+
+### 首页
+
+<Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
+
+## 建宁闲谈
+
+### 文章
+
+<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" rssbud="1"/>
+
 ## 敬维博客
 
 ### 文章
@@ -178,11 +162,11 @@ pageClass: routes
 
 <Route author="LogicJake" example="/security/pulses" path="/security/pulses"/>
 
-## 美团技术团队
+## 每日安全提示
 
-### 最近更新
+### 文章
 
-<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
+<Route author="Yansy" example="/totaldefense/recent" path="/totaldefense/recent"/>
 
 ## 王五四文集
 
@@ -195,3 +179,25 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 美团技术团队
+
+### 最近更新
+
+<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
+
+## 财新博客
+
+### 用户博客
+
+<Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column" :paramsDesc="['博客名称，可在博客主页的 URL 找到']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验.
+
+</Route>
+
+## 阿里云系统组技术博客
+
+### 首页
+
+<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index"/>
