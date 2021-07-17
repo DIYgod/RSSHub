@@ -1252,6 +1252,32 @@
                 },
             },
         ],
+        'y.music': [
+            {
+                title: '云音乐 - 用户歌单',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/user',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 歌单歌曲',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/playlist',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 歌手专辑',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/album',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 播单声音',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: ['/m/radio', '/m/djradio'],
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+        ],
     },
     'suzhou.gov.cn': {
         _name: '苏州市政府',
