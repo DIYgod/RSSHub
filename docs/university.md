@@ -128,6 +128,13 @@ pageClass: routes
 
 <Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot">
 
+### 学生就业指导服务中心
+
+<Route author="DylanXie123" example="/pku/scc/recruit/110001" path="/pku/scc/recruit/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
+| 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 科研通知 | 财务通知 | 工会通知 | 院友通知 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0    | 1        | 2        | 6        | 8        | 7        | 5        | 3        | 4        |
+
 ::: warning 注意
 
 论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
