@@ -130,10 +130,10 @@ pageClass: routes
 
 ### 学生就业指导服务中心
 
-<Route author="DylanXie123" example="/pku/scc/recruit/110001" path="/pku/scc/recruit/:type" :paramsDesc="['分区 type, 可在网页 URL 中找到']">
-| 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 科研通知 | 财务通知 | 工会通知 | 院友通知 |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 0    | 1        | 2        | 6        | 8        | 7        | 5        | 3        | 4        |
+<Route author="DylanXie123" example="/pku/scc/recruit/zpxx" path="/pku/scc/recruit/:type" :paramsDesc="['分区 type，见下表，默认请求 tzgg']">
+| xwrd | tzgg | zpxx | gfjgxx | sxxx | cyxx |
+| ---- | -------- | -------- | -------- | -------- | -------- |
+| 新闻热点 | 通知公告 | 招聘信息 | 国防军工信息 | 实习信息 | 创业信息 |
 
 ::: warning 注意
 
