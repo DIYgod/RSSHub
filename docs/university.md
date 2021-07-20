@@ -1494,7 +1494,7 @@ type 列表：
 
 ### 清华大学招聘信息
 
-<Route author="Halcao" example="/thu/career" path="/thu/career" />
+<Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
 
 ## 山东大学
 
