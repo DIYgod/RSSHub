@@ -292,7 +292,7 @@ pageClass: routes
 
 ### 风之动漫
 
-<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id/:nums?" example="/fzdm/manhua/39/2" :paramsDesc="['漫画ID', '最新的n话, 默认为最新1话']" anticrawler="1"/>
+<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量']" anticrawler="1"/>
 
 ## 海猫吧
 
