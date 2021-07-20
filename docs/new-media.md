@@ -1938,6 +1938,18 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/bioon/latest" path="/bioon/latest"/>
 
+## 生物探索
+
+### 频道
+
+<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel?" :paramsDesc="['频道，见下表，默认为首页']">
+
+| 首页 | 研究     | 产业     | 融资      | 时政     | 人物      | 公司    | 新品    | 活动     |
+| ---- | -------- | -------- | --------- | -------- | --------- | ------- | ------- | -------- |
+| home | research | industry | financing | politics | celebrity | company | product | activity |
+
+</Route>
+
 ## 世界卫生组织 WHO
 
 ### 媒体中心
