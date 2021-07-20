@@ -286,13 +286,13 @@ pageClass: routes
 
 ### 漫画更新
 
-<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID。 默认获取全部，建议使用通用参数limit获取指定数量']"/>
+<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
 ## 风之动漫
 
 ### 风之动漫
 
-<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id" example="/fzdm/manhua/93" :paramsDesc="['漫画ID']" anticrawler="1"/>
+<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量']" anticrawler="1"/>
 
 ## 海猫吧
 
