@@ -209,7 +209,13 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 ### Keyword
 
-<RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:r18?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content, 0 to no filter, 1 to only not R18, 2 to only R18, default to 0']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']" radar="1" rssbud="1">
+
+| only not R18 | only R18 | no filter |
+| ----------------- | ------------------------- | ------------------------- |
+| safe           | r18              | empty or other            |
+
+</RouteEn>
 
 ### Following timeline
 
