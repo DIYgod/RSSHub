@@ -286,7 +286,7 @@ pageClass: routes
 
 ### 漫画更新
 
-<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
+<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID。 默认获取全部，建议使用通用参数limit获取指定数量']"/>
 
 ## 风之动漫
 
