@@ -531,11 +531,11 @@ IT・科学 tech_science
 
 <Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['板块']">
 
-无料全文，综合页文章标题添加板块标签。
+无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
-| ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
-| news | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
+| 新着・速報 | 　　社会 | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
+| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
+| 　news 　  | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
 
 </Route>
 
@@ -740,7 +740,7 @@ category 对应的关键词有
 
 ### 新闻聚合
 
-<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>
+<Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
 
 ## 连线 Wired
 
