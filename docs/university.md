@@ -1670,6 +1670,22 @@ type 列表：
 
 </Route>
 
+### 学生就业服务和职业发展中心
+
+<Route author="DylanXie123" example="/sjtu/job/zpfw/zpxx/allqy" path="/sjtu/job/zpfw/:type/:subType?" :paramsDesc="['招聘热点或招聘信息', 'type为`zpxx`时可选择子类型，为`zprd`时此项被忽略，默认为最新，具体见下表']">
+
+类型 type
+| 招聘热点 | 招聘信息 |
+| -------- | -------- |
+| zprd     | zpxx     |
+
+子类型 subType
+| 最新招聘信息 | 所有企业 | 国有企业 | 民营企业 | 外资企业 | 海外及其他企业 | 所有单位 | 实习兼职 |
+| -------- | -------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+| new     | allqy     | gyqy      | myqy     | wzqy     | qtqy     | alldw     | sxjz     |
+
+</Route>
+
 ## 上海科技大学
 
 ### 活动通知
