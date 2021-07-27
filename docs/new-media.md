@@ -240,7 +240,7 @@ pageClass: routes
 
 ### Research
 
-<Route author="nczitzk" example="/disinformationindex/research" path="/disinformationindex/researxch"/>
+<Route author="nczitzk" example="/disinformationindex/research" path="/disinformationindex/research"/>
 
 ### Blog
 
