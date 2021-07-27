@@ -52,6 +52,34 @@ pageClass: routes
 
 <Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
+## 52hrtt 华人头条
+
+### 新闻
+
+<Route author="nczitzk" example="/52hrtt/global" path="/52hrtt/:area?/:type?" :paramsDesc="['地区，默认为全球', '分类，默认为新闻']">
+
+地区和分类皆可在浏览器地址栏中找到，下面是一个例子。
+
+访问华人头条全球站的国际分类，会跳转到 <https://www.52hrtt.com/global/n/w?infoTypeId=A1459145516533>。其中 `global` 即为 **全球** 对应的地区代码，`A1459145516533` 即为 **国际** 对应的分类代码。
+
+</Route>
+
+### 专题
+
+<Route author="nczitzk" example="/52hrtt/symposium/F1626082387819" path="/52hrtt/symposium/:id?/:classId?" :paramsDesc="['专题 id', '子分类 id']">
+
+专题 id 和 子分类 id 皆可在浏览器地址栏中找到，下面是一个例子。
+
+访问 “邱毅看平潭” 专题，会跳转到 <https://www.52hrtt.com/global/n/w/symposium/F1626082387819>。其中 `F1626082387819` 即为 **专题 id** 对应的地区代码。
+
+::: tip 提示
+
+更多的专题可以点击 [这里](https://www.52hrtt.com/global/n/w/symposium)
+
+:::
+
+</Route>
+
 ## 9To5
 
 ### 9To5 分站
