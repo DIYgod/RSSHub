@@ -1109,6 +1109,26 @@ category 对应的关键词有
 
 </Route>
 
+### 栏目
+
+<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']">
+
+| 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
+| -------- | ------ | -------- | ------ |
+| jdft     | dzw    | jrsf     | kjl    |
+
+| 正大综艺 | 经济半小时 | 第一动画乐园 |
+| -------- | ---------- | ------------ |
+| zdzy     | jjbxs      | dydhly       |
+
+::: tip 提示
+
+更多栏目请看 [这里](https://tv.cctv.com/lm)
+
+:::
+
+</Route>
+
 ### 新闻专题
 
 <Route author="nczitzk" example="/cctv-special/315" path="/cctv-special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']">
