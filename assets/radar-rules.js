@@ -610,6 +610,28 @@
             },
         ],
     },
+    'mhgui.com': {
+        _name: '漫画柜镜像站',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-jing-xiang-zhan',
+                source: '/comic/:id/',
+                target: '/mhgui/comic/:id',
+            },
+        ],
+    },
+    'tw.manhuagui.com': {
+        _name: '漫画柜台湾',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-tai-wan',
+                source: '/comic/:id/',
+                target: '/twmanhuagui/comic/:id',
+            },
+        ],
+    },
     'pgyer.com': {
         _name: '蒲公英应用分发',
         www: [
@@ -1888,28 +1910,34 @@
         _name: '站酷',
         www: [
             {
-                title: '全部推荐',
+                title: '发现',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/all',
+                target: '/zcool/discover',
             },
             {
-                title: '首页推荐',
+                title: '发现 - 精选 - 全部推荐',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/home',
+                target: '/zcool/discover/all',
             },
             {
-                title: '编辑推荐',
+                title: '发现 - 精选 - 首页推荐',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/home',
+                target: '/zcool/discover/home',
             },
             {
-                title: '文章推荐',
+                title: '发现 - 精选 - 编辑精选',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/article',
+                target: '/zcool/discover/home',
+            },
+            {
+                title: '发现 - 精选 - 文章 - 编辑精选',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/discover/article',
             },
             {
                 title: '作品榜单',
@@ -2007,11 +2035,17 @@
             {
                 title: '视频 - 播放列表',
                 docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
-                source: '/detail/:type/:id',
+                source: '/x/cover/:id',
                 target: (params) => {
                     const id = params.id.match('(.*).html')[1];
                     return id ? `/tencentvideo/playlist/${id}` : '';
                 },
+            },
+            {
+                title: '视频 - 播放列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
+                source: '/x/cover/:id/:detail',
+                target: '/tencentvideo/playlist/:id',
             },
         ],
     },
@@ -3004,6 +3038,16 @@
                 docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
                 source: '/fine/:tag',
                 target: '/lfsyd/tag/:tag',
+            },
+        ],
+    },
+    'zyshow.net': {
+        www: [
+            {
+                title: '',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/:name/',
+                target: '/zyshow/:name',
             },
         ],
     },
