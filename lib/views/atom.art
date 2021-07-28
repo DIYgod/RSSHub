@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <generator>RSSHub</generator>
+    <webMaster>i@diygod.me (DIYgod)</webMaster>
+    <language>{{ language || 'zh-cn' }}</language>
+    <id>{{ id || link }}</id>
+    <title><![CDATA[{{@ title || 'RSSHub' }}]]></title>
+
+    {{ if subtitle }}
+    <subtitle><![CDATA[{{@ subtitle }}]]></subtitle>
+    {{ /if }}
+
+    <updated>{{ updated }}</updated>
+    <link href="{{ link }}" />
+    <author>
+        <name><![CDATA[{{@ author || 'RSSHub' }}]]></name>
+    </author>
+
+    {{if contributor }}
+    {{ each contributor }}
+    <contributor>
+        <name><![CDATA[{{@ $value }}]]></name>
+    </contributor>
+    {{ /each }}
+    {{ /if }}
+
+    {{ if icon }}
+    <icon>{{ icon }}</icon>
+    {{ /if }}
+
+    {{ if logo }}
+    <logo>{{ logo }}</logo>
+    {{ /if }}
+
+    {{ each item $e }}
+    <entry>
+        <id>{{ $e.guid || $e.id || $e.link }}</id>
+        <title><![CDATA[{{@ $e.title }}]]></title>
+
+        <published>{{ $e.pubDate || $e.updated }}</published>
+        <updated>{{ $e.updated }}</updated>
+
+        {{ if $e.author }}
+        <author>
+            <name><![CDATA[{{@ $e.author || 'RSSHub' }}]]></name>
+        </author>
+        {{ /if }}
+
+        <link href="{{ $e.link }}" />
+
+        {{ if $e.summary }}
+        <summary type="html"><![CDATA[{{@ $e.summary }}]]></summary>
+        {{ /if }}
+
+        {{ if $e.content }}
+        <content type="html" src="{{ $e.link }}">{{ $e.content.html || $e.content.text }}</content>
+        {{ else if $e.description }}
+        <content type="html" src="{{ $e.link }}">{{ $e.description }}</content>
+        {{ /if }}
+
+        {{ if typeof $e.category === 'string' }}
+        <category term="{{ $e.category }}"></category>
+        {{ else }}
+                {{ each $e.category $c }}
+                <category term="{{ $c }}"></category>
+                {{ /each }}
+        {{ /if }}
+
+    </entry>
+    {{ /each }}
+
+</feed>

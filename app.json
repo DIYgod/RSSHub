@@ -1,0 +1,33 @@
+{
+    "name": "RSSHub",
+    "description": "万物皆可 RSS",
+    "repository": "https://github.com/DIYgod/RSSHub",
+    "website": "https://docs.rsshub.app/",
+    "logo": "https://i.loli.net/2019/04/23/5cbeb7e41414c.png",
+    "keywords": ["RSS"],
+    "env": {
+        "NODE_MODULES_CACHE": {
+            "value": "false",
+            "required": true
+        },
+        "PORT": {
+            "value": "80",
+            "required": false
+        },
+        "PIXIV_REFRESHTOKEN": {
+            "required": false
+        },
+        "DISQUS_API_KEY": {
+            "required": false
+        },
+        "TWITTER_CONSUMER_KEY": {
+            "required": false
+        },
+        "TWITTER_CONSUMER_SECRET": {
+            "required": false
+        },
+        "YOUTUBE_KEY": {
+            "required": false
+        }
+    }
+}
