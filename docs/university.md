@@ -305,7 +305,7 @@ pageClass: routes
 
 ### 本科教学信息网通知公告
 
-<Route author="El-Chiang Hagb" example="/cqu/jwc/" path="/cqu/jwc/:path+" :paramsDesc="['路径']">
+<Route author="El-Chiang Hagb" example="/cqu/jwc/" path="/cqu/jwc/:path*" :paramsDesc="['路径']">
 
 | 分类                                                              | 路径                |
 | ----------------------------------------------------------------- | ------------------- |
