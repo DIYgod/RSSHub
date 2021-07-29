@@ -224,6 +224,46 @@ pageClass: routes
 
 <Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" :paramsDesc="['标签，可在对应标签页 URL 中找到']" />
 
+## Europa Press
+
+### 分类
+
+<Route author="nczitzk" example="/europapress" path="/europapress/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| España   | Internacional | Economía | Deportes |
+| -------- | ------------- | -------- | -------- |
+| nacional | internacional | economía | deportes |
+
+| Cultura | Sociedad | Ciencia | Salud |
+| ------- | -------- | ------- | ----- |
+| cultura | sociedad | ciencia | salud |
+
+| Tecnología | Comunicados | Estar donde estés |
+| ---------- | ----------- | ----------------- |
+| tecnología | comunicados | estar-donde-estes |
+
+| Andalucía | Aragón | Cantabria | Castilla-La Mancha |
+| --------- | ------ | --------- | ------------------ |
+| andalucia | aragon | cantabria | castilla-lamancha  |
+
+| Castilla y León | Cataluña  | Extremadura | Galicia |
+| --------------- | --------- | ----------- | ------- |
+| castilla-y-leon | catalunya | extremadura | galicia |
+
+| Islas Canarias | Islas Baleares | Madrid | País Vasco |
+| -------------- | -------------- | ------ | ---------- |
+| islas-canarias | illes-balears  | madrid | euskadi    |
+
+| La Rioja | C. Valenciana        | Navarra | Asturias |
+| -------- | -------------------- | ------- | -------- |
+| la-rioja | comunitat-valenciana | navarra | asturias |
+
+| Murcia | Ceuta y Melilla |
+| ------ | --------------- |
+| murcia | ceuta-y-melilla |
+
+</Route>
+
 ## ezone.hk
 
 ### 分类
