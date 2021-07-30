@@ -15,7 +15,7 @@
   <div v-if="path.match(/:.*?(\/|$)/g)">
   <p>
     参数:
-  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)">{{item.replace(':','').replace('/','').replace('?','')}}, {{(item.includes('?')||item.includes('*'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
+  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)">{{item.replace(/:|\?|\+|\*/g,'')}}, {{{'?':'可选','*':'零个或多个','+':'单个或多个'}[item[item.length-1]]||'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
   </div>
   <div v-else><p>参数: 无</p></div>
   <slot></slot>
