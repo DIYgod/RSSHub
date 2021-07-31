@@ -1810,6 +1810,12 @@ type 列表：
 
  </Route>
 
+## 温州大学
+
+### 温州大学
+
+<Route author="Chandler-Lu" example="/wzu/news" path="/wzu/news" /></Route>
+
 ## 温州商学院
 
 ### 温州商学院
@@ -2411,4 +2417,4 @@ type 列表：
 
 ### 数据科学与计算机学院动态
 
-<Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
+<Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" /></Route>

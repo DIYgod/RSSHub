@@ -253,6 +253,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
+## PlayStation
+
+### PlayStation 4 System Update
+
+见 [#playstation](/game.html#playstation)
+
 ## Potplayer
 
 ### Version History
@@ -264,12 +270,6 @@ Refer to [#minecraft](/en/game.html#minecraft)
 | ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
 
 </RouteEn>
-
-## PlayStation
-
-### PlayStation 4 System Update
-
-见 [#playstation](/game.html#playstation)
 
 ## QNAP
 
