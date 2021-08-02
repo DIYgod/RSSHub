@@ -2406,6 +2406,7 @@ column 为 third 时可选的 category:
 ## 鱼塘热榜
 
 <Route author="TheresaQWQ" example="/mofish/2" path="/mofish/:id" :paramsDesc="['分类id，可以在 https://api.tophub.fun/GetAllType 获取']" />
+
 ## 遠見
 
 <Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" :paramsDesc="['見下表, 默認爲 newest']">
@@ -2420,7 +2421,7 @@ column 为 third 时可选的 category:
 
 ### 分类
 
-<Route author="nczitzk" example="/ccin/index" path="/ccf/:category?" :paramsDesc="['分类，可在分类页 URL 中找到，默认为首页']">
+<Route author="nczitzk" example="/ccin/index" path="/ccin/:category?" :paramsDesc="['分类，可在分类页 URL 中找到，默认为首页']">
 
 | 首页  | 综合要闻   | 国内化工       | 国际化工 | 科技创新   | 企业报道         | 会议活动 | 市场信息     | 化工号 |
 | ----- | ---------- | -------------- | -------- | ---------- | ---------------- | -------- | ------------ | ------ |
@@ -2443,18 +2444,6 @@ column 为 third 时可选的 category:
 | 南通市安全生产管理协会 - 化工号 | 氯碱产业    | 海湾集团 - 化工号 | 神木煤化工产业有限公司 - 化工号 | 如东洋口化学工业园 — 化工号 | 安元科技 - 化工号 | 哈尔滨石化 - 化工号 |
 | ------------------------------- | ----------- | ----------------- | ------------------------------- | --------------------------- | ----------------- | ------------------- |
 | ntaqpx                          | chlorAlkali | qdhw              | smmhg                           | rdyk                        | safirst           | hebsh               |
-
-</Route>
-
-## 中国计算机学会
-
-### 新闻
-
-<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
-
-| CCF 新闻   | CCF 聚焦 | ACM 信息 |
-| ---------- | -------- | -------- |
-| Media_list | Focus    | ACM_News |
 
 </Route>
 
