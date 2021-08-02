@@ -212,6 +212,12 @@ pageClass: routes
 
 <Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']"/>
 
+## Hugo
+
+### 更新日志
+
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
 ## IPSW.me
 
 ### 苹果固件更新 - IPSWs/OTAs 版本
@@ -301,6 +307,18 @@ pageClass: routes
 ### PlayStation 4 系统更新纪录
 
 见 [#playstation](/game.html#playstation)
+
+## Potplayer
+
+### 版本历史
+
+<Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['语言，见下表，默认为英语']">
+
+| 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
+| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
+| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
+
+</Route>
 
 ## QNAP
 
