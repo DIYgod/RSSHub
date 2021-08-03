@@ -564,7 +564,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 热门瞬间
 
-<Route author="BugWriter2" example="/soul/posts/hot" path="/soul/posts/hot" radar="1" rssbud="1"></Route>
+<Route author="BugWriter2" example="/soul/posts/hot/NXJiSlM5V21kamJWVlgvZUh1NEExdz09" path="/soul/posts/hot/:pid?" :paramsDesc="['瞬间 id, 分享用户瞬间时的 URL 的 postIdEcpt 参数']" radar="1" rssbud="1"></Route>
+
+::: tip 提示
+
+提供不同内容的 `pid`, 可以得到不同的热门瞬间推荐，如果想看多个种类的热门可以用 `|` 把不同的 `pid` 连起来，例如: `NXJiSlM5V21kamJWVlgvZUh1NEExdz09|MkM0amxSTUNiTEpLcHhzSlRzTEI1dz09`
+
+:::
 
 ## Tape 小纸条
 
