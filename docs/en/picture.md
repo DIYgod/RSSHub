@@ -74,7 +74,7 @@ pageClass: routes
 
 ### Home
 
-<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['Category, see below, Home by default']">
+<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['Category, see below, Home by default']"/>
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
@@ -84,7 +84,7 @@ pageClass: routes
 
 ### Videos
 
-<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['Sort, see below, Popular by default']">
+<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['Sort, see below, Popular by default']" />
 
 | Popular | Recent |
 | ------- | ------ |
