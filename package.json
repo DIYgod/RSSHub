@@ -2,7 +2,7 @@
   "name": "rsshub",
   "version": "1.0.0",
   "description": "Make RSS Great Again!",
-  "main": "lib/workers_index.js",
+  "main": "lib/pkg.js",
   "files": [
     "lib"
   ],
