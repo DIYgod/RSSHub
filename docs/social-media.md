@@ -568,7 +568,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ::: tip 提示
 
-提供不同内容的 `pid`, 可以得到不同的热门瞬间推荐，如果想看多个种类的热门可以用 `|` 把不同的 `pid` 连起来，例如: `NXJiSlM5V21kamJWVlgvZUh1NEExdz09|MkM0amxSTUNiTEpLcHhzSlRzTEI1dz09`
+提供不同内容的 `pid`, 可以得到不同的热门瞬间推荐，如果想看多个种类的热门可以用 `+` 把不同的 `pid` 连起来，例如: `NXJiSlM5V21kamJWVlgvZUh1NEExdz09+MkM0amxSTUNiTEpLcHhzSlRzTEI1dz09`
 
 :::
 
