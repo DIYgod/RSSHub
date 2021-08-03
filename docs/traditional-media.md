@@ -29,7 +29,7 @@ pageClass: routes
 ### 话题
 
 <Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
-采用了`puppeteer`规避`Project Shield`，无全文抓取，建议自建。  
+采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
 
 ## BBC
 
@@ -186,7 +186,7 @@ pageClass: routes
 
 <Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
 
-细则: 
+细则：
 
 -   `:range` 时间范围参数  
     (可为 `latest` 或 `四位数字的年份`)
@@ -213,9 +213,9 @@ Solidot 提供的 feed:
 
 :::
 
-| 全部 | 创业    | Linux | 科学    | 科技       | 移动   | 苹果  | 硬件     | 软件     | 安全     | 游戏  | 书籍  | ask | idle | 博客 | 云计算 |
-| ---- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ------ |
-| www  | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud  |
+| 全部 | 创业    | Linux | 科学    | 科技       | 移动   | 苹果  | 硬件     | 软件     | 安全     | 游戏  | 书籍  | ask | idle | 博客 | 云计算 | 奇客故事 |
+| ---- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ------ | -------- |
+| www  | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud  | story    |
 
 </Route>
 
@@ -389,6 +389,130 @@ Category 列表：
 
 <Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
 
+## 朝日新聞中文網（繁體中文版）
+
+::: tip 提示
+
+朝日新闻中文网已于 2021 年 3 月 31 日关闭。
+
+:::
+
+### 新聞
+
+<Route author="nczitzk" example="/asahi" path="/asahi/:genre?/:category?" :paramsDesc="['类型，见下表，默认为トップ', '分类，见下表，默认为空，即该类型下所有新闻']">
+
+::: tip 提示
+
+以下小标题即类型 `genre`，标题下表格中为对应类型的分类 `category`，两者需要配合使用。
+
+如订阅 **社会** 类型中的 **事件・事故・裁判** 分类，填入 [`/asahi/national/incident`](http://rsshub.app/asahi/national/incident)。
+
+若类型下没有分类，如 **トップ** 类型，直接填入 [`/asahi/top`](http://rsshub.app/asahi/top)。
+
+或者欲订阅该类型下的所有分类，如订阅 **社会** 中的所有分类，则直接将分类 `category` 留空，即 [`/asahi/national`](http://rsshub.app/asahi/national)。
+
+:::
+
+トップ top
+
+社会 national
+
+| 事件・事故・裁判 | 災害・交通情報 | その他・話題 | おくやみ   |
+| ---------------- | -------------- | ------------ | ---------- |
+| incident         | calamity       | etc          | obituaries |
+
+経済 business
+
+| 産業・商品 | 金融・財政 | 経済政策       | 労働・雇用 | 市況・統計 |
+| ---------- | ---------- | -------------- | ---------- | ---------- |
+| industry   | finance    | economicpolicy | work       | statistics |
+
+政治 politics
+
+| 国政       | 地方政治 | 発言録       | 世論調査 |
+| ---------- | -------- | ------------ | -------- |
+| government | local    | hatsugenroku | yoron    |
+
+国際 international
+
+| アジア・太平洋 | 北米     | 中南米   | ヨーロッパ | 中東       | アフリカ | 国連・その他 |
+| -------------- | -------- | -------- | ---------- | ---------- | -------- | ------------ |
+| asia           | namerica | samerica | europe     | middleeast | africa   | etc          |
+
+スポーツ sports
+
+| 野球     | サッカー | 相撲 | フィギュア         | ゴルフ | 一般スポーツ | 東京オリンピック 2020 | 東京パラリンピック 2020 |
+| -------- | -------- | ---- | ------------------ | ------ | ------------ | --------------------- | ----------------------- |
+| baseball | soccer   | sumo | winter_figureskate | golf   | general      | olympics              | paralympics             |
+
+IT・科学 tech_science
+
+| 環境・エネルギー | 科学    | デジもの | 企業・サービス | 製品ファイル |
+| ---------------- | ------- | -------- | -------------- | ------------ |
+| eco              | science | digital  | service        | products     |
+
+文化・芸能 culture
+
+| 映画   | 音楽  | アイドル | アート | テレビ・芸能 | 舞台・演芸 | マンガ・アニメ・ゲーム | ひと・歴史 | 囲碁 | 将棋   |
+| ------ | ----- | -------- | ------ | ------------ | ---------- | ---------------------- | ---------- | ---- | ------ |
+| movies | music | idol     | art    | showbiz      | stage      | manga                  | history    | igo  | shougi |
+
+ライフ life
+
+| 介護      | 働き方・就活 | 食・料理 |
+| --------- | ------------ | -------- |
+| eldercare | hataraku     | food     |
+
+教育・子育て edu
+
+| 小中高  | 大学       | 教育制度・話題 | 教育問題 | 地域の教育ニュース | 吹奏楽    | 合唱   | 子育て   | ハグスタ |
+| ------- | ---------- | -------------- | -------- | ------------------ | --------- | ------ | -------- | -------- |
+| student | university | system         | issue    | chiiki             | suisogaku | gassho | hagukumu | msta     |
+
+</Route>
+
+## 朝日新聞デジタル
+
+<Route author="nczitzk" example="/asahi/area/hokkaido" path="/asahi/area/:id" :paramsDesc="['地方 id，见下表']">
+
+北海道・東北
+
+| 北海道   | 青森   | 秋田  | 岩手  | 山形     | 宮城   | 福島      |
+| -------- | ------ | ----- | ----- | -------- | ------ | --------- |
+| hokkaido | aomori | akita | iwate | yamagata | miyagi | fukushima |
+
+関東
+
+| 群馬  | 茨城    | 栃木    | 埼玉    | 千葉  | 東京  | 神奈川   |
+| ----- | ------- | ------- | ------- | ----- | ----- | -------- |
+| gunma | ibaraki | tochigi | saitama | chiba | tokyo | kanagawa |
+
+東海・甲信越
+
+| 静岡     | 岐阜 | 愛知  | 三重 | 新潟    | 山梨      | 長野   |
+| -------- | ---- | ----- | ---- | ------- | --------- | ------ |
+| shizuoka | gifu | aichi | mie  | niigata | yamanashi | nagano |
+
+近畿・北陸
+
+| 滋賀  | 京都  | 奈良 | 和歌山   | 大阪  | 兵庫  | 富山   | 石川     | 福井  |
+| ----- | ----- | ---- | -------- | ----- | ----- | ------ | -------- | ----- |
+| shiga | kyoto | nara | wakayama | osaka | hyogo | toyama | ishikawa | fukui |
+
+中国・四国
+
+| 鳥取    | 島根    | 岡山    | 広島      | 山口      | 香川   | 愛媛  | 徳島      | 高知  |
+| ------- | ------- | ------- | --------- | --------- | ------ | ----- | --------- | ----- |
+| tottori | shimane | okayama | hiroshima | yamaguchi | kagawa | ehime | tokushima | kochi |
+
+九州・沖縄
+
+| 福岡    | 大分 | 宮崎     | 鹿児島    | 佐賀 | 長崎     | 熊本     | 沖縄    |
+| ------- | ---- | -------- | --------- | ---- | -------- | -------- | ------- |
+| fukuoka | oita | miyazaki | kagoshima | saga | nagasaki | kumamoto | okinawa |
+
+</Route>
+
 ## 第一财经
 
 ### 直播区
@@ -407,11 +531,11 @@ Category 列表：
 
 <Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['板块']">
 
-无料全文，综合页文章标题添加板块标签。
+无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
-| ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
-| news | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
+| 新着・速報 | 　　社会 | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
+| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
+| 　news 　  | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
 
 </Route>
 
@@ -616,7 +740,15 @@ category 对应的关键词有
 
 ### 新闻聚合
 
-<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>
+<Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
+
+## 连线 Wired
+
+非订阅用户每月有阅读全文次数限制。
+
+### 标签
+
+<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']"/>
 
 ## 联合早报
 
@@ -645,14 +777,6 @@ category 对应的关键词有
 除了上面两个兼容规则之外，联合早报网站里所有页面形如 <https://www.zaobao.com/wencui/politic> 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
 
 <Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type/:section" :paramsDesc="['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']" />
-
-## 连线 Wired
-
-非订阅用户每月有阅读全文次数限制。
-
-### 标签
-
-<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']"/>
 
 ## 路透社
 
@@ -742,9 +866,10 @@ category 对应的关键词有
 
 </Route>
 
-### 每日简报
+### 新闻简报
 
-<Route author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese"/>
+网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
 
 ### 畅销书排行榜
 
@@ -1019,62 +1144,6 @@ category 对应的关键词有
 ### 央视网图片《镜象》
 
 <Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" />
-
-## 朝日新聞中文網（繁體中文版）
-
-### 新聞分類
-
-<Route author="qiwihui" example="/asahichinese-f/society" path="/asahichinese-f/:category/:subCate?" :paramsDesc="['版块', '子版块']">
-
-版块：
-
-| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    | whatsnew |
-| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
-| 國內綜合 | 政治・經濟       | 文化・生活 | 旅遊・活動 | 體育・奧運 | 商業・商品 | IT ・科技  | 國際・東亞 | 評論・專欄 | 最新消息 |
-
-版块 `cool_japan` 和 `travel` 包含子版块：
-
-`cool_japan`：
-
-| entertainment | anime | life       | style_culture |
-| ------------- | ----- | ---------- | ------------- |
-| 藝能          | 動漫  | 生活・美食 | 時尚・藝文    |
-
-`travel`:
-
-| news | scenery | topic | move |
-| ---- | ------- | ----- | ---- |
-| 資訊 | 風景    | 體驗  | 交通 |
-
-</Route>
-
-## 朝日新聞中文网（简体中文版）
-
-### 新闻分类
-
-<Route author="zhouchang29" example="/asahichinese-j/society" path="/asahichinese-j/:category/:subCate?" :paramsDesc="['版块', '子版块']">
-
-版块：
-
-| society  | politics_economy | cool_japan | travel     | sports     | business   | technology | world      | opinion    | whatsnew |
-| -------- | ---------------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
-| 日本社会 | 政治・经济       | 文娱・生活 | 旅游・活动 | 体育・奥运 | 商务・商品 | IT ・科技  | 国际・东亚 | 观点・专栏 | 最新     |
-
-版块 `cool_japan` 和 `travel` 包含子版块：
-
-`cool_japan`：
-
-| entertainment | anime | life       | style_culture |
-| ------------- | ----- | ---------- | ------------- |
-| 艺能          | 动漫  | 生活・美食 | 时尚・文化    |
-
-`travel`:
-
-| news | scenery | topic | move |
-| ---- | ------- | ----- | ---- |
-| 资讯 | 风景    | 体验  | 交通 |
-
-</Route>
 
 ## 中国日报
 
