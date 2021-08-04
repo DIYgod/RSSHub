@@ -1958,6 +1958,44 @@ type 列表：
 
 </Route>
 
+## 西北农林科技大学
+
+### 校园要闻
+
+<Route author="dingyx99" example="/nwafu/news" path="/nwafu/news" />
+
+### 教务公告
+
+<Route author="dingyx99" example="/nwafu/jiaowu" path="/nwafu/jiaowu" />
+
+### 后勤公告
+
+<Route author="dingyx99" example="/nwafu/gs" path="/nwafu/gs" />
+
+### 图书馆公告
+
+<Route author="dingyx99" example="/nwafu/lib" path="/nwafu/lib" />
+
+### 网教中心公告
+
+<Route author="dingyx99" example="/nwafu/nic" path="/nwafu/nic" />
+
+### 团委公告
+
+<Route author="dingyx99" example="/nwafu/54youth" path="/nwafu/54youth" />
+
+### 计财处公告
+
+<Route author="dingyx99" example="/nwafu/jcc" path="/nwafu/jcc" />
+
+### 研究生院公告
+
+<Route author="dingyx99" example="/nwafu/yjshy" path="/nwafu/yjshy" />
+
+### 信息工程学院公告
+
+<Route author="dingyx99" example="/nwafu/cie" path="/nwafu/cie" />
+
 ## 西南财经大学
 
 ### 经济信息工程学院
