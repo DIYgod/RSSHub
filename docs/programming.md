@@ -540,6 +540,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
 
+### 资讯
+
+<Route author="cancergary" example="/juejin/news/739332228916791" path="/juejin/news/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
+
 ## 开发者头条
 
 ### 今天头条
