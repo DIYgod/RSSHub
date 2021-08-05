@@ -599,6 +599,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## Sky Sports
+
+### News
+
+<Route author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['球队 id，可在球队对应页面的 URL 中找到']" />
+
 ## TANC 艺术新闻
 
 ### 分类
