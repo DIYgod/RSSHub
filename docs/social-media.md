@@ -1128,6 +1128,18 @@ rule
 
 </Route>
 
+### 微博新鲜事
+
+<Route author="zsh2517" example="/weibo/tag/48000a174a94d615_0" path="/weibo/tag/:tagId" :paramsDesc="['对应文章 URL 中的 id，即 `weibo.com/a/hot/{tagId}.html` 的 `tagId` 部分']" anticrawler="1" selfhost="1">
+
+::: warning 注意
+
+须在 `lib/config.js` 中配置 `weibo_available_cookies` 字段。任意有效（已登录）的 cookie 均可，无需与账号关联。
+
+:::
+
+</Route>
+
 ## 微博绿洲
 
 ### 用户
