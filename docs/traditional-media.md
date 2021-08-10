@@ -29,7 +29,7 @@ pageClass: routes
 ### 话题
 
 <Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
-采用了`puppeteer`规避`Project Shield`，无全文抓取，建议自建。  
+采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
 
 ## BBC
 
@@ -186,7 +186,7 @@ pageClass: routes
 
 <Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
 
-细则: 
+细则：
 
 -   `:range` 时间范围参数  
     (可为 `latest` 或 `四位数字的年份`)
@@ -531,11 +531,11 @@ IT・科学 tech_science
 
 <Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['板块']">
 
-无料全文，综合页文章标题添加板块标签。
+无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
-| ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
-| news | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
+| 新着・速報 | 　　社会 | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
+| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
+| 　news 　  | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
 
 </Route>
 
@@ -740,7 +740,7 @@ category 对应的关键词有
 
 ### 新闻聚合
 
-<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>
+<Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
 
 ## 连线 Wired
 
@@ -866,9 +866,10 @@ category 对应的关键词有
 
 </Route>
 
-### 每日简报
+### 新闻简报
 
-<Route author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese"/>
+网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
 
 ### 畅销书排行榜
 
