@@ -183,9 +183,9 @@ pageClass: routes
 
 支持的主机平台:
 
-| PS 4 | Xbox One | Switch | PC | Wii U | 3DS | PS Vita | iOS |
-| ---- | -------- | ------ | -- | ----- | --- | ------- | --- |
-| ps4  | xboxone  | switch | pc | wii-u | 3ds | vita    | ios |
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
 
 发行类型，默认为 `new`:
 
@@ -349,8 +349,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 Steam 新闻中心支持官方的 RSS 订阅:
 
 -   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
--   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english> 
--   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss>	或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
+-   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english>
+-   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss> 或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
 
 :::
 
@@ -394,9 +394,9 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 <Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
 
-| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+| 首頁 | PC  | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+| ---- | --- | ------- | -------- | ------ | -------- | -------- | ---- |
+| 缺省 | 1   | 3       | 4        | 5      | 9        | 11       | 13   |
 
 | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
 | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
@@ -464,11 +464,11 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
-|    17    |   18   |   16   |   19   |   20   |      329     |      221     |
+|    17    |   18   |   16   |   19   |   20   |     329      |     221      |
 
 | 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
 | :------: | :------: | :------: | :------: | :------: | :----: |
-|    112   |    389   |    24    |    102   |    23    |   117  |
+|   112    |   389    |    24    |   102    |    23    |  117   |
 
 </Route>
 
@@ -552,7 +552,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户动态
 
-<Route author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="auto-bot-ty" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
 ### 游戏新闻
 
