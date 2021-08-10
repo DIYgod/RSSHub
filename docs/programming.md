@@ -177,13 +177,21 @@ GitHub 官方也提供了一些 RSS:
 
 ### Explore
 
-<Route author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['分类']">
+<Route author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" :paramsDesc="['分类', '服务器地址，缺省为 gitlab.com']">
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
 
 </Route>
+
+### Releases
+
+<Route author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" :paramsDesc="['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']" />
+
+### Tags
+
+<Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']" />
 
 ## Go 语言中文网
 

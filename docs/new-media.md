@@ -114,6 +114,18 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## CBNData
+
+### 看点
+
+<Route author="nczitzk" example="/cbndata/information" path="/cbndata/information/:category?" :paramsDesc="['分类，见下表，默认为看点']">
+
+| 看点 | 餐饮零售 | 美妆个护 | 服饰鞋包 | 家电数码 | 宠物 | 营销 |
+| ---- | -------- | -------- | -------- | -------- | ---- | ---- |
+|      | 2560     | 1        | 2559     | 59       | 2419 | 2484 |
+
+</Route>
+
 ## cfan
 
 ### 新闻
@@ -287,6 +299,12 @@ Tag
 ### Posts
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
+
+## Harvard Health Publishing
+
+### Harvard Health Blog
+
+<Route author="nczitzk" example="/harvard/health/blog" path="/harvard/health/blog" />
 
 ## HKEPC
 
@@ -578,6 +596,22 @@ IPFS 网关有可能失效，那时候换成其他网关。
 -   Soomal 提供官方 RSS 订阅
     -   Soomal 网站更新：<http://www.soomal.com/doc/101.rss.xml>
     -   Soomal 论坛与留言系统的更新：<http://www.soomal.com/bbs/101.rss.xml>
+
+</Route>
+
+## TANC 艺术新闻
+
+### 分类
+
+<Route author="nczitzk" example="/tanchinese" path="/tanchinese/:category?" :paramsDesc="['分类，见下表，默认为 INDEX 首页']">
+
+| INDEX 首页 | ENGLISH 英文版 | NEWS 新闻 | MUSEUM 博物馆 | EXHIBITIONS 展览 |
+| ---------- | -------------- | --------- | ------------- | ---------------- |
+|            | english        | news      | museum        | exhibitions      |
+
+| COMMENTS 评论 | FEATURE 特写 | INTERVIEW 专访 | VIDEO 影像之选 | ART MARKET 艺术市场 |
+| ------------- | ------------ | -------------- | -------------- | ------------------- |
+| comments      | feature      | interview      | video          | art-market          |
 
 </Route>
 
@@ -1584,12 +1618,6 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
 
-## 梅斯医学 MedSci
-
-### 推荐
-
-<Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
-
 ## 美国半导体行业协会
 
 ### 新闻
@@ -1793,6 +1821,26 @@ column 为 third 时可选的 category:
 ### 用户
 
 <Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" :paramsDesc="['用户 id']"/>
+
+## 人民论坛网
+
+### 思想理论
+
+<Route author="nczitzk" example="/rmlt/idea" path="/rmlt/idea/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 首页 | 独家连线   | 深度原创   | 中外思潮 | 时事洞察 |
+| ---- | ---------- | ---------- | -------- | -------- |
+|      | connection | yuanchuang | sichao   | dongcha  |
+
+| 中国声音 | 全球观察 | 思想名人堂  | 学术人生 |
+| -------- | -------- | ----------- | -------- |
+| shengyin | guancha  | mingrentang | xueshu   |
+
+| 前沿理论 | 比较研究 |
+| -------- | -------- |
+| lilun    | yanjiu   |
+
+</Route>
 
 ## 人人都是产品经理
 
