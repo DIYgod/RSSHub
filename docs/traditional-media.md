@@ -525,6 +525,21 @@ IT・科学 tech_science
 
 <Route author="saury" example="/eastday/sh" path="/eastday/sh" />
 
+### 24 小时热闻
+
+<Route author="nczitzk" example="/eastday/24" path="/eastday/24/:category?" :paramsDesc="['分类，见下表，默认为社会']">
+
+| 推荐 | 社会 | 娱乐 | 国际 | 军事 |
+| ---- | ---- | ---- | ---- | ---- |
+
+| 养生 | 汽车 | 体育 | 财经 | 游戏 |
+| ---- | ---- | ---- | ---- | ---- |
+
+| 科技 | 国内 | 宠物 | 情感 | 人文 | 教育 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
+
 ## 読売新聞
 
 ### 新聞
