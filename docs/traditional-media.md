@@ -385,6 +385,10 @@ Category 列表：
 
 </Route>
 
+### 财新数据通
+
+<Route author="nczitzk" example="/caixin/database" path="/caixin/database"/>
+
 ### 财新一线
 
 <Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
