@@ -236,6 +236,12 @@ pageClass: routes
 
 <Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
 
+## MacWk
+
+### 应用更新
+
+<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']" radar="1" rssbud="1"/>
+
 ## ManicTime
 
 <Route author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
@@ -425,6 +431,12 @@ pageClass: routes
 ### Dev Release Changelog
 
 <Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
+
+## X410
+
+### News
+
+<Route author="nczitzk" example="/x410/news" path="/x410/news"/>
 
 ## xclient.info
 
