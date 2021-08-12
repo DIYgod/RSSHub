@@ -1,5 +1,6 @@
 process.env.REQUEST_TIMEOUT = '500';
 const got = require('../../lib/utils/got');
+const logger = require('../../lib/utils/logger');
 const config = require('../../lib/config').value;
 const nock = require('nock');
 
@@ -65,11 +66,16 @@ describe('got', () => {
                 return [200, '{"code": 0}'];
             });
 
+        const loggerSpy = jest.spyOn(logger, 'error').mockReturnValue({});
+
         try {
             await got.get('http://rsshub.test/timeout');
             throw Error('Timeout Invalid');
         } catch (error) {
             expect(error.name).toBe('RequestError');
         }
+        expect(loggerSpy).toHaveBeenCalledWith(expect.stringContaining('http://rsshub.test/timeout'));
+
+        loggerSpy.mockRestore();
     });
 });
