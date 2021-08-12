@@ -156,6 +156,12 @@ pageClass: routes
 
 <Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
 
+## Common App
+
+### Blog
+
+<Route author="nczitzk" example="/commonapp/blog" path="/commonapp/blog"/>
+
 ## Day One
 
 ### Blog
