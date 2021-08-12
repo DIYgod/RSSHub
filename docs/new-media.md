@@ -308,11 +308,11 @@ Tag
 
 ## HKEPC
 
-### HKEPC 電腦領域
+### HKEPC 电脑领域
 
-<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" :paramsDesc="['分類，見下表，默认为最新消息']">
+<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" :paramsDesc="['分类，见下表，默认为最新消息']">
 
-| 專題報導   | 新聞中心 | 新品快遞 | 超頻領域 | 流動數碼 | 生活娛樂      | 會員消息 | 腦場新聞 | 業界資訊 | 最新消息 |
+| 专题报导   | 新闻中心 | 新品快递 | 超频领域 | 流动数码 | 生活娱乐      | 会员消息 | 脑场新闻 | 业界资讯 | 最新消息 |
 | ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
 | coverStory | news     | review   | ocLab    | digital  | entertainment | member   | price    | press    | latest   |
 
@@ -1100,6 +1100,18 @@ area 分区选项
 | 实用软件 | 网站源码 | 技术教程 | 游戏助手 | 游戏资源 | 值得一看 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
 | rj       | wzym     | jsjc     | yx       | yxzy     | zdyk     |
+
+</Route>
+
+## 费米实验室
+
+### 新闻
+
+<Route author="nczitzk" example="/fnal/news" path="/fnal/news/:category?" :paramsDesc="['分类，见下表，默认为 All News']">
+
+| All News | Fermilab features | Press releases | Symmetry features |
+| -------- | ----------------- | -------------- | ----------------- |
+| allnews  | 269               | 55             | 12580             |
 
 </Route>
 
@@ -1938,6 +1950,18 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/bioon/latest" path="/bioon/latest"/>
 
+## 生物探索
+
+### 频道
+
+<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel?" :paramsDesc="['频道，见下表，默认为首页']">
+
+| 首页 | 研究     | 产业     | 融资      | 时政     | 人物      | 公司    | 新品    | 活动     |
+| ---- | -------- | -------- | --------- | -------- | --------- | ------- | ------- | -------- |
+| home | research | industry | financing | politics | celebrity | company | product | activity |
+
+</Route>
+
 ## 世界卫生组织 WHO
 
 ### 媒体中心
@@ -2504,4 +2528,18 @@ QueryString:
 
 ### 全文
 
-<Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+<Route author="HenryQW nczitzk" example="/zzz" path="/zzz/:category?/:language?" :paramsDesc="['分类，见下表，默认为全部', '语言，见下表，默认为简体中文']">
+
+分类
+
+| 全部 | 房股财经     | 时事评论      | 每日一见    | 随心杂谈    | 精彩推荐       | 历史新撰     |
+| ---- | ------------ | ------------- | ----------- | ----------- | -------------- | ------------ |
+| all  | fangshigushi | shishipinglun | meiriyijian | suixinzatan | jingcaituijian | lishixinzuan |
+
+语言
+
+| 简体中文 | 港澳繁體 | 台灣正體 |
+| -------- | -------- | -------- |
+|          | zh-hk    | zh-tw    |
+
+</Route>
