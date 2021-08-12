@@ -1962,12 +1962,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 世界卫生组织 WHO
-
-### 媒体中心
-
-<Route author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
-
 ## 时事一点通
 
 ### 资讯
@@ -1979,6 +1973,12 @@ column 为 third 时可选的 category:
 | 0    | 3        | 6        | 13       | 12       | 4        | 10       | 11       | 5        | 8        | 7        |
 
 </Route>
+
+## 世界卫生组织 WHO
+
+### 媒体中心
+
+<Route author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
 
 ## 数英网
 
