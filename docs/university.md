@@ -303,9 +303,40 @@ pageClass: routes
 
 ## 重庆大学
 
-### 教务网通知公告
+### 本科教学信息网通知公告
 
-<Route author="El-Chiang" example="/cqu/jwc/announcement" path="/cqu/jwc/announcement"/>
+<Route author="El-Chiang Hagb" example="/cqu/jwc/" path="/cqu/jwc/:path*" :paramsDesc="['路径']">
+
+| 分类                                                              | 路径                |
+| ----------------------------------------------------------------- | ------------------- |
+| [通知公告](http://jwc.cqu.edu.cn/index/tzgg.htm)                  | `index/tzgg` 或留空 |
+| [通知公告 / 学籍管理](http://jwc.cqu.edu.cn/index/tzgg/xjgl.htm)  | `index/tzgg/xjgl`   |
+| [通知公告 / 交流交换](http://jwc.cqu.edu.cn/index/tzgg/jljh1.htm) | `index/tzgg/jljh1`  |
+| [通知公告 / 教学运行](http://jwc.cqu.edu.cn/index/tzgg/jxyx.htm)  | `index/tzgg/jxyx`   |
+| [通知公告 / 教学质量](http://jwc.cqu.edu.cn/index/tzgg/jxzl.htm)  | `index/tzgg/jxzl`   |
+| [通知公告 / 教研教改](http://jwc.cqu.edu.cn/index/tzgg/jyjg.htm)  | `index/tzgg/jyjg`   |
+| [通知公告 / 创新实践](http://jwc.cqu.edu.cn/index/tzgg/cxsj.htm)  | `index/tzgg/cxsj`   |
+| [学籍管理 / 学籍处理](http://jwc.cqu.edu.cn/xjgl/xjcl.htm)        | `xjgl/xjcl`         |
+| [学籍管理 / 交流交换](http://jwc.cqu.edu.cn/xjgl/jljh.htm)        | `xjgl/jljh`         |
+| [学籍管理 / 学生推免](http://jwc.cqu.edu.cn/xjgl/xstm.htm)        | `xjgl/xstm`         |
+| [学籍管理 / 转专业](http://jwc.cqu.edu.cn/xjgl/zzy.htm)           | `xjgl/zzy`          |
+| [教学运行 / 学生选课](http://jwc.cqu.edu.cn/jxyx/xsxk.htm)        | `jxyx/xsxk`         |
+| [教学运行 / 考试安排](http://jwc.cqu.edu.cn/jxyx/ksap.htm)        | `jxyx/ksap`         |
+| [教学运行 / 助教管理](http://jwc.cqu.edu.cn/jxyx/zjgl.htm)        | `jxyx/zjgl`         |
+
+</Route>
+
+::: tip 提示
+路径参数的值为相应通知列表页面的地址去除后缀名和域名后的路径。
+
+例如 “通知公告” 列表页面地址为 <http://jwc.cqu.edu.cn/index/tzgg.htm>，相应参数为 `index/tgzz`。
+:::
+
+::: warning 注意
+原重庆大学教务网网站变更为重庆大学本科教学信息网。该路由编写时（2021-07-29）它[正处于试运行阶段](http://jwc.cqu.edu.cn/info/1080/3482.htm)。
+
+通知的分类比较迷，请小心甄别、使用（以免漏掉需要的通知）。
+:::
 
 ### 新闻网讲座预告
 
