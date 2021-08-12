@@ -432,6 +432,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
 
+## X410
+
+### News
+
+<Route author="nczitzk" example="/x410/news" path="/x410/news"/>
+
 ## xclient.info
 
 ### 应用更新
