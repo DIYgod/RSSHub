@@ -1841,6 +1841,12 @@ type 列表：
 
  </Route>
 
+## 温州大学
+
+### 新闻
+
+<Route author="Chandler-Lu" example="/wzu/news" path="/wzu/news" />
+
 ## 温州商学院
 
 ### 温州商学院
