@@ -8,11 +8,13 @@ pageClass: routes
 
 ### Photos
 
-<RouteEn author="nczitzk" example="/1x/latest/all" path="/1x/:type?/:caty?" :paramsDesc="['sort type, `latest` by default, or `popular` or `curators-choice`', 'picture category, `all` by default, see below']">
+<RouteEn author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['Category, Latest awarded by default, see below']">
 
-| Picture Category | Code          |
+| Category         | Title         |
 | ---------------- | ------------- |
-| All categories   | all           |
+| Latest awarded   | latest        |
+| Popular          | popular       |
+| Latest published | published     |
 | Abstract         | abstract      |
 | Action           | action        |
 | Animals          | animals       |
