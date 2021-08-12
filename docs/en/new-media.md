@@ -394,6 +394,12 @@ Compared to the official one, this feed:
 
 <RouteEn author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
+## Sky Sports
+
+### News
+
+<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />\
+
 ## Soomal
 
 ### 话题
@@ -419,12 +425,6 @@ Compared to the official one, this feed:
   - Soomal forum and comments：[http://www.soomal.com/bbs/101.rss.xml](http://www.soomal.com/bbs/101.rss.xml)
 
 </RouteEn>
-
-## Sky Sports
-
-### News
-
-<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />\
 
 ## The Brain
 

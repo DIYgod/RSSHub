@@ -609,6 +609,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
 
+## Sky Sports
+
+### News
+
+<Route author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['球队 id，可在球队对应页面的 URL 中找到']" />
+
 ## SocialBeta
 
 ### 首页
@@ -644,12 +650,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
     -   Soomal 论坛与留言系统的更新：<http://www.soomal.com/bbs/101.rss.xml>
 
 </Route>
-
-## Sky Sports
-
-### News
-
-<Route author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['球队 id，可在球队对应页面的 URL 中找到']" />
 
 ## TANC 艺术新闻
 
@@ -2532,18 +2532,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 中国计算机学会
-
-### 新闻
-
-<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
-
-| CCF 新闻   | CCF 聚焦 | ACM 信息 |
-| ---------- | -------- | -------- |
-| Media_list | Focus    | ACM_News |
-
-</Route>
-
 ## 中国机械工程学会
 
 ### 学会新闻
@@ -2553,6 +2541,18 @@ column 为 third 时可选的 category:
 | 学会要闻    | 学会动态 | 科技新闻 |
 | ----------- | -------- | -------- |
 | Information | Dynamics | TechNews |
+
+</Route>
+
+## 中国计算机学会
+
+### 新闻
+
+<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
+
+| CCF 新闻   | CCF 聚焦 | ACM 信息 |
+| ---------- | -------- | -------- |
+| Media_list | Focus    | ACM_News |
 
 </Route>
 
