@@ -679,6 +679,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## The Partnership on AI
+
+### Resources
+
+<Route author="nczitzk" example="/partnershiponai/resources" path="/partnershiponai/resources"/>
+
 ## The Verge
 
 ### The Verge

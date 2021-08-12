@@ -438,6 +438,12 @@ Compared to the official one, this feed:
 
 </RouteEn>
 
+## The Partnership on AI
+
+### Resources
+
+<RouteEn author="nczitzk" example="/partnershiponai/resources" path="/partnershiponai/resources"/>
+
 ## The Verge
 
 <RouteEn author="HenryQW" example="/verge" path="/verge">
