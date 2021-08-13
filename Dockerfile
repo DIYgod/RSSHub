@@ -24,7 +24,7 @@ RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm ci ;\
   fi;
 
-RUN node tools/minify-docker.js
+RUN node scripts/docker/minify-docker.js
 
 FROM node:14-slim as app
 
@@ -34,7 +34,7 @@ ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
 
 WORKDIR /app
 COPY . /app
-COPY --from=dep-builder /app/node_modules /app/node_modules
+COPY --from=dep-builder /app/app-minimal/node_modules /app/node_modules
 COPY --from=dep-builder /usr/bin/dumb-init /usr/bin/dumb-init
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
