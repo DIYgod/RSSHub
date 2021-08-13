@@ -484,4 +484,18 @@ Provides all of the Thrillist articles with the specified tag.
 
 ### Newsroom
 
-<RouteEn author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
+<RouteEn author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" :paramsDesc="['Category, see below, Feature stories by default', 'Language, see below, English by default']">
+
+Category
+
+| Feature stories | Commentaries |
+| --------------- | ------------ |
+| feature-stories | commentaries |
+
+Language
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh   | fr       | ru      | es      | pt        |
+
+</RouteEn>
