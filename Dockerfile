@@ -7,7 +7,7 @@ ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
 
 RUN ln -sf /bin/bash /bin/sh
 
-RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init python build-essential --no-install-recommends
+RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init python3 build-essential --no-install-recommends
 
 WORKDIR /app
 COPY . /app
