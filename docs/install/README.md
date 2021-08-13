@@ -248,7 +248,7 @@ in pkgs.stdenv.mkDerivation {
 
 ### 注意：
 
-未验证支付方式的heroku账户每月仅有550小时额度（约23天），验证支付方式后可达每月1000小时。
+未验证支付方式的 heroku 账户每月仅有 550 小时额度（约 23 天），验证支付方式后可达每月 1000 小时。
 
 ### 一键部署（无自动更新）
 
@@ -264,7 +264,8 @@ in pkgs.stdenv.mkDerivation {
 ## 部署到 Vercel (Zeit Now)
 
 ### 注意：
-Vercel免费版可能出现路由超时,请尝试其他方式或者使用付费版本。
+
+Vercel 免费版可能出现路由超时，请尝试其他方式或者使用付费版本。
 
 ![图片.png](https://i.loli.net/2021/08/12/qyUrZgB6vEIjuwD.png)
 
