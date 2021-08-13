@@ -19,9 +19,9 @@ RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
 RUN npm i -g npm
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
-  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && npm install ;\
+  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && npm ci ;\
   else \
-  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm install ;\
+  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm ci ;\
   fi;
 
 RUN node tools/minify-docker.js

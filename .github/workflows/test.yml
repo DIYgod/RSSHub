@@ -22,7 +22,7 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: yarn install
+    - run: npm ci
     - run: npm run jest
       env:
         REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/

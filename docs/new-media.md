@@ -2556,18 +2556,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 中国计算机学会
-
-### 新闻
-
-<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
-
-| CCF 新闻   | CCF 聚焦 | ACM 信息 |
-| ---------- | -------- | -------- |
-| Media_list | Focus    | ACM_News |
-
-</Route>
-
 ## 中国科学院青年创新促进会
 
 ### 最新博文
