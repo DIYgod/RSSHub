@@ -29,7 +29,9 @@ jobs:
           run: |
                   docker buildx build \
                   --platform=linux/amd64,linux/arm/v7,linux/arm64 \
-                  --output "type=image,name=rsshub,push=false" \
+                  --tag "rsshub:latest" \
+                  --output "type=image,push=false" \
                   --file ./Dockerfile .
+                  docker images
                   chmod +x scripts/docker/test-docker.sh
                   scripts/docker/test-docker.sh
