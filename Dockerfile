@@ -1,4 +1,4 @@
-FROM node:14-slim as dep-builder
+FROM node:14-buster-slim as dep-builder
 
 LABEL MAINTAINER https://github.com/DIYgod/RSSHub/
 
