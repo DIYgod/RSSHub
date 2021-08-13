@@ -7,6 +7,7 @@ MAX_RETRIES=60
 docker run -d -p 1200:1200 rsshub
 
 if [[ $? -ne 0 ]]
+then
     echo "failed to run docker"
     exit 1
 fi
