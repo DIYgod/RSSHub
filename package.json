@@ -63,7 +63,8 @@
     "string-width": "4.2.2",
     "supertest": "6.1.3",
     "vuepress": "1.8.2",
-    "yorkie": "2.0.0"
+    "yorkie": "2.0.0",
+    "fs-extra": "^8.1.0"
   },
   "dependencies": {
     "@koa/router": "10.0.0",
@@ -83,7 +84,6 @@
     "entities": "2.1.0",
     "etag": "1.8.1",
     "fanfou-sdk": "4.2.0",
-    "fs-extra": "^8.1.0",
     "git-rev-sync": "3.0.1",
     "googleapis": "73.0.0",
     "got": "11.8.2",
