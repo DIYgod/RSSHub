@@ -5,6 +5,11 @@
 
 docker run -d -p 1200:1200 rsshub
 
+if [[ $? -ne 0 ]]
+    echo "failed to run docker"
+    exit 1
+fi
+
 RETRY=0
 curl -m 10 localhost:1200
 while [[ $? -ne 0 ]] && [[ $RETRY -lt 60 ]]; do
@@ -15,7 +20,7 @@ done
 
 if [[ $RETRY -gt 60 ]]
 then
-    echo "Unable to run docker, aborted"
+    echo "Unable to run, aborted"
     exit 1
 else
     echo "Successfully acquire homepage, passing"
