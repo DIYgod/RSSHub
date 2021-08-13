@@ -31,6 +31,6 @@ jobs:
                   -t rsshub \
                   --platform=linux/amd64,linux/arm/v7,linux/arm64 \
                   --output "type=image,push=false" \
-                  --file ./Dockerfile . \
+                  --file ./Dockerfile .
                   chmod +x scripts/docker/test-docker.sh
                   scripts/docker/test-docker.sh
