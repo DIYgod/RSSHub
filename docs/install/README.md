@@ -23,7 +23,7 @@ sidebar: auto
 
 ## Docker 镜像
 
-默认推荐使用`diygod/rsshub`即`diygod/rsshub:latest`最新版镜像以获取最新路由.  
+默认推荐使用`diygod/rsshub`即`diygod/rsshub:latest`最新版镜像以获取最新路由.
 当`diygod/rsshub:latest`存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
 
 ```bash
@@ -246,6 +246,10 @@ in pkgs.stdenv.mkDerivation {
 
 ## 部署到 Heroku
 
+### 注意：
+
+未验证支付方式的heroku账户每月仅有550小时额度（约23天），验证支付方式后可达每月1000小时。
+
 ### 一键部署（无自动更新）
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
@@ -258,6 +262,11 @@ in pkgs.stdenv.mkDerivation {
 4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
 ## 部署到 Vercel (Zeit Now)
+
+### 注意：
+Vercel免费版可能出现路由超时,请尝试其他方式或者使用付费版本。
+
+![图片.png](https://i.loli.net/2021/08/12/qyUrZgB6vEIjuwD.png)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
