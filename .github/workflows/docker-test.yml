@@ -27,9 +27,8 @@ jobs:
           uses: docker/setup-buildx-action@v1
         - name: Build dockerfile and Run (without push)
           run: |
-                  ID=$(docker buildx build -q\
+                  ID=$(docker buildx build -q \
                   --platform=linux/amd64,linux/arm/v7,linux/arm64 \
-                  --tag "rsshub:latest" \
                   --output "type=image,push=false" \
                   --file ./Dockerfile .)
                   chmod +x scripts/docker/test-docker.sh
