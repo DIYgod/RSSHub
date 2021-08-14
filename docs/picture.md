@@ -8,31 +8,33 @@ pageClass: routes
 
 ### Photos
 
-<Route author="nczitzk" example="/1x/latest/all" path="/1x/:type?/:caty?" :paramsDesc="['排序类型，默认为 `latest`，亦可选 `popular` 或 `curators-choice`', '图片类别，默认为 `all`，见下表']">
+<Route author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['类别，默认为 Latest awarded，见下表']">
 
-| 图片类别       | 代码          |
-| -------------- | ------------- |
-| All categories | all           |
-| Abstract       | abstract      |
-| Action         | action        |
-| Animals        | animals       |
-| Architecture   | architecture  |
-| Conceptual     | conceptual    |
-| Creative edit  | creative-edit |
-| Documentary    | documentary   |
-| Everyday       | everyday      |
-| Fine Art Nude  | fine-art-nude |
-| Humour         | humour        |
-| Landscape      | landscape     |
-| Macro          | macro         |
-| Mood           | mood          |
-| Night          | night         |
-| Performance    | performance   |
-| Portrait       | portrait      |
-| Still life     | still-life    |
-| Street         | street        |
-| Underwater     | underwater    |
-| Wildlife       | wildlife      |
+| Category         | Title         |
+| ---------------- | ------------- |
+| Latest awarded   | latest        |
+| Popular          | popular       |
+| Latest published | published     |
+| Abstract         | abstract      |
+| Action           | action        |
+| Animals          | animals       |
+| Architecture     | architecture  |
+| Conceptual       | conceptual    |
+| Creative edit    | creative-edit |
+| Documentary      | documentary   |
+| Everyday         | everyday      |
+| Fine Art Nude    | fine-art-nude |
+| Humour           | humour        |
+| Landscape        | landscape     |
+| Macro            | macro         |
+| Mood             | mood          |
+| Night            | night         |
+| Performance      | performance   |
+| Portrait         | portrait      |
+| Still life       | still-life    |
+| Street           | street        |
+| Underwater       | underwater    |
+| Wildlife         | wildlife      |
 
 </Route>
 
@@ -374,9 +376,9 @@ R18 显示
 
 <Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 |
-| ------ | ---------- | ---------- |
-| pic    | top        | top-4h     |
+| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 |
+| ------ | ---------- | ---------- | ---- | ------ | ---------- |
+| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   |
 
 ### 首页
 

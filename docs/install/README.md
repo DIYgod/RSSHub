@@ -21,6 +21,17 @@ sidebar: auto
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker 镜像
+
+默认推荐使用`diygod/rsshub`即`diygod/rsshub:latest`最新版镜像以获取最新路由.
+当`diygod/rsshub:latest`存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
+
+```bash
+$ docker pull diygod/rsshub:2021-06-18
+```
+
+待最新镜像更新后在切换回`diygod/rsshub:latest`最新版镜像.
+
 ## Docker Compose 部署
 
 ### 安装
@@ -235,6 +246,10 @@ in pkgs.stdenv.mkDerivation {
 
 ## 部署到 Heroku
 
+### 注意：
+
+未验证支付方式的 heroku 账户每月仅有 550 小时额度（约 23 天），验证支付方式后可达每月 1000 小时。
+
 ### 一键部署（无自动更新）
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
@@ -247,6 +262,12 @@ in pkgs.stdenv.mkDerivation {
 4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
 ## 部署到 Vercel (Zeit Now)
+
+### 注意：
+
+Vercel 免费版可能出现路由超时，请尝试其他方式或者使用付费版本。
+
+![图片.png](https://i.loli.net/2021/08/12/qyUrZgB6vEIjuwD.png)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
@@ -612,6 +633,15 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `IG_PROXY`: Instagram 代理 URL。
 
     注意，暂不支持两步验证。
+
+-   BUPT
+
+    -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
+        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
+        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        3.  打开控制台，刷新
+        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        5.  找到请求头中的 Cookie
 
 -   BTBYR
 
