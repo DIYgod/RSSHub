@@ -32,4 +32,5 @@ jobs:
                   --output "type=image,push=false" \
                   --file ./Dockerfile .)
                   chmod +x scripts/docker/test-docker.sh
-                  scripts/docker/test-docker.sh $ID
+                  echo "Docker ID: ${ID}"
+                  scripts/docker/test-docker.sh ${ID}
