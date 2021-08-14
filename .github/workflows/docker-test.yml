@@ -21,7 +21,6 @@ jobs:
         - name: Build dockerfile and Run (without push)
           run: |
                   docker build \
-                  --load -q \
                   --tag rsshub:latest \
                   --file ./Dockerfile .
                   chmod +x scripts/docker/test-docker.sh
