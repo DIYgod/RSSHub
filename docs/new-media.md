@@ -156,6 +156,10 @@ pageClass: routes
 
 <Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
 
+### 主题
+
+<Route author="cczhong11" example="/cnbeta/topic/453" path="/cnbeta/topic/:topic_id"/>
+
 ## Common App
 
 ### Blog
