@@ -7,14 +7,7 @@ on:
             - 'lib/**'
             - 'Dockerfile'
             - 'package.json'
-    push:
-        branches: '*'
-        paths:
-            - '.github/workflows/**'
-            - 'lib/**'
-            - 'Dockerfile'
-            - 'package.json'
-
+    # Please, always create a pull request instead of push to master.
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -27,8 +20,7 @@ jobs:
           uses: docker/setup-buildx-action@v1
         - name: Build dockerfile and Run (without push)
           run: |
-                  docker buildx build \
-                  --platform=linux/amd64,linux/arm/v7,linux/arm64 \
+                  docker build \
                   --load -q \
                   --tag rsshub:latest \
                   --file ./Dockerfile .
