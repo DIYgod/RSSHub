@@ -4,7 +4,7 @@ MAX_RETRIES=60
 # Try running the docker and get the output
 # then try getting homepage in 3 mins
 
-docker run -d -p 1200:1200 rsshub
+docker run -d -p 1200:1200 $1
 
 if [[ $? -ne 0 ]]
 then
