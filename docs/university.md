@@ -1845,7 +1845,13 @@ type 列表：
 
 ### 新闻
 
-<Route author="Chandler-Lu" example="/wzu/news" path="/wzu/news" />
+<Route author="Chandler-Lu" example="/wzu/news/0" path="/wzu/news/:type" :paramsDesc="['分类, 见下表 默认为`0`']" />
+
+| 温大新闻 | 媒体温大 | 学术温大 | 通知公告 | 招标信息 | 学术公告 |
+| :------: | :------: | :------: | :------: | :------: | :------: |
+|     0    |     1    |     2    |     3    |     4    |     5    |
+
+</Route>
 
 ## 温州商学院
 
