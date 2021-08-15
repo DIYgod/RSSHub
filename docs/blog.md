@@ -90,6 +90,12 @@ pageClass: routes
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
+## yuzu emulator
+
+### Entry
+
+<Route author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
+
 ## 阿里云系统组技术博客
 
 ### 首页
