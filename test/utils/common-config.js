@@ -2,12 +2,12 @@ const configUtils = require('../../lib/utils/common-config');
 const nock = require('nock');
 
 describe('index', () => {
-    it('transElemText', async () => {
+    it('transElemText', () => {
         const $ = () => 'RSSHub';
         expect(configUtils.transElemText($, '$()')).toBe('RSSHub');
     });
 
-    it('replaceParams', async () => {
+    it('replaceParams', () => {
         const $ = () => 'RSSHub';
         const data = {
             params: {
@@ -18,7 +18,7 @@ describe('index', () => {
         expect(configUtils.replaceParams(data, data.title, $)).toBe('RSSHub');
     });
 
-    it('getProp', async () => {
+    it('getProp', () => {
         const $ = () => 'RSSHub';
         const data = {
             title: 'RSSHub',
@@ -27,7 +27,7 @@ describe('index', () => {
         expect(configUtils.getProp(data, 'title', $)).toBe('RSSHub');
     });
 
-    it('all', async () => {
+    it('all', () => {
         const $ = () => 'RSSHub';
         const data = {
             params: {
