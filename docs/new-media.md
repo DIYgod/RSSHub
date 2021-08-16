@@ -28,11 +28,19 @@ pageClass: routes
 
 ### 资讯
 
-<Route author="nczitzk" example="/36kr/news/latest" path="/36kr/news/:caty" :paramsDesc="['资讯分类']">
+<Route author="nczitzk" example="/36kr/news/latest" path="/36kr/news/:category?" :paramsDesc="['资讯分类，见下表，默认为最新']">
 
-| 最新   | 推荐      | 创投    | 中概股 | 汽车   | 科技       | 企服              | 金融    | 生活 | 创新     | 房产        | 职场      | 其他  |
-| ------ | --------- | ------- | ------ | ------ | ---------- | ----------------- | ------- | ---- | -------- | ----------- | --------- | ----- |
-| latest | recommend | contact | ccs    | travel | technology | enterpriseservice | banking | life | innovate | real_estate | workplace | other |
+| 最新   | 推荐      | 创投    | Markets |
+| ------ | --------- | ------- | ------- |
+| latest | recommend | contact | ccs     |
+
+| 汽车   | 科技       | 企服              | 生活 |
+| ------ | ---------- | ----------------- | ---- |
+| travel | technology | enterpriseservice | life |
+
+| 创新     | 房产        | 职场      | 企业号  | 其他  |
+| -------- | ----------- | --------- | ------- | ----- |
+| innovate | real_estate | workplace | qiyehao | other |
 
 </Route>
 
