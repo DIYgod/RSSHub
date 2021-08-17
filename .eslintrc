@@ -57,6 +57,7 @@
         "no-new-func": 2,
         "require-await": 2,
         "no-return-await": 2,
-        "prefer-arrow-callback": 2
+        "prefer-arrow-callback": 2,
+        "object-shorthand": 2
     }
 }
