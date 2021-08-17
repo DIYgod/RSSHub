@@ -1859,6 +1859,25 @@ type 列表：
 
 </Route>
 
+## 潍坊学院
+
+### 潍坊学院新闻
+
+<Route author="cccht" example="/wfu/news/wyyw" path="/wfu/news/:type?" :paramsDesc="['分类, 默认为 `wyyw`, 具体参数见下表']">
+
+| **内容** | **参数** |
+| :------: | :------: |
+| 潍院要闻 |   wyyw   |
+| 综合新闻 |   zhxw   |
+| 学术纵横 |   xszh   |
+
+</Route>
+
+### 潍坊学院教务处通知
+
+<Route author="cccht" example="/wfu/jwc" path="/wfu/jwc"">
+</Route>
+
 ## 武昌首义学院
 
 ### 新闻中心
