@@ -41,10 +41,9 @@ describe('index', () => {
     it('buildData', async () => {
         nock('http://rsshub.test')
             .get('/buildData')
-            .reply(function () {
-                return [
-                    200,
-                    `<div class="content">
+            .reply(() => [
+                200,
+                `<div class="content">
                 <ul>
                     <li>
                         <a href="/1">1</a>
@@ -56,8 +55,7 @@ describe('index', () => {
                     </li>
                 </ul>
             </div>`,
-                ];
-            });
+            ]);
         const data = await configUtils({
             link: 'http://rsshub.test/buildData',
             url: 'http://rsshub.test/buildData',
