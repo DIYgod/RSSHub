@@ -295,6 +295,20 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
+## Line
+
+### Today
+
+<Route author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['Edition, see below, Taiwan by default', 'Tag, can be found in URL, top by default']">
+
+Edition
+
+| Taiwan | Thailand | Indonesia | Hong Kong |
+| ------ | -------- | --------- | --------- |
+| tw     | th       | id        | hk        |
+
+</Route>
+
 ## MakeUseOf
 
 <RouteEn author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['Category, Trending by default']"/>
