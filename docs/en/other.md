@@ -104,7 +104,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1" rssbud="1">
+<RouteEn author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1" rssbud="1">
 
 | Japanese | English |
 | -------- | ------- |
