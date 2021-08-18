@@ -339,6 +339,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
+## X410
+
+### News
+
+<RouteEn author="nczitzk" example="/x410/news" path="/x410/news"/>
+
 ## Xiaomi.eu
 
 ### ROM Releases
