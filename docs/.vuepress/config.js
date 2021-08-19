@@ -1,4 +1,4 @@
-const pinyin = require('pinyin');
+const { pinyin } = require('@napi-rs/pinyin');
 const { slugify: _slugify } = require('@vuepress/shared-utils');
 
 module.exports = {

@@ -140,24 +140,26 @@
             {
                 title: '用户收藏',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/bookmark.php',
-                target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+                source: '/users/:id/bookmarks/artworks',
+                target: '/pixiv/user/bookmarks/:id',
             },
             {
                 title: '用户动态',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/member.php',
-                target: (params, url) => `/pixiv/user/${new URL(url).searchParams.get('id')}`,
+                source: '/users/:id',
+                target: '/pixiv/user/:id',
             },
             {
                 title: '排行榜',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
                 source: '/ranking.php',
+                target: (params, url) => `/pixiv/ranking/${new URL(url).searchParams.get('mode') || 'daily'}`,
             },
             {
                 title: '关键词',
                 docs: 'https://docs.rsshub.app/social-media.html#pixiv',
-                source: '/search.php',
+                source: ['/tags/:keyword', '/tags/:keyword/:type?'],
+                target: (params, url) => `/pixiv/search/:keyword/${new URL(url).searchParams.get('order')}/${new URL(url).searchParams.get('mode')}`,
             },
             {
                 title: '关注的新作品',
@@ -605,6 +607,28 @@
                 docs: 'https://docs.rsshub.app/anime.html#kan-man-hua',
                 source: '/comic/:id/',
                 target: '/manhuagui/comic/:id',
+            },
+        ],
+    },
+    'mhgui.com': {
+        _name: '漫画柜镜像站',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-jing-xiang-zhan',
+                source: '/comic/:id/',
+                target: '/mhgui/comic/:id',
+            },
+        ],
+    },
+    'tw.manhuagui.com': {
+        _name: '漫画柜台湾',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-tai-wan',
+                source: '/comic/:id/',
+                target: '/twmanhuagui/comic/:id',
             },
         ],
     },
@@ -1142,12 +1166,6 @@
                 source: '/search/',
                 target: (params, url) => `/steam/search/${new URL(url).searchParams}`,
             },
-            {
-                title: 'news',
-                docs: 'https://docs.rsshub.app/game.html#steam',
-                source: '/news/',
-                target: (params, url) => `/steam/news/${new URL(url).searchParams.get('appids')}`,
-            },
         ],
     },
     'baijingapp.com': {
@@ -1232,6 +1250,32 @@
                     const id = new URL(url).hash.match(/djradio\?id=(.*)/)[1];
                     return id ? `/ncm/djradio/${id}` : '';
                 },
+            },
+        ],
+        'y.music': [
+            {
+                title: '云音乐 - 用户歌单',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/user',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 歌单歌曲',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/playlist',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 歌手专辑',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/album',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 播单声音',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: ['/m/radio', '/m/djradio'],
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
             },
         ],
     },
@@ -1892,28 +1936,34 @@
         _name: '站酷',
         www: [
             {
-                title: '全部推荐',
+                title: '发现',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/all',
+                target: '/zcool/discover',
             },
             {
-                title: '首页推荐',
+                title: '发现 - 精选 - 全部推荐',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/home',
+                target: '/zcool/discover/all',
             },
             {
-                title: '编辑推荐',
+                title: '发现 - 精选 - 首页推荐',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/home',
+                target: '/zcool/discover/home',
             },
             {
-                title: '文章推荐',
+                title: '发现 - 精选 - 编辑精选',
                 docs: 'https://docs.rsshub.app/design.html#zhan-ku',
                 source: '',
-                target: '/zcool/recommenda/article',
+                target: '/zcool/discover/home',
+            },
+            {
+                title: '发现 - 精选 - 文章 - 编辑精选',
+                docs: 'https://docs.rsshub.app/design.html#zhan-ku',
+                source: '',
+                target: '/zcool/discover/article',
             },
             {
                 title: '作品榜单',
@@ -2011,11 +2061,17 @@
             {
                 title: '视频 - 播放列表',
                 docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
-                source: '/detail/:type/:id',
+                source: '/x/cover/:id',
                 target: (params) => {
                     const id = params.id.match('(.*).html')[1];
                     return id ? `/tencentvideo/playlist/${id}` : '';
                 },
+            },
+            {
+                title: '视频 - 播放列表',
+                docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
+                source: '/x/cover/:id/:detail',
+                target: '/tencentvideo/playlist/:id',
             },
         ],
     },
@@ -3036,6 +3092,27 @@
                 docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
                 source: '/fine/:tag',
                 target: '/lfsyd/tag/:tag',
+            },
+        ],
+    },
+    'macwk.com': {
+        _name: 'MacWk',
+        '.': [
+            {
+                title: '应用更新',
+                docs: 'https://docs.rsshub.app/program-update.html#macwk',
+                source: '/soft/:name',
+                target: '/macwk/soft/:name',
+            },
+        ],
+    },
+    'zyshow.net': {
+        www: [
+            {
+                title: '',
+                docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
+                source: '/:name/',
+                target: '/zyshow/:name',
             },
         ],
     },
