@@ -109,6 +109,21 @@ pageClass: routes
 
 <Route author="XYenon" example="/gov/harbin/kjj" path="/gov/harbin/kjj"/>
 
+## 湖北省软件行业协会
+
+### 新闻中心
+
+<Route author="tudou027" example="/gov/hubei/hbsia/zxzx" path="/gov/hubei/hbsia/:caty" :paramsDesc="['类别']">
+
+| 具体栏目 | 参数 |
+| :------: | :--: |
+| 最新资讯 | zxzx |
+| 活动通知 | hdtz |
+| 活动报道 | hdbd |
+| 公示公告 | gsgg |
+
+</Route>
+
 ## 联合国
 
 ### 安理会否决了决议
@@ -194,6 +209,30 @@ pageClass: routes
 ### 政府信息公开文件
 
 <Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
+
+## 武汉东湖新技术开发区
+
+### 新闻中心
+
+<Route author="tudou027" example="/gov/wuhan/wehdz/tz" path="/gov/wuhan/wehdz/:caty" :paramsDesc="['类别']">
+
+| 通知 | 公告 |
+| :--: | :--: |
+|  tz  |  gg  |
+
+</Route>
+
+## 武汉市科学技术局
+
+### 新闻中心
+
+<Route author="tudou027" example="/gov/wuhan/kjj/tzgg" path="/gov/wuhan/kjj/:caty" :paramsDesc="['类别']">
+
+| 通知公告 | 公示信息 |
+| :------: | :------: |
+|   tzgg   |   gsxx   |
+
+</Route>
 
 ## 中国工业和信息化部
 
