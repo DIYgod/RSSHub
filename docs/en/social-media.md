@@ -132,7 +132,7 @@ If you don't want to setup credentials, use Picuki.
 
 ### User
 
-<RouteEn author="hoilc" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter user name, in the URL']"/>
+<RouteEn author="hoilc nczitzk" example="/lofter/user/i" path="/lofter/user/:name?" :paramsDesc="['Lofter user name, can be found in the URL']"/>
 
 ### Tag
 
