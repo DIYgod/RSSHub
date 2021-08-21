@@ -384,6 +384,10 @@ Category 列表：
 
 </Route>
 
+### 财新数据通
+
+<Route author="nczitzk" example="/caixin/database" path="/caixin/database"/>
+
 ### 财新一线
 
 <Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
@@ -1049,6 +1053,22 @@ category 对应的关键词有
 | local    | greaterchina | international | finance  | sport    |
 | -------- | ------------ | ------------- | -------- | -------- |
 | 本地新聞 | 大中華新聞   | 國際新聞      | 財經新聞 | 體育新聞 |
+
+</Route>
+
+## 香港经济日报
+
+### 新闻
+
+香港经济日报已有提供简单 RSS，详细可前往官方网站： <https://www.hket.com/rss>
+
+此路由主要补全官方 RSS 全文输出。
+
+<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" :paramsDesc="['分类，默认为全部新闻']">
+
+| sran001  | sran008  | sran010  | sran011  | srac002  | srat006  |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 两岸新闻 | 香港新闻 |
 
 </Route>
 
