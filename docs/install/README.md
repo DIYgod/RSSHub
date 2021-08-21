@@ -263,12 +263,6 @@ in pkgs.stdenv.mkDerivation {
 
 ## 部署到 Vercel (Zeit Now)
 
-### 注意：
-
-Vercel 免费版可能出现路由超时，请尝试其他方式或者使用付费版本。
-
-![图片.png](https://i.loli.net/2021/08/12/qyUrZgB6vEIjuwD.png)
-
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
 ## 部署到 Google App Engine
