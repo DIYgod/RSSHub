@@ -201,3 +201,7 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 華康字型故事
+
+<Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
