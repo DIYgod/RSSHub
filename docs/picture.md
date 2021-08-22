@@ -237,6 +237,16 @@ R18 显示
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## Mic Mic Idol
+
+### 最新
+
+<Route author="KotoriK" example="/micmicidol" path="/micmicidol">
+
+### 标签
+
+<Route author="KotoriK" example="/micmicidol/search/Young%20Jump/20" path="/micmicidol/search/:label/:max?" :paramsDesc="['标签名','最多返回多少条结果']">
+
 ## MM 范
 
 ### 分类
