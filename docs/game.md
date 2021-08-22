@@ -342,15 +342,17 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-### Steam news
+### Steam 新闻中心
 
-<Route author="maple3142" example="/steam/news/1091500/schinese" path="/steam/news/:appid/:language?" :paramsDesc="['游戏 id', '语言,默认简体中文']" radar="1" rssbud="1">
+::: tip
 
-| 语言 (Language) | 简体中文 (Simplified Chinese) | 繁體中文 (Traditional Chinese) | 日本語 (Japanese) | 한국어 (Korean) | Български (Bulgarian) | Čeština (Czech) | Dansk (Danish) | Deutsch (German) | Español - España (Spanish - Spain) | Español - Latinoamérica (Spanish - Latin America), | Ελληνικά (Greek) | Français (French) | Italiano (Italian) | Magyar (Hungarian) | Nederlands (Dutch) | Norsk (Norwegian) | Polski (Polish) | Português (Portuguese) | Português - Brasil (Portuguese - Brazil) | Română (Romanian) | Русский (Russian) | Suomi (Finnish) | Svenska (Swedish) | Türkçe (Turkish) | Tiếng Việt (Vietnamese) | Українська (Ukrainian) |
-| --------------- | ----------------------------- | ------------------------------ | ----------------- | --------------- | --------------------- | --------------- | -------------- | ---------------- | ---------------------------------- | -------------------------------------------------- | ---------------- | ----------------- | ------------------ | ------------------ | ------------------ | ----------------- | --------------- | ---------------------- | ---------------------------------------- | ----------------- | ----------------- | --------------- | ----------------- | ---------------- | ----------------------- | ---------------------- |
-|                 | schinese                      | tchinese                       | japanese          | koreana         | bulgarian             | czech           | danish         | german           | spanish                            | latam                                              | greek            | french            | italian            | hungarian          | dutch              | norwegian         | polish          | portuguese             | brazilian                                | romanian          | russian           | finnish         | swedish           | turkish          | vietnamese              | ukrainian              |
+Steam 新闻中心支持官方的 RSS 订阅:
 
-</Route>
+-   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
+-   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english> 
+-   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss>	或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
+
+:::
 
 ## SteamGifts
 
@@ -456,19 +458,27 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 旅法师营地
 
-### 旅法师营地
+### 分区
 
-<Route author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
-| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王 | 电子游戏 | 手机游戏 | 桌面游戏 |
-| -------- | -------- | ------ | ------ | ------ | -------- | -------- | -------- |
-| 1        | 2        | 3      | 14     | 16     | 4        | 22       | 9        |
+| 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
+| :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
+|    17    |   18   |   16   |   19   |   20   |      329     |      221     |
 
-| 影之诗 | Artifact | 玩家杂谈 | 营地电台 | 2047 | 魂武 |
-| ------ | -------- | -------- | -------- | ---- | ---- |
-| 17     | 67       | 21       | 5        | 62   | 68   |
+| 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
+| :------: | :------: | :------: | :------: | :------: | :----: |
+|    112   |    389   |    24    |    102   |    23    |   117  |
 
 </Route>
+
+### 用户的帖子
+
+<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" :paramsDesc="['用户 id']" radar="1" rssbud="1"/>
+
+可以在用户主页的 URL 中找到
+
+Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 米哈游
 
@@ -498,6 +508,10 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+### 塞壬唱片
+
+<Route author="rikkablue" example="/siren/news" path="/siren/news"/>
+
 ## 奶牛关
 
 ### 元素文章
@@ -516,17 +530,23 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-## 网易大神
+## 世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ
 
-### 用户发帖
+### 公告
 
-<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
+<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
 
 ## 王者荣耀
 
 ### 新闻中心
 
 <Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
+
+## 网易大神
+
+### 用户发帖
+
+<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
 
 ## 小黑盒
 
@@ -592,6 +612,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | 1        | 2        | 3        | 4        |
 </Route>
 
+## 游戏年轮
+
+### 分类
+
+<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" :paramsDesc="['分类，见下表，默认为PC游戏', '类型，可在各分类页中导航栏中找到']">
+
+| PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
+| ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
+| pcgame  | ps4      | sgame       | nsaita      | ps      | bt      | 3ds      | psv      | jiaocheng    | ps3yx    | zhangji  |
+
+</Route>
+
 ## 游戏时光
 
 ### 游戏时光新闻
@@ -607,6 +639,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
 
 ## 游讯网
+
+### 资讯
+
+<Route author="nczitzk" example="/yxdown/news" path="/yxdown/news/:category?" :paramsDesc="['分类，见下表，默认为资讯首页']">
+
+| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |
+
+</Route>
 
 ### 精彩推荐
 

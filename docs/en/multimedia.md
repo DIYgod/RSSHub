@@ -16,6 +16,12 @@ Full transcript support for better user experience.
 
 <RouteEn author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
 
+## Bandcamp
+
+### Tag
+
+<RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['Tag, can be found in URL']"/>
+
 ## EZTV
 
 ::: tip
@@ -59,6 +65,18 @@ Official RSS: https://eztv.io/ezrss.xml
 ### Bestreviews
 
 <RouteEn author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" rssbud="1"/>
+
+## Melon
+
+### Chart
+
+<RouteEn author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" :paramsDesc="['Category, see below, 24H by default']">
+
+| 24H | 일간 | 주간 | 월간 |
+| - | - | - | - |
+| | day | week | month |
+
+</RouteEn>
 
 ## Nyaa
 
