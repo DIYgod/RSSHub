@@ -1890,6 +1890,10 @@ column 为 third 时可选的 category:
 
 ## 全现在
 
+### 首页
+
+<Route author="nczitzk" example="/allnow" path="/allnow"/>
+
 ### 专栏
 
 <Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
