@@ -764,6 +764,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>
 
+### 24 小时头条
+
+<Route author="nczitzk" example="/zhibo8/hot" path="/zhibo8/hot"/>
+
 ## 中国灵异网
 
 ### 分类
