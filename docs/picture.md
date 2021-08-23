@@ -245,7 +245,7 @@ R18 显示
 
 ### 标签
 
-<Route author="KotoriK" example="/micmicidol/search/Young%20Jump/20" path="/micmicidol/search/:label/:max?" :paramsDesc="['标签名','最多返回多少条结果']">
+<Route author="KotoriK" example="/micmicidol/search/Young%20Jump/20" path="/micmicidol/search/:label" :paramsDesc="['标签名']">
 
 ## MM 范
 
