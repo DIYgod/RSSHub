@@ -246,7 +246,7 @@ R18 显示
 ### 标签
 
 <Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" :paramsDesc="['标签名']"/>
-获取数量可以通过`limit`参数控制。默认值为`50`。
+获取数量可以通过 [limit](https://docs.rsshub.app/parameter.html#tiao-shu-xian-zhi) 参数控制。默认值为`50`。
 
 ## MM 范
 
