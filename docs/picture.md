@@ -241,11 +241,12 @@ R18 显示
 
 ### 最新
 
-<Route author="KotoriK" example="/micmicidol" path="/micmicidol">
+<Route author="KotoriK" example="/micmicidol" path="/micmicidol"/>
 
 ### 标签
 
-<Route author="KotoriK" example="/micmicidol/search/Young%20Jump/20" path="/micmicidol/search/:label" :paramsDesc="['标签名']">
+<Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" :paramsDesc="['标签名']"/>
+获取数量可以通过`limit`参数控制。默认值为`50`。
 
 ## MM 范
 
