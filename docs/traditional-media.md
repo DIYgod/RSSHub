@@ -1057,6 +1057,22 @@ category 对应的关键词有
 
 </Route>
 
+## 香港经济日报
+
+### 新闻
+
+香港经济日报已有提供简单 RSS，详细可前往官方网站： <https://www.hket.com/rss>
+
+此路由主要补全官方 RSS 全文输出。
+
+<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" :paramsDesc="['分类，默认为全部新闻']">
+
+| sran001  | sran008  | sran010  | sran011  | srac002  | srat006  |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 两岸新闻 | 香港新闻 |
+
+</Route>
+
 ## 香港商报
 
 ### PDF 版
