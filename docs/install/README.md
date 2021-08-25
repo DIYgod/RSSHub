@@ -704,6 +704,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         | <https://netnr-proxy.openode.io/>        | digitalocean |
 
 -   E-Hentai
-    -   `EH_IPB_MEMBER_ID`: E站浏览器cookie中的`ipb_member_id`值
-    -   `EH_IPB_PASS_HASH`: E站浏览器cookie中的`ipb_pass_hash`值
-    -   `EH_SK`: E站浏览器cookie中的`sk`值
+    -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
+    -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
+    -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
