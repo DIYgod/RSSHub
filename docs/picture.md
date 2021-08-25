@@ -480,7 +480,7 @@ R18 显示
 
 <Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest"/>
 
-## eHentai
+## E-Hentai
 
 ### 收藏
 
