@@ -118,6 +118,10 @@ pageClass: routes
 
 <Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
+## 華康字型故事
+
+<Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
+
 ## 建宁闲谈
 
 ### 文章
