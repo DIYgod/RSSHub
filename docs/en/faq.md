@@ -10,7 +10,7 @@
 
 **Q: How does RSSHub Radar work? **
 
-**A:** When entering a new page, RSSHub Radar first according to the page link tag [Find](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/content/utils.js# L25) The page comes with RSS, and then according to the remote update [rules](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) to find the RSSHub route applicable to the current page and the current website ; Add a little more magic.
+**A:** When entering a new page, RSSHub Radar first according to the page link tag [Find](https://github.com/DIYgod/RSSHub-Radar/blob/master/src/js/content/utils.js#L25) The page comes with RSS, and then according to the remote update [rules](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) to find the RSSHub route applicable to the current page and the current website ; Add a little more magic.
 
 **Q: Can I use the demo instance？**
 
