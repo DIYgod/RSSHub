@@ -669,7 +669,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 关键词
 
-<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" :paramsDesc="['关键词', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?/limit?" :paramsDesc="['关键词', '额外参数；请参阅上面的说明和表格', '查询前多少条']" radar="1" rssbud="1"/>
 
 ### Trends
 
