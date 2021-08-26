@@ -8,31 +8,33 @@ pageClass: routes
 
 ### Photos
 
-<Route author="nczitzk" example="/1x/latest/all" path="/1x/:type?/:caty?" :paramsDesc="['排序类型，默认为 `latest`，亦可选 `popular` 或 `curators-choice`', '图片类别，默认为 `all`，见下表']">
+<Route author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['类别，默认为 Latest awarded，见下表']">
 
-| 图片类别       | 代码          |
-| -------------- | ------------- |
-| All categories | all           |
-| Abstract       | abstract      |
-| Action         | action        |
-| Animals        | animals       |
-| Architecture   | architecture  |
-| Conceptual     | conceptual    |
-| Creative edit  | creative-edit |
-| Documentary    | documentary   |
-| Everyday       | everyday      |
-| Fine Art Nude  | fine-art-nude |
-| Humour         | humour        |
-| Landscape      | landscape     |
-| Macro          | macro         |
-| Mood           | mood          |
-| Night          | night         |
-| Performance    | performance   |
-| Portrait       | portrait      |
-| Still life     | still-life    |
-| Street         | street        |
-| Underwater     | underwater    |
-| Wildlife       | wildlife      |
+| Category         | Title         |
+| ---------------- | ------------- |
+| Latest awarded   | latest        |
+| Popular          | popular       |
+| Latest published | published     |
+| Abstract         | abstract      |
+| Action           | action        |
+| Animals          | animals       |
+| Architecture     | architecture  |
+| Conceptual       | conceptual    |
+| Creative edit    | creative-edit |
+| Documentary      | documentary   |
+| Everyday         | everyday      |
+| Fine Art Nude    | fine-art-nude |
+| Humour           | humour        |
+| Landscape        | landscape     |
+| Macro            | macro         |
+| Mood             | mood          |
+| Night            | night         |
+| Performance      | performance   |
+| Portrait         | portrait      |
+| Still life       | still-life    |
+| Street           | street        |
+| Underwater       | underwater    |
+| Wildlife         | wildlife      |
 
 </Route>
 
@@ -88,17 +90,31 @@ pageClass: routes
 
 ## Dilbert Comic Strip
 
-<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip" />
 
 通过提取漫画，提供比官方源更佳的阅读体验。
 
 </Route>
 
+## E-Hentai
+
+### 收藏
+
+<Route author="Howard Yin" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:bittorrent?" :paramsDesc="['收藏夹编号，可选','顺序，可选：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+
+### 标签
+
+<Route author="Howard Yin" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:bittorrent?" :paramsDesc="['标签', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+
+### 搜索
+
+<Route author="Howard Yin" example="/ehentai/search/:params?/:page?" path="/ehentai/search/:params?/:page?/:bittorrent?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+
 ## Elite Babes
 
 ### Home
 
-<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']">
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']" />
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
@@ -108,7 +124,7 @@ pageClass: routes
 
 ### Videos
 
-<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']">
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']"/>
 
 | Popular | Recent |
 | ------- | ------ |
@@ -374,9 +390,9 @@ R18 显示
 
 <Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 |
-| ------ | ---------- | ---------- |
-| pic    | top        | top-4h     |
+| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 |
+| ------ | ---------- | ---------- | ---- | ------ | ---------- |
+| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   |
 
 ### 首页
 
