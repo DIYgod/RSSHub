@@ -766,7 +766,7 @@ pageClass: routes
 
 ### 24 小时头条
 
-<Route author="nczitzk" example="/zhibo8/hot" path="/zhibo8/hot/:limit?" :paramsDesc="['限制获取条目数，默认为 50 条']"/>
+<Route author="nczitzk" example="/zhibo8/hot" path="/zhibo8/hot"/>
 
 ## 中国灵异网
 
