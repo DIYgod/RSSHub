@@ -438,6 +438,16 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 安全内参
+
+### 分类
+
+<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category"/>
+
+### 作者
+
+<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author"/>
+
 ## 饿了么开放平台
 
 ### 商家开放平台公告
