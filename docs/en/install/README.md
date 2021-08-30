@@ -242,6 +242,10 @@ in pkgs.stdenv.mkDerivation {
 
 ## Deploy to Heroku
 
+### Notice：
+
+Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
+
 ### Instant deploy (without automatic update)
 
 [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https%3A%2F%2Fgithub.com%2FDIYgod%2FRSSHub)
