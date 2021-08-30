@@ -2092,9 +2092,9 @@ column 为 third 时可选的 category:
 
 <Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel" :paramsDesc="['频道，见下表']">
 
-| 最新研究  |  人物访谈   |  产业动态  |  活动发布  |
-| -------- | --------- | --------- | -------- |
-| research | interview | industry  | activity |
+| 最新研究 | 人物访谈  | 产业动态 | 活动发布 |
+| -------- | --------- | -------- | -------- |
+| reaseach | interview | industry | activity |
 
 </Route>
 
