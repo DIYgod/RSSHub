@@ -1617,7 +1617,7 @@ type 列表：
 
 ### 官网信息
 
-<Route author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['类型名称'']"/>
+<Route author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['类型名称']"/>
 
 | 学术讲座 | 通知公告 |
 | -------- | -------- |
