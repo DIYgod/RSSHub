@@ -224,6 +224,18 @@ pageClass: routes
 
 </Route>
 
+## ePrice
+
+<Route author="TonyRL" example="/eprice/tw" path="/eprice/:region?" :paramsDesc="['地区，预设为tw']">
+
+地区：
+
+| hk   | tw   |
+| ---- | ---- |
+| 香港 | 台湾 |
+
+</Route>
+
 ## Esquirehk
 
 ### Tag
