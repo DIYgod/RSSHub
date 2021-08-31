@@ -422,6 +422,12 @@ Tag
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
+## KBS
+
+### News
+
+<Route author="nczitzk" example="/kbs/news" path="/kbs/news/:category?/:language?" :paramsDesc="['分类，可在分类页地址中找到对应 id 字段，默认为 all 即 全部', '语言，见下表，默认为 e 即 English']"/>
+
 ## Kotaku
 
 ### Story
