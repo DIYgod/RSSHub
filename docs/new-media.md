@@ -527,6 +527,15 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## NL Times
+
+<Route author="Hivol" example="/nltimes/news/top-stories" path="/nltimes/news/:category?" :paramsDesc="['分类名']" >
+
+| Top Stories (默认) | Health | Crime | Politics | Business | Tech | Culture | Sports | Weird | 1-1-2 |
+| ------------------ | ------ | ----- | -------- | -------- | ---- | ------- | ------ | ----- | ----- |
+| top-stories        | health | crime | politics | business | tech | culture | sports | weird | 1-1-2 |
+
+</Route>
 ## OpenAI
 
 ### Blog
