@@ -536,12 +536,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   bilibili 用户关注动态路由
+-   bilibili 用户关注动态系列路由
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
         1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
         2.  打开控制台，切换到 Network 面板，刷新
-        3.  点击 dynamic_new 请求，找到 Cookie。
+        3.  点击 dynamic_new 请求，找到 Cookie
+        4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
 
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
