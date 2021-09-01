@@ -263,12 +263,6 @@ in pkgs.stdenv.mkDerivation {
 
 ## 部署到 Vercel (Zeit Now)
 
-### 注意：
-
-Vercel 免费版可能出现路由超时，请尝试其他方式或者使用付费版本。
-
-![图片.png](https://i.loli.net/2021/08/12/qyUrZgB6vEIjuwD.png)
-
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
 ## 部署到 Google App Engine
@@ -702,3 +696,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
         | <https://cors.netnr.workers.dev/>        | cloudflare   |
         | <https://netnr-proxy.openode.io/>        | digitalocean |
+
+-   E-Hentai
+    -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
+    -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
+    -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
