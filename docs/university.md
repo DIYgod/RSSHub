@@ -1617,11 +1617,19 @@ type 列表：
 
 ### 官网信息
 
-<Route author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
+<Route author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['类型名称']"/>
+
+| 学术讲座 | 通知公告 |
+| -------- | -------- |
+| events   | notes    |
 
 ### 教务信息
 
-<Route author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
+<Route author="simonsmh" example="/shmtu/jwc/jwgg" path="/shmtu/jwc/:type" :paramsDesc="['类型名称']"/>
+
+| 教务公告 | 教务新闻 |
+| -------- | -------- |
+| jwgg     | jwxw     |
 
 ## 上海海洋大学
 
