@@ -653,6 +653,19 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 | -------- | -------- |
 | jxtz     | zjjz     |
 
+
+
+## 厦门大学
+
+## 航空航天学院
+<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" :paramsDesc="['分类见下表']"/>
+
+| 通知公告 | 本科生教务 | 研究生教务 |
+| :--------: | :--------: | :--------: |
+| tzgg     | bksjw     | yjsjw|
+</Route>
+
+
 ## 复旦大学继续教育学院
 
 ### 成人夜大通知公告
