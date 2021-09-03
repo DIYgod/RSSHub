@@ -81,6 +81,12 @@ pageClass: routes
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
+## Jikipedia 小鸡词典
+
+### 首页随机词条
+
+<Route author="TonyRL" example="/jikipedia" path="/jikipedia" anticrawler="1"/>
+
 ## MarginNote
 
 ### 标签
