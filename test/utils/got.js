@@ -1,6 +1,5 @@
 process.env.REQUEST_TIMEOUT = '500';
 const got = require('../../lib/utils/got');
-const logger = require('../../lib/utils/logger');
 const config = require('../../lib/config').value;
 const nock = require('nock');
 
@@ -25,7 +24,7 @@ describe('got', () => {
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
-            .reply(() => {
+            .reply(function () {
                 requestRun();
                 return [503, '0'];
             });
@@ -43,7 +42,9 @@ describe('got', () => {
     it('axios', async () => {
         nock('http://rsshub.test')
             .post('/post')
-            .reply(() => [200, '{"code": 0}']);
+            .reply(function () {
+                return [200, '{"code": 0}'];
+            });
 
         const response1 = await got.post('http://rsshub.test/post', {
             form: {
@@ -60,9 +61,9 @@ describe('got', () => {
         nock('http://rsshub.test')
             .get('/timeout')
             .delay(600)
-            .reply(() => [200, '{"code": 0}']);
-
-        const loggerSpy = jest.spyOn(logger, 'error').mockReturnValue({});
+            .reply(function () {
+                return [200, '{"code": 0}'];
+            });
 
         try {
             await got.get('http://rsshub.test/timeout');
@@ -70,8 +71,5 @@ describe('got', () => {
         } catch (error) {
             expect(error.name).toBe('RequestError');
         }
-        expect(loggerSpy).toHaveBeenCalledWith(expect.stringContaining('http://rsshub.test/timeout'));
-
-        loggerSpy.mockRestore();
     });
 });

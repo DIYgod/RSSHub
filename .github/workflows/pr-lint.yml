@@ -7,11 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@v1
       with:
         node-version: '14'
-        cache: 'npm'
-    - run: npm ci
+    - run: yarn install
     - name: Lint
       run: |
         npm run lint
