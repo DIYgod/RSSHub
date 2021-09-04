@@ -475,11 +475,18 @@ pageClass: routes
 
 ## 大连理工大学
 
+**以下标注`星号*`的路由，需登录 webvpn 才能抓取**
+
+-   如果你部署自己的 RSShub: 添加环境变量 `DUT_USERNAME={学号}` 和 `DUT_PASSWD={密码}` 即可
+-   如果你使用公开的 RSShub: [这个](https://rsshub.beautyyu.one/)RSShub 实例已配置 webvpn
+
+未标注`星号*`的路由可以直接使用
+
 ### 教务处
 
 <Route author="beautyyuyanli" example="/dut/teach/zytg" path="/dut/teach/:type" :paramsDesc="['通知类型']">
 
-| 重要通告 | 新闻快递 | 教学文件       | 其他文件    |
+| 重要通告 | 新闻快递 | 教学文件 \*    | 其他文件 \* |
 | -------- | -------- | -------------- | ----------- |
 | zytg     | xwkd     | jiaoxuewenjian | qitawenjian |
 
@@ -502,6 +509,56 @@ pageClass: routes
 | 学生通知   | 教师通知 | 新闻速递 |
 | ---------- | -------- | -------- |
 | xstong_zhi | jstz     | xwsd     |
+
+</Route>
+
+### 网信中心
+
+<Route author="beautyyuyanli" example="/dut/its/zxdt" path="/dut/its/:type" :paramsDesc="['通知类型']">
+
+| 中心动态 | 中心通知 | 安全公告 |
+| -------- | -------- | -------- |
+| zxtz     | zxtz     | aqgg     |
+
+</Route>
+
+### 电信学部
+
+<Route author="beautyyuyanli" example="/dut/ee/xbxw" path="/dut/ee/:type" :paramsDesc="['通知类型']">
+
+| 学部新闻 | 学部通知 | 学术科研活动 | 本科生工作 | 研究生工作 |
+| -------- | -------- | ------------ | ---------- | ---------- |
+| xbxw     | xbtz     | xskyhd       | bks        | yjs        |
+
+</Route>
+
+### 开发区校区
+
+<Route author="beautyyuyanli" example="/dut/eda/tzgg" path="/dut/eda/:type" :paramsDesc="['通知类型']">
+
+| 通知公告 | 校区新闻 |
+| -------- | -------- |
+| tzgg     | xqxw     |
+
+</Route>
+
+### 软件学院
+
+<Route author="beautyyuyanli" example="/dut/ssdut/xytz" path="/dut/ssdut/:type" :paramsDesc="['通知类型']">
+
+| 本科生通知 | 研究生通知 | 学院通知 | 学术动态 |
+| ---------- | ---------- | -------- | -------- |
+| bkstz      | yjstz      | xytz     | xsdt     |
+
+</Route>
+
+### 保卫处
+
+<Route author="beautyyuyanli" example="/dut/gach/gzdt" path="/dut/gach/:type" :paramsDesc="['通知类型']">
+
+| 工作动态 | 通知公告 | 党建园地 |
+| -------- | -------- | -------- |
+| gzdt     | tzgg     | djyd     |
 
 </Route>
 
