@@ -48,6 +48,24 @@ pageClass: routes
 
 <Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
 
+## Asian to lick
+
+### 首页
+
+<Route author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+
+### 分类
+
+<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['分类，可在对应分类页 URL 中找到分类编号，默认为首页']"/>
+
+### 标签
+
+<Route author="nczitzk" example="/asiantolick/tag/90" path="/asiantolick/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到标签编号，默认为首页']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['关键词，默认为空']"/>
+
 ## BabeHub
 
 ### 分类
