@@ -8,7 +8,7 @@ module.exports = async ({ github, context, core }, body, number) => {
     core.debug(`match: ${m}`);
     let res = null;
 
-    const removeLabel = async () =>
+    const removeLabel = () =>
         github.issues
             .removeLabel({
                 issue_number: number,
