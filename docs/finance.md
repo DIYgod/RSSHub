@@ -161,12 +161,6 @@ pageClass: routes
 
 <Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
 
-## 新浪财经
-
-### 新浪财经－国內
-
-<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
-
 ## 雪球
 
 ### 用户动态
