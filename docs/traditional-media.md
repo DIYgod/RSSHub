@@ -199,6 +199,60 @@ pageClass: routes
 
 </Route>
 
+## SBS
+
+### 中文
+
+<Route author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" :paramsDesc="['分类，可选 `news` 和 `podcast`，默认为 `news`', 'id，见下表，可在对应页地址栏中找到，默认为 `news`', '方言，可选 `mandarin` 和 `cantonese`，默认为 `mandarin`', '语言，可选 `zh-hans` 和 `zh-hant`，默认为 `zh-hans`']">
+
+::: tip 提示
+
+当订阅播客时，请为 `category` 填入 **podcast**。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 的 URL 为 <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>，其中 `id` 为 **sbs-mandarin**，`dialect` 为 **mandarin**，`language` 为 **zh-hans**，其路由即为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)。
+
+:::
+
+| 新闻 | 澳大利亚新闻    | 国际新闻           | ​商业与财经      |
+| ---- | --------------- | ------------------ | ---------------- |
+| news | australian-news | international-news | business-finance |
+
+| 澳中关系                  | ​移民与签证 | Stories in English |
+| ------------------------- | ----------- | ------------------ |
+| australia-china-relations | immigration | english            |
+
+| COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
+| ----------------- | ------------------ | ----------------- | --------- |
+| coronavirus       | australian-chinese | life-in-australia | education |
+
+| 健康   | 吃喝玩乐                  | 艺术人文        | 澳洲定居指南     |
+| ------ | ------------------------- | --------------- | ---------------- |
+| health | food-travel-entertainment | cultural-events | settlement-guide |
+
+SBS 普通话节目：
+
+| SBS 普通话播客 | 解读澳洲            | 疫苗快报                   |
+| -------------- | ------------------- | -------------------------- |
+| sbs-mandarin   | australia-explained | covid-vaccine-daily-update |
+
+SBS 廣東話節目：
+
+| SBS 廣東話節目 Podcast | 疫苗快報            | 美食速遞        | 我不是名人          |
+| ---------------------- | ------------------- | --------------- | ------------------- |
+| sbs-cantonese          | covid-vaccine-daily | gourmet-express | my-australian-story |
+
+| 健康快樂人         | 園藝趣談       | 寰宇金融       | 文化 360    | 科技世界         |
+| ------------------ | -------------- | -------------- | ----------- | ---------------- |
+| healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
+
+::: tip 提示
+
+大部分时候你可以省略 `language` 字段，因为默认搭配 madarin 为 zh-hans，cantonese 为 zh-hant。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 路由为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)，你可以省略为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin)。
+
+你仍可以自定义 `language`，但需要注意的是，并非所有页面都有对应的双语版本。
+
+:::
+
+</Route>
+
 ## Solidot
 
 ### 最新消息
