@@ -628,6 +628,18 @@ pageClass: routes
 
 <Route author="monner-henster" example="/rs05/rs05" path="/rs05/rs05"/>
 
+## s-hentai
+
+### Category
+
+<Route author="nczitzk" example="/s-hentai" path="/s-hentai/:id?" :paramsDesc="['id，见下表，默认为 ready-to-download']">
+
+| Doujin | HCG | Games・Animes | Voices・ASMR | Ready to Download |
+| ------ | --- | ------------- | ------------ | ----------------- |
+| 1      | 2   | 3             | 4            | ready-to-download |
+
+</Route>
+
 ## Sankaku Complex
 
 ### Post
