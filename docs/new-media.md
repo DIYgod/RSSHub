@@ -2328,6 +2328,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 文化銀行
+
+### 文化金庫
+
+<Route author="nczitzk" example="/bankofculture" path="/bankofculture"/>
+
 ## 无产者评论
 
 ### 分类
