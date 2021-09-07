@@ -16,6 +16,26 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
 
+## TokenInsight
+
+### Research
+
+<RouteEn author="nczitzk" example="/tokeninsight" path="/tokeninsight/:category?/:language?" :paramsDesc="['Category, see below, News by default', 'Language, see below, English by default']">
+
+Category
+
+| News | Latest | Report |
+| ---- | ------ | ------ |
+| news | latest | report |
+
+Language
+
+| English | 中文 |
+| ------- | ---- |
+| en      | cn   |
+
+</RouteEn>
+
 ## World Economic Forum
 
 ### Report

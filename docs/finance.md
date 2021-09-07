@@ -28,6 +28,26 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
+## TokenInsight
+
+### 研究
+
+<Route author="nczitzk" example="/tokeninsight" path="/tokeninsight/:category?/:language?" :paramsDesc="['分类，见下表，默认为资讯', '语言，见下表，默认为 English']">
+
+分类
+
+| 资讯 | 快讯   | 报告   |
+| ---- | ------ | ------ |
+| news | latest | report |
+
+语言
+
+| English | 中文 |
+| ------- | ---- |
+| en      | cn   |
+
+</Route>
+
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
 ### 资讯
