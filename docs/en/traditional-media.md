@@ -312,3 +312,27 @@ Provide full article RSS for WSJ topics.
 Provides all of the articles by the specified Yahoo! author.
 
 </RouteEn>
+
+## 華視新聞網
+
+### Category
+
+<RouteEn author="nczitzk" example="/cts" path="/cts/:category?" :paramsDesc="['Category, see below, real by default']">
+
+| 即時 | 氣象    | 政治     | 國際          |
+| ---- | ------- | -------- | ------------- |
+| real | weather | politics | international |
+
+| 社會    | 運動   | 生活 | 財經  |
+| ------- | ------ | ---- | ----- |
+| society | sports | life | money |
+
+| 台語      | 地方  | 產業 | 綜合    |
+| --------- | ----- | ---- | ------- |
+| taiwanese | local | pr   | general |
+
+| 藝文 | 娛樂      |
+| ---- | --------- |
+| arts | entertain |
+
+</RouteEn>

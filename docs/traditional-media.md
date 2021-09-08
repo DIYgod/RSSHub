@@ -602,6 +602,30 @@ Type 栏目：
 
 <Route author="HenryQW" example="/dwnews/rank" path="/dwnews/rank"/>
 
+## 華視新聞網
+
+### 分类
+
+<Route author="nczitzk" example="/cts" path="/cts/:category?" :paramsDesc="['分类，见下表，默认为即時']">
+
+| 即時 | 氣象    | 政治     | 國際          |
+| ---- | ------- | -------- | ------------- |
+| real | weather | politics | international |
+
+| 社會    | 運動   | 生活 | 財經  |
+| ------- | ------ | ---- | ----- |
+| society | sports | life | money |
+
+| 台語      | 地方  | 產業 | 綜合    |
+| --------- | ----- | ---- | ------- |
+| taiwanese | local | pr   | general |
+
+| 藝文 | 娛樂      |
+| ---- | --------- |
+| arts | entertain |
+
+</Route>
+
 ## 华尔街见闻
 
 ### 华尔街见闻
