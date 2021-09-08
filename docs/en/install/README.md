@@ -21,6 +21,15 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker Image
+We recommend using the latest version of the docker image.  
+When the latest version is unavailable , you can use image with date tag. For example :
+```
+$ docker pull diygod/rsshub:2021-06-18
+```
+Your can back to the latest version when code has been fixed and rebuild the image.
+
+
 ## Docker Compose Deployment
 
 ### Install
@@ -232,6 +241,10 @@ in pkgs.stdenv.mkDerivation {
 ```
 
 ## Deploy to Heroku
+
+### Notice：
+
+Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
 
 ### Instant deploy (without automatic update)
 
