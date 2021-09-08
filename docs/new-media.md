@@ -226,7 +226,7 @@ pageClass: routes
 
 ## ePrice
 
-<Route author="TonyRL" example="/eprice/tw" path="/eprice/:region?" :paramsDesc="['地区，预设为tw']">
+<Route author="TonyRL" example="/eprice/tw" path="/eprice/:region?" :paramsDesc="['地区，预设为 tw']">
 
 地区：
 
