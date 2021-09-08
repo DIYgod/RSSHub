@@ -266,6 +266,12 @@
 
 </Route>
 
+## 咚漫
+
+### 漫画更新
+
+<Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
+
 ## 動畫瘋
 
 ### 最後更新
@@ -275,12 +281,6 @@
 ### 動畫
 
 <Route author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
-
-## 咚漫
-
-### 漫画更新
-
-<Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
 
 ## 動漫狂
 
@@ -292,7 +292,7 @@
 
 ### 风之动漫
 
-<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id/:nums?" example="/fzdm/manhua/39/2" :paramsDesc="['漫画ID', '最新的n话, 默认为最新1话']" anticrawler="1"/>
+<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量']" anticrawler="1"/>
 
 ## 海猫吧
 
@@ -305,6 +305,18 @@
 ### 漫画更新
 
 <Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+
+## 看漫画镜像站
+
+### 漫画更新
+
+<Route author="btdwv" path="/mhgui/comic/:id" example="/mhgui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+
+## 看漫画台湾
+
+### 漫画更新
+
+<Route author="btdwv" path="/twmanhuagui/comic/:id" example="/twmanhuagui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
 ## 漫画 DB
 
