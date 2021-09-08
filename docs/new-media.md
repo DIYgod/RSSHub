@@ -2238,18 +2238,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 维基百科
-
-### 中国大陆新闻动态
-
-<Route author="HenryQW" example="/wikipedia/mainland" path="/wikipedia/mainland"/>
-
-## 未名新闻
-
-### 分类
-
-<Route author="nczitzk" example="/mitbbs" path="/mitbbs/:caty?" :paramsDesc="['新闻分类，参见下表，默认为“新闻大杂烩”']">
-
 ## 網路天文館
 
 ### 天象預報
