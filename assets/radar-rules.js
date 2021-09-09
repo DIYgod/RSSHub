@@ -1252,6 +1252,32 @@
                 },
             },
         ],
+        'y.music': [
+            {
+                title: '云音乐 - 用户歌单',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/user',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 歌单歌曲',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/playlist',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 歌手专辑',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: '/m/album',
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+            {
+                title: '云音乐 - 播单声音',
+                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
+                source: ['/m/radio', '/m/djradio'],
+                target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}`,
+            },
+        ],
     },
     'suzhou.gov.cn': {
         _name: '苏州市政府',
@@ -3016,6 +3042,34 @@
             },
         ],
     },
+    'e-hentai.org/': {
+        _name: 'E-Hentai',
+        '.': [
+            {
+                title: '收藏',
+                docs: 'https://docs.rsshub.app/picture.html#ehentai',
+                source: '/favorites.php',
+                target: '/ehentai/favorites',
+            },
+            {
+                title: '标签',
+                docs: 'https://docs.rsshub.app/picture.html#ehentai',
+                source: '/tag/:tag',
+                target: '/ehentai/tag/:tag',
+            },
+            {
+                title: '搜索',
+                docs: 'https://docs.rsshub.app/picture.html#ehentai',
+                source: '/',
+                target: (params, url) => {
+                    const keyword = new URL(url).searchParams.toString();
+                    if (keyword) {
+                        return `/ehentai/search/${keyword}`;
+                    }
+                },
+            },
+        ],
+    },
     'iyingdi.com': {
         _name: '旅法师营地',
         www: [
@@ -3038,6 +3092,17 @@
                 docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di',
                 source: '/fine/:tag',
                 target: '/lfsyd/tag/:tag',
+            },
+        ],
+    },
+    'macwk.com': {
+        _name: 'MacWk',
+        '.': [
+            {
+                title: '应用更新',
+                docs: 'https://docs.rsshub.app/program-update.html#macwk',
+                source: '/soft/:name',
+                target: '/macwk/soft/:name',
             },
         ],
     },
