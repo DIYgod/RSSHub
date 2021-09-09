@@ -20,7 +20,7 @@ pageClass: routes
 
 ### Research
 
-<RouteEn author="nczitzk" example="/tokeninsight" path="/tokeninsight/:category?/:language?" :paramsDesc="['Category, see below, News by default', 'Language, see below, English by default']">
+<RouteEn author="nczitzk" example="/tokeninsight/research" path="/tokeninsight/research/:category?/:language?" :paramsDesc="['Category, see below, News by default', 'Language, see below, English by default']">
 
 Category
 
