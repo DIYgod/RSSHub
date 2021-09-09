@@ -32,7 +32,7 @@ pageClass: routes
 
 ### 研究
 
-<Route author="nczitzk" example="/tokeninsight" path="/tokeninsight/:category?/:language?" :paramsDesc="['分类，见下表，默认为资讯', '语言，见下表，默认为 English']">
+<Route author="nczitzk" example="/tokeninsight/research" path="/tokeninsight/research/:category?/:language?" :paramsDesc="['分类，见下表，默认为资讯', '语言，见下表，默认为 English']">
 
 分类
 
