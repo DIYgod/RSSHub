@@ -497,11 +497,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## Matters
 
-### 最新、熱議、精華
+### 最新、热门、精华
 
-<Route author="xyqfer Cerebrater xosdy" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
+<Route author="xyqfer Cerebrater xosdy" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默认为 latest, 见下表']" radar="1" rssbud="1">
 
-| 最新   | 熱議 | 精華    |
+| 最新   | 热门 | 精华    |
 | ------ | ---- | ------- |
 | latest | heat | essence |
 
@@ -509,11 +509,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 标签
 
-<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']" radar="1" rssbud="1"/>
+<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['标签 id，可在标签所在的 URL 找到']" radar="1" rssbud="1"/>
 
 ### 作者
 
-<Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1" rssbud="1"/>
+<Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主页的 URL 找到']" radar="1" rssbud="1"/>
 
 ## MIT 科技评论
 
