@@ -957,6 +957,10 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/people/cpc/24h" path="/people/cpc/24h"/>
 
+### 人民网 今日头条一览
+
+<Route author="yubinbai" example="/people/toutiao" path="/people/toutiao"/>
+
 ## 人民日报社 国际金融报
 
 ### 栏目
