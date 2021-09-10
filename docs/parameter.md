@@ -93,3 +93,11 @@ RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss`
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
 -   和 filter 或其他 URL query 一起使用 `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
+
+## 输出简讯
+
+可以使用 `brief` 参数输出特定字数 ( ≥ `100` 字 ) 的纯文本内容
+
+举例：
+
+-   输出 100 字简讯: `?brief=100`
