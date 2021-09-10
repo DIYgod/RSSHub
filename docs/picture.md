@@ -88,6 +88,30 @@ pageClass: routes
 
 <Route author="zphw" example="/dailyart/zh" path="/dailyart/:language?" :paramsDesc="['语言，支持 en, zh, jp 等，默认为 en']" />
 
+## DeviantArt
+
+### 首页
+
+<Route author="nczitzk" example="/devianart" path="/devianart"/>
+
+### 主题
+
+<Route author="nczitzk" example="/devianart/topic/digital-art" path="/devianart/topic/:id?/:order?" :paramsDesc="['主题 id，可在对应主题页 URL 中找到', '排序方式，见下表，默认为 Most recent']">
+
+| Most recent | Popular this week | Popular this month | Popular this century |
+| ----------- | ----------------- | ------------------ | -------------------- |
+| most-recent | this-week         | this-month         |                      |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/devianart/tag/animal" path="/devianart/tag/:id?/:order?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到', '排序方式，同上表，默认为 Most recent']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/devianart/search/cat" path="/devianart/search/:keyword?/:order?" :paramsDesc="['搜索关键字，默认为空', '排序方式，同上表，默认为 Most recent']"/>
+
 ## Dilbert Comic Strip
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip" />

@@ -68,6 +68,30 @@ pageClass: routes
 
 <RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
 
+## DeviantArt
+
+### Home
+
+<RouteEn author="nczitzk" example="/devianart" path="/devianart"/>
+
+### Topic
+
+<RouteEn author="nczitzk" example="/devianart/topic/digital-art" path="/devianart/topic/:id?/:order?" :paramsDesc="['Topic id, can be found in URL', 'Order, see below, Most recent by default']">
+
+| Most recent | Popular this week | Popular this month | Popular this century |
+| ----------- | ----------------- | ------------------ | -------------------- |
+| most-recent | this-week         | this-month         |                      |
+
+</RouteEn>
+
+### Tag
+
+<RouteEn author="nczitzk" example="/devianart/tag/animal" path="/devianart/tag/:id?/:order?" :paramsDesc="['Tag id, can be found in URL', 'Order, same as above, Most recent by default']"/>
+
+### Search
+
+<RouteEn author="nczitzk" example="/devianart/search/cat" path="/devianart/search/:keyword?" :paramsDesc="['Keyword, empty by default']"/>
+
 ## Dilbert Comic Strip
 
 <RouteEn name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip"/>
