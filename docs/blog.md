@@ -176,6 +176,26 @@ pageClass: routes
 
 </Route>
 
+## 簡訊設計
+
+### 分類
+
+<Route author="nczitzk" example="/simpleinfo" path="/simpleinfo/:category?" :paramsDesc="['分类，见下表，默认为首页'">
+
+| 志祺七七 | 專案作品 | 夥伴聊聊 |
+| -------- | -------- | -------- |
+| all      | work     | talk     |
+
+| 國內外新聞 | 政治百分百 | 社會觀察家 | 心理與哲學            |
+| ---------- | ---------- | ---------- | --------------------- |
+| news       | politics   | society    | psychology-philosophy |
+
+| 科學大探索 | 環境與健康         | ACG 快樂聊 | 好書籍分享   | 其它主題     |
+| ---------- | ------------------ | ---------- | ------------ | ------------ |
+| science    | environment-health | acg        | book-sharing | other-topics |
+
+</Route>
+
 ## 敬维博客
 
 ### 文章
