@@ -200,6 +200,19 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 </RouteEn>
 
+## Rádio Macau
+
+<RouteEn author="tpnonthealps" example="/radiomacau/pt" path="/radiomacau/:language/:category?" :paramsDesc="['`cn` `pt` `en`', 'only available in `cn` language']">
+
+When using `cn` language, the following `:category?` parameters are available:
+
+-   Local News: `local`
+-   International: `global`
+-   Greater China：`bothsides`
+-   Featured Topics：`topic`
+
+</RouteEn>
+
 ## SCMP
 
 ### News

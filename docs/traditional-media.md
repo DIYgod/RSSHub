@@ -335,7 +335,27 @@ Provides all of the articles by the specified Yahoo! author.
 
 ## 澳門電台
 
-<Route author="tpnonthealps" example="/radiomacau" path="/radiomacau" />
+<Route author="tpnonthealps" example="/radiomacau/cn" path="/radiomacau/:language/:category?" :paramsDesc="['语言', '类别（仅限中文版）']">
+
+不同语言可用的类别参数：
+
+-   中文版 `cn`（不指定时提供全部）:
+
+    -   本地新聞：`local`
+    -   國際新聞：`global`
+    -   兩岸新聞：`bothsides`
+    -   專題新聞：`topic`
+
+-   葡文版 `pt`：无
+
+-   英文版 `en`：无
+
+其他可选项：
+
+-   全文输出转换为简体字：`?opencc=t2s`  
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+
+</Route>
 
 ## 半月谈
 
