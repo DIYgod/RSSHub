@@ -261,6 +261,14 @@ pageClass: routes
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
 
+### 制作商
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/studio/ej" path="/javbus/studio/:studioid" :paramsDesc="['制作商id，详见作品右侧制作商的链接']" />
+
+### 发行商
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/label/x8" path="/javbus/label/:labelid" :paramsDesc="['发行商id，详见作品右侧发行商的链接']" />
+
 ### 首页 / 步兵
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/home" path="/javbus/uncensored/home"/>
@@ -685,15 +693,55 @@ pageClass: routes
 
 见 [#youtube](/social-media.html#youtube)
 
-## 爱奇艺
+## 中国广播
 
-### 用户视频
+### 电台节目
 
-<Route author="talengu" example="/iqiyi/user/video/2289191062" path="/iqiyi/user/video/:uid" :paramsDesc="['用户名']" />
+<Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
 
-### 动漫
+## 中国高清网
 
-<Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
+### 电影
+
+<Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签tag，视频清晰度']" />
+
+| 全部 | 蓝光   | 1080P | 720P | 3D | WEB-DL |
+| ---- | ------ | ----- | ---- | -- | ------ |
+| 留空 | bluray | 1080p | 720p | 3d | webdl  |
+
+## 人人影视
+
+### 评测推荐
+
+<Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
+
+### 今日更新
+
+<Route author="alcarl" example="/yyets/todayfilelist" path="/yyets/todayfilelist" />
+
+## 优酷
+
+### 频道
+
+<Route author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+## 低端影视
+
+### 影视剧集更新
+
+<Route author="saintwinkle" example="/ddrk/update/silicon-valley/6" path="/ddrk/update/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容']" radar="1" rssbud="1"/>
+
+### 首页
+
+<Route author="hoilc" example="/ddrk/index" path="/ddrk/index" radar="1" rssbud="1"/>
+
+### 分类
+
+<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" :paramsDesc="['分类 ID, 可在 URL 中找到, 注意, 如果有两级分类, 只需要填写第二级即可']" radar="1" rssbud="1"/>
+
+### 标签
+
+<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" :paramsDesc="['标签名, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 哔嘀影视
 
@@ -763,11 +811,277 @@ pageClass: routes
 
 </Route>
 
+## 喜马拉雅
+
+### 专辑（不输出 ShowNote）
+
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。']" supportPodcast="1" radar="1" rssbud="1" selfhost="1">
+
+目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。
+
+::: warning 注意
+专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
+
+**付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**
+:::
+
+</Route>
+
+### 专辑（输出 ShowNote）
+
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/album/:id/:all/:shownote?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']" supportPodcast="1" selfhost="1">
+
+</Route>
+
+## 场库
+
+### 今日精选
+
+<Route author="Wenmoux" example="/changku" path="/changku"/>
+
+### 分类
+
+<Route author="Wenmoux" example="/changku/cate/12" path="/changku/cate/:cateid" :paramsDesc="['分类id']">
+
+| 创意 | 励志 | 搞笑 | 广告 | 汽车 | 旅行 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 6    | 7    | 8    | 13   | 92   | 11   |
+
+| 爱情 | 剧情 | 运动 | 动画 | 音乐 | 科幻 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 12   | 17   | 10   | 16   | 18   | 23   |
+
+| 预告 | 记录 | 混剪 | 游戏 | 时尚 | 实验 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 43   | 24   | 44   | 104  | 88   | 45   |
+
+| 生活 |
+| ---- |
+| 78   |
+
+</Route>
+
+## 奈菲影视
+
+### 分区
+
+<Route author="AngUOI" example="/nfmovies/0" path="/nfmovies/:id?" :paramsDesc="['子版块 id, 为空默认首页']">
+
+| 首页 | 电影 | 电视剧 | 综艺 | 动漫 | 奈菲独家 |
+| ---- | ---- | ------ | ---- | ---- | -------- |
+| 0    | 1    | 2      | 3    | 4    | 5        |
+
+</Route>
+
+## 字幕库
+
+### 字幕列表
+
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+
+类型
+
+| 最新电影 | 最新美剧 |
+| -------- | -------- |
+| mv       | tv       |
+
+</Route>
+
+## 字幕组（ZiMuZu.tv）
+
+### 影视
+
+::: tip 提示
+
+跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
+
+:::
+
+<Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
+
+### 排行榜
+
+<Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']">
+
+例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
+
+</Route>
+
+## 小宇宙
+
+### 发现
+
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" selfhost="1">
+
+::: warning 注意
+
+小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。
+
+:::
+
+</Route>
+
+## 开眼
+
+### 每日精选
+
+<Route author="SunShinenny" example="/kaiyan/index" path="/kaiyan/index"/>
+
+## 弯弯字幕组
+
+### 分类
+
+<Route author="nczitzk" example="/wanwansub/139" path="/wanwansub/:id?" :paramsDesc="['分类 id，见下表，默认为 ALL']" >
+
+| ALL | 英语小分队 | 日语小分队 | 韩语小分队 | 葡语小分队 | 西语小分队 | 法语小分队 | 意语小分队 | 德语小分队 | 泰语小分队 | 其他语种 |
+| --- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
+| 139 | 110        | 111        | 112        | 113        | 114        | 115        | 116        | 153        | 117        | 154      |
+
+</Route>
+
+### 剧集
+
+<Route author="nczitzk" example="/wanwansub/info/393" path="/wanwansub/info/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
+
 ## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
 ### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
 
 <Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
+
+## 故事 FM
+
+### 首页
+
+<Route author="sanmmm" example="/storyfm/index" path="/storyfm/index"/>
+
+## 柠檬 私房歌 (ningmeng.name)
+
+### 私房歌
+
+<Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" />
+
+## 深影译站
+
+### 首页
+
+<Route author="nczitzk" example="/shinybbs" path="/shinybbs" />
+
+### 剧集类型
+
+<Route author="nczitzk" example="/shinybbs/page/62" path="/shinybbs/page/:id?" :paramsDesc="['类型 id，见下表']">
+
+| 英美剧 | 日韩剧 | 小语种 |
+| ------ | ------ | ------ |
+| 62     | 140    | 2      |
+
+</Route>
+
+### 最新作品
+
+<Route author="nczitzk" example="/shinybbs/latest" path="/shinybbs/latest" />
+
+### 指定剧集
+
+<Route author="nczitzk" example="/shinybbs/p/1790" path="/shinybbs/p/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
+
+## 爱奇艺
+
+### 用户视频
+
+<Route author="talengu" example="/iqiyi/user/video/2289191062" path="/iqiyi/user/video/:uid" :paramsDesc="['用户名']" />
+
+### 动漫
+
+<Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
+
+## 片源网
+
+### 最新资源
+
+<Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1" rssbud="1"/>
+
+## 猫眼电影
+
+### 正在热映
+
+<Route author="HenryQW" example="/maoyan/hot" path="/maoyan/hot" />
+
+### 即将上映
+
+<Route author="HenryQW" example="/maoyan/upcoming" path="/maoyan/upcoming" />
+
+## 猫耳 FM
+
+### 广播剧 / 有声漫画
+
+<Route author="FlashWingShadow" example="/missevan/drama/28499" path="/missevan/drama/:id" :paramsDesc="['剧集 id，在剧集主页 URL 中可以找到']"/>
+
+### 最新广播剧
+
+<Route author="nczitzk" example="/missevan/drama/latest" path="/missevan/drama/latest"/>
+
+## 电影天堂
+
+### 新片精品
+
+<Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
+
+## 电影首发站
+
+### 电影
+
+<Route author="epirus" example="/dysfz" path="/dysfz"/>
+
+## 综艺秀（[www.zyshow.net）](http://www.zyshow.net）)
+
+### 综艺
+
+<Route author="pharaoh2012" example="/zyshow/chongchongchong" path="/zyshow/:name" :paramsDesc="['综艺 name，对应综艺的 URL 中找到']"  radar="1" rssbud="1"/>
+
+## 网易云音乐
+
+### 歌单歌曲
+
+<Route author="DIYgod" example="/ncm/playlist/35798529" path="/ncm/playlist/:id" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']" radar="1" />
+
+### 用户歌单
+
+<Route author="DIYgod" example="/ncm/user/playlist/45441555" path="/ncm/user/playlist/:uid" :paramsDesc="['用户 uid, 可在用户主页 URL 中找到']" radar="1" />
+
+### 歌手专辑
+
+<Route author="metowolf" example="/ncm/artist/2116" path="/ncm/artist/:id" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到']" radar="1" />
+
+### 电台节目
+
+<Route author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']" supportPodcast="1"  radar="1" />
+
+## 腾讯视频
+
+### 播放列表
+
+<Route author="Andiedie" example="/tencentvideo/playlist/jx7g4sm320sqm7i" path="/tencentvideo/playlist/:id" :paramsDesc="['播放列表 ID，可以在 URL 中找到']" radar="1" />
+
+## 色花堂中文论坛
+
+### 分区帖子
+
+<Route author="qiwihui junfengP" example="/dsndsht23/36/368" path="/dsndsht23/:subforumid?/:type?" supportBT="1" :paramsDesc="['版块 id 或板块名称（见下表）, 为空默认高清中文字幕', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+
+**原创 BT 电影**
+
+| 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV |
+| -------- | -------- | ------------ | ------------ | ------------ | -------- | ------------ | ------- | -------- | -------- | ----------- | ------------ |
+| mrhj     | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | yzmzym       | vr      | omwm     | dmyc     | ai          | ydsc         |
+
+**色花图片**
+
+| 华人性爱自拍 | 华人街拍区 | 亚洲性爱 | 欧美性爱 | 卡通动漫 |
+| ------------ | ---------- | -------- | -------- | -------- |
+| hrxazp       | hrjpq      | yzxa     | omxa     | ktdm     |
+
+</Route>
 
 ## 草榴社区
 
@@ -805,237 +1119,17 @@ pageClass: routes
 
 </Route>
 
-## 场库
-
-### 今日精选
-
-<Route author="Wenmoux" example="/changku" path="/changku"/>
-
-### 分类
-
-<Route author="Wenmoux" example="/changku/cate/12" path="/changku/cate/:cateid" :paramsDesc="['分类id']">
-
-| 创意 | 励志 | 搞笑 | 广告 | 汽车 | 旅行 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 6    | 7    | 8    | 13   | 92   | 11   |
-
-| 爱情 | 剧情 | 运动 | 动画 | 音乐 | 科幻 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 12   | 17   | 10   | 16   | 18   | 23   |
-
-| 预告 | 记录 | 混剪 | 游戏 | 时尚 | 实验 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 43   | 24   | 44   | 104  | 88   | 45   |
-
-| 生活 |
-| ---- |
-| 78   |
-
-</Route>
-
-## 低端影视
-
-### 影视剧集更新
-
-<Route author="saintwinkle" example="/ddrk/update/silicon-valley/6" path="/ddrk/update/:name/:season?" :paramsDesc="['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容']" radar="1" rssbud="1"/>
-
-### 首页
-
-<Route author="hoilc" example="/ddrk/index" path="/ddrk/index" radar="1" rssbud="1"/>
-
-### 分类
-
-<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" :paramsDesc="['分类 ID, 可在 URL 中找到, 注意, 如果有两级分类, 只需要填写第二级即可']" radar="1" rssbud="1"/>
-
-### 标签
-
-<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" :paramsDesc="['标签名, 可在 URL 中找到']" radar="1" rssbud="1"/>
-
-## 电影首发站
-
-### 电影
-
-<Route author="epirus" example="/dysfz" path="/dysfz"/>
-
-## 电影天堂
-
-### 新片精品
-
-<Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
-
-## 高清电台
-
-### 最新电影
-
-<Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
-
-## 故事 FM
-
-### 首页
-
-<Route author="sanmmm" example="/storyfm/index" path="/storyfm/index"/>
-
-## 开眼
-
-### 每日精选
-
-<Route author="SunShinenny" example="/kaiyan/index" path="/kaiyan/index"/>
-
 ## 荔枝 FM
 
 ### 电台更新
 
 <Route author="nczitzk" example="/lizhi/user/27151442948222380" path="/lizhi/user/:id" :paramsDesc="['用户 id，可以在电台的 URL 中找到']"/>
 
-## 猫耳 FM
-
-### 广播剧 / 有声漫画
-
-<Route author="FlashWingShadow" example="/missevan/drama/28499" path="/missevan/drama/:id" :paramsDesc="['剧集 id，在剧集主页 URL 中可以找到']"/>
-
-### 最新广播剧
-
-<Route author="nczitzk" example="/missevan/drama/latest" path="/missevan/drama/latest"/>
-
-## 猫眼电影
-
-### 正在热映
-
-<Route author="HenryQW" example="/maoyan/hot" path="/maoyan/hot" />
-
-### 即将上映
-
-<Route author="HenryQW" example="/maoyan/upcoming" path="/maoyan/upcoming" />
-
-## 奈菲影视
-
-### 分区
-
-<Route author="AngUOI" example="/nfmovies/0" path="/nfmovies/:id?" :paramsDesc="['子版块 id, 为空默认首页']">
-
-| 首页 | 电影 | 电视剧 | 综艺 | 动漫 | 奈菲独家 |
-| ---- | ---- | ------ | ---- | ---- | -------- |
-| 0    | 1    | 2      | 3    | 4    | 5        |
-
-</Route>
-
-## 柠檬 私房歌 (ningmeng.name)
-
-### 私房歌
-
-<Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" />
-
-## 片源网
-
-### 最新资源
-
-<Route author="greatcodeeer" example="/pianyuan" path="/pianyuan" radar="1" rssbud="1"/>
-
-## 飘花电影网
-
-### 今日热门
-
-<Route author="nczitzk" example="/piaohua/hot" path="/piaohua/hot" />
-
 ## 蜻蜓 FM
 
 ### 专辑
 
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
-
-## 人人影视
-
-### 评测推荐
-
-<Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
-
-### 今日更新
-
-<Route author="alcarl" example="/yyets/todayfilelist" path="/yyets/todayfilelist" />
-
-## 色花堂中文论坛
-
-### 分区帖子
-
-<Route author="qiwihui junfengP" example="/dsndsht23/36/368" path="/dsndsht23/:subforumid?/:type?" supportBT="1" :paramsDesc="['版块 id 或板块名称（见下表）, 为空默认高清中文字幕', '类型 id, 可在分区类型过滤后的 URL 中找到']">
-
-**原创 BT 电影**
-
-| 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV |
-| -------- | -------- | ------------ | ------------ | ------------ | -------- | ------------ | ------- | -------- | -------- | ----------- | ------------ |
-| mrhj     | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | yzmzym       | vr      | omwm     | dmyc     | ai          | ydsc         |
-
-**色花图片**
-
-| 华人性爱自拍 | 华人街拍区 | 亚洲性爱 | 欧美性爱 | 卡通动漫 |
-| ------------ | ---------- | -------- | -------- | -------- |
-| hrxazp       | hrjpq      | yzxa     | omxa     | ktdm     |
-
-</Route>
-
-## 深影译站
-
-### 首页
-
-<Route author="nczitzk" example="/shinybbs" path="/shinybbs" />
-
-### 剧集类型
-
-<Route author="nczitzk" example="/shinybbs/page/62" path="/shinybbs/page/:id?" :paramsDesc="['类型 id，见下表']">
-
-| 英美剧 | 日韩剧 | 小语种 |
-| ------ | ------ | ------ |
-| 62     | 140    | 2      |
-
-</Route>
-
-### 最新作品
-
-<Route author="nczitzk" example="/shinybbs/latest" path="/shinybbs/latest" />
-
-### 指定剧集
-
-<Route author="nczitzk" example="/shinybbs/p/1790" path="/shinybbs/p/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
-
-## 腾讯视频
-
-### 播放列表
-
-<Route author="Andiedie" example="/tencentvideo/playlist/jx7g4sm320sqm7i" path="/tencentvideo/playlist/:id" :paramsDesc="['播放列表 ID，可以在 URL 中找到']" radar="1" />
-
-## 弯弯字幕组
-
-### 分类
-
-<Route author="nczitzk" example="/wanwansub/139" path="/wanwansub/:id?" :paramsDesc="['分类 id，见下表，默认为 ALL']" >
-
-| ALL | 英语小分队 | 日语小分队 | 韩语小分队 | 葡语小分队 | 西语小分队 | 法语小分队 | 意语小分队 | 德语小分队 | 泰语小分队 | 其他语种 |
-| --- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
-| 139 | 110        | 111        | 112        | 113        | 114        | 115        | 116        | 153        | 117        | 154      |
-
-</Route>
-
-### 剧集
-
-<Route author="nczitzk" example="/wanwansub/info/393" path="/wanwansub/info/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
-
-## 网易云音乐
-
-### 歌单歌曲
-
-<Route author="DIYgod" example="/ncm/playlist/35798529" path="/ncm/playlist/:id" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']" radar="1" />
-
-### 用户歌单
-
-<Route author="DIYgod" example="/ncm/user/playlist/45441555" path="/ncm/user/playlist/:uid" :paramsDesc="['用户 uid, 可在用户主页 URL 中找到']" radar="1" />
-
-### 歌手专辑
-
-<Route author="metowolf" example="/ncm/artist/2116" path="/ncm/artist/:id" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到']" radar="1" />
-
-### 电台节目
-
-<Route author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']" supportPodcast="1"  radar="1" />
 
 ## 西瓜视频
 
@@ -1049,106 +1143,20 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="FlashWingShadow" example="/ixigua/user/video/4234740937" path="/ixigua/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在用户主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
 
-## 喜马拉雅
-
-### 专辑（不输出 ShowNote）
-
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。']" supportPodcast="1" radar="1" rssbud="1" selfhost="1">
-
-目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。
-
-::: warning 注意
-专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
-
-**付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**
-:::
-
-</Route>
-
-### 专辑（输出 ShowNote）
-
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/album/:id/:all/:shownote?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']" supportPodcast="1" selfhost="1">
-
-</Route>
-
-## 小宇宙
-
-### 发现
-
-<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" selfhost="1">
-
-::: warning 注意
-
-小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。
-
-:::
-
-</Route>
-
-## 优酷
-
-### 频道
-
-<Route author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
-
-## 中国高清网
-
-### 电影
-
-<Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" :paramsDesc="['标签tag，视频清晰度']" />
-
-| 全部 | 蓝光   | 1080P | 720P | 3D | WEB-DL |
-| ---- | ------ | ----- | ---- | -- | ------ |
-| 留空 | bluray | 1080p | 720p | 3d | webdl  |
-
-## 中国广播
-
-### 电台节目
-
-<Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
-
 ## 追新番日剧站
 
 ### 更新列表
 
 <Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" radar="1" rssbud="1"/>
 
-## 字幕库
+## 飘花电影网
 
-### 字幕列表
+### 今日热门
 
-<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" :paramsDesc="['类型, 默认为`mv`电影']">
+<Route author="nczitzk" example="/piaohua/hot" path="/piaohua/hot" />
 
-类型
+## 高清电台
 
-| 最新电影 | 最新美剧 |
-| -------- | -------- |
-| mv       | tv       |
+### 最新电影
 
-</Route>
-
-## 字幕组（ZiMuZu.tv）
-
-### 影视
-
-::: tip 提示
-
-跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
-
-:::
-
-<Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" :paramsDesc="['影视 id，对应影视的 URL 中找到，为空时输出最近更新']" supportBT="1"/>
-
-### 排行榜
-
-<Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" :paramsDesc="['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']">
-
-例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
-
-</Route>
-
-## 综艺秀（[www.zyshow.net）](http://www.zyshow.net）)
-
-### 综艺
-
-<Route author="pharaoh2012" example="/zyshow/chongchongchong" path="/zyshow/:name" :paramsDesc="['综艺 name，对应综艺的 URL 中找到']"  radar="1" rssbud="1"/>
+<Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest"/>
