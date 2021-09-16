@@ -318,6 +318,12 @@ pageClass: routes
 
 <Route author="btdwv" path="/twmanhuagui/comic/:id/:chapterCnt?" example="/twmanhuagui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
+## 拷贝漫画
+
+### 漫画更新
+
+<Route author="ryuushinu666" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/zaiyishijiemigongkaihougong/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="0" rssbud="0"/>
+
 ## 漫画 DB
 
 ### 漫画 DB
