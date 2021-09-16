@@ -1119,6 +1119,18 @@ category 对应的关键词有
 
 </Route>
 
+## 信报财经新闻
+
+### 即时新闻
+
+<Route author="TonyRL" example="/hkej/index" path="/hkej/:category?" :paramsDesc="['分类，默认为全部新闻']">
+
+| index    | stock    | hongkong | china    | international | property | current  |
+| -------- | -------- | -------- | -------- | ------------- | -------- | -------- |
+| 全部新闻 | 港股直击 | 香港财经 | 中国财经 | 国际财经      | 地产新闻 | 时事脉搏 |
+
+</Route>
+
 ## 央视新闻
 
 ### 新闻联播
