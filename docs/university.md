@@ -1527,6 +1527,18 @@ type 列表：
 
 <Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
 
+## 厦门大学
+
+### 航空航天学院
+
+<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" :paramsDesc="['分类见下表']"/>
+
+| 通知公告 | 本科生教务 | 研究生教务 |
+| :------: | :--------: | :--------: |
+|   tzgg   |    bksjw   |    yjsjw   |
+
+</Route>
+
 ## 山东大学
 
 ### 软件学院通知
