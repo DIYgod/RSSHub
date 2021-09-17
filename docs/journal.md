@@ -92,6 +92,32 @@ pageClass: routes
 
 </Route>
 
+## JASA
+
+### Section
+
+<Route author="Derekmini" example="/jasa/section/animal" path="/jasa/section/:id" :paramsDesc="['Section id，见下表']" radar="1" rssbud="1">
+
+| Id               | 名称                                      |
+| ---------------- | ----------------------------------------- |
+| reflections      | REFLECTIONS                               |
+| animal           | ANIMAL BIOACOUSTICS                       |
+| computational    | COMPUTATIONAL ACOUSTICS                   |
+| engineering      | ENGINEERING ACOUSTICS                     |
+| musical          | MUSICAL ACOUSTICS                         |
+| noise            | NOISE                                     |
+| physical         | PHYSICAL ACOUSTICS                        |
+| psychological    | PSYCHOLOGICAL AND PHYSIOLOGICAL ACOUSTICS |
+| signalprocessing | SIGNAL PROCESSING IN ACOUSTICS            |
+| speech           | SPEECH COMMUNICATION                      |
+| underwater       | UNDERWATER ACOUSTICS                      |
+| letters          | LETTERS TO THE EDITOR                     |
+| errata           | ERRATA                                    |
+| standardsnews    | ACOUSTICAL STANDARDS NEWS                 |
+| reviewspatents   | REVIEWS OF ACOUSTICAL PATENTS             |
+
+</Route>
+
 ## Nature 系列
 
 ### 最新成果
