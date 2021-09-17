@@ -632,6 +632,17 @@
             },
         ],
     },
+    'copymanga.com': {
+        _name: '漫画柜台湾',
+        www: [
+            {
+                title: '漫画更新',
+                docs: 'https://docs.rsshub.app/anime.html#kao-bei-man-hua',
+                source: '/comic/:id/',
+                target: '/copymanga/comic/:id/5',
+            },
+        ],
+    },
     'pgyer.com': {
         _name: '蒲公英应用分发',
         www: [
