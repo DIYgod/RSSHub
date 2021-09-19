@@ -234,6 +234,20 @@ pageClass: routes
 
 </Route>
 
+## 香港卫生署
+
+### 新闻公报
+
+<Route author="nczitzk" example="/dh" path="/dh/:language?" :paramsDesc="['语言，见下表，默认为 tc_chi']">
+
+语言
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| english | chs      | tc_chi   |
+
+</Route>
+
 ## 中国工业和信息化部
 
 ### 政策解读
