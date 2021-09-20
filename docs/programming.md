@@ -352,6 +352,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['部分, 默认为All, part参数可在url中获得']" />
 
+## sec-news
+
+### 首页
+
+<Route author="kaiili" example="/secnews/page" path="/secnews/page" :paramsDesc="安全文摘首页" />
+
 ## segmentfault
 
 ### 频道
