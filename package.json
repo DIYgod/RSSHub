@@ -20,7 +20,8 @@
     "format:staged": "eslint \"**/*.js\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json}\"",
     "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
-    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit"
+    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
+    "jest:watch": "cross-env NODE_ENV=test jest --watch"
   },
   "repository": {
     "type": "git",
