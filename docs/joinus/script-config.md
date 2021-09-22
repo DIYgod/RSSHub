@@ -1,35 +1,108 @@
 # 路由配置
 
-在编写新的路由时，RSSHub会读取文件夹中的`config.js`注册脚本，下面是这个文件的规范
-
 ::: warning 警告
 
 这个规范仍在制定过程中，可能会随着时间推移而发生改变，请记得多回来看看！
 
 :::
 
-## 注册路由
+在编写新的路由时，RSSHub会读取文件夹中的：
 
-如果需要注册一个路由，请在导出对象中`routes`中书写 -- 这个属性应当是一个数组，规则如下：
+- `router.js`注册路由
+- `maintainer.js`获取路由路径，维护者
+- `radar.js`获取路由所对应的网站，以及匹配规则：https://github.com/DIYgod/RSSHub-Radar/
 
-```js
-routes: [
-    {
-        path: '/furstar/characters/:lang?',
-        module: './index',
-    },
-    {
-        path: '/furstar/artists/:lang?',
-        module: './artists',
-    },
-    {
-        path: '/furstar/archive/:lang?',
-        module: './archive',
-    },
-],
+**以上文件为所有插件必备**
+
+```
+├───lib/v2
+│   ├───furstar
+│       ├─── router.js
+│       ├─── maintainer.js
+│       ├─── radar.js
+│       ├─── someOtherJs.js
+│   └───test
+│   └───someOtherScript
+...
 ```
 
-- path
-    - `@koa/router` 可以识别的路径
-- module
-    - 相对于`config.js`的脚本位置
+**所有符合条件的，在`/v2`路径下的路由，将会被自动载入，无需更新`router.js`**
+
+
+## 注册路由
+
+`router.js` 应当导出一个方法，我们在初始化路由的时候，会提供一个`@koa/router`对象
+
+### 命名规范
+
+我们会默认将所有的路由文件夹名字附加在真正的路由前面。路由维护者可以认定自己获取的就是根，我们会在附加对应的命名空间，在这空间底下，开发者有所有的控制权
+
+### 例子
+
+```js
+module.exports = function (router) {
+    router.get('/characters/:lang?', require('./index'));
+    router.get('/artists/:lang?', require('./artists'));
+    router.get('/archive/:lang?', require('./archive'));
+};
+```
+
+## 维护者列表
+
+`maintainer.js` 应当导出一个对象，在我们获取路径相关信息时，将会在从这里调取开发者信息等
+
+- key: `@koa/router` 对应的路径匹配
+- value: 数组，包含所有开发者的Github Username
+
+Github ID可能是更好的选择，但是后续处理不便，目前暂定Username
+
+### 例子
+
+```js
+module.exports = {
+    '/characters/:lang?': ['NeverBehave'],
+    '/artists/:lang?': ['NeverBehave'],
+    '/archive/:lang?': ['NeverBehave'],
+};
+```
+
+`npm run build:maintainer` 将会在`assets/build`下生成一份贡献者清单
+
+## Radar Rules
+
+书写方式：https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze
+
+**我们目前要求所有路由，必须包含这个文件，并且包含对应的域名 -- 我们不要求完全的路由匹配，最低要求是在对应的网站，可以显示支持即可。这个文件后续会用于帮助bug反馈。**
+
+### 例子
+
+```js
+module.exports = {
+    'furstar.jp': {
+        _name: 'Furstar',
+        '.': [
+            {
+                title: '最新售卖角色列表',
+                docs: 'https://docs.rsshub.app/shopping.html#furstar-zui-xin-shou-mai-jiao-se-lie-biao',
+                source: ['/:lang', '/'],
+                target: '/characters/:lang',
+            },
+            {
+                title: '已经出售的角色列表',
+                docs: 'https://docs.rsshub.app/shopping.html#furstar-yi-jing-chu-shou-de-jiao-se-lie-biao',
+                source: ['/:lang/archive.php', '/archive.php'],
+                target: '/archive/:lang',
+            },
+            {
+                title: '画师列表',
+                docs: 'https://docs.rsshub.app/shopping.html#furstar-hua-shi-lie-biao',
+                source: ['/'],
+                target: '/artists',
+            },
+        ],
+    },
+};
+```
+
+
+`npm run build:radar` 将会在`/assets/build/`下生成一份完整的`radar-rules.js`
