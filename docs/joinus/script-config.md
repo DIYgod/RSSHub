@@ -1,4 +1,4 @@
-# 路由配置
+# 路由规范
 
 ::: warning 警告
 
@@ -11,12 +11,15 @@
 - `router.js`注册路由
 - `maintainer.js`获取路由路径，维护者
 - `radar.js`获取路由所对应的网站，以及匹配规则：https://github.com/DIYgod/RSSHub-Radar/
+- `templates` 渲染模版
 
 **以上文件为所有插件必备**
 
 ```
 ├───lib/v2
 │   ├───furstar
+│       ├─── templates
+│           ├─── description.art
 │       ├─── router.js
 │       ├─── maintainer.js
 │       ├─── radar.js
@@ -28,6 +31,11 @@
 
 **所有符合条件的，在`/v2`路径下的路由，将会被自动载入，无需更新`router.js`**
 
+## 路由示例
+
+参考`furstar`: `./lib/v2/furstar`
+
+可以复制该文件夹作为新路由模版
 
 ## 注册路由
 
@@ -106,3 +114,37 @@ module.exports = {
 
 
 `npm run build:radar` 将会在`/assets/build/`下生成一份完整的`radar-rules.js`
+
+
+## Template
+
+我们目前要求所有路由，在渲染`description`等带HTML的内容时，**必须**使用art引擎进行排版
+
+art说明文档：https://aui.github.io/art-template/docs/
+
+同时，所有模版应该放在插件`templates`文件夹中 -- 后续我们会以此提供自定义模版切换/渲染等需求
+
+### 例子
+
+```art
+<div>
+    <img src="{{ avatar }}" />
+    {{ if link !== null }}
+    <a href="{{ link }}">{{name}}</a>
+    {{ else }}
+    <a href="#">{{name}}</a>
+    {{ /if }}
+</div>
+```
+
+```js
+const { art } = require('@/utils/render');
+const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
+```
+
+## ctx.state.json
+
+插件目前可以提供一个自定义的对象，用于调试 -- 访问对应路由+`.debug.json`即可获取到对应内容
+
+我们对这个部分格式内容没有任何限制，完全可选，目前会继续观察这个选项的发展方向
+
