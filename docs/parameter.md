@@ -96,13 +96,13 @@ RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss`
 
 ### debug
 
-在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub将会返回插件设置在`ctx.state.json`的内容
+在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub 将会返回插件设置在`ctx.state.json`的内容
 
 这功能皆在方便开发者调试问题，方便用户自行开发需要的功能。插件作者可以酌情考虑使用，没有格式要求。
 
 举例：
 
-- `/furstar/characters/cn.debug.json`
+-   `/furstar/characters/cn.debug.json`
 
 ## 输出简讯
 
