@@ -30,6 +30,7 @@ describe('cache', () => {
         const response2 = await request.get('/test/cache');
 
         const parsed1 = await parser.parseString(response1.text);
+        console.log(response2.text)
         const parsed2 = await parser.parseString(response2.text);
 
         delete parsed1.lastBuildDate;
