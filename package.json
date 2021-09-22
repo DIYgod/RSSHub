@@ -12,6 +12,7 @@
     "profiling": "NODE_ENV=production node --prof lib/index.js",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
+    "build:all": "npm run build:radar && npm run build:maintainer",
     "build:radar": "node scripts/workflow/build-radar.js",
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
     "lint": "eslint .",
