@@ -84,6 +84,7 @@ describe('cache', () => {
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
+        await wait(3000); // Wait for cache write
         const response2 = await request.get('/test/cache');
 
         const parsed1 = await parser.parseString(response1.text);
@@ -139,6 +140,7 @@ describe('cache', () => {
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
+        await wait(3000); // Wait for cache write
         const response2 = await request.get('/test/cache');
 
         const parsed1 = await parser.parseString(response1.text);
