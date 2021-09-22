@@ -84,7 +84,7 @@ describe('cache', () => {
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
-        wait(3000); // Wait for Status
+        await wait(3000); // Wait for Status
         const response2 = await request.get('/test/cache');
 
         const parsed1 = await parser.parseString(response1.text);
