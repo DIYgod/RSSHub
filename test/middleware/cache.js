@@ -134,8 +134,8 @@ describe('cache', () => {
     it('redis with quit', async () => {
         process.env.CACHE_TYPE = 'redis';
         server = require('../../lib/index');
-        const client = require('../../lib/app').context.cache.client;
-        await client.quit();
+        const { redisClient } = require('../../lib/app').context.cache.clients;
+        await redisClient.quit();
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');

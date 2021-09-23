@@ -536,12 +536,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   bilibili 用户关注视频动态路由
+-   bilibili 用户关注动态系列路由
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
         1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
         2.  打开控制台，切换到 Network 面板，刷新
-        3.  点击 dynamic_new 请求，找到 Cookie。(Key：`SESSDATA`)
+        3.  点击 dynamic_new 请求，找到 Cookie
+        4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
 
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
@@ -550,8 +551,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   邮箱 邮件列表路由：
 
     -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
-        -   Linux 环境变量：`EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
-        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
+        -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
+        -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
 
 -   吹牛部落 栏目更新
 
