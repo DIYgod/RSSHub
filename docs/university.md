@@ -868,16 +868,6 @@ category 列表：
 
 <Route author="OdinZhang" example="/hainanu/ssszs" path="hainanu/ssszs"/>
 
-## 航空航天学院
-
-<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" :paramsDesc="['分类见下表']"/>
-
-| 通知公告 | 本科生教务 | 研究生教务 |
-| :------: | :--------: | :--------: |
-|   tzgg   |    bksjw   |    yjsjw   |
-
-</Route>
-
 ## 合肥工业大学
 
 ### 通知公告
@@ -1533,11 +1523,25 @@ type 列表：
 
 </Route>
 
+::: warning 注意
+由于学校通知仅允许校园网访问，需自行部署。
+:::
+
 ### 清华大学招聘信息
 
 <Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
 
 ## 厦门大学
+
+### 航空航天学院
+
+<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" :paramsDesc="['分类见下表']"/>
+
+| 通知公告 | 本科生教务 | 研究生教务 |
+| :------: | :--------: | :--------: |
+|   tzgg   |    bksjw   |    yjsjw   |
+
+</Route>
 
 ## 山东大学
 
