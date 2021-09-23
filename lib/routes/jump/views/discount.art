@@ -98,6 +98,7 @@
         {{item.cutOff}}%
     </td>
 </tr>
+{{if item.mcScore}}
 <tr style="background-color:#d4e3e5;">
     <td style=" border-width: 1px;padding: 8px;border-style: solid;border-color: #a9c6c9;">
         metacritic评分
@@ -106,4 +107,5 @@
         {{item.mcScore}}
     </td>
 </tr>
+{{/if}}
 </div>
