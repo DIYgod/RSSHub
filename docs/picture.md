@@ -388,11 +388,11 @@ R18 显示
 
 ### 无聊图
 
-<Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+<Route author="kobemtl Xuanwo xyqfer 9uanhuo" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 |
-| ------ | ---------- | ---------- | ---- | ------ | ---------- |
-| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   |
+| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 | 动物园 |
+| ------ | ---------- | ---------- | ---- | ------ | ---------- | ------ |
+| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   | zoo    |
 
 ### 首页
 
@@ -435,14 +435,6 @@ R18 显示
 ### 搜索关键字
 
 <Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
-
-### 妹子图
-
-<Route author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
-
-| 妹子图 | 妹子图热榜 |
-| ------ | ---------- |
-| ooxx   | top-ooxx   |
 
 ## 妹子图
 
