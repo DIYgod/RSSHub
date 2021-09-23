@@ -8,6 +8,9 @@
         "Zyx-A",
         "junfengP"
     ],
+    "/eprice/:region?": [
+        "TonyRL"
+    ],
     "/furstar/characters/:lang?": [
         "NeverBehave"
     ],
