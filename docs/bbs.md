@@ -192,6 +192,14 @@ pageClass: routes
 
 </Route>
 
+## The Ring of Wonder
+
+### 首页更新
+
+<Route author="shiningdracon" example="/trow/portal" path="/trow/portal" />
+
+</Route>
+
 ## V2EX
 
 ### 最热 / 最新主题
@@ -243,6 +251,12 @@ pageClass: routes
 ### 工作机会
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
+
+## 恩山无线论坛
+
+### 板块
+
+<Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
 
 ## 光谷社区
 
@@ -771,5 +785,3 @@ pageClass: routes
 | 灵异事件      | 灵异图片     | 民间奇谈     |
 | ------------- | ------------ | ------------ |
 | lingyishijain | lingyitupian | minjianqitan |
-
-</Route>
