@@ -21,6 +21,15 @@
         "no-multi-str": 2,
         "comma-spacing": 2,
         "comma-style": 2,
+        "no-implicit-coercion": [
+            "error",
+            {
+                "boolean": false,
+                "number": false,
+                "string": false,
+                "disallowTemplateShorthand": true
+            }
+        ],
         "func-call-spacing": 2,
         "keyword-spacing": 2,
         "linebreak-style": 2,
