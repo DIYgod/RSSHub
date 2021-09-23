@@ -1655,7 +1655,7 @@
     "/gamer/hot/:bsn": [],
     "/icity/:id": [],
     "/anki/changes": [],
-    "/abc/:site?": [],
+    "/abc/:id?": [],
     "/cna/:id?": [],
     "/huawei/xinsheng/:caty?/:order?/:keyword?": [],
     "/ow/patch": [],
