@@ -318,6 +318,16 @@ pageClass: routes
 
 <Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
+## 中国银行保险监督管理委员会
+
+<Route author="JkCheung" example="/gov/cbirc/" path="/gov/cbirc/:category" :paramsDesc="['类目']">
+
+| 监管动态 | 公告通知 | 政策法规 | 政策解读 | 征求意见 | 行政许可 | 行政处罚 | 行政监管措施 | 工作论文 | 金融监管研究 | 统计信息 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+|   jgdt   |   ggtz   |   zcfg   |   zcjd  |   zqyj  |   xzxk  |   xzcf  |   xzjgcs  |   gzlw  |   jrjgyj  |   tjxx  |
+
+</Route>
+
 ## 中国政府
 
 ### 数据
