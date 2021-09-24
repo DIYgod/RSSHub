@@ -712,4 +712,4 @@ pageClass: routes
 
 ### 新闻公布
 
-<Route author="linbuxiao" example="/icac/news" path="/icac/news"/>
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言, 留空为sc, 支持sc（中文）, en（英文）']">
