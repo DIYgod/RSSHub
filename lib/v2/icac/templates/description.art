@@ -1,4 +1,0 @@
-<p>{{ desc }}</p>
-{{ if thumb }}
-    <img src="{{ thumb }}"/>
-{{/if}}
