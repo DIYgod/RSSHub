@@ -712,4 +712,4 @@ pageClass: routes
 
 ### 新闻公布
 
-<Route author="linbuxiao" example="/ccdi/news" path="/ccdi/news"/>
+<Route author="linbuxiao" example="/icac/news" path="/icac/news"/>
