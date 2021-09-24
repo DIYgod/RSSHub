@@ -192,16 +192,15 @@ pageClass: routes
 -   `:category` 栏目参数：
 
     -   `all`: 全站
-    -   `local`: 本地（港聞）
-    -   `international`: 國際（兩岸國際）
-    -   `finance`: 財經
-    -   `china`: 兩岸（有線中國組）
+    -   `local`: 港聞
+    -   `international`: 兩岸國際
+    -   `china`: 有線中國組
     -   `sports`: 體育
 
 -   `:option?` 可开启的选项：
 
-    -   `plain`: 全文输出（纯文字）
-    -   `withphoto`: 全文输出 （含题图） **（不指定 `:option?` 时将预设为此项）**
+    -   `plain`: 全文输出为纯文字
+    -   `brief`: 输出为 100 字简讯
 
 -   全文输出转换为简体字：`?opencc=t2s`  
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
