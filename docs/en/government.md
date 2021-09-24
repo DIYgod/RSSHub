@@ -72,4 +72,4 @@ Category
 
 ### Press Releases
 
-<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, current year by sc. Supprot sc and en']">
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']">
