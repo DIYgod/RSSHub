@@ -26,12 +26,14 @@ pageClass: routes
 
 ### Latest News
 
-<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']"/>
+<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']">
 Category
 
 | All  | Detected Cases | Investigation Reports or Recommendations  | Annual Reports | CCAC's Updates |
 | ---- | -------------- | ----------------------------------------- | -------------- | -------------- |
 | all  | case           | Persuasion                                | AnnualReport   | PCANews        |
+
+</RouteEn>
 
 ## Ministry of Foreign Affairs of Japan
 
