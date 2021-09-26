@@ -26,6 +26,9 @@
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
+    "/jump/discount/:platform/:filter?/:countries?": [
+        "zytomorrow"
+    ],
     "/ruancan/ruancan": [
         "nczitzk"
     ],
