@@ -1415,6 +1415,18 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+## 加拿大国际广播电台
+
+### 最新消息
+
+<Route author="nczitzk" example="/radio-cannada/latest" path="/radio-cannada/latest/:language?" :paramsDesc="['语言，见下表，默认为 English']">
+
+| Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
+| -------- | ------- | ------- | -------- | -------- | ------- | ------ | ------- |
+| fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa     | tl      |
+
+</Route>
+
 ## 贾真的电商 108 将
 
 ### 「108 将」实战分享
