@@ -1511,6 +1511,16 @@ type 列表：
 
 </Route>
 
+### 南开大学校办
+
+<Route author="NicerWang" example="/nku/xb" path="/nku/xb/:type" :paramsDesc="['分区 type, 见表格']">
+
+| 全部 | 南党 | 南党发 | 南发字 | 南发办 | 
+| -------- | -------- | -------- | -------- | -------- |
+| all | nd | ndf | nfz | nfb|
+
+</Route>
+
 ## 清华大学
 
 ### 清华大学校内信息发布平台
