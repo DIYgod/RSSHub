@@ -16,6 +16,12 @@ pageClass: routes
 
 <RouteEn author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" :paramsDesc="['Keyword']"/>
 
+## Hong Kong Independent Commission Against Corruption
+
+### Press Releases
+
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']">
+
 ## Ministry of Foreign Affairs of Japan
 
 ### Press conference
@@ -67,9 +73,3 @@ Category
 ### Dispute settlement news
 
 <RouteEn author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" :paramsDesc="['Year, current year by default']"/>
-
-## Hong Kong Independent Commission Against Corruption
-
-### Press Releases
-
-<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']">
