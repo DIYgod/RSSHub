@@ -244,7 +244,7 @@ pageClass: routes
 
 ### 最新消息
 
-<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）'，`pt`（葡萄牙文）]"/>
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']"/>
 
 | 全部  | 案件发布 | 调查报告或勘喻  | 年度报告        | 公署消息    |
 | ---- | ------- | ------------ | -------------  | --------- |
