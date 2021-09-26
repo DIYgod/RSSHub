@@ -23,6 +23,9 @@
     "/furstar/archive/:lang?": [
         "NeverBehave"
     ],
+    "/icac/news/:lang?": [
+        "linbuxiao, TonyRL"
+    ],
     "/test/:id": [
         "DIYgod",
         "NeverBehave"
