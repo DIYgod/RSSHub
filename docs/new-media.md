@@ -1419,7 +1419,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 最新消息
 
-<Route author="nczitzk" example="/radio-cannada/latest" path="/radio-cannada/latest/:language?" :paramsDesc="['语言，见下表，默认为 English']">
+<Route author="nczitzk" example="/radio-canada/latest" path="/radio-cannada/latest/:language?" :paramsDesc="['语言，见下表，默认为 English']">
 
 | Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
 | -------- | ------- | ------- | -------- | -------- | ------- | ------ | ------- |
