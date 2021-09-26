@@ -1,4 +1,7 @@
 {
+    "/8world/:category?": [
+        "nczitzk"
+    ],
     "/aamacau/aamacau/:category?/:id?": [
         "nczitzk"
     ],
