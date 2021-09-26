@@ -238,7 +238,17 @@ pageClass: routes
 
 ### 新闻公布
 
-<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']">
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']"/>
+
+## 澳门廉政公署
+
+### 最新消息
+
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）'，`pt`（葡萄牙文）]"/>
+
+| 全部  | 案件发布 | 调查报告或勘喻  | 年度报告        | 公署消息    |
+| ---- | ------- | ------------ | -------------  | --------- |
+| all  | case    | Persuasion   | AnnualReport   | PCANews   |
 
 ## 中国工业和信息化部
 
