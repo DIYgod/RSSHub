@@ -26,6 +26,18 @@
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
+    "/ruancan/ruancan": [
+        "nczitzk"
+    ],
+    "/ruancan/ruancan/sort/:sort?": [
+        "nczitzk"
+    ],
+    "/ruancan/ruancan/tag/:tag": [
+        "nczitzk"
+    ],
+    "/ruancan/ruancan/search/:keyword?": [
+        "nczitzk"
+    ],
     "/test/:id": [
         "DIYgod",
         "NeverBehave"
