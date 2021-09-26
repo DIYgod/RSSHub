@@ -707,3 +707,9 @@ pageClass: routes
 ### 审查调查
 
 <Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
+
+## 香港廉政公署
+
+### 新闻公布
+
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']">
