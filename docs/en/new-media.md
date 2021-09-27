@@ -376,7 +376,7 @@ Compared to the official one, this feed:
 
 ### Latest News
 
-<RouteEn author="nczitzk" example="/radio-canada/latest" path="/radio-cannada/latest/:language?" :paramsDesc="['Language, see below, English by default']">
+<RouteEn author="nczitzk" example="/radio-canada/latest" path="/radio-canada/latest/:language?" :paramsDesc="['Language, see below, English by default']">
 
 | Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
 | -------- | ------- | ------- | -------- | -------- | ------- | ------ | ------- |
