@@ -192,6 +192,14 @@ pageClass: routes
 
 </Route>
 
+## The Ring of Wonder
+
+### 首页更新
+
+<Route author="shiningdracon" example="/trow/portal" path="/trow/portal" />
+
+</Route>
+
 ## V2EX
 
 ### 最热 / 最新主题
@@ -777,5 +785,3 @@ pageClass: routes
 | 灵异事件      | 灵异图片     | 民间奇谈     |
 | ------------- | ------------ | ------------ |
 | lingyishijain | lingyitupian | minjianqitan |
-
-</Route>
