@@ -1,7 +1,8 @@
 process.env.REQUEST_TIMEOUT = '500';
 import got from '../../lib/utils/got';
 import logger from '../../lib/utils/logger';
-import config from '../../lib/config').value;
+import { get as getConfig } from '../../lib/config/index.js';
+const config = getConfig();
 import nock from 'nock';
 
 afterAll(() => {

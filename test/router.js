@@ -6,7 +6,8 @@ import server from '../lib/index.js';
 const request = supertest(server);
 import Parser from 'rss-parser';
 const parser = new Parser();
-import { value as config } from '../lib/config.js';
+import { get as getConfig } from '../../lib/config/index.js';
+const config = getConfig();
 
 afterAll(() => {
     delete process.env.SOCKET;

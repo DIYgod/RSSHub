@@ -1,6 +1,6 @@
 /** */
 import fs from 'fs';
-import path from 'path';
+import path from 'node:path';
 const target = path.join(__dirname, '../../assets/build/maintainer.json');
 import maintainer from path.join(__dirname, '../../lib/maintainer.js');
 

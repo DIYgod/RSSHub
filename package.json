@@ -8,6 +8,7 @@
   ],
   "type": "module",
   "node": "^14.13.1 || >=16.0.0",
+  "@std/esm": "cjs",
   "scripts": {
     "start": "node lib/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
@@ -28,7 +29,7 @@
     "postinstall": "link-module-alias"
   },
   "_moduleAliases": {
-    "@": "lib"
+    "@": "./lib"
   },
   "repository": {
     "type": "git",
