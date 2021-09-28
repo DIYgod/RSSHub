@@ -54,7 +54,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "fs-extra": "^8.1.0",
-    "jest": "26.6.3",
+    "jest": "27.2.3",
     "mockdate": "3.0.5",
     "nock": "13.0.11",
     "nodemon": "2.0.7",
