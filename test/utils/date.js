@@ -1,5 +1,5 @@
-const parseDate = require('../../lib/utils/date');
-const MockDate = require('mockdate');
+import parseDate from '../../lib/utils/date';
+import MockDate from 'mockdate';
 
 describe('date', () => {
     MockDate.set(new Date('2019-01-01'));

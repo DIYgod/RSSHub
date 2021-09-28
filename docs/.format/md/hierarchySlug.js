@@ -123,4 +123,4 @@ anchor.defaults = {
     permalinkAttrs,
 };
 
-module.exports = anchor;
+export default anchor;

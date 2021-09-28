@@ -1,8 +1,8 @@
-const file = require('./file');
+import file from './file';
 const pinyinCompare = new Intl.Collator('zh-Hans-CN-u-co-pinyin').compare;
 const isASCII = (str) => /^[\x00-\x7F]*$/.test(str);
 
-module.exports = {
+export {
     rules: (list) => list.filter((e) => e.type === file.ROUTE_TYPE),
     handler: async (data) => {
         const content = data.split('\n');

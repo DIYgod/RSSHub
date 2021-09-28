@@ -1,5 +1,5 @@
-const configUtils = require('../../lib/utils/common-config');
-const nock = require('nock');
+import configUtils from '../../lib/utils/common-config';
+import nock from 'nock';
 
 describe('index', () => {
     it('transElemText', () => {

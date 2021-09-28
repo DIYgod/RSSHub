@@ -1,10 +1,10 @@
 process.env.NODE_NAME = 'mock';
 
-const supertest = require('supertest');
+import supertest from 'supertest';
 jest.mock('request-promise-native');
-const server = require('../../lib/index');
+import server from '../../lib/index';
 const request = supertest(server);
-const cheerio = require('cheerio');
+import cheerio from 'cheerio';
 let gitHash;
 try {
     gitHash = require('git-rev-sync').short();

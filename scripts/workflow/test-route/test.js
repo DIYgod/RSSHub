@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-module.exports = async ({ github, context, core }, baseUrl, routes, number) => {
+export async ({ github, context, core }, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
         return;
     }

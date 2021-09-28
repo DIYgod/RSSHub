@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-module.exports = {
+export default {
     ROUTE_TYPE: 'route',
     GUIDE_TYPE: 'guide',
     NAV_TYPE: 'nav',

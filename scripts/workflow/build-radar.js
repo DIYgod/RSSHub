@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 const target = path.join(__dirname, '../../assets/build/radar-rules.js');
-const radar = require(path.join(__dirname, '../../lib/radar.js'));
+import radar from path.join(__dirname, '../../lib/radar.js');
 
 fs.writeFileSync(target, radar.toSource());

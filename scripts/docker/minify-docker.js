@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-const fs = require('fs-extra');
-const path = require('path');
-const { nodeFileTrace } = require('@vercel/nft');
+import fs from 'fs-extra';
+import path from 'path';
+import { nodeFileTrace } from '@vercel/nft';
 const files = ['lib/index.js', 'api/now.js'];
 const resultFolder = 'app-minimal';
 
