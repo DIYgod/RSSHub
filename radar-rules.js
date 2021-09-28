@@ -509,14 +509,6 @@
     },
     'google.com': {
         _name: '谷歌',
-        chrome: [
-            {
-                title: '插件更新',
-                source: '/webstore/detail/:name/:id',
-                docs: 'https://docs.rsshub.app/program-update.html#chrome-wang-shang-ying-yong-dian',
-                target: '/chrome/webstore/extensions/:id',
-            },
-        ],
         photos: [
             {
                 title: '相册',
