@@ -106,6 +106,7 @@
     "json5": "2.2.0",
     "koa": "2.13.1",
     "koa-basic-auth": "4.0.0",
+    "koa-bodyparser": "^4.3.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
     "lru-cache": "6.0.0",
