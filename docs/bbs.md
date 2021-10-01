@@ -144,13 +144,13 @@ pageClass: routes
 
 <Route author="Cesaryuan" example="/quicker/user/action/18359/Cesaryuan" path="/quicker/user/action/:uid/:person" :paramsDesc="['用户ID，可在用户主页链接里找到', '用户昵称，可在用户主页链接里找到']" />
 
-## RF 技术社区
+## [RF 技术社区](https://rf.eefocus.com/)
 
 ### 文章
 
 <Route author="nczitzk" example="/rf/article" path="/rf/article"/>
 
-## Ruby China
+## [Ruby China](https://ruby-china.org/)
 
 > 未登录状态下抓取页面非实时更新
 
@@ -170,7 +170,7 @@ pageClass: routes
 
 <Route author="ahonn" example="/ruby-china/jobs" path="/ruby-china/jobs"/>
 
-## Saraba1st
+## [Saraba1st](https://bbs.saraba1st.com/)
 
 ### 帖子
 
@@ -180,7 +180,7 @@ pageClass: routes
 
 </Route>
 
-## SCBOY 论坛
+## [SCBOY 论坛](https://www.scboy.cc/)
 
 ### 帖子
 
@@ -192,7 +192,7 @@ pageClass: routes
 
 </Route>
 
-## V2EX
+## [V2EX](https://www.v2ex.com/)
 
 ### 最热 / 最新主题
 
@@ -206,7 +206,7 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
-## 巴哈姆特電玩資訊站
+## [巴哈姆特電玩資訊站](https://www.gamer.com.tw/)
 
 ### 熱門推薦
 
@@ -222,7 +222,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" :paramsDesc="['驿站ID，在 URL 可以找到']"/>
 
-## 超理论坛
+## [超理论坛](https://chaoli.club/)
 
 ### 板块
 
@@ -238,19 +238,19 @@ pageClass: routes
 
 </Route>
 
-## 电鸭社区
+## [电鸭社区](https://eleduck.com/)
 
 ### 工作机会
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 
-## 恩山无线论坛
+## [恩山无线论坛](https://www.right.com.cn/forum/forum.php)
 
 ### 板块
 
 <Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
 
-## 光谷社区
+## [光谷社区](http://guanggoo.com/)
 
 ### 子论坛
 
@@ -262,9 +262,9 @@ pageClass: routes
 
 </Route>
 
-## 虎扑
+## [虎扑](https://www.hupu.com/)
 
-### 虎扑 BBS 论坛
+### [虎扑 BBS 论坛](https://bbs.hupu.com/)
 
 <Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']">
 
@@ -308,7 +308,7 @@ pageClass: routes
 
 </Route>
 
-## 华为心声社区
+## [华为心声社区](https://xinsheng.huawei.com/)
 
 ### 华为家事
 
@@ -328,7 +328,7 @@ pageClass: routes
 
 </Route>
 
-## 集思录
+## [集思录](https://www.jisilu.cn/)
 
 ### 用户回复
 
@@ -338,9 +338,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
-## 看雪
+## [看雪](https://pediy.com/)
 
-### 论坛
+### [论坛](https://bbs.pediy.com/)
 
 <Route author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
 
@@ -366,7 +366,7 @@ pageClass: routes
 | 最新主题 | latest |
 | 精华主题 | digest |
 
-## 梨园
+## [梨园](https://forums.liyuans.com/)
 
 ### 主题帖（全站）
 
@@ -384,7 +384,7 @@ pageClass: routes
 
 <Route author="WooMai" example="/liyuan-forums/threads/user/1" path="/liyuan-forums/threads/user/:user_id" :paramsDesc="['用户 ID (仅支持数字 ID), 支持多个, 使用英文逗号分隔']" />
 
-## 龙空
+## [龙空](https://www.lkong.com/)
 
 ### 分区
 
@@ -394,7 +394,7 @@ pageClass: routes
 
 <Route author="ma6254" example="/lkong/thread/2356933" path="/lkong/thread/:id?" :paramsDesc="['帖子 id, 可在帖子的URL里找到']"/>
 
-## 龙腾网
+## [龙腾网](http://www.ltaaa.cn/)
 
 ### 网帖翻译
 
@@ -406,7 +406,7 @@ pageClass: routes
 
 </Route>
 
-## 牛客网
+## [牛客网](https://www.nowcoder.com/)
 
 ### 讨论区
 
@@ -446,7 +446,7 @@ pageClass: routes
 
 </Route>
 
-## 品葱
+## [品葱](https://pincong.rocks/)
 
 ### 发现
 
@@ -464,13 +464,13 @@ pageClass: routes
 
 <Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" />
 
-## 三星盖乐世社区
+## [三星盖乐世社区](http://www.samsungmembers.cn/)
 
 ### 最新帖子
 
 <Route author="nczitzk" example="/samsungmembers/latest" path="/samsungmembers/latest"/>
 
-## 书友社区
+## [书友社区](https://sq.wgrid.cn/)
 
 ### 导读
 
@@ -482,7 +482,7 @@ pageClass: routes
 
 </Route>
 
-## 水木社区
+## [水木社区](https://www.mysmth.net/)
 
 ### 分区文章
 
@@ -498,7 +498,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
 
-## 天涯论坛
+## [天涯论坛](http://www.tianya.cn/)
 
 ### 子版块
 
@@ -512,7 +512,7 @@ pageClass: routes
 
 <Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" :paramsDesc="['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']"/>
 
-## 贴吧
+## [贴吧](https://tieba.baidu.com/)
 
 ### 帖子列表
 
@@ -538,13 +538,13 @@ pageClass: routes
 
 </Route>
 
-## 万维读者
+## [万维读者](https://www.creaders.net/)
 
 ### 焦点新闻
 
 <Route author="nczitzk" example="/creaders/headline" path="/creaders/headline"/>
 
-## 文学城
+## [文学城](https://www.wenxuecity.com/)
 
 ### 博客
 
@@ -562,13 +562,13 @@ pageClass: routes
 
 <Route author="nczitzk" example="/wenxuecity/news" path="/wenxuecity/news" />
 
-## 小米社区
+## [小米社区](https://www.xiaomi.cn/)
 
 ### 圈子
 
 <Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" :paramsDesc="['圈子 id，可在圈子 URL 找到']" radar="1" rssbud="1"/>
 
-## 小木虫论坛
+## [小木虫论坛](http://muchong.com)
 
 ### 期刊点评
 
@@ -686,7 +686,7 @@ pageClass: routes
 
 </Route>
 
-## 一亩三分地
+## [一亩三分地](https://www.1point3acres.com/)
 
 ### 帖子
 
@@ -750,7 +750,7 @@ pageClass: routes
 
 </Route>
 
-## 直播吧
+## [直播吧](https://www.zhiboba.fun/)
 
 ### 子论坛
 
@@ -764,7 +764,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>
 
-## 中国灵异网
+## [中国灵异网](http://www.xyese.com/)
 
 ### 分类
 
