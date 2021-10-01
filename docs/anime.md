@@ -4,19 +4,19 @@ pageClass: routes
 
 # 二次元
 
-## 005.tv
+## [005.tv](https://www.005.tv/
 
 ### 二次元资讯
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
 
-## 1draw #深夜の真剣お絵描き 60 分一本勝負
+## [1draw #深夜の真剣お絵描き 60 分一本勝負](https://1draw.aqn.jp/)
 
 ### 投稿一览
 
 <Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
-## AcFun
+## [AcFun](https://www.acfun.cn/)
 
 ### 番剧
 
@@ -33,7 +33,7 @@ pageClass: routes
 
 <Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
-## AGE 动漫
+## [AGE 动漫](https://www.agefans.cc/)
 
 ### 最近更新
 
@@ -43,7 +43,7 @@ pageClass: routes
 
 <Route author="s2marine" example="/agefans/detail/20200035" path="/agefans/detail/:id" :paramsDesc="['番剧 id，对应详情 URL 中找到']"/>
 
-## Anime1
+## [Anime1](https://anime1.me/)
 
 ### 動畫
 
@@ -57,7 +57,7 @@ pageClass: routes
 
 <Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" :paramsDesc="['关键字']" radar="1" rssbud="1"/>
 
-## Animen 动漫平台
+## [Animen 动漫平台](http://www.animen.com.tw/)
 
 ### news
 
@@ -69,13 +69,13 @@ pageClass: routes
 
 </Route>
 
-## Anitama
+## [Anitama](http://www.anitama.cn/)
 
 ### Anitama Channel
 
 <Route author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
 
-## Bangumi
+## [Bangumi](https://bangumi.tv/)
 
 ### 放送列表
 
@@ -113,11 +113,11 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']" radar="1"/>
 
-## bilibili
+## [bilibili](https://www.bilibili.com/)
 
 见 [#bilibili](/social-media.html#bilibili)
 
-## DLsite
+## [DLsite](https://www.dlsite.com/)
 
 ### 当前日期发售的新产品
 
@@ -134,25 +134,25 @@ pageClass: routes
 <Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']">
 </Route>
 
-## ebb.io
+## [ebb.io](https://ebb.io/)
 
 ### ebb
 
 <Route author="Tsuki" example="/ebb" path="/ebb"/>
 
-## Eventernote
+## [Eventernote](https://www.eventernote.com/)
 
 ### 声优活动及演唱会
 
 <Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" :paramsDesc="['声优姓名', '声优 ID']" radar="1" rssbud="1"/>
 
-## Hanime.tv
+## [Hanime.tv](https://hanime.tv/)
 
 ### 最近更新
 
 <Route author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
-## Hpoi 手办维基
+## [Hpoi 手办维基](https://www.hpoi.net/)
 
 ### 情报
 
@@ -186,13 +186,13 @@ pageClass: routes
 
 </Route>
 
-## say 花火
+## [say 花火](https://www.sayhuahuo.com/)
 
 ### 文章
 
 <Route author="junfengP" example="/sayhuahuo" path="/sayhuahuo"/>
 
-## Vol.moe
+## [Vol.moe](https://vol.moe/)
 
 ### vol
 
@@ -204,7 +204,7 @@ pageClass: routes
 
 </Route>
 
-## Webtoons
+## [Webtoons](https://www.webtoons.com)
 
 ### 漫画更新
 
@@ -216,7 +216,7 @@ pageClass: routes
 
 <Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
 
-## 嘀哩嘀哩 - dilidili
+## [嘀哩嘀哩 - dilidili](https://dilidili.online/)
 
 ### 嘀哩嘀哩番剧更新
 
@@ -228,7 +228,7 @@ pageClass: routes
 
 </Route>
 
-## 電撃オンライン
+## [電撃オンライン](https://dengekionline.com/)
 
 ### 最新記事
 
@@ -240,7 +240,7 @@ pageClass: routes
 
 </Route>
 
-## 东方我乐多丛志
+## [东方我乐多丛志](https://cn.touhougarakuta.com/)
 
 ### 文章
 
@@ -266,13 +266,13 @@ pageClass: routes
 
 </Route>
 
-## 咚漫
+## [咚漫](https://www.dongmanmanhua.cn/)
 
 ### 漫画更新
 
 <Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
 
-## 動畫瘋
+## [動畫瘋](https://ani.gamer.com.tw/)
 
 ### 最後更新
 
@@ -282,49 +282,49 @@ pageClass: routes
 
 <Route author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
 
-## 動漫狂
+## [動漫狂](https://www.cartoonmad.com/)
 
 ### 漫画更新
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
 
-## 风之动漫
+## [风之动漫](https://www.fffdm.com/)
 
 ### 风之动漫
 
 <Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量']" anticrawler="1"/>
 
-## 海猫吧
+## [海猫吧](https://haimaoba.com/)
 
 ### 漫画更新
 
 <Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
-## 看漫画
+## [看漫画](https://www.manhuagui.com/)
 
 ### 漫画更新
 
 <Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
-## 看漫画镜像站
+## [看漫画镜像站](https://www.mhgui.com/)
 
 ### 漫画更新
 
 <Route author="btdwv" path="/mhgui/comic/:id" example="/mhgui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
-## 看漫画台湾
+## [看漫画台湾](https://tw.manhuagui.com/)
 
 ### 漫画更新
 
 <Route author="btdwv" path="/twmanhuagui/comic/:id" example="/twmanhuagui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
-## 漫画 DB
+## [漫画 DB](https://www.manhuadb.com/)
 
 ### 漫画 DB
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" :paramsDesc="['漫画ID']"/>
 
-## 漫画堆
+## [漫画堆](http://www.manhuadui.com/)
 
 ### 漫画
 
@@ -336,7 +336,7 @@ pageClass: routes
 
 <Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1" rssbud="1"/>
 
-## 三界异次元
+## [三界异次元](http://www.3ycy.com/)
 
 ### 三界异次元
 
@@ -358,7 +358,7 @@ pageClass: routes
 
 <Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
-## 忧郁的 loli
+## [忧郁的 loli](https://www.kkgal.com/)
 
 ### 文章
 
