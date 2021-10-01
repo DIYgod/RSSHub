@@ -4,13 +4,13 @@ pageClass: routes
 
 # 博客
 
-## archdaily
+## [archdaily](https://www.archdaily.com/)
 
 ### 首页
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
-## Benedict Evans
+## [Benedict Evans](https://www.ben-evans.com/)
 
 <Route author="emdoe" example="/benedictevans" path="/benedictevans"/>
 
@@ -20,11 +20,11 @@ pageClass: routes
 
 <Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
-## Gwern Branwen
+## [Gwern Branwen](https://www.gwern.net)
 
 <Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
 
-## Hedwig.pub
+## [Hedwig.pub](https://hedwig.pub/)
 
 <Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
 
@@ -34,7 +34,7 @@ pageClass: routes
 
 > 原则上只要是 {type}.hedwig.pub 都可以匹配。
 
-## Hexo
+## [Hexo](https://hexo.io)
 
 ### Next 主题博客
 
@@ -44,7 +44,7 @@ pageClass: routes
 
 <Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
-## Hi, DIYgod
+## [Hi, DIYgod](https://diygod.me/)
 
 ### DIYgod 的动森日记
 
@@ -54,25 +54,24 @@ pageClass: routes
 
 <Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk"/>
 
-## JustRun
+## [JustRun](http://www.justrun.org/)
 
 ### JustRun
 
 <Route author="nczitzk" example="/justrun" path="/justrun"/>
 
-## LaTeX 开源小屋
+## [LaTeX 开源小屋](https://www.latexstudio.net/)
 
 ### 首页
 
 <Route author="kt286 nczitzk" example="/latexstudio/home" path="/latexstudio/home"/>
 
-## LeeMeng
-
+## [LeeMeng](https://leemeng.tw/)
 ### blog
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
-## Paul Graham 博客
+## [Paul Graham 博客](http://www.paulgraham.com/)
 
 通过提取文章全文，提供比官方源更佳的阅读体验。
 
@@ -80,13 +79,13 @@ pageClass: routes
 
 <Route author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
 
-## Phrack Magazine
+## [Phrack Magazine](http://www.phrack.org/)
 
 ### 文章
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
 
-## WordPress
+## [WordPress](https://wordpress.com/)
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
@@ -96,13 +95,13 @@ pageClass: routes
 
 <Route author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
 
-## 阿里云系统组技术博客
+## [阿里云系统组技术博客](https://kernel.taobao.org/)
 
 ### 首页
 
 <Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index"/>
 
-## 财新博客
+## [财新博客](https://blog.caixin.com/)
 
 ### 用户博客
 
@@ -112,23 +111,23 @@ pageClass: routes
 
 </Route>
 
-## 大侠阿木
+## [大侠阿木](https://www.daxiaamu.com/)
 
 ### 首页
 
 <Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
-## 華康字型故事
+## [華康字型故事](https://www.dynacw.com.tw/)
 
 <Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
 
-## 建宁闲谈
+## [建宁闲谈](http://jian-ning.com/)
 
 ### 文章
 
 <Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" rssbud="1"/>
 
-## 劍心．回憶
+## [劍心．回憶](http://kenshin.hk/)
 
 ### 分类
 
@@ -176,7 +175,7 @@ pageClass: routes
 
 </Route>
 
-## 敬维博客
+## [敬维博客](https://jingwei.link/)
 
 ### 文章
 
@@ -188,19 +187,19 @@ pageClass: routes
 
 <Route author="LogicJake" example="/security/pulses" path="/security/pulses"/>
 
-## 美团技术团队
+## [美团技术团队](https://tech.meituan.com/)
 
 ### 最近更新
 
 <Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
 
-## 王五四文集
+## [王五四文集](http://wang54.blogspot.com/)
 
 ### 文章
 
 <Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" :paramsDesc="['RSS抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为2020']"/>
 
-## 王垠博客
+## [王垠博客](https://www.yinwang.org/)
 
 ### 文章
 

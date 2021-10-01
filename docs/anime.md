@@ -4,7 +4,7 @@ pageClass: routes
 
 # 二次元
 
-## [005.tv](https://www.005.tv/
+## [005.tv](https://www.005.tv/)
 
 ### 二次元资讯
 
