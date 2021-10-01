@@ -1,7 +1,7 @@
-const dateParser = require('../../lib/utils/dateParser');
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
-const MockDate = require('mockdate');
+import dateParser from '../../lib/utils/dateParser';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import MockDate from 'mockdate';
 dayjs.extend(utc);
 
 describe('dateParser', () => {

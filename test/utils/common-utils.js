@@ -1,4 +1,4 @@
-const utils = require('../../lib/utils/common-utils');
+import utils from '../../lib/utils/common-utils';
 
 describe('common-utils', () => {
     it('toTitleCase', () => {

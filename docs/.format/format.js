@@ -1,10 +1,11 @@
-const file = require('./file');
-const sgf = require('staged-git-files');
-const path = require('path');
-const sortByHeading = require('./sortByHeading');
-const chineseFormat = require('./chineseFormat');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+import file from './file';
+import sgf from 'staged-git-files';
+import path from 'path';
+import sortByHeading from './sortByHeading';
+import chineseFormat from './chineseFormat';
+import util from 'node:util';
+import { exec as callbackExec } from 'node:child_process';
+const exec = util.promisify(callbackExec)
 
 /**
  * Processors are objects contains two methods:
@@ -54,7 +55,7 @@ const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, fil
     }
  */
 const buildFileList = async () => {
-    const config = require(`../.vuepress/config`);
+    import config from `../.vuepress/config`;
     let fileList = [];
     Object.keys(config.themeConfig.locales).forEach((key) => {
         const locale = config.themeConfig.locales[key];

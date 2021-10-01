@@ -1,7 +1,7 @@
-const { pinyin } = require('@napi-rs/pinyin');
-const { slugify: _slugify } = require('@vuepress/shared-utils');
+import { pinyin } from '@napi-rs/pinyin';
+import { slugify as _slugify } from '@vuepress/shared-utils';
 
-module.exports = {
+export default {
     plugins: {
         '@vuepress/google-analytics': {
             ga: 'UA-48084758-10',

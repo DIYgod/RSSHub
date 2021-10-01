@@ -1,7 +1,7 @@
-const supertest = require('supertest');
-const Parser = require('rss-parser');
+import supertest from 'supertest';
+import Parser from 'rss-parser';
 const parser = new Parser();
-const wait = require('../../lib/utils/wait');
+import wait from '../../lib/utils/wait';
 let server;
 jest.mock('request-promise-native');
 
@@ -55,7 +55,7 @@ describe('cache', () => {
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
 
-        const app = require('../../lib/app');
+        import app from '../../lib/app';
         await app.context.cache.set('mock', undefined);
         expect(await app.context.cache.get('mock')).toBe('');
 
@@ -112,7 +112,7 @@ describe('cache', () => {
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
 
-        const app = require('../../lib/app');
+        import app from '../../lib/app';
         await app.context.cache.set('mock1', undefined);
         expect(await app.context.cache.get('mock1')).toBe('');
         await app.context.cache.set('mock2', '2');
@@ -134,7 +134,8 @@ describe('cache', () => {
     it('redis with quit', async () => {
         process.env.CACHE_TYPE = 'redis';
         server = require('../../lib/index');
-        const { redisClient } = require('../../lib/app').context.cache.clients;
+        import app from '../../lib/app';
+        const redisClient = app.context.cache.clients
         await redisClient.quit();
         const request = supertest(server);
 

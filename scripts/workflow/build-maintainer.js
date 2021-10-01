@@ -1,8 +1,8 @@
 /** */
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'node:path';
 const target = path.join(__dirname, '../../assets/build/maintainer.json');
-const maintainer = require(path.join(__dirname, '../../lib/maintainer.js'));
+import maintainer from path.join(__dirname, '../../lib/maintainer.js');
 
 const count = Object.keys(maintainer).length;
 const uniqueMaintainer = new Set();

@@ -2,10 +2,13 @@
   "name": "rsshub",
   "version": "1.0.0",
   "description": "Make RSS Great Again!",
-  "main": "lib/pkg.js",
+  "exports": "./lib/pkg.js",
   "files": [
     "lib"
   ],
+  "type": "module",
+  "node": "^14.13.1 || >=16.0.0",
+  "@std/esm": "cjs",
   "scripts": {
     "start": "node lib/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
@@ -21,7 +24,12 @@
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json}\"",
     "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
-    "jest:watch": "cross-env NODE_ENV=test jest --watch"
+    "jest:watch": "cross-env NODE_ENV=test jest --watch",
+    "preinstall": "which link-module-alias && link-module-alias clean || echo",
+    "postinstall": "link-module-alias"
+  },
+  "_moduleAliases": {
+    "@": "./lib"
   },
   "repository": {
     "type": "git",
@@ -55,6 +63,7 @@
     "eslint-plugin-prettier": "3.4.0",
     "fs-extra": "^8.1.0",
     "jest": "26.6.3",
+    "link-module-alias": "^1.2.0",
     "mockdate": "3.0.5",
     "nock": "13.0.11",
     "nodemon": "2.0.7",
@@ -112,7 +121,6 @@
     "lz-string": "1.4.4",
     "mailparser": "3.2.0",
     "markdown-it": "12.0.6",
-    "module-alias": "2.2.2",
     "parse-torrent": "9.1.3",
     "pidusage": "2.0.21",
     "plist": "3.0.2",

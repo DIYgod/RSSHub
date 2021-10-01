@@ -1,12 +1,12 @@
-const file = require('./file');
-const width = require('string-width');
-const remark = require('remark');
-const pangu = require('remark-pangu');
-const frontmatter = require('remark-frontmatter');
+import file from './file';
+import width from 'string-width';
+import remark from 'remark';
+import pangu from 'remark-pangu';
+import frontmatter from 'remark-frontmatter';
 
-const prettier = require('remark-preset-prettier');
+import prettier from 'remark-preset-prettier';
 
-module.exports = {
+export default {
     rules: (list) => list.filter((e) => e.lang === file.LANG_CN),
     handler: async (doc) => {
         let result = await remark()

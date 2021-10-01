@@ -1,8 +1,8 @@
-const supertest = require('supertest');
+import supertest from 'supertest';
 jest.mock('request-promise-native');
-const server = require('../../lib/index');
+import server from '../../lib/index';
 const request = supertest(server);
-const Parser = require('rss-parser');
+import Parser from 'rss-parser';
 const parser = new Parser();
 
 afterAll(() => {

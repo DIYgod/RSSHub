@@ -1,8 +1,9 @@
 process.env.REQUEST_TIMEOUT = '500';
-const got = require('../../lib/utils/got');
-const logger = require('../../lib/utils/logger');
-const config = require('../../lib/config').value;
-const nock = require('nock');
+import got from '../../lib/utils/got';
+import logger from '../../lib/utils/logger';
+import { get as getConfig } from '../../lib/config/index.js';
+const config = getConfig();
+import nock from 'nock';
 
 afterAll(() => {
     delete process.env.REQUEST_TIMEOUT;

@@ -1,5 +1,5 @@
-const supertest = require('supertest');
-const md5 = require('../../lib/utils/md5');
+import supertest from 'supertest';
+import md5 from '../../lib/utils/md5';
 let server;
 jest.mock('request-promise-native');
 

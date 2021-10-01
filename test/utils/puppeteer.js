@@ -1,5 +1,5 @@
-const puppeteer = require('../../lib/utils/puppeteer');
-const wait = require('../../lib/utils/wait');
+import puppeteer from '../../lib/utils/puppeteer';
+import wait from '../../lib/utils/wait';
 
 describe('puppeteer', () => {
     it('puppeteer run', async () => {

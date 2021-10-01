@@ -1,6 +1,6 @@
-const parser = require('../../lib/utils/rss-parser');
-const config = require('../../lib/config').value;
-const nock = require('nock');
+import parser from '../../lib/utils/rss-parser';
+import { value as config } from '../lib/config.js';
+import nock from 'nock';
 
 describe('got', () => {
     it('headers', async () => {

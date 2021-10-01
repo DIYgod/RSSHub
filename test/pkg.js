@@ -1,12 +1,13 @@
+import RSSHub from '../lib/pkg.js';
 jest.mock('request-promise-native');
-const RSSHub = require('../lib/pkg');
+
 
 describe('pkg', () => {
     it('config', () => {
         RSSHub.init({
             UA: 'mock',
         });
-        const config = require('../lib/config').value;
+        import { value as config } from '../lib/config';
         expect(config.ua).toBe('mock');
     });
 

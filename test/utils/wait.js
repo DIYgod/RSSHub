@@ -1,4 +1,4 @@
-const wait = require('../../lib/utils/wait');
+import wait from '../../lib/utils/wait';
 
 describe('wait', () => {
     it('wait 0.1 second', async () => {

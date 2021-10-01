@@ -1,7 +1,7 @@
-const got = require('../../lib/utils/got');
-const parser = require('../../lib/utils/rss-parser');
-const nock = require('nock');
-require('../../lib/utils/request-wrapper');
+import got from '../../lib/utils/got';
+import parser from '../../lib/utils/rss-parser';
+import nock from 'nock';
+import '../../lib/utils/request-wrapper';
 let check = () => {};
 const simpleResponse = '<rss version="2.0"><channel><item></item></channel></rss>';
 
@@ -17,7 +17,7 @@ afterEach(() => {
     nock.activate();
     check = () => {};
 
-    const http = require('http');
+    import http from 'http';
     const httpWrap = (func) => {
         const origin = func;
         return function (url, request) {
