@@ -4,7 +4,7 @@ pageClass: routes
 
 # 论坛
 
-## A 岛匿名版
+## [A 岛匿名版](https://adnmb3.com/Forum)
 
 ### 串
 
@@ -40,13 +40,13 @@ pageClass: routes
 
 </Route>
 
-## Chiphell
+## [Chiphell](https://www.chiphell.com/)
 
 ### 子版块
 
 <Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
 
-## Citavi 中文网站论坛
+## [Citavi 中文网站论坛](http://forum.softhead-citavi.com/)
 
 <Route author="nczitzk" example="/citavi" path="/citavi/:caty" :paramsDesc="['分类名，可在对应分类页 URL 中找到，默认为全部']">
 
@@ -56,7 +56,7 @@ pageClass: routes
 
 </Route>
 
-## Dcard
+## [Dcard](https://www.dcard.tw)
 
 ### 首頁帖子
 
@@ -66,7 +66,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1"/>
 
-## Discuz
+## [Discuz](https://www.discuz.net/)
 
 ### 通用子版块 - 自动检测
 
@@ -92,13 +92,13 @@ pageClass: routes
 
 </Route>
 
-## eTOLAND
+## [eTOLAND](http://www.etoland.co.kr/)
 
 ### 主题贴
 
 <Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" rssbud="1"/>
 
-## LearnKu
+## [LearnKu](https://learnku.com/)
 
 ### 社区
 
@@ -108,13 +108,13 @@ pageClass: routes
 | ---- | ------------ | ---- | ----- |
 | jobs | translations | qa   | links |
 
-## LowEndTalk
+## [LowEndTalk](https://www.lowendtalk.com/)
 
 ### Discussion
 
 <Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" :paramsDesc="['讨论 id']"/>
 
-## MCBBS
+## [MCBBS](https://www.mcbbs.net/)
 
 ### 版块
 
@@ -124,7 +124,7 @@ pageClass: routes
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
-## NGA
+## [NGA](https://bbs.nga.cn/)
 
 ### 分区帖子
 
@@ -134,7 +134,7 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
 
-## Quicker
+## [Quicker](https://getquicker.net/)
 
 ### 讨论区
 

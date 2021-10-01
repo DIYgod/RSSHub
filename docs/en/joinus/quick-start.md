@@ -455,7 +455,9 @@ ctx.state.data = {
 
 1.  Please be sure to close the tag of `<Route>`!
 
-1.  Execute `npm run format` to lint the code before you commit and open a pull request
+2. When adding a new site, please be sure to add **original link** in the title of the new site 🔗 !
+
+3.  Execute `npm run format` to lint the code before you commit and open a pull request
 
 ## ## Submit new RSSHub Radar rule
 

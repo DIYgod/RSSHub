@@ -457,7 +457,9 @@ ctx.state.data = {
 
 1.  请一定要注意把`<Route>`的标签关闭！
 
-2.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
+2. 加入新站点时，请一定要在新站点标题中添加**原站链接**🔗 ！ 
+
+3.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
 
 ## 提交新的 RSSHub Radar 规则
 
