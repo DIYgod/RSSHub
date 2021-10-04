@@ -1,1 +1,1 @@
-<img src="{{ $image }}"><div>{{ description }}</div>
+<img src="{{ image }}"><div>{{@ description }}</div>
