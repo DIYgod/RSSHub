@@ -76,7 +76,7 @@ pageClass: routes
 
 Ash Maurya's blog
 
-<Route author="james-tindal" example="/blogs/love-the-problem" path="/blogs/love-the-problem"/>
+<RouteEn author="james-tindal" example="/blogs/love-the-problem" path="/blogs/love-the-problem"/>
 
 ## Paul Graham 博客
 
