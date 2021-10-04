@@ -220,3 +220,9 @@ Type
 | all | rec       |
 
 </RouteEn>
+
+## Fisher Spb
+
+### News
+
+<Route author="denis.ya" example="/news" path="/news" />
