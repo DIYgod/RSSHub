@@ -225,4 +225,4 @@ Type
 
 ### News
 
-<Route author="denis.ya" example="/news" path="/news" />
+<RouteEn author="denis-ya" example="/fisher-spb/news" path="/fisher-spb/news" />
