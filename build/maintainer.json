@@ -29,6 +29,9 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/qq/live/:id": [
+        "nczitzk"
+    ],
     "/ruancan/ruancan": [
         "nczitzk"
     ],

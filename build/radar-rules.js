@@ -44,6 +44,34 @@
         docs:"https://docs.rsshub.app/game.html#jump",
         source:[ "/" ],
         target:"/jump/discount/switch" } ] },
+  "qq.com":{ _name:"腾讯",
+    "mp.weixin":[ { title:"微信公众号栏目",
+        docs:"https://docs.rsshub.app/new-media.html#gong-zhong-hao-lan-mu-fei-tui-song-li-shi-xiao-xi",
+        source:"/mp/homepage",
+        target:(params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}` },
+      { title:"微信公众号话题",
+        docs:"https://docs.rsshub.app/new-media.html#wei-xin-gong-zhong-hao-wen-zhang-hua-ti-tag",
+        source:"/mp/appmsgalbum",
+        target:(params, url) => `/wechat/mp/msgalbum/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('album_id')}` } ],
+    egame:[ { title:"企鹅电竞直播间",
+        docs:"https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo",
+        source:"/:id",
+        target:(params) => {
+                    if (params.id.match(/^\d+$/)) {
+                        return '/egameqq/room/:id';
+                    }
+                } } ],
+    v:[ { title:"视频 - 播放列表",
+        docs:"https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin",
+        source:"/x/cover/:id",
+        target:(params) => {
+                    const id = params.id.match('(.*).html')[1];
+                    return id ? `/tencentvideo/playlist/${id}` : '';
+                } },
+      { title:"视频 - 播放列表",
+        docs:"https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin",
+        source:"/x/cover/:id/:detail",
+        target:"/tencentvideo/playlist/:id" } ] },
   "ruancan.com":{ _name:"软餐",
     ".":[ { title:"首页",
         docs:"https://docs.rsshub.app/new-media.html#ruan-can-shou-ye",
@@ -1274,34 +1302,6 @@
         source:[ "/bbs/board.php",
           "/plugin/mobile/board.php" ],
         target:(params, url) => `/etoland/${new URL(url).searchParams.get('bo_table')}` } ] },
-  "qq.com":{ _name:"腾讯",
-    "mp.weixin":[ { title:"微信公众号栏目",
-        docs:"https://docs.rsshub.app/new-media.html#gong-zhong-hao-lan-mu-fei-tui-song-li-shi-xiao-xi",
-        source:"/mp/homepage",
-        target:(params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}` },
-      { title:"微信公众号话题",
-        docs:"https://docs.rsshub.app/new-media.html#wei-xin-gong-zhong-hao-wen-zhang-hua-ti-tag",
-        source:"/mp/appmsgalbum",
-        target:(params, url) => `/wechat/mp/msgalbum/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('album_id')}` } ],
-    egame:[ { title:"企鹅电竞直播间",
-        docs:"https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo",
-        source:"/:id",
-        target:(params) => {
-                    if (params.id.match(/^\d+$/)) {
-                        return '/egameqq/room/:id';
-                    }
-                } } ],
-    v:[ { title:"视频 - 播放列表",
-        docs:"https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin",
-        source:"/x/cover/:id",
-        target:(params) => {
-                    const id = params.id.match('(.*).html')[1];
-                    return id ? `/tencentvideo/playlist/${id}` : '';
-                } },
-      { title:"视频 - 播放列表",
-        docs:"https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin",
-        source:"/x/cover/:id/:detail",
-        target:"/tencentvideo/playlist/:id" } ] },
   "javbus.com":{ _name:"JavBus",
     www:[ { title:"首页",
         docs:"https://docs.rsshub.app/multimedia.html#javbus",
