@@ -4,7 +4,7 @@ pageClass: routes
 
 # 游戏
 
-## 3DMGame
+## [3DMGame](https://www.3dmgame.com/)
 
 ### 新闻中心
 
@@ -20,7 +20,7 @@ pageClass: routes
 
 </Route>
 
-## 4Gamers 新闻
+## [4Gamers 新闻](https://www.4gamers.com.tw/)
 
 ### 分类
 
@@ -40,7 +40,7 @@ pageClass: routes
 
 <Route author="monner-henster" example="/a9vg/a9vg" path="/a9vg/a9vg"/>
 
-## Blizzard
+## [Blizzard](https://www.blizzard.com/)
 
 ### News
 
@@ -85,13 +85,13 @@ pageClass: routes
 
 </Route>
 
-## dekudeals
+## [dekudeals](https://www.dekudeals.com/)
 
 ### 分类
 
 <Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
 
-## Epic Games Store
+## [Epic Games Store](https://www.epicgames.com/store/)
 
 ### 免费游戏
 
@@ -103,7 +103,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
-## GameRes 游资网
+## [GameRes 游资网](https://www.gameres.com/)
 
 ### 热点推荐
 
@@ -145,37 +145,37 @@ pageClass: routes
 
 </Route>
 
-## GNN.tw 游戏新闻
+## [GNN.tw 游戏新闻](https://gnn.gamer.com.tw/)
 
 ### GNN.tw 游戏新闻
 
 <Route author="monner-henster" example="/gnn/gnn" path="/gnn/gnn"/>
 
-## Indienova
+## [Indienova](https://indienova.com/)
 
 ### indienova 文章
 
 <Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
-## Konami
+## [Konami](https://www.konami.com/)
 
 ### PES Mobile 公告
 
 <Route author="HenryQW" example="/konami/pesmobile/zh-cn/ios" path="/konami/pesmobile/:lang?/:os?" :paramsDesc="['语言，在URL中获得，如zh-cn, zh-tw, en', '操作系统，iOS 或 Android']"/>
 
-## Liquipedia
+## [Liquipedia](https://liquipedia.net/)
 
 ### Dota2 战队最近比赛结果
 
 <Route author="wzekin" example="/liquipedia/dota2/matches/Team_Aster" path="liquipedia/dota2/matches/:id" :paramsDesc="['战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster']"/>
 
-## Maxjia News
+## [Maxjia News](https://news.maxjia.com/)
 
 ### Dota 2
 
 <Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
 
-## Metacritic
+## [Metacritic](https://www.metacritic.com/)
 
 ### 新游发行
 
@@ -201,7 +201,7 @@ pageClass: routes
 
 </Route>
 
-## Minecraft
+## [Minecraft](https://www.minecraft.net/)
 
 ### Java 版游戏更新
 
@@ -219,7 +219,7 @@ pageClass: routes
 | modpackEntry | 模组包的短名从模组包的页面链接中找到，例如 `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`，短名就是 `ftb_presents_direwolf20_1_16`。 |
 </Route>
 
-## Nintendo
+## [Nintendo](https://www.nintendo.com.hk/)
 
 ### eShop 新发售游戏
 
@@ -241,7 +241,7 @@ pageClass: routes
 
 <Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
 
-## PlayStation
+## [PlayStation](https://www.playstation.com/)
 
 ### PlayStation Store 游戏列表
 
@@ -271,7 +271,7 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
-## psnine
+## [psnine](http://psnine.com/)
 
 ### 首页 - 白金攻略 / 游戏开箱
 
@@ -324,13 +324,13 @@ pageClass: routes
 
 </Route>
 
-## ScoreSaber
+## [ScoreSaber](https://scoresaber.com/)
 
 ### 用户动态
 
 <Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页URL中获取']"/>
 
-## Steam
+## [Steam](https://store.steampowered.com/)
 
 ### Steam search
 
@@ -354,13 +354,13 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 :::
 
-## SteamGifts
+## [SteamGifts](https://www.steamgifts.com/)
 
 ### Discussions
 
 <Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
 
-## TapTap
+## [TapTap](https://www.taptap.com/)
 
 ::: warning 注意
 
@@ -388,7 +388,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 | ------ | ---- | -------- |
 | update | hot  | spent    |
 
-## 巴哈姆特
+## [巴哈姆特](https://www.gamer.com.tw/)
 
 ### GNN 新聞
 
@@ -404,7 +404,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 </Route>
 
-## 触乐
+## [触乐](https://www.chuapp.com/)
 
 <Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" :paramsDesc="['默认为 night']">
 
@@ -414,7 +414,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 </Route>
 
-## 二柄 APP
+## [二柄 APP](https://www.diershoubing.com/)
 
 ### 新闻
 
@@ -434,7 +434,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 <Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn"/>
 
-## 怪物猎人世界
+## [怪物猎人世界](http://www.monsterhunterworld.com/)
 
 ### 更新情报
 
@@ -444,7 +444,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 <Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1" rssbud="1"/>
 
-## 剑网 3
+## [剑网 3](https://jx3.xoyo.com/)
 
 ### 新闻资讯
 
@@ -456,7 +456,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 </Route>
 
-## 旅法师营地
+## [旅法师营地](https://www.iyingdi.com/)
 
 ### 分区
 
@@ -480,7 +480,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
-## 米哈游
+## [米哈游](https://www.mihayo.com/)
 
 ### 崩坏 2 - 游戏公告
 
@@ -502,7 +502,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
-## 明日方舟
+## [明日方舟](https://ak.hypergryph.com/)
 
 ### 游戏公告与新闻
 
@@ -512,13 +512,13 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="rikkablue" example="/siren/news" path="/siren/news"/>
 
-## 奶牛关
+## [奶牛关](https://cowlevel.net/)
 
 ### 元素文章
 
 <Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
-## 少女前线
+## [少女前线](https://gf-cn.sunborngame.com/)
 
 ### 新闻
 
@@ -536,19 +536,19 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
 
-## 王者荣耀
+## [王者荣耀](https://pvp.qq.com/)
 
 ### 新闻中心
 
 <Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
 
-## 网易大神
+## [网易大神](https://ds.163.com/)
 
 ### 用户发帖
 
 <Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
 
-## 小黑盒
+## [小黑盒](https://xiaoheihe.cn/)
 
 ### 用户动态
 
@@ -568,13 +568,13 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
-## 英雄联盟
+## [英雄联盟](https://lol.qq.com/)
 
 ### 新闻中心
 
 <Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类,all=全部,zh=综合,gg=公告,ss=赛事,gl=攻略,sq=社区']"/>
 
-## 游民星空
+## [游民星空](https://www.gamersky.com/)
 
 ### 游民星空今日推荐
 
@@ -590,7 +590,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
-## 游戏打折情报
+## [游戏打折情报](https://www.yxdzqb.com)
 
 ### 游戏折扣
 
@@ -602,7 +602,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
-## 游戏动力
+## [游戏动力](https://vgn.cn/)
 
 ### 游戏资讯
 
@@ -612,7 +612,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 | 1        | 2        | 3        | 4        |
 </Route>
 
-## 游戏年轮
+## [游戏年轮](https://www.bibgame.com/)
 
 ### 分类
 
@@ -624,7 +624,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
-## 游戏时光
+## [游戏时光](http://www.vgtime.com/)
 
 ### 游戏时光新闻
 
@@ -638,7 +638,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
 
-## 游讯网
+## [游讯网](http://www.yxdown.com/)
 
 ### 资讯
 
@@ -654,7 +654,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="nczitzk" example="/yxdown/recommend" path="/yxdown/recommend"/>
 
-## 游研社
+## [游研社](https://www.yystv.cn/)
 
 ### 游研社 - 分类文章
 
@@ -670,7 +670,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
 
-## 原神
+## [原神](https://ys.mihoyo.com/main/)
 
 ### 新闻
 
@@ -688,7 +688,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend"/>
 
-## 最终幻想 14
+## [最终幻想 14](https://adsrff.web.sdo.com/)
 
 ### 最终幻想 14 国服
 
