@@ -4,7 +4,7 @@ pageClass: routes
 
 # 预报预警
 
-## Outage.Report
+## [Outage.Report](http://www.cs.com.cn/)
 
 ### Report
 
@@ -16,7 +16,7 @@ pageClass: routes
 
 ## 地震速报
 
-### 中国地震局
+### [中国地震局](https://www.cea.gov.cn/)
 
 <Route author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']" anticrawler="1">
 
@@ -24,7 +24,7 @@ pageClass: routes
 
 </Route>
 
-### 中国地震台
+### [中国地震台](https://news.ceic.ac.cn/)
 
 <Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type" :paramsDesc="['类型，1 最近24小时地震信息, 2: 最近48小时地震信息, 5: 最近一年3.0级以上地震信息, 7: 最近一年3.0级以下地震, 8: 最近一年4.0级以上地震信息, 9: 最近一年5.0级以上地震信息, 0: 最近一年6.0级以上地震信息']">
 
@@ -32,13 +32,13 @@ pageClass: routes
 
 </Route>
 
-## 国家突发事件预警信息发布网
+## [国家突发事件预警信息发布网](http://www.12379.cn/)
 
 ### 当前生效预警
 
 <Route author="nczitzk" example="/12379" path="/12379/index"/>
 
-## 国家应急广播网
+## [国家应急广播网](http://www.cneb.gov.cn/)
 
 ### 预警信息
 
@@ -48,7 +48,7 @@ pageClass: routes
 
 <Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
 
-## 上海市生态环境局
+## [上海市生态环境局](https://sthj.sh.gov.cn/)
 
 ### 空气质量
 
@@ -56,7 +56,7 @@ pageClass: routes
 
 ## 停电通知
 
-### 95598 停电查询网
+### [95598 停电查询网](http://www.sttcq.com/td/)
 
 <Route author="mjysci" example="/tingdiantz/95598/hb1/wh/wc/" path="/tingdiantz/95598/:province/:city/:district?" :paramsDesc="['省，2~3位拼音缩写，详情见http://www.sttcq.com/td/','市，同上', '区，同上']"/>  
 
@@ -104,13 +104,13 @@ pageClass: routes
 
 <Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan"/>
 
-## 香港天文台
+## [香港天文台](https://www.hko.gov.hk/)
 
 ### Current Weather Report
 
 <Route author="calpa" example="/hko/weather" path="/hko/weather"/>
 
-## 中央气象台
+## [中央气象台](http://www.nmc.cn/)
 
 ### 全国气象预警
 
