@@ -1,4 +1,7 @@
 {
+    "/2047/:category?/:sort?": [
+        "nczitzk"
+    ],
     "/8world/:category?": [
         "nczitzk"
     ],
