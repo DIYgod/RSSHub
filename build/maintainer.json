@@ -14,6 +14,9 @@
     "/eprice/:region?": [
         "TonyRL"
     ],
+    "/focustaiwan/:category?": [
+        "nczitzk"
+    ],
     "/furstar/characters/:lang?": [
         "NeverBehave"
     ],
