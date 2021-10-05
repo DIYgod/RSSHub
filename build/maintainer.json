@@ -8,6 +8,9 @@
     "/aamacau/aamacau/:category?/:id?": [
         "nczitzk"
     ],
+    "/biodiscover/:channel?": [
+        "aidistan"
+    ],
     "/epicgames/epicgames/:collection": [
         "DIYgod",
         "NeverBehave",
@@ -2008,7 +2011,6 @@
     "/fnal/news/:category?": [],
     "/x410/news": [],
     "/right/forum/:id?": [],
-    "/biodiscover/:channel?": [],
     "/hket/:category?": [],
     "/s-hentai/:id?": []
 }
