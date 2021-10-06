@@ -10,7 +10,7 @@
 
 - `router.js`注册路由
 - `maintainer.js`获取路由路径，维护者
-- `radar.js`获取路由所对应的网站，以及匹配规则：https://github.com/DIYgod/RSSHub-Radar/
+- `radar.js`获取路由所对应的网站，以及匹配规则：<https://github.com/DIYgod/RSSHub-Radar/>
 - `templates` 渲染模版
 
 **以上文件为所有插件必备**
