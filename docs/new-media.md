@@ -2420,6 +2420,32 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/news/whxw" path="/news/whxw"/>
 
+## 辛華社
+
+### 首页
+
+<Route author="nczitzk" example="/hotchina" path="/hotchina"/>
+
+### 分类
+
+<Route author="nczitzk" example="/hotchina" path="/hotchina/category/:id?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 攝徒日記 | 辛華社特約報導 | 小粉紅觀察 | 維權消息 | 讀者投書 | 中國牆內 | 台灣國 | 國際 |
+| -------- | -------------- | ---------- | -------- | -------- | -------- | ------ | ---- |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/hotchina" path="/hotchina/tag/:id?" :paramsDesc="['标签，可在对应标签页的 URL 中找到，默认为首页']">
+
+以下为 Top Tags：
+
+| 辱華 | 小粉紅 | 中國限電 | 徵稿 | 特約報導 | 舔共藝人 | 中共國慶 |
+| ---- | ------ | -------- | ---- | -------- | -------- | -------- |
+
+</Route>
+
 ## 新浪专栏
 
 ### 创事记
