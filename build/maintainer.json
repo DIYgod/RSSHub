@@ -20,6 +20,9 @@
     "/eprice/:region?": [
         "TonyRL"
     ],
+    "/fisher-spb/news": [
+        "denis-ya"
+    ],
     "/focustaiwan/:category?": [
         "nczitzk"
     ],
