@@ -30,7 +30,7 @@ pageClass: routes
 
 ### Ash Maurya's blog
 
-<RouteEn author="james-tindal" example="/blogs/love-the-problem" path="/blogs/love-the-problem"/>
+<RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
 
 ## Paul Graham
 
