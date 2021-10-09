@@ -142,7 +142,7 @@ sidebar: auto
             list
                 .map((index, item) => {
                     item = $(item);
-                    itemPicUrl = `${item.find('a.cover').attr('style')}`.replace('background-image:url(', '').replace(')', '');
+                    itemPicUrl = item.find('a.cover').attr('style').replace('background-image:url(', '').replace(')', '');
                     return {
                         title: item.find('.title a').first().text(),
                         description: `作者：${item.find('.usr-pic a').last().text()}<br>描述：${item.find('.content p').text()}<br><img src="${itemPicUrl}">`,

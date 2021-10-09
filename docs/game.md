@@ -157,6 +157,29 @@ pageClass: routes
 
 <Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
+## JUMP
+
+### 游戏折扣
+
+<Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" :paramsDesc="['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']">
+| switch | ps4 | ps5 | xbox | steam | epic |
+| ------ | --- | ---- | ---- | ---- | ---- |
+| 可用   | 可用 | 可用   | 不可用   | 可用   | 不可用 |
+
+| filter | switch | ps4 | ps5 | steam |
+| ------ | ------ | --- | --- | ----- |
+| all    | ✔      | ✔   | ✔   | ✔     |
+| jx     | ✔      | ✔   | ❌  | ✔     |
+| sd     | ✔      | ✔   | ✔   | ✔     |
+| dl     | ❌     | ✔   | ❌  | ✔     |
+| vip    | ❌     | ❌  | ✔   | ❌    |
+
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| ---- | ------------ | ---- | ---- | ---- |
+| na   | eu           | fr   | de   | jp   |
+
+</Route>
+
 ## Konami
 
 ### PES Mobile 公告
@@ -209,7 +232,7 @@ pageClass: routes
 
 ### CurseForge Mod 更新
 
-<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
+<Route author="Indexyz Discreater" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的 ID， 可在 mod 主页的 `About This Project` 中找到']"/>
 
 ### Feed The Beast (FTB) 模组包更新
 
@@ -349,8 +372,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 Steam 新闻中心支持官方的 RSS 订阅:
 
 -   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
--   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english> 
--   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss>	或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
+-   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english>
+-   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss> 或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
 
 :::
 
@@ -552,7 +575,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户动态
 
-<Route author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="auto-bot-ty" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
 ### 游戏新闻
 
@@ -639,6 +662,16 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 <Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
 
 ## 游讯网
+
+### 资讯
+
+<Route author="nczitzk" example="/yxdown/news" path="/yxdown/news/:category?" :paramsDesc="['分类，见下表，默认为资讯首页']">
+
+| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |
+
+</Route>
 
 ### 精彩推荐
 
