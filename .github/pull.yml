@@ -1,0 +1,6 @@
+---
+version: "1"
+rules:
+  base: deploy
+  upstream: DIYgod:deploy
+  mergeMethod: hardreset
