@@ -252,7 +252,7 @@ Heroku accounts with unverified payment methods have only 550 hours of credit pe
 
 ### Automatic deploy upon update
 
-1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
+1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account, and switch the default branch to `deploy`.
 2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
 3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
 4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
