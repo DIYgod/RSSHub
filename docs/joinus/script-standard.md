@@ -78,7 +78,7 @@ module.exports = {
 
 ## Radar Rules
 
-书写方式：https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze
+书写方式： <https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze>
 
 **我们目前要求所有路由，必须包含这个文件，并且包含对应的域名 -- 我们不要求完全的路由匹配，最低要求是在对应的网站，可以显示支持即可。这个文件后续会用于帮助bug反馈。**
 
@@ -93,19 +93,19 @@ module.exports = {
                 title: '最新售卖角色列表',
                 docs: 'https://docs.rsshub.app/shopping.html#furstar-zui-xin-shou-mai-jiao-se-lie-biao',
                 source: ['/:lang', '/'],
-                target: '/characters/:lang',
+                target: '/furstar/characters/:lang',
             },
             {
                 title: '已经出售的角色列表',
                 docs: 'https://docs.rsshub.app/shopping.html#furstar-yi-jing-chu-shou-de-jiao-se-lie-biao',
                 source: ['/:lang/archive.php', '/archive.php'],
-                target: '/archive/:lang',
+                target: '/furstar/archive/:lang',
             },
             {
                 title: '画师列表',
                 docs: 'https://docs.rsshub.app/shopping.html#furstar-hua-shi-lie-biao',
                 source: ['/'],
-                target: '/artists',
+                target: '/furstar/artists',
             },
         ],
     },
@@ -120,7 +120,7 @@ module.exports = {
 
 我们目前要求所有路由，在渲染`description`等带HTML的内容时，**必须**使用art引擎进行排版
 
-art说明文档：https://aui.github.io/art-template/docs/
+art说明文档： <https://aui.github.io/art-template/docs/>
 
 同时，所有模版应该放在插件`templates`文件夹中 -- 后续我们会以此提供自定义模版切换/渲染等需求
 
