@@ -1,0 +1,21 @@
+---
+name: Remove dependabot.yml from deploy branch
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: deploy
+      - run: |
+          git config --global user.email github-actions@github.com
+          git config --global user.name github-actions
+          git fetch origin master
+          git reset --hard origin/master
+          git rm .github/dependabot.yml
+          git commit -m 'Remove dependabot.yml'
+          git push -f
