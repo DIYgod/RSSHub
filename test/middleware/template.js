@@ -60,8 +60,8 @@ describe('template', () => {
 
     it(`.json`, async () => {
         const response = await request.get('/test/1.json');
-        expect(response.status).toBe(404);
-        expect(response.text).toMatch(/Error: <b>JSON output had been removed/);
+        const responseXML = await request.get('/test/1.rss');
+        expect(response.text.slice(0, 50)).toEqual(responseXML.text.slice(0, 50));
     });
 
     it(`long title`, async () => {
