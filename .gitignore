@@ -19,3 +19,5 @@ app-minimal/
 
 .now
 .vercel
+
+assets/build/

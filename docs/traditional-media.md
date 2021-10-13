@@ -12,15 +12,53 @@ pageClass: routes
 
 ## ABC News
 
-### 子站
+### Channel & Topic
 
-<Route author="nczitzk" example="/abc/chinese" path="/abc/:site?" :paramsDesc="['子站，见下表']">
+<Route author="nczitzk" example="/abc" path="/abc/:id?" :paramsDesc="['id，可在对应 Channel 或 Topic 页面中找到，也可以填入对应页源代码中的 `documentId`，部分见下表，默认为 Just In']">
 
-子站
+::: tip 提示
 
-| Just In | Politics | World | Business | Analysis             | Sport | Science | Health | Arts         | Fact Check | 中文新闻 | Berita Bahasa Indonesia | Tok Pisin |
-| ------- | -------- | ----- | -------- | -------------------- | ----- | ------- | ------ | ------------ | ---------- | -------- | ----------------------- | --------- |
-| justin  | politics | world | business | analysis-and-opinion | sport | science | health | arts-culture | factcheck  | chinese  | indonesian              | tok-pisin |
+支持 [Topic Library](https://abc.net.au/news/topics) 中的所有 Topic，你可以填入其 URL 中 `topic` 后的字段，也可以填入对应的 `documentId`。
+
+如 [Computers and Technology](https://www.abc.net.au/news/topic/computers-and-technology) 的 URL 是 <https://www.abc.net.au/news/topic/computers-and-technology>，其 `topic` 后的字段为 `computers-and-technology`，且该 Topic 的 `documentId` 为 `2302`，所以路由为 [/abc/computers-and-technology](https://rsshub.app/abc/computers-and-technology) 以及 [/abc/2302](https://rsshub.app/abc/2302)。
+
+支持的 Channel 在下表已经全部列出，同上，其他 Channel 请找到对应 Channel 页面的源代码中的 `documentId` 填入。
+
+:::
+
+以下是部分支持 Channel 和 Topic id：
+
+| Just In | Coronavirus | Politics | World |
+| ------- | ----------- | -------- | ----- |
+| justin  | coronavirus | politics | world |
+
+| Asia Pacific | Business | Analysis & Opinion   | Sport |
+| ------------ | -------- | -------------------- | ----- |
+| asia-pacific | business | analysis-and-opinion | sport |
+
+| AFL | Rugby League | Rugby Union | Football |
+| --- | ------------ | ----------- | -------- |
+| afl | rugbyleague  | rugbyunion  | football |
+
+| Cricket | Science | Astronomy (Space) | Computers and Technology |
+| ------- | ------- | ----------------- | ------------------------ |
+| cricket | science | astronomy-space   | computers-and-technology |
+
+| Environment | Archaeology | Health | Exercise and Fitness |
+| ----------- | ----------- | ------ | -------------------- |
+| environment | archaeology | health | exercise-and-fitness |
+
+| Pharmaceuticals | Mental Health | Diet and Nutrition | Arts & Culture |
+| --------------- | ------------- | ------------------ | -------------- |
+| pharmaceuticals | mental-health | diet-and-nutrition | arts-culture   |
+
+| Fact Check | ABC 中文 | 澳洲时政           | 聚焦中港台     |
+| ---------- | -------- | ------------------ | -------------- |
+| factcheck  | chinese  | australia-politics | focus-on-china |
+
+| 观点与分析              | 澳洲华人             | 解读澳洲          | Berita dalam Bahasa Indonesia | Tok Pisin |
+| ----------------------- | -------------------- | ----------------- | ----------------------------- | --------- |
+| analysis-and-opinion-zh | chinese-in-australia | curious-australia | indonesian                    | tok-pisin |
 
 </Route>
 
@@ -154,16 +192,15 @@ pageClass: routes
 -   `:category` 栏目参数：
 
     -   `all`: 全站
-    -   `local`: 本地（港聞）
-    -   `international`: 國際（兩岸國際）
-    -   `finance`: 財經
-    -   `china`: 兩岸（有線中國組）
+    -   `local`: 港聞
+    -   `international`: 兩岸國際
+    -   `china`: 有線中國組
     -   `sports`: 體育
 
 -   `:option?` 可开启的选项：
 
-    -   `plain`: 全文输出（纯文字）
-    -   `withphoto`: 全文输出 （含题图） **（不指定 `:option?` 时将预设为此项）**
+    -   `plain`: 全文输出为纯文字
+    -   `brief`: 输出为 100 字简讯
 
 -   全文输出转换为简体字：`?opencc=t2s`  
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
