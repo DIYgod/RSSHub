@@ -24,7 +24,7 @@ const loopSideBar = (children, type, lang, prefix) =>
             lang,
         }));
 const loopNav = (nav, lang) =>
-    nav.map((e) => {
+    nav.flatMap((e) => {
         if (e.items) {
             return loopNav(e.items, lang);
         }
