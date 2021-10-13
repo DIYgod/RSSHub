@@ -44,6 +44,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户ID']" />
 
+## 8 视界
+
+### 分类
+
+<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类，见下表，默认为即时']">
+
+| 即时     | 新加坡    | 东南亚         | 中港台        | 国际  | 财经    | 体育   |
+| -------- | --------- | -------------- | ------------- | ----- | ------- | ------ |
+| realtime | singapore | southeast-asia | greater-china | world | finance | sports |
+
+</Route>
+
 ### 主题文章
 
 <Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题ID']" />
@@ -291,6 +303,22 @@ pageClass: routes
 | 科技焦點 | 網絡生活 | 教學評測 | IT Times |
 | -------- | -------- | -------- | -------- |
 | srae001  | srae008  | srae017  | srae021  |
+
+</Route>
+
+## Focus Taiwan
+
+### Category
+
+<Route author="nczitzk" example="/focustaiwan" path="/focustaiwan/:category?" :paramsDesc="['分类，见下表，默认为 news']">
+
+| Latest | Editor's Picks | Photos of the Day |
+| ------ | -------------- | ----------------- |
+| news   | editorspicks   | photos            |
+
+| Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
+| -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
+| politics | cross-strait | business | society | science & tech | culture | sports |
 
 </Route>
 
@@ -1982,6 +2010,24 @@ column 为 third 时可选的 category:
 
 <Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
 
+## 软餐
+
+### 首页
+
+<Route author="nczitzk" example="/ruancan" path="/ruancan"/>
+
+### 分类
+
+<Route author="nczitzk" example="/ruancan/sort/news" path="/ruancan/sort/:sort" :paramsDesc="['分类 id，可在对应分类页 URL 中找到']"/>
+
+### 标签
+
+<Route author="nczitzk" example="/ruancan/tag/oxygenos" path="/ruancan/tag/:tag" :paramsDesc="['标签 id，可在对应标签页 URL 中找到']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/ruancan/search/ColorOS" path="/ruancan/search/:keyword?" :paramsDesc="['关键字，默认为空']"/>
+
 ## 少数派 sspai
 
 ### 最新上架付费专栏
@@ -2060,11 +2106,11 @@ column 为 third 时可选的 category:
 
 ### 频道
 
-<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel?" :paramsDesc="['频道，见下表，默认为首页']">
+<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel" :paramsDesc="['频道，见下表']">
 
-| 首页 | 研究     | 产业     | 融资      | 时政     | 人物      | 公司    | 新品    | 活动     |
-| ---- | -------- | -------- | --------- | -------- | --------- | ------- | ------- | -------- |
-| home | research | industry | financing | politics | celebrity | company | product | activity |
+| 最新研究 | 人物访谈  | 产业动态 | 活动发布 |
+| -------- | --------- | -------- | -------- |
+| reaseach | interview | industry | activity |
 
 </Route>
 
