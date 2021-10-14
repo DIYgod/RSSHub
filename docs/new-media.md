@@ -1876,6 +1876,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 趨勢科技防詐達人
+
+### 最新詐騙情報
+
+<Route author="nczitzk" example="/getdr" path="/getdr"/>
+
 ## 全球化智库
 
 ### 分类
