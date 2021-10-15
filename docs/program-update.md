@@ -338,6 +338,10 @@ pageClass: routes
 
 </Route>
 
+## QQ 互联 SDK
+
+<Route author="nuomi1" example="/qq/sdk/changelog/iOS" path="/qq/sdk/changelog/:platform" :paramsDesc="['平台，iOS / Android']"/>
+
 ## QTTabBar
 
 ### Change Log
