@@ -346,6 +346,24 @@ Tag
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
+## Harvard Business Review
+
+### Topic
+
+<Route author="nczitzk" example="/hbr/topic/leadership" path="/hbr/topic/:topic?" :paramsDesc="['话题，可在，默认为 Leadership', '类别，见下表，默认为 Latest']">
+
+| LATEST | POPULAR | FROM THE STORE | FOR YOU |
+| ------ | ------- | -------------- | ------- |
+| Latest | Popular | From the Store | For You |
+
+::: tip 提示
+
+点击此处查看 [所有话题](https://hbr.org/topics)
+
+:::
+
+</Route>
+
 ## Harvard Health Publishing
 
 ### Harvard Health Blog
