@@ -44,6 +44,12 @@ pageClass: routes
 
 <Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
+## HeaDuck 研究所
+
+### 網誌文章
+
+<Route author="nczitzk" example="/headuck" path="/headuck"/>
+
 ## Hi, DIYgod
 
 ### DIYgod 的动森日记
