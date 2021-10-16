@@ -15,6 +15,7 @@ Categories
 | Category               | Slug                |
 | ---------------------- | ------------------- |
 | All News               |                     |
+| Diablo II: Resurrected | diablo2             |
 | Diablo III             | diablo3             |
 | Diablo IV              | diablo4             |
 | Diablo: Immortal       | diablo-immortal     |
