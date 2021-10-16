@@ -209,6 +209,12 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## ScienceDirect
+
+### Journal
+
+<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
+
 ## Stork 文献鸟订阅
 
 ### 关键词
