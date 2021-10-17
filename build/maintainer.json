@@ -41,6 +41,9 @@
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
+    "/independent/ps5-stock-uk": [
+        "DIYgod"
+    ],
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
