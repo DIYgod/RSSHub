@@ -75,6 +75,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
+## hotukdeals
+
+### thread
+
+<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
+
 ## LeBonCoin
 
 ### Ads
