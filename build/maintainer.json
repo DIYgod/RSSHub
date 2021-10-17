@@ -35,6 +35,9 @@
     "/furstar/archive/:lang?": [
         "NeverBehave"
     ],
+    "/hotukdeals/:type": [
+        "DIYgod"
+    ],
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
