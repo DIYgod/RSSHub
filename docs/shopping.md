@@ -105,6 +105,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## The Independent
+
+### PS5 stock UK
+
+<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
+
 ## Westore
 
 ### 新品

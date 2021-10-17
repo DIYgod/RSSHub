@@ -87,3 +87,9 @@ All categories, see [Category list](https://www.mercari.com/jp/category/)
 All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
 </RouteEn>
+
+## The Independent
+
+### PS5 stock UK
+
+<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
