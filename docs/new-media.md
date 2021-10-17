@@ -364,6 +364,12 @@ Tag
 
 </Route>
 
+## HKJunkCall 資訊中心
+
+### 近期資訊
+
+<Route author="nczitzk" example="/hkjunkcall" path="/hkjunkcall" />
+
 ## iDaily 每日环球视野
 
 ### 今日 Timeline
