@@ -25,7 +25,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Special Sponsors
 
-<a style="margin-right: 50px;" href="https://rss3.io/" target="_blank"><img alt="RSS3" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rss3_.png"></a><a href="https://sa.net/" target="_blank"><img alt="Riven Cloud" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rivencloudd.png"></a>
+<a style="margin-right: 50px;" href="https://rss3.io/" target="_blank"><img alt="RSS3" height="60px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/rss3_.png"></a>
 
 ### Sponsors
 
