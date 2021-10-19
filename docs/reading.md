@@ -22,6 +22,12 @@ pageClass: routes
 
 </Route>
 
+## Literotica
+
+### New Stories
+
+<Route author="nczitzk" example="/literotica/new" path="/literotica/new"/>
+
 ## Mobilism
 
 ### eBook Releases
