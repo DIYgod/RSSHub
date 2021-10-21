@@ -201,28 +201,23 @@ GitHub 官方也提供了一些 RSS:
 
 ## Hacker News
 
-### 分类
+### 分区
 
-<Route author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['内容分区', '链接类型（可不填）']">
+<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?" :paramsDesc="['内容分区，见下表，默认为 index', '链接类型，见下表，默认为 sources']">
 
-网站地址：<https://news.ycombinator.com/>
+内容分区
 
-| 内容分区 | section                               |
-| -------- | ------------------------------------- |
-| index    | <https://news.ycombinator.com/>       |
-| new      | <https://news.ycombinator.com/newest> |
-| past     | <https://news.ycombinator.com/front>  |
-| ask      | <https://news.ycombinator.com/ask>    |
-| show     | <https://news.ycombinator.com/show>   |
-| jobs     | <https://news.ycombinator.com/jobs>   |
-| best     | <https://news.ycombinator.com/best>   |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) |
 
-> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 index，应优先考虑
+条目指向链接类型
 
-| 链接类型 | type                          |
-| -------- | ----------------------------- |
-| story    | 默认值，链向用户分享的地址    |
-| comments | 链向 Hacker News 上的讨论页面 |
+| 用户分享的来源地址 | Hacker News 上的讨论页面 |
+| ------------------ | ------------------------ |
+| sources            | comments                 |
+
+> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 homepage，应优先考虑。
 
 </Route>
 

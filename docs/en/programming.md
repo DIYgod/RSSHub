@@ -127,31 +127,25 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <RouteEn author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
 
-
 ## Hacker News
 
 ### Section
 
-<RouteEn author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['Section', 'Link type']">
+<RouteEn author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?" :paramsDesc="['Section, see below, index by default', 'Link, see below, sources by default']">
 
-Website: https://news.ycombinator.com/
+Section
 
-| Section | section                             |
-| ------- | ----------------------------------- |
-| index   | https://news.ycombinator.com/       |
-| new     | https://news.ycombinator.com/newest |
-| past    | https://news.ycombinator.com/front  |
-| ask     | https://news.ycombinator.com/ask    |
-| show    | https://news.ycombinator.com/show   |
-| jobs    | https://news.ycombinator.com/jobs   |
-| best    | https://news.ycombinator.com/best   |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) |
 
-> Official RSS：https://news.ycombinator.com/rss is same as `index` section
+Items link to
 
-| Link type | type                           |
-| --------- | ------------------------------ |
-| story     | Deault, link to shared address |
-| comments  | Link to Hacker News address    |
+| Source addresses shared by users | Comments on Hacker News |
+| -------------------------------- | ----------------------- |
+| sources                          | comments                |
+
+> Default RSS by the website: <https://news.ycombinator.com/rss>, same as `index` section, should be the first choice.
 
 </RouteEn>
 
