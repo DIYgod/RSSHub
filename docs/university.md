@@ -182,6 +182,10 @@ pageClass: routes
 
 <Route author="sinofp" example="/bit/cs" path="/bit/cs" />
 
+### 人才招聘
+
+<Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" />
+
 ## 北京林业大学
 
 ### 绿色新闻网
