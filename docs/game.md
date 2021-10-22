@@ -531,6 +531,10 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+### アークナイツ(日服新闻)
+
+<Route author="ofyark" example="/arknights/japan" path="/arknights/japan"/>
+
 ### 塞壬唱片
 
 <Route author="rikkablue" example="/siren/news" path="/siren/news"/>
