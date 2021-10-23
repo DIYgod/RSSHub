@@ -1,4 +1,4 @@
-***
+* * *
 
 ## Academy of Management
 
