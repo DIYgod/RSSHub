@@ -1519,6 +1519,10 @@ type 列表：
 
 </Route>
 
+::: warning 注意
+由于学校通知仅允许校园网访问，需自行部署。
+:::
+
 ### 清华大学招聘信息
 
 <Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
