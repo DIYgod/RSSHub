@@ -8,15 +8,53 @@
 
 ## ABC News
 
-### 子站
+### Channel & Topic
 
-<Route author="nczitzk" example="/abc/chinese" path="/abc/:site?" :paramsDesc="['子站，见下表']">
+<Route author="nczitzk" example="/abc" path="/abc/:id?" :paramsDesc="['id，可在对应 Channel 或 Topic 页面中找到，也可以填入对应页源代码中的 `documentId`，部分见下表，默认为 Just In']">
 
-子站
+::: tip 提示
 
-| Just In | Politics | World | Business | Analysis             | Sport | Science | Health | Arts         | Fact Check | 中文新闻 | Berita Bahasa Indonesia | Tok Pisin |
-| ------- | -------- | ----- | -------- | -------------------- | ----- | ------- | ------ | ------------ | ---------- | -------- | ----------------------- | --------- |
-| justin  | politics | world | business | analysis-and-opinion | sport | science | health | arts-culture | factcheck  | chinese  | indonesian              | tok-pisin |
+支持 [Topic Library](https://abc.net.au/news/topics) 中的所有 Topic，你可以填入其 URL 中 `topic` 后的字段，也可以填入对应的 `documentId`。
+
+如 [Computers and Technology](https://www.abc.net.au/news/topic/computers-and-technology) 的 URL 是 <https://www.abc.net.au/news/topic/computers-and-technology>，其 `topic` 后的字段为 `computers-and-technology`，且该 Topic 的 `documentId` 为 `2302`，所以路由为 [/abc/computers-and-technology](https://rsshub.app/abc/computers-and-technology) 以及 [/abc/2302](https://rsshub.app/abc/2302)。
+
+支持的 Channel 在下表已经全部列出，同上，其他 Channel 请找到对应 Channel 页面的源代码中的 `documentId` 填入。
+
+:::
+
+以下是部分支持 Channel 和 Topic id：
+
+| Just In | Coronavirus | Politics | World |
+| ------- | ----------- | -------- | ----- |
+| justin  | coronavirus | politics | world |
+
+| Asia Pacific | Business | Analysis & Opinion   | Sport |
+| ------------ | -------- | -------------------- | ----- |
+| asia-pacific | business | analysis-and-opinion | sport |
+
+| AFL | Rugby League | Rugby Union | Football |
+| --- | ------------ | ----------- | -------- |
+| afl | rugbyleague  | rugbyunion  | football |
+
+| Cricket | Science | Astronomy (Space) | Computers and Technology |
+| ------- | ------- | ----------------- | ------------------------ |
+| cricket | science | astronomy-space   | computers-and-technology |
+
+| Environment | Archaeology | Health | Exercise and Fitness |
+| ----------- | ----------- | ------ | -------------------- |
+| environment | archaeology | health | exercise-and-fitness |
+
+| Pharmaceuticals | Mental Health | Diet and Nutrition | Arts & Culture |
+| --------------- | ------------- | ------------------ | -------------- |
+| pharmaceuticals | mental-health | diet-and-nutrition | arts-culture   |
+
+| Fact Check | ABC 中文 | 澳洲时政           | 聚焦中港台     |
+| ---------- | -------- | ------------------ | -------------- |
+| factcheck  | chinese  | australia-politics | focus-on-china |
+
+| 观点与分析              | 澳洲华人             | 解读澳洲          | Berita dalam Bahasa Indonesia | Tok Pisin |
+| ----------------------- | -------------------- | ----------------- | ----------------------------- | --------- |
+| analysis-and-opinion-zh | chinese-in-australia | curious-australia | indonesian                    | tok-pisin |
 
 </Route>
 
@@ -25,7 +63,7 @@
 ### 话题
 
 <Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
-采用了`puppeteer`规避`Project Shield`，无全文抓取，建议自建。  
+采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
 
 ## BBC
 
@@ -150,16 +188,15 @@
 -   `:category` 栏目参数：
 
     -   `all`: 全站
-    -   `local`: 本地（港聞）
-    -   `international`: 國際（兩岸國際）
-    -   `finance`: 財經
-    -   `china`: 兩岸（有線中國組）
+    -   `local`: 港聞
+    -   `international`: 兩岸國際
+    -   `china`: 有線中國組
     -   `sports`: 體育
 
 -   `:option?` 可开启的选项：
 
-    -   `plain`: 全文输出（纯文字）
-    -   `withphoto`: 全文输出 （含题图） **（不指定 `:option?` 时将预设为此项）**
+    -   `plain`: 全文输出为纯文字
+    -   `brief`: 输出为 100 字简讯
 
 -   全文输出转换为简体字：`?opencc=t2s`  
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
@@ -172,7 +209,17 @@
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
-## pageClass: routes
+## Phoronix
+
+### 新闻与评测
+
+<Route author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['页面', '对 `category` 页面是分类项目 `item`，对其它页面是主题 `q`，可以在网站顶部导航栏各项目链接里找出。如 `https://www.phoronix.com/scan.php?page=category&item=Computers` 对应 `/phoronix/category/Computers`']" />
+
+## RTHK 傳媒透視
+
+<Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
+
+细则：
 
 # 传统媒体
 
@@ -362,9 +409,137 @@ Category 列表：
 
 </Route>
 
+### 财新数据通
+
+<Route author="nczitzk" example="/caixin/database" path="/caixin/database"/>
+
 ### 财新一线
 
 <Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
+
+## 朝日新聞中文網（繁體中文版）
+
+::: tip 提示
+
+朝日新闻中文网已于 2021 年 3 月 31 日关闭。
+
+:::
+
+### 新聞
+
+<Route author="nczitzk" example="/asahi" path="/asahi/:genre?/:category?" :paramsDesc="['类型，见下表，默认为トップ', '分类，见下表，默认为空，即该类型下所有新闻']">
+
+::: tip 提示
+
+以下小标题即类型 `genre`，标题下表格中为对应类型的分类 `category`，两者需要配合使用。
+
+如订阅 **社会** 类型中的 **事件・事故・裁判** 分类，填入 [`/asahi/national/incident`](http://rsshub.app/asahi/national/incident)。
+
+若类型下没有分类，如 **トップ** 类型，直接填入 [`/asahi/top`](http://rsshub.app/asahi/top)。
+
+或者欲订阅该类型下的所有分类，如订阅 **社会** 中的所有分类，则直接将分类 `category` 留空，即 [`/asahi/national`](http://rsshub.app/asahi/national)。
+
+:::
+
+トップ top
+
+社会 national
+
+| 事件・事故・裁判 | 災害・交通情報 | その他・話題 | おくやみ   |
+| ---------------- | -------------- | ------------ | ---------- |
+| incident         | calamity       | etc          | obituaries |
+
+経済 business
+
+| 産業・商品 | 金融・財政 | 経済政策       | 労働・雇用 | 市況・統計 |
+| ---------- | ---------- | -------------- | ---------- | ---------- |
+| industry   | finance    | economicpolicy | work       | statistics |
+
+政治 politics
+
+| 国政       | 地方政治 | 発言録       | 世論調査 |
+| ---------- | -------- | ------------ | -------- |
+| government | local    | hatsugenroku | yoron    |
+
+国際 international
+
+| アジア・太平洋 | 北米     | 中南米   | ヨーロッパ | 中東       | アフリカ | 国連・その他 |
+| -------------- | -------- | -------- | ---------- | ---------- | -------- | ------------ |
+| asia           | namerica | samerica | europe     | middleeast | africa   | etc          |
+
+スポーツ sports
+
+| 野球     | サッカー | 相撲 | フィギュア         | ゴルフ | 一般スポーツ | 東京オリンピック 2020 | 東京パラリンピック 2020 |
+| -------- | -------- | ---- | ------------------ | ------ | ------------ | --------------------- | ----------------------- |
+| baseball | soccer   | sumo | winter_figureskate | golf   | general      | olympics              | paralympics             |
+
+IT・科学 tech_science
+
+| 環境・エネルギー | 科学    | デジもの | 企業・サービス | 製品ファイル |
+| ---------------- | ------- | -------- | -------------- | ------------ |
+| eco              | science | digital  | service        | products     |
+
+文化・芸能 culture
+
+| 映画   | 音楽  | アイドル | アート | テレビ・芸能 | 舞台・演芸 | マンガ・アニメ・ゲーム | ひと・歴史 | 囲碁 | 将棋   |
+| ------ | ----- | -------- | ------ | ------------ | ---------- | ---------------------- | ---------- | ---- | ------ |
+| movies | music | idol     | art    | showbiz      | stage      | manga                  | history    | igo  | shougi |
+
+ライフ life
+
+| 介護      | 働き方・就活 | 食・料理 |
+| --------- | ------------ | -------- |
+| eldercare | hataraku     | food     |
+
+教育・子育て edu
+
+| 小中高  | 大学       | 教育制度・話題 | 教育問題 | 地域の教育ニュース | 吹奏楽    | 合唱   | 子育て   | ハグスタ |
+| ------- | ---------- | -------------- | -------- | ------------------ | --------- | ------ | -------- | -------- |
+| student | university | system         | issue    | chiiki             | suisogaku | gassho | hagukumu | msta     |
+
+</Route>
+
+## 朝日新聞デジタル
+
+<Route author="nczitzk" example="/asahi/area/hokkaido" path="/asahi/area/:id" :paramsDesc="['地方 id，见下表']">
+
+北海道・東北
+
+| 北海道   | 青森   | 秋田  | 岩手  | 山形     | 宮城   | 福島      |
+| -------- | ------ | ----- | ----- | -------- | ------ | --------- |
+| hokkaido | aomori | akita | iwate | yamagata | miyagi | fukushima |
+
+関東
+
+| 群馬  | 茨城    | 栃木    | 埼玉    | 千葉  | 東京  | 神奈川   |
+| ----- | ------- | ------- | ------- | ----- | ----- | -------- |
+| gunma | ibaraki | tochigi | saitama | chiba | tokyo | kanagawa |
+
+東海・甲信越
+
+| 静岡     | 岐阜 | 愛知  | 三重 | 新潟    | 山梨      | 長野   |
+| -------- | ---- | ----- | ---- | ------- | --------- | ------ |
+| shizuoka | gifu | aichi | mie  | niigata | yamanashi | nagano |
+
+近畿・北陸
+
+| 滋賀  | 京都  | 奈良 | 和歌山   | 大阪  | 兵庫  | 富山   | 石川     | 福井  |
+| ----- | ----- | ---- | -------- | ----- | ----- | ------ | -------- | ----- |
+| shiga | kyoto | nara | wakayama | osaka | hyogo | toyama | ishikawa | fukui |
+
+中国・四国
+
+| 鳥取    | 島根    | 岡山    | 広島      | 山口      | 香川   | 愛媛  | 徳島      | 高知  |
+| ------- | ------- | ------- | --------- | --------- | ------ | ----- | --------- | ----- |
+| tottori | shimane | okayama | hiroshima | yamaguchi | kagawa | ehime | tokushima | kochi |
+
+九州・沖縄
+
+| 福岡    | 大分 | 宮崎     | 鹿児島    | 佐賀 | 長崎     | 熊本     | 沖縄    |
+| ------- | ---- | -------- | --------- | ---- | -------- | -------- | ------- |
+| fukuoka | oita | miyazaki | kagoshima | saga | nagasaki | kumamoto | okinawa |
+
+</Route>
 
 ## 第一财经
 
@@ -384,11 +559,11 @@ Category 列表：
 
 <Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['板块']">
 
-无料全文，综合页文章标题添加板块标签。
+无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 総合 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
-| ---- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
-| news | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
+| 新着・速報 | 　　社会 | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
+| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
+| 　news 　  | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
 
 </Route>
 
@@ -593,7 +768,15 @@ category 对应的关键词有
 
 ### 新闻聚合
 
-<Route author="wushijishan" example="/kaopunews/all" path="/kaopunews/all"/>
+<Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
+
+## 连线 Wired
+
+非订阅用户每月有阅读全文次数限制。
+
+### 标签
+
+<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']"/>
 
 ## 联合早报
 
@@ -622,14 +805,6 @@ category 对应的关键词有
 除了上面两个兼容规则之外，联合早报网站里所有页面形如 <https://www.zaobao.com/wencui/politic> 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
 
 <Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type/:section" :paramsDesc="['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']" />
-
-## 连线 Wired
-
-非订阅用户每月有阅读全文次数限制。
-
-### 标签
-
-<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" :paramsDesc="['标签']"/>
 
 ## 路透社
 
@@ -719,9 +894,10 @@ category 对应的关键词有
 
 </Route>
 
-### 每日简报
+### 新闻简报
 
-<Route author="xyqfer" example="/nytimes/morning_post" path="/nytimes/morning_post"/>
+<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese"/>
+网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
 
 ### 畅销书排行榜
 
@@ -905,6 +1081,22 @@ category 对应的关键词有
 
 </Route>
 
+## 香港经济日报
+
+### 新闻
+
+香港经济日报已有提供简单 RSS，详细可前往官方网站： <https://www.hket.com/rss>
+
+此路由主要补全官方 RSS 全文输出。
+
+<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" :paramsDesc="['分类，默认为全部新闻']">
+
+| sran001  | sran008  | sran010  | sran011  | srac002  | srat006  |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 两岸新闻 | 香港新闻 |
+
+</Route>
+
 ## 香港商报
 
 ### PDF 版
@@ -996,130 +1188,6 @@ category 对应的关键词有
 ### 央视网图片《镜象》
 
 <Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" />
-
-## 朝日新聞中文網（繁體中文版）
-
-::: tip 提示
-
-朝日新闻中文网已于 2021 年 3 月 31 日关闭。
-
-:::
-
-### 新聞
-
-<Route author="nczitzk" example="/asahi" path="/asahi/:genre?/:category?" :paramsDesc="['类型，见下表，默认为トップ', '分类，见下表，默认为空，即该类型下所有新闻']">
-
-::: tip 提示
-
-以下小标题即类型 `genre`，标题下表格中为对应类型的分类 `category`，两者需要配合使用。
-
-如订阅 **社会** 类型中的 **事件・事故・裁判** 分类，填入 [`/asahi/national/incident`](http://rsshub.app/asahi/national/incident)。
-
-若类型下没有分类，如 **トップ** 类型，直接填入 [`/asahi/top`](http://rsshub.app/asahi/top)。
-
-或者欲订阅该类型下的所有分类，如订阅 **社会** 中的所有分类，则直接将分类 `category` 留空，即 [`/asahi/national`](http://rsshub.app/asahi/national)。
-
-:::
-
-トップ top
-
-社会 national
-
-| 事件・事故・裁判 | 災害・交通情報 | その他・話題 | おくやみ   |
-| ---------------- | -------------- | ------------ | ---------- |
-| incident         | calamity       | etc          | obituaries |
-
-経済 business
-
-| 産業・商品 | 金融・財政 | 経済政策       | 労働・雇用 | 市況・統計 |
-| ---------- | ---------- | -------------- | ---------- | ---------- |
-| industry   | finance    | economicpolicy | work       | statistics |
-
-政治 politics
-
-| 国政       | 地方政治 | 発言録       | 世論調査 |
-| ---------- | -------- | ------------ | -------- |
-| government | local    | hatsugenroku | yoron    |
-
-国際 international
-
-| アジア・太平洋 | 北米     | 中南米   | ヨーロッパ | 中東       | アフリカ | 国連・その他 |
-| -------------- | -------- | -------- | ---------- | ---------- | -------- | ------------ |
-| asia           | namerica | samerica | europe     | middleeast | africa   | etc          |
-
-スポーツ sports
-
-| 野球     | サッカー | 相撲 | フィギュア         | ゴルフ | 一般スポーツ | 東京オリンピック 2020 | 東京パラリンピック 2020 |
-| -------- | -------- | ---- | ------------------ | ------ | ------------ | --------------------- | ----------------------- |
-| baseball | soccer   | sumo | winter_figureskate | golf   | general      | olympics              | paralympics             |
-
-IT・科学 tech_science
-
-| 環境・エネルギー | 科学    | デジもの | 企業・サービス | 製品ファイル |
-| ---------------- | ------- | -------- | -------------- | ------------ |
-| eco              | science | digital  | service        | products     |
-
-文化・芸能 culture
-
-| 映画   | 音楽  | アイドル | アート | テレビ・芸能 | 舞台・演芸 | マンガ・アニメ・ゲーム | ひと・歴史 | 囲碁 | 将棋   |
-| ------ | ----- | -------- | ------ | ------------ | ---------- | ---------------------- | ---------- | ---- | ------ |
-| movies | music | idol     | art    | showbiz      | stage      | manga                  | history    | igo  | shougi |
-
-ライフ life
-
-| 介護      | 働き方・就活 | 食・料理 |
-| --------- | ------------ | -------- |
-| eldercare | hataraku     | food     |
-
-教育・子育て edu
-
-| 小中高  | 大学       | 教育制度・話題 | 教育問題 | 地域の教育ニュース | 吹奏楽    | 合唱   | 子育て   | ハグスタ |
-| ------- | ---------- | -------------- | -------- | ------------------ | --------- | ------ | -------- | -------- |
-| student | university | system         | issue    | chiiki             | suisogaku | gassho | hagukumu | msta     |
-
-</Route>
-
-## 朝日新聞デジタル
-
-<Route author="nczitzk" example="/asahi/area/hokkaido" path="/asahi/area/:id" :paramsDesc="['地方 id，见下表']">
-
-北海道・東北
-
-| 北海道   | 青森   | 秋田  | 岩手  | 山形     | 宮城   | 福島      |
-| -------- | ------ | ----- | ----- | -------- | ------ | --------- |
-| hokkaido | aomori | akita | iwate | yamagata | miyagi | fukushima |
-
-関東
-
-| 群馬  | 茨城    | 栃木    | 埼玉    | 千葉  | 東京  | 神奈川   |
-| ----- | ------- | ------- | ------- | ----- | ----- | -------- |
-| gunma | ibaraki | tochigi | saitama | chiba | tokyo | kanagawa |
-
-東海・甲信越
-
-| 静岡     | 岐阜 | 愛知  | 三重 | 新潟    | 山梨      | 長野   |
-| -------- | ---- | ----- | ---- | ------- | --------- | ------ |
-| shizuoka | gifu | aichi | mie  | niigata | yamanashi | nagano |
-
-近畿・北陸
-
-| 滋賀  | 京都  | 奈良 | 和歌山   | 大阪  | 兵庫  | 富山   | 石川     | 福井  |
-| ----- | ----- | ---- | -------- | ----- | ----- | ------ | -------- | ----- |
-| shiga | kyoto | nara | wakayama | osaka | hyogo | toyama | ishikawa | fukui |
-
-中国・四国
-
-| 鳥取    | 島根    | 岡山    | 広島      | 山口      | 香川   | 愛媛  | 徳島      | 高知  |
-| ------- | ------- | ------- | --------- | --------- | ------ | ----- | --------- | ----- |
-| tottori | shimane | okayama | hiroshima | yamaguchi | kagawa | ehime | tokushima | kochi |
-
-九州・沖縄
-
-| 福岡    | 大分 | 宮崎     | 鹿児島    | 佐賀 | 長崎     | 熊本     | 沖縄    |
-| ------- | ---- | -------- | --------- | ---- | -------- | -------- | ------- |
-| fukuoka | oita | miyazaki | kagoshima | saga | nagasaki | kumamoto | okinawa |
-
-</Route>
 
 ## 中国日报
 

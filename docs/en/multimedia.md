@@ -122,6 +122,18 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 - `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
 - `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
+## s-hentai
+
+### Category
+
+<RouteEn author="nczitzk" example="/s-hentai" path="/hentai/:id?" :paramsDesc="['id, see below, ready-to-download by default']">
+
+| Doujin | HCG | Games・Animes | Voices・ASMR | Ready to Download |
+| ------ | --- | ------------- | ------------ | ----------------- |
+| 1      | 2   | 3             | 4            | ready-to-download |
+
+</RouteEn>
+
 ## Sankaku Complex
 
 ### Post

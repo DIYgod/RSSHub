@@ -21,6 +21,15 @@ Deploy for public access may require:
 1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker Image
+We recommend using the latest version of the docker image.  
+When the latest version is unavailable , you can use image with date tag. For example :
+```
+$ docker pull diygod/rsshub:2021-06-18
+```
+Your can back to the latest version when code has been fixed and rebuild the image.
+
+
 ## Docker Compose Deployment
 
 ### Install
@@ -232,6 +241,10 @@ in pkgs.stdenv.mkDerivation {
 ```
 
 ## Deploy to Heroku
+
+### Notice：
+
+Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
 
 ### Instant deploy (without automatic update)
 
@@ -506,8 +519,8 @@ See docs of specified route and `lib/config.js` for detail information.
 -   mail:
 
     -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. The value is in the format of `password=password&host=server&port=port`, eg:
-        -   Linux env: `EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
-        -   docker env: `EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
+        -   Linux env: `EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
+        -   docker env: `EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
 
 -   nhentai torrent: [Registration](https://nhentai.net/register/)
 

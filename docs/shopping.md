@@ -71,6 +71,12 @@
 
 <Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
+## hotukdeals
+
+### thread
+
+<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
+
 ## LeBonCoin
 
 ### Ads
@@ -95,9 +101,11 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
-## pageClass: routes
+## The Independent
 
-# 购物
+### PS5 stock UK
+
+<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
 
 ## Westore
 
