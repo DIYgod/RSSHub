@@ -1559,9 +1559,9 @@ column 为 third 时可选的 category:
 
 ::: tip 提示
 
-使用 **类型** 表中的两个参数时，编号应留空，如：**最新** 为 [`/new`](https://rsshub.app/mydrivers/new)
+使用 **类型** 表中的两个参数时，编号应留空，如：**最新** 为 [`/mydrivers/new`](https://rsshub.app/mydrivers/new)
 
-使用 **编号** 表中的参数不应遗漏对应类型参数，如 **电脑** 为 [`bcid/801`](https://rsshub.app/mydriversbcid/801)
+使用 **编号** 表中的参数不应遗漏对应类型参数，如 **电脑** 为 [`/mydrivers/bcid/801`](https://rsshub.app/mydrivers/bcid/801)
 
 :::
 
