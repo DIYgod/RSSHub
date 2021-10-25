@@ -50,7 +50,7 @@
     "@vuepress/plugin-pwa": "1.8.2",
     "ci-info": "^2.0.0",
     "cross-env": "7.0.3",
-    "eslint": "7.29.0",
+    "eslint": "8.1.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "fs-extra": "^8.1.0",
