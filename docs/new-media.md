@@ -306,6 +306,22 @@ pageClass: routes
 
 </Route>
 
+## Focus Taiwan
+
+### Category
+
+<Route author="nczitzk" example="/focustaiwan" path="/focustaiwan/:category?" :paramsDesc="['分类，见下表，默认为 news']">
+
+| Latest | Editor's Picks | Photos of the Day |
+| ------ | -------------- | ----------------- |
+| news   | editorspicks   | photos            |
+
+| Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
+| -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
+| politics | cross-strait | business | society | science & tech | culture | sports |
+
+</Route>
+
 ## GQ
 
 ### GQ 台湾
@@ -2090,11 +2106,11 @@ column 为 third 时可选的 category:
 
 ### 频道
 
-<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel?" :paramsDesc="['频道，见下表，默认为首页']">
+<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel" :paramsDesc="['频道，见下表']">
 
-| 首页 | 研究     | 产业     | 融资      | 时政     | 人物      | 公司    | 新品    | 活动     |
-| ---- | -------- | -------- | --------- | -------- | --------- | ------- | ------- | -------- |
-| home | research | industry | financing | politics | celebrity | company | product | activity |
+| 最新研究 | 人物访谈  | 产业动态 | 活动发布 |
+| -------- | --------- | -------- | -------- |
+| reaseach | interview | industry | activity |
 
 </Route>
 

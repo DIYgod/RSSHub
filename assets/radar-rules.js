@@ -85,8 +85,18 @@
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
                 target: (params) => {
-                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                    if (!['home', 'explore', 'notifications', 'messages', 'explore', 'search'].includes(params.id)) {
                         return '/twitter/user/:id';
+                    }
+                },
+            },
+            {
+                title: '用户媒体时间线',
+                docs: 'https://docs.rsshub.app/social-media.html#twitter',
+                source: '/:id/media',
+                target: (params) => {
+                    if (!['home', 'explore', 'notifications', 'messages', 'explore', 'search'].includes(params.id)) {
+                        return '/twitter/media/:id';
                     }
                 },
             },
@@ -95,7 +105,7 @@
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
                 target: (params) => {
-                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                    if (!['home', 'explore', 'notifications', 'messages', 'explore', 'search'].includes(params.id)) {
                         return '/twitter/followings/:id';
                     }
                 },
@@ -105,7 +115,7 @@
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id',
                 target: (params) => {
-                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                    if (!['home', 'explore', 'notifications', 'messages', 'explore', 'search'].includes(params.id)) {
                         return '/twitter/likes/:id';
                     }
                 },
@@ -115,7 +125,7 @@
                 docs: 'https://docs.rsshub.app/social-media.html#twitter',
                 source: '/:id/lists/:name',
                 target: (params) => {
-                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                    if (!['home', 'explore', 'notifications', 'messages', 'explore', 'search'].includes(params.id)) {
                         return '/twitter/list/:id/:name';
                     }
                 },
