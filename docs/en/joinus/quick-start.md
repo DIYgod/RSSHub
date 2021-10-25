@@ -103,7 +103,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
 
     2. **Acquire data via HTML webpage using got**
 
-    Data have to be acquired via HTML webpage if **no API was provided**, for example: [/lib/routes/douban/explore.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)
+    Data have to be acquired via HTML webpage if **no API was provided**, for example: [/lib/routes/douban/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)
 
     Acquiring data by scrapping the HTML using got:
 

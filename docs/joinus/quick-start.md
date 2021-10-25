@@ -105,7 +105,7 @@ sidebar: auto
 
     2.  **使用 got 从 HTML 获取数据**
 
-    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/douban/explore.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)。
+    有时候数据是写在 HTML 里的，**没有接口供我们调用**，样例: [/lib/routes/douban/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)。
 
     使用 got 请求 HTML 数据：
 

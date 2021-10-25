@@ -1200,6 +1200,17 @@
             },
         ],
     },
+    'xmanhua.com': {
+        _name: 'x漫画',
+        '.': [
+            {
+                title: '漫画更新章节',
+                docs: 'https://127.0.0.1/xmanhua.html',
+                source: '/:uid',
+                target: '/xmanhu/index',
+            },
+        ],
+    },
     'cqut.edu.cn': {
         _name: '重庆理工大学',
         tz: [{ title: '通知', docs: 'https://docs.rsshub.app/university.html#chong-qing-li-gong-da-xue', source: '/*' }],
