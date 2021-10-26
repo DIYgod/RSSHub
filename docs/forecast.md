@@ -1,4 +1,4 @@
-***
+* * *
 
 ## Outage.Report
 
