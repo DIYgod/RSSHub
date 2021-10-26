@@ -1328,4 +1328,13 @@
     },
     'macwk.com': { _name: 'MacWk', '.': [{ title: '应用更新', docs: 'https://docs.rsshub.app/program-update.html#macwk', source: '/soft/:name', target: '/macwk/soft/:name' }] },
     'zyshow.net': { www: [{ title: '', docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di', source: '/:name/', target: '/zyshow/:name' }] },
+    'foreverblog.cn': {
+        _name: 'foreverblog',
+        www: [
+            {
+                title: '十年之约',
+                docs: 'https://docs.rsshub.app/social-media.html#foreverblog',
+            },
+        ],
+    },
 });
