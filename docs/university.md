@@ -505,11 +505,11 @@ pageClass: routes
 
 </Route>
 
-###  软件学院
+### 软件学院
 
 <Route author="machangxin" example="/dut/ssdut/yjs" path="/dut/ssdut/:type" :paramsDesc="['通知类型']">
 
-| 研究生通知   |
+| 研究生通知 |
 | ---------- |
 | yjs        |
 
