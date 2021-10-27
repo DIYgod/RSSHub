@@ -639,6 +639,12 @@ Type 栏目：
 
 <Route author="HenryQW" example="/dwnews/rank" path="/dwnews/rank"/>
 
+## 公視新聞網
+
+### 即時新聞
+
+<Route author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>
+
 ## 华尔街见闻
 
 ### 华尔街见闻
