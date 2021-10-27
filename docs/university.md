@@ -505,6 +505,36 @@ pageClass: routes
 
 </Route>
 
+###  软件学院
+
+<Route author="machangxin" example="/dut/ssdut/yjs" path="/dut/ssdut/:type" :paramsDesc="['通知类型']">
+
+| 研究生通知   |
+| ---------- |
+| yjs        |
+
+</Route>
+
+### 研究生院
+
+<Route author="machangxin" example="/dut/pg/zytz" path="/dut/pg/:type" :paramsDesc="['通知类型']">
+
+| 重要通告 |
+| -------- |
+| zytz     |
+
+</Route>
+
+### 开发区校区
+
+<Route author="machangxin" example="/dut/eda/tzgg" path="/dut/eda/:type" :paramsDesc="['通知类型']">
+
+| 通知公告 |
+| -------- |
+| tzgg     |
+
+</Route>
+
 ## 电子科技大学
 
 ### 教务处
