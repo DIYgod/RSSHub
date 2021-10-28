@@ -392,7 +392,7 @@ Compared to the official one, this feed:
 
 ### Category
 
-<RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Category, Latest News by default']"/>
+<RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Language, eng by default', 'Category, Latest News by default']"/>
 
 ## Sixth Tone
 
