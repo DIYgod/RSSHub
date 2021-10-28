@@ -388,6 +388,12 @@ Compared to the official one, this feed:
 
 <RouteEn author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
+## swissinfo
+
+### Category
+
+<RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Category, Latest News by default']"/>
+
 ## Sixth Tone
 
 ### News
