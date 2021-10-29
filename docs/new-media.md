@@ -1377,19 +1377,19 @@ others = 热点新闻 + 滚动新闻
 
 ## 后续
 
-### Live
+### 分类
 
-<Route author="ciaranchen sanmmm" example="/houxu/live/5" path="/houxu/live/:id" :paramsDesc="['Live ID']" />
+<Route author="nczitzk" example="/houxu" path="/houxu/:category?" :paramsDesc="['分类，见下表，默认为首页']">
 
-### 最新 Live
-
-<Route author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型']">
-
-| 往事进展 | 最新添加 |
-| -------- | -------- |
-| realtime | new      |
+| 首页  | 热点     | 跟踪   | 事件   |
+| ----- | -------- | ------ | ------ |
+| index | featured | memory | events |
 
 </Route>
+
+### Lives
+
+<Route author="ciaranchen sanmmm nczitzk" example="/houxu/lives/33899" path="/houxu/:category?" :paramsDesc="['编号，可在对应 Live 页面的 URL 中找到']"/>
 
 ### 最新专栏
 
