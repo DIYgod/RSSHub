@@ -564,7 +564,15 @@ IT・科学 tech_science
 
 ### 上海新闻
 
-<Route author="saury" example="/eastday/sh" path="/eastday/sh" />
+<Route author="saury" example="/eastday/sh" path="/eastday/sh"/>
+
+### 热点搜索
+
+<Route author="nczitzk" example="/eastday/find" path="/eastday/find"/>
+
+### 原创
+
+<Route author="nczitzk" example="/eastday/portrait" path="/eastday/portrait"/>
 
 ## 読売新聞
 
