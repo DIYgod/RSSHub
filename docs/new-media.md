@@ -2028,6 +2028,22 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/ruancan/search/ColorOS" path="/ruancan/search/:keyword?" :paramsDesc="['关键字，默认为空']"/>
 
+## 上下游 News&Market
+
+### 分類
+
+<Route author="nczitzk" example="/newsmarket" path="/newsmarket/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 時事。政策  | 食安        | 新知      | 愛地方       | 種好田       | 好吃。好玩    |
+| ----------- | ----------- | --------- | ------------ | ------------ | ------------- |
+| news-policy | food-safety | knowledge | country-life | good-farming | good-food-fun |
+
+| 食農教育       | 人物               | 漁業。畜牧           | 綠生活。國際        | 評論    |
+| -------------- | ------------------ | -------------------- | ------------------- | ------- |
+| food-education | people-and-history | raising-and-breeding | living-green-travel | opinion |
+
+</Route>
+
 ## 少数派 sspai
 
 ### 最新上架付费专栏
