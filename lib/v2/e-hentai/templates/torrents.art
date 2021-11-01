@@ -1,0 +1,4 @@
+<p>Torrents:<p>
+{{ each torrents torrent }}
+<a href="{{ torrent.link }}">{{ torrent.title }}</a>
+{{ /each }}

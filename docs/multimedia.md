@@ -209,6 +209,64 @@ pageClass: routes
 
 </Route>
 
+## E-Hentai
+
+### 分类
+
+<Route author="nczitzk" example="/e-hentai/category/manga" path="/e-hentai/category/:category?/:needTorrents?/:needImages?" :paramsDesc="['分类，可在对应分类页中找到，默认为首页', '需要输出种子文件，填写 true/yes 表示需要，默认需要', '需要显示大图，填写 true/yes 表示需要，默认需要']">
+
+::: tip 提示
+
+参数 **需要输出种子文件** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带种子文件的路径，以供支持 RSS 的下载工具订阅下载。
+
+同理，参数 **需要显示大图** 启用后，RSS 会携带每项内容中的大图，而不只提供缩略图。
+
+当然，选择 **需要输出种子文件**、**需要显示大图** 后获取内容时间需要更久，同时若指定获取数量过多，可能会出现获取超时错误。此时，可以在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，或直接修改全局的超时参数 `REQUEST_TIMEOUT`（详见文档中的 [其他应用配置](https://docs.rsshub.app/install/#pei-zhi-qi-ta-ying-yong-pei-zhi)）。
+
+以下是一个例子：
+
+选择浏览 [Manga 分类](https://e-hentai.org/manga)，并指定 **不携带种子文件**，**只显示大图**，并只 **输出 5 个**。由于 [Manga 分类](https://e-hentai.org/manga) 的 URL <https://e-hentai.org/manga> 中对应分类字段为 `manga`，所以对应路由为 [`/e-hentai/category/manga/no/yes?limit=5`](https://rsshub.app/e-hentai/category/manga/no/yes?limit=5)
+
+:::
+
+| Doujinshi | Manga | Artist CG | Game CG | Western |
+| --------- | ----- | --------- | ------- | ------- |
+| doujinshi | manga | artistcg  | gamecg  | western |
+
+| Non-H | Image Set | Cosplay | Asian Porn | Misc | Popular |
+| ----- | --------- | ------- | ---------- | ---- | ------- |
+| non-h | imageset  | cosplay | asianporn  | misc | popular |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/e-hentai/tag/language:chinese" path="/e-hentai/tag/:tag?" :paramsDesc="['标签，可在对应标签页中找到，默认为首页']">
+
+::: tip 提示
+
+参数 **需要输出种子文件**、**需要显示大图** 的说明同上，以下是一个例子：
+
+选择浏览 [language:chinese 标签](https://e-hentai.org/tag/language:chinese)，并指定 **携带种子文件**，**不显示大图**。由于 [language:chinese 标签](https://e-hentai.org/tag/language:chinese) 的 URL <https://e-hentai.org/tag/language:chinese> 中对应标签字段为 `language:chinese`，所以对应路由为 [`/e-hentai/tag/language:chinese/true/false`](https://rsshub.app/e-hentai/tag/language:chinese/true/false)
+
+:::
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/e-hentai/search/f_search=haha" path="/e-hentai/search/:keyword?" :paramsDesc="['关键字，可以在搜索结果页的 URL 中找到，默认为首页']">
+
+::: tip 提示
+
+参数 **需要输出种子文件**、**需要显示大图** 的说明同上，以下是一个例子：
+
+选择浏览 [f_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay)，并指定 **携带种子文件**，且 **显示大图**。由于 [f_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay) 的 URL <https://e-hentai.org/?f_search=cosplay> 中对应关键字字段为 `?` 后的 `f_search=cosplay`，所以对应路由为 [`/e-hentai/search/f_search=cosplay/y/y`](https://rsshub.app/e-hentai/search/f_search=cosplay/y/y)
+
+:::
+
+</Route>
+
 ## EZTV
 
 ::: tip 提示
