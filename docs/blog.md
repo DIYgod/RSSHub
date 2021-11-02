@@ -86,6 +86,26 @@ pageClass: routes
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
 
+## Whoscall
+
+### 最新文章
+
+<Route author="nczitzk" example="/whoscall" path="/whoscall"/>
+
+</Route>
+
+### 分類
+
+<Route author="nczitzk" example="/whoscall/categories/5-Whoscall%20百科" path="/whoscall/categories/:category?" :paramsDesc="['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']">
+
+</Route>
+
+### 標籤
+
+<Route author="nczitzk" example="/whoscall/tags/whoscall小百科" path="/whoscall/tags/:tag?" :paramsDesc="['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']">
+
+</Route>
+
 ## WordPress
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
