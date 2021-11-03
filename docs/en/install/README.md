@@ -480,6 +480,8 @@ See docs of specified route and `lib/config.js` for detail information.
     
     -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
 
+    -   `PIXIV_IMG_PROXY`: Used as a proxy for image addresses, as pixiv images have anti-theft, default to `https://i.pixiv.cat`
+
 -   pixiv fanbox: Get paid content
 
     -   `FANBOX_SESSION_ID`: equals to `FANBOXSESSID` in site cookies.
