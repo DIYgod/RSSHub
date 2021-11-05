@@ -1025,3 +1025,29 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ch   | pt   |
 
  </Route>
+
+## 骨朵数据
+
+### 日榜
+
+<Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily/:type/:category" :paramsDesc="['类型，见下表', '分类，见下表']">
+
+类型
+
+| 汇总榜  | 排行榜 |
+| --------------- | --------------- |
+| collect | bill   |
+
+分类（汇总榜）
+
+| 连续剧 | 综艺 |
+| --------------- | ------------- |
+| drama           | variety       |
+
+分类（排行榜）
+
+| 网络剧 | 网络大电影 | 网络综艺 | 电视剧 | 电视综艺 | 国漫 |
+| --------------- | --------------- | --------------- | --------------- | --------------- | --------------- |
+| network_drama | network_movie | network_variety | tv_drama | tv_variety | anime |
+
+</Route>
