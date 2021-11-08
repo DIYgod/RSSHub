@@ -1025,3 +1025,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ch   | pt   |
 
  </Route>
+
+## 骨朵数据
+
+### 日榜
+
+<Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily" />
