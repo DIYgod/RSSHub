@@ -10,11 +10,11 @@
 
 其中域名 `https://rsshub.app` 可以替换为你[自部署](/install/)的域名
 
-另外 RSSHub 支持很多实用的参数，比如内容过滤、全文输出等，可以在 [通用参数](/parameter.htm) 文档了解具体使用方法
+另外 RSSHub 支持很多实用的参数，比如内容过滤、全文输出等，可以在 [通用参数](/parameter.html) 文档了解具体使用方法
 
 ## 编写订阅源
 
-RSSHub 的发展离不开社区的力量，欢迎编写你感兴趣的订阅源[参与我们](/joinus)
+RSSHub 的发展离不开社区的力量，欢迎编写你感兴趣的订阅源[参与我们](/joinus/quick-start.html)
 
 ## 作为 npm 包使用
 

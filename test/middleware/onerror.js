@@ -1,6 +1,8 @@
 process.env.SENTRY = 'https://mock@mock.com/1';
+process.env.SENTRY_ROUTE_TIMEOUT = '0';
 
 const supertest = require('supertest');
+jest.mock('request-promise-native');
 const server = require('../../lib/index');
 const request = supertest(server);
 
@@ -10,6 +12,7 @@ afterAll(() => {
 
 afterAll(() => {
     delete process.env.SENTRY;
+    delete process.env.SENTRY_ROUTE_TIMEOUT;
 });
 
 describe('error', () => {

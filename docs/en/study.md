@@ -4,42 +4,6 @@ pageClass: routes
 
 # Study
 
-## eLife
-
-### Latest Research-ALL
-
-<RouteEn author="emdoe" example="/elife/latest" path="/elife/latest" />
-
-### Latest Research-Research by Subject
-
-<RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage']" />
-
-## Google Scholar
-
-### Keywords Monitoring
-
-<RouteEn author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" :paramsDesc="['query statement which supports「Basic」and「Advanced」modes']" anticrawler="1">
-
-::: warning
-
-Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
-
-:::
-
-1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
-
-2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
-
-</RouteEn>
-
-### Author citations
-
-<RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
-
-The parameter id in the route is the id in the URL of the user ’s Google Scholar reference page，for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
-
-</RouteEn>
-
 ## gradCafe
 
 ### gradCafe result
@@ -50,26 +14,91 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 <RouteEn author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['Keyword']"/>
 
-## Nature
+## Great Britain China Centre
 
-### Nature
+### Educational Trust
 
-<RouteEn author="emdoe" example="/nature/research" path="/nature/research" />
+<RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
-### Nature Machine Intelligence
+## iciba
 
-<RouteEn author="LogicJake" example="/nature/natmachintell/research" path="/nature/natmachintell/research" />
+### Daily English Sentence
 
-### Nature Neuroscience
+<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show（min = 1, max = 7, default = 1）', 'image style']">
 
-<RouteEn author="emdoe" example="/nature/neuroscience/research" path="/nature/neuroscience/research" />
+| `:img_type` | image style    |
+| ----------- | -------------- |
+| original    | Original size  |
+| medium      | Medium size    |
+| thumbnail   | Thumbnail size |
+| poster      | Art poster     |
 
-## Proceedings of The National Academy of Sciences
+</Route>
 
-### Latest Articles-ALL
+## LinkResearch
 
-<RouteEn author="emdoe" example="/pnas/latest" path="/pnas/latest" />
+### theses
 
-### Latest Articles-Articles by Topic
+<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']"/>
 
-<RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
+| `:param` | example         | definition                             |
+| -------- | --------------- | -------------------------------------- |
+| category | category=thesis | **one of**，theses/information/careers |
+| subject  | subject=生物    | string / undefined                     |
+| columns  | columns=健康    | string / undefined                     |
+| columns  | columns=virus   | string / undefined                     |
+
+## X-MOL
+
+### News
+
+<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+
+## XMind
+
+### Mindmap Gallery
+
+<RouteEn author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['language code, all languages by default']">
+
+| English | Español | Deutsch | Français | 中文 | 日本語 |
+| ------- | ------- | ------- | -------- | ---- | ------ |
+| en      | es      | de      | fr       | zh   | jp     |
+
+</RouteEn>
+
+## ZhiShiFenZi
+
+### News
+
+<RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']"/>
+
+| `:type`   | type name |
+| --------- | --------- |
+| biology   | Biology   |
+| medicine  | Medicine  |
+| ai        | AI        |
+| physics   | physics   |
+| chymistry | Chymistry |
+| astronomy | Astronomy |
+| others    | Others    |
+
+> leave it blank（`/zhishifenzi/news`）to get all
+
+### depth
+
+<RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+
+### innovation
+
+<RouteEn author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
+
+| `:type`       | type name     |
+| ------------- | ------------- |
+| ~~multiple~~  | ~~Multiple~~  |
+| company       | Company       |
+| product       | Product       |
+| technology    | Technology    |
+| ~~character~~ | ~~Character~~ |
+| policy        | Policy        |
+
+> leave it blank（`/zhishifenzi/innovation`）to get all
