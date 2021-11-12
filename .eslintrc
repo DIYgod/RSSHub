@@ -2,12 +2,13 @@
     "extends": ["eslint:recommended", "plugin:prettier/recommended"],
     "plugins": ["prettier"],
     "parserOptions": {
-        "ecmaVersion": 2018,
+        "ecmaVersion": 2020,
         "sourceType": "module"
     },
     "env": {
         "node": true,
-        "es6": true
+        "es6": true,
+        "browser": true
     },
     "rules": {
         "no-console": 2,
@@ -20,6 +21,15 @@
         "no-multi-str": 2,
         "comma-spacing": 2,
         "comma-style": 2,
+        "no-implicit-coercion": [
+            "error",
+            {
+                "boolean": false,
+                "number": false,
+                "string": false,
+                "disallowTemplateShorthand": true
+            }
+        ],
         "func-call-spacing": 2,
         "keyword-spacing": 2,
         "linebreak-style": 2,
@@ -52,6 +62,11 @@
         "prettier/prettier": 0,
         "no-await-in-loop": 2,
         "require-atomic-updates": 0,
-        "no-prototype-builtins": 0
+        "no-prototype-builtins": 0,
+        "no-new-func": 2,
+        "require-await": 2,
+        "no-return-await": 2,
+        "prefer-arrow-callback": 2,
+        "object-shorthand": 2
     }
 }

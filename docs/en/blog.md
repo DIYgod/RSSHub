@@ -10,11 +10,17 @@ pageClass: routes
 
 <RouteEn author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Google Sites
+
+### Articles
+
+<RouteEn author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, can be found in URL']" />
+
 ## Hexo Blog
 
 ### Blog using Next theme
 
-<RouteEn author="fengkx" path="/hexo/next/:url" example="/hexo/next/fengkx.top" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+<RouteEn author="fengkx" path="/hexo/next/:url" example="/hexo/next/diygod.me" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
 ### Blog using Yilia theme
 
@@ -25,3 +31,19 @@ pageClass: routes
 ### Essays
 
 <RouteEn author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
+
+## Phrack Magazine
+
+### Article
+
+<RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
+
+## WordPress
+
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
+
+## yuzu emulator
+
+### Entry
+
+<RouteEn author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />

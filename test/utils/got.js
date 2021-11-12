@@ -1,12 +1,18 @@
+process.env.REQUEST_TIMEOUT = '500';
 const got = require('../../lib/utils/got');
+const logger = require('../../lib/utils/logger');
 const config = require('../../lib/config').value;
 const nock = require('nock');
+
+afterAll(() => {
+    delete process.env.REQUEST_TIMEOUT;
+});
 
 describe('got', () => {
     it('headers', async () => {
         nock('http://rsshub.test')
             .get('/test')
-            .reply(function() {
+            .reply(function () {
                 expect(this.req.headers['user-agent']).toBe(config.ua);
                 return [200, ''];
             });
@@ -16,42 +22,31 @@ describe('got', () => {
 
     it('retry', async () => {
         const requestRun = jest.fn();
-        let requestTime;
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
-            .reply(function() {
+            .reply(() => {
                 requestRun();
-                const now = new Date();
-                if (requestTime) {
-                    expect(now - requestTime).toBeGreaterThanOrEqual(100);
-                    expect(now - requestTime).toBeLessThan(120);
-                }
-                requestTime = new Date();
-                return [404, '0'];
+                return [503, '0'];
             });
 
         try {
             await got.get('http://rsshub.test/testRerty');
         } catch (error) {
-            expect(error.name).toBe('RequestError');
+            expect(error.name).toBe('HTTPError');
         }
 
         // retries
-        expect(requestRun).toHaveBeenCalledTimes(config.requestRetry);
+        expect(requestRun).toHaveBeenCalledTimes(config.requestRetry + 1);
     });
 
     it('axios', async () => {
         nock('http://rsshub.test')
             .post('/post')
-            .reply(function() {
-                return [200, '{"code": 0}'];
-            });
+            .reply(() => [200, '{"code": 0}']);
 
-        const response1 = await got.post('post', {
-            baseUrl: 'http://rsshub.test/',
-            form: true,
-            data: {
+        const response1 = await got.post('http://rsshub.test/post', {
+            form: {
                 test: 1,
             },
         });
@@ -59,19 +54,24 @@ describe('got', () => {
         expect(response1.status).toBe(200);
         expect(response1.body).toBe('{"code": 0}');
         expect(response1.data.code).toBe(0);
+    });
 
+    it('timeout', async () => {
         nock('http://rsshub.test')
-            .get(/^\/params/)
-            .reply(function() {
-                expect(this.req.path).toBe('/params?test=1');
-                return [200, ''];
-            });
+            .get('/timeout')
+            .delay(600)
+            .reply(() => [200, '{"code": 0}']);
 
-        await got.get('http://rsshub.test/params', {
-            params: {
-                test: 1,
-            },
-            responseType: 'buffer',
-        });
+        const loggerSpy = jest.spyOn(logger, 'error').mockReturnValue({});
+
+        try {
+            await got.get('http://rsshub.test/timeout');
+            throw Error('Timeout Invalid');
+        } catch (error) {
+            expect(error.name).toBe('RequestError');
+        }
+        expect(loggerSpy).toHaveBeenCalledWith(expect.stringContaining('http://rsshub.test/timeout'));
+
+        loggerSpy.mockRestore();
     });
 });

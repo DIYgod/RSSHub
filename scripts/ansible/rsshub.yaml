@@ -1,0 +1,129 @@
+-
+  name: Install RSSHub
+  hosts: localhost
+  become: true
+  vars_prompt:
+    -
+      name: domain_name
+      prompt: What is the domain name (without www, e.g. rsshub.example.com)? Use "http://localhost" for development in Vagrant VM.
+      private: no
+  tasks:
+    -
+      name: Check OS
+      fail:
+        msg: This playbook can only be run on Ubuntu 20.04 at this moment
+      when: ansible_distribution != 'Ubuntu' or ansible_distribution_version !='20.04'
+    -
+      name: Install GPG keys for repos
+      apt_key:
+        url: '{{ item }}'
+        state: present
+      with_items:
+        - https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        - https://download.docker.com/linux/ubuntu/gpg
+        - https://dl.cloudsmith.io/public/caddy/stable/cfg/gpg/gpg.155B6D79CA56EA34.key
+    -
+      name: Install repos
+      apt_repository:
+        repo: '{{ item }}'
+        state: present
+        update_cache: yes
+      with_items:
+        - deb https://deb.nodesource.com/node_12.x focal main
+        - deb https://download.docker.com/linux/ubuntu focal stable
+        - deb https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    -
+      name: Install prerequisites
+      apt:
+        name:
+          - nodejs
+          - build-essential
+          - python-is-python2
+          - redis-server
+          - docker-ce
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+          - caddy
+        state: present
+        update_cache: yes
+    -
+      name: Install python module for docker
+      pip:
+        name: docker
+    -
+      name: Pull docker image for browserless
+      docker_image:
+        name: browserless/chrome
+        source: pull
+    -
+      name: Start redis
+      systemd:
+        state: restarted
+        enabled: yes
+        name: redis
+        daemon_reload: yes
+    -
+      name: Copy caddy configuration
+      template:
+        src: rsshub.Caddyfile
+        dest: /etc/caddy/Caddyfile
+    -
+      name: Start caddy
+      systemd:
+        state: restarted
+        enabled: yes
+        name: caddy
+        daemon_reload: yes
+    -
+      name: Create and start browserless container
+      docker_container:
+        name: browserless
+        image: browserless/chrome:1.43-chrome-stable
+        state: started
+        restart_policy: always
+        published_ports:
+          - "3000:3000"
+    -
+      name: Create the user
+      user:
+        name: rsshub
+        create_home: true
+        shell: /bin/bash
+    -
+      name: Clone the repo
+      git:
+        repo: https://github.com/DIYgod/RSSHub.git
+        dest: /home/rsshub/app
+        update: yes
+    -
+      name: Install repo dependencies
+      command: npm ci --production
+      args:
+        chdir: /home/rsshub/app
+      environment:
+        PUPPETEER_SKIP_DOWNLOAD: true
+    -
+      name: Copy configuration
+      copy:
+        src: rsshub.env
+        dest: /home/rsshub/app/.env
+    -
+      name: Own repo to the user
+      file:
+        path: /home/rsshub/app
+        owner: rsshub
+        group: rsshub
+        recurse: yes
+    -
+      name: Install the systemd unit
+      copy:
+        src: rsshub.service
+        dest: /etc/systemd/system/rsshub.service
+    -
+      name: Start the systemd service
+      systemd:
+        state: restarted
+        enabled: yes
+        name: rsshub
+        daemon_reload: yes

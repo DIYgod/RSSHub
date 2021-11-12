@@ -1,6 +1,7 @@
 process.env.NODE_NAME = 'mock';
 
 const supertest = require('supertest');
+jest.mock('request-promise-native');
 const server = require('../../lib/index');
 const request = supertest(server);
 const cheerio = require('cheerio');
@@ -17,8 +18,9 @@ afterAll(() => {
 
 describe('debug', () => {
     it('debug', async () => {
-        await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
-        await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
+        const response1 = await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
+        const etag = response1.headers.etag;
+        await request.get('/test/1').set('If-None-Match', etag).set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/1').set('X-Forwarded-For', '233.233.233.234');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         await request.get('/test/2').set('X-Forwarded-For', '233.233.233.234');
@@ -29,37 +31,31 @@ describe('debug', () => {
 
         const $ = cheerio.load(response.text);
         $('.debug-item').each((index, item) => {
-            const key = $(item)
-                .find('.debug-key')
-                .html()
-                .trim();
-            const value = $(item)
-                .find('.debug-value')
-                .html()
-                .trim();
+            const key = $(item).find('.debug-key').html().trim();
+            const value = $(item).find('.debug-value').html().trim();
             switch (key) {
-                case 'node name:':
+                case 'Node Name:':
                     expect(value).toBe('mock');
                     break;
-                case 'git hash:':
+                case 'Git Hash:':
                     expect(value).toBe(gitHash);
                     break;
-                case 'request amount:':
+                case 'Request Amount:':
                     expect(value).toBe('8');
                     break;
-                case 'hot routes:':
-                    expect(value).toBe('4  undefined<br>3  /test/:id<br>');
+                case 'ETag Matched:':
+                    expect(value).toBe('1');
                     break;
-                case 'hot paths:':
+                case 'Hot Routes:':
+                    expect(value).toBe('3  /test/:id<br>');
+                    break;
+                case 'Hot Paths:':
                     expect(value).toBe('3  /test/1<br>2  /test/2<br>2  /test/empty<br>1  /<br>');
                     break;
-                case 'hot IP:':
-                    expect(value).toBe('5  233.233.233.233<br>3  233.233.233.234<br>');
+                case 'Hot Error Routes:':
+                    expect(value).toBe('1  /test/:id<br>');
                     break;
-                case 'hot error routes:':
-                    expect(value).toBe('1  /test/:id<br>1  undefined<br>');
-                    break;
-                case 'hot error paths:':
+                case 'Hot Error Paths:':
                     expect(value).toBe('2  /test/empty<br>');
                     break;
             }
