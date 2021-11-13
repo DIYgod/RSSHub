@@ -863,6 +863,12 @@ pageClass: routes
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
+## 法国国际广播电台
+
+### 滚动新闻
+
+<Route author="nczitzk" example="/rfi/news" path="/rfi/news"/>
+
 ## 高清电台
 
 ### 最新电影
