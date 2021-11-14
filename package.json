@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Make RSS Great Again!",
   "main": "lib/pkg.js",
+  "type": "module",
   "files": [
     "lib"
   ],
@@ -21,7 +22,9 @@
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json}\"",
     "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
-    "jest:watch": "cross-env NODE_ENV=test jest --watch"
+    "jest:watch": "cross-env NODE_ENV=test jest --watch",
+    "postinstall": "link-module-alias",
+    "preinstall": "command -v link-module-alias && link-module-alias clean || true"
   },
   "repository": {
     "type": "git",
@@ -39,6 +42,9 @@
     "url": "https://github.com/DIYgod/RSSHub/issues"
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
+  "_moduleAliases": {
+    "~": "lib"
+  },
   "devDependencies": {
     "@napi-rs/pinyin": "^1.6.1",
     "@types/cheerio": "0.22.24",
@@ -108,6 +114,7 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
+    "link-module-alias": "^1.2.0",
     "lru-cache": "6.0.0",
     "lz-string": "1.4.4",
     "mailparser": "3.2.0",
@@ -150,7 +157,7 @@
     "bail": true,
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "@/(.*)": "<rootDir>/lib/$1"
+      "~/(.*)": "<rootDir>/lib/$1"
     }
   }
 }

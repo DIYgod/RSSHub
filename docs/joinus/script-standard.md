@@ -138,7 +138,7 @@ art说明文档： <https://aui.github.io/art-template/docs/>
 ```
 
 ```js
-const { art } = require('@/utils/render');
+const { art } = require('~/utils/render');
 const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
 ```
 
