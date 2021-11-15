@@ -1,8 +1,15 @@
 /** */
-import fs from 'fs';
+import fs from 'node:fs';
 import path from 'node:path';
+
+import {createCommons} from 'simport';
+
+const {
+    __dirname,
+} = createCommons(import.meta.url);
+
 const target = path.join(__dirname, '../../assets/build/maintainer.json');
-import maintainer from path.join(__dirname, '../../lib/maintainer.js');
+const maintainer = (await import(path.join(__dirname, '../../lib/maintainer.js'))).default;
 
 const count = Object.keys(maintainer).length;
 const uniqueMaintainer = new Set();
