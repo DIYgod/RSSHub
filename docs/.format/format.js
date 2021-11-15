@@ -1,6 +1,6 @@
 const file = require('./file');
 const sgf = require('staged-git-files');
-const path = require('path');
+import path from 'path'
 const sortByHeading = require('./sortByHeading');
 const chineseFormat = require('./chineseFormat');
 const util = require('util');

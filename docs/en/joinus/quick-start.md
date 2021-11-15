@@ -227,7 +227,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
 
     ```js
     const buildData = require('~/utils/common-config');
-    module.exports = async (ctx) => {
+    export default async (ctx) => {
         ctx.state.data = await buildData({
             link: '', // RSS source link
             url: '', // Data source link
@@ -245,7 +245,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
     ```js
     const buildData = require('~/utils/common-config');
 
-    module.exports = async (ctx) => {
+    export default async (ctx) => {
         const link = `https://www.uraaka-joshi.com/`;
         ctx.state.data = await buildData({
             link,

@@ -26,7 +26,7 @@
 具体解析参数请参考dayjs github说明
 
 ```javascript
-const { parseDate } = require('~/utils/parse-date');
+import { parseDate } from '~/utils/parse-date.js'
 
 const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
@@ -49,7 +49,7 @@ const pubDate = parseRelativeDate('前天 15:36');
 :::
 
 ```javascript
-const timezone = require('~/utils/timezone');
+import timezone from '~/utils/timezone.js';
 
 const pubDate = timezone(new Date(), +8)
 ```

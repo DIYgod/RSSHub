@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const Parser = require('rss-parser');
+import Parser from 'rss-parser';
 const parser = new Parser();
 const wait = require('../../lib/utils/wait');
 let server;

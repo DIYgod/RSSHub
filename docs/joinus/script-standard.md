@@ -48,7 +48,7 @@
 ### 例子
 
 ```js
-module.exports = function (router) {
+export default function (router) {
     router.get('/characters/:lang?', require('./index'));
     router.get('/artists/:lang?', require('./artists'));
     router.get('/archive/:lang?', require('./archive'));
@@ -67,7 +67,7 @@ Github ID可能是更好的选择，但是后续处理不便，目前暂定Usern
 ### 例子
 
 ```js
-module.exports = {
+export default {
     '/characters/:lang?': ['NeverBehave'],
     '/artists/:lang?': ['NeverBehave'],
     '/archive/:lang?': ['NeverBehave'],
@@ -85,7 +85,7 @@ module.exports = {
 ### 例子
 
 ```js
-module.exports = {
+export default {
     'furstar.jp': {
         _name: 'Furstar',
         '.': [
@@ -138,7 +138,7 @@ art说明文档： <https://aui.github.io/art-template/docs/>
 ```
 
 ```js
-const { art } = require('~/utils/render');
+import { art } from '~/utils/render.js'
 const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
 ```
 

@@ -228,7 +228,7 @@ sidebar: auto
 
     ```js
     const buildData = require('~/utils/common-config');
-    module.exports = async (ctx) => {
+    export default async (ctx) => {
         ctx.state.data = await buildData({
             link: '', // RSS来源链接
             url: '', // 数据来源链接
@@ -246,7 +246,7 @@ sidebar: auto
     ```js
     const buildData = require('~/utils/common-config');
 
-    module.exports = async (ctx) => {
+    export default async (ctx) => {
         const link = `https://www.uraaka-joshi.com/`;
         ctx.state.data = await buildData({
             link,

@@ -1,6 +1,6 @@
 /** */
 const fs = require('fs');
-const path = require('path');
+import path from 'path'
 const target = path.join(__dirname, '../../assets/build/maintainer.json');
 const maintainer = require(path.join(__dirname, '../../lib/maintainer.js'));
 

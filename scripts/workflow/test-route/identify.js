@@ -1,7 +1,7 @@
 const noFound = 'Auto: Route No Found';
 const whiteListedUser = ['dependabot[bot]'];
 
-module.exports = async ({ github, context, core }, body, number) => {
+export default async ({ github, context, core }, body, number) => {
     core.debug(`sender: ${context.payload.sender.login}`);
     core.debug(`body: ${body}`);
     const m = body.match(/```routes\r\n((.|\r\n)*)```/);
