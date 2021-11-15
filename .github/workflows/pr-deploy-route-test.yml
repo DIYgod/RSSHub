@@ -21,7 +21,7 @@ jobs:
           script: |
             const body = context.payload.pull_request.body
             const number = context.payload.pull_request.number
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
+            const script = (await import(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)).default
             return await script({github, context, core}, body, number)
       - name: Waiting for 200 from the Vercel Preview
         if: (env.TEST_CONTINUE)
@@ -43,5 +43,5 @@ jobs:
             const routes = JSON.parse(process.env.TEST_ROUTES)
             const number = context.payload.pull_request.number
             core.info(`${link}, ${routes}, ${number}`)
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
+            const script = (await import(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)).default
             return await script({github, context, core}, link, routes, number)

@@ -1,4 +1,4 @@
-import parseDate from '../../lib/utils/date';
+import parseDate from '../../lib/utils/date.js';
 import MockDate from 'mockdate';
 
 describe('date', () => {

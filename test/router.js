@@ -1,13 +1,14 @@
 process.env.SOCKET = 'socket';
 
 import supertest from 'supertest';
+import {jest} from '@jest/globals';
 jest.mock('request-promise-native');
 import server from '../lib/index.js';
 const request = supertest(server);
 import Parser from 'rss-parser';
 const parser = new Parser();
-import { get as getConfig } from '../../lib/config/index.js';
-const config = getConfig();
+import { getGlobalConfig } from '../../lib/config/index.js';
+const config = getGlobalConfig();
 
 afterAll(() => {
     delete process.env.SOCKET;

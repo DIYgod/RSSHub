@@ -3,7 +3,13 @@ import Parser from 'rss-parser';
 const parser = new Parser();
 import wait from '../../lib/utils/wait';
 let server;
+import {jest} from '@jest/globals';
 jest.mock('request-promise-native');
+import {createCommons} from 'simport';
+
+const {
+    require,
+} = createCommons(import.meta.url);
 
 beforeAll(() => {
     process.env.CACHE_EXPIRE = 1;
@@ -55,7 +61,7 @@ describe('cache', () => {
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
 
-        import app from '../../lib/app';
+        let app = require('../../lib/app.js');
         await app.context.cache.set('mock', undefined);
         expect(await app.context.cache.get('mock')).toBe('');
 
@@ -112,7 +118,7 @@ describe('cache', () => {
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
 
-        import app from '../../lib/app';
+        let app = require('../../lib/app.js');
         await app.context.cache.set('mock1', undefined);
         expect(await app.context.cache.get('mock1')).toBe('');
         await app.context.cache.set('mock2', '2');
@@ -134,7 +140,7 @@ describe('cache', () => {
     it('redis with quit', async () => {
         process.env.CACHE_TYPE = 'redis';
         server = require('../../lib/index');
-        import app from '../../lib/app';
+        let app = require('../../lib/app.js');
         const redisClient = app.context.cache.clients
         await redisClient.quit();
         const request = supertest(server);

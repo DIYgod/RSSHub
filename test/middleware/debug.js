@@ -1,6 +1,7 @@
 process.env.NODE_NAME = 'mock';
 
 import supertest from 'supertest';
+import {jest} from '@jest/globals';
 jest.mock('request-promise-native');
 import server from '../../lib/index';
 const request = supertest(server);

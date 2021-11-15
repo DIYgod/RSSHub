@@ -1,5 +1,5 @@
-import got from '../../lib/utils/got';
-import parser from '../../lib/utils/rss-parser';
+import got from '../../lib/utils/got.js';
+import parser from '../../lib/utils/rss-parser.js';
 import nock from 'nock';
 import '../../lib/utils/request-wrapper';
 let check = () => {};

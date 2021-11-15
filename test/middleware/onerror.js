@@ -2,6 +2,7 @@ process.env.SENTRY = 'https://mock@mock.com/1';
 process.env.SENTRY_ROUTE_TIMEOUT = '0';
 
 import supertest from 'supertest';
+import {jest} from '@jest/globals';
 jest.mock('request-promise-native');
 import server from '../../lib/index';
 const request = supertest(server);

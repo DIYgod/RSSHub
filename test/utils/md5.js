@@ -1,4 +1,4 @@
-import md5 from '../../lib/utils/md5';
+import md5 from '../../lib/utils/md5.js';
 
 describe('md5', () => {
     it('md5 RSSHub', () => {

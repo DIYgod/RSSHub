@@ -1,4 +1,5 @@
 import supertest from 'supertest';
+import {jest} from '@jest/globals';
 jest.mock('request-promise-native');
 import Parser from 'rss-parser';
 const parser = new Parser();

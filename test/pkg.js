@@ -1,4 +1,5 @@
 import RSSHub from '../lib/pkg.js';
+import {jest} from '@jest/globals';
 jest.mock('request-promise-native');
 
 

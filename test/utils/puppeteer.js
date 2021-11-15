@@ -1,5 +1,5 @@
-import puppeteer from '../../lib/utils/puppeteer';
-import wait from '../../lib/utils/wait';
+import puppeteer from '../../lib/utils/puppeteer.js';
+import wait from '../../lib/utils/wait.js';
 
 describe('puppeteer', () => {
     it('puppeteer run', async () => {

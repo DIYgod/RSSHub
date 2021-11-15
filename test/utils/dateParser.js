@@ -1,4 +1,4 @@
-import dateParser from '../../lib/utils/dateParser';
+import dateParser from '../../lib/utils/dateParser.js';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import MockDate from 'mockdate';

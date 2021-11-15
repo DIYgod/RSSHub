@@ -8,7 +8,6 @@
   ],
   "type": "module",
   "node": "^14.13.1 || >=16.0.0",
-  "@std/esm": "cjs",
   "scripts": {
     "start": "node lib/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
@@ -22,7 +21,7 @@
     "format": "eslint \"**/*.js\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
     "format:staged": "eslint \"**/*.js\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json}\"",
-    "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "test": "npm run format:check && npm jest",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
     "jest:watch": "cross-env NODE_ENV=test jest --watch",
     "preinstall": "which link-module-alias && link-module-alias clean || echo",
@@ -130,6 +129,7 @@
     "rss-parser": "3.10.0",
     "showdown": "1.9.1",
     "simplecc-wasm": "0.1.2",
+    "simport": "^1.2.0",
     "socks-proxy-agent": "6.0.0",
     "string-similarity": "^4.0.3",
     "tiny-async-pool": "1.2.0",
@@ -157,6 +157,7 @@
     ],
     "bail": true,
     "testEnvironment": "node",
+    "transform": {},
     "moduleNameMapper": {
       "~/(.*)": "<rootDir>/lib/$1"
     }

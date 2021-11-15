@@ -1,4 +1,4 @@
-import utils from '../../lib/utils/common-utils';
+import utils from '../../lib/utils/common-utils.js';
 
 describe('common-utils', () => {
     it('toTitleCase', () => {

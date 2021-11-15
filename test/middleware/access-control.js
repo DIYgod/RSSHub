@@ -1,7 +1,15 @@
 import supertest from 'supertest';
 import md5 from '../../lib/utils/md5';
+import {jest} from '@jest/globals';
+
 let server;
 jest.mock('request-promise-native');
+
+import {createCommons} from 'simport';
+
+const {
+    require,
+} = createCommons(import.meta.url);
 
 function checkBlock(response) {
     expect(response.status).toBe(403);

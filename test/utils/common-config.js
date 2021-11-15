@@ -1,4 +1,4 @@
-import configUtils from '../../lib/utils/common-config';
+import configUtils from '../../lib/utils/common-config.js';
 import nock from 'nock';
 
 describe('index', () => {
