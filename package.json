@@ -29,7 +29,7 @@
     "postinstall": "link-module-alias"
   },
   "_moduleAliases": {
-    "@": "./lib"
+    "~": "./lib"
   },
   "repository": {
     "type": "git",
@@ -158,7 +158,7 @@
     "bail": true,
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "@/(.*)": "<rootDir>/lib/$1"
+      "~/(.*)": "<rootDir>/lib/$1"
     }
   }
 }
