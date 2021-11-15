@@ -1,13 +1,9 @@
-const path = require('path');
-const moduleAlias = require('module-alias');
-moduleAlias.addAlias('@', path.join(__dirname, '../lib'));
+import { setConfig } from '../lib/config.js';
+import app from './lib/app.js'
 
-const config = require('../lib/config');
-config.set({
+setConfig({
     NO_LOGFILES: true,
 });
-
-const app = require('../lib/app');
 
 module.exports = (req, res) => {
     app.callback()(req, res);
