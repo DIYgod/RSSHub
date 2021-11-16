@@ -103,6 +103,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
+## GameApps.hk 香港手机游戏网
+
+### 最新消息
+
+<Route author="TonyRL" example="/gameapps" path="/gameapps"/>
+
 ## GameRes 游资网
 
 ### 热点推荐
