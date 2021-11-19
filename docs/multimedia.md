@@ -1029,6 +1029,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/ncm/user/playlist/45441555" path="/ncm/user/playlist/:uid" :paramsDesc="['用户 uid, 可在用户主页 URL 中找到']" radar="1" />
 
+### 用户听歌排行
+
+<Route author="alfredcai" example="/ncm/user/playrecords/45441555/1" path="/ncm/user/playrecords/:uid/:type?" :paramsDesc="['用户 uid, 可在用户主页 URL 中找到','排行榜类型，0所有时间(默认)，1最近一周']" />
+
 ### 歌手专辑
 
 <Route author="metowolf" example="/ncm/artist/2116" path="/ncm/artist/:id" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到']" radar="1" />
