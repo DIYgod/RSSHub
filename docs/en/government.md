@@ -22,6 +22,26 @@ pageClass: routes
 
 <Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']">
 
+## Hong Kong Centre for Health Protection
+
+### Category
+
+<RouteEn author="nczitzk" example="/chp" path="/chp/:category?/:language?" :paramsDesc="['Category, see below, Important Topics by default', 'Language, see below, zh_tw by default']">
+
+Category
+
+| Important Topics | Press Releases   | Response Level | Periodicals & Publications | Health Notice |
+| ---------------- | ---------------- | -------------- | -------------------------- | ------------- |
+| important_ft     | press_data_index | ResponseLevel  | publication                | HealthAlert   |
+
+Language
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| en      | zh_cn    | zh_tw    |
+
+</RouteEn>
+
 ## Ministry of Foreign Affairs of Japan
 
 ### Press conference
