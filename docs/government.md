@@ -244,7 +244,7 @@ pageClass: routes
 
 ### 新闻公报
 
-<Route author="nczitzk" example="/dh" path="/dh/:language?" :paramsDesc="['语言，见下表，默认为 tc_chi']">
+<Route author="nczitzk" example="/hongkong/dh" path="/hongkong/dh/:language?" :paramsDesc="['语言，见下表，默认为 tc_chi']">
 
 语言
 
