@@ -1634,6 +1634,78 @@ column 为 third 时可选的 category:
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
 
+## 雷峰网
+
+### 最新文章
+
+<Route author="vlcheng" example="/leiphone/latest" path="/leiphone/latest"/>
+
+### 业界资讯
+
+<Route author="vlcheng" example="/leiphone/newsflash" path="/leiphone/newsflash"/>
+
+### 栏目
+
+<Route author="vlcheng" example="/leiphone/category/industrynews" path="/leiphone/category/industrynews/:catname" :paramsDesc="['网站顶部分类栏目']">
+
+-   主栏目
+
+| 业界         | 人工智能 | 智能驾驶       | 数智化          | 金融科技 | 医疗科技 | 芯片  | 政企安全   | 智慧城市  | 行业云        | 工业互联网         | AIoT |
+| ------------ | -------- | -------------- | --------------- | -------- | -------- | ----- | ---------- | --------- | ------------- | ------------------ | ---- |
+| industrynews | ai       | transportation | digitalindustry | fintech  | aihealth | chips | gbsecurity | smartcity | industrycloud | IndustrialInternet | iot  |
+
+-   子栏目
+
+    -   人工智能
+
+    | 学术     | 开发者   |
+    | -------- | -------- |
+    | academic | yanxishe |
+
+    -   数智化
+
+    | 零售数智化 | 金融数智化 | 工业数智化 | 医疗数智化 | 城市数智化  |
+    | ---------- | ---------- | ---------- | ---------- | ----------- |
+    | redigital  | findigital | mandigital | medigital  | citydigital |
+
+    -   金融科技
+
+    | 科技巨头 | 银行AI | 金融云       | 风控与安全   |
+    | -------- | ------ | ------------ | ------------ |
+    | BigTech  | bank   | FinanceCloud | DataSecurity |
+
+    -   医疗科技
+
+    | 医疗AI   | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
+    | -------- | ------ | -------- | ---------------- | ------------ | ------------ |
+    | healthai | touzi  | qixie    | hulianwangyiliao | shengwuyiyao | jiankangxian |
+
+    -   芯片
+
+    | 材料设备  | 芯片设计   | 晶圆代工      | 封装测试  |
+    | --------- | ---------- | ------------- | --------- |
+    | materials | chipdesign | manufacturing | packaging |
+
+    -   智慧城市
+
+    | 智慧安防      | 智慧教育       | 智慧交通            | 智慧社区       | 智慧零售       | 智慧政务        | 智慧地产 |
+    | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
+    | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
+
+    -   工业互联网
+
+    | 工业软件   | 工业安全 | 5G工业互联网 | 工业转型实践 |
+    | ---------- | -------- | ------------ | ------------ |
+    | gysoftware | gysafety | 5ggy         | gypratice    |
+
+    -   AIoT
+
+    | 物联网 | 智能硬件 | 机器人 | 智能家居  |
+    | ------ | -------- | ------ | --------- |
+    | 5G     | arvr     | robot  | smarthome |
+
+</Route>
+
 ## 留园网
 
 ### 分站
