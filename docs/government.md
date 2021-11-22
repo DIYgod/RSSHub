@@ -240,6 +240,20 @@ pageClass: routes
 
 <Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']">
 
+## 香港卫生署
+
+### 新闻公报
+
+<Route author="nczitzk" example="/dh" path="/dh/:language?" :paramsDesc="['语言，见下表，默认为 tc_chi']">
+
+语言
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| english | chs      | tc_chi   |
+
+</Route>
+
 ## 中国工业和信息化部
 
 ### 政策解读

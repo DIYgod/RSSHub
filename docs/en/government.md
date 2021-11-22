@@ -22,6 +22,20 @@ pageClass: routes
 
 <Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']">
 
+## Hong Kong Department of Health
+
+### Press Release
+
+<RouteEn author="nczitzk" example="/dh" path="/dh/:language?" :paramsDesc="['Language, see below, tc_chi by default']">
+
+Language
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| english | chs | tc_chi |
+
+</RouteEn>
+
 ## Ministry of Foreign Affairs of Japan
 
 ### Press conference
