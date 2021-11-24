@@ -295,9 +295,27 @@ pageClass: routes
 
 ## JavDB
 
+::: tip 提示
+
+JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名，若该域名无法访问，可以通过在路由后方加上 `?domain=<域名>` 指定路由访问的域名。如指定域名为 <https://javdb.com>，则在所有 JavDB 路由后加上 `?domain=javdb.com` 即可，此时路由为 [`/javdb?domain=javdb.com`](https://rsshub.app/javdb?domain=javdb.com)
+
+如果加入了 **分類** 参数，直接在分類参数后加入 `?domain=<域名>` 即可。如指定分類 URL 为 <https://javdb.com/tags?c2=5&c10=1> 并指定域名为 <https://javdb.com>，即在 `/javdb/tags/c2=5&c10=1` 后加上 `?domain=javdb.com`，此时路由为 [`/javdb/tags/c2=5&c10=1?domain=javdb.com`](https://rsshub.app/javdb/tags/c2=5&c10=1?domain=javdb.com)
+
+**排行榜**、**搜索**、**演員**、**片商** 参数同适用于 **分類** 参数的上述规则
+
+:::
+
+::: tip 提示
+
+你可以通过指定 `limit` 参数来获取特定数量的条目，即可以通过在路由后方加上 `?limit=25`，默认为单次获取 20 个条目，即默认 `?limit=20`
+
+因为该站有反爬检测，所以不应将此值调整过高
+
+:::
+
 ### 主页
 
-<Route author="nczitzk" example="/javdb" path="/javdb/:category?/:sort?/:filter?" :paramsDesc="['分类，见下表，默认为 `有碼`', '排序，见下表，默认为 `磁鏈更新排序`', '过滤，见下表，默认为 `可下载`']">
+<Route author="nczitzk" example="/javdb" path="/javdb/:category?/:sort?/:filter?" :paramsDesc="['分类，见下表，默认为 `有碼`', '排序，见下表，默认为 `磁鏈更新排序`', '过滤，见下表，默认为 `可下载`']" anticrawler="1">
 
 分类
 
@@ -321,7 +339,7 @@ pageClass: routes
 
 ### 分類
 
-<Route author="nczitzk" example="/javdb/tags/c2=5&c10=1" path="/javdb/tags/:query?/:category?" :paramsDesc="['筛选，默认为 `c10=1`', '分类，见下表，默认为 `有碼`']">
+<Route author="nczitzk" example="/javdb/tags/c2=5&c10=1" path="/javdb/tags/:query?/:category?" :paramsDesc="['筛选，默认为 `c10=1`', '分类，见下表，默认为 `有碼`']" anticrawler="1">
 
 ::: tip 提示
 
@@ -341,7 +359,7 @@ pageClass: routes
 
 ### 排行榜
 
-<Route author="nczitzk" example="/javdb/rankings" path="/javdb/rankings/:category?/:time?" :paramsDesc="['分类，见下表，默认为 `有碼`', '时间，见下表，默认为 `日榜`']">
+<Route author="nczitzk" example="/javdb/rankings" path="/javdb/rankings/:category?/:time?" :paramsDesc="['分类，见下表，默认为 `有碼`', '时间，见下表，默认为 `日榜`']" anticrawler="1">
 
 分类
 
@@ -359,7 +377,7 @@ pageClass: routes
 
 ### 搜索
 
-<Route author="nczitzk" example="/javdb/search/巨乳" path="/javdb/search/:keyword?/:filter?" :paramsDesc="['关键字，默认为空', '过滤，见下表，默认为 `可播放`']">
+<Route author="nczitzk" example="/javdb/search/巨乳" path="/javdb/search/:keyword?/:filter?" :paramsDesc="['关键字，默认为空', '过滤，见下表，默认为 `可播放`']" anticrawler="1">
 
 | 全部 | 可播放   | 單體作品 | 演員  | 片商  | 導演     | 系列   | 番號 | 可下載   | 字幕  | 預覽圖  |
 | ---- | -------- | -------- | ----- | ----- | -------- | ------ | ---- | -------- | ----- | ------- |
@@ -369,7 +387,7 @@ pageClass: routes
 
 ### 演員
 
-<Route author="nczitzk" example="/javdb/actors/R2Vg" path="/javdb/actors/:id/:filter?" :paramsDesc="['编号，可在演员页 URL 中找到', '过滤，见下表，默认为 `全部`']">
+<Route author="nczitzk" example="/javdb/actors/R2Vg" path="/javdb/actors/:id/:filter?" :paramsDesc="['编号，可在演员页 URL 中找到', '过滤，见下表，默认为 `全部`']" anticrawler="1">
 
 | 全部 | 可播放 | 單體作品 | 可下載 | 含字幕 |
 | ---- | ------ | -------- | ------ | ------ |
@@ -381,7 +399,7 @@ pageClass: routes
 
 ### 系列
 
-<Route author="nczitzk" example="/javdb/series/1NW" path="/javdb/series/:id/:filter?" :paramsDesc="['编号，可在系列页 URL 中找到', '过滤，见下表，默认为 `全部`']">
+<Route author="nczitzk" example="/javdb/series/1NW" path="/javdb/series/:id/:filter?" :paramsDesc="['编号，可在系列页 URL 中找到', '过滤，见下表，默认为 `全部`']" anticrawler="1">
 
 | 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
 | ---- | -------- | -------- | -------- | ----- | ------- |
@@ -393,7 +411,7 @@ pageClass: routes
 
 ### 片商
 
-<Route author="nczitzk" example="/javdb/makers/7R" path="/javdb/makers/:id/:filter?" :paramsDesc="['编号，可在片商页 URL 中找到', '过滤，见下表，默认为 `全部`']">
+<Route author="nczitzk" example="/javdb/makers/7R" path="/javdb/makers/:id/:filter?" :paramsDesc="['编号，可在片商页 URL 中找到', '过滤，见下表，默认为 `全部`']" anticrawler="1">
 
 | 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
 | ---- | -------- | -------- | -------- | ----- | ------- |
