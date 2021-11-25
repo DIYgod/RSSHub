@@ -475,33 +475,161 @@ pageClass: routes
 
 ## 大连理工大学
 
+### 通用
+
+<Route author="nczitzk" example="/dut" path="/dut/:site?/:category?" :paramsDesc="['站点，可在 URL 中找到，默认为 **新闻网**', '分类，可在 URL 中找到，默认为各站点默认分类栏目，如 **新闻网** 即为 **头条关注**']">
+
+订阅 **单级** 栏目如 [大连理工大学新闻网](https://news.dlut.edu.cn) 的 [头条关注](https://news.dlut.edu.cn/ttgz.htm) 分类栏目，分为 3 步：
+
+1.  将 URL <https://news.dlut.edu.cn/ttgz.htm> 中 `https://` 与 `.dlut.edu.cn/` 中间的 `news` 作为 `site` 参数填入；
+2.  将 `https://news.dlut.edu.cn/` 与 `.htm` 间的 `ttgz` 作为 `category` 参数填入；
+3.  最终可获得 [`/dut/news/ttgz`](https://rsshub.app/dut/news/tzgg)。
+
+订阅 **多级** 栏目如 [大连理工大学新闻网](https://news.dlut.edu.cn) 的 [人才培养](https://news.dlut.edu.cn/xwjj01/rcpy.htm) 分类栏目，同样分为 3 步：
+
+1.  将 URL <https://news.dlut.edu.cn/xwjj01/rcpy.htm> 中 `https://` 与 `.dlut.edu.cn/` 中间的 `news` 作为 `site` 参数填入；
+2.  把 `https://news.dlut.edu.cn/` 与 `.htm` 间 `xwjj01/rcpy` 作为 `category` 参数填入；
+3.  最终可获得 [`/dut/news/xwjj01/rcpy`](https://rsshub.app/dut/news/xwjj01/rcpy)。
+
+::: tip 小提示
+
+大连理工大学大部分站点支持上述通用规则进行订阅。下方的大连理工大学相关路由基本适用于该规则，在其对应的表格中没有提及的分类栏目，可以使用上方的方法自行扩展。
+
+:::
+
+::: tip 小小提示
+
+你会发现 [大连理工大学新闻网](https://news.dlut.edu.cn) 的 [人才培养](https://news.dlut.edu.cn/xwjj01/rcpy.htm) 分类栏目在下方 [**新闻网**](#da-lian-li-gong-da-xue-xin-wen-wang) 参数表格中 `category` 参数为 `rcpy`，并非上面例子中给出的 `xwjj01/rcpy`。这意味着开发者对路由 `/dut/news/xwjj01/rcpy` 指定了快捷方式 `/dut/news/rcpy`。两者的效果是一致的。
+
+:::
+
+</Route>
+
+### 新闻网
+
+<Route author="nczitzk" example="/dut/news" path="/dut/news/:category?" :paramsDesc="['分类，见下表，默认为 [**头条关注**](https://news.dlut.edu.cn/ttgz.htm)']">
+
+| 头条关注 | 新闻聚焦 | 人才培养 | 科学研究 | 交流合作 |
+| -------- | -------- | -------- | -------- | -------- |
+| ttgz     | xwjj     | rcpy     | kxyj     | jlhz     |
+
+| 一线风采 | 大工人物 | 图说大工 | 影像大工 | 媒体大工 |
+| -------- | -------- | -------- | -------- | -------- |
+| yxfc     | dgrw     | tsdg     | yxdg     | mtdg     |
+
+</Route>
+
+### 人事处
+
+<Route author="nczitzk" example="/dut/perdep" path="/dut/perdep/:category?" :paramsDesc="['分类，见下表，默认为 [**通知公告**](http://perdep.dlut.edu.cn/tzgg/tzgg.htm)']">
+
+| 通知公告 | 工作动态 | 政策法规 |
+| -------- | -------- | -------- |
+| tzgg     | gzdt     | zcfg     |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学人事处](http://perdep.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
 ### 教务处
 
-<Route author="beautyyuyanli" example="/dut/teach/zytg" path="/dut/teach/:type" :paramsDesc="['通知类型']">
+<Route author="beautyyuyanli nczitzk" example="/dut/teach" path="/dut/teach/:category?" :paramsDesc="['分类，见下表，默认为 [**新闻快递**](http://teach.dlut.edu.cn/xwkd/xwkd.htm)']">
 
-| 重要通告 | 新闻快递 | 教学文件       | 其他文件    |
-| -------- | -------- | -------------- | ----------- |
-| zytg     | xwkd     | jiaoxuewenjian | qitawenjian |
+| 新闻快递 | 重要通告 | 办会公示 |
+| -------- | -------- | -------- |
+| xwkd     | zytg     | bhgs     |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学教务处](http://teach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
+### 研究生院
+
+<Route author="nczitzk" example="/dut/gs" path="/dut/gs/:category?" :paramsDesc="['分类，见下表，默认为 [**重要通知**](http://gs.dlut.edu.cn/zytz.htm)']">
+
+| 重要通知 | 工作动态 | 政策法规 |
+| -------- | -------- | -------- |
+| zytz     | gzdt     | zcfg     |
+
+| 研究生招生 - 政策文件 | 研究生招生 - 工作动态 | 研究生招生 - 资料下载 |
+| --------------------- | --------------------- | --------------------- |
+| yjszs/zcwj1           | yjszs/gzdt/gzdt       | yjszs/zlxz/zlxz       |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学研究生院](http://gs.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+### 软件学院
+
+<Route author="nczitzk" example="/dut/ssdut" path="/dut/ssdut/:category?" :paramsDesc="['分类，见下表，默认为 [**焦点新闻**](http://ssdut.dlut.edu.cn/ywgg/xueyuanxinwen/jdxw.htm)']">
+
+| 焦点新闻 | 综合新闻 | 学院通知 | 学术动态 | 本科生通知 | 研究生通知 |
+| -------- | -------- | -------- | -------- | ---------- | ---------- |
+| jdxw     | zhxw     | xytz     | xsdt     | bkstz      | yjstz      |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学软件学院](http://ssdut.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
+### 开发区校区
+
+<Route author="nczitzk" example="/dut/eda" path="/dut/eda/:category?" :paramsDesc="['分类，见下表，默认为 [**通知公告**](http://eda.dlut.edu.cn/tzgg/tzgg.htm)']">
+
+| 通知公告 | 校区新闻 |
+| -------- | -------- |
+| tzgg     | xqxw     |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学开发区校区](http://eda.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
+### 国际合作与交流处（港澳台办）
+
+<Route author="beautyyuyanli nczitzk" example="/dut/dutdice" path="/dut/dutdice/:category?" :paramsDesc="['分类，见下表，默认为 [**新闻速递**](http://dutdice.dlut.edu.cn/xwsd/xxxw.htm)']">
+
+| 教师通知 | 学生通知   | 新闻速递 |
+| -------- | ---------- | -------- |
+| jstz     | xstong_zhi | xwsd     |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学国际合作与交流处（港澳台办）](http://dutdice.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
 
 </Route>
 
 ### 体育场馆中心
 
-<Route author="beautyyuyanli" example="/dut/tycgzx/hdrc" path="/dut/tycgzx/:type" :paramsDesc="['通知类型']">
+<Route author="beautyyuyanli nczitzk" example="/dut/tycgzx" path="/dut/tycgzx/:category?" :paramsDesc="['分类，见下表，默认为 [**通知公告**](http://tycgzx.dlut.edu.cn/tzgg/tzgg.htm)']">
 
-| 通知公告 | 活动日程 | 新闻动态 |
-| -------- | -------- | -------- |
-| tzgg     | hdrc     | xwdt     |
+| 通知公告 | 活动日程 | 新闻动态 | 健康知识 |
+| -------- | -------- | -------- | -------- |
+| tzgg     | hdrc     | xwdt     | jkzs     |
 
-</Route>
+::: tip 提示
 
-### 国际处及港澳台办
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育场馆中心](http://tycgzx.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
-<Route author="beautyyuyanli" example="/dut/dutdice/xwsd" path="/dut/dutdice/:type" :paramsDesc="['通知类型']">
-
-| 学生通知   | 教师通知 | 新闻速递 |
-| ---------- | -------- | -------- |
-| xstong_zhi | jstz     | xwsd     |
+:::
 
 </Route>
 
