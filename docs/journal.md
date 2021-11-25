@@ -96,7 +96,7 @@ pageClass: routes
 
 ### 最新文章
 
-<Route author="Derekmini auto-bot-ty" example="/jasa/current" path="/jasa/current" radar="1" rssbud="1">
+<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
 
 </Route>
 
