@@ -372,17 +372,17 @@ Compared to the official one, this feed:
 
 </RouteEn>
 
-## RSS3
-
-### Blog
-
-<RouteEn author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
-
 ## Research Gate
 
 ### Publications
 
 <RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']"/>
+
+## RSS3
+
+### Blog
+
+<RouteEn author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
 
 ## Semiconductor Industry Association
 
