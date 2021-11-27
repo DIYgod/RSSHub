@@ -567,6 +567,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## Odaily 星球日报
+
+### 活动
+
+<Route author="ncziztk" example="/odaily/activity" path="/odaily/activity"/>
+
 ## OpenAI
 
 ### Blog
