@@ -74,6 +74,24 @@
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
+    "/heu/yjsy/list/:id": [
+        "Derekmini"
+    ],
+    "/heu/job/bigemploy": [
+        "Derekmini"
+    ],
+    "/heu/job/calendar": [
+        "Derekmini"
+    ],
+    "/heu/job/list/:id": [
+        "Derekmini"
+    ],
+    "/heu/gx/:type/:colume/:id?": [
+        "Derekmini"
+    ],
+    "/heu/uae/list/:id": [
+        "Derekmini"
+    ],
     "/hkej/:category?": [
         "TonyRL"
     ],
@@ -638,13 +656,6 @@
     "/utdallas/isso": [],
     "/njupt/jwc/:type?": [],
     "/nchu/jwc/:type?": [],
-    "/heu/ugs/news/:author?/:category?": [],
-    "/heu/yjsy/:type?": [],
-    "/heu/gongxue/:type?": [],
-    "/heu/news/:type?": [],
-    "/heu/shuisheng/:type?": [],
-    "/heu/uae/:type?": [],
-    "/heu/job/:type?": [],
     "/cqu/jwc/:path*": [],
     "/cqu/news/jzyg": [],
     "/cqu/news/tz": [],
