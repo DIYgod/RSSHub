@@ -157,6 +157,29 @@ pageClass: routes
 
 <Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
+## JUMP
+
+### 游戏折扣
+
+<Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" :paramsDesc="['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']">
+| switch | ps4 | ps5 | xbox | steam | epic |
+| ------ | --- | ---- | ---- | ---- | ---- |
+| 可用   | 可用 | 可用   | 不可用   | 可用   | 不可用 |
+
+| filter | switch | ps4 | ps5 | steam |
+| ------ | ------ | --- | --- | ----- |
+| all    | ✔      | ✔   | ✔   | ✔     |
+| jx     | ✔      | ✔   | ❌  | ✔     |
+| sd     | ✔      | ✔   | ✔   | ✔     |
+| dl     | ❌     | ✔   | ❌  | ✔     |
+| vip    | ❌     | ❌  | ✔   | ❌    |
+
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| ---- | ------------ | ---- | ---- | ---- |
+| na   | eu           | fr   | de   | jp   |
+
+</Route>
+
 ## Konami
 
 ### PES Mobile 公告
@@ -209,7 +232,7 @@ pageClass: routes
 
 ### CurseForge Mod 更新
 
-<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
+<Route author="Indexyz Discreater" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的 ID， 可在 mod 主页的 `About This Project` 中找到']"/>
 
 ### Feed The Beast (FTB) 模组包更新
 
@@ -342,15 +365,17 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-### Steam news
+### Steam 新闻中心
 
-<Route author="maple3142" example="/steam/news/1091500/schinese" path="/steam/news/:appid/:language?" :paramsDesc="['游戏 id', '语言,默认简体中文']" radar="1" rssbud="1">
+::: tip
 
-| 语言 (Language) | 简体中文 (Simplified Chinese) | 繁體中文 (Traditional Chinese) | 日本語 (Japanese) | 한국어 (Korean) | Български (Bulgarian) | Čeština (Czech) | Dansk (Danish) | Deutsch (German) | Español - España (Spanish - Spain) | Español - Latinoamérica (Spanish - Latin America), | Ελληνικά (Greek) | Français (French) | Italiano (Italian) | Magyar (Hungarian) | Nederlands (Dutch) | Norsk (Norwegian) | Polski (Polish) | Português (Portuguese) | Português - Brasil (Portuguese - Brazil) | Română (Romanian) | Русский (Russian) | Suomi (Finnish) | Svenska (Swedish) | Türkçe (Turkish) | Tiếng Việt (Vietnamese) | Українська (Ukrainian) |
-| --------------- | ----------------------------- | ------------------------------ | ----------------- | --------------- | --------------------- | --------------- | -------------- | ---------------- | ---------------------------------- | -------------------------------------------------- | ---------------- | ----------------- | ------------------ | ------------------ | ------------------ | ----------------- | --------------- | ---------------------- | ---------------------------------------- | ----------------- | ----------------- | --------------- | ----------------- | ---------------- | ----------------------- | ---------------------- |
-|                 | schinese                      | tchinese                       | japanese          | koreana         | bulgarian             | czech           | danish         | german           | spanish                            | latam                                              | greek            | french            | italian            | hungarian          | dutch              | norwegian         | polish          | portuguese             | brazilian                                | romanian          | russian           | finnish         | swedish           | turkish          | vietnamese              | ukrainian              |
+Steam 新闻中心支持官方的 RSS 订阅:
 
-</Route>
+-   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
+-   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english>
+-   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss> 或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
+
+:::
 
 ## SteamGifts
 
@@ -456,23 +481,17 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 旅法师营地
 
-### 旅法师营地
+### 首页
 
-<Route author="qwertyuiop6" example="/lfsyd/1" path="/lfsyd/:typecode" :paramsDesc="['订阅分区类型']">
+<Route author="auto-bot-ty" example="/lfsyd/home" path="/lfsyd/home" radar="1" rssbud="1"/>
 
-| 主页资讯 | 炉石传说 | 万智牌 | 昆特牌 | 游戏王 | 电子游戏 | 手机游戏 | 桌面游戏 |
-| -------- | -------- | ------ | ------ | ------ | -------- | -------- | -------- |
-| 1        | 2        | 3      | 14     | 16     | 4        | 22       | 9        |
+### 首页（旧版）
 
-| 影之诗 | Artifact | 玩家杂谈 | 营地电台 | 2047 | 魂武 |
-| ------ | -------- | -------- | -------- | ---- | ---- |
-| 17     | 67       | 21       | 5        | 62   | 68   |
-
-</Route>
+<Route author="auto-bot-ty" example="/lfsyd/old_home" path="/lfsyd/old_home" radar="1" rssbud="1"/>
 
 ### 分区
 
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
@@ -483,6 +502,14 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 |    112   |    389   |    24    |    102   |    23    |   117  |
 
 </Route>
+
+### 用户的帖子
+
+<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" :paramsDesc="['用户 id']" radar="1" rssbud="1"/>
+
+可以在用户主页的 URL 中找到
+
+Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 米哈游
 
@@ -512,6 +539,14 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+### アークナイツ (日服新闻)
+
+<Route author="ofyark" example="/arknights/japan" path="/arknights/japan"/>
+
+### 塞壬唱片
+
+<Route author="rikkablue" example="/siren/news" path="/siren/news"/>
+
 ## 奶牛关
 
 ### 元素文章
@@ -520,7 +555,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ## 少女前线
 
-### 新闻
+### 情报局
 
 <Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" :paramsDesc="['分类，见下表，默认为新闻']">
 
@@ -530,11 +565,11 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 </Route>
 
-## 网易大神
+## 世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ
 
-### 用户发帖
+### 公告
 
-<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
+<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
 
 ## 王者荣耀
 
@@ -542,11 +577,17 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 <Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类,all=全部,rm=热门，xw=新闻,gg=公告,hd=活动,ss=赛事']"/>
 
+## 网易大神
+
+### 用户发帖
+
+<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
+
 ## 小黑盒
 
 ### 用户动态
 
-<Route author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="auto-bot-ty" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
 ### 游戏新闻
 
@@ -606,6 +647,18 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 | 1        | 2        | 3        | 4        |
 </Route>
 
+## 游戏年轮
+
+### 分类
+
+<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" :paramsDesc="['分类，见下表，默认为PC游戏', '类型，可在各分类页中导航栏中找到']">
+
+| PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
+| ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
+| pcgame  | ps4      | sgame       | nsaita      | ps      | bt      | 3ds      | psv      | jiaocheng    | ps3yx    | zhangji  |
+
+</Route>
+
 ## 游戏时光
 
 ### 游戏时光新闻
@@ -621,6 +674,16 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 <Route author="DIYgod" example="/vgtime/keyword/怪物猎人" path="/vgtime/keyword/:keyword" radar="1" rssbud="1"/>
 
 ## 游讯网
+
+### 资讯
+
+<Route author="nczitzk" example="/yxdown/news" path="/yxdown/news/:category?" :paramsDesc="['分类，见下表，默认为资讯首页']">
+
+| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |
+
+</Route>
 
 ### 精彩推荐
 

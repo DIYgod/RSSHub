@@ -102,9 +102,47 @@ pageClass: routes
 
 ## 2048 核基地
 
-### 论坛更新
+### 论坛
 
-<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到, 例如, `thread.php?fid-16.html`中, 板块 ID 为`16`']" supportBT="1" />
+<Route author="hoilc nczitzk" example="/2048/2" path="/2048/:id?" :paramsDesc="['板块 ID, 见下表，默认为最新合集，即 `3`，亦可在 URL 中找到, 例如, `thread.php?fid-3.html`中, 板块 ID 为`3`']" supportBT="1">
+
+| 最新合集 | 亞洲無碼 | 日本騎兵 | 歐美新片 | 國內原創 | 中字原創 | 三級寫真 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 3        | 4        | 5        | 13       | 15       | 16       | 18       |
+
+| 有碼.HD | 亞洲 SM.HD | 日韓 VR/3D | 歐美 VR/3D | S-cute / Mywife / G-area |
+| ------- | ---------- | ---------- | ---------- | ------------------------ |
+| 116     | 114        | 96         | 97         | 119                      |
+
+| 網友自拍 | 亞洲激情 | 歐美激情 | 露出偷窺 | 高跟絲襪 | 卡通漫畫 | 原創达人 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 23       | 24       | 25       | 26       | 27       | 28       | 135      |
+
+| 唯美清純 | 网络正妹 | 亞洲正妹 | 素人正妹 | COSPLAY | 女优情报 | Gif 动图 |
+| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
+| 21       | 274      | 276      | 277      | 278     | 29       |          |
+
+| 獨家拍攝 | 稀有首發 | 网络见闻 | 主播實錄 | 珍稀套圖 | 名站同步 | 实用漫画 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 213      | 94       | 283      | 111      | 88       | 131      | 180      |
+
+| 网盘二区 | 网盘三区 | 分享福利 | 国产精选 | 高清福利 | 高清首发 | 多挂原创 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 72       | 272      | 195      | 280      | 79       | 216      | 76       |
+
+| 磁链迅雷 | 正片大片 | H-GAME | 有声小说 | 在线视频 | 在线快播影院 |
+| -------- | -------- | ------ | -------- | -------- | ------------ |
+| 43       | 67       | 66     | 55       | 78       | 279          |
+
+| 综合小说 | 人妻意淫 | 乱伦迷情 | 长篇连载 | 文学作者 | TXT 小说打包 |
+| -------- | -------- | -------- | -------- | -------- | ------------ |
+| 48       | 103      | 50       | 54       | 100      | 109          |
+
+| 聚友客栈 | 坛友自售 |
+| -------- | -------- |
+| 57       | 136      |
+
+</Route>
 
 ## 60-Second Science - Scientific American
 
@@ -166,6 +204,10 @@ pageClass: routes
 ### Tag
 
 <Route author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['标签，可在 URL 中找到']"/>
+
+### Upcoming Live Streams
+
+<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
 
 ## bilibili
 
@@ -297,7 +339,7 @@ pageClass: routes
 
 ### 主页
 
-<Route author="nczitzk" example="/javdb/home" path="/javdb/home/:caty?/:sort?/:filter?" :paramsDesc="['分类，见下表，默认为 `有碼`', '排序，见下表，默认为 `磁鏈更新排序`', '过滤，见下表，默认为 `可下载`']">
+<Route author="nczitzk" example="/javdb" path="/javdb/:category?/:sort?/:filter?" :paramsDesc="['分类，见下表，默认为 `有碼`', '排序，见下表，默认为 `磁鏈更新排序`', '过滤，见下表，默认为 `可下载`']">
 
 分类
 
@@ -321,7 +363,7 @@ pageClass: routes
 
 ### 分類
 
-<Route author="nczitzk" example="/javdb/tags/c2=5&c10=1" path="/javdb/tags/:query?/:caty?" :paramsDesc="['筛选，默认为 `c10=1`', '分类，见下表，默认为 `有碼`']">
+<Route author="nczitzk" example="/javdb/tags/c2=5&c10=1" path="/javdb/tags/:query?/:category?" :paramsDesc="['筛选，默认为 `c10=1`', '分类，见下表，默认为 `有碼`']">
 
 ::: tip 提示
 
@@ -341,7 +383,7 @@ pageClass: routes
 
 ### 排行榜
 
-<Route author="nczitzk" example="/javdb/rankings" path="/javdb/rankings/:caty?/:time?" :paramsDesc="['分类，见下表，默认为 `有碼`', '时间，见下表，默认为 `日榜`']">
+<Route author="nczitzk" example="/javdb/rankings" path="/javdb/rankings/:category?/:time?" :paramsDesc="['分类，见下表，默认为 `有碼`', '时间，见下表，默认为 `日榜`']">
 
 分类
 
@@ -442,6 +484,18 @@ pageClass: routes
 ### 站内 Top 榜单
 
 <Route author="hoilc" example="/lastfm/top/spain" path="/lastfm/top/:country?" :paramsDesc="['国家或地区, 需要符合`ISO 3166-1`的英文全称, 可参考`https://zh.wikipedia.org/wiki/ISO_3166-1二位字母代码#正式分配代码`']" radar="1" rssbud="1"/>
+
+## Melon
+
+### Chart
+
+<Route author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" :paramsDesc="['分类，见下表，默认为24H']">
+
+| 24H | 일간 | 주간 | 월간  |
+| --- | ---- | ---- | ----- |
+|     | day  | week | month |
+
+</Route>
 
 ## Mp4Ba
 
@@ -616,6 +670,18 @@ pageClass: routes
 
 <Route author="monner-henster" example="/rs05/rs05" path="/rs05/rs05"/>
 
+## s-hentai
+
+### Category
+
+<Route author="nczitzk" example="/s-hentai" path="/s-hentai/:id?" :paramsDesc="['id，见下表，默认为 ready-to-download']">
+
+| Doujin | HCG | Games・Animes | Voices・ASMR | Ready to Download |
+| ------ | --- | ------------- | ------------ | ----------------- |
+| 1      | 2   | 3             | 4            | ready-to-download |
+
+</Route>
+
 ## Sankaku Complex
 
 ### Post
@@ -642,9 +708,28 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
-## subHD.tv - 最新字幕
+## Sub HD
 
-<Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
+### 字幕
+
+<Route author="laampui nczitzk" example="/subhd/sub/new" path="/subhd/sub/:category?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新字幕 | 热门字幕 | 剧集字幕 | 电影字幕 |
+| -------- | -------- | -------- | -------- |
+| new      | top      | tv       | movie    |
+
+</Route>
+
+### 字幕组
+
+<Route author="nczitzk" example="/subhd/zu/14" path="/subhd/zu/:category?" :paramsDesc="['字幕组，见下表，默认为 YYeTs字幕组']">
+
+| YYeTs 字幕组 | F.I.X 字幕侠 | 深影字幕组 | 擦枪字幕组 | 哒哒字幕组 | 迪幻字幕组 | 伊甸园字幕组 | H-SGDK 字幕组 | 蓝血字幕组 | GA 字幕组 | CC 标准电影字幕组 | NEW 字幕组 | Orange 字幕组 | 圣城家园 SCG 字幕组 | 纪录片之家字幕组 |
+| ------------ | ------------ | ---------- | ---------- | ---------- | ---------- | ------------ | ------------- | ---------- | --------- | ----------------- | ---------- | ------------- | ------------------- | ---------------- |
+| 14           | 28           | 2          | 118        | 132        | 20         | 1            | 18            | 71         | 11        | 75                | 130        | 66            | 19                  | 10               |
+
+</Route>
+
 ## Trakt.tv
 
 ### 用户收藏
@@ -675,7 +760,7 @@ pageClass: routes
 
 ### 首页
 
-<Route author="nczitzk" example="/bde4" path="/bde4/:type?/:caty?/:area?/:year?/:order?" :paramsDesc="['资源分类，见下表，默认为 `all` 即不限', '影视类型，见下表，默认为 `all` 即不限','制片地区，见下表，默认为 `all` 即不限','上映时间，此处填写年份不小于2000，默认为 `all` 即不限','影视排序，见下表，默认为更新时间']">
+<Route author="nczitzk" example="/mp4er" path="/mp4er/:type?/:caty?/:area?/:year?/:order?" :paramsDesc="['资源分类，见下表，默认为 `all` 即不限', '影视类型，见下表，默认为 `all` 即不限','制片地区，见下表，默认为 `all` 即不限','上映时间，此处填写年份不小于2000，默认为 `all` 即不限','影视排序，见下表，默认为更新时间']">
 
 #### 资源分类
 
@@ -838,6 +923,12 @@ pageClass: routes
 ### 新片精品
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
+
+## 法国国际广播电台
+
+### 滚动新闻
+
+<Route author="nczitzk" example="/rfi/news" path="/rfi/news"/>
 
 ## 高清电台
 
@@ -1083,11 +1174,11 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
 
-## 追新番日剧站
+## 追新番
 
-### 更新列表
+### 最近更新
 
-<Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" radar="1" rssbud="1"/>
+<Route author="mengx8 nczitzk" example="/fanxinzhui" path="/fanxinzhui" radar="1" rssbud="1"/>
 
 ## 字幕库
 
@@ -1122,3 +1213,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 例如，路由 `/zimuzu/top/week/movie` 应该输出 <http://www.rrys2019.com/html/top/week_movie_list.html> 的排行榜单
 
 </Route>
+
+## 综艺秀（[www.zyshow.net）](http://www.zyshow.net）)
+
+### 综艺
+
+<Route author="pharaoh2012" example="/zyshow/chongchongchong" path="/zyshow/:name" :paramsDesc="['综艺 name，对应综艺的 URL 中找到']"  radar="1" rssbud="1"/>

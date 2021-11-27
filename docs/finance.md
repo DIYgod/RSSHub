@@ -187,7 +187,7 @@ pageClass: routes
 
 ### 组合最新调仓信息
 
-<Route author="ZhishanZhang" example="/xueqiu/p/ZH1288184" path="/xueqiu/snb/:id" :paramsDesc="['组合代码, 可在组合主页 URL 中找到.']"/>
+<Route author="ZhishanZhang" example="/xueqiu/snb/ZH1288184" path="/xueqiu/snb/:id" :paramsDesc="['组合代码, 可在组合主页 URL 中找到.']"/>
 
 ### 股票信息
 
@@ -198,6 +198,10 @@ pageClass: routes
 | announcement | news | research |
 
 </Route>
+
+### 股票评论
+
+<Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" :paramsDesc="['股票代码（需要带上交易所）', '标题长度']"/>
 
 ## 证券时报网
 

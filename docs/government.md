@@ -4,6 +4,18 @@ pageClass: routes
 
 # 政务消息
 
+## 澳门廉政公署
+
+### 最新消息
+
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']">
+
+| 全部 | 案件发布 | 调查报告或勘喻 | 年度报告     | 公署消息 |
+| ---- | -------- | -------------- | ------------ | -------- |
+| all  | case     | Persuasion     | AnnualReport | PCANews  |
+
+</Route>
+
 ## 北京市卫生健康委员会
 
 ### 新闻中心
@@ -13,6 +25,36 @@ pageClass: routes
 | 委内新闻 | 基层动态 | 媒体聚焦 | 热点新闻 |
 | :------: | :------: | :------: | :------: |
 |   wnxw   |   jcdt   |   mtjj   |   rdxws  |
+
+</Route>
+
+## 重庆市人民政府
+
+### 两江新区信息公开网
+
+#### 党务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
+
+#### 政务公开
+
+<Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" :paramsDesc="['分类名']">
+
+| 履职依据 | 公示公告 |
+| -------- | -------- |
+| lzyj     | gsgg     |
+
+</Route>
+
+## 德阳考试中心
+
+### 考试新闻
+
+<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型。']">
+
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |  其他 |
+| :------: | :--------: | :------: | :--------------------: | :---: |
+|    all   |     gwy    |   sydw   |          zyzc          | other |
 
 </Route>
 
@@ -90,6 +132,21 @@ pageClass: routes
 ### 政务公开
 
 <Route author="XYenon" example="/gov/harbin/kjj" path="/gov/harbin/kjj"/>
+
+## 湖北省软件行业协会
+
+### 新闻中心
+
+<Route author="tudou027" example="/gov/hubei/hbsia/zxzx" path="/gov/hubei/hbsia/:caty" :paramsDesc="['类别']">
+
+| 具体栏目 | 参数 |
+| :------: | :--: |
+| 最新资讯 | zxzx |
+| 活动通知 | hdtz |
+| 活动报道 | hdbd |
+| 公示公告 | gsgg |
+
+</Route>
 
 ## 联合国
 
@@ -177,6 +234,36 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
+## 武汉东湖新技术开发区
+
+### 新闻中心
+
+<Route author="tudou027" example="/gov/wuhan/wehdz/tz" path="/gov/wuhan/wehdz/:caty" :paramsDesc="['类别']">
+
+| 通知 | 公告 |
+| :--: | :--: |
+|  tz  |  gg  |
+
+</Route>
+
+## 武汉市科学技术局
+
+### 新闻中心
+
+<Route author="tudou027" example="/gov/wuhan/kjj/tzgg" path="/gov/wuhan/kjj/:caty" :paramsDesc="['类别']">
+
+| 通知公告 | 公示信息 |
+| :------: | :------: |
+|   tzgg   |   gsxx   |
+
+</Route>
+
+## 香港廉政公署
+
+### 新闻公布
+
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']"/>
+
 ## 中国工业和信息化部
 
 ### 政策解读
@@ -246,6 +333,20 @@ pageClass: routes
 ### CAICT 观点
 
 <Route author="nczitzk" example="/gov/caict/caictgd" path="/gov/caict/caictgd"/>
+
+## 中国证券监督管理委员会
+
+### 发审委公告
+
+<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
+
+### 证监会消息
+
+<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+
+### 申请事项进度
+
+<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国政府
 
@@ -317,20 +418,6 @@ pageClass: routes
 ### 吹风会
 
 <Route author="EsuRt" example="/gov/statecouncil/briefing" path="/gov/statecouncil/briefing"/>
-
-## 中国证券监督管理委员会
-
-### 发审委公告
-
-<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
-
-### 证监会消息
-
-<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如`http://www.csrc.gov.cn/pub/newsite/*/*`的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
-
-### 申请事项进度
-
-<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
 ## 中国政协网
 
@@ -542,12 +629,6 @@ pageClass: routes
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
-## 中華民國國防部
-
-### 即時軍事動態
-
-<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
-
 ## 中华人民共和国国家发展和改革委员会
 
 ### 新闻动态
@@ -645,23 +726,11 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/mohurd/policy" path="/gov/mohurd/policy"/>
 
-## 重庆市人民政府
+## 中華民國國防部
 
-### 两江新区信息公开网
+### 即時軍事動態
 
-#### 党务公开
-
-<Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
-
-#### 政务公开
-
-<Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" :paramsDesc="['分类名']">
-
-| 履职依据 | 公示公告 |
-| -------- | -------- |
-| lzyj     | gsgg     |
-
-</Route>
+<Route author="nczitzk" example="/gov/taiwan/mnd" path="/gov/taiwan/mnd"/>
 
 ## 中央纪委国家监委
 
