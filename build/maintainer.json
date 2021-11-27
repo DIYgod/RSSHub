@@ -179,6 +179,12 @@
     "/startuplatte/:category?": [
         "nczitzk"
     ],
+    "/subhd/sub/:category?": [
+        "nczitzk"
+    ],
+    "/subhd/zu/:category?": [
+        "nczitzk"
+    ],
     "/szse/rule": [
         "nczitzk"
     ],
@@ -885,7 +891,6 @@
     "/zimuzu/resource/:id?": [],
     "/zimuzu/top/:range/:type": [],
     "/zimuku/:type?": [],
-    "/subhd/newest": [],
     "/huxiu/tag/:id": [],
     "/huxiu/search/:keyword": [],
     "/huxiu/author/:id": [],
