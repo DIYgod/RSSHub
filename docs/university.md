@@ -845,41 +845,53 @@ category 列表：
 
 ### 研究生院
 
-<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['栏目, 默认为 `announcement`']" radar="1" rssbud="1">
+<Route author="Derekmini XYenon" example="/heu/yjsy/list/2981" path="/heu/yjsy/list/:id" :paramsDesc="['栏目编号，由 `URL` 中获取。']" radar="1" rssbud="1">
 
-| 通知公告     | 新闻动态 | 国家公派项目 | 国际合作与交流项目 |
-| ------------ | -------- | ------------ | ------------------ |
-| announcement | news     | gjgp         | gjhz               |
+| 通知公告 | 新闻动态 | 学籍注册 | 奖助学金 | 其他 |
+| :------: | :------: | :------: | :------: | :--: |
+|   2981   |   2980   |   3009   |   3011   |  ... |
 
 </Route>
 
 ### 就业服务平台
 
-<Route author="Derekmini" example="/heu/job/tzgg" path="/heu/job/:type?" :paramsDesc="['栏目, 默认为 `tzgg`']" radar="1" rssbud="1">
+<Route author="Derekmini" example="/heu/job/list/tzgg" path="/heu/job/list/:id" :paramsDesc="['栏目，如下表']" radar="1" rssbud="1">
 
-| 通知公告 |
-| -------- |
-| tzgg     |
+| 通知公告 | 热点新闻 |
+| :------: | :------: |
+|   tzgg   |   rdxw   |
+
+</Route>
+
+#### 大型招聘会
+
+<Route author="Derekmini" example="/heu/job/bigemploy" path="/heu/job/bigemploy" radar="1" rssbud="1">
+
+</Route>
+
+#### 今日招聘会
+
+<Route author="Derekmini" example="/heu/job/calendar" path="/heu/job/calendar" radar="1" rssbud="1">
 
 </Route>
 
 ### 工学新闻
 
-<Route author="Derekmini XYenon" example="/heu/news/yw" path="/heu/news/:type?" :paramsDesc="['栏目, 默认为 `yw`']" radar="1" rssbud="1">
+<Route author="Derekmini XYenon" example="/heu/gx/list/xw/yw" path="/heu/gx/:type/:column/:id?" :paramsDesc="['页面类型，如 `新闻 - 要闻` 页面为 `list` 类型，`新闻 - 专题策划` 页面为 `card` 类型，通过直接观察页面来判断；','主栏，如 `新闻：xw`，由 `URL` 中获取；','次栏，如 `要闻：yw`，如果次栏存在，则为必选，由 `URL` 中获取。']" radar="1" rssbud="1">
 
-| 要闻 | 时讯 |
-| ---- | ---- |
-| yw   | sx   |
+|   新闻   | 新闻 - 要闻 | 新闻 - 专题策划 | 其他 |
+| :------: | :---------: | :-------------: | :--: |
+| /card/xw | /list/xw/yw |  /card/xw/ztch  |  ... |
 
 </Route>
 
-### 水声工程学院通知
+### 水声工程学院
 
-<Route author="Derekmini" example="/heu/uae/xwdt" path="/heu/uae/:type?" :paramsDesc="['栏目, 默认为 `xwdt`']" radar="1" rssbud="1">
+<Route author="Derekmini" example="/heu/uae/list/3751" path="/heu/uae/list/:id" :paramsDesc="['栏目编号，由 `URL` 中获取。']" radar="1" rssbud="1">
 
-| 新闻动态 | 通知公告 |
-| -------- | -------- |
-| xwdt     | tzgg     |
+| 新闻动态 | 通知公告 | 其他 |
+| :------: | :------: | :--: |
+|   3751   |   3752   |  ... |
 
 </Route>
 
