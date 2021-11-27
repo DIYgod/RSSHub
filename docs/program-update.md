@@ -468,18 +468,6 @@ pageClass: routes
 
 见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
 
-## 厚墨
-
-### 书源更新
-
-<Route author="AngUOI" example="/houmo/9251" path="/houmo/:code?" :paramsDesc="['不填则默认获取全部']">
-
-| 1212 | 2000 | 2333 | 6666   | 9251 | 9713 |
-| ---- | ---- | ---- | ------ | ---- | ---- |
-| 沚水 | 楚观 | 纯二 | 张小晚 | 归谜 | 旧人 |
-
-</Route>
-
 ## 蒲公英应用分发
 
 ### app 更新
