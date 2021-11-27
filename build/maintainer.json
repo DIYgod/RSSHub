@@ -44,6 +44,9 @@
     "/furstar/archive/:lang?": [
         "NeverBehave"
     ],
+    "/hbr/topic/:topic?/:type?": [
+        "nczitzk"
+    ],
     "/hkjunkcall/": [
         "nczitzk"
     ],
