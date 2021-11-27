@@ -136,6 +136,20 @@ pageClass: routes
 
 </Route>
 
+### 人事处
+
+<Route author="nczitzk" example="/pku/hr" path="/pku/hr/:category?" :paramsDesc="['分类，见下方说明，默认为首页最新公告']">
+
+::: tip 提示
+
+分类字段处填写的是对应北京大学人事处分类页网址中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
+
+如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 的网址为 <https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm> 其中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段为 `rczp/js/jxkyry`。随后，并将其中的 `/` 修改为 `-`，可以得到 `rczp-js-jxkyry`。所以最终我们的路由为 [`/pku/hr/rczp-js-jxkyry`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
+
+:::
+
+</Route>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
@@ -182,6 +196,10 @@ pageClass: routes
 
 <Route author="sinofp" example="/bit/cs" path="/bit/cs" />
 
+### 人才招聘
+
+<Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" />
+
 ## 北京林业大学
 
 ### 绿色新闻网
@@ -209,6 +227,18 @@ pageClass: routes
 | 教务快讯 | 考试信息 | 课程信息 | 教改动态 | 图片新闻 |
 | -------- | -------- | -------- | -------- | -------- |
 | jwkx     | ksxx     | kcxx     | jgdt     | tpxw     |
+
+</Route>
+
+## 北京师范大学
+
+### 经济与工商管理学院
+
+<Route author="nczitzk" example="/bnu/bs" path="/bnu/bs/:category?" :paramsDesc="['分类，见下表，默认为学院新闻']">
+
+| 学院新闻 | 通知公告 | 学术成果 | 学术讲座 | 教师观点 | 人才招聘 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| xw       | zytzyyg  | xzcg     | xzjz     | xz       | bshzs    |
 
 </Route>
 
@@ -266,6 +296,10 @@ pageClass: routes
 由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。
 
 :::
+
+### 人才招聘
+
+<Route author="nczitzk" example="/bupt/rczp" path="/bupt/rczp" />
 
 ## 常州大学
 
@@ -643,6 +677,22 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+## 对外经济贸易大学
+
+### 人力资源处
+
+<Route author="nczitzk" example="/uibe/hr" path="/uibe/hr/:category?/:type?" :paramsDesc="['分类，可在对应页 URL 中找到，默认为通知公告', '类型，可在对应页 URL 中找到，默认为空']">
+
+::: tip 提示
+
+如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 <http://hr.uibe.edu.cn/tzgg>，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
+
+如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 <http://hr.uibe.edu.cn/jszp/zpxx>，其路由为 [`/uibe/hr/jszp/zpxx`](https://rsshub.app/uibe/jszp/zpxx)
+
+:::
+
+</Route>
+
 ## 福州大学
 
 ### 教务处通知
@@ -993,6 +1043,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
 | ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
 | all  | course | exam | practice | communication | teacher | info |
+
+</Route>
+
+### 教务处学院通知
+
+<Route author="KeNorizon Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
+
+| 全部 | 选课   | 考试 | 信息 |
+| ---- | ------ | ---- | ---- |
+| all  | course | exam | info |
 
 </Route>
 
@@ -1869,7 +1929,13 @@ type 列表：
 
 ### 新闻
 
-<Route author="Chandler-Lu" example="/wzu/news" path="/wzu/news" />
+<Route author="Chandler-Lu" example="/wzu/news/0" path="/wzu/news/:type" :paramsDesc="['分类, 见下表 默认为`0`']" />
+
+| 温大新闻 | 媒体温大 | 学术温大 | 通知公告 | 招标信息 | 学术公告 |
+| :------: | :------: | :------: | :------: | :------: | :------: |
+|     0    |     1    |     2    |     3    |     4    |     5    |
+
+</Route>
 
 ## 温州商学院
 
@@ -2167,6 +2233,15 @@ type 列表：
 | -------- | ---------- | -------- | -------- | ---------- | -------- |
 | 1        | 2          | 3        | 4        | 5          | 6        |
 
+</Route>
+
+## 云南师范大学
+
+### 继续教育学院
+
+#### 新闻
+
+<Route author="SettingDust" example="/ynnu/edu/news" path="/ynnu/edu/news" >
 </Route>
 
 ## 浙江大学
@@ -2503,6 +2578,22 @@ type 列表：
 | 招聘类型 | 本部招聘 | 湘雅招聘 | 铁道招聘 | 在线招聘 | 事业招考 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
 | 参数     | 1        | 2        | 3        | 4        | 5        |
+
+</Route>
+
+## 中国人民大学
+
+### 人事处
+
+<Route author="nczitzk" example="/ruc/hr" path="/ruc/hr/:category?" :paramsDesc="['分类，见下方说明，默认为首页通知公告']">
+
+::: tip 提示
+
+分类字段处填写的是对应中国人民大学人事处分类页网址中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
+
+如 [中国人民大学人事处 - 办事机构 - 教师事务办公室 - 教师通知公告](http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm) 的网址为 <http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm> 其中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段为 `bsjg/bsjsswbgs/jstzgg`。随后，并将其中的 `/` 修改为 `-`，可以得到 `bsjg-bsjsswbgs-jstzgg`。所以最终我们的路由为 [`/ruc/hr/bsjg-bsjsswbgs-jstzgg`](https://rsshub.app/ruc/hr/bsjg-bsjsswbgs-jstzgg)
+
+:::
 
 </Route>
 

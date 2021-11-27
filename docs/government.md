@@ -4,6 +4,18 @@ pageClass: routes
 
 # 政务消息
 
+## 澳门廉政公署
+
+### 最新消息
+
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']">
+
+| 全部 | 案件发布 | 调查报告或勘喻 | 年度报告     | 公署消息 |
+| ---- | -------- | -------------- | ------------ | -------- |
+| all  | case     | Persuasion     | AnnualReport | PCANews  |
+
+</Route>
+
 ## 北京市卫生健康委员会
 
 ### 新闻中心
@@ -31,6 +43,18 @@ pageClass: routes
 | 履职依据 | 公示公告 |
 | -------- | -------- |
 | lzyj     | gsgg     |
+
+</Route>
+
+## 德阳考试中心
+
+### 考试新闻
+
+<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型。']">
+
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |  其他 |
+| :------: | :--------: | :------: | :--------------------: | :---: |
+|    all   |     gwy    |   sydw   |          zyzc          | other |
 
 </Route>
 
@@ -238,7 +262,7 @@ pageClass: routes
 
 ### 新闻公布
 
-<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']">
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']"/>
 
 ## 中国工业和信息化部
 
