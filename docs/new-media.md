@@ -1236,6 +1236,18 @@ Supported sub-sites:
 
 <Route author="DIYgod" example="/chouti/top/24" path="/chouti/top/:hour?" :paramsDesc="['排行榜周期，可选 24 72 168 三种，默认 24']" />
 
+## 創新拿鐵
+
+### 分类
+
+<Route author="nczitzk" example="/startuplatte" path="/startuplatte/:category?" :paramsDesc="['分类，见下表，默认为首頁']">
+
+| 首頁 | 大師智慧 | 深度分析 | 新知介紹 |
+| ---- | -------- | -------- | -------- |
+|      | quote    | analysis | trend    |
+
+</Route>
+
 ## 创业邦
 
 ### 作者
