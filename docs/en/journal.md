@@ -201,6 +201,12 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 <RouteEn author="yech1990" example="/pubmed/trending" path="/pubmed/trending" supportScihub="1"/>
 
+## ScienceDirect
+
+### Journal
+
+<RouteEn author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['Journal id, can be found in URL']"/>
+
 ## Science Journal
 
 ### Current Issue
