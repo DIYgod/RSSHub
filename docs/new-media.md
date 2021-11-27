@@ -733,8 +733,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="ncziztk" example="/odaily/user/2147486902" path="/odaily/user/:id" :paramsDesc="['用户 id，可在用户页地址栏中找到']"/>
 
-## Odaily 星球日报
-
 ### 活动
 
 <Route author="ncziztk" example="/odaily/activity" path="/odaily/activity"/>
