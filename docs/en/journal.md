@@ -68,6 +68,8 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 <RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" supportScihub="1"/>
 
+</RouteEn>
+
 ## Google Scholar
 
 ### Keywords Monitoring
@@ -91,6 +93,22 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 <RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
 The parameter id in the route is the id in the URL of the user ’s Google Scholar reference page，for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+
+</RouteEn>
+
+## IEEE Xplore
+
+### Latest Research
+
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name， get it from punumber of the URL','Sort Type, default: `vol-only-seq`，get it from sortType of the URL']" radar="1" rssbud="1">
+
+</RouteEn>
+
+### Latest Research (Last 2 month)
+
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name， get it from punumber of the URL','Sort Type, default: `vol-only-seq`，get it from sortType of the URL']" radar="1" rssbud="1">
+
+Due to the large number of paper entries, new entries may always at the end of entries, so only articles published in the current month and the previous month are filtered.
 
 </RouteEn>
 
