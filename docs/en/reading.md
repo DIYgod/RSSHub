@@ -15,3 +15,7 @@ pageClass: routes
 ### New Stories
 
 <RouteEn author="nczitzk" example="/literotica/new" path="/literotica/new"/>
+
+### Category
+
+<RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Categor, can be found in URL']"/>
