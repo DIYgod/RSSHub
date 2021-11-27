@@ -44,6 +44,15 @@
     "/furstar/archive/:lang?": [
         "NeverBehave"
     ],
+    "/hotchina/": [
+        "nczitzk"
+    ],
+    "/hotchina/category/:id?": [
+        "nczitzk"
+    ],
+    "/hotchina/tag/:id?": [
+        "nczitzk"
+    ],
     "/hotukdeals/:type": [
         "DIYgod"
     ],
