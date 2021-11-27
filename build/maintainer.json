@@ -234,6 +234,9 @@
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
+    "/yaohuo/": [
+        "nczitzk"
+    ],
     "/rsshub/rss": [],
     "/rsshub/routes": [],
     "/rsshub/sponsors": [],
@@ -1845,7 +1848,6 @@
     "/secshi": [],
     "/chuhaibiji": [],
     "/blogs/jianning": [],
-    "/yaohuo/:type?": [],
     "/hudongba/:city/:id": [],
     "/chaping/banner": [],
     "/chaping/news/:caty?": [],
