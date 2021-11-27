@@ -2025,6 +2025,7 @@
     "/x410/news": [],
     "/right/forum/:id?": [],
     "/hket/:category?": [],
+    "/hkgolden/:id?/:limit?/:sort?": [],
     "/discuss/:fid": [],
     "/uwants/:fid": [],
     "/now/news/rank": [],
