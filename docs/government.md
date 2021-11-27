@@ -234,6 +234,12 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
+## 台灣衛生福利部
+
+### 即時新聞澄清
+
+<Route author="nczitzk" example="/mohw/clarification" path="/mohw/clarification"/>
+
 ## 武汉东湖新技术开发区
 
 ### 新闻中心
