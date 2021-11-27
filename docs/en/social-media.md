@@ -136,7 +136,13 @@ If you don't want to setup credentials, use Picuki.
 
 ### Tag
 
-<RouteEn author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['tag name', 'ranking type, default to new, can be new date week month total']"/>
+<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']">
+
+| new  | date | week | month | total |
+| ---- | ---- | ---- | ----- | ----- |
+| 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
+
+</Route>
 
 ## Mastodon
 
@@ -297,6 +303,10 @@ generates
 ### User timeline
 
 <RouteEn path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
+
+### User media
+
+<RouteEn author="yindaheng98" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
 
 ## User following timeline
 
