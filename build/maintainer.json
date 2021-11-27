@@ -2035,6 +2035,7 @@
     "/uwants/:fid": [],
     "/now/news/rank": [],
     "/s-hentai/:id?": [],
+    "/netflix/newsroom/:category?/:region?": [],
     "/sbs/chinese/:category?/:id?/:dialect?/:language?": [],
     "/asiantolick/:category?/:keyword?": [],
     "/researchgate/publications/:id": [],
