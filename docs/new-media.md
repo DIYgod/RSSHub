@@ -902,6 +902,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
+## swissinfo
+
+### 分类
+
+<Route author="nczitzk" example="/swissinfo/chi/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['语言，默认为 eng', '分类，默认为 Latest News']"/>
+
 ## Sixth Tone
 
 ### 最新文章
