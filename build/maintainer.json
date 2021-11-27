@@ -74,6 +74,9 @@
     "/getdr/": [
         "nczitzk"
     ],
+    "/gf-cn/news/:category?": [
+        "nczitzk"
+    ],
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
@@ -2133,7 +2136,6 @@
     "/elitebabes/:category?": [],
     "/trakt/collection/:username/:type?": [],
     "/ccg/:category?": [],
-    "/gf-cn/news/:category?": [],
     "/eagle/changelog/:language?": [],
     "/ezone/:category?": [],
     "/cria/news/:id?": [],
