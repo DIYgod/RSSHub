@@ -203,6 +203,11 @@
     "/secnews/index": [
         "kaiili"
     ],
+    "/solidot/:type?": [
+        "sgqy",
+        "hang333",
+        "TonyRL"
+    ],
     "/startuplatte/:category?": [
         "nczitzk"
     ],
@@ -824,7 +829,6 @@
     "/60s-science": [],
     "/99percentinvisible/transcript": [],
     "/aozora/newbook/:count?": [],
-    "/solidot/:type?": [],
     "/parcel/hermesuk/:tracking": [],
     "/dgtle": [],
     "/dgtle/whale/category/:category": [],
