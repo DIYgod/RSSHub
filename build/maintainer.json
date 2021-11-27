@@ -131,6 +131,9 @@
     "/mydrivers/:type?/:id?": [
         "nczitzk"
     ],
+    "/mygopen/:label?": [
+        "nczitzk"
+    ],
     "/netease/news/rank/:category?/:type?/:time?": [
         "nczitzk"
     ],
