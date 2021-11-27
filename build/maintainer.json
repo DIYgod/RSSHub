@@ -59,6 +59,18 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/lfsyd/home": [
+        "auto-bot-ty"
+    ],
+    "/lfsyd/old_home": [
+        "auto-bot-ty"
+    ],
+    "/lfsyd/user/:id?": [
+        "auto-bot-ty"
+    ],
+    "/lfsyd/tag/:tagId?": [
+        "auto-bot-ty"
+    ],
     "/ngocn2/:category?": [
         "nczitzk"
     ],
@@ -312,9 +324,6 @@
     "/nytimes/:lang?": [],
     "/3dm/:name/:type": [],
     "/3dm/news": [],
-    "/lfsyd/:typecode": [],
-    "/lfsyd/user/:id": [],
-    "/lfsyd/tag/:tag": [],
     "/ximalaya/album/:id/:all?": [],
     "/ximalaya/album/:id/:all/:shownote?": [],
     "/eztv/torrents/:imdb_id": [],
