@@ -14,6 +14,12 @@
     "/ccac/news/:type/:lang?": [
         "linbuxiao"
     ],
+    "/cebbank/quotation/all": [
+        "linbuxiao"
+    ],
+    "/cebbank/quotation/history/:type": [
+        "linbuxiao"
+    ],
     "/epicgames/epicgames/:collection": [
         "DIYgod",
         "NeverBehave",
