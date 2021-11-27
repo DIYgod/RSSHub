@@ -104,6 +104,9 @@
     "/literotica/category/:category": [
         "nczitzk"
     ],
+    "/mingpao/:type?/:category?": [
+        "TonyRL"
+    ],
     "/mvm/:category?": [
         "nczitzk"
     ],
