@@ -1638,7 +1638,7 @@ column 为 third 时可选的 category:
 
 ### 最新文章
 
-<Route author="vlcheng" example="/leiphone/latest" path="/leiphone/latest"/>
+<Route author="vlcheng" example="/leiphone" path="/leiphone"/>
 
 ### 业界资讯
 
