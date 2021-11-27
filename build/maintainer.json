@@ -134,6 +134,9 @@
     "/netease/news/rank/:category?/:type?/:time?": [
         "nczitzk"
     ],
+    "/newsmarket/:category?": [
+        "nczitzk"
+    ],
     "/ngocn2/:category?": [
         "nczitzk"
     ],
