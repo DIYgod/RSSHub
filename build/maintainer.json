@@ -72,6 +72,9 @@
         "DIYgod",
         "NeverBehave"
     ],
+    "/timednews/news/:type?": [
+        "linbuxiao"
+    ],
     "/trow/portal": [
         "shiningdracon"
     ],
