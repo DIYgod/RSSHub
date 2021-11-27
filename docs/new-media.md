@@ -2644,6 +2644,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 香港討論區
+
+### 版塊
+
+<Route author="nczitzk" example="/discuss/62" path="/discuss/:fid" :paramsDesc="['fid，可在对应板块页的 URL 中找到']"/>
+
 ## 香水时代
 
 ### 首页
