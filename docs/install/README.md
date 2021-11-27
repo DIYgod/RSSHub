@@ -704,3 +704,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
     -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
     -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
+
+-   南方周末付费全文
+    -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文
