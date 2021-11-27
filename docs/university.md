@@ -703,6 +703,14 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 | -------- | -------- |
 | jxtz     | zjjz     |
 
+### 教务处通知（无文章内容）
+
+<Route author="Lao-Liu233" example="/fzu_min/jxtz" path="/fzu_min/:type" :paramsDesc="['分类见下表']"/>
+
+| 教学通知 | 专家讲座 |
+| -------- | -------- |
+| jxtz     | zjjz     |
+
 ## 复旦大学继续教育学院
 
 ### 成人夜大通知公告
