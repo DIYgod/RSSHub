@@ -1236,6 +1236,16 @@ Supported sub-sites:
 
 <Route author="DIYgod" example="/chouti/top/24" path="/chouti/top/:hour?" :paramsDesc="['排行榜周期，可选 24 72 168 三种，默认 24']" />
 
+## 创业邦
+
+### 作者
+
+<Route author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id']"/>
+
+### 标签
+
+<Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
+
 ## 創新拿鐵
 
 ### 分类
@@ -1247,16 +1257,6 @@ Supported sub-sites:
 |      | quote    | analysis | trend    |
 
 </Route>
-
-## 创业邦
-
-### 作者
-
-<Route author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id']"/>
-
-### 标签
-
-<Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称']"/>
 
 ## 得到
 
@@ -2166,6 +2166,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 趨勢科技防詐達人
+
+### 最新詐騙情報
+
+<Route author="nczitzk" example="/getdr" path="/getdr"/>
+
 ## 趣头条
 
 ### 分类
@@ -2179,12 +2185,6 @@ column 为 third 时可选的 category:
 更多的 cid 可通过访问[官网](http://home.qutoutiao.net)切换分类，观察 url 获得。
 
 </Route>
-
-## 趨勢科技防詐達人
-
-### 最新詐騙情報
-
-<Route author="nczitzk" example="/getdr" path="/getdr"/>
 
 ## 全球化智库
 
