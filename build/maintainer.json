@@ -577,6 +577,7 @@
     "/dgut/xsc/:type?": [],
     "/tju/sse/:type?": [],
     "/scut/jwc/notice/:category?": [],
+    "/scut/jwc/school/:category?": [],
     "/scut/jwc/news": [],
     "/wzbc/:type?": [],
     "/henu/:type?": [],
