@@ -239,6 +239,12 @@ _only support Science Journal_
 
 </RouteEn>
 
+## ScienceDirect
+
+### Journal
+
+<RouteEn author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['Journal id, can be found in URL']"/>
+
 ## X-MOL Platform
 
 ### Journal
