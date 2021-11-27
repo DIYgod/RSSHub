@@ -11,6 +11,9 @@
     "/biodiscover/:channel?": [
         "aidistan"
     ],
+    "/bnu/bs/:category?": [
+        "nczitzk"
+    ],
     "/ccac/news/:type/:lang?": [
         "linbuxiao"
     ],
