@@ -213,6 +213,12 @@ pageClass: routes
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Now 新聞
+
+### 熱門
+
+<Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
+
 ## Phoronix
 
 ### 新闻与评测
