@@ -56,6 +56,9 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/csc/notice/:type?": [
+        "Derekmini"
+    ],
     "/distill/": [
         "nczitzk"
     ],
@@ -1694,7 +1697,6 @@
     "/nsfc/news/:type?": [],
     "/krankenkassen": [],
     "/guat/news/:type?": [],
-    "/csc/notice/:type?": [],
     "/learnku/:community/:category?": [],
     "/neea/:type": [],
     "/cauyjs": [],
