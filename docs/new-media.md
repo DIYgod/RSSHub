@@ -2671,6 +2671,16 @@ column 为 third 时可选的 category:
 
 </Route>
 
+### 人间
+
+<Route author="nczitzk" example="/netease/renjian/texie" path="/netease/renjian/:category?" :paramsDesc="['分类，见下表，默认为特写']">
+
+| 特写  | 记事  | 大写  | 好读  | 看客  |
+| ----- | ----- | ----- | ----- | ----- |
+| texie | jishi | daxie | haodu | kanke |
+
+</Route>
+
 ## 網路天文館
 
 ### 天象預報
