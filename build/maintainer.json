@@ -176,6 +176,9 @@
     "/pts/dailynews": [
         "nczitzk"
     ],
+    "/qm120/news/:category?": [
+        "nczitzk"
+    ],
     "/qq/live/:id": [
         "nczitzk"
     ],
