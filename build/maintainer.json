@@ -2,6 +2,9 @@
     "/2047/:category?/:sort?": [
         "nczitzk"
     ],
+    "/2048/:id?": [
+        "nczitzk"
+    ],
     "/8world/:category?": [
         "nczitzk"
     ],
@@ -1481,7 +1484,6 @@
     "/hackerone/hacktivity": [],
     "/hackerone/search/:search": [],
     "/cowlevel/element/:id": [],
-    "/2048/bbs/:fid": [],
     "/google/news/:category/:locale": [],
     "/p-articles/section/:section": [],
     "/p-articles/contributors/:author": [],
