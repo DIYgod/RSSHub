@@ -35,6 +35,12 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/eastday/find": [
+        "nczitzk"
+    ],
+    "/eastday/portrait": [
+        "nczitzk"
+    ],
     "/epicgames/epicgames/:collection": [
         "DIYgod",
         "NeverBehave",
