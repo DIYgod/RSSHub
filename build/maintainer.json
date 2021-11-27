@@ -352,6 +352,9 @@
     "/wechat/feeddd/:id": [
         "TonyRL"
     ],
+    "/wsyu/news/:type?": [
+        "Derekmini"
+    ],
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
@@ -1732,7 +1735,6 @@
     "/eastmoney/user/:uid": [],
     "/ssmh": [],
     "/ssmh/category/:cid": [],
-    "/wsyu/news/:type?": [],
     "/scnuyjs": [],
     "/scnucs": [],
     "/scutyjs": [],
