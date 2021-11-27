@@ -2818,12 +2818,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 新华网
-
-### 新华社新闻
-
-<Route author="nczitzk" example="/news/whxw" path="/news/whxw"/>
-
 ## 辛華社
 
 ### 首页
@@ -2849,6 +2843,12 @@ column 为 third 时可选的 category:
 | ---- | ------ | -------- | ---- | -------- | -------- | -------- |
 
 </Route>
+
+## 新华网
+
+### 新华社新闻
+
+<Route author="nczitzk" example="/news/whxw" path="/news/whxw"/>
 
 ## 新浪专栏
 
