@@ -635,6 +635,20 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## Netflix
+
+### Newsroom
+
+<Route author="nczitzk" example="/netflix/newsroom" path="/netflix/newsroom/:category?/:region?" :paramsDesc="['分类，见下表，默认为 0 即 全部', '地区，可在地区页 URL 中找到，默认为 en 即 英语地区']">
+
+分类
+
+| 全部报道 | 业务     | 创新          | 娱乐       | 巴西制作 | 社会影响 |
+| -------- | -------- | ------------- | ---------- | -------- | -------- |
+| all      | business | entertainment | innovation | brazil   | impact   |
+
+</Route>
+
 ## Odaily 星球日报
 
 ### 活动
