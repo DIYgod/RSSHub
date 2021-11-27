@@ -80,6 +80,20 @@ pageClass: routes
 
 <Route author="emdoe HenryQW" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" supportScihub="1"/>
 
+## ELSEVIER
+
+### 最新文章
+
+<Route author="Derekmini sunsunwolf-swb" example="/elsevier/signal-processing/latest" path="/elsevier/:journal/latest" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
+
+</Route>
+
+### 指定卷中的文章
+
+<Route author="Derekmini sunsunwolf-swb" example="/elsevier/signal-processing/vol/192" path="/elsevier/:journal/vol/:id" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分','卷号 (如果 `Issue` 存在, 使用 `Volume-Issue`, e.g., `/elsevier/aace-clinical-case-reports/vol/7-6`)']" radar="1" rssbud="1">
+
+</Route>
+
 ## IEEE Xplore
 
 ### 作者
@@ -101,6 +115,24 @@ pageClass: routes
 ### 最新文章（近两个月）
 
 <Route author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/:journal/latest/date/:sortType?" :paramsDesc="['期刊名称， 复制 URL 中 punumber 部分','排序方式, 默认`vol-only-seq`，复制 URL 中 sortType 部分。由于期刊条目过多，按照该排序方式可能将近期更新文章淹没在旧条目中，故只筛选当前月与上个月内发表文章']" radar="1" rssbud="1">
+
+</Route>
+
+## JASA
+
+### 最新文章
+
+<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
+
+</Route>
+
+### 专栏
+
+<Route author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['专栏名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
+
+| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
+| :-----: | :---------: | :-----------------: | :----: |
+|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
 
 </Route>
 
@@ -221,6 +253,12 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## ScienceDirect
+
+### Journal
+
+<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
+
 ## Stork 文献鸟订阅
 
 ### 关键词
@@ -252,5 +290,17 @@ _仅支持 Science 主刊_
 <Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
 路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 <https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ> 中 user= 后的 mlmE4JMAAAAJ。
+
+</Route>
+
+## 管理世界
+
+### 分类
+
+<Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
+
+| 本期要目 | 学术活动 | 通知公告 |
+| -------- | -------- | -------- |
+| bqym     | xshd     | tzgg     |
 
 </Route>

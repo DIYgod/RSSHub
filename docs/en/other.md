@@ -51,6 +51,12 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 <RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
 
+### Yahoo Japan COVID19 news collection
+
+Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
+
+<RouteEn author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['Romaji of Todofuken. Can be got from URLs on area detail page. Example: kyoto']"/>
+
 ## Darwin Awards
 
 ### Articles
