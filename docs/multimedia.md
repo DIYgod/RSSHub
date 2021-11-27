@@ -205,6 +205,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['标签，可在 URL 中找到']"/>
 
+### Upcoming Live Streams
+
+<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
