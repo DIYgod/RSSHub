@@ -47,6 +47,9 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/people/liuyan/:id/:state?": [
+        "nczitzk"
+    ],
     "/qq/live/:id": [
         "nczitzk"
     ],
