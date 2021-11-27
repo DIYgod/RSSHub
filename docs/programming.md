@@ -58,6 +58,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/deeplearningai/thebatch" path="/deeplearningai/thebatch"/>
 
+## Distill
+
+### Latest
+
+<Route author="nczitzk" example="/distill" path="/distill"/>
+
 ## Dockone
 
 ### 周报
