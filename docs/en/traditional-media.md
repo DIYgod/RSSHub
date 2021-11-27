@@ -175,6 +175,32 @@ Generates full-text feeds that the official feed doesn't provide.
 
 </RouteEn>
 
+## Ming Pao
+
+### Ming Pao Daily
+
+<RouteEn author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" :paramsDesc="['channel，default to brief']"/>
+
+::: tip tips
+Only `s00017` is in English.
+:::
+
+| category | Channel       |
+| -------- | ------------- |
+| s00001   | Brief         |
+| s00002   | Local         |
+| s00003   | Editorial     |
+| s00004   | Economy       |
+| s00005   | Supplement    |
+| s00011   | Education     |
+| s00012   | Views         |
+| s00013   | China         |
+| s00014   | International |
+| s00015   | Sports        |
+| s00016   | Entertainment |
+| s00017   | English       |
+| s00018   | Columnist     |
+
 ## NHK
 
 ### News Web Easy
@@ -235,6 +261,60 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 | local      | greaterchina       | international | finance      | sport      |
 | ---------- | ------------------ | ------------- | ------------ | ---------- |
 | Local News | Greater China News | World News    | Finance News | Sport News |
+
+</RouteEn>
+
+## SBS
+
+### Chinese
+
+<RouteEn author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" :paramsDesc="['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']">
+
+::: tip Tip
+
+When subscribing to podcasts, fill `category` with **podcast**. For example, URL to [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>, with **sbs-mandarin** as `id`, **mandarin** as `dialect`, `language` as **zh-hans**, and the route is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans).
+
+:::
+
+| 新闻 | 澳大利亚新闻    | 国际新闻           | ​商业与财经      |
+| ---- | --------------- | ------------------ | ---------------- |
+| news | australian-news | international-news | business-finance |
+
+| 澳中关系                  | ​移民与签证 | Stories in English |
+| ------------------------- | ----------- | ------------------ |
+| australia-china-relations | immigration | english            |
+
+| COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
+| ----------------- | ------------------ | ----------------- | --------- |
+| coronavirus       | australian-chinese | life-in-australia | education |
+
+| 健康   | 吃喝玩乐                  | 艺术人文        | 澳洲定居指南     |
+| ------ | ------------------------- | --------------- | ---------------- |
+| health | food-travel-entertainment | cultural-events | settlement-guide |
+
+SBS Mandarin Programs:
+
+| SBS 普通话播客 | 解读澳洲            | 疫苗快报                   |
+| -------------- | ------------------- | -------------------------- |
+| sbs-mandarin   | australia-explained | covid-vaccine-daily-update |
+
+SBS Cantonese Programs:
+
+| SBS 廣東話節目 Podcast | 疫苗快報            | 美食速遞        | 我不是名人          |
+| ---------------------- | ------------------- | --------------- | ------------------- |
+| sbs-cantonese          | covid-vaccine-daily | gourmet-express | my-australian-story |
+
+| 健康快樂人         | 園藝趣談       | 寰宇金融       | 文化 360    | 科技世界         |
+| ------------------ | -------------- | -------------- | ----------- | ---------------- |
+| healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
+
+::: tip Tip
+
+Mostly, you can omit `language`, for the reason that **madarin** is with **zh-hans** and **cantonese** is with **zh-hant** by default. For example, the route of [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans), which can also be [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin).
+
+You still can customize `language`, however, it is important to note that not all pages are available in bilingual versions.
+
+:::
 
 </RouteEn>
 

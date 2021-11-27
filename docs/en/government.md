@@ -20,7 +20,20 @@ pageClass: routes
 
 ### Press Releases
 
-<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']">
+<RouteEn author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']"/>
+
+## Macau Independent Commission Against Corruption
+
+### Latest News
+
+<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']">
+Category
+
+| All  | Detected Cases | Investigation Reports or Recommendations  | Annual Reports | CCAC's Updates |
+| ---- | -------------- | ----------------------------------------- | -------------- | -------------- |
+| all  | case           | Persuasion                                | AnnualReport   | PCANews        |
+
+</RouteEn>
 
 ## Ministry of Foreign Affairs of Japan
 
