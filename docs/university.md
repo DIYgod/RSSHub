@@ -996,6 +996,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 教务处学院通知
+
+<Route author="KeNorizon Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
+
+| 全部 | 选课   | 考试 | 信息 |
+| ---- | ------ | ---- | ---- |
+| all  | course | exam | info |
+
+</Route>
+
 ### 教务处新闻动态
 
 <Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
@@ -1523,9 +1533,25 @@ type 列表：
 
 </Route>
 
+::: warning 注意
+由于学校通知仅允许校园网访问，需自行部署。
+:::
+
 ### 清华大学招聘信息
 
 <Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
+
+## 厦门大学
+
+### 航空航天学院
+
+<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" :paramsDesc="['分类见下表']"/>
+
+| 通知公告 | 本科生教务 | 研究生教务 |
+| :------: | :--------: | :--------: |
+|   tzgg   |    bksjw   |    yjsjw   |
+
+</Route>
 
 ## 山东大学
 
@@ -1617,11 +1643,19 @@ type 列表：
 
 ### 官网信息
 
-<Route author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['events 为学术讲座, notes 为通知公告']"/>
+<Route author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['类型名称']"/>
+
+| 学术讲座 | 通知公告 |
+| -------- | -------- |
+| events   | notes    |
 
 ### 教务信息
 
-<Route author="simonsmh" example="/shmtu/jwc/jiaowugonggao" path="/shmtu/jwc/:type" :paramsDesc="['jiaowuxinwen 为教务新闻, jiaowugonggao 为教务公告']"/>
+<Route author="simonsmh" example="/shmtu/jwc/jwgg" path="/shmtu/jwc/:type" :paramsDesc="['类型名称']"/>
+
+| 教务公告 | 教务新闻 |
+| -------- | -------- |
+| jwgg     | jwxw     |
 
 ## 上海海洋大学
 
@@ -2143,6 +2177,15 @@ type 列表：
 | -------- | ---------- | -------- | -------- | ---------- | -------- |
 | 1        | 2          | 3        | 4        | 5          | 6        |
 
+</Route>
+
+## 云南师范大学
+
+### 继续教育学院
+
+#### 新闻
+
+<Route author="SettingDust" example="/ynnu/edu/news" path="/ynnu/edu/news" >
 </Route>
 
 ## 浙江大学
