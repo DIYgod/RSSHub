@@ -53,6 +53,9 @@
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
+    "/hkej/:category?": [
+        "TonyRL"
+    ],
     "/hket/:category?": [
         "TonyRL"
     ],
