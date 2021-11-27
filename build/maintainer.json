@@ -35,6 +35,9 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/distill/": [
+        "nczitzk"
+    ],
     "/eastday/find": [
         "nczitzk"
     ],
