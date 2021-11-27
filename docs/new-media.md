@@ -44,6 +44,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户ID']" />
 
+## 8 视界
+
+### 分类
+
+<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类，见下表，默认为即时']">
+
+| 即时     | 新加坡    | 东南亚         | 中港台        | 国际  | 财经    | 体育   |
+| -------- | --------- | -------------- | ------------- | ----- | ------- | ------ |
+| realtime | singapore | southeast-asia | greater-china | world | finance | sports |
+
+</Route>
+
 ### 主题文章
 
 <Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题ID']" />
@@ -114,6 +126,18 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## CBNData
+
+### 看点
+
+<Route author="nczitzk" example="/cbndata/information" path="/cbndata/information/:category?" :paramsDesc="['分类，见下表，默认为看点']">
+
+| 看点 | 餐饮零售 | 美妆个护 | 服饰鞋包 | 家电数码 | 宠物 | 营销 |
+| ---- | -------- | -------- | -------- | -------- | ---- | ---- |
+|      | 2560     | 1        | 2559     | 59       | 2419 | 2484 |
+
+</Route>
+
 ## cfan
 
 ### 新闻
@@ -143,6 +167,12 @@ pageClass: routes
 ### 最新
 
 <Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
+
+## Common App
+
+### Blog
+
+<Route author="nczitzk" example="/commonapp/blog" path="/commonapp/blog"/>
 
 ## Day One
 
@@ -206,11 +236,63 @@ pageClass: routes
 
 </Route>
 
+## ePrice
+
+<Route author="TonyRL" example="/eprice/tw" path="/eprice/:region?" :paramsDesc="['地区，预设为 tw']">
+
+地区：
+
+| hk   | tw   |
+| ---- | ---- |
+| 香港 | 台湾 |
+
+</Route>
+
 ## Esquirehk
 
 ### Tag
 
 <Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" :paramsDesc="['标签，可在对应标签页 URL 中找到']" />
+
+## Europa Press
+
+### 分类
+
+<Route author="nczitzk" example="/europapress" path="/europapress/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| España   | Internacional | Economía | Deportes |
+| -------- | ------------- | -------- | -------- |
+| nacional | internacional | economía | deportes |
+
+| Cultura | Sociedad | Ciencia | Salud |
+| ------- | -------- | ------- | ----- |
+| cultura | sociedad | ciencia | salud |
+
+| Tecnología | Comunicados | Estar donde estés |
+| ---------- | ----------- | ----------------- |
+| tecnología | comunicados | estar-donde-estes |
+
+| Andalucía | Aragón | Cantabria | Castilla-La Mancha |
+| --------- | ------ | --------- | ------------------ |
+| andalucia | aragon | cantabria | castilla-lamancha  |
+
+| Castilla y León | Cataluña  | Extremadura | Galicia |
+| --------------- | --------- | ----------- | ------- |
+| castilla-y-leon | catalunya | extremadura | galicia |
+
+| Islas Canarias | Islas Baleares | Madrid | País Vasco |
+| -------------- | -------------- | ------ | ---------- |
+| islas-canarias | illes-balears  | madrid | euskadi    |
+
+| La Rioja | C. Valenciana        | Navarra | Asturias |
+| -------- | -------------------- | ------- | -------- |
+| la-rioja | comunitat-valenciana | navarra | asturias |
+
+| Murcia | Ceuta y Melilla |
+| ------ | --------------- |
+| murcia | ceuta-y-melilla |
+
+</Route>
 
 ## ezone.hk
 
@@ -221,6 +303,90 @@ pageClass: routes
 | 科技焦點 | 網絡生活 | 教學評測 | IT Times |
 | -------- | -------- | -------- | -------- |
 | srae001  | srae008  | srae017  | srae021  |
+
+</Route>
+
+## Fashion Network
+
+### News
+
+<Route author="nczitzk" example="/fashionnetwork/news/5,6/15,112" path="/fashionnetwork/news/:sectors?/:categories?/:country?" :paramsDesc="['分区，见下表，默认为 `all`', '分类，见下表，默认为 `all`', '国家，见下表，默认为 `ww`']">
+
+Sectoies
+
+Fashion 1
+
+| Ready-to-wear | Accessories | Footwear | Sports | Denim | Lingerie | Swimwear | Eyewear | Bridal wear | Textile | Miscellaneous |
+| ------------- | ----------- | -------- | ------ | ----- | -------- | -------- | ------- | ----------- | ------- | ------------- |
+| 5             | 6           | 7        | 8      | 9     | 10       | 11       | 12      | 13          | 14      | 31            |
+
+Luxury 2
+
+| Ready-to-wear | Accessories | Footwear | Watches | Jewellery | Miscellaneous |
+| ------------- | ----------- | -------- | ------- | --------- | ------------- |
+| 15            | 16          | 17       | 18      | 19        | 32            |
+
+Beauty 3
+
+| Perfume | Cosmetics | Aesthetics | Wellness | Hair | Miscellaneous |
+| ------- | --------- | ---------- | -------- | ---- | ------------- |
+| 21      | 22        | 23         | 24       | 33   |               |
+
+Lifestyle 4
+
+| Home decor | Tableware | Hospitality | Fine foods | Tourism | Miscellaneous |
+| ---------- | --------- | ----------- | ---------- | ------- | ------------- |
+| 25         | 26        | 27          | 28         | 29      | 34            |
+
+Others 30
+
+Category
+
+| Retail | Business | Industry | Trade shows |
+| ------ | -------- | -------- | ----------- |
+| 15     | 112      | 5        | 12          |
+
+| Innovations | Collection | Catwalks | Design |
+| ----------- | ---------- | -------- | ------ |
+| 113         | 114        | 60       | 70     |
+
+| Media | Campaigns | People | Events | Appointments |
+| ----- | --------- | ------ | ------ | ------------ |
+| 50    | 115       | 80     | 90     | 95           |
+
+Country
+
+| Latin America | Brazil | China | France |
+| ------------- | ------ | ----- | ------ |
+| pe            | br     | cn    | fr     |
+
+| Germany | India | Italy | Japan |
+| ------- | ----- | ----- | ----- |
+| de      | in    | it    | jp    |
+
+| Mexico | Portugal | Russia | Spain |
+| ------ | -------- | ------ | ----- |
+| mx     | pt       | ru     | es    |
+
+| Turkey | United Kingdom | USA | Worldwide |
+| ------ | -------------- | --- | --------- |
+| tr     | uk             | us  | ww        |
+
+</Route>
+
+## Focus Taiwan
+
+### Category
+
+<Route author="nczitzk" example="/focustaiwan" path="/focustaiwan/:category?" :paramsDesc="['分类，见下表，默认为 news']">
+
+| Latest | Editor's Picks | Photos of the Day |
+| ------ | -------------- | ----------------- |
+| news   | editorspicks   | photos            |
+
+| Politics | Cross-strait | Business | Society | Science & Tech | Culture | Sports |
+| -------- | ------------ | -------- | ------- | -------------- | ------- | ------ |
+| politics | cross-strait | business | society | science & tech | culture | sports |
 
 </Route>
 
@@ -287,6 +453,24 @@ Tag
 ### Posts
 
 <Route author="loganrockmore" example="/grubstreet" path="/grubstreet" />
+
+## Harvard Health Publishing
+
+### Harvard Health Blog
+
+<Route author="nczitzk" example="/harvard/health/blog" path="/harvard/health/blog" />
+
+## HKEPC
+
+### HKEPC 电脑领域
+
+<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" :paramsDesc="['分类，见下表，默认为最新消息']">
+
+| 专题报导   | 新闻中心 | 新品快递 | 超频领域 | 流动数码 | 生活娱乐      | 会员消息 | 脑场新闻 | 业界资讯 | 最新消息 |
+| ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
+| coverStory | news     | review   | ocLab    | digital  | entertainment | member   | price    | press    | latest   |
+
+</Route>
 
 ## iDaily 每日环球视野
 
@@ -421,11 +605,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## Matters
 
-### 最新、熱議、精華
+### 最新、热门、精华
 
-<Route author="xyqfer Cerebrater xosdy" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默認爲 latest, 見下表']" radar="1" rssbud="1">
+<Route author="xyqfer Cerebrater xosdy" example="/matters/latest/heat" path="/matters/latest/:type?" :paramsDesc="['默认为 latest, 见下表']" radar="1" rssbud="1">
 
-| 最新   | 熱議 | 精華    |
+| 最新   | 热门 | 精华    |
 | ------ | ---- | ------- |
 | latest | heat | essence |
 
@@ -433,11 +617,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 标签
 
-<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['標籤 id，可在標籤所在的 URL 找到']" radar="1" rssbud="1"/>
+<Route author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['标签 id，可在标签所在的 URL 找到']" radar="1" rssbud="1"/>
 
 ### 作者
 
-<Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主頁的 URL 找到']" radar="1" rssbud="1"/>
+<Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主页的 URL 找到']" radar="1" rssbud="1"/>
 
 ## MIT 科技评论
 
@@ -450,6 +634,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 ### 话题
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+
+## Odaily 星球日报
+
+### 活动
+
+<Route author="ncziztk" example="/odaily/activity" path="/odaily/activity"/>
 
 ## OpenAI
 
@@ -505,6 +695,86 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/quantamagazine/archive" path="/quantamagazine/archive"/>
 
+## QuestMobile
+
+### 行业研究报告
+
+<Route author="nczitzk" example="/questmobile/report" path="/questmobile/report/:category?/:label?" :paramsDesc="['行业，见下表，默认为全部行业', '标签，见下表，默认为全部标签']">
+
+行业
+
+| 全部行业 | 移动视频 | 移动社交 | 移动购物 |
+| -------- | -------- | -------- | -------- |
+| 0        | 10       | 1        | 2        |
+
+| 系统工具 | 新闻资讯 | 移动音乐 | 生活服务 |
+| -------- | -------- | -------- | -------- |
+| 17       | 21       | 11       | 5        |
+
+| 数字阅读 | 汽车服务 | 拍摄美化 | 旅游服务 |
+| -------- | -------- | -------- | -------- |
+| 16       | 4        | 12       | 8        |
+
+| 健康美容 | 医疗服务 | 教育学习 | 金融理财 |
+| -------- | -------- | -------- | -------- |
+| 22       | 23       | 14       | 3        |
+
+| 办公商务 | 智能设备 | 手机游戏 | 出行服务 | 内容平台 |
+| -------- | -------- | -------- | -------- | -------- |
+| 9        | 19       | 20       | 26       | 29       |
+
+标签
+
+| 全部标签 | 5G | 双十一 | 直播带货 | 电商平台 |
+| -------- | -- | ------ | -------- | -------- |
+| 0        | 75 | 74     | 73       | 72       |
+
+| 新蓝领 | 市场竞争 | KOL | 品牌营销 | 互联网研究 |
+| ------ | -------- | --- | -------- | ---------- |
+| 71     | 70       | 69  | 68       | 67         |
+
+| 广告效果 | 媒介策略 | App 和小程序 | App 增长 |
+| -------- | -------- | ------------ | -------- |
+| 66       | 65       | 64           | 63       |
+
+| 小程序数据 | 移动大数据 | 互联网报告 | 数据报告 |
+| ---------- | ---------- | ---------- | -------- |
+| 62         | 61         | 60         | 59       |
+
+| 互联网数据 | 智能终端 | 小程序 | 私域流量 |
+| ---------- | -------- | ------ | -------- |
+| 58         | 57       | 56     | 55       |
+
+| 运动消费 | 用户争夺 | 运动健身 | 新消费 |
+| -------- | -------- | -------- | ------ |
+| 54       | 53       | 52       | 48     |
+
+| 增长模式 | 下沉 | 新中产 | 银发族 |
+| -------- | ---- | ------ | ------ |
+| 42       | 41   | 36     | 31     |
+
+| 粉丝经济 | 泛娱乐 | 网购少女 | 二次元 |
+| -------- | ------ | -------- | ------ |
+| 30       | 29     | 28       | 27     |
+
+| 兴趣圈层 | 大学生 | 广告营销 | Z 世代 |
+| -------- | ------ | -------- | ------ |
+| 26       | 25     | 23       | 22     |
+
+| 付费用户 | 精细化运营 | 00 后 | 90 后 |
+| -------- | ---------- | ----- | ----- |
+| 18       | 17         | 14    | 11    |
+
+| 春节报告 | 低幼经济 | 季度报告 | 年度报告 |
+| -------- | -------- | -------- | -------- |
+| 10       | 9        | 7        | 6        |
+
+| 全景生态 | 消费者洞察 |
+| -------- | ---------- |
+| 5        | 2          |
+
+</Route>
+
 ## Readhub
 
 ### 分类
@@ -516,6 +786,18 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | topic    | news     | technews   | blockchain | daily    |
 
 </Route>
+
+## Research Gate
+
+### Publications
+
+<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['用户名，可在用户页地址栏中找到']"/>
+
+## RSS3
+
+### Blog
+
+<Route author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
 
 ## Simons Foundation
 
@@ -532,6 +814,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 ### 最新文章
 
 <Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
+
+## Sky Sports
+
+### News
+
+<Route author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['球队 id，可在球队对应页面的 URL 中找到']" />
 
 ## SocialBeta
 
@@ -569,6 +857,22 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## TANC 艺术新闻
+
+### 分类
+
+<Route author="nczitzk" example="/tanchinese" path="/tanchinese/:category?" :paramsDesc="['分类，见下表，默认为 INDEX 首页']">
+
+| INDEX 首页 | ENGLISH 英文版 | NEWS 新闻 | MUSEUM 博物馆 | EXHIBITIONS 展览 |
+| ---------- | -------------- | --------- | ------------- | ---------------- |
+|            | english        | news      | museum        | exhibitions      |
+
+| COMMENTS 评论 | FEATURE 特写 | INTERVIEW 专访 | VIDEO 影像之选 | ART MARKET 艺术市场 |
+| ------------- | ------------ | -------------- | -------------- | ------------------- |
+| comments      | feature      | interview      | video          | art-market          |
+
+</Route>
+
 ## The Brain
 
 ### Blog
@@ -580,6 +884,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | blog | recorded-events | big-thinkers |
 
 </Route>
+
+## The Partnership on AI
+
+### Resources
+
+<Route author="nczitzk" example="/partnershiponai/resources" path="/partnershiponai/resources"/>
 
 ## The Verge
 
@@ -598,6 +908,16 @@ IPFS 网关有可能失效，那时候换成其他网关。
 Provides all of the Thrillist articles with the specified tag.
 
 </Route>
+
+## Topbook
+
+### Overview
+
+<Route author="nczitzk" example="/topbook/overview/24" path="/topbook/overview/:id?" :paramsDesc="['id，可在对应页面 URL 中找到，默认为今天看什么']"/>
+
+### 今天看什么
+
+<Route author="nczitzk" example="/topbook/today" path="/topbook/today"/>
 
 ## TOPYS
 
@@ -622,6 +942,16 @@ Supported sub-sites:
 | tv | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
 
 </Route>
+
+## World Happiness
+
+### Blog
+
+<Route author="nczitzk" example="/worldhappiness/blog" path="/worldhappiness/blog"/>
+
+### Archive
+
+<Route author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
 
 ## ZAKER
 
@@ -652,16 +982,6 @@ Supported sub-sites:
 
 </Route>
 
-## 巴比特
-
-### 作者专栏
-
-<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
-
-### 快讯
-
-<Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
-
 ## 八阕
 
 ### 广角新闻
@@ -674,17 +994,27 @@ Supported sub-sites:
 
 </Route>
 
-## 百度知道日报
+## 巴比特
 
-### 精选
+### 作者专栏
 
-<Route author="1813927768" example="/baidu/daily" path="/baidu/daily"/>
+<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" :paramsDesc="['作者ID，可在对应专辑页面的 URL 中找到']"/>
+
+### 快讯
+
+<Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
 
 ## 白鲸出海
 
 ### 首页最新帖子
 
 <Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
+
+## 百度知道日报
+
+### 精选
+
+<Route author="1813927768" example="/baidu/daily" path="/baidu/daily"/>
 
 ## 坂道系列官网资讯
 
@@ -914,54 +1244,6 @@ area 分区选项
 
 </Route>
 
-## 懂球帝
-
-::: tip 提示
-
--   可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。
-
-:::
-
-### 新闻
-
-<Route author="HendricksZheng" example="/dongqiudi/top_news/1" path="/dongqiudi/top_news/:id?" :paramsDesc="['类别 id，不填默认头条新闻']" />
-
-| 头条 | 深度 | 闲情 | D 站 | 中超 | 国际 | 英超 | 西甲 | 意甲 | 德甲 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 1    | 55   | 37   | 219  | 56   | 120  | 3    | 5    | 4    | 6    |
-
-### 专题
-
-<Route author="dxmpalb" example="/dongqiudi/special/41" path="/dongqiudi/special/:id" :paramsDesc="['专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配']">
-
-| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
-| ---------- | ------------ | -------------- |
-| 41         | 52           | 53             |
-
-</Route>
-
-### 早报
-
-<Route author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
-
-::: tip 提示
-
-部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.
-
-:::
-
-### 足球赛果
-
-<Route author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
-
-### 球队新闻
-
-<Route author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
-
-### 球员新闻
-
-<Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
-
 ## 东西智库
 
 ### 分类
@@ -1025,6 +1307,54 @@ area 分区选项
 
 </Route>
 
+## 懂球帝
+
+::: tip 提示
+
+-   可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。
+
+:::
+
+### 新闻
+
+<Route author="HendricksZheng" example="/dongqiudi/top_news/1" path="/dongqiudi/top_news/:id?" :paramsDesc="['类别 id，不填默认头条新闻']" />
+
+| 头条 | 深度 | 闲情 | D 站 | 中超 | 国际 | 英超 | 西甲 | 意甲 | 德甲 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 55   | 37   | 219  | 56   | 120  | 3    | 5    | 4    | 6    |
+
+### 专题
+
+<Route author="dxmpalb" example="/dongqiudi/special/41" path="/dongqiudi/special/:id" :paramsDesc="['专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配']">
+
+| 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
+| ---------- | ------------ | -------------- |
+| 41         | 52           | 53             |
+
+</Route>
+
+### 早报
+
+<Route author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
+
+::: tip 提示
+
+部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.
+
+:::
+
+### 足球赛果
+
+<Route author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+
+### 球队新闻
+
+<Route author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" :paramsDesc="['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']"/>
+
+### 球员新闻
+
+<Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
+
 ## 多知网
 
 ### 首页
@@ -1044,6 +1374,18 @@ area 分区选项
 | 实用软件 | 网站源码 | 技术教程 | 游戏助手 | 游戏资源 | 值得一看 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
 | rj       | wzym     | jsjc     | yx       | yxzy     | zdyk     |
+
+</Route>
+
+## 费米实验室
+
+### 新闻
+
+<Route author="nczitzk" example="/fnal/news" path="/fnal/news/:category?" :paramsDesc="['分类，见下表，默认为 All News']">
+
+| All News | Fermilab features | Press releases | Symmetry features |
+| -------- | ----------------- | -------------- | ----------------- |
+| allnews  | 269               | 55             | 12580             |
 
 </Route>
 
@@ -1219,16 +1561,6 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
 
-## 互动吧
-
-### 活动
-
-<Route author="nczitzk" example="/hudongba/beijing/98-0-2-0-1-1" path="/hudongba/:city/:id" :paramsDesc="['城市，可在选定所在城市后的页面 URL 中找到', '编号，可在选定筛选条件后的页面 URL 中找到']">
-
-如例子 `/hudongba/beijing/98-0-2-0-1-1` 对应的网址 `https://www.hudongba.com/beijing/98-0-2-0-0-1` 中，`beijing` 即所在城市为北京；`98-0-2-0-0-1` 则是所选择的分类编号，指分类不限、时间不限、综合排序的所有亲子活动。
-
-</Route>
-
 ## 虎嗅
 
 ### 首页资讯
@@ -1251,6 +1583,16 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" :paramsDesc="['文集 id']" />
 
+## 互动吧
+
+### 活动
+
+<Route author="nczitzk" example="/hudongba/beijing/98-0-2-0-1-1" path="/hudongba/:city/:id" :paramsDesc="['城市，可在选定所在城市后的页面 URL 中找到', '编号，可在选定筛选条件后的页面 URL 中找到']">
+
+如例子 `/hudongba/beijing/98-0-2-0-1-1` 对应的网址 `https://www.hudongba.com/beijing/98-0-2-0-0-1` 中，`beijing` 即所在城市为北京；`98-0-2-0-0-1` 则是所选择的分类编号，指分类不限、时间不限、综合排序的所有亲子活动。
+
+</Route>
+
 ## 汇通网
 
 ### 7x24 小时快讯
@@ -1266,6 +1608,16 @@ others = 热点新闻 + 滚动新闻
 | 资讯 | 视频   | 电台   | 文章     |
 | ---- | ------ | ------ | -------- |
 | news | videos | radios | articles |
+
+</Route>
+
+## 加美财经
+
+<Route author="nczitzk" example="/caus" path="/caus/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 要闻 | 商业 | 快讯 | 投资理财 | 生活 |
+| ---- | ---- | ---- | ---- | -------- | ---- |
+| 0    | 1    | 2    | 3    | 4        | 6    |
 
 </Route>
 
@@ -1500,6 +1852,28 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/6park/chan1/keywords/都市" path="/6park/:id/keywords/:keyword?" :paramsDesc="['分站，见上表', '关键字']"/>
 
+## 論盡媒體 AllAboutMacau Media
+
+### 话题
+
+<Route author="nczitzk" example="/aamacau" path="/aamacau/:category?/:id?" :paramsDesc="['分类，见下表，默认为即時報道', 'id，可在对应页面 URL 中找到，默认为空']">
+
+| 即時報道     | 每週專題    | 藝文爛鬼樓 | 論盡紙本 | 新聞事件 | 特別企劃 |
+| ------------ | ----------- | ---------- | -------- | -------- | -------- |
+| breakingnews | weeklytopic | culture    | press    | case     | special  |
+
+::: tip 提示
+
+除了直接订阅分类全部文章（如 [每週專題](https://aamacau.com/topics/weeklytopic) 的对应路由为 [/aamacau/weeklytopic](https://rsshub.app/aamacau/weeklytopic)），你也可以订阅特定的专题，如 [【9-12】2021 澳門立法會選舉](https://aamacau.com/topics/【9-12】2021澳門立法會選舉) 的对应路由为 [/【9-12】2021 澳門立法會選舉](https://rsshub.app/aamacau/【9-12】2021澳門立法會選舉)。
+
+分类中的专题也可以单独订阅，如 [新聞事件](https://aamacau.com/topics/case) 中的 [「武漢肺炎」新聞檔案](https://aamacau.com/topics/case/「武漢肺炎」新聞檔案) 对应路由为 [/case/「武漢肺炎」新聞檔案](https://rsshub.app/aamacau/case/「武漢肺炎」新聞檔案)。
+
+同理，其他分类同上例子也可以订阅特定的单独专题。
+
+:::
+
+</Route>
+
 ## 妈咪帮
 
 <Route author="nczitzk" example="/mamibuy" path="/mamibuy/:caty?/:age?/:sort?" :paramsDesc="['分类，见下表，默认为全分類', '岁数，见下表，默认为不限', '排序，见下表，默认为最新']">
@@ -1523,6 +1897,34 @@ column 为 third 时可选的 category:
 | 1    | 2    | 3    |
 
 </Route>
+
+## 梅花网
+
+### 作品
+
+<Route author="nczitzk" example="/meihua/shots/latest" path="/meihua/shots/:caty">
+
+| 最新   | 热门 | 推荐      |
+| ------ | ---- | --------- |
+| latest | hot  | recommend |
+
+</Route>
+
+### 文章
+
+<Route author="nczitzk" example="/meihua/article/latest" path="/meihua/article/:caty">
+
+| 最新   | 热门 |
+| ------ | ---- |
+| latest | hot  |
+
+</Route>
+
+## 梅斯医学 MedSci
+
+### 推荐
+
+<Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
 
 ## 美国半导体行业协会
 
@@ -1548,28 +1950,6 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/aflcio/blog" path="/aflcio/blog"/>
 
-## 梅花网
-
-### 作品
-
-<Route author="nczitzk" example="/meihua/shots/latest" path="/meihua/shots/:caty">
-
-| 最新   | 热门 | 推荐      |
-| ------ | ---- | --------- |
-| latest | hot  | recommend |
-
-</Route>
-
-### 文章
-
-<Route author="nczitzk" example="/meihua/article/latest" path="/meihua/article/:caty">
-
-| 最新   | 热门 |
-| ------ | ---- |
-| latest | hot  |
-
-</Route>
-
 ## 镁客网 im2maker
 
 ### 镁客网频道
@@ -1582,11 +1962,43 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 梅斯医学 MedSci
+## 摩点
 
-### 推荐
+### 众筹
 
-<Route author="nczitzk" example="/medsci/recommend" path="/medsci/recommend"/>
+<Route author="nczitzk" example="/modian/zhongchou" path="/modian/zhongchou/:category?/:sort?/:status?" :paramsDesc="['分类，见下表，默认为全部', '排序，见下表，默认为最新上线', '状态，见下表，默认为全部']">
+
+分类
+
+| 全部 | 游戏  | 动漫   | 出版       | 桌游       |
+| ---- | ----- | ------ | ---------- | ---------- |
+| all  | games | comics | publishing | tablegames |
+
+| 潮玩模型 | 影视       | 音乐  | 活动       | 设计   |
+| -------- | ---------- | ----- | ---------- | ------ |
+| toys     | film-video | music | activities | design |
+
+| 科技       | 食品 | 爱心通道 | 动物救助 |
+| ---------- | ---- | -------- | -------- |
+| technology | food | charity  | animals  |
+
+| 个人愿望 | 其他   |
+| -------- | ------ |
+| wishes   | others |
+
+排序
+
+| 最新上线 | 金额最高  | 评论最多    |
+| -------- | --------- | ----------- |
+| top_time | top_money | top_comment |
+
+状态
+
+| 全部 | 创意 | 预热    | 众筹中 | 众筹成功 |
+| ---- | ---- | ------- | ------ | -------- |
+| all  | idea | preheat | going  | success  |
+
+</Route>
 
 ## 摩根大通研究所
 
@@ -1706,6 +2118,10 @@ column 为 third 时可选的 category:
 
 ## 全现在
 
+### 首页
+
+<Route author="nczitzk" example="/allnow" path="/allnow"/>
+
 ### 专栏
 
 <Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" :paramsDesc="['专栏 id']"/>
@@ -1717,6 +2133,26 @@ column 为 third 时可选的 category:
 ### 用户
 
 <Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" :paramsDesc="['用户 id']"/>
+
+## 人民论坛网
+
+### 思想理论
+
+<Route author="nczitzk" example="/rmlt/idea" path="/rmlt/idea/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 首页 | 独家连线   | 深度原创   | 中外思潮 | 时事洞察 |
+| ---- | ---------- | ---------- | -------- | -------- |
+|      | connection | yuanchuang | sichao   | dongcha  |
+
+| 中国声音 | 全球观察 | 思想名人堂  | 学术人生 |
+| -------- | -------- | ----------- | -------- |
+| shengyin | guancha  | mingrentang | xueshu   |
+
+| 前沿理论 | 比较研究 |
+| -------- | -------- |
+| lilun    | yanjiu   |
+
+</Route>
 
 ## 人人都是产品经理
 
@@ -1739,6 +2175,24 @@ column 为 third 时可选的 category:
 ### 最新文章
 
 <Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
+
+## 软餐
+
+### 首页
+
+<Route author="nczitzk" example="/ruancan" path="/ruancan"/>
+
+### 分类
+
+<Route author="nczitzk" example="/ruancan/sort/news" path="/ruancan/sort/:sort" :paramsDesc="['分类 id，可在对应分类页 URL 中找到']"/>
+
+### 标签
+
+<Route author="nczitzk" example="/ruancan/tag/oxygenos" path="/ruancan/tag/:tag" :paramsDesc="['标签 id，可在对应标签页 URL 中找到']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/ruancan/search/ColorOS" path="/ruancan/search/:keyword?" :paramsDesc="['关键字，默认为空']"/>
 
 ## 少数派 sspai
 
@@ -1788,6 +2242,10 @@ column 为 third 时可选的 category:
 
 ## 深圳新闻网
 
+### 深圳市政府新闻发布厅
+
+<Route author="nczitzk" example="/sznews/press" path="/sznews/press"/>
+
 ### 排行榜
 
 <Route author="nczitzk" example="/sznews/ranking" path="/sznews/ranking"/>
@@ -1809,6 +2267,30 @@ column 为 third 时可选的 category:
 ### 最新资讯
 
 <Route author="nczitzk" example="/bioon/latest" path="/bioon/latest"/>
+
+## 生物探索
+
+### 频道
+
+<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel" :paramsDesc="['频道，见下表']">
+
+| 最新研究 | 人物访谈  | 产业动态 | 活动发布 |
+| -------- | --------- | -------- | -------- |
+| reaseach | interview | industry | activity |
+
+</Route>
+
+## 时事一点通
+
+### 资讯
+
+<Route author="nczitzk" example="/ssydt/article" path="/ssydt/article/:id?" :paramsDesc="['id，见下表，默认为推荐']">
+
+| 推荐 | 时事日报 | 时事专题 | 备考技巧 | 招考信息 | 时事月报 | 重要会议 | 领导讲话 | 时事周刊 | 官网公告 | 时事评论 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 0    | 3        | 6        | 13       | 12       | 4        | 10       | 11       | 5        | 8        | 7        |
+
+</Route>
 
 ## 世界卫生组织 WHO
 
@@ -1903,6 +2385,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 歪脑 wainao.me
+
+### 所有文章
+
+<Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
+
 ## 外接大脑
 
 ### 文章
@@ -1914,12 +2402,6 @@ column 为 third 时可选的 category:
 | all  | news | finance | blockchain | internet | tech | newmedia | business | hundred     | ecommerce | entertainment | life |
 
 </Route>
-
-## 歪脑 wainao.me
-
-### 所有文章
-
-<Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
 
 ## 晚点 LatePost
 
@@ -1942,12 +2424,6 @@ column 为 third 时可选的 category:
 | (空) | My01     | My02     | My03     | My04     |
 
 </Route>
-
-## 網路天文館
-
-### 天象預報
-
-<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast"/>
 
 ## 网易号
 
@@ -2002,23 +2478,11 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 维基百科
+## 網路天文館
 
-### 中国大陆新闻动态
+### 天象預報
 
-<Route author="HenryQW" example="/wikipedia/mainland" path="/wikipedia/mainland"/>
-
-## 未名新闻
-
-### 分类
-
-<Route author="nczitzk" example="/mitbbs" path="/mitbbs/:caty?" :paramsDesc="['新闻分类，参见下表，默认为“新闻大杂烩”']">
-
-| 新闻大杂烩 | 军事     | 国际   | 体育 | 娱乐 | 科技 | 财经    |
-| ---------- | -------- | ------ | ---- | ---- | ---- | ------- |
-|            | zhongguo | haiwai | tiyu | yule | keji | caijing |
-
-</Route>
+<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast"/>
 
 ## 微信
 
@@ -2096,6 +2560,24 @@ column 为 third 时可选的 category:
 
 <Route author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
 
+## 维基百科
+
+### 中国大陆新闻动态
+
+<Route author="HenryQW" example="/wikipedia/mainland" path="/wikipedia/mainland"/>
+
+## 未名新闻
+
+### 分类
+
+<Route author="nczitzk" example="/mitbbs" path="/mitbbs/:caty?" :paramsDesc="['新闻分类，参见下表，默认为“新闻大杂烩”']">
+
+| 新闻大杂烩 | 军事     | 国际   | 体育 | 娱乐 | 科技 | 财经    |
+| ---------- | -------- | ------ | ---- | ---- | ---- | ------- |
+|            | zhongguo | haiwai | tiyu | yule | keji | caijing |
+
+</Route>
+
 ## 无产者评论
 
 ### 分类
@@ -2132,12 +2614,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 橡树岭国家实验室
-
-### 新闻
-
-<Route author="nczitzk" example="/ornl/news" path="/ornl/news"/>
-
 ## 香水时代
 
 ### 首页
@@ -2147,6 +2623,12 @@ column 为 third 时可选的 category:
 ### 香评
 
 <Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" :paramsDesc="['用户id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']"/>
+
+## 橡树岭国家实验室
+
+### 新闻
+
+<Route author="nczitzk" example="/ornl/news" path="/ornl/news"/>
 
 ## 小刀娱乐网
 
@@ -2200,23 +2682,6 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/yaohuo/new" path="/yaohuo/:type?" :paramsDesc="['排序类型，可选 `new` 指最新，`hot` 指最热，默认为 `new`']"/>
 
-## 异次元软件世界
-
-### 首页
-
-<Route author="kimi360" example="/iplay/home" path="/iplay/home"/>
-
-## 移动支付网
-
-### 新闻
-
-<Route author="LogicJake" example="/mpaypass/news" path="/mpaypass/news"/>
-
-### 分类
-
-<Route author="zhuan-zhu" example="/mpaypass/main/policy" path="mpaypass/main/:type?"
-:paramsDesc="['新闻类型,类型可在URL中找到，类似policy，eye等，空或其他任意值展示最新新闻']"/>
-
 ## 一兜糖
 
 ### 首页精选
@@ -2243,11 +2708,40 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 移动支付网
+
+### 新闻
+
+<Route author="LogicJake" example="/mpaypass/news" path="/mpaypass/news"/>
+
+### 分类
+
+<Route author="zhuan-zhu" example="/mpaypass/main/policy" path="mpaypass/main/:type?"
+:paramsDesc="['新闻类型,类型可在URL中找到，类似policy，eye等，空或其他任意值展示最新新闻']"/>
+
 ## 亿欧网
 
 ### 资讯
 
 <Route author="WenryXu" example="/iyiou" path="/iyiou"/>
+
+## 异次元软件世界
+
+### 首页
+
+<Route author="kimi360" example="/iplay/home" path="/iplay/home"/>
+
+## 游戏葡萄
+
+### 文章
+
+<Route author="KotoriK nczitzk" example="/gamegrape/13" path="/gamegrape/:id?" :paramsDesc="['分类 id，见下表，默认为全部']">
+
+| 全部 | 深度 | 资讯 | DemoWall | 酷玩 | 海外 | 专栏 | 葡萄观察 |
+| ---- | ---- | ---- | -------- | ---- | ---- | ---- | -------- |
+|      | 13   | 14   | 15       | 16   | 17   | 18   | 19       |
+
+</Route>
 
 ## 有趣天文奇观
 
@@ -2263,18 +2757,6 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/interesting-sky/recent-interesting" path="/interesting-sky/recent-interesting"/>
 
-## 游戏葡萄
-
-### 文章
-
-<Route author="KotoriK nczitzk" example="/gamegrape/13" path="/gamegrape/:id?" :paramsDesc="['分类 id，见下表，默认为全部']">
-
-| 全部 | 深度 | 资讯 | DemoWall | 酷玩 | 海外 | 专栏 | 葡萄观察 |
-| ---- | ---- | ---- | -------- | ---- | ---- | ---- | -------- |
-|      | 13   | 14   | 15       | 16   | 17   | 18   | 19       |
-
-</Route>
-
 ## 鱼塘热榜
 
 <Route author="TheresaQWQ" example="/mofish/2" path="/mofish/:id" :paramsDesc="['分类id，可以在 https://api.tophub.fun/GetAllType 获取']" />
@@ -2288,15 +2770,15 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 中国计算机学会
+## 中国纺织经济信息网
 
-### 新闻
+### 资讯
 
-<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
+<Route author="nczitzk" example="/ctei/news/bwzq" path="/ctei/news/:id?" :paramsDesc="['分类 id，可在分类页的 URL 中找到，默认为本网专区']">
 
-| CCF 新闻   | CCF 聚焦 | ACM 信息 |
-| ---------- | -------- | -------- |
-| Media_list | Focus    | ACM_News |
+| 要闻   | 国内     | 国际     | 企业    | 品牌  | 外贸  | 政策   | 科技       | 流行    | 服装    | 家纺    |
+| ------ | -------- | -------- | ------- | ----- | ----- | ------ | ---------- | ------- | ------- | ------- |
+| newsyw | domestic | internal | company | brand | trade | policy | Technology | fashion | apparel | hometex |
 
 </Route>
 
@@ -2309,6 +2791,18 @@ column 为 third 时可选的 category:
 | 学会要闻    | 学会动态 | 科技新闻 |
 | ----------- | -------- | -------- |
 | Information | Dynamics | TechNews |
+
+</Route>
+
+## 中国计算机学会
+
+### 新闻
+
+<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
+
+| CCF 新闻   | CCF 聚焦 | ACM 信息 |
+| ---------- | -------- | -------- |
+| Media_list | Focus    | ACM_News |
 
 </Route>
 
@@ -2376,4 +2870,18 @@ QueryString:
 
 ### 全文
 
-<Route author="HenryQW" example="/zzz" path="/zzz/index"/>
+<Route author="HenryQW nczitzk" example="/zzz" path="/zzz/:category?/:language?" :paramsDesc="['分类，见下表，默认为全部', '语言，见下表，默认为简体中文']">
+
+分类
+
+| 全部 | 房股财经     | 时事评论      | 每日一见    | 随心杂谈    | 精彩推荐       | 历史新撰     |
+| ---- | ------------ | ------------- | ----------- | ----------- | -------------- | ------------ |
+| all  | fangshigushi | shishipinglun | meiriyijian | suixinzatan | jingcaituijian | lishixinzuan |
+
+语言
+
+| 简体中文 | 港澳繁體 | 台灣正體 |
+| -------- | -------- | -------- |
+|          | zh-hk    | zh-tw    |
+
+</Route>

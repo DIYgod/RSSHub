@@ -189,13 +189,21 @@ GitHub 官方也提供了一些 RSS:
 
 ### Explore
 
-<Route author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['分类']">
+<Route author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" :paramsDesc="['分类', '服务器地址，缺省为 gitlab.com']">
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
 
 </Route>
+
+### Releases
+
+<Route author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" :paramsDesc="['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']" />
+
+### Tags
+
+<Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']" />
 
 ## Go 语言中文网
 
@@ -543,16 +551,6 @@ GitHub 官方也提供了一些 RSS:
 ### 分享
 
 <Route author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
-
-## 开发者头条
-
-### 今天头条
-
-<Route author="jjeejj" example="/toutiao/today" path="/toutiao/today"/>
-
-### 独家号
-
-<Route author="jjeejj" example="/toutiao/user/140544" path="/toutiao/user/:id" :paramsDesc="['独家号 id, 可在对应独家号页 URL 中找到']"/>
 
 ## 开源中国
 
