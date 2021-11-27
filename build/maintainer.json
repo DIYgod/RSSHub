@@ -186,6 +186,9 @@
     "/wangqiutiyu/anchor/:id": [
         "nczitzk"
     ],
+    "/wzu/news/:type?": [
+        "Chandler-Lu"
+    ],
     "/rsshub/rss": [],
     "/rsshub/routes": [],
     "/rsshub/sponsors": [],
@@ -2124,7 +2127,6 @@
     "/tanchinese/:category?": [],
     "/harvard/health/blog": [],
     "/yuzu-emu/entry": [],
-    "/wzu/news": [],
     "/partnershiponai/resources": [],
     "/commonapp/blog": [],
     "/skysports/news/:team": [],
