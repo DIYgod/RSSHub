@@ -2032,6 +2032,7 @@
     "/uwants/:fid": [],
     "/now/news/rank": [],
     "/s-hentai/:id?": [],
+    "/asiantolick/:category?/:keyword?": [],
     "/researchgate/publications/:id": [],
     "/questmobile/report/:category?/:label?": [],
     "/rss3/blog": [],
