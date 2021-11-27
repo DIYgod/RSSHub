@@ -104,7 +104,7 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 
 <RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
-The parameter id in the route is the id in the URL of the user ’s Google Scholar reference page，for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
 
 </RouteEn>
 
@@ -112,15 +112,15 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 ### Latest Research
 
-<RouteEn author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name， get it from punumber of the URL','Sort Type, default: `vol-only-seq`，get it from sortType of the URL']" radar="1" rssbud="1">
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/:journal/latest/vol/:sortType?" :paramsDesc="['Journal Name, get it from punumber of the URL','Sort Type, default: `vol-only-seq`, get it from sortType of the URL']" radar="1" rssbud="1">
 
 </RouteEn>
 
 ### Latest Research (Last 2 month)
 
-<RouteEn author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name， get it from punumber of the URL','Sort Type, default: `vol-only-seq`，get it from sortType of the URL']" radar="1" rssbud="1">
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name, get it from punumber of the URL','Sort Type, default: `vol-only-seq`, get it from sortType of the URL']" radar="1" rssbud="1">
 
-Due to the large number of paper entries, new entries may always at the end of entries, so only articles published in the current month and the previous month are filtered.
+New items may always at the end of the list, when the number of paper entries is too large. So we only filtered those articles published in the current month and the previous month.
 
 </RouteEn>
 
@@ -134,7 +134,7 @@ Due to the large number of paper entries, new entries may always at the end of e
 
 ### Section Research
 
-<RouteEn author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name，get it from tocSection of the URL']" radar="1" rssbud="1">
+<RouteEn author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name, get it from tocSection of the URL']" radar="1" rssbud="1">
 
 | Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
 | :-----: | :---------: | :-----------------: | :----: |
