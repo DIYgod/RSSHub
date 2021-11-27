@@ -687,26 +687,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
-## Odaily 星球日报
-
-### 快讯
-
-<Route author="ncziztk" example="/odaily/newsflash" path="/odaily/newsflash"/>
-
-### 文章
-
-<Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为新品']">
-
-| 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
-| ---- | ---- | --- | ---- | ---- | ---- | ---- |
-| 333  | 331  | 334 | 332  | 330  | 297  | 296  |
-
-</Route>
-
-### 用户文章
-
-<Route author="ncziztk" example="/odaily/user/2147486902" path="/odaily/user/:id" :paramsDesc="['用户 id，可在用户页地址栏中找到']"/>
-
 ## Netflix
 
 ### Newsroom
@@ -732,6 +712,26 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | article  | daily-brief | trending |
 
 </Route>
+
+## Odaily 星球日报
+
+### 快讯
+
+<Route author="ncziztk" example="/odaily/newsflash" path="/odaily/newsflash"/>
+
+### 文章
+
+<Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为新品']">
+
+| 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
+| ---- | ---- | --- | ---- | ---- | ---- | ---- |
+| 333  | 331  | 334 | 332  | 330  | 297  | 296  |
+
+</Route>
+
+### 用户文章
+
+<Route author="ncziztk" example="/odaily/user/2147486902" path="/odaily/user/:id" :paramsDesc="['用户 id，可在用户页地址栏中找到']"/>
 
 ## Odaily 星球日报
 
@@ -907,12 +907,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
-## swissinfo
-
-### 分类
-
-<Route author="nczitzk" example="/swissinfo/chi/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['语言，默认为 eng', '分类，默认为 Latest News']"/>
-
 ## Sixth Tone
 
 ### 最新文章
@@ -960,6 +954,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
     -   Soomal 论坛与留言系统的更新：<http://www.soomal.com/bbs/101.rss.xml>
 
 </Route>
+
+## swissinfo
+
+### 分类
+
+<Route author="nczitzk" example="/swissinfo/chi/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['语言，默认为 eng', '分类，默认为 Latest News']"/>
 
 ## TANC 艺术新闻
 

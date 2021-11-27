@@ -491,12 +491,6 @@ Compared to the official one, this feed:
 
 <RouteEn author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
-## swissinfo
-
-### Category
-
-<RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Language, eng by default', 'Category, Latest News by default']"/>
-
 ## Sixth Tone
 
 ### News
@@ -534,6 +528,12 @@ Compared to the official one, this feed:
   - Soomal forum and comments：[http://www.soomal.com/bbs/101.rss.xml](http://www.soomal.com/bbs/101.rss.xml)
 
 </RouteEn>
+
+## swissinfo
+
+### Category
+
+<RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Language, eng by default', 'Category, Latest News by default']"/>
 
 ## The Brain
 
