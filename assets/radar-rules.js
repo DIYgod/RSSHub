@@ -626,15 +626,6 @@
             { title: '支持的快递公司列表', docs: 'https://docs.rsshub.app/other.html#kuai-di-100', source: '/', target: '/kuaidi100/company' },
         ],
     },
-    'nsfc.gov.cn': {
-        _name: '国家自然科学基金委员会',
-        www: [
-            { title: '基金要闻', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/jjyw' },
-            { title: '通知公告', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/tzgg' },
-            { title: '资助成果', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/zzcg' },
-            { title: '科普快讯', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/kpkx' },
-        ],
-    },
     'japanpost.jp': {
         _name: '日本郵便',
         'trackings.post': [
