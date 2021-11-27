@@ -248,6 +248,9 @@
     "/watchout/": [
         "nczitzk"
     ],
+    "/wechat/feeddd/:id": [
+        "TonyRL"
+    ],
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
