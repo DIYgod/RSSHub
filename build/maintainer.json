@@ -68,6 +68,9 @@
     "/ruancan/ruancan/search/:keyword?": [
         "nczitzk"
     ],
+    "/secnews/index": [
+        "kaiili"
+    ],
     "/szse/rule": [
         "nczitzk"
     ],
