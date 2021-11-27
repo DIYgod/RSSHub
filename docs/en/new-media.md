@@ -372,6 +372,12 @@ Compared to the official one, this feed:
 
 </RouteEn>
 
+## Research Gate
+
+### Publications
+
+<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']"/>
+
 ## Semiconductor Industry Association
 
 ### Latest News
