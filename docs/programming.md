@@ -450,6 +450,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 安全文摘
+
+### 首页
+
+<Route author="kaiili" example="/secnews" path="/secnews" />
+
 ## 饿了么开放平台
 
 ### 商家开放平台公告
