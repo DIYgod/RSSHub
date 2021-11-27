@@ -110,6 +110,9 @@
     "/ruancan/ruancan/search/:keyword?": [
         "nczitzk"
     ],
+    "/sciencedirect/journal/:id": [
+        "nczitzk"
+    ],
     "/secnews/index": [
         "kaiili"
     ],
