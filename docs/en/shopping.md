@@ -88,6 +88,12 @@ All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
 </RouteEn>
 
+## ShopBack
+
+### Store
+
+<RouteEn author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['Store, can be found in URL']"/>
+
 ## The Independent
 
 ### PS5 stock UK
