@@ -1363,6 +1363,7 @@
     "/coronavirus/mogov-2019ncov/:lang": [],
     "/coronavirus/qq/fact": [],
     "/coronavirus/sg-moh": [],
+    "/coronavirus/yahoo-japan/:tdfk?": [],
     "/njfu/jwc/:category?": [],
     "/nikkei/index": [],
     "/nikkei/:category/:article_type?": [],
