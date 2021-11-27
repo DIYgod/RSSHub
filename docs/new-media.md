@@ -635,6 +635,18 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
+## NGOCN
+
+### 首页
+
+<Route author="nczitzk" example="/ngocn2" path="/ngocn2/:category?" :paramsDesc="['分类，见下表，默认为所有文章']" radar="1" rssbud="1">
+
+| 所有文章 | 早报        | 热点     |
+| -------- | ----------- | -------- |
+| article  | daily-brief | trending |
+
+</Route>
+
 ## Netflix
 
 ### Newsroom
