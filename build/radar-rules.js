@@ -211,6 +211,64 @@
         source:[ "/c/:category",
           "/" ],
         target:"/literotica/category/:category" } ] },
+  "163.com":{ _name:"网易",
+    ds:[ { title:"大神",
+        docs:"https://docs.rsshub.app/game.html#wang-yi-da-shen",
+        source:"/user/:id",
+        target:"/netease/ds/:id" } ],
+    open:[ { title:"公开课 - 精品课程",
+        docs:"https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke",
+        source:"/",
+        target:"/open163/vip" },
+      { title:"公开课 - 最新课程",
+        docs:"https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke",
+        source:"/",
+        target:"/open163/latest" } ],
+    music:[ { title:"云音乐 - 用户歌单",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/",
+        target:(params, url) => {
+                    const id = new URL(url).hash.match(/home\?id=(.*)/)[1];
+                    return id ? `/ncm/user/playlist/${id}` : '';
+                } },
+      { title:"云音乐 - 歌单歌曲",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/",
+        target:(params, url) => {
+                    const id = new URL(url).hash.match(/playlist\?id=(.*)/)[1];
+                    return id ? `/ncm/playlist/${id}` : '';
+                } },
+      { title:"云音乐 - 歌手专辑",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/",
+        target:(params, url) => {
+                    const id = new URL(url).hash.match(/album\?id=(.*)/)[1];
+                    return id ? `/ncm/artist/${id}` : '';
+                } },
+      { title:"云音乐 - 电台节目",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/",
+        target:(params, url) => {
+                    const id = new URL(url).hash.match(/djradio\?id=(.*)/)[1];
+                    return id ? `/ncm/djradio/${id}` : '';
+                } } ],
+    "y.music":[ { title:"云音乐 - 用户歌单",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/m/user",
+        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
+      { title:"云音乐 - 歌单歌曲",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/m/playlist",
+        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
+      { title:"云音乐 - 歌手专辑",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/m/album",
+        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
+      { title:"云音乐 - 播单声音",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:[ "/m/radio",
+          "/m/djradio" ],
+        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` } ] },
   "ngocn2.org":{ _name:"NGOCN",
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/new-media.html#ngocn2-fen-lei",
@@ -978,64 +1036,6 @@
         docs:"https://docs.rsshub.app/bbs.html#xiao-mi-she-qu",
         source:"/board/:boardId",
         target:"/mi/bbs/board/:boardId" } ] },
-  "163.com":{ _name:"网易",
-    ds:[ { title:"大神",
-        docs:"https://docs.rsshub.app/game.html#wang-yi-da-shen",
-        source:"/user/:id",
-        target:"/netease/ds/:id" } ],
-    open:[ { title:"公开课 - 精品课程",
-        docs:"https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke",
-        source:"/",
-        target:"/open163/vip" },
-      { title:"公开课 - 最新课程",
-        docs:"https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke",
-        source:"/",
-        target:"/open163/latest" } ],
-    music:[ { title:"云音乐 - 用户歌单",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:"/",
-        target:(params, url) => {
-                    const id = new URL(url).hash.match(/home\?id=(.*)/)[1];
-                    return id ? `/ncm/user/playlist/${id}` : '';
-                } },
-      { title:"云音乐 - 歌单歌曲",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:"/",
-        target:(params, url) => {
-                    const id = new URL(url).hash.match(/playlist\?id=(.*)/)[1];
-                    return id ? `/ncm/playlist/${id}` : '';
-                } },
-      { title:"云音乐 - 歌手专辑",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:"/",
-        target:(params, url) => {
-                    const id = new URL(url).hash.match(/album\?id=(.*)/)[1];
-                    return id ? `/ncm/artist/${id}` : '';
-                } },
-      { title:"云音乐 - 电台节目",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:"/",
-        target:(params, url) => {
-                    const id = new URL(url).hash.match(/djradio\?id=(.*)/)[1];
-                    return id ? `/ncm/djradio/${id}` : '';
-                } } ],
-    "y.music":[ { title:"云音乐 - 用户歌单",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:"/m/user",
-        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
-      { title:"云音乐 - 歌单歌曲",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:"/m/playlist",
-        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
-      { title:"云音乐 - 歌手专辑",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:"/m/album",
-        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
-      { title:"云音乐 - 播单声音",
-        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        source:[ "/m/radio",
-          "/m/djradio" ],
-        target:(params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` } ] },
   "suzhou.gov.cn":{ _name:"苏州市政府",
     www:[ { title:"政府新闻",
         docs:"https://docs.rsshub.app/government.html#su-zhou-shi-ren-min-zheng-fu",

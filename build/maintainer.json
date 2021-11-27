@@ -95,6 +95,9 @@
     "/literotica/category/:category": [
         "nczitzk"
     ],
+    "/netease/news/rank/:category?/:type?/:time?": [
+        "nczitzk"
+    ],
     "/ngocn2/:category?": [
         "nczitzk"
     ],
@@ -1644,7 +1647,6 @@
     "/jike/topic/:id": [],
     "/jike/topic/text/:id": [],
     "/jike/user/:id": [],
-    "/netease/news/rank/:category?/:type?/:time?": [],
     "/netease/news/special/:type?": [],
     "/netease/dy/:id": [],
     "/netease/dy2/:id": [],
