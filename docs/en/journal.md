@@ -112,7 +112,7 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 
 ### Latest Research
 
-<RouteEn author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name, get it from punumber of the URL','Sort Type, default: `vol-only-seq`, get it from sortType of the URL']" radar="1" rssbud="1">
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/:journal/latest/vol/:sortType?" :paramsDesc="['Journal Name, get it from punumber of the URL','Sort Type, default: `vol-only-seq`, get it from sortType of the URL']" radar="1" rssbud="1">
 
 </RouteEn>
 
