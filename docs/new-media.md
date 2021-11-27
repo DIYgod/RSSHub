@@ -2294,6 +2294,18 @@ column 为 third 时可选的 category:
 
 ## 世界卫生组织 WHO
 
+### 新闻稿
+
+<Route author="nczitzk" example="/who/news" path="/who/news/:language?" :paramsDesc="['语言，见下表，默认为英语']">
+
+语言
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh   | fr       | ru      | es      | pt        |
+
+</Route>
+
 ### 媒体中心
 
 <Route author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
