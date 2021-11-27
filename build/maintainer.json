@@ -56,6 +56,9 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/ngocn2/:category?": [
+        "nczitzk"
+    ],
     "/people/liuyan/:id/:state?": [
         "nczitzk"
     ],
