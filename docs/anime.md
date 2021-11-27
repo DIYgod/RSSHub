@@ -318,6 +318,12 @@ pageClass: routes
 
 <Route author="btdwv" path="/twmanhuagui/comic/:id" example="/twmanhuagui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
+## 拷贝漫画
+
+### 漫画更新
+
+<Route author="btdwv" path="/copymanga/comic/:id" example="/copymanga/comic/zhandoupohuaixueyuandangerous" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+
 ## 漫画 DB
 
 ### 漫画 DB

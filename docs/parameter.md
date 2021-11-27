@@ -93,3 +93,21 @@ RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss`
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
 -   和 filter 或其他 URL query 一起使用 `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
+
+### debug
+
+在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub 将会返回插件设置在`ctx.state.json`的内容
+
+这功能皆在方便开发者调试问题，方便用户自行开发需要的功能。插件作者可以酌情考虑使用，没有格式要求。
+
+举例：
+
+-   `/furstar/characters/cn.debug.json`
+
+## 输出简讯
+
+可以使用 `brief` 参数输出特定字数 ( ≥ `100` 字 ) 的纯文本内容
+
+举例：
+
+-   输出 100 字简讯: `?brief=100`
