@@ -361,7 +361,7 @@
     "/telegram/blog": [],
     "/readhub/category/:category": [],
     "/github/repos/:user": [],
-    "/github/trending/:since/:language?": [],
+    "/github/trending/:since/:language?/:spoken_language?": [],
     "/github/issue/:user/:repo/:state?/:labels?": [],
     "/github/pull/:user/:repo": [],
     "/github/user/followers/:user": [],
