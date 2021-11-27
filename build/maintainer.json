@@ -47,6 +47,9 @@
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
+    "/hket/:category?": [
+        "TonyRL"
+    ],
     "/hkjunkcall/": [
         "nczitzk"
     ],
@@ -2089,7 +2092,6 @@
     "/fnal/news/:category?": [],
     "/x410/news": [],
     "/right/forum/:id?": [],
-    "/hket/:category?": [],
     "/micmicidol": [],
     "/micmicidol/search/:label": [],
     "/hkgolden/:id?/:limit?/:sort?": [],
