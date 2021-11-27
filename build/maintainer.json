@@ -134,6 +134,9 @@
     "/people/liuyan/:id/:state?": [
         "nczitzk"
     ],
+    "/pku/hr/:category?": [
+        "nczitzk"
+    ],
     "/qq/live/:id": [
         "nczitzk"
     ],
