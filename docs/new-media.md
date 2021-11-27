@@ -520,6 +520,14 @@ Tag
 
 </Route>
 
+### 专题
+
+<Route author="nczitzk" example="/ithome/zt/xijiayi" path="/ithome/zt/:id" :paramsDesc="['专题 id']" radar="1" rssbud="1">
+
+所有专题请见[此处](https://www.ithome.com/zt)
+
+</Route>
+
 ## IT 桔子
 
 ### 投融资事件
