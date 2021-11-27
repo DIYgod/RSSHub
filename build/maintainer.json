@@ -62,6 +62,9 @@
     "/ruancan/ruancan/search/:keyword?": [
         "nczitzk"
     ],
+    "/szse/rule": [
+        "nczitzk"
+    ],
     "/test/:id": [
         "DIYgod",
         "NeverBehave"
@@ -1185,7 +1188,6 @@
     "/sse/disclosure/:query?": [],
     "/szse/notice": [],
     "/szse/inquire/:type": [],
-    "/szse/rule": [],
     "/szse/projectdynamic/:type?/:stage?/:status?": [],
     "/jskou/:type?": [],
     "/cneb/yjxx": [],
