@@ -11,6 +11,9 @@
     "/biodiscover/:channel?": [
         "aidistan"
     ],
+    "/ccac/news/:type/:lang?": [
+        "linbuxiao"
+    ],
     "/epicgames/epicgames/:collection": [
         "DIYgod",
         "NeverBehave",
