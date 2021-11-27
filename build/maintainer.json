@@ -210,6 +210,9 @@
     "/wangqiutiyu/anchor/:id": [
         "nczitzk"
     ],
+    "/watchout/": [
+        "nczitzk"
+    ],
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
