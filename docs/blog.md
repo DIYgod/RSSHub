@@ -205,3 +205,9 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 十年之约
+
+### 文章
+
+<Route author="7Wate" example="/blogs/foreverblog" path="/blogs/foreverblog" />
