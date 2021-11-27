@@ -17,6 +17,9 @@
     "/biodiscover/:channel?": [
         "aidistan"
     ],
+    "/bit/rszhaopin": [
+        "nczitzk"
+    ],
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
