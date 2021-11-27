@@ -2027,6 +2027,8 @@
     "/x410/news": [],
     "/right/forum/:id?": [],
     "/hket/:category?": [],
+    "/micmicidol": [],
+    "/micmicidol/search/:label": [],
     "/hkgolden/:id?/:limit?/:sort?": [],
     "/discuss/:fid": [],
     "/uwants/:fid": [],
