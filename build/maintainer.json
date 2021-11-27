@@ -23,6 +23,9 @@
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
+    "/bupt/rczp": [
+        "nczitzk"
+    ],
     "/ccac/news/:type/:lang?": [
         "linbuxiao"
     ],
