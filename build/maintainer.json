@@ -2142,5 +2142,7 @@
     "/rss3/blog": [],
     "/odaily/activity": [],
     "/fashionnetwork/news/:sectors?/:categories?/:language?": [],
-    "/dykszx/news/:type?": []
+    "/dykszx/news/:type?": [],
+    "/secrss/category/:category?": [],
+    "/secrss/author/:author?": []
 }
