@@ -141,6 +141,9 @@
     "/trow/portal": [
         "shiningdracon"
     ],
+    "/uibe/hr/:category?/:type?": [
+        "nczitzk"
+    ],
     "/wangqiutiyu/anchor/:id": [
         "nczitzk"
     ],
