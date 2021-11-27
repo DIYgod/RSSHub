@@ -661,6 +661,17 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="EsuRt queensferryme" example="/mittrchina/hot" path="/mittrchina/:type" :paramsDesc="['类型 type，可以是 index（首页资讯）或 hot（本周热榜）']"/>
 
+## MyGoPen
+
+### 分類
+
+<Route author="nczitzk" example="/mygopen" path="/mygopen/:label?" :paramsDesc="['分類，见下表，默认为首页']">
+
+| 謠言 | 詐騙 | 真實資訊 | 教學 |
+| ---- | ---- | -------- | ---- |
+
+</Route>
+
 ## Nautilus
 
 ### 话题
