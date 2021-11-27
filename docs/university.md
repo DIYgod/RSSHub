@@ -283,6 +283,10 @@ pageClass: routes
 
 :::
 
+### 人才招聘
+
+<Route author="nczitzk" example="/bupt/rczp" path="/bupt/rczp" />
+
 ## 常州大学
 
 ### 教务处
