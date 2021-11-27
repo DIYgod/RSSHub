@@ -577,3 +577,15 @@ Language
 ### Newsroom
 
 <RouteEn author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
+
+### Speeches
+
+<RouteEn author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" :paramsDesc="['Language, see below, English by default']">
+
+Language
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh   | fr       | ru      | es      | pt        |
+
+</Route>
