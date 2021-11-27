@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - "lib/**"
+      - 'lib/**'
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "npm"
+          cache: 'npm'
       - name: build file
         run: npm ci && npm run build:all
       - name: Deploy

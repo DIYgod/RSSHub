@@ -12,7 +12,7 @@
       when: ansible_distribution != 'Ubuntu' or ansible_distribution_version !='20.04'
     - name: Install GPG keys for repos
       apt_key:
-        url: "{{ item }}"
+        url: '{{ item }}'
         state: present
       with_items:
         - https://deb.nodesource.com/gpgkey/nodesource.gpg.key
@@ -20,7 +20,7 @@
         - https://dl.cloudsmith.io/public/caddy/stable/cfg/gpg/gpg.155B6D79CA56EA34.key
     - name: Install repos
       apt_repository:
-        repo: "{{ item }}"
+        repo: '{{ item }}'
         state: present
         update_cache: yes
       with_items:
@@ -71,7 +71,7 @@
         state: started
         restart_policy: always
         published_ports:
-          - "3000:3000"
+          - '3000:3000'
     - name: Create the user
       user:
         name: rsshub

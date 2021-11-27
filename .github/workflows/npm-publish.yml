@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - "lib/**"
+      - 'lib/**'
 
 jobs:
   build:
@@ -15,9 +15,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "14"
-          cache: "npm"
-          registry-url: "https://registry.npmjs.org"
+          node-version: '14'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
       - name: Release
         run: |
           git config --local user.email "action@github.com"

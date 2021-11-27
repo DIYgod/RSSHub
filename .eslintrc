@@ -66,6 +66,13 @@
         "no-new-func": 2,
         "require-await": 2,
         "prefer-arrow-callback": 2,
-        "object-shorthand": 2
+        "object-shorthand": 2,
+        "yml/quotes": [
+            "error",
+            {
+                "prefer": "single"
+            }
+        ]
+
     }
 }

@@ -1,14 +1,14 @@
-name: "[docker] CI for releases"
+name: '[docker] CI for releases'
 
 on:
   push:
     branches:
       - master
     paths:
-      - "lib/**"
-      - ".github/workflows/**"
-      - "Dockerfile"
-      - "package.json"
+      - 'lib/**'
+      - '.github/workflows/**'
+      - 'Dockerfile'
+      - 'package.json'
 
 jobs:
   release:

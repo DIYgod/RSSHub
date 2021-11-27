@@ -15,6 +15,7 @@ jobs:
         id: fetchRoute
         uses: actions/github-script@v3
         with:
+
           # by default, JSON format returned
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

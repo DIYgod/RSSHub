@@ -1,13 +1,14 @@
-name: "[docker] CI for build tests"
+name: '[docker] CI for build tests'
 
 on:
   pull_request:
     branches:
       - master
     paths:
-      - "lib/**"
-      - "Dockerfile"
-      - "package.json"
+      - 'lib/**'
+      - 'Dockerfile'
+      - 'package.json'
+
   # Please, always create a pull request instead of push to master.
 jobs:
   test:
