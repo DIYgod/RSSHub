@@ -149,6 +149,9 @@
     "/ruancan/ruancan/search/:keyword?": [
         "nczitzk"
     ],
+    "/ruc/hr/:category?": [
+        "nczitzk"
+    ],
     "/sciencedirect/journal/:id": [
         "nczitzk"
     ],
