@@ -704,6 +704,7 @@
     "/manhuagui/comic/:id": [],
     "/mhgui/comic/:id": [],
     "/twmanhuagui/comic/:id": [],
+    "/copymanga/comic/:id": [],
     "/cartoonmad/comic/:id": [],
     "/vol/:mode?": [],
     "/dongmanmanhua/:category/:name/:id": [],
