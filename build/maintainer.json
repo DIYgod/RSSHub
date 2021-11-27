@@ -101,6 +101,9 @@
     "/literotica/category/:category": [
         "nczitzk"
     ],
+    "/mvm/:category?": [
+        "nczitzk"
+    ],
     "/netease/news/rank/:category?/:type?/:time?": [
         "nczitzk"
     ],
