@@ -430,3 +430,9 @@ Provide full article RSS for WSJ topics.
 Provides all of the articles by the specified Yahoo! author.
 
 </RouteEn>
+
+## 公視新聞網
+
+### Daily News
+
+<RouteEn author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>
