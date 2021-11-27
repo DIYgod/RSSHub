@@ -5,6 +5,18 @@
     "/2048/:id?": [
         "nczitzk"
     ],
+    "/18comic/album/:id": [
+        "nczitzk"
+    ],
+    "/18comic/blogs/:category?": [
+        "nczitzk"
+    ],
+    "/18comic/search/:option?/:category?/:time?/:order?/:keyword?": [
+        "nczitzk"
+    ],
+    "/18comic/:category?/:time?/:order?/:keyword?": [
+        "nczitzk"
+    ],
     "/8world/:category?": [
         "nczitzk"
     ],
@@ -24,6 +36,12 @@
         "nczitzk"
     ],
     "/bnu/bs/:category?": [
+        "nczitzk"
+    ],
+    "/bse/:category?/:keyword?": [
+        "nczitzk"
+    ],
+    "/btzj/:category?": [
         "nczitzk"
     ],
     "/bupt/rczp": [
@@ -46,6 +64,14 @@
     ],
     "/eastday/portrait": [
         "nczitzk"
+    ],
+    "/elsevier/:journal/latest": [
+        "Derekmini",
+        "sunsunwolf-swb"
+    ],
+    "/elsevier/:journal/vol/:id": [
+        "Derekmini",
+        "sunsunwolf-swb"
     ],
     "/epicgames/epicgames/:collection": [
         "DIYgod",
@@ -70,6 +96,9 @@
     ],
     "/furstar/archive/:lang?": [
         "NeverBehave"
+    ],
+    "/gameapps/": [
+        "TonyRL"
     ],
     "/getdr/": [
         "nczitzk"
@@ -107,6 +136,12 @@
     "/hkjunkcall/": [
         "nczitzk"
     ],
+    "/hongkong/dh/:language?": [
+        "nczitzk"
+    ],
+    "/hongkong/chp/:category?/:language?": [
+        "nczitzk"
+    ],
     "/hotchina/": [
         "nczitzk"
     ],
@@ -122,10 +157,52 @@
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
+    "/ieee/:journal/latest/date/:sortType?": [
+        "Derekmini",
+        "auto-bot-ty"
+    ],
+    "/ieee/:journal/latest/vol/:sortType?": [
+        "Derekmini",
+        "auto-bot-ty"
+    ],
     "/independent/ps5-stock-uk": [
         "DIYgod"
     ],
     "/ithome/zt/:id": [
+        "nczitzk"
+    ],
+    "/jasa/latest": [
+        "Derekmini",
+        "auto-bot-ty"
+    ],
+    "/jasa/section/:id": [
+        "Derekmini"
+    ],
+    "/javdb/home/:category?/:sort?/:filter?": [
+        "nczitzk"
+    ],
+    "/javdb/search/:keyword?/:filter?": [
+        "nczitzk"
+    ],
+    "/javdb/tags/:query?/:category?": [
+        "nczitzk"
+    ],
+    "/javdb/actors/:id/:filter?": [
+        "nczitzk"
+    ],
+    "/javdb/makers/:id/:filter?": [
+        "nczitzk"
+    ],
+    "/javdb/series/:id/:filter?": [
+        "nczitzk"
+    ],
+    "/javdb/rankings/:category?/:time?": [
+        "nczitzk"
+    ],
+    "/javdb/:category?/:sort?/:filter?": [
+        "nczitzk"
+    ],
+    "/jisilu/:category?/:sort?/:day?": [
         "nczitzk"
     ],
     "/jump/discount/:platform/:filter?/:countries?": [
@@ -152,6 +229,12 @@
     "/mingpao/:type?/:category?": [
         "TonyRL"
     ],
+    "/mohw/clarification": [
+        "nczitzk"
+    ],
+    "/mox/:category?": [
+        "nczitzk"
+    ],
     "/mvm/:category?": [
         "nczitzk"
     ],
@@ -165,6 +248,9 @@
         "nczitzk"
     ],
     "/netease/news/rank/:category?/:type?/:time?": [
+        "nczitzk"
+    ],
+    "/news/whxw": [
         "nczitzk"
     ],
     "/newsmarket/:category?": [
@@ -212,6 +298,12 @@
     "/secnews/index": [
         "kaiili"
     ],
+    "/shopback/:store": [
+        "nczitzk"
+    ],
+    "/sicau/zsjy/:category?": [
+        "nczitzk"
+    ],
     "/solidot/:type?": [
         "sgqy",
         "hang333",
@@ -224,6 +316,9 @@
         "nczitzk"
     ],
     "/subhd/zu/:category?": [
+        "nczitzk"
+    ],
+    "/swissinfo/:language?/:category?": [
         "nczitzk"
     ],
     "/szse/rule": [
@@ -326,6 +421,7 @@
     "/ncm/user/playlist/:uid": [],
     "/ncm/artist/:id": [],
     "/ncm/djradio/:id": [],
+    "/ncm/user/playrecords/:uid/:type?": [],
     "/juejin/category/:category": [],
     "/juejin/tag/:tag": [],
     "/juejin/trending/:category/:type": [],
@@ -470,8 +566,8 @@
     "/nytimes/:lang?": [],
     "/3dm/:name/:type": [],
     "/3dm/news": [],
-    "/ximalaya/album/:id/:all?": [],
-    "/ximalaya/album/:id/:all/:shownote?": [],
+    "/ximalaya/:type/:id/:all?": [],
+    "/ximalaya/:type/:id/:all/:shownote?": [],
     "/eztv/torrents/:imdb_id": [],
     "/smzdm/keyword/:keyword": [],
     "/smzdm/ranking/:rank_type/:rank_id/:hour": [],
@@ -817,7 +913,6 @@
     "/kirara/news": [],
     "/dytt": [],
     "/dytt/index": [],
-    "/btzj/:type?": [],
     "/rs05/rs05": [],
     "/rrys/review": [],
     "/yyets/todayfilelist": [],
@@ -1213,7 +1308,9 @@
     "/aqicn/:city/:pollution?": [],
     "/maoyan/hot": [],
     "/maoyan/upcoming": [],
+    "/maoyan/hotComplete/:orderby?/:ascOrDesc?/:top?": [],
     "/cnbeta": [],
+    "/cnbeta/topic/:topic_id": [],
     "/gov/veterans/:type": [],
     "/gov/veterans/hebei/:type": [],
     "/dilbert/strip": [],
@@ -1897,14 +1994,6 @@
     "/mamibuy/:caty?/:age?/:sort?": [],
     "/mercari/:type/:id": [],
     "/notefolio/:caty?/:order?/:time?/:query?": [],
-    "/javdb/home/:category?/:sort?/:filter?": [],
-    "/javdb/search/:keyword?/:filter?": [],
-    "/javdb/tags/:query?/:caty?": [],
-    "/javdb/actors/:id/:filter?": [],
-    "/javdb/makers/:id/:filter?": [],
-    "/javdb/series/:id/:filter?": [],
-    "/javdb/rankings/:caty?/:time?": [],
-    "/javdb/:category?/:sort?/:filter?": [],
     "/weforum/report/:lang?/:year?/:platform?": [],
     "/nobelprize/:caty?": [],
     "/gov/taiwan/mnd": [],
@@ -2099,7 +2188,6 @@
     "/shinybbs": [],
     "/tianyancha/hot": [],
     "/kingarthur/:type": [],
-    "/news/whxw": [],
     "/yxdown/recommend": [],
     "/yxdown/news/:category?": [],
     "/babehub/search/:keyword?": [],
@@ -2154,8 +2242,6 @@
     "/liyuan-forums/threads/forum/:forum_id": [],
     "/liyuan-forums/threads/topic/:topic_id": [],
     "/liyuan-forums/threads/user/:user_id": [],
-    "/jisilu/reply/:user": [],
-    "/jisilu/topic/:user": [],
     "/verfghbw/press/:keyword?": [],
     "/topbook/overview/:id?": [],
     "/topbook/today": [],
@@ -2217,8 +2303,12 @@
     "/questmobile/report/:category?/:label?": [],
     "/rss3/blog": [],
     "/odaily/activity": [],
+    "/odaily/newsflash": [],
+    "/odaily/user/:id": [],
+    "/odaily/:id?": [],
     "/fashionnetwork/news/:sectors?/:categories?/:language?": [],
     "/dykszx/news/:type?": [],
     "/secrss/category/:category?": [],
-    "/secrss/author/:author?": []
+    "/secrss/author/:author?": [],
+    "/fashionnetwork/headline/:country?": []
 }
