@@ -704,9 +704,28 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
-## subHD.tv - 最新字幕
+## Sub HD
 
-<Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
+### 字幕
+
+<Route author="laampui nczitzk" example="/subhd/sub/new" path="/subhd/sub/:category?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新字幕 | 热门字幕 | 剧集字幕 | 电影字幕 |
+| -------- | -------- | -------- | -------- |
+| new      | top      | tv       | movie    |
+
+</Route>
+
+### 字幕组
+
+<Route author="nczitzk" example="/subhd/zu/14" path="/subhd/zu/:category?" :paramsDesc="['字幕组，见下表，默认为 YYeTs字幕组']">
+
+| YYeTs 字幕组 | F.I.X 字幕侠 | 深影字幕组 | 擦枪字幕组 | 哒哒字幕组 | 迪幻字幕组 | 伊甸园字幕组 | H-SGDK 字幕组 | 蓝血字幕组 | GA 字幕组 | CC 标准电影字幕组 | NEW 字幕组 | Orange 字幕组 | 圣城家园 SCG 字幕组 | 纪录片之家字幕组 |
+| ------------ | ------------ | ---------- | ---------- | ---------- | ---------- | ------------ | ------------- | ---------- | --------- | ----------------- | ---------- | ------------- | ------------------- | ---------------- |
+| 14           | 28           | 2          | 118        | 132        | 20         | 1            | 18            | 71         | 11        | 75                | 130        | 66            | 19                  | 10               |
+
+</Route>
+
 ## Trakt.tv
 
 ### 用户收藏
