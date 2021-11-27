@@ -118,6 +118,23 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 | smart-cities | /technologyreview/smart-cities|
 | space | /technologyreview/space |
 
+## JASA
+
+### Latest Research
+
+<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
+
+</Route>
+
+### Section Research
+
+<Route author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name，get it from tocSection of the URL']" radar="1" rssbud="1">
+
+| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
+| :-----: | :---------: | :-----------------: | :----: |
+|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
+
+</Route>
 
 ## Nature Journal
 
