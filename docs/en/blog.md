@@ -26,6 +26,12 @@ pageClass: routes
 
 <RouteEn author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
+## Love the Problem
+
+### Ash Maurya's blog
+
+<RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
+
 ## Paul Graham
 
 ### Essays
@@ -42,3 +48,8 @@ pageClass: routes
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
 
+## yuzu emulator
+
+### Entry
+
+<RouteEn author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />

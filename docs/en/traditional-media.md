@@ -6,17 +6,55 @@ pageClass: routes
 
 ## ABC News
 
-### Site
+### Channel & Topic
 
-<Route author="nczitzk" example="/abc" path="/abc/:site?" :paramsDesc="['Site, see below']">
+<RouteEn author="nczitzk" example="/abc" path="/abc/:id?" :paramsDesc="['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']">
 
-Site
+::: tip Tip
 
-| Just In | Politics | World | Business | Analysis | Sport | Science | Health | Arts | Fact Check | 中文新闻 | Berita Bahasa Indonesia | Tok Pisin |
-| - | - | - | - | - | - | - | - | - | - | - | - | - | - |
-| justin | politics | world | business | analysis-and-opinion | sport | science | health | arts-culture | factcheck | chinese | indonesian | tok-pisin |
+All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.
 
-</Route>
+For example, the URL for [Computers and Technology](https://www.abc.net.au/news/topic/computers-and-technology) is <https://www.abc.net.au/news/topic/computers-and-technology>, the field after `topic` is `computers-and-technology`, and the `documentId` of the Topic is `2302`, so the route is [/abc/computers-and-technology](https://rsshub.app/abc/computers-and-technology) and [/abc/2302](https://rsshub.app/abc/2302).
+
+The supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.
+
+:::
+
+The following are some of the supported Channel and Topic ids.
+
+| Just In | Coronavirus | Politics | World |
+| ------- | ----------- | -------- | ----- |
+| justin  | coronavirus | politics | world |
+
+| Asia Pacific | Business | Analysis & Opinion   | Sport |
+| ------------ | -------- | -------------------- | ----- |
+| asia-pacific | business | analysis-and-opinion | sport |
+
+| AFL | Rugby League | Rugby Union | Football |
+| --- | ------------ | ----------- | -------- |
+| afl | rugbyleague  | rugbyunion  | football |
+
+| Cricket | Science | Astronomy (Space) | Computers and Technology |
+| ------- | ------- | ----------------- | ------------------------ |
+| cricket | science | astronomy-space   | computers-and-technology |
+
+| Environment | Archaeology | Health | Exercise and Fitness |
+| ----------- | ----------- | ------ | -------------------- |
+| environment | archaeology | health | exercise-and-fitness |
+
+| Pharmaceuticals | Mental Health | Diet and Nutrition | Arts & Culture |
+| --------------- | ------------- | ------------------ | -------------- |
+| pharmaceuticals | mental-health | diet-and-nutrition | arts-culture   |
+
+| Fact Check | ABC 中文 | 澳洲时政           | 聚焦中港台     |
+| ---------- | -------- | ------------------ | -------------- |
+| factcheck  | chinese  | australia-politics | focus-on-china |
+
+| 观点与分析              | 澳洲华人             | 解读澳洲          | Berita dalam Bahasa Indonesia | Tok Pisin |
+| ----------------------- | -------------------- | ----------------- | ----------------------------- | --------- |
+| analysis-and-opinion-zh | chinese-in-australia | curious-australia | indonesian                    | tok-pisin |
+
+</RouteEn>
 
 ## AP News
 
@@ -137,6 +175,32 @@ Generates full-text feeds that the official feed doesn't provide.
 
 </RouteEn>
 
+## Ming Pao
+
+### Ming Pao Daily
+
+<RouteEn author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" :paramsDesc="['channel，default to brief']"/>
+
+::: tip tips
+Only `s00017` is in English.
+:::
+
+| category | Channel       |
+| -------- | ------------- |
+| s00001   | Brief         |
+| s00002   | Local         |
+| s00003   | Editorial     |
+| s00004   | Economy       |
+| s00005   | Supplement    |
+| s00011   | Education     |
+| s00012   | Views         |
+| s00013   | China         |
+| s00014   | International |
+| s00015   | Sports        |
+| s00016   | Entertainment |
+| s00017   | English       |
+| s00018   | Columnist     |
+
 ## NHK
 
 ### News Web Easy
@@ -200,6 +264,60 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 </RouteEn>
 
+## SBS
+
+### Chinese
+
+<RouteEn author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" :paramsDesc="['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']">
+
+::: tip Tip
+
+When subscribing to podcasts, fill `category` with **podcast**. For example, URL to [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>, with **sbs-mandarin** as `id`, **mandarin** as `dialect`, `language` as **zh-hans**, and the route is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans).
+
+:::
+
+| 新闻 | 澳大利亚新闻    | 国际新闻           | ​商业与财经      |
+| ---- | --------------- | ------------------ | ---------------- |
+| news | australian-news | international-news | business-finance |
+
+| 澳中关系                  | ​移民与签证 | Stories in English |
+| ------------------------- | ----------- | ------------------ |
+| australia-china-relations | immigration | english            |
+
+| COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
+| ----------------- | ------------------ | ----------------- | --------- |
+| coronavirus       | australian-chinese | life-in-australia | education |
+
+| 健康   | 吃喝玩乐                  | 艺术人文        | 澳洲定居指南     |
+| ------ | ------------------------- | --------------- | ---------------- |
+| health | food-travel-entertainment | cultural-events | settlement-guide |
+
+SBS Mandarin Programs:
+
+| SBS 普通话播客 | 解读澳洲            | 疫苗快报                   |
+| -------------- | ------------------- | -------------------------- |
+| sbs-mandarin   | australia-explained | covid-vaccine-daily-update |
+
+SBS Cantonese Programs:
+
+| SBS 廣東話節目 Podcast | 疫苗快報            | 美食速遞        | 我不是名人          |
+| ---------------------- | ------------------- | --------------- | ------------------- |
+| sbs-cantonese          | covid-vaccine-daily | gourmet-express | my-australian-story |
+
+| 健康快樂人         | 園藝趣談       | 寰宇金融       | 文化 360    | 科技世界         |
+| ------------------ | -------------- | -------------- | ----------- | ---------------- |
+| healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
+
+::: tip Tip
+
+Mostly, you can omit `language`, for the reason that **madarin** is with **zh-hans** and **cantonese** is with **zh-hant** by default. For example, the route of [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans), which can also be [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin).
+
+You still can customize `language`, however, it is important to note that not all pages are available in bilingual versions.
+
+:::
+
+</RouteEn>
+
 ## SCMP
 
 ### News
@@ -256,6 +374,25 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+### Best Seller Books
+
+
+<RouteEn author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
+
+| Category | 
+| -------- | 
+| combined-print-and-e-book-nonfiction |
+| hardcover-nonfiction| 
+| paperback-nonfiction| 
+| advice-how-to-and-miscellaneous| 
+| combined-print-and-e-book-fiction|
+| hardcover-fiction|
+| trade-fiction-paperback| 
+| childrens-middle-grade-hardcover| 
+| picture-books|
+| series-books|
+| young-adult-hardcover| 
+
 ## The Wall Street Journal (WSJ)
 
 ### News
@@ -293,3 +430,9 @@ Provide full article RSS for WSJ topics.
 Provides all of the articles by the specified Yahoo! author.
 
 </RouteEn>
+
+## 公視新聞網
+
+### Daily News
+
+<RouteEn author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>

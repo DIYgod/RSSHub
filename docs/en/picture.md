@@ -8,11 +8,13 @@ pageClass: routes
 
 ### Photos
 
-<RouteEn author="nczitzk" example="/1x/latest/all" path="/1x/:type?/:caty?" :paramsDesc="['sort type, `latest` by default, or `popular` or `curators-choice`', 'picture category, `all` by default, see below']">
+<RouteEn author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['Category, Latest awarded by default, see below']">
 
-| Picture Category | Code          |
+| Category         | Title         |
 | ---------------- | ------------- |
-| All categories   | all           |
+| Latest awarded   | latest        |
+| Popular          | popular       |
+| Latest published | published     |
 | Abstract         | abstract      |
 | Action           | action        |
 | Animals          | animals       |
@@ -35,6 +37,24 @@ pageClass: routes
 | Wildlife         | wildlife      |
 
 </RouteEn>
+
+## Asian to lick
+
+### Home
+
+<RouteEn author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+
+### Category
+
+<RouteEn author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['Category, the id can be found in URL, homepage by default']"/>
+
+### Tag
+
+<RouteEn author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" :paramsDesc="['Tag, the id can be found in URL, homepage by default']"/>
+
+### Search
+
+<RouteEn author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['Keyword, empty by default']"/>
 
 ## BabeHub
 
@@ -74,7 +94,7 @@ pageClass: routes
 
 ### Home
 
-<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['Category, see below, Home by default']">
+<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['Category, see below, Home by default']"/>
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
@@ -84,7 +104,7 @@ pageClass: routes
 
 ### Videos
 
-<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['Sort, see below, Popular by default']">
+<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['Sort, see below, Popular by default']" />
 
 | Popular | Recent |
 | ------- | ------ |
