@@ -626,27 +626,6 @@
             { title: '支持的快递公司列表', docs: 'https://docs.rsshub.app/other.html#kuai-di-100', source: '/', target: '/kuaidi100/company' },
         ],
     },
-    'hrbeu.edu.cn': {
-        _name: '哈尔滨工程大学',
-        yjsy: [
-            { title: '研究生院 - 通知公告', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/yjsy/announcement' },
-            { title: '研究生院 - 新闻动态', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/yjsy/news' },
-            { title: '研究生院 - 国家公派项目', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/yjsy/gjgp' },
-            { title: '研究生院 - 国际合作与交流项目', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/yjsy/gjhz' },
-        ],
-        job: [{ title: '就业服务平台 - 通知公告', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/job/tzgg' }],
-        uae: [
-            { title: '水声学院 - 新闻动态', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/shuisheng/xwdt' },
-            { title: '研究生院 - 通知公告', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/shuisheng/tzgg' },
-        ],
-    },
-    'gongxue.cn': {
-        _name: '工学网',
-        '.': [
-            { title: '要闻', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/gongxue/yw' },
-            { title: '时讯', docs: 'https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue', source: '/*', target: '/heu/gongxue/sx' },
-        ],
-    },
     'nsfc.gov.cn': {
         _name: '国家自然科学基金委员会',
         www: [
@@ -1328,4 +1307,13 @@
     },
     'macwk.com': { _name: 'MacWk', '.': [{ title: '应用更新', docs: 'https://docs.rsshub.app/program-update.html#macwk', source: '/soft/:name', target: '/macwk/soft/:name' }] },
     'zyshow.net': { www: [{ title: '', docs: 'https://docs.rsshub.app/game.html#lv-fa-shi-ying-di', source: '/:name/', target: '/zyshow/:name' }] },
+    'foreverblog.cn': {
+        _name: 'foreverblog',
+        www: [
+            {
+                title: '十年之约',
+                docs: 'https://docs.rsshub.app/social-media.html#foreverblog',
+            },
+        ],
+    },
 });
