@@ -262,6 +262,9 @@
     "/ngocn2/:category?": [
         "nczitzk"
     ],
+    "/nsfc/news/:type?": [
+        "Derekmini"
+    ],
     "/people/liuyan/:id/:state?": [
         "nczitzk"
     ],
@@ -1694,7 +1697,6 @@
     "/lagou/jobs/:position/:city": [],
     "/yzu/home/:type": [],
     "/yzu/yjszs/:type": [],
-    "/nsfc/news/:type?": [],
     "/krankenkassen": [],
     "/guat/news/:type?": [],
     "/learnku/:community/:category?": [],
