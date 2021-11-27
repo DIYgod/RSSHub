@@ -16,6 +16,12 @@ pageClass: routes
 
 <RouteEn author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
 
+## Distill
+
+### Latest
+
+<RouteEn author="nczitzk" example="/distill" path="/distill"/>
+
 ## GitHub
 
 ::: tip

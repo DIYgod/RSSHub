@@ -32,6 +32,8 @@ pageClass: routes
 
 ## dbaplus 社群
 
+### 栏目
+
 <Route author="nczitzk" example="/dbaplus" path="/dbaplus/:tab?" :paramsDesc="['栏目，见下表，默认为全部']">
 
 | 全部 | 数据库 | 运维 | 大数据 | 架构 | PaaS 云 | 职场生涯 | 这里有毒 |
@@ -40,11 +42,27 @@ pageClass: routes
 
 </Route>
 
+### 活动
+
+<Route author="nczitzk" example="/dbaplus/activity" path="/dbaplus/activity/:type?" :paramsDesc="['分类，见下表，默认为线上分享']">
+
+| 线上分享 | 线下峰会 |
+| -------- | -------- |
+| online   | offline  |
+
+</Route>
+
 ## deeplearning.ai
 
 ### TheBatch 周报
 
 <Route author="nczitzk" example="/deeplearningai/thebatch" path="/deeplearningai/thebatch"/>
+
+## Distill
+
+### Latest
+
+<Route author="nczitzk" example="/distill" path="/distill"/>
 
 ## Dockone
 
@@ -101,7 +119,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language?/:spoken_language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到', '自然语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1"/>
 
 ### Topics
 
@@ -442,6 +460,22 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 安全内参
+
+### 分类
+
+<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category"/>
+
+### 作者
+
+<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author"/>
+
+## 安全文摘
+
+### 首页
+
+<Route author="kaiili" example="/secnews" path="/secnews" />
+
 ## 饿了么开放平台
 
 ### 商家开放平台公告
@@ -543,16 +577,6 @@ GitHub 官方也提供了一些 RSS:
 ### 分享
 
 <Route author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
-
-## 开发者头条
-
-### 今天头条
-
-<Route author="jjeejj" example="/toutiao/today" path="/toutiao/today"/>
-
-### 独家号
-
-<Route author="jjeejj" example="/toutiao/user/140544" path="/toutiao/user/:id" :paramsDesc="['独家号 id, 可在对应独家号页 URL 中找到']"/>
 
 ## 开源中国
 

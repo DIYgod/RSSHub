@@ -6,28 +6,26 @@
 
 :::
 
-在编写新的路由时，RSSHub会读取文件夹中的：
+在编写新的路由时，RSSHub 会读取文件夹中的：
 
-- `router.js`注册路由
-- `maintainer.js`获取路由路径，维护者
-- `radar.js`获取路由所对应的网站，以及匹配规则：https://github.com/DIYgod/RSSHub-Radar/
-- `templates` 渲染模版
+-   `router.js`注册路由
+-   `maintainer.js`获取路由路径，维护者
+-   `radar.js`获取路由所对应的网站，以及匹配规则：<https://github.com/DIYgod/RSSHub-Radar/>
+-   `templates` 渲染模版
 
 **以上文件为所有插件必备**
 
-```
-├───lib/v2
-│   ├───furstar
-│       ├─── templates
-│           ├─── description.art
-│       ├─── router.js
-│       ├─── maintainer.js
-│       ├─── radar.js
-│       ├─── someOtherJs.js
-│   └───test
-│   └───someOtherScript
-...
-```
+    ├───lib/v2
+    │   ├───furstar
+    │       ├─── templates
+    │           ├─── description.art
+    │       ├─── router.js
+    │       ├─── maintainer.js
+    │       ├─── radar.js
+    │       ├─── someOtherJs.js
+    │   └───test
+    │   └───someOtherScript
+    ...
 
 **所有符合条件的，在`/v2`路径下的路由，将会被自动载入，无需更新`router.js`**
 
@@ -59,10 +57,10 @@ module.exports = function (router) {
 
 `maintainer.js` 应当导出一个对象，在我们获取路径相关信息时，将会在从这里调取开发者信息等
 
-- key: `@koa/router` 对应的路径匹配
-- value: 数组，包含所有开发者的Github Username
+-   key: `@koa/router` 对应的路径匹配
+-   value: 数组，包含所有开发者的 Github Username
 
-Github ID可能是更好的选择，但是后续处理不便，目前暂定Username
+Github ID 可能是更好的选择，但是后续处理不便，目前暂定 Username
 
 ### 例子
 
@@ -80,7 +78,7 @@ module.exports = {
 
 书写方式： <https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze>
 
-**我们目前要求所有路由，必须包含这个文件，并且包含对应的域名 -- 我们不要求完全的路由匹配，最低要求是在对应的网站，可以显示支持即可。这个文件后续会用于帮助bug反馈。**
+**我们目前要求所有路由，必须包含这个文件，并且包含对应的域名 -- 我们不要求完全的路由匹配，最低要求是在对应的网站，可以显示支持即可。这个文件后续会用于帮助 bug 反馈。**
 
 ### 例子
 
@@ -112,17 +110,15 @@ module.exports = {
 };
 ```
 
-
 `npm run build:radar` 将会在`/assets/build/`下生成一份完整的`radar-rules.js`
-
 
 ## Template
 
-我们目前要求所有路由，在渲染`description`等带HTML的内容时，**必须**使用art引擎进行排版
+我们目前要求所有路由，在渲染`description`等带 HTML 的内容时，**必须**使用 art 引擎进行排版
 
-art说明文档： <https://aui.github.io/art-template/docs/>
+art 说明文档： <https://aui.github.io/art-template/docs/>
 
-同时，所有模版应该放在插件`templates`文件夹中 -- 后续我们会以此提供自定义模版切换/渲染等需求
+同时，所有模版应该放在插件`templates`文件夹中 -- 后续我们会以此提供自定义模版切换 / 渲染等需求
 
 ### 例子
 
@@ -144,7 +140,6 @@ const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'
 
 ## ctx.state.json
 
-插件目前可以提供一个自定义的对象，用于调试 -- 访问对应路由+`.debug.json`即可获取到对应内容
+插件目前可以提供一个自定义的对象，用于调试 -- 访问对应路由 +`.debug.json`即可获取到对应内容
 
 我们对这个部分格式内容没有任何限制，完全可选，目前会继续观察这个选项的发展方向
-

@@ -13,11 +13,11 @@ We welcome all pull requests. Suggestions and feedback are also welcomed [here](
 
 ## Submit new RSS rule
 
-Before you start writing RSS rule, please make sure that the source site does not provide RSS. Some web pages will include a link element with type `application/atom+xml` or `application/rss+xml` in the HTML header to indicate the RSS link.
+Before you start writing an RSS rule, please make sure that the source site does not provide RSS. Some web pages will include a link element with type `application/atom+xml` or `application/rss+xml` in the HTML header to indicate the RSS link.
 
 ### Debug
 
-First `yarn` or`npm install` to install dependencies, then execute `yarn dev` or`npm run dev`, open `http://localhost:1200` to see the effect, and the page will refresh automatically if files modified.
+First, `yarn` or `npm install` to install dependencies, then execute `yarn dev` or `npm run dev`, open `http://localhost:1200` to see the effect, and the page will refresh automatically if files are modified.
 
 ### Add route
 
@@ -29,7 +29,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
 
 #### Acquiring Data
 
--   Typically the data are acquired via HTTP requests (via API or webpage) sent by [got](https://github.com/sindresorhus/got)
+-   Typically, the data are acquired via HTTP requests (via API or webpage) sent by [got](https://github.com/sindresorhus/got)
 -   Occasionally [puppeteer](https://github.com/GoogleChrome/puppeteer) is required for browser stimulation and page rendering in order to acquire the data
 
 -   The acquired data are most likely in JSON or HTML format
@@ -39,7 +39,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
 
     1. **Acquire data via API using got**
 
-    Example：[/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
+    Example: [/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
     Acquiring data via the official API provided by the data source using got:
 
@@ -57,7 +57,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
     // The object contains a nested object called data, thus response.data.data is the actual data needed here
     ```
 
-    One of the leaf objects (response.data.data[0])：
+    One of the leaf objects (response.data.data[0]):
 
     ```json
     {
@@ -75,7 +75,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
     }
     ```
 
-    Processing the data further to generate objects in accordance with RSS specification, mainly title, link, description, publish time, then assign them to ctx.state.data, [produce RSS feed](#produce-rss-feed)：
+    Processing the data further to generate objects in accordance with RSS specification, mainly title, link, description, publish time, then assign them to ctx.state.data, [produce RSS feed](#produce-rss-feed):
 
     ```js
     ctx.state.data = {
@@ -125,9 +125,9 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
     // use cheerio selector, select all 'div' elements with 'data-item_id' attribute, the result is an array of cheerio node objects
     // use cheerio get() method to transform a cheerio node object array into a node array
 
-    // PS：every cheerio node is a HTML DOM
-    // PPS：cheerio selector is almost identical to jquery selector
-    // Refer to cheerio docs：https://cheerio.js.org/
+    // PS: every cheerio node is a HTML DOM
+    // PPS: cheerio selector is almost identical to jquery selector
+    // Refer to cheerio docs: https://cheerio.js.org/
     ```
 
     Use map to traverse the array and parse out the result of each item
@@ -156,9 +156,9 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
 
     3. **Acquire data via page rendering using puppeteer**
 
-    ::: tip tips
+    ::: tip Tips
 
-    This method consumes more resources and is less performant, use only when the above methods failed to acquire data, otherwise your pull requests will be rejected!
+    This method consumes more resources and is less performant, use only when the above methods are failed to acquire data. Otherwise, your pull requests will be rejected!
 
     :::
 
@@ -210,16 +210,16 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
 
     // the route is now done
 
-    // PS: the route acts as a notifier of new articles, it does not provide access to the content behind the paywall, thus not content were fetched
+    // PS: the route acts as a notifier of new articles. It does not provide access to the content behind the paywall. Thus no content was fetched
     ```
 
     4. **Use general configuration routing**
 
     A large number of websites can generate RSS through a configuration paradigm.
 
-    The general configuration is to easily generate RSS by reading json data through cheerio (**CSS selector, jQuery function**)
+    The general configuration is to generate RSS with ease by reading json data through cheerio (**CSS selector, jQuery function**)
 
-    First we need a few data:
+    First, we need a few data:
 
     1. RSS source link
     2. Data source link
@@ -239,7 +239,7 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
     };
     ```
 
-    Our RSS does not have any content for now, the content needs to be completed by `item`
+    Our RSS does not have any content for now. The content needs to be completed by `item`.
     Here is an example
 
     ```js
@@ -272,9 +272,9 @@ Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/m
 
 #### Use Cache
 
-All routes have a cache, the global cache time is set in `lib/config.js`, but the content returned by some interfaces is updated less frequently. At this time, you should set a longer cache time for these data.
+All routes have a cache, the global cache time is set in `lib/config.js`, but the content returned by some interfaces is updated less frequently. For that, you should set a longer cache time for these data like the full text of an article.
 
-For example, the bilibili column needs to get the full text of the article：[/lib/routes/bilibili/followings_article.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/followings_article.js)
+For example, the bilibili column needs to get the full text of the article: [/lib/routes/bilibili/followings_article.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/followings_article.js)
 
 Since the full text of all articles cannot be got from one API, each article needs to be requested once, and these data are generally unchanged, so these data should be stored in the cache to avoid requesting repeatedly
 
@@ -291,7 +291,7 @@ const description = await ctx.cache.tryGet(link, async () => {
 });
 ```
 
-The implementation of tryGet can be seen [here](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache.js#L128). The first parameter is the cache key, the second parameter is the cache data acquisition method, and the third parameter is the cache time, it should not be passed in normally. The cache time defaults to [CACHE_CONTENT_EXPIRE](/en/install/#cache-configurations), and each time accessing the cache will recalculate the expiration time
+The implementation of tryGet can be seen [here](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58). The first parameter is the cache key, the second parameter is the cache data acquisition method, and the third parameter is the cache time, it should not be passed in normally. The cache time defaults to [CACHE_CONTENT_EXPIRE](/en/install/#cache-configurations), and each time accessing the cache will recalculate the expiration time
 
 ---
 
@@ -386,7 +386,7 @@ ctx.state.data = {
 
 ### Add the documentation
 
-1.  Update [Documentation (/docs/en/README.md) ](https://github.com/DIYgod/RSSHub/blob/master/docs/en/README.md), preview the docs via `npm run docs:dev`
+1.  Update the corresponding file in [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en) directory, preview the docs via `npm run docs:dev`
 
     -   Documentation uses vue component:
         -   `author`: route authors, separated by a single space
@@ -416,14 +416,14 @@ ctx.state.data = {
         2. Multiple parameters:
 
         ```vue
-        <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']" />
+        <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['GitHub username', 'GitHub repo name']" />
         ```
 
         Preview:
 
         ***
 
-        <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['用户名', '仓库名']"/>
+        <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['GitHub username', 'GitHub repo name']"/>
 
         ***
 
@@ -457,6 +457,126 @@ ctx.state.data = {
 
 1.  Execute `npm run format` to lint the code before you commit and open a pull request
 
-## ## Submit new RSSHub Radar rule
+## Submit new RSSHub Radar rule
 
-TODO
+### Debug
+
+Open browser's RSSHub Radar extension settings, switch to rules list, scroll down and you will see a text box, copy the new rules into the text box and start debugging
+
+### Code the rule
+
+Add rules to [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)
+
+Simplified rules will be used for the following illustration:
+
+```js
+{
+    'bilibili.com': {
+        _name: 'bilibili',
+        www: [{
+            title: '分区视频',
+            docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+            source: '/v/*tpath',
+            target: (params) => {
+                let tid;
+                switch (params.tpath) {
+                    case 'douga/mad':
+                        tid = '24';
+                        break;
+                    default:
+                        return false;
+                }
+                return `/bilibili/partion/${tid}`;
+            },
+        }],
+    },
+    'twitter.com': {
+        _name: 'Twitter',
+        '.': [{  // for twitter.com
+            title: 'User timeline',
+            docs: 'https://docs.rsshub.app/en/social-media.html#twitter',
+            source: '/:id',
+            target: (params) => {
+                if (params.id !== 'home') {
+                    return '/twitter/user/:id';
+                }
+            },
+        }],
+    },
+    'pixiv.net': {
+        _name: 'Pixiv',
+        'www': [{
+            title: 'User Bookmark',
+            docs: 'https://docs.rsshub.app/en/social-media.html#pixiv',
+            source: '/bookmark.php',
+            target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
+        }],
+    },
+    'weibo.com': {
+        _name: '微博',
+        '.': [{
+            title: '博主',
+            docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+            source: ['/u/:id', '/:id'],
+            target: (params, url, document) => {
+                const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];
+                return uid ? `/weibo/user/${uid}` : '';
+            },
+        }],
+    },
+}
+```
+
+The definition and usage of these fields are explained below:
+
+#### title
+
+Required, route name
+
+The corresponding name in RSSHub docs, e.g. the `title` for `Twitter User timeline` is `User timeline`
+
+#### docs
+
+Required, docs link
+
+e.g. the `docs` for `Twitter User timeline` is `https://docs.rsshub.app/en/social-media.html#twitter`
+
+Note that it is not `https://docs.rsshub.app/en/social-media.html#twitter-user-timeline`, hash should be positioned to the H1 heading
+
+#### source
+
+Optional, source path, leave it blank and it will never match, only appears in `RSSHub for current website`
+
+e.g. the `source` for `Twitter User timeline` is `/:id`
+
+Let's say we are in `https://twitter.com/DIYgod`, which matches`twitter.com/:id`, the resulting params is `{id: 'DIYgod'}`, the extension will then generate an RSSHub subscription address based on the params `target`
+
+Please note that `source` can only match URL Path, if the parameters are in URL Param and URL Hash please use `target`
+
+#### target
+
+Optional, RSSHub path, leave it blank to not generate an RSSHub path
+
+The corresponding path in RSSHub docs, e.g. the `target` for `Twitter User timeline` is `/twitter/user/:id`
+
+The source path in the previous step matches `id` with `DIYgod`, the `:id` in RSSHub path will be replaced with `DIYgod`, resulting in `/twitter/user/DIYgod`, which is the result we want
+
+Furthermore, if the source path does not match the desired parameters, we can use `target` as a function with `params`, `url` and `document` parameters
+
+`params` are the parameters matched by `source` in the previous step, `url` is the page url, `document` is the page document
+
+Note that the `target` method runs in a sandbox, any changes to `document` will not be reflected in the web page
+
+### RSSBud
+
+[RSSBud](https://github.com/Cay-Zhang/RSSBud) supports RSSHub Radar rules and will also be updated automatically, but please note that:
+
+-   Using `'.'` subdomain allows RSSBud to support common mobile domains such as `m` / `mobile`
+
+-   Using `document` in `target` does not apply to RSSBud: RSSBud is not a browser extension, it only fetches and analyzes the URL of a website
+
+### Additional Information
+
+Adding `radar="1"` in the RSSHub docs will show a `support browser extension` badge
+
+If RSSBud is also supported, adding `rssbud="1"` will show a `support rssbud` badge
