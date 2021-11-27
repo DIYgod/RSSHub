@@ -98,19 +98,19 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 ### Latest Research
 
-<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
+<RouteEn author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
 
-</Route>
+</RouteEn>
 
 ### Section Research
 
-<Route author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name，get it from tocSection of the URL']" radar="1" rssbud="1">
+<RouteEn author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name，get it from tocSection of the URL']" radar="1" rssbud="1">
 
 | Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
 | :-----: | :---------: | :-----------------: | :----: |
 |  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
 
-</Route>
+</RouteEn>
 
 ## MIT Technology Review
 
