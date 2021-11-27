@@ -186,6 +186,22 @@ pageClass: routes
 
 </Route>
 
+## Mox.moe
+
+### 首頁
+
+<Route author="nczitzk" example="/mox" path="/mox/:category?" :paramsDesc="['分类，可在对应分类页 URL 中找到']">
+
+::: tip 提示
+
+在首页将分类参数选择确定后跳转到的分类页面 URL 中，`/l/` 后的字段即为分类参数。
+
+如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 <https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL>，此时 `/l/` 后的字段为 `CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`。最终获得路由为 [`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
+
+:::
+
+</Route>
+
 ## say 花火
 
 ### 文章
@@ -317,6 +333,12 @@ pageClass: routes
 ### 漫画更新
 
 <Route author="btdwv" path="/twmanhuagui/comic/:id" example="/twmanhuagui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+
+## 拷贝漫画
+
+### 漫画更新
+
+<Route author="btdwv" path="/copymanga/comic/:id" example="/copymanga/comic/zhandoupohuaixueyuandangerous" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
 
 ## 漫画 DB
 

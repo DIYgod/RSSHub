@@ -209,6 +209,12 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## ScienceDirect
+
+### Journal
+
+<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
+
 ## Stork 文献鸟订阅
 
 ### 关键词
@@ -240,5 +246,17 @@ _仅支持 Science 主刊_
 <Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
 路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 <https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ> 中 user= 后的 mlmE4JMAAAAJ。
+
+</Route>
+
+## 管理世界
+
+### 分类
+
+<Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
+
+| 本期要目 | 学术活动 | 通知公告 |
+| -------- | -------- | -------- |
+| bqym     | xshd     | tzgg     |
 
 </Route>

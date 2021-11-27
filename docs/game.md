@@ -103,6 +103,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
+## GameApps.hk 香港手机游戏网
+
+### 最新消息
+
+<Route author="TonyRL" example="/gameapps" path="/gameapps"/>
+
 ## GameRes 游资网
 
 ### 热点推荐
@@ -481,9 +487,17 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ## 旅法师营地
 
+### 首页
+
+<Route author="auto-bot-ty" example="/lfsyd/home" path="/lfsyd/home" radar="1" rssbud="1"/>
+
+### 首页（旧版）
+
+<Route author="auto-bot-ty" example="/lfsyd/old_home" path="/lfsyd/old_home" radar="1" rssbud="1"/>
+
 ### 分区
 
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
@@ -531,6 +545,10 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+### アークナイツ (日服新闻)
+
+<Route author="ofyark" example="/arknights/japan" path="/arknights/japan"/>
+
 ### 塞壬唱片
 
 <Route author="rikkablue" example="/siren/news" path="/siren/news"/>
@@ -543,7 +561,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 少女前线
 
-### 新闻
+### 情报局
 
 <Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" :paramsDesc="['分类，见下表，默认为新闻']">
 

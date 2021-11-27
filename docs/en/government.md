@@ -20,7 +20,40 @@ pageClass: routes
 
 ### Press Releases
 
-<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']">
+<RouteEn author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']"/>
+
+## Macau Independent Commission Against Corruption
+
+### Latest News
+
+<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']">
+Category
+
+| All  | Detected Cases | Investigation Reports or Recommendations  | Annual Reports | CCAC's Updates |
+| ---- | -------------- | ----------------------------------------- | -------------- | -------------- |
+| all  | case           | Persuasion                                | AnnualReport   | PCANews        |
+
+</RouteEn>
+
+## Hong Kong Centre for Health Protection
+
+### Category
+
+<RouteEn author="nczitzk" example="/chp" path="/chp/:category?/:language?" :paramsDesc="['Category, see below, Important Topics by default', 'Language, see below, zh_tw by default']">
+
+Category
+
+| Important Topics | Press Releases   | Response Level | Periodicals & Publications | Health Notice |
+| ---------------- | ---------------- | -------------- | -------------------------- | ------------- |
+| important_ft     | press_data_index | ResponseLevel  | publication                | HealthAlert   |
+
+Language
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| en      | zh_cn    | zh_tw    |
+
+</RouteEn>
 
 ## Hong Kong Department of Health
 

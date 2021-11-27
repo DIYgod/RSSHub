@@ -102,9 +102,47 @@ pageClass: routes
 
 ## 2048 核基地
 
-### 论坛更新
+### 论坛
 
-<Route author="hoilc" example="/2048/bbs/16" path="/2048/bbs/:fid" :paramsDesc="['板块 ID, 可在 URL 中找到, 例如, `thread.php?fid-16.html`中, 板块 ID 为`16`']" supportBT="1" />
+<Route author="hoilc nczitzk" example="/2048/2" path="/2048/:id?" :paramsDesc="['板块 ID, 见下表，默认为最新合集，即 `3`，亦可在 URL 中找到, 例如, `thread.php?fid-3.html`中, 板块 ID 为`3`']" supportBT="1">
+
+| 最新合集 | 亞洲無碼 | 日本騎兵 | 歐美新片 | 國內原創 | 中字原創 | 三級寫真 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 3        | 4        | 5        | 13       | 15       | 16       | 18       |
+
+| 有碼.HD | 亞洲 SM.HD | 日韓 VR/3D | 歐美 VR/3D | S-cute / Mywife / G-area |
+| ------- | ---------- | ---------- | ---------- | ------------------------ |
+| 116     | 114        | 96         | 97         | 119                      |
+
+| 網友自拍 | 亞洲激情 | 歐美激情 | 露出偷窺 | 高跟絲襪 | 卡通漫畫 | 原創达人 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 23       | 24       | 25       | 26       | 27       | 28       | 135      |
+
+| 唯美清純 | 网络正妹 | 亞洲正妹 | 素人正妹 | COSPLAY | 女优情报 | Gif 动图 |
+| -------- | -------- | -------- | -------- | ------- | -------- | -------- |
+| 21       | 274      | 276      | 277      | 278     | 29       |          |
+
+| 獨家拍攝 | 稀有首發 | 网络见闻 | 主播實錄 | 珍稀套圖 | 名站同步 | 实用漫画 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 213      | 94       | 283      | 111      | 88       | 131      | 180      |
+
+| 网盘二区 | 网盘三区 | 分享福利 | 国产精选 | 高清福利 | 高清首发 | 多挂原创 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 72       | 272      | 195      | 280      | 79       | 216      | 76       |
+
+| 磁链迅雷 | 正片大片 | H-GAME | 有声小说 | 在线视频 | 在线快播影院 |
+| -------- | -------- | ------ | -------- | -------- | ------------ |
+| 43       | 67       | 66     | 55       | 78       | 279          |
+
+| 综合小说 | 人妻意淫 | 乱伦迷情 | 长篇连载 | 文学作者 | TXT 小说打包 |
+| -------- | -------- | -------- | -------- | -------- | ------------ |
+| 48       | 103      | 50       | 54       | 100      | 109          |
+
+| 聚友客栈 | 坛友自售 |
+| -------- | -------- |
+| 57       | 136      |
+
+</Route>
 
 ## 60-Second Science - Scientific American
 
@@ -167,15 +205,61 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['标签，可在 URL 中找到']"/>
 
+### Upcoming Live Streams
+
+<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
+
 ## bilibili
 
 见 [#bilibili](/social-media.html#bilibili)
 
 ## BT 之家
 
+### 分类
+
+<Route author="nczitzk" example="/btzj" path="/btzj/:category?" :paramsDesc="['分类，可在对应分类页 URL 中找到，默认为首页']">
+
+::: tip 提示
+
+分类页中域名末尾到 `.htm` 前的字段即为对应分类，如 [电影](https://www.btbtt20.com/forum-index-fid-951.htm) <https://www.btbtt20.com/forum-index-fid-951.htm> 中域名末尾到 `.htm` 前的字段为 `forum-index-fid-951`，所以路由应为 [`/btzj/forum-index-fid-951`](https://rsshub.app/btzj/forum-index-fid-951)
+
+部分分类页，如 [电影](https://www.btbtt20.com/forum-index-fid-951.htm)、[剧集](https://www.btbtt20.com/forum-index-fid-950.htm) 等，提供了更复杂的分类筛选。你可以将选项选中后，获得结果分类页 URL 中分类参数，构成路由。如选中分类 [高清电影 - 年份：2021 - 地区：欧美](https://www.btbtt20.com/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0.htm) <https://www.btbtt20.com/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0.htm> 中域名末尾到 `.htm` 前的字段为 `forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0`，所以路由应为 [`/btzj/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0`](https://rsshub.app/btzj/forum-index-fid-1183-typeid1-0-typeid2-738-typeid3-10086-typeid4-0)
+
+:::
+
+基础分类如下：
+
+| 交流                | 电影                | 剧集                | 高清电影             |
+| ------------------- | ------------------- | ------------------- | -------------------- |
+| forum-index-fid-975 | forum-index-fid-951 | forum-index-fid-950 | forum-index-fid-1183 |
+
+| 音乐                | 动漫                | 游戏                | 综艺                 |
+| ------------------- | ------------------- | ------------------- | -------------------- |
+| forum-index-fid-953 | forum-index-fid-981 | forum-index-fid-955 | forum-index-fid-1106 |
+
+| 图书                 | 美图                | 站务              | 科技                |
+| -------------------- | ------------------- | ----------------- | ------------------- |
+| forum-index-fid-1151 | forum-index-fid-957 | forum-index-fid-2 | forum-index-fid-952 |
+
+| 求助                 | 音轨字幕             |
+| -------------------- | -------------------- |
+| forum-index-fid-1187 | forum-index-fid-1191 |
+
+::: tip 提示
+
+BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认域名，若该域名无法访问，可以通过在路由后方加上 `?domain=<域名>` 指定路由访问的域名。如指定域名为 <https://www.btbtt15.com>，则在 `/btzj` 后加上 `?domain=btbtt15.com` 即可，此时路由为 [`/btzj?domain=btbtt15.com`](https://rsshub.app/btzj?domain=btbtt15.com)
+
+如果加入了分类参数，直接在分类参数后加入 `?domain=<域名>` 即可。如指定分类 [剧集](https://www.btbtt20.com/forum-index-fid-950.htm) <https://www.btbtt20.com/forum-index-fid-950.htm> 并指定域名为 <https://www.btbtt15.com>，即在 `/btzj/forum-index-fid-950` 后加上 `?domain=btbtt15.com`，此时路由为 [`/btzj/forum-index-fid-950?domain=btbtt15.com`](https://rsshub.app/btzj/forum-index-fid-950?domain=btbtt15.com)
+
+目前，你可以选择的域名有 `btbtt10-20.com` 共 10 个，或 `88btbbt.com`，该站也提供了专用网址查询工具。详见 [此贴](https://www.btbtt20.com/thread-index-fid-2-tid-4550191.htm)
+
+:::
+
+</Route>
+
 ### 最新种子
 
-<Route author="zhang-wangz" example="/btzj/base" path="/btzj/:type?" anticrawler="1" :paramsDesc="['type,见下表']">
+<Route author="zhang-wangz nczitzk" example="/btzj/base" path="/btzj/:type?" anticrawler="1" :paramsDesc="['type,见下表']">
 
 | base                       | govern                   |
 | -------------------------- | ------------------------ |
@@ -666,9 +750,28 @@ pageClass: routes
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
-## subHD.tv - 最新字幕
+## Sub HD
 
-<Route author="laampui" example="/subhd/newest" path="/subhd/newest" />
+### 字幕
+
+<Route author="laampui nczitzk" example="/subhd/sub/new" path="/subhd/sub/:category?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新字幕 | 热门字幕 | 剧集字幕 | 电影字幕 |
+| -------- | -------- | -------- | -------- |
+| new      | top      | tv       | movie    |
+
+</Route>
+
+### 字幕组
+
+<Route author="nczitzk" example="/subhd/zu/14" path="/subhd/zu/:category?" :paramsDesc="['字幕组，见下表，默认为 YYeTs字幕组']">
+
+| YYeTs 字幕组 | F.I.X 字幕侠 | 深影字幕组 | 擦枪字幕组 | 哒哒字幕组 | 迪幻字幕组 | 伊甸园字幕组 | H-SGDK 字幕组 | 蓝血字幕组 | GA 字幕组 | CC 标准电影字幕组 | NEW 字幕组 | Orange 字幕组 | 圣城家园 SCG 字幕组 | 纪录片之家字幕组 |
+| ------------ | ------------ | ---------- | ---------- | ---------- | ---------- | ------------ | ------------- | ---------- | --------- | ----------------- | ---------- | ------------- | ------------------- | ---------------- |
+| 14           | 28           | 2          | 118        | 132        | 20         | 1            | 18            | 71         | 11        | 75                | 130        | 66            | 19                  | 10               |
+
+</Route>
+
 ## Trakt.tv
 
 ### 用户收藏
@@ -863,6 +966,12 @@ pageClass: routes
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
+## 法国国际广播电台
+
+### 滚动新闻
+
+<Route author="nczitzk" example="/rfi/news" path="/rfi/news"/>
+
 ## 高清电台
 
 ### 最新电影
@@ -1029,6 +1138,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/ncm/user/playlist/45441555" path="/ncm/user/playlist/:uid" :paramsDesc="['用户 uid, 可在用户主页 URL 中找到']" radar="1" />
 
+### 用户听歌排行
+
+<Route author="alfredcai" example="/ncm/user/playrecords/45441555/1" path="/ncm/user/playrecords/:uid/:type?" :paramsDesc="['用户 uid, 可在用户主页 URL 中找到','排行榜类型，0所有时间(默认)，1最近一周']" />
+
 ### 歌手专辑
 
 <Route author="metowolf" example="/ncm/artist/2116" path="/ncm/artist/:id" :paramsDesc="[' 歌手 id, 可在歌手详情页 URL 中找到']" radar="1" />
@@ -1053,12 +1166,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 专辑（不输出 ShowNote）
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/album/:id/:all?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。']" supportPodcast="1" radar="1" rssbud="1" selfhost="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/:type/:id/:all?" :paramsDesc="['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。']" supportPodcast="1" radar="1" rssbud="1" selfhost="1">
 
 目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。
 
 ::: warning 注意
-专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
+专辑类型即 url 中的分类拼音，使用通用分类 `album` 通常是可行的，专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
 
 **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**
 :::
@@ -1067,7 +1180,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 专辑（输出 ShowNote）
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/album/:id/:all/:shownote?" :paramsDesc="['专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']" supportPodcast="1" selfhost="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/:type/:id/:all/:shownote?" :paramsDesc="['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']" supportPodcast="1" selfhost="1">
 
 </Route>
 
@@ -1107,11 +1220,11 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
 
-## 追新番日剧站
+## 追新番
 
-### 更新列表
+### 最近更新
 
-<Route author="mengx8" example="/zhuixinfan/list" path="/zhuixinfan/list" radar="1" rssbud="1"/>
+<Route author="mengx8 nczitzk" example="/fanxinzhui" path="/fanxinzhui" radar="1" rssbud="1"/>
 
 ## 字幕库
 
