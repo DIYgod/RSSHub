@@ -925,6 +925,12 @@ Provides all of the Thrillist articles with the specified tag.
 
 <Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
 
+## Uwants
+
+### 版塊
+
+<Route author="nczitzk" example="/uwants/1520" path="/uwants/:fid" :paramsDesc="['fid，可在对应板块页的 URL 中找到']"/>
+
 ## VOA News
 
 ### Day in Photos
