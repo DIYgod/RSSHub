@@ -12,15 +12,53 @@ pageClass: routes
 
 ## ABC News
 
-### 子站
+### Channel & Topic
 
-<Route author="nczitzk" example="/abc/chinese" path="/abc/:site?" :paramsDesc="['子站，见下表']">
+<Route author="nczitzk" example="/abc" path="/abc/:id?" :paramsDesc="['id，可在对应 Channel 或 Topic 页面中找到，也可以填入对应页源代码中的 `documentId`，部分见下表，默认为 Just In']">
 
-子站
+::: tip 提示
 
-| Just In | Politics | World | Business | Analysis             | Sport | Science | Health | Arts         | Fact Check | 中文新闻 | Berita Bahasa Indonesia | Tok Pisin |
-| ------- | -------- | ----- | -------- | -------------------- | ----- | ------- | ------ | ------------ | ---------- | -------- | ----------------------- | --------- |
-| justin  | politics | world | business | analysis-and-opinion | sport | science | health | arts-culture | factcheck  | chinese  | indonesian              | tok-pisin |
+支持 [Topic Library](https://abc.net.au/news/topics) 中的所有 Topic，你可以填入其 URL 中 `topic` 后的字段，也可以填入对应的 `documentId`。
+
+如 [Computers and Technology](https://www.abc.net.au/news/topic/computers-and-technology) 的 URL 是 <https://www.abc.net.au/news/topic/computers-and-technology>，其 `topic` 后的字段为 `computers-and-technology`，且该 Topic 的 `documentId` 为 `2302`，所以路由为 [/abc/computers-and-technology](https://rsshub.app/abc/computers-and-technology) 以及 [/abc/2302](https://rsshub.app/abc/2302)。
+
+支持的 Channel 在下表已经全部列出，同上，其他 Channel 请找到对应 Channel 页面的源代码中的 `documentId` 填入。
+
+:::
+
+以下是部分支持 Channel 和 Topic id：
+
+| Just In | Coronavirus | Politics | World |
+| ------- | ----------- | -------- | ----- |
+| justin  | coronavirus | politics | world |
+
+| Asia Pacific | Business | Analysis & Opinion   | Sport |
+| ------------ | -------- | -------------------- | ----- |
+| asia-pacific | business | analysis-and-opinion | sport |
+
+| AFL | Rugby League | Rugby Union | Football |
+| --- | ------------ | ----------- | -------- |
+| afl | rugbyleague  | rugbyunion  | football |
+
+| Cricket | Science | Astronomy (Space) | Computers and Technology |
+| ------- | ------- | ----------------- | ------------------------ |
+| cricket | science | astronomy-space   | computers-and-technology |
+
+| Environment | Archaeology | Health | Exercise and Fitness |
+| ----------- | ----------- | ------ | -------------------- |
+| environment | archaeology | health | exercise-and-fitness |
+
+| Pharmaceuticals | Mental Health | Diet and Nutrition | Arts & Culture |
+| --------------- | ------------- | ------------------ | -------------- |
+| pharmaceuticals | mental-health | diet-and-nutrition | arts-culture   |
+
+| Fact Check | ABC 中文 | 澳洲时政           | 聚焦中港台     |
+| ---------- | -------- | ------------------ | -------------- |
+| factcheck  | chinese  | australia-politics | focus-on-china |
+
+| 观点与分析              | 澳洲华人             | 解读澳洲          | Berita dalam Bahasa Indonesia | Tok Pisin |
+| ----------------------- | -------------------- | ----------------- | ----------------------------- | --------- |
+| analysis-and-opinion-zh | chinese-in-australia | curious-australia | indonesian                    | tok-pisin |
 
 </Route>
 
@@ -154,16 +192,15 @@ pageClass: routes
 -   `:category` 栏目参数：
 
     -   `all`: 全站
-    -   `local`: 本地（港聞）
-    -   `international`: 國際（兩岸國際）
-    -   `finance`: 財經
-    -   `china`: 兩岸（有線中國組）
+    -   `local`: 港聞
+    -   `international`: 兩岸國際
+    -   `china`: 有線中國組
     -   `sports`: 體育
 
 -   `:option?` 可开启的选项：
 
-    -   `plain`: 全文输出（纯文字）
-    -   `withphoto`: 全文输出 （含题图） **（不指定 `:option?` 时将预设为此项）**
+    -   `plain`: 全文输出为纯文字
+    -   `brief`: 输出为 100 字简讯
 
 -   全文输出转换为简体字：`?opencc=t2s`  
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
@@ -175,6 +212,12 @@ pageClass: routes
 ### News Web Easy
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+## Now 新聞
+
+### 熱門
+
+<Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
 
 ## Phoronix
 
@@ -196,6 +239,60 @@ pageClass: routes
 
 -   全文输出转换为简体字: `?opencc=t2s`  
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+
+</Route>
+
+## SBS
+
+### 中文
+
+<Route author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" :paramsDesc="['分类，可选 `news` 和 `podcast`，默认为 `news`', 'id，见下表，可在对应页地址栏中找到，默认为 `news`', '方言，可选 `mandarin` 和 `cantonese`，默认为 `mandarin`', '语言，可选 `zh-hans` 和 `zh-hant`，默认为 `zh-hans`']">
+
+::: tip 提示
+
+当订阅播客时，请为 `category` 填入 **podcast**。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 的 URL 为 <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>，其中 `id` 为 **sbs-mandarin**，`dialect` 为 **mandarin**，`language` 为 **zh-hans**，其路由即为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)。
+
+:::
+
+| 新闻 | 澳大利亚新闻    | 国际新闻           | ​商业与财经      |
+| ---- | --------------- | ------------------ | ---------------- |
+| news | australian-news | international-news | business-finance |
+
+| 澳中关系                  | ​移民与签证 | Stories in English |
+| ------------------------- | ----------- | ------------------ |
+| australia-china-relations | immigration | english            |
+
+| COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
+| ----------------- | ------------------ | ----------------- | --------- |
+| coronavirus       | australian-chinese | life-in-australia | education |
+
+| 健康   | 吃喝玩乐                  | 艺术人文        | 澳洲定居指南     |
+| ------ | ------------------------- | --------------- | ---------------- |
+| health | food-travel-entertainment | cultural-events | settlement-guide |
+
+SBS 普通话节目：
+
+| SBS 普通话播客 | 解读澳洲            | 疫苗快报                   |
+| -------------- | ------------------- | -------------------------- |
+| sbs-mandarin   | australia-explained | covid-vaccine-daily-update |
+
+SBS 廣東話節目：
+
+| SBS 廣東話節目 Podcast | 疫苗快報            | 美食速遞        | 我不是名人          |
+| ---------------------- | ------------------- | --------------- | ------------------- |
+| sbs-cantonese          | covid-vaccine-daily | gourmet-express | my-australian-story |
+
+| 健康快樂人         | 園藝趣談       | 寰宇金融       | 文化 360    | 科技世界         |
+| ------------------ | -------------- | -------------- | ----------- | ---------------- |
+| healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
+
+::: tip 提示
+
+大部分时候你可以省略 `language` 字段，因为默认搭配 madarin 为 zh-hans，cantonese 为 zh-hant。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 路由为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)，你可以省略为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin)。
+
+你仍可以自定义 `language`，但需要注意的是，并非所有页面都有对应的双语版本。
+
+:::
 
 </Route>
 
@@ -1126,6 +1223,26 @@ category 对应的关键词有
 <Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
 
 新闻联播内容摘要。
+
+</Route>
+
+### 栏目
+
+<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']">
+
+| 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
+| -------- | ------ | -------- | ------ |
+| jdft     | dzw    | jrsf     | kjl    |
+
+| 正大综艺 | 经济半小时 | 第一动画乐园 |
+| -------- | ---------- | ------------ |
+| zdzy     | jjbxs      | dydhly       |
+
+::: tip 提示
+
+更多栏目请看 [这里](https://tv.cctv.com/lm)
+
+:::
 
 </Route>
 

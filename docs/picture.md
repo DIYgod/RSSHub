@@ -48,6 +48,24 @@ pageClass: routes
 
 <Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
 
+## Asian to lick
+
+### 首页
+
+<Route author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+
+### 分类
+
+<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['分类，可在对应分类页 URL 中找到分类编号，默认为首页']"/>
+
+### 标签
+
+<Route author="nczitzk" example="/asiantolick/tag/90" path="/asiantolick/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到标签编号，默认为首页']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['关键词，默认为空']"/>
+
 ## BabeHub
 
 ### 分类
@@ -251,6 +269,17 @@ R18 显示
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## Mic Mic Idol
+
+### 最新
+
+<Route author="KotoriK" example="/micmicidol" path="/micmicidol"/>
+
+### 标签
+
+<Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" :paramsDesc="['标签名']"/>
+获取数量可以通过 [limit](https://docs.rsshub.app/parameter.html#tiao-shu-xian-zhi) 参数控制。默认值为`50`。
+
 ## MM 范
 
 ### 分类
@@ -388,11 +417,11 @@ R18 显示
 
 ### 无聊图
 
-<Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+<Route author="kobemtl Xuanwo xyqfer 9uanhuo" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 |
-| ------ | ---------- | ---------- | ---- | ------ | ---------- |
-| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   |
+| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 | 动物园 |
+| ------ | ---------- | ---------- | ---- | ------ | ---------- | ------ |
+| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   | zoo    |
 
 ### 首页
 
@@ -435,14 +464,6 @@ R18 显示
 ### 搜索关键字
 
 <Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
-
-### 妹子图
-
-<Route author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
-
-| 妹子图 | 妹子图热榜 |
-| ------ | ---------- |
-| ooxx   | top-ooxx   |
 
 ## 妹子图
 

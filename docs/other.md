@@ -870,6 +870,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
 
+### Yahoo Japan 新型コロナウイルス感染症まとめ
+
+新闻主页：<https://news.yahoo.co.jp/pages/article/20200207>
+
+<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']"/>
+
 ## 新趣集
 
 > 官方 Feed 地址为: <https://xinquji.com/rss>
