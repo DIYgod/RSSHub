@@ -8,6 +8,9 @@
     "/aamacau/aamacau/:category?/:id?": [
         "nczitzk"
     ],
+    "/ash-maurya/ash-maurya": [
+        "james-tindal"
+    ],
     "/biodiscover/:channel?": [
         "aidistan"
     ],
