@@ -137,6 +137,9 @@
     "/mygopen/:label?": [
         "nczitzk"
     ],
+    "/netease/renjian/:category?": [
+        "nczitzk"
+    ],
     "/netease/news/rank/:category?/:type?/:time?": [
         "nczitzk"
     ],
