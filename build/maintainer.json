@@ -122,6 +122,9 @@
     "/mvm/:category?": [
         "nczitzk"
     ],
+    "/mydrivers/:type?/:id?": [
+        "nczitzk"
+    ],
     "/netease/news/rank/:category?/:type?/:time?": [
         "nczitzk"
     ],
