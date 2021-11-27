@@ -405,6 +405,24 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ---- | ---- | ----- |
 | yi   | zhu  | shang |
 
+## 光大银行
+
+### 外汇牌价
+
+#### 总览
+
+<Route author="linbuxiao" example="/quotation/all" path="/quotation/all" />
+
+#### 历史牌价
+
+<Route author="linbuxiao" example="/quotation/history/usd" path="/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
+
+| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
+| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
+| usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
+
+</Route>
+
 ## 国家留学网
 
 ### 通知
@@ -993,24 +1011,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
 | ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
-
-</Route>
-
-## 光大银行
-
-### 外汇牌价 
-
-#### 总览
-
-<Route author="linbuxiao" example="/quotation/all" path="/quotation/all" />
-
-#### 历史牌价
-
-<Route author="linbuxiao" example="/quotation/history/usd" path="/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
-
-| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
-|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
-| usd | gbp | hkd | chf | sek | dkk | nok | jpy | cad | aud | sgd | eur | mop | thb | nzd | krw |
 
 </Route>
 
