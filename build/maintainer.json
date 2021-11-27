@@ -69,6 +69,9 @@
     "/trow/portal": [
         "shiningdracon"
     ],
+    "/wangqiutiyu/anchor/:id": [
+        "nczitzk"
+    ],
     "/rsshub/rss": [],
     "/rsshub/routes": [],
     "/rsshub/sponsors": [],
