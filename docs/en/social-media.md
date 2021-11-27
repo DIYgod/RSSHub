@@ -209,7 +209,13 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 ### Keyword
 
-<RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:r18?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content, 0 to no filter, 1 to only not R18, 2 to only R18, default to 0']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']" radar="1" rssbud="1">
+
+| only not R18 | only R18 | no filter |
+| ----------------- | ------------------------- | ------------------------- |
+| safe           | r18              | empty or other            |
+
+</RouteEn>
 
 ### Following timeline
 
@@ -291,6 +297,10 @@ generates
 ### User timeline
 
 <RouteEn path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
+
+### User media
+
+<RouteEn author="yindaheng98" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
 
 ## User following timeline
 
