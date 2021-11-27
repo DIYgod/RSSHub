@@ -50,6 +50,9 @@
     "/furstar/archive/:lang?": [
         "NeverBehave"
     ],
+    "/getdr/": [
+        "nczitzk"
+    ],
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
