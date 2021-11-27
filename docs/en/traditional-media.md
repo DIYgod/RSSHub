@@ -175,6 +175,32 @@ Generates full-text feeds that the official feed doesn't provide.
 
 </RouteEn>
 
+## Ming Pao
+
+### Ming Pao Daily
+
+<RouteEn author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" :paramsDesc="['channel，default to brief']"/>
+
+::: tip tips
+Only `s00017` is in English.
+:::
+
+| category | Channel       |
+| -------- | ------------- |
+| s00001   | Brief         |
+| s00002   | Local         |
+| s00003   | Editorial     |
+| s00004   | Economy       |
+| s00005   | Supplement    |
+| s00011   | Education     |
+| s00012   | Views         |
+| s00013   | China         |
+| s00014   | International |
+| s00015   | Sports        |
+| s00016   | Entertainment |
+| s00017   | English       |
+| s00018   | Columnist     |
+
 ## NHK
 
 ### News Web Easy
