@@ -26,6 +26,10 @@ pageClass: routes
 
 ### New Stories
 
+<Route author="nczitzk" example="/literotica/new" path="/literotica/new"/>
+
+### Category
+
 <Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['分类，可在对应分类页地址栏中找到']"/>
 
 ## Mobilism
