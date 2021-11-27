@@ -960,6 +960,7 @@
     "/woshipm/latest": [],
     "/gaoqing/latest": [],
     "/wenku8/chapter/:id": [],
+    "/wenku8/volume/:id": [],
     "/whalegogo/home": [],
     "/whalegogo/portal/:type_id/:tagid?": [],
     "/aisixiang/column/:id": [],
