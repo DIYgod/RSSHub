@@ -42,7 +42,7 @@
   "devDependencies": {
     "@napi-rs/pinyin": "^1.6.1",
     "@types/cheerio": "0.22.24",
-    "@types/got": "9.6.11",
+    "@types/got": "9.6.12",
     "@types/koa": "2.13.1",
     "@vercel/nft": "0.9.6",
     "@vuepress/plugin-back-to-top": "1.8.2",
