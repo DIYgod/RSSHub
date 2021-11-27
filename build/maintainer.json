@@ -80,6 +80,9 @@
     "/lfsyd/tag/:tagId?": [
         "auto-bot-ty"
     ],
+    "/literotica/new": [
+        "nczitzk"
+    ],
     "/literotica/category/:category": [
         "nczitzk"
     ],
