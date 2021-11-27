@@ -137,6 +137,9 @@
     "/pku/hr/:category?": [
         "nczitzk"
     ],
+    "/pts/dailynews": [
+        "nczitzk"
+    ],
     "/qq/live/:id": [
         "nczitzk"
     ],
