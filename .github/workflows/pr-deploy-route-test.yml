@@ -4,8 +4,7 @@ name: PR route test
 # https://github.com/actions/first-interaction/issues/10#issuecomment-752360668
 # Reopen Included
 on:
-- pull_request_target
-
+  - pull_request_target
 
 jobs:
   testRoute:

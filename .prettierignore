@@ -1,7 +1,8 @@
 package.json
 docs/.vuepress/dist
 package-lock.json
-.github/
+.github/*.md
+.github/ISSUE_TEMPLATE/*.md
 renovate.json
 coverage
 .vscode/
