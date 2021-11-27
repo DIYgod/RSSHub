@@ -1354,6 +1354,7 @@
     "/changba/:userid": [],
     "/lol/newsindex/:type": [],
     "/lolapp/recommend": [],
+    "/lolapp/article/:uuid": [],
     "/zreading": [],
     "/nba/app_news": [],
     "/tprtc/cqzr": [],
