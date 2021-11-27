@@ -68,6 +68,20 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 <RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" supportScihub="1"/>
 
+## ELSEVIER
+
+### Latest Research
+
+<RouteEn author="Derekmini sunsunwolf-swb" example="/elsevier/signal-processing/latest" path="/elsevier/:journal/latest" :paramsDesc="['Journal Name, get it from tocSection of the URL.']" radar="1" rssbud="1">
+
+</RouteEn>
+
+### Special Volume
+
+<RouteEn author="Derekmini sunsunwolf-swb" example="/elsevier/signal-processing/vol/192" path="/elsevier/:journal/vol/:id" :paramsDesc="['Journal Name, get it from tocSection of the URL','Volume Number, get it from the Journal Website (If `Issue` exist, must use `Volume-Issue`, e.g., `/elsevier/aace-clinical-case-reports/vol/7-6`)']" radar="1" rssbud="1">
+
+</RouteEn>
+
 ## Google Scholar
 
 ### Keywords Monitoring
@@ -94,6 +108,40 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 
 </RouteEn>
 
+## IEEE Xplore
+
+### Latest Research
+
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name， get it from punumber of the URL','Sort Type, default: `vol-only-seq`，get it from sortType of the URL']" radar="1" rssbud="1">
+
+</RouteEn>
+
+### Latest Research (Last 2 month)
+
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/:journal/latest/date/:sortType?" :paramsDesc="['Journal Name， get it from punumber of the URL','Sort Type, default: `vol-only-seq`，get it from sortType of the URL']" radar="1" rssbud="1">
+
+Due to the large number of paper entries, new entries may always at the end of entries, so only articles published in the current month and the previous month are filtered.
+
+</RouteEn>
+
+## JASA
+
+### Latest Research
+
+<RouteEn author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
+
+</RouteEn>
+
+### Section Research
+
+<RouteEn author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name，get it from tocSection of the URL']" radar="1" rssbud="1">
+
+| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
+| :-----: | :---------: | :-----------------: | :----: |
+|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
+
+</RouteEn>
+
 ## MIT Technology Review
 
 <RouteEn author="zphw" example="/technologyreview" path="/technologyreview" />
@@ -117,7 +165,6 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 | silicon-valley |  /technologyreview/silicon-valley|
 | smart-cities | /technologyreview/smart-cities|
 | space | /technologyreview/space |
-
 
 ## Nature Journal
 
@@ -238,6 +285,12 @@ Including ‘Science’, 'Science Advances', 'Science Immunology', 'Science Robo
 _only support Science Journal_
 
 </RouteEn>
+
+## ScienceDirect
+
+### Journal
+
+<RouteEn author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['Journal id, can be found in URL']"/>
 
 ## X-MOL Platform
 

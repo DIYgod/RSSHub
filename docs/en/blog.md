@@ -26,6 +26,12 @@ pageClass: routes
 
 <RouteEn author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
+## Love the Problem
+
+### Ash Maurya's blog
+
+<RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
+
 ## Paul Graham
 
 ### Essays
