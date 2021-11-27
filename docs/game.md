@@ -481,9 +481,17 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ## 旅法师营地
 
+### 首页
+
+<Route author="auto-bot-ty" example="/lfsyd/home" path="/lfsyd/home" radar="1" rssbud="1"/>
+
+### 首页（旧版）
+
+<Route author="auto-bot-ty" example="/lfsyd/old_home" path="/lfsyd/old_home" radar="1" rssbud="1"/>
+
 ### 分区
 
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
@@ -530,6 +538,10 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游戏公告与新闻
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
+
+### アークナイツ(日服新闻)
+
+<Route author="ofyark" example="/arknights/japan" path="/arknights/japan"/>
 
 ### 塞壬唱片
 
