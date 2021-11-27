@@ -746,6 +746,7 @@
     "/usst/jwc": [],
     "/lyu/news/:type": [],
     "/fzu/:type": [],
+    "/fzu_min/:type": [],
     "/xmu/aero/:type": [],
     "/ifanr/:channel?": [],
     "/guokr/scientific": [],
