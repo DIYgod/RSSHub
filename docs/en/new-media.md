@@ -313,6 +313,24 @@ Country
 
 <RouteEn author="loganrockmore" example="/grubstreet" path="/grubstreet" />
 
+## Harvard Business Review
+
+### Topic
+
+<RouteEn author="nczitzk" example="/hbr/topic/leadership" path="/hbr/topic/:topic?/:type?" :paramsDesc="['Topic, can be found in URL, Leadership by default', 'Type, see below, Latest by default']">
+
+| LATEST | POPULAR | FROM THE STORE | FOR YOU |
+| ------ | ------- | -------------- | ------- |
+| Latest | Popular | From the Store | For You |
+
+::: tip Tip
+
+Click here to view [All Topics](https://hbr.org/topics)
+
+:::
+
+</RouteEn>
+
 ## Harvard Health Publishing
 
 ### Harvard Health Blog
