@@ -212,6 +212,18 @@ pageClass: routes
 
 </Route>
 
+## 北京师范大学
+
+### 经济与工商管理学院
+
+<Route author="nczitzk" example="/bnu/bs" path="/bnu/bs/:category?" :paramsDesc="['分类，见下表，默认为学院新闻']">
+
+| 学院新闻 | 通知公告 | 学术成果 | 学术讲座 | 教师观点 | 人才招聘 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| xw       | zytzyyg  | xzcg     | xzjz     | xz       | bshzs    |
+
+</Route>
+
 ## 北京物资学院
 
 ### 通知公告
