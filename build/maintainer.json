@@ -70,11 +70,11 @@
     ],
     "/elsevier/:journal/latest": [
         "Derekmini",
-        "sunsunwolf-swb"
+        "sunwolf-swb"
     ],
     "/elsevier/:journal/vol/:id": [
         "Derekmini",
-        "sunsunwolf-swb"
+        "sunwolf-swb"
     ],
     "/epicgames/epicgames/:collection": [
         "DIYgod",
