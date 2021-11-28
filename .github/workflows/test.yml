@@ -29,6 +29,6 @@ jobs:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - run: npm run docs:build
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2.1.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
