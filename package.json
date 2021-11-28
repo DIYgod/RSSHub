@@ -67,7 +67,7 @@
     "remark-pangu": "2.2.0",
     "remark-preset-prettier": "0.4.1",
     "staged-git-files": "1.2.0",
-    "string-width": "4.2.3",
+    "string-width": "5.0.1",
     "supertest": "6.1.6",
     "tosource": "2.0.0-alpha.3",
     "vuepress": "1.8.2",
