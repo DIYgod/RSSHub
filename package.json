@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
-    "@napi-rs/pinyin": "1.6.1",
+    "@napi-rs/pinyin": "1.6.2",
     "@types/cheerio": "0.22.30",
     "@types/got": "9.6.12",
     "@types/koa": "2.13.4",
