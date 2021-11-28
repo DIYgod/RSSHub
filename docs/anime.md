@@ -358,6 +358,29 @@ pageClass: routes
 
 <Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
+## 腾讯动漫
+
+### 排行榜
+
+<Route author="nczitzk" example="/ac/rank" path="/ac/rank/:type?/:time?" :paramsDesc="['分类，见下表，默认为月票榜']" radar="1" rssbud="1">
+
+| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
+| ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| mt     | rise   | new    | pay    | top    | male   | female |
+
+::: tip 提示
+
+`time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。
+
+:::
+
+</Route>
+
+### 漫画
+
+<Route author="nczitzk" example="/ac/comic/531490
+排行榜" path="/ac/comic/:id" :paramsDesc="['编号，可在对应页 URL 中找到']" radar="1" rssbud="1"/>
+
 ## 忧郁的 loli
 
 ### 文章
