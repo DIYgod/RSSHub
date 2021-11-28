@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: '14'
           cache: 'npm'
-      - run: npm ci
+      - run: yarn
       - name: Lint
         run: |
           npm run lint

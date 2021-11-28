@@ -173,7 +173,7 @@ $ cd RSSHub
 $ npm ci --production
 ```
 
-或 `yarnv1` (不推荐)
+或 `yarn`
 
 ```bash
 $ yarn install --production

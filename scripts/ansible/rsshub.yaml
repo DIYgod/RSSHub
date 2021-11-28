@@ -83,7 +83,7 @@
         dest: /home/rsshub/app
         update: yes
     - name: Install repo dependencies
-      command: npm ci --production
+      command: yarn install --production
       args:
         chdir: /home/rsshub/app
       environment:

@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
+      - run: yarn
       - run: npm run jest
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/

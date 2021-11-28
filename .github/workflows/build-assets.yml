@@ -25,7 +25,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - name: build file
-        run: npm ci && npm run build:all
+        run: yarn && npm run build:all
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
