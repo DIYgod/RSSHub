@@ -173,13 +173,15 @@ $ cd RSSHub
 $ npm ci --production
 ```
 
-或 `yarnv1` (不推荐)
+或 `yarn`
 
 ```bash
 $ yarn install --production
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
+
+### 启动
 
 然后在 `RSSHub` 文件夹中运行下面的命令就可以启动
 
@@ -376,7 +378,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 部分路由反爬严格，可以配置使用代理抓取。
 
-可通过**代理 URI **或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI **中的配置。
+可通过**代理 URI**或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI**中的配置。
 
 #### 代理 URI
 
@@ -390,8 +392,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 > 一些示例：
 >
 > -   `socks4://127.0.0.1:1080`
-> -   `socks5h://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
-> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5h`)
+> -   `socks5h://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`）
+> -   `socks://127.0.0.1:1080` （protocol 为 socks 时表示 `socks5h`）
 > -   `http://127.0.0.1:8080`
 > -   `http://user:pass@127.0.0.1:8080`
 > -   `https://127.0.0.1:8443`
@@ -577,6 +579,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
 -   MiniFlux 全部路由：
+
     -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的 [付费服务地址](https://reader.miniflux.app)
     -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API 密钥` -> `创建一个新的 API 密钥` 处获取
 
@@ -704,3 +707,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
     -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
     -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
+
+-   南方周末付费全文
+    -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文

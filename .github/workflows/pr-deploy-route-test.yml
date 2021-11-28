@@ -4,8 +4,7 @@ name: PR route test
 # https://github.com/actions/first-interaction/issues/10#issuecomment-752360668
 # Reopen Included
 on:
-- pull_request_target
-
+  - pull_request_target
 
 jobs:
   testRoute:
@@ -14,8 +13,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Fetch affected routes
         id: fetchRoute
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         with:
+
           # by default, JSON format returned
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -32,7 +32,7 @@ jobs:
           max_timeout: 300
       - name: Generate feedback
         if: (env.TEST_CONTINUE)
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         env:
           TEST_BASEURL: ${{steps.waitFor200.outputs.url}}
           TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
