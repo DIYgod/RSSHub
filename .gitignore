@@ -20,3 +20,4 @@ app-minimal/
 .vercel
 
 assets/build/
+package-lock.json
