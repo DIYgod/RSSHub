@@ -634,6 +634,11 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hoilc" example="/lagou/jobs/JavaScript/上海" path="/lagou/jobs/:position/:city" :paramsDesc="['职位名，可以参考[拉勾网首页](https://www.lagou.com)的职位列表', '城市名，请参考[拉勾网支持的全部城市](https://www.lagou.com/jobs/allCity.html)']" anticrawler="1"/>
 
+## 蓝桥云课
+
+### 作者发布的课程
+
+<Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  :paramsDesc="['作者 uid 可在作者主页 URL 中找到']" radar="1"/>
 ## 洛谷
 
 ### 日报
