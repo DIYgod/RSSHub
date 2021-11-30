@@ -1,6 +1,7 @@
 ---
 name: 🐛 Bug Report
 about: Submit discovered bugs
+labels: RSS bug
 ---
 
 <!--
