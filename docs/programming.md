@@ -636,6 +636,10 @@ GitHub 官方也提供了一些 RSS:
 
 ## 蓝桥云课
 
+### 最新发布的课程
+
+<Route author="huhuhang" example="/lanqiao/course/全部" path="/lanqiao/course/:tag"  :paramsDesc="['课程标签 tag 可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1"/>
+
 ### 作者发布的课程
 
 <Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  :paramsDesc="['作者 uid 可在作者主页 URL 中找到']" radar="1"/>
