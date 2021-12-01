@@ -11,6 +11,39 @@ body:
         否则 issue 将被立即关闭
 
         目前 RSS 提案滞销，如有能力请按照 [指南](https://docs.rsshub.app/joinus) 自行编写并提交 PR
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 类型
+      multiple: false
+      options:
+        - 社交媒体
+        - 新媒体
+        - 传统媒体
+        - 论坛
+        - 博客
+        - 编程
+        - 设计
+        - 直播
+        - 音视频
+        - 图片
+        - 二次元
+        - 程序更新
+        - 大学通知
+        - 预报预警
+        - 出行旅游
+        - 购物
+        - 游戏
+        - 阅读
+        - 政务消息
+        - 学习
+        - 科学期刊
+        - 金融
+        - 其他
+    validations:
+      required: true
+
   - type: input
     id: site-url
     attributes:

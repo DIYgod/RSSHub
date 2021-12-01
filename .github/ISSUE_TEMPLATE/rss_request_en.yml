@@ -12,11 +12,35 @@ body:
 
         We are flooded with feature requests and short-handed, please try to make it yourself, the [guide](https://docs.rsshub.app/en/joinus) is a good place to start. Submit a pull request when done!
 
-  - type: input
-    id: site-url
+  - type: dropdown
+    id: category
     attributes:
-      label: Website URL
-      placeholder: https://example.com
+      label: Category
+      multiple: false
+      options:
+        - Social Media
+        - New media
+        - News
+        - BBS
+        - Blog
+        - Programming
+        - Design
+        - Live
+        - Multimedia
+        - Pciture
+        - ACG
+        - Application Updates
+        - University
+        - Forecast
+        - Travel
+        - Shopping
+        - Gaming
+        - Reading
+        - Government
+        - Study
+        - Scientific Journal
+        - Finance
+        - Uncategorized
     validations:
       required: true
 
