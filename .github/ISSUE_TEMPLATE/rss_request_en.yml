@@ -44,6 +44,14 @@ body:
     validations:
       required: true
 
+  - type: input
+    id: site-url
+    attributes:
+      label: Website URL
+      placeholder: https://example.com
+    validations:
+      required: true
+
   - type: textarea
     id: description
     attributes:
