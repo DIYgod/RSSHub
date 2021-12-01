@@ -78,5 +78,5 @@ body:
     attributes:
       label: This is not a duplicated rss request
       options:
-        - label: I have searched [existing issues](https://github.com/DIYgod/RSSHub/issues) and [pull requests](https://github.com/DIYgod/RSSHub/pulls) to ensure this feature has not already been requested
+        - label: I have searched [existing issues](https://github.com/DIYgod/RSSHub/issues) and [pull requests](https://github.com/DIYgod/RSSHub/pulls) to ensure this rss proposal has not already been requested
           required: true
