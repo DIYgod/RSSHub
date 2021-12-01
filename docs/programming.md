@@ -644,6 +644,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  :paramsDesc="['作者 uid 可在作者主页 URL 中找到']" radar="1"/>
 
+### 社区最新技术问答
+
+<Route author="huhuhang" example="/questions/" path="/lanqiao/questions/" radar="1"/>
+
 ## 洛谷
 
 ### 日报
