@@ -1,6 +1,7 @@
 ---
 name: 🍭 Feature Request
 about: Submit a new feature request
+labels: RSS enhancement
 ---
 
 <!--

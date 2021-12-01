@@ -1,6 +1,7 @@
 ---
 name: 🍰 RSS 提案
 about: 提交新的 RSS 提案
+labels: RSS proposal
 ---
 
 <!--
