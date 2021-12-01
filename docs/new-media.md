@@ -1487,6 +1487,12 @@ area 分区选项
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
+## 樊登读书
+
+## 樊登福州运营中心
+
+<Route author="Fatpandac" example="/dushu/dushu" path="/dushu/dushu" />
+
 ## 飞雪娱乐网
 
 <Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']">
