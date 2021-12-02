@@ -2760,7 +2760,7 @@ column 为 third 时可选的 category:
 
 ### 公众号（Telegram 频道来源）
 
-<Route author="LogicJake" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id" :paramsDesc="['公众号绑定频道 id']">
+<Route author="LogicJake" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id/:mpName?" :paramsDesc="['公众号绑定频道 id', '欲筛选的公众号全名（精确匹配），在频道订阅了多个公众号时可选用']">
 
 ::: warning 注意
 
