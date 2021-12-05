@@ -405,13 +405,7 @@ pageClass: routes
 
 ### 漫画更新
 
-<Route author="ryuushinu666" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/zaiyishijiemigongkaihougong/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
-
-## 拷贝漫画
-
-### 漫画更新
-
-<Route author="btdwv" path="/copymanga/comic/:id" example="/copymanga/comic/zhandoupohuaixueyuandangerous" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+<Route author="btdwv" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/zaiyishijiemigongkaihougong/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 漫画 DB
 
