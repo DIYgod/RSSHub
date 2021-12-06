@@ -729,6 +729,10 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend"/>
 
+### 用户文章
+
+<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID,可在文章html中获取']"/>
+
 ## 最终幻想 14
 
 ### 最终幻想 14 国服

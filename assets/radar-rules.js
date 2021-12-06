@@ -626,15 +626,6 @@
             { title: '支持的快递公司列表', docs: 'https://docs.rsshub.app/other.html#kuai-di-100', source: '/', target: '/kuaidi100/company' },
         ],
     },
-    'nsfc.gov.cn': {
-        _name: '国家自然科学基金委员会',
-        www: [
-            { title: '基金要闻', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/jjyw' },
-            { title: '通知公告', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/tzgg' },
-            { title: '资助成果', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/zzcg' },
-            { title: '科普快讯', docs: 'https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui', source: '/*', target: '/nsfc/news/kpkx' },
-        ],
-    },
     'japanpost.jp': {
         _name: '日本郵便',
         'trackings.post': [
@@ -653,15 +644,6 @@
         ],
     },
     'apnews.com': { _name: 'AP News', '.': [{ title: '话题', docs: 'https://docs.rsshub.app/traditional-media.html#ap-news', source: '/:topic', target: '/apnews/topics/:topic' }] },
-    'csc.edu.cn': {
-        _name: '国家留学网',
-        www: [
-            { title: '遴选通知', docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang', source: '/*', target: '/csc/notice/lxtz' },
-            { title: '综合项目专栏', docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang', source: '/*', target: '/csc/notice/xmzl' },
-            { title: '常见问题解答', docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang', source: '/*', target: '/csc/notice/wtjd' },
-            { title: '录取公告', docs: 'https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang', source: '/*', target: '/csc/notice/lqgg' },
-        ],
-    },
     'biquge5200.com': { www: [{ title: 'biquge5200.com', docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge5200-com', source: '/:id', target: '/novel/biquge/:id' }] },
     'biquge.info': { www: [{ title: 'biquge.info', docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge-info', source: '/:id', target: '/novel/biqugeinfo/:id' }] },
     'matters.news': {
