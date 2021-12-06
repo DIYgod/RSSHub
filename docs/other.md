@@ -206,6 +206,12 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## Mozilla
+
+### Firefox Monitor
+
+<Route author="TonyRL" example="/firefox/monitor" path="/firefox/monitor"/>
+
 ## NOI 全国青少年信息学奥林匹克竞赛
 
 ### 新闻
