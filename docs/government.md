@@ -304,6 +304,18 @@ pageClass: routes
 
 </Route>
 
+## 浙江省土地使用权网上交易系统
+
+### 公告信息
+
+<Route author="Fatpandac" example="/zjgtjy/all" path="zjgtjy/:type" :paramsDesc="['分类名']">
+
+| 全部公告 | 挂牌公告 | 拍卖公告 | 补充公告 |
+| :------: | :------: | :------: | :------: |
+|    all   |   gpgg   |   pmgg   |   bcgg   |
+
+</Route>
+
 ## 中国工业和信息化部
 
 ### 政策解读
