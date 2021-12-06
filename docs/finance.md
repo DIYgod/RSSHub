@@ -42,7 +42,7 @@ pageClass: routes
 
 ### 栏目
 
-<Route author="nczitzk" example="/barronschina" path="/barronschina/:id::?" :paramsDesc="['栏目 id，默认为快讯']">
+<Route author="nczitzk" example="/barronschina" path="/barronschina/:id?" :paramsDesc="['栏目 id，默认为快讯']">
 
 ::: tip 提示
 
