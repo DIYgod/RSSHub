@@ -210,7 +210,7 @@ pageClass: routes
 
 ### Firefox Monitor
 
-<Route author="TonyRL" example="/firefox/monitor" path="/firefox/monitor"/>
+<Route author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
 
 ## NOI 全国青少年信息学奥林匹克竞赛
 

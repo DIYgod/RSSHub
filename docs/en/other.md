@@ -146,7 +146,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### Firefox Monitor
 
-<RouteEn author="TonyRL" example="/firefox/monitor" path="/firefox/monitor"/>
+<RouteEn author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
 
 ## Nobel Prize
 
