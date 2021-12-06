@@ -38,6 +38,24 @@ pageClass: routes
 
 </RouteEn>
 
+## Asian to lick
+
+### Home
+
+<RouteEn author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+
+### Category
+
+<RouteEn author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['Category, the id can be found in URL, homepage by default']"/>
+
+### Tag
+
+<RouteEn author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" :paramsDesc="['Tag, the id can be found in URL, homepage by default']"/>
+
+### Search
+
+<RouteEn author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['Keyword, empty by default']"/>
+
 ## BabeHub
 
 ### Category

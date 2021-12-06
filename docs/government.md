@@ -4,6 +4,18 @@ pageClass: routes
 
 # 政务消息
 
+## 澳门廉政公署
+
+### 最新消息
+
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']">
+
+| 全部 | 案件发布 | 调查报告或勘喻 | 年度报告     | 公署消息 |
+| ---- | -------- | -------------- | ------------ | -------- |
+| all  | case     | Persuasion     | AnnualReport | PCANews  |
+
+</Route>
+
 ## 北京市卫生健康委员会
 
 ### 新闻中心
@@ -222,6 +234,12 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
+## 台灣衛生福利部
+
+### 即時新聞澄清
+
+<Route author="nczitzk" example="/mohw/clarification" path="/mohw/clarification"/>
+
 ## 武汉东湖新技术开发区
 
 ### 新闻中心
@@ -250,7 +268,41 @@ pageClass: routes
 
 ### 新闻公布
 
-<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']">
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']"/>
+
+## 香港卫生防护中心
+
+### 分类
+
+<Route author="nczitzk" example="/chp" path="/chp/:category?/:language?" :paramsDesc="['分类，见下表，默认为重要资讯', '语言，见下表，默认为 zh_tw']">
+
+分类
+
+| 重要资讯     | 新闻稿           | 应变级别      | 期刊及刊物  | 健康通告    |
+| ------------ | ---------------- | ------------- | ----------- | ----------- |
+| important_ft | press_data_index | ResponseLevel | publication | HealthAlert |
+
+语言
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| en      | zh_cn    | zh_tw    |
+
+</Route>
+
+## 香港卫生署
+
+### 新闻公报
+
+<Route author="nczitzk" example="/hongkong/dh" path="/hongkong/dh/:language?" :paramsDesc="['语言，见下表，默认为 tc_chi']">
+
+语言
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| english | chs      | tc_chi   |
+
+</Route>
 
 ## 中国工业和信息化部
 
