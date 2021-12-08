@@ -1,6 +1,7 @@
 ---
 pageClass: routes
 ---
+
 # 大学通知
 
 ## MIT
@@ -141,9 +142,9 @@ pageClass: routes
 
 ::: tip 提示
 
-分类字段处填写的是对应北京大学人事处分类页网址中介于 **[http://hr.pku.edu.cn/](http://hr.pku.edu.cn/)** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
+分类字段处填写的是对应北京大学人事处分类页网址中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 
-如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 的网址为 [https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 其中介于 **[http://hr.pku.edu.cn/](http://hr.pku.edu.cn/)** 和 **/index.htm** 中间的一段为 `rczp/js/jxkyry`。随后，并将其中的 `/` 修改为 `-`，可以得到 `rczp-js-jxkyry`。所以最终我们的路由为 [`/pku/hr/rczp-js-jxkyry`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
+如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 的网址为 <https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm> 其中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段为 `rczp/js/jxkyry`。随后，并将其中的 `/` 修改为 `-`，可以得到 `rczp-js-jxkyry`。所以最终我们的路由为 [`/pku/hr/rczp-js-jxkyry`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
 
 :::
 
@@ -269,7 +270,7 @@ pageClass: routes
 
 ### 信息门户
 
-`<Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />`
+<Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
 ::: warning 注意
 
@@ -338,10 +339,10 @@ pageClass: routes
 
 ### 本科教学信息网通知公告
 
-`<Route author="El-Chiang Hagb" example="/cqu/jwc/" path="/cqu/jwc/:path*" :paramsDesc="['路径']">`
+<Route author="El-Chiang Hagb" example="/cqu/jwc/" path="/cqu/jwc/:path*" :paramsDesc="['路径']">
 
-| 分类                                                           | 路径                  |
-| -------------------------------------------------------------- | --------------------- |
+| 分类                                                              | 路径                |
+| ----------------------------------------------------------------- | ------------------- |
 | [通知公告](http://jwc.cqu.edu.cn/index/tzgg.htm)                  | `index/tzgg` 或留空 |
 | [通知公告 / 学籍管理](http://jwc.cqu.edu.cn/index/tzgg/xjgl.htm)  | `index/tzgg/xjgl`   |
 | [通知公告 / 交流交换](http://jwc.cqu.edu.cn/index/tzgg/jljh1.htm) | `index/tzgg/jljh1`  |
@@ -362,7 +363,7 @@ pageClass: routes
 ::: tip 提示
 路径参数的值为相应通知列表页面的地址去除后缀名和域名后的路径。
 
-例如 “通知公告” 列表页面地址为 [http://jwc.cqu.edu.cn/index/tzgg.htm](http://jwc.cqu.edu.cn/index/tzgg.htm)，相应参数为 `index/tgzz`。
+例如 “通知公告” 列表页面地址为 <http://jwc.cqu.edu.cn/index/tzgg.htm>，相应参数为 `index/tgzz`。
 :::
 
 ::: warning 注意
@@ -502,7 +503,7 @@ pageClass: routes
 
 | 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
 | :--------: | :--------: | :------------------: | :------------: |
-|   bsyjs   |   ssyjs   |      tdxlgdssxw      |    gatdqzs    |
+|    bsyjs   |    ssyjs   |      tdxlgdssxw      |     gatdqzs    |
 
 </Route>
 
@@ -568,8 +569,8 @@ pageClass: routes
 | ---------- | --------- | --------- | --------- | ---------- |
 | xwzx\*xyxw | tzgg\*xsk | tzgg\*jwk | tzgg\*ygk | ztlj\*xskb |
 
-注 1: xwzx\*xyxw 对应 [http://www.scse.uestc.edu.cn/xwzx/xyxw.htm](http://www.scse.uestc.edu.cn/xwzx/xyxw.htm) ;
-tzgg\*xsk 对应 [http://www.scse.uestc.edu.cn/tzgg/xsk.htm](http://www.scse.uestc.edu.cn/tzgg/xsk.htm)
+注 1: xwzx\*xyxw 对应 <http://www.scse.uestc.edu.cn/xwzx/xyxw.htm> ;
+tzgg\*xsk 对应 <http://www.scse.uestc.edu.cn/tzgg/xsk.htm>
 
 可自定义设置
 
@@ -585,8 +586,8 @@ tzgg\*xsk 对应 [http://www.scse.uestc.edu.cn/tzgg/xsk.htm](http://www.scse.ues
 | -------- | -------- | -------- | -------- |
 | tzgg1    | xskb1    | jdxw     | zhxw1    |
 
-注 1: tzgg1 对应 [http://www.auto.uestc.edu.cn/index/tzgg1.htm](http://www.auto.uestc.edu.cn/index/tzgg1.htm) ;
-xskb1 对应 [http://www.auto.uestc.edu.cn/index/xskb1.htm](http://www.auto.uestc.edu.cn/index/xskb1.htm)
+注 1: tzgg1 对应 <http://www.auto.uestc.edu.cn/index/tzgg1.htm> ;
+xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 可自定义设置
 
@@ -696,9 +697,9 @@ xskb1 对应 [http://www.auto.uestc.edu.cn/index/xskb1.htm](http://www.auto.uest
 
 ::: tip 提示
 
-如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 [http://hr.uibe.edu.cn/tzgg](http://hr.uibe.edu.cn/tzgg)，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
+如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 <http://hr.uibe.edu.cn/tzgg>，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
 
-如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 [http://hr.uibe.edu.cn/jszp/zpxx](http://hr.uibe.edu.cn/jszp/zpxx)，其路由为 [`/uibe/hr/jszp/zpxx`](https://rsshub.app/uibe/jszp/zpxx)
+如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 <http://hr.uibe.edu.cn/jszp/zpxx>，其路由为 [`/uibe/hr/jszp/zpxx`](https://rsshub.app/uibe/jszp/zpxx)
 
 :::
 
@@ -856,11 +857,11 @@ category 列表：
 
 ### 研究生院
 
-`<Route author="Derekmini XYenon" example="/heu/yjsy/list/2981" path="/heu/yjsy/list/:id" :paramsDesc="['栏目编号，由 `URL ` 中获取。']" radar="1" rssbud="1">`
+<Route author="Derekmini XYenon" example="/heu/yjsy/list/2981" path="/heu/yjsy/list/:id" :paramsDesc="['栏目编号，由 `URL` 中获取。']" radar="1" rssbud="1">
 
 | 通知公告 | 新闻动态 | 学籍注册 | 奖助学金 | 其他 |
 | :------: | :------: | :------: | :------: | :--: |
-|   2981   |   2980   |   3009   |   3011   | ... |
+|   2981   |   2980   |   3009   |   3011   |  ... |
 
 </Route>
 
@@ -888,11 +889,11 @@ category 列表：
 
 ### 工学新闻
 
-`<Route author="Derekmini XYenon" example="/heu/gx/list/xw/yw" path="/heu/gx/:type/:column/:id?" :paramsDesc="['页面类型，如 `新闻 - 要闻 `页面为`list ` 类型，`新闻 - 专题策划 `页面为`card `类型，通过直接观察页面来判断；','主栏，如`新闻：xw `，由 `URL `中获取；','次栏，如`要闻：yw `，如果次栏存在，则为必选，由 `URL ` 中获取。']" radar="1" rssbud="1">`
+<Route author="Derekmini XYenon" example="/heu/gx/list/xw/yw" path="/heu/gx/:type/:column/:id?" :paramsDesc="['页面类型，如 `新闻 - 要闻` 页面为 `list` 类型，`新闻 - 专题策划` 页面为 `card` 类型，通过直接观察页面来判断；','主栏，如 `新闻：xw`，由 `URL` 中获取；','次栏，如 `要闻：yw`，如果次栏存在，则为必选，由 `URL` 中获取。']" radar="1" rssbud="1">
 
 |   新闻   | 新闻 - 要闻 | 新闻 - 专题策划 | 其他 |
 | :------: | :---------: | :-------------: | :--: |
-| /card/xw | /list/xw/yw |  /card/xw/ztch  | ... |
+| /card/xw | /list/xw/yw |  /card/xw/ztch  |  ... |
 
 </Route>
 
@@ -902,7 +903,7 @@ category 列表：
 
 | 新闻动态 | 通知公告 | 其他 |
 | :------: | :------: | :--: |
-|   3751   |   3752   | ... |
+|   3751   |   3752   |  ... |
 
 </Route>
 
@@ -918,7 +919,7 @@ category 列表：
 
 ::: tip 提示
 今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
-例如会议讲座的路径为 `/taxonomy/term/10/25`，则可以通过 `/hit/today/25`订阅该详细类别。
+例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
 :::
 
 ::: warning 注意
@@ -1079,7 +1080,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处学院通知
 
-`<Route author="KeNorizon Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类, 默认为 `all `']">`
+<Route author="KeNorizon Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
 
 | 全部 | 选课   | 考试 | 信息 |
 | ---- | ------ | ---- | ---- |
@@ -1378,7 +1379,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务通知
 
-`<Route author="arcosx Seiry" example="/nuaa/jwc/default" path="/nuaa/jwc/:type" :paramsDesc="['分类名']">`
+<Route author="arcosx Seiry" example="/nuaa/jwc/default" path="/nuaa/jwc/:type" :paramsDesc="['分类名']">
 
 | 教学服务      | 教学建设 | 学生培养 | 教学资源 |
 | ------------- | -------- | -------- | -------- |
@@ -1388,7 +1389,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 计算机科学与技术学院
 
-`<Route author="LogicJake Seiry" example="/nuaa/cs/kydt" path="/nuaa/cs/:type?" :paramsDesc="['分类名']"/>`
+<Route author="LogicJake Seiry" example="/nuaa/cs/kydt" path="/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
 
 | 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -1398,7 +1399,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-`<Route author="junfengP Seiry" example="/nuaa/yjsy/latest" path="/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>`
+<Route author="junfengP Seiry" example="/nuaa/yjsy/latest" path="/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
 
 | 最近动态 | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
 | -------- | -------- | -------- | -------- | -------- |
@@ -1482,7 +1483,7 @@ type 列表：
 
 将其替换到 RSS 路由地址中即可：
 
-[https://rsshub.app/**nuist**/`bulletin`](https://rsshub.app/**nuist**/%60bulletin%60) 或 [https://rsshub.app/**nuist**/`bulletin`/`791`](https://rsshub.app/**nuist**/%60bulletin%60/%60791%60)
+<https://rsshub.app/**nuist**/`bulletin`> 或 <https://rsshub.app/**nuist**/`bulletin`/`791`>
 
 :::
 
@@ -1620,7 +1621,7 @@ type 列表：
 
 ### 清华大学招聘信息
 
-`<Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />`
+<Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
 
 ## 厦门大学
 
@@ -1630,7 +1631,7 @@ type 列表：
 
 | 通知公告 | 本科生教务 | 研究生教务 |
 | :------: | :--------: | :--------: |
-|   tzgg   |   bksjw   |   yjsjw   |
+|   tzgg   |    bksjw   |    yjsjw   |
 
 </Route>
 
@@ -1778,7 +1779,7 @@ type 列表：
 
 ### 电子信息与电气工程学院学生工作办公室
 
-`<Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">`
+<Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
 
 | 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 | 本科生综合测评 |
 | -------- | ----------- | ------------ | -------- | -------- | -------- | -------------- |
@@ -1836,7 +1837,7 @@ type 列表：
 
 ::: warning 注意
 
-分区 ID 是 `info/iList.jsp?cat_id=`后方数字
+分区 ID 是`info/iList.jsp?cat_id=`后方数字
 
 目前仅支持文章分区的识别
 
@@ -1966,7 +1967,7 @@ type 列表：
 
 注意: `qttz` 与 `xwdt` 在原网站等价.
 
-</Route>
+ </Route>
 
 ## 温州大学
 
@@ -1976,7 +1977,7 @@ type 列表：
 
 | 温大新闻 | 媒体温大 | 学术温大 | 通知公告 | 招标信息 | 学术公告 |
 | :------: | :------: | :------: | :------: | :------: | :------: |
-|    0    |    1    |    2    |    3    |    4    |    5    |
+|     0    |     1    |     2    |     3    |     4    |     5    |
 
 </Route>
 
@@ -2008,7 +2009,8 @@ type 列表：
 
 ### 计算机学院公告
 
-`<Route author="SweetDumpling" example="/whu/cs/2" path="/whu/cs/:type" :paramsDesc="['公告类型, 详见表格']">`
+<Route author="SweetDumpling" example="/whu/cs/2" path="/whu/cs/:type"
+:paramsDesc="['公告类型, 详见表格']">
 
 | 公告类型 | 新闻动态 | 学术讲座 | 学院通知 | 公示公告 |
 | -------- | -------- | -------- | -------- | -------- |
@@ -2023,23 +2025,23 @@ type 列表：
 注意：除了 `kydt` 代表学术动态，其余页面均是拼音首字母小写.
 
 | **内容** | **参数** |
-| :------------: | :------------: |
-|    武大要闻    |      wdyw      |
-|    媒体武大    |      mtwd      |
-|    专题报道    |      ztbd      |
-|    珞珈人物    |      ljrw      |
-|    国际交流    |      gjjl      |
-|    缤纷校园    |      bfxy      |
-|    校友之声    |      xyzs      |
-|    珞珈论坛    |      ljlt      |
-|    新闻热线    |      xwrx      |
-|    头条新闻    |      ttxw      |
-|    综合新闻    |      zhxw      |
-|    珞珈影像    |      ljyx      |
-|    学术动态    |      kydt      |
-|    珞珈副刊    |      ljfk      |
-|    校史钩沉    |      xsgc      |
-|    来稿选登    |      lgxd      |
+| :------: | :------: |
+| 武大要闻 |   wdyw   |
+| 媒体武大 |   mtwd   |
+| 专题报道 |   ztbd   |
+| 珞珈人物 |   ljrw   |
+| 国际交流 |   gjjl   |
+| 缤纷校园 |   bfxy   |
+| 校友之声 |   xyzs   |
+| 珞珈论坛 |   ljlt   |
+| 新闻热线 |   xwrx   |
+| 头条新闻 |   ttxw   |
+| 综合新闻 |   zhxw   |
+| 珞珈影像 |   ljyx   |
+| 学术动态 |   kydt   |
+| 珞珈副刊 |   ljfk   |
+| 校史钩沉 |   xsgc   |
+| 来稿选登 |   lgxd   |
 
 </Route>
 
@@ -2047,7 +2049,8 @@ type 列表：
 
 ### 信息门户公告
 
-`<Route author="Loyio" example="/wtu/2" path="/wtu/:type" :paramsDesc="['公告类型, 详见表格']">`
+<Route author="Loyio" example="/wtu/2" path="/wtu/:type"
+:paramsDesc="['公告类型, 详见表格']">
 
 | 公告类型 | 通知公告 | 教务信息 | 科研动态 |
 | -------- | -------- | -------- | -------- |
@@ -2068,7 +2071,7 @@ type 列表：
 
 | 全部 | 教学信息 | 教学研究 | 实践教学 | 质量监控 | 通知公告 |
 | :--: | :------: | :------: | :------: | :------: | :------: |
-| all |   jxxx   |   jxyj   |   sjjx   |   zljk   |   tzgg   |
+|  all |   jxxx   |   jxyj   |   sjjx   |   zljk   |   tzgg   |
 
 </Route>
 
@@ -2080,11 +2083,11 @@ type 列表：
 
 ::: tip 提示
 
-支持 `http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
+支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
 
-例如 `http://dean.xjtu.edu.cn/gzlc.htm`, 则 `subpath`为 `gzlc`
+例如`http://dean.xjtu.edu.cn/gzlc.htm`, 则`subpath`为`gzlc`
 
-又例 `http://dean.xjtu.edu.cn/jxxx/xytz.htm`, 则 `subpath`为 `jxxx/xytz`
+又例`http://dean.xjtu.edu.cn/jxxx/xytz.htm`, 则`subpath`为`jxxx/xytz`
 
 :::
 
@@ -2214,7 +2217,7 @@ type 列表：
 
 <Route author="VxRain" example="/xynu/zkb/zkzx" path="/xynu/zkb/:category" :paramsDesc="['分类ID']">
 
-分类 ID（如果请求的分类 ID 在不存在下表中，默认请求 `zkzx`）
+分类 ID（如果请求的分类 ID 在不存在下表中，默认请求`zkzx`）
 
 | 主考专业 | 规章制度 | 实践课程 | 毕业论文 | 学士学位 | 自考毕业 | 自考教材 | 自考指南 | 联系我们 | 自考资讯 | 报名指南 | 日程安排 | 新生入门 | 转考免考 | 复习资料 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -2323,7 +2326,7 @@ type 列表：
 
 ### 浙大软件学院
 
-`<Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1" rssbud="1">`
+<Route author="yonvenne zwithz" example="/zju/cst/0" path="/zju/cst/:type" :paramsDesc="['分类, 见下表']" radar="1" rssbud="1">
 
 | 全部通知 | 招生信息 | 教务管理 | 论文管理 | 思政工作 | 评奖评优 | 实习就业 | 国际实习 | 国内合作科研 | 国际合作科研 | 校园服务 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ------------ | ------------ | -------- |
@@ -2570,9 +2573,9 @@ type 列表：
 
 ::: tip 提示
 
-分类字段处填写的是对应中国人民大学人事处分类页网址中介于 **[http://hr.ruc.edu.cn/](http://hr.ruc.edu.cn/)** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
+分类字段处填写的是对应中国人民大学人事处分类页网址中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 
-如 [中国人民大学人事处 - 办事机构 - 教师事务办公室 - 教师通知公告](http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm) 的网址为 [http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm](http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm) 其中介于 **[http://hr.ruc.edu.cn/](http://hr.ruc.edu.cn/)** 和 **/index.htm** 中间的一段为 `bsjg/bsjsswbgs/jstzgg`。随后，并将其中的 `/` 修改为 `-`，可以得到 `bsjg-bsjsswbgs-jstzgg`。所以最终我们的路由为 [`/ruc/hr/bsjg-bsjsswbgs-jstzgg`](https://rsshub.app/ruc/hr/bsjg-bsjsswbgs-jstzgg)
+如 [中国人民大学人事处 - 办事机构 - 教师事务办公室 - 教师通知公告](http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm) 的网址为 <http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm> 其中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段为 `bsjg/bsjsswbgs/jstzgg`。随后，并将其中的 `/` 修改为 `-`，可以得到 `bsjg-bsjsswbgs-jstzgg`。所以最终我们的路由为 [`/ruc/hr/bsjg-bsjsswbgs-jstzgg`](https://rsshub.app/ruc/hr/bsjg-bsjsswbgs-jstzgg)
 
 :::
 
@@ -2642,4 +2645,4 @@ type 列表：
 
 ### 数据科学与计算机学院动态
 
-`<Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />`
+<Route author="Neutrino3316 MegrezZhu" example="/sysu/sdcs" path="/sysu/sdcs" />
