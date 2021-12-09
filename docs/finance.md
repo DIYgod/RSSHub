@@ -38,105 +38,6 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
-## 北京证券交易所
-
-### 栏目
-
-<Route author="nczitzk" example="/bse" path="/bse/:category?/:keyword?" :paramsDesc="['分类，见下表，默认为本所要闻', '关键字，默认为空']">
-
-| 本所要闻       | 人才招聘 | 采购信息 | 业务通知  |
-| -------------- | -------- | -------- | --------- |
-| important_news | recruit  | purchase | news_list |
-
-| 法律法规 | 公开征求意见   | 部门规章        | 发行融资  |
-| -------- | -------------- | --------------- | --------- |
-| law_list | public_opinion | regulation_list | fxrz_list |
-
-| 持续监管  | 交易管理  | 市场管理  | 上市委会议公告 |
-| --------- | --------- | --------- | -------------- |
-| cxjg_list | jygl_list | scgl_list | meeting_notice |
-
-| 上市委会议结果公告 | 上市委会议变更公告 | 并购重组委会议公告 |
-| ------------------ | ------------------ | ------------------ |
-| meeting_result     | meeting_change     | bgcz_notice        |
-
-| 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核          | 注册结果     |
-| ---------------------- | ---------------------- | ----------------- | ------------ |
-| bgcz_result            | bgcz_change            | termination_audit | audit_result |
-
-</Route>
-
-## 财联社
-
-### 电报
-
-<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表']">
-
-| 看盘  | 公告         | 解读    | 加红 | 推送  | 提醒   | 基金 |
-| ----- | ------------ | ------- | ---- | ----- | ------ | ---- |
-| watch | announcement | explain | red  | jpush | remind | fund |
-
-</Route>
-
-### 深度
-
-<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
-
-| 要闻 | 股市 | 环球 | 公司 | 地产 | 券商 | 金融 | 汽车 | 科创版 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
-| 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111   |
-
-</Route>
-
-## 富途牛牛
-
-### 要闻
-
-<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
-
-## 格隆汇
-
-### 用户文章
-
-<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']"/>
-
-### 主题文章
-
-<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']"/>
-
-### 搜索关键字
-
-<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
-
-## 金十数据
-
-<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
-## 麦肯锡中国
-
-<Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">
-
-| 汽车  | 金融服务          | 数字化              | 消费者    | 医药与医疗                 | 麦肯锡全球研究院          | 全球基础材料 | 创新       | 宏观经济     | 制造业        | 人才与领导力      | 技术，媒体与通信             | 城市化与可持续发展          | 资本项目和基础设施              | 旅游、运输和物流 |
-| ----- | ----------------- | ------------------- | --------- | -------------------------- | ------------------------- | ------------ | ---------- | ------------ | ------------- | ----------------- | ---------------------------- | --------------------------- | ------------------------------- | ---------------- |
-| autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流   |
-
-</Route>
-
-## 每经网
-
-### 分类
-
-<Route author="nczitzk" example="/nbd" path="/nbd/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
-
-| 头条 | 要闻 | 图片新闻 | 推荐 |
-| ---- | ---- | -------- | ---- |
-| 2    | 3    | 4        | 5    |
-
-</Route>
-
-### 重磅原创
-
-<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily"/>
-
 ## 上海证券交易所
 
 ### 本所业务规则
@@ -167,6 +68,110 @@ pageClass: routes
 
 </Route>
 
+## 中国人民银行
+
+### 沟通交流
+
+<Route author="nczitzk" example="/pbc/goutongjiaoliu" path="/pbc/goutongjiaoliu"/>
+
+### 货币政策司公开市场交易公告
+
+<Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
+
+## 中证网
+
+### 资讯
+
+<Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" :paramsDesc="['资讯类型']">
+
+| 中证快讯 | 行业资讯 |
+| -------- | -------- |
+| zzkx     | hyzx     |
+
+</Route>
+
+## 北京证券交易所
+
+### 栏目
+
+<Route author="nczitzk" example="/bse" path="/bse/:category?/:keyword?" :paramsDesc="['分类，见下表，默认为本所要闻', '关键字，默认为空']">
+
+| 本所要闻       | 人才招聘 | 采购信息 | 业务通知  |
+| -------------- | -------- | -------- | --------- |
+| important_news | recruit  | purchase | news_list |
+
+| 法律法规 | 公开征求意见   | 部门规章        | 发行融资  |
+| -------- | -------------- | --------------- | --------- |
+| law_list | public_opinion | regulation_list | fxrz_list |
+
+| 持续监管  | 交易管理  | 市场管理  | 上市委会议公告 |
+| --------- | --------- | --------- | -------------- |
+| cxjg_list | jygl_list | scgl_list | meeting_notice |
+
+| 上市委会议结果公告 | 上市委会议变更公告 | 并购重组委会议公告 |
+| ------------------ | ------------------ | ------------------ |
+| meeting_result     | meeting_change     | bgcz_notice        |
+
+| 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核          | 注册结果     |
+| ---------------------- | ---------------------- | ----------------- | ------------ |
+| bgcz_result            | bgcz_change            | termination_audit | audit_result |
+
+</Route>
+
+## 天天基金
+
+### 用户动态
+
+<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+
+## 富途牛牛
+
+### 要闻
+
+<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
+
+## 新浪财经
+
+### 新浪财经－国內
+
+<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
+
+## 有知有行
+
+### 有知文章
+
+<Route author="broven" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials" />
+
+## 格隆汇
+
+### 用户文章
+
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']"/>
+
+### 主题文章
+
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']"/>
+
+### 搜索关键字
+
+<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
+
+## 每经网
+
+### 分类
+
+<Route author="nczitzk" example="/nbd" path="/nbd/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+
+| 头条 | 要闻 | 图片新闻 | 推荐 |
+| ---- | ---- | -------- | ---- |
+| 2    | 3    | 4        | 5    |
+
+</Route>
+
+### 重磅原创
+
+<Route author="MeXunco" example="/nbd/daily" path="/nbd/daily"/>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
@@ -177,18 +182,63 @@ pageClass: routes
 
 <Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
 
-## 天天基金
+## 证券时报网
 
-### 用户动态
+### 要闻
 
-<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
+<Route author="nczitzk" example="/stcn/news" path="/stcn/news/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
 
-## 新浪财经
+| 要闻 | 滚动 | 深度 | 评论 |
+| ---- | ---- | ---- | ---- |
+| news | gd   | sd   | pl   |
 
-### 新浪财经－国內
+</Route>
 
-<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
+### 数据
 
+<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
+
+| 数据 | 机器人新闻 |
+| ---- | ---------- |
+| data | jqrxw      |
+
+</Route>
+
+### 快讯
+
+<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+
+| 快讯 | e 公司 | 研报 | 时事 | 财经 |
+| ---- | ------ | ---- | ---- | ---- |
+|      | egs    | yb   | ss   | cj   |
+
+</Route>
+
+## 财联社
+
+### 电报
+
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表']">
+
+| 看盘  | 公告         | 解读    | 加红 | 推送  | 提醒   | 基金 |
+| ----- | ------------ | ------- | ---- | ----- | ------ | ---- |
+| watch | announcement | explain | red  | jpush | remind | fund |
+
+</Route>
+
+### 深度
+
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+
+| 要闻 | 股市 | 环球 | 公司 | 地产 | 券商 | 金融 | 汽车 | 科创版 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
+| 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111   |
+
+</Route>
+
+## 金十数据
+
+<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
 ## 雪球
 
 ### 用户动态
@@ -231,56 +281,12 @@ pageClass: routes
 
 <Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" :paramsDesc="['股票代码（需要带上交易所）', '标题长度']"/>
 
-## 证券时报网
+## 麦肯锡中国
 
-### 要闻
+<Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">
 
-<Route author="nczitzk" example="/stcn/news" path="/stcn/news/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
-
-| 要闻 | 滚动 | 深度 | 评论 |
-| ---- | ---- | ---- | ---- |
-| news | gd   | sd   | pl   |
-
-</Route>
-
-### 数据
-
-<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
-
-| 数据 | 机器人新闻 |
-| ---- | ---------- |
-| data | jqrxw      |
-
-</Route>
-
-### 快讯
-
-<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
-
-| 快讯 | e 公司 | 研报 | 时事 | 财经 |
-| ---- | ------ | ---- | ---- | ---- |
-|      | egs    | yb   | ss   | cj   |
-
-</Route>
-
-## 中国人民银行
-
-### 沟通交流
-
-<Route author="nczitzk" example="/pbc/goutongjiaoliu" path="/pbc/goutongjiaoliu"/>
-
-### 货币政策司公开市场交易公告
-
-<Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
-
-## 中证网
-
-### 资讯
-
-<Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" :paramsDesc="['资讯类型']">
-
-| 中证快讯 | 行业资讯 |
-| -------- | -------- |
-| zzkx     | hyzx     |
+| 汽车  | 金融服务          | 数字化              | 消费者    | 医药与医疗                 | 麦肯锡全球研究院          | 全球基础材料 | 创新       | 宏观经济     | 制造业        | 人才与领导力      | 技术，媒体与通信             | 城市化与可持续发展          | 资本项目和基础设施              | 旅游、运输和物流 |
+| ----- | ----------------- | ------------------- | --------- | -------------------------- | ------------------------- | ------------ | ---------- | ------------ | ------------- | ----------------- | ---------------------------- | --------------------------- | ------------------------------- | ---------------- |
+| autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流   |
 
 </Route>
