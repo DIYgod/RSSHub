@@ -669,6 +669,10 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+### 最新信息公开
+
+<Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news">
+
 ## 东南大学
 
 ### 信息科学与工程学院学术活动
