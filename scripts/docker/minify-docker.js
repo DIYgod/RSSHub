@@ -7,9 +7,10 @@ const resultFolder = 'app-minimal';
 
 (async () => {
     console.log('Start analyizing...');
-    const { fileList } = await nodeFileTrace(files, {
+    const { fileList: fileSet } = await nodeFileTrace(files, {
         base: path.resolve(path.join(__dirname, '../..')),
     });
+    const fileList = Array.from(fileSet);
     console.log('Total files need to be copy: ' + fileList.length);
     return Promise.all(fileList.map((e) => fs.copy(e, path.resolve(path.join(resultFolder, e)))));
 })();

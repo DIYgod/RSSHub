@@ -2,27 +2,28 @@ name: publish
 
 on:
   push:
-    branches: master
+    branches:
+      - master
     paths:
-        - 'lib/**'
+      - 'lib/**'
 
 jobs:
   build:
     if: github.repository == 'DIYgod/RSSHub'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-        cache: 'npm'
-        registry-url: 'https://registry.npmjs.org'
-    - name: Release
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        npx version-from-git --allow-same-version --template 'master.short'
-    - name: Publish to npmjs
-      run: npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
+      - name: Release
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          npx version-from-git --allow-same-version --template 'master.short'
+      - name: Publish to npmjs
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
