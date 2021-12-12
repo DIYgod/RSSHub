@@ -14,7 +14,6 @@ WORKDIR /app
 COPY ./yarn.lock /app
 COPY ./package.json /app
 
-#COPY . /app
 
 RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
   echo 'use npm mirror'; npm config set registry https://registry.npm.taobao.org; \
