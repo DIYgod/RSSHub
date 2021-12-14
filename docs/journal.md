@@ -4,6 +4,25 @@ pageClass: routes
 
 # 科学期刊
 
+## Academy of Management
+
+### Journal
+
+<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['期刊 id，见下表']" supportScihub="1">
+
+| Id        | 名称                                       |
+| --------- | ------------------------------------------ |
+| annals    | Academy of Management Annals               |
+| amd       | Academy of Management Discoveries          |
+| amgblproc | Academy of Management Global Proceedings   |
+| amj       | Academy of Management Journal              |
+| amle      | Academy of Management Learning & Education |
+| amp       | Academy of Management Perspectives         |
+| amproc    | Academy of Management Proceedings          |
+| amr       | Academy of Management Review               |
+
+</Route>
+
 ## arXiv
 
 ### 搜索关键字
@@ -15,6 +34,12 @@ pageClass: routes
 路由中的参数 query 处填写 `http://export.arxiv.org/api/query?` 后的内容。
 
 </Route>
+
+## BioOne
+
+### Featured articles
+
+<Route author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
 
 ## Cell
 
@@ -39,11 +64,35 @@ pageClass: routes
 
 </Route>
 
+## Deloitte
+
+<Route author="laampui" example="/deloitte/industries/consumer" path="/deloitte/industries/:category?" :paramsDesc="['默认为 energy-resources-industrials']">
+
+| 消费行业 | 能源、资源及工业行业         | 金融服务行业       | 政府及公共服务             | 生命科学与医疗行业       | 科技、传媒及电信行业                |
+| -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
+| consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
+
+</Route>
+
 ## elife
 
 ### 最新成果
 
 <Route author="emdoe HenryQW" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" supportScihub="1"/>
+
+## ELSEVIER
+
+### 最新文章
+
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/latest" path="/elsevier/:journal/latest" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
+
+</Route>
+
+### 指定卷中的文章
+
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/vol/192" path="/elsevier/:journal/vol/:id" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分','卷号 (如果 `Issue` 存在, 使用 `Volume-Issue`, e.g., `/elsevier/aace-clinical-case-reports/vol/7-6`)']" radar="1" rssbud="1">
+
+</Route>
 
 ## IEEE Xplore
 
@@ -54,6 +103,38 @@ pageClass: routes
 | 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
 | ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
 | `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
+
+</Route>
+
+### 最新文章
+
+<Route author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/ieee/:journal/latest/vol/:sortType?" :paramsDesc="['期刊名称，复制 URL 中 punumber 部分','排序方式，默认`vol-only-seq`，复制 URL 中 sortType 部分']" radar="1" rssbud="1">
+
+</Route>
+
+### 最新文章（近两个月）
+
+<Route author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/ieee/:journal/latest/date/:sortType?" :paramsDesc="['期刊名称，复制 URL 中 punumber 部分','排序方式，默认`vol-only-seq`，复制 URL 中 sortType 部分']" radar="1" rssbud="1">
+
+当期刊的文章条目过多时，按照 `vol-only-seq` 排序方式可能将近期更新文章淹没在旧条目中，故只筛选当前月与上个月内发表的文章。
+
+</Route>
+
+## JASA
+
+### 最新文章
+
+<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
+
+</Route>
+
+### 专栏
+
+<Route author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['专栏名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
+
+| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
+| :-----: | :---------: | :-----------------: | :----: |
+|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
 
 </Route>
 
@@ -123,7 +204,7 @@ pageClass: routes
 
 ### 最新文章（可筛选领域）
 
-<Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" />
+<Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
 
 -   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
     若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
@@ -174,6 +255,12 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## ScienceDirect
+
+### Journal
+
+<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
+
 ## Stork 文献鸟订阅
 
 ### 关键词
@@ -205,5 +292,17 @@ _仅支持 Science 主刊_
 <Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
 路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 <https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ> 中 user= 后的 mlmE4JMAAAAJ。
+
+</Route>
+
+## 管理世界
+
+### 分类
+
+<Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
+
+| 本期要目 | 学术活动 | 通知公告 |
+| -------- | -------- | -------- |
+| bqym     | xshd     | tzgg     |
 
 </Route>

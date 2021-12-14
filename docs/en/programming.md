@@ -4,11 +4,23 @@ pageClass: routes
 
 # Programming
 
+## ACM
+
+### A.M.Turing Award Winners
+
+<Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
+
 ## cve.mitre.org
 
 ### Search Result
 
 <RouteEn author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
+
+## Distill
+
+### Latest
+
+<RouteEn author="nczitzk" example="/distill" path="/distill"/>
 
 ## GitHub
 
@@ -25,35 +37,49 @@ GitHub provides some official RSS feeds:
 
 ### User Repo
 
-<RouteEn author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" :paramsDesc="['GitHub username']" radar="1" />
+<RouteEn author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" :paramsDesc="['GitHub username']" radar="1" rssbud="1"/>
 
 ### Trending
 
-<RouteEn path="/github/trending/:since/:language?" example="/github/trending/daily/javascript" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: daily, weekly or monthly', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" radar="1" />
+<RouteEn path="/github/trending/:since/:language?" example="/github/trending/daily/javascript" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: daily, weekly or monthly', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" radar="1" rssbud="1"/>
+
+### Topics
+
+<Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" :paramsDesc="['Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:']" radar="1" rssbud="1">
+
+| Parameter | Description | Values |
+| ---- | ---- | ---- |
+| `l` | Language | For instance `php`, which can be found in the URL of the corresponding [Topics page](https://github.com/topics/framework?l=php) |
+| `o` | Sorting Order | `asc`, `desc` |
+| `s` | Sorting Criteria | `stars`, `forks`, `updated` |
+
+For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will generate the RSS feed corresponding to this [page](https://github.com/topics/framework?l=php&o=desc&s=stars).
+
+</Route>
 
 ### Repo Issues
 
-<RouteEn author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/bug" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" />
+<RouteEn author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/bug" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" rssbud="1"/>
 
 ### Repo Pull Requests
 
-<RouteEn author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1"/>
+<RouteEn author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1" rssbud="1"/>
 
 ### User Followers
 
-<RouteEn author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" radar="1" />
+<RouteEn author="HenryQW" path="/github/user/follower/:user" example="/github/user/followers/HenryQW" :paramsDesc="['GitHub username']" radar="1" rssbud="1"/>
 
 ### Repo Stars
 
-<RouteEn author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" radar="1" />
+<RouteEn author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" :paramsDesc="['GitHub username', 'GitHub repo name']" radar="1" rssbud="1"/>
 
 ### Repo Branches
 
-<RouteEn author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1"/>
+<RouteEn author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" :paramsDesc="['User name', 'Repo name']" radar="1" rssbud="1"/>
 
 ### Files Commits
 
-<RouteEn author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['User name', 'Repo name', 'Branch name', 'File path']" radar="1">
+<RouteEn author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['User name', 'Repo name', 'Branch name', 'File path']" radar="1" rssbud="1">
 
 | User name | Repo name | Branch name | File path       |
 | --------- | --------- | ----------- | --------------- |
@@ -81,23 +107,32 @@ GitHub provides some official RSS feeds:
 
 ### User Starred Repositories
 
-<RouteEn author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['User name']" radar="1"/>
+<RouteEn author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" :paramsDesc="['User name']" radar="1" rssbud="1"/>
 
 ### Repo Contributors
 
-<RouteEn author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']" radar="1"/>
+<RouteEn author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']" radar="1" rssbud="1"/>
 
 ## GitLab
 
 ### Explore
 
-<RouteEn author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">
+<RouteEn author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" :paramsDesc="['type', 'Gitlab instance hostname, default to gitlab.com']">
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
 
 </RouteEn>
+
+### Releases
+
+<RouteEn author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" :paramsDesc="['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
+
+### Tags
+
+<RouteEn author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
+
 
 ## Hacker News
 
@@ -200,6 +235,12 @@ Website: https://news.ycombinator.com/
 ### issues
 
 <RouteEn author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+
+## react
+
+### react-native
+
+<RouteEn author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
 
 ## Scala
 

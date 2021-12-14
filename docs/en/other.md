@@ -51,6 +51,18 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 <RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
 
+### Yahoo Japan COVID19 news collection
+
+Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
+
+<RouteEn author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['Romaji of Todofuken. Can be got from URLs on area detail page. Example: kyoto']"/>
+
+## Darwin Awards
+
+### Articles
+
+<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
+
 ## dcinside
 
 ### board
@@ -69,7 +81,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/en/install)
 
-<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" />
+<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" selfhost="1"/>
 
 ## Emi Nitta official website
 
@@ -81,11 +93,18 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 <RouteEn author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
+## Fisher Spb
+
+### News
+
+<RouteEn author="denis-ya" example="/fisher-spb/news" path="/fisher-spb/news" />
+
 ## HackerOne
 
 ### HackerOne Hacker Activity
 
-<RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
+<RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
+<RouteEn author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" :paramsDesc="['Search string']" radar="1" rssbud="1"/>
 
 ## Instapaper
 
@@ -97,11 +116,41 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/EJ123456789JP/en" path="/japanpost/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1">
+<RouteEn author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1" rssbud="1">
 
 | Japanese | English |
 | -------- | ------- |
 | ja       | en      |
+
+</RouteEn>
+
+## King Arthur
+
+### Baking
+
+<RouteEn author="loganrockmore" example="/kingarthur/story" path="/instapaper/:category">
+
+| Story | Recipes | Tips and Techniques |
+| ----- | ------- | ------------------- |
+| story | recipes | tips-and-techniques |
+
+</RouteEn>
+
+## MITRE
+
+### All Publications
+
+<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
+
+## Nobel Prize
+
+### List
+
+<RouteEn author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['Category, see below, all by default']">
+
+| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science |
+| ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
+| physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
 
 </RouteEn>
 
@@ -130,7 +179,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Remote.work Job Information
 
-<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1">
+<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1" rssbud="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
