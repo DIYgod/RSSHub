@@ -2090,7 +2090,7 @@ column 为 third 时可选的 category:
 
 ### 资讯
 
-<Route author="nczitzk" example="/" path="/medsci/:sid?/:tid?" :paramsDesc="['科室，见下表，默认为推荐', '亚专业，可在对应科室页 URL 中找到，默认为该科室的全部']">
+<Route author="nczitzk" example="/medsci" path="/medsci/:sid?/:tid?" :paramsDesc="['科室，见下表，默认为推荐', '亚专业，可在对应科室页 URL 中找到，默认为该科室的全部']">
 
 ::: tip 提示
 
