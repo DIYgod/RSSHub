@@ -1491,7 +1491,7 @@ area 分区选项
 
 ## 樊登福州运营中心
 
-<Route author="Fatpandac" example="/dushu/dushu" path="/dushu/dushu" />
+<Route author="Fatpandac" example="/dushu" path="/dushu" />
 
 ## 飞雪娱乐网
 
