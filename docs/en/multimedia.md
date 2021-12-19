@@ -22,6 +22,10 @@ Full transcript support for better user experience.
 
 <RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['Tag, can be found in URL']"/>
 
+### Upcoming Live Streams
+
+<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
+
 ## EZTV
 
 ::: tip
