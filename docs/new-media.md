@@ -664,6 +664,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['作者 id，可在作者主页的 URL 找到']" radar="1" rssbud="1"/>
 
+## Mirror
+
+<Route author="fifteen42 rde9" example="/mirror/tingfei.eth" path="/mirror/:id" :paramsDesc="['user id']" />
+
 ## MIT 科技评论
 
 ### 首页
