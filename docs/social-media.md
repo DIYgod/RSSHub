@@ -1126,7 +1126,7 @@ rule
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 | type      | 备注     |
 | --------- | -------- |
