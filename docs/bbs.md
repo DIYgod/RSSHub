@@ -80,7 +80,7 @@ pageClass: routes
 
 | category |   原创软件   |  媒体播放  | 网页浏览 | 图形图像 | 聊天软件 | 办公软件 | 上传下载 |  系统辅助  |  系统必备  | 安全软件 | 补丁相关 | 硬件相关 |
 | :------: | :----------: | :--------: | :------: | :------: | :------: | :------: | :------: | :--------: | :--------: | :------: | :------: | :------: |
-| computer | originalsoft | multimedia |  browser |   image  |    im    |   work   |   down   | systemsoft | systemplus | security |   patch  | hardwork |
+| computer | originalsoft | multimedia |  browser |   image  |    im    |   work   |   down   | systemsoft | systemplus | security |   patch  | hardware |
 
 | category | windows 11 | windows 10 | windows 7 | windows xp | windows pe |
 | :------: | :--------: | :--------: | :-------: | :--------: | :--------: |
