@@ -257,7 +257,7 @@ pageClass: routes
 
 ### 用户
 
-&lt;Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['', 'type 默认为 video'] radar="1" rssbud="1">
+<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['', 'type 默认为 video']" radar="1" rssbud="1">
 
 | type |  视频 |  图片 |
 | :--: | :---: | :---: |
