@@ -64,10 +64,10 @@ For example: https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no
 
 ### User
 
-<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['username, can find in userpage', 'video by default']" radar="1" rssbud="1">
+<RouteEn author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['username, can find in userpage', 'video by default']" radar="1" rssbud="1">
 
 | type | video | image |
 | :--: | :---: | :---: |
 |      | video | image |
 
-</Route>
+</RouteEn>
