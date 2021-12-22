@@ -157,7 +157,6 @@ pageClass: routes
 ::: tip 提示
 
 -   不支持付费文章。
--   由于未知原因 FT 中文网的 SSL 证书不被信任 （参见 [SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取。
 
 :::
 
