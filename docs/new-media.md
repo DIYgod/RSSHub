@@ -1063,17 +1063,13 @@ Supported sub-sites:
 
 ## ZAKER
 
-### source
-
-<Route author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id?" :paramsDesc="['source id，可在 URL 中找到，默认为 1']"/>
-
 ### 分类
 
-<Route author="kt286" example="/zaker/channel/13" path="/zaker/channel/:id?" :paramsDesc="['channel id，可在 URL 中找到，默认为 1']"/>
+<Route author="LogicJake kt286 TonyRL" example="/zaker/channel/13" path="/zaker/channel/:id?" :paramsDesc="['channel id，可在 URL 中找到，默认为 1']"/>
 
 ### 精读
 
-<Route author="AlexdanerZe" example="/zaker/focusread" path="/zaker/focusread" />
+<Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
 
 ## 爱范儿 ifanr
 
