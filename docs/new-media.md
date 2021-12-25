@@ -1065,11 +1065,11 @@ Supported sub-sites:
 
 ### source
 
-<Route author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id" :paramsDesc="['source id，可在 URL 中找到']"/>
+<Route author="LogicJake" example="/zaker/source/12291" path="/zaker/source/:id?" :paramsDesc="['source id，可在 URL 中找到，默认为 1']"/>
 
 ### 分类
 
-<Route author="kt286" example="/zaker/channel/13" path="/zaker/channel/:id" :paramsDesc="['channel id，可在 URL 中找到']"/>
+<Route author="kt286" example="/zaker/channel/13" path="/zaker/channel/:id?" :paramsDesc="['channel id，可在 URL 中找到，默认为 1']"/>
 
 ### 精读
 
