@@ -22,13 +22,15 @@ Deploy for public access may require:
 1. [Google App Engine](https://cloud.google.com/appengine/)
 
 ## Docker Image
-We recommend using the latest version of the docker image.  
-When the latest version is unavailable , you can use image with date tag. For example :
-```
+
+We recommend using the latest version `diygod/rsshub` (i.e. `diygod/rsshub:latest`) of the docker image.
+When the latest version is unstable, you can use the image with a date tag for temporary use. For example:
+
+```bash
 $ docker pull diygod/rsshub:2021-06-18
 ```
-Your can back to the latest version when code has been fixed and rebuild the image.
 
+You can back to the latest version when the code has been fixed and rebuild the image.
 
 ## Docker Compose Deployment
 
@@ -98,7 +100,7 @@ $ docker stop rsshub
 
 ### Update
 
-Remove old container
+Remove the old container
 
 ```bash
 $ docker stop rsshub
@@ -117,9 +119,11 @@ For example, adding `-e CACHE_EXPIRE=3600` will set the cache time to 1 hour.
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
+This deployment method does not include puppeteer and Redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
+
 To configure more options please refer to [Configuration](#configuration).
 
-# Ansible Deployment
+## Ansible Deployment
 
 This Ansible playbook includes RSSHub, Redis, browserless (uses Docker) and Caddy 2
 
@@ -161,18 +165,18 @@ $ git clone https://github.com/DIYgod/RSSHub.git
 $ cd RSSHub
 ```
 
-Execute the following commands to install dependencies
+Execute the following commands to install dependencies (Do not add the `--production` parameter for development).
 
 Using `npm`
 
 ```bash
-$ npm ci
+$ npm ci --production
 ```
 
 Or `yarnv1` (not recommended)
 
 ```bash
-$ yarn
+$ yarn --production
 ```
 
 ### Launch
@@ -212,7 +216,7 @@ CACHE_EXPIRE=600
 
 Please notice that it will not override already existed environment variables, more rules please refer to [dotenv](https://github.com/motdotla/dotenv)
 
-This deployment method does not include puppeteer and redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
+This deployment method does not include puppeteer and Redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
 
 To configure more options please refer to [Configuration](#configuration).
 
@@ -242,7 +246,7 @@ in pkgs.stdenv.mkDerivation {
 
 ## Deploy to Heroku
 
-### Notice：
+### Notice:
 
 Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
 
@@ -277,7 +281,7 @@ Execute `git clone https://github.com/DIYgod/RSSHub.git` to pull the latest code
 
 #### Deploy to Flexible Environment
 
-Under RSSHub's root directory, create a file `app.yaml` with the following content：
+Under RSSHub's root directory, create a file `app.yaml` with the following content:
 
 ```yaml
 # [START app_yaml]
@@ -307,7 +311,7 @@ env_variables:
 
 #### Deploy to standard environment
 
-Under RSSHub's root directory, create a file `app.yaml` with the following content：
+Under RSSHub's root directory, create a file `app.yaml` with the following content:
 
 ```yaml
 # [START app_yaml]
@@ -364,13 +368,36 @@ RSSHub supports two caching methods: memory and redis
 
 `CACHE_CONTENT_EXPIRE`: content cache expiry time in seconds, it will be recalculated when it is accessed, default to `1 * 60 * 60`
 
-`REDIS_URL`: Redis target address（invalid when `CACHE_TYPE` is set to memory）, default to `redis://localhost:6379/`
+`REDIS_URL`: Redis target address (invalid when `CACHE_TYPE` is set to memory), default to `redis://localhost:6379/`
 
 ### Proxy Configurations
 
-Partial routes have a strict anti-crawler policy, and can be configured to use proxy
+Partial routes have a strict anti-crawler policy, and can be configured to use proxy.
 
-`PROXY_PROTOCOL`: Using proxy, Supports socks, socks5, socks5h, http, https, etc. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page and [source](https://github.com/TooTallNate/node-socks-proxy-agent/blob/master/src/agent.ts) for what these protocols mean. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/) for reference.
+Proxy can be configured via either **Proxy URI** or **Proxy options**. When both are configured, RSSHub will use the configuration in **Proxy URI**.
+
+#### Proxy URI
+
+`PROXY_URI`: Proxy supports socks4, socks5(hostname is resolved locally, not recommanded), socks5h(hostname is
+resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), http, https. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/).
+
+> Proxy URI's format:
+>
+> -   `{protocol}://{host}:{port}`
+> -   `{protocol}://{username}:{password}@{host}:{port}` (with credentials)
+>
+> Some examples:
+>
+> -   `socks4://127.0.0.1:1080`
+> -   `socks5h://user:pass@127.0.0.1:1080` (username as `user`, password as `pass`)
+> -   `socks://127.0.0.1:1080` (`socks5h` when protocol is `socks`)
+> -   `http://127.0.0.1:8080`
+> -   `http://user:pass@127.0.0.1:8080`
+> -   `https://127.0.0.1:8443`
+
+#### Proxy options
+
+`PROXY_PROTOCOL`: Using proxy, supports socks, http, https, etc. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page and [source](https://github.com/TooTallNate/node-socks-proxy-agent/blob/master/src/agent.ts) for what these protocols mean. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/) for reference.
 
 `PROXY_HOST`: host or IP of the proxy
 
@@ -379,21 +406,22 @@ Partial routes have a strict anti-crawler policy, and can be configured to use p
 `PROXY_AUTH`: credentials to authenticate a user agent to proxy server, `Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
-### CORS Request
-
-RSSHub by default reject CORS requests. This behavior can be modified via setting `ALLOW_ORIGIN: *` or `ALLOW_ORIGIN: www.example.com`.
 
 ### User Authentication Configurations
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg：http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes.
 
 For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
 
-`HTTP_BASIC_AUTH_NAME`: Http basic authentication username, default to `usernam3`, please change asap
+`HTTP_BASIC_AUTH_NAME`: HTTP basic authentication username, default to `usernam3`, please change asap
 
-`HTTP_BASIC_AUTH_PASS`: Http basic authentication password, default to `passw0rd`, please change asap
+`HTTP_BASIC_AUTH_PASS`: HTTP basic authentication password, default to `passw0rd`, please change asap
+
+### CORS Request
+
+RSSHub by default reject CORS requests. This behavior can be modified via setting `ALLOW_ORIGIN: *` or `ALLOW_ORIGIN: www.example.com`.
 
 ### Access Control Configuration
 
@@ -442,15 +470,15 @@ See the relation between access key/code and white/blacklisting.
 
 `REQUEST_TIMEOUT`: milliseconds to wait for the server to end the response before aborting the request with error, default to `3000`
 
-`DEBUG_INFO`: display route information on homepage for debugging purpose. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `true`
+`DEBUG_INFO`: display route information on the homepage for debugging purposes. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `true`
 
 `NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
-`NODE_NAME`: node name, used for load balancing, identify current node
+`NODE_NAME`: node name, used for load balancing, identify the current node
 
-`PUPPETEER_WS_ENDPOINT`: Browser websocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+`PUPPETEER_WS_ENDPOINT`: Browser WebSocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
@@ -458,26 +486,26 @@ See the relation between access key/code and white/blacklisting.
 
 `DISALLOW_ROBOT`: prevent indexing by search engine, default to enable, set false or 0 to disable
 
-`HOTLINK_TEMPLATE`: Replace image link in description to avoid anti-hotlink protection, leave blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any properity listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
+`HOTLINK_TEMPLATE`: Replace image link in the description to avoid anti-hotlink protection, leave blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
 
 ### Route-specific Configurations
 
 ::: tip Notice
 
-Configs here is incomplete.
+Configs here are incomplete.
 
-See docs of specified route and `lib/config.js` for detail information.
+See docs of the specified route and `lib/config.js` for detailed information.
 
 :::
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_REFRESHTOKEN`: Please refer to [this article](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to get a `refresh_token`
- 
+
     -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
 
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
-    
+
     -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
 
     -   `PIXIV_IMG_PROXY`: Used as a proxy for image addresses, as pixiv images have anti-theft, default to `https://i.pixiv.cat`
@@ -510,13 +538,13 @@ See docs of specified route and `lib/config.js` for detail information.
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   Instagram：
+-   Instagram:
 
     -   `IG_USERNAME`: Your Instagram username
     -   `IG_PASSWORD`: Your Instagram password
     -   `IG_PROXY`: Proxy URL for Instagram
 
-    Warning: Two Factor Authentication is *not* supported.
+    Warning: Two Factor Authentication is **not** supported.
 
 -   mail:
 
@@ -529,27 +557,37 @@ See docs of specified route and `lib/config.js` for detail information.
     -   `NHENTAI_USERNAME`: nhentai username or email
     -   `NHENTAI_PASSWORD`: nhentai password
 
--   discuz cookies
+-   Discuz cookie
 
-    -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by discuz, cid can be anything from 00 to 99. When visiting route discuz, using cid to specify this cookie.
+    -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by Discuz, cid can be anything from 00 to 99. When visiting a Discuz route, use cid to specify this cookie.
 
--   Mastodon user timeline: apply api here `https://mastodon.example/settings/applications`, please check scope `read:search`
+-   Last.fm
 
-    -   `MASTODON_API_HOST`: api instance domain
+    -   `LASTFM_API_KEY`: Last.fm API Key
+
+-   Mastodon user timeline: apply API here `https://mastodon.example/settings/applications`(repalce `mastodon.example`), please check scope `read:search`
+
+    -   `MASTODON_API_HOST`: API instance domain
     -   `MASTODON_API_ACCESS_TOKEN`: user access token
     -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
 
 -   Sci-hub for scientific journal routes:
 
-    -   `SCIHUB_HOST`: The Sci-hub mirror address that is accssible from your location, default to `https://sci-hub.se`.
+    -   `SCIHUB_HOST`: The Sci-hub mirror address that is accessible from your location, default to `https://sci-hub.se`.
 
 -   Wordpress:
-    -   `WORDPRESS_CDN`: Proxy http image link with https link. Consider using:
 
-        | url                                      | backbone     |
-        | ---------------------------------------- | ------------ |
-        | https://imageproxy.pimg.tw/resize?url=   | akamai       |
-        | https://images.weserv.nl/?url=           | cloudflare   |
-        | https://pic1.xuehuaimg.com/proxy/        | cloudflare   |
-        | https://cors.netnr.workers.dev/          | cloudflare   |
-        | https://netnr-proxy.openode.io/          | digitalocean |
+    -   `WORDPRESS_CDN`: Proxy HTTP image link with HTTPS link. Consider using:
+
+        | url                                    | backbone     |
+        | -------------------------------------- | ------------ |
+        | https://imageproxy.pimg.tw/resize?url= | akamai       |
+        | https://images.weserv.nl/?url=         | cloudflare   |
+        | https://pic1.xuehuaimg.com/proxy/      | cloudflare   |
+        | https://cors.netnr.workers.dev/        | cloudflare   |
+        | https://netnr-proxy.openode.io/        | digitalocean |
+
+-   E-Hentai
+    -   `EH_IPB_MEMBER_ID`: The value of `ipb_member_id` in the cookie header after logging in E-Hentai
+    -   `EH_IPB_PASS_HASH`: The value of `ipb_pass_hash` in the cookie header after logging in E-Hentai
+    -   `EH_SK`: The value of `sk` in the cookie header after logging in E-Hentai

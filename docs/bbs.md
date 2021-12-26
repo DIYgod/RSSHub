@@ -398,13 +398,37 @@ pageClass: routes
 
 ## 集思录
 
+### 广场
+
+<Route author="nczitzk" example="/jisilu" path="/jisilu/:category?/:sort?/:day?" :paramsDesc="['分类，见下表，默认为全部，可在 URL 中找到', '排序，见下表，默认为最新，可在 URL 中找到', '几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效']">
+
+分类
+
+| 全部 | 债券 / 可转债 | 基金 | 套利 | 新股 |
+| ---- | ------------- | ---- | ---- | ---- |
+|      | 4             | 7    | 5    | 3    |
+
+排序
+
+| 最新 | 热门 | 按发表时间 |
+| ---- | ---- | ---------- |
+|      | hot  | add_time   |
+
+几天内
+
+| 30 天 | 7 天 | 当天 |
+| ----- | ---- | ---- |
+| 30    | 7    | 1    |
+
+</Route>
+
 ### 用户回复
 
 <Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
 ### 用户主题
 
-<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/topic/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
 ## 看雪
 

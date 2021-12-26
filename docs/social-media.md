@@ -458,11 +458,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 话题 (标签)
 
-<Route author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['话题名(标签名) 例如 `名侦探柯南`', '排行类型, 默认显示最新话题, 取值如下']"/>
+<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['话题(标签)名 例如 `名侦探柯南`，默认为 `摄影`', '排行类型, 见下表，默认显示最新']">
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
 | 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
+
+</Route>
 
 ## Mastodon
 

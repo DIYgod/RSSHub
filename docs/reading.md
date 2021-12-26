@@ -22,6 +22,16 @@ pageClass: routes
 
 </Route>
 
+## Literotica
+
+### New Stories
+
+<Route author="nczitzk" example="/literotica/new" path="/literotica/new"/>
+
+### Category
+
+<Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['分类，可在对应分类页地址栏中找到']"/>
+
 ## Mobilism
 
 ### eBook Releases
@@ -292,6 +302,10 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 章节
 
 <Route author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+### 最新卷
+
+<Route author="huangliangshusheng" example="/wenku8/volume/1163" path="/wenku8/volume/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ## 生物帮
 
