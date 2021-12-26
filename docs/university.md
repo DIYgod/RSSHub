@@ -868,6 +868,12 @@ category 列表：
 
 <Route author="OdinZhang" example="/hainanu/ssszs" path="hainanu/ssszs"/>
 
+## 杭州电子科技大学
+
+### 计算机学院 - 通知公告
+
+<Route author="legr4ndk" example="/hdu/cs" path="/hdu/cs"/>
+
 ## 合肥工业大学
 
 ### 通知公告
