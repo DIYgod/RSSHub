@@ -1342,6 +1342,26 @@ area 分区选项
 
 <Route author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" :paramsDesc="['类别id，可在 URL 中找到']" />
 
+## 电獭少女
+
+### 分类
+
+<Route author="TonyRL" example="/agirls/app" path="/agirls/:category?" :paramsDesc="['分类，默认为最新文章，可在对应主题页的 URL 中找到，下表仅列出部分']" radar="1" rssbud="1">
+
+| App 评测 | 手机开箱 | 笔电开箱 | 3C 周边     | 教学小技巧 | 科技情报 |
+| -------- | -------- | -------- | ----------- | ---------- | -------- |
+| app      | phone    | computer | accessories | tutorial   | techlife |
+
+</Route>
+
+### 精选主题
+
+<Route author="TonyRL" example="/agirls/topic/iphone13" path="/agirls/topic/:topic" :paramsDesc="['精选主题，可通过下方精选主题列表获得']" radar="1" rssbud="1"/>
+
+### 当前精选主题列表
+
+<Route author="TonyRL" example="/agirls/topic_list" path="/agirls/topic_list" radar="1" rssbud="1"/>
+
 ## 丁香园
 
 ### 新冠疫苗实时动态
