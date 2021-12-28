@@ -4,6 +4,18 @@ pageClass: routes
 
 # Application Updates
 
+## Anki
+
+### Changes
+
+<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+
+## AnyTXT
+
+### Release Notes
+
+<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+
 ## Apkpure
 
 ### Versions
@@ -28,7 +40,45 @@ pageClass: routes
 
 ### New Dropzone Actions
 
-<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action"/>
+<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
+
+## Bandisoft
+
+### History
+
+<RouteEn author="nczitzk" example="/bandisoft/bandizip" path="/bandisoft/:id?/:lang?" :paramsDesc="['Software id, see below, Bandizip by default', 'Language, see below, English by default']">
+
+Software id
+
+| Bandizip (Win) | Bandizip (Mac) | Honeycam | Honeyview |
+| -------------- | -------------- | -------- | --------- |
+| bandizip       | bandizip.mac   | honeycam | honeyview |
+
+Language
+
+| English | en |
+| 中文 (简体) | cn |
+| 中文 (繁體) | tw |
+| 日本語 | jp |
+| Русский | ru |
+| Español | es |
+| Français | fr |
+| Deutsch | de |
+| Italiano | it |
+| Slovenčina | sk |
+| Українська | uk |
+| Беларуская | be |
+| Dansk | da |
+| Polski | pl |
+| Português Brasileiro | br |
+| Čeština | cs |
+| Nederlands | nl |
+| Slovenščina| sl |
+| Türkçe| tr  |
+| ภาษาไทย | th |
+| 한국어 | kr |
+
+</RouteEn>
 
 ## Chocolatey
 
@@ -46,11 +96,17 @@ pageClass: routes
 
 ### File Update
 
-<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']"/>
+<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" :paramsDesc="['Game name', 'Catalog name', 'Progect name']">
 
 For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
 
 </RouteEn>
+
+## Ditto clipboard manager
+
+### Changes
+
+<RouteEn author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" :paramsDesc="['Type, `beta` is an option']"/>
 
 ## Docker Hub
 
@@ -63,6 +119,26 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
 
 :::
+
+## Eagle
+
+### Changelog
+
+<RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
+  
+Language
+
+| Simplified Chinese | Traditional Chinese | English |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
+    
+</RouteEn>
+
+## Everything
+
+### Changes
+
+<RouteEn author="nczitzk" example="/everything/changes" path="/everything/changes"/>
 
 ## F-Droid
 
@@ -92,17 +168,45 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 <RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
 
+## Hugo
+
+### Release News
+
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
 ## IPSW.me
 
 ### Apple Firmware Update-IPSWs/OTAs version
 
 <RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']"/>
 
+## Logseq
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+
+## MacKed
+
+### APP Update
+
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be find in URL']"/>
+
+## ManicTime
+
+<RouteEn author="nczitzk" example="/manictime/releases" path="/manictime/releases"/>
+
 ## Microsoft Edge
 
 ### Addons Update
 
 <RouteEn author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['Addon id, can be found in addon url']"/>
+
+## Microsoft Store
+
+### Updates
+
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['`Share` - `Copy Link` in the Store', '`CN` as default']" />
 
 ## Minecraft
 
@@ -143,11 +247,59 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## Obsidian
+
+### Announcements
+
+<RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
+
 ## PlayStation
 
 ### PlayStation 4 System Update
 
 见 [#playstation](/game.html#playstation)
+
+## Potplayer
+
+### Version History
+
+<RouteEn author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['Language, see below, English by default']">
+
+| 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
+| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
+| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
+
+</RouteEn>
+
+## QNAP
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" :paramsDesc="['OS id, see below']">
+
+| QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
+| --- | --------- | --------- | ------------------ | --- | --- | ------ |
+| qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
+
+</RouteEn>
+
+## QTTabBar
+
+### Change Log
+
+<RouteEn author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
+
+## RescueTime
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
+
+| Mac OS | Windows |
+| - | - |
+| mac | windows |
+
+</RouteEn>
 
 ## RSSHub
 
@@ -157,7 +309,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New sponsors
 
-<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
 ## sketch.com
 
@@ -175,11 +327,23 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
+## Total Commander
+
+### What's New
+
+<RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
 ## Typora
 
 ### Changelog
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
+## X410
+
+### News
+
+<RouteEn author="nczitzk" example="/x410/news" path="/x410/news"/>
 
 ## Xiaomi.eu
 
@@ -192,3 +356,10 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Module Update
 
 <RouteEn author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" :paramsDesc="['module package name']"/>
+
+## XYplorer
+
+### What's New
+
+<RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+

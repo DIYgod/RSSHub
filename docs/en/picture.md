@@ -4,21 +4,121 @@ pageClass: routes
 
 # Picture
 
-## Awesome Pigtails
+## 1X
 
-### New
+### Photos
 
-<RouteEn author="Chingyat" example="/pigtails" path="/pigtails/index"/>
+<RouteEn author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['Category, Latest awarded by default, see below']">
+
+| Category         | Title         |
+| ---------------- | ------------- |
+| Latest awarded   | latest        |
+| Popular          | popular       |
+| Latest published | published     |
+| Abstract         | abstract      |
+| Action           | action        |
+| Animals          | animals       |
+| Architecture     | architecture  |
+| Conceptual       | conceptual    |
+| Creative edit    | creative-edit |
+| Documentary      | documentary   |
+| Everyday         | everyday      |
+| Fine Art Nude    | fine-art-nude |
+| Humour           | humour        |
+| Landscape        | landscape     |
+| Macro            | macro         |
+| Mood             | mood          |
+| Night            | night         |
+| Performance      | performance   |
+| Portrait         | portrait      |
+| Still life       | still-life    |
+| Street           | street        |
+| Underwater       | underwater    |
+| Wildlife         | wildlife      |
+
+</RouteEn>
+
+## Asian to lick
+
+### Home
+
+<RouteEn author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+
+### Category
+
+<RouteEn author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['Category, the id can be found in URL, homepage by default']"/>
+
+### Tag
+
+<RouteEn author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" :paramsDesc="['Tag, the id can be found in URL, homepage by default']"/>
+
+### Search
+
+<RouteEn author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['Keyword, empty by default']"/>
+
+## BabeHub
+
+### Category
+
+<RouteEn author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['Category, see below, Home by default']">
+
+| Home | Most Viewed | Picture Archive | Video Archive |
+| - | - | - | - |
+| | most-viewed | picture | video |
+
+</RouteEn>
+
+### Search
+
+<RouteEn author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
 
 ## Bing Wallpaper
 
 ### Daily Wallpaper
 
-<RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1"/>
+<RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
+
+## ComicsKingdom Comic Strips
+
+<RouteEn author="stjohnjohnson" example="/comicskingdom/baby-blues" path="/comicskingdom/:strip" :paramsDesc="['URL path of the strip on comicskingdom.com']" />
+
+## DailyArt
+
+<RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
 
 ## Dilbert Comic Strip
 
 <RouteEn name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip"/>
+
+## Elite Babes
+
+### Home
+
+<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['Category, see below, Home by default']"/>
+
+| Home | Hot | Popular | Recent |
+| ---- | --- | ------- | ------ |
+|      | hot | popular | recent |
+
+</Route>
+
+### Videos
+
+<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['Sort, see below, Popular by default']" />
+
+| Popular | Recent |
+| ------- | ------ |
+| popular | recent |
+
+</Route>
+
+### Search
+
+<RouteEn author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['Keyword']"/>
+
+## GoComics Comic Strips
+
+<RouteEn author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" :paramsDesc="['URL path of the strip on gocomics.com']" />
 
 ## Google Doodles
 
@@ -30,7 +130,7 @@ pageClass: routes
 
 ### Public Albums
 
-<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']" radar="1" />
+<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']" radar="1"/>
 
 ## Konachan Anime Wallpapers
 
@@ -60,6 +160,16 @@ For example:
 ### Manga Updates
 
 <RouteEn author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['Manga slug, can be found in URL, including neither `manga-` nor `.html`']" />
+
+## NASA Astronomy Picture of the Day
+
+### NASA
+
+<RouteEn author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
+
+### Cheng Kung University Mirror
+
+<RouteEn author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
 
 ## nHentai
 

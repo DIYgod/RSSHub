@@ -10,6 +10,77 @@ pageClass: routes
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
+## AppSales
+
+### Apps
+
+<Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" :paramsDesc="['分类，默认为 `highlights`', '时间，默认为 `24h`']">
+
+分类
+
+| Highlights | Active Sales | Now Free | Watchlist Charts |
+| ---------- | ------------ | -------- | ---------------- |
+| highlights | activesales  | nowfree  | mostwanted       |
+
+时间
+
+| 最近一天 | 最近一周 | 所有时间 |
+| -------- | -------- | -------- |
+| 24h      | week     | alltime  |
+
+::: tip 提示
+
+参数 `time` 仅在选择 `mostwanted` 作为分类的时候有效。
+
+:::
+
+</Route>
+
+## booth.pm
+
+### 店铺
+
+<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['店铺子域名']" />
+
+## Craigslist
+
+### 商品搜索
+
+<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['位置，即Craigslist的子域，如sfbay', '搜索类型，如sso']"/>
+
+> 由于 Craigslist 取消了 RSS 订阅搜索功能，因此用 RSSHub 来实现了类似效果。
+> 一个完整原始搜索会像这样：
+> <https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel>
+>
+> /search/xxx 后跟的 "xxx" 为搜索类型，直接参考原始请求即可。
+> query string 是实际的搜索内容。
+
+## Furstar
+
+### 最新售卖角色列表
+
+<Route author="NeverBehave" example="/furstar/characters/cn" path="/furstar/characters/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
+### 已经出售的角色列表
+
+<Route author="NeverBehave" example="/furstar/archive/cn" path="/furstar/archive/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
+### 画师列表
+
+<Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" :paramsDesc="['语言, 留空为jp, 支持cn, en']"/>
+
+## Guiltfree.pl
+
+### Onsale
+
+<Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+
+## hotukdeals
+
+### thread
+
+<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
+
 ## LeBonCoin
 
 ### Ads
@@ -21,6 +92,30 @@ Transform any search into a feed.
 For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015>, the query is `category=10&locations=Paris_75015`
 
 </Route>
+
+## Mercari
+
+### 商品
+
+<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" :paramsDesc="['类型，可选 `category` 指按类别浏览，`brand` 指按品牌浏览，`search` 指搜索关键词浏览', 'id，可在对应分类或品牌页 URL 中找到。若选择 `search` 作为 `type` 则此处填写关键词']">
+
+所有分类参见 [分类清单](https://www.mercari.com/jp/category/)
+
+所有品牌参见 [品牌清单](https://www.mercari.com/jp/brand/)
+
+</Route>
+
+## ShopBack
+
+### Store
+
+<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['店铺名，可在 URL 中找到']"/>
+
+## The Independent
+
+### PS5 stock UK
+
+<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
 
 ## Westore
 
@@ -95,6 +190,18 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
 
+## 麦当劳
+
+### 麦当劳活动资讯
+
+<Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" :paramsDesc="['分类名（可用+连接多个分类）']">
+
+| 全部分类  | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
+| --------- | -------------- | -------- | -------- | ----- | -------- | -------- |
+| news_list | responsibility | brand    | product  | sales | culture  | event    |
+
+</Route>
+
 ## 缺书网
 
 ### 促销
@@ -121,11 +228,11 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 关键词
 
-<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']" radar="1"/>
+<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" :paramsDesc="['你想订阅的关键词']" radar="1" rssbud="1"/>
 
 ### 排行榜
 
-<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1">
+<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" :paramsDesc="['榜单类型','榜单ID','时间跨度']" radar="1" rssbud="1">
 
 -   榜单类型
 
@@ -185,6 +292,16 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="xfangbao" example="/smzdm/article/6902738986" path="/smzdm/article/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
 
+### 用户爆料
+
+<Route author="nczitzk" example="/smzdm/baoliao/7367111021" path="/smzdm/baoliao/:uid" :paramsDesc="['用户id，网址上直接可以看到']"/>
+
+## 它惠网
+
+### 线报
+
+<Route author="nczitzk" example="/tahui/rptlist" path="/tahui/rptlist"/>
+
 ## 淘宝众筹
 
 ### 众筹项目
@@ -209,6 +326,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" :paramsDesc="['商铺 id']"/>
 
+## 消费明鉴
+
+### 最新新闻
+
+<Route author="nczitzk" example="/mingjian" path="/mingjian"/>
+
 ## 消费者报道
 
 ### 要闻
@@ -227,7 +350,13 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 小米有品每日上新
 
-<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new"/>
+<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
+
+| 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
+| ---------- | -------------- | -------------- | ------------------ |
+| 0          | 1              | 2              | 3                  |
+
+</Route>
 
 ## 宜家 IKEA
 
