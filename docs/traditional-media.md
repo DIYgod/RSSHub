@@ -636,13 +636,13 @@ IT・科学 tech_science
 
 ## 东网
 
-<Route author="Fatpandac" example="/oncc/zh_hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh_hans` 为简体，`zh_hant` 为繁体', '频道，默认为港澳']">
+<Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
 
 频道参数可以从官网的地址中获取，如：
 
-`https://hk.on.cc/hk/finance/index_cn.html` 对应 `/oncc/zh_hans/finance`
+`https://hk.on.cc/hk/finance/index_cn.html` 对应 `/oncc/zh-hans/finance`
 
-`https://hk.on.cc/hk/finance/index.html` 对应 `/oncc/zh_hant/finance`
+`https://hk.on.cc/hk/finance/index.html` 对应 `/oncc/zh-hant/finance`
 
 </Route>
 
