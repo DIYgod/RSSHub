@@ -2103,6 +2103,33 @@ type 列表：
 
 <Route author="DylanXie123" example="/xjtu/ee/1114" path="/xjtu/job/:id?" :paramsDesc="['栏目id，默认请求`1114`，可在 URL 中找到']"  />
 
+## 西安理工大学
+
+### 学校主页
+
+<Route author="mocusez" example="/xaut/index/tzgg" path="/xaut/index/:category?" :paramsDesc="['通知类别,默认为通知公告']">
+
+| 通知公告 | 校园要问 | 媒体播报 | 学术活动 |
+| :------: | :------: | :------: | :------: |
+|   tzgg   |   xyyw   |   mtbd   |   xshd   |
+
+</Route>
+
+### 教务处
+
+<Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" :paramsDesc="['通知类别,默认为通知公告']">
+
+::: warning 注意
+
+有些内容需使用校园网或 VPN 访问知行网获取
+:::
+
+| 通知公告 | 校园动态 | 规章制度 | 竞赛结果公示 | 竞赛获奖通知 | 竞赛信息 | 公开公示 |
+| :------: | :------: | :------: | :----------: | :----------: | :------: | :------: |
+|   tzgg   |   xydt   |   gzzd   |     jggs     |     jsjg     |   jsxx   |   gkgs   |
+
+</Route>
+
 ## 西北工业大学
 
 ### 翱翔门户
