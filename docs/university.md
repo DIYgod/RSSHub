@@ -2109,7 +2109,7 @@ type 列表：
 
 <Route author="mocusez" example="/xaut/index/tzgg" path="/xaut/index/:category?" :paramsDesc="['通知类别,默认为通知公告']">
 
-| 通知公告 | 校园要问 | 媒体播报 | 学术活动 |
+| 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |
 | :------: | :------: | :------: | :------: |
 |   tzgg   |   xyyw   |   mtbd   |   xshd   |
 
