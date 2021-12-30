@@ -292,6 +292,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['国家 country, 中国(cn)和美国(us)', '用户名 user, 可在LeetCode用户主页的 URL 中找到']"/>
 
+## leetcode.com
+### 比赛列表
+<Route author="a180285" example="/leetcode-com/contest" path="/leetcode-com/contest" radar="1" rssbud="1"/>
+
 ## LinkedKeeper
 
 ### 博文
