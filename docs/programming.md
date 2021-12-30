@@ -244,6 +244,10 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## hackerrank
+### 活跃比赛列表
+<Route author="a180285" example="/hackerrank/contest" path="/hackerrank/contest" radar="1" rssbud="1"/>
+
 ## Hex-Rays
 
 ### Hex-Rays News
