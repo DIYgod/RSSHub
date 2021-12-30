@@ -17,7 +17,6 @@ RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
   fi;
 
 RUN npm i -g npm
-RUN npm i
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
   unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && npm ci ;\
