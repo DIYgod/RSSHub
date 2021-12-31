@@ -2107,7 +2107,7 @@ type 列表：
 
 ### 学校主页
 
-<Route author="mocusez" example="/xaut/index/tzgg" path="/xaut/index/:category?" :paramsDesc="['通知类别，默认为通知公告']">
+<Route author="mocusez" example="/xaut/index/tzgg" path="/xaut/index/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1" >
 
 | 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |
 | :------: | :------: | :------: | :------: |
@@ -2117,7 +2117,7 @@ type 列表：
 
 ### 教务处
 
-<Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" :paramsDesc="['通知类别，默认为通知公告']">
+<Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1">
 
 ::: warning 注意
 
@@ -2132,7 +2132,7 @@ type 列表：
 
 ### 人事处
 
-<Route author="light0926 mocusez" example="/xaut/rsc/tzgg" path="/xaut/rsc/:category?" :paramsDesc="['通知类别，默认为通知公告']">
+<Route author="light0926 mocusez" example="/xaut/rsc/tzgg" path="/xaut/rsc/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1">
 
 ::: warning 注意
 
