@@ -265,6 +265,9 @@
     "/nsfc/news/:type?": [
         "Derekmini"
     ],
+    "/oncc/:language/:channel?": [
+        "Fatpandac"
+    ],
     "/people/liuyan/:id/:state?": [
         "nczitzk"
     ],
