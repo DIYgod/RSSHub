@@ -12,8 +12,9 @@ pageClass: routes
 
 
 ## ACM-ECNU
+
 ### ECNU ACM Online-Judge contests list
-<Route author="a180285" example="/acm-ecnu/contest/public" path="/acm-ecnu/contest/:category?" radar="1" rssbud="1" :paramsDesc="['category is optional, default is all, use `public` for public only contests']" />
+<RouteEn author="a180285" example="/acm-ecnu/contest/public" path="/acm-ecnu/contest/:category?" radar="1" rssbud="1" :paramsDesc="['category is optional, default is all, use `public` for public only contests']" />
 
 
 ## cve.mitre.org
