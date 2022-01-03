@@ -1023,9 +1023,14 @@ Provides all of the Thrillist articles with the specified tag.
 
 ## TOPYS
 
-### 分类
+### 关键字
 
-<Route author="kt286" example="/topys/7" path="/topys/:category" :paramsDesc="['分类ID，可在对应页面的 URL 中找到']"/>
+<Route author="nczitzk" example="/topys" path="/topys/:keyword?" :paramsDesc="['关键字，可在对应结果页的 URL 中找到']">
+
+| 创意 | 设计 | 商业 | 艺术 | 文化 | 科技 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+
+</Route>
 
 ## Uwants
 
