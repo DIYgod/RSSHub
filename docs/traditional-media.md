@@ -1073,6 +1073,18 @@ category 对应的关键词有
 
 </Route>
 
+## 苹果新闻网
+
+<Route author="Fatpandac" example="/appledaily/home" path="/appledaily/:channel?" :paramsDesc="['频道，默认为主页']">
+
+频道参数均可在官网获取，如：
+
+`https://tw.appledaily.com/realtime/micromovie/` 对应 `/appledaily/micromovie`
+
+`https://tw.appledaily.com/home/` 对应 `/appledaily/home`
+
+</Route>
+
 ## 齐鲁晚报
 
 ### 新闻
