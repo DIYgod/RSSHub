@@ -26,7 +26,19 @@ pageClass: routes
 
 ## AtCoder
 
-### Contests
+### Present Contests
+
+<Route author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '状态，见下表，默认为 Recent Contests']">
+
+状态
+
+| Active Contests | Upcoming Contests | Recent Contests |
+| --------------- | ----------------- | --------------- |
+| active          | upcoming          | recent          |
+
+</Route>
+
+### Contests Archive
 
 <Route author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', 'Rated 对象，见下表，默认为全部', '分类，见下表，默认为全部', '关键字，默认为空']">
 

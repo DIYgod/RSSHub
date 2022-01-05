@@ -12,7 +12,19 @@ pageClass: routes
 
 ## AtCoder
 
-### Contests
+### Present Contests
+
+<RouteEn author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Status, see below, Recent Contests by default']">
+
+Status
+
+| Active Contests | Upcoming Contests | Recent Contests |
+| --------------- | ----------------- | --------------- |
+| active          | upcoming          | recent          |
+
+</RouteEn>
+
+### Contests Archive
 
 <RouteEn author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Rated Range, see below, all by default', 'Category, see below, all by default', 'Keyword']">
 
