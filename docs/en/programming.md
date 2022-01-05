@@ -10,6 +10,38 @@ pageClass: routes
 
 <Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
+## AtCoder
+
+### Contests
+
+<RouteEn author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Rated Range, see below, all by default', 'Category, see below, all by default', 'Keyword']">
+
+Rated Range
+
+| ABC Class (Rated for ~1999) | ARC Class (Rated for ~2799) | AGC Class (Rated for ~9999) |
+| --------------------------- | --------------------------- | --------------------------- |
+| 1                           | 2                           | 3                           |
+
+Category
+
+| All | AtCoder Typical Contest | PAST Archive | Unofficial(unrated) |
+| --- | ----------------------- | ------------ | ------------------- |
+| 0   | 6                       | 50           | 101                 |
+
+| JOI Archive | Sponsored Tournament | Sponsored Parallel(rated) |
+| ----------- | -------------------- | ------------------------- |
+| 200         | 1000                 | 1001                      |
+
+| Sponsored Parallel(unrated) | Optimization Contest |
+| --------------------------- | -------------------- |
+| 1002                        | 1200                 |
+
+</RouteEn>
+
+### Posts
+
+<RouteEn author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Keyword']"/>
+
 ## cve.mitre.org
 
 ### Search Result
