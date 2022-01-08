@@ -10,7 +10,10 @@ RUN ln -sf /bin/bash /bin/sh
 RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init python3 build-essential --no-install-recommends
 
 WORKDIR /app
-COPY . /app
+
+COPY ./yarn.lock /app
+COPY ./package.json /app
+
 
 RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
   echo 'use npm mirror'; npm config set registry https://registry.npm.taobao.org; \
@@ -19,10 +22,12 @@ RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
 RUN npm i -g npm
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
-  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && npm ci ;\
+  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && yarn ;\
   else \
-  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm ci ;\
+  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && yarn ;\
   fi;
+
+COPY . /app
 
 RUN node scripts/docker/minify-docker.js
 
