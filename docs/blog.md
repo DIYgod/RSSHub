@@ -194,6 +194,12 @@ pageClass: routes
 
 <Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
 
+## 十年之约
+
+### 文章
+
+<Route author="7Wate" example="/blogs/foreverblog" path="/blogs/foreverblog" />
+
 ## 王五四文集
 
 ### 文章
