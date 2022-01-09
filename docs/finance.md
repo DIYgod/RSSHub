@@ -108,6 +108,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
 
+## 国家金融与发展实验室
+
+### 研究
+
+<Route author="Fatpandac" example="/nifd/research/3333d2af-91d6-429b-be83-28b92f31b6d7" path="/nifd/research/:categoryGuid?" :paramsDesc="['资讯类型，默认为周报']">
+
+资讯类型可以从网址中获取，如：
+
+`http://www.nifd.cn/Research?categoryGuid=7a6a826d-b525-42aa-b550-4236e524227f` 对应 `/nifd/research/7a6a826d-b525-42aa-b550-4236e524227f`
+
+</Route>
+
 ## 金十数据
 
 <Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
