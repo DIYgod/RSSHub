@@ -1966,6 +1966,18 @@ column 为 third 时可选的 category:
 
 <Route author="xyqfer" example="/laosiji/hotshow/128" path="/laosiji/hotshow/:id" :paramsDesc="['节目 id']"/>
 
+## 链新闻 ABMedia
+
+### 类别
+
+<Route author="Fatpandac" example="/abmedia/technology-development" path="/abmedia/:category?" :paramsDesc="['类别，默认为产品技术']">
+
+参数可以从链接中拿到，如：
+
+`https://www.abmedia.io/category/technology-development` 对应 `/abmedia/technology-development`
+
+</Route>
+
 ## 留园网
 
 ### 分站
