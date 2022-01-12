@@ -2,7 +2,7 @@ FROM node:14-buster-slim as dep-builder
 
 LABEL MAINTAINER https://github.com/DIYgod/RSSHub/
 
-ARG USE_CHINA_NPM_REGISTRY=0;
+ARG USE_CHINA_NPM_REGISTRY=1;
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
 
 RUN ln -sf /bin/bash /bin/sh
@@ -19,9 +19,9 @@ RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
 RUN npm i -g npm
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
-  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && npm ci ;\
+  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && npm i ;\
   else \
-  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm ci ;\
+  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm i ;\
   fi;
 
 RUN node scripts/docker/minify-docker.js
