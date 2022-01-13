@@ -351,10 +351,6 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
-## INFORMS
-
-<RouteEn author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['Category, can be found in the url of the page, `orsc` by default']"/>
-
 ## Institute of International Education
 
 ### Blog

@@ -124,6 +124,10 @@ New items may always at the end of the list, when the number of paper entries is
 
 </RouteEn>
 
+## INFORMS
+
+<RouteEn author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['Category, can be found in the url of the page, `orsc` by default']"/>
+
 ## JASA
 
 ### Latest Research
