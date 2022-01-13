@@ -1,1 +1,10 @@
-{{@ article }}
+<div style="background-color:#f0f2f5">
+    <h2>正文</h2>
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    {{@ article }}
+    {{if comment }}
+        <h2>评论</h2>
+        <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+        {{@ comment }}
+     {{/if}}
+</div>
