@@ -1,10 +1,12 @@
-<div style="background-color:#f0f2f5">
+<div style="background-color:#f0f2f5;border: 1px solid #e3eaef;box-shadow: 0 1px 2px 0 rgb(101 129 156 / 8%);font-size: 1rem;position: relative;background: #fff;box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);margin: 1rem 0;padding: 1em;border-radius: 0.28571429rem;">
     <h2>正文</h2>
-    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
+    <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=rgba(211,224,233,.15) SIZE=3>
     {{@ article }}
-    {{if comment }}
-        <h2>评论</h2>
-        <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=#987cb9 SIZE=3>
-        {{@ comment }}
-     {{/if}}
 </div>
+{{if comment }}
+    <div style="background-color:#f0f2f5;border: 1px solid #e3eaef;box-shadow: 0 1px 2px 0 rgb(101 129 156 / 8%);font-size: 1rem;position: relative;background: #fff;box-shadow: 0 1px 2px 0 rgb(34 36 38 / 15%);margin: 1rem 0;padding: 1em;border-radius: 0.28571429rem;">
+     <h2>评论</h2>
+     <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="100%" color=rgba(211,224,233,.15) SIZE=3>
+     {{@ comment }}
+    </div>
+{{/if}}
