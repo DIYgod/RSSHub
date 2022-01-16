@@ -211,3 +211,13 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 雨苁博客
+
+### 首页
+
+<Route author="XinRoom" example="/ddosi" path="/ddosi"/>
+
+### 分类
+
+<Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
