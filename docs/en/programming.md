@@ -133,7 +133,6 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <RouteEn author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
 
-
 ## Hacker News
 
 ### Section
@@ -227,6 +226,30 @@ Website: https://news.ycombinator.com/
 | Slackware        | `Slackware`        |
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
+
+</RouteEn>
+
+## Node.js
+
+### News
+
+<RouteEn author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" :paramsDesc="['Language, see below, en by default']">
+
+| العربية | Catalan | Deutsch | Español | زبان فارسی |
+| ------- | ------- | ------- | ------- | ---------- |
+| ar      | ca      | de      | es      | fa         |
+
+| Français | Galego | Italiano | 日本語 | 한국어 |
+| -------- | ------ | -------- | ------ | ------ |
+| fr       | gl     | it       | ja     | ko     |
+
+| Português do Brasil | limba română | Русский | Türkçe | Українська |
+| ------------------- | ------------ | ------- | ------ | ---------- |
+| pt-br               | ro           | ru      | tr     | uk         |
+
+| 简体中文 | 繁體中文 |
+| -------- | -------- |
+| zh-cn    | zh-tw    |
 
 </RouteEn>
 

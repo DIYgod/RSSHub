@@ -334,6 +334,30 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## Node.js
+
+### News
+
+<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" :paramsDesc="['语言，见下表，默认为 en']">
+
+| العربية | Catalan | Deutsch | Español | زبان فارسی |
+| ------- | ------- | ------- | ------- | ---------- |
+| ar      | ca      | de      | es      | fa         |
+
+| Français | Galego | Italiano | 日本語 | 한국어 |
+| -------- | ------ | -------- | ------ | ------ |
+| fr       | gl     | it       | ja     | ko     |
+
+| Português do Brasil | limba română | Русский | Türkçe | Українська |
+| ------------------- | ------------ | ------- | ------ | ---------- |
+| pt-br               | ro           | ru      | tr     | uk         |
+
+| 简体中文 | 繁體中文 |
+| -------- | -------- |
+| zh-cn    | zh-tw    |
+
+</Route>
+
 ## NOSEC.org
 
 ### Posts
