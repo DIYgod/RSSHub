@@ -1357,6 +1357,56 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
 
+## 南京大学
+
+### 本科生院
+
+<Route author="ret-1" example="/nju/jw/ggtz" path="/nju/jw/:type" :paramsDesc="['分类名']">
+
+| 公告通知 | 教学动态 |
+| -------- | -------- |
+| ggtz     | jxdt     |
+
+</Route>
+
+### 研究生院
+
+<Route author="ret-1" example="/nju/gra" path="/nju/gra" />
+
+### 人才招聘网
+
+<Route author="ret-1" example="/nju/rczp/xxfb" path="/nju/rczp/:type" :paramsDesc="['分类名']">
+
+| 信息发布 | 教研类岗位 | 管理岗位及其他 |
+| -------- | ---------- | -------------- |
+| xxfb     | jylgw      | gllgw          |
+
+</Route>
+
+### 科学技术处
+
+<Route author="ret-1" example="/nju/scit/tzgg" path="/nju/scit/:type" :paramsDesc="['分类名']">
+
+| 通知公告 | 科研动态 |
+| -------- | -------- |
+| tzgg     | kydt     |
+
+</Route>
+
+### 资产管理处
+
+<Route author="ret-1" example="/nju/zcc" path="/nju/zcc" />
+
+### 招标办公室
+
+<Route author="ret-1" example="/nju/zbb/cgxx" path="/nju/zbb/:type" :paramsDesc="['分类名']">
+
+| 采购信息 | 成交公示 | 政府采购意向公开 |
+| -------- | -------- | ---------------- |
+| cgxx     | cjgs     | zfcgyxgk         |
+
+</Route>
+
 ## 南京工业大学
 
 ### 南京工业大学教务处
