@@ -166,11 +166,37 @@ pageClass: routes
 
 ### 最新
 
-<Route author="kt286 HaitianLiu" example="/cnbeta" path="/cnbeta"/>
+<Route author="kt286 HaitianLiu nczitzk" example="/cnbeta" path="/cnbeta">
+
+::: tip 提示
+
+最新的内容来源于 [官方 RSS](https://www.cnbeta.com/backend.php)
+
+:::
+
+</Route>
+
+### 分类
+
+<Route author="nczitzk" example="/cnbeta/category/movie" path="/cnbeta/category/:id" :paramsDesc="['分类 id，可在对应分类页的 URL 中找到']">
+
+| 影视  | 音乐  | 游戏 | 动漫  | 趣闻  | 科学    | 软件 |
+| ----- | ----- | ---- | ----- | ----- | ------- | ---- |
+| movie | music | game | comic | funny | science | soft |
+
+</Route>
 
 ### 主题
 
-<Route author="cczhong11" example="/cnbeta/topic/453" path="/cnbeta/topic/:topic_id"/>
+<Route author="cczhong11 nczitzk" example="/cnbeta/topics/453" path="/cnbeta/topics/:id" :paramsDesc="['主题 id，可在对应主题页的 URL 中找到']">
+
+::: tip 提示
+
+完整的主题列表参见 [主题列表](https://www.cnbeta.com/topics.htm)
+
+:::
+
+</Route>
 
 ## Common App
 
