@@ -212,6 +212,12 @@ pageClass: routes
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
+## 上海市职业能力考试院
+
+### 考试项目
+
+<Route author="Fatpandac" example="/gov/shanghai/rsj/ksxm" path="/gov/shanghai/rsj/ksxm"/>
+
 ## 世界贸易组织
 
 ### 争端解决新闻
