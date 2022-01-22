@@ -286,6 +286,15 @@
     "/knowmedia/:category?": [
         "Fatpandac"
     ],
+    "/lanqiao/author/:uid": [
+        "huhuhang"
+    ],
+    "/lanqiao/courses/:tag": [
+        "huhuhang"
+    ],
+    "/lanqiao/questions/:id": [
+        "huhuhang"
+    ],
     "/learnku/:community/:category?": [
         "kayw-geek"
     ],
