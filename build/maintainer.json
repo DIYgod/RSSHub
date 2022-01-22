@@ -26,6 +26,9 @@
     "/aamacau/aamacau/:category?/:id?": [
         "nczitzk"
     ],
+    "/acm-ecnu/contest/:category?": [
+        "a180285"
+    ],
     "/ahjzu/news": [
         "Yuk-0v0"
     ],
