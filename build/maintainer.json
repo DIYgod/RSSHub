@@ -469,6 +469,15 @@
     "/ulapia/reports/:category?": [
         "Fatpandac"
     ],
+    "/wallstreetcn/live/:category?": [
+        "nczitzk"
+    ],
+    "/wallstreetcn/news/:category?": [
+        "nczitzk"
+    ],
+    "/wallstreetcn/:category?": [
+        "nczitzk"
+    ],
     "/wangqiutiyu/anchor/:id": [
         "nczitzk"
     ],
@@ -1197,8 +1206,6 @@
     "/jingdong/zhongchou/:type/:status/:sort": [],
     "/taobao/zhongchou/:type?": [],
     "/allpoetry/:order?": [],
-    "/wallstreetcn/news/global": [],
-    "/wallstreetcn/live/:channel?": [],
     "/duozhuayu/search/:wd": [],
     "/cyzone/author/:id": [],
     "/cyzone/label/:name": [],
