@@ -59,6 +59,15 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/cnbeta/": [
+        "nczitzk"
+    ],
+    "/cnbeta/category/:id": [
+        "nczitzk"
+    ],
+    "/cnbeta/topics/:id": [
+        "nczitzk"
+    ],
     "/csc/notice/:type?": [
         "Derekmini"
     ],
@@ -1342,8 +1351,6 @@
     "/maoyan/hot": [],
     "/maoyan/upcoming": [],
     "/maoyan/hotComplete/:orderby?/:ascOrDesc?/:top?": [],
-    "/cnbeta": [],
-    "/cnbeta/topic/:topic_id": [],
     "/gov/veterans/:type": [],
     "/gov/veterans/hebei/:type": [],
     "/dilbert/strip": [],
