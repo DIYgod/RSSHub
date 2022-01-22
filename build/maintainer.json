@@ -92,6 +92,9 @@
     "/cnki/journals/debut/:name": [
         "Fatpandac"
     ],
+    "/cool18/:id?/:type?/:keyword?": [
+        "nczitzk"
+    ],
     "/csc/notice/:type?": [
         "Derekmini"
     ],
@@ -2300,7 +2303,6 @@
     "/lowendtalk/discussion/:id?": [],
     "/proletar/:type?/:id?": [],
     "/qttabbar/change-log": [],
-    "/cool18/:id?/:type?/:keyword?": [],
     "/ustr/press-releases/:year?/:month?": [],
     "/vgn/:platform?": [],
     "/iea/:category?": [],
