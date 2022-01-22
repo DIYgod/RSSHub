@@ -313,6 +313,9 @@
     "/literotica/category/:category": [
         "nczitzk"
     ],
+    "/medsci/:sid?/:tid?": [
+        "nczitzk"
+    ],
     "/mingpao/:type?/:category?": [
         "TonyRL"
     ],
