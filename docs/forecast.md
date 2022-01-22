@@ -32,6 +32,16 @@ pageClass: routes
 
 </Route>
 
+## 广州天气
+
+### 突发性天气提示
+
+<Route author="Fatpandac" example="/gov/guangdong/tqyb/tfxtq" path="/gov/guangdong/tqyb/tfxtq"/>
+
+### 广东省内城市预警信号
+
+<Route author="Fatpandac" example="/gov/guangdong/tqyb/sncsyjxh" path="/gov/guangdong/tqyb/sncsyjxh"/>
+
 ## 国家突发事件预警信息发布网
 
 ### 当前生效预警

@@ -375,6 +375,18 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="nczitzk" example="/mathunion/fields-medal" path="/mathunion/fields-medal"/>
 
+## KBS
+
+### Today
+
+<RouteEn author="nczitzk" example="/kbs/today" path="/kbs/today/:language?" :paramsDesc="['Language, see below, e as English by default']">
+
+| 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
+| ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
+| k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |
+
+</RouteEn>
+
 ## Letterboxd
 
 ### User diary
@@ -384,6 +396,20 @@ Provides a better reading experience (full text articles) over the official one.
 ### Following diary
 
 <RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
+
+## Line
+
+### Today
+
+<RouteEn author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['Edition, see below, Taiwan by default', 'Tag, can be found in URL, top by default']">
+
+Edition
+
+| Taiwan | Thailand | Indonesia | Hong Kong |
+| ------ | -------- | --------- | --------- |
+| tw     | th       | id        | hk        |
+
+</RouteEn>
 
 ## MakeUseOf
 
