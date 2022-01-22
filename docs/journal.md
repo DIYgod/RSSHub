@@ -122,6 +122,8 @@ pageClass: routes
 
 ## INFORMS
 
+### 类型
+
 <Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['类型, 可以在 url 中得到，默认为 `orsc`']"/>
 
 ## JASA
