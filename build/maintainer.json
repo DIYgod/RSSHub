@@ -35,6 +35,9 @@
     "/ajmide/:id": [
         "Fatpandac"
     ],
+    "/appledaily/:channel?": [
+        "Fatpandac"
+    ],
     "/ash-maurya/ash-maurya": [
         "james-tindal"
     ],
