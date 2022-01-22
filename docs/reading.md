@@ -109,7 +109,7 @@ pageClass: routes
 
 ### 最新章节
 
-<Route author="JeasonLau" example="/axdzs/191/191976" path="/axdzs/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到', '小说网站链接最后的数字, 可在对应小说页 URL 中找到']"  />
+<Route author="JeasonLau Maecenas" example="/axdzs/诡秘之主" path="/axdzs/:novel" :paramsDesc="['小说的中文名, 可在对应小说页 URL 中找到']"  />
 
 ## 笔趣阁
 
