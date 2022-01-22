@@ -247,6 +247,9 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/knowmedia/:category?": [
+        "Fatpandac"
+    ],
     "/learnku/:community/:category?": [
         "kayw-geek"
     ],
