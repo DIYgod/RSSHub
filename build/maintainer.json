@@ -220,6 +220,9 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/learnku/:community/:category?": [
+        "kayw-geek"
+    ],
     "/lfsyd/home": [
         "auto-bot-ty"
     ],
@@ -1715,7 +1718,6 @@
     "/yzu/yjszs/:type": [],
     "/krankenkassen": [],
     "/guat/news/:type?": [],
-    "/learnku/:community/:category?": [],
     "/neea/:type": [],
     "/cauyjs": [],
     "/sustyjs": [],
