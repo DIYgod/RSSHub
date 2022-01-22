@@ -292,6 +292,24 @@
     "/ngocn2/:category?": [
         "nczitzk"
     ],
+    "/nju/jw/:type": [
+        "ret-1"
+    ],
+    "/nju/gra": [
+        "ret-1"
+    ],
+    "/nju/rczp/:type": [
+        "ret-1"
+    ],
+    "/nju/scit/:type": [
+        "ret-1"
+    ],
+    "/nju/zcc": [
+        "ret-1"
+    ],
+    "/nju/zbb/:type": [
+        "ret-1"
+    ],
     "/nsfc/news/:type?": [
         "Derekmini"
     ],
