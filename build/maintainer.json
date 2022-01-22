@@ -35,6 +35,12 @@
     "/ash-maurya/ash-maurya": [
         "james-tindal"
     ],
+    "/atcoder/post/:language?/:keyword?": [
+        "nczitzk"
+    ],
+    "/atcoder/contest/:language?/:rated?/:category?/:keyword?": [
+        "nczitzk"
+    ],
     "/bandcamp/live": [
         "nczitzk"
     ],
