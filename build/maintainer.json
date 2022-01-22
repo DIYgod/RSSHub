@@ -267,10 +267,6 @@
     "/heu/uae/list/:id": [
         "Derekmini"
     ],
-    "/hex-rays/news": [
-        "hellodword ",
-        "TonyRL"
-    ],
     "/hkej/:category?": [
         "TonyRL"
     ],
@@ -1932,6 +1928,7 @@
     "/project-zero-issues": [],
     "/galaxylab": [],
     "/nosec/:keykind?": [],
+    "/hex-rays/news": [],
     "/xinquji/today": [],
     "/xinquji/today/internal": [],
     "/gbcc/trust": [],
