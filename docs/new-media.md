@@ -2498,6 +2498,18 @@ column 为 third 时可选的 category:
 
 <Route author="Jeason0228" example="/sspai/tag/apple" path="/sspai/tag/:keyword" :paramsDesc="['关键词']" radar="1"/>
 
+## 深焦
+
+### 分类
+
+<Route author="nczitzk" example="/filmdeepfocus" path="/filmdeepfocus/:category?" :paramsDesc="['分类，见下表，默认为影评']">
+
+| 影评 | 影人       | 特别策划   | 专访       | 书评       |
+| ---- | ---------- | ---------- | ---------- | ---------- |
+| page | new-page-3 | new-page-2 | new-page-4 | new-page-1 |
+
+</Route>
+
 ## 深圳新闻网
 
 ### 深圳市政府新闻发布厅
