@@ -50,6 +50,9 @@
     "/bit/rszhaopin": [
         "nczitzk"
     ],
+    "/blockbeats/:channel?": [
+        "Fatpandac"
+    ],
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
@@ -138,6 +141,9 @@
     ],
     "/eprice/:region?": [
         "TonyRL"
+    ],
+    "/eventernote/actors/:name/:id": [
+        "KTachibanaM"
     ],
     "/filmdeepfocus/:category?": [
         "nczitzk"
@@ -2219,7 +2225,6 @@
     "/gamer/gnn/:category?": [],
     "/npc/:caty": [],
     "/ofweek/news": [],
-    "/eventernote/actors/:name/:id": [],
     "/popyard/:caty?": [],
     "/yuanshen/:location?/:category?": [],
     "/wto/dispute-settlement/:year?": [],
