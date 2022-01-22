@@ -267,6 +267,10 @@
     "/heu/uae/list/:id": [
         "Derekmini"
     ],
+    "/hex-rays/news": [
+        "hellodword ",
+        "TonyRL"
+    ],
     "/hkej/:category?": [
         "TonyRL"
     ],
@@ -675,6 +679,12 @@
     ],
     "/yaohuo/": [
         "nczitzk"
+    ],
+    "/zaker/:type/:id?": [
+        "LogicJake",
+        "kt286",
+        "AlexdanerZe",
+        "TonyRL"
     ],
     "/zjgtjy/:type?": [
         "Fatpandac"
@@ -1518,8 +1528,6 @@
     "/infoq/topic/:id": [],
     "/checkee/:dispdate": [],
     "/iresearch/report": [],
-    "/zaker/:type/:id": [],
-    "/zaker/focusread": [],
     "/matters/latest/:type?": [],
     "/matters/hot": [],
     "/matters/tags/:tid": [],
@@ -1924,7 +1932,6 @@
     "/project-zero-issues": [],
     "/galaxylab": [],
     "/nosec/:keykind?": [],
-    "/hex-rays/news": [],
     "/xinquji/today": [],
     "/xinquji/today/internal": [],
     "/gbcc/trust": [],
