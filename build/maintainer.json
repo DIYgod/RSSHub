@@ -246,6 +246,9 @@
     "/ithome/zt/:id": [
         "nczitzk"
     ],
+    "/iwara/users/:username?/:type?": [
+        "Fatpandac"
+    ],
     "/jandan/:category?": [
         "nczitzk"
     ],
