@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
+## Codeforces
+
+### Latest contests
+
+<RouteEn author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
+
 ## AtCoder
 
 ### Present Contests

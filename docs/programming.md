@@ -24,6 +24,12 @@ pageClass: routes
 
 > AlgoCasts 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
+## Codeforces
+
+#### 最新比赛
+
+<Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
+
 ## AtCoder
 
 ### Present Contests
