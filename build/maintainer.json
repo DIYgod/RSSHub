@@ -542,6 +542,15 @@
     "/szse/rule": [
         "nczitzk"
     ],
+    "/telegram/telegram/channel/:username/:searchQuery?": [
+        "DIYgod"
+    ],
+    "/telegram/telegram/stickerpack/:name": [
+        "DIYgod"
+    ],
+    "/telegram/telegram/blog": [
+        "fengkx"
+    ],
     "/test/:id": [
         "DIYgod",
         "NeverBehave"
@@ -785,9 +794,6 @@
     "/v2ex/topics/:type": [],
     "/v2ex/post/:postid": [],
     "/v2ex/tab/:tabid": [],
-    "/telegram/channel/:username/:searchQuery?": [],
-    "/telegram/stickerpack/:name": [],
-    "/telegram/blog": [],
     "/readhub/category/:category": [],
     "/github/repos/:user": [],
     "/github/trending/:since/:language?/:spoken_language?": [],
