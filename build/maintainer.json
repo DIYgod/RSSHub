@@ -172,6 +172,10 @@
     "/gameapps/": [
         "TonyRL"
     ],
+    "/gamer/hot/:bsn": [
+        "nczitzk",
+        "TonyRL"
+    ],
     "/gamersecret/:type?/:category?": [
         "nczitzk"
     ],
@@ -2212,7 +2216,6 @@
     "/cgtn/opinions": [],
     "/appsales/:caty?/:time?": [],
     "/aom/journal/:id": [],
-    "/gamer/hot/:bsn": [],
     "/icity/:id": [],
     "/anki/changes": [],
     "/abc/:id?": [],
