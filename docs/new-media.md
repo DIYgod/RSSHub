@@ -773,11 +773,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 文章
 
-<Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为新品']">
+<Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为最新']">
 
-| 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
-| ---- | ---- | --- | ---- | ---- | ---- | ---- |
-| 333  | 331  | 334 | 332  | 330  | 297  | 296  |
+| 最新 | 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
+| ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- |
+| 280  | 333  | 331  | 334 | 332  | 330  | 297  | 296  |
 
 </Route>
 
