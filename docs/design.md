@@ -65,6 +65,48 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 <Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </Route>
 
+## LogoNews 标志情报局
+
+### 首页
+
+<Route author="nczitzk" example="/logonews" path="/logonews"/>
+
+### 文章分类
+
+<Route author="nczitzk" example="/logonews/category/news/newsletter" path="/logonews/category/:category/:type" :paramsDesc="['分类，可在对应分类页 URL 中找到', '类型，可在对应分类页 URL 中找到']">
+
+如 [简讯 - 标志情报局](https://www.logonews.cn/category/news/newsletter) 的 URL 为 <https://www.logonews.cn/category/news/newsletter>，可得路由为 [`/logonews/category/news/newsletter`](https://rsshub.app/logonews/category/news/newsletter)。
+
+</Route>
+
+### 文章标签
+
+<Route author="nczitzk" example="/logonews/tag/china" path="/logonews/tag/:tag" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+
+如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 <https://www.logonews.cn/tag/china>，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。
+
+</Route>
+
+### 作品
+
+<Route author="nczitzk" example="/logonews/work" path="/logonews/work"/>
+
+### 作品分类
+
+<Route author="nczitzk" example="/logonews/work/categorys/hotel-catering" path="/logonews/work/categorys/:category" :paramsDesc="['分类，可在对应分类页 URL 中找到']">
+
+如 [LOGO 作品分类：酒店餐饮 - 标志情报局](https://www.logonews.cn/work/categorys/hotel-catering) 的 URL 为 <https://www.logonews.cn/work/categorys/hotel-catering>，可得路由为 [`/logonews/work/categorys/hotel-catering`](https://rsshub.app/logonews/work/categorys/hotel-catering)。
+
+</Route>
+
+### 作品标签
+
+<Route author="nczitzk" example="/logonews/work/tags/旅游" path="/logonews/work/tags/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+
+如 [LOGO 标签：旅游 - 标志情报局](https://www.logonews.cn/work/tags/旅游) 的 URL 为 [https://www.logonews.cn/work/tags/ 旅游](https://www.logonews.cn/work/tags/旅游)，可得路由为 [`/logonews/work/tags/旅游`](https://rsshub.app/logonews/work/tags/旅游)。
+
+</Route>
+
 ## Method Studios
 
 ### 菜单
