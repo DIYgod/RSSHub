@@ -44,6 +44,10 @@ pageClass: routes
 
 <Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
+### Fluid 主题博客
+
+<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+
 ## Hi, DIYgod
 
 ### DIYgod 的动森日记
@@ -211,3 +215,13 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 雨苁博客
+
+### 首页
+
+<Route author="XinRoom" example="/ddosi" path="/ddosi"/>
+
+### 分类
+
+<Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>

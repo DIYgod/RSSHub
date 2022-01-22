@@ -62,6 +62,40 @@ Language codes
 
 <RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## Gamer Secret
+
+### Latest News
+
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+
+### Category
+
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" :paramsDesc="['Type, see below, Latest News by default', 'Category, see below']">
+
+| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+| ----------- | -- | ----------- | -------- | ---- | ------ |
+| latest-news | pc | playstation | nintendo | xbox | moblie |
+
+Or
+
+| GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+| ---------------- | ------------------ | --------------- | ----------------- |
+| category/general | category/generalen | category/mobile | category/mobileen |
+
+| NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+| ----------------- | ------------------- | ----------- | ------------- |
+| category/nintendo | category/nintendoen | category/pc | category/pcen |
+
+| PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+| -------------------- | ---------------------- | ---------------- |
+| category/playstation | category/playstationen | category/reviews |
+
+| XBOX          | XBOX EN         |
+| ------------- | --------------- |
+| category/xbox | category/xboxen |
+
+</RouteEn>
+
 ## Konami
 
 ### PES Mobile Announcement
