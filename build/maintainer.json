@@ -53,6 +53,9 @@
     "/bupt/rczp": [
         "nczitzk"
     ],
+    "/cbirc/:category?": [
+        "JkCheung"
+    ],
     "/ccac/news/:type/:lang?": [
         "linbuxiao"
     ],
