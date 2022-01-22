@@ -304,6 +304,9 @@
     "/lanqiao/questions/:id": [
         "huhuhang"
     ],
+    "/lativ/:id": [
+        "Fatpandac"
+    ],
     "/learnku/:community/:category?": [
         "kayw-geek"
     ],
