@@ -532,6 +532,16 @@
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
+    "/xaut/index/:category?": [
+        "mocusez"
+    ],
+    "/xaut/jwc/:category?": [
+        "mocusez"
+    ],
+    "/xaut/rsc/:category?": [
+        "mocusez",
+        "light0926"
+    ],
     "/yaohuo/": [
         "nczitzk"
     ],
