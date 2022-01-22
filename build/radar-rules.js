@@ -1911,6 +1911,12 @@
 
                     return `/timednews/news/${name}`;
                 } } ] },
+  "topys.cn":{ _name:"TOPYS",
+    ".":[ { title:"关键字",
+        docs:"https://docs.rsshub.app/new-media.html#topys-guan-jian-zi",
+        source:[ "/search/:keyword",
+          "/" ],
+        target:"/topys/:keyword?" } ] },
   "trow.cc":{ _name:"The Ring of Wonder",
     ".":[ { title:"首页更新",
         docs:"https://docs.rsshub.app/bbs.html#the-ring-of-wonder",

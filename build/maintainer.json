@@ -588,6 +588,9 @@
     "/timednews/news/:type?": [
         "linbuxiao"
     ],
+    "/topys/:keyword?": [
+        "nczitzk"
+    ],
     "/trow/portal": [
         "shiningdracon"
     ],
@@ -1618,7 +1621,6 @@
     "/flyertea/preferential": [],
     "/flyertea/creditcard/:bank": [],
     "/radio/:channelname/:name": [],
-    "/topys/:category": [],
     "/8btc/:authorid": [],
     "/8btc/news/flash": [],
     "/vuevideo/:userid": [],
