@@ -142,6 +142,9 @@
     "/gameapps/": [
         "TonyRL"
     ],
+    "/gamersecret/:type?/:category?": [
+        "nczitzk"
+    ],
     "/getdr/": [
         "nczitzk"
     ],
