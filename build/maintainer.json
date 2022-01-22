@@ -280,6 +280,9 @@
     "/lfsyd/tag/:tagId?": [
         "auto-bot-ty"
     ],
+    "/line/today/:edition?/:tab?": [
+        "nczitzk"
+    ],
     "/literotica/new": [
         "nczitzk"
     ],
