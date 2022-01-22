@@ -774,6 +774,7 @@
     "/tuicool/mags/:type": [],
     "/hexo/next/:url": [],
     "/hexo/yilia/:url": [],
+    "/hexo/fluid/:url": [],
     "/cpython/:pre?": [],
     "/mi/golden": [],
     "/mi/crowdfunding": [],
