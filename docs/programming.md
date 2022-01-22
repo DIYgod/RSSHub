@@ -30,12 +30,6 @@ pageClass: routes
 
 > AlgoCasts 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
-## Codeforces
-
-#### 最新比赛
-
-<Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
-
 ## AtCoder
 
 ### Present Contests
@@ -79,6 +73,12 @@ Rated 对象
 ### Posts
 
 <Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']"/>
+
+## Codeforces
+
+#### 最新比赛
+
+<Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
 ## cve.mitre.org
 

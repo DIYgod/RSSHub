@@ -17,12 +17,6 @@ pageClass: routes
 
 <RouteEn author="a180285" example="/acm-ecnu/contest/public" path="/acm-ecnu/contest/:category?" radar="1" rssbud="1" :paramsDesc="['category is optional, default is all, use `public` for public only contests']" />
 
-## Codeforces
-
-### Latest contests
-
-<RouteEn author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
-
 ## AtCoder
 
 ### Present Contests
@@ -66,6 +60,12 @@ Category
 ### Posts
 
 <RouteEn author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Keyword']"/>
+
+## Codeforces
+
+### Latest contests
+
+<RouteEn author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
 ## cve.mitre.org
 
