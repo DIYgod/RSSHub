@@ -253,6 +253,26 @@ pageClass: routes
 
 </Route>
 
+## Kemono
+
+### Posts
+
+<Route author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" :paramsDesc="['来源，见下表，默认为 Posts', '用户 Id，可在对应页 URL 中找到']">
+
+Sources
+
+| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+
+::: tip 提示
+
+当选择 `posts` 作为参数 **source** 的值时，参数 **id** 不生效。
+
+:::
+
+</Route>
+
 ## Mox.moe
 
 ### 首頁
