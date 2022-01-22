@@ -1050,6 +1050,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
 
+### 华东理工继续教育学院新闻公告
+
+<Route author="jialinghui" example="/ecust-jxjy/news" path="/news" rssbud="1" />
+
 ## 华东师范大学
 
 ### 华东师范大学研究生院
