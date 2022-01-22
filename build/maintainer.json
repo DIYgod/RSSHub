@@ -2634,5 +2634,6 @@
     "/secrss/category/:category?": [],
     "/secrss/author/:author?": [],
     "/fashionnetwork/headline/:country?": [],
+    "/mirror/:id": [],
     "/kbs/today/:language?": []
 }
