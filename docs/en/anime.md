@@ -79,3 +79,15 @@ For example: https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no
 ### [Naver](https://comic.naver.com)
 
 <RouteEn author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId of naver webtoon']" />
+
+## iwara
+
+### User
+
+<RouteEn author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['username, can find in userpage', 'video by default']" radar="1" rssbud="1">
+
+| type | video | image |
+| :--: | :---: | :---: |
+|      | video | image |
+
+</RouteEn>

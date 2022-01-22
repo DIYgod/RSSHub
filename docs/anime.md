@@ -253,6 +253,18 @@ pageClass: routes
 
 </Route>
 
+## iwara
+
+### 用户
+
+<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['用户昵称', 'type 默认为 video']" radar="1" rssbud="1">
+
+| type |  视频 |  图片 |
+| :--: | :---: | :---: |
+| 参数 | video | image |
+
+</Route>
+
 ## Kemono
 
 ### Posts
