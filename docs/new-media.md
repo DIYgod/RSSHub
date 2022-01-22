@@ -718,6 +718,8 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## Mirror
 
+### User
+
 <Route author="fifteen42 rde9" example="/mirror/tingfei.eth" path="/mirror/:id" :paramsDesc="['user id']" />
 
 ## MIT 科技评论
