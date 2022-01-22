@@ -2154,6 +2154,18 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/6park/chan1/keywords/都市" path="/6park/:id/keywords/:keyword?" :paramsDesc="['分站，见上表', '关键字']"/>
 
+## 律动
+
+### 新闻快讯
+
+<Route author="Fatpandac" example="/blockbeats/flash" path="/blockbeats/:channel?" :paramsDesc="['类型，见下表，默认为快讯']">
+
+|  快讯 | 新闻 |
+| :---: | :--: |
+| flash | news |
+
+</Route>
+
 ## 論盡媒體 AllAboutMacau Media
 
 ### 话题
