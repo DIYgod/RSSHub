@@ -195,6 +195,12 @@
     "/ithome/zt/:id": [
         "nczitzk"
     ],
+    "/jandan/:category?": [
+        "nczitzk"
+    ],
+    "/jandan/": [
+        "nczitzk"
+    ],
     "/jasa/latest": [
         "Derekmini",
         "auto-bot-ty"
@@ -551,8 +557,6 @@
     "/douban/channel/:id/subject/:nav": [],
     "/douban/celebrity/:id/:sort?": [],
     "/plainlaw/archives": [],
-    "/jandan/article": [],
-    "/jandan/:sub_model": [],
     "/dapenti/tugua": [],
     "/dapenti/subject/:id": [],
     "/dockone/weekly": [],
