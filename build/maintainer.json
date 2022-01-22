@@ -433,6 +433,9 @@
     "/secnews/index": [
         "kaiili"
     ],
+    "/shmeea/": [
+        "jialinghui"
+    ],
     "/shopback/:store": [
         "nczitzk"
     ],
