@@ -133,6 +133,9 @@
     "/focustaiwan/:category?": [
         "nczitzk"
     ],
+    "/fortunechina/:category?": [
+        "nczitzk"
+    ],
     "/furstar/characters/:lang?": [
         "NeverBehave"
     ],
