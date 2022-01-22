@@ -31,6 +31,14 @@
         docs:"https://docs.rsshub.app/new-media.html#lun-jin-mei-ti-allaboutmacau-media-hua-ti",
         source:[ "/" ],
         target:"/:category?/:id?" } ] },
+  "ajmide.com":{ _name:"阿基米德FM",
+    m:[ { title:"播客",
+        docs:"https://docs.rsshub.app/multimedia.html#a-ji-mi-de-fm-bo-ke",
+        source:[ "/m/brand" ],
+        target:(_, url) => {
+                    const id = new URL(url).searchParams.get('id');
+                    return `/ajmide/${id}`;
+                } } ] },
   "blog.leanstack.com":{ _name:"Ash Maurya's blog",
     ".":[ { title:"Ash Maurya's blog",
         docs:"https://docs.rsshub.app/en/blog.html#ash-maurya",
