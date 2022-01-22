@@ -16,6 +16,12 @@ pageClass: routes
 
 </Route>
 
+## 澳门卫生局
+
+### 最新消息
+
+<Route author="Fatpandac" exmaple="/ssm/news" path="/ssm/news"/>
+
 ## 北京市卫生健康委员会
 
 ### 新闻中心
@@ -147,6 +153,30 @@ pageClass: routes
 
 <Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" rssbud="1"/>
 
+## 国家药品审评网站
+
+### 首页
+
+<Route author="Fatpandac" example="/cde/news/gzdt" path="/cde/:channel/:category" :paramsDesc="['频道', '类别']">
+
+-   频道
+
+| 新闻中心 | 政策法规 |
+| :------: | :------: |
+|   news   |  policy  |
+
+-   类别
+
+| 新闻中心 | 政务新闻 | 要闻导读 | 图片新闻 | 工作动态 |
+| :------: | :------: | :------: | :------: | :------: |
+|          |   zwxw   |   ywdd   |   tpxw   |   gzdt   |
+
+| 政策法规 | 法律法规 | 中心规章 |
+| :------: | :------: | :------: |
+|          |   flfg   |   zxgz   |
+
+</Route>
+
 ## 哈尔滨市科技局
 
 ### 政务公开
@@ -232,6 +262,12 @@ pageClass: routes
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
+## 上海市职业能力考试院
+
+### 考试项目
+
+<Route author="Fatpandac" example="/gov/shanghai/rsj/ksxm" path="/gov/shanghai/rsj/ksxm"/>
+
 ## 世界贸易组织
 
 ### 争端解决新闻
@@ -253,6 +289,18 @@ pageClass: routes
 ### 政府信息公开文件
 
 <Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
+
+## 台湾行政院消费者保护会
+
+### 消费资讯
+
+<Route author="Fatpandac" example="/cpcey/xwg" path="/cpcey/:type?" :paramsDesc="['默认为 xwg']">
+
+| 新闻稿 | 消费资讯 |
+| :----: | :------: |
+|   xwg  |   xfzx   |
+
+</Route>
 
 ## 台灣衛生福利部
 
@@ -321,6 +369,18 @@ pageClass: routes
 | English | 中文简体 | 中文繁體 |
 | ------- | -------- | -------- |
 | english | chs      | tc_chi   |
+
+</Route>
+
+## 浙江省土地使用权网上交易系统
+
+### 公告信息
+
+<Route author="Fatpandac" example="/zjgtjy/all" path="zjgtjy/:type" :paramsDesc="['分类名']">
+
+| 全部公告 | 挂牌公告 | 拍卖公告 | 补充公告 |
+| :------: | :------: | :------: | :------: |
+|    all   |   gpgg   |   pmgg   |   bcgg   |
 
 </Route>
 
@@ -393,6 +453,16 @@ pageClass: routes
 ### CAICT 观点
 
 <Route author="nczitzk" example="/gov/caict/caictgd" path="/gov/caict/caictgd"/>
+
+## 中国银行保险监督管理委员会
+
+<Route author="JkCheung" example="/cbirc/" path="/cbirc/:category" :paramsDesc="['类目']">
+
+| 监管动态 | 公告通知 | 政策法规 | 政策解读 | 征求意见 | 行政许可 | 行政处罚 | 行政监管措施 | 工作论文 | 金融监管研究 | 统计信息 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :----------: | :------: | :----------: | :------: |
+|   jgdt   |   ggtz   |   zcfg   |   zcjd   |   zqyj   |   xzxk   |   xzcf   |    xzjgcs    |   gzlw   |    jrjgyj    |   tjxx   |
+
+</Route>
 
 ## 中国证券监督管理委员会
 
@@ -495,11 +565,13 @@ pageClass: routes
 
 #### 北京教育考试院
 
-<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']"/>
+<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']">
 
 | 通知公告 | 招考政策 | 自考快递 |
 | :------: | :------: | :------: |
 |  bjeeagg |   zkzc   |   zkkd   |
+
+</Route>
 
 ### 河北省退役军人事务厅
 
@@ -578,7 +650,7 @@ pageClass: routes
 
 ### 领事馆重要通知
 
-<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" >
 
 ### 支持国家列表
 
@@ -688,6 +760,8 @@ pageClass: routes
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+</Route>
 
 ## 中华人民共和国国家发展和改革委员会
 

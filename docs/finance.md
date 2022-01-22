@@ -38,6 +38,20 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
+## 巴伦周刊中文版
+
+### 栏目
+
+<Route author="nczitzk" example="/barronschina" path="/barronschina/:id?" :paramsDesc="['栏目 id，默认为快讯']">
+
+::: tip 提示
+
+栏目 id 留空则返回快讯，在对应页地址栏 `columnId=` 后可以看到。
+
+:::
+
+</Route>
+
 ## 北京证券交易所
 
 ### 栏目
@@ -183,6 +197,22 @@ pageClass: routes
 
 <Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
+## 乌拉邦
+
+### 最新研报
+
+<Route author="Fatpandac" example="/ulapia/research/latest" path="/ulapia/research/latest"/>
+
+### 频道
+
+<Route author="Fatpandac" example="/ulapia/reports/stock_research" path="/ulapia/reports/:category?" :paramsDesc="['频道类型，默认为券商晨报（今日晨报）']">
+
+|    个股研报    |      行业研报     |      策略研报     |    宏观研报    |   新股研报   | 券商晨报（今日晨报） |
+| :------------: | :---------------: | :---------------: | :------------: | :----------: | :------------------: |
+| stock_research | industry_research | strategy_research | macro_research | ipo_research |    brokerage_news    |
+
+</Route>
+
 ## 新浪财经
 
 ### 新浪财经－国內
@@ -230,6 +260,12 @@ pageClass: routes
 ### 股票评论
 
 <Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" :paramsDesc="['股票代码（需要带上交易所）', '标题长度']"/>
+
+## 有知有行
+
+### 有知文章
+
+<Route author="broven" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials" />
 
 ## 证券时报网
 
