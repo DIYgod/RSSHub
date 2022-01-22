@@ -424,6 +424,9 @@
     "/uibe/hr/:category?/:type?": [
         "nczitzk"
     ],
+    "/ulapia/reports/:category?": [
+        "Fatpandac"
+    ],
     "/wangqiutiyu/anchor/:id": [
         "nczitzk"
     ],
