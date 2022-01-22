@@ -397,6 +397,12 @@
     "/pts/dailynews": [
         "nczitzk"
     ],
+    "/qidiantu/:category?/:type?/:is_history?": [
+        "nczitzk"
+    ],
+    "/qidiantu/shouding": [
+        "nczitzk"
+    ],
     "/qm120/news/:category?": [
         "nczitzk"
     ],
