@@ -204,6 +204,9 @@
     "/github/comments/:user/:repo/:type/:number": [
         "TonyRL"
     ],
+    "/gov/beijing/kw/:channel": [
+        "Fatpandac"
+    ],
     "/gov/shenzhen/hrss/szksy/:caty/:page?": [
         "zlasd"
     ],
