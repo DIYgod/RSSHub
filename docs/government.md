@@ -16,7 +16,15 @@ pageClass: routes
 
 </Route>
 
+## 澳门卫生局
+
+### 最新消息
+
+<Route author="Fatpandac" exmaple="/ssm/news" path="/ssm/news"/>
+
 ## 北京市科学技术委员会、中关村科技园区管理委员会
+
+### 频道
 
 <Route author="Fatpandac" example="/kwbeijing/col736" path="/kwbeijing/:channel" :paramsDesc="['频道']">
 
@@ -25,12 +33,6 @@ pageClass: routes
 `http://kw.beijing.gov.cn/col/col736/index.html` 对应 `/kwbeijing/col736`
 
 </Route>
-
-## 澳门卫生局
-
-### 最新消息
-
-<Route author="Fatpandac" exmaple="/ssm/news" path="/ssm/news"/>
 
 ## 北京市卫生健康委员会
 
