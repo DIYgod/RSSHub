@@ -283,6 +283,15 @@
     "/learnku/:community/:category?": [
         "kayw-geek"
     ],
+    "/leiphone/leiphone": [
+        "vlcheng"
+    ],
+    "/leiphone/leiphone/category/:catname": [
+        "vlcheng"
+    ],
+    "/leiphone/leiphone/newsflash": [
+        "vlcheng"
+    ],
     "/lfsyd/home": [
         "auto-bot-ty"
     ],
