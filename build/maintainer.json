@@ -74,6 +74,12 @@
     "/csc/notice/:type?": [
         "Derekmini"
     ],
+    "/ddosi/": [
+        "XinRoom"
+    ],
+    "/ddosi/category/:category": [
+        "XinRoom"
+    ],
     "/distill/": [
         "nczitzk"
     ],
