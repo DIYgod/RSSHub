@@ -301,9 +301,9 @@ _仅支持 Science 主刊_
 
 <Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
 
-| 本期要目 | 学术活动 | 通知公告 |
-| -------- | -------- | -------- |
-| bqym     | xshd     | tzgg     |
+| 本期要目 | 网络首发 | 学术活动 | 通知公告 |
+| -------- | -------- | -------- | -------- |
+| bqym     | wlsf     | xshd     | tzgg     |
 
 </Route>
 
