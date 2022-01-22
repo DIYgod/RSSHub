@@ -160,6 +160,13 @@
     "/fortunechina/:category?": [
         "nczitzk"
     ],
+    "/ft/ft/myft/:key": [
+        "HenryQW"
+    ],
+    "/ft/ft/:language/:channel?": [
+        "HenryQW",
+        "xyqfer"
+    ],
     "/furstar/characters/:lang?": [
         "NeverBehave"
     ],
@@ -1165,8 +1172,6 @@
     "/qutoutiao/category/:cid": [],
     "/nhk/news_web_easy": [],
     "/bbc/:site?/:channel?": [],
-    "/ft/myft/:key": [],
-    "/ft/:language/:channel?": [],
     "/verge": [],
     "/pediy/topic/:category?/:type?": [],
     "/dwnews/yaowen/:region?": [],
