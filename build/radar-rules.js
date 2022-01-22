@@ -173,6 +173,23 @@
         docs:"https://docs.rsshub.app/picture.html#cool-18",
         source:"/",
         target:"/cool18/:id?/:type?/:keyword?" } ] },
+  "cqwu.net":{ _name:"重庆文理学院",
+    www:[ { title:"通知",
+        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'channel_7721.html') {
+                        return '/cqwu/news/notify';
+                    }
+                } },
+      { title:"学术活动",
+        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
+        source:"/:type",
+        target:(params) => {
+                    if (params.type === 'channel_7722.html') {
+                        return '/cqwu/news/academiceve';
+                    }
+                } } ] },
   "csc.edu.cn":{ _name:"国家留学网",
     www:[ { title:"遴选通知",
         docs:"https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang",
@@ -2775,23 +2792,6 @@
     lib:[ { title:"图书馆通知",
         docs:"https://docs.rsshub.app/university.html#chong-qing-li-gong-da-xue",
         source:"/*" } ] },
-  "cqwu.net":{ _name:"重庆文理学院",
-    www:[ { title:"通知",
-        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
-        source:"/:type",
-        target:(params) => {
-                    if (params.type === 'channel_7721.html') {
-                        return '/cqwu/news/notify';
-                    }
-                } },
-      { title:"学术活动",
-        docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
-        source:"/:type",
-        target:(params) => {
-                    if (params.type === 'channel_7722.html') {
-                        return '/cqwu/news/academiceve';
-                    }
-                } } ] },
   "trakt.tv":{ _name:"Trakt.tv",
     ".":[ { title:"用户收藏",
         docs:"https://docs.rsshub.app/multimedia.html#trakt-tv-yong-hu-shou-cang",

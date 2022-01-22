@@ -95,6 +95,9 @@
     "/cool18/:id?/:type?/:keyword?": [
         "nczitzk"
     ],
+    "/cqwu/news/:type?": [
+        "Fatpandac"
+    ],
     "/csc/notice/:type?": [
         "Derekmini"
     ],
@@ -988,7 +991,6 @@
     "/cqu/youth/:category": [],
     "/cqu/sci/:category": [],
     "/cqu/net/:category": [],
-    "/cqwu/news/:type?": [],
     "/nuist/bulletin/:category?": [],
     "/nuist/jwc/:category?": [],
     "/nuist/yjs/:category?": [],
