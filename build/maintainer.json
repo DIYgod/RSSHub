@@ -343,6 +343,9 @@
     "/netease/renjian/:category?": [
         "nczitzk"
     ],
+    "/netease/today/:need_content?": [
+        "nczitzk"
+    ],
     "/netease/news/rank/:category?/:type?/:time?": [
         "nczitzk"
     ],
