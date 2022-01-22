@@ -261,6 +261,13 @@ pageClass: routes
 
 <Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" :paramsDesc="['股票代码（需要带上交易所）', '标题长度']"/>
 
+## 有知有行
+
+### 有知文章
+
+<Route author="broven" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials" />
+
+
 ## 证券时报网
 
 ### 要闻
