@@ -115,6 +115,9 @@
     "/eprice/:region?": [
         "TonyRL"
     ],
+    "/filmdeepfocus/:category?": [
+        "nczitzk"
+    ],
     "/fisher-spb/news": [
         "denis-ya"
     ],
