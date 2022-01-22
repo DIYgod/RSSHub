@@ -750,6 +750,16 @@ Type 栏目：
 
 <Route author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>
 
+## 国际金融报栏目
+
+### 栏目
+
+<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
+
+`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
+
+</Route>
+
 ## 华尔街见闻
 
 ### 华尔街见闻
@@ -1181,16 +1191,6 @@ category 对应的关键词有
 | 全部 | 待回复 | 办理中 | 已办理 |
 | ---- | ------ | ------ | ------ |
 | 1    | 2      | 3      | 4      |
-
-</Route>
-
-## 国际金融报栏目
-  
-### 栏目
-
-<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
-
-`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
 
 </Route>
 
