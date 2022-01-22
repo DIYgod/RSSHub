@@ -508,6 +508,9 @@
     "/trow/portal": [
         "shiningdracon"
     ],
+    "/ucas/job/:type?": [
+        "Fatpandac"
+    ],
     "/uibe/hr/:category?/:type?": [
         "nczitzk"
     ],
