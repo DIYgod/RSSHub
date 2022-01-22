@@ -270,6 +270,18 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
+## 台湾行政院消费者保护会
+
+### 消费资讯
+
+<Route author="Fatpandac" example="/cpcey/xwg" path="/cpcey/:type?" :paramsDesc="['默认为 xwg']">
+
+| 新闻稿 | 消费资讯 |
+| :----: | :------: |
+|   xwg  |   xfzx   |
+
+</Route>
+
 ## 台灣衛生福利部
 
 ### 即時新聞澄清
@@ -839,15 +851,3 @@ pageClass: routes
 ### 审查调查
 
 <Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
-
-## 台湾行政院消费者保护会
-
-### 消费资讯
-
-<Route author="Fatpandac" example="/cpcey/xwg" path="/cpcey/:type?" :paramsDesc="['默认为 xwg']">
-
-| 新闻稿 | 消费资讯 |
-| :----: | :------: |
-|   xwg  |   xfzx   |
-
-</Route>
