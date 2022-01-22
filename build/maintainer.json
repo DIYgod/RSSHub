@@ -178,6 +178,9 @@
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
+    "/github/comments/:user/:repo/:type/:number": [
+        "TonyRL"
+    ],
     "/gov/shenzhen/hrss/szksy/:caty/:page?": [
         "zlasd"
     ],
