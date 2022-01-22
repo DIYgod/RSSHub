@@ -68,6 +68,9 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/chaoxing/qk/:id/:needContent?": [
+        "nczitzk"
+    ],
     "/cnbeta/": [
         "nczitzk"
     ],
