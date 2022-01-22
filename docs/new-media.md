@@ -2538,6 +2538,20 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 识媒体
+
+### 频道
+
+<Route author="Fatpandac" example="/knowmedia/jqgx" path="/knowmedia/:category?" :paramsDesc="['分类，见下表，默认为近期更新']">
+
+分类
+
+| 近期更新 | 精选专栏 | 活动讯息 | 影音专区 |
+| :------: | :------: | :------: | :------: |
+|   jqgx   |   jxzl   |   hdxx   |   yyzq   |
+
+</Route>
+
 ## 世界卫生组织 WHO
 
 ### 新闻稿
