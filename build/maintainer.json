@@ -38,6 +38,9 @@
     "/bandcamp/live": [
         "nczitzk"
     ],
+    "/baozimh/comic/:name": [
+        "Fatpandac"
+    ],
     "/barronschina/:id?": [
         "nczitzk"
     ],
