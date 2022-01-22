@@ -50,6 +50,9 @@
     "/ccac/news/:type/:lang?": [
         "linbuxiao"
     ],
+    "/cde/:channel/:category": [
+        "Fatpandac"
+    ],
     "/cebbank/quotation/all": [
         "linbuxiao"
     ],
