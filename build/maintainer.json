@@ -2412,5 +2412,6 @@
     "/dykszx/news/:type?": [],
     "/secrss/category/:category?": [],
     "/secrss/author/:author?": [],
-    "/fashionnetwork/headline/:country?": []
+    "/fashionnetwork/headline/:country?": [],
+    "/kbs/today/:language?": []
 }
