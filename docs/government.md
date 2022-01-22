@@ -16,6 +16,12 @@ pageClass: routes
 
 </Route>
 
+## 澳门卫生局
+
+### 最新消息
+
+<Route author="Fatpandac" exmaple="/ssm/news" path="/ssm/news"/>
+
 ## 北京市卫生健康委员会
 
 ### 新闻中心
