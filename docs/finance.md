@@ -38,6 +38,20 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
+## 巴伦周刊中文版
+
+### 栏目
+
+<Route author="nczitzk" example="/barronschina" path="/barronschina/:id?" :paramsDesc="['栏目 id，默认为快讯']">
+
+::: tip 提示
+
+栏目 id 留空则返回快讯，在对应页地址栏 `columnId=` 后可以看到。
+
+:::
+
+</Route>
+
 ## 北京证券交易所
 
 ### 栏目
