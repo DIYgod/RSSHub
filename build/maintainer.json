@@ -409,6 +409,9 @@
     "/ngocn2/:category?": [
         "nczitzk"
     ],
+    "/nifd/research/:categoryGuid?": [
+        "Fatpandac"
+    ],
     "/nikkei-cn/:language?/:category?/:type?": [
         "nczitzk"
     ],
