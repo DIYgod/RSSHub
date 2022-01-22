@@ -1792,6 +1792,7 @@
     "/piapro/public/:type/:tag?/:category?": [],
     "/ifeng/feng/:id/:type": [],
     "/novel/d1bz/:category/:id": [],
+    "/axdzs/:novel": [],
     "/axdzs/:id1/:id2": [],
     "/hackerone/hacktivity": [],
     "/hackerone/search/:search": [],
