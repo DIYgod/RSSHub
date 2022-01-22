@@ -315,6 +315,9 @@
     "/independent/ps5-stock-uk": [
         "DIYgod"
     ],
+    "/informs/:category?": [
+        "Fatpandac"
+    ],
     "/ithome/zt/:id": [
         "nczitzk"
     ],
