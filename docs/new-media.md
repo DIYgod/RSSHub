@@ -1269,6 +1269,18 @@ Supported sub-sites:
 
 <Route author="22k" example="/buaq" path="/buaq/index"/>
 
+## 财富中文网
+
+### 分类
+
+<Route author="nczitzk" example="/fortunechina" path="/fortunechina/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 商业    | 领导力    | 科技 | 研究   |
+| ------- | --------- | ---- | ------ |
+| shangye | lindgaoli | keji | report |
+
+</Route>
+
 ## 差评
 
 ### 图片墙
