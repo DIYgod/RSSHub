@@ -306,3 +306,13 @@ _仅支持 Science 主刊_
 | bqym     | xshd     | tzgg     |
 
 </Route>
+
+## 中国知网
+
+### 期刊
+
+<Route author="Fatpandac" example="/cnki/journals/LKGP" path="/cnki/journals/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
+
+### 网络首发
+
+<Route author="Fatpandac" example="/cnki/journals/debut/LKGP" path="/cnki/journals/debut/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
