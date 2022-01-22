@@ -1142,13 +1142,29 @@ category 对应的关键词有
 
 ## 人民网
 
-### 观点
+### 通用
 
-<Route author="LogicJake" example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
+<Route author="nczitzk" example="/people" path="/people/:site?/:category?" :paramsDesc="['站点，可在对应站点 URL 中找到', '分类，可在对应分类页中找到']">
 
-### 环保频道
+订阅 **单级** 栏目如 [滚动 -- 生态 -- 人民网](http://env.people.com.cn/GB/74877/index.html) 分类栏目，分为 3 步：
 
-<Route author="zsimple" example="/people/env/74877" path="/people/env/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
+1.  将 URL <http://env.people.com.cn/GB/74877/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `env` 作为 `site` 参数填入；
+2.  将 `http://env.people.com.cn/GB/` 与 `/index.html` 间的 `74877` 作为 `category` 参数填入；
+3.  最终可获得 [`/people/env/74877`](https://rsshub.app/people/env/74877)。
+
+订阅 **多级** 栏目如 [经济观察 -- 观点 -- 人民网](http://opinion.people.com.cn/GB/427456/434878/index.html) 分类栏目，同样分为 3 步：
+
+1.  将 URL <http://opinion.people.com.cn/GB/427456/434878/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `opinion` 作为 `site` 参数填入；
+2.  把 `http://opinion.people.com.cn/GB/` 与 `/index.html` 间 `427456/434878` 作为 `category` 参数填入；
+3.  最终可获得 [`/people/opinion/427456/434878`](https://rsshub.app/people/opinion/427456/434878)。
+
+::: tip 提示
+
+人民网大部分站点支持上述通用规则进行订阅。
+
+:::
+
+</Route>
 
 ### 习近平系列重要讲话
 
@@ -1158,14 +1174,6 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/people/cpc/24h" path="/people/cpc/24h"/>
 
-### 国际金融报栏目
-
-<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
-
-`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
-
-</Route>
-
 ### 领导留言板
 
 <Route author="nczitzk" example="/people/liuyan/539" path="/people/liuyan/:id/:state?" :paramsDesc="['编号，可在对应人物页 URL 中找到', '状态，见下表，默认为全部']">
@@ -1173,6 +1181,16 @@ category 对应的关键词有
 | 全部 | 待回复 | 办理中 | 已办理 |
 | ---- | ------ | ------ | ------ |
 | 1    | 2      | 3      | 4      |
+
+</Route>
+
+## 国际金融报栏目
+  
+### 栏目
+
+<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
+
+`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
 
 </Route>
 
