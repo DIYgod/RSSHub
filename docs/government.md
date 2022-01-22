@@ -404,6 +404,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/caict/caictgd" path="/gov/caict/caictgd"/>
 
+## 中国银行保险监督管理委员会
+
+<Route author="JkCheung" example="/cbirc/" path="/cbirc/:category" :paramsDesc="['类目']">
+
+| 监管动态 | 公告通知 | 政策法规 | 政策解读 | 征求意见 | 行政许可 | 行政处罚 | 行政监管措施 | 工作论文 | 金融监管研究 | 统计信息 |
+| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :----------: | :------: | :----------: | :------: |
+|   jgdt   |   ggtz   |   zcfg   |   zcjd   |   zqyj   |   xzxk   |   xzcf   |    xzjgcs    |   gzlw   |    jrjgyj    |   tjxx   |
+
+</Route>
+
 ## 中国证券监督管理委员会
 
 ### 发审委公告
@@ -417,16 +427,6 @@ pageClass: routes
 ### 申请事项进度
 
 <Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id， `https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
-
-## 中国银行保险监督管理委员会
-
-<Route author="JkCheung" example="/cbirc/" path="/cbirc/:category" :paramsDesc="['类目']">
-
-| 监管动态 | 公告通知 | 政策法规 | 政策解读 | 征求意见 | 行政许可 | 行政处罚 | 行政监管措施 | 工作论文 | 金融监管研究 | 统计信息 |
-| :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
-|   jgdt   |   ggtz   |   zcfg   |   zcjd  |   zqyj  |   xzxk  |   xzcf  |   xzjgcs  |   gzlw  |   jrjgyj  |   tjxx  |
-
-</Route>
 
 ## 中国政府
 
