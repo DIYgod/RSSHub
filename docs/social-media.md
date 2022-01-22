@@ -628,7 +628,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | showAuthorInDesc             | 是否在正文处显示作者                                                         | 0/1/true/false | false（`/twitter/followings` 中为 true） |
 | showQuotedAuthorAvatarInDesc | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false                                    |
 | showAuthorAvatarInDesc       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）               | 0/1/true/false | false                                    |
-| showEmojiForRetweetAndReply  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                          | 0/1/true/false | false                                    |
+| showEmojiForRetweetAndReply  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                            | 0/1/true/false | false                                    |
 | showRetweetTextInTitle       | 在标题处显示转推评论（置为 false 则在标题只显示被转推推文）                  | 0/1/true/false | true                                     |
 | addLinkForPics               | 为图片添加可点击的链接                                                       | 0/1/true/false | false                                    |
 | showTimestampInDescription   | 在正文处显示推特的时间戳                                                     | 0/1/true/false | false                                    |
@@ -876,7 +876,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 | showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | true   |
 | showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false  |
 | showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false  |
-| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                    | 0/1/true/false | false  |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “Fw”（转发）                                     | 0/1/true/false | false  |
 | showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发的广播）  | 0/1/true/false | false  |
 | addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false  |
 | showTimestampInDescription | 在正文处显示广播的时间戳                                       | 0/1/true/false | false  |
@@ -1091,7 +1091,7 @@ rule
 | showAuthorInTitle          | 是否在标题处显示作者                                           | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
 | showAuthorInDesc           | 是否在正文处显示作者                                           | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
 | showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false                               |
-| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                                   | 0/1/true/false | false                               |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                                    | 0/1/true/false | false                               |
 | showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博）    | 0/1/true/false | true                                |
 | addLinkForPics             | 为图片添加可点击的链接                                         | 0/1/true/false | false                               |
 | showTimestampInDescription | 在正文处显示被转发微博的时间戳                                 | 0/1/true/false | false                               |
@@ -1126,7 +1126,16 @@ rule
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id/:routeParams?" :paramsDesc="['超话ID', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+
+| type      | 备注             |
+| --------- | ---------------- |
+| soul      | 精华             |
+| video     | 视频（暂不支持） |
+| album     | 相册（暂不支持） |
+| hot_sort  | 热门             |
+| sort_time | 最新帖子         |
+| feed      | 最新评论         |
 
 ### 个人时间线
 
