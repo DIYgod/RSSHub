@@ -346,6 +346,9 @@
     "/nodejs/blog/:language?": [
         "nczitzk"
     ],
+    "/now/news/:category?/:id?": [
+        "nczitzk"
+    ],
     "/nsfc/news/:type?": [
         "Derekmini"
     ],
