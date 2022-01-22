@@ -74,6 +74,12 @@
     "/cnbeta/topics/:id": [
         "nczitzk"
     ],
+    "/cnki/journals/:name": [
+        "Fatpandac"
+    ],
+    "/cnki/journals/debut/:name": [
+        "Fatpandac"
+    ],
     "/csc/notice/:type?": [
         "Derekmini"
     ],
