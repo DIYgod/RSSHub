@@ -1112,6 +1112,8 @@ category 对应的关键词有
 
 ## 苹果新闻网
 
+### 频道
+
 <Route author="Fatpandac" example="/appledaily/home" path="/appledaily/:channel?" :paramsDesc="['频道，默认为主页']">
 
 频道参数均可在官网获取，如：
