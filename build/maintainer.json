@@ -627,7 +627,7 @@
     "/weibo/user/:uid/:routeParams?": [],
     "/weibo/keyword/:keyword/:routeParams?": [],
     "/weibo/search/hot": [],
-    "/weibo/super_index/:id/:routeParams?": [],
+    "/weibo/super_index/:id/:type?/:routeParams?": [],
     "/weibo/oasis/user/:userid": [],
     "/tieba/forum/:kw": [],
     "/tieba/forum/good/:kw/:cid?": [],
