@@ -17,6 +17,9 @@
     "/18comic/:category?/:time?/:order?/:keyword?": [
         "nczitzk"
     ],
+    "/423down/:category/:type": [
+        "Fatpandac"
+    ],
     "/8world/:category?": [
         "nczitzk"
     ],
