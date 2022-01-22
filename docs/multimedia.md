@@ -1152,6 +1152,11 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 ## 网易云音乐
 
+::: tip 部分歌单及听歌排行信息为登陆后可见
+
+部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_Cookies`设为登陆后的 Cookie 值，即可正常获取。
+:::
+
 ### 歌单歌曲
 
 <Route author="DIYgod" example="/ncm/playlist/35798529" path="/ncm/playlist/:id" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']" radar="1" />
