@@ -148,6 +148,9 @@
     "/filmdeepfocus/:category?": [
         "nczitzk"
     ],
+    "/firefox/breaches": [
+        "TonyRL"
+    ],
     "/fisher-spb/news": [
         "denis-ya"
     ],
