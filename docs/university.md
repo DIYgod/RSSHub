@@ -2641,6 +2641,18 @@ type 列表：
 
 <Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt"/>
 
+## 中国科学院大学
+
+### 招聘信息
+
+<Route author="Fatpandac" example="/ucas/job" path="/ucas/job/:type?" :paramsDesc="['招聘类型，默认为博士后']">
+
+| 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
+| :------: | :----: | :----------: | :----------: | :----------: |
+|   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |
+
+</Route>
+
 ## 中国农业大学
 
 ### 中国农业大学研招网通知公告
