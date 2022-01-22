@@ -379,6 +379,9 @@
     "/ngocn2/:category?": [
         "nczitzk"
     ],
+    "/nikkei-cn/:language?/:category?/:type?": [
+        "nczitzk"
+    ],
     "/nju/jw/:type": [
         "ret-1"
     ],
