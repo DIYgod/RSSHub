@@ -107,6 +107,9 @@
     "/cnki/journals/debut/:name": [
         "Fatpandac"
     ],
+    "/codeforces/contests": [
+        "Fatpandac"
+    ],
     "/cool18/:id?/:type?/:keyword?": [
         "nczitzk"
     ],
