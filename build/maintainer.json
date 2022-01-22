@@ -29,6 +29,9 @@
     "/bandcamp/live": [
         "nczitzk"
     ],
+    "/bendibao/news/:city": [
+        "nczitzk"
+    ],
     "/biodiscover/:channel?": [
         "aidistan"
     ],
@@ -1837,7 +1840,6 @@
     "/axis-studios/:type/:tag?": [],
     "/ptpress/book/:type?": [],
     "/uniqlo/stylingbook/:category?": [],
-    "/bendibao/news/:city": [],
     "/unit-image/films/:type?": [],
     "/digic-pictures/:menu/:tags?": [],
     "/cve/search/:keyword": [],
