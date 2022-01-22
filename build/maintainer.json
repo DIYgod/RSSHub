@@ -172,6 +172,12 @@
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
+    "/gov/shenzhen/hrss/szksy/:caty/:page?": [
+        "zlasd"
+    ],
+    "/gov/shenzhen/zzb/:caty/:page?": [
+        "zlasd"
+    ],
     "/gov/shanghai/rsj/ksxm": [
         "Fatpandac"
     ],
