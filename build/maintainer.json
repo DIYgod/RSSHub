@@ -517,6 +517,9 @@
     "/yaohuo/": [
         "nczitzk"
     ],
+    "/zjgtjy/:type?": [
+        "Fatpandac"
+    ],
     "/rsshub/rss": [],
     "/rsshub/routes": [],
     "/rsshub/sponsors": [],
