@@ -411,6 +411,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ---- | ---- | ----- |
 | yi   | zhu  | shang |
 
+</Route>
+
+## 骨朵数据
+
+### 日榜
+
+<Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily" />
+
 ## 光大银行
 
 ### 外汇牌价
@@ -1054,4 +1062,4 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ---- | ---- |
 | ch   | pt   |
 
- </Route>
+</Route>

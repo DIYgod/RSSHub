@@ -505,11 +505,13 @@ pageClass: routes
 
 #### 北京教育考试院
 
-<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']"/>
+<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']">
 
 | 通知公告 | 招考政策 | 自考快递 |
 | :------: | :------: | :------: |
 |  bjeeagg |   zkzc   |   zkkd   |
+
+</Route>
 
 ### 河北省退役军人事务厅
 
@@ -588,7 +590,7 @@ pageClass: routes
 
 ### 领事馆重要通知
 
-<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" >
 
 ### 支持国家列表
 
@@ -698,6 +700,8 @@ pageClass: routes
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+</Route>
 
 ## 中华人民共和国国家发展和改革委员会
 
