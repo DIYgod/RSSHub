@@ -95,6 +95,9 @@
     "/cool18/:id?/:type?/:keyword?": [
         "nczitzk"
     ],
+    "/cpcey/:type?": [
+        "Fatpandac"
+    ],
     "/cqwu/news/:type?": [
         "Fatpandac"
     ],
