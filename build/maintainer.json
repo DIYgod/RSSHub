@@ -29,6 +29,15 @@
     "/acm-ecnu/contest/:category?": [
         "a180285"
     ],
+    "/agirls/topic/:topic": [
+        "TonyRL"
+    ],
+    "/agirls/topic_list": [
+        "TonyRL"
+    ],
+    "/agirls/:category?": [
+        "TonyRL"
+    ],
     "/ahjzu/news": [
         "Yuk-0v0"
     ],
