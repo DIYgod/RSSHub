@@ -32,6 +32,9 @@
     "/bandcamp/live": [
         "nczitzk"
     ],
+    "/barronschina/:id?": [
+        "nczitzk"
+    ],
     "/bendibao/news/:city": [
         "nczitzk"
     ],
