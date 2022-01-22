@@ -869,3 +869,5 @@ pageClass: routes
 | 灵异事件      | 灵异图片     | 民间奇谈     |
 | ------------- | ------------ | ------------ |
 | lingyishijain | lingyitupian | minjianqitan |
+
+</Route>

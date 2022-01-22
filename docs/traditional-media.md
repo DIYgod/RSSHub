@@ -215,6 +215,32 @@ pageClass: routes
 
 ## Now 新聞
 
+### 新聞
+
+<Route author="nczitzk" example="/now/news" path="/now/news/:category?/:id?" :paramsDesc="['分类，见下表，默认为首页', '编号，可在对应专题/节目页 URL 中找到 topicId']">
+
+::: tip 提示
+
+**编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
+
+对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123&topicId=1056) 话题，其网址为<https://news.now.com/home/tracker/detail?catCode=123&topicId=1056>，其中 `topicId` 为 1056，则对应路由为 [`/now/news/tracker/1056`](https://rsshub.app/now/news/tracker/1056)
+
+:::
+
+| 首頁 | 港聞  | 兩岸國際      | 娛樂          |
+| ---- | ----- | ------------- | ------------- |
+|      | local | international | entertainment |
+
+| 生活 | 科技       | 財經    | 體育   |
+| ---- | ---------- | ------- | ------ |
+| life | technology | finance | sports |
+
+| 事件追蹤 | 評論節目 | 新聞專題 |
+| -------- | -------- | -------- |
+| tracker  | feature  | opinion  |
+
+</Route>
+
 ### 熱門
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
@@ -633,6 +659,18 @@ IT・科学 tech_science
 ### 原创
 
 <Route author="nczitzk" example="/eastday/portrait" path="/eastday/portrait"/>
+
+## 东网
+
+<Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
+
+频道参数可以从官网的地址中获取，如：
+
+`https://hk.on.cc/hk/finance/index_cn.html` 对应 `/oncc/zh-hans/finance`
+
+`https://hk.on.cc/hk/finance/index.html` 对应 `/oncc/zh-hant/finance`
+
+</Route>
 
 ## 読売新聞
 
@@ -1122,6 +1160,24 @@ category 对应的关键词有
 | 全部 | 待回复 | 办理中 | 已办理 |
 | ---- | ------ | ------ | ------ |
 | 1    | 2      | 3      | 4      |
+
+</Route>
+
+## 日本经济新闻中文版
+
+### 新闻
+
+<Route author="nczitzk" example="/nikkei-cn" path="/nikkei-cn/:language?/:category?/:type?" :paramsDesc="['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '分类，默认为空，可在对应分类页 URL 中找到', '子分类，默认为空，可在对应分类页 URL 中找到']" radar="1" rssbud="1">
+
+::: tip 提示
+
+如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/cn/china/ceconomy`](https://rsshub.app/nikkei-cn/cn/china/ceconomy)
+
+如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://zh.cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/zh/china/ceconomy`](https://rsshub.app/nikkei-cn/zh/china/ceconomy)
+
+特别地，当 `category` 填入 `rss` 后（即路由为 [`/nikkei-cn/cn/rss`](https://rsshub.app/nikkei-cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)
+
+:::
 
 </Route>
 

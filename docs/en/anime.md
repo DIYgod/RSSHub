@@ -10,6 +10,26 @@ pageClass: routes
 
 <RouteEn author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
+## Kemono
+
+### Posts
+
+<RouteEn author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" :paramsDesc="['Source, see below, Posts by default', 'User id, can be found in URL']">
+
+Sources
+
+| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+
+::: tip Tip
+
+When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
+
+:::
+
+</RouteEn>
+
 ## Touhougarakuta
 
 ### Articles

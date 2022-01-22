@@ -411,6 +411,14 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ---- | ---- | ----- |
 | yi   | zhu  | shang |
 
+</Route>
+
+## 骨朵数据
+
+### 日榜
+
+<Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily" />
+
 ## 光大银行
 
 ### 外汇牌价
@@ -718,6 +726,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 上海市教育考试院
+
+### 消息速递
+
+官方网址：<http://www.shmeea.edu.cn>
+
+<Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
 ## 上海证券交易所
 
 ### 上市公司信息最新公告披露
@@ -1054,4 +1069,4 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ---- | ---- |
 | ch   | pt   |
 
- </Route>
+</Route>

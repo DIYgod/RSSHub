@@ -109,7 +109,7 @@ pageClass: routes
 
 ### 最新章节
 
-<Route author="JeasonLau" example="/axdzs/191/191976" path="/axdzs/:id1/:id2" :paramsDesc="['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到', '小说网站链接最后的数字, 可在对应小说页 URL 中找到']"  />
+<Route author="JeasonLau Maecenas" example="/axdzs/诡秘之主" path="/axdzs/:novel" :paramsDesc="['小说的中文名, 可在对应小说页 URL 中找到']"  />
 
 ## 笔趣阁
 
@@ -138,6 +138,32 @@ pageClass: routes
 ### 新书出版
 
 <Route author="CokeMine" example="/bookscomtw/newbooks/books_nbtopm_15" path="/bookscomtw/newbooks/:category" :paramsDesc="['书籍类型 category, 可在对应博客来新书页 URL 中找到']"/>
+
+## 超星
+
+### 期刊
+
+<Route author="nczitzk" example="/chaoxing/qk/6b5c39b3dd84352be512e29df0297437" path="/chaoxing/qk/:id/:needContent?" :paramsDesc="['期刊 id，可在期刊页 URL 中找到', '需要获取文章全文，填写 true/yes 表示需要，默认需要']" anticrawler="1" radar="1" rssbud="1">
+
+::: tip 看我
+
+全部期刊可以在 [这里](http://qk.chaoxing.com/space/index) 找到，你也可以从 [学科分类](https://qikan.chaoxing.com/jourclassify) 和 [期刊导航](https://qikan.chaoxing.com/search/openmag) 中发现更多期刊。
+
+如订阅 [**上海文艺**](http://m.chaoxing.com/mqk/list?sw=&mags=6b5c39b3dd84352be512e29df0297437&isort=20&from=space)，其 URL 为 <http://m.chaoxing.com/mqk/list?mags=6b5c39b3dd84352be512e29df0297437>。`6b5c39b3dd84352be512e29df0297437` 即为期刊 id，所得路由为 [`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437)
+
+:::
+
+::: warning 提示
+
+你可以设置参数 **需要获取文章全文** 为 `true` `yes` `t` `y` 等值（或者忽略这个参数），RSS 的条目会携带期刊中的 **文章全文**，而不仅仅是 **文章概要**。但因为发起访问请求过多会被该网站屏蔽，你可以将其关闭（设置该参数为 `false` `no` `f` `n` 等值），这将会大大减少请求次数从而更难触发网站的反爬机制。
+
+路由默认会获取 **30** 个条目。在路由后指定 `?limit=<条目数量>` 减少或增加单次获取条目数量，同样可以减少请求次数，如设置为一次获取 **10** 个条目，路由可以更改为 [`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437?limit=10`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437?limit=10)
+
+在根据上文设置 **需要获取文章全文** 为不需要时，你可以将 `limit` 值增大，从而获取更多的条目，此时因为不获取全文也不会触发反爬机制，如 [`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437/false?limit=100`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437/false?limit=100)
+
+:::
+
+</Route>
 
 ## 吹牛部落
 
@@ -287,6 +313,28 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="LogicJake" example="/qidian/free-next" path="/qidian/free-next/:type?" :paramsDesc="['默认不填为起点中文网，填 mm 为起点女生网']"/>
 
+## 起点图
+
+### 首订
+
+<Route author="nczitzk" example="/qidiantu/shouding" path="/qidiantu/shouding"/>
+
+### 榜单
+
+<Route author="nczitzk" example="/qidiantu" path="/qidiantu/:category?/:type?/:is_history?" :paramsDesc="['分类', '类型', '是否查看历史榜单，填写 true/yes 表示是，默认否']">
+
+::: tip 提示
+
+参数 **是否查看历史榜单** 设置为 `true` `yes` `t` `y` 等值后，RSS 会返回历史榜单。
+
+如 [`/qidiantu/1/1/t`](https://rsshub.app/qidiantu/1/1/t) 将会返回 [起点首页 - 封推 的历史推荐记录](https://www.qidiantu.com/bang/1/1/) 的结果。
+
+而 [`/qidiantu/1/1`](https://rsshub.app/qidiantu/1/1) 将会返回最新一期 [收藏增长 (起点首页 - 封推)](https://www.qidiantu.com/bang/1/1/2021-12-14) 的结果（编写文档时最新一期为 2021-12-14）。
+
+:::
+
+</Route>
+
 ## 青空文庫
 
 ### 青空文庫新着リスト
@@ -306,6 +354,22 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 最新卷
 
 <Route author="huangliangshusheng" example="/wenku8/volume/1163" path="/wenku8/volume/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+### 首页分类
+
+<Route author="Fatpandac" example="/wenku8/lastupdate" path="/wenku8/:categoty?" :paramsDesc="['首页分类，见下表，默认为今日更新']" selfhost="1">
+
+::: warning 注意
+
+首页需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+|  今日更新  | 完结全本 | 新书一览 | 动画化作品 | 热门轻小说 |  轻小说列表 |
+| :--------: | :------: | :------: | :--------: | :--------: | :---------: |
+| lastupdate | fullflag | postdate |    anime   |  allvisit  | articlelist |
+
+</Route>
 
 ## 生物帮
 
