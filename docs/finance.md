@@ -183,6 +183,22 @@ pageClass: routes
 
 <Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
+## 乌拉邦
+
+### 最新研报
+
+<Route author="Fatpandac" example="/ulapia/research/latest" path="/ulapia/research/latest"/>
+
+### 频道
+
+<Route author="Fatpandac" example="/ulapia/reports/stock_research" path="/ulapia/reports/:category?" :paramsDesc="['频道类型，默认为券商晨报（今日晨报）']">
+
+|    个股研报    |      行业研报     |      策略研报     |    宏观研报    |   新股研报   | 券商晨报（今日晨报） |
+| :------------: | :---------------: | :---------------: | :------------: | :----------: | :------------------: |
+| stock_research | industry_research | strategy_research | macro_research | ipo_research |    brokerage_news    |
+
+</Route>
+
 ## 新浪财经
 
 ### 新浪财经－国內
