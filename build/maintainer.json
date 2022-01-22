@@ -148,6 +148,9 @@
     "/gov/guangdong/tqyb/sncsyjxh": [
         "Fatpandac"
     ],
+    "/hackernews/:section?/:type?": [
+        "nczitzk"
+    ],
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
@@ -1219,7 +1222,6 @@
     "/aisixiang/column/:id": [],
     "/aisixiang/ranking/:type?/:range?": [],
     "/aisixiang/thinktank/:name/:type?": [],
-    "/hackernews/:section/:type?": [],
     "/leetcode/articles": [],
     "/leetcode/submission/us/:user": [],
     "/leetcode/submission/cn/:user": [],
