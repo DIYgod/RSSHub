@@ -20,11 +20,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
       - name: build file
-        run: npm ci && npm run build:all
+        run: yarn && npm run build:all
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

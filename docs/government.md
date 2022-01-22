@@ -4,6 +4,18 @@ pageClass: routes
 
 # 政务消息
 
+## 澳门廉政公署
+
+### 最新消息
+
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']">
+
+| 全部 | 案件发布 | 调查报告或勘喻 | 年度报告     | 公署消息 |
+| ---- | -------- | -------------- | ------------ | -------- |
+| all  | case     | Persuasion     | AnnualReport | PCANews  |
+
+</Route>
+
 ## 北京市卫生健康委员会
 
 ### 新闻中心
@@ -31,6 +43,18 @@ pageClass: routes
 | 履职依据 | 公示公告 |
 | -------- | -------- |
 | lzyj     | gsgg     |
+
+</Route>
+
+## 德阳考试中心
+
+### 考试新闻
+
+<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型。']">
+
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |  其他 |
+| :------: | :--------: | :------: | :--------------------: | :---: |
+|    all   |     gwy    |   sydw   |          zyzc          | other |
 
 </Route>
 
@@ -102,6 +126,30 @@ pageClass: routes
 ### 详情
 
 <Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名id', '文章id']" radar="1" rssbud="1"/>
+
+## 国家药品审评网站
+
+### 首页
+
+<Route author="Fatpandac" example="/cde/news/gzdt" path="/cde/:channel/:category" :paramsDesc="['频道', '类别']">
+
+-   频道
+
+| 新闻中心 | 政策法规 |
+| :------: | :------: |
+|   news   |  policy  |
+
+-   类别
+
+| 新闻中心 | 政务新闻 | 要闻导读 | 图片新闻 | 工作动态 |
+| :------: | :------: | :------: | :------: | :------: |
+|          |   zwxw   |   ywdd   |   tpxw   |   gzdt   |
+
+| 政策法规 | 法律法规 | 中心规章 |
+| :------: | :------: | :------: |
+|          |   flfg   |   zxgz   |
+
+</Route>
 
 ## 哈尔滨市科技局
 
@@ -188,6 +236,12 @@ pageClass: routes
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
+## 上海市职业能力考试院
+
+### 考试项目
+
+<Route author="Fatpandac" example="/gov/shanghai/rsj/ksxm" path="/gov/shanghai/rsj/ksxm"/>
+
 ## 世界贸易组织
 
 ### 争端解决新闻
@@ -210,6 +264,12 @@ pageClass: routes
 
 <Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc"/>
 
+## 台灣衛生福利部
+
+### 即時新聞澄清
+
+<Route author="nczitzk" example="/mohw/clarification" path="/mohw/clarification"/>
+
 ## 武汉东湖新技术开发区
 
 ### 新闻中心
@@ -231,6 +291,46 @@ pageClass: routes
 | 通知公告 | 公示信息 |
 | :------: | :------: |
 |   tzgg   |   gsxx   |
+
+</Route>
+
+## 香港廉政公署
+
+### 新闻公布
+
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文）']"/>
+
+## 香港卫生防护中心
+
+### 分类
+
+<Route author="nczitzk" example="/chp" path="/chp/:category?/:language?" :paramsDesc="['分类，见下表，默认为重要资讯', '语言，见下表，默认为 zh_tw']">
+
+分类
+
+| 重要资讯     | 新闻稿           | 应变级别      | 期刊及刊物  | 健康通告    |
+| ------------ | ---------------- | ------------- | ----------- | ----------- |
+| important_ft | press_data_index | ResponseLevel | publication | HealthAlert |
+
+语言
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| en      | zh_cn    | zh_tw    |
+
+</Route>
+
+## 香港卫生署
+
+### 新闻公报
+
+<Route author="nczitzk" example="/hongkong/dh" path="/hongkong/dh/:language?" :paramsDesc="['语言，见下表，默认为 tc_chi']">
+
+语言
+
+| English | 中文简体 | 中文繁體 |
+| ------- | -------- | -------- |
+| english | chs      | tc_chi   |
 
 </Route>
 
@@ -405,11 +505,13 @@ pageClass: routes
 
 #### 北京教育考试院
 
-<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']"/>
+<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']">
 
 | 通知公告 | 招考政策 | 自考快递 |
 | :------: | :------: | :------: |
 |  bjeeagg |   zkzc   |   zkkd   |
+
+</Route>
 
 ### 河北省退役军人事务厅
 
@@ -488,7 +590,7 @@ pageClass: routes
 
 ### 领事馆重要通知
 
-<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" />
+<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" :paramsDesc="['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']" >
 
 ### 支持国家列表
 
@@ -598,6 +700,8 @@ pageClass: routes
 | 爱丁堡     | `/embassy/uk/edinburgh`  |
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
+
+</Route>
 
 ## 中华人民共和国国家发展和改革委员会
 

@@ -1,2 +1,4 @@
 coverage
 .vscode
+docker-compose.yml
+!/.github

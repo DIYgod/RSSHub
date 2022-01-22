@@ -32,6 +32,8 @@ pageClass: routes
 
 ## dbaplus 社群
 
+### 栏目
+
 <Route author="nczitzk" example="/dbaplus" path="/dbaplus/:tab?" :paramsDesc="['栏目，见下表，默认为全部']">
 
 | 全部 | 数据库 | 运维 | 大数据 | 架构 | PaaS 云 | 职场生涯 | 这里有毒 |
@@ -40,11 +42,27 @@ pageClass: routes
 
 </Route>
 
+### 活动
+
+<Route author="nczitzk" example="/dbaplus/activity" path="/dbaplus/activity/:type?" :paramsDesc="['分类，见下表，默认为线上分享']">
+
+| 线上分享 | 线下峰会 |
+| -------- | -------- |
+| online   | offline  |
+
+</Route>
+
 ## deeplearning.ai
 
 ### TheBatch 周报
 
 <Route author="nczitzk" example="/deeplearningai/thebatch" path="/deeplearningai/thebatch"/>
+
+## Distill
+
+### Latest
+
+<Route author="nczitzk" example="/distill" path="/distill"/>
 
 ## Dockone
 
@@ -101,7 +119,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language?/:spoken_language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到', '自然语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1"/>
 
 ### Topics
 
@@ -201,28 +219,23 @@ GitHub 官方也提供了一些 RSS:
 
 ## Hacker News
 
-### 分类
+### 分区
 
-<Route author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['内容分区', '链接类型（可不填）']">
+<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?" :paramsDesc="['内容分区，见下表，默认为 index', '链接类型，见下表，默认为 sources']">
 
-网站地址：<https://news.ycombinator.com/>
+内容分区
 
-| 内容分区 | section                               |
-| -------- | ------------------------------------- |
-| index    | <https://news.ycombinator.com/>       |
-| new      | <https://news.ycombinator.com/newest> |
-| past     | <https://news.ycombinator.com/front>  |
-| ask      | <https://news.ycombinator.com/ask>    |
-| show     | <https://news.ycombinator.com/show>   |
-| jobs     | <https://news.ycombinator.com/jobs>   |
-| best     | <https://news.ycombinator.com/best>   |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) |
 
-> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 index，应优先考虑
+条目指向链接类型
 
-| 链接类型 | type                          |
-| -------- | ----------------------------- |
-| story    | 默认值，链向用户分享的地址    |
-| comments | 链向 Hacker News 上的讨论页面 |
+| 用户分享的来源地址 | Hacker News 上的讨论页面 |
+| ------------------ | ------------------------ |
+| sources            | comments                 |
+
+> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 homepage，应优先考虑。
 
 </Route>
 
@@ -313,6 +326,30 @@ GitHub 官方也提供了一些 RSS:
 注意标识大小写
 
 :::
+
+</Route>
+
+## Node.js
+
+### News
+
+<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" :paramsDesc="['语言，见下表，默认为 en']">
+
+| العربية | Catalan | Deutsch | Español | زبان فارسی |
+| ------- | ------- | ------- | ------- | ---------- |
+| ar      | ca      | de      | es      | fa         |
+
+| Français | Galego | Italiano | 日本語 | 한국어 |
+| -------- | ------ | -------- | ------ | ------ |
+| fr       | gl     | it       | ja     | ko     |
+
+| Português do Brasil | limba română | Русский | Türkçe | Українська |
+| ------------------- | ------------ | ------- | ------ | ---------- |
+| pt-br               | ro           | ru      | tr     | uk         |
+
+| 简体中文 | 繁體中文 |
+| -------- | -------- |
+| zh-cn    | zh-tw    |
 
 </Route>
 
@@ -438,6 +475,22 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 安全内参
+
+### 分类
+
+<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category"/>
+
+### 作者
+
+<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author"/>
+
+## 安全文摘
+
+### 首页
+
+<Route author="kaiili" example="/secnews" path="/secnews" />
+
 ## 饿了么开放平台
 
 ### 商家开放平台公告
@@ -539,16 +592,6 @@ GitHub 官方也提供了一些 RSS:
 ### 分享
 
 <Route author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
-
-## 开发者头条
-
-### 今天头条
-
-<Route author="jjeejj" example="/toutiao/today" path="/toutiao/today"/>
-
-### 独家号
-
-<Route author="jjeejj" example="/toutiao/user/140544" path="/toutiao/user/:id" :paramsDesc="['独家号 id, 可在对应独家号页 URL 中找到']"/>
 
 ## 开源中国
 

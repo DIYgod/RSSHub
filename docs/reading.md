@@ -22,6 +22,16 @@ pageClass: routes
 
 </Route>
 
+## Literotica
+
+### New Stories
+
+<Route author="nczitzk" example="/literotica/new" path="/literotica/new"/>
+
+### Category
+
+<Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['分类，可在对应分类页地址栏中找到']"/>
+
 ## Mobilism
 
 ### eBook Releases
@@ -292,6 +302,26 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 章节
 
 <Route author="zsakvo" example="/wenku8/chapter/74" path="/wenku8/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+### 最新卷
+
+<Route author="huangliangshusheng" example="/wenku8/volume/1163" path="/wenku8/volume/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+
+### 首页分类
+
+<Route author="Fatpandac" example="/wenku8/lastupdate" path="/wenku8/:categoty?" :paramsDesc="['首页分类，见下表，默认为今日更新']" selfhost="1">
+
+::: warning 注意
+
+首页需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+|  今日更新  | 完结全本 | 新书一览 | 动画化作品 | 热门轻小说 |  轻小说列表 |
+| :--------: | :------: | :------: | :--------: | :--------: | :---------: |
+| lastupdate | fullflag | postdate |    anime   |  allvisit  | articlelist |
+
+</Route>
 
 ## 生物帮
 
