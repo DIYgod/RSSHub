@@ -109,6 +109,12 @@
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
+    "/gov/guangdong/tqyb/tfxtq": [
+        "Fatpandac"
+    ],
+    "/gov/guangdong/tqyb/sncsyjxh": [
+        "Fatpandac"
+    ],
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
