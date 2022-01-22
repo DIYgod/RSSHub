@@ -52,6 +52,12 @@ pageClass: routes
 
 <Route author="Diffumist" example="/ahut/cstzgg" path="/ahut/cstzgg" />
 
+## 安徽建筑大学
+
+### 通知公告
+
+<Route author="Yuk-0v0" example="/ahjzu/news" path="/ahjzu/news" />
+
 ## 安徽农业大学
 
 ### 计算机学院
