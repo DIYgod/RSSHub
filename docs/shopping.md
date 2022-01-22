@@ -81,6 +81,12 @@ pageClass: routes
 
 <Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
 
+## lativ
+
+### 订阅价格
+
+<Route author="Fatpandac" example="/lativ/54220021" path="/lativ/:id" :paramsDesc="['商品id，网址上可以直接拿到']"/>
+
 ## LeBonCoin
 
 ### Ads
