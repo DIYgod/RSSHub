@@ -259,6 +259,12 @@
     "/mygopen/:label?": [
         "nczitzk"
     ],
+    "/neea/jlpt": [
+        "nczitzk"
+    ],
+    "/neea/:type?": [
+        "SunShinenny"
+    ],
     "/netease/renjian/:category?": [
         "nczitzk"
     ],
@@ -1718,7 +1724,6 @@
     "/yzu/yjszs/:type": [],
     "/krankenkassen": [],
     "/guat/news/:type?": [],
-    "/neea/:type": [],
     "/cauyjs": [],
     "/sustyjs": [],
     "/sustech/newshub-zh": [],
