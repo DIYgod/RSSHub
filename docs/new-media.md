@@ -2054,13 +2054,13 @@ column 为 third 时可选的 category:
 
     -   金融科技
 
-    | 科技巨头 | 银行AI | 金融云       | 风控与安全   |
-    | -------- | ------ | ------------ | ------------ |
-    | BigTech  | bank   | FinanceCloud | DataSecurity |
+    | 科技巨头 | 银行 AI | 金融云       | 风控与安全   |
+    | -------- | ------- | ------------ | ------------ |
+    | BigTech  | bank    | FinanceCloud | DataSecurity |
 
     -   医疗科技
 
-    | 医疗AI   | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
+    | 医疗 AI  | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
     | -------- | ------ | -------- | ---------------- | ------------ | ------------ |
     | healthai | touzi  | qixie    | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
@@ -2078,9 +2078,9 @@ column 为 third 时可选的 category:
 
     -   工业互联网
 
-    | 工业软件   | 工业安全 | 5G工业互联网 | 工业转型实践 |
-    | ---------- | -------- | ------------ | ------------ |
-    | gysoftware | gysafety | 5ggy         | gypratice    |
+    | 工业软件   | 工业安全 | 5G 工业互联网 | 工业转型实践 |
+    | ---------- | -------- | ------------- | ------------ |
+    | gysoftware | gysafety | 5ggy          | gypratice    |
 
     -   AIoT
 
