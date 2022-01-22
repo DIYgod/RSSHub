@@ -16,6 +16,16 @@ pageClass: routes
 
 </Route>
 
+## 北京市科学技术委员会、中关村科技园区管理委员会
+
+<Route author="Fatpandac" example="/kwbeijing/col736" path="/kwbeijing/:channel" :paramsDesc="['频道']">
+
+频道参数可在官网获取，如：
+
+`http://kw.beijing.gov.cn/col/col736/index.html` 对应 `/kwbeijing/col736`
+
+</Route>
+
 ## 澳门卫生局
 
 ### 最新消息
