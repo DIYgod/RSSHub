@@ -1968,6 +1968,10 @@ column 为 third 时可选的 category:
 
 ## 链新闻 ABMedia
 
+### 首页最新新闻
+
+<Route author="Fatpandac" example="/abmedia/index" path="/abmedia/index"/>
+
 ### 类别
 
 <Route author="Fatpandac" example="/abmedia/technology-development" path="/abmedia/:category?" :paramsDesc="['类别，默认为产品技术']">
