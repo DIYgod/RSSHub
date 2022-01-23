@@ -1126,7 +1126,16 @@ rule
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id/:routeParams?" :paramsDesc="['超话ID', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+
+| type      | 备注             |
+| --------- | ---------------- |
+| soul      | 精华             |
+| video     | 视频（暂不支持） |
+| album     | 相册（暂不支持） |
+| hot_sort  | 热门             |
+| sort_time | 最新帖子         |
+| feed      | 最新评论         |
 
 ### 个人时间线
 

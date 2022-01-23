@@ -52,6 +52,12 @@ pageClass: routes
 
 <Route author="Diffumist" example="/ahut/cstzgg" path="/ahut/cstzgg" />
 
+## 安徽建筑大学
+
+### 通知公告
+
+<Route author="Yuk-0v0" example="/ahjzu/news" path="/ahjzu/news" />
+
 ## 安徽农业大学
 
 ### 计算机学院
@@ -1044,6 +1050,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
 
+### 华东理工继续教育学院新闻公告
+
+<Route author="jialinghui" example="/ecust-jxjy/news" path="/news" rssbud="1" />
+
 ## 华东师范大学
 
 ### 华东师范大学研究生院
@@ -1356,6 +1366,56 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 南方科技大学采购与招标管理部
 
 <Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
+
+## 南京大学
+
+### 本科生院
+
+<Route author="ret-1" example="/nju/jw/ggtz" path="/nju/jw/:type" :paramsDesc="['分类名']">
+
+| 公告通知 | 教学动态 |
+| -------- | -------- |
+| ggtz     | jxdt     |
+
+</Route>
+
+### 研究生院
+
+<Route author="ret-1" example="/nju/gra" path="/nju/gra" />
+
+### 人才招聘网
+
+<Route author="ret-1" example="/nju/rczp/xxfb" path="/nju/rczp/:type" :paramsDesc="['分类名']">
+
+| 信息发布 | 教研类岗位 | 管理岗位及其他 |
+| -------- | ---------- | -------------- |
+| xxfb     | jylgw      | gllgw          |
+
+</Route>
+
+### 科学技术处
+
+<Route author="ret-1" example="/nju/scit/tzgg" path="/nju/scit/:type" :paramsDesc="['分类名']">
+
+| 通知公告 | 科研动态 |
+| -------- | -------- |
+| tzgg     | kydt     |
+
+</Route>
+
+### 资产管理处
+
+<Route author="ret-1" example="/nju/zcc" path="/nju/zcc" />
+
+### 招标办公室
+
+<Route author="ret-1" example="/nju/zbb/cgxx" path="/nju/zbb/:type" :paramsDesc="['分类名']">
+
+| 采购信息 | 成交公示 | 政府采购意向公开 |
+| -------- | -------- | ---------------- |
+| cgxx     | cjgs     | zfcgyxgk         |
+
+</Route>
 
 ## 南京工业大学
 
@@ -2103,6 +2163,48 @@ type 列表：
 
 <Route author="DylanXie123" example="/xjtu/ee/1114" path="/xjtu/job/:id?" :paramsDesc="['栏目id，默认请求`1114`，可在 URL 中找到']"  />
 
+## 西安理工大学
+
+### 学校主页
+
+<Route author="mocusez" example="/xaut/index/tzgg" path="/xaut/index/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1" >
+
+| 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |
+| :------: | :------: | :------: | :------: |
+|   tzgg   |   xyyw   |   mtbd   |   xshd   |
+
+</Route>
+
+### 教务处
+
+<Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1">
+
+::: warning 注意
+
+有些内容需使用校园网或 VPN 访问知行网获取
+:::
+
+| 通知公告 | 新闻动态 | 规章制度 | 竞赛结果公示 | 竞赛获奖通知 | 竞赛信息 | 公开公示 |
+| :------: | :------: | :------: | :----------: | :----------: | :------: | :------: |
+|   tzgg   |   xwdt   |   gzzd   |     jggs     |     jsjg     |   jsxx   |   gkgs   |
+
+</Route>
+
+### 人事处
+
+<Route author="light0926 mocusez" example="/xaut/rsc/tzgg" path="/xaut/rsc/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1">
+
+::: warning 注意
+
+有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
+:::
+
+| 通知公告 | 工作动态 |
+| :------: | :------: |
+|   tzgg   |   gzdt   |
+
+</Route>
+
 ## 西北工业大学
 
 ### 翱翔门户
@@ -2542,6 +2644,18 @@ type 列表：
 ### 中国科学院电工研究所 科研动态
 
 <Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt"/>
+
+## 中国科学院大学
+
+### 招聘信息
+
+<Route author="Fatpandac" example="/ucas/job" path="/ucas/job/:type?" :paramsDesc="['招聘类型，默认为博士后']">
+
+| 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
+| :------: | :----: | :----------: | :----------: | :----------: |
+|   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |
+
+</Route>
 
 ## 中国农业大学
 

@@ -90,7 +90,7 @@ pageClass: routes
 
 ### 指定卷中的文章
 
-<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/vol/192" path="/elsevier/:journal/vol/:id" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分','卷号 (如果 `Issue` 存在, 使用 `Volume-Issue`, e.g., `/elsevier/aace-clinical-case-reports/vol/7-6`)']" radar="1" rssbud="1">
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/vol/192" path="/elsevier/:journal/vol/:id" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分','卷号 (如果 `Issue` 存在，使用 `Volume-Issue`, e.g., `/elsevier/aace-clinical-case-reports/vol/7-6`)']" radar="1" rssbud="1">
 
 </Route>
 
@@ -119,6 +119,12 @@ pageClass: routes
 当期刊的文章条目过多时，按照 `vol-only-seq` 排序方式可能将近期更新文章淹没在旧条目中，故只筛选当前月与上个月内发表的文章。
 
 </Route>
+
+## INFORMS
+
+### 类型
+
+<Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['类型, 可以在 url 中得到，默认为 `orsc`']"/>
 
 ## JASA
 
@@ -301,8 +307,18 @@ _仅支持 Science 主刊_
 
 <Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
 
-| 本期要目 | 学术活动 | 通知公告 |
-| -------- | -------- | -------- |
-| bqym     | xshd     | tzgg     |
+| 本期要目 | 网络首发 | 学术活动 | 通知公告 |
+| -------- | -------- | -------- | -------- |
+| bqym     | wlsf     | xshd     | tzgg     |
 
 </Route>
+
+## 中国知网
+
+### 期刊
+
+<Route author="Fatpandac" example="/cnki/journals/LKGP" path="/cnki/journals/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
+
+### 网络首发
+
+<Route author="Fatpandac" example="/cnki/journals/debut/LKGP" path="/cnki/journals/debut/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
