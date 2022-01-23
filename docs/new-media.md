@@ -1489,9 +1489,9 @@ area 分区选项
 
 ## 樊登读书
 
-## 樊登福州运营中心
+### 樊登福州运营中心
 
-<Route author="Fatpandac" example="/dushu" path="/dushu" />
+<Route author="Fatpandac" example="/dushu/fuzhou" path="/dushu/fuzhou" />
 
 ## 飞雪娱乐网
 
