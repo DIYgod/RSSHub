@@ -717,3 +717,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   轻小说文库
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
+
+-   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
+    -   `GOOGLE_FONTS_API_KEY`: API key

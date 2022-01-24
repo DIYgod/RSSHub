@@ -591,3 +591,6 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `EH_IPB_MEMBER_ID`: The value of `ipb_member_id` in the cookie header after logging in E-Hentai
     -   `EH_IPB_PASS_HASH`: The value of `ipb_pass_hash` in the cookie header after logging in E-Hentai
     -   `EH_SK`: The value of `sk` in the cookie header after logging in E-Hentai
+
+-   Google Fonts: [API key application](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
+    - `GOOGLE_FONTS_API_KEY`: API key

@@ -58,6 +58,18 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 
 <RouteEn path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" :paramsDesc="['desired keyword']" />
 
+## Google
+
+### Google Fonts
+
+<RouteEn author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" :paramsDesc="['Sorting type, see below, default to `date`']" radar="1" rssbud="1">
+
+| Newest | Trending | Most popular | Name  | Number of styles |
+| :----: | :------: | :----------: | :--:  | :--------------: |
+| date   | trending | popularity   | alpha | style            |
+
+</RouteEn>
+
 ## Inside Design
 
 ### Recent Stories
