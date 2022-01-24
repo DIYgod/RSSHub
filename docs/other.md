@@ -921,6 +921,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']"/>
 
+### 疫情通报 - 上海卫健委
+
+<Route author="zcf0508" example="/sh-wsjkw" path="/sh-wsjkw"/>
+
 ## 新趣集
 
 > 官方 Feed 地址为: <https://xinquji.com/rss>
