@@ -1181,7 +1181,7 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 ### 电台节目
 
-<Route author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id/:offset?" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到', '可选 - 数据偏移量,例如设置500会展示500条以后的数据']" supportPodcast="1"  radar="1" />
+<Route author="magic-akari" example="/ncm/djradio/347317067" path="/ncm/djradio/:id" :paramsDesc="['节目 id, 可在电台节目页 URL 中找到']" supportPodcast="1"  radar="1" />
 
 ## 西瓜视频
 
