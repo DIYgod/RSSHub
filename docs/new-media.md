@@ -2649,6 +2649,8 @@ column 为 third 时可选的 category:
 
 ## 晚点 LatePost
 
+### 报道
+
 <Route author="HaitianLiu nczitzk" example="/latepost" path="/latepost/:proma?" :paramsDesc="['栏目 id，见下表，默认为最新报道']">
 
 | 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
