@@ -378,8 +378,7 @@ pageClass: routes
 
 ### 漫画
 
-<Route author="nczitzk" example="/ac/comic/531490
-排行榜" path="/ac/comic/:id" :paramsDesc="['编号，可在对应页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/ac/comic/531490" path="/ac/comic/:id" :paramsDesc="['编号，可在对应页 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 忧郁的 loli
 
