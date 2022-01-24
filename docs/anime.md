@@ -253,6 +253,38 @@ pageClass: routes
 
 </Route>
 
+## iwara
+
+### 用户
+
+<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['用户昵称', 'type 默认为 video']" radar="1" rssbud="1">
+
+| type |  视频 |  图片 |
+| :--: | :---: | :---: |
+| 参数 | video | image |
+
+</Route>
+
+## Kemono
+
+### Posts
+
+<Route author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" :paramsDesc="['来源，见下表，默认为 Posts', '用户 Id，可在对应页 URL 中找到']">
+
+Sources
+
+| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+
+::: tip 提示
+
+当选择 `posts` 作为参数 **source** 的值时，参数 **id** 不生效。
+
+:::
+
+</Route>
+
 ## Mox.moe
 
 ### 首頁
@@ -298,6 +330,12 @@ pageClass: routes
 ### [Naver](https://comic.naver.com)
 
 <Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
+
+## 包子漫画
+
+#### 订阅漫画
+
+<Route author="Fatpandac" example="/baozimh/comic/guowangpaiming-shiricaofu" path="/baozimh/comic/:name" :paramsDesc="['漫画名称，在漫画链接可以得到(`comic/` 后的那段)']"/>
 
 ## 嘀哩嘀哩 - dilidili
 
@@ -387,25 +425,25 @@ pageClass: routes
 
 ### 漫画更新
 
-<Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+<Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 看漫画镜像站
 
 ### 漫画更新
 
-<Route author="btdwv" path="/mhgui/comic/:id" example="/mhgui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+<Route author="btdwv" path="/mhgui/comic/:id/:chapterCnt?" example="/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 看漫画台湾
 
 ### 漫画更新
 
-<Route author="btdwv" path="/twmanhuagui/comic/:id" example="/twmanhuagui/comic/13317" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+<Route author="btdwv" path="/twmanhuagui/comic/:id/:chapterCnt?" example="/twmanhuagui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 拷贝漫画
 
 ### 漫画更新
 
-<Route author="btdwv" path="/copymanga/comic/:id" example="/copymanga/comic/zhandoupohuaixueyuandangerous" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+<Route author="btdwv" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/zaiyishijiemigongkaihougong/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 漫画 DB
 

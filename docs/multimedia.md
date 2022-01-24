@@ -806,6 +806,12 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 见 [#youtube](/social-media.html#youtube)
 
+## 阿基米德 FM
+
+### 播客
+
+<Route author="Fatpandac" example="/ajmide/10603594" path="/ajmide/:id" :paramsDesc="['播客 id，可以从播客页面 URL 中找到']" radar="1" rssbud="1"/>
+
 ## 爱奇艺
 
 ### 用户视频
@@ -1151,6 +1157,11 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 <Route author="nczitzk" example="/wanwansub/info/393" path="/wanwansub/info/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
 
 ## 网易云音乐
+
+::: tip 部分歌单及听歌排行信息为登陆后可见
+
+部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_Cookies`设为登陆后的 Cookie 值，即可正常获取。
+:::
 
 ### 歌单歌曲
 
