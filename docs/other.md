@@ -923,7 +923,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 疫情通报 - 上海卫健委
 
-<Route author="zcf0508" example="/guangdong/tqyb/sncsyjxh" path="/guangdong/tqyb/sncsyjxh"/>
+<Route author="zcf0508" example="/gov/shanghai/wsjkw/yqtb" path="/gov/shanghai/wsjkw/yqtb"/>
 
 ## 新趣集
 
