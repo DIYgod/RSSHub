@@ -212,6 +212,10 @@ pageClass: routes
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Nikkei Asia
+
+<Route author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
+
 ## Now 新聞
 
 ### 新聞
