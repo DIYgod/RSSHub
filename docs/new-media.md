@@ -2075,7 +2075,7 @@ column 为 third 时可选的 category:
 
 ### 栏目
 
-<Route author="vlcheng" example="/leiphone/category/industrynews" path="/leiphone/category/industrynews/:catname" :paramsDesc="['网站顶部分类栏目']">
+<Route author="vlcheng" example="/leiphone/category/industrynews" path="/leiphone/category/:catname" :paramsDesc="['网站顶部分类栏目']">
 
 -   主栏目
 
