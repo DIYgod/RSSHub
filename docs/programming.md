@@ -74,6 +74,12 @@ Rated 对象
 
 <Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']"/>
 
+## Bitmovin
+
+### Blog
+
+<Route author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
+
 ## Codeforces
 
 #### 最新比赛
