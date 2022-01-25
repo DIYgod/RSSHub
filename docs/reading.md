@@ -36,7 +36,18 @@ pageClass: routes
 
 ### eBook Releases
 
-<Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
+<Route author="nitezs" example="/mobilism/books/romance" path="/mobilism/books/:type" :paramsDesc="['种类']">
+
+| 分类     | 分类名     |
+| -------- | ---------- |
+| 浪漫     | romance    |
+| 科幻小说 | scifi      |
+| 经典     | classics   |
+| 杂志     | magazines  |
+| 有声读物 | audioBooks |
+| 漫画     | comics     |
+
+</Route>
 
 ## SoBooks
 
@@ -365,9 +376,9 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 :::
 
-|  今日更新  | 完结全本 | 新书一览 | 动画化作品 | 热门轻小说 |  轻小说列表 |
+|  今日更新  | 完结全本 | 新书一览 | 动画化作品 | 热门轻小说 | 轻小说列表  |
 | :--------: | :------: | :------: | :--------: | :--------: | :---------: |
-| lastupdate | fullflag | postdate |    anime   |  allvisit  | articlelist |
+| lastupdate | fullflag | postdate |   anime    |  allvisit  | articlelist |
 
 </Route>
 
