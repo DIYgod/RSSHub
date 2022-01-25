@@ -48,9 +48,9 @@ pageClass: routes
 | -------- | ---- | ---- | ---- | ---- |
 | 12       | 16   | 42   | 56   | 76   |
 
-| 站务 | 国防 | 工会 | 水 | 江湖 |
-| ---- | ---- | ---- | -- | ---- |
-| 13   | 15   | 29   | 4  | 21   |
+| 站务 | 国防 | 工会 | 水  | 江湖 |
+| ---- | ---- | ---- | --- | ---- |
+| 13   | 15   | 29   | 4   | 21   |
 
 | 吐槽 | 树洞 | 标本 |
 | ---- | ---- | ---- |
@@ -70,21 +70,21 @@ pageClass: routes
 
 <Route author="Fatpandac" exmaple="/423down/index/all" path="/423down/:category/:type" :paramsDesc="['类型', '分类']" radar="1">
 
-| category | 全部 |
-| :------: | :--: |
-|   index  |  all |
+| category | 全部  |
+| :------: | :---: |
+|  index   |  all  |
 
 | category | 安卓软件 |
 | :------: | :------: |
-|  android |    apk   |
+| android  |   apk    |
 
 | category |   原创软件   |  媒体播放  | 网页浏览 | 图形图像 | 聊天软件 | 办公软件 | 上传下载 |  系统辅助  |  系统必备  | 安全软件 | 补丁相关 | 硬件相关 |
 | :------: | :----------: | :--------: | :------: | :------: | :------: | :------: | :------: | :--------: | :--------: | :------: | :------: | :------: |
-| computer | originalsoft | multimedia |  browser |   image  |    im    |   work   |   down   | systemsoft | systemplus | security |   patch  | hardware |
+| computer | originalsoft | multimedia | browser  |  image   |    im    |   work   |   down   | systemsoft | systemplus | security |  patch   | hardware |
 
 | category | windows 11 | windows 10 | windows 7 | windows xp | windows pe |
 | :------: | :--------: | :--------: | :-------: | :--------: | :--------: |
-|    os    |    win11   |    win10   |    win7   |    winxp   |    winpe   |
+|    os    |   win11    |   win10    |   win7    |   winxp    |   winpe    |
 
 </Route>
 
@@ -209,6 +209,8 @@ pageClass: routes
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
 ## Mobilism
+
+### 分类
 
 <Route author="nitezs" example="/mobilism/android/apps" path="/mobilism/:category/:type" :paramsDesc="['分类', 种类']">
 
