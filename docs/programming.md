@@ -74,6 +74,12 @@ Rated 对象
 
 <Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']"/>
 
+## BBC News Labs
+
+### News
+
+<Route author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
+
 ## Codeforces
 
 #### 最新比赛
