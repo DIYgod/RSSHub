@@ -212,7 +212,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nitezs" example="/mobilism/android/apps" path="/mobilism/:category/:type" :paramsDesc="['分类', 种类']">
+<Route author="nitezs" example="/mobilism/android/apps" path="/mobilism/:category/:type" :paramsDesc="['分类', '种类']">
 
 | 图书  | 安卓    | iPhone | iPad |
 | ----- | ------- | ------ | ---- |
