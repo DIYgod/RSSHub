@@ -944,6 +944,16 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 </Route>
 
+### 豆瓣招聘
+
+<Route author="Fatpandac" example="/douban/jobs/campus" path="/douban/jobs/:type" :paramsDesc="['招聘类型，见下表']">
+
+| 社会招聘 | 校园招聘 | 实习生招聘 |
+| :------: | :------: | :--------: |
+|  social  |  campus  |   intern   |
+
+</Route>
+
 ## 饭否
 
 ::: warning 注意
