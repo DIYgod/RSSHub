@@ -62,11 +62,17 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### Google Fonts
 
-<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" :paramsDesc="['排序，见下表，默认为最新']" radar="1" rssbud="1">
+<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" :paramsDesc="['排序，见下表，默认为最新']" selfhost="1">
 
 | 最新 |   趋势   |  最受欢迎  |  名字 | 风格数量 |
 | :--: | :------: | :--------: | :---: | :------: |
 | date | trending | popularity | alpha |   style  |
+
+::: warning 注意
+
+需要设置 API key，所以只能自建，详情见[ 部署页面 ](https://docs.rsshub.app/en/install/#configuration-route-specific-configurations)的配置模块。
+
+:::
 
 </Route>
 
