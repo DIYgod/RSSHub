@@ -42,7 +42,7 @@ module.exports = async ({ github, context, core }, baseUrl, routes, number) => {
 `;
         }
     }
-    github.issues
+    github.rest.issues
         .addLabels({
             issue_number: number,
             owner: context.repo.owner,
@@ -52,7 +52,7 @@ module.exports = async ({ github, context, core }, baseUrl, routes, number) => {
         .catch((e) => {
             core.warning(e);
         });
-    github.issues
+    github.rest.issues
         .createComment({
             issue_number: number,
             owner: context.repo.owner,

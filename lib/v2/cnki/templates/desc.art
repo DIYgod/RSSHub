@@ -1,0 +1,5 @@
+<text>作者：{{ author }} </text>
+<br>
+<text>单位：{{ company }} </text>
+<br>
+<text>{{ content }}</text>

@@ -6,13 +6,14 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '14'
-    - run: yarn install
-    - name: Lint
-      run: |
-        npm run lint
-      env:
-        CI: true
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          cache: 'yarn'
+      - run: yarn
+      - name: Lint
+        run: |
+          npm run lint
+        env:
+          CI: true

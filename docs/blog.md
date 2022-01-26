@@ -44,6 +44,10 @@ pageClass: routes
 
 <Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
+### Fluid 主题博客
+
+<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+
 ## Hi, DIYgod
 
 ### DIYgod 的动森日记
@@ -90,6 +94,12 @@ pageClass: routes
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
+## yuzu emulator
+
+### Entry
+
+<Route author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
+
 ## 阿里云系统组技术博客
 
 ### 首页
@@ -111,6 +121,10 @@ pageClass: routes
 ### 首页
 
 <Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
+
+## 華康字型故事
+
+<Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
 
 ## 建宁闲谈
 
@@ -184,6 +198,12 @@ pageClass: routes
 
 <Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
 
+## 十年之约
+
+### 文章
+
+<Route author="7Wate" example="/blogs/foreverblog" path="/blogs/foreverblog" />
+
 ## 王五四文集
 
 ### 文章
@@ -195,3 +215,13 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 雨苁博客
+
+### 首页
+
+<Route author="XinRoom" example="/ddosi" path="/ddosi"/>
+
+### 分类
+
+<Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
