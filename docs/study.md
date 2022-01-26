@@ -146,6 +146,10 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+### 教育部考试中心日本语能力测试重要通知
+
+<Route author="nczitzk" example="/neea/jlpt" path="/neea/jlpt"/>
+
 ## ProcessOn
 
 ### 推荐
@@ -246,7 +250,7 @@ pageClass: routes
 
 ## 幕布精选
 
-<Route author="laampui" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:tagId/:title?" :paramsDesc="['标签 id', '显示标题']" />
+<Route author="laampui nczitzk" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:category?/:title?" :paramsDesc="['分类 id', '显示标题']" />
 
 ## 扇贝
 

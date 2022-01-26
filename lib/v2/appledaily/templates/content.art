@@ -1,0 +1,7 @@
+{{ each content_elements }}
+    {{ if $value.type === 'image' }}
+    <img src="{{ $value.url }}" alt="{{ $value.caption }}"/>
+    {{ else if $value.type === 'text' }}
+    <p>{{ $value.content }}</p>
+    {{ /if }}
+{{ /each }}
