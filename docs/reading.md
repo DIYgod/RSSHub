@@ -36,7 +36,18 @@ pageClass: routes
 
 ### eBook Releases
 
-<Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type" :paramsDesc="['种类']">
+
+| 分类     | 分类名     |
+| -------- | ---------- |
+| 浪漫     | romance    |
+| 科幻小说 | scifi      |
+| 经典     | classics   |
+| 杂志     | magazines  |
+| 有声读物 | audioBooks |
+| 漫画     | comics     |
+
+</Route>
 
 ## SoBooks
 
