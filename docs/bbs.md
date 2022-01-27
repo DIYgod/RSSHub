@@ -330,6 +330,18 @@ pageClass: routes
 
 </Route>
 
+## 大眼仔旭
+
+### 分类
+
+<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category" :paramsDesc="['分类']" radar="1"> 
+
+| 微软应用 | 安卓应用 | 教程资源 | 其他资源 |
+| -------- | -------- | -------- | -------- |
+| windows  | android  | tutorial | other    |
+
+</Route>
+
 ## 电鸭社区
 
 ### 工作机会
