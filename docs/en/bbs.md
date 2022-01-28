@@ -47,3 +47,29 @@ If the url of the thread is <https://www.scboy.com/?thread-188673.htm> then tid 
 When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See <https://docs.rsshub.app/en/install/#Deployment> for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
 
 </RouteEn>
+
+## Mobilism
+
+### Forums
+
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type" :paramsDesc="['category', 'type']">
+
+| ebook | Android | iPhone | iPad |
+| ----- | ------- | ------ | ---- |
+| books | android | iphone | ipad |
+
+| Romance | Sci-fi | Classics | Magazines | AudioBooks | Comics | Apps | Games |
+| ------- | ------ | -------- | --------- | ---------- | ------ | ---- | ----- |
+| romance | scifi  | classics | magazines | audioBooks | comics | apps | games |
+
+</Route>
+
+### Portal
+
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['type']">
+
+| Android Apps | Android Games | ebook | iPad Apps | iPad Games | iPhone Apps | iPhone Games |
+| ------------ | ------------- | ----- | --------- | ---------- | ----------- | ------------ |
+| aapp         | agame         | ebook | ipapp     | ipgame     | iapp        | igame        |
+
+</Route>

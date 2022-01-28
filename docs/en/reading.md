@@ -19,3 +19,20 @@ pageClass: routes
 ### Category
 
 <RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Categor, can be found in URL']"/>
+
+## Mobilism
+
+### eBook Releases
+
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type" :paramsDesc="['type']">
+
+| type       |
+| ---------- |
+| romance    |
+| scifi      |
+| classics   |
+| magazines  |
+| audioBooks |
+| comics     |
+
+</Route>
