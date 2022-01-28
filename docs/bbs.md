@@ -208,6 +208,32 @@ pageClass: routes
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
+## Mobilism
+
+### Forums
+
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type" :paramsDesc="['分类', '种类']">
+
+| 图书  | 安卓    | iPhone | iPad |
+| ----- | ------- | ------ | ---- |
+| books | android | iphone | ipad |
+
+| 浪漫    | 科幻  | 经典     | 杂志      | 有声读物   | 漫画   | 应用 | 游戏  |
+| ------- | ----- | -------- | --------- | ---------- | ------ | ---- | ----- |
+| romance | scifi | classics | magazines | audioBooks | comics | apps | games |
+
+</Route>
+
+### Portal
+
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['种类']">
+
+| 安卓应用 | 安卓游戏 | 图书  | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
+| -------- | -------- | ----- | --------- | --------- | ----------- | ----------- |
+| aapp     | agame    | ebook | ipapp     | ipgame    | iapp        | igame       |
+
+</Route>
+
 ## NGA
 
 ### 分区帖子
@@ -893,31 +919,5 @@ pageClass: routes
 | 灵异事件      | 灵异图片     | 民间奇谈     |
 | ------------- | ------------ | ------------ |
 | lingyishijain | lingyitupian | minjianqitan |
-
-</Route>
-
-## Mobilism
-
-### Forums
-
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type" :paramsDesc="['分类', '种类']">
-
-| 图书  | 安卓    | iPhone | iPad |
-| ----- | ------- | ------ | ---- |
-| books | android | iphone | ipad |
-
-| 浪漫    | 科幻  | 经典     | 杂志      | 有声读物   | 漫画   | 应用 | 游戏  |
-| ------- | ----- | -------- | --------- | ---------- | ------ | ---- | ----- |
-| romance | scifi | classics | magazines | audioBooks | comics | apps | games |
-
-</Route>
-
-### Portal
-
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['种类']">
-
-| 安卓应用 | 安卓游戏 | 图书  | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
-| -------- | -------- | ----- | --------- | --------- | ----------- | ----------- |
-| aapp     | agame    | ebook | ipapp     | ipgame    | iapp        | igame       |
 
 </Route>
