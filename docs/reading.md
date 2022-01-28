@@ -36,9 +36,9 @@ pageClass: routes
 
 ### eBook Releases
 
-<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type" :paramsDesc="['种类']">
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" :paramsDesc="['种类','是否获取全文,如需获取全文参数传入`y`']">
 
-| 分类     | 分类名     |
+| 分类名   | 参数       |
 | -------- | ---------- |
 | 浪漫     | romance    |
 | 科幻小说 | scifi      |

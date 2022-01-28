@@ -48,22 +48,6 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 </RouteEn>
 
-## Mobilism
-
-### Forums
-
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type" :paramsDesc="['category', 'type']">
-
-| ebook | Android | iPhone | iPad |
-| ----- | ------- | ------ | ---- |
-| books | android | iphone | ipad |
-
-| Romance | Sci-fi | Classics | Magazines | AudioBooks | Comics | Apps | Games |
-| ------- | ------ | -------- | --------- | ---------- | ------ | ---- | ----- |
-| romance | scifi  | classics | magazines | audioBooks | comics | apps | games |
-
-</Route>
-
 ### Portal
 
 <Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['type']">

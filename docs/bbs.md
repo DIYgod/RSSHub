@@ -212,7 +212,7 @@ pageClass: routes
 
 ### Forums
 
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type" :paramsDesc="['分类', '种类']">
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['分类', '种类','是否获取全文,如需获取全文参数传入`y`']">
 
 | 图书  | 安卓    | iPhone | iPad |
 | ----- | ------- | ------ | ---- |
@@ -226,7 +226,7 @@ pageClass: routes
 
 ### Portal
 
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['种类']">
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['种类','是否获取全文,如需获取全文参数传入`y`']">
 
 | 安卓应用 | 安卓游戏 | 图书  | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
 | -------- | -------- | ----- | --------- | --------- | ----------- | ----------- |
