@@ -124,7 +124,7 @@ The owner of the official image fills in the library, for example: https://rsshu
 
 ### Image New Tag
 
-<RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['Image owner', 'Image name']">
+<RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" :paramsDesc="['Image owner', 'Image name', 'Tag count, 10 by default']">
 
 ::: warning
 

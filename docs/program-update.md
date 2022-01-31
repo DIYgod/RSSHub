@@ -162,7 +162,7 @@ pageClass: routes
 
 ### 镜像有新 Tag
 
-<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['镜像作者', '镜像名称']" radar="1" rssbud="1">
+<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" :paramsDesc="['镜像作者', '镜像名称', 'tag 数量，默认为 10']" radar="1" rssbud="1">
 
 ::: warning 注意
 
