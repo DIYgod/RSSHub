@@ -121,7 +121,7 @@ The owner of the official image fills in the library, for example: https://rsshu
 :::
 ### Image New Tag
 
-<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['Image owner', 'Image name']" radar="1" rssbud="1"/>
+<RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['Image owner', 'Image name']" />
 
 ::: warning
 
@@ -139,8 +139,8 @@ Use `library` as the `owner` for official images, such as <https://rsshub.app/do
 Language
 
 | Simplified Chinese | Traditional Chinese | English |
-| ------------------ | ------------------- | ------- |
-| cn                 | tw                  | en      |
+| ------ | -------- | -------- |
+|  cn  |  tw  |  en  |
     
 </RouteEn>
 
@@ -306,8 +306,8 @@ Refer to [#minecraft](/en/game.html#minecraft)
 <RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
 
 | Mac OS | Windows |
-| ------ | ------- |
-| mac    | windows |
+| - | - |
+| mac | windows |
 
 </RouteEn>
 
