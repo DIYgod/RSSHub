@@ -112,16 +112,19 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 
 ### Image New Build
 
-<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
+<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']">
 
 ::: warning
 
 The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
 
 :::
+
+</RouteEn>
+
 ### Image New Tag
 
-<RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['Image owner', 'Image name']" />
+<RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['Image owner', 'Image name']">
 
 ::: warning
 
@@ -129,6 +132,7 @@ Use `library` as the `owner` for official images, such as <https://rsshub.app/do
 
 :::
 
+</RouteEn>
 
 ## Eagle
 
