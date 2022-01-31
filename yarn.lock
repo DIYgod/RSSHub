@@ -4702,10 +4702,10 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
   integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
 
-devtools-protocol@0.0.901419:
-  version "0.0.901419"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.901419.tgz#79b5459c48fe7e1c5563c02bd72f8fec3e0cebcd"
-  integrity sha512-4INMPwNm9XRpBukhNbF7OB6fNTTCaI8pzy/fXg0xQzAy5h3zL1P8xT3QazgKqBrb/hAYwIBizqDBZ7GtJE74QQ==
+devtools-protocol@0.0.948846:
+  version "0.0.948846"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.948846.tgz#bff47e2d1dba060130fa40ed2e5f78b916ba285f"
+  integrity sha512-5fGyt9xmMqUl2VI7+rnUkKCiAQIpLns8sfQtTENy5L70ktbNw0Z3TFJ1JoFNYdx/jffz4YXU45VF75wKZD7sZQ==
 
 diff-sequences@^27.4.0:
   version "27.4.0"
@@ -9396,14 +9396,7 @@ nock@13.2.1:
     lodash.set "^4.3.2"
     propagate "^2.0.0"
 
-node-fetch@2.6.5:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.5.tgz#42735537d7f080a7e5f78b6c549b7146be1742fd"
-  integrity sha512-mmlIVHJEu5rnIxgEgez6b9GgWXbkZj5YZ7fx+2r94a2E+Uirsp6HsPTPlomfdHtpt/B0cdKviwkoaM6pyvUOpQ==
-  dependencies:
-    whatwg-url "^5.0.0"
-
-node-fetch@^2.3.0, node-fetch@^2.6.1, node-fetch@^2.6.5:
+node-fetch@2.6.7, node-fetch@^2.3.0, node-fetch@^2.6.1, node-fetch@^2.6.5:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
@@ -10859,16 +10852,16 @@ pupa@^2.0.1, pupa@^2.1.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer@11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-11.0.0.tgz#0808719c38e15315ecc1b1c28911f1c9054d201f"
-  integrity sha512-6rPFqN1ABjn4shgOICGDBITTRV09EjXVqhDERBDKwCLz0UyBxeeBH6Ay0vQUJ84VACmlxwzOIzVEJXThcF3aNg==
+puppeteer@13.1.3:
+  version "13.1.3"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-13.1.3.tgz#46b1e3f7577e59c08088b449c6fa161dbc78c680"
+  integrity sha512-nqcJNThLUG0Dgo++2mMtGR2FCyg7olJJhj/rm0A65muyN3nrH6lGvnNRzEaNmSnHWvjaDIG9ox5kxQB+nXTg5A==
   dependencies:
     debug "4.3.2"
-    devtools-protocol "0.0.901419"
+    devtools-protocol "0.0.948846"
     extract-zip "2.0.1"
     https-proxy-agent "5.0.0"
-    node-fetch "2.6.5"
+    node-fetch "2.6.7"
     pkg-dir "4.2.0"
     progress "2.0.3"
     proxy-from-env "1.1.0"
@@ -13552,10 +13545,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
