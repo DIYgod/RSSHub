@@ -119,6 +119,16 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
 
 :::
+### Image New Tag
+
+<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['Image owner', 'Image name']" radar="1" rssbud="1"/>
+
+::: warning
+
+Use `library` as the `owner` for official images, such as <https://rsshub.app/dockerhub/tag/library/mysql>
+
+:::
+
 
 ## Eagle
 
@@ -129,8 +139,8 @@ The owner of the official image fills in the library, for example: https://rsshu
 Language
 
 | Simplified Chinese | Traditional Chinese | English |
-| ------ | -------- | -------- |
-|  cn  |  tw  |  en  |
+| ------------------ | ------------------- | ------- |
+| cn                 | tw                  | en      |
     
 </RouteEn>
 
@@ -296,8 +306,8 @@ Refer to [#minecraft](/en/game.html#minecraft)
 <RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
 
 | Mac OS | Windows |
-| - | - |
-| mac | windows |
+| ------ | ------- |
+| mac    | windows |
 
 </RouteEn>
 
