@@ -809,7 +809,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 浏览发现
 
-<Route author="clarkzsd" example="/douban/explore" path="/douban/explore"/>
+<Route author="clarkzsd Fatpandac" example="/douban/explore" path="/douban/explore"/>
 
 ### 浏览发现分栏目
 
