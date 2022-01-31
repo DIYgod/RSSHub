@@ -158,6 +158,16 @@ pageClass: routes
 
 :::
 
+### 镜像有新 Tag
+
+<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image" :paramsDesc="['镜像作者', '镜像名称']" radar="1" rssbud="1"/>
+
+::: warning 注意
+
+官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/tag/library/mysql>
+
+:::
+
 ## Eagle
 
 ### 更新日志
