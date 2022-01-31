@@ -20,7 +20,7 @@ pageClass: routes
 
 ### 最新消息
 
-<Route author="Fatpandac" exmaple="/ssm/news" path="/ssm/news"/>
+<Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
 ## 北京市科学技术委员会、中关村科技园区管理委员会
 

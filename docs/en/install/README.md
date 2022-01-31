@@ -140,7 +140,7 @@ git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # When prompt to enter a domain name, enter the domain name that this machine/VM will use
-# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+# For example, if your users use https://rsshub.example.com to access your RSSHub instance, enter rsshub.example.com (remove the https://)
 ```
 
 ### Update
@@ -149,7 +149,7 @@ sudo ansible-playbook rsshub.yaml
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # When prompt to enter a domain name, enter the domain name that this machine/VM will use
-# For example, if your users use https://rsshub.exmaple.com to access your RSSHub instance, enter rsshub.exmaple.com (remove the https://)
+# For example, if your users use https://rsshub.example.com to access your RSSHub instance, enter rsshub.example.com (remove the https://)
 ```
 
 ## Manual Deployment
