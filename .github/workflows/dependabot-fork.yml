@@ -7,10 +7,10 @@ jobs:
     name: Ignore dependabot on forks
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Comment Dependabot PR
-        if: github.repository_owner != 'DIYgod' && github.actor == 'dependabot'
+        if: github.repository_owner != 'DIYgod' && github.actor == 'dependabot[bot]'
         uses: thollander/actions-comment-pull-request@v1
         with:
           message: '@dependabot ignore this dependency'
