@@ -20,6 +20,12 @@
         "DISQUS_API_KEY": {
             "required": false
         },
+        "SPOTIFY_API_KEY": {
+            "required": false
+        },
+        "SPOTIFY_API_SECRET": {
+            "required": false
+        },
         "TWITTER_CONSUMER_KEY": {
             "required": false
         },
