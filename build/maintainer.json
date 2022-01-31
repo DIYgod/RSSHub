@@ -499,6 +499,9 @@
     "/nikkei-cn/:language?/:category?/:type?": [
         "nczitzk"
     ],
+    "/nippon/:category?": [
+        "laampui"
+    ],
     "/nju/jw/:type": [
         "ret-1"
     ],
