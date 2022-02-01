@@ -622,6 +622,9 @@
     "/startuplatte/:category?": [
         "nczitzk"
     ],
+    "/storm/:category?/:id?": [
+        "nczitzk"
+    ],
     "/subhd/sub/:category?": [
         "nczitzk"
     ],
