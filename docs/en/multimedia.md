@@ -16,6 +16,16 @@ Full transcript support for better user experience.
 
 <RouteEn author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
 
+## Bandcamp
+
+### Tag
+
+<RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['Tag, can be found in URL']"/>
+
+### Upcoming Live Streams
+
+<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
+
 ## EZTV
 
 ::: tip
@@ -60,6 +70,18 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" rssbud="1"/>
 
+## Melon
+
+### Chart
+
+<RouteEn author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" :paramsDesc="['Category, see below, 24H by default']">
+
+| 24H | 일간 | 주간 | 월간 |
+| - | - | - | - |
+| | day | week | month |
+
+</RouteEn>
+
 ## Nyaa
 
 ### Seatch Result
@@ -103,6 +125,18 @@ Official RSS: https://eztv.io/ezrss.xml
 Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
 - `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
 - `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
+
+## s-hentai
+
+### Category
+
+<RouteEn author="nczitzk" example="/s-hentai" path="/hentai/:id?" :paramsDesc="['id, see below, ready-to-download by default']">
+
+| Doujin | HCG | Games・Animes | Voices・ASMR | Ready to Download |
+| ------ | --- | ------------- | ------------ | ----------------- |
+| 1      | 2   | 3             | 4            | ready-to-download |
+
+</RouteEn>
 
 ## Sankaku Complex
 

@@ -62,6 +62,40 @@ Language codes
 
 <RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## Gamer Secret
+
+### Latest News
+
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+
+### Category
+
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" :paramsDesc="['Type, see below, Latest News by default', 'Category, see below']">
+
+| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+| ----------- | -- | ----------- | -------- | ---- | ------ |
+| latest-news | pc | playstation | nintendo | xbox | moblie |
+
+Or
+
+| GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+| ---------------- | ------------------ | --------------- | ----------------- |
+| category/general | category/generalen | category/mobile | category/mobileen |
+
+| NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+| ----------------- | ------------------- | ----------- | ------------- |
+| category/nintendo | category/nintendoen | category/pc | category/pcen |
+
+| PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+| -------------------- | ---------------------- | ---------------- |
+| category/playstation | category/playstationen | category/reviews |
+
+| XBOX          | XBOX EN         |
+| ------------- | --------------- |
+| category/xbox | category/xboxen |
+
+</RouteEn>
+
 ## Konami
 
 ### PES Mobile Announcement
@@ -102,7 +136,7 @@ Sorting types, default to `date`:
 
 ### CurseForge Mod Update
 
-<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for exmaple `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
+<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
 
 ### Feed The Beast Modpack Updates
 
@@ -158,6 +192,12 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 <RouteEn author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
+## ProjectSekai ｜ プロセカ
+
+### News
+
+<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
+
 ## Steam
 
 ### Steam search
@@ -172,17 +212,13 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 
 ### Steam news
 
-<RouteEn author="maple3142" example="/steam/news/282800" path="/steam/news/:appids" :paramsDesc="['game id']" radar="1" rssbud="1"/>
-
-
 ::: tip
 
 Steam provides some official RSS feeds:
 
--   Game News: https://store.steampowered.com/feeds/news/app/412830/
--   Curator/Group/Publisher/Developer News: https://store.steampowered.com/feeds/news/group/35143931/
-
-Game News use the AppID while the rest are only available in the Steam News UI, it seems.
+-	News home page: [https://store.steampowered.com/feeds/news/?l=english](https://store.steampowered.com/feeds/news/?l=english) the parameter `l=english` specifiy the language.
+-   Game news rss can get from the rss buttom in page like this: [https://store.steampowered.com/news/app/648800/](https://store.steampowered.com/news/app/648800/) , rss link will looks like： [https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english](https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english) 
+-	Steam group can add `/rss` behind Steam community URL to subscribe: [https://steamcommunity.com/groups/SteamLabs/rss](https://steamcommunity.com/groups/SteamLabs/rss)	or add the `/feeds` in Steam News : [https://store.steampowered.com/feeds/news/group/35143931/](https://store.steampowered.com/feeds/news/group/35143931/)
 
 :::
 
