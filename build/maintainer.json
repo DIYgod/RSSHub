@@ -156,6 +156,15 @@
     "/dushu/fuzhou": [
         "Fatpandac"
     ],
+    "/e-hentai/category/:category?/:needTorrents?/:needImages?": [
+        "nczitzk"
+    ],
+    "/e-hentai/tag/:tag?/:needTorrents?/:needImages?": [
+        "nczitzk"
+    ],
+    "/e-hentai/search/:keyword?/:needTorrents?/:needImages?": [
+        "nczitzk"
+    ],
     "/eastday/find": [
         "nczitzk"
     ],
