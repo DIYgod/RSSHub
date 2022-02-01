@@ -38,6 +38,48 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
+## 巴伦周刊中文版
+
+### 栏目
+
+<Route author="nczitzk" example="/barronschina" path="/barronschina/:id?" :paramsDesc="['栏目 id，默认为快讯']">
+
+::: tip 提示
+
+栏目 id 留空则返回快讯，在对应页地址栏 `columnId=` 后可以看到。
+
+:::
+
+</Route>
+
+## 北京证券交易所
+
+### 栏目
+
+<Route author="nczitzk" example="/bse" path="/bse/:category?/:keyword?" :paramsDesc="['分类，见下表，默认为本所要闻', '关键字，默认为空']">
+
+| 本所要闻       | 人才招聘 | 采购信息 | 业务通知  |
+| -------------- | -------- | -------- | --------- |
+| important_news | recruit  | purchase | news_list |
+
+| 法律法规 | 公开征求意见   | 部门规章        | 发行融资  |
+| -------- | -------------- | --------------- | --------- |
+| law_list | public_opinion | regulation_list | fxrz_list |
+
+| 持续监管  | 交易管理  | 市场管理  | 上市委会议公告 |
+| --------- | --------- | --------- | -------------- |
+| cxjg_list | jygl_list | scgl_list | meeting_notice |
+
+| 上市委会议结果公告 | 上市委会议变更公告 | 并购重组委会议公告 |
+| ------------------ | ------------------ | ------------------ |
+| meeting_result     | meeting_change     | bgcz_notice        |
+
+| 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核          | 注册结果     |
+| ---------------------- | ---------------------- | ----------------- | ------------ |
+| bgcz_result            | bgcz_change            | termination_audit | audit_result |
+
+</Route>
+
 ## 财联社
 
 ### 电报
@@ -79,6 +121,18 @@ pageClass: routes
 ### 搜索关键字
 
 <Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
+
+## 国家金融与发展实验室
+
+### 研究
+
+<Route author="Fatpandac" example="/nifd/research/3333d2af-91d6-429b-be83-28b92f31b6d7" path="/nifd/research/:categoryGuid?" :paramsDesc="['资讯类型，默认为周报']">
+
+资讯类型可以从网址中获取，如：
+
+`http://www.nifd.cn/Research?categoryGuid=7a6a826d-b525-42aa-b550-4236e524227f` 对应 `/nifd/research/7a6a826d-b525-42aa-b550-4236e524227f`
+
+</Route>
 
 ## 金十数据
 
@@ -155,6 +209,22 @@ pageClass: routes
 
 <Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
+## 乌拉邦
+
+### 最新研报
+
+<Route author="Fatpandac" example="/ulapia/research/latest" path="/ulapia/research/latest"/>
+
+### 频道
+
+<Route author="Fatpandac" example="/ulapia/reports/stock_research" path="/ulapia/reports/:category?" :paramsDesc="['频道类型，默认为券商晨报（今日晨报）']">
+
+|    个股研报    |      行业研报     |      策略研报     |    宏观研报    |   新股研报   | 券商晨报（今日晨报） |
+| :------------: | :---------------: | :---------------: | :------------: | :----------: | :------------------: |
+| stock_research | industry_research | strategy_research | macro_research | ipo_research |    brokerage_news    |
+
+</Route>
+
 ## 新浪财经
 
 ### 新浪财经－国內
@@ -187,7 +257,7 @@ pageClass: routes
 
 ### 组合最新调仓信息
 
-<Route author="ZhishanZhang" example="/xueqiu/p/ZH1288184" path="/xueqiu/snb/:id" :paramsDesc="['组合代码, 可在组合主页 URL 中找到.']"/>
+<Route author="ZhishanZhang" example="/xueqiu/snb/ZH1288184" path="/xueqiu/snb/:id" :paramsDesc="['组合代码, 可在组合主页 URL 中找到.']"/>
 
 ### 股票信息
 
@@ -202,6 +272,12 @@ pageClass: routes
 ### 股票评论
 
 <Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" :paramsDesc="['股票代码（需要带上交易所）', '标题长度']"/>
+
+## 有知有行
+
+### 有知文章
+
+<Route author="broven" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials" />
 
 ## 证券时报网
 

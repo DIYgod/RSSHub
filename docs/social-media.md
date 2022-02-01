@@ -242,7 +242,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户关注专栏
 
-<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsdesc="['用户 id']" selfhost="1">
+<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" :paramsDesc="['用户 id']" selfhost="1">
 ::: warning 注意
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -458,11 +458,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 话题 (标签)
 
-<Route author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['话题名(标签名) 例如 `名侦探柯南`', '排行类型, 默认显示最新话题, 取值如下']"/>
+<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['话题(标签)名 例如 `名侦探柯南`，默认为 `摄影`', '排行类型, 见下表，默认显示最新']">
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
 | 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
+
+</Route>
 
 ## Mastodon
 
@@ -651,6 +653,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=exclude_replies`时去除回复，`routeParams=exclude_rts`去除转推，`routeParams=exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1" rssbud="1"/>
 
+### 用户媒体时间线
+
+<Route author="yindaheng98" example="/twitter/media/DIYgod" path="/twitter/media/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格。']" radar="1" rssbud="1"/>
+
 ### 用户关注时间线
 
 <Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1" selfhost="1">
@@ -673,7 +679,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 关键词
 
-<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" :paramsDesc="['关键词', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?/limit?" :paramsDesc="['关键词', '额外参数；请参阅上面的说明和表格', '查询前多少条']" radar="1" rssbud="1"/>
 
 ### Trends
 
@@ -747,7 +753,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 用户
 
-<Route author="kt286" example="/changba/34108440" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应页面的 URL 中找到']" supportPodcast="1"/>
+<Route author="kt286 xizeyoupan" example="/changba/skp6hhF59n48R-UpqO3izw" path="/changba/:userid" :paramsDesc="['用户ID, 可在对应分享页面的 URL 中找到']" radar="1" supportPodcast="1"/>
 
 ## 大众点评
 
@@ -1120,7 +1126,16 @@ rule
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9" path="/weibo/super_index/:id/:routeParams?" :paramsDesc="['超话ID', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+
+| type      | 备注             |
+| --------- | ---------------- |
+| soul      | 精华             |
+| video     | 视频（暂不支持） |
+| album     | 相册（暂不支持） |
+| hot_sort  | 热门             |
+| sort_time | 最新帖子         |
+| feed      | 最新评论         |
 
 ### 个人时间线
 

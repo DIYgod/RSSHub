@@ -15,19 +15,20 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: ['14.x']
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run jest
-      env:
-        REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
-    - run: npm run docs:build
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-         token: ${{ secrets.CODECOV_TOKEN }}
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn
+      - run: npm run jest
+        env:
+          REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
+      - run: npm run docs:build
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

@@ -9,7 +9,7 @@ module.exports = async ({ github, context, core }, body, number) => {
     let res = null;
 
     const removeLabel = () =>
-        github.issues
+        github.rest.issues
             .removeLabel({
                 issue_number: number,
                 owner: context.repo.owner,
@@ -23,7 +23,7 @@ module.exports = async ({ github, context, core }, body, number) => {
     if (whiteListedUser.includes(context.payload.sender.login)) {
         core.info('PR created by a whitelisted user, passing');
         await removeLabel();
-        await github.issues
+        await github.rest.issues
             .addLabels({
                 issue_number: number,
                 owner: context.repo.owner,
@@ -45,7 +45,7 @@ module.exports = async ({ github, context, core }, body, number) => {
         if (res.length > 0 && res[0] === 'NOROUTE') {
             core.info('PR stated no route, passing');
             await removeLabel();
-            await github.issues
+            await github.rest.issues
                 .addLabels({
                     issue_number: number,
                     owner: context.repo.owner,
@@ -66,7 +66,7 @@ module.exports = async ({ github, context, core }, body, number) => {
 
     core.warning('seems no route found, failing');
 
-    await github.issues
+    await github.rest.issues
         .addLabels({
             issue_number: number,
             owner: context.repo.owner,
@@ -76,7 +76,7 @@ module.exports = async ({ github, context, core }, body, number) => {
         .catch((e) => {
             core.warning(e);
         });
-    await github.issues
+    await github.rest.issues
         .createComment({
             issue_number: number,
             owner: context.repo.owner,
@@ -87,7 +87,7 @@ Auto Route test failed, please check your PR body format and reopen pull request
         .catch((e) => {
             core.warning(e);
         });
-    await github.pulls
+    await github.rest.pulls
         .update({
             owner: context.repo.owner,
             repo: context.repo.repo,
