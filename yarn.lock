@@ -6333,10 +6333,10 @@ googleapis-common@^5.0.2:
     url-template "^2.0.8"
     uuid "^8.0.0"
 
-googleapis@91.0.0:
-  version "91.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-91.0.0.tgz#c5e51ca568ed687f0694a082237c7b7b96a19b3b"
-  integrity sha512-iHqXZwgYam0g8n0Yyi+YHx8kgwT+H5O4k3fe0LB1JhWRp1dSKYu+ShY4PQbW584zLOE4kK3LHf2B+x1THx+ZPQ==
+googleapis@94.0.0:
+  version "94.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-94.0.0.tgz#596cc226dbb0cb0e81edfb4310da804c4cafebdf"
+  integrity sha512-Rg5Mib5TF3kddtORJyMGED9Ga0CfR0Wx3tS8urpw3tRpLfANEf7DYfG3FGUWSrnDs+eDanEUVCY4HCy/muhw8w==
   dependencies:
     google-auth-library "^7.0.2"
     googleapis-common "^5.0.2"
@@ -13552,10 +13552,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
