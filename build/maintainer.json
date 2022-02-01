@@ -723,6 +723,18 @@
         "AlexdanerZe",
         "TonyRL"
     ],
+    "/zaobao/realtime/:section?": [
+        "shunf4"
+    ],
+    "/zaobao/znews/:section?": [
+        "shunf4"
+    ],
+    "/zaobao/:type/:section": [
+        "shunf4"
+    ],
+    "/zaobao/interactive-graphics": [
+        "shunf4"
+    ],
     "/zjgtjy/:type?": [
         "Fatpandac"
     ],
@@ -1253,10 +1265,6 @@
     "/ifanr/:channel?": [],
     "/guokr/scientific": [],
     "/guokr/:channel": [],
-    "/zaobao/realtime/:section?": [],
-    "/zaobao/znews/:section?": [],
-    "/zaobao/:type/:section": [],
-    "/zaobao/interactive-graphics": [],
     "/apple/exchange_repair/:country?": [],
     "/ipsw/index/:ptype/:pname": [],
     "/curseforge/files/:project": [],
