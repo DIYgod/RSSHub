@@ -593,6 +593,12 @@
     "/qm120/news/:category?": [
         "nczitzk"
     ],
+    "/qq/ac/comic/:id": [
+        "nczitzk"
+    ],
+    "/qq/ac/rank/:type?/:time?": [
+        "nczitzk"
+    ],
     "/qq/live/:id": [
         "nczitzk"
     ],
