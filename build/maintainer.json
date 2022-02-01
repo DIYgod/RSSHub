@@ -1680,6 +1680,8 @@
     "/sixthtone/news": [],
     "/aiyanxishe/:id/:sort?": [],
     "/huodongxing/explore": [],
+    "/flyert/preferential": [],
+    "/flyert/creditcard/:bank": [],
     "/flyertea/preferential": [],
     "/flyertea/creditcard/:bank": [],
     "/radio/:channelname/:name": [],
