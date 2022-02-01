@@ -716,6 +716,15 @@
     "/wenku8/chapter/:id": [
         "zsakvo"
     ],
+    "/whoscall/": [
+        "nczitzk"
+    ],
+    "/whoscall/tags/:tag?": [
+        "nczitzk"
+    ],
+    "/whoscall/categories/:category?": [
+        "nczitzk"
+    ],
     "/wsyu/news/:type?": [
         "Derekmini"
     ],
