@@ -578,6 +578,9 @@
     "/qq/live/:id": [
         "nczitzk"
     ],
+    "/radio-canada/latest/:language?": [
+        "nczitzk"
+    ],
     "/rfi/news": [
         "nczitzk"
     ],
