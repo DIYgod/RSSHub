@@ -39,6 +39,15 @@
 
         <pre class="message">Route requested: {{@ requestPath }}</pre>
         <pre class="message">Error message: {{@ message }}</pre>
+        <pre class="messaage">
+Helpful Information to provide when opening issue: 
+Path: {{@ errorPath }}
+Node version: {{@ nodeVersion}}
+        </pre>
+        <pre class="message">
+如果您认为 RSSHub 导致了该错误，请在Github按照模版，复制本页面信息进行<a href="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=&template=bug_report.md" target="_blank">汇报</a>
+If you believe this is an error caused by RSSHub, please <a href="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=&template=bug_report.md" target="_blank">report on github</a>
+        </pre>
 
         <div style="margin: 50px 0">
             <p>在线文档与支持，请访问<a href="https://docs.rsshub.app/" target="_blank">docs.rsshub.app</a>。</p>
