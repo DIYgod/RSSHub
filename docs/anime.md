@@ -489,7 +489,7 @@ Sources
 
 ### 排行榜
 
-<Route author="nczitzk" example="/ac/rank" path="/ac/rank/:type?/:time?" :paramsDesc="['分类，见下表，默认为月票榜']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/qq/ac/rank" path="/qq/ac/rank/:type?/:time?" :paramsDesc="['分类，见下表，默认为月票榜', '时间，`cur` 为当周、`prev` 为上周']" radar="1" rssbud="1">
 
 | 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
@@ -505,7 +505,7 @@ Sources
 
 ### 漫画
 
-<Route author="nczitzk" example="/ac/comic/531490" path="/ac/comic/:id" :paramsDesc="['编号，可在对应页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/qq/ac/comic/531490" path="/qq/ac/comic/:id" :paramsDesc="['编号，可在对应页 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 忧郁的 loli
 
