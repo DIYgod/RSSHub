@@ -1606,6 +1606,26 @@ area 分区选项
 
 </Route>
 
+## 風傳媒
+
+### 分类
+
+<Route author="nczitzk" example="/storm" path="/storm/:category?/:id?" :paramsDesc="['分类，见下表，默认为新聞總覽']">
+
+| 新聞總覽 | 地方新聞      | 歷史頻道 | 評論總覽    |
+| -------- | ------------- | -------- | ----------- |
+| articles | localarticles | history  | all-comment |
+
+::: tip 提示
+
+支持形如 <https://www.storm.mg/category/118> 的路由，即 [`/storm/category/118`](https://rsshub.app/storm/category/118)
+
+支持形如 <https://www.storm.mg/localarticle-category/s149845> 的路由，即 [`/storm/localarticle-category/s149845`](https://rsshub.app/storm/localarticle-category/s149845)
+
+:::
+
+</Route>
+
 ## 凤凰网
 
 ### 大风号
@@ -2873,26 +2893,6 @@ column 为 third 时可选的 category:
 ### 更新
 
 <Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
-
-## 風傳媒
-
-### 分类
-
-<Route author="nczitzk" example="/storm" path="/storm/:category?/:id?" :paramsDesc="['分类，见下表，默认为新聞總覽']">
-
-| 新聞總覽 | 地方新聞      | 歷史頻道 | 評論總覽    |
-| -------- | ------------- | -------- | ----------- |
-| articles | localarticles | history  | all-comment |
-
-::: tip 提示
-
-支持形如 <https://www.storm.mg/category/118> 的路由，即 [`/storm/category/118`](https://rsshub.app/storm/category/118)
-
-支持形如 <https://www.storm.mg/localarticle-category/s149845> 的路由，即 [`/storm/localarticle-category/s149845`](https://rsshub.app/storm/localarticle-category/s149845)
-
-:::
-
-</Route>
 
 ## 通識・現代中國
 
