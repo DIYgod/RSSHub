@@ -146,6 +146,10 @@ pageClass: routes
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
+### 教育部考试中心日本语能力测试重要通知
+
+<Route author="nczitzk" example="/neea/jlpt" path="/neea/jlpt"/>
+
 ## ProcessOn
 
 ### 推荐
