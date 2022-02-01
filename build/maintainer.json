@@ -107,6 +107,10 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/changba/changba/:userid": [
+        "xizeyoupan",
+        "kt286"
+    ],
     "/chaoxing/qk/:id/:needContent?": [
         "nczitzk"
     ],
@@ -1686,7 +1690,6 @@
     "/csrc/fashenwei": [],
     "/csrc/auditstatus/:apply_id": [],
     "/lwn/alerts/:distributor": [],
-    "/changba/:userid": [],
     "/lol/newsindex/:type": [],
     "/lolapp/recommend": [],
     "/lolapp/article/:uuid": [],
