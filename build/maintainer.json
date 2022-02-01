@@ -416,6 +416,9 @@
     "/lanqiao/questions/:id": [
         "huhuhang"
     ],
+    "/latepost/:proma?": [
+        "nczitzk"
+    ],
     "/lativ/:id": [
         "Fatpandac"
     ],
@@ -2485,7 +2488,6 @@
     "/yinxiang/card/:id": [],
     "/yinxiang/personal/:id": [],
     "/yinxiang/category/:id": [],
-    "/latepost/:proma?": [],
     "/ixigua/user/video/:uid/:disableEmbed?": [],
     "/gvm/index/:category?": [],
     "/chuapp/index/:category?": [],
