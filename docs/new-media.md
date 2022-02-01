@@ -1610,7 +1610,7 @@ area 分区选项
 
 ### 分类
 
-<Route author="nczitzk" example="/storm" path="/storm/:category?/:id?" :paramsDesc="['分类，见下表，默认为新聞總覽']">
+<Route author="nczitzk" example="/storm" path="/storm/:category?/:id?" :paramsDesc="['分类，见下表，默认为新聞總覽', '子分类 ID，可在 URL 中找到']">
 
 | 新聞總覽 | 地方新聞      | 歷史頻道 | 評論總覽    |
 | -------- | ------------- | -------- | ----------- |
