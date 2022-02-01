@@ -185,6 +185,9 @@
     "/eventernote/actors/:name/:id": [
         "KTachibanaM"
     ],
+    "/ezone/:category?": [
+        "nczitzk"
+    ],
     "/filmdeepfocus/:category?": [
         "nczitzk"
     ],
@@ -2587,7 +2590,6 @@
     "/trakt/collection/:username/:type?": [],
     "/ccg/:category?": [],
     "/eagle/changelog/:language?": [],
-    "/ezone/:category?": [],
     "/cria/news/:id?": [],
     "/lingyi/:category": [],
     "/wainao-reads/all-articles": [],
