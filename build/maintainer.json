@@ -156,6 +156,12 @@
     "/distill/": [
         "nczitzk"
     ],
+    "/dockerhub/build/:owner/:image/:tag?": [
+        "HenryQW"
+    ],
+    "/dockerhub/tag/:owner/:image": [
+        "outloudvi"
+    ],
     "/douban/book/latest": [
         "fengkx"
     ],
@@ -1574,7 +1580,6 @@
     "/jpmorganchase": [],
     "/meipai/user/:uid": [],
     "/duozhi": [],
-    "/dockerhub/build/:owner/:image/:tag?": [],
     "/woshipm/popular": [],
     "/woshipm/wen": [],
     "/woshipm/bookmarks/:id": [],
