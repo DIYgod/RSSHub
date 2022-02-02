@@ -156,6 +156,84 @@
     "/distill/": [
         "nczitzk"
     ],
+    "/douban/book/latest": [
+        "fengkx"
+    ],
+    "/douban/book/rank/:type?": [
+        "xyqfer",
+        "queensferryme"
+    ],
+    "/douban/bookstore": [
+        "xyqfer"
+    ],
+    "/douban/celebrity/:id/:sort?": [
+        "minimalistrojan"
+    ],
+    "/douban/channel/:id/:nav?": [
+        "umm233"
+    ],
+    "/douban/channel/:id/subject/:nav": [
+        "umm233"
+    ],
+    "/douban/commercialpress/latest": [
+        "xyqfer"
+    ],
+    "/douban/doulist/:id": [
+        "LogicJake"
+    ],
+    "/douban/event/hot/:locationId": [
+        "xyqfer"
+    ],
+    "/douban/explore": [
+        "clarkzsd"
+    ],
+    "/douban/explore_column/:id": [
+        "LogicJake"
+    ],
+    "/douban/group/:groupid/:type?": [
+        "DIYgod"
+    ],
+    "/douban/jobs/:type": [
+        "Fatpandac"
+    ],
+    "/douban/movie/classification/:sort?/:score?/:tags?": [
+        "zzwab"
+    ],
+    "/douban/movie/later": [
+        "DIYgod"
+    ],
+    "/douban/movie/playing": [
+        "DIYgod"
+    ],
+    "/douban/movie/playing/:score": [
+        "DIYgod"
+    ],
+    "/douban/movie/ustop": [
+        "DIYgod"
+    ],
+    "/douban/movie/weekly/:type?": [
+        "numm233",
+        "nczitzk"
+    ],
+    "/douban/music/latest/:area?": [
+        "fengkx",
+        "xyqfer"
+    ],
+    "/douban/people/:userid/status/:routeParams": [
+        "alfredcai"
+    ],
+    "/douban/people/:userid/wish/:routeParams?": [
+        "exherb"
+    ],
+    "/douban/replied/:uid": [
+        "nczitzk"
+    ],
+    "/douban/replies/:uid": [
+        "nczitzk"
+    ],
+    "/douban/topic/:id/:sort?": [
+        "LogicJake"
+    ],
     "/dushu/fuzhou": [
         "Fatpandac"
     ],
@@ -891,31 +969,6 @@
     "/pixiv/ranking/:mode/:date?": [],
     "/pixiv/search/:keyword/:order?/:mode?": [],
     "/fanbox/:user?": [],
-    "/douban/movie/playing": [],
-    "/douban/movie/playing/:score": [],
-    "/douban/movie/playing/:score/:city": [],
-    "/douban/movie/later": [],
-    "/douban/movie/ustop": [],
-    "/douban/movie/weekly/:type?": [],
-    "/douban/movie/classification/:sort?/:score?/:tags?": [],
-    "/douban/group/:groupid/:type?": [],
-    "/douban/explore": [],
-    "/douban/music/latest/:area?": [],
-    "/douban/book/latest": [],
-    "/douban/event/hot/:locationId": [],
-    "/douban/commercialpress/latest": [],
-    "/douban/bookstore": [],
-    "/douban/book/rank/:type?": [],
-    "/douban/doulist/:id": [],
-    "/douban/explore/column/:id": [],
-    "/douban/people/:userid/status/:routeParams?": [],
-    "/douban/people/:userid/wish/:routeParams?": [],
-    "/douban/replies/:uid": [],
-    "/douban/replied/:uid": [],
-    "/douban/topic/:id/:sort?": [],
-    "/douban/channel/:id/:nav?": [],
-    "/douban/channel/:id/subject/:nav": [],
-    "/douban/celebrity/:id/:sort?": [],
     "/plainlaw/archives": [],
     "/dapenti/tugua": [],
     "/dapenti/subject/:id": [],
