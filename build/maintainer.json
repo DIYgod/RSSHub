@@ -863,7 +863,7 @@
     "/jianshu/trending/:timeframe": [],
     "/jianshu/collection/:id": [],
     "/jianshu/user/:id": [],
-    "/zhihu/collection/:id": [],
+    "/zhihu/collection/:id/:getAll?": [],
     "/zhihu/people/activities/:id": [],
     "/zhihu/people/answers/:id": [],
     "/zhihu/posts/:usertype/:id": [],
