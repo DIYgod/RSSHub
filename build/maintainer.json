@@ -748,6 +748,10 @@
     "/szse/rule": [
         "nczitzk"
     ],
+    "/taobao/zhongchou/:type?": [
+        "xyqfer",
+        "Fatpandac"
+    ],
     "/telegram/telegram/channel/:username/:searchQuery?": [
         "DIYgod"
     ],
@@ -1519,7 +1523,6 @@
     "/icourse163/newest": [],
     "/patchwork.kernel.org/comments/:id": [],
     "/jingdong/zhongchou/:type/:status/:sort": [],
-    "/taobao/zhongchou/:type?": [],
     "/allpoetry/:order?": [],
     "/duozhuayu/search/:wd": [],
     "/cyzone/author/:id": [],
