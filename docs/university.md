@@ -1835,13 +1835,13 @@ type 列表：
 
 </Route>
 
-### 教务处通知公告（全文输出）
+### 教务处通知公告
 
-<Route author="SeanChao" example="/sjtu/jwc/students" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 students ']">
+<Route author="SeanChao" example="/sjtu/jwc/" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 all ']">
 
-| 面向学生的通知 | 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 工会与支部 |
-| -------------- | -------- | -------- | --------- | -------- | ------ | ------ | ------ | ---------- |
-| students       | news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | party      |
+| 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 |
+| -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |
+| news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | language | party      | ge       |
 
 </Route>
 
