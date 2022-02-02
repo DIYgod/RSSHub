@@ -140,7 +140,7 @@ git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ### 更新
@@ -149,7 +149,7 @@ sudo ansible-playbook rsshub.yaml
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ## 手动部署
