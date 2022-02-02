@@ -371,6 +371,24 @@
     "/github/user/followers/:user": [
         "HenryQW"
     ],
+    "/google/album/:id": [
+        "hoilc"
+    ],
+    "/google/citations/:id": [
+        "KellyHwong"
+    ],
+    "/google/doodles/:language?": [
+        "xyqfer"
+    ],
+    "/google/fonts/:sort?": [
+        "Fatpandac"
+    ],
+    "/google/scholar/:query": [
+        "HenryQW"
+    ],
+    "/google/sites/:id": [
+        "hoilc"
+    ],
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
     ],
@@ -1189,11 +1207,6 @@
     "/atfd/:locations/:nearby?": [],
     "/fir/update/:id": [],
     "/nvidia/webdriverupdate": [],
-    "/google/citations/:id": [],
-    "/google/scholar/:query": [],
-    "/google/doodles/:language?": [],
-    "/google/album/:id": [],
-    "/google/sites/:id": [],
     "/imuseum/:city/:type?": [],
     "/appstore/update/:country/:id": [],
     "/appstore/price/:country/:type/:id": [],
