@@ -6,7 +6,7 @@ on:
       - master
     paths:
       - 'lib/**'
-      - '.github/workflows/**'
+      - '.github/workflows/docker-release.yml'
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
