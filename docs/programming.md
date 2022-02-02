@@ -281,23 +281,29 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分区
 
-<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?" :paramsDesc="['内容分区，见下表，默认为 index', '链接类型，见下表，默认为 sources']">
+<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']">
 
 内容分区
 
-| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      |
-| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) |
 
 条目指向链接类型
 
-| 用户分享的来源地址 | Hacker News 上的讨论页面 |
-| ------------------ | ------------------------ |
-| sources            | comments                 |
+| 用户分享的来源地址 | Hacker News 上的讨论页面 | 读取回复列表  |
+| ------------------ | ------------------------ | ------------- |
+| sources            | comments                 | comments_list |
 
 > 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 homepage，应优先考虑。
 
 </Route>
+
+### 用户
+
+订阅特定用户的内容
+
+<Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']" />
 
 ## Hex-Rays
 
