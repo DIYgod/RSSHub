@@ -3295,6 +3295,26 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 消费者委员会
+
+### 文章
+
+<Route author="nczitzk" example="/consumer" path="/consumer/:category?/:language?/:keyword?" :paramsDesc="['分类，见下表，默认为測試及調查', '语言，见下表，默认为繁体中文', '关键字，默认为空']">
+
+分类
+
+| 测试及调查 | 生活资讯 | 投诉实录  | 议题评论 |
+| ---------- | -------- | --------- | -------- |
+| test       | life     | complaint | topic    |
+
+语言
+
+| 简体中文 | 繁体中文 |
+| -------- | -------- |
+| sc       | tc       |
+
+</Route>
+
 ## 辛華社
 
 ### 首页
