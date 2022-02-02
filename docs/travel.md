@@ -55,11 +55,11 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 ### 优惠信息
 
-<Route author="howel52" example="/flyertea/preferential" path="/flyertea/preferential" />
+<Route author="howel52" example="/flyert/preferential" path="/flyert/preferential" />
 
 ### 信用卡
 
-<Route author="nicolaszf" example="/flyertea/creditcard/zhongxin" path="/flyertea/creditcard/:bank" :paramsDesc="['信用卡板块各银行的拼音简称']">
+<Route author="nicolaszf" example="/flyert/creditcard/zhongxin" path="/flyert/creditcard/:bank" :paramsDesc="['信用卡板块各银行的拼音简称']">
 
 | 信用卡模块 | bank          |
 | ---------- | ------------- |
