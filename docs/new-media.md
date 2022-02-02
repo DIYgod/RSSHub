@@ -3265,6 +3265,26 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/ornl/news" path="/ornl/news"/>
 
+## 消费者委员会
+
+### 文章
+
+<Route author="nczitzk" example="/consumer" path="/consumer/:category?/:language?/:keyword?" :paramsDesc="['分类，见下表，默认为測試及調查', '语言，见下表，默认为繁体中文', '关键字，默认为空']">
+
+分类
+
+| 测试及调查 | 生活资讯 | 投诉实录  | 议题评论 |
+| ---------- | -------- | --------- | -------- |
+| test       | life     | complaint | topic    |
+
+语言
+
+| 简体中文 | 繁体中文 |
+| -------- | -------- |
+| sc       | tc       |
+
+</Route>
+
 ## 小刀娱乐网
 
 <Route author="nczitzk" example="/x6d/34" path="/x6d/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']">
@@ -3292,26 +3312,6 @@ column 为 third 时可选的 category:
 | 资源宝库 | 书籍资料 | 设计资源 | 剪辑资源 | 办公资源 | 壁纸资源 | 编程资源 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 106      | 107      | 108      | 109      | 110      | 111      | 113      |
-
-</Route>
-
-## 消费者委员会
-
-### 文章
-
-<Route author="nczitzk" example="/consumer" path="/consumer/:category?/:language?/:keyword?" :paramsDesc="['分类，见下表，默认为測試及調查', '语言，见下表，默认为繁体中文', '关键字，默认为空']">
-
-分类
-
-| 测试及调查 | 生活资讯 | 投诉实录  | 议题评论 |
-| ---------- | -------- | --------- | -------- |
-| test       | life     | complaint | topic    |
-
-语言
-
-| 简体中文 | 繁体中文 |
-| -------- | -------- |
-| sc       | tc       |
 
 </Route>
 
