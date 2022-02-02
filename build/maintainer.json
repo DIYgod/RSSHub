@@ -331,8 +331,45 @@
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
+    "/github/branches/:user/:repo": [
+        "max-arnold"
+    ],
     "/github/comments/:user/:repo/:type/:number": [
         "TonyRL"
+    ],
+    "/github/contributors/:user/:repo/:order?/:anon?": [
+        "zoenglinghou"
+    ],
+    "/github/file/:user/:repo/:branch/:filepath+": [
+        "zengxs"
+    ],
+    "/github/issue/:user/:repo/:state?/:labels?": [
+        "HenryQW",
+        "AndreyMZ"
+    ],
+    "/github/pull/:user/:repo": [
+        "hashman"
+    ],
+    "/github/repos/:user": [
+        "DIYgod"
+    ],
+    "/github/search/:query/:sort?/:order?": [
+        "LogicJake"
+    ],
+    "/github/starred_repos/:user": [
+        "LanceZhu"
+    ],
+    "/github/stars/:user/:repo": [
+        "HenryQW"
+    ],
+    "/github/topics/:name/:qs?": [
+        "queensferryme"
+    ],
+    "/github/trending/:since/:language?/:spoken_language?": [
+        "DIYgod"
+    ],
+    "/github/user/followers/:user": [
+        "HenryQW"
     ],
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
@@ -1017,18 +1054,6 @@
     "/v2ex/post/:postid": [],
     "/v2ex/tab/:tabid": [],
     "/readhub/category/:category": [],
-    "/github/repos/:user": [],
-    "/github/trending/:since/:language?/:spoken_language?": [],
-    "/github/issue/:user/:repo/:state?/:labels?": [],
-    "/github/pull/:user/:repo": [],
-    "/github/user/followers/:user": [],
-    "/github/stars/:user/:repo": [],
-    "/github/search/:query/:sort?/:order?": [],
-    "/github/branches/:user/:repo": [],
-    "/github/file/:user/:repo/:branch/:filepath+": [],
-    "/github/starred_repos/:user": [],
-    "/github/contributors/:user/:repo/:order?/:anon?": [],
-    "/github/topics/:name/:qs?": [],
     "/fdroid/apprelease/:app": [],
     "/konachan/post/popular_recent": [],
     "/konachan.com/post/popular_recent": [],
