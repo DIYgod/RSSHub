@@ -132,6 +132,9 @@
     "/codeforces/contests": [
         "Fatpandac"
     ],
+    "/consumer/:category?/:language?/:keyword?": [
+        "nczitzk"
+    ],
     "/cool18/:id?/:type?/:keyword?": [
         "nczitzk"
     ],
