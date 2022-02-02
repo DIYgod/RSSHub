@@ -198,7 +198,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Section
 
-<RouteEn author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?" :paramsDesc="['Section, see below, index by default', 'Link, see below, sources by default']">
+<RouteEn author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['Section, see below, index by default', 'Link, see below, sources by default', 'User, only valid for section threads and submitted']">
 
 Section
 
@@ -208,13 +208,19 @@ Section
 
 Items link to
 
-| Source addresses shared by users | Comments on Hacker News |
-| -------------------------------- | ----------------------- |
-| sources                          | comments                |
+| Source addresses shared by users | Comments on Hacker News | Comments list  |
+| -------------------------------- | ----------------------- | -------------- |
+| sources                          | comments                | comments_list  |
 
 > Default RSS by the website: <https://news.ycombinator.com/rss>, same as `index` section, should be the first choice.
 
 </RouteEn>
+
+### Follow User
+
+Subscribe to the updates (threads and submission) from a paritcular Hacker News user
+
+<RouteEn author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['Section, see below, index by default', 'Link, see below, sources by default', 'User, only valid for section threads and submitted']">
 
 ## Hex-Rays
 
