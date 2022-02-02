@@ -10,6 +10,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
+## ACM-ECNU 比赛
+
+### 华东师范大学 ACM OJ 比赛列表
+
+<Route author="a180285" example="/acm-ecnu/contest/public" path="/acm-ecnu/contest/:category?" radar="1" rssbud="1" :paramsDesc="['分类可选，不写代表全部，public 代表仅订阅公开比赛']" />
+
 ## AI 研习社
 
 ### 首页
@@ -24,6 +30,56 @@ pageClass: routes
 
 > AlgoCasts 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
+## AtCoder
+
+### Present Contests
+
+<Route author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '状态，见下表，默认为 Recent Contests']">
+
+状态
+
+| Active Contests | Upcoming Contests | Recent Contests |
+| --------------- | ----------------- | --------------- |
+| active          | upcoming          | recent          |
+
+</Route>
+
+### Contests Archive
+
+<Route author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', 'Rated 对象，见下表，默认为全部', '分类，见下表，默认为全部', '关键字，默认为空']">
+
+Rated 对象
+
+| ABC Class (Rated for ~1999) | ARC Class (Rated for ~2799) | AGC Class (Rated for ~9999) |
+| --------------------------- | --------------------------- | --------------------------- |
+| 1                           | 2                           | 3                           |
+
+分类
+
+| All | AtCoder Typical Contest | PAST Archive | Unofficial(unrated) |
+| --- | ----------------------- | ------------ | ------------------- |
+| 0   | 6                       | 50           | 101                 |
+
+| JOI Archive | Sponsored Tournament | Sponsored Parallel(rated) |
+| ----------- | -------------------- | ------------------------- |
+| 200         | 1000                 | 1001                      |
+
+| Sponsored Parallel(unrated) | Optimization Contest |
+| --------------------------- | -------------------- |
+| 1002                        | 1200                 |
+
+</Route>
+
+### Posts
+
+<Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']"/>
+
+## Codeforces
+
+#### 最新比赛
+
+<Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
+
 ## cve.mitre.org
 
 ### 搜索结果
@@ -31,6 +87,8 @@ pageClass: routes
 <Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['关键词']" />
 
 ## dbaplus 社群
+
+### 栏目
 
 <Route author="nczitzk" example="/dbaplus" path="/dbaplus/:tab?" :paramsDesc="['栏目，见下表，默认为全部']">
 
@@ -40,11 +98,27 @@ pageClass: routes
 
 </Route>
 
+### 活动
+
+<Route author="nczitzk" example="/dbaplus/activity" path="/dbaplus/activity/:type?" :paramsDesc="['分类，见下表，默认为线上分享']">
+
+| 线上分享 | 线下峰会 |
+| -------- | -------- |
+| online   | offline  |
+
+</Route>
+
 ## deeplearning.ai
 
 ### TheBatch 周报
 
 <Route author="nczitzk" example="/deeplearningai/thebatch" path="/deeplearningai/thebatch"/>
+
+## Distill
+
+### Latest
+
+<Route author="nczitzk" example="/distill" path="/distill"/>
 
 ## Dockone
 
@@ -101,7 +175,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript" path="/github/trending/:since/:language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly) URL 中找到']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language?/:spoken_language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到', '自然语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1"/>
 
 ### Topics
 
@@ -173,6 +247,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['用户名', '仓库名', 'Commit 数量排序顺序，desc和asc（默认desc降序）', '是否包括匿名用户，默认不包含，任意值包含匿名用户']" radar="1" rssbud="1"/>
 
+### Issues / Pull Requests 评论
+
+<Route author="TonyRL" example="/github/comments/DIYgod/RSSHub/issues/8116" path="/github/comments/:user/:repo/:type/:number" :paramsDesc="['用户名', '仓库', '类型，`issues`或`pull`', '编号']"/>
+
 ## GitLab
 
 ### Explore
@@ -201,28 +279,23 @@ GitHub 官方也提供了一些 RSS:
 
 ## Hacker News
 
-### 分类
+### 分区
 
-<Route author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['内容分区', '链接类型（可不填）']">
+<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?" :paramsDesc="['内容分区，见下表，默认为 index', '链接类型，见下表，默认为 sources']">
 
-网站地址：<https://news.ycombinator.com/>
+内容分区
 
-| 内容分区 | section                               |
-| -------- | ------------------------------------- |
-| index    | <https://news.ycombinator.com/>       |
-| new      | <https://news.ycombinator.com/newest> |
-| past     | <https://news.ycombinator.com/front>  |
-| ask      | <https://news.ycombinator.com/ask>    |
-| show     | <https://news.ycombinator.com/show>   |
-| jobs     | <https://news.ycombinator.com/jobs>   |
-| best     | <https://news.ycombinator.com/best>   |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) |
 
-> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 index，应优先考虑
+条目指向链接类型
 
-| 链接类型 | type                          |
-| -------- | ----------------------------- |
-| story    | 默认值，链向用户分享的地址    |
-| comments | 链向 Hacker News 上的讨论页面 |
+| 用户分享的来源地址 | Hacker News 上的讨论页面 |
+| ------------------ | ------------------------ |
+| sources            | comments                 |
+
+> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 homepage，应优先考虑。
 
 </Route>
 
@@ -313,6 +386,30 @@ GitHub 官方也提供了一些 RSS:
 注意标识大小写
 
 :::
+
+</Route>
+
+## Node.js
+
+### News
+
+<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" :paramsDesc="['语言，见下表，默认为 en']">
+
+| العربية | Catalan | Deutsch | Español | زبان فارسی |
+| ------- | ------- | ------- | ------- | ---------- |
+| ar      | ca      | de      | es      | fa         |
+
+| Français | Galego | Italiano | 日本語 | 한국어 |
+| -------- | ------ | -------- | ------ | ------ |
+| fr       | gl     | it       | ja     | ko     |
+
+| Português do Brasil | limba română | Русский | Türkçe | Українська |
+| ------------------- | ------------ | ------- | ------ | ---------- |
+| pt-br               | ro           | ru      | tr     | uk         |
+
+| 简体中文 | 繁體中文 |
+| -------- | -------- |
+| zh-cn    | zh-tw    |
 
 </Route>
 
@@ -438,6 +535,22 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 安全内参
+
+### 分类
+
+<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category"/>
+
+### 作者
+
+<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author"/>
+
+## 安全文摘
+
+### 首页
+
+<Route author="kaiili" example="/secnews" path="/secnews" />
+
 ## 饿了么开放平台
 
 ### 商家开放平台公告
@@ -540,16 +653,6 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']"/>
 
-## 开发者头条
-
-### 今天头条
-
-<Route author="jjeejj" example="/toutiao/today" path="/toutiao/today"/>
-
-### 独家号
-
-<Route author="jjeejj" example="/toutiao/user/140544" path="/toutiao/user/:id" :paramsDesc="['独家号 id, 可在对应独家号页 URL 中找到']"/>
-
 ## 开源中国
 
 ### 资讯
@@ -609,6 +712,20 @@ GitHub 官方也提供了一些 RSS:
 ### 职位招聘
 
 <Route author="hoilc" example="/lagou/jobs/JavaScript/上海" path="/lagou/jobs/:position/:city" :paramsDesc="['职位名，可以参考[拉勾网首页](https://www.lagou.com)的职位列表', '城市名，请参考[拉勾网支持的全部城市](https://www.lagou.com/jobs/allCity.html)']" anticrawler="1"/>
+
+## 蓝桥云课
+
+### 最新发布的课程
+
+<Route author="huhuhang" example="/lanqiao/courses/全部" path="/lanqiao/courses/:tag"  :paramsDesc="['课程标签 tag 可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1" rssbud="1"/>
+
+### 作者发布的课程
+
+<Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  :paramsDesc="['作者 uid 可在作者主页 URL 中找到']" radar="1" rssbud="1"/>
+
+### 社区最新技术问答
+
+<Route author="huhuhang" example="/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 id 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 洛谷
 

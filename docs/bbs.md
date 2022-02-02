@@ -64,6 +64,30 @@ pageClass: routes
 
 </Route>
 
+## 423Down
+
+### 分类
+
+<Route author="Fatpandac" example="/423down/index/all" path="/423down/:category/:type" :paramsDesc="['类型', '分类']" radar="1">
+
+| category | 全部 |
+| :------: | :--: |
+|   index  |  all |
+
+| category | 安卓软件 |
+| :------: | :------: |
+|  android |    apk   |
+
+| category |   原创软件   |  媒体播放  | 网页浏览 | 图形图像 | 聊天软件 | 办公软件 | 上传下载 |  系统辅助  |  系统必备  | 安全软件 | 补丁相关 | 硬件相关 |
+| :------: | :----------: | :--------: | :------: | :------: | :------: | :------: | :------: | :--------: | :--------: | :------: | :------: | :------: |
+| computer | originalsoft | multimedia |  browser |   image  |    im    |   work   |   down   | systemsoft | systemplus | security |   patch  | hardware |
+
+| category | windows 11 | windows 10 | windows 7 | windows xp | windows pe |
+| :------: | :--------: | :--------: | :-------: | :--------: | :--------: |
+|    os    |    win11   |    win10   |    win7   |    winxp   |    winpe   |
+
+</Route>
+
 ## A 岛匿名版
 
 ### 串
@@ -398,13 +422,37 @@ pageClass: routes
 
 ## 集思录
 
+### 广场
+
+<Route author="nczitzk" example="/jisilu" path="/jisilu/:category?/:sort?/:day?" :paramsDesc="['分类，见下表，默认为全部，可在 URL 中找到', '排序，见下表，默认为最新，可在 URL 中找到', '几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效']">
+
+分类
+
+| 全部 | 债券 / 可转债 | 基金 | 套利 | 新股 |
+| ---- | ------------- | ---- | ---- | ---- |
+|      | 4             | 7    | 5    | 3    |
+
+排序
+
+| 最新 | 热门 | 按发表时间 |
+| ---- | ---- | ---------- |
+|      | hot  | add_time   |
+
+几天内
+
+| 30 天 | 7 天 | 当天 |
+| ----- | ---- | ---- |
+| 30    | 7    | 1    |
+
+</Route>
+
 ### 用户回复
 
 <Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
 ### 用户主题
 
-<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/topic/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
 ## 看雪
 
@@ -845,3 +893,5 @@ pageClass: routes
 | 灵异事件      | 灵异图片     | 民间奇谈     |
 | ------------- | ------------ | ------------ |
 | lingyishijain | lingyitupian | minjianqitan |
+
+</Route>
