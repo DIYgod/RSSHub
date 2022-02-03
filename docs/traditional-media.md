@@ -157,7 +157,6 @@ pageClass: routes
 ::: tip 提示
 
 -   不支持付费文章。
--   由于未知原因 FT 中文网的 SSL 证书不被信任 （参见 [SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取。
 
 :::
 
@@ -214,6 +213,32 @@ pageClass: routes
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
 ## Now 新聞
+
+### 新聞
+
+<Route author="nczitzk" example="/now/news" path="/now/news/:category?/:id?" :paramsDesc="['分类，见下表，默认为首页', '编号，可在对应专题/节目页 URL 中找到 topicId']">
+
+::: tip 提示
+
+**编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
+
+对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123&topicId=1056) 话题，其网址为<https://news.now.com/home/tracker/detail?catCode=123&topicId=1056>，其中 `topicId` 为 1056，则对应路由为 [`/now/news/tracker/1056`](https://rsshub.app/now/news/tracker/1056)
+
+:::
+
+| 首頁 | 港聞  | 兩岸國際      | 娛樂          |
+| ---- | ----- | ------------- | ------------- |
+|      | local | international | entertainment |
+
+| 生活 | 科技       | 財經    | 體育   |
+| ---- | ---------- | ------- | ------ |
+| life | technology | finance | sports |
+
+| 事件追蹤 | 評論節目 | 新聞專題 |
+| -------- | -------- | -------- |
+| tracker  | feature  | opinion  |
+
+</Route>
 
 ### 熱門
 
@@ -634,6 +659,18 @@ IT・科学 tech_science
 
 <Route author="nczitzk" example="/eastday/portrait" path="/eastday/portrait"/>
 
+## 东网
+
+<Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
+
+频道参数可以从官网的地址中获取，如：
+
+`https://hk.on.cc/hk/finance/index_cn.html` 对应 `/oncc/zh-hans/finance`
+
+`https://hk.on.cc/hk/finance/index.html` 对应 `/oncc/zh-hant/finance`
+
+</Route>
+
 ## 読売新聞
 
 ### 新聞
@@ -712,6 +749,16 @@ Type 栏目：
 ### 即時新聞
 
 <Route author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>
+
+## 国际金融报栏目
+
+### 栏目
+
+<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
+
+`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
+
+</Route>
 
 ## 华尔街见闻
 
@@ -881,9 +928,9 @@ category 对应的关键词有
 
 <Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类，缺省为 china']">
 
-| 中国  | 新加坡    | 东南亚 | 国际  | 体育   | 早报现在 |
-| ----- | --------- | ------ | ----- | ------ | -------- |
-| china | singapore | sea    | world | sports | fukan    |
+| 中国  | 新加坡    | 东南亚 | 国际  | 体育   |
+| ----- | --------- | ------ | ----- | ------ |
+| china | singapore | sea    | world | sports |
 
 </Route>
 
@@ -1073,6 +1120,20 @@ category 对应的关键词有
 
 </Route>
 
+## 苹果新闻网
+
+### 频道
+
+<Route author="Fatpandac" example="/appledaily/home" path="/appledaily/:channel?" :paramsDesc="['频道，默认为主页']">
+
+频道参数均可在官网获取，如：
+
+`https://tw.appledaily.com/realtime/micromovie/` 对应 `/appledaily/micromovie`
+
+`https://tw.appledaily.com/home/` 对应 `/appledaily/home`
+
+</Route>
+
 ## 齐鲁晚报
 
 ### 新闻
@@ -1091,13 +1152,29 @@ category 对应的关键词有
 
 ## 人民网
 
-### 观点
+### 通用
 
-<Route author="LogicJake" example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
+<Route author="nczitzk" example="/people" path="/people/:site?/:category?" :paramsDesc="['站点，可在对应站点 URL 中找到', '分类，可在对应分类页中找到']">
 
-### 环保频道
+订阅 **单级** 栏目如 [滚动 -- 生态 -- 人民网](http://env.people.com.cn/GB/74877/index.html) 分类栏目，分为 3 步：
 
-<Route author="zsimple" example="/people/env/74877" path="/people/env/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
+1.  将 URL <http://env.people.com.cn/GB/74877/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `env` 作为 `site` 参数填入；
+2.  将 `http://env.people.com.cn/GB/` 与 `/index.html` 间的 `74877` 作为 `category` 参数填入；
+3.  最终可获得 [`/people/env/74877`](https://rsshub.app/people/env/74877)。
+
+订阅 **多级** 栏目如 [经济观察 -- 观点 -- 人民网](http://opinion.people.com.cn/GB/427456/434878/index.html) 分类栏目，同样分为 3 步：
+
+1.  将 URL <http://opinion.people.com.cn/GB/427456/434878/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `opinion` 作为 `site` 参数填入；
+2.  把 `http://opinion.people.com.cn/GB/` 与 `/index.html` 间 `427456/434878` 作为 `category` 参数填入；
+3.  最终可获得 [`/people/opinion/427456/434878`](https://rsshub.app/people/opinion/427456/434878)。
+
+::: tip 提示
+
+人民网大部分站点支持上述通用规则进行订阅。
+
+:::
+
+</Route>
 
 ### 习近平系列重要讲话
 
@@ -1107,14 +1184,6 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/people/cpc/24h" path="/people/cpc/24h"/>
 
-### 国际金融报栏目
-
-<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
-
-`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
-
-</Route>
-
 ### 领导留言板
 
 <Route author="nczitzk" example="/people/liuyan/539" path="/people/liuyan/:id/:state?" :paramsDesc="['编号，可在对应人物页 URL 中找到', '状态，见下表，默认为全部']">
@@ -1122,6 +1191,24 @@ category 对应的关键词有
 | 全部 | 待回复 | 办理中 | 已办理 |
 | ---- | ------ | ------ | ------ |
 | 1    | 2      | 3      | 4      |
+
+</Route>
+
+## 日本经济新闻中文版
+
+### 新闻
+
+<Route author="nczitzk" example="/nikkei-cn" path="/nikkei-cn/:language?/:category?/:type?" :paramsDesc="['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '分类，默认为空，可在对应分类页 URL 中找到', '子分类，默认为空，可在对应分类页 URL 中找到']" radar="1" rssbud="1">
+
+::: tip 提示
+
+如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/cn/china/ceconomy`](https://rsshub.app/nikkei-cn/cn/china/ceconomy)
+
+如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://zh.cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/zh/china/ceconomy`](https://rsshub.app/nikkei-cn/zh/china/ceconomy)
+
+特别地，当 `category` 填入 `rss` 后（即路由为 [`/nikkei-cn/cn/rss`](https://rsshub.app/nikkei-cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)
+
+:::
 
 </Route>
 
