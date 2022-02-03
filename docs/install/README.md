@@ -140,7 +140,7 @@ git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ### 更新
@@ -149,7 +149,7 @@ sudo ansible-playbook rsshub.yaml
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ## 手动部署
@@ -717,3 +717,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   轻小说文库
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
+
+-   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
+    -   `GOOGLE_FONTS_API_KEY`: API key

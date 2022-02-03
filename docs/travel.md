@@ -55,11 +55,11 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 ### 优惠信息
 
-<Route author="howel52" example="/flyertea/preferential" path="/flyertea/preferential" />
+<Route author="howel52" example="/flyert/preferential" path="/flyert/preferential" />
 
 ### 信用卡
 
-<Route author="nicolaszf" example="/flyertea/creditcard/zhongxin" path="/flyertea/creditcard/:bank" :paramsDesc="['信用卡板块各银行的拼音简称']">
+<Route author="nicolaszf" example="/flyert/creditcard/zhongxin" path="/flyert/creditcard/:bank" :paramsDesc="['信用卡板块各银行的拼音简称']">
 
 | 信用卡模块 | bank          |
 | ---------- | ------------- |
@@ -119,5 +119,15 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 | 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
 | ------------ | ---- | -------- | ---------- | -------- |
 | announcement | news | media    | exhibition | specials |
+
+</Route>
+
+## 走进日本
+
+<Route author="laampui" example="/nippon/Politics" path="/nippon/:category?" :paramsDesc="['默认政治，可选如下']">
+
+| 政治     | 经济    | 社会    | 展览预告 | 焦点专题           | 深度报道 | 话题         | 日本信息库 | 日本一蹩      | 人物访谈 | 编辑部通告    |
+| -------- | ------- | ------- | -------- | ------------------ | -------- | ------------ | ---------- | ------------- | -------- | ------------- |
+| Politics | Economy | Society | Culture  | Science,Technology | In-depth | japan-topics | japan-data | japan-glances | People   | Announcements |
 
 </Route>

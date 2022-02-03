@@ -932,9 +932,9 @@ category 对应的关键词有
 
 <Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类，缺省为 china']">
 
-| 中国  | 新加坡    | 东南亚 | 国际  | 体育   | 早报现在 |
-| ----- | --------- | ------ | ----- | ------ | -------- |
-| china | singapore | sea    | world | sports | fukan    |
+| 中国  | 新加坡    | 东南亚 | 国际  | 体育   |
+| ----- | --------- | ------ | ----- | ------ |
+| china | singapore | sea    | world | sports |
 
 </Route>
 

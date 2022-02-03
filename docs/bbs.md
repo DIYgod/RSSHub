@@ -68,7 +68,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="Fatpandac" exmaple="/423down/index/all" path="/423down/:category/:type" :paramsDesc="['类型', '分类']" radar="1">
+<Route author="Fatpandac" example="/423down/index/all" path="/423down/:category/:type" :paramsDesc="['类型', '分类']" radar="1">
 
 | category | 全部 |
 | :------: | :--: |

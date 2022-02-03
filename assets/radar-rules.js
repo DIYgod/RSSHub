@@ -312,17 +312,6 @@
     },
     'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'epicgames.com': { _name: 'Epic Games', www: [{ title: '每周免费游戏', docs: 'https://docs.rsshub.app/game.html#epicgames-freegame', source: '/store/zh-CN/free-games', target: '/epicgames/freegames' }] },
-    'docker.com': {
-        _name: 'Docker',
-        hub: [
-            {
-                title: '镜像有新 Build',
-                docs: 'https://docs.rsshub.app/program-update.html#docker-hub',
-                source: ['/r/:owner/:image', '/r/:owner/:image/tags', '/_/:image'],
-                target: (params) => `/dockerhub/build/${params.owner ? params.owner : 'library'}/${params.image}`,
-            },
-        ],
-    },
     'nga.cn': {
         _name: 'NGA',
         bbs: [
