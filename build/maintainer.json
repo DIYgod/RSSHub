@@ -47,6 +47,9 @@
     "/ajmide/:id": [
         "Fatpandac"
     ],
+    "/app-center/release/:user/:app/:distribution_group": [
+        "Rongronggg9"
+    ],
     "/appledaily/:channel?": [
         "Fatpandac"
     ],

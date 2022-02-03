@@ -225,6 +225,12 @@
                     const id = new URL(url).searchParams.get('id');
                     return `/ajmide/${id}`;
                 } } ] },
+  "appcenter.ms":{ _name:"App Center",
+    install:[ { title:"App Center Release",
+        docs:"https://docs.rsshub.app/program-update.html#app-center",
+        source:[ "/users/:user/apps/:app/distribution_groups/:distribution_group",
+          "/orgs/:user/apps/:app/distribution_groups/:distribution_group" ],
+        target:"/app-center/release/:user/:app/:distribution_group" } ] },
   "appledaily.com":{ _name:"苹果新闻网",
     tw:[ { title:"首頁",
         docs:"https://docs.rsshub.app/traditional-media.html#ping-guo-xin-wen-wang",
