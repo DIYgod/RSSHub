@@ -809,7 +809,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 浏览发现
 
-<Route author="clarkzsd" example="/douban/explore" path="/douban/explore"/>
+<Route author="clarkzsd Fatpandac" example="/douban/explore" path="/douban/explore"/>
 
 ### 浏览发现分栏目
 
@@ -941,6 +941,16 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 | torrentQuery     | 额外关键词，如 `1080p`， 逗号分割                          |                                 |        |
 | torrentMinSeeds  | 最小 seeds 数                                              |                                 | 1      |
 | torrentMinRating | 种子和电影标题最小匹配度                                   |                                 | 0.5    |
+
+</Route>
+
+### 豆瓣招聘
+
+<Route author="Fatpandac" example="/douban/jobs/campus" path="/douban/jobs/:type" :paramsDesc="['招聘类型，见下表']">
+
+| 社会招聘 | 校园招聘 | 实习生招聘 |
+| :------: | :------: | :--------: |
+|  social  |  campus  |   intern   |
 
 </Route>
 
@@ -1220,7 +1230,7 @@ rule
 
 ### 收藏夹
 
-<Route author="huruji Colin-XKL" example="/zhihu/collection/26444956" path="/zhihu/collection/:id" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="huruji Colin-XKL Fatpandac" example="/zhihu/collection/26444956" path="/zhihu/collection/:id/:getAll?" :paramsDesc="['收藏夹 id, 可在收藏夹页面 URL 中找到', '获取全部收藏内容，任意值为打开']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 用户动态
 
