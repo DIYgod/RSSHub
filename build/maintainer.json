@@ -667,6 +667,9 @@
     "/nifd/research/:categoryGuid?": [
         "Fatpandac"
     ],
+    "/nikkei-asia/nikkei-asia": [
+        "rainrdx"
+    ],
     "/nikkei-cn/:language?/:category?/:type?": [
         "nczitzk"
     ],
