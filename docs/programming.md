@@ -715,17 +715,17 @@ GitHub 官方也提供了一些 RSS:
 
 ## 蓝桥云课
 
-### 最新发布的课程
+### 全站发布的课程
 
-<Route author="huhuhang" example="/lanqiao/courses/全部" path="/lanqiao/courses/:tag"  :paramsDesc="['课程标签 tag 可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1" rssbud="1"/>
+<Route author="huhuhang" example="/lanqiao/courses/latest/all" path="/lanqiao/courses/:sort/:tag"  :paramsDesc="['排序规则 sort, 默认(default)、最新(latest)、最热(hotest)', '课程标签 tag，可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1" rssbud="1"/>
 
 ### 作者发布的课程
 
 <Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  :paramsDesc="['作者 uid 可在作者主页 URL 中找到']" radar="1" rssbud="1"/>
 
-### 社区最新技术问答
+### 社区技术问答
 
-<Route author="huhuhang" example="/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 id 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 id 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 洛谷
 
