@@ -410,8 +410,9 @@
     "/guduodata/daily": [
         "Gem1ni"
     ],
-    "/hackernews/:section?/:type?": [
-        "nczitzk"
+    "/hackernews/:section?/:type?/:user?": [
+        "nczitzk",
+        "xie-dongping"
     ],
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"

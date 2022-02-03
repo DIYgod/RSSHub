@@ -1126,7 +1126,7 @@
         docs:"https://docs.rsshub.app/programming.html#hacker-news",
         source:[ "/:section",
           "/" ],
-        target:"/hackernews/:section?/:type?" } ] },
+        target:"/hackernews/:section?/:type?/:user?" } ] },
   "hbr.org":{ _name:"Harvard Business Review",
     ".":[ { title:"Topic",
         docs:"https://docs.rsshub.app/new-media.html#harvard-business-review-topic",
