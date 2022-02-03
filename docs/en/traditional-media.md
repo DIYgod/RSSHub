@@ -211,7 +211,7 @@ Only `s00017` is in English.
 
 ### Latest News
 
-<Route author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
+<RouteEn author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
 
 ## Phoronix
 
