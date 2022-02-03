@@ -415,17 +415,27 @@ R18 显示
 
 ## 煎蛋
 
-### 无聊图
+### 板块
 
-<Route author="kobemtl Xuanwo xyqfer 9uanhuo" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+<Route author="nczitzk" example="/jandan/top" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']">
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 | 动物园 |
-| ------ | ---------- | ---------- | ---- | ------ | ---------- | ------ |
-| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   | zoo    |
+| 问答 | 树洞     | 动物园 | 女装 | 随手拍 | 无聊图 | 鱼塘 |
+| ---- | -------- | ------ | ---- | ------ | ------ | ---- |
+| qa   | treehole | zoo    | girl | ooxx   | pic    | pond |
+
+</Route>
+
+### 热榜
+
+<Route author="kobemtl Xuanwo xyqfer 9uanhuo nczitzk" example="/jandan/top-4h" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']"/>
+
+| 4 小时热门 | 吐槽      | 无聊图 | 随手拍   | 动物园  | 优评         | 3 日最佳  | 7 日最佳  |
+| ---------- | --------- | ------ | -------- | ------- | ------------ | --------- | --------- |
+| top-4h     | top-tucao | top    | top-ooxx | top-zoo | top-comments | top-3days | top-7days |
 
 ### 首页
 
-<Route author="lonelykid" example="/jandan/article" path="/jandan/article"/>
+<Route author="lonelykid nczitzk" example="/jandan" path="/jandan"/>
 
 ## 绝对领域
 

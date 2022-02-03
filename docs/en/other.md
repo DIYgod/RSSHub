@@ -142,6 +142,12 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 <Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
 
+## Mozilla
+
+### Firefox Monitor
+
+<RouteEn author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
+
 ## Nobel Prize
 
 ### List
@@ -172,7 +178,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### Today Popular
 
-<RouteEn author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+<RouteEn author="miaoyafeng Fatpandac" example="/producthunt/today" path="/producthunt/today">
 </RouteEn>
 
 ## Remote.work

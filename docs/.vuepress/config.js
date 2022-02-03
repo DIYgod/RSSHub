@@ -1,4 +1,4 @@
-const { pinyin } = require('@napi-rs/pinyin');
+const { pinyin, PINYIN_STYLE } = require('@napi-rs/pinyin');
 const { slugify: _slugify } = require('@vuepress/shared-utils');
 
 module.exports = {
@@ -42,12 +42,10 @@ module.exports = {
                 slugify: function (s) {
                     return _slugify(
                         pinyin(s, {
-                            style: pinyin.STYLE_NORMAL,
+                            style: PINYIN_STYLE.Plain,
                             heteronym: true,
                             segment: true,
-                        })
-                            .map((item) => item[0])
-                            .join('-')
+                        }).join('-')
                     );
                 },
                 level: 2,
