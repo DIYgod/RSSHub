@@ -16,6 +16,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
 
+## Apkpure
+
+### Versions
+
+<RouteEn author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['Region code', 'package name']"/>
+
 ## App Center
 
 ### Release
@@ -29,12 +35,6 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 :::
 
 </RouteEn>
-
-## Apkpure
-
-### Versions
-
-<RouteEn author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['Region code', 'package name']"/>
 
 ## App Store/Mac App Store
 
