@@ -550,9 +550,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   spotify 全部路由： [注册地址](https://developer.spotify.com)
 
-    -   `SPOTIFY_API_KEY`：Spotify 应用的 client ID
+    -   `SPOTIFY_CLIENT_ID`：Spotify 应用的 client ID
 
-    -   `SPOTIFY_API_SECRET`：Spotify 应用的 client secret
+    -   `SPOTIFY_CLIENT_SECRET`：Spotify 应用的 client secret
 
 -   spotify 用户相关路由
 

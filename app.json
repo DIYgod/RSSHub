@@ -20,10 +20,10 @@
         "DISQUS_API_KEY": {
             "required": false
         },
-        "SPOTIFY_API_KEY": {
+        "SPOTIFY_CLIENT_ID": {
             "required": false
         },
-        "SPOTIFY_API_SECRET": {
+        "SPOTIFY_CLIENT_SECRET": {
             "required": false
         },
         "SPOTIFY_REFRESHTOKEN": {

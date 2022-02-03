@@ -540,9 +540,9 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   spotify: [API key registration](https://developer.spotify.com)
 
-    -   `SPOTIFY_API_KEY`：Client ID of the application
+    -   `SPOTIFY_CLIENT_ID`：Client ID of the application
 
-    -   `SPOTIFY_API_SECRET`：Client secret of the application
+    -   `SPOTIFY_CLIENT_SECRET`：Client secret of the application
 
 -   spotify (user data related routes):
 
