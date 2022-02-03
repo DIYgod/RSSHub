@@ -548,6 +548,16 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         3.  点击 dynamic_new 请求，找到 Cookie
         4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
 
+-   spotify 全部路由： [注册地址](https://developer.spotify.com)
+
+    -   `SPOTIFY_API_KEY`：Spotify 应用的 client ID
+
+    -   `SPOTIFY_API_SECRET`：Spotify 应用的 client secret
+
+-   spotify 用户相关路由
+
+    -   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
+
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
     -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
