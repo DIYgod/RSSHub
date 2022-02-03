@@ -725,7 +725,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 社区最新技术问答
 
-<Route author="huhuhang" example="/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 id 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 id 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 洛谷
 
