@@ -209,6 +209,8 @@ Only `s00017` is in English.
 
 ## Nikkei Asia
 
+### Latest News
+
 <Route author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
 
 ## Phoronix
