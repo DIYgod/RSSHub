@@ -726,6 +726,10 @@
     "/pku/hr/:category?": [
         "nczitzk"
     ],
+    "/producthunt/today": [
+        "miaoyafeng",
+        "Fatpandac"
+    ],
     "/pts/dailynews": [
         "nczitzk"
     ],
@@ -2093,7 +2097,6 @@
     "/xinwenlianbo/index": [],
     "/blogs/paulgraham": [],
     "/invisionapp/inside-design": [],
-    "/producthunt/today": [],
     "/mlog-club/topics/:node": [],
     "/mlog-club/projects": [],
     "/chrome/webstore/extensions/:id": [],
