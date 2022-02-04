@@ -342,7 +342,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 要闻
 
-<Route author="EsuRt" example="/ccreports/article" path="/ccreports"/>
+<Route author="EsuRt Fatpandac" example="/ccreports/article" path="/ccreports/article"/>
 
 ## 小米
 
