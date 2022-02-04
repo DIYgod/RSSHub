@@ -717,7 +717,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 全站发布的课程
 
-<Route author="huhuhang" example="/lanqiao/courses/latest/all" path="/lanqiao/courses/:sort/:tag"  :paramsDesc="['排序规则 sort, 默认(default)、最新(latest)、最热(hotest)', '课程标签 tag，可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1" rssbud="1"/>
+<Route author="huhuhang" example="/lanqiao/courses/latest/all" path="/lanqiao/courses/:sort/:tag"  :paramsDesc="['排序规则 sort, 默认(`default`)、最新(`latest`)、最热(`hotest`)', '课程标签 tag，可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1" rssbud="1"/>
 
 ### 作者发布的课程
 
