@@ -799,6 +799,21 @@
         "hang333",
         "TonyRL"
     ],
+    "/spotify/artist/:id": [
+        "outloudvi"
+    ],
+    "/spotify/playlist/:id": [
+        "outloudvi"
+    ],
+    "/spotify/saved/:limit?": [
+        "outloudvi"
+    ],
+    "/spotify/top/tracks": [
+        "outloudvi"
+    ],
+    "/spotify/top/artists": [
+        "outloudvi"
+    ],
     "/ssm/news": [
         "Fatpandac"
     ],
