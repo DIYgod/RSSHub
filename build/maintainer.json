@@ -870,6 +870,72 @@
     "/ulapia/reports/:category?": [
         "Fatpandac"
     ],
+    "/ustb/yjsy/news/adma": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/all": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/cicst": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/cres": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/huasheng": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/iet": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/ihmm": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/marx": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/me": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/metall": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/mse": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/ncms": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/saee": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/scce": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/sd": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/seee": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/sem": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/sfs": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/shuli": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/skl": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/slam": [
+        "DA1Y1"
+    ],
+    "/ustb/yjsy/news/wenfa": [
+        "DA1Y1"
+    ],
     "/wallstreetcn/live/:category?": [
         "nczitzk"
     ],
