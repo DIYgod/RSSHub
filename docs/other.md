@@ -254,7 +254,7 @@ pageClass: routes
 
 ### Today Popular
 
-<Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+<Route author="miaoyafeng Fatpandac" example="/producthunt/today" path="/producthunt/today">
 </Route>
 
 ## SANS Institute

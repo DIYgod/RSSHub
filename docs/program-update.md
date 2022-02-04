@@ -32,6 +32,20 @@ pageClass: routes
 
 <Route author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
 
+## App Center
+
+### Release
+
+<Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" :paramsDesc="['用户', 'App 名称', '分发组']" radar="1" rssbud="1">
+
+::: tip 提示
+
+参数可从 Release 页的 URL 中提取: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
+
+:::
+
+</Route>
+
 ## App Store/Mac App Store
 
 ### 应用更新
