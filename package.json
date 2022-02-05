@@ -152,5 +152,8 @@
     "moduleNameMapper": {
       "@/(.*)": "<rootDir>/lib/$1"
     }
+  },
+  "nodemonConfig": {
+    "ext": "art,js,mjs,json"
   }
 }
