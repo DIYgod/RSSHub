@@ -538,6 +538,16 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
+-   spotify: [API key registration](https://developer.spotify.com)
+
+    -   `SPOTIFY_CLIENT_ID`：Client ID of the application
+
+    -   `SPOTIFY_CLIENT_SECRET`：Client secret of the application
+
+-   spotify (user data related routes):
+
+    -   `SPOTIFY_REFRESHTOKEN`：The refresh token of the user f the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
+
 -   Instagram:
 
     -   `IG_USERNAME`: Your Instagram username
