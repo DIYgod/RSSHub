@@ -3,8 +3,8 @@ name: test
 on: [push, pull_request]
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
+  build-linux:
+    runs-on: ubuntu-latest
 
     services:
       redis:
@@ -17,8 +17,8 @@ jobs:
       fail-fast: false
       matrix:
         node-version: ['14', '16']
-        os: [macos-latest, ubuntu-latest, windows-latest]
 
+    name: Node ${{ matrix.node_version }} on ${{ runner.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -30,6 +30,30 @@ jobs:
         env:
           CACHE_TYPE: redis
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
+      - run: npm run docs:build
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['14', '16']
+        os: [macos-latest, windows-latest]
+
+    name: Node ${{ matrix.node_version }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn
+      - run: npm run jest
       - run: npm run docs:build
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
