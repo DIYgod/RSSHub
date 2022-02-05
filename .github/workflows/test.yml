@@ -18,7 +18,7 @@ jobs:
       matrix:
         node-version: ['14', '16']
 
-    name: Node ${{ matrix.node_version }}
+    name: Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -45,7 +45,7 @@ jobs:
         node-version: ['14', '16']
         os: [macos-latest, windows-latest]
 
-    name: Node ${{ matrix.node_version }} on ${{ matrix.os }}
+    name: Node ${{ matrix.node-version }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
