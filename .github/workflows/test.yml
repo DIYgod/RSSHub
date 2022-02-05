@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     services:
       redis:
@@ -14,8 +14,10 @@ jobs:
         options: --entrypoint redis-server
 
     strategy:
+      fail-fast: false
       matrix:
-        node-version: ['14.x']
+        node-version: ['14', '16']
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v2
