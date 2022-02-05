@@ -826,6 +826,28 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
+## Spotify
+
+### 艺术家专辑
+
+<Route author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['艺术家 ID']" />
+
+### 播放列表
+
+<Route author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['播放列表 ID']" />
+
+### 个人 Saved Tracks
+
+<Route author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['歌曲数量，默认为 50']" />
+
+### 个人 Top Tracks
+
+<Route author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" />
+
+### 个人 Top Artists
+
+<Route author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
+
 ## Sub HD
 
 ### 字幕

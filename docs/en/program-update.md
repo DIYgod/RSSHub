@@ -22,6 +22,20 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['Region code', 'package name']"/>
 
+## App Center
+
+### Release
+
+<RouteEn author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" :paramsDesc="['User', 'App name', 'Distribution group']" radar="1" rssbud="1">
+
+::: tip
+
+The parameters can be extracted from the Release page URL: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
+
+:::
+
+</RouteEn>
+
 ## App Store/Mac App Store
 
 ### App Update
