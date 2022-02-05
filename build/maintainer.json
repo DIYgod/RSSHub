@@ -556,7 +556,7 @@
     "/lanqiao/author/:uid": [
         "huhuhang"
     ],
-    "/lanqiao/courses/:tag": [
+    "/lanqiao/courses/:sort/:tag": [
         "huhuhang"
     ],
     "/lanqiao/questions/:id": [
