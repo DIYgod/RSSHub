@@ -16,9 +16,9 @@
     "build:radar": "node scripts/workflow/build-radar.js",
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
     "lint": "eslint .",
-    "format": "eslint \"**/*.js\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
-    "format:staged": "eslint \"**/*.js\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
-    "format:check": "eslint \"**/*.js\" && prettier-check \"**/*.{js,json}\"",
+    "format": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
+    "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
+    "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
     "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
     "jest:watch": "cross-env NODE_ENV=test jest --watch"
