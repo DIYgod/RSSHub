@@ -38,8 +38,10 @@ jobs:
           load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ github.workflow }}
-          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+          cache-from: |
+            type=gha,scope=docker-test
+            type=gha,scope=docker-release
+          cache-to: type=gha,mode=max,scope=docker-test
 
       - name: Run dockerfile
         run: |
