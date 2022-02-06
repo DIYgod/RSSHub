@@ -1008,6 +1008,9 @@
         "AlexdanerZe",
         "TonyRL"
     ],
+    "/zaobao/interactive-graphics": [
+        "shunf4"
+    ],
     "/zaobao/realtime/:section?": [
         "shunf4"
     ],
@@ -1015,9 +1018,6 @@
         "shunf4"
     ],
     "/zaobao/:type/:section": [
-        "shunf4"
-    ],
-    "/zaobao/interactive-graphics": [
         "shunf4"
     ],
     "/zjgtjy/:type?": [
