@@ -1002,6 +1002,10 @@
     "/yaohuo/": [
         "nczitzk"
     ],
+    "/yxdzqb/:type": [
+        "LogicJake",
+        "nczitzk"
+    ],
     "/zaker/:type/:id?": [
         "LogicJake",
         "kt286",
@@ -1915,7 +1919,6 @@
     "/gov/veterans/:type": [],
     "/gov/veterans/hebei/:type": [],
     "/dilbert/strip": [],
-    "/yxdzqb/:type": [],
     "/monsterhunter/update": [],
     "/mhw/update": [],
     "/mhw/news": [],
