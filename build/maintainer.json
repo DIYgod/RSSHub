@@ -142,6 +142,10 @@
     "/cnki/journals/debut/:name": [
         "Fatpandac"
     ],
+    "/cntv/:column": [
+        "WhoIsSure",
+        "Fatpandac"
+    ],
     "/codeforces/contests": [
         "Fatpandac"
     ],
@@ -2628,7 +2632,6 @@
     "/wsj/:lang/:category?": [],
     "/chinafile/:category?": [],
     "/daodu/:caty?": [],
-    "/cntv/:column": [],
     "/grandchallenge/user/:id": [],
     "/grandchallenge/challenges": [],
     "/nwpu/:column": [],
