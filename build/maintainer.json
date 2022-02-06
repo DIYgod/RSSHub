@@ -77,6 +77,12 @@
     "/biodiscover/:channel?": [
         "aidistan"
     ],
+    "/bioone/featured": [
+        "nczitzk"
+    ],
+    "/bioone/journals/:journal?": [
+        "nczitzk"
+    ],
     "/bit/rszhaopin": [
         "nczitzk"
     ],
@@ -2780,7 +2786,6 @@
     "/sznews/press": [],
     "/sznews/ranking": [],
     "/shuax/project/:name?": [],
-    "/bioone/featured": [],
     "/obsidian/announcements": [],
     "/jlbtc/kyc/:category?": [],
     "/jlbtc/jwc/:id?": [],
