@@ -1002,6 +1002,10 @@
     "/yaohuo/": [
         "nczitzk"
     ],
+    "/youku/channel/:channelId/:embed?": [
+        "xyqfer",
+        "Fatpandac"
+    ],
     "/yxdzqb/:type": [
         "LogicJake",
         "nczitzk"
@@ -1565,7 +1569,6 @@
     "/chouti/:subject?": [],
     "/xidian/jwc/:category?": [],
     "/westore/new": [],
-    "/youku/channel/:channelId/:embed?": [],
     "/oilprice/:area": [],
     "/nhentai/search/:keyword/:mode?": [],
     "/nhentai/:key/:keyword/:mode?": [],
