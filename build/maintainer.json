@@ -117,6 +117,9 @@
     "/cde/:channel/:category": [
         "Fatpandac"
     ],
+    "/cdi/:id?": [
+        "nczitzk"
+    ],
     "/cebbank/quotation/all": [
         "linbuxiao"
     ],
