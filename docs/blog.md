@@ -94,7 +94,7 @@ pageClass: routes
 
 ### 最新资讯
 
-<Route author="iceqing" example="/polkaworld/newest?limit=10" path="/polkaworld/newest" :paramsDesc="['']"/>
+<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
 
 ::: tip 提示
 
