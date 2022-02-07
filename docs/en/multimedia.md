@@ -22,6 +22,10 @@ Full transcript support for better user experience.
 
 <RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['Tag, can be found in URL']"/>
 
+### Upcoming Live Streams
+
+<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
+
 ## EZTV
 
 ::: tip
@@ -122,6 +126,18 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 - `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
 - `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
+## s-hentai
+
+### Category
+
+<RouteEn author="nczitzk" example="/s-hentai" path="/hentai/:id?" :paramsDesc="['id, see below, ready-to-download by default']">
+
+| Doujin | HCG | Games・Animes | Voices・ASMR | Ready to Download |
+| ------ | --- | ------------- | ------------ | ----------------- |
+| 1      | 2   | 3             | 4            | ready-to-download |
+
+</RouteEn>
+
 ## Sankaku Complex
 
 ### Post
@@ -133,6 +149,30 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 ### Tracks
 
 <RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['User name']" />
+
+## Spotify
+
+
+### Artist Albums
+
+<RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['Artist ID']" />
+
+### Playlist
+
+<RouteEn author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['Playlist ID']" />
+
+### Personal Saved Tracks
+
+<RouteEn author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['Track count, 50 by default']" />
+
+### Personal Top Tracks
+
+<RouteEn author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" />
+
+### Personal Top Artists
+
+<RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
+
 
 ## Trakt.tv
 

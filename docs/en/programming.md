@@ -10,11 +10,74 @@ pageClass: routes
 
 <Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
+
+## ACM-ECNU
+
+### ECNU ACM Online-Judge contests list
+
+<RouteEn author="a180285" example="/acm-ecnu/contest/public" path="/acm-ecnu/contest/:category?" radar="1" rssbud="1" :paramsDesc="['category is optional, default is all, use `public` for public only contests']" />
+
+## AtCoder
+
+### Present Contests
+
+<RouteEn author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Status, see below, Recent Contests by default']">
+
+Status
+
+| Active Contests | Upcoming Contests | Recent Contests |
+| --------------- | ----------------- | --------------- |
+| active          | upcoming          | recent          |
+
+</RouteEn>
+
+### Contests Archive
+
+<RouteEn author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Rated Range, see below, all by default', 'Category, see below, all by default', 'Keyword']">
+
+Rated Range
+
+| ABC Class (Rated for ~1999) | ARC Class (Rated for ~2799) | AGC Class (Rated for ~9999) |
+| --------------------------- | --------------------------- | --------------------------- |
+| 1                           | 2                           | 3                           |
+
+Category
+
+| All | AtCoder Typical Contest | PAST Archive | Unofficial(unrated) |
+| --- | ----------------------- | ------------ | ------------------- |
+| 0   | 6                       | 50           | 101                 |
+
+| JOI Archive | Sponsored Tournament | Sponsored Parallel(rated) |
+| ----------- | -------------------- | ------------------------- |
+| 200         | 1000                 | 1001                      |
+
+| Sponsored Parallel(unrated) | Optimization Contest |
+| --------------------------- | -------------------- |
+| 1002                        | 1200                 |
+
+</RouteEn>
+
+### Posts
+
+<RouteEn author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Keyword']"/>
+
+## Codeforces
+
+### Latest contests
+
+<RouteEn author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
+
 ## cve.mitre.org
 
 ### Search Result
 
 <RouteEn author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" :paramsDesc="['keyword']" />
+
+## Distill
+
+### Latest
+
+<RouteEn author="nczitzk" example="/distill" path="/distill"/>
 
 ## GitHub
 
@@ -35,7 +98,7 @@ GitHub provides some official RSS feeds:
 
 ### Trending
 
-<RouteEn path="/github/trending/:since/:language?" example="/github/trending/daily/javascript" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: daily, weekly or monthly', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" path="/github/trending/:since/:language/:spoken_language?" example="/github/trending/daily/javascript/en" :paramsDesc="['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: `daily`, `weekly` or `monthly`', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, don\'t filter option is `any`', 'natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']" radar="1" rssbud="1"/>
 
 ### Topics
 
@@ -107,11 +170,15 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <RouteEn author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']" radar="1" rssbud="1"/>
 
+### Issues / Pull Requests comments
+
+<RouteEn author="TonyRL" example="/github/comments/DIYgod/RSSHub/issues/8116" path="/github/comments/:user/:repo/:type/:number" :paramsDesc="['User / Org name', 'Repo name', 'Type, `issues` or `pull`', 'Number']"/>
+
 ## GitLab
 
 ### Explore
 
-<RouteEn author="imlonghao" example="/gitlab/explore/trending" path="/gitlab/explore/:type" :paramsDesc="['type']">
+<RouteEn author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" :paramsDesc="['type', 'Gitlab instance hostname, default to gitlab.com']">
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
@@ -119,32 +186,41 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 </RouteEn>
 
+### Releases
+
+<RouteEn author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" :paramsDesc="['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
+
+### Tags
+
+<RouteEn author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
+
 ## Hacker News
 
 ### Section
 
-<RouteEn author="cf020031308" example="/hackernews/best/comments" path="/hackernews/:section/:type?" :paramsDesc="['Section', 'Link type']">
+<RouteEn author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['Section, see below, `index` by default', 'Link, see below, `sources` by default', 'User, only valid for section `threads` and `submitted`']">
 
-Website: https://news.ycombinator.com/
+Section
 
-| Section | section                             |
-| ------- | ----------------------------------- |
-| index   | https://news.ycombinator.com/       |
-| new     | https://news.ycombinator.com/newest |
-| past    | https://news.ycombinator.com/front  |
-| ask     | https://news.ycombinator.com/ask    |
-| show    | https://news.ycombinator.com/show   |
-| jobs    | https://news.ycombinator.com/jobs   |
-| best    | https://news.ycombinator.com/best   |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) |
 
-> Official RSS：https://news.ycombinator.com/rss is same as `index` section
+Items link to
 
-| Link type | type                           |
-| --------- | ------------------------------ |
-| story     | Deault, link to shared address |
-| comments  | Link to Hacker News address    |
+| Source addresses shared by users | Comments on Hacker News | Comments list  |
+| -------------------------------- | ----------------------- | -------------- |
+| sources                          | comments                | comments_list  |
+
+> Default RSS by the website: <https://news.ycombinator.com/rss>, same as `index` section, should be the first choice.
 
 </RouteEn>
+
+### Follow User
+
+Subscribe to the updates (threads and submission) from a paritcular Hacker News user
+
+<RouteEn author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['Section, see above, `index` by default', 'Link, see above, `sources` by default', 'User, only valid for section `threads` and `submitted`']" />
 
 ## Hex-Rays
 
@@ -212,6 +288,30 @@ Website: https://news.ycombinator.com/
 | Slackware        | `Slackware`        |
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
+
+</RouteEn>
+
+## Node.js
+
+### News
+
+<RouteEn author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" :paramsDesc="['Language, see below, en by default']">
+
+| العربية | Catalan | Deutsch | Español | زبان فارسی |
+| ------- | ------- | ------- | ------- | ---------- |
+| ar      | ca      | de      | es      | fa         |
+
+| Français | Galego | Italiano | 日本語 | 한국어 |
+| -------- | ------ | -------- | ------ | ------ |
+| fr       | gl     | it       | ja     | ko     |
+
+| Português do Brasil | limba română | Русский | Türkçe | Українська |
+| ------------------- | ------------ | ------- | ------ | ---------- |
+| pt-br               | ro           | ru      | tr     | uk         |
+
+| 简体中文 | 繁體中文 |
+| -------- | -------- |
+| zh-cn    | zh-tw    |
 
 </RouteEn>
 
