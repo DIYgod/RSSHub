@@ -90,6 +90,10 @@ pageClass: routes
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
 
+## PolkaWorld
+
+<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
+
 ## Whoscall
 
 ### 最新文章
