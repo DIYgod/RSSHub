@@ -1752,6 +1752,18 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="nczitzk" example="/mathunion/fields-medal" path="/mathunion/fields-medal"/>
 
+## 国家高端智库 / 综合开发研究院
+
+### 栏目
+
+<Route author="nczitzk" example="/cdi" path="/cdi/:id?" :paramsDesc="['分类，见下表，默认为综研国策']">
+
+| 樊纲观点 | 综研国策 | 综研观察 | 综研专访 | 综研视点 | 银湖新能源 |
+| -------- | -------- | -------- | -------- | -------- | ---------- |
+| 102      | 152      | 150      | 153      | 154      | 151        |
+
+</Route>
+
 ## 果壳网
 
 ### 科学人
