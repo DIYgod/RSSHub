@@ -2107,7 +2107,7 @@
     "/haimaoba/:id?": [],
     "/reuters/channel/:site/:channel": [],
     "/pgyer/:app?": [],
-    "/weibo/timeline/:uid/:feature?": [],
+    "/weibo/timeline/:uid/:feature?/:routeParams?": [],
     "/taptap/topic/:id/:label?": [],
     "/taptap/changelog/:id": [],
     "/taptap/review/:id/:order?": [],
