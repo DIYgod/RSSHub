@@ -94,7 +94,12 @@ pageClass: routes
 
 ### 最新资讯
 
-<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
+<Route author="iceqing" example="/polkaworld/newest?limit=10" path="/polkaworld/newest" :paramsDesc="['']"/>
+
+::: tip 
+
+Limit the number of entries to be retrieved by adding `limit=x` to the end of the route, default value is `10`.
+:::
 
 ## Whoscall
 
