@@ -44,6 +44,12 @@ pageClass: routes
 
 ## Phrack Magazine
 
+## PolkaWorld
+
+### Newest Articles
+<RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
+
+
 ### Article
 
 <RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
