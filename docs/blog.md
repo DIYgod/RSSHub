@@ -96,9 +96,10 @@ pageClass: routes
 
 <Route author="iceqing" example="/polkaworld/newest?limit=10" path="/polkaworld/newest" :paramsDesc="['']"/>
 
-::: tip 
+::: tip 提示
 
-Limit the number of entries to be retrieved by adding `limit=x` to the end of the route, default value is `10`.
+在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
+
 :::
 
 ## Whoscall

@@ -49,9 +49,10 @@ pageClass: routes
 ### Newest Articles
 <RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
 
-::: tip 提示
+::: tip 
 
-`?limit=`, default value is `10`.
+Limit the number of entries to be retrieved by adding `limit=x` to the end of the route, default value is `10`.
+
 :::
 
 ### Article
