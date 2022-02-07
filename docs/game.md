@@ -669,11 +669,11 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏折扣
 
-<Route author="LogicJake" example="/yxdzqb/hot_chinese" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
+<Route author="LogicJake nczitzk" example="/yxdzqb/popular_cn" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
 
 | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
 | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
-| new            | hot                | hot_chinese            | low            | low_chinese            |
+| discount       | popular            | popular_cn             | low            | low_cn                 |
 
 </Route>
 

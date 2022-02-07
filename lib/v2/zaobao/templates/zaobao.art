@@ -13,5 +13,5 @@
 {{ /each }}
 
 {{ if articleBody }}
-    {{ articleBody }}
+    {{@ articleBody }}
 {{ /if }}
