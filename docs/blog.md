@@ -108,7 +108,6 @@ pageClass: routes
 
 <Route author="nczitzk" example="/whoscall" path="/whoscall"/>
 
-
 ### 分類
 
 <Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" :paramsDesc="['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']">
