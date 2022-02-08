@@ -382,7 +382,7 @@ R18 显示
 
 ### 搜索
 
-<Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['过滤器，默认为空', '需要图片信息，填写 true/yes 表示需要，默认不需要']">
+<Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['过滤器，默认为空', '需要图片信息，填写 `true`/`yes` 表示需要，默认不需要']">
 
 ::: tip 提示
 
