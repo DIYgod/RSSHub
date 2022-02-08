@@ -262,3 +262,7 @@ pageClass: routes
 ### 分类
 
 <Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
+
+## 竹白
+
+<Route author="naixy28" example="/blogs/zhubai/via" path="/blogs/zhubai/:id"/>
