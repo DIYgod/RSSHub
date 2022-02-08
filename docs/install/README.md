@@ -140,7 +140,7 @@ git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ### 更新
@@ -149,7 +149,7 @@ sudo ansible-playbook rsshub.yaml
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ## 手动部署
@@ -548,6 +548,16 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         3.  点击 dynamic_new 请求，找到 Cookie
         4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
 
+-   spotify 全部路由： [注册地址](https://developer.spotify.com)
+
+    -   `SPOTIFY_CLIENT_ID`：Spotify 应用的 client ID
+
+    -   `SPOTIFY_CLIENT_SECRET`：Spotify 应用的 client secret
+
+-   spotify 用户相关路由
+
+    -   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
+
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
     -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
@@ -717,3 +727,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   轻小说文库
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
+
+-   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
+    -   `GOOGLE_FONTS_API_KEY`: API key

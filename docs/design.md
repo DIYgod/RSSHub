@@ -58,6 +58,24 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
 
+## Google
+
+### Google Fonts
+
+<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" :paramsDesc="['排序，见下表，默认为最新']" selfhost="1">
+
+| 最新 |   趋势   |  最受欢迎  |  名字 | 风格数量 |
+| :--: | :------: | :--------: | :---: | :------: |
+| date | trending | popularity | alpha |   style  |
+
+::: warning 注意
+
+需要设置 API key，所以只能自建，详情见[ 部署页面 ](https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)的配置模块。
+
+:::
+
+</Route>
+
 ## Inside Design
 
 ### Recent Stories

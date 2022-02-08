@@ -8,6 +8,7 @@ on:
       - 'lib/**'
       - 'Dockerfile'
       - 'package.json'
+      - 'yarn.lock'
 
   # Please, always create a pull request instead of push to master.
 jobs:
@@ -16,14 +17,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-      - name: Build dockerfile and Run (without push)
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: rsshub
+          flavor: latest=true
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: |
+            type=gha,scope=docker-test
+            type=gha,scope=docker-release
+          cache-to: type=gha,mode=max,scope=docker-test
+
+      - name: Run dockerfile
         run: |
-          docker build \
-          --tag rsshub:latest \
-          --file ./Dockerfile .
           chmod +x scripts/docker/test-docker.sh
           scripts/docker/test-docker.sh
