@@ -990,6 +990,14 @@
     "/ustb/yjsy/news/wenfa": [
         "DA1Y1"
     ],
+    "/wallhaven/search/:filter?/:needDetails?": [
+        "nczitzk",
+        "Fatpandac"
+    ],
+    "/wallhaven/:filter?/:needDetails?": [
+        "nczitzk",
+        "Fatpandac"
+    ],
     "/wallstreetcn/live/:category?": [
         "nczitzk"
     ],

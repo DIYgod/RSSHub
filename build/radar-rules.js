@@ -2511,6 +2511,47 @@
         docs:"https://docs.rsshub.app/university.html#bei-jing-ke-ji-da-xue",
         source:"/:type",
         target:"/ustb/yjsy/news/:type" } ] },
+  "wallhaven.cc":{ _name:"wallhaven",
+    ".":[ { title:"Latest",
+        docs:"https://docs.rsshub.app/picture.html#wallhaven-zhu-zhu-ti",
+        source:[ "/:category",
+          "/" ],
+        target:(params) => {
+                    if (params.category === 'latest') {
+                        return '/wallhaven/latest';
+                    }
+                } },
+      { title:"Hot",
+        docs:"https://docs.rsshub.app/picture.html#wallhaven-zhu-zhu-ti",
+        source:[ "/:category",
+          "/" ],
+        target:(params) => {
+                    if (params.category === 'hot') {
+                        return '/wallhaven/hot';
+                    }
+                } },
+      { title:"TopList",
+        docs:"https://docs.rsshub.app/picture.html#wallhaven-zhu-zhu-ti",
+        source:[ "/:category",
+          "/" ],
+        target:(params) => {
+                    if (params.category === 'toplist') {
+                        return '/wallhaven/toplist';
+                    }
+                } },
+      { title:"Random",
+        docs:"https://docs.rsshub.app/picture.html#wallhaven-zhu-zhu-ti",
+        source:[ "/:category",
+          "/" ],
+        target:(params) => {
+                    if (params.category === 'random') {
+                        return '/wallhaven/random';
+                    }
+                } },
+      { title:"Search",
+        docs:"https://docs.rsshub.app/picture.html#wallhaven-sou-xiao-sou-shao-suo",
+        source:[ "/" ],
+        target:"/wallhaven/search/:filter?/:needDetails?" } ] },
   "wallstreetcn.com":{ _name:"华尔街见闻",
     ".":[ { title:"资讯",
         docs:"https://docs.rsshub.app/traditional-media.html#hua-er-jie-jian-wen-zi-xun",
