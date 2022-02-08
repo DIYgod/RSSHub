@@ -175,7 +175,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language?/:spoken_language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到, 可选 daily weekly monthly', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到', '自然语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language/:spoken_language?" :paramsDesc="['时间跨度, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到, 可选 `daily` `weekly` `monthly`', '语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，`any`表示不设语言限制', '自然语言, 可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1"/>
 
 ### Topics
 
@@ -281,23 +281,29 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分区
 
-<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?" :paramsDesc="['内容分区，见下表，默认为 index', '链接类型，见下表，默认为 sources']">
+<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']">
 
 内容分区
 
-| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      |
-| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- |
-| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) |
 
 条目指向链接类型
 
-| 用户分享的来源地址 | Hacker News 上的讨论页面 |
-| ------------------ | ------------------------ |
-| sources            | comments                 |
+| 用户分享的来源地址 | Hacker News 上的讨论页面 | 读取回复列表  |
+| ------------------ | ------------------------ | ------------- |
+| sources            | comments                 | comments_list |
 
 > 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 homepage，应优先考虑。
 
 </Route>
+
+### 用户
+
+订阅特定用户的内容
+
+<Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']" />
 
 ## Hex-Rays
 
@@ -715,17 +721,17 @@ GitHub 官方也提供了一些 RSS:
 
 ## 蓝桥云课
 
-### 最新发布的课程
+### 全站发布的课程
 
-<Route author="huhuhang" example="/lanqiao/courses/全部" path="/lanqiao/courses/:tag"  :paramsDesc="['课程标签 tag 可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1" rssbud="1"/>
+<Route author="huhuhang" example="/lanqiao/courses/latest/all" path="/lanqiao/courses/:sort/:tag"  :paramsDesc="['排序规则 sort, 默认(`default`)、最新(`latest`)、最热(`hotest`)', '课程标签 `tag`，可在该页面找到：https://www.lanqiao.cn/courses/']" radar="1" rssbud="1"/>
 
 ### 作者发布的课程
 
-<Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  :paramsDesc="['作者 uid 可在作者主页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  :paramsDesc="['作者 `uid` 可在作者主页 URL 中找到']" radar="1" rssbud="1"/>
 
-### 社区最新技术问答
+### 技术社区
 
-<Route author="huhuhang" example="/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 id 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 `id` 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 洛谷
 

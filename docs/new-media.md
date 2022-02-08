@@ -1606,6 +1606,26 @@ area 分区选项
 
 </Route>
 
+## 風傳媒
+
+### 分类
+
+<Route author="nczitzk" example="/storm" path="/storm/:category?/:id?" :paramsDesc="['分类，见下表，默认为新聞總覽', '子分类 ID，可在 URL 中找到']">
+
+| 新聞總覽 | 地方新聞      | 歷史頻道 | 評論總覽    |
+| -------- | ------------- | -------- | ----------- |
+| articles | localarticles | history  | all-comment |
+
+::: tip 提示
+
+支持形如 <https://www.storm.mg/category/118> 的路由，即 [`/storm/category/118`](https://rsshub.app/storm/category/118)
+
+支持形如 <https://www.storm.mg/localarticle-category/s149845> 的路由，即 [`/storm/localarticle-category/s149845`](https://rsshub.app/storm/localarticle-category/s149845)
+
+:::
+
+</Route>
+
 ## 凤凰网
 
 ### 大风号
@@ -1732,6 +1752,18 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="nczitzk" example="/mathunion/fields-medal" path="/mathunion/fields-medal"/>
 
+## 国家高端智库 / 综合开发研究院
+
+### 栏目
+
+<Route author="nczitzk" example="/cdi" path="/cdi/:id?" :paramsDesc="['分类，见下表，默认为综研国策']">
+
+| 樊纲观点 | 综研国策 | 综研观察 | 综研专访 | 综研视点 | 银湖新能源 |
+| -------- | -------- | -------- | -------- | -------- | ---------- |
+| 102      | 152      | 150      | 153      | 154      | 151        |
+
+</Route>
+
 ## 果壳网
 
 ### 科学人
@@ -1760,19 +1792,19 @@ others = 热点新闻 + 滚动新闻
 
 ## 后续
 
-### Live
+### 分类
 
-<Route author="ciaranchen sanmmm" example="/houxu/live/5" path="/houxu/live/:id" :paramsDesc="['Live ID']" />
+<Route author="nczitzk" example="/houxu" path="/houxu/:category?" :paramsDesc="['分类，见下表，默认为首页']">
 
-### 最新 Live
-
-<Route author="ciaranchen" example="/houxu/lives/new" path="/houxu/lives/:type" :paramsDesc="['类型']">
-
-| 往事进展 | 最新添加 |
-| -------- | -------- |
-| realtime | new      |
+| 首页  | 热点     | 跟踪   | 事件   |
+| ----- | -------- | ------ | ------ |
+| index | featured | memory | events |
 
 </Route>
+
+### Lives
+
+<Route author="ciaranchen sanmmm nczitzk" example="/houxu/lives/33899" path="/houxu/:category?" :paramsDesc="['编号，可在对应 Live 页面的 URL 中找到']"/>
 
 ### 最新专栏
 
@@ -1835,6 +1867,18 @@ others = 热点新闻 + 滚动新闻
 | 全部 | 要闻 | 商业 | 快讯 | 投资理财 | 生活 |
 | ---- | ---- | ---- | ---- | -------- | ---- |
 | 0    | 1    | 2    | 3    | 4        | 6    |
+
+</Route>
+
+## 加拿大国际广播电台
+
+### 最新消息
+
+<Route author="nczitzk" example="/radio-canada/latest" path="/radio-canada/latest/:language?" :paramsDesc="['语言，见下表，默认为 English']">
+
+| Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
+| -------- | ------- | ------- | -------- | -------- | ------- | ------ | ------- |
+| fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa     | tl      |
 
 </Route>
 
@@ -2075,7 +2119,7 @@ column 为 third 时可选的 category:
 
 ### 栏目
 
-<Route author="vlcheng" example="/leiphone/category/industrynews" path="/leiphone/category/industrynews/:catname" :paramsDesc="['网站顶部分类栏目']">
+<Route author="vlcheng" example="/leiphone/category/industrynews" path="/leiphone/category/:catname" :paramsDesc="['网站顶部分类栏目']">
 
 -   主栏目
 
@@ -2519,6 +2563,22 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 全国港澳研究会
+
+### 分类
+
+<Route author="nczitzk" example="/cahkms" path="/cahkms/:category?" :paramsDesc="['分类，见下表，默认为重要新闻']">
+
+| 关于我们 | 港澳新闻 | 重要新闻 | 顾问点评、会员观点 | 专题汇总 |
+| -------- | -------- | -------- | ------------------ | -------- |
+| 01       | 02       | 03       | 04                 | 05       |
+
+| 港澳时评 | 图片新闻 | 视频中心 | 港澳研究 | 最新书讯 | 研究资讯 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 06       | 07       | 08       | 09       | 10       | 11       |
+
+</Route>
+
 ## 全民健康网
 
 <Route author="nczitzk" example="/qm120/news" path="/qm120/news/:category?" :paramsDesc="['分类，见下表，默认为健康焦点']">
@@ -2918,6 +2978,8 @@ column 为 third 时可选的 category:
 
 ## 晚点 LatePost
 
+### 报道
+
 <Route author="HaitianLiu nczitzk" example="/latepost" path="/latepost/:proma?" :paramsDesc="['栏目 id，见下表，默认为最新报道']">
 
 | 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
@@ -3071,7 +3133,7 @@ column 为 third 时可选的 category:
 
 ### 公众号 (feeddd 来源)
 
-<Route author="TonyRL" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id, 打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`, 在 URL 中找到 id']"/>
+<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id, 打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`, 在 URL 中找到 id; 注意不是公众号页的 id, 而是订阅的 id']"/>
 
 ### 公众号栏目 (非推送 & 历史消息)
 
@@ -3230,6 +3292,26 @@ column 为 third 时可选的 category:
 ### 新闻
 
 <Route author="nczitzk" example="/ornl/news" path="/ornl/news"/>
+
+## 消费者委员会
+
+### 文章
+
+<Route author="nczitzk" example="/consumer" path="/consumer/:category?/:language?/:keyword?" :paramsDesc="['分类，见下表，默认为測試及調查', '语言，见下表，默认为繁体中文', '关键字，默认为空']">
+
+分类
+
+| 测试及调查 | 生活资讯 | 投诉实录  | 议题评论 |
+| ---------- | -------- | --------- | -------- |
+| test       | life     | complaint | topic    |
+
+语言
+
+| 简体中文 | 繁体中文 |
+| -------- | -------- |
+| sc       | tc       |
+
+</Route>
 
 ## 小刀娱乐网
 
