@@ -358,6 +358,16 @@ R18 显示
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
+## wallhaven
+
+### 分类
+
+<Route author="Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category" :paramsDesc="['分类，可以从网站中获取']"/>
+
+### 搜索
+
+<Route author="Fatpandac" example="/wallhaven/search/categories=110&purity=100&sorting=date_added&order=desc&page=2" path="/wallhaven/search/:params" :paramsDesc="['用于搜索的参数。可在原网站搜索后复制`https://wallhaven.cc/search?`后面的内容']"/>
+
 ## Wallpaperhub
 
 <Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />

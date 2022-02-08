@@ -196,6 +196,17 @@ For example:
 
 <RouteEn author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['Category, see [here](https://tits-guru.com/categories) for details']"/>
 
+## wallhaven
+
+### Category
+
+<RouteEn author="Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category" :paramsDesc="['Category, the category can be found in URL']"/>
+
+### Search
+
+<RouteEn author="Fatpandac" example="/wallhaven/search/categories=110&purity=100&sorting=date_added&order=desc&page=2" path="/wallhaven/search/:params" :paramsDesc="['params of search, you can get it after `https://wallhaven.cc/search?`']"/>
+
+
 ## yande.re
 
 ::: tip
