@@ -565,31 +565,103 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 </Route>
 
-## JavLibrary
+## JAVLibrary
 
-### 影片
+### 最近讨论的影片
 
-<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['影片类型']" radar="1" rssbud="1">
-|新话题|新发行|新加入|最想要|高评价|
-|-----|------|------|-----|------|
-|update|newrelease|newentries|mostwanted|bestrated|
+<Route author="nczitzk" example="/javlibrary/update/cn" path="/javlibrary/update/:language?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1"/>
+
+### 新发行的影片
+
+<Route author="nczitzk" example="/javlibrary/newrelease/cn" path="/javlibrary/newrelease/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为有评论的影片（依发行日），即 `1`']" radar="1" rssbud="1">
+
+| 有评论的影片（依发行日） | 所有的影片（依发行日） |
+| ------------------------ | ---------------------- |
+| 1                        | 2                      |
+
 </Route>
 
-### 影星
+### 最新加入的影片
 
-<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星id，从链接上获取']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/javlibrary/newentries/cn" path="/javlibrary/newentries/:language?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1"/>
 
-### 用户
+### 最想要的影片
 
-<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" radar="1" rssbud="1">
-|想要的|看过的|拥有的|发表的文章|
-|-----|------|------|-----|
-|userwanted|userwatched|userowned|userposts|
+<Route author="nczitzk" example="/javlibrary/mostwanted/cn" path="/javlibrary/mostwanted/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为上个月，即 `1`']" radar="1" rssbud="1">
+
+| 上个月 | 全部 |
+| ------ | ---- |
+| 1      | 2    |
+
+</Route>
+
+### 评价最高的影片
+
+<Route author="nczitzk" example="/javlibrary/bestrated/cn" path="/javlibrary/bestrated/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为上个月，即 `1`']" radar="1" rssbud="1">
+
+| 上个月 | 全部 |
+| ------ | ---- |
+| 1      | 2    |
+
+</Route>
+
+### 影片依分类
+
+<Route author="nczitzk" example="/javlibrary/genre/amjq/cn" path="/javlibrary/genre/:genre?/:language?/:mode?" :paramsDesc="['分类，默认为极致·性高潮，即 `amjq`', '语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为有评论的影片（依发行日），即 `1`']" radar="1" rssbud="1">
+
+| 有评论的影片（依发行日） | 所有的影片（依发行日） |
+| ------------------------ | ---------------------- |
+| 1                        | 2                      |
+
+::: tip 提示
+
+全部分类参见 [依分类](https://www.javlibrary.com/cn/genres.php)
+
+:::
+
+</Route>
+
+### 影片按演员
+
+<Route author="Diygod junfengP nczitzk" example="/javlibrary/star/abbds/cn" path="/javlibrary/star/:id/:language?/:mode?" :paramsDesc="['演员 id，可在对应演员页 URL 中找到', '语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为有评论的影片（依发行日），即 `1`']" radar="1" rssbud="1">
+
+| 有评论的影片（依发行日） | 所有的影片（依发行日） |
+| ------------------------ | ---------------------- |
+| 1                        | 2                      |
+
+::: tip 提示
+
+按排行榜查看演员可前往 [排行榜](https://www.javlibrary.com/cn/star_mostfav.php)
+
+全部演员参见 [名鑑](https://www.javlibrary.com/cn/star_list.php)
+
+:::
+
 </Route>
 
 ### 最佳评论
 
-<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" rssbud="1"/>
+<Route author="DCJaous nczitzk" example="/javlibrary/bestreviews/cn" path="/javlibrary/bestreviews/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为上个月，即 `1`']" radar="1" rssbud="1">
+
+| 上个月 | 全部 |
+| ------ | ---- |
+| 1      | 2    |
+
+</Route>
+
+### 用户发表的文章
+
+<Route author="Diygod junfengP nczitzk" example="/javlibrary/userposts/mangudai/cn" path="/javlibrary/userposts/:id/:language?" :paramsDesc="['用户 id，可在对应用户页 URL 中找到', '语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1"/>
+
+### 用户相关的影片
+
+<Route author="Diygod junfengP nczitzk" example="/javlibrary/userwatched/mangudai/cn" path="/javlibrary/:type/:id/:language?" :paramsDesc="['相关类型，见下表', '用户 id，可在对应用户页 URL 中找到', '语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1">
+
+| 用户想要的影片 | 用户看过的影片 | 用户拥有的影片 |
+| -------------- | -------------- | -------------- |
+| userwanted     | userwatched    | userowned      |
+
+</Route>
 
 ## Last.fm
 
