@@ -108,7 +108,6 @@ pageClass: routes
 
 <Route author="nczitzk" example="/whoscall" path="/whoscall"/>
 
-</Route>
 
 ### 分類
 
