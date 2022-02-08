@@ -55,7 +55,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-yml": "0.12.0",
     "fs-extra": "10.0.0",
-    "jest": "27.3.1",
+    "jest": "27.5.1",
     "mockdate": "3.0.5",
     "nock": "13.2.1",
     "nodemon": "2.0.15",
