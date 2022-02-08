@@ -515,6 +515,10 @@
     "/informs/:category?": [
         "Fatpandac"
     ],
+    "/iresearch/report": [
+        "brilon",
+        "Fatpandac"
+    ],
     "/ithome/zt/:id": [
         "nczitzk"
     ],
@@ -1857,7 +1861,6 @@
     "/infoq/recommend": [],
     "/infoq/topic/:id": [],
     "/checkee/:dispdate": [],
-    "/iresearch/report": [],
     "/matters/latest/:type?": [],
     "/matters/hot": [],
     "/matters/tags/:tid": [],
