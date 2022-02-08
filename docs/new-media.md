@@ -3127,10 +3127,6 @@ column 为 third 时可选的 category:
 
 <Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']"/>
 
-### 公众号 (wechat-feeds 来源)
-
-<Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
-
 ### 公众号 (feeddd 来源)
 
 <Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id, 打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`, 在 URL 中找到 id; 注意不是公众号页的 id, 而是订阅的 id']"/>
