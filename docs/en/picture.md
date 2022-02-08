@@ -220,7 +220,7 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### Search
 
-<RouteEn author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['Filter, empty by default', 'Need Details, `true/yes` as yes, no by default']">
+<RouteEn author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']">
 
 ::: tip Tip
 
