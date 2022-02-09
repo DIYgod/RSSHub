@@ -129,7 +129,7 @@
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
-    "winston": "3.3.3"
+    "winston": "3.5.1"
   },
   "jest": {
     "testMatch": [
