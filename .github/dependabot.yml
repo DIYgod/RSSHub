@@ -6,7 +6,7 @@ updates:
       interval: daily
       time: '21:00'
     open-pull-requests-limit: 10
-    target-branch: 'build/railway'
+    target-branch: 'deploy/railway'
     labels:
       - dependencies
     ignore:

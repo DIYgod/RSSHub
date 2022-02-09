@@ -1,0 +1,58 @@
+name: Auto Merge Upstream
+on:
+  push:
+    branches: ['master']
+  schedule:
+    - cron: '36 2 * * *'
+  workflow_dispatch: ~
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set GitHub Actions git info
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: Merge upstream
+        id: merge-upstream
+        run: |
+          git config pull.rebase false
+          git remote add DIYgod $GITHUB_SERVER_URL/DIYgod/RSSHub
+          git checkout upstream
+          git fetch DIYgod master
+          git merge DIYgod/master origin/upstream --no-edit
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: upstream
+
+      - name: Merge railway
+        id: merge-railway
+        run: |
+          git checkout deploy/railway
+          git merge DIYgod/master origin/deploy/railway --no-edit
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: deploy/railway
+
+      - name: Merge master
+        id: merge-master
+        run: |
+          git checkout master
+          git merge DIYgod/master origin/master --no-edit
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
