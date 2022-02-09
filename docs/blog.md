@@ -265,4 +265,6 @@ pageClass: routes
 
 ## 竹白
 
+### 文章
+
 <Route author="naixy28" example="/blogs/zhubai/via" path="/blogs/zhubai/:id"/>
