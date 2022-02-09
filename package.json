@@ -53,7 +53,7 @@
     "eslint": "8.8.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-yml": "0.12.0",
+    "eslint-plugin-yml": "0.13.0",
     "fs-extra": "10.0.0",
     "jest": "27.5.1",
     "mockdate": "3.0.5",
