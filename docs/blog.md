@@ -90,13 +90,23 @@ pageClass: routes
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
 
+## PolkaWorld
+
+### 最新资讯
+
+<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
+
+::: tip 提示
+
+在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
+
+:::
+
 ## Whoscall
 
 ### 最新文章
 
 <Route author="nczitzk" example="/whoscall" path="/whoscall"/>
-
-</Route>
 
 ### 分類
 
