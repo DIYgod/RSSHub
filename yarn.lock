@@ -1251,97 +1251,96 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@napi-rs/pinyin-android-arm64@^1.6.1":
+"@napi-rs/pinyin-android-arm-eabi@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-android-arm-eabi/-/pinyin-android-arm-eabi-1.7.0.tgz#5d83648ecfc73580e8db1e41f2a2f9dae5dba454"
+  integrity sha512-gTrDc4GGoesaWdPpsLyEADki8cs3RX0oZ0ePeGvHibsWYHEa6jUVnSor64Kb651qpQas03DSksHpVcDjiykFTA==
+
+"@napi-rs/pinyin-android-arm64@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-android-arm64/-/pinyin-android-arm64-1.7.0.tgz#9e29227b9da6a727a612298a83bf4c3f04cfece2"
   integrity sha512-EEFWuOonBFLg6LLU+Zszq/GfthiiH5J4KoxvicTVPe+Bs+5eE7La2gXrXAwZid9q9LZTXrj1eHJERAOffD+skQ==
 
-"@napi-rs/pinyin-darwin-arm64@^1.6.1":
+"@napi-rs/pinyin-darwin-arm64@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-darwin-arm64/-/pinyin-darwin-arm64-1.7.0.tgz#9efe792da6bdaae558be91d6cc456a6acbd51a9e"
   integrity sha512-Eaeb1JwMhm4My+c0uuq6x/1xy6aqaNwMhR9BtKECSPuSh1hXd3AA+Y2EetZqnTggPJyb3B4B+R+vNugFv/RTOQ==
 
-"@napi-rs/pinyin-darwin-x64@^1.6.1":
+"@napi-rs/pinyin-darwin-x64@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-darwin-x64/-/pinyin-darwin-x64-1.7.0.tgz#9af49e873633a5296fb20780e37d643217f661a2"
   integrity sha512-GBNtO1DlEi3912uVbhi2hIaaX3LTUEKhvRbXCEAanqsAb7MM4Y0iJgDr5xjKGaCDv0+Rbk5bib9yy43wUuTW2A==
 
-"@napi-rs/pinyin-freebsd-x64@^1.6.1":
+"@napi-rs/pinyin-freebsd-x64@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-freebsd-x64/-/pinyin-freebsd-x64-1.7.0.tgz#85c6558b5986ac24bf06ccdd303edfb965ea1aa7"
   integrity sha512-3smO3C+Gz3WSBpYjAKm7VlT67hBnAzwIExAe2lYGqQ1SO9jUFhkYbimN/ab4XUCiPoVr0S/6vlqzm58BoEX0xQ==
 
-"@napi-rs/pinyin-linux-arm-gnueabihf@^1.6.1":
+"@napi-rs/pinyin-linux-arm-gnueabihf@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-linux-arm-gnueabihf/-/pinyin-linux-arm-gnueabihf-1.7.0.tgz#5fa3f8043c963cbd919a694fd5136599a99784c5"
   integrity sha512-dMlyC1G2ytGB8sk6Wmty4bNIrloJ2c1lkOBcqhc6kVOXIVcvYdR/9vllreAFvuWJvTlroW10N1vOZmQSpmAI1w==
 
-"@napi-rs/pinyin-linux-arm64-gnu@^1.6.1":
+"@napi-rs/pinyin-linux-arm64-gnu@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-linux-arm64-gnu/-/pinyin-linux-arm64-gnu-1.7.0.tgz#a15d5251a770e2c28235309ecee274e9c24ad73d"
   integrity sha512-WA94mKN/0Um+ysI+4Kn2rrowGbGE0NQro109LTy9BuglM0PIEl1hZYHaaQ1vw/h5ZNW0ai25HlBJffxmgQW2eA==
 
-"@napi-rs/pinyin-linux-arm64-musl@^1.6.1":
+"@napi-rs/pinyin-linux-arm64-musl@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-linux-arm64-musl/-/pinyin-linux-arm64-musl-1.7.0.tgz#6973841cc2bf3af355b8ac1fa3d1cf34ce910d07"
   integrity sha512-RtdoxvuIhbYCcZJ1IQQlvMsTWKzW84teJXqjoQRvkUGeowccM4O6bCztgmXp9WDW5dOGV4DfIMslki2ps9jaRQ==
 
-"@napi-rs/pinyin-linux-x64-gnu@^1.6.1":
+"@napi-rs/pinyin-linux-x64-gnu@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-linux-x64-gnu/-/pinyin-linux-x64-gnu-1.7.0.tgz#6b8e1056513de484d30effc2ab43ce1ba8d6f019"
   integrity sha512-LuTEGUTKTfiC5ra+eLtH4Gft3M9S93Is1avXe1jgeb9YnnrA25UH1VFMo5lxmgWW/5535SVbw7NSxocKIR4CwA==
 
-"@napi-rs/pinyin-linux-x64-musl@^1.6.1":
+"@napi-rs/pinyin-linux-x64-musl@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-linux-x64-musl/-/pinyin-linux-x64-musl-1.7.0.tgz#5effbb9e93691871feaadfd69d98651bb32c3eb3"
   integrity sha512-WUNYSJFG5E8fe8+D0bYuJUU+F4DF1devfxF/2VHfCxvRKJGo6ZWK8Cfn/iHdroU4Vk4dxXy5krRsSzJxor5ZLw==
 
-"@napi-rs/pinyin-win32-arm64-msvc@^1.6.1":
+"@napi-rs/pinyin-win32-arm64-msvc@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-win32-arm64-msvc/-/pinyin-win32-arm64-msvc-1.7.0.tgz#886f00b2529b999e06256ce40797176bbd3e7b0d"
   integrity sha512-C2lpEC/tEO+PzUssfZUmYYQFgop2RTvktiygJl+3jenU17jrzEAnyMqg7c02ClPu3JcGXHk++k7RiKY9cVBnog==
 
-"@napi-rs/pinyin-win32-ia32-msvc@^1.6.1":
+"@napi-rs/pinyin-win32-ia32-msvc@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-win32-ia32-msvc/-/pinyin-win32-ia32-msvc-1.7.0.tgz#09aa37c4c84c59dbcc9dac658a970005758b72cb"
   integrity sha512-DNMExy0kcyPf11WRunRU8aEwfzknThPLJfPQfUKaYimhJx+v5SMOQ1dapTXufJXsEphdGoXXdle6lV3NdVcKlQ==
 
-"@napi-rs/pinyin-win32-x64-msvc@^1.6.1":
+"@napi-rs/pinyin-win32-x64-msvc@1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/pinyin-win32-x64-msvc/-/pinyin-win32-x64-msvc-1.7.0.tgz#1c44d2bf0ba162e6f1b617f013cb0b376f7f2a58"
   integrity sha512-fseGGv3YCHREmOCp9YY/lrm8LMo0jmQ6qsj1B0UJqmXjTxniWjfvfuwPerjHe1iSWtCAela+7vKtH9UIIWWhHw==
 
-"@napi-rs/pinyin@1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@napi-rs/pinyin/-/pinyin-1.6.1.tgz#06d4e8b9182e47f6045c7169e7af557550079370"
-  integrity sha512-MILZu4btg2nBcgzbp7kvBkfWz5YhdKCwKJGed/opliU+cSBXW0vulb3iyKlQkQpj1q85bk+QZTlj0foP8/29wg==
+"@napi-rs/pinyin@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/pinyin/-/pinyin-1.7.0.tgz#024b12e283dffc9b673b771c78f8f51f19d4efe2"
+  integrity sha512-IZF4k2j3zIc1xKRm9lSbLE0q3/hkg3xVOIqCQzKST1ukjIcXpuWx1ntrSpFJpkKivngG3eeZf7dpQOclf1VCOw==
   dependencies:
-    "@node-rs/helper" "^1.1.1"
+    "@napi-rs/triples" "^1.1.0"
   optionalDependencies:
-    "@napi-rs/pinyin-android-arm64" "^1.6.1"
-    "@napi-rs/pinyin-darwin-arm64" "^1.6.1"
-    "@napi-rs/pinyin-darwin-x64" "^1.6.1"
-    "@napi-rs/pinyin-freebsd-x64" "^1.6.1"
-    "@napi-rs/pinyin-linux-arm-gnueabihf" "^1.6.1"
-    "@napi-rs/pinyin-linux-arm64-gnu" "^1.6.1"
-    "@napi-rs/pinyin-linux-arm64-musl" "^1.6.1"
-    "@napi-rs/pinyin-linux-x64-gnu" "^1.6.1"
-    "@napi-rs/pinyin-linux-x64-musl" "^1.6.1"
-    "@napi-rs/pinyin-win32-arm64-msvc" "^1.6.1"
-    "@napi-rs/pinyin-win32-ia32-msvc" "^1.6.1"
-    "@napi-rs/pinyin-win32-x64-msvc" "^1.6.1"
+    "@napi-rs/pinyin-android-arm-eabi" "1.7.0"
+    "@napi-rs/pinyin-android-arm64" "1.7.0"
+    "@napi-rs/pinyin-darwin-arm64" "1.7.0"
+    "@napi-rs/pinyin-darwin-x64" "1.7.0"
+    "@napi-rs/pinyin-freebsd-x64" "1.7.0"
+    "@napi-rs/pinyin-linux-arm-gnueabihf" "1.7.0"
+    "@napi-rs/pinyin-linux-arm64-gnu" "1.7.0"
+    "@napi-rs/pinyin-linux-arm64-musl" "1.7.0"
+    "@napi-rs/pinyin-linux-x64-gnu" "1.7.0"
+    "@napi-rs/pinyin-linux-x64-musl" "1.7.0"
+    "@napi-rs/pinyin-win32-arm64-msvc" "1.7.0"
+    "@napi-rs/pinyin-win32-ia32-msvc" "1.7.0"
+    "@napi-rs/pinyin-win32-x64-msvc" "1.7.0"
 
 "@napi-rs/triples@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@napi-rs/triples/-/triples-1.1.0.tgz#88c35b72e79a20b79bb4c9b3e2817241a1c9f4f9"
   integrity sha512-XQr74QaLeMiqhStEhLn1im9EOMnkypp7MZOwQhGzqp2Weu5eQJbpPxWxixxlYRKWPOmJjsk6qYfYH9kq43yc2w==
-
-"@node-rs/helper@^1.1.1":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@node-rs/helper/-/helper-1.3.3.tgz#2b1953846ddba31bfb7ecf4ba57e7b1359fcdedc"
-  integrity sha512-p4OdfQObGN9YFy5WZaGwlPYICQSe7xZYyXB0sxREmvj1HzGKp5bPg2PlfgfMZEfnjIA882B9ZrnagYzZihIwjA==
-  dependencies:
-    "@napi-rs/triples" "^1.1.0"
 
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
@@ -13552,10 +13551,8 @@ watchpack@^1.7.4:
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.7.5.tgz#1267e6c55e0b9b5be44c2023aed5437a2c26c453"
   integrity sha512-9P3MWk6SrKjHsGkLT2KHXdQ/9SNkyoJbabxnKOoJepsvJjJG8uYTR3yTPxPQvNDI3w4Nz1xnE0TLHK4RIVe/MQ==
   dependencies:
-    chokidar "^3.4.1"
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
-    watchpack-chokidar2 "^2.0.1"
   optionalDependencies:
     chokidar "^3.4.1"
     watchpack-chokidar2 "^2.0.1"
