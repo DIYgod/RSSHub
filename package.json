@@ -47,7 +47,7 @@
     "@vercel/nft": "0.17.0",
     "@vuepress/plugin-back-to-top": "1.8.2",
     "@vuepress/plugin-google-analytics": "1.8.2",
-    "@vuepress/plugin-pwa": "1.8.2",
+    "@vuepress/plugin-pwa": "1.9.7",
     "ci-info": "3.3.0",
     "cross-env": "7.0.3",
     "eslint": "8.8.0",
