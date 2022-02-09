@@ -44,7 +44,7 @@
     "@types/cheerio": "0.22.30",
     "@types/got": "9.6.12",
     "@types/koa": "2.13.4",
-    "@vercel/nft": "0.17.0",
+    "@vercel/nft": "0.17.4",
     "@vuepress/plugin-back-to-top": "1.8.2",
     "@vuepress/plugin-google-analytics": "1.8.2",
     "@vuepress/plugin-pwa": "1.8.2",
