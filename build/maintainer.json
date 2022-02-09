@@ -1038,6 +1038,9 @@
     "/wsyu/news/:type?": [
         "Derekmini"
     ],
+    "/wyzxwk/article/:id?": [
+        "nczitzk"
+    ],
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
