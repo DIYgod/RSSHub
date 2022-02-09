@@ -10703,10 +10703,10 @@ pretty-format@^27.5.1:
     ansi-styles "^5.0.0"
     react-is "^17.0.1"
 
-pretty-quick@3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/pretty-quick/-/pretty-quick-3.1.2.tgz#89d8741af7122cbd7f34182df746c5a7ea360b5c"
-  integrity sha512-T+fpTJrDjTzewql4p3lKrRA7z3MrNyjBK1MKeaBm5PpKwATgVm885TpY7TgY8KFt5Q1Qn3QDseRQcyX9AKTKkA==
+pretty-quick@3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/pretty-quick/-/pretty-quick-3.1.3.tgz#15281108c0ddf446675157ca40240099157b638e"
+  integrity sha512-kOCi2FJabvuh1as9enxYmrnBC6tVMoVOenMaBqRfsvBHB0cbpYHjdQEpSglpASDFEXVwplpcGR4CLEaisYAFcA==
   dependencies:
     chalk "^3.0.0"
     execa "^4.0.0"
