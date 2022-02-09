@@ -10,6 +10,10 @@ pageClass: routes
 
 <Route author="LogicJake" example="/12306/zxdt" path="/12306/zxdt/:id?" :paramsDesc="['铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态']"/>
 
+### 售票信息
+
+<Route author="Fatpandac" example="/12306/2022-02-19/重庆/永川东" path="/12306/:date/:from/:to/:type?" :paramsDesc="['时间', '始发站', '终点站', '售票类型，成人和学生可选，默认为成人']"/>
+
 ## All the Flight Deals
 
 ### 特价机票

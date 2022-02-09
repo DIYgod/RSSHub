@@ -10,9 +10,14 @@ updates:
     labels:
       - dependencies
     ignore:
+
+    # ESM only
       - dependency-name: got
         versions:
           - '>=12.0.0'
+      - dependency-name: ip-regex
+        versions:
+          - '>=5.0.0'
       - dependency-name: remark
         versions:
           - '>=14.0.0'
