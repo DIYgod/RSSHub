@@ -99,7 +99,7 @@
     "instagram-private-api": "1.45.2",
     "ioredis": "4.28.5",
     "ip": "*",
-    "ip-regex": "4.3.0",
+    "ip-regex": "5.0.0",
     "is-localhost-ip": "1.4.0",
     "jsdom": "19.0.0",
     "json-bigint": "1.0.0",
