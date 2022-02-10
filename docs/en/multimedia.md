@@ -44,31 +44,103 @@ Official RSS: https://eztv.io/ezrss.xml
 
 <RouteEn author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
-## JavLibrary
+## JAVLibrary
 
-### Videos
+### Recently Discussed Videos
 
-<RouteEn author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['video type']" radar="1" rssbud="1">
-|New Comments|New Release|New Entries|Most Wanted|Best Rated|
-|-----|------|------|-----|------|
-|update|newrelease|newentries|mostwanted|bestrated|
+<RouteEn author="nczitzk" example="/javlibrary/update/en" path="/javlibrary/update/:language?" :paramsDesc="['Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1"/>
+
+### New Releases
+
+<RouteEn author="nczitzk" example="/javlibrary/newrelease/en" path="/javlibrary/newrelease/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']" radar="1" rssbud="1">
+
+| videos with comments (by date) | everything (by date) |
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |
+
 </RouteEn>
 
-### Stars
+### Recently Inserted Videos
 
-<RouteEn author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['star id, find it from link']" radar="1" rssbud="1"/>
+<RouteEn author="nczitzk" example="/javlibrary/newentries/en" path="/javlibrary/newentries/:language?" :paramsDesc="['Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1"/>
 
-### Users
+### Most Wanted Videos
 
-<RouteEn author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['user id','user choice, see table below']" radar="1" rssbud="1">
-|User wanted|User watched|User owned|User posts|
-|-----|------|------|-----|
-|userwanted|userwatched|userowned|userposts|
+<RouteEn author="nczitzk" example="/javlibrary/mostwanted/en" path="/javlibrary/mostwanted/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']" radar="1" rssbud="1">
+
+| Last Month | All Time |
+| ---------- | -------- |
+| 1          | 2        |
+
 </RouteEn>
 
-### Bestreviews
+### Best Rated Videos
 
-<RouteEn author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" rssbud="1"/>
+<RouteEn author="nczitzk" example="/javlibrary/bestrated/en" path="/javlibrary/bestrated/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']" radar="1" rssbud="1">
+
+| Last Month | All Time |
+| ---------- | -------- |
+| 1          | 2        |
+
+</RouteEn>
+
+### Best Reviews
+
+<RouteEn author="DCJaous nczitzk" example="/javlibrary/bestreviews/en" path="/javlibrary/bestreviews/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']" radar="1" rssbud="1">
+
+| Last Month | All Time |
+| ---------- | -------- |
+| 1          | 2        |
+
+</RouteEn>
+
+### Videos by categories
+
+<RouteEn author="nczitzk" example="/javlibrary/genre/amjq/en" path="/javlibrary/genre/:genre?/:language?/:mode?" :paramsDesc="['Category, Acme · Orgasm by default, as `amjq`', 'Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']" radar="1" rssbud="1">
+
+| videos with comments (by date) | everything (by date) |
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |
+
+::: tip Tip
+
+See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
+
+:::
+
+</RouteEn>
+
+### Videos by star
+
+<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/star/abbds/en" path="/javlibrary/star/:id/:language?/:mode?" :paramsDesc="['Star id, can be found in URL', 'Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']" radar="1" rssbud="1">
+
+| videos with comments (by date) | everything (by date) |
+| ------------------------------ | -------------------- |
+| 1                              | 2                    |
+
+::: tip Tip
+
+See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.
+
+See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
+
+:::
+
+</RouteEn>
+
+### Posts published by user
+
+<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/userposts/mangudai/en" path="/javlibrary/userposts/:id/:language?" :paramsDesc="['User id, can be found in URL', 'Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1"/>
+
+### Videos by user
+
+<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/userwatched/mangudai/en" path="/javlibrary/:type/:id/:language?" :paramsDesc="['Type, see below', 'User id, can be found in URL', 'Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1">
+
+| Wanted     | Watched     | Owned     |
+| ---------- | ----------- | --------- |
+| userwanted | userwatched | userowned |
+
+</RouteEn>
 
 ## Melon
 
@@ -149,6 +221,30 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 ### Tracks
 
 <RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['User name']" />
+
+## Spotify
+
+
+### Artist Albums
+
+<RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['Artist ID']" />
+
+### Playlist
+
+<RouteEn author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['Playlist ID']" />
+
+### Personal Saved Tracks
+
+<RouteEn author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['Track count, 50 by default']" />
+
+### Personal Top Tracks
+
+<RouteEn author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" />
+
+### Personal Top Artists
+
+<RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
+
 
 ## Trakt.tv
 

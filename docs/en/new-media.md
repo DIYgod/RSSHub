@@ -375,6 +375,18 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="nczitzk" example="/mathunion/fields-medal" path="/mathunion/fields-medal"/>
 
+## KBS
+
+### Today
+
+<RouteEn author="nczitzk" example="/kbs/today" path="/kbs/today/:language?" :paramsDesc="['Language, see below, e as English by default']">
+
+| 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
+| ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
+| k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |
+
+</RouteEn>
+
 ## Letterboxd
 
 ### User diary
@@ -384,6 +396,20 @@ Provides a better reading experience (full text articles) over the official one.
 ### Following diary
 
 <RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
+
+## Line
+
+### Today
+
+<RouteEn author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['Edition, see below, Taiwan by default', 'Tag, can be found in URL, top by default']">
+
+Edition
+
+| Taiwan | Thailand | Indonesia | Hong Kong |
+| ------ | -------- | --------- | --------- |
+| tw     | th       | id        | hk        |
+
+</RouteEn>
 
 ## MakeUseOf
 
@@ -402,6 +428,12 @@ Provides a better reading experience (full text articles) over the official one.
 ### Author
 
 <RouteEn author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
+
+## Mirror
+
+### User
+
+<RouteEn author="fifteen42 rde9" example="/mirror/tingfei.eth" path="/mirror/:id" :paramsDesc="['user id']" />
 
 ## National Association of Colleges and Employers
 
@@ -459,6 +491,18 @@ Compared to the official one, this feed:
 
 1. supports LaTeX formulas, and
 2. displays all pictures in the article (except those print-hidden multimedia materials).
+
+</RouteEn>
+
+## Radio-Canada.ca
+
+### Latest News
+
+<RouteEn author="nczitzk" example="/radio-canada/latest" path="/radio-canada/latest/:language?" :paramsDesc="['Language, see below, English by default']">
+
+| Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
+| -------- | ------- | ------- | -------- | -------- | ------- | ------ | ------- |
+| fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa     | tl      |
 
 </RouteEn>
 
@@ -600,7 +644,7 @@ Language
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |
 
-</Route>
+</RouteEn>
 
 ### Newsroom
 
@@ -616,4 +660,4 @@ Language
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |
 
-</Route>
+</RouteEn>

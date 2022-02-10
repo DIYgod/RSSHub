@@ -358,6 +358,42 @@ R18 显示
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
+## wallhaven
+
+::: tip 提示
+
+参数 **需要图片信息** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带各图片的标题、上传者、上传时间、分类信息，可支持 RSS 阅读器的筛选功能。
+
+但开启后对该网站请求次数大量增多，从而导致网站返回 `Response code 429 (Too Many Requests)`。所以需要指定更小的 `limit` 参数值，即在路由后添加 `?limit=<单次请求获取数目>`，下面是一个例子：
+
+如 [Latest Wallpapers](https://wallhaven.cc/latest)，开启 **需要图片信息** 后的路由为 [/wallhaven/latest/true](https://rsshub.app/wallhaven/latest/true)，此时再指定更小的 `limit` 参数值，即 [/wallhaven/latest/true?limit=5](https://rsshub.app/wallhaven/latest/true?limit=5)
+
+:::
+
+### 分类
+
+<Route author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" :paramsDesc="['分类，见下表，默认为 Latest', '需要图片信息，填写 true/yes 表示需要，默认不需要']">
+
+| Latest | Hot | Toplist | Random |
+| ------ | --- | ------- | ------ |
+| latest | hot | toplist | random |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['过滤器，默认为空', '需要图片信息，填写 `true`/`yes` 表示需要，默认不需要']">
+
+::: tip 提示
+
+订阅以 `https://wallhaven.cc/search` 起始的页面，将 `?` 后的字段作为 `filter` 填写入路由。下面是一个例子：
+
+如 [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)，中 `?` 后的字段为 `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd`，所以可以得到路由是 [/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)
+
+:::
+
+</Route>
+
 ## Wallpaperhub
 
 <Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
@@ -415,17 +451,27 @@ R18 显示
 
 ## 煎蛋
 
-### 无聊图
+### 板块
 
-<Route author="kobemtl Xuanwo xyqfer 9uanhuo" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+<Route author="nczitzk" example="/jandan/top" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']">
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 | 女装 | 随手拍 | 随手拍热榜 | 动物园 |
-| ------ | ---------- | ---------- | ---- | ------ | ---------- | ------ |
-| pic    | top        | top-4h     | girl | ooxx   | top-ooxx   | zoo    |
+| 问答 | 树洞     | 动物园 | 女装 | 随手拍 | 无聊图 | 鱼塘 |
+| ---- | -------- | ------ | ---- | ------ | ------ | ---- |
+| qa   | treehole | zoo    | girl | ooxx   | pic    | pond |
+
+</Route>
+
+### 热榜
+
+<Route author="kobemtl Xuanwo xyqfer 9uanhuo nczitzk" example="/jandan/top-4h" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']"/>
+
+| 4 小时热门 | 吐槽      | 无聊图 | 随手拍   | 动物园  | 优评         | 3 日最佳  | 7 日最佳  |
+| ---------- | --------- | ------ | -------- | ------- | ------------ | --------- | --------- |
+| top-4h     | top-tucao | top    | top-ooxx | top-zoo | top-comments | top-3days | top-7days |
 
 ### 首页
 
-<Route author="lonelykid" example="/jandan/article" path="/jandan/article"/>
+<Route author="lonelykid nczitzk" example="/jandan" path="/jandan"/>
 
 ## 绝对领域
 

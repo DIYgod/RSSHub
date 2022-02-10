@@ -250,9 +250,10 @@
     'ishuhui.com': { _name: '鼠绘漫画', www: [{ title: '鼠绘漫画', docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua', source: '/comics/anime/:id', target: '/shuhui/comics/:id' }] },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/traditional_media.html#chicago-tribune', source: '/' }] },
     'haimaoba.com': { _name: '海猫吧', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba', source: '/catalog/:id', target: '/haimaoba/:id' }] },
-    'manhuagui.com': { _name: '漫画柜', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua', source: '/comic/:id/', target: '/manhuagui/comic/:id' }] },
-    'mhgui.com': { _name: '漫画柜镜像站', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-jing-xiang-zhan', source: '/comic/:id/', target: '/mhgui/comic/:id' }] },
+    'manhuagui.com': { _name: '漫画柜', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua', source: '/comic/:id/', target: '/manhuagui/comic/:id/5' }] },
+    'mhgui.com': { _name: '漫画柜镜像站', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-jing-xiang-zhan', source: '/comic/:id/', target: '/mhgui/comic/:id/5' }] },
     'tw.manhuagui.com': { _name: '漫画柜台湾', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-tai-wan', source: '/comic/:id/', target: '/twmanhuagui/comic/:id' }] },
+    'copymanga.com': { _name: '拷贝漫画', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kao-bei-man-hua', source: '/comic/:id/', target: '/manhuagui/comic/:id/5' }] },
     'pgyer.com': { _name: '蒲公英应用分发', www: [{ title: 'app更新', docs: 'https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa', source: '/:app', target: '/pgyer/:app' }] },
     'pianyuan.la': { _name: '片源网', '.': [{ title: '电影和剧集', docs: 'https://docs.rsshub.app/multimedia.html#pian-yuan', source: '/' }] },
     'sspai.com': {
@@ -311,17 +312,6 @@
     },
     'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'epicgames.com': { _name: 'Epic Games', www: [{ title: '每周免费游戏', docs: 'https://docs.rsshub.app/game.html#epicgames-freegame', source: '/store/zh-CN/free-games', target: '/epicgames/freegames' }] },
-    'docker.com': {
-        _name: 'Docker',
-        hub: [
-            {
-                title: '镜像有新 Build',
-                docs: 'https://docs.rsshub.app/program-update.html#docker-hub',
-                source: ['/r/:owner/:image', '/r/:owner/:image/tags', '/_/:image'],
-                target: (params) => `/dockerhub/build/${params.owner ? params.owner : 'library'}/${params.image}`,
-            },
-        ],
-    },
     'nga.cn': {
         _name: 'NGA',
         bbs: [
@@ -531,42 +521,6 @@
             },
         ],
         sites: [{ title: 'Sites', docs: 'https://docs.rsshub.app/blog.html#google-sites', source: ['/site/:id/*', '/site/:id'], target: '/google/sites/:id' }],
-    },
-    'javlibrary.com': {
-        _name: 'javlibrary',
-        www: [
-            { title: '新话题', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/update' },
-            { title: '新发行', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/newrelease' },
-            { title: '新加入', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/newentries' },
-            { title: '最想要', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/mostwanted' },
-            { title: '高评价', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/bestrated' },
-            { title: '最佳评论', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/bestreviews' },
-            { title: '影星', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn/vl_star.php', target: (params, url) => `/javlibrary/stars/${new URL(url).searchParams.get('s')}` },
-            {
-                title: '用户文章',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userposts`,
-            },
-            {
-                title: '用户拥有',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userowned`,
-            },
-            {
-                title: '用户看过',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwatched`,
-            },
-            {
-                title: '用户想要',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwanted`,
-            },
-        ],
     },
     'qidian.com': {
         _name: '起点',

@@ -1,0 +1,3 @@
+<img id="cover" src="{{ imgUrl }}"/>
+<br>
+{{ body }}
