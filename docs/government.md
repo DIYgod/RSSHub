@@ -132,7 +132,7 @@ pageClass: routes
 
 #### 政务公开
 
-<Route author="Fatpandac" example="/gov/huizhou/zwgk/jgdt" path="/gov/huizhou/zwgk/:category?" :paramsDesc="['资讯类别，可以从网址中的到，默认为政务要闻']"/>
+<Route author="Fatpandac" example="/gov/huizhou/zwgk/jgdt" path="/gov/huizhou/zwgk/:category?" :paramsDesc="['资讯类别，可以从网址中得到，默认为政务要闻']"/>
 
 ## 国家税务总局
 
