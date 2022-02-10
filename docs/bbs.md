@@ -895,3 +895,9 @@ pageClass: routes
 | lingyishijain | lingyitupian | minjianqitan |
 
 </Route>
+
+## audiobar
+
+<Route author="zxzhuty" example="/audiobar/latest" path="/audiobar/latest" :paramsDesc="无">
+
+</Route>
