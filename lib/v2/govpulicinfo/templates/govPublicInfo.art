@@ -1,4 +1,4 @@
-<table border="1" cellpadding="2" cellspacing="0">
+<table border="1" cellpadding="2" cellspacing="0" align="center">
     <tbody>
             <tr>
                 <td>索引号</td>
@@ -20,17 +20,21 @@
                 <td>信息来源</td>
                 <td>{{item.source}}</td>
             </tr>
-            {{if item.file != -1}}
+            {{if item.file.length}}
                 <tr>
                     <td>附件</td>
-                    <td><a href="{{item.file}}">点击下载附件</a></td>
+                    <td>
+                        {{each item.file}}
+                            <a href="{{$value.url}}">{{$value.name}}</a><br>
+                        {{/each}}
+                    </td>
                 </tr>
             {{/if}}
     </tbody>
 </table>
 
 <div>
-    {{item.content}}
+    {{@ item.content}}
 </div>
 
 
