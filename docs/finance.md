@@ -283,21 +283,11 @@ pageClass: routes
 
 ### 要闻
 
-<Route author="nczitzk" example="/stcn/news" path="/stcn/news/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+<Route author="nczitzk" example="/stcn/xw/news" path="/stcn/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
 
-| 要闻 | 滚动 | 深度 | 评论 |
-| ---- | ---- | ---- | ---- |
-| news | gd   | sd   | pl   |
-
-</Route>
-
-### 数据
-
-<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
-
-| 数据 | 机器人新闻 |
-| ---- | ---------- |
-| data | jqrxw      |
+| 要闻    | 滚动 | 深度  | 评论  |
+| ------- | ---- | ----- | ----- |
+| xw/news | gd   | xw/sd | xw/pl |
 
 </Route>
 
@@ -305,9 +295,29 @@ pageClass: routes
 
 <Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
 
-| 快讯 | e 公司 | 研报 | 时事 | 财经 |
-| ---- | ------ | ---- | ---- | ---- |
-|      | egs    | yb   | ss   | cj   |
+| 快讯 | e 公司 | 研报 | 时事 | 财经 | 券中社 |
+| ---- | ------ | ---- | ---- | ---- | ------ |
+|      | egs    | yb   | ss   | cj   | qzs    |
+
+</Route>
+
+### 股市
+
+<Route author="nczitzk" example="/stcn/stock" path="/stcn/stock/:id?" :paramsDesc="['分类 id，见下表，默认为股市']">
+
+| 股市 | 股市动态 | 独家解读 |
+| ---- | -------- | -------- |
+|      | gsdt     | djjd     |
+
+</Route>
+
+### 数据
+
+<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
+
+| 数据 | 机器人新闻 | 独家数据 |
+| ---- | ---------- | -------- |
+|      | jqrxw      | djsj     |
 
 </Route>
 
