@@ -12,7 +12,7 @@ pageClass: routes
 
 ### 售票信息
 
-<Route author="Fatpandac" example="/12306/2022-02-19/重庆/永川东" path="/12306/:date/:from/:to/:type?" :paramsDesc="['时间', '始发站', '终点站', '售票类型，成人和学生可选，默认为成人']"/>
+<Route author="Fatpandac" example="/12306/2022-02-19/重庆/永川东" path="/12306/:date/:from/:to/:type?" :paramsDesc="['时间，格式为（YYYY-MM-DD）', '始发站', '终点站', '售票类型，成人和学生可选，默认为成人']"/>
 
 ## All the Flight Deals
 
