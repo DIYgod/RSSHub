@@ -20,7 +20,7 @@
                 <td>信息来源</td>
                 <td>{{item.source}}</td>
             </tr>
-            {{if item.file}}
+            {{if item.file != -1}}
                 <tr>
                     <td>附件</td>
                     <td><a href="{{item.file}}">点击下载附件</a></td>
