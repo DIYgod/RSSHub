@@ -45,9 +45,9 @@
     "@types/got": "9.6.12",
     "@types/koa": "2.13.4",
     "@vercel/nft": "0.17.5",
-    "@vuepress/plugin-back-to-top": "1.8.2",
-    "@vuepress/plugin-google-analytics": "1.8.2",
-    "@vuepress/plugin-pwa": "1.8.2",
+    "@vuepress/plugin-back-to-top": "1.9.7",
+    "@vuepress/plugin-google-analytics": "1.9.7",
+    "@vuepress/plugin-pwa": "1.9.7",
     "ci-info": "3.3.0",
     "cross-env": "7.0.3",
     "eslint": "8.8.0",
@@ -70,7 +70,7 @@
     "string-width": "4.2.3",
     "supertest": "6.2.2",
     "tosource": "2.0.0-alpha.3",
-    "vuepress": "1.8.2",
+    "vuepress": "1.9.7",
     "yorkie": "2.0.0"
   },
   "dependencies": {
