@@ -13025,10 +13025,10 @@ toposort@^1.0.0:
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-1.0.7.tgz#2e68442d9f64ec720b8cc89e6443ac6caa950029"
   integrity sha1-LmhELZ9k7HILjMieZEOsbKqVACk=
 
-torrent-search-api@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/torrent-search-api/-/torrent-search-api-2.1.3.tgz#5fe976b2493e07fe4d2315695bf1eccff6974b05"
-  integrity sha512-yQA/T7Rz0Xc0OsdkaJ0G09aSJh4vgt0nsCYKlg9DvSI6kGqxAwlhDAeQncj1gFTsHdPALzXeUqaPCKeigkKc4A==
+torrent-search-api@2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/torrent-search-api/-/torrent-search-api-2.1.4.tgz#b60537d9d72a868c38838a78c4a19a878a1f2b68"
+  integrity sha512-gFWQiQgBMjYWrxB6KP9E2SiOaE6FtSBrILippUDw8h3euMrnggrx2S2Vs/jlIduL6/zEa1bGLG3h016jRRGlng==
   dependencies:
     cloudscraper "^4.6.0"
     lodash "^4.17.15"
