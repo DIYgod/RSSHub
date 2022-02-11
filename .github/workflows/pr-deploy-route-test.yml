@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Fetch affected routes
         id: fetchRoute
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
 
           # by default, JSON format returned
@@ -32,7 +32,7 @@ jobs:
           max_timeout: 300
       - name: Generate feedback
         if: (env.TEST_CONTINUE)
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         env:
           TEST_BASEURL: ${{steps.waitFor200.outputs.url}}
           TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
