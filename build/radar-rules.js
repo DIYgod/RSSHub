@@ -1180,6 +1180,11 @@
                         return '/gov/huizhou/zwgk/xqyw';
                     }
                 } } ] },
+  "deyang.gov.cn":{ _name:"德阳市人民政府",
+    ".":[ { title:"德阳市政府公开信息",
+        docs:"https://docs.rsshub.app/government.html#de-yang-shi-fu-ren-min-zheng-zheng-fu",
+        source:[ "/*" ],
+        target:"/sichuan/deyang/govpulicinfo/:countyName/:institutionName?" } ] },
   "guduodata.com":{ _name:"骨朵数据",
     data:[ { title:"日榜",
         docs:"https://docs.rsshub.app/other.html#gu-duo-shu-ju",

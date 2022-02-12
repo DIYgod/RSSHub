@@ -439,6 +439,9 @@
     "/gov/huizhou/zwgk/:category?": [
         "Fatpandac"
     ],
+    "/gov/sichuan/deyang/govpulicinfo/:countyName/:institutionName?": [
+        "zytomorrow"
+    ],
     "/guduodata/daily": [
         "Gem1ni"
     ],
