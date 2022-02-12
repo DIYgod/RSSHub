@@ -25,20 +25,21 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
 ```routes
 ```
 
-## 新RSS检查列表 / New RSS Script Checklist
+## 新 RSS 检查列表 / New RSS Script Checklist
   
-- [ ] New Route
-- [ ] Documentation
-  - [ ] CN
-  - [ ] EN
+- [ ] 新的路由 New Route
+  - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/script-standard.html) Follows [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html)
+- [ ] 文档说明 Documentation
+  - [ ] 中文文档 CN
+  - [ ] 英文文档 EN
 - [ ] 全文获取 fulltext
-  - [ ] Use Cache
+  - [ ] 使用缓存 Use Cache
 - [ ] 反爬/频率限制 anti-bot or rate limit?
   - [ ] 如果有, 是否有对应的措施? If yes, do your code reflect this sign?
-- [ ] 日期和时间 date and time
+- [ ] [日期和时间](https://docs.rsshub.app/joinus/pub-date.html) [date and time](https://docs.rsshub.app/en/joinus/pub-date.html)
   - [ ] 可以解析 Parsed
   - [ ] 时区调整 Correct TimeZone
-- [ ] 添加了新的包 New package added 
+- [ ] 添加了新的包 New package added
 - [ ] `Puppeteer`
 
 ## 说明 / Note

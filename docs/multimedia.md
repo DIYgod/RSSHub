@@ -274,7 +274,9 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 :::
 
-## CNTV 栏目
+## CNTV
+
+### 栏目
 
 ::: tip 提示
 
@@ -283,13 +285,71 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 :::
 
-<Route author="WhoIsSure" example="/cntv/TOPC1451528971114112" path="/cntv/:column" :paramsDesc="['栏目ID, 可在对应CNTV栏目页面找到']">
+<Route author="WhoIsSure Fatpandac" example="/cntv/TOPC1451528971114112" path="/cntv/:column" :paramsDesc="['栏目ID, 可在对应CNTV栏目页面找到']">
 
 栏目
 
 | 新闻联播             | 新闻周刊             | 天下足球             |
 | -------------------- | -------------------- | -------------------- |
 | TOPC1451528971114112 | TOPC1451559180488841 | TOPC1451551777876756 |
+
+</Route>
+
+## E-Hentai
+
+### 分类
+
+<Route author="nczitzk" example="/e-hentai/category/manga" path="/e-hentai/category/:category?/:needTorrents?/:needImages?" :paramsDesc="['分类，可在对应分类页中找到，默认为首页', '需要输出种子文件，填写 true/yes 表示需要，默认需要', '需要显示大图，填写 true/yes 表示需要，默认需要']">
+
+::: tip 提示
+
+参数 **需要输出种子文件** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带种子文件的路径，以供支持 RSS 的下载工具订阅下载。
+
+同理，参数 **需要显示大图** 启用后，RSS 会携带每项内容中的大图，而不只提供缩略图。
+
+当然，选择 **需要输出种子文件**、**需要显示大图** 后获取内容时间需要更久，同时若指定获取数量过多，可能会出现获取超时错误。此时，可以在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，或直接修改全局的超时参数 `REQUEST_TIMEOUT`（详见文档中的 [其他应用配置](https://docs.rsshub.app/install/#pei-zhi-qi-ta-ying-yong-pei-zhi)）。
+
+以下是一个例子：
+
+选择浏览 [Manga 分类](https://e-hentai.org/manga)，并指定 **不携带种子文件**，**只显示大图**，并只 **输出 5 个**。由于 [Manga 分类](https://e-hentai.org/manga) 的 URL <https://e-hentai.org/manga> 中对应分类字段为 `manga`，所以对应路由为 [`/e-hentai/category/manga/no/yes?limit=5`](https://rsshub.app/e-hentai/category/manga/no/yes?limit=5)
+
+:::
+
+| Doujinshi | Manga | Artist CG | Game CG | Western |
+| --------- | ----- | --------- | ------- | ------- |
+| doujinshi | manga | artistcg  | gamecg  | western |
+
+| Non-H | Image Set | Cosplay | Asian Porn | Misc | Popular |
+| ----- | --------- | ------- | ---------- | ---- | ------- |
+| non-h | imageset  | cosplay | asianporn  | misc | popular |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/e-hentai/tag/language:chinese" path="/e-hentai/tag/:tag?" :paramsDesc="['标签，可在对应标签页中找到，默认为首页']">
+
+::: tip 提示
+
+参数 **需要输出种子文件**、**需要显示大图** 的说明同上，以下是一个例子：
+
+选择浏览 [language:chinese 标签](https://e-hentai.org/tag/language:chinese)，并指定 **携带种子文件**，**不显示大图**。由于 [language:chinese 标签](https://e-hentai.org/tag/language:chinese) 的 URL <https://e-hentai.org/tag/language:chinese> 中对应标签字段为 `language:chinese`，所以对应路由为 [`/e-hentai/tag/language:chinese/true/false`](https://rsshub.app/e-hentai/tag/language:chinese/true/false)
+
+:::
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/e-hentai/search/f_search=haha" path="/e-hentai/search/:keyword?" :paramsDesc="['关键字，可以在搜索结果页的 URL 中找到，默认为首页']">
+
+::: tip 提示
+
+参数 **需要输出种子文件**、**需要显示大图** 的说明同上，以下是一个例子：
+
+选择浏览 [f_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay)，并指定 **携带种子文件**，且 **显示大图**。由于 [f_search=cosplay 搜索结果](https://e-hentai.org/?f_search=cosplay) 的 URL <https://e-hentai.org/?f_search=cosplay> 中对应关键字字段为 `?` 后的 `f_search=cosplay`，所以对应路由为 [`/e-hentai/search/f_search=cosplay/y/y`](https://rsshub.app/e-hentai/search/f_search=cosplay/y/y)
+
+:::
 
 </Route>
 
@@ -505,31 +565,103 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 </Route>
 
-## JavLibrary
+## JAVLibrary
 
-### 影片
+### 最近讨论的影片
 
-<Route author="Diygod junfengP" example="/javlibrary/videos/bestrated" path="/javlibrary/videos/:vtype" :paramsDesc="['影片类型']" radar="1" rssbud="1">
-|新话题|新发行|新加入|最想要|高评价|
-|-----|------|------|-----|------|
-|update|newrelease|newentries|mostwanted|bestrated|
+<Route author="nczitzk" example="/javlibrary/update/cn" path="/javlibrary/update/:language?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1"/>
+
+### 新发行的影片
+
+<Route author="nczitzk" example="/javlibrary/newrelease/cn" path="/javlibrary/newrelease/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为有评论的影片（依发行日），即 `1`']" radar="1" rssbud="1">
+
+| 有评论的影片（依发行日） | 所有的影片（依发行日） |
+| ------------------------ | ---------------------- |
+| 1                        | 2                      |
+
 </Route>
 
-### 影星
+### 最新加入的影片
 
-<Route author="Diygod junfengP" example="/javlibrary/stars/afisw" path="/javlibrary/stars/:sid" :paramsDesc="['影星id，从链接上获取']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/javlibrary/newentries/cn" path="/javlibrary/newentries/:language?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1"/>
 
-### 用户
+### 最想要的影片
 
-<Route author="Diygod junfengP" example="/javlibrary/users/mangudai/userposts" path="/javlibrary/users/:uid/:utype" :paramsDesc="['用户id，即用户名称','用户选项，见下表']" radar="1" rssbud="1">
-|想要的|看过的|拥有的|发表的文章|
-|-----|------|------|-----|
-|userwanted|userwatched|userowned|userposts|
+<Route author="nczitzk" example="/javlibrary/mostwanted/cn" path="/javlibrary/mostwanted/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为上个月，即 `1`']" radar="1" rssbud="1">
+
+| 上个月 | 全部 |
+| ------ | ---- |
+| 1      | 2    |
+
+</Route>
+
+### 评价最高的影片
+
+<Route author="nczitzk" example="/javlibrary/bestrated/cn" path="/javlibrary/bestrated/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为上个月，即 `1`']" radar="1" rssbud="1">
+
+| 上个月 | 全部 |
+| ------ | ---- |
+| 1      | 2    |
+
+</Route>
+
+### 影片依分类
+
+<Route author="nczitzk" example="/javlibrary/genre/amjq/cn" path="/javlibrary/genre/:genre?/:language?/:mode?" :paramsDesc="['分类，默认为极致·性高潮，即 `amjq`', '语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为有评论的影片（依发行日），即 `1`']" radar="1" rssbud="1">
+
+| 有评论的影片（依发行日） | 所有的影片（依发行日） |
+| ------------------------ | ---------------------- |
+| 1                        | 2                      |
+
+::: tip 提示
+
+全部分类参见 [依分类](https://www.javlibrary.com/cn/genres.php)
+
+:::
+
+</Route>
+
+### 影片按演员
+
+<Route author="Diygod junfengP nczitzk" example="/javlibrary/star/abbds/cn" path="/javlibrary/star/:id/:language?/:mode?" :paramsDesc="['演员 id，可在对应演员页 URL 中找到', '语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为有评论的影片（依发行日），即 `1`']" radar="1" rssbud="1">
+
+| 有评论的影片（依发行日） | 所有的影片（依发行日） |
+| ------------------------ | ---------------------- |
+| 1                        | 2                      |
+
+::: tip 提示
+
+按排行榜查看演员可前往 [排行榜](https://www.javlibrary.com/cn/star_mostfav.php)
+
+全部演员参见 [名鑑](https://www.javlibrary.com/cn/star_list.php)
+
+:::
+
 </Route>
 
 ### 最佳评论
 
-<Route author="DCJaous" example="/javlibrary/bestreviews" path="/javlibrary/bestreviews" radar="1" rssbud="1"/>
+<Route author="DCJaous nczitzk" example="/javlibrary/bestreviews/cn" path="/javlibrary/bestreviews/:language?/:mode?" :paramsDesc="['语言，见上表，默认为日语，即 `ja`', '模式，见下表，默认为上个月，即 `1`']" radar="1" rssbud="1">
+
+| 上个月 | 全部 |
+| ------ | ---- |
+| 1      | 2    |
+
+</Route>
+
+### 用户发表的文章
+
+<Route author="Diygod junfengP nczitzk" example="/javlibrary/userposts/mangudai/cn" path="/javlibrary/userposts/:id/:language?" :paramsDesc="['用户 id，可在对应用户页 URL 中找到', '语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1"/>
+
+### 用户相关的影片
+
+<Route author="Diygod junfengP nczitzk" example="/javlibrary/userwatched/mangudai/cn" path="/javlibrary/:type/:id/:language?" :paramsDesc="['相关类型，见下表', '用户 id，可在对应用户页 URL 中找到', '语言，见上表，默认为日语，即 `ja`']" radar="1" rssbud="1">
+
+| 用户想要的影片 | 用户看过的影片 | 用户拥有的影片 |
+| -------------- | -------------- | -------------- |
+| userwanted     | userwatched    | userowned      |
+
+</Route>
 
 ## Last.fm
 
@@ -768,6 +900,28 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 <Route author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['用户名']" />
 
+## Spotify
+
+### 艺术家专辑
+
+<Route author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['艺术家 ID']" />
+
+### 播放列表
+
+<Route author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['播放列表 ID']" />
+
+### 个人 Saved Tracks
+
+<Route author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['歌曲数量，默认为 50']" />
+
+### 个人 Top Tracks
+
+<Route author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" />
+
+### 个人 Top Artists
+
+<Route author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
+
 ## Sub HD
 
 ### 字幕
@@ -805,6 +959,12 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 ## YouTube
 
 见 [#youtube](/social-media.html#youtube)
+
+## 阿基米德 FM
+
+### 播客
+
+<Route author="Fatpandac" example="/ajmide/10603594" path="/ajmide/:id" :paramsDesc="['播客 id，可以从播客页面 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 爱奇艺
 
@@ -1152,6 +1312,11 @@ JavDB 有多个备用域名，本路由以 <https://javdb7.com> 为默认域名�
 
 ## 网易云音乐
 
+::: tip 部分歌单及听歌排行信息为登陆后可见
+
+部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_Cookies`设为登陆后的 Cookie 值，即可正常获取。
+:::
+
 ### 歌单歌曲
 
 <Route author="DIYgod" example="/ncm/playlist/35798529" path="/ncm/playlist/:id" :paramsDesc="['歌单 id, 可在歌单页 URL 中找到']" radar="1" />
@@ -1224,7 +1389,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 频道
 
-<Route author="xyqfer" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="xyqfer Fatpandac" example="/youku/channel/UNTg3MTM3OTcy" path="/youku/channel/:channelId/:embed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ## 中国高清网
 

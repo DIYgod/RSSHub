@@ -1,0 +1,9 @@
+<div>
+    {{ if discount != null }}
+    <h2><strike>原价: {{ price }}</strike></h2>
+    <h1>特价: {{ discount }}</h1>
+    {{ else }}
+    <h1>价格: {{ price }}</h1>
+    {{ /if }}
+    <img src="{{ image }}" alt="{{ title }}"/>
+</div>

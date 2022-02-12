@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Fetch affected routes
         id: fetchRoute
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
 
           # by default, JSON format returned
@@ -25,14 +25,14 @@ jobs:
             return await script({github, context, core}, body, number)
       - name: Waiting for 200 from the Vercel Preview
         if: (env.TEST_CONTINUE)
-        uses: patrickedqvist/wait-for-vercel-preview@master
+        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
         id: waitFor200
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 300
       - name: Generate feedback
         if: (env.TEST_CONTINUE)
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         env:
           TEST_BASEURL: ${{steps.waitFor200.outputs.url}}
           TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}

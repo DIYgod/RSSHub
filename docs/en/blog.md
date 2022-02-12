@@ -26,6 +26,10 @@ pageClass: routes
 
 <RouteEn author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
 
+### Blog using Fluid theme
+
+<RouteEn author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+
 ## Love the Problem
 
 ### Ash Maurya's blog
@@ -39,6 +43,17 @@ pageClass: routes
 <RouteEn author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
 
 ## Phrack Magazine
+
+## PolkaWorld
+
+### Newest Articles
+<RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
+
+::: tip 
+
+Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
+
+:::
 
 ### Article
 

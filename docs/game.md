@@ -109,6 +109,40 @@ pageClass: routes
 
 <Route author="TonyRL" example="/gameapps" path="/gameapps"/>
 
+## Gamer Secret
+
+### 最新資訊
+
+<Route author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+
+### 分類
+
+<Route author="nczitzk" example="/gamersecret/pc" path="/gamersecret/:type?/:category?" :paramsDesc="['类型，见下表，默认为 Latest News', '分类，见下表，默认为空']">
+
+| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+| ----------- | -- | ----------- | -------- | ---- | ------ |
+| latest-news | pc | playstation | nintendo | xbox | moblie |
+
+或者
+
+| GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+| ---------------- | ------------------ | --------------- | ----------------- |
+| category/general | category/generalen | category/mobile | category/mobileen |
+
+| NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+| ----------------- | ------------------- | ----------- | ------------- |
+| category/nintendo | category/nintendoen | category/pc | category/pcen |
+
+| PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+| -------------------- | ---------------------- | ---------------- |
+| category/playstation | category/playstationen | category/reviews |
+
+| XBOX          | XBOX EN         |
+| ------------- | --------------- |
+| category/xbox | category/xboxen |
+
+</Route>
+
 ## GameRes 游资网
 
 ### 热点推荐
@@ -635,11 +669,11 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏折扣
 
-<Route author="LogicJake" example="/yxdzqb/hot_chinese" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
+<Route author="LogicJake nczitzk" example="/yxdzqb/popular_cn" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
 
 | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
 | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
-| new            | hot                | hot_chinese            | low            | low_chinese            |
+| discount       | popular            | popular_cn             | low            | low_cn                 |
 
 </Route>
 
