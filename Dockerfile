@@ -14,7 +14,7 @@ COPY ./yarn.lock /app
 COPY ./package.json /app
 
 RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-  echo 'use npm mirror'; npm config set registry https://registry.npm.taobao.org; \
+  echo 'use npm mirror'; npm config set registry https://registry.npmmirror.com; \
   fi;
 
 RUN npm i -g npm
