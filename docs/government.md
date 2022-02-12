@@ -406,6 +406,12 @@ pageClass: routes
 
 </Route>
 
+## 德阳市人民政府
+
+### 德阳市政府公开信息
+
+<Route author="zytomorrow" example="/gov/sichuan/deyang/govpulicinfo/德阳市市/市人社局" path="/gov/sichuan/deyang/govpulicinfo/:countyName/:institutionName?" :paramsDesc="['区县名。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区', '单位名称。可直接输入网页显示单位名称']"/>
+
 ## 中国工业和信息化部
 
 ### 政策解读
