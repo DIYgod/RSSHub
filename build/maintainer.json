@@ -667,6 +667,14 @@
     "/literotica/category/:category": [
         "nczitzk"
     ],
+    "/lkong/forum/:id?/:digest?": [
+        "nczitzk",
+        "ma6254"
+    ],
+    "/lkong/thread/:id": [
+        "nczitzk",
+        "ma6254"
+    ],
     "/logonews/work/tags/:tag": [
         "nczitzk"
     ],
@@ -2087,8 +2095,6 @@
     "/yidoutang/mtest": [],
     "/yidoutang/case/:type": [],
     "/kaiyan/index": [],
-    "/lkong/forum/:id/:digest?": [],
-    "/lkong/thread/:id": [],
     "/nogizaka46/news": [],
     "/keyakizaka46/news": [],
     "/hinatazaka46/news": [],
