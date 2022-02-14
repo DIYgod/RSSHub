@@ -116,7 +116,7 @@
     "parse-torrent": "9.1.4",
     "pidusage": "3.0.0",
     "plist": "3.0.4",
-    "puppeteer": "11.0.0",
+    "puppeteer": "13.3.2",
     "query-string": "7.1.1",
     "require-all": "3.0.0",
     "rss-parser": "3.12.0",
