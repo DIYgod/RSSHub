@@ -62,6 +62,25 @@ Language codes
 
 <RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## FINAL FANTASY XIV
+
+### FINAL FANTASY XIV (The Lodestone)
+
+<RouteEn author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['Region', 'Category, `all` by default']">
+
+Region
+
+| North Ameria | Europe | France | Germany | Japan |
+| ------------ | ------ | ------ | ------- | ----- |
+| na           | eu     | fr     | de      | jp    |
+
+Category
+
+| all | topics | notices | maintenance | updates | status   | developers |
+| --- | ------ | ------- | ----------- | ------- | -------- | ---------- |
+
+</RouteEn>
+
 ## Gamer Secret
 
 ### Latest News
