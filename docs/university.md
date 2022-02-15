@@ -2313,6 +2313,48 @@ type 列表：
 
 </Route>
 
+## 西南石油大学
+
+### 办公网
+
+<Route author="CYTMWIA" example="/swpu/bgw/zytzgg" path="/swpu/bgw/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 重要通知公告 | 部门通知公告 | 本周活动 | 学术报告 |
+| ---- | ------------ | ------------ | -------- | -------- |
+| 代码 | zytzgg       | bmtzgg       | bzhd     | xsbg     |
+
+</Route>
+
+### 教务处
+
+<Route author="CYTMWIA" example="/swpu/dean/tzgg" path="/swpu/dean/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 通知公告 | 新闻报道 | 视点声音 |
+| ---- | -------- | -------- | -------- |
+| 代码 | tzgg     | xwbd     | sdsy     |
+
+</Route>
+
+### 计算机科学学院
+
+<Route author="CYTMWIA" example="/swpu/scs/tzgg" path="/swpu/scs/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 通知公告 | 新闻速递 |
+| ---- | -------- | -------- |
+| 代码 | tzgg     | xwsd     |
+
+</Route>
+
+### 电气信息学院
+
+<Route author="CYTMWIA" example="/swpu/dxy/1156" path="/swpu/dxy/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 学院新闻 | 学院通知 |
+| ---- | -------- | -------- |
+| 代码 | 1122     | 1156     |
+
+</Route>
+
 ## 信阳师范学院
 
 ### 高等教育自学考试办公室
