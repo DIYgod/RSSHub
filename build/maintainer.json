@@ -534,8 +534,18 @@
         "brilon",
         "Fatpandac"
     ],
+    "/ithome/ranking/:type": [
+        "immmortal",
+        "luyuhuang"
+    ],
+    "/ithome/tag/:name": [
+        "Fatpandac"
+    ],
     "/ithome/zt/:id": [
         "nczitzk"
+    ],
+    "/ithome/:caty": [
+        "luyuhuang"
     ],
     "/iwara/users/:username?/:type?": [
         "Fatpandac"
@@ -2276,8 +2286,6 @@
     "/chocolatey/software/:name?": [],
     "/nyaa/search/:query?": [],
     "/pianyuan/:media?": [],
-    "/ithome/:caty": [],
-    "/ithome/ranking/:type": [],
     "/bahamut/creation/:author/:category?": [],
     "/bahamut/creation_index/:category?/:subcategory?/:type?": [],
     "/centbrowser/history": [],
