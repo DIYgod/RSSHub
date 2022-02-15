@@ -44,6 +44,10 @@ pageClass: routes
 
 <Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
 
+### Fluid 主题博客
+
+<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+
 ## Hi, DIYgod
 
 ### DIYgod 的动森日记
@@ -86,9 +90,52 @@ pageClass: routes
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
 
+## PolkaWorld
+
+### 最新资讯
+
+<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
+
+::: tip 提示
+
+在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
+
+:::
+
+## Whoscall
+
+### 最新文章
+
+<Route author="nczitzk" example="/whoscall" path="/whoscall"/>
+
+### 分類
+
+<Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" :paramsDesc="['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']">
+
+| News   | Whoscall 百科   | 防詐小學堂     | Whoscall 日常   |
+| ------ | --------------- | -------------- | --------------- |
+| 1-News | 5-Whoscall 百科 | 4 - 防詐小學堂 | 6-Whoscall 日常 |
+
+</Route>
+
+### 標籤
+
+<Route author="nczitzk" example="/whoscall/tags/whoscall小百科" path="/whoscall/tags/:tag?" :paramsDesc="['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']">
+
+| 防疫也防詐 | 防詐專家 | 來電辨識 | whoscall 日常 |
+| ---------- | -------- | -------- | ------------- |
+
+</Route>
+
 ## WordPress
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
+
+## yuzu emulator
+
+### Entry
+
+<Route author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
 
 ## 阿里云系统组技术博客
 
@@ -111,6 +158,10 @@ pageClass: routes
 ### 首页
 
 <Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
+
+## 華康字型故事
+
+<Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
 
 ## 建宁闲谈
 
@@ -184,6 +235,12 @@ pageClass: routes
 
 <Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
 
+## 十年之约
+
+### 文章
+
+<Route author="7Wate" example="/blogs/foreverblog" path="/blogs/foreverblog" />
+
 ## 王五四文集
 
 ### 文章
@@ -195,3 +252,23 @@ pageClass: routes
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 雨苁博客
+
+### 首页
+
+<Route author="XinRoom" example="/ddosi" path="/ddosi"/>
+
+### 分类
+
+<Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
+
+## 竹白
+
+### 文章
+
+<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  :paramsDesc="['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']">
+::: tip 提示
+在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
+::: 
+</Route>

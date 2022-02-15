@@ -22,6 +22,20 @@ pageClass: routes
 
 <RouteEn author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['Region code', 'package name']"/>
 
+## App Center
+
+### Release
+
+<RouteEn author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" :paramsDesc="['User', 'App name', 'Distribution group']" radar="1" rssbud="1">
+
+::: tip
+
+The parameters can be extracted from the Release page URL: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
+
+:::
+
+</RouteEn>
+
 ## App Store/Mac App Store
 
 ### App Update
@@ -112,13 +126,27 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 
 ### Image New Build
 
-<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']"/>
+<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['Image owner', 'Image name', 'Image tag，default to latest']">
 
 ::: warning
 
 The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
 
 :::
+
+</RouteEn>
+
+### Image New Tag
+
+<RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" :paramsDesc="['Image owner', 'Image name', 'Tag count, 10 by default']">
+
+::: warning
+
+Use `library` as the `owner` for official images, such as <https://rsshub.app/dockerhub/tag/library/mysql>
+
+:::
+
+</RouteEn>
 
 ## Eagle
 
@@ -167,6 +195,12 @@ Language
 ### Script Update
 
 <RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
+
+## Hugo
+
+### Release News
+
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
 
 ## IPSW.me
 
@@ -253,6 +287,18 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#playstation](/game.html#playstation)
 
+## Potplayer
+
+### Version History
+
+<RouteEn author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['Language, see below, English by default']">
+
+| 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
+| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
+| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
+
+</RouteEn>
+
 ## QNAP
 
 ### Release Notes
@@ -320,6 +366,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
+## X410
+
+### News
+
+<RouteEn author="nczitzk" example="/x410/news" path="/x410/news"/>
 
 ## Xiaomi.eu
 

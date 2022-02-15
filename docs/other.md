@@ -109,6 +109,12 @@ pageClass: routes
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
+## Etherscan
+
+### Etherscan 转账追踪
+
+<Route author="Pretty9" example="/etherscan/transactions/0x283af0b28c62c092c9727f1ee09c02ca627eb7f5" path="/etherscan/transactions/:address" :paramsDesc="['地址']"/>
+
 ## Grand-Challenge
 
 ### Challenge 列表
@@ -200,6 +206,12 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## Mozilla
+
+### Firefox Monitor
+
+<Route author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
+
 ## NOI 全国青少年信息学奥林匹克竞赛
 
 ### 新闻
@@ -242,7 +254,7 @@ pageClass: routes
 
 ### Today Popular
 
-<Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+<Route author="miaoyafeng Fatpandac" example="/producthunt/today" path="/producthunt/today">
 </Route>
 
 ## SANS Institute
@@ -310,6 +322,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 艾瑞
+
+### 产业研究报告
+
+<Route author="brilon Fatpandac" example="/iresearch/report" path="/iresearch/report"/>
+
 ## 爱 Q 生活网
 
 ### 最近更新
@@ -338,12 +356,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 用户动态
 
 <Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
-
-## 艾瑞
-
-### 产业研究报告
-
-<Route author="brilon" example="/iresearch/report" path="/iresearch/report"/>
 
 ## 百度搜索风云榜
 
@@ -404,6 +416,32 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 翻译 | 注释 | 赏析  |
 | ---- | ---- | ----- |
 | yi   | zhu  | shang |
+
+</Route>
+
+## 骨朵数据
+
+### 日榜
+
+<Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily" />
+
+## 光大银行
+
+### 外汇牌价
+
+#### 总览
+
+<Route author="linbuxiao" example="/quotation/all" path="/quotation/all" />
+
+#### 历史牌价
+
+<Route author="linbuxiao" example="/quotation/history/usd" path="/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
+
+| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
+| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
+| usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
+
+</Route>
 
 ## 国家留学网
 
@@ -686,7 +724,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 郵便追跡サービス
 
-<Route author="tuzi3040" example="/japanpost/EJ123456789JP/ja" path="/japanpost/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1" rssbud="1">
+<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/ja" path="/japanpost/track/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1" rssbud="1">
 
 | 日语 | 英语 |
 | ---- | ---- |
@@ -694,6 +732,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 上海市教育考试院
+
+### 消息速递
+
+官方网址：<http://www.shmeea.edu.cn>
+
+<Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
 ## 上海证券交易所
 
 ### 上市公司信息最新公告披露
@@ -727,6 +772,46 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 最新规则
 
 <Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
+
+### 创业板项目动态
+
+<Route author="nczitzk" example="/szse/projectdynamic" path="/szse/projectdynamic/:type?/:stage?/:status?" :paramsDesc="['类型，见下表，默认为IPO', '阶段，见下表，默认为全部', '状态，见下表，默认为全部']">
+
+类型
+
+| IPO | 再融资 | 重大资产重组 |
+| --- | ------ | ------------ |
+| 1   | 2      | 3            |
+
+阶段
+
+| 全部 | 受理 | 问询 | 上市委会议 |
+| ---- | ---- | ---- | ---------- |
+| 0    | 10   | 20   | 30         |
+
+| 提交注册 | 注册结果 | 中止 | 终止 |
+| -------- | -------- | ---- | ---- |
+| 35       | 40       | 50   | 60   |
+
+状态
+
+| 全部 | 新受理 | 已问询 | 通过 | 未通过 |
+| ---- | ------ | ------ | ---- | ------ |
+| 0    | 20     | 30     | 45   | 44     |
+
+| 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |
+| -------- | -------- | ---------- | -------- |
+| 46       | 56       | 54         | 60       |
+
+| 注册生效 | 不予注册 | 补充审核 | 终止注册 |
+| -------- | -------- | -------- | -------- |
+| 70       | 74       | 78       | 76       |
+
+| 中止 | 审核不通过 | 撤回 |
+| ---- | ---------- | ---- |
+| 80   | 90         | 95   |
+
+</Route>
 
 ## 守望先锋
 
@@ -830,6 +915,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
 
+### Yahoo Japan 新型コロナウイルス感染症まとめ
+
+新闻主页：<https://news.yahoo.co.jp/pages/article/20200207>
+
+<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']"/>
+
 ## 新趣集
 
 > 官方 Feed 地址为: <https://xinquji.com/rss>
@@ -854,12 +945,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
-## 油价
-
-### 今日油价
-
-<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
-
 ## 邮箱
 
 ### 邮件列表
@@ -867,6 +952,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" selfhost="1"/>
+
+## 油价
+
+### 今日油价
+
+<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
 ## 源仓库
 
@@ -973,3 +1064,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
+### 澳門特別行政區政府各公共部門獎助貸學金服務平台
+
+官方網址：<https://www.bolsas.gov.mo/>
+
+<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
+
+| 中文 | 葡文 |
+| ---- | ---- |
+| ch   | pt   |
+
+</Route>
