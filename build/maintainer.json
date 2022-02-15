@@ -313,6 +313,14 @@
     "/ezone/:category?": [
         "nczitzk"
     ],
+    "/ff14/global/:lang/:type?": [
+        "chengyuhui"
+    ],
+    "/ff14/zh/:type?": [
+        "Kiotlin",
+        "ZeroClad",
+        "15x15G"
+    ],
     "/filmdeepfocus/:category?": [
         "nczitzk"
     ],
@@ -2103,8 +2111,6 @@
     "/arknights/news": [],
     "/arknights/japan": [],
     "/siren/news": [],
-    "/ff14/ff14_zh/:type": [],
-    "/ff14/ff14_global/:lang/:type": [],
     "/xuetangx/course/:cid/:type": [],
     "/xuetangx/course/list/:mode/:credential/:status/:type?": [],
     "/wikihow/index": [],
