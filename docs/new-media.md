@@ -563,9 +563,9 @@ Tag
 
 <Route author="luyuhuang" example="/ithome/it" path="/ithome/:caty" :paramsDesc="['类别']" radar="1" rssbud="1">
 
-| it      | soft     | win10      | iphone      | ipad      | android      | digi     | next     |
-| ------- | -------- | ---------- | ----------- | --------- | ------------ | -------- | -------- |
-| IT 资讯 | 软件之家 | win10 之家 | iphone 之家 | ipad 之家 | android 之家 | 数码之家 | 智能时代 |
+| it      | soft     | win10      | win11      | iphone      | ipad      | android      | digi     | next     |
+| ------- | -------- | ---------- | ---------- | ----------- | --------- | ------------ | -------- | -------- |
+| IT 资讯 | 软件之家 | win10 之家 | win11 之家 | iphone 之家 | ipad 之家 | android 之家 | 数码之家 | 智能时代 |
 
 </Route>
 
@@ -586,6 +586,10 @@ Tag
 所有专题请见[此处](https://www.ithome.com/zt)
 
 </Route>
+
+### 标签
+
+<Route author="Fatpandac" example="/ithome/tag/win11" path="/ithome/tag/:name" :paramsDesc="['标签名称，可从网址链接中获取']" radar="1" rssbud="1"/>
 
 ## IT 桔子
 
