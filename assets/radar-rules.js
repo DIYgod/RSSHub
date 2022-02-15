@@ -1252,13 +1252,4 @@
             },
         ],
     },
-    'audiobar.cn': {
-        _name: '音频应用',
-        www: [
-            {
-                title: '最新主题',
-                docs: 'https://docs.rsshub.app/bbs.html#audiobar',
-            },
-        ],
-    },
 });
