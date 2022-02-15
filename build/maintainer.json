@@ -931,6 +931,18 @@
     "/swissinfo/:language?/:category?": [
         "nczitzk"
     ],
+    "/swpu/bgw/:code": [
+        "CYTMWIA"
+    ],
+    "/swpu/dean/:code": [
+        "CYTMWIA"
+    ],
+    "/swpu/dxy/:code": [
+        "CYTMWIA"
+    ],
+    "/swpu/scs/:code": [
+        "CYTMWIA"
+    ],
     "/szse/rule": [
         "nczitzk"
     ],
