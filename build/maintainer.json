@@ -1122,6 +1122,9 @@
     "/zaobao/:type/:section": [
         "shunf4"
     ],
+    "/zhubai/:id": [
+        "naixy28"
+    ],
     "/zjgtjy/:type?": [
         "Fatpandac"
     ],
