@@ -8,31 +8,33 @@ pageClass: routes
 
 ### Photos
 
-<Route author="nczitzk" example="/1x/latest/all" path="/1x/:type?/:caty?" :paramsDesc="['排序类型，默认为 `latest`，亦可选 `popular` 或 `curators-choice`', '图片类别，默认为 `all`，见下表']">
+<Route author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['类别，默认为 Latest awarded，见下表']">
 
-| 图片类别       | 代码          |
-| -------------- | ------------- |
-| All categories | all           |
-| Abstract       | abstract      |
-| Action         | action        |
-| Animals        | animals       |
-| Architecture   | architecture  |
-| Conceptual     | conceptual    |
-| Creative edit  | creative-edit |
-| Documentary    | documentary   |
-| Everyday       | everyday      |
-| Fine Art Nude  | fine-art-nude |
-| Humour         | humour        |
-| Landscape      | landscape     |
-| Macro          | macro         |
-| Mood           | mood          |
-| Night          | night         |
-| Performance    | performance   |
-| Portrait       | portrait      |
-| Still life     | still-life    |
-| Street         | street        |
-| Underwater     | underwater    |
-| Wildlife       | wildlife      |
+| Category         | Title         |
+| ---------------- | ------------- |
+| Latest awarded   | latest        |
+| Popular          | popular       |
+| Latest published | published     |
+| Abstract         | abstract      |
+| Action           | action        |
+| Animals          | animals       |
+| Architecture     | architecture  |
+| Conceptual       | conceptual    |
+| Creative edit    | creative-edit |
+| Documentary      | documentary   |
+| Everyday         | everyday      |
+| Fine Art Nude    | fine-art-nude |
+| Humour           | humour        |
+| Landscape        | landscape     |
+| Macro            | macro         |
+| Mood             | mood          |
+| Night            | night         |
+| Performance      | performance   |
+| Portrait         | portrait      |
+| Still life       | still-life    |
+| Street           | street        |
+| Underwater       | underwater    |
+| Wildlife         | wildlife      |
 
 </Route>
 
@@ -45,6 +47,24 @@ pageClass: routes
 ### 分类
 
 <Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
+
+## Asian to lick
+
+### 首页
+
+<Route author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+
+### 分类
+
+<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['分类，可在对应分类页 URL 中找到分类编号，默认为首页']"/>
+
+### 标签
+
+<Route author="nczitzk" example="/asiantolick/tag/90" path="/asiantolick/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到标签编号，默认为首页']"/>
+
+### 搜索
+
+<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['关键词，默认为空']"/>
 
 ## BabeHub
 
@@ -88,17 +108,31 @@ pageClass: routes
 
 ## Dilbert Comic Strip
 
-<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip" />
 
 通过提取漫画，提供比官方源更佳的阅读体验。
 
 </Route>
 
+## E-Hentai
+
+### 收藏
+
+<Route author="Howard Yin" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:bittorrent?" :paramsDesc="['收藏夹编号，可选','顺序，可选：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+
+### 标签
+
+<Route author="Howard Yin" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:bittorrent?" :paramsDesc="['标签', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+
+### 搜索
+
+<Route author="Howard Yin" example="/ehentai/search/:params?/:page?" path="/ehentai/search/:params?/:page?/:bittorrent?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+
 ## Elite Babes
 
 ### Home
 
-<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']">
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']" />
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
@@ -108,7 +142,7 @@ pageClass: routes
 
 ### Videos
 
-<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']">
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']"/>
 
 | Popular | Recent |
 | ------- | ------ |
@@ -235,6 +269,17 @@ R18 显示
 
 <Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
 
+## Mic Mic Idol
+
+### 最新
+
+<Route author="KotoriK" example="/micmicidol" path="/micmicidol"/>
+
+### 标签
+
+<Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" :paramsDesc="['标签名']"/>
+获取数量可以通过 [limit](https://docs.rsshub.app/parameter.html#tiao-shu-xian-zhi) 参数控制。默认值为`50`。
+
 ## MM 范
 
 ### 分类
@@ -313,6 +358,42 @@ R18 显示
 
 <Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
 
+## wallhaven
+
+::: tip 提示
+
+参数 **需要图片信息** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带各图片的标题、上传者、上传时间、分类信息，可支持 RSS 阅读器的筛选功能。
+
+但开启后对该网站请求次数大量增多，从而导致网站返回 `Response code 429 (Too Many Requests)`。所以需要指定更小的 `limit` 参数值，即在路由后添加 `?limit=<单次请求获取数目>`，下面是一个例子：
+
+如 [Latest Wallpapers](https://wallhaven.cc/latest)，开启 **需要图片信息** 后的路由为 [/wallhaven/latest/true](https://rsshub.app/wallhaven/latest/true)，此时再指定更小的 `limit` 参数值，即 [/wallhaven/latest/true?limit=5](https://rsshub.app/wallhaven/latest/true?limit=5)
+
+:::
+
+### 分类
+
+<Route author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" :paramsDesc="['分类，见下表，默认为 Latest', '需要图片信息，填写 true/yes 表示需要，默认不需要']">
+
+| Latest | Hot | Toplist | Random |
+| ------ | --- | ------- | ------ |
+| latest | hot | toplist | random |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['过滤器，默认为空', '需要图片信息，填写 `true`/`yes` 表示需要，默认不需要']">
+
+::: tip 提示
+
+订阅以 `https://wallhaven.cc/search` 起始的页面，将 `?` 后的字段作为 `filter` 填写入路由。下面是一个例子：
+
+如 [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)，中 `?` 后的字段为 `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd`，所以可以得到路由是 [/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)
+
+:::
+
+</Route>
+
 ## Wallpaperhub
 
 <Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
@@ -370,17 +451,27 @@ R18 显示
 
 ## 煎蛋
 
-### 无聊图
+### 板块
 
-<Route author="Xuanwo xyqfer" example="/jandan/pic" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
+<Route author="nczitzk" example="/jandan/top" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']">
 
-| 无聊图 | 无聊图热榜 | 4 小时热榜 |
-| ------ | ---------- | ---------- |
-| pic    | top        | top-4h     |
+| 问答 | 树洞     | 动物园 | 女装 | 随手拍 | 无聊图 | 鱼塘 |
+| ---- | -------- | ------ | ---- | ------ | ------ | ---- |
+| qa   | treehole | zoo    | girl | ooxx   | pic    | pond |
+
+</Route>
+
+### 热榜
+
+<Route author="kobemtl Xuanwo xyqfer 9uanhuo nczitzk" example="/jandan/top-4h" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']"/>
+
+| 4 小时热门 | 吐槽      | 无聊图 | 随手拍   | 动物园  | 优评         | 3 日最佳  | 7 日最佳  |
+| ---------- | --------- | ------ | -------- | ------- | ------------ | --------- | --------- |
+| top-4h     | top-tucao | top    | top-ooxx | top-zoo | top-comments | top-3days | top-7days |
 
 ### 首页
 
-<Route author="lonelykid" example="/jandan/article" path="/jandan/article"/>
+<Route author="lonelykid nczitzk" example="/jandan" path="/jandan"/>
 
 ## 绝对领域
 
@@ -419,14 +510,6 @@ R18 显示
 ### 搜索关键字
 
 <Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
-
-### 妹子图
-
-<Route author="kobemtl xyqfer" example="/jandan/ooxx" path="/jandan/:sub_model" :paramsDesc="['煎蛋板块名称']"/>
-
-| 妹子图 | 妹子图热榜 |
-| ------ | ---------- |
-| ooxx   | top-ooxx   |
 
 ## 妹子图
 
