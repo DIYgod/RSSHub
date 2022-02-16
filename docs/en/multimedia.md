@@ -24,7 +24,7 @@ Full transcript support for better user experience.
 
 ### Upcoming Live Streams
 
-<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
+<RouteEn author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
 
 ## EZTV
 
@@ -250,7 +250,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### User Collection
 
-<Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
+<RouteEn author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
 
 ## YouTube
 

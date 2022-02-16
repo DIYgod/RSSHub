@@ -215,7 +215,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### News
 
-<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
+<RouteEn author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
 
 ## Steam
 

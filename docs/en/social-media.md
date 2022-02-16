@@ -136,7 +136,7 @@ If you don't want to setup credentials, use Picuki.
 
 ### Tag
 
-<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']">
+<RouteEn author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']">
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
