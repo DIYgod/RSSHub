@@ -898,6 +898,4 @@ pageClass: routes
 
 ## audiobar
 
-<Route author="zxzhuty" example="/audiobar/latest" path="/audiobar/latest" :paramsDesc="无">
-
-</Route>
+<Route author="zxzhuty" example="/audiobar/latest" path="/audiobar/latest" />
