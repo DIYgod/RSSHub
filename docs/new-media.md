@@ -819,6 +819,29 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## PANews
+
+### 深度
+
+<Route author="nczitzk" example="/panewslab" path="/panewslab/:category?" :paramsDesc="['分类，见下表，默认为精选']">
+
+| DAO | 元宇宙 | DeFi | Layer 2 | 链游 | 波卡 | NFT | 央行数字货币 | 融资 | 活动 | 监管 |
+| --- | ------ | ---- | ------- | ---- | ---- | --- | ------------ | ---- | ---- | ---- |
+
+</Route>
+
+### 快讯
+
+<Route author="nczitzk" example="/panewslab/newsflash" path="/panewslab/newsflash/:language?" :paramsDesc="['语言，默认为 zh，可在地址栏 URL 中找到']"/>
+
+### 专栏
+
+<Route author="nczitzk" example="/panewslab/column/N7042814" path="/panewslab/column/:id" :paramsDesc="['语言，默认为 zh，可在地址栏 URL 中找到']"/>
+
+### 专题
+
+<Route author="nczitzk" example="/panewslab/topic/1582623288184036" path="/panewslab/topic/:id" :paramsDesc="['专题 id，可在地址栏 URL 中找到']"/>
+
 ## PMCAFF
 
 ### 今日推荐 / 精选
