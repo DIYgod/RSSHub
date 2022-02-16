@@ -394,7 +394,7 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes/:lang?" radar="1" rssbud="1" :paramsDesc="['语言，`en` 为英文路由，其他值或留空则为中文路由，预设为中文路由']"/>
 
 ### 有新赞助商啦
 
