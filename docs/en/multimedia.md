@@ -30,7 +30,7 @@ Full transcript support for better user experience.
 
 ::: tip
 
-Official RSS: https://eztv.io/ezrss.xml
+Official RSS: <https://eztv.io/ezrss.xml>
 
 :::
 
@@ -195,7 +195,9 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 **`language`**
 
 Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
+
 - `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
+
 - `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
 ## s-hentai
@@ -224,7 +226,6 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ## Spotify
 
-
 ### Artist Albums
 
 <RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['Artist ID']" />
@@ -244,7 +245,6 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 ### Personal Top Artists
 
 <RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
-
 
 ## Trakt.tv
 

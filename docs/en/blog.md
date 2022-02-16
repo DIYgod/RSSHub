@@ -47,13 +47,16 @@ pageClass: routes
 ## PolkaWorld
 
 ### Newest Articles
-<RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
 
-::: tip 
+<RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest">
+
+::: tip
 
 Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
 
 :::
+
+</RouteEn>
 
 ### Article
 

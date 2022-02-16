@@ -10,7 +10,6 @@ pageClass: routes
 
 <RouteEn author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
-
 ## ACM-ECNU
 
 ### ECNU ACM Online-Judge contests list
