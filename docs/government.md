@@ -306,11 +306,35 @@ pageClass: routes
 
 ### 政府新闻
 
-<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" :paramsDesc="['分类名']">
+<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" :paramsDesc="['栏目名']">
 
-| 政务要闻 | 区县快讯 | 部门动态 | 新闻视频 | 热点专题 | 市本级专题 | 最新热点专题 | 往期专题 | 区县专题 | 政务公告 | 便民资讯 |
-| :------: | :------: | :------: | :------: | :------: | :--------: | :----------: | :------: | :------: | :------: | :------: |
-|   news   | district |   bmdt   |   xwsp   |   rdzt   |    sbjzt   |    zxrdzt    |   wqzt   |   qxzt   |   zwgg   |   bmzx   |
+| 新闻栏目名 | :uid |
+| :------: | :--: |
+| 苏州要闻 | news 或 szyw |
+| 区县快讯 | district 或 qxkx |
+| 部门动态 | bmdt |
+| 新闻视频 | xwsp |
+| 政务公告 | zwgg |
+| 便民公告 | mszx |
+| 民生资讯 | bmzx |
+
+| 热点专题栏目名 | :uid |
+| :------: | :--: |
+| 热点专题 | rdzt |
+| 市本级专题 | sbjzt |
+| 最新热点专题 | zxrdzt |
+| 往期专题 | wqzt |
+| 区县专题 | qxzt |
+
+::: tip 提示
+
+**热点专题**栏目包含**市本级专题**和**区县专题**
+
+**市本级专题**栏目包含**最新热点专题**和**往期专题**
+
+如需订阅完整的热点专题，仅需订阅 **热点专题**`rdzt` 一项即可。
+
+:::
 
 </Route>
 
