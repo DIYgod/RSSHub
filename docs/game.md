@@ -765,13 +765,13 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户文章
 
-<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID,可在文章html中获取']"/>
+<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID，可在文章html中获取']"/>
 
 ## 最终幻想 14
 
 ### 最终幻想 14 国服
 
-<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']">
+<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" :paramsDesc="['分类名，预设为 `all`']">
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
 | ---- | -------- | ------ | --------- | ---- |
@@ -781,14 +781,15 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 最终幻想 14 国际服 （Lodestone）
 
-<Route author="chengyuhui" example="/ff14/ff14_global/na/all" path="/ff14/ff14_global/:lang/:type" :paramsDesc="['地区', '分类名']">
+<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['地区', '分类名，预设为 `all`']">
+
 | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
 | ---- | ------------ | ---- | ---- | ---- |
 | na   | eu           | fr   | de   | jp   |
 
-| 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
-| ------ | ------- | ----------- | ------- | -------- | ---------- |
-| topics | notices | maintenance | updates | status   | developers |
+| 所有 | 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
+| ---- | ------ | ------- | ----------- | ------- | -------- | ---------- |
+| all  | topics | notices | maintenance | updates | status   | developers |
 
 </Route>
 

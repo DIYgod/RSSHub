@@ -262,3 +262,13 @@ pageClass: routes
 ### 分类
 
 <Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
+
+## 竹白
+
+### 文章
+
+<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  :paramsDesc="['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']">
+::: tip 提示
+在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
+::: 
+</Route>
