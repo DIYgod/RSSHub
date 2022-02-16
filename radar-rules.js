@@ -185,13 +185,6 @@
         www: [{ title: '排行榜', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/top' }],
         search: [{ title: '关键词', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/', target: (params, url) => `/smzdm/keyword/${new URL(url).searchParams.get('s')}` }],
     },
-    'rsshub.app': {
-        _name: 'RSSHub',
-        docs: [
-            { title: '有新路由啦', docs: 'https://docs.rsshub.app/program-update.html#rsshub', source: ['', '/*tpath'], target: '/rsshub/routes' },
-            { title: '有新赞助商啦', docs: 'https://docs.rsshub.app/program-update.html#rsshub', source: ['', '/*tpath'], target: '/rsshub/sponsors' },
-        ],
-    },
     'ximalaya.com': {
         _name: '喜马拉雅',
         '.': [

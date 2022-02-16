@@ -859,6 +859,12 @@
     "/rfi/news": [
         "nczitzk"
     ],
+    "/rsshub/routes/:lang?": [
+        "DIYgod"
+    ],
+    "/rsshub/rsshub/sponsors": [
+        "DIYgod"
+    ],
     "/ruancan/ruancan": [
         "nczitzk"
     ],
@@ -1161,9 +1167,6 @@
     "/zjgtjy/:type?": [
         "Fatpandac"
     ],
-    "/rsshub/rss": [],
-    "/rsshub/routes": [],
-    "/rsshub/sponsors": [],
     "/1draw": [],
     "/quicker/qa": [],
     "/quicker/update": [],
