@@ -333,7 +333,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New routes
 
-<RouteEn path="/rsshub/routes" example="/rsshub/routes" />
+<RouteEn author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" :paramsDesc="['Language, `en` means English routes, other values or null means Chinese routes']"/>
 
 ### New sponsors
 
