@@ -52,6 +52,12 @@ pageClass: routes
 
 <Route author="Diffumist" example="/ahut/cstzgg" path="/ahut/cstzgg" />
 
+## 安徽建筑大学
+
+### 通知公告
+
+<Route author="Yuk-0v0" example="/ahjzu/news" path="/ahjzu/news" />
+
 ## 安徽农业大学
 
 ### 计算机学院
@@ -136,6 +142,20 @@ pageClass: routes
 
 </Route>
 
+### 人事处
+
+<Route author="nczitzk" example="/pku/hr" path="/pku/hr/:category?" :paramsDesc="['分类，见下方说明，默认为首页最新公告']">
+
+::: tip 提示
+
+分类字段处填写的是对应北京大学人事处分类页网址中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
+
+如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 的网址为 <https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm> 其中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段为 `rczp/js/jxkyry`。随后，并将其中的 `/` 修改为 `-`，可以得到 `rczp-js-jxkyry`。所以最终我们的路由为 [`/pku/hr/rczp-js-jxkyry`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
+
+:::
+
+</Route>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
@@ -160,6 +180,18 @@ pageClass: routes
 
 </Route>
 
+## 北京科技大学
+
+### 研究生院
+
+<Route author="DA1Y1" example="/ustb/yjsy/news/all" path="/ustb/yjsy/news/:type" :paramsDesc="['文章类别']">
+
+| 北京科技大学研究生院 | 土木与资源工程学院 | 能源与环境工程学院 | 冶金与生态工程学院 | 材料科学与工程学院 | 机械工程学院 | 自动化学院 | 计算机与通信工程学院 | 数理学院 | 化学与生物工程学院 | 经济管理学院 | 文法学院 | 马克思主义学院 | 外国语学院 | 国家材料服役安全科学中心 | 新金属材料国家重点实验室 | 工程技术研究院 | 钢铁共性技术协同创新中心 | 钢铁冶金新技术国家重点实验室 | 新材料技术研究院 | 科技史与文化遗产研究院 | 顺德研究生院 |
+| -------------------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------ | ---------- | -------------------- | -------- | ------------------ | ------------ | -------- | -------------- | ---------- | ------------------------ | ------------------------ | -------------- | ------------------------ | ---------------------------- | ---------------- | ---------------------- | ------------ |
+| all                  | cres               | seee               | metall             | mse                | me           | saee       | scce                 | shuli    | huasheng           | sem          | wenfa    | marx           | sfs        | ncms                     | skl                      | iet            | cicst                    | slam                         | adma             | ihmm                   | sd           |
+
+</Route>
+
 ## 北京科技大学天津学院
 
 ### 北京科技大学天津学院
@@ -181,6 +213,10 @@ pageClass: routes
 ### 计院通知
 
 <Route author="sinofp" example="/bit/cs" path="/bit/cs" />
+
+### 人才招聘
+
+<Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" />
 
 ## 北京林业大学
 
@@ -209,6 +245,18 @@ pageClass: routes
 | 教务快讯 | 考试信息 | 课程信息 | 教改动态 | 图片新闻 |
 | -------- | -------- | -------- | -------- | -------- |
 | jwkx     | ksxx     | kcxx     | jgdt     | tpxw     |
+
+</Route>
+
+## 北京师范大学
+
+### 经济与工商管理学院
+
+<Route author="nczitzk" example="/bnu/bs" path="/bnu/bs/:category?" :paramsDesc="['分类，见下表，默认为学院新闻']">
+
+| 学院新闻 | 通知公告 | 学术成果 | 学术讲座 | 教师观点 | 人才招聘 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| xw       | zytzyyg  | xzcg     | xzjz     | xz       | bshzs    |
 
 </Route>
 
@@ -266,6 +314,10 @@ pageClass: routes
 由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。
 
 :::
+
+### 人才招聘
+
+<Route author="nczitzk" example="/bupt/rczp" path="/bupt/rczp" />
 
 ## 常州大学
 
@@ -643,11 +695,35 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+## 对外经济贸易大学
+
+### 人力资源处
+
+<Route author="nczitzk" example="/uibe/hr" path="/uibe/hr/:category?/:type?" :paramsDesc="['分类，可在对应页 URL 中找到，默认为通知公告', '类型，可在对应页 URL 中找到，默认为空']">
+
+::: tip 提示
+
+如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 <http://hr.uibe.edu.cn/tzgg>，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
+
+如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 <http://hr.uibe.edu.cn/jszp/zpxx>，其路由为 [`/uibe/hr/jszp/zpxx`](https://rsshub.app/uibe/jszp/zpxx)
+
+:::
+
+</Route>
+
 ## 福州大学
 
 ### 教务处通知
 
 <Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/:type" :paramsDesc="['分类见下表']"/>
+
+| 教学通知 | 专家讲座 |
+| -------- | -------- |
+| jxtz     | zjjz     |
+
+### 教务处通知（无文章内容）
+
+<Route author="Lao-Liu233" example="/fzu_min/jxtz" path="/fzu_min/:type" :paramsDesc="['分类见下表']"/>
 
 | 教学通知 | 专家讲座 |
 | -------- | -------- |
@@ -787,41 +863,53 @@ category 列表：
 
 ### 研究生院
 
-<Route author="XYenon Derekmini" example="/heu/yjsy/announcement" path="/heu/yjsy/:type?" :paramsDesc="['栏目, 默认为 `announcement`']" radar="1" rssbud="1">
+<Route author="Derekmini XYenon" example="/heu/yjsy/list/2981" path="/heu/yjsy/list/:id" :paramsDesc="['栏目编号，由 `URL` 中获取。']" radar="1" rssbud="1">
 
-| 通知公告     | 新闻动态 | 国家公派项目 | 国际合作与交流项目 |
-| ------------ | -------- | ------------ | ------------------ |
-| announcement | news     | gjgp         | gjhz               |
+| 通知公告 | 新闻动态 | 学籍注册 | 奖助学金 | 其他 |
+| :------: | :------: | :------: | :------: | :--: |
+|   2981   |   2980   |   3009   |   3011   |  ... |
 
 </Route>
 
 ### 就业服务平台
 
-<Route author="Derekmini" example="/heu/job/tzgg" path="/heu/job/:type?" :paramsDesc="['栏目, 默认为 `tzgg`']" radar="1" rssbud="1">
+<Route author="Derekmini" example="/heu/job/list/tzgg" path="/heu/job/list/:id" :paramsDesc="['栏目，如下表']" radar="1" rssbud="1">
 
-| 通知公告 |
-| -------- |
-| tzgg     |
+| 通知公告 | 热点新闻 |
+| :------: | :------: |
+|   tzgg   |   rdxw   |
+
+</Route>
+
+#### 大型招聘会
+
+<Route author="Derekmini" example="/heu/job/bigemploy" path="/heu/job/bigemploy" radar="1" rssbud="1">
+
+</Route>
+
+#### 今日招聘会
+
+<Route author="Derekmini" example="/heu/job/calendar" path="/heu/job/calendar" radar="1" rssbud="1">
 
 </Route>
 
 ### 工学新闻
 
-<Route author="Derekmini XYenon" example="/heu/news/yw" path="/heu/news/:type?" :paramsDesc="['栏目, 默认为 `yw`']" radar="1" rssbud="1">
+<Route author="Derekmini XYenon" example="/heu/gx/list/xw/yw" path="/heu/gx/:type/:column/:id?" :paramsDesc="['页面类型，如 `新闻 - 要闻` 页面为 `list` 类型，`新闻 - 专题策划` 页面为 `card` 类型，通过直接观察页面来判断；','主栏，如 `新闻：xw`，由 `URL` 中获取；','次栏，如 `要闻：yw`，如果次栏存在，则为必选，由 `URL` 中获取。']" radar="1" rssbud="1">
 
-| 要闻 | 时讯 |
-| ---- | ---- |
-| yw   | sx   |
+|   新闻   | 新闻 - 要闻 | 新闻 - 专题策划 | 其他 |
+| :------: | :---------: | :-------------: | :--: |
+| /card/xw | /list/xw/yw |  /card/xw/ztch  |  ... |
 
 </Route>
 
-### 水声工程学院通知
+### 水声工程学院
 
-<Route author="Derekmini" example="/heu/uae/xwdt" path="/heu/uae/:type?" :paramsDesc="['栏目, 默认为 `xwdt`']" radar="1" rssbud="1">
+<Route author="Derekmini" example="/heu/uae/list/3751" path="/heu/uae/list/:id" :paramsDesc="['栏目编号，由 `URL` 中获取。']" radar="1" rssbud="1">
 
-| 新闻动态 | 通知公告 |
-| -------- | -------- |
-| xwdt     | tzgg     |
+| 新闻动态 | 通知公告 | 其他 |
+| :------: | :------: | :--: |
+|   3751   |   3752   |  ... |
 
 </Route>
 
@@ -974,6 +1062,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
 
+### 华东理工继续教育学院新闻公告
+
+<Route author="jialinghui" example="/ecust-jxjy/news" path="/news" rssbud="1" />
+
 ## 华东师范大学
 
 ### 华东师范大学研究生院
@@ -993,6 +1085,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
 | ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
 | all  | course | exam | practice | communication | teacher | info |
+
+</Route>
+
+### 教务处学院通知
+
+<Route author="KeNorizon Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类, 默认为 `all`']">
+
+| 全部 | 选课   | 考试 | 信息 |
+| ---- | ------ | ---- | ---- |
+| all  | course | exam | info |
 
 </Route>
 
@@ -1276,6 +1378,56 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 南方科技大学采购与招标管理部
 
 <Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
+
+## 南京大学
+
+### 本科生院
+
+<Route author="ret-1" example="/nju/jw/ggtz" path="/nju/jw/:type" :paramsDesc="['分类名']">
+
+| 公告通知 | 教学动态 |
+| -------- | -------- |
+| ggtz     | jxdt     |
+
+</Route>
+
+### 研究生院
+
+<Route author="ret-1" example="/nju/gra" path="/nju/gra" />
+
+### 人才招聘网
+
+<Route author="ret-1" example="/nju/rczp/xxfb" path="/nju/rczp/:type" :paramsDesc="['分类名']">
+
+| 信息发布 | 教研类岗位 | 管理岗位及其他 |
+| -------- | ---------- | -------------- |
+| xxfb     | jylgw      | gllgw          |
+
+</Route>
+
+### 科学技术处
+
+<Route author="ret-1" example="/nju/scit/tzgg" path="/nju/scit/:type" :paramsDesc="['分类名']">
+
+| 通知公告 | 科研动态 |
+| -------- | -------- |
+| tzgg     | kydt     |
+
+</Route>
+
+### 资产管理处
+
+<Route author="ret-1" example="/nju/zcc" path="/nju/zcc" />
+
+### 招标办公室
+
+<Route author="ret-1" example="/nju/zbb/cgxx" path="/nju/zbb/:type" :paramsDesc="['分类名']">
+
+| 采购信息 | 成交公示 | 政府采购意向公开 |
+| -------- | -------- | ---------------- |
+| cgxx     | cjgs     | zfcgyxgk         |
+
+</Route>
 
 ## 南京工业大学
 
@@ -1695,13 +1847,13 @@ type 列表：
 
 </Route>
 
-### 教务处通知公告（全文输出）
+### 教务处通知公告
 
-<Route author="SeanChao" example="/sjtu/jwc/students" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 students ']">
+<Route author="SeanChao" example="/sjtu/jwc/" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 all ']">
 
-| 面向学生的通知 | 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 工会与支部 |
-| -------------- | -------- | -------- | --------- | -------- | ------ | ------ | ------ | ---------- |
-| students       | news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | party      |
+| 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 |
+| -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |
+| news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | language | party      | ge       |
 
 </Route>
 
@@ -1825,6 +1977,18 @@ type 列表：
 
 <Route author="talenHuang" example="/sctu/jwc/13/645" path="/sctu/jwc/context/:type/:id" :paramsDesc="['通知类型','文章id']"/>
 
+## 四川农业大学
+
+### 招生就业
+
+<Route author="nczitzk" example="/sicau/zsjy/bkszs" path="/sicau/zsjy/:category?" :paramsDesc="['分类，见下表，默认为本科生招生']">
+
+| 本科生招生 | 研究生招生 | 毕业生选录指南 |
+| ---------- | ---------- | -------------- |
+| bkszs      | yjszs      | bysxlzn        |
+
+</Route>
+
 ## 四川职业技术学院
 
 ### 学院公告
@@ -1869,7 +2033,13 @@ type 列表：
 
 ### 新闻
 
-<Route author="Chandler-Lu" example="/wzu/news" path="/wzu/news" />
+<Route author="Chandler-Lu" example="/wzu/news/0" path="/wzu/news/:type" :paramsDesc="['分类, 见下表 默认为`0`']" />
+
+| 温大新闻 | 媒体温大 | 学术温大 | 通知公告 | 招标信息 | 学术公告 |
+| :------: | :------: | :------: | :------: | :------: | :------: |
+|     0    |     1    |     2    |     3    |     4    |     5    |
+
+</Route>
 
 ## 温州商学院
 
@@ -2005,6 +2175,48 @@ type 列表：
 
 <Route author="DylanXie123" example="/xjtu/ee/1114" path="/xjtu/job/:id?" :paramsDesc="['栏目id，默认请求`1114`，可在 URL 中找到']"  />
 
+## 西安理工大学
+
+### 学校主页
+
+<Route author="mocusez" example="/xaut/index/tzgg" path="/xaut/index/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1" >
+
+| 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |
+| :------: | :------: | :------: | :------: |
+|   tzgg   |   xyyw   |   mtbd   |   xshd   |
+
+</Route>
+
+### 教务处
+
+<Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1">
+
+::: warning 注意
+
+有些内容需使用校园网或 VPN 访问知行网获取
+:::
+
+| 通知公告 | 新闻动态 | 规章制度 | 竞赛结果公示 | 竞赛获奖通知 | 竞赛信息 | 公开公示 |
+| :------: | :------: | :------: | :----------: | :----------: | :------: | :------: |
+|   tzgg   |   xwdt   |   gzzd   |     jggs     |     jsjg     |   jsxx   |   gkgs   |
+
+</Route>
+
+### 人事处
+
+<Route author="light0926 mocusez" example="/xaut/rsc/tzgg" path="/xaut/rsc/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1">
+
+::: warning 注意
+
+有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
+:::
+
+| 通知公告 | 工作动态 |
+| :------: | :------: |
+|   tzgg   |   gzdt   |
+
+</Route>
+
 ## 西北工业大学
 
 ### 翱翔门户
@@ -2101,6 +2313,48 @@ type 列表：
 
 </Route>
 
+## 西南石油大学
+
+### 办公网
+
+<Route author="CYTMWIA" example="/swpu/bgw/zytzgg" path="/swpu/bgw/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 重要通知公告 | 部门通知公告 | 本周活动 | 学术报告 |
+| ---- | ------------ | ------------ | -------- | -------- |
+| 代码 | zytzgg       | bmtzgg       | bzhd     | xsbg     |
+
+</Route>
+
+### 教务处
+
+<Route author="CYTMWIA" example="/swpu/dean/tzgg" path="/swpu/dean/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 通知公告 | 新闻报道 | 视点声音 |
+| ---- | -------- | -------- | -------- |
+| 代码 | tzgg     | xwbd     | sdsy     |
+
+</Route>
+
+### 计算机科学学院
+
+<Route author="CYTMWIA" example="/swpu/scs/tzgg" path="/swpu/scs/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 通知公告 | 新闻速递 |
+| ---- | -------- | -------- |
+| 代码 | tzgg     | xwsd     |
+
+</Route>
+
+### 电气信息学院
+
+<Route author="CYTMWIA" example="/swpu/dxy/1156" path="/swpu/dxy/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 学院新闻 | 学院通知 |
+| ---- | -------- | -------- |
+| 代码 | 1122     | 1156     |
+
+</Route>
+
 ## 信阳师范学院
 
 ### 高等教育自学考试办公室
@@ -2167,6 +2421,15 @@ type 列表：
 | -------- | ---------- | -------- | -------- | ---------- | -------- |
 | 1        | 2          | 3        | 4        | 5          | 6        |
 
+</Route>
+
+## 云南师范大学
+
+### 继续教育学院
+
+#### 新闻
+
+<Route author="SettingDust" example="/ynnu/edu/news" path="/ynnu/edu/news" >
 </Route>
 
 ## 浙江大学
@@ -2436,6 +2699,18 @@ type 列表：
 
 <Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt"/>
 
+## 中国科学院大学
+
+### 招聘信息
+
+<Route author="Fatpandac" example="/ucas/job" path="/ucas/job/:type?" :paramsDesc="['招聘类型，默认为博士后']">
+
+| 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
+| :------: | :----: | :----------: | :----------: | :----------: |
+|   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |
+
+</Route>
+
 ## 中国农业大学
 
 ### 中国农业大学研招网通知公告
@@ -2445,6 +2720,22 @@ type 列表：
 #### 中国农业大学信电学院
 
 <Route author="sushengmao" example="/cauele" path="/cauele" />
+
+## 中国人民大学
+
+### 人事处
+
+<Route author="nczitzk" example="/ruc/hr" path="/ruc/hr/:category?" :paramsDesc="['分类，见下方说明，默认为首页通知公告']">
+
+::: tip 提示
+
+分类字段处填写的是对应中国人民大学人事处分类页网址中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
+
+如 [中国人民大学人事处 - 办事机构 - 教师事务办公室 - 教师通知公告](http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm) 的网址为 <http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm> 其中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段为 `bsjg/bsjsswbgs/jstzgg`。随后，并将其中的 `/` 修改为 `-`，可以得到 `bsjg-bsjsswbgs-jstzgg`。所以最终我们的路由为 [`/ruc/hr/bsjg-bsjsswbgs-jstzgg`](https://rsshub.app/ruc/hr/bsjg-bsjsswbgs-jstzgg)
+
+:::
+
+</Route>
 
 ## 中国石油大学（华东）
 

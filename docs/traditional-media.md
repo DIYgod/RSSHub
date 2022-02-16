@@ -157,7 +157,6 @@ pageClass: routes
 ::: tip 提示
 
 -   不支持付费文章。
--   由于未知原因 FT 中文网的 SSL 证书不被信任 （参见 [SSL Labs 报告](https://www.ssllabs.com/ssltest/analyze.html?d=www.ftchinese.com&latest)), 所有文章通过 http 协议获取。
 
 :::
 
@@ -213,6 +212,44 @@ pageClass: routes
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Nikkei Asia
+
+### 最新新闻
+
+<Route author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
+
+## Now 新聞
+
+### 新聞
+
+<Route author="nczitzk" example="/now/news" path="/now/news/:category?/:id?" :paramsDesc="['分类，见下表，默认为首页', '编号，可在对应专题/节目页 URL 中找到 topicId']">
+
+::: tip 提示
+
+**编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
+
+对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123&topicId=1056) 话题，其网址为<https://news.now.com/home/tracker/detail?catCode=123&topicId=1056>，其中 `topicId` 为 1056，则对应路由为 [`/now/news/tracker/1056`](https://rsshub.app/now/news/tracker/1056)
+
+:::
+
+| 首頁 | 港聞  | 兩岸國際      | 娛樂          |
+| ---- | ----- | ------------- | ------------- |
+|      | local | international | entertainment |
+
+| 生活 | 科技       | 財經    | 體育   |
+| ---- | ---------- | ------- | ------ |
+| life | technology | finance | sports |
+
+| 事件追蹤 | 評論節目 | 新聞專題 |
+| -------- | -------- | -------- |
+| tracker  | feature  | opinion  |
+
+</Route>
+
+### 熱門
+
+<Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
+
 ## Phoronix
 
 ### 新闻与评测
@@ -233,6 +270,60 @@ pageClass: routes
 
 -   全文输出转换为简体字: `?opencc=t2s`  
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
+
+</Route>
+
+## SBS
+
+### 中文
+
+<Route author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" :paramsDesc="['分类，可选 `news` 和 `podcast`，默认为 `news`', 'id，见下表，可在对应页地址栏中找到，默认为 `news`', '方言，可选 `mandarin` 和 `cantonese`，默认为 `mandarin`', '语言，可选 `zh-hans` 和 `zh-hant`，默认为 `zh-hans`']">
+
+::: tip 提示
+
+当订阅播客时，请为 `category` 填入 **podcast**。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 的 URL 为 <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>，其中 `id` 为 **sbs-mandarin**，`dialect` 为 **mandarin**，`language` 为 **zh-hans**，其路由即为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)。
+
+:::
+
+| 新闻 | 澳大利亚新闻    | 国际新闻           | ​商业与财经      |
+| ---- | --------------- | ------------------ | ---------------- |
+| news | australian-news | international-news | business-finance |
+
+| 澳中关系                  | ​移民与签证 | Stories in English |
+| ------------------------- | ----------- | ------------------ |
+| australia-china-relations | immigration | english            |
+
+| COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
+| ----------------- | ------------------ | ----------------- | --------- |
+| coronavirus       | australian-chinese | life-in-australia | education |
+
+| 健康   | 吃喝玩乐                  | 艺术人文        | 澳洲定居指南     |
+| ------ | ------------------------- | --------------- | ---------------- |
+| health | food-travel-entertainment | cultural-events | settlement-guide |
+
+SBS 普通话节目：
+
+| SBS 普通话播客 | 解读澳洲            | 疫苗快报                   |
+| -------------- | ------------------- | -------------------------- |
+| sbs-mandarin   | australia-explained | covid-vaccine-daily-update |
+
+SBS 廣東話節目：
+
+| SBS 廣東話節目 Podcast | 疫苗快報            | 美食速遞        | 我不是名人          |
+| ---------------------- | ------------------- | --------------- | ------------------- |
+| sbs-cantonese          | covid-vaccine-daily | gourmet-express | my-australian-story |
+
+| 健康快樂人         | 園藝趣談       | 寰宇金融       | 文化 360    | 科技世界         |
+| ------------------ | -------------- | -------------- | ----------- | ---------------- |
+| healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
+
+::: tip 提示
+
+大部分时候你可以省略 `language` 字段，因为默认搭配 madarin 为 zh-hans，cantonese 为 zh-hant。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 路由为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)，你可以省略为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin)。
+
+你仍可以自定义 `language`，但需要注意的是，并非所有页面都有对应的双语版本。
+
+:::
 
 </Route>
 
@@ -564,7 +655,27 @@ IT・科学 tech_science
 
 ### 上海新闻
 
-<Route author="saury" example="/eastday/sh" path="/eastday/sh" />
+<Route author="saury" example="/eastday/sh" path="/eastday/sh"/>
+
+### 热点搜索
+
+<Route author="nczitzk" example="/eastday/find" path="/eastday/find"/>
+
+### 原创
+
+<Route author="nczitzk" example="/eastday/portrait" path="/eastday/portrait"/>
+
+## 东网
+
+<Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
+
+频道参数可以从官网的地址中获取，如：
+
+`https://hk.on.cc/hk/finance/index_cn.html` 对应 `/oncc/zh-hans/finance`
+
+`https://hk.on.cc/hk/finance/index.html` 对应 `/oncc/zh-hant/finance`
+
+</Route>
 
 ## 読売新聞
 
@@ -638,6 +749,22 @@ Type 栏目：
 ### 24 小时新闻排行榜
 
 <Route author="HenryQW" example="/dwnews/rank" path="/dwnews/rank"/>
+
+## 公視新聞網
+
+### 即時新聞
+
+<Route author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>
+
+## 国际金融报栏目
+
+### 栏目
+
+<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
+
+`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
+
+</Route>
 
 ## 华尔街见闻
 
@@ -807,9 +934,9 @@ category 对应的关键词有
 
 <Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类，缺省为 china']">
 
-| 中国  | 新加坡    | 东南亚 | 国际  | 体育   | 早报现在 |
-| ----- | --------- | ------ | ----- | ------ | -------- |
-| china | singapore | sea    | world | sports | fukan    |
+| 中国  | 新加坡    | 东南亚 | 国际  | 体育   |
+| ----- | --------- | ------ | ----- | ------ |
+| china | singapore | sea    | world | sports |
 
 </Route>
 
@@ -868,6 +995,45 @@ category 对应的关键词有
     | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
 
 </Route>
+
+## 明报
+
+### 即时新闻
+
+<Route author="TonyRL" example="/mingpao/ins/all" path="/mingpao/ins/:category?" :paramsDesc="['频道，预设为总目录']"/>
+
+| category | 即时新闻频道 |
+| -------- | ------------ |
+| all      | 总目录       |
+| s00001   | 港闻         |
+| s00002   | 经济         |
+| s00003   | 地产         |
+| s00004   | 两岸         |
+| s00005   | 国际         |
+| s00006   | 体育         |
+| s00007   | 娱乐         |
+| s00022   | 文摘         |
+| s00024   | 热点         |
+
+### 每日明报
+
+<Route author="TonyRL" example="/mingpao/pns/s00001" path="/mingpao/pns/:category?" :paramsDesc="['频道，预设为要闻']"/>
+
+| category | 每日明报频道 |
+| -------- | ------------ |
+| s00001   | 要闻         |
+| s00002   | 港闻         |
+| s00003   | 社评         |
+| s00004   | 经济         |
+| s00005   | 副刊         |
+| s00011   | 教育         |
+| s00012   | 观点         |
+| s00013   | 中国         |
+| s00014   | 国际         |
+| s00015   | 体育         |
+| s00016   | 娱乐         |
+| s00017   | 英文         |
+| s00018   | 作家专栏     |
 
 ## 南方周末
 
@@ -960,6 +1126,20 @@ category 对应的关键词有
 
 </Route>
 
+## 苹果新闻网
+
+### 频道
+
+<Route author="Fatpandac" example="/appledaily/home" path="/appledaily/:channel?" :paramsDesc="['频道，默认为主页']">
+
+频道参数均可在官网获取，如：
+
+`https://tw.appledaily.com/realtime/micromovie/` 对应 `/appledaily/micromovie`
+
+`https://tw.appledaily.com/home/` 对应 `/appledaily/home`
+
+</Route>
+
 ## 齐鲁晚报
 
 ### 新闻
@@ -976,31 +1156,65 @@ category 对应的关键词有
 
 </Route>
 
-## 人民日报
+## 人民网
 
-### 观点
+### 通用
 
-<Route author="LogicJake"  example="/people/opinion/223228" path="/people/opinion/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
+<Route author="nczitzk" example="/people" path="/people/:site?/:category?" :paramsDesc="['站点，可在对应站点 URL 中找到', '分类，可在对应分类页中找到']">
 
-### 环保频道
+订阅 **单级** 栏目如 [滚动 -- 生态 -- 人民网](http://env.people.com.cn/GB/74877/index.html) 分类栏目，分为 3 步：
 
-<Route author="zsimple"  example="/people/env/74877" path="/people/env/:id" :paramsDesc="['板块 id，可在 URL 中找到']"/>
+1.  将 URL <http://env.people.com.cn/GB/74877/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `env` 作为 `site` 参数填入；
+2.  将 `http://env.people.com.cn/GB/` 与 `/index.html` 间的 `74877` 作为 `category` 参数填入；
+3.  最终可获得 [`/people/env/74877`](https://rsshub.app/people/env/74877)。
+
+订阅 **多级** 栏目如 [经济观察 -- 观点 -- 人民网](http://opinion.people.com.cn/GB/427456/434878/index.html) 分类栏目，同样分为 3 步：
+
+1.  将 URL <http://opinion.people.com.cn/GB/427456/434878/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `opinion` 作为 `site` 参数填入；
+2.  把 `http://opinion.people.com.cn/GB/` 与 `/index.html` 间 `427456/434878` 作为 `category` 参数填入；
+3.  最终可获得 [`/people/opinion/427456/434878`](https://rsshub.app/people/opinion/427456/434878)。
+
+::: tip 提示
+
+人民网大部分站点支持上述通用规则进行订阅。
+
+:::
+
+</Route>
 
 ### 习近平系列重要讲话
 
-<Route author="LogicJake"  example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认 all']"/>
+<Route author="LogicJake" example="/people/xjpjh" path="/people/xjpjh/:keyword?/:year?" :paramsDesc="['关键词，默认不填','年份，默认 all']"/>
 
 ### 中国共产党新闻网 24 小时滚动新闻
 
 <Route author="nczitzk" example="/people/cpc/24h" path="/people/cpc/24h"/>
 
-## 人民日报社 国际金融报
+### 领导留言板
 
-### 栏目
+<Route author="nczitzk" example="/people/liuyan/539" path="/people/liuyan/:id/:state?" :paramsDesc="['编号，可在对应人物页 URL 中找到', '状态，见下表，默认为全部']">
 
-<Route author="Origami404" example="/ifnews/48" path="/ifnews/:cid" :paramsDesc="['栏目 ID']">
+| 全部 | 待回复 | 办理中 | 已办理 |
+| ---- | ------ | ------ | ------ |
+| 1    | 2      | 3      | 4      |
 
-`cid`可在对应栏目的 url 后的参数中获取，如`热点快报`的栏目 url 为`http://www.ifnews.com/column.html?cid=48`, `cid`即为`48`.
+</Route>
+
+## 日本经济新闻中文版
+
+### 新闻
+
+<Route author="nczitzk" example="/nikkei-cn" path="/nikkei-cn/:language?/:category?/:type?" :paramsDesc="['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '分类，默认为空，可在对应分类页 URL 中找到', '子分类，默认为空，可在对应分类页 URL 中找到']" radar="1" rssbud="1">
+
+::: tip 提示
+
+如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/cn/china/ceconomy`](https://rsshub.app/nikkei-cn/cn/china/ceconomy)
+
+如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://zh.cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/zh/china/ceconomy`](https://rsshub.app/nikkei-cn/zh/china/ceconomy)
+
+特别地，当 `category` 填入 `rss` 后（即路由为 [`/nikkei-cn/cn/rss`](https://rsshub.app/nikkei-cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)
+
+:::
 
 </Route>
 
@@ -1100,13 +1314,61 @@ category 对应的关键词有
 
 香港经济日报已有提供简单 RSS，详细可前往官方网站： <https://www.hket.com/rss>
 
-此路由主要补全官方 RSS 全文输出。
+此路由主要补全官方 RSS 全文输出及完善分类输出。
 
-<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" :paramsDesc="['分类，默认为全部新闻']">
+<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" :paramsDesc="['分类，默认为全部新闻，可在 URL 中找到，部分见下表']" radar="1" rssbud="1">
 
-| sran001  | sran008  | sran010  | sran011  | srac002  | srat006  |
+| sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
 | -------- | -------- | -------- | -------- | -------- | -------- |
-| 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 两岸新闻 | 香港新闻 |
+| 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 商业新闻 | 香港新闻 |
+
+| sran009  | sran009-1 | sran009-2 | sran009-3  | sran009-4 | sran009-5 | sran009-6 |
+| -------- | --------- | --------- | ---------- | --------- | --------- | --------- |
+| 即时财经 | 股市      | 新股 IPO  | 新经济追踪 | 当炒股    | 宏观解读  | Hot Talk  |
+
+| sran011-1 | sran011-2    | sran011-3    |
+| --------- | ------------ | ------------ |
+| 环球政治  | 环球经济金融 | 环球社会热点 |
+
+| sran016    | sran016-1  | sran016-2  | sran016-3  | sran016-4  | sran016-5      |
+| ---------- | ---------- | ---------- | ---------- | ---------- | -------------- |
+| 大湾区主页 | 大湾区发展 | 大湾区工作 | 大湾区买楼 | 大湾区消费 | 大湾区投资理财 |
+
+| srac002  | srac003  | srac004  | srac005  |
+| -------- | -------- | -------- | -------- |
+| 即时中国 | 经济脉搏 | 国情动向 | 社会热点 |
+
+| srat001 | srat008 | srat055  | srat069  | srat070   |
+| ------- | ------- | -------- | -------- | --------- |
+| 话题    | 观点    | 休闲消费 | 娱乐新闻 | TOPick TV |
+
+| srat052  | srat052-1 | srat052-2  | srat052-3 |
+| -------- | --------- | ---------- | --------- |
+| 健康主页 | 食用安全  | 医生诊症室 | 保健美颜  |
+
+| srat053  | srat053-1 | srat053-2 | srat053-3 | srat053-4  |
+| -------- | --------- | --------- | --------- | ---------- |
+| 亲子主页 | 儿童健康  | 育儿经    | 教育      | 亲子好去处 |
+
+| srat053-6   | srat053-61 | srat053-62 | srat053-63 | srat053-64 |
+| ----------- | ---------- | ---------- | ---------- | ---------- |
+| Band 1 学堂 | 幼稚园     | 中小学     | 尖子教室   | 海外升学   |
+
+| srat072-1  | srat072-2  | srat072-3        | srat072-4         |
+| ---------- | ---------- | ---------------- | ----------------- |
+| 健康身心活 | 抗癌新方向 | 「糖」「心」解密 | 风湿不再 你我自在 |
+
+| sraw007  | sraw009  | sraw010  | sraw011  | sraw012  | sraw014  | sraw018  | sraw019  |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 全部博客 | Bloggers | 收息攻略 | 精明消费 | 退休规划 | 个人增值 | 财富管理 | 绿色金融 |
+
+| sraw015  | sraw015-07 | sraw015-08 | sraw015-09 | sraw015-10 |
+| -------- | ---------- | ---------- | ---------- | ---------- |
+| 移民百科 | 海外置业   | 移民攻略   | 移民点滴   | 海外理财   |
+
+| sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
+| -------- | ------------ | --------- | --------- | --------- |
+| ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
 
 </Route>
 
@@ -1156,6 +1418,18 @@ category 对应的关键词有
 
 </Route>
 
+## 信报财经新闻
+
+### 即时新闻
+
+<Route author="TonyRL" example="/hkej/index" path="/hkej/:category?" :paramsDesc="['分类，默认为全部新闻']">
+
+| index    | stock    | hongkong | china    | international | property | current  |
+| -------- | -------- | -------- | -------- | ------------- | -------- | -------- |
+| 全部新闻 | 港股直击 | 香港财经 | 中国财经 | 国际财经      | 地产新闻 | 时事脉搏 |
+
+</Route>
+
 ## 央视新闻
 
 ### 新闻联播
@@ -1163,6 +1437,26 @@ category 对应的关键词有
 <Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
 
 新闻联播内容摘要。
+
+</Route>
+
+### 栏目
+
+<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']">
+
+| 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
+| -------- | ------ | -------- | ------ |
+| jdft     | dzw    | jrsf     | kjl    |
+
+| 正大综艺 | 经济半小时 | 第一动画乐园 |
+| -------- | ---------- | ------------ |
+| zdzy     | jjbxs      | dydhly       |
+
+::: tip 提示
+
+更多栏目请看 [这里](https://tv.cctv.com/lm)
+
+:::
 
 </Route>
 

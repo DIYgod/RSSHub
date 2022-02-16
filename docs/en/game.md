@@ -62,6 +62,59 @@ Language codes
 
 <RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## FINAL FANTASY XIV
+
+### FINAL FANTASY XIV (The Lodestone)
+
+<RouteEn author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['Region', 'Category, `all` by default']">
+
+Region
+
+| North Ameria | Europe | France | Germany | Japan |
+| ------------ | ------ | ------ | ------- | ----- |
+| na           | eu     | fr     | de      | jp    |
+
+Category
+
+| all | topics | notices | maintenance | updates | status   | developers |
+| --- | ------ | ------- | ----------- | ------- | -------- | ---------- |
+
+</RouteEn>
+
+## Gamer Secret
+
+### Latest News
+
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+
+### Category
+
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" :paramsDesc="['Type, see below, Latest News by default', 'Category, see below']">
+
+| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+| ----------- | -- | ----------- | -------- | ---- | ------ |
+| latest-news | pc | playstation | nintendo | xbox | moblie |
+
+Or
+
+| GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+| ---------------- | ------------------ | --------------- | ----------------- |
+| category/general | category/generalen | category/mobile | category/mobileen |
+
+| NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+| ----------------- | ------------------- | ----------- | ------------- |
+| category/nintendo | category/nintendoen | category/pc | category/pcen |
+
+| PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+| -------------------- | ---------------------- | ---------------- |
+| category/playstation | category/playstationen | category/reviews |
+
+| XBOX          | XBOX EN         |
+| ------------- | --------------- |
+| category/xbox | category/xboxen |
+
+</RouteEn>
+
 ## Konami
 
 ### PES Mobile Announcement
@@ -102,7 +155,7 @@ Sorting types, default to `date`:
 
 ### CurseForge Mod Update
 
-<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for exmaple `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
+<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
 
 ### Feed The Beast Modpack Updates
 

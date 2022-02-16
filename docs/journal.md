@@ -41,6 +41,10 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
 
+### Journals
+
+<Route author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" :paramsDesc="['期刊名，可在期刊页地址栏中找到']"/>
+
 ## Cell
 
 ### 主刊
@@ -80,6 +84,20 @@ pageClass: routes
 
 <Route author="emdoe HenryQW" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['方向名称', '请在主页获取。`latest` 则为全部。']" supportScihub="1"/>
 
+## ELSEVIER
+
+### 最新文章
+
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/latest" path="/elsevier/:journal/latest" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
+
+</Route>
+
+### 指定卷中的文章
+
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/vol/192" path="/elsevier/:journal/vol/:id" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分','卷号 (如果 `Issue` 存在，使用 `Volume-Issue`, e.g., `/elsevier/aace-clinical-case-reports/vol/7-6`)']" radar="1" rssbud="1">
+
+</Route>
+
 ## IEEE Xplore
 
 ### 作者
@@ -89,6 +107,44 @@ pageClass: routes
 | 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
 | ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
 | `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
+
+</Route>
+
+### 最新文章
+
+<Route author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/ieee/:journal/latest/vol/:sortType?" :paramsDesc="['期刊名称，复制 URL 中 punumber 部分','排序方式，默认`vol-only-seq`，复制 URL 中 sortType 部分']" radar="1" rssbud="1">
+
+</Route>
+
+### 最新文章（近两个月）
+
+<Route author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/ieee/:journal/latest/date/:sortType?" :paramsDesc="['期刊名称，复制 URL 中 punumber 部分','排序方式，默认`vol-only-seq`，复制 URL 中 sortType 部分']" radar="1" rssbud="1">
+
+当期刊的文章条目过多时，按照 `vol-only-seq` 排序方式可能将近期更新文章淹没在旧条目中，故只筛选当前月与上个月内发表的文章。
+
+</Route>
+
+## INFORMS
+
+### 类型
+
+<Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['类型, 可以在 url 中得到，默认为 `orsc`']"/>
+
+## JASA
+
+### 最新文章
+
+<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
+
+</Route>
+
+### 专栏
+
+<Route author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['专栏名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
+
+| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
+| :-----: | :---------: | :-----------------: | :----: |
+|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
 
 </Route>
 
@@ -209,6 +265,12 @@ _仅支持 Science 主刊_
 
 </Route>
 
+## ScienceDirect
+
+### Journal
+
+<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
+
 ## Stork 文献鸟订阅
 
 ### 关键词
@@ -242,3 +304,25 @@ _仅支持 Science 主刊_
 路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 <https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ> 中 user= 后的 mlmE4JMAAAAJ。
 
 </Route>
+
+## 管理世界
+
+### 分类
+
+<Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
+
+| 本期要目 | 网络首发 | 学术活动 | 通知公告 |
+| -------- | -------- | -------- | -------- |
+| bqym     | wlsf     | xshd     | tzgg     |
+
+</Route>
+
+## 中国知网
+
+### 期刊
+
+<Route author="Fatpandac" example="/cnki/journals/LKGP" path="/cnki/journals/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
+
+### 网络首发
+
+<Route author="Fatpandac" example="/cnki/journals/debut/LKGP" path="/cnki/journals/debut/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>

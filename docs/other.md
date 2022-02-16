@@ -109,6 +109,12 @@ pageClass: routes
 
 <Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
 
+## Etherscan
+
+### Etherscan 转账追踪
+
+<Route author="Pretty9" example="/etherscan/transactions/0x283af0b28c62c092c9727f1ee09c02ca627eb7f5" path="/etherscan/transactions/:address" :paramsDesc="['地址']"/>
+
 ## Grand-Challenge
 
 ### Challenge 列表
@@ -200,6 +206,12 @@ pageClass: routes
 
 <Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
 
+## Mozilla
+
+### Firefox Monitor
+
+<Route author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
+
 ## NOI 全国青少年信息学奥林匹克竞赛
 
 ### 新闻
@@ -242,7 +254,7 @@ pageClass: routes
 
 ### Today Popular
 
-<Route author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+<Route author="miaoyafeng Fatpandac" example="/producthunt/today" path="/producthunt/today">
 </Route>
 
 ## SANS Institute
@@ -314,7 +326,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 产业研究报告
 
-<Route author="brilon" example="/iresearch/report" path="/iresearch/report"/>
+<Route author="brilon Fatpandac" example="/iresearch/report" path="/iresearch/report"/>
 
 ## 爱 Q 生活网
 
@@ -404,6 +416,32 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 翻译 | 注释 | 赏析  |
 | ---- | ---- | ----- |
 | yi   | zhu  | shang |
+
+</Route>
+
+## 骨朵数据
+
+### 日榜
+
+<Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily" />
+
+## 光大银行
+
+### 外汇牌价
+
+#### 总览
+
+<Route author="linbuxiao" example="/quotation/all" path="/quotation/all" />
+
+#### 历史牌价
+
+<Route author="linbuxiao" example="/quotation/history/usd" path="/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
+
+| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
+| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
+| usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
+
+</Route>
 
 ## 国家留学网
 
@@ -694,6 +732,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 上海市教育考试院
+
+### 消息速递
+
+官方网址：<http://www.shmeea.edu.cn>
+
+<Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
 ## 上海证券交易所
 
 ### 上市公司信息最新公告披露
@@ -870,6 +915,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
 
+### Yahoo Japan 新型コロナウイルス感染症まとめ
+
+新闻主页：<https://news.yahoo.co.jp/pages/article/20200207>
+
+<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']"/>
+
 ## 新趣集
 
 > 官方 Feed 地址为: <https://xinquji.com/rss>
@@ -1024,4 +1075,4 @@ type 为 all 时，category 参数不支持 cost 和 free
 | ---- | ---- |
 | ch   | pt   |
 
- </Route>
+</Route>

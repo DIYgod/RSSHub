@@ -4,6 +4,90 @@ pageClass: routes
 
 # 论坛
 
+## 2047
+
+### 分类
+
+<Route author="nczitzk" example="/2047" path="/2047/:category?/:sort?" :paramsDesc="['分类，见下表，默认为首页', '排序，见下表，默认为综合']">
+
+分类
+
+| 首页 | 时政     | 民生  | 科技 | 休闲    |
+| ---- | -------- | ----- | ---- | ------- |
+|      | opinions | daily | stem | culture |
+
+| 欢乐     | 江湖  | 站务   | 水    |
+| -------- | ----- | ------ | ----- |
+| tainment | inner | office | water |
+
+| 时事 | 观点 | 政治 | 人物 | 司法实践 |
+| ---- | ---- | ---- | ---- | -------- |
+| 2    | 1    | 31   | 10   | 49       |
+
+| 香港 | 历史 | 疫情 | 新疆 | 假设 |
+| ---- | ---- | ---- | ---- | ---- |
+| 47   | 85   | 44   | 32   | 22   |
+
+| 经济 | 生活 | 留学移民 | 情感 | 教育 |
+| ---- | ---- | -------- | ---- | ---- |
+| 65   | 41   | 14       | 23   | 66   |
+
+| 技术 | 翻墙 | 加密技术 | 哲学 | 阅读 |
+| ---- | ---- | -------- | ---- | ---- |
+| 3    | 18   | 24       | 34   | 6    |
+
+| 音乐 | 影视 | 炉边诗社 | 博客 | 美食 |
+| ---- | ---- | -------- | ---- | ---- |
+| 7    | 11   | 46       | 8    | 43   |
+
+| 文学 | ACG | 欢乐 | 公告 | 分享发现 |
+| ---- | --- | ---- | ---- | -------- |
+| 84   | 30  | 17   | 67   | 5        |
+
+| 分享原创 | 2049 | 宗教 | 语言 | 人文 |
+| -------- | ---- | ---- | ---- | ---- |
+| 12       | 16   | 42   | 56   | 76   |
+
+| 站务 | 国防 | 工会 | 水 | 江湖 |
+| ---- | ---- | ---- | -- | ---- |
+| 13   | 15   | 29   | 4  | 21   |
+
+| 吐槽 | 树洞 | 标本 |
+| ---- | ---- | ---- |
+| 9    | 19   | 20   |
+
+排序
+
+| 即时 | 新帖 | 综合 | 精华  | 高赞 | 观看 |
+| ---- | ---- | ---- | ----- | ---- | ---- |
+| t_u  | t_c  | t_hn | t_hn2 | amv  | vc   |
+
+</Route>
+
+## 423Down
+
+### 分类
+
+<Route author="Fatpandac" example="/423down/index/all" path="/423down/:category/:type" :paramsDesc="['类型', '分类']" radar="1">
+
+| category | 全部 |
+| :------: | :--: |
+|   index  |  all |
+
+| category | 安卓软件 |
+| :------: | :------: |
+|  android |    apk   |
+
+| category |   原创软件   |  媒体播放  | 网页浏览 | 图形图像 | 聊天软件 | 办公软件 | 上传下载 |  系统辅助  |  系统必备  | 安全软件 | 补丁相关 | 硬件相关 |
+| :------: | :----------: | :--------: | :------: | :------: | :------: | :------: | :------: | :--------: | :--------: | :------: | :------: | :------: |
+| computer | originalsoft | multimedia |  browser |   image  |    im    |   work   |   down   | systemsoft | systemplus | security |   patch  | hardware |
+
+| category | windows 11 | windows 10 | windows 7 | windows xp | windows pe |
+| :------: | :--------: | :--------: | :-------: | :--------: | :--------: |
+|    os    |    win11   |    win10   |    win7   |    winxp   |    winpe   |
+
+</Route>
+
 ## A 岛匿名版
 
 ### 串
@@ -338,13 +422,37 @@ pageClass: routes
 
 ## 集思录
 
+### 广场
+
+<Route author="nczitzk" example="/jisilu" path="/jisilu/:category?/:sort?/:day?" :paramsDesc="['分类，见下表，默认为全部，可在 URL 中找到', '排序，见下表，默认为最新，可在 URL 中找到', '几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效']">
+
+分类
+
+| 全部 | 债券 / 可转债 | 基金 | 套利 | 新股 |
+| ---- | ------------- | ---- | ---- | ---- |
+|      | 4             | 7    | 5    | 3    |
+
+排序
+
+| 最新 | 热门 | 按发表时间 |
+| ---- | ---- | ---------- |
+|      | hot  | add_time   |
+
+几天内
+
+| 30 天 | 7 天 | 当天 |
+| ----- | ---- | ---- |
+| 30    | 7    | 1    |
+
+</Route>
+
 ### 用户回复
 
 <Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
 ### 用户主题
 
-<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/reply/:topic" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/topic/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
 
 ## 看雪
 
@@ -396,11 +504,11 @@ pageClass: routes
 
 ### 分区
 
-<Route author="ma6254" example="/lkong/forum/60" path="/lkong/forum/:id/:digest?" :paramsDesc="['分区 id, 可在分区的URL里找到','默认获取全部主题，任意值则只获取精华主题']"/>
+<Route author="ma6254 nczitzk" example="/lkong/forum/60" path="/lkong/forum/:id/:digest?" :paramsDesc="['分区 id, 可在分区的URL里找到','默认获取全部主题，任意值则只获取精华主题']"/>
 
 ### 帖子
 
-<Route author="ma6254" example="/lkong/thread/2356933" path="/lkong/thread/:id?" :paramsDesc="['帖子 id, 可在帖子的URL里找到']"/>
+<Route author="ma6254 nczitzk" example="/lkong/thread/2356933" path="/lkong/thread/:id?" :paramsDesc="['帖子 id, 可在帖子的URL里找到']"/>
 
 ## 龙腾网
 
@@ -785,3 +893,5 @@ pageClass: routes
 | 灵异事件      | 灵异图片     | 民间奇谈     |
 | ------------- | ------------ | ------------ |
 | lingyishijain | lingyitupian | minjianqitan |
+
+</Route>

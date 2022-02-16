@@ -51,6 +51,12 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 <RouteEn author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
 
+### Yahoo Japan COVID19 news collection
+
+Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
+
+<RouteEn author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['Romaji of Todofuken. Can be got from URLs on area detail page. Example: kyoto']"/>
+
 ## Darwin Awards
 
 ### Articles
@@ -86,6 +92,12 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 ### News
 
 <RouteEn author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+
+## Fisher Spb
+
+### News
+
+<RouteEn author="denis-ya" example="/fisher-spb/news" path="/fisher-spb/news" />
 
 ## HackerOne
 
@@ -130,6 +142,12 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 <Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
 
+## Mozilla
+
+### Firefox Monitor
+
+<RouteEn author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
+
 ## Nobel Prize
 
 ### List
@@ -160,7 +178,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Today Popular
 
-<RouteEn author="miaoyafeng" example="/producthunt/today" path="/producthunt/today">
+<RouteEn author="miaoyafeng Fatpandac" example="/producthunt/today" path="/producthunt/today">
 </RouteEn>
 
 ## Remote.work

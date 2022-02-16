@@ -103,6 +103,46 @@ pageClass: routes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
+## GameApps.hk 香港手机游戏网
+
+### 最新消息
+
+<Route author="TonyRL" example="/gameapps" path="/gameapps"/>
+
+## Gamer Secret
+
+### 最新資訊
+
+<Route author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+
+### 分類
+
+<Route author="nczitzk" example="/gamersecret/pc" path="/gamersecret/:type?/:category?" :paramsDesc="['类型，见下表，默认为 Latest News', '分类，见下表，默认为空']">
+
+| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+| ----------- | -- | ----------- | -------- | ---- | ------ |
+| latest-news | pc | playstation | nintendo | xbox | moblie |
+
+或者
+
+| GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+| ---------------- | ------------------ | --------------- | ----------------- |
+| category/general | category/generalen | category/mobile | category/mobileen |
+
+| NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+| ----------------- | ------------------- | ----------- | ------------- |
+| category/nintendo | category/nintendoen | category/pc | category/pcen |
+
+| PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+| -------------------- | ---------------------- | ---------------- |
+| category/playstation | category/playstationen | category/reviews |
+
+| XBOX          | XBOX EN         |
+| ------------- | --------------- |
+| category/xbox | category/xboxen |
+
+</Route>
+
 ## GameRes 游资网
 
 ### 热点推荐
@@ -232,7 +272,7 @@ pageClass: routes
 
 ### CurseForge Mod 更新
 
-<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的短名或者 `Project ID`. 项目的短名可以在地址栏获取到, 例如地址为 `https://minecraft.curseforge.com/projects/non-update`, 短名就为 `non-update`. `Project ID` 可在 `Overview` 中的 `About This Project` 中找到']"/>
+<Route author="Indexyz Discreater" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的 ID， 可在 mod 主页的 `About This Project` 中找到']"/>
 
 ### Feed The Beast (FTB) 模组包更新
 
@@ -372,8 +412,8 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 Steam 新闻中心支持官方的 RSS 订阅:
 
 -   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
--   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english> 
--   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss>	或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
+-   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english>
+-   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss> 或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
 
 :::
 
@@ -481,9 +521,17 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ## 旅法师营地
 
+### 首页
+
+<Route author="auto-bot-ty" example="/lfsyd/home" path="/lfsyd/home" radar="1" rssbud="1"/>
+
+### 首页（旧版）
+
+<Route author="auto-bot-ty" example="/lfsyd/old_home" path="/lfsyd/old_home" radar="1" rssbud="1"/>
+
 ### 分区
 
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tag" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
@@ -531,6 +579,10 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+### アークナイツ (日服新闻)
+
+<Route author="ofyark" example="/arknights/japan" path="/arknights/japan"/>
+
 ### 塞壬唱片
 
 <Route author="rikkablue" example="/siren/news" path="/siren/news"/>
@@ -543,7 +595,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 少女前线
 
-### 新闻
+### 情报局
 
 <Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" :paramsDesc="['分类，见下表，默认为新闻']">
 
@@ -575,7 +627,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户动态
 
-<Route author="LogicJake" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="auto-bot-ty" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
 
 ### 游戏新闻
 
@@ -617,11 +669,11 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏折扣
 
-<Route author="LogicJake" example="/yxdzqb/hot_chinese" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
+<Route author="LogicJake nczitzk" example="/yxdzqb/popular_cn" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
 
 | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
 | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
-| new            | hot                | hot_chinese            | low            | low_chinese            |
+| discount       | popular            | popular_cn             | low            | low_cn                 |
 
 </Route>
 
@@ -711,11 +763,15 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend"/>
 
+### 用户文章
+
+<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID，可在文章html中获取']"/>
+
 ## 最终幻想 14
 
 ### 最终幻想 14 国服
 
-<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']">
+<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" :paramsDesc="['分类名，预设为 `all`']">
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
 | ---- | -------- | ------ | --------- | ---- |
@@ -725,14 +781,15 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 最终幻想 14 国际服 （Lodestone）
 
-<Route author="chengyuhui" example="/ff14/ff14_global/na/all" path="/ff14/ff14_global/:lang/:type" :paramsDesc="['地区', '分类名']">
+<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['地区', '分类名，预设为 `all`']">
+
 | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
 | ---- | ------------ | ---- | ---- | ---- |
 | na   | eu           | fr   | de   | jp   |
 
-| 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
-| ------ | ------- | ----------- | ------- | -------- | ---------- |
-| topics | notices | maintenance | updates | status   | developers |
+| 所有 | 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
+| ---- | ------ | ------- | ----------- | ------- | -------- | ---------- |
+| all  | topics | notices | maintenance | updates | status   | developers |
 
 </Route>
 

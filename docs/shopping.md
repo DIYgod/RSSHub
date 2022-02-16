@@ -75,6 +75,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
+## hotukdeals
+
+### thread
+
+<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
+
+## lativ
+
+### 订阅价格
+
+<Route author="Fatpandac" example="/lativ/54220021" path="/lativ/:id" :paramsDesc="['商品id，网址上可以直接拿到']"/>
+
 ## LeBonCoin
 
 ### Ads
@@ -98,6 +110,18 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 所有品牌参见 [品牌清单](https://www.mercari.com/jp/brand/)
 
 </Route>
+
+## ShopBack
+
+### Store
+
+<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['店铺名，可在 URL 中找到']"/>
+
+## The Independent
+
+### PS5 stock UK
+
+<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
 
 ## Westore
 
@@ -288,7 +312,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 众筹项目
 
-<Route author="xyqfer" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
+<Route author="xyqfer Fatpandac" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
 
 | 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
 | ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
@@ -318,7 +342,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 要闻
 
-<Route author="EsuRt" example="/ccreports/article" path="/ccreports"/>
+<Route author="EsuRt Fatpandac" example="/ccreports/article" path="/ccreports/article"/>
 
 ## 小米
 

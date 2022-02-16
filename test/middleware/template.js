@@ -36,6 +36,8 @@ describe('template', () => {
         delete parsed2.lastBuildDate;
         delete parsed1.feedUrl;
         delete parsed2.feedUrl;
+        delete parsed1.paginationLinks;
+        delete parsed2.paginationLinks;
         expect(parsed2).toMatchObject(parsed1);
     });
 
