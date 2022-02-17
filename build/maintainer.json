@@ -68,6 +68,9 @@
     "/atcoder/contest/:language?/:rated?/:category?/:keyword?": [
         "nczitzk"
     ],
+    "/audiobar/latest": [
+        "zxzhuty"
+    ],
     "/bandcamp/live": [
         "nczitzk"
     ],

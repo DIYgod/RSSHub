@@ -390,6 +390,11 @@
                     `/atcoder/content/${new URL(url).searchParams.get('lang') ?? 'en'}/${new URL(url).searchParams.get('ratedType') ?? '0'}/${new URL(url).searchParams.get('category') ?? '0'}/${
                         new URL(url).searchParams.get('keyword') ?? ''
                     }` } ] },
+  "audiobar.cn":{ _name:"音频应用",
+    ".":[ { title:"最新主题",
+        docs:"https://docs.rsshub.app/bbs.html#yin-pin-ying-yong",
+        source:[ "/all.php" ],
+        target:"/audiobar/latest" } ] },
   "bandcamp.com":{ _name:"Bandcamp",
     ".":[ { title:"Upcoming Live Streams",
         docs:"https://docs.rsshub.app/multimedia.html#bandcamp-upcoming-live-streams",
