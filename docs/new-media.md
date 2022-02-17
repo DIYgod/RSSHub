@@ -1191,7 +1191,7 @@ Supported sub-sites:
 
 ### 乃木坂 46 新闻
 
-<Route author="crispgm" example="/nogizaka46/news" path="/nogizaka46/news" />
+<Route author="crispgm Fatpandac" example="/nogizaka46/news" path="/nogizaka46/news" />
 
 ### 欅坂 46 新闻
 
