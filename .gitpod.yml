@@ -1,0 +1,41 @@
+image: gitpod/workspace-node-lts
+
+ports:
+  - port: 1200
+    onOpen: notify
+    visibility: public
+  - port: 8080
+    onOpen: notify
+    visibility: public
+
+tasks:
+  - name: install deps
+    init: yarn
+  - name: start app
+    command: yarn dev
+    openMode: tab-after
+  - name: start docs
+    command: yarn docs:dev
+    openMode: tab-after
+
+vscode:
+  extensions:
+    - DavidAnson.vscode-markdownlint
+    - dbaeumer.vscode-eslint
+    - eamodio.gitlens
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - foxundermoon.shell-format
+    - Shan.code-settings-sync
+    - vivaxy.vscode-conventional-commits
+    - WakaTime.vscode-wakatime
+    - yzhang.markdown-all-in-one
+
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: false
+    pullRequestsFromForks: false
+    addCheck: false
+    addComment: false
