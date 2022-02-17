@@ -895,3 +895,9 @@ pageClass: routes
 | lingyishijain | lingyitupian | minjianqitan |
 
 </Route>
+
+## 音频应用
+
+### 最新主题
+
+<Route author="zxzhuty" example="/audiobar/latest" path="/audiobar/latest" />
