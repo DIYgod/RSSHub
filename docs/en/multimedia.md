@@ -24,13 +24,13 @@ Full transcript support for better user experience.
 
 ### Upcoming Live Streams
 
-<Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
+<RouteEn author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
 
 ## EZTV
 
 ::: tip
 
-Official RSS: https://eztv.io/ezrss.xml
+Official RSS: <https://eztv.io/ezrss.xml>
 
 :::
 
@@ -195,7 +195,9 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 **`language`**
 
 Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
+
 - `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
+
 - `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
 ## s-hentai
@@ -224,7 +226,6 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ## Spotify
 
-
 ### Artist Albums
 
 <RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['Artist ID']" />
@@ -245,12 +246,11 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 <RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
 
-
 ## Trakt.tv
 
 ### User Collection
 
-<Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
+<RouteEn author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
 
 ## YouTube
 

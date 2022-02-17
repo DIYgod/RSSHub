@@ -47,13 +47,16 @@ pageClass: routes
 ## PolkaWorld
 
 ### Newest Articles
-<RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
 
-::: tip 
+<RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest">
+
+::: tip
 
 Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
 
 :::
+
+</RouteEn>
 
 ### Article
 
@@ -61,7 +64,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ## WordPress
 
-<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
+<RouteEn author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
 
 ## yuzu emulator
 

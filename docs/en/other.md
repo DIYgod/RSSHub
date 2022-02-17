@@ -61,13 +61,13 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### Articles
 
-<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
+<RouteEn author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
 
 ## dcinside
 
 ### board
 
-<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
+<RouteEn author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
 
 ## DHL
 
@@ -140,7 +140,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### All Publications
 
-<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
+<RouteEn author="sbilly" example="/mitre/publications" path="/mitre/publications" />
 
 ## Mozilla
 
