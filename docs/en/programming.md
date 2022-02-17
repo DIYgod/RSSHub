@@ -8,8 +8,7 @@ pageClass: routes
 
 ### A.M.Turing Award Winners
 
-<Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
-
+<RouteEn author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
 ## ACM-ECNU
 
@@ -102,7 +101,7 @@ GitHub provides some official RSS feeds:
 
 ### Topics
 
-<Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" :paramsDesc="['Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:']" radar="1" rssbud="1">
+<RouteEn author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" :paramsDesc="['Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:']" radar="1" rssbud="1">
 
 | Parameter | Description | Values |
 | ---- | ---- | ---- |
