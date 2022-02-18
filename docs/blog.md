@@ -28,9 +28,9 @@ pageClass: routes
 
 <Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
 
-| 呆唯的 Newsletter | 0neSe7en 的技术周刊 | 地心引力 | 宪学宪卖 | Comeet 每周精选 | 无鸡之谈 | 我有一片芝麻地 |
-| ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
-| hirasawayui       | se7en               | walnut   | themez   | comeet          | sunskyxh | zmd            |
+| 呆唯的 Newsletter | 0neSe7en 的技术周刊 | 地心引力   | 宪学宪卖   | Comeet 每周精选 | 无鸡之谈     | 我有一片芝麻地 |
+| -------------- | -------------- | ------ | ------ | ----------- | -------- | ------- |
+| hirasawayui    | se7en          | walnut | themez | comeet      | sunskyxh | zmd     |
 
 > 原则上只要是 {type}.hedwig.pub 都可以匹配。
 
@@ -113,7 +113,7 @@ pageClass: routes
 <Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" :paramsDesc="['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']">
 
 | News   | Whoscall 百科   | 防詐小學堂     | Whoscall 日常   |
-| ------ | --------------- | -------------- | --------------- |
+| ------ | ------------- | --------- | ------------- |
 | 1-News | 5-Whoscall 百科 | 4 - 防詐小學堂 | 6-Whoscall 日常 |
 
 </Route>
@@ -123,7 +123,7 @@ pageClass: routes
 <Route author="nczitzk" example="/whoscall/tags/whoscall小百科" path="/whoscall/tags/:tag?" :paramsDesc="['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']">
 
 | 防疫也防詐 | 防詐專家 | 來電辨識 | whoscall 日常 |
-| ---------- | -------- | -------- | ------------- |
+| ----- | ---- | ---- | ----------- |
 
 </Route>
 
@@ -183,35 +183,35 @@ pageClass: routes
 
 藝能新聞 jnews
 
-| 日劇新聞   | 日影新聞   | 日樂新聞   | 日藝新聞           |
+| 日劇新聞       | 日影新聞       | 日樂新聞       | 日藝新聞               |
 | ---------- | ---------- | ---------- | ------------------ |
 | news_drama | news_movie | news_music | news_entertainment |
 
-| 動漫新聞 | 藝人美照     | 清涼寫真   | 日本廣告 | 其他日聞    |
-| -------- | ------------ | ---------- | -------- | ----------- |
-| news_acg | artist-photo | photoalbum | jpcm     | news_others |
+| 動漫新聞     | 藝人美照         | 清涼寫真       | 日本廣告 | 其他日聞        |
+| -------- | ------------ | ---------- | ---- | ----------- |
+| news_acg | artist-photo | photoalbum | jpcm | news_others |
 
 旅遊情報 jpnews
 
-| 日本美食情報 | 日本甜點情報  | 日本零食情報  | 日本飲品情報  | 日本景點情報       |
-| ------------ | ------------- | ------------- | ------------- | ------------------ |
-| jpnews-food  | jpnews-sweets | jpnews-okashi | jpnews-drinks | jpnews-attractions |
+| 日本美食情報      | 日本甜點情報        | 日本零食情報        | 日本飲品情報        | 日本景點情報             |
+| ----------- | ------------- | ------------- | ------------- | ------------------ |
+| jpnews-food | jpnews-sweets | jpnews-okashi | jpnews-drinks | jpnews-attractions |
 
-| 日本玩樂情報 | 日本住宿情報 | 日本活動情報  | 日本購物情報    | 日本社會情報   |
-| ------------ | ------------ | ------------- | --------------- | -------------- |
-| jpnews-play  | jpnews-hotel | jpnews-events | jpnews-shopping | jpnews-society |
+| 日本玩樂情報      | 日本住宿情報       | 日本活動情報        | 日本購物情報          | 日本社會情報         |
+| ----------- | ------------ | ------------- | --------------- | -------------- |
+| jpnews-play | jpnews-hotel | jpnews-events | jpnews-shopping | jpnews-society |
 
-| 日本交通情報   | 日本天氣情報   |
+| 日本交通情報         | 日本天氣情報         |
 | -------------- | -------------- |
 | jpnews-traffic | jpnews-weather |
 
 日劇世界 jdrama
 
-| 每周劇評            | 日劇總評           | 資料情報   |
+| 每周劇評                | 日劇總評               | 資料情報       |
 | ------------------- | ------------------ | ---------- |
 | drama_review_weekly | drama_review_final | drama_data |
 
-| 深度日劇   | 收視報告     | 日劇專欄     | 劇迷互動          |
+| 深度日劇       | 收視報告         | 日劇專欄         | 劇迷互動              |
 | ---------- | ------------ | ------------ | ----------------- |
 | drama_deep | drama_rating | drama_column | drama_interactive |
 

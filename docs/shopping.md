@@ -24,9 +24,9 @@ pageClass: routes
 
 时间
 
-| 最近一天 | 最近一周 | 所有时间 |
-| -------- | -------- | -------- |
-| 24h      | week     | alltime  |
+| 最近一天 | 最近一周 | 所有时间    |
+| ---- | ---- | ------- |
+| 24h  | week | alltime |
 
 ::: tip 提示
 
@@ -161,21 +161,21 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 类型
 
-| 全部 | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| all  | kj   | ms   | jd   | sj   | yl   | wh   | gy   | qt   |
+| 全部  | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
+| --- | -- | -- | -- | -- | -- | -- | -- | -- |
+| all | kj | ms | jd | sj | yl | wh | gy | qt |
 
 状态
 
-| 全部 | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
-| ---- | ------ | ------ | -------- | -------- |
-| all  | yrz    | zcz    | zccg     | xmcg     |
+| 全部  | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
+| --- | --- | --- | ---- | ---- |
+| all | yrz | zcz | zccg | xmcg |
 
 排序方式
 
 | 综合推荐 | 最新上线 | 金额最多 | 支持最多 | 即将结束 |
-| -------- | -------- | -------- | -------- | -------- |
-| zhtj     | zxsx     | jezg     | zczd     | jjjs     |
+| ---- | ---- | ---- | ---- | ---- |
+| zhtj | zxsx | jezg | zczd | jjjs |
 
 </Route>
 
@@ -202,9 +202,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" :paramsDesc="['分类名（可用+连接多个分类）']">
 
-| 全部分类  | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
-| --------- | -------------- | -------- | -------- | ----- | -------- | -------- |
-| news_list | responsibility | brand    | product  | sales | culture  | event    |
+| 全部分类      | 社会责任           | 人员品牌  | 产品故事    | 优惠    | 品牌文化    | 活动速报  |
+| --------- | -------------- | ----- | ------- | ----- | ------- | ----- |
+| news_list | responsibility | brand | product | sales | culture | event |
 
 </Route>
 
@@ -242,41 +242,41 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 -   榜单类型
 
-| 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
-| ---------- | ---------- | ----------- | ---------- | ---------- |
-| pinlei     | dianshang  | haitao      | haowen     | haowu      |
+| 好价品类榜  | 好价电商榜     | 海淘 TOP 榜 | 好文排行榜  | 好物排行榜 |
+| ------ | --------- | -------- | ------ | ----- |
+| pinlei | dianshang | haitao   | haowen | haowu |
 
 -   榜单 ID
 
 好价品类榜
 
 | 全部 | 时尚运动 | 3C 家电 | 食品家居 | 日百母婴 | 出行游玩 | 白菜 | 凑单品 |
-| ---- | -------- | ------- | -------- | -------- | -------- | ---- | ------ |
-| 11   | 12       | 13      | 14       | 15       | 16       | 17   | 22     |
+| -- | ---- | ----- | ---- | ---- | ---- | -- | --- |
+| 11 | 12   | 13    | 14   | 15   | 16   | 17 | 22  |
 
 好价电商榜
 
 | 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |
-| ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |
-| 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |
+| --- | -- | -- | ----- | ---- | ---- | -- | --- | ----- | ----- | ---- |
+| 24  | 23 | 25 | 26    | 27   | 28   | 29 | 30  | 31    | 32    | 33   |
 
 海淘 TOP 榜
 
 | 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |
-| ---- | -------- | ------ | ------ | ------ | ------ | ------ |
-| 39   | 34       | 35     | 36     | 37     | 38     | hsw    |
+| -- | ---- | --- | --- | --- | --- | --- |
+| 39 | 34   | 35  | 36  | 37  | 38  | hsw |
 
 好文排行榜
 
 | 原创 | 资讯 |
-| ---- | ---- |
-| yc   | zx   |
+| -- | -- |
+| yc | zx |
 
 好物排行榜
 
-| 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |
-| ------ | -------- | -------- | -------- |
-| hwall  | zc       | nb       | hw       |
+| 新晋榜   | 消费众测 | 新锐品牌 | 好物榜单 |
+| ----- | ---- | ---- | ---- |
+| hwall | zc   | nb   | hw   |
 
 </Route>
 
@@ -289,8 +289,8 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 <Route author="LogicJake" example="/smzdm/haowen/fenlei/shenghuodianqi" path="/smzdm/haowen/fenlei/:name/:sort?" :paramsDesc="['分类名，可在 URL 中查看','排序方式，默认为最新']">
 
 | 最新 | 周排行 | 月排行 |
-| ---- | ------ | ------ |
-| 0    | 7      | 30     |
+| -- | --- | --- |
+| 0  | 7   | 30  |
 
 </Route>
 
@@ -314,9 +314,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="xyqfer Fatpandac" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
 
-| 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
-| ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
-| all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |
+| 全部  | 科技   | 食品          | 动漫  | 设计     | 公益   | 娱乐   | 影音    | 书籍   | 游戏   | 其他    |
+| --- | ---- | ----------- | --- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
+| all | tech | agriculture | acg | design | love | tele | music | book | game | other |
 
 </Route>
 
@@ -359,8 +359,8 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 <Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
 
 | 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
-| ---------- | -------------- | -------------- | ------------------ |
-| 0          | 1              | 2              | 3                  |
+| ----- | ------- | ------- | --------- |
+| 0     | 1       | 2       | 3         |
 
 </Route>
 
