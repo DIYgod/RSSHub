@@ -305,6 +305,16 @@ Country
 
 </RouteEn>
 
+## Global Disinformation Index
+
+### Research
+
+<RouteEn author="nczitzk" example="/disinformationindex/research" path="/disinformationindex/research"/>
+
+### Blog
+
+<RouteEn author="nczitzk" example="/disinformationindex/blog" path="/disinformationindex/blog"/>
+
 ## Google News
 
 ### News
