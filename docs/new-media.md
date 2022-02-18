@@ -425,6 +425,16 @@ Country
 
 </Route>
 
+## Global Disinformation Index
+
+### Research
+
+<Route author="nczitzk" example="/disinformationindex/research" path="/disinformationindex/research"/>
+
+### Blog
+
+<Route author="nczitzk" example="/disinformationindex/blog" path="/disinformationindex/blog"/>
+
 ## GQ
 
 ### GQ 台湾
