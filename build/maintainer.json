@@ -26,6 +26,9 @@
     "/423down/:category/:type": [
         "Fatpandac"
     ],
+    "/50forum/": [
+        "sddiky"
+    ],
     "/8world/:category?": [
         "nczitzk"
     ],
