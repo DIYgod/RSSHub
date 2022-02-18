@@ -3,7 +3,8 @@ const width = require('string-width');
 const remark = require('remark');
 const pangu = require('remark-pangu');
 const frontmatter = require('remark-frontmatter');
-
+const stringify = require('remark-stringify');
+const gfm = require('remark-gfm');
 const prettier = require('remark-preset-prettier');
 
 module.exports = {
@@ -15,9 +16,13 @@ module.exports = {
                 inlineCode: false,
                 link: false,
             })
+            .use(stringify, {
+                bullet: '-',
+                ruleSpaces: true,
+            })
             .use(prettier)
-            .use({
-                settings: {
+            .use(gfm, {
+                options: {
                     stringLength: width,
                 },
             })

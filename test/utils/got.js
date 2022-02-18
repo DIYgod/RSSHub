@@ -25,7 +25,7 @@ describe('got', () => {
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
-            .reply(function () {
+            .reply(() => {
                 requestRun();
                 return [503, '0'];
             });
@@ -43,9 +43,7 @@ describe('got', () => {
     it('axios', async () => {
         nock('http://rsshub.test')
             .post('/post')
-            .reply(function () {
-                return [200, '{"code": 0}'];
-            });
+            .reply(() => [200, '{"code": 0}']);
 
         const response1 = await got.post('http://rsshub.test/post', {
             form: {
@@ -62,9 +60,7 @@ describe('got', () => {
         nock('http://rsshub.test')
             .get('/timeout')
             .delay(600)
-            .reply(function () {
-                return [200, '{"code": 0}'];
-            });
+            .reply(() => [200, '{"code": 0}']);
 
         const loggerSpy = jest.spyOn(logger, 'error').mockReturnValue({});
 
