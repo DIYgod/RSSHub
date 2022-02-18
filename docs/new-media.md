@@ -1934,6 +1934,12 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+## 经济 50 人论坛
+
+### 专家文章
+
+<Route author="sddiky" example="/50forum" path="/50forum"/>
+
 ## 鲸跃汽车
 
 ### 首页
