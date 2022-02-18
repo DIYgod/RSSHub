@@ -26,6 +26,7 @@ vscode:
     - EditorConfig.EditorConfig
     - esbenp.prettier-vscode
     - foxundermoon.shell-format
+    - octref.vetur
     - Shan.code-settings-sync
     - vivaxy.vscode-conventional-commits
     - WakaTime.vscode-wakatime
