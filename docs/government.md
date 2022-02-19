@@ -228,6 +228,18 @@ pageClass: routes
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
+## 美国白宫办公厅
+
+### 简报室
+
+<Route author="nczitzk" example="/whitehouse/briefing-room" path="/whitehouse/briefing-room/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |
+| --- | ---- | ----------- | -------------------- | --------------- | -------------------- | ----------------------- |
+|     | blog | legislation | presidential-actions | press-briefings | speeches-remarks     | statements-releases     |
+
+</Route>
+
 ## 美国财政部
 
 ### 新闻稿
