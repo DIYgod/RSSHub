@@ -9,6 +9,7 @@ on:
 
 jobs:
   build:
+    name: npm publish
     if: github.repository == 'DIYgod/RSSHub'
     runs-on: ubuntu-latest
     steps:
