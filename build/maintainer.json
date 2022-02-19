@@ -1125,6 +1125,9 @@
     "/wenku8/chapter/:id": [
         "zsakvo"
     ],
+    "/whitehouse/briefing-room/:category?": [
+        "nczitzk"
+    ],
     "/whoscall/": [
         "nczitzk"
     ],
