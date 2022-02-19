@@ -974,3 +974,9 @@ GitHub 官方也提供了一些 RSS:
 ### 热门
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+
+## GoCN
+
+### 文章
+
+<Route author="AtlanCI" example="/gocn" path="/gocn"/>
