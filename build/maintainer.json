@@ -820,6 +820,18 @@
     "/oncc/:language/:channel?": [
         "Fatpandac"
     ],
+    "/panewslab/column/:id": [
+        "nczitzk"
+    ],
+    "/panewslab/newsflash/:language?": [
+        "nczitzk"
+    ],
+    "/panewslab/topic/:id": [
+        "nczitzk"
+    ],
+    "/panewslab/:category?": [
+        "nczitzk"
+    ],
     "/people/cpc/24h": [
         "nczitzk"
     ],
