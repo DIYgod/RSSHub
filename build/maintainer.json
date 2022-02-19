@@ -188,6 +188,9 @@
     "/ddosi/category/:category": [
         "XinRoom"
     ],
+    "/disinfo/publications": [
+        "nczitzk"
+    ],
     "/distill/": [
         "nczitzk"
     ],
