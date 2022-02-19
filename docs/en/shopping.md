@@ -40,13 +40,19 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### Shop
 
-<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['Shop subdomain']" />
+<RouteEn author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['Shop subdomain']" />
 
 ## Guiltfree.pl
 
 ### Onsale
 
 <RouteEn author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+
+## hotukdeals
+
+### thread
+
+<RouteEn author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
 
 ## IKEA
 
@@ -81,3 +87,15 @@ All categories, see [Category list](https://www.mercari.com/jp/category/)
 All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
 </RouteEn>
+
+## ShopBack
+
+### Store
+
+<RouteEn author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['Store, can be found in URL']"/>
+
+## The Independent
+
+### PS5 stock UK
+
+<RouteEn author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
