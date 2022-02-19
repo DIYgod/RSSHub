@@ -10,6 +10,12 @@ pageClass: routes
 
 <RouteEn author="kt286" example="/archdaily" path="/archdaily"/>
 
+## Etymonlin
+
+### Latest Stories
+
+<RouteEn author="cyzs233" example="/etymonline" path="/etymonline"/>
+
 ## Google Sites
 
 ### Articles
