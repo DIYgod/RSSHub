@@ -836,7 +836,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 专栏
 
-<Route author="nczitzk" example="/panewslab/column/N7042814" path="/panewslab/column/:id" :paramsDesc="['语言，默认为 zh，可在地址栏 URL 中找到']"/>
+<Route author="nczitzk" example="/panewslab/column/N7042814" path="/panewslab/column/:id" :paramsDesc="['专栏 id，可在地址栏 URL 中找到']"/>
 
 ### 专题
 
