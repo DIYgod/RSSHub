@@ -1,4 +1,4 @@
-FROM node:14-slim as dep-builder
+FROM node:14-buster-slim as dep-builder
 
 LABEL MAINTAINER https://github.com/DIYgod/RSSHub/
 
@@ -6,25 +6,29 @@ ARG USE_CHINA_NPM_REGISTRY=0;
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
 
 RUN ln -sf /bin/bash /bin/sh
-
-RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init python build-essential --no-install-recommends
+RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init python3 build-essential --no-install-recommends
 
 WORKDIR /app
-COPY . /app
+
+COPY ./yarn.lock /app
+COPY ./package.json /app
 
 RUN if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-  echo 'use npm mirror'; npm config set registry https://registry.npm.taobao.org; \
+  echo 'use npm mirror'; npm config set registry https://registry.npmmirror.com; \
   fi;
 
 RUN npm i -g npm
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
-  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && npm install ;\
+  unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD ;\
   else \
-  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && npm install ;\
+  export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true ;\
   fi;
 
-RUN node tools/minify-docker.js
+RUN yarn --frozen-lockfile --network-timeout 1000000
+COPY . /app
+RUN node scripts/docker/minify-docker.js
+
 
 FROM node:14-slim as app
 
@@ -34,7 +38,7 @@ ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
 
 WORKDIR /app
 COPY . /app
-COPY --from=dep-builder /app/node_modules /app/node_modules
+COPY --from=dep-builder /app/app-minimal/node_modules /app/node_modules
 COPY --from=dep-builder /usr/bin/dumb-init /usr/bin/dumb-init
 
 RUN if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
