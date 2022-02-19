@@ -417,6 +417,9 @@
     "/github/user/followers/:user": [
         "HenryQW"
     ],
+    "/gocn/": [
+        "AtlanCI"
+    ],
     "/google/album/:id": [
         "hoilc"
     ],
