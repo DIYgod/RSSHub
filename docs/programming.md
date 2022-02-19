@@ -277,6 +277,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
 
+## GoCN
+
+### 文章
+
+<Route author="AtlanCI" example="/gocn" path="/gocn"/>
+
 ## Hacker News
 
 ### 分区
