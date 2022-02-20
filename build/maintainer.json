@@ -1180,6 +1180,13 @@
         "mocusez",
         "light0926"
     ],
+    "/xiaoyuzhou/": [
+        "prnake",
+        "Maecenas"
+    ],
+    "/xiaoyuzhou/podcast/:id": [
+        "hondajojo"
+    ],
     "/yaohuo/": [
         "nczitzk"
     ],
@@ -2682,7 +2689,6 @@
     "/newrank/douyin/:dyid": [],
     "/manxiaosi/book/:id": [],
     "/jlu/oa": [],
-    "/xiaoyuzhou": [],
     "/hfut/tzgg": [],
     "/darwinawards/all": [],
     "/scvtc/xygg": [],
