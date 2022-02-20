@@ -920,6 +920,12 @@
     "/shopback/:store": [
         "nczitzk"
     ],
+    "/sicau/dky/:category?": [
+        "nczitzk"
+    ],
+    "/sicau/yan/:category?": [
+        "nczitzk"
+    ],
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
