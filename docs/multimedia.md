@@ -201,6 +201,10 @@ pageClass: routes
 
 ## Bandcamp
 
+### Weekly
+
+<Route author="nczitzk" example="/bandcamp/weekly" path="/bandcamp/weekly"/>
+
 ### Tag
 
 <Route author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['标签，可在 URL 中找到']"/>

@@ -18,6 +18,10 @@ Full transcript support for better user experience.
 
 ## Bandcamp
 
+### Weekly
+
+<RouteEn author="nczitzk" example="/bandcamp/weekly" path="/bandcamp/weekly"/>
+
 ### Tag
 
 <RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['Tag, can be found in URL']"/>
