@@ -1389,6 +1389,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
+### 播客
+
+<Route author="hondajojo" example="/xiaoyuzhou/podcast/6021f949a789fca4eff4492c" path="/xiaoyuzhou/podcast/:id" :paramsDesc="['播客id，可以在小宇宙播客的 URL 中找到']"/>
+
 ## 优酷
 
 ### 频道
