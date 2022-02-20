@@ -238,10 +238,6 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
-## ORCID
-
-<Route author="OrangeEd1t" example="orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['学术识别号']"/>
-
 ## Parcel Tracking
 
 ### Hermes UK

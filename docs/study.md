@@ -150,6 +150,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/neea/jlpt" path="/neea/jlpt"/>
 
+## ORCID
+
+### 作品列表
+
+<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['学术识别号']"/>
+
 ## ProcessOn
 
 ### 推荐
