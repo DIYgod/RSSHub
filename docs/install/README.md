@@ -21,6 +21,17 @@ sidebar: auto
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 
+## Docker 镜像
+
+默认推荐使用`diygod/rsshub`即`diygod/rsshub:latest`最新版镜像以获取最新路由.
+当`diygod/rsshub:latest`存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
+
+```bash
+$ docker pull diygod/rsshub:2021-06-18
+```
+
+待最新镜像更新后在切换回`diygod/rsshub:latest`最新版镜像.
+
 ## Docker Compose 部署
 
 ### 安装
@@ -129,7 +140,7 @@ git clone https://github.com/DIYgod/RSSHub.git ~/RSSHub
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ### 更新
@@ -138,7 +149,7 @@ sudo ansible-playbook rsshub.yaml
 cd ~/RSSHub/scripts/ansible
 sudo ansible-playbook rsshub.yaml
 # 当提示输入 domain name 的时候，输入该主机所使用的域名
-# 举例：如果您的 RSSHub 用户使用 https://rsshub.exmaple.com 访问您的 RSSHub 实例，输入 rsshub.exmaple.com（去掉 https://）
+# 举例：如果您的 RSSHub 用户使用 https://rsshub.example.com 访问您的 RSSHub 实例，输入 rsshub.example.com（去掉 https://）
 ```
 
 ## 手动部署
@@ -159,7 +170,7 @@ $ cd RSSHub
 使用 `npm`
 
 ```bash
-$ npm install --production
+$ npm ci --production
 ```
 
 或 `yarn`
@@ -169,6 +180,8 @@ $ yarn install --production
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
+
+### 启动
 
 然后在 `RSSHub` 文件夹中运行下面的命令就可以启动
 
@@ -234,6 +247,10 @@ in pkgs.stdenv.mkDerivation {
 ```
 
 ## 部署到 Heroku
+
+### 注意：
+
+未验证支付方式的 heroku 账户每月仅有 550 小时额度（约 23 天），验证支付方式后可达每月 1000 小时。
 
 ### 一键部署（无自动更新）
 
@@ -322,7 +339,7 @@ env_variables:
 gcloud app deploy
 ```
 
-进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service_2)。
+进行项目部署，如果您需要变更 app.yaml 文件名称或者变更部署的项目 ID 或者指定版本号等，请参考 [Deploying a service](https://cloud.google.com/appengine/docs/flexible/nodejs/testing-and-deploying-your-app#deploying_a_service\_2)。
 
 部署完成后可访问您的 Google App Engine URL 查看部署情况。
 
@@ -361,7 +378,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 部分路由反爬严格，可以配置使用代理抓取。
 
-可通过**代理 URI **或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI **中的配置。
+可通过**代理 URI**或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI**中的配置。
 
 #### 代理 URI
 
@@ -375,8 +392,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 > 一些示例：
 >
 > -   `socks4://127.0.0.1:1080`
-> -   `socks5h://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`)
-> -   `socks://127.0.0.1:1080` (protocol 为 socks 时表示 `socks5h`)
+> -   `socks5h://user:pass@127.0.0.1:1080` （用户名为 `user`, 密码为 `pass`）
+> -   `socks://127.0.0.1:1080` （protocol 为 socks 时表示 `socks5h`）
 > -   `http://127.0.0.1:8080`
 > -   `http://user:pass@127.0.0.1:8080`
 > -   `https://127.0.0.1:8443`
@@ -427,7 +444,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问码为 访问密钥 + 路由 共同生成的 md5，例如：
 
-| 访问密钥    | 路由              | 生成过程                                 | 访问码                           |
+| 访问密钥        | 路由                | 生成过程                                     | 访问码                              |
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
 | ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
@@ -437,11 +454,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问密钥 / 码与黑白名单的访问控制关系如下：
 
-|            | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
-| ---------- | ----------------- | ----------------- | --------------- |
-| 在白名单中 | ✅                | ✅                | ✅              |
-| 在黑名单中 | ✅                | ❌                | ❌              |
-| 无黑白名单 | ✅                | ❌                | ❌              |
+|       | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
+| ----- | ---------- | ---------- | --------- |
+| 在白名单中 | ✅          | ✅          | ✅         |
+| 在黑名单中 | ✅          | ❌          | ❌         |
+| 无黑白名单 | ✅          | ❌          | ❌         |
 
 ### 其他应用配置
 
@@ -465,7 +482,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
 
-`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&version=v1.14.0&show=api-browserwsendpoint)
+`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer\&version=v1.14.0\&show=api-browserwsendpoint)
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
@@ -492,6 +509,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv 源站的主机名或 IP 地址，主机名会被解析为 IPv4 地址，默认为`public-api.secure.pixiv.net`；仅在`PIXIV_BYPASS_CDN`开启时生效
 
     -   `PIXIV_BYPASS_DOH`: 用于解析 `PIXIV_BYPASS_HOSTNAME` 的 DoH 端点 URL，需要兼容 Cloudflare 或 Google 的 DoH 服务的 JSON 查询格式，默认为 `https://1.1.1.1/dns-query`
+
+    -   `PIXIV_IMG_PROXY`: 用于图片地址的代理，因为 pixiv 图片有防盗链，默认为 `https://i.pixiv.cat`
 
 -   pixiv fanbox 用于获取付费内容
 
@@ -521,12 +540,23 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
--   bilibili 用户关注视频动态路由
+-   bilibili 用户关注动态系列路由
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
         1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
         2.  打开控制台，切换到 Network 面板，刷新
-        3.  点击 dynamic_new 请求，找到 Cookie。(Key：`SESSDATA`)
+        3.  点击 dynamic_new 请求，找到 Cookie
+        4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
+
+-   spotify 全部路由： [注册地址](https://developer.spotify.com)
+
+    -   `SPOTIFY_CLIENT_ID`：Spotify 应用的 client ID
+
+    -   `SPOTIFY_CLIENT_SECRET`：Spotify 应用的 client secret
+
+-   spotify 用户相关路由
+
+    -   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
 
 -   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
@@ -534,9 +564,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   邮箱 邮件列表路由：
 
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。内容格式为 `password=密码&host=服务器&port=端口`，例如：
-        -   Linux 环境变量：`EMAIL_CONFIG_xxx.qq.com="password=123456&host=imap.qq.com&port=993"`
-        -   docker 环境变量：`EMAIL_CONFIG_xxx.qq.com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
+        -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
+        -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
 
 -   吹牛部落 栏目更新
 
@@ -559,6 +589,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
 
 -   MiniFlux 全部路由：
+
     -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的 [付费服务地址](https://reader.miniflux.app)
     -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API 密钥` -> `创建一个新的 API 密钥` 处获取
 
@@ -588,7 +619,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   discuz cookies 设定
 
-    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 [00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 \[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
 
 -   Sci-hub 设置，用于科学期刊路由。
 
@@ -596,11 +627,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   端传媒设置，用于获取付费内容全文：
 
-    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6JiE1NTYzNDgxNDVAcXEuY29tIiwidXNlcl9pZCI6MTM0NDIwLCJlbWFpbCI6IjE1NTYzNDgxNDVAcXEuY29tIiwiZXhwIjoxNTk0MTk5NjQ3fQ.Tqui-ORNR7d4Bh240nKy_Ldi6crfq0A78Yj2iwy2_U8'`。
+    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJxxxx......xx_U8'`。使用 token 部署的好处是避免占据登陆设备数的额度，但这个 token 一般有效期为两周，因此只可作临时测试使用。
 
     -   `INITIUM_IAP_RECEIPT`: 端传媒 iOS 版内购回执认证 token。获取方式：登陆后打开端传媒 iOS app 内任意页面，打开抓包工具，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`X-IAP-Receipt`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_IAP_RECEIPT: 'ef81dee9e4e2fe084a0af1ea82da2f7b16e75f756db321618a119fa62b52550e'`。
 
-    Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即可。如果你在进行上述操作时遇到困难，亦可选择在环境设置中填写明文的用户名和密码：
+    Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即可。你也可选择直接在环境设置中填写明文的用户名和密码：
 
     -   `INITIUM_USERNAME`: 端传媒用户名 （邮箱）
     -   `INITIUM_PASSWORD`: 端传媒密码
@@ -612,6 +643,15 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `IG_PROXY`: Instagram 代理 URL。
 
     注意，暂不支持两步验证。
+
+-   BUPT
+
+    -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
+        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
+        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        3.  打开控制台，刷新
+        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        5.  找到请求头中的 Cookie
 
 -   BTBYR
 
@@ -661,6 +701,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
 
+-   网易云歌单及听歌排行
+
+    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
+
 -   Wordpress
 
     -   `WORDPRESS_CDN`: 用于中转 http 图片链接。可供考虑的服务见下表：
@@ -672,3 +716,17 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
         | <https://cors.netnr.workers.dev/>        | cloudflare   |
         | <https://netnr-proxy.openode.io/>        | digitalocean |
+
+-   E-Hentai
+    -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
+    -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
+    -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
+
+-   南方周末付费全文
+    -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文
+
+-   轻小说文库
+    -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
+
+-   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
+    -   `GOOGLE_FONTS_API_KEY`: API key
