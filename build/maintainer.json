@@ -835,6 +835,9 @@
     "/oncc/:language/:channel?": [
         "Fatpandac"
     ],
+    "/orcid/:id": [
+        "OrangeEd1t"
+    ],
     "/panewslab/column/:id": [
         "nczitzk"
     ],
