@@ -2938,6 +2938,12 @@ column 为 third 时可选的 category:
 
 <Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
 
+## 腾讯研究院
+
+### 最近更新
+
+<Route author="Fatpandac" example="/tisi/latest" path="/tisi/latest"/>
+
 ## 通識・現代中國
 
 ### 議題熱話
