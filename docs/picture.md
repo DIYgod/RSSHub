@@ -445,13 +445,9 @@ R18 显示
 
 ## 国家地理
 
-### 每日精选
-
-<Route author="OrangeEd1t" example="/natgeo/dailyselection" path="/natgeo/dailyselection"/>
-
 ### 每日一图
 
-<Route author="LogicJake & OrangeEd1t" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
+<Route author="LogicJake" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
 ## 煎蛋
 
