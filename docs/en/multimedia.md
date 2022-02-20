@@ -20,7 +20,7 @@ Full transcript support for better user experience.
 
 ### Weekly
 
-<Route author="nczitzk" example="/bandcamp/weekly" path="/bandcamp/weekly"/>
+<RouteEn author="nczitzk" example="/bandcamp/weekly" path="/bandcamp/weekly"/>
 
 ### Tag
 
