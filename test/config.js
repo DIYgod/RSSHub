@@ -3,7 +3,7 @@ afterEach(() => {
 });
 
 describe('config', () => {
-    it('bilibilib cookie', async () => {
+    it('bilibilib cookie', () => {
         process.env.BILIBILI_COOKIE_12 = 'cookie1';
         process.env.BILIBILI_COOKIE_34 = 'cookie2';
 
@@ -17,7 +17,7 @@ describe('config', () => {
         delete process.env.BILIBILI_COOKIE_34;
     });
 
-    it('twitter token', async () => {
+    it('twitter token', () => {
         process.env.TWITTER_TOKEN_12 = 'token1';
         process.env.TWITTER_TOKEN_34 = 'token2';
 
@@ -31,7 +31,7 @@ describe('config', () => {
         delete process.env.TWITTER_TOKEN_34;
     });
 
-    it('email config', async () => {
+    it('email config', () => {
         process.env['EMAIL_CONFIG_xx.qq.com'] = 'token1';
         process.env['EMAIL_CONFIG_oo.qq.com'] = 'token2';
 

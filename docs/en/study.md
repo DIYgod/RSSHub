@@ -24,7 +24,7 @@ pageClass: routes
 
 ### Daily English Sentence
 
-<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show（min = 1, max = 7, default = 1）', 'image style']">
+<RouteEn author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show (min = 1, max = 7, default = 1)', 'image style']">
 
 | `:img_type` | image style    |
 | ----------- | -------------- |
