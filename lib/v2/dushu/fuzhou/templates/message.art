@@ -1,0 +1,9 @@
+<text>地区：{{item.areaName}}</text>
+<br>
+<text>地点：{{item.address}}</text>
+<br>
+<text>开始时间： {{item.startTime}}</text>
+<br>
+<text>结束时间： {{item.endTime}}</text>
+<br>
+<img style="heigth:500px;width:500px" src="{{item.posterImg}}">
