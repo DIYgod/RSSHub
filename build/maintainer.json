@@ -1014,6 +1014,9 @@
     "/timednews/news/:type?": [
         "linbuxiao"
     ],
+    "/tisi/latest": [
+        "Fatpandac"
+    ],
     "/topys/:keyword?": [
         "nczitzk"
     ],
