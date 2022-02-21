@@ -1232,6 +1232,10 @@ Supported sub-sites:
 
 <Route author="crispgm Fatpandac" example="/nogizaka46/news" path="/nogizaka46/news" />
 
+### 乃木坂 46 博客
+
+<Route author="Kasper4649" example="/nogizaka46/blog" path="/nogizaka46/blog" />
+
 ### 欅坂 46 新闻
 
 <Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
