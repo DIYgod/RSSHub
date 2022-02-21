@@ -10,6 +10,73 @@ pageClass: routes
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
 
+## 18comic 禁漫天堂
+
+### 成人 A 漫
+
+<Route author="nczitzk" example="/18comic" path="/18comic/:category?/:time?/:order?/:keyword?" :paramsDesc="['分类，见下表，默认为 `all` 即全部', '时间范围，见下表，默认为 `a` 即全部', '排列顺序，见下表，默认为 `mr` 即最新', '关键字，见下表，默认为空']">
+
+分类
+
+| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 單本     |
+| --- | ------- | ------ | ------ | ------ | ----- | ------ |
+| all | another | doujin | hanman | meiman | short | single |
+
+时间范围
+
+| 全部 | 今天 | 这周 | 本月 |
+| -- | -- | -- | -- |
+| a  | t  | w  | m  |
+
+排列顺序
+
+| 最新 | 最多点阅 | 最多图片 | 最爱 |
+| -- | ---- | ---- | -- |
+| mr | mv   | mp   | tf |
+
+关键字（供参考）
+
+| YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
+| ---- | --- | --- | --- | -- | -- |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?:keyword?/:time?/:order?" :paramsDesc="['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']">
+
+::: tip 提示
+
+关键字必须超过两个字，这是来自网站的限制。
+
+:::
+
+</Route>
+
+### 专辑
+
+<Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" :paramsDesc="['专辑 id，可在专辑页 URL 中找到']">
+
+::: tip 提示
+
+专辑 id 不包括 URL 中标题的部分。
+
+:::
+
+</Route>
+
+### 文庫
+
+<Route author="nczitzk" example="/18comic/blogs" path="/18comic/blogs/:category?" :paramsDesc="['分类，见下表，默认为空即全部']">
+
+分类
+
+| 全部 | 紳夜食堂   | 遊戲文庫    | JG GAMES | 模型山下   |
+| -- | ------ | ------- | -------- | ------ |
+|    | dinner | raiders | jg       | figure |
+
+</Route>
+
 ## 1draw #深夜の真剣お絵描き 60 分一本勝負
 
 ### 投稿一览
@@ -64,8 +131,8 @@ pageClass: routes
 <Route author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="['板块类型']">
 
 | 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-| zx   | jd   | dh   | mh   | yx   | xs   | zrb    | hd   | yy   | ft   | qt   | xwg    | lrb    | gg   |
+| -- | -- | -- | -- | -- | -- | --- | -- | -- | -- | -- | --- | --- | -- |
+| zx | jd | dh | mh | yx | xs | zrb | hd | yy | ft | qt | xwg | lrb | gg |
 
 </Route>
 
@@ -123,9 +190,9 @@ pageClass: routes
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
-| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL |
-| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | -- |
-| home | comic | soft | maniax     | books      | pro        | girls | bl |
+| 同人   | 漫画    | 软件   | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女    | BL |
+| ---- | ----- | ---- | -------- | -------- | ----- | ----- | -- |
+| home | comic | soft | maniax   | books    | pro   | girls | bl |
 
 </Route>
 
@@ -160,9 +227,9 @@ pageClass: routes
 
 分类
 
-| 全部 | 手办  | 模型  |
-| ---- | ----- | ----- |
-| all  | hobby | model |
+| 全部  | 手办    | 模型    |
+| --- | ----- | ----- |
+| all | hobby | model |
 
 </Route>
 
@@ -170,9 +237,9 @@ pageClass: routes
 
 <Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '角色/作品 ID']">
 
-| 角色手办  | 作品手办 |
-| --------- | -------- |
-| charactar | works    |
+| 角色手办      | 作品手办  |
+| --------- | ----- |
+| charactar | works |
 
 </Route>
 
@@ -180,9 +247,57 @@ pageClass: routes
 
 <Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
 
-| 想买 | 预定     | 已入 | 关注 | 有过   |
-| ---- | -------- | ---- | ---- | ------ |
-| want | preorder | buy  | care | resell |
+| 想买   | 预定       | 已入  | 关注   | 有过     |
+| ---- | -------- | --- | ---- | ------ |
+| want | preorder | buy | care | resell |
+
+</Route>
+
+## iwara
+
+### 用户
+
+<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['用户昵称', 'type 默认为 video']" radar="1" rssbud="1">
+
+| type |   视频  |   图片  |
+| :--: | :---: | :---: |
+|  参数  | video | image |
+
+</Route>
+
+## Kemono
+
+### Posts
+
+<Route author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" :paramsDesc="['来源，见下表，默认为 Posts', '用户 Id，可在对应页 URL 中找到']">
+
+Sources
+
+| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+
+::: tip 提示
+
+当选择 `posts` 作为参数 **source** 的值时，参数 **id** 不生效。
+
+:::
+
+</Route>
+
+## Mox.moe
+
+### 首頁
+
+<Route author="nczitzk" example="/mox" path="/mox/:category?" :paramsDesc="['分类，可在对应分类页 URL 中找到']">
+
+::: tip 提示
+
+在首页将分类参数选择确定后跳转到的分类页面 URL 中，`/l/` 后的字段即为分类参数。
+
+如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 `/l/` 后的字段为 `CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`。最终获得路由为 [`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
+
+:::
 
 </Route>
 
@@ -198,7 +313,7 @@ pageClass: routes
 
 <Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" :paramsDesc="['模式']">
 
-| 连载   | 完结   |
+| 连载     | 完结     |
 | ------ | ------ |
 | serial | finish |
 
@@ -215,6 +330,12 @@ pageClass: routes
 ### [Naver](https://comic.naver.com)
 
 <Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
+
+## 包子漫画
+
+#### 订阅漫画
+
+<Route author="Fatpandac" example="/baozimh/comic/guowangpaiming-shiricaofu" path="/baozimh/comic/:name" :paramsDesc="['漫画名称，在漫画链接可以得到(`comic/` 后的那段)']"/>
 
 ## 嘀哩嘀哩 - dilidili
 
@@ -249,22 +370,28 @@ pageClass: routes
 语言
 
 | 中文 | 日文 | 韩文 |
-| ---- | ---- | ---- |
-| cn   | ja   | ko   |
+| -- | -- | -- |
+| cn | ja | ko |
 
 类型
 
-| 最新情报 | 连载   | 特辑       | 小说   | 漫画   | 新闻 |
-| -------- | ------ | ---------- | ------ | ------ | ---- |
-| index    | series | interviews | novels | comics | news |
+| 最新情报  | 连载     | 特辑         | 小说     | 漫画     | 新闻   |
+| ----- | ------ | ---------- | ------ | ------ | ---- |
+| index | series | interviews | novels | comics | news |
 
-| 音乐点评     | 游戏测评    | 同人作品感想 | 关于本站      |
-| ------------ | ----------- | ------------ | ------------- |
-| music_review | game_review | book_review  | where_are_you |
+| 音乐点评         | 游戏测评        | 同人作品感想      | 关于本站          |
+| ------------ | ----------- | ----------- | ------------- |
+| music_review | game_review | book_review | where_are_you |
 
 **注：** 最新情报包括后面所有类型的文章，内容较多，谨慎使用。
 
 </Route>
+
+## 咚漫
+
+### 漫画更新
+
+<Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
 
 ## 動畫瘋
 
@@ -276,12 +403,6 @@ pageClass: routes
 
 <Route author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" :paramsDesc="['動畫 sn']"/>
 
-## 咚漫
-
-### 漫画更新
-
-<Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
-
 ## 動漫狂
 
 ### 漫画更新
@@ -292,7 +413,7 @@ pageClass: routes
 
 ### 风之动漫
 
-<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id/:nums?" example="/fzdm/manhua/39/2" :paramsDesc="['漫画ID', '最新的n话, 默认为最新1话']" anticrawler="1"/>
+<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量']" anticrawler="1"/>
 
 ## 海猫吧
 
@@ -304,7 +425,25 @@ pageClass: routes
 
 ### 漫画更新
 
-<Route author="MegrezZhu" path="/manhuagui/comic/:id" example="/manhuagui/comic/22942" :paramsDesc="['漫画ID']" radar="1" rssbud="1"/>
+<Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+
+## 看漫画镜像站
+
+### 漫画更新
+
+<Route author="btdwv" path="/mhgui/comic/:id/:chapterCnt?" example="/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+
+## 看漫画台湾
+
+### 漫画更新
+
+<Route author="btdwv" path="/twmanhuagui/comic/:id/:chapterCnt?" example="/twmanhuagui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+
+## 拷贝漫画
+
+### 漫画更新
+
+<Route author="btdwv marvolo666 yan12125" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/zaiyishijiemigongkaihougong/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 漫画 DB
 
@@ -345,6 +484,28 @@ pageClass: routes
 ### 鼠绘漫画
 
 <Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
+
+## 腾讯动漫
+
+### 排行榜
+
+<Route author="nczitzk" example="/qq/ac/rank" path="/qq/ac/rank/:type?/:time?" :paramsDesc="['分类，见下表，默认为月票榜', '时间，`cur` 为当周、`prev` 为上周']" radar="1" rssbud="1">
+
+| 月票榜 | 飙升榜  | 新作榜 | 畅销榜 | TOP100 | 男生榜  | 女生榜    |
+| --- | ---- | --- | --- | ------ | ---- | ------ |
+| mt  | rise | new | pay | top    | male | female |
+
+::: tip 提示
+
+`time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。
+
+:::
+
+</Route>
+
+### 漫画
+
+<Route author="nczitzk" example="/qq/ac/comic/531490" path="/qq/ac/comic/:id" :paramsDesc="['编号，可在对应页 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 忧郁的 loli
 
