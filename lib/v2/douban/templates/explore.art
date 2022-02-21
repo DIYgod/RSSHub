@@ -1,0 +1,7 @@
+作者：{{author}}
+<br>
+描述：{{desc}}
+<br>
+{{ if itemPic }}
+<img src={{ itemPic }}>
+{{ /if }}

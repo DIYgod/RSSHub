@@ -1,0 +1,18 @@
+name: Ignore dependabot on forks
+
+on: pull_request
+
+jobs:
+  dependabot-fork:
+    if: github.repository_owner != 'DIYgod' && github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    name: Ignore dependabot on forks
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Comment Dependabot PR
+        uses: thollander/actions-comment-pull-request@v1
+        with:
+          message: '@dependabot ignore this dependency'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
