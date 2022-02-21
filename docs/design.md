@@ -182,33 +182,6 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
 
-## Vimeo
-
-### 用户页面
-
-<Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat" :paramsDesc="['用户名或者 uid，用户名可从地址栏获得，如 [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply) 中为 `filmsupply`', '分类根据不同的用户页面获得，例子中有`Docmentary`，`Narrative`，`Drama`等。填入 `picks` 为和首页一样的推荐排序，推荐排序下没有发布时间信息']" radar="1">
-
-::: tip 请注意带有斜杠的的标签名
-
-如果分类名带有斜杠符号的如 `3D/CG` 时，必须把斜杠`/`转成 `|` 
-
-:::
-
-
-</Route>
-
-### Channel
-
-<Route author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" :paramsDesc="['channel 名可从 url 获得,如 [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) 中的 `bestoftheyear`']" radar="1">
-
-</Route>
-
-### Category
-
-<Route author="MisteryMonster" example="/vimeo/category/personal/stories/staffpicks" path="/vimeo/category/:category/:subcategory?/:staffpicks?" :paramsDesc="['主分类名可从 url 获得，如 [https://vimeo.com/categories/personal/stories/videos/](https://vimeo.com/categories/personal/stories/videos/) 中的 `personal`', '子分类名可从 url 获得,如 上面例子中的 `stories`，具体的子分类可以在网页中查询。', '填入 `staffpicks` 则按 staffpicks 排序']" radar="1">
-
-</Route>
-
 ## 优设网
 
 ### 设计专题
