@@ -885,7 +885,13 @@ pageClass: routes
 
 ### 滚动新闻
 
-<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>
+<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" :paramsDesc="['分类，见下表，默认为 NBA']">
+
+| NBA | 足球    | 电竞       | 综合     |
+| --- | ----- | -------- | ------ |
+| nba | zuqiu | dianjing | zonghe |
+
+</Route>
 
 ## 中国灵异网
 
