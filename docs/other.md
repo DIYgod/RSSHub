@@ -359,6 +359,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
 
+## 澳門特別行政區政府各公共部門獎助貸學金服務平台
+
+官方網址：<https://www.bolsas.gov.mo/>
+
+<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
+
+| 中文 | 葡文 |
+| -- | -- |
+| ch | pt |
+
+</Route>
+
 ## 百度搜索风云榜
 
 ### 榜单
@@ -1067,15 +1079,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-### 澳門特別行政區政府各公共部門獎助貸學金服務平台
-
-官方網址：<https://www.bolsas.gov.mo/>
-
-<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
-
-| 中文 | 葡文 |
-| -- | -- |
-| ch | pt |
-
-</Route>
