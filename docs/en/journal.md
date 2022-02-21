@@ -243,7 +243,7 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 #### Journal
 
-<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']"/>
+<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
 
 ## Proceedings of The National Academy of Sciences (PNAS)
 
