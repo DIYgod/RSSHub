@@ -841,6 +841,9 @@
     "/orcid/:id": [
         "OrangeEd1t"
     ],
+    "/oup/:name": [
+        "Fatpandac"
+    ],
     "/panewslab/column/:id": [
         "nczitzk"
     ],
