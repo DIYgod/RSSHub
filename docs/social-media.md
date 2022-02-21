@@ -695,6 +695,32 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Where On Earth ID. 默认 woeid=1 (World Wide)']" radar="1" rssbud="1"/>
 
+## Vimeo
+
+### 用户页面
+
+<Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat" :paramsDesc="['用户名或者 uid，用户名可从地址栏获得，如 [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply) 中为 `filmsupply`', '分类根据不同的用户页面获得，例子中有`Docmentary`，`Narrative`，`Drama`等。填入 `picks` 为和首页一样的推荐排序，推荐排序下没有发布时间信息']" radar="1">
+
+::: tip 请注意带有斜杠的的标签名
+
+如果分类名带有斜杠符号的如 `3D/CG` 时，必须把斜杠`/`转成 `|`
+
+:::
+
+</Route>
+
+### 频道页面
+
+<Route author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" :paramsDesc="['channel 名可从 url 获得,如 [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) 中的 `bestoftheyear`']" radar="1">
+
+</Route>
+
+### 分类页面
+
+<Route author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" :paramsDesc="['主分类名可从 url 获得，如 [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) 中的 `documentary`。', '填入 `staffpicks` 则按 staffpicks 排序']" radar="1">
+
+</Route>
+
 ## VueVlog
 
 ### 用户

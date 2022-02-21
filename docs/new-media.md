@@ -1232,6 +1232,10 @@ Supported sub-sites:
 
 <Route author="crispgm Fatpandac" example="/nogizaka46/news" path="/nogizaka46/news" />
 
+### 乃木坂 46 博客
+
+<Route author="Kasper4649" example="/nogizaka46/blog" path="/nogizaka46/blog" />
+
 ### 欅坂 46 新闻
 
 <Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
@@ -2983,6 +2987,12 @@ column 为 third 时可选的 category:
 
 <Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
 
+## 腾讯研究院
+
+### 最近更新
+
+<Route author="Fatpandac" example="/tisi/latest" path="/tisi/latest"/>
+
 ## 通識・現代中國
 
 ### 議題熱話
@@ -3638,6 +3648,18 @@ column 为 third 时可选的 category:
 ### 评论与特写
 
 <Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
+
+## 中国收入分配研究院
+
+### 分类
+
+<Route author="nczitzk" example="/ciidbnu" path="/ciidbnu/:id?" :paramsDesc="['分类 id，可在分类页地址栏 URL 中找到']">
+
+| 社会动态 | 院内新闻 | 学术观点 | 文献书籍 | 工作论文 | 专题讨论 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 1    | 5    | 3    | 4    | 6    | 8    |
+
+</Route>
 
 ## 中国橡胶网
 

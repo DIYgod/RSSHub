@@ -1977,6 +1977,26 @@ type 列表：
 
 ## 四川农业大学
 
+### 动物科技学院
+
+<Route author="nczitzk" example="/sicau/dky/tzgg" path="/sicau/dky/:category?" :paramsDesc="['分类，见下表，默认为通知公告']">
+
+| 通知公告 | 学院动态 | 教学管理 | 动科大讲堂 | 就业信息 |
+| ---- | ---- | ---- | ----- | ---- |
+| tzgg | xydt | jxgl | dkdjt | zpxx |
+
+</Route>
+
+### 研究生院
+
+<Route author="nczitzk" example="/sicau/yan/xwgg" path="/sicau/yan/:category?" :paramsDesc="['分类，见下表，默认为新闻公告']">
+
+| 新闻公告 | 学术报告 |
+| ---- | ---- |
+| xwgg | xsbg |
+
+</Route>
+
 ### 招生就业
 
 <Route author="nczitzk" example="/sicau/zsjy/bkszs" path="/sicau/zsjy/:category?" :paramsDesc="['分类，见下表，默认为本科生招生']">
