@@ -122,7 +122,7 @@
     "query-string": "7.1.1",
     "require-all": "3.0.0",
     "rss-parser": "3.12.0",
-    "showdown": "1.9.1",
+    "showdown": "2.0.0",
     "simplecc-wasm": "0.1.4",
     "socks-proxy-agent": "6.1.1",
     "string-similarity": "4.0.4",
