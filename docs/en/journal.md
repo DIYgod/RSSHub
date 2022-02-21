@@ -237,6 +237,14 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 <RouteEn author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
 
+## Oxford University Press
+
+### Oxford Academic
+
+#### Journal
+
+<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
+
 ## Proceedings of The National Academy of Sciences (PNAS)
 
 ### Latest Articles - Articles by Topic
