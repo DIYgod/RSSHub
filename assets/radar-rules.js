@@ -40,6 +40,7 @@
             { title: '用户追番列表', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/bangumi/:uid' },
         ],
         manga: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/social-media.html#bilibili-man-hua-geng-xin', source: '/detail/:comicid', target: '/bilibili/manga/update/:comicid' }],
+        live: [{ title: '直播开播', docs: 'https://docs.rsshub.app/live.html#bi-li-bi-li-zhi-bo-zhi-bo-kai-bo', source: ['/:roomID'], target: '/bilibili/live/room/:roomID' }],
     },
     'weibo.com': {
         _name: '微博',
