@@ -348,6 +348,12 @@
     "/fisher-spb/news": [
         "denis-ya"
     ],
+    "/flyert/preferential": [
+        "howel52"
+    ],
+    "/flyert/creditcard/:bank": [
+        "nicolaszf"
+    ],
     "/focustaiwan/:category?": [
         "nczitzk"
     ],
@@ -2140,10 +2146,6 @@
     "/sixthtone/news": [],
     "/aiyanxishe/:id/:sort?": [],
     "/huodongxing/explore": [],
-    "/flyert/preferential": [],
-    "/flyert/creditcard/:bank": [],
-    "/flyertea/preferential": [],
-    "/flyertea/creditcard/:bank": [],
     "/radio/:channelname/:name": [],
     "/8btc/:authorid": [],
     "/8btc/news/flash": [],
