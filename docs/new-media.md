@@ -2342,6 +2342,8 @@ column 为 third 时可选的 category:
 
 [**甲醇热点聚焦**](https://list.oilchem.net/140/18263) <https://list.oilchem.net/140/18263> 中，类别 id 为 `list`，分类 id 为 `140`，子分类 id 为 `18263`，对应路由即为 [`/oilchem/list/140/18263`](https://rsshub.app/oilchem/list/140/18263)
 
+</Route>
+
 ## 律动
 
 ### 新闻快讯
