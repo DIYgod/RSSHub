@@ -287,6 +287,12 @@
     "/douban/topic/:id/:sort?": [
         "LogicJake"
     ],
+    "/dtcj/datahero/:category?": [
+        "nczitzk"
+    ],
+    "/dtcj/datainsight/:id?": [
+        "nczitzk"
+    ],
     "/dushu/fuzhou": [
         "Fatpandac"
     ],
@@ -2982,7 +2988,6 @@
     "/jlbtc/kyc/:category?": [],
     "/jlbtc/jwc/:id?": [],
     "/jlbtc/:category?": [],
-    "/dtcj/datahero/:category?": [],
     "/kenshin/:category?/:type?": [],
     "/av01/actor/:name/:type?": [],
     "/av01/tag/:name/:type?": [],
