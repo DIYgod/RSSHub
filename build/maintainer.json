@@ -29,6 +29,12 @@
     "/50forum/": [
         "sddiky"
     ],
+    "/52hrtt/symposium/:id?/:classId?": [
+        "nczitzk"
+    ],
+    "/52hrtt/:area?/:type?": [
+        "nczitzk"
+    ],
     "/8world/:category?": [
         "nczitzk"
     ],
