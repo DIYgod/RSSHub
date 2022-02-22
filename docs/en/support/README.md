@@ -12,6 +12,7 @@ You can support RSSHub via donations.
 
 Recurring donors will be rewarded via express issue response, or even have your name displayed on our GitHub page and website.
 
+-   Become a Sponser on [GitHub](https://github.com/sponsors/DIYgod)
 -   Become a Sponser on [Patreon](https://www.patreon.com/DIYgod)
 -   Become a Sponser on [爱发电](https://afdian.net/@diygod)
 -   Contact us directly: i@diygod.me
