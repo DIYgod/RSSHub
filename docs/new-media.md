@@ -44,26 +44,6 @@ pageClass: routes
 
 <Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户ID']" />
 
-## 8 视界
-
-### 分类
-
-<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类，见下表，默认为即时']">
-
-| 即时       | 新加坡       | 东南亚            | 中港台           | 国际    | 财经      | 体育     |
-| -------- | --------- | -------------- | ------------- | ----- | ------- | ------ |
-| realtime | singapore | southeast-asia | greater-china | world | finance | sports |
-
-</Route>
-
-### 主题文章
-
-<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题ID']" />
-
-### 搜索文章
-
-<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
-
 ## 52hrtt 华人头条
 
 ### 新闻
@@ -91,6 +71,26 @@ pageClass: routes
 :::
 
 </Route>
+
+## 8 视界
+
+### 分类
+
+<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类，见下表，默认为即时']">
+
+| 即时       | 新加坡       | 东南亚            | 中港台           | 国际    | 财经      | 体育     |
+| -------- | --------- | -------------- | ------------- | ----- | ------- | ------ |
+| realtime | singapore | southeast-asia | greater-china | world | finance | sports |
+
+</Route>
+
+### 主题文章
+
+<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题ID']" />
+
+### 搜索文章
+
+<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 9To5
 
