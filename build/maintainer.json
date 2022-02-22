@@ -326,11 +326,17 @@
     "/e-hentai/search/:keyword?/:needTorrents?/:needImages?": [
         "nczitzk"
     ],
+    "/eastday/24/:category?": [
+        "nczitzk"
+    ],
     "/eastday/find": [
         "nczitzk"
     ],
     "/eastday/portrait": [
         "nczitzk"
+    ],
+    "/eastday/sh": [
+        "saury"
     ],
     "/ecust-jxjy/ecust-jxjy/news": [
         "jialinghui"
@@ -2171,7 +2177,6 @@
     "/005tv/zx/latest": [],
     "/polimi/news/:language?": [],
     "/dekudeals/:type": [],
-    "/eastday/sh": [],
     "/metacritic/release/:platform/:type/:sort?": [],
     "/kkj/news": [],
     "/outagereport/:name/:count?": [],
