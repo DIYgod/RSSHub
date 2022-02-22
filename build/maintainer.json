@@ -874,6 +874,9 @@
     "/odaily/:id?": [
         "nczitzk"
     ],
+    "/oilchem/:type?/:category?/:subCategory?": [
+        "nczitzk"
+    ],
     "/oncc/:language/:channel?": [
         "Fatpandac"
     ],
