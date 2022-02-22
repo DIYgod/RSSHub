@@ -1238,6 +1238,18 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
 
+## 秋爸日字
+
+### 分类
+
+<Route author="nczitzk" example="/qq88" path="/qq88/:category?" :paramsDesc="['分类 id，见下表，默认为首页']">
+
+| 首页 | オトナの土ドラ | 日剧 | 日剧 SP |
+| ---- | -------------- | ---- | ------- |
+|      | 10             | 5    | 11      |
+
+</Route>
+
 ## 人人影视
 
 ### 评测推荐
