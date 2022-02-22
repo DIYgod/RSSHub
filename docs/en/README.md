@@ -25,11 +25,11 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 
 ### Special Sponsors
 
-<a style="margin-right: 50px;" href="https://rss3.io/" target="_blank"><img alt="RSS3" height="60px" src="https://i.imgur.com/v7TF0jp.png"></a><a href="https://sa.net/" target="_blank"><img alt="Riven Cloud" height="60px" src="https://i.imgur.com/3rM8nWI.png"></a>
+<a style="margin-right: 50px;" href="https://rss3.io/" target="_blank"><img alt="RSS3" height="60px" src="https://i.imgur.com/v7TF0jp.png"></a>
 
 ### Sponsors
 
-[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://www.shaoyaoju.org/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy) . [feeds.pub](https://feeds.pub)
+[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://wineso.me/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy) . [feeds.pub](https://feeds.pub)
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/en/support/)
 
