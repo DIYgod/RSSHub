@@ -204,11 +204,6 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
-## 上海教育考试院自学考试通知公告
-
-<Route author="oyydd" example="/self-study/shanghai" path="/self-study/shanghai" />
-
-
 ## 杭州市国家普通话测试网报信息
 
 ### 考试信息
@@ -282,6 +277,18 @@ path="/ctfhub/upcoming/:limit?"
 | 13   | 22    | 28   | 4    | 19   | 25       | 37     | 49     | 52   |
 
 </Route>
+
+## 上海市教育考试院
+
+### 消息速递
+
+官方网址：<http://www.shmeea.edu.cn>
+
+<Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
+
+### 自学考试通知公告
+
+<Route author="h2ws" example="/shmeea/self-study" path="/shmeea/self-study" radar="1" rssbud="1"/>
 
 ## 思维导图社区
 
