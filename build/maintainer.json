@@ -965,6 +965,9 @@
     "/shmeea/": [
         "jialinghui"
     ],
+    "/shmeea/self-study": [
+        "h2ws"
+    ],
     "/shopback/:store": [
         "nczitzk"
     ],
