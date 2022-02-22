@@ -1197,6 +1197,9 @@
     "/whoscall/categories/:category?": [
         "nczitzk"
     ],
+    "/wsj/:lang/:category?": [
+        "oppilate"
+    ],
     "/wsyu/news/:type?": [
         "Derekmini"
     ],
@@ -2832,7 +2835,6 @@
     "/qnap/release-notes/:id": [],
     "/liquipedia/dota2/matches/:id": [],
     "/gov/harbin/kjj": [],
-    "/wsj/:lang/:category?": [],
     "/chinafile/:category?": [],
     "/daodu/:caty?": [],
     "/grandchallenge/user/:id": [],
