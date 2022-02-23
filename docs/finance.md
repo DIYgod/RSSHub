@@ -12,6 +12,16 @@ pageClass: routes
 
 ## DT 财经
 
+### 数据洞察
+
+<Route author="nczitzk" example="/dtcj/datainsight" path="/dtcj/datainsight/:id?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 城数 | NEXT 情报局 | 专业精选 |
+| -- | -------- | ---- |
+| 3  | 1        | 4    |
+
+</Route>
+
 ### 数据侠专栏
 
 <Route author="nczitzk" example="/dtcj/datahero" path="/dtcj/datahero/:category?" :paramsDesc="['分类，见下表，默认为全部']">

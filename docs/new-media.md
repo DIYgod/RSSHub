@@ -44,6 +44,34 @@ pageClass: routes
 
 <Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户ID']" />
 
+## 52hrtt 华人头条
+
+### 新闻
+
+<Route author="nczitzk" example="/52hrtt/global" path="/52hrtt/:area?/:type?" :paramsDesc="['地区，默认为全球', '分类，默认为新闻']">
+
+地区和分类皆可在浏览器地址栏中找到，下面是一个例子。
+
+访问华人头条全球站的国际分类，会跳转到 <https://www.52hrtt.com/global/n/w?infoTypeId=A1459145516533>。其中 `global` 即为 **全球** 对应的地区代码，`A1459145516533` 即为 **国际** 对应的分类代码。
+
+</Route>
+
+### 专题
+
+<Route author="nczitzk" example="/52hrtt/symposium/F1626082387819" path="/52hrtt/symposium/:id?/:classId?" :paramsDesc="['专题 id', '子分类 id']">
+
+专题 id 和 子分类 id 皆可在浏览器地址栏中找到，下面是一个例子。
+
+访问 “邱毅看平潭” 专题，会跳转到 <https://www.52hrtt.com/global/n/w/symposium/F1626082387819>。其中 `F1626082387819` 即为 **专题 id** 对应的地区代码。
+
+::: tip 提示
+
+更多的专题可以点击 [这里](https://www.52hrtt.com/global/n/w/symposium)
+
+:::
+
+</Route>
+
 ## 8 视界
 
 ### 分类
@@ -2299,6 +2327,22 @@ column 为 third 时可选的 category:
 ### 搜索关键字
 
 <Route author="nczitzk" example="/6park/chan1/keywords/都市" path="/6park/:id/keywords/:keyword?" :paramsDesc="['分站，见上表', '关键字']"/>
+
+## 隆众资讯
+
+### 资讯
+
+<Route author="nczitzk" example="/oilchem/list/140/18263" path="/oilchem/:type?/:category?/:subCategory?" :paramsDesc="['类别 id，可在对应类别页中找到，默认为首页', '分类 id，可在对应分类页中找到', '子分类 id，可在对应分类页中找到']">
+
+以下是几个例子：
+
+[**化工**](https://chem.oilchem.net) <https://chem.oilchem.net> 中，类别 id 为 `chem`，分类 id 为空，子分类 id 为空，对应路由即为 [`/oilchem/chem`](https://rsshub.app/oilchem/list/140/18263)
+
+[**甲醇**](https://chem.oilchem.net/chemical/methanol.shtml) 的相关资讯有两个页面入口：其一 <https://chem.oilchem.net/chemical/methanol.shtml> 中，类别 id 为 `chem`，分类 id 为 `chemical`，子分类 id 为 `methanol`，对应路由即为 [`/oilchem/chem/chemical/methanol`](https://rsshub.app/oilchem/chem/chemical/methanol) 或其二 <https://list.oilchem.net/140> 中，类别 id 为 `list`，分类 id 为 `140`，子分类 id 为空，对应路由即为 [`/oilchem/list/140`](https://rsshub.app/oilchem/list/140)；
+
+[**甲醇热点聚焦**](https://list.oilchem.net/140/18263) <https://list.oilchem.net/140/18263> 中，类别 id 为 `list`，分类 id 为 `140`，子分类 id 为 `18263`，对应路由即为 [`/oilchem/list/140/18263`](https://rsshub.app/oilchem/list/140/18263)
+
+</Route>
 
 ## 律动
 
