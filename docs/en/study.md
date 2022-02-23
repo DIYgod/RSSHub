@@ -24,7 +24,7 @@ pageClass: routes
 
 ### Daily English Sentence
 
-<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show（min = 1, max = 7, default = 1）', 'image style']">
+<RouteEn author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show (min = 1, max = 7, default = 1)', 'image style']">
 
 | `:img_type` | image style    |
 | ----------- | -------------- |
@@ -47,6 +47,12 @@ pageClass: routes
 | subject  | subject=生物    | string / undefined                     |
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |
+
+## ORCID
+
+### Works List
+
+<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
 
 ## X-MOL
 
