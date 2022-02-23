@@ -54,6 +54,10 @@ pageClass: routes
 
 <Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']"/>
 
+### 苹果邮件
+
+见 [#中国邮政速递物流](/other.html#zhong-guo-you-zheng-su-di-wu-liu)
+
 ### App Store/Mac App Store
 
 见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
@@ -1054,6 +1058,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 新闻
 
 <Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" rssbud="1"/>
+
+### 苹果邮件
+
+<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" :paramsDesc="['苹果邮件编号']"/>
 
 ## 自如
 
