@@ -483,6 +483,18 @@ This route provides a flexible plan with full text content to subscribe specific
 
 </RouteEn>
 
+## NL Times
+
+### News
+
+<RouteEn author="Hivol" example="/nltimes/news/top-stories" path="/nltimes/news/:category?" :paramsDesc="['category']" >
+
+| Top Stories (default) | Health | Crime | Politics | Business | Tech | Culture | Sports | Weird | 1-1-2 |
+| --------------------- | ------ | ----- | -------- | -------- | ---- | ------- | ------ | ----- | ----- |
+| top-stories           | health | crime | politics | business | tech | culture | sports | weird | 1-1-2 |
+
+</RouteEn>
+
 ## Oak Ridge National Laboratory
 
 ### News
