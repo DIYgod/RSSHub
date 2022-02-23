@@ -393,6 +393,16 @@ Provides a better reading experience (full text articles) over the official one.
 
 ## KBS
 
+### News
+
+<RouteEn author="nczitzk" example="/kbs/news" path="/kbs/news/:category?/:language?" :paramsDesc="['Category, can be found in Url as `id`, all by default', 'Language, see below, e as English by default']">
+
+| 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
+| ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
+| k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |
+
+</RouteEn>
+
 ### Today
 
 <RouteEn author="nczitzk" example="/kbs/today" path="/kbs/today/:language?" :paramsDesc="['Language, see below, e as English by default']">
@@ -470,6 +480,18 @@ Edition
 <RouteEn author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['topic']">
 
 This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](http://nautil.us) and click `Topics` to acquire whole topic list.
+
+</RouteEn>
+
+## NL Times
+
+### News
+
+<RouteEn author="Hivol" example="/nltimes/news/top-stories" path="/nltimes/news/:category?" :paramsDesc="['category']" >
+
+| Top Stories (default) | Health | Crime | Politics | Business | Tech | Culture | Sports | Weird | 1-1-2 |
+| --------------------- | ------ | ----- | -------- | -------- | ---- | ------- | ------ | ----- | ----- |
+| top-stories           | health | crime | politics | business | tech | culture | sports | weird | 1-1-2 |
 
 </RouteEn>
 
@@ -647,33 +669,3 @@ Provides all of the Thrillist articles with the specified tag.
 ### Archive
 
 <RouteEn author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
-
-## World Health Organization | WHO
-
-### News
-
-<RouteEn author="nczitzk" example="/who/news" path="/who/news/:language?" :paramsDesc="['Language, see below, English by default']">
-
-Language
-
-| English | العربية | 中文 | Français | Русский | Español | Português |
-| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
-| en      | ar      | zh   | fr       | ru      | es      | pt        |
-
-</RouteEn>
-
-### Newsroom
-
-<RouteEn author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
-
-### Speeches
-
-<RouteEn author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" :paramsDesc="['Language, see below, English by default']">
-
-Language
-
-| English | العربية | 中文 | Français | Русский | Español | Português |
-| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
-| en      | ar      | zh   | fr       | ru      | es      | pt        |
-
-</RouteEn>

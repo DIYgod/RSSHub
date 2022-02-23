@@ -314,6 +314,50 @@ pageClass: routes
 
 <Route author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" :paramsDesc="['年份，默认为当前年份']"/>
 
+## 世界卫生组织 WHO
+
+### 新闻稿
+
+<Route author="nczitzk" example="/who/news" path="/who/news/:language?" :paramsDesc="['语言，见下表，默认为英语']">
+
+语言
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | -- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh | fr       | ru      | es      | pt        |
+
+</Route>
+
+### 媒体中心
+
+<Route author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" :paramsDesc="['分类，见下表，默认为特写故事', '语言，见下表，默认为英语']">
+
+分类
+
+| 特写故事            | 评论           |
+| --------------- | ------------ |
+| feature-stories | commentaries |
+
+语言
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | -- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh | fr       | ru      | es      | pt        |
+
+</Route>
+
+### 总干事的讲话
+
+<Route author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" :paramsDesc="['语言，见下表，默认为英语']">
+
+语言
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | -- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh | fr       | ru      | es      | pt        |
+
+</Route>
+
 ## 苏州市人民政府
 
 ### 政府新闻
