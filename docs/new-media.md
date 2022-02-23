@@ -829,6 +829,8 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## NL Times
 
+### News
+
 <Route author="Hivol" example="/nltimes/news/top-stories" path="/nltimes/news/:category?" :paramsDesc="['分类名']" >
 
 | Top Stories (默认) | Health | Crime | Politics | Business | Tech | Culture | Sports | Weird | 1-1-2 |
