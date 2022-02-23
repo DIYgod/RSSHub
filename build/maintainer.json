@@ -775,6 +775,14 @@
         "nczitzk",
         "ma6254"
     ],
+    "/lofter/tag/:name?/:type?": [
+        "hoilc",
+        "nczitzk"
+    ],
+    "/lofter/user/:name?": [
+        "hondajojo",
+        "nczitzk"
+    ],
     "/logonews/work/tags/:tag": [
         "nczitzk"
     ],
@@ -2374,8 +2382,6 @@
     "/taptap/topic/:id/:label?": [],
     "/taptap/changelog/:id": [],
     "/taptap/review/:id/:order?": [],
-    "/lofter/tag/:name?/:type?": [],
-    "/lofter/user/:username": [],
     "/watchface/:watch_type?/:list_type?": [],
     "/cnu/selected": [],
     "/cnu/discovery/:type?/:category?": [],
