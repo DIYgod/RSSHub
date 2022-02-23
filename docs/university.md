@@ -1537,6 +1537,28 @@ type 列表：
 
 </Route>
 
+## 南京师范大学
+
+### 教务通知
+
+<Route author="Shujakuinkuraudo" example="/njnu/jwc/xstz" path="/njnu/jwc/:type" :paramsDesc="['分类名']">
+
+| 教师通知 | 新闻动态 | 学生通知 |
+| ---- | ---- | ---- |
+| jstz | xwdt | xstz |
+
+</Route>
+
+### 计算机与电子信息学院 - 人工智能学院
+
+<Route author="Shujakuinkuraudo" example="/njnu/ceai/xszx" path="/njnu/ceai/:type" :paramsDesc="['分类名']">
+
+| 学院公告 | 学院新闻 | 学生资讯 |
+| ---- | ---- | ---- |
+| xygg | xyxw | xszx |
+
+</Route>
+
 ## 南京信息工程大学
 
 ::: tip 提示
