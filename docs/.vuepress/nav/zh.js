@@ -15,6 +15,10 @@ module.exports = [
                 text: '详细规范',
                 items: [
                     {
+                        text: '路由规范',
+                        link: '/joinus/script-standard',
+                    },
+                    {
                         text: '日期处理',
                         link: '/joinus/pub-date',
                     },
