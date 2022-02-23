@@ -14,7 +14,6 @@ jobs:
           cache: 'yarn'
       - run: yarn
       - name: Lint
-        run: |
-          npm run lint
-        env:
-          CI: true
+        uses: reviewdog/action-eslint@v1
+        with:
+           github_token: ${{ secrets.GITHUB_TOKEN }}
