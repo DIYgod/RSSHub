@@ -647,33 +647,3 @@ Provides all of the Thrillist articles with the specified tag.
 ### Archive
 
 <RouteEn author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
-
-## World Health Organization | WHO
-
-### News
-
-<RouteEn author="nczitzk" example="/who/news" path="/who/news/:language?" :paramsDesc="['Language, see below, English by default']">
-
-Language
-
-| English | العربية | 中文 | Français | Русский | Español | Português |
-| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
-| en      | ar      | zh   | fr       | ru      | es      | pt        |
-
-</RouteEn>
-
-### Newsroom
-
-<RouteEn author="LogicJake" example="/who/news-room/feature-stories" path="/who/news-room/:type" :paramsDesc="['类别，可在 URL 中找到']"/>
-
-### Speeches
-
-<RouteEn author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" :paramsDesc="['Language, see below, English by default']">
-
-Language
-
-| English | العربية | 中文 | Français | Русский | Español | Português |
-| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
-| en      | ar      | zh   | fr       | ru      | es      | pt        |
-
-</RouteEn>
