@@ -6,14 +6,26 @@ on:
       - master
     paths:
       - 'lib/**'
-      - '.github/workflows/**'
+      - '.github/workflows/docker-release.yml'
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
 
 jobs:
+  check-env:
+    runs-on: ubuntu-latest
+    outputs:
+      check-docker: ${{ steps.check-docker.outputs.defined }}
+    steps:
+      - id: check-docker
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        if: ${{ env.DOCKER_USERNAME != '' }}
+        run: echo "::set-output name=defined::true"
   release:
     runs-on: ubuntu-latest
+    needs: check-env
+    if: needs.check-env.outputs.check-docker == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -48,5 +60,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
-          cache-from: type=gha,scope=${{ github.workflow }}
-          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+          cache-from: type=gha,scope=docker-release
+          cache-to: type=gha,mode=max,scope=docker-release

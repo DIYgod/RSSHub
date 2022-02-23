@@ -3,20 +3,18 @@ name: test
 on: [push, pull_request]
 
 jobs:
-  build:
+  jest:
     runs-on: ubuntu-latest
-
     services:
       redis:
         image: redis
         ports:
           - 6379/tcp
         options: --entrypoint redis-server
-
     strategy:
       matrix:
-        node-version: ['14.x']
-
+        node-version: ['14', '16']
+    name: Jest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -27,8 +25,23 @@ jobs:
       - run: npm run jest
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
-      - run: npm run docs:build
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2.1.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  docs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['14', '16']
+    name: Build docs on Node ${{ matrix.node-version }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn
+      - name: Build docs
+        run: npm run docs:build

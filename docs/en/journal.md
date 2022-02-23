@@ -41,6 +41,10 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 <RouteEn author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
 
+### Journals
+
+<RouteEn author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" :paramsDesc="['Journals, can be found in URL']"/>
+
 ## Cell Journal
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
@@ -232,6 +236,14 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 ### Research Highlight
 
 <RouteEn author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
+
+## Oxford University Press
+
+### Oxford Academic
+
+#### Journal
+
+<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
 
 ## Proceedings of The National Academy of Sciences (PNAS)
 

@@ -13,6 +13,7 @@ on:
   # Please, always create a pull request instead of push to master.
 jobs:
   test:
+    name: Docker build & tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,8 +39,10 @@ jobs:
           load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ github.workflow }}
-          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+          cache-from: |
+            type=gha,scope=docker-test
+            type=gha,scope=docker-release
+          cache-to: type=gha,mode=max,scope=docker-test
 
       - name: Run dockerfile
         run: |

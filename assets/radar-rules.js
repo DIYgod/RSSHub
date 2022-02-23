@@ -13,34 +13,6 @@
     },
     'https://www.icac.org.hk': { _name: '廉政公署', '.': [{ title: '新闻公布', docs: 'https://docs.rsshub.app/government.html#xiang-gang-lian-zheng-gong-shu', source: ['/:lang/press/index.html'], target: '/icac/news/:lang' }] },
     'trow.cc': { _name: 'The Ring of Wonder', '.': [{ title: '首页更新', docs: 'https://docs.rsshub.app/bbs.html#the-ring-of-wonder', source: ['/'], target: '/portal' }] },
-    'bilibili.com': {
-        _name: 'bilibili',
-        www: [
-            { title: '分区视频', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: ['/v/*tpath', '/documentary', '/movie', '/tv'] },
-            { title: '视频评论', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/video/:aid', target: (params) => `/bilibili/video/reply/${params.aid.replace('av', '')}` },
-            {
-                title: '视频弹幕',
-                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
-                source: '/video/:aid',
-                target: (params, url) => {
-                    const pid = new URL(url).searchParams.get('p');
-                    return `/bilibili/video/danmaku/${params.aid.replace('av', '')}/${pid ? pid : 1}`;
-                },
-            },
-            { title: '番剧', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/bangumi/media/:bid', target: (params) => `/bilibili/bangumi/media/${params.bid.replace('md', '')}` },
-        ],
-        space: [
-            { title: 'UP 主动态', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/dynamic/:uid' },
-            { title: 'UP 主投稿', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/video/:uid' },
-            { title: 'UP 主专栏', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/article/:uid' },
-            { title: 'UP 主默认收藏夹', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/fav/:uid' },
-            { title: 'UP 主投币视频', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/coin/:uid' },
-            { title: 'UP 主粉丝', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/followers/:uid' },
-            { title: 'UP 主关注用户', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/followings/:uid' },
-            { title: '用户追番列表', docs: 'https://docs.rsshub.app/social-media.html#bilibili', source: '/:uid', target: '/bilibili/user/bangumi/:uid' },
-        ],
-        manga: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/social-media.html#bilibili-man-hua-geng-xin', source: '/detail/:comicid', target: '/bilibili/manga/update/:comicid' }],
-    },
     'weibo.com': {
         _name: '微博',
         '.': [
@@ -185,13 +157,6 @@
         www: [{ title: '排行榜', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/top' }],
         search: [{ title: '关键词', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/', target: (params, url) => `/smzdm/keyword/${new URL(url).searchParams.get('s')}` }],
     },
-    'rsshub.app': {
-        _name: 'RSSHub',
-        docs: [
-            { title: '有新路由啦', docs: 'https://docs.rsshub.app/program-update.html#rsshub', source: ['', '/*tpath'], target: '/rsshub/routes' },
-            { title: '有新赞助商啦', docs: 'https://docs.rsshub.app/program-update.html#rsshub', source: ['', '/*tpath'], target: '/rsshub/sponsors' },
-        ],
-    },
     'ximalaya.com': {
         _name: '喜马拉雅',
         '.': [
@@ -312,17 +277,6 @@
     },
     'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'epicgames.com': { _name: 'Epic Games', www: [{ title: '每周免费游戏', docs: 'https://docs.rsshub.app/game.html#epicgames-freegame', source: '/store/zh-CN/free-games', target: '/epicgames/freegames' }] },
-    'docker.com': {
-        _name: 'Docker',
-        hub: [
-            {
-                title: '镜像有新 Build',
-                docs: 'https://docs.rsshub.app/program-update.html#docker-hub',
-                source: ['/r/:owner/:image', '/r/:owner/:image/tags', '/_/:image'],
-                target: (params) => `/dockerhub/build/${params.owner ? params.owner : 'library'}/${params.image}`,
-            },
-        ],
-    },
     'nga.cn': {
         _name: 'NGA',
         bbs: [
@@ -532,42 +486,6 @@
             },
         ],
         sites: [{ title: 'Sites', docs: 'https://docs.rsshub.app/blog.html#google-sites', source: ['/site/:id/*', '/site/:id'], target: '/google/sites/:id' }],
-    },
-    'javlibrary.com': {
-        _name: 'javlibrary',
-        www: [
-            { title: '新话题', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/update' },
-            { title: '新发行', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/newrelease' },
-            { title: '新加入', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/newentries' },
-            { title: '最想要', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/mostwanted' },
-            { title: '高评价', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/videos/bestrated' },
-            { title: '最佳评论', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn', target: '/javlibrary/bestreviews' },
-            { title: '影星', docs: 'https://docs.rsshub.app/multimedia.html#javlibrary', source: '/cn/vl_star.php', target: (params, url) => `/javlibrary/stars/${new URL(url).searchParams.get('s')}` },
-            {
-                title: '用户文章',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userposts`,
-            },
-            {
-                title: '用户拥有',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userowned`,
-            },
-            {
-                title: '用户看过',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwatched`,
-            },
-            {
-                title: '用户想要',
-                docs: 'https://docs.rsshub.app/multimedia.html#javlibrary',
-                source: ['/cn/user.php', '/cn/userposts.php', '/cn/userwateched.php', '/cn/userowned.php', '/cn/userwanted.php'],
-                target: (params, url) => `/javlibrary/users/${new URL(url).searchParams.get('u')}/userwanted`,
-            },
-        ],
     },
     'qidian.com': {
         _name: '起点',

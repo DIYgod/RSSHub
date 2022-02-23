@@ -538,6 +538,16 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
+-   spotify: [API key registration](https://developer.spotify.com)
+
+    -   `SPOTIFY_CLIENT_ID`：Client ID of the application
+
+    -   `SPOTIFY_CLIENT_SECRET`：Client secret of the application
+
+-   spotify (user data related routes):
+
+    -   `SPOTIFY_REFRESHTOKEN`：The refresh token of the user f the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
+
 -   Instagram:
 
     -   `IG_USERNAME`: Your Instagram username
@@ -591,3 +601,6 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `EH_IPB_MEMBER_ID`: The value of `ipb_member_id` in the cookie header after logging in E-Hentai
     -   `EH_IPB_PASS_HASH`: The value of `ipb_pass_hash` in the cookie header after logging in E-Hentai
     -   `EH_SK`: The value of `sk` in the cookie header after logging in E-Hentai
+
+-   Google Fonts: [API key application](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
+    - `GOOGLE_FONTS_API_KEY`: API key

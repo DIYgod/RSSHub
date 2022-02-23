@@ -136,7 +136,7 @@ If you don't want to setup credentials, use Picuki.
 
 ### Tag
 
-<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']">
+<RouteEn author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']">
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
@@ -150,8 +150,8 @@ If you don't want to setup credentials, use Picuki.
 
 Official user RSS:
 
--   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
--   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
+- RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
+- Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
 
 These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you will need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
@@ -245,7 +245,7 @@ Only for self-hosted
 
 ::: tip
 
-Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting https://t.me/s/:username.
+Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`.
 
 :::
 
@@ -335,6 +335,27 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 ### Trends
 
 <RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']" radar="1" rssbud="1"/>
+
+## Vimeo
+
+### User Profile
+
+<RouteEn author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" :paramsDesc="['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']">
+::: tip Special category name attention
+
+Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
+
+:::
+
+</RouteEn>
+
+### Channel
+
+<RouteEn author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" :paramsDesc="['channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .']" radar="1"/>
+
+### Category
+
+<RouteEn author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" :paramsDesc="['Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ', 'type `staffpicks` to sort with staffpicks']" radar="1"/>
 
 ## YouTube
 
