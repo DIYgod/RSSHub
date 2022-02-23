@@ -888,6 +888,9 @@
     "/nju/zbb/:type": [
         "ret-1"
     ],
+    "/nltimes/news/:category?": [
+        "Hivol"
+    ],
     "/nodejs/blog/:language?": [
         "nczitzk"
     ],
