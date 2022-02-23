@@ -1218,6 +1218,16 @@
     "/whitehouse/briefing-room/:category?": [
         "nczitzk"
     ],
+    "/who/news/:language?": [
+        "nczitzk"
+    ],
+    "/who/news-room/:category?/:language?": [
+        "LogicJake",
+        "nczitzk"
+    ],
+    "/who/speeches/:language?": [
+        "nczitzk"
+    ],
     "/whoscall/": [
         "nczitzk"
     ],
@@ -2119,9 +2129,6 @@
     "/nintendo/news/china": [],
     "/nintendo/direct": [],
     "/nintendo/system-update": [],
-    "/who/news-room/:type": [],
-    "/who/speeches/:language?": [],
-    "/who/news/:language?": [],
     "/metred/fuli": [],
     "/mit/graduateadmissions/:type/:name": [],
     "/mit/ocw-top": [],
