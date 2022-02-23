@@ -865,10 +865,6 @@
             { title: 'IPO Featured Stories', docs: 'http://docs.rsshub.app/en/university.html#umass-amherst', source: '/ipo/iss/featured-stories', target: '/umass/amherst/ipostories' },
         ],
     },
-    'lofter.com': {
-        _name: 'Lofter',
-        www: [{ title: '话题 (标签)', docs: 'https://docs.rsshub.app/social-media.html#lofter', source: ['/tag/:name', '/tag/:name/:type'], target: (params) => `/lofter/tag/${params.name}/${params.type || ''}` }],
-    },
     'yuque.com': {
         _name: '语雀',
         www: [
