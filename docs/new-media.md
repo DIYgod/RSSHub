@@ -50,7 +50,15 @@ pageClass: routes
 
 ### 用户文章
 
-<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户ID']" />
+<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户 ID']" />
+
+### 主题文章
+
+<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题 ID']" />
+
+### 搜索文章
+
+<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 52hrtt 华人头条
 
@@ -91,14 +99,6 @@ pageClass: routes
 | realtime | singapore | southeast-asia | greater-china | world | finance | sports |
 
 </Route>
-
-### 主题文章
-
-<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题ID']" />
-
-### 搜索文章
-
-<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 9To5
 
