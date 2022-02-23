@@ -665,6 +665,21 @@ IT・科学 tech_science
 
 <Route author="nczitzk" example="/eastday/portrait" path="/eastday/portrait"/>
 
+### 24 小时热闻
+
+<Route author="nczitzk" example="/eastday/24" path="/eastday/24/:category?" :paramsDesc="['分类，见下表，默认为社会']">
+
+| 推荐 | 社会 | 娱乐 | 国际 | 军事 |
+| -- | -- | -- | -- | -- |
+
+| 养生 | 汽车 | 体育 | 财经 | 游戏 |
+| -- | -- | -- | -- | -- |
+
+| 科技 | 国内 | 宠物 | 情感 | 人文 | 教育 |
+| -- | -- | -- | -- | -- | -- |
+
+</Route>
+
 ## 东网
 
 <Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
