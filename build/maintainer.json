@@ -1231,6 +1231,12 @@
     "/wenku8/chapter/:id": [
         "zsakvo"
     ],
+    "/wfu/jwc": [
+        "cccht"
+    ],
+    "/wfu/news/:type?": [
+        "cccht"
+    ],
     "/whitehouse/briefing-room/:category?": [
         "nczitzk"
     ],
