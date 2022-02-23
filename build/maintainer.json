@@ -1477,7 +1477,6 @@
     "/v2ex/topics/:type": [],
     "/v2ex/post/:postid": [],
     "/v2ex/tab/:tabid": [],
-    "/readhub/category/:category": [],
     "/fdroid/apprelease/:app": [],
     "/konachan/post/popular_recent": [],
     "/konachan.com/post/popular_recent": [],
