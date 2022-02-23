@@ -798,6 +798,12 @@
     "/mygopen/:label?": [
         "nczitzk"
     ],
+    "/nbd/daily": [
+        "MeXunco"
+    ],
+    "/nbd/:id?": [
+        "nczitzk"
+    ],
     "/neea/jlpt": [
         "nczitzk"
     ],
@@ -2354,8 +2360,6 @@
     "/wineyun/:category": [],
     "/xiaohongshu/user/:user_id/:category": [],
     "/xiaohongshu/board/:board_id": [],
-    "/nbd/daily": [],
-    "/nbd/:id?": [],
     "/kzfeed/topic/:id": [],
     "/factcheck": [],
     "/x-mol/news/:tag?": [],
