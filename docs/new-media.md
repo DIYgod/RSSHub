@@ -3208,11 +3208,11 @@ column 为 third 时可选的 category:
 
 <Route author="LogicJake Rongronggg9" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id/:mpName?/:searchQueryType?" :paramsDesc="['公众号绑定频道 id', '欲筛选的公众号全名（URL-encoded, 精确匹配），在频道订阅了多个公众号时可选用', '搜索查询类型，见下表']">
 
-| 搜索查询类型 | 将使用的搜索关键字 |           适用于            |
-|:------:|:---------:|:------------------------:|
-|  `0`   |  (禁用搜索)   |        所有情况 (默认)         |
-|  `1`   |   公众号全名   | 未启用 efb-patch-middleware |
-|  `2`   |  #公众号全名   | 已启用 efb-patch-middleware |
+| 搜索查询类型 | 将使用的搜索关键字 |            适用于           |
+| :----: | :-------: | :----------------------: |
+|   `0`  |   (禁用搜索)  |         所有情况 (默认)        |
+|   `1`  |   公众号全名   | 未启用 efb-patch-middleware |
+|   `2`  |   #公众号全名  | 已启用 efb-patch-middleware |
 
 ::: tip 提示
 
