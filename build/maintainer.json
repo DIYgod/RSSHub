@@ -710,6 +710,12 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/kbs/news/:category?/:language?": [
+        "nczitzk"
+    ],
+    "/kbs/today/:language?": [
+        "nczitzk"
+    ],
     "/kemono/:source?/:id?": [
         "nczitzk"
     ],
@@ -3161,6 +3167,5 @@
     "/secrss/category/:category?": [],
     "/secrss/author/:author?": [],
     "/fashionnetwork/headline/:country?": [],
-    "/mirror/:id": [],
-    "/kbs/today/:language?": []
+    "/mirror/:id": []
 }
