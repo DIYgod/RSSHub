@@ -393,6 +393,16 @@ Provides a better reading experience (full text articles) over the official one.
 
 ## KBS
 
+### News
+
+<RouteEn author="nczitzk" example="/kbs/news" path="/kbs/news/:category?/:language?" :paramsDesc="['Category, can be found in Url as `id`, all by default', 'Language, see below, e as English by default']">
+
+| 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
+| ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
+| k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |
+
+</RouteEn>
+
 ### Today
 
 <RouteEn author="nczitzk" example="/kbs/today" path="/kbs/today/:language?" :paramsDesc="['Language, see below, e as English by default']">
