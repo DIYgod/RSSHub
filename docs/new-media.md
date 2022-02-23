@@ -1012,11 +1012,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 分类
 
-<Route author="WhiteWorld" example="/readhub/category/topic" path="/readhub/category/:category" :paramsDesc="['分类名']">
+<Route author="WhiteWorld nczitzk" example="/readhub" path="/readhub/:category?" :paramsDesc="['分类，见下表，默认为热门话题']">
 
-| 热门话题  | 科技动态 | 开发者资讯    | 区块链快讯      | 每日早报  |
-| ----- | ---- | -------- | ---------- | ----- |
-| topic | news | technews | blockchain | daily |
+| 热门话题  | 科技动态 | 技术资讯 | 区块链快讯      | 每日早报  |
+| ----- | ---- | ---- | ---------- | ----- |
+| topic | news | tech | blockchain | daily |
 
 </Route>
 
