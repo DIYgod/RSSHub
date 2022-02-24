@@ -84,6 +84,11 @@
     "/app-center/release/:user/:app/:distribution_group": [
         "Rongronggg9"
     ],
+    "/apple/exchange_repair/:country?": [
+        "metowolf",
+        "HenryQW",
+        "kt286"
+    ],
     "/appledaily/:channel?": [
         "Fatpandac"
     ],
@@ -1839,7 +1844,6 @@
     "/ifanr/:channel?": [],
     "/guokr/scientific": [],
     "/guokr/:channel": [],
-    "/apple/exchange_repair/:country?": [],
     "/ipsw/index/:ptype/:pname": [],
     "/curseforge/files/:project": [],
     "/sspai/series": [],
