@@ -730,3 +730,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
     -   `GOOGLE_FONTS_API_KEY`: API key
+
+-   豆瓣想看
+    -   `DOUBAN_COOKIE`: 豆瓣登陆后的 Cookie 值
