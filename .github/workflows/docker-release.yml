@@ -10,7 +10,7 @@ on:
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
-  workflow_dispatch:
+  workflow_dispatch: ~
 
 jobs:
   check-env:
