@@ -92,6 +92,21 @@
     "/appledaily/:channel?": [
         "Fatpandac"
     ],
+    "/appstore/update/:country/:id": [
+        "HenryQW"
+    ],
+    "/appstore/price/:country/:type/:id": [
+        "HenryQW"
+    ],
+    "/appstore/iap/:country/:id": [
+        "HenryQW"
+    ],
+    "/appstore/xianmian": [
+        "Andiedie"
+    ],
+    "/appstore/gofans": [
+        "HenryQW"
+    ],
     "/ash-maurya/ash-maurya": [
         "james-tindal"
     ],
@@ -1650,11 +1665,6 @@
     "/fir/update/:id": [],
     "/nvidia/webdriverupdate": [],
     "/imuseum/:city/:type?": [],
-    "/appstore/update/:country/:id": [],
-    "/appstore/price/:country/:type/:id": [],
-    "/appstore/iap/:country/:id": [],
-    "/appstore/xianmian": [],
-    "/appstore/gofans": [],
     "/hopper/:lowestOnly/:from/:to?": [],
     "/mafengwo/note/:type": [],
     "/mafengwo/ziyouxing/:code": [],
