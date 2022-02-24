@@ -60,6 +60,9 @@
     "/abmedia/abmedia/:category?": [
         "Fatpandac"
     ],
+    "/abskoop/": [
+        "zhenhappy"
+    ],
     "/acm-ecnu/contest/:category?": [
         "a180285"
     ],
