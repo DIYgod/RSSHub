@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Use Node.js v14
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.0.0
         with:
           node-version: '14'
           cache: 'yarn'
