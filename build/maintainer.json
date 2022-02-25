@@ -260,6 +260,9 @@
     "/csc/notice/:type?": [
         "Derekmini"
     ],
+    "/dahecube/:type?": [
+        "linbuxiao"
+    ],
     "/ddosi/": [
         "XinRoom"
     ],
