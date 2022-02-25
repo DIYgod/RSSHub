@@ -366,6 +366,12 @@ pageClass: routes
 
 </Route>
 
+## QQ 互联 SDK
+
+### 更新日志
+
+<Route author="nuomi1" example="/tencent/qq/sdk/changelog/iOS" path="/tencent/qq/sdk/changelog/:platform" :paramsDesc="['平台，iOS / Android']"/>
+
 ## QTTabBar
 
 ### Change Log
