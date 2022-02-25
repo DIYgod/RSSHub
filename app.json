@@ -20,6 +20,15 @@
         "DISQUS_API_KEY": {
             "required": false
         },
+        "SPOTIFY_CLIENT_ID": {
+            "required": false
+        },
+        "SPOTIFY_CLIENT_SECRET": {
+            "required": false
+        },
+        "SPOTIFY_REFRESHTOKEN": {
+            "required": false
+        },
         "TWITTER_CONSUMER_KEY": {
             "required": false
         },
