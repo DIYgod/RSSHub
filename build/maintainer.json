@@ -1220,6 +1220,9 @@
     "/telegram/telegram/blog": [
         "fengkx"
     ],
+    "/tencent/qq/sdk/changelog/:platform": [
+        "nuomi1"
+    ],
     "/test/:id": [
         "DIYgod",
         "NeverBehave"
