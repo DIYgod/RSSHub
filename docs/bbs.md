@@ -525,7 +525,7 @@ pageClass: routes
 ## 牛客网
 
 ### 面经
-<Route author="huyyi" example="/nowcoder/experience/639?order=3&companyId=665&phaseId=0" path="/nowcoder/experience/:tagId" :paramsDesc="['职位id，[查询链接](https://www.nowcoder.com/profile/all-jobs)']">
+<Route author="huyyi" example="/nowcoder/experience/639?order=3&companyId=665&phaseId=0" path="/nowcoder/experience/:tagId" :paramsDesc="['职位id [查询链接](https://www.nowcoder.com/profile/all-jobs)']">
 可选参数：
 - companyId：筛选公司，公司的id可以[查询](https://www.nowcoder.com/discuss/tag/exp)
 - order：3-最新；1-最热
