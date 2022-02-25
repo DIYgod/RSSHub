@@ -22,7 +22,7 @@ filter 选出想要的内容
 
 -   filter_time: 过滤时间，仅支持数字，单位为秒。返回指定时间范围内的内容。如果条目没有输出`pubDate`或者格式不正确将不会被过滤
 
-举例 1: `https://rsshub.app/bilibili/fav/2267573/801952073?filter=编曲|摄影`  
+举例 1: `https://rsshub.app/bilibili/fav/2267573/801952073?filter=编曲|摄影`
 举例 2: <https://rsshub.app/nga/forum/489?filter_time=600>
 
 filterout 去掉不要的内容
@@ -93,6 +93,16 @@ RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss`
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
 -   和 filter 或其他 URL query 一起使用 `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
+
+### debug
+
+在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub 将会返回插件设置在`ctx.state.json`的内容
+
+这功能皆在方便开发者调试问题，方便用户自行开发需要的功能。插件作者可以酌情考虑使用，没有格式要求。
+
+举例：
+
+-   `/furstar/characters/cn.debug.json`
 
 ## 输出简讯
 
