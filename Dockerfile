@@ -2,8 +2,8 @@ FROM node:14-buster-slim as dep-builder
 
 LABEL MAINTAINER https://github.com/DIYgod/RSSHub/
 
-ARG USE_CHINA_NPM_REGISTRY=1;
-ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
+ARG USE_CHINA_NPM_REGISTRY=0
+ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
 
 RUN ln -sf /bin/bash /bin/sh
 RUN apt-get update && apt-get install -yq libgconf-2-4 apt-transport-https git dumb-init python3 build-essential --no-install-recommends
@@ -34,7 +34,7 @@ FROM node:14-slim as app
 
 ENV NODE_ENV production
 ENV TZ Asia/Shanghai
-ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1;
+ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
 
 WORKDIR /app
 COPY . /app
