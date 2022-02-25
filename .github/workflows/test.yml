@@ -45,3 +45,19 @@ jobs:
       - run: yarn
       - name: Build docs
         run: npm run docs:build
+
+  all:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: ['14', '16']
+    name: Build radar and maintainer on Node ${{ matrix.node-version }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3.0.0
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn
+      - name: Build radar and maintainer
+        run: npm run build:all
