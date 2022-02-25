@@ -638,69 +638,6 @@
         _name: 'eTOLAND',
         '.': [{ title: '主题贴', docs: 'https://docs.rsshub.app/bbs.html#etoland', source: ['/bbs/board.php', '/plugin/mobile/board.php'], target: (params, url) => `/etoland/${new URL(url).searchParams.get('bo_table')}` }],
     },
-    'qq.com': {
-        _name: '腾讯',
-        'mp.weixin': [
-            {
-                title: '微信公众号栏目',
-                docs: 'https://docs.rsshub.app/new-media.html#gong-zhong-hao-lan-mu-fei-tui-song-li-shi-xiao-xi',
-                source: '/mp/homepage',
-                target: (params, url) => `/wechat/mp/homepage/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('hid')}/${new URL(url).searchParams.get('cid') ? new URL(url).searchParams.get('cid') : ''}`,
-            },
-            {
-                title: '微信公众号话题',
-                docs: 'https://docs.rsshub.app/new-media.html#wei-xin-gong-zhong-hao-wen-zhang-hua-ti-tag',
-                source: '/mp/appmsgalbum',
-                target: (params, url) => `/wechat/mp/msgalbum/${new URL(url).searchParams.get('__biz')}/${new URL(url).searchParams.get('album_id')}`,
-            },
-        ],
-        egame: [
-            {
-                title: '企鹅电竞直播间',
-                docs: 'https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo',
-                source: '/:id',
-                target: (params) => {
-                    if (params.id.match(/^\d+$/)) {
-                        return '/egameqq/room/:id';
-                    }
-                },
-            },
-        ],
-        v: [
-            {
-                title: '视频 - 播放列表',
-                docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin',
-                source: '/x/cover/:id',
-                target: (params) => {
-                    const id = params.id.match('(.*).html')[1];
-                    return id ? `/tencentvideo/playlist/${id}` : '';
-                },
-            },
-            { title: '视频 - 播放列表', docs: 'https://docs.rsshub.app/multimedia.html#teng-xun-shi-pin', source: '/x/cover/:id/:detail', target: '/tencentvideo/playlist/:id' },
-        ],
-    },
-    'javbus.com': {
-        _name: 'JavBus',
-        www: [
-            { title: '首页', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/', target: '/javbus/home' },
-            { title: '分类', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/genre/:gid', target: '/javbus/genre/:gid' },
-            { title: '演员', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/star/:sid', target: '/javbus/star/:sid' },
-            { title: '系列', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/series/:seriesid', target: '/javbus/series/:seriesid' },
-            { title: '首页 / 步兵', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/uncensored', target: '/javbus/uncensored/home' },
-            { title: '分类 / 步兵', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/uncensored/genre/:gid', target: '/javbus/uncensored/genre/:gid' },
-            { title: '演员 / 步兵', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/uncensored/star/:sid', target: '/javbus/uncensored/star/:sid' },
-            { title: '系列 / 步兵', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/uncensored/series/:seriesid', target: '/javbus/uncensored/series/:seriesid' },
-        ],
-    },
-    'javbus.one': {
-        _name: 'JavBus',
-        www: [
-            { title: '首页 / 欧陆风云', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/', target: '/javbus/western/home' },
-            { title: '分类 / 欧陆风云', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/genre/:gid', target: '/javbus/western/genre/:gid' },
-            { title: '演员 / 欧陆风云', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/star/:sid', target: '/javbus/western/star/:sid' },
-            { title: '系列 / 欧陆风云', docs: 'https://docs.rsshub.app/multimedia.html#javbus', source: '/series/:seriesid', target: '/javbus/western/series/:seriesid' },
-        ],
-    },
     'onejav.com': {
         _name: 'OneJAV BT',
         '.': [

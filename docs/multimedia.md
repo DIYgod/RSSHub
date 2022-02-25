@@ -156,6 +156,10 @@ pageClass: routes
 
 <Route author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
 
+## A 姐分享
+
+<Route author="zhenhappy" example="/abskoop" path="/abskoop"/>
+
 ## AcFun
 
 见 [#AcFun](/anime.html#acfun)
@@ -408,6 +412,14 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 ### 系列
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+
+### 制作商
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/studio/ej" path="/javbus/studio/:studioid" :paramsDesc="['制作商id，详见作品右侧制作商的链接']" />
+
+### 发行商
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/label/x8" path="/javbus/label/:labelid" :paramsDesc="['发行商id，详见作品右侧发行商的链接']" />
 
 ### 首页 / 步兵
 
