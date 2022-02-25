@@ -1204,6 +1204,11 @@
     "/swpu/scs/:code": [
         "CYTMWIA"
     ],
+    "/sysu/sysu/cse": [
+        "Neutrino3316",
+        "MegrezZhu",
+        "nczitzk"
+    ],
     "/szse/rule": [
         "nczitzk"
     ],
@@ -2042,7 +2047,6 @@
     "/nga/forum/:fid/:recommend?": [],
     "/nga/post/:tid": [],
     "/nautilus/topic/:tid": [],
-    "/sysu/sdcs": [],
     "/anigamer/new_anime": [],
     "/anigamer/anime/:sn": [],
     "/apkpure/versions/:region/:pkg": [],
