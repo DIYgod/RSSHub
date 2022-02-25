@@ -721,6 +721,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
     -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
     -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
+    -   `EH_IGNEOUS`: ExHentai 账户登录后 cookie 中的`igneous`值。若设置此值，RSS 数据将全部从里站获取，`EH_SK`将被忽略
 
 -   南方周末付费全文
     -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文
@@ -730,3 +731,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
     -   `GOOGLE_FONTS_API_KEY`: API key
+
+-   豆瓣想看
+    -   `DOUBAN_COOKIE`: 豆瓣登陆后的 Cookie 值
