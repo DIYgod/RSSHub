@@ -719,6 +719,36 @@ Edition
 
 </Route>
 
+## LVV2
+
+### 频道
+
+<Route author="Fatpandac" example="/lvv2/news/sort-score" path="/news/:channel/:sort?" :paramsDesc="['频道，见下表', '排序方式，仅得分和24小时榜可选填该参数，见下表']">
+
+|    热门    |    最新    |     得分     |     24 小时榜    |
+| :------: | :------: | :--------: | :-----------: |
+| sort-hot | sort-new | sort-score | sort-realtime |
+
+| 排序方式 |  一小时内  |  一天内  |  一个周内  |   一个月内  |
+| :--: | :----: | :---: | :----: | :-----: |
+|      | t-hour | t-day | t-week | t-month |
+
+</Route>
+
+### 24 小时点击排行 Top 10
+
+<Route author="Fatpandac" example="/lvv2/top/sort-score" path="/top/:channel/:sort?" :paramsDesc="['频道，见下表', '排序方式，仅得分和24小时榜可选填该参数，见下表']">
+
+|    热门    |    最新    |     得分     |     24 小时榜    |
+| :------: | :------: | :--------: | :-----------: |
+| sort-hot | sort-new | sort-score | sort-realtime |
+
+| 排序方式 |  一小时内  |  一天内  |  一个周内  |   一个月内  |
+| :--: | :----: | :---: | :----: | :-----: |
+|      | t-hour | t-day | t-week | t-month |
+
+</Route>
+
 ## MakeUseOf
 
 <Route author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['分类，默认为 Trending']"/>
