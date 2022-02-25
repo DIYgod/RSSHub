@@ -63,7 +63,7 @@
     "prettier-check": "2.0.0",
     "pretty-quick": "3.1.3",
     "remark": "13.0.0",
-    "remark-frontmatter": "3.0.0",
+    "remark-frontmatter": "4.0.1",
     "remark-gfm": "1.0.0",
     "remark-pangu": "2.2.0",
     "remark-preset-prettier": "0.5.1",
