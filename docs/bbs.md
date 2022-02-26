@@ -525,11 +525,15 @@ pageClass: routes
 ## 牛客网
 
 ### 面经
-<Route author="huyyi" example="/nowcoder/experience/639?order=3&companyId=665&phaseId=0" path="/nowcoder/experience/:tagId" :paramsDesc="['职位id [查询链接](https://www.nowcoder.com/profile/all-jobs)']">
+
+<Route author="huyyi" example="/nowcoder/experience/639?order=3&companyId=665&phaseId=0" path="/nowcoder/experience/:tagId" :paramsDesc="['职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开']">
+
 可选参数：
-- companyId：筛选公司，公司的id可以[查询](https://www.nowcoder.com/discuss/tag/exp)
-- order：3-最新；1-最热
-- phaseId：0-所有；1-校招；2-实习；3-社招
+
+-   companyId：公司 id，[🔗查询链接](https://www.nowcoder.com/discuss/tag/exp), 复制打开
+-   order：3 - 最新；1 - 最热
+-   phaseId：0 - 所有；1 - 校招；2 - 实习；3 - 社招
+
 </Route>
 
 ### 讨论区
