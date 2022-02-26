@@ -1,5 +1,4 @@
 name: PR route test
-
 # https://github.com/actions/first-interaction/issues/10#issuecomment-670968624
 # https://github.com/actions/first-interaction/issues/10#issuecomment-752360668
 # Reopen Included
@@ -16,7 +15,6 @@ jobs:
         id: fetchRoute
         uses: actions/github-script@v6
         with:
-
           # by default, JSON format returned
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
