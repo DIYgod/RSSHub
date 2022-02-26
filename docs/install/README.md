@@ -438,6 +438,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 黑白名单支持 IP、路由和 UA，模糊匹配，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
+#### 路径前缀
+
+`PREFIX`: URL 的路径前缀，默认为空字符串。如设置为 `/prefix`，则需要使用 <https://rsshub.app/prefix/qdaily/column/59>
+
 #### 访问密钥 / 码
 
 -   `ACCESS_KEY`: 访问密钥，用于直接访问所有路由或者生成访问码
