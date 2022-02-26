@@ -331,6 +331,12 @@ Sources
 
 <Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
 
+## X 漫画
+
+### 最新动态
+
+<Route author="Ye11" example="/xmanhua" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
+
 ## 包子漫画
 
 #### 订阅漫画
@@ -518,10 +524,3 @@ Sources
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
-
-
-## x漫画
-
-### 最新动态
-
-<Route author="Ye11" example="/xmanhua" path="/xmanhua/:uid?" :paramsDesc="['漫画id,在浏览器中可见，例如鬼灭之刃对应的id为73xm']"/>
