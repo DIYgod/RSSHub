@@ -269,6 +269,12 @@
     "/ddosi/category/:category": [
         "XinRoom"
     ],
+    "/dhu/jiaowu/news/:type?": [
+        "KiraKiseki"
+    ],
+    "/dhu/xxgk/news": [
+        "KiraKiseki"
+    ],
     "/disinfo/publications": [
         "nczitzk"
     ],
