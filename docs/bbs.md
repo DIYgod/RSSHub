@@ -548,11 +548,11 @@ pageClass: routes
 
 ### 校招日程
 
-<Route author="junfengP" example="/nowcoder/schedule" path="nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
+<Route author="junfengP" example="/nowcoder/schedule" path="/nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
 
 ### 求职推荐
 
-<Route author="junfengP" example="/nowcoder/recommend" path="nowcoder/recommend"/>
+<Route author="junfengP" example="/nowcoder/recommend" path="/nowcoder/recommend"/>
 
 ### 实习广场 & 社招广场
 
