@@ -903,6 +903,12 @@
     "/logonews/": [
         "nczitzk"
     ],
+    "/lvv2/news/:channel/:sort?": [
+        "Fatpandac"
+    ],
+    "/lvv2/top/:channel/:sort?": [
+        "Fatpandac"
+    ],
     "/medsci/:sid?/:tid?": [
         "nczitzk"
     ],
