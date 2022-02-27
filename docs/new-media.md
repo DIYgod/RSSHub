@@ -3330,7 +3330,7 @@ column 为 third 时可选的 category:
 
 ### 最新新闻
 
-根据维基新闻的[sitemap](https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85)获取新闻全文 <Route author="KotoriK" example="/latest" path="/latest"></Route>
+根据维基新闻的[sitemap](https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85)获取新闻全文。目前仅支持中文维基新闻。 <Route author="KotoriK" example="/latest" path="/latest"></Route>
 
 ## 未名新闻
 
