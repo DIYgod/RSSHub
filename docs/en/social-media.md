@@ -187,7 +187,7 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 ### User Profile
 
-<RouteEn author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram id','Default to disable the embedded video, set to any value to enable embedding']" />
+<RouteEn author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram id','Default to enable the embedded video, set to 0 to disable embedding']" radar="1" rssbud="1"/>
 
 ## pixiv
 
