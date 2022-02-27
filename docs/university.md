@@ -683,6 +683,22 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 </Route>
 
+## 东华大学
+
+### 教务处通知
+
+<Route author="KiraKiseki" example="/dhu/jiaowu/news/student" path="/dhu/jiaowu/news/:type?" :paramsDesc="['默认为 `student`']">
+
+| 学生专栏    | 教师专栏    |
+| ------- | ------- |
+| student | teacher |
+
+</Route>
+
+### 最新信息公开
+
+<Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
+
 ## 东南大学
 
 ### 信息科学与工程学院学术活动
