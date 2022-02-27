@@ -654,6 +654,18 @@ pageClass: routes
 
 </Route>
 
+## 通信人家园
+
+### 论坛 频道
+
+<Route author="Fatpandac" example="/txrjy/fornumtopic" path="/txrjy/fornumtopic/:chennel?" :paramsDesc="['频道的 id，见下表，默认为最新500个主题帖']">
+
+| 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
+| :---------: | :---------: | :---: | :---: | :--: | :--: |
+|      1      |      2      |   3   |   4   |   5  |   6  |
+
+</Route>
+
 ## 万维读者
 
 ### 焦点新闻
