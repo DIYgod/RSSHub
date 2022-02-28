@@ -1422,6 +1422,9 @@
     "/whoscall/categories/:category?": [
         "nczitzk"
     ],
+    "/wikinews/latest": [
+        "KotoriK"
+    ],
     "/wsj/:lang/:category?": [
         "oppilate"
     ],
