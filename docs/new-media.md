@@ -1064,7 +1064,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 分类
 
-<Route author="WhiteWorld nczitzk" example="/readhub" path="/readhub/:category?" :paramsDesc="['分类，见下表，默认为热门话题']">
+<Route author="WhiteWorld nczitzk Fatpandac" example="/readhub" path="/readhub/:category?/:overview?" :paramsDesc="['分类，见下表，默认为热门话题', '获取概述，任意值获取概述，默认为不获取']">
 
 | 热门话题  | 科技动态 | 技术资讯 | 区块链快讯      | 每日早报  |
 | ----- | ---- | ---- | ---------- | ----- |
@@ -3325,6 +3325,12 @@ column 为 third 时可选的 category:
 ### 中国大陆新闻动态
 
 <Route author="HenryQW" example="/wikipedia/mainland" path="/wikipedia/mainland"/>
+
+## 维基新闻
+
+### 最新新闻
+
+根据维基新闻的[sitemap](https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85)获取新闻全文。目前仅支持中文维基新闻。 <Route author="KotoriK" example="/latest" path="/latest"></Route>
 
 ## 未名新闻
 
