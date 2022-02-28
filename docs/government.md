@@ -871,6 +871,16 @@ pageClass: routes
 
 </Route>
 
+## 中华人民共和国工业和信息化部
+
+### 文件发布
+
+<Route author="Fatpandac" example="/miit/wjfb/ghs" path="/miit/wjfb/:ministry" :paramsDesc="['部门缩写，可以在对应 URL 中获取']"/>
+
+### 意见征集
+
+<Route author="Fatpandac" example="/miit/yjzj" path="/miit/yjzj"/>
+
 ## 中华人民共和国国家发展和改革委员会
 
 ### 新闻动态
