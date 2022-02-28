@@ -1064,7 +1064,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 分类
 
-<Route author="WhiteWorld nczitzk" example="/readhub" path="/readhub/:category?" :paramsDesc="['分类，见下表，默认为热门话题']">
+<Route author="WhiteWorld nczitzk Fatpandac" example="/readhub" path="/readhub/:category?/:overview?" :paramsDesc="['分类，见下表，默认为热门话题', '获取概述，任意值获取概述，默认为不获取']">
 
 | 热门话题  | 科技动态 | 技术资讯 | 区块链快讯      | 每日早报  |
 | ----- | ---- | ---- | ---------- | ----- |
