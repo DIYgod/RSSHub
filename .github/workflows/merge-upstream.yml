@@ -1,7 +1,7 @@
 name: Auto Merge Upstream
 on:
   push:
-    branches: ['master']
+    branches: ['master', 'upstream']
   schedule:
     - cron: '36 2 * * *'
   workflow_dispatch: ~
