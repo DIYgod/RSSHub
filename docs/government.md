@@ -498,6 +498,14 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/miit/zcjd" path="/gov/miit/zcjd"/>
 
+### 文件发布
+
+<Route author="Fatpandac" example="/gov/miit/wjfb/ghs" path="/gov/miit/wjfb/:ministry" :paramsDesc="['部门缩写，可以在对应 URL 中获取']"/>
+
+### 意见征集
+
+<Route author="Fatpandac" example="/gov/miit/yjzj" path="/gov/miit/yjzj"/>
+
 ### 文件公示
 
 <Route author="Yoge-Code" example="/gov/miit/wjgs" path="/gov/miit/wjgs"/>
@@ -870,16 +878,6 @@ pageClass: routes
 | 曼彻斯特  | `/embassy/uk/manchester` |
 
 </Route>
-
-## 中华人民共和国工业和信息化部
-
-### 文件发布
-
-<Route author="Fatpandac" example="/miit/wjfb/ghs" path="/miit/wjfb/:ministry" :paramsDesc="['部门缩写，可以在对应 URL 中获取']"/>
-
-### 意见征集
-
-<Route author="Fatpandac" example="/miit/yjzj" path="/miit/yjzj"/>
 
 ## 中华人民共和国国家发展和改革委员会
 
