@@ -9,7 +9,7 @@ jobs:
     name: Ignore dependabot on forks
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Comment Dependabot PR
         uses: thollander/actions-comment-pull-request@v1
