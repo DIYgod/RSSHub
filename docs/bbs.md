@@ -658,7 +658,7 @@ pageClass: routes
 
 ### 论坛 频道
 
-<Route author="Fatpandac" example="/txrjy/fornumtopic" path="/txrjy/fornumtopic/:chennel?" :paramsDesc="['频道的 id，见下表，默认为最新500个主题帖']">
+<Route author="Fatpandac" example="/txrjy/fornumtopic" path="/txrjy/fornumtopic/:channel?" :paramsDesc="['频道的 id，见下表，默认为最新500个主题帖']">
 
 | 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
 | :---------: | :---------: | :---: | :---: | :--: | :--: |
