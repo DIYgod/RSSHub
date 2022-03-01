@@ -81,6 +81,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
+## IELTS 雅思
+
+### 最新消息
+
+<Route author="zenxds" example="/ielts" path="/ielts"/>
+
 ## MarginNote
 
 ### 标签
