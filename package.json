@@ -131,7 +131,7 @@
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
     "twit": "2.2.11",
-    "winston": "3.5.1",
+    "winston": "3.6.0",
     "xml2js": "0.4.23"
   },
   "jest": {
