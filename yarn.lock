@@ -12138,10 +12138,10 @@ shelljs@0.8.5:
     interpret "^1.0.0"
     rechoir "^0.6.2"
 
-showdown@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/showdown/-/showdown-2.0.0.tgz#f7c9138c89c36c7858e086a20c1fba891db68fb7"
-  integrity sha512-Gz0wkh/EBFbEH+Nb85nyRSrcRvPecgt8c6fk/ICaOQ2dVsWCvZU5jfViPtBIyLXVYooICO0WTl7vLsoPaIH09w==
+showdown@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/showdown/-/showdown-2.0.1.tgz#284a9d6a1599f74ec324f6a983ae8f8641983b81"
+  integrity sha512-03JpT+yiQbYJynAkzCPJFZKbGHf4q9nly+oDcD32oiyc00wNII+cd8EuXFYwYWXroUIoSgxPYuts9YPQfGIkIw==
   dependencies:
     yargs "^17.2.1"
 
