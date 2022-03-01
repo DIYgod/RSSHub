@@ -1,4 +1,4 @@
-version: "1"
+version: '1'
 rules:
   - base: master
     upstream: DIYgod:master
@@ -8,11 +8,11 @@ rules:
     upstream: master
     mergeMethod: merge
     mergeUnstable: false
-    assignees: 
+    assignees:
       - oouxx
     reviewer:
       - oouxx
     conflictReviewers:
       - oouxx
-lable: ":arrow_heading_down:pull"
+lable: ':arrow_heading_down:pull'
 

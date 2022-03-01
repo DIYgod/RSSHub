@@ -320,7 +320,7 @@
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+<<<<<<< HEAD
 
 ## Obsidian
 
