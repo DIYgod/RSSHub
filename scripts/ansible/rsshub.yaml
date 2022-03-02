@@ -67,7 +67,7 @@
     - name: Create and start browserless container
       docker_container:
         name: browserless
-        image: browserless/chrome:1.43-chrome-stable
+        image: browserless/chrome
         state: started
         restart_policy: always
         published_ports:
