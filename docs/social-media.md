@@ -522,7 +522,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 <Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" :paramsDesc="['Instagram 用户 id','功能标记，见下表']" radar="1" rssbud="1">
 
 | functionalFlag | 嵌入视频         | 获取 Instagram Stories |
-|----------------|--------------|----------------------|
+| -------------- | ------------ | -------------------- |
 | 0              | 关，只用图片显示视频封面 | 关                    |
 | 1 (默认)         | 开            | 关                    |
 | 10             | 开            | 开                    |
