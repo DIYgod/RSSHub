@@ -187,7 +187,22 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 ### User Profile
 
-<RouteEn author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram id','Default to disable the embedded video, set to any value to enable embedding']" />
+<RouteEn author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" :paramsDesc="['Instagram id','functional flag, see the table below']" radar="1" rssbud="1">
+
+| functionalFlag | Video embedding                         | Fetching Instagram Stories |
+|----------------|-----------------------------------------|----------------------------|
+| 0              | off, only show video poster as an image | off                        |
+| 1 (default)    | on                                      | off                        |
+| 10             | on                                      | on                         |
+
+::: warning
+
+Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
+Though, every Story expires after 24 hours, so it may be not so serious.
+
+:::
+
+</RouteEn>
 
 ## pixiv
 

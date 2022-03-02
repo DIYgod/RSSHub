@@ -519,7 +519,22 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户
 
-<Route author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram 用户 id','是否显示视频，任意值为是，留空为否']" radar="1" rssbud="1"/>
+<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" :paramsDesc="['Instagram 用户 id','功能标记，见下表']" radar="1" rssbud="1">
+
+| functionalFlag | 嵌入视频         | 获取 Instagram Stories |
+|----------------|--------------|----------------------|
+| 0              | 关，只用图片显示视频封面 | 关                    |
+| 1 (默认)         | 开            | 关                    |
+| 10             | 开            | 开                    |
+
+::: warning 注意
+
+Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 Story 显示多于一次。
+尽管如此，每个 Story 都会在 24 小时后过期，所以问题也许没那么严重。
+
+:::
+
+</Route>
 
 ## pixiv
 
