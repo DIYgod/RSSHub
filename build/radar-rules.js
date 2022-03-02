@@ -2651,6 +2651,11 @@
         docs:"https://docs.rsshub.app/traditional-media.html#ren-min-wang-ling-dao-liu-yan-ban",
         source:"/",
         target:"/people/liuyan/:id/:state?" } ] },
+  "picuki.com":{ _name:"Picuki",
+    www:[ { title:"用户",
+        docs:"https://docs.rsshub.app/social-media.html#picuki-yong-hu",
+        source:"/profile/:id",
+        target:"/picuki/profile/:id" } ] },
   "pku.edu.cn":{ _name:"北京大学",
     hr:[ { title:"人事处",
         docs:"https://docs.rsshub.app/university.html#bei-jing-da-xue-ren-shi-chu",
@@ -4648,11 +4653,6 @@
                     const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
                     return `/behance/${uid1}`;
                 } } ] },
-  "picuki.com":{ _name:"Picuki",
-    www:[ { title:"用户",
-        docs:"https://docs.rsshub.app/social-media.html#picuki-yong-hu",
-        source:"/profile/:id",
-        target:"/picuki/profile/:id" } ] },
   "jjmhw.cc":{ _name:"漫小肆",
     www:[ { title:"漫画更新",
         docs:"https://docs.rsshub.app/anime.html#man-xiao-si",
