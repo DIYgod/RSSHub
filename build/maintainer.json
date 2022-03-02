@@ -1255,8 +1255,9 @@
         "xyqfer",
         "Fatpandac"
     ],
-    "/telegram/telegram/channel/:username/:searchQuery?": [
-        "DIYgod"
+    "/telegram/telegram/channel/:username/:routeParams?": [
+        "DIYgod",
+        "Rongronggg9"
     ],
     "/telegram/telegram/stickerpack/:name": [
         "DIYgod"
