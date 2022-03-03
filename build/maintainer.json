@@ -1288,6 +1288,9 @@
     "/trow/portal": [
         "shiningdracon"
     ],
+    "/txrjy/fornumtopic/:channel?": [
+        "Fatpandac"
+    ],
     "/ucas/job/:type?": [
         "Fatpandac"
     ],

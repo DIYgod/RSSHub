@@ -3149,6 +3149,15 @@
         docs:"https://docs.rsshub.app/bbs.html#the-ring-of-wonder",
         source:[ "/" ],
         target:"/portal" } ] },
+  "txrjy.com":{ _name:"通信人家园",
+    ".":[ { title:"论坛 频道",
+        docs:"https://docs.rsshub.app/bbs.html#tong-xin-ren-jia-yuan",
+        source:[ "/c114-listnewtopic.php" ],
+        target:(params, url) => {
+                    const channel = new URL(url).searchParams.get('typeid');
+
+                    return `/txrjy/fornumtopic/${channel ? channel : ''}`;
+                } } ] },
   "uibe.edu.cn":{ _name:"对外经济贸易大学",
     hr:[ { title:"人力资源处",
         docs:"https://docs.rsshub.app/university.html#dui-wai-jing-ji-mao-yi-da-xue-ren-li-zi-yuan-chu",
