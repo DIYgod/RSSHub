@@ -1294,6 +1294,15 @@
     "/tisi/latest": [
         "Fatpandac"
     ],
+    "/tokeninsight/blog/:lang?": [
+        "fuergaosi233"
+    ],
+    "/tokeninsight/bulletin:lang?": [
+        "fuergaosi233"
+    ],
+    "/tokeninsight/report:lang?": [
+        "fuergaosi233"
+    ],
     "/topys/:keyword?": [
         "nczitzk"
     ],
