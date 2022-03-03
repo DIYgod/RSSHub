@@ -790,7 +790,7 @@ Type 栏目：
 
 ### 实时快讯
 
-<Route author="nczitzk" example="/wallstreetcn/live" path="/wallstreetcn/live/:channel?" :paramsDesc="['快讯分类，默认`global`，见下表']">
+<Route author="nczitzk" example="/wallstreetcn/live" path="/wallstreetcn/live/:category?/:score?" :paramsDesc="['快讯分类，默认`global`，见下表', '快讯重要度，默认`1`全部快讯，可设置为`2`只看重要的']">
 
 | 要闻     | A 股     | 美股       | 港股       | 外汇    | 商品        | 理财        |
 | ------ | ------- | -------- | -------- | ----- | --------- | --------- |
