@@ -592,6 +592,9 @@
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
+    "/hdu/cs": [
+        "legr4ndk"
+    ],
     "/hellobtc/information/:channel?": [
         "Fatpandac"
     ],
