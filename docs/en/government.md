@@ -95,6 +95,18 @@ Fill in the English expression for the month in the Month field, eg `December` f
 
 </RouteEn>
 
+## The White House
+
+### Briefing Room
+
+<RouteEn author="nczitzk" example="/whitehouse/briefing-room" path="/whitehouse/briefing-room/:category?" :paramsDesc="['Category, see below, all by default']">
+
+| All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |
+| - | - | - | - | - | - | - |
+| | blog | legislation | presidential-actions | press-briefings | speeches-remarks | statements-releases |
+
+</RouteEn>
+
 ## U.S. Department of the Treasury
 
 ### Press Releases
@@ -114,6 +126,50 @@ Category
 ### Security Council Vetoed a Resolution
 
 <RouteEn author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+
+## World Health Organization | WHO
+
+### News
+
+<RouteEn author="nczitzk" example="/who/news" path="/who/news/:language?" :paramsDesc="['Language, see below, English by default']">
+
+Language
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh   | fr       | ru      | es      | pt        |
+
+</RouteEn>
+
+### Newsroom
+
+<RouteEn author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" :paramsDesc="['Category, see below, Feature stories by default', 'Language, see below, English by default']">
+
+Category
+
+| Feature stories | Commentaries |
+| --------------- | ------------ |
+| feature-stories | commentaries |
+
+Language
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh   | fr       | ru      | es      | pt        |
+
+</RouteEn>
+
+### Speeches
+
+<RouteEn author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" :paramsDesc="['Language, see below, English by default']">
+
+Language
+
+| English | العربية | 中文 | Français | Русский | Español | Português |
+| ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+| en      | ar      | zh   | fr       | ru      | es      | pt        |
+
+</RouteEn>
 
 ## World Trade Organization
 

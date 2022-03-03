@@ -15,6 +15,7 @@ tmp
 coverage
 .env
 app-minimal/
+Session.vim
 
 .now
 .vercel
