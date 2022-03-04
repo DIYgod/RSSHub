@@ -607,6 +607,15 @@
     "/hellobtc/topic/:id": [
         "Fatpandac"
     ],
+    "/hellogithub/article": [
+        "moke8"
+    ],
+    "/hellogithub/ranking/:type?": [
+        "moke8"
+    ],
+    "/hellogithub/month": [
+        "moke8"
+    ],
     "/heu/yjsy/list/:id": [
         "Derekmini"
     ],
