@@ -924,7 +924,6 @@
             },
         ],
     },
-    'picuki.com': { _name: 'Picuki', www: [{ title: '用户', docs: 'https://docs.rsshub.app/social-media.html#picuki-yong-hu', source: '/profile/:id', target: '/picuki/profile/:id' }] },
     'jjmhw.cc': { _name: '漫小肆', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#man-xiao-si', source: '/book/:id', target: '/manxiaosi/book/:id' }] },
     'wenxuecity.com': {
         _name: '文学城',
