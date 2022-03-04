@@ -78,7 +78,7 @@ Eg: <https://rsshub.app/pnas/latest?scihub=1>
 
 ## Conversion between Traditional and Simplified Chinese
 
--   opencc: s2t (Simplified Chinese to Traditional Chinese)、t2s (Traditional Chinese to Simplified Chinese), other optional values refer to [OpenCC - Configurations](https://github.com/BYVoid/OpenCC#configurations-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
+-   opencc: s2t (Simplified Chinese to Traditional Chinese)、t2s (Traditional Chinese to Simplified Chinese), other optional values refer to [simplecc-wasm - Configurations](https://github.com/fengkx/simplecc-wasm#%E9%85%8D%E7%BD%AE-configurations)
 
 Eg: <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 

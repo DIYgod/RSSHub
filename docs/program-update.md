@@ -20,11 +20,31 @@ pageClass: routes
 
 <Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
 
+## AnyTXT
+
+### Release Notes
+
+<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+
 ## Apkpure
 
 ### Versions
 
 <Route author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
+
+## App Center
+
+### Release
+
+<Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" :paramsDesc="['用户', 'App 名称', '分发组']" radar="1" rssbud="1">
+
+::: tip 提示
+
+参数可从 Release 页的 URL 中提取: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
+
+:::
+
+</Route>
 
 ## App Store/Mac App Store
 
@@ -68,27 +88,9 @@ pageClass: routes
 
 语言
 
-| English | en |
-| 中文 (简体) | cn |
-| 中文 (繁體) | tw |
-| 日本語 | jp |
-| Русский | ru |
-| Español | es |
-| Français | fr |
-| Deutsch | de |
-| Italiano | it |
-| Slovenčina | sk |
-| Українська | uk |
-| Беларуская | be |
-| Dansk | da |
-| Polski | pl |
-| Português Brasileiro | br |
-| Čeština | cs |
-| Nederlands | nl |
-| Slovenščina| sl |
-| Türkçe| tr  |
-| ภาษาไทย | th |
-| 한국어 | kr |
+| English | 中文 (简体) | 中文 (繁體) | 日本語 | Русский | Español | Français | Deutsch | Italiano | Slovenčina | Українська | Беларуская | Dansk | Polski | Português Brasileiro | Čeština | Nederlands | Slovenščina | Türkçe | ภาษาไทย | 한국어 |
+| ------- | ------- | ------- | --- | ------- | ------- | -------- | ------- | -------- | ---------- | ---------- | ---------- | ----- | ------ | -------------------- | ------- | ---------- | ----------- | ------ | ------- | --- |
+| en      | cn      | tw      | jp  | ru      | es      | fr       | de      | it       | sk         | uk         | be         | da    | pl     | br                   | cs      | nl         | sl          | tr     | th      | kr  |
 
 </Route>
 
@@ -98,9 +100,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" :paramsDesc="['客户端 id，见下表，默认为安卓版']">
 
-| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版          |
-| ------- | --------- | ---------- | ------ | -------------- |
-| android | iphone    | ipad       | win    | android_tv_yst |
+| 安卓版     | iPhone 版 | iPad HD 版 | UWP 版 | TV 版           |
+| ------- | -------- | --------- | ----- | -------------- |
+| android | iphone   | ipad      | win   | android_tv_yst |
 
 ## Bugly SDK
 
@@ -152,17 +154,51 @@ pageClass: routes
 
 </Route>
 
+## Ditto clipboard manager
+
+### Changes
+
+<Route author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" :paramsDesc="['类型，可选 `beta`']"/>
+
 ## Docker Hub
 
 ### 镜像有新 Build
 
-<Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']" radar="1" rssbud="1"/>
+<Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" :paramsDesc="['镜像作者', '镜像名称', '镜像标签，默认 latest']" radar="1" rssbud="1">
 
 ::: warning 注意
 
 官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/build/library/mysql>
 
 :::
+
+</Route>
+
+### 镜像有新 Tag
+
+<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" :paramsDesc="['镜像作者', '镜像名称', 'tag 数量，默认为 10']" radar="1" rssbud="1">
+
+::: warning 注意
+
+官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/tag/library/mysql>
+
+:::
+
+</Route>
+
+## Eagle
+
+### 更新日志
+
+<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog/:language?" :paramsDesc="['语言，选项见下表，默认为 `cn`']" radar="1">
+
+语言
+
+| 简体中文 | 繁体中文 | 英文 |
+| ---- | ---- | -- |
+| cn   | tw   | en |
+
+</Route>
 
 ## Everything
 
@@ -188,7 +224,7 @@ pageClass: routes
 
 <Route author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['操作平台']">
 
-| 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
+| 桌面      | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
@@ -204,11 +240,35 @@ pageClass: routes
 
 <Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']"/>
 
-## IPSW.me
+## Hugo
+
+### 更新日志
+
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
+## IPSW\.me
 
 ### 苹果固件更新 - IPSWs/OTAs 版本
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
+
+## Logseq
+
+### Changelog
+
+<Route author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+
+## MacKed
+
+### 应用更新
+
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
+
+## MacWk
+
+### 应用更新
+
+<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']" radar="1" rssbud="1"/>
 
 ## ManicTime
 
@@ -224,6 +284,12 @@ pageClass: routes
 
 <Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
 
+## Microsoft Store
+
+### Updates
+
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['在 Store 中点击 `分享` - `复制链接` 即可获得', '默认为 `CN`']" />
+
 ## Minecraft
 
 见 [#minecraft](/game.html#minecraft)
@@ -234,13 +300,13 @@ pageClass: routes
 
 <Route author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型', '地区, 默认为 `cn`']">
 
-| 类型   | type    |
-| ------ | ------- |
+| 类型  | type    |
+| --- | ------- |
 | 稳定版 | release |
 | 开发版 | dev     |
 
-| 地区   | region |
-| ------ | ------ |
+| 地区  | region |
+| --- | ------ |
 | 国内版 | cn     |
 | 国际版 | global |
 
@@ -258,6 +324,12 @@ pageClass: routes
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## Obsidian
+
+### Announcements
+
+<Route author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
+
 ## OneNote Gem Add-Ins
 
 ### Release History
@@ -270,6 +342,18 @@ pageClass: routes
 
 见 [#playstation](/game.html#playstation)
 
+## Potplayer
+
+### 版本历史
+
+<Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['语言，见下表，默认为英语']">
+
+| 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
+| --- | ------- | ------- | ------- | ---------- | ------- | ------ |
+| ko  | zh_CN   | zh_TW   | en      | uk         | ru      | pl     |
+
+</Route>
+
 ## QNAP
 
 ### Release Notes
@@ -281,6 +365,12 @@ pageClass: routes
 | qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
 
 </Route>
+
+## QQ 互联 SDK
+
+### 更新日志
+
+<Route author="nuomi1" example="/tencent/qq/sdk/changelog/iOS" path="/tencent/qq/sdk/changelog/:platform" :paramsDesc="['平台，iOS / Android']"/>
 
 ## QTTabBar
 
@@ -310,7 +400,7 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes/:lang?" radar="1" rssbud="1" :paramsDesc="['语言，`en` 为英文路由，其他值或留空则为中文路由，预设为中文路由']"/>
 
 ### 有新赞助商啦
 
@@ -321,6 +411,28 @@ pageClass: routes
 ### Release Notes
 
 <Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes"/>
+
+## Shuax
+
+### Project
+
+<Route author="nczitzk" example="/shuax/project/chrome" path="/shuax/project"  :paramsDesc="['项目名，见下表，默认为 MouseInc']">
+
+| MouseInc | Chrome | Edge |
+| -------- | ------ | ---- |
+| mouseinc | chrome | edge |
+
+</Route>
+
+## simpread
+
+### 消息通知
+
+<Route author="zytomorrow" example="/simpread/notice" path="/simpread/notice"/>
+
+### 更新日志
+
+<Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
 
 ## sketch.com
 
@@ -354,6 +466,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
 
+## X410
+
+### News
+
+<Route author="nczitzk" example="/x410/news" path="/x410/news"/>
+
 ## xclient.info
 
 ### 应用更新
@@ -384,18 +502,6 @@ pageClass: routes
 
 见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
 
-## 厚墨
-
-### 书源更新
-
-<Route author="AngUOI" example="/houmo/9251" path="/houmo/:code?" :paramsDesc="['不填则默认获取全部']">
-
-| 1212 | 2000 | 2333 | 6666   | 9251 | 9713 |
-| ---- | ---- | ---- | ------ | ---- | ---- |
-| 沚水 | 楚观 | 纯二 | 张小晚 | 归谜 | 旧人 |
-
-</Route>
-
 ## 蒲公英应用分发
 
 ### app 更新
@@ -408,12 +514,6 @@ pageClass: routes
 
 <Route author="mrbruce516" example="/tesla" path="/tesla/update"/>
 
-## 腾讯柠檬 Lab
-
-### 柠檬精选 Mac Apps
-
-<Route author="HenryQW" example="/tencent/lemon" path="/tencent/lemon"/>
-
 ## 腾讯云移动直播 SDK
 
 ### 更新日志
@@ -425,3 +525,23 @@ pageClass: routes
 ### 金米奖
 
 <Route author="nczitzk" example="/mi/golden" path="/mi/golden"/>
+
+## 猿料
+
+### 标签
+
+<Route author="nczitzk" example="/yuanliao" path="/yuanliao/:tag/:sort?" :paramsDesc="['标签，见下表，默认为 `utools`', '排序，见下表，默认为最新回复']">
+
+标签
+
+| uTools | 插件发布    |
+| ------ | ------- |
+| utools | plugins |
+
+排序
+
+| 最新回复 | 热门回复          | 新鲜出炉       | 陈年旧贴      |
+| ---- | ------------- | ---------- | --------- |
+|      | -commentCount | -createdAt | createdAt |
+
+</Route>

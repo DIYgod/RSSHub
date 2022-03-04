@@ -1,0 +1,3 @@
+{{ each imgUrlList }}
+<img src="{{ $value }}">
+{{ /each }}
