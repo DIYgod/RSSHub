@@ -60,6 +60,12 @@ Category
 
 <RouteEn author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['Language, `jp` as Japanese or `en` as English, English by default', 'Keyword']"/>
 
+## BBC News Labs
+
+### News
+
+<RouteEn author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
+
 ## Codeforces
 
 ### Latest contests
