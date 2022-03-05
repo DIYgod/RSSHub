@@ -311,6 +311,26 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']" />
 
+## HelloGitHub
+
+### 文章列表
+
+<Route author="moke8" example="/hellogithub/article" path="/hellogithub/article"/>
+
+### 编程语言排行榜
+
+<Route author="moke8" example="/hellogithub/ranking" path="/hellogithub/ranking/:type?" :paramsDesc="['分类，见下表']">
+
+| 编程语言排行 | 数据库排行 | 服务端语言排行   |
+| ------ | ----- | --------- |
+| tiobe  | db    | webserver |
+
+</Route>
+
+### 月刊
+
+<Route author="moke8" example="/hellogithub/month" path="/hellogithub/month"/>
+
 ## Hex-Rays
 
 ### Hex-Rays News
