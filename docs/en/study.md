@@ -48,6 +48,12 @@ pageClass: routes
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |
 
+## ORCID
+
+### Works List
+
+<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
+
 ## X-MOL
 
 ### News

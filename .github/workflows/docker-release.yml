@@ -10,13 +10,26 @@ on:
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
+  workflow_dispatch: ~
 
 jobs:
+  check-env:
+    runs-on: ubuntu-latest
+    outputs:
+      check-docker: ${{ steps.check-docker.outputs.defined }}
+    steps:
+      - id: check-docker
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        if: ${{ env.DOCKER_USERNAME != '' }}
+        run: echo "::set-output name=defined::true"
   release:
     runs-on: ubuntu-latest
+    needs: check-env
+    if: needs.check-env.outputs.check-docker == 'true'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
