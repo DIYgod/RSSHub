@@ -18,26 +18,26 @@ pageClass: routes
 
 分类
 
-| 全部 | 其他漫畫 | 同人   | 韓漫   | 美漫   | 短篇  | 單本   |
-| ---- | -------- | ------ | ------ | ------ | ----- | ------ |
-| all  | another  | doujin | hanman | meiman | short | single |
+| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 單本     |
+| --- | ------- | ------ | ------ | ------ | ----- | ------ |
+| all | another | doujin | hanman | meiman | short | single |
 
 时间范围
 
 | 全部 | 今天 | 这周 | 本月 |
-| ---- | ---- | ---- | ---- |
-| a    | t    | w    | m    |
+| -- | -- | -- | -- |
+| a  | t  | w  | m  |
 
 排列顺序
 
 | 最新 | 最多点阅 | 最多图片 | 最爱 |
-| ---- | -------- | -------- | ---- |
-| mr   | mv       | mp       | tf   |
+| -- | ---- | ---- | -- |
+| mr | mv   | mp   | tf |
 
 关键字（供参考）
 
 | YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
-| ---- | ------ | --- | ---- | -- | ---- |
+| ---- | --- | --- | --- | -- | -- |
 
 </Route>
 
@@ -71,9 +71,9 @@ pageClass: routes
 
 分类
 
-| 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |
-| ---- | -------- | -------- | -------- | -------- |
-|      | dinner   | raiders  | jg       | figure   |
+| 全部 | 紳夜食堂   | 遊戲文庫    | JG GAMES | 模型山下   |
+| -- | ------ | ------- | -------- | ------ |
+|    | dinner | raiders | jg       | figure |
 
 </Route>
 
@@ -131,8 +131,8 @@ pageClass: routes
 <Route author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="['板块类型']">
 
 | 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-| zx   | jd   | dh   | mh   | yx   | xs   | zrb    | hd   | yy   | ft   | qt   | xwg    | lrb    | gg   |
+| -- | -- | -- | -- | -- | -- | --- | -- | -- | -- | -- | --- | --- | -- |
+| zx | jd | dh | mh | yx | xs | zrb | hd | yy | ft | qt | xwg | lrb | gg |
 
 </Route>
 
@@ -190,9 +190,9 @@ pageClass: routes
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
-| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL |
-| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | -- |
-| home | comic | soft | maniax     | books      | pro        | girls | bl |
+| 同人   | 漫画    | 软件   | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女    | BL |
+| ---- | ----- | ---- | -------- | -------- | ----- | ----- | -- |
+| home | comic | soft | maniax   | books    | pro   | girls | bl |
 
 </Route>
 
@@ -227,9 +227,9 @@ pageClass: routes
 
 分类
 
-| 全部 | 手办  | 模型  |
-| ---- | ----- | ----- |
-| all  | hobby | model |
+| 全部  | 手办    | 模型    |
+| --- | ----- | ----- |
+| all | hobby | model |
 
 </Route>
 
@@ -237,9 +237,9 @@ pageClass: routes
 
 <Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '角色/作品 ID']">
 
-| 角色手办  | 作品手办 |
-| --------- | -------- |
-| charactar | works    |
+| 角色手办      | 作品手办  |
+| --------- | ----- |
+| charactar | works |
 
 </Route>
 
@@ -247,9 +247,9 @@ pageClass: routes
 
 <Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
 
-| 想买 | 预定     | 已入 | 关注 | 有过   |
-| ---- | -------- | ---- | ---- | ------ |
-| want | preorder | buy  | care | resell |
+| 想买   | 预定       | 已入  | 关注   | 有过     |
+| ---- | -------- | --- | ---- | ------ |
+| want | preorder | buy | care | resell |
 
 </Route>
 
@@ -259,9 +259,9 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['用户昵称', 'type 默认为 video']" radar="1" rssbud="1">
 
-| type |  视频 |  图片 |
+| type |   视频  |   图片  |
 | :--: | :---: | :---: |
-| 参数 | video | image |
+|  参数  | video | image |
 
 </Route>
 
@@ -313,7 +313,7 @@ Sources
 
 <Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" :paramsDesc="['模式']">
 
-| 连载   | 完结   |
+| 连载     | 完结     |
 | ------ | ------ |
 | serial | finish |
 
@@ -330,6 +330,12 @@ Sources
 ### [Naver](https://comic.naver.com)
 
 <Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId']" />
+
+## X 漫画
+
+### 最新动态
+
+<Route author="Ye11" example="/xmanhua" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
 
 ## 包子漫画
 
@@ -370,18 +376,18 @@ Sources
 语言
 
 | 中文 | 日文 | 韩文 |
-| ---- | ---- | ---- |
-| cn   | ja   | ko   |
+| -- | -- | -- |
+| cn | ja | ko |
 
 类型
 
-| 最新情报 | 连载   | 特辑       | 小说   | 漫画   | 新闻 |
-| -------- | ------ | ---------- | ------ | ------ | ---- |
-| index    | series | interviews | novels | comics | news |
+| 最新情报  | 连载     | 特辑         | 小说     | 漫画     | 新闻   |
+| ----- | ------ | ---------- | ------ | ------ | ---- |
+| index | series | interviews | novels | comics | news |
 
-| 音乐点评     | 游戏测评    | 同人作品感想 | 关于本站      |
-| ------------ | ----------- | ------------ | ------------- |
-| music_review | game_review | book_review  | where_are_you |
+| 音乐点评         | 游戏测评        | 同人作品感想      | 关于本站          |
+| ------------ | ----------- | ----------- | ------------- |
+| music_review | game_review | book_review | where_are_you |
 
 **注：** 最新情报包括后面所有类型的文章，内容较多，谨慎使用。
 
@@ -491,9 +497,9 @@ Sources
 
 <Route author="nczitzk" example="/qq/ac/rank" path="/qq/ac/rank/:type?/:time?" :paramsDesc="['分类，见下表，默认为月票榜', '时间，`cur` 为当周、`prev` 为上周']" radar="1" rssbud="1">
 
-| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
-| ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-| mt     | rise   | new    | pay    | top    | male   | female |
+| 月票榜 | 飙升榜  | 新作榜 | 畅销榜 | TOP100 | 男生榜  | 女生榜    |
+| --- | ---- | --- | --- | ------ | ---- | ------ |
+| mt  | rise | new | pay | top    | male | female |
 
 ::: tip 提示
 

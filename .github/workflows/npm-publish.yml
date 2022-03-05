@@ -9,11 +9,12 @@ on:
 
 jobs:
   build:
+    name: npm publish
     if: github.repository == 'DIYgod/RSSHub'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.0.0
         with:
           node-version: '14'
           cache: 'yarn'

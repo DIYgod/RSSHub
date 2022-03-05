@@ -52,11 +52,11 @@ pageClass: routes
 | --------------- | ------------- | ------------------ | -------------- |
 | pharmaceuticals | mental-health | diet-and-nutrition | arts-culture   |
 
-| Fact Check | ABC 中文 | 澳洲时政           | 聚焦中港台     |
-| ---------- | -------- | ------------------ | -------------- |
-| factcheck  | chinese  | australia-politics | focus-on-china |
+| Fact Check | ABC 中文  | 澳洲时政               | 聚焦中港台          |
+| ---------- | ------- | ------------------ | -------------- |
+| factcheck  | chinese | australia-politics | focus-on-china |
 
-| 观点与分析              | 澳洲华人             | 解读澳洲          | Berita dalam Bahasa Indonesia | Tok Pisin |
+| 观点与分析                   | 澳洲华人                 | 解读澳洲              | Berita dalam Bahasa Indonesia | Tok Pisin |
 | ----------------------- | -------------------- | ----------------- | ----------------------------- | --------- |
 | analysis-and-opinion-zh | chinese-in-australia | curious-australia | indonesian                    | tok-pisin |
 
@@ -66,7 +66,7 @@ pageClass: routes
 
 ### 话题
 
-<Route author="mjysci" example="/apnews/topics2/ap-top-news" path="/apnews/topics2/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
+<Route author="mjysci" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
 采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
 
 ## BBC
@@ -90,7 +90,7 @@ pageClass: routes
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-支持大部分频道，频道名称见 [BBC 中文网官方 RSS](https://www.bbc.com/zhongwen/simp/services/2009/09/000000_rss)。
+支持大部分频道，频道名称见 [BBC 中文网官方 RSS](https://www.bbc.com/zhongwen/simp/services/2009/09/000000\_rss)。
 
 简体版：
 
@@ -136,9 +136,9 @@ pageClass: routes
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| 全部 | The China NGO Project |
-| ---- | --------------------- |
-| all  | ngo                   |
+| 全部  | The China NGO Project |
+| --- | --------------------- |
+| all | ngo                   |
 
 </Route>
 
@@ -201,7 +201,7 @@ pageClass: routes
     -   `plain`: 全文输出为纯文字
     -   `brief`: 输出为 100 字简讯
 
--   全文输出转换为简体字：`?opencc=t2s`  
+-   全文输出转换为简体字：`?opencc=t2s`
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
 
 </Route>
@@ -228,21 +228,21 @@ pageClass: routes
 
 **编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
 
-对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123&topicId=1056) 话题，其网址为<https://news.now.com/home/tracker/detail?catCode=123&topicId=1056>，其中 `topicId` 为 1056，则对应路由为 [`/now/news/tracker/1056`](https://rsshub.app/now/news/tracker/1056)
+对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123\&topicId=1056) 话题，其网址为<https://news.now.com/home/tracker/detail?catCode=123&topicId=1056>，其中 `topicId` 为 1056，则对应路由为 [`/now/news/tracker/1056`](https://rsshub.app/now/news/tracker/1056)
 
 :::
 
-| 首頁 | 港聞  | 兩岸國際      | 娛樂          |
-| ---- | ----- | ------------- | ------------- |
-|      | local | international | entertainment |
+| 首頁 | 港聞    | 兩岸國際          | 娛樂            |
+| -- | ----- | ------------- | ------------- |
+|    | local | international | entertainment |
 
-| 生活 | 科技       | 財經    | 體育   |
+| 生活   | 科技         | 財經      | 體育     |
 | ---- | ---------- | ------- | ------ |
 | life | technology | finance | sports |
 
-| 事件追蹤 | 評論節目 | 新聞專題 |
-| -------- | -------- | -------- |
-| tracker  | feature  | opinion  |
+| 事件追蹤    | 評論節目    | 新聞專題    |
+| ------- | ------- | ------- |
+| tracker | feature | opinion |
 
 </Route>
 
@@ -262,13 +262,13 @@ pageClass: routes
 
 细则：
 
--   `:range` 时间范围参数  
+-   `:range` 时间范围参数
     (可为 `latest` 或 `四位数字的年份`)
 
     -   `latest`: 最新的 50 篇文章
     -   `2020`: 2020 年的所有文章
 
--   全文输出转换为简体字: `?opencc=t2s`  
+-   全文输出转换为简体字: `?opencc=t2s`
     (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
 
 </Route>
@@ -285,35 +285,35 @@ pageClass: routes
 
 :::
 
-| 新闻 | 澳大利亚新闻    | 国际新闻           | ​商业与财经      |
+| 新闻   | 澳大利亚新闻          | 国际新闻               | ​商业与财经           |
 | ---- | --------------- | ------------------ | ---------------- |
 | news | australian-news | international-news | business-finance |
 
-| 澳中关系                  | ​移民与签证 | Stories in English |
+| 澳中关系                      | ​移民与签证      | Stories in English |
 | ------------------------- | ----------- | ------------------ |
 | australia-china-relations | immigration | english            |
 
-| COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
-| ----------------- | ------------------ | ----------------- | --------- |
-| coronavirus       | australian-chinese | life-in-australia | education |
+| COVID-19 专题报道 | 澳大利亚华人             | 澳大利亚生活            | 教育        |
+| ------------- | ------------------ | ----------------- | --------- |
+| coronavirus   | australian-chinese | life-in-australia | education |
 
-| 健康   | 吃喝玩乐                  | 艺术人文        | 澳洲定居指南     |
+| 健康     | 吃喝玩乐                      | 艺术人文            | 澳洲定居指南           |
 | ------ | ------------------------- | --------------- | ---------------- |
 | health | food-travel-entertainment | cultural-events | settlement-guide |
 
 SBS 普通话节目：
 
-| SBS 普通话播客 | 解读澳洲            | 疫苗快报                   |
-| -------------- | ------------------- | -------------------------- |
-| sbs-mandarin   | australia-explained | covid-vaccine-daily-update |
+| SBS 普通话播客    | 解读澳洲                | 疫苗快报                       |
+| ------------ | ------------------- | -------------------------- |
+| sbs-mandarin | australia-explained | covid-vaccine-daily-update |
 
 SBS 廣東話節目：
 
-| SBS 廣東話節目 Podcast | 疫苗快報            | 美食速遞        | 我不是名人          |
-| ---------------------- | ------------------- | --------------- | ------------------- |
-| sbs-cantonese          | covid-vaccine-daily | gourmet-express | my-australian-story |
+| SBS 廣東話節目 Podcast | 疫苗快報                | 美食速遞            | 我不是名人               |
+| ----------------- | ------------------- | --------------- | ------------------- |
+| sbs-cantonese     | covid-vaccine-daily | gourmet-express | my-australian-story |
 
-| 健康快樂人         | 園藝趣談       | 寰宇金融       | 文化 360    | 科技世界         |
+| 健康快樂人              | 園藝趣談           | 寰宇金融           | 文化 360      | 科技世界             |
 | ------------------ | -------------- | -------------- | ----------- | ---------------- |
 | healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
 
@@ -341,9 +341,9 @@ Solidot 提供的 feed:
 
 :::
 
-| 全部 | 创业    | Linux | 科学    | 科技       | 移动   | 苹果  | 硬件     | 软件     | 安全     | 游戏  | 书籍  | ask | idle | 博客 | 云计算 | 奇客故事 |
-| ---- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ------ | -------- |
-| www  | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud  | story    |
+| 全部  | 创业      | Linux | 科学      | 科技         | 移动     | 苹果    | 硬件       | 软件       | 安全       | 游戏    | 书籍    | ask | idle | 博客   | 云计算   | 奇客故事  |
+| --- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ----- | ----- |
+| www | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud | story |
 
 </Route>
 
@@ -419,7 +419,7 @@ Solidot 提供的 feed:
 
 `语言`
 
-| 粵語      | 中文    | 藏語    |
+| 粵語        | 中文      | 藏語      |
 | --------- | ------- | ------- |
 | cantonese | chinese | tibetan |
 
@@ -440,14 +440,14 @@ Solidot 提供的 feed:
 `地区`
 
 | 香港 | 台灣 | 美國 |
-| ---- | ---- | ---- |
-| hk   | tw   | en   |
+| -- | -- | -- |
+| hk | tw | en |
 
 `类別`
 
-| 新聞總集 | 兩岸國際 | 財經     | 娛樂          | 體育   | 健康   |
-| -------- | -------- | -------- | ------------- | ------ | ------ |
-| （空）   | world    | business | entertainment | sports | health |
+| 新聞總集 | 兩岸國際  | 財經       | 娛樂            | 體育     | 健康     |
+| ---- | ----- | -------- | ------------- | ------ | ------ |
+| （空）  | world | business | entertainment | sports | health |
 
 </Route>
 
@@ -483,19 +483,19 @@ Provides all of the articles by the specified Yahoo! author.
 
 Column 列表：
 
-| 经济    | 金融    | 政经  | 环科    | 世界          | 观点网  | 文化    | 周刊   |
+| 经济      | 金融      | 政经    | 环科      | 世界            | 观点网     | 文化      | 周刊     |
 | ------- | ------- | ----- | ------- | ------------- | ------- | ------- | ------ |
 | economy | finance | china | science | international | opinion | culture | weekly |
 
 以金融板块为例的 category 列表：（其余 column 以类似方式寻找）
 
-| 监管       | 银行 | 证券基金 | 信托保险        | 投资       | 创新       | 市场   |
-| ---------- | ---- | -------- | --------------- | ---------- | ---------- | ------ |
-| regulation | bank | stock    | insurance_trust | investment | innovation | market |
+| 监管         | 银行   | 证券基金  | 信托保险            | 投资         | 创新         | 市场     |
+| ---------- | ---- | ----- | --------------- | ---------- | ---------- | ------ |
+| regulation | bank | stock | insurance_trust | investment | innovation | market |
 
 Category 列表：
 
-| 封面报道   | 开卷  | 社论      | 时事            | 编辑寄语    | 经济    | 金融    | 商业     | 环境与科技             | 民生    | 副刊   |
+| 封面报道       | 开卷    | 社论        | 时事              | 编辑寄语        | 经济      | 金融      | 商业       | 环境与科技                  | 民生      | 副刊     |
 | ---------- | ----- | --------- | --------------- | ----------- | ------- | ------- | -------- | ---------------------- | ------- | ------ |
 | coverstory | first | editorial | current_affairs | editor_desk | economy | finance | business | environment_technology | cwcivil | column |
 
@@ -549,57 +549,57 @@ Category 列表：
 
 社会 national
 
-| 事件・事故・裁判 | 災害・交通情報 | その他・話題 | おくやみ   |
-| ---------------- | -------------- | ------------ | ---------- |
-| incident         | calamity       | etc          | obituaries |
+| 事件・事故・裁判 | 災害・交通情報  | その他・話題 | おくやみ       |
+| -------- | -------- | ------ | ---------- |
+| incident | calamity | etc    | obituaries |
 
 経済 business
 
-| 産業・商品 | 金融・財政 | 経済政策       | 労働・雇用 | 市況・統計 |
-| ---------- | ---------- | -------------- | ---------- | ---------- |
-| industry   | finance    | economicpolicy | work       | statistics |
+| 産業・商品    | 金融・財政   | 経済政策           | 労働・雇用 | 市況・統計      |
+| -------- | ------- | -------------- | ----- | ---------- |
+| industry | finance | economicpolicy | work  | statistics |
 
 政治 politics
 
-| 国政       | 地方政治 | 発言録       | 世論調査 |
-| ---------- | -------- | ------------ | -------- |
-| government | local    | hatsugenroku | yoron    |
+| 国政         | 地方政治  | 発言録          | 世論調査  |
+| ---------- | ----- | ------------ | ----- |
+| government | local | hatsugenroku | yoron |
 
 国際 international
 
-| アジア・太平洋 | 北米     | 中南米   | ヨーロッパ | 中東       | アフリカ | 国連・その他 |
-| -------------- | -------- | -------- | ---------- | ---------- | -------- | ------------ |
-| asia           | namerica | samerica | europe     | middleeast | africa   | etc          |
+| アジア・太平洋 | 北米       | 中南米      | ヨーロッパ  | 中東         | アフリカ   | 国連・その他 |
+| ------- | -------- | -------- | ------ | ---------- | ------ | ------ |
+| asia    | namerica | samerica | europe | middleeast | africa | etc    |
 
 スポーツ sports
 
-| 野球     | サッカー | 相撲 | フィギュア         | ゴルフ | 一般スポーツ | 東京オリンピック 2020 | 東京パラリンピック 2020 |
-| -------- | -------- | ---- | ------------------ | ------ | ------------ | --------------------- | ----------------------- |
-| baseball | soccer   | sumo | winter_figureskate | golf   | general      | olympics              | paralympics             |
+| 野球       | サッカー   | 相撲   | フィギュア              | ゴルフ  | 一般スポーツ  | 東京オリンピック 2020 | 東京パラリンピック 2020 |
+| -------- | ------ | ---- | ------------------ | ---- | ------- | ------------- | -------------- |
+| baseball | soccer | sumo | winter_figureskate | golf | general | olympics      | paralympics    |
 
 IT・科学 tech_science
 
-| 環境・エネルギー | 科学    | デジもの | 企業・サービス | 製品ファイル |
-| ---------------- | ------- | -------- | -------------- | ------------ |
-| eco              | science | digital  | service        | products     |
+| 環境・エネルギー | 科学      | デジもの    | 企業・サービス | 製品ファイル   |
+| -------- | ------- | ------- | ------- | -------- |
+| eco      | science | digital | service | products |
 
 文化・芸能 culture
 
-| 映画   | 音楽  | アイドル | アート | テレビ・芸能 | 舞台・演芸 | マンガ・アニメ・ゲーム | ひと・歴史 | 囲碁 | 将棋   |
-| ------ | ----- | -------- | ------ | ------------ | ---------- | ---------------------- | ---------- | ---- | ------ |
-| movies | music | idol     | art    | showbiz      | stage      | manga                  | history    | igo  | shougi |
+| 映画     | 音楽    | アイドル | アート | テレビ・芸能  | 舞台・演芸 | マンガ・アニメ・ゲーム | ひと・歴史   | 囲碁  | 将棋     |
+| ------ | ----- | ---- | --- | ------- | ----- | ----------- | ------- | --- | ------ |
+| movies | music | idol | art | showbiz | stage | manga       | history | igo | shougi |
 
 ライフ life
 
-| 介護      | 働き方・就活 | 食・料理 |
-| --------- | ------------ | -------- |
-| eldercare | hataraku     | food     |
+| 介護        | 働き方・就活   | 食・料理 |
+| --------- | -------- | ---- |
+| eldercare | hataraku | food |
 
 教育・子育て edu
 
-| 小中高  | 大学       | 教育制度・話題 | 教育問題 | 地域の教育ニュース | 吹奏楽    | 合唱   | 子育て   | ハグスタ |
-| ------- | ---------- | -------------- | -------- | ------------------ | --------- | ------ | -------- | -------- |
-| student | university | system         | issue    | chiiki             | suisogaku | gassho | hagukumu | msta     |
+| 小中高     | 大学         | 教育制度・話題 | 教育問題  | 地域の教育ニュース | 吹奏楽       | 合唱     | 子育て      | ハグスタ |
+| ------- | ---------- | ------- | ----- | --------- | --------- | ------ | -------- | ---- |
+| student | university | system  | issue | chiiki    | suisogaku | gassho | hagukumu | msta |
 
 </Route>
 
@@ -609,37 +609,37 @@ IT・科学 tech_science
 
 北海道・東北
 
-| 北海道   | 青森   | 秋田  | 岩手  | 山形     | 宮城   | 福島      |
+| 北海道      | 青森     | 秋田    | 岩手    | 山形       | 宮城     | 福島        |
 | -------- | ------ | ----- | ----- | -------- | ------ | --------- |
 | hokkaido | aomori | akita | iwate | yamagata | miyagi | fukushima |
 
 関東
 
-| 群馬  | 茨城    | 栃木    | 埼玉    | 千葉  | 東京  | 神奈川   |
+| 群馬    | 茨城      | 栃木      | 埼玉      | 千葉    | 東京    | 神奈川      |
 | ----- | ------- | ------- | ------- | ----- | ----- | -------- |
 | gunma | ibaraki | tochigi | saitama | chiba | tokyo | kanagawa |
 
 東海・甲信越
 
-| 静岡     | 岐阜 | 愛知  | 三重 | 新潟    | 山梨      | 長野   |
-| -------- | ---- | ----- | ---- | ------- | --------- | ------ |
-| shizuoka | gifu | aichi | mie  | niigata | yamanashi | nagano |
+| 静岡       | 岐阜   | 愛知    | 三重  | 新潟      | 山梨        | 長野     |
+| -------- | ---- | ----- | --- | ------- | --------- | ------ |
+| shizuoka | gifu | aichi | mie | niigata | yamanashi | nagano |
 
 近畿・北陸
 
-| 滋賀  | 京都  | 奈良 | 和歌山   | 大阪  | 兵庫  | 富山   | 石川     | 福井  |
+| 滋賀    | 京都    | 奈良   | 和歌山      | 大阪    | 兵庫    | 富山     | 石川       | 福井    |
 | ----- | ----- | ---- | -------- | ----- | ----- | ------ | -------- | ----- |
 | shiga | kyoto | nara | wakayama | osaka | hyogo | toyama | ishikawa | fukui |
 
 中国・四国
 
-| 鳥取    | 島根    | 岡山    | 広島      | 山口      | 香川   | 愛媛  | 徳島      | 高知  |
+| 鳥取      | 島根      | 岡山      | 広島        | 山口        | 香川     | 愛媛    | 徳島        | 高知    |
 | ------- | ------- | ------- | --------- | --------- | ------ | ----- | --------- | ----- |
 | tottori | shimane | okayama | hiroshima | yamaguchi | kagawa | ehime | tokushima | kochi |
 
 九州・沖縄
 
-| 福岡    | 大分 | 宮崎     | 鹿児島    | 佐賀 | 長崎     | 熊本     | 沖縄    |
+| 福岡      | 大分   | 宮崎       | 鹿児島       | 佐賀   | 長崎       | 熊本       | 沖縄      |
 | ------- | ---- | -------- | --------- | ---- | -------- | -------- | ------- |
 | fukuoka | oita | miyazaki | kagoshima | saga | nagasaki | kumamoto | okinawa |
 
@@ -665,6 +665,21 @@ IT・科学 tech_science
 
 <Route author="nczitzk" example="/eastday/portrait" path="/eastday/portrait"/>
 
+### 24 小时热闻
+
+<Route author="nczitzk" example="/eastday/24" path="/eastday/24/:category?" :paramsDesc="['分类，见下表，默认为社会']">
+
+| 推荐 | 社会 | 娱乐 | 国际 | 军事 |
+| -- | -- | -- | -- | -- |
+
+| 养生 | 汽车 | 体育 | 财经 | 游戏 |
+| -- | -- | -- | -- | -- |
+
+| 科技 | 国内 | 宠物 | 情感 | 人文 | 教育 |
+| -- | -- | -- | -- | -- | -- |
+
+</Route>
+
 ## 东网
 
 <Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
@@ -685,9 +700,9 @@ IT・科学 tech_science
 
 无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 新着・速報 | 　　社会 | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      |
-| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- |
-| 　news 　  | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial |
+| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |
+| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- |
+| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial |
 
 </Route>
 
@@ -707,7 +722,7 @@ IT・科学 tech_science
 
 Type 栏目：
 
-| 最新   | 深度    | What’s New | 广场              | 科技       | 风物    | 特约    | ... |
+| 最新     | 深度      | What’s New | 广场                | 科技         | 风物      | 特约      | ... |
 | ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
 | latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
 
@@ -732,6 +747,7 @@ Type 栏目：
 需要自建，详情见部署页面的配置模块。
 
 :::
+
 </Route>
 
 ## 多维新闻网
@@ -740,7 +756,7 @@ Type 栏目：
 
 <Route author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
 
-| 全部   | 国际   | 中国  | 香港     | 台湾   | 经济   | 视觉   |
+| 全部     | 国际     | 中国    | 香港       | 台湾     | 经济     | 视觉     |
 | ------ | ------ | ----- | -------- | ------ | ------ | ------ |
 | yaowen | global | china | hongkong | taiwan | jingji | shijue |
 
@@ -774,9 +790,9 @@ Type 栏目：
 
 ### 实时快讯
 
-<Route author="nczitzk" example="/wallstreetcn/live" path="/wallstreetcn/live/:channel?" :paramsDesc="['快讯分类，默认`global`，见下表']">
+<Route author="nczitzk" example="/wallstreetcn/live" path="/wallstreetcn/live/:category?/:score?" :paramsDesc="['快讯分类，默认`global`，见下表', '快讯重要度，默认`1`全部快讯，可设置为`2`只看重要的']">
 
-| 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
+| 要闻     | A 股     | 美股       | 港股       | 外汇    | 商品        | 理财        |
 | ------ | ------- | -------- | -------- | ----- | --------- | --------- |
 | global | a-stock | us-stock | hk-stock | forex | commodity | financing |
 
@@ -848,45 +864,45 @@ TMT tmt [`/eeo/tmt`](http://rsshub.app/eeo/tmt)
 
 时事・政策・宏观 yaowen [`/eeo/yaowen`](http://rsshub.app/eeo/yaowen)
 
-| 时事  | 政策   | 宏观    | 智库       | 首席观点 | 大宗商品 |
-| ----- | ------ | ------- | ---------- | -------- | -------- |
-| dashi | hfggzc | hfshuju | hfdongjian | sxgd     | dzsp     |
+| 时事    | 政策     | 宏观      | 智库         | 首席观点 | 大宗商品 |
+| ----- | ------ | ------- | ---------- | ---- | ---- |
+| dashi | hfggzc | hfshuju | hfdongjian | sxgd | dzsp |
 
 证券・资本・理财 jinrong [`/eeo/jinrong`](http://rsshub.app/eeo/jinrong)
 
-| 债市    | 资本  | 理财  | 证券      | 银行  |
+| 债市      | 资本    | 理财    | 证券        | 银行    |
 | ------- | ----- | ----- | --------- | ----- |
 | zhaishi | ziben | licai | zhengquan | jijin |
 
-| 保险    | PE / 创投 | 科创板      | 新三板    | 互联网金融 |
-| ------- | --------- | ----------- | --------- | ---------- |
-| jinkong | chuangtou | kechuangban | xinsanban | hlwjr      |
+| 保险      | PE / 创投   | 科创板         | 新三板       | 互联网金融 |
+| ------- | --------- | ----------- | --------- | ----- |
+| jinkong | chuangtou | kechuangban | xinsanban | hlwjr |
 
 新科技・互联网・O2O shangye [`/eeo/shangye`](http://rsshub.app/eeo/shangye)
 
-| 新科技      | 互联网    | 大健康 | O2O   | 花蕾之约     | 创业家笔记 | 环境     |
-| ----------- | --------- | ------ | ----- | ------------ | ---------- | -------- |
-| xinnengyuan | dianshang | yiliao | wuliu | hualeizhiyue | cyjbj      | huanjing |
+| 新科技         | 互联网       | 大健康    | O2O   | 花蕾之约         | 创业家笔记 | 环境       |
+| ----------- | --------- | ------ | ----- | ------------ | ----- | -------- |
+| xinnengyuan | dianshang | yiliao | wuliu | hualeizhiyue | cyjbj | huanjing |
 
 房产・汽车・消费 fcqcxf [`/eeo/fcqcxf`](http://rsshub.app/eeo/fcqcxf)
 
-| 房产   | 汽车  | 消费    |
+| 房产     | 汽车    | 消费      |
 | ------ | ----- | ------- |
 | dichan | qiche | xiaofei |
 
 影视・体育・娱乐 yule [`/eeo/yule`](http://rsshub.app/eeo/yule)
 
-| 娱乐 | 影视    | 体育 | 教育   |
+| 娱乐   | 影视      | 体育   | 教育     |
 | ---- | ------- | ---- | ------ |
 | yule | yingshi | tiyu | jiaoyu |
 
 观察家・书评・思想 gcj [`/eeo/gcj`](http://rsshub.app/eeo/gcj)
 
-| 观察家     | 专栏     | 个人历史 | 书评    |
-| ---------- | -------- | -------- | ------- |
-| guanchajia | zhuanlan | lishi    | shuping |
+| 观察家        | 专栏       | 个人历史  | 书评      |
+| ---------- | -------- | ----- | ------- |
+| guanchajia | zhuanlan | lishi | shuping |
 
-| 纵深     | 文化   | 领读   |
+| 纵深       | 文化     | 领读     |
 | -------- | ------ | ------ |
 | zongshen | wenhua | lingdu |
 
@@ -899,8 +915,8 @@ TMT tmt [`/eeo/tmt`](http://rsshub.app/eeo/tmt)
 category 对应的关键词有
 
 | 时事 | 政策 | 证券 | 资本 | 理财 | 新科技 | 大健康 | 房产 | 汽车 | 消费 | 影视 | 娱乐 | 体育 | 教育 | 观察家 | 专栏 | 书评 | 个人历史 | 宏观 |
-| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | -------- | ---- |
-| 01   | 02   | 03   | 04   | 05   | 06     | 07     | 08   | 09   | 10   | 11   | 12   | 13   | 14   | 15     | 16   | 17   | 18       | 19   |
+| -- | -- | -- | -- | -- | --- | --- | -- | -- | -- | -- | -- | -- | -- | --- | -- | -- | ---- | -- |
+| 01 | 02 | 03 | 04 | 05 | 06  | 07  | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15  | 16 | 17 | 18   | 19 |
 
 </Route>
 
@@ -924,7 +940,7 @@ category 对应的关键词有
 
 <Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类，缺省为 china']">
 
-| 中国  | 新加坡    | 国际  | 财经     |
+| 中国    | 新加坡       | 国际    | 财经       |
 | ----- | --------- | ----- | -------- |
 | china | singapore | world | zfinance |
 
@@ -934,9 +950,9 @@ category 对应的关键词有
 
 <Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类，缺省为 china']">
 
-| 中国  | 新加坡    | 东南亚 | 国际  | 体育   |
-| ----- | --------- | ------ | ----- | ------ |
-| china | singapore | sea    | world | sports |
+| 中国    | 新加坡       | 东南亚 | 国际    | 体育     |
+| ----- | --------- | --- | ----- | ------ |
+| china | singapore | sea | world | sports |
 
 </Route>
 
@@ -962,21 +978,21 @@ category 对应的关键词有
 
     -   主频道：
 
-    | 深度分析 | 时事要闻    | 生活 | 投资      |
+    | 深度分析     | 时事要闻        | 生活   | 投资        |
     | -------- | ----------- | ---- | --------- |
     | analyses | generalnews | life | investing |
 
     -   资讯子频道：
 
-    | 中国财经 | 国际财经              | 新闻人物  | 财经视点 |
-    | -------- | --------------------- | --------- | -------- |
-    | china    | internationalbusiness | newsmaker | opinions |
+    | 中国财经  | 国际财经                  | 新闻人物      | 财经视点     |
+    | ----- | --------------------- | --------- | -------- |
+    | china | internationalbusiness | newsmaker | opinions |
 
     -   专栏子频道：
 
-    | 中国财经专栏 | 国际财经专栏 | 大宗商品专栏 |
-    | ------------ | ------------ | ------------ |
-    | CnColumn     | IntColumn    | ComColumn    |
+    | 中国财经专栏   | 国际财经专栏    | 大宗商品专栏    |
+    | -------- | --------- | --------- |
+    | CnColumn | IntColumn | ComColumn |
 
 -   美国分站 `us`：
 
@@ -1003,37 +1019,37 @@ category 对应的关键词有
 <Route author="TonyRL" example="/mingpao/ins/all" path="/mingpao/ins/:category?" :paramsDesc="['频道，预设为总目录']"/>
 
 | category | 即时新闻频道 |
-| -------- | ------------ |
-| all      | 总目录       |
-| s00001   | 港闻         |
-| s00002   | 经济         |
-| s00003   | 地产         |
-| s00004   | 两岸         |
-| s00005   | 国际         |
-| s00006   | 体育         |
-| s00007   | 娱乐         |
-| s00022   | 文摘         |
-| s00024   | 热点         |
+| -------- | ------ |
+| all      | 总目录    |
+| s00001   | 港闻     |
+| s00002   | 经济     |
+| s00003   | 地产     |
+| s00004   | 两岸     |
+| s00005   | 国际     |
+| s00006   | 体育     |
+| s00007   | 娱乐     |
+| s00022   | 文摘     |
+| s00024   | 热点     |
 
 ### 每日明报
 
 <Route author="TonyRL" example="/mingpao/pns/s00001" path="/mingpao/pns/:category?" :paramsDesc="['频道，预设为要闻']"/>
 
 | category | 每日明报频道 |
-| -------- | ------------ |
-| s00001   | 要闻         |
-| s00002   | 港闻         |
-| s00003   | 社评         |
-| s00004   | 经济         |
-| s00005   | 副刊         |
-| s00011   | 教育         |
-| s00012   | 观点         |
-| s00013   | 中国         |
-| s00014   | 国际         |
-| s00015   | 体育         |
-| s00016   | 娱乐         |
-| s00017   | 英文         |
-| s00018   | 作家专栏     |
+| -------- | ------ |
+| s00001   | 要闻     |
+| s00002   | 港闻     |
+| s00003   | 社评     |
+| s00004   | 经济     |
+| s00005   | 副刊     |
+| s00011   | 教育     |
+| s00012   | 观点     |
+| s00013   | 中国     |
+| s00014   | 国际     |
+| s00015   | 体育     |
+| s00016   | 娱乐     |
+| s00017   | 英文     |
+| s00018   | 作家专栏   |
 
 ## 南方周末
 
@@ -1043,9 +1059,9 @@ category 对应的关键词有
 
 下面给出部分参考：
 
-| 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 1    | 2    | 3    | 4    | 7    | 8    | 6    | 5    | 131  |
+| 推荐 | 新闻 | 观点 | 文化 | 人物 | 影像 | 专题 | 生活 | 视频  |
+| -- | -- | -- | -- | -- | -- | -- | -- | --- |
+| 1  | 2  | 3  | 4  | 7  | 8  | 6  | 5  | 131 |
 
 </Route>
 
@@ -1067,9 +1083,9 @@ category 对应的关键词有
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-| 默认中文 | 中英对照 | 英文 | 中英对照 （繁体中文）   | 繁体中文           |
-| -------- | -------- | ---- | ----------------------- | ------------------ |
-| （空）   | dual     | en   | dual-traditionalchinese | traditionalchinese |
+| 默认中文 | 中英对照 | 英文 | 中英对照 （繁体中文）             | 繁体中文               |
+| ---- | ---- | -- | ----------------------- | ------------------ |
+| （空）  | dual | en | dual-traditionalchinese | traditionalchinese |
 
 </Route>
 
@@ -1082,19 +1098,19 @@ category 对应的关键词有
 
 <Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
 
-| Category                             | 中文              |
-| ------------------------------------ | ----------------- |
-| combined-print-and-e-book-nonfiction | 非虚构类 - 综合   |
+| Category                             | 中文         |
+| ------------------------------------ | ---------- |
+| combined-print-and-e-book-nonfiction | 非虚构类 - 综合  |
 | hardcover-nonfiction                 | 非虚构类 - 精装本 |
 | paperback-nonfiction                 | 非虚构类 - 平装本 |
-| advice-how-to-and-miscellaneous      | 工具类            |
-| combined-print-and-e-book-fiction    | 虚构类 - 综合     |
-| hardcover-fiction                    | 虚构类 - 精装本   |
-| trade-fiction-paperback              | 虚构类 - 平装本   |
-| childrens-middle-grade-hardcover     | 儿童 - 中年级     |
-| picture-books                        | 儿童 - 绘本       |
-| series-books                         | 儿童 - 系列图书   |
-| young-adult-hardcover                | 青少年            |
+| advice-how-to-and-miscellaneous      | 工具类        |
+| combined-print-and-e-book-fiction    | 虚构类 - 综合   |
+| hardcover-fiction                    | 虚构类 - 精装本  |
+| trade-fiction-paperback              | 虚构类 - 平装本  |
+| childrens-middle-grade-hardcover     | 儿童 - 中年级   |
+| picture-books                        | 儿童 - 绘本    |
+| series-books                         | 儿童 - 系列图书  |
+| young-adult-hardcover                | 青少年        |
 
 ## 澎湃新闻
 
@@ -1106,9 +1122,9 @@ category 对应的关键词有
 
 <Route author="xyqfer nczitzk" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
 
-| 视频  | 时事  | 财经  | 思想  | 澎湃号 | 生活  |
-| ----- | ----- | ----- | ----- | ------ | ----- |
-| 26916 | 25950 | 25951 | 25952 | 36079  | 25953 |
+| 视频    | 时事    | 财经    | 思想    | 澎湃号   | 生活    |
+| ----- | ----- | ----- | ----- | ----- | ----- |
+| 26916 | 25950 | 25951 | 25952 | 36079 | 25953 |
 
 </Route>
 
@@ -1121,8 +1137,8 @@ category 对应的关键词有
 <Route author="umm233" example="/thepaper/839studio/2" path="/thepaper/839studio/:id?" :paramsDesc="['分类 id 可选，默认订阅全部分类']">
 
 | 视频 | 交互 | 信息图 | 数据故事 |
-| ---- | ---- | ------ | -------- |
-| 2    | 4    | 3      | 453      |
+| -- | -- | --- | ---- |
+| 2  | 4  | 3   | 453  |
 
 </Route>
 
@@ -1150,9 +1166,9 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/qlwb/city/:city" path="/qlwb/city" :paramsDesc="['城市代码']">
 
-| 今日临沂 | 今日德州 | 今日威海 | 今日枣庄  | 今日淄博 | 今日烟台 | 今日潍坊 | 今日菏泽 | 今日日照 | 今日泰山 | 今日聊城  | 今日济宁 |
-| -------- | -------- | -------- | --------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- |
-| linyi    | dezhou   | weihai   | zaozhuang | zibo     | yantai   | weifang  | heze     | rizhao   | taishan  | liaocheng | jining   |
+| 今日临沂  | 今日德州   | 今日威海   | 今日枣庄      | 今日淄博 | 今日烟台   | 今日潍坊    | 今日菏泽 | 今日日照   | 今日泰山    | 今日聊城      | 今日济宁   |
+| ----- | ------ | ------ | --------- | ---- | ------ | ------- | ---- | ------ | ------- | --------- | ------ |
+| linyi | dezhou | weihai | zaozhuang | zibo | yantai | weifang | heze | rizhao | taishan | liaocheng | jining |
 
 </Route>
 
@@ -1195,8 +1211,8 @@ category 对应的关键词有
 <Route author="nczitzk" example="/people/liuyan/539" path="/people/liuyan/:id/:state?" :paramsDesc="['编号，可在对应人物页 URL 中找到', '状态，见下表，默认为全部']">
 
 | 全部 | 待回复 | 办理中 | 已办理 |
-| ---- | ------ | ------ | ------ |
-| 1    | 2      | 3      | 4      |
+| -- | --- | --- | --- |
+| 1  | 2   | 3   | 4   |
 
 </Route>
 
@@ -1234,9 +1250,9 @@ category 对应的关键词有
 
 综合页文章标题添加板块标签
 
-| 総合 | マネーのまなび | 経済・金融 | 政治     | ビジネス | マネーのまなび | テクノロジー | 国際          | スポーツ | 社会・くらし | オピニオン | 文化    | FT     | 地域  | 日経ビジネス | ライフ |
-| ---- | -------------- | ---------- | -------- | -------- | -------------- | ------------ | ------------- | -------- | ------------ | ---------- | ------- | ------ | ----- | ------------ | ------ |
-| news | 未支持         | economy    | politics | business | 未支持         | technology   | international | sports   | society      | opinion    | culture | 未支持 | local | 未支持       | 未支持 |
+| 総合   | マネーのまなび | 経済・金融   | 政治       | ビジネス     | マネーのまなび | テクノロジー     | 国際            | スポーツ   | 社会・くらし  | オピニオン   | 文化      | FT  | 地域    | 日経ビジネス | ライフ |
+| ---- | ------- | ------- | -------- | -------- | ------- | ---------- | ------------- | ------ | ------- | ------- | ------- | --- | ----- | ------ | --- |
+| news | 未支持     | economy | politics | business | 未支持     | technology | international | sports | society | opinion | culture | 未支持 | local | 未支持    | 未支持 |
 
 </Route>
 
@@ -1246,9 +1262,9 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/cna/aall" path="/cna/:id?" :paramsDesc="['分类 id 或新闻专题 id。分类 id 见下表，新闻专题 id 為 https://www.cna.com.tw/list/newstopic.aspx 中，連結的數字部份。此參數默认为 aall']">
 
-| 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| aall | aipl | aopl | acn  | aie  | asc  | ait  | ahel | asoc | aloc | acul | aspt | amov |
+| 即時   | 政治   | 國際   | 兩岸  | 產經  | 證券  | 科技  | 生活   | 社會   | 地方   | 文化   | 運動   | 娛樂   |
+| ---- | ---- | ---- | --- | --- | --- | --- | ---- | ---- | ---- | ---- | ---- | ---- |
+| aall | aipl | aopl | acn | aie | asc | ait | ahel | asoc | aloc | acul | aspt | amov |
 
 </Route>
 
@@ -1302,9 +1318,9 @@ category 对应的关键词有
 
 <Route author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" :paramsDesc="['语言，繁体`hk`，英文`en`','类别']">
 
-| local    | greaterchina | international | finance  | sport    |
-| -------- | ------------ | ------------- | -------- | -------- |
-| 本地新聞 | 大中華新聞   | 國際新聞      | 財經新聞 | 體育新聞 |
+| local | greaterchina | international | finance | sport |
+| ----- | ------------ | ------------- | ------- | ----- |
+| 本地新聞  | 大中華新聞        | 國際新聞          | 財經新聞    | 體育新聞  |
 
 </Route>
 
@@ -1318,57 +1334,57 @@ category 对应的关键词有
 
 <Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" :paramsDesc="['分类，默认为全部新闻，可在 URL 中找到，部分见下表']" radar="1" rssbud="1">
 
-| sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 商业新闻 | 香港新闻 |
+| sran001 | sran008 | sran010 | sran011 | sran012 | srat006 |
+| ------- | ------- | ------- | ------- | ------- | ------- |
+| 全部新闻    | 财经地产    | 科技信息    | 国际新闻    | 商业新闻    | 香港新闻    |
 
-| sran009  | sran009-1 | sran009-2 | sran009-3  | sran009-4 | sran009-5 | sran009-6 |
-| -------- | --------- | --------- | ---------- | --------- | --------- | --------- |
-| 即时财经 | 股市      | 新股 IPO  | 新经济追踪 | 当炒股    | 宏观解读  | Hot Talk  |
+| sran009 | sran009-1 | sran009-2 | sran009-3 | sran009-4 | sran009-5 | sran009-6 |
+| ------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| 即时财经    | 股市        | 新股 IPO    | 新经济追踪     | 当炒股       | 宏观解读      | Hot Talk  |
 
-| sran011-1 | sran011-2    | sran011-3    |
-| --------- | ------------ | ------------ |
-| 环球政治  | 环球经济金融 | 环球社会热点 |
+| sran011-1 | sran011-2 | sran011-3 |
+| --------- | --------- | --------- |
+| 环球政治      | 环球经济金融    | 环球社会热点    |
 
-| sran016    | sran016-1  | sran016-2  | sran016-3  | sran016-4  | sran016-5      |
-| ---------- | ---------- | ---------- | ---------- | ---------- | -------------- |
-| 大湾区主页 | 大湾区发展 | 大湾区工作 | 大湾区买楼 | 大湾区消费 | 大湾区投资理财 |
+| sran016 | sran016-1 | sran016-2 | sran016-3 | sran016-4 | sran016-5 |
+| ------- | --------- | --------- | --------- | --------- | --------- |
+| 大湾区主页   | 大湾区发展     | 大湾区工作     | 大湾区买楼     | 大湾区消费     | 大湾区投资理财   |
 
-| srac002  | srac003  | srac004  | srac005  |
-| -------- | -------- | -------- | -------- |
-| 即时中国 | 经济脉搏 | 国情动向 | 社会热点 |
+| srac002 | srac003 | srac004 | srac005 |
+| ------- | ------- | ------- | ------- |
+| 即时中国    | 经济脉搏    | 国情动向    | 社会热点    |
 
-| srat001 | srat008 | srat055  | srat069  | srat070   |
-| ------- | ------- | -------- | -------- | --------- |
-| 话题    | 观点    | 休闲消费 | 娱乐新闻 | TOPick TV |
+| srat001 | srat008 | srat055 | srat069 | srat070   |
+| ------- | ------- | ------- | ------- | --------- |
+| 话题      | 观点      | 休闲消费    | 娱乐新闻    | TOPick TV |
 
-| srat052  | srat052-1 | srat052-2  | srat052-3 |
-| -------- | --------- | ---------- | --------- |
-| 健康主页 | 食用安全  | 医生诊症室 | 保健美颜  |
+| srat052 | srat052-1 | srat052-2 | srat052-3 |
+| ------- | --------- | --------- | --------- |
+| 健康主页    | 食用安全      | 医生诊症室     | 保健美颜      |
 
-| srat053  | srat053-1 | srat053-2 | srat053-3 | srat053-4  |
-| -------- | --------- | --------- | --------- | ---------- |
-| 亲子主页 | 儿童健康  | 育儿经    | 教育      | 亲子好去处 |
+| srat053 | srat053-1 | srat053-2 | srat053-3 | srat053-4 |
+| ------- | --------- | --------- | --------- | --------- |
+| 亲子主页    | 儿童健康      | 育儿经       | 教育        | 亲子好去处     |
 
-| srat053-6   | srat053-61 | srat053-62 | srat053-63 | srat053-64 |
-| ----------- | ---------- | ---------- | ---------- | ---------- |
-| Band 1 学堂 | 幼稚园     | 中小学     | 尖子教室   | 海外升学   |
+| srat053-6 | srat053-61 | srat053-62 | srat053-63 | srat053-64 |
+| --------- | ---------- | ---------- | ---------- | ---------- |
+| Band 1 学堂 | 幼稚园        | 中小学        | 尖子教室       | 海外升学       |
 
-| srat072-1  | srat072-2  | srat072-3        | srat072-4         |
-| ---------- | ---------- | ---------------- | ----------------- |
-| 健康身心活 | 抗癌新方向 | 「糖」「心」解密 | 风湿不再 你我自在 |
+| srat072-1 | srat072-2 | srat072-3 | srat072-4 |
+| --------- | --------- | --------- | --------- |
+| 健康身心活     | 抗癌新方向     | 「糖」「心」解密  | 风湿不再 你我自在 |
 
-| sraw007  | sraw009  | sraw010  | sraw011  | sraw012  | sraw014  | sraw018  | sraw019  |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 全部博客 | Bloggers | 收息攻略 | 精明消费 | 退休规划 | 个人增值 | 财富管理 | 绿色金融 |
+| sraw007 | sraw009  | sraw010 | sraw011 | sraw012 | sraw014 | sraw018 | sraw019 |
+| ------- | -------- | ------- | ------- | ------- | ------- | ------- | ------- |
+| 全部博客    | Bloggers | 收息攻略    | 精明消费    | 退休规划    | 个人增值    | 财富管理    | 绿色金融    |
 
-| sraw015  | sraw015-07 | sraw015-08 | sraw015-09 | sraw015-10 |
-| -------- | ---------- | ---------- | ---------- | ---------- |
-| 移民百科 | 海外置业   | 移民攻略   | 移民点滴   | 海外理财   |
+| sraw015 | sraw015-07 | sraw015-08 | sraw015-09 | sraw015-10 |
+| ------- | ---------- | ---------- | ---------- | ---------- |
+| 移民百科    | 海外置业       | 移民攻略       | 移民点滴       | 海外理财       |
 
-| sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
-| -------- | ------------ | --------- | --------- | --------- |
-| ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
+| sraw020 | sraw020-1 | sraw020-2 | sraw020-3 | sraw020-4 |
+| ------- | --------- | --------- | --------- | --------- |
+| ESG 主页  | ESG 趋势政策  | ESG 投资    | ESG 企业    | ESG 社会    |
 
 </Route>
 
@@ -1396,8 +1412,8 @@ category 对应的关键词有
 
 分类：
 
-| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| zx | twhk | dwzw | zrdl | lskg | smyx | shbk | kjqy |
+| -- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
 
 </Route>
@@ -1412,9 +1428,9 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']">
 
-| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
-| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
-| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | mashu | kungfu   | ufc | others |
+| 排球     | 游泳   | 乒乓球      | 羽毛球    | 台球      | 田径       | 体操    | 冰雪     | 射击 | 马术    | 拳击搏击   | UFC | 其他     |
+| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | -- | ----- | ------ | --- | ------ |
+| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh | mashu | kungfu | ufc | others |
 
 </Route>
 
@@ -1424,9 +1440,9 @@ category 对应的关键词有
 
 <Route author="TonyRL" example="/hkej/index" path="/hkej/:category?" :paramsDesc="['分类，默认为全部新闻']">
 
-| index    | stock    | hongkong | china    | international | property | current  |
-| -------- | -------- | -------- | -------- | ------------- | -------- | -------- |
-| 全部新闻 | 港股直击 | 香港财经 | 中国财经 | 国际财经      | 地产新闻 | 时事脉搏 |
+| index | stock | hongkong | china | international | property | current |
+| ----- | ----- | -------- | ----- | ------------- | -------- | ------- |
+| 全部新闻  | 港股直击  | 香港财经     | 中国财经  | 国际财经          | 地产新闻     | 时事脉搏    |
 
 </Route>
 
@@ -1445,12 +1461,12 @@ category 对应的关键词有
 <Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']">
 
 | 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
-| -------- | ------ | -------- | ------ |
-| jdft     | dzw    | jrsf     | kjl    |
+| ---- | --- | ---- | --- |
+| jdft | dzw | jrsf | kjl |
 
 | 正大综艺 | 经济半小时 | 第一动画乐园 |
-| -------- | ---------- | ------------ |
-| zdzy     | jjbxs      | dydhly       |
+| ---- | ----- | ------ |
+| zdzy | jjbxs | dydhly |
 
 ::: tip 提示
 
@@ -1478,9 +1494,9 @@ category 对应的关键词有
 
 <Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 新闻 | 国内  | 国际  | 社会    | 法治 | 文娱 | 科技 | 生活 | 教育 | 每周质量报告 |
-| ---- | ----- | ----- | ------- | ---- | ---- | ---- | ---- | ---- | ------------ |
-| news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       |
+| 新闻   | 国内    | 国际    | 社会      | 法治  | 文娱  | 科技   | 生活   | 教育  | 每周质量报告 |
+| ---- | ----- | ----- | ------- | --- | --- | ---- | ---- | --- | ------ |
+| news | china | world | society | law | ent | tech | life | edu | mzzlbg |
 
 </Route>
 
@@ -1504,7 +1520,7 @@ category 对应的关键词有
 
 目录分类
 
-| 最新      | 双语           | 热词          | 口语            | 译词          | 视频        | 听力     | 专栏      | 文件                     | 考试         |
+| 最新        | 双语             | 热词            | 口语              | 译词            | 视频          | 听力       | 专栏        | 文件                       | 考试           |
 | --------- | -------------- | ------------- | --------------- | ------------- | ----------- | -------- | --------- | ------------------------ | ------------ |
 | thelatest | news_bilingual | news_hotwords | practice_tongue | trans_collect | video_links | audio_cd | columnist | 5af95d44a3103f6866ee845c | englishexams |
 
@@ -1516,8 +1532,8 @@ category 对应的关键词有
 
 <Route author="laampui" example="/zsnews/index/35" path="/zsnews/index/:cateid" :paramsDesc="['类别']">
 
-| 35   | 36   | 37   | 38   | 39   |
-| ---- | ---- | ---- | ---- | ---- |
+| 35 | 36 | 37 | 38 | 39 |
+| -- | -- | -- | -- | -- |
 | 本地 | 镇区 | 热点 | 社会 | 综合 |
 
 </Route>
@@ -1528,9 +1544,9 @@ category 对应的关键词有
 
 <Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['类别']" radar="1" rssbud="1">
 
-| realtimenews | politic | opinion | life | star | money | society | hottopic | tube    | world | armament | chinese | fashion | sports | technologynews | travel | album |
-| ------------ | ------- | ------- | ---- | ---- | ----- | ------- | -------- | ------- | ----- | -------- | ------- | ------- | ------ | -------------- | ------ | ----- |
-| 即時         | 政治    | 言論    | 生活 | 娛樂 | 財經  | 社會    | 話題     | 快點 TV | 國際  | 軍事     | 兩岸    | 時尚    | 體育   | 科技           | 玩食   | 專輯  |
+| realtimenews | politic | opinion | life | star | money | society | hottopic | tube  | world | armament | chinese | fashion | sports | technologynews | travel | album |
+| ------------ | ------- | ------- | ---- | ---- | ----- | ------- | -------- | ----- | ----- | -------- | ------- | ------- | ------ | -------------- | ------ | ----- |
+| 即時           | 政治      | 言論      | 生活   | 娛樂   | 財經    | 社會      | 話題       | 快點 TV | 國際    | 軍事       | 兩岸      | 時尚      | 體育     | 科技             | 玩食     | 專輯    |
 
 </Route>
 
@@ -1540,7 +1556,7 @@ category 对应的关键词有
 
 <Route author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" :paramsDesc="['主题分类']">
 
-| 商业     | 城市化 | 气候变化与能源            | 自然保护     | 管制与法律         | 健康与食品      | 自然灾害          | 污染      | 科学与技术       | 安全     | 水    |
+| 商业       | 城市化    | 气候变化与能源                   | 自然保护         | 管制与法律              | 健康与食品           | 自然灾害              | 污染        | 科学与技术            | 安全       | 水     |
 | -------- | ------ | ------------------------- | ------------ | ------------------ | --------------- | ----------------- | --------- | ---------------- | -------- | ----- |
 | business | cities | climate-change-and-energy | conservation | governance-and-law | health-and-food | natural-disasters | pollution | science-and-tech | security | water |
 
@@ -1550,7 +1566,7 @@ category 对应的关键词有
 
 <Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
 
-| 文章    | 博客 | 文化    | 报告    |
+| 文章      | 博客   | 文化      | 报告      |
 | ------- | ---- | ------- | ------- |
 | article | blog | culture | reports |
 

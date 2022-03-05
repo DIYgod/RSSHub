@@ -73,5 +73,19 @@
                 "prefer": "single"
             }
         ]
-    }
+    },
+    "overrides": [
+        {
+            "files": ["*.yaml", "*.yml"],
+            "parser": "yaml-eslint-parser",
+            "rules": {
+                "lines-around-comment": [
+                    "error",
+                    {
+                        "beforeBlockComment": false
+                    }
+                ]
+            }
+        }
+    ]
 }
