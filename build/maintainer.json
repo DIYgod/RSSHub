@@ -582,6 +582,21 @@
     "/gov/sichuan/deyang/govpulicinfo/:countyName/:institutionName?": [
         "zytomorrow"
     ],
+    "/gov/miit/wjfb/:ministry": [
+        "Fatpandac"
+    ],
+    "/gov/miit/yjzj": [
+        "Fatpandac"
+    ],
+    "/gov/miit/zcwj": [
+        "Yoge-Code"
+    ],
+    "/gov/miit/wjgs": [
+        "Yoge-Code"
+    ],
+    "/gov/miit/zcjd": [
+        "Yoge-Code"
+    ],
     "/guduodata/daily": [
         "Gem1ni"
     ],
@@ -2617,9 +2632,6 @@
     "/noi/winners-list": [],
     "/noi/province-news": [],
     "/noi/rg-news": [],
-    "/gov/miit/zcwj": [],
-    "/gov/miit/wjgs": [],
-    "/gov/miit/zcjd": [],
     "/gov/cnca/jgdt": [],
     "/gov/cnca/hydt": [],
     "/gov/cnca/zxtz": [],
