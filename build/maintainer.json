@@ -1475,6 +1475,9 @@
     "/whitehouse/briefing-room/:category?": [
         "nczitzk"
     ],
+    "/whitehouse/ostp": [
+        "LyleLee"
+    ],
     "/who/news/:language?": [
         "nczitzk"
     ],
