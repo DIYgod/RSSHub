@@ -497,6 +497,13 @@
     "/gamersecret/:type?/:category?": [
         "nczitzk"
     ],
+    "/gcores/category/:category": [
+        "MoguCloud",
+        "StevenRCE0"
+    ],
+    "/gcores/tag/:tag/:category?": [
+        "StevenRCE0"
+    ],
     "/getdr/": [
         "nczitzk"
     ],
@@ -1771,7 +1778,6 @@
     "/t66y/post/:tid": [],
     "/t66y/:id/:type?": [],
     "/sexinsex/:id/:type?": [],
-    "/gcores/category/:category": [],
     "/natgeo/dailyphoto": [],
     "/natgeo/:cat/:type?": [],
     "/one": [],
