@@ -2031,6 +2031,14 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+### 标签
+
+<Route author="StevenRCE0" example="/gcores/tag/42/articles" path="/gcores/tag/:tag/:category?" :paramsDesc="['标签名，可在选定标签分类页面的 URL 中找到，如视觉动物——42', '分类名']" radar="1">
+
+分类名同上。
+
+</Route>
+
 ## 加美财经
 
 <Route author="nczitzk" example="/caus" path="/caus/:category?" :paramsDesc="['分类，见下表，默认为全部']">
