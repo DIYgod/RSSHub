@@ -9,6 +9,7 @@ jobs:
   testRoute:
     name: Vercel Preview
     runs-on: ubuntu-latest
+    if: github.repository_owner == 'DIYgod'
     steps:
       - uses: actions/checkout@v3
       - name: Fetch affected routes
