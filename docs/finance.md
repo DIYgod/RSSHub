@@ -4,6 +4,12 @@ pageClass: routes
 
 # 金融
 
+## BigQuant
+
+### 专题报告
+
+<Route author="nczitzk" example="/bigquant/collections" path="/bigquant/collections"/>
+
 ## CFD
 
 ### 每周股指派息调整 (GBP)
