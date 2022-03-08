@@ -23,6 +23,24 @@
     "/18comic/:category?/:time?/:order?/:keyword?": [
         "nczitzk"
     ],
+    "/35photo/actual": [
+        "nczitzk"
+    ],
+    "/35photo/author/:id": [
+        "nczitzk"
+    ],
+    "/35photo/genre/:id": [
+        "nczitzk"
+    ],
+    "/35photo/interesting": [
+        "nczitzk"
+    ],
+    "/35photo/map": [
+        "nczitzk"
+    ],
+    "/35photo/new": [
+        "nczitzk"
+    ],
     "/36kr/motif/:mid": [
         "nczitzk"
     ],
