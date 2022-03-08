@@ -766,6 +766,18 @@ Type 栏目：
 
 <Route author="HenryQW" example="/dwnews/rank" path="/dwnews/rank"/>
 
+## 俄罗斯卫星通讯社
+
+### 分类
+
+<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?" :paramsDesc="['分类，见下表，默认为 news']">
+
+| 新闻   | 中国    | 俄罗斯    | 国际             | 俄中关系                   | 评论      |
+| ---- | ----- | ------ | -------------- | ---------------------- | ------- |
+| news | china | russia | category_guoji | russia_china_relations | opinion |
+
+</Route>
+
 ## 公視新聞網
 
 ### 即時新聞
