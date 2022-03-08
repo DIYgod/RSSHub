@@ -39,13 +39,15 @@ module.exports = {
         },
         extendMarkdown: (md) => {
             md.use(require('../.format/md/hierarchySlug'), {
-                slugify: function (s) {
+                slugify(s) {
                     return _slugify(
                         pinyin(s, {
                             style: PINYIN_STYLE.Plain,
                             heteronym: true,
                             segment: true,
-                        }).join('-')
+                        })
+                            .map((item) => item[0])
+                            .join('-')
                     );
                 },
                 level: 2,

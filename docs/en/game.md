@@ -62,6 +62,25 @@ Language codes
 
 <RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
+## FINAL FANTASY XIV
+
+### FINAL FANTASY XIV (The Lodestone)
+
+<RouteEn author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['Region', 'Category, `all` by default']">
+
+Region
+
+| North Ameria | Europe | France | Germany | Japan |
+| ------------ | ------ | ------ | ------- | ----- |
+| na           | eu     | fr     | de      | jp    |
+
+Category
+
+| all | topics | notices | maintenance | updates | status   | developers |
+| --- | ------ | ------- | ----------- | ------- | -------- | ---------- |
+
+</RouteEn>
+
 ## Gamer Secret
 
 ### Latest News
@@ -136,7 +155,7 @@ Sorting types, default to `date`:
 
 ### CurseForge Mod Update
 
-<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for exmaple `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
+<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
 
 ### Feed The Beast Modpack Updates
 
@@ -196,7 +215,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### News
 
-<Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
+<RouteEn author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
 
 ## Steam
 
@@ -216,9 +235,9 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 
 Steam provides some official RSS feeds:
 
--	News home page: [https://store.steampowered.com/feeds/news/?l=english](https://store.steampowered.com/feeds/news/?l=english) the parameter `l=english` specifiy the language.
--   Game news rss can get from the rss buttom in page like this: [https://store.steampowered.com/news/app/648800/](https://store.steampowered.com/news/app/648800/) , rss link will looks like： [https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english](https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english) 
--	Steam group can add `/rss` behind Steam community URL to subscribe: [https://steamcommunity.com/groups/SteamLabs/rss](https://steamcommunity.com/groups/SteamLabs/rss)	or add the `/feeds` in Steam News : [https://store.steampowered.com/feeds/news/group/35143931/](https://store.steampowered.com/feeds/news/group/35143931/)
+- News home page: [https://store.steampowered.com/feeds/news/?l=english](https://store.steampowered.com/feeds/news/?l=english) the parameter `l=english` specifiy the language.
+- Game news rss can get from the rss buttom in page like this: [https://store.steampowered.com/news/app/648800/](https://store.steampowered.com/news/app/648800/), rss link will looks like： [https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english](https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english)
+- Steam group can add `/rss` behind Steam community URL to subscribe: [https://steamcommunity.com/groups/SteamLabs/rss](https://steamcommunity.com/groups/SteamLabs/rss) or add the `/feeds` in Steam News : [https://store.steampowered.com/feeds/news/group/35143931/](https://store.steampowered.com/feeds/news/group/35143931/)
 
 :::
 

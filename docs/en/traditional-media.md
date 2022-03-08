@@ -207,6 +207,12 @@ Only `s00017` is in English.
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+## Nikkei Asia
+
+### Latest News
+
+<RouteEn author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
+
 ## Phoronix
 
 ### News & Reviews

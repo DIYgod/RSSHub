@@ -407,11 +407,11 @@ ctx.state.data = {
 
         Preview:
 
-        ***
+        * * *
 
         <RouteEn author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
-        ***
+        * * *
 
         2. Multiple parameters:
 
@@ -421,11 +421,11 @@ ctx.state.data = {
 
         Preview:
 
-        ***
+        * * *
 
         <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['GitHub username', 'GitHub repo name']"/>
 
-        ***
+        * * *
 
         3. Use component slot for complicated description:
 
@@ -441,7 +441,7 @@ ctx.state.data = {
 
         Preview:
 
-        ***
+        * * *
 
         <RouteEn author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
@@ -451,7 +451,7 @@ ctx.state.data = {
 
         </RouteEn>
 
-        ***
+        * * *
 
 1.  Please be sure to close the tag of `<Route>`!
 
