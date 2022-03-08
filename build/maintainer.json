@@ -613,6 +613,9 @@
     "/gov/miit/zcjd": [
         "Yoge-Code"
     ],
+    "/gov/mee/ywdt?": [
+        "liuxsdev"
+    ],
     "/guduodata/daily": [
         "Gem1ni"
     ],
@@ -2213,7 +2216,6 @@
     "/gov/hunan/notice/:type": [],
     "/gov/ndrc/xwdt/:caty?": [],
     "/gov/customs/list/:gchannel": [],
-    "/gov/mee/gs": [],
     "/gov/moe/:type": [],
     "/gov/fmprc/fyrbt": [],
     "/gov/mohurd/policy": [],
