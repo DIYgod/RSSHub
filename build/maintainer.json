@@ -158,6 +158,9 @@
     "/bendibao/news/:city": [
         "nczitzk"
     ],
+    "/bigquant/collections": [
+        "nczitzk"
+    ],
     "/biodiscover/:channel?": [
         "aidistan"
     ],
