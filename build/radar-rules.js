@@ -838,6 +838,12 @@
                     });
                     return `/dahecube/${type}`;
                 } } ] },
+  "dayanzai.me":{ _name:"大眼仔旭",
+    ".":[ { title:"大眼仔旭",
+        docs:"https://docs.rsshub.app/bbs.html#dayanzai",
+        source:[ "/:category",
+          "/:category/*" ],
+        target:"/dayanzai/:category" } ] },
   "www.ddosi.org":{ _name:"🔰雨苁ℒ🔰",
     ".":[ { title:"首页",
         docs:"https://docs.rsshub.app/blog.html#yu-cong-bo-ke-shou-ye",

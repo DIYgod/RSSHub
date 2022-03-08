@@ -278,6 +278,9 @@
     "/dahecube/:type?": [
         "linbuxiao"
     ],
+    "/dayanzai/dayanzai/:category/:fulltext?": [
+        "nitezs"
+    ],
     "/ddosi/": [
         "XinRoom"
     ],
