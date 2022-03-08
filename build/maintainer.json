@@ -1246,6 +1246,14 @@
     "/secnews/index": [
         "kaiili"
     ],
+    "/segmentfault/channel/:name": [
+        "LogicJake",
+        "Fatpandac"
+    ],
+    "/segmentfault/user/:name": [
+        "leyuuu",
+        "Fatpandac"
+    ],
     "/shmeea/": [
         "jialinghui"
     ],
@@ -2281,8 +2289,6 @@
     "/leetcode/articles": [],
     "/leetcode/submission/us/:user": [],
     "/leetcode/submission/cn/:user": [],
-    "/segmentfault/channel/:name": [],
-    "/segmentfault/user/:name": [],
     "/hupu/bxj/:id/:order?": [],
     "/hupu/bbs/:id/:order?": [],
     "/hupu/all/:caty": [],
