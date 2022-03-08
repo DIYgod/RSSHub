@@ -492,6 +492,15 @@
     "/focustaiwan/:category?": [
         "nczitzk"
     ],
+    "/foresightnews/article": [
+        "nczitzk"
+    ],
+    "/foresightnews/column/:id": [
+        "nczitzk"
+    ],
+    "/foresightnews/news": [
+        "nczitzk"
+    ],
     "/fortunechina/:category?": [
         "nczitzk"
     ],
