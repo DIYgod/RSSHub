@@ -1286,6 +1286,9 @@
         "hang333",
         "TonyRL"
     ],
+    "/soundofhope/:channel/:id": [
+        "Fatpandac"
+    ],
     "/spotify/artist/:id": [
         "outloudvi"
     ],
