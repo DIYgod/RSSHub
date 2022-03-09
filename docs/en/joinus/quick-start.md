@@ -322,6 +322,16 @@ ctx.state.data = {
 };
 ```
 
+::: warning Warning
+
+`title`, `subtitle` (only for atom), `author` (only for atom), `item.title`, and `item.author` should not contain linebreaks, consecutive white spaces, or start/end with white space(s).  
+Most RSS readers will automatically trim them, so they make no sense. However, some readers may not process them properly, so we will trim them before outputting to ensure these fields contain no linebreaks, consecutive white spaces, or start/end with white space(s).  
+If the route you are writing can not tolerate these trimmings, you should consider change the format of these fields.
+
+In addition, although other fields will not be forced trimmed, you should also try to avoid violations of the above rules. Especially when using Cheerio to extract web pages, you need to keep in mind that Cheerio will retain wraps and indentation. In particular, for `item.description`, any intended linebreaks should be converted to `<br>`, otherwise the RSS reader is likely to trim them; especially if you extract the RSS feed from JSON, the JSON returned by the source website is very likely to contain linebreaks that need to be displayed, so it must be converted in this case.
+
+:::
+
 ##### Podcast feed
 
 Used for audio feed, these **additional** data are in accordance with many podcast players' subscription format:
