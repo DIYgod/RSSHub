@@ -1298,6 +1298,16 @@ category 对应的关键词有
 
 <Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名，可在该分类的 URL 中找到（即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
 
+## 希望之声
+
+<Route author="Fatpandac" example="/soundofhope/term/203" path="/soundofhope/:channel/:id" :paramsDesc="['频道', '子频道 ID']">
+
+参数均可在官网获取，如：
+
+`https://www.soundofhope.org/term/203` 对应 `/soundofhope/term/203`
+
+</Route>
+
 ## 香港 01
 
 ### 热门
@@ -1598,7 +1608,7 @@ category 对应的关键词有
 
 ## 自由亚洲电台
 
-<Route author="zphw" example="/rfa/mandarin" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['语言，默认 English', '频道', '子频道（如存在）']" />
+<Route author="zphw" example="/rfa/mandarin" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['语言，默认 English', '频道', '子频道（如存在）']">
 
 通过指定频道参数，提供比官方源更佳的阅读体验。
 
@@ -1607,3 +1617,5 @@ category 对应的关键词有
 `https://www.rfa.org/cantonese/news` 对应 `/rfa/cantonese/news`
 
 `https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`
+
+</Route>
