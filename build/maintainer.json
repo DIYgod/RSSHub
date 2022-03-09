@@ -1301,6 +1301,9 @@
     "/spotify/top/artists": [
         "outloudvi"
     ],
+    "/sputniknews/:category?": [
+        "nczitzk"
+    ],
     "/ssm/news": [
         "Fatpandac"
     ],
