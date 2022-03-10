@@ -351,15 +351,15 @@ Solidot 提供的 feed:
 
 ### TASS
 
-<Route author="mkmark" example="/tass/en/all" path="/tass/:lang/:category" radar="1" :paramsDesc="['语言，可选`en`或`ru`', '分类，见下']"/></Route>
+<Route author="mkmark" example="/tass/en/all" path="/tass/:language/:section" radar="1" :paramsDesc="['语言，可选`en`或`ru`', '板块，见下']"/></Route>
 
-英文可选分类如下
+英文可选板块如下
 
 | All | Russian Politics & Diplomacy | World | Business & Economy | Military & Defense | Science & Space | Emergencies | Society & Culture | Sport | Press Review |
 |-----|------------------------------|-------|--------------------|--------------------|-----------------|-------------|-------------------|-------|--------------|
 | all | politics                     | world | economy            | defense            | science         | emergencies | society           | sport | pressreview  |
 
-俄文分类请自行根据rss内容确定。
+俄文板块请自行根据rss内容确定。
 
 使用 `puppeteer` 实现js跳转。
 
