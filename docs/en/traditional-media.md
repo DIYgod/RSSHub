@@ -334,6 +334,24 @@ See the [official RSS page](https://www.scmp.com/rss) to get the ID of each cate
 
 </RouteEn>
 
+## TASS
+
+### TASS
+
+<RouteEn author="mkmark" example="/tass/en/all" path="/tass/:lang/:category" radar="1" :paramsDesc="['language，`en` or `ru`', 'category, see below']"/></Route>
+
+English categories:
+
+| All | Russian Politics & Diplomacy | World | Business & Economy | Military & Defense | Science & Space | Emergencies | Society & Culture | Sport | Press Review |
+|-----|------------------------------|-------|--------------------|--------------------|-----------------|-------------|-------------------|-------|--------------|
+| all | politics                     | world | economy            | defense            | science         | emergencies | society           | sport | pressreview  |
+
+Russian categories can be derived from feeds detail.
+
+Use `puppeteer` to circumvent js redirection.
+
+</RouteEn>
+
 ## The Economist
 
 ### Category
