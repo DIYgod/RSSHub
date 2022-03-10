@@ -473,6 +473,18 @@ Country
 
 <Route author="nczitzk" example="/foresightnews" path="/foresightnews"/>
 
+### 文章
+
+<Route author="nczitzk" example="/foresightnews/article" path="/foresightnews/article">
+
+::: tip 提示
+
+**文章** 来自 **首页** 时间流，并筛除 **首页** 时间流中的 **快讯** 获得，所以 `limit` 参数不能按预期返回指定数目的文章。
+
+:::
+
+</Route>
+
 ### 快讯
 
 <Route author="nczitzk" example="/foresightnews/news" path="/foresightnews/news"/>
