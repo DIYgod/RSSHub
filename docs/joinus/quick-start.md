@@ -335,8 +335,9 @@ ctx.state.data = {
     item: [
         {
             itunes_item_image: '', // 每个track单独的图片
+            itunes_duration: '', // 音频长度，总共的秒数或者 H:mm:ss，可选
             enclosure_url: '', // 音频链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_length: '', // 文件大小 (单位: Byte)，可选
             enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
         },
     ],
@@ -352,7 +353,7 @@ ctx.state.data = {
     item: [
         {
             enclosure_url: '', // 磁力链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_length: '', // 文件大小 (单位: Byte)，可选
             enclosure_type: 'application/x-bittorrent', // 固定为 'application/x-bittorrent'
         },
     ],
