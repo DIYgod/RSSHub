@@ -1310,7 +1310,7 @@
     "/spotify/top/artists": [
         "outloudvi"
     ],
-    "/sputniknews/:category?": [
+    "/sputniknews/:category?/:language?": [
         "nczitzk"
     ],
     "/ssm/news": [
