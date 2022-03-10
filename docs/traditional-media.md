@@ -1456,6 +1456,18 @@ category 对应的关键词有
 
 </Route>
 
+## 新唐人电视台
+
+### 频道
+
+<Route author="Fatpandac" example="/ntdtv/b5/prog1201" path="/ntdtv/:language/:id" :paramsDesc="['语言，简体为`gb`，繁体为`b5`', '子频道名称']">
+
+参数均可在官网获取，如：
+
+`https://www.ntdtv.com/b5/prog1201` 对应 `/ntdtv/b5/prog1201`
+
+</Route>
+
 ## 信报财经新闻
 
 ### 即时新闻
