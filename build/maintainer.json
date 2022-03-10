@@ -604,6 +604,9 @@
     "/google/sites/:id": [
         "hoilc"
     ],
+    "/google/sites/recentChanges/:id": [
+        "nczitzk"
+    ],
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
     ],
