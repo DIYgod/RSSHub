@@ -8,13 +8,13 @@ pageClass: routes
 
 ### Changes
 
-<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+<RouteEn author="nczitzk" example="/anki/changes" path="/anki/changes"/>
 
 ## AnyTXT
 
 ### Release Notes
 
-<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+<RouteEn author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
 
 ## Apkpure
 
@@ -130,7 +130,7 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 
 ::: warning
 
-The owner of the official image fills in the library, for example: https://rsshub.app/dockerhub/build/library/mysql
+The owner of the official image fills in the library, for example: <https://rsshub.app/dockerhub/build/library/mysql>
 
 :::
 
@@ -159,7 +159,7 @@ Language
 | Simplified Chinese | Traditional Chinese | English |
 | ------ | -------- | -------- |
 |  cn  |  tw  |  en  |
-    
+
 </RouteEn>
 
 ## Everything
@@ -200,7 +200,7 @@ Language
 
 ### Release News
 
-<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+<RouteEn author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
 
 ## IPSW.me
 
@@ -218,7 +218,7 @@ Language
 
 ### APP Update
 
-<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be find in URL']"/>
+<RouteEn author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be find in URL']"/>
 
 ## ManicTime
 
@@ -234,7 +234,7 @@ Language
 
 ### Updates
 
-<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['`Share` - `Copy Link` in the Store', '`CN` as default']" />
+<RouteEn author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" :paramsDesc="['`Share` - `Copy Link` in the Store', '`CN` as default']" />
 
 ## Minecraft
 
@@ -333,7 +333,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### New routes
 
-<RouteEn path="/rsshub/routes" example="/rsshub/routes" />
+<RouteEn author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" :paramsDesc="['Language, `en` means English routes, other values or null means Chinese routes']"/>
 
 ### New sponsors
 
@@ -390,4 +390,3 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### What's New
 
 <RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
-

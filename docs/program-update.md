@@ -89,8 +89,8 @@ pageClass: routes
 语言
 
 | English | 中文 (简体) | 中文 (繁體) | 日本語 | Русский | Español | Français | Deutsch | Italiano | Slovenčina | Українська | Беларуская | Dansk | Polski | Português Brasileiro | Čeština | Nederlands | Slovenščina | Türkçe | ภาษาไทย | 한국어 |
-| ------- | ----------- | ----------- | ------ | ------- | ------- | -------- | ------- | -------- | ---------- | ---------- | ---------- | ----- | ------ | -------------------- | ------- | ---------- | ----------- | ------ | ------- | ------ |
-| en      | cn          | tw          | jp     | ru      | es      | fr       | de      | it       | sk         | uk         | be         | da    | pl     | br                   | cs      | nl         | sl          | tr     | th      | kr     |
+| ------- | ------- | ------- | --- | ------- | ------- | -------- | ------- | -------- | ---------- | ---------- | ---------- | ----- | ------ | -------------------- | ------- | ---------- | ----------- | ------ | ------- | --- |
+| en      | cn      | tw      | jp  | ru      | es      | fr       | de      | it       | sk         | uk         | be         | da    | pl     | br                   | cs      | nl         | sl          | tr     | th      | kr  |
 
 </Route>
 
@@ -100,9 +100,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" :paramsDesc="['客户端 id，见下表，默认为安卓版']">
 
-| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版          |
-| ------- | --------- | ---------- | ------ | -------------- |
-| android | iphone    | ipad       | win    | android_tv_yst |
+| 安卓版     | iPhone 版 | iPad HD 版 | UWP 版 | TV 版           |
+| ------- | -------- | --------- | ----- | -------------- |
+| android | iphone   | ipad      | win   | android_tv_yst |
 
 ## Bugly SDK
 
@@ -191,12 +191,12 @@ pageClass: routes
 ### 更新日志
 
 <Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog/:language?" :paramsDesc="['语言，选项见下表，默认为 `cn`']" radar="1">
-    
+
 语言
 
 | 简体中文 | 繁体中文 | 英文 |
-| -------- | -------- | ---- |
-| cn       | tw       | en   |
+| ---- | ---- | -- |
+| cn   | tw   | en |
 
 </Route>
 
@@ -224,7 +224,7 @@ pageClass: routes
 
 <Route author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['操作平台']">
 
-| 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
+| 桌面      | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
@@ -246,7 +246,7 @@ pageClass: routes
 
 <Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
 
-## IPSW.me
+## IPSW\.me
 
 ### 苹果固件更新 - IPSWs/OTAs 版本
 
@@ -300,13 +300,13 @@ pageClass: routes
 
 <Route author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型', '地区, 默认为 `cn`']">
 
-| 类型   | type    |
-| ------ | ------- |
+| 类型  | type    |
+| --- | ------- |
 | 稳定版 | release |
 | 开发版 | dev     |
 
-| 地区   | region |
-| ------ | ------ |
+| 地区  | region |
+| --- | ------ |
 | 国内版 | cn     |
 | 国际版 | global |
 
@@ -349,8 +349,8 @@ pageClass: routes
 <Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['语言，见下表，默认为英语']">
 
 | 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
-| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
-| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
+| --- | ------- | ------- | ------- | ---------- | ------- | ------ |
+| ko  | zh_CN   | zh_TW   | en      | uk         | ru      | pl     |
 
 </Route>
 
@@ -365,6 +365,12 @@ pageClass: routes
 | qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
 
 </Route>
+
+## QQ 互联 SDK
+
+### 更新日志
+
+<Route author="nuomi1" example="/tencent/qq/sdk/changelog/iOS" path="/tencent/qq/sdk/changelog/:platform" :paramsDesc="['平台，iOS / Android']"/>
 
 ## QTTabBar
 
@@ -394,7 +400,7 @@ pageClass: routes
 
 ### 有新路由啦
 
-<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes/:lang?" radar="1" rssbud="1" :paramsDesc="['语言，`en` 为英文路由，其他值或留空则为中文路由，预设为中文路由']"/>
 
 ### 有新赞助商啦
 
@@ -528,14 +534,14 @@ pageClass: routes
 
 标签
 
-| uTools | 插件发布 |
-| ------ | -------- |
-| utools | plugins  |
+| uTools | 插件发布    |
+| ------ | ------- |
+| utools | plugins |
 
 排序
 
-| 最新回复 | 热门回复      | 新鲜出炉   | 陈年旧贴  |
-| -------- | ------------- | ---------- | --------- |
-|          | -commentCount | -createdAt | createdAt |
+| 最新回复 | 热门回复          | 新鲜出炉       | 陈年旧贴      |
+| ---- | ------------- | ---------- | --------- |
+|      | -commentCount | -createdAt | createdAt |
 
 </Route>

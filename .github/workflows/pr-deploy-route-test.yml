@@ -1,5 +1,4 @@
 name: PR route test
-
 # https://github.com/actions/first-interaction/issues/10#issuecomment-670968624
 # https://github.com/actions/first-interaction/issues/10#issuecomment-752360668
 # Reopen Included
@@ -8,14 +7,14 @@ on:
 
 jobs:
   testRoute:
+    name: Vercel Preview
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Fetch affected routes
         id: fetchRoute
         uses: actions/github-script@v6
         with:
-
           # by default, JSON format returned
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

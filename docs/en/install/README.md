@@ -604,3 +604,5 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Google Fonts: [API key application](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
     - `GOOGLE_FONTS_API_KEY`: API key
+-   douban
+    - `DOUBAN_COOKIE`: Cookie of douban user

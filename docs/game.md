@@ -14,9 +14,9 @@ pageClass: routes
 
 <Route author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
 
-| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
-| ---- | ---- | -------- | ---------- |
-| news | gl   | resource | blockchain |
+| 新闻   | 攻略 | 下载资源     | 区块链快讯      |
+| ---- | -- | -------- | ---------- |
+| news | gl | resource | blockchain |
 
 </Route>
 
@@ -48,40 +48,40 @@ pageClass: routes
 
 分类
 
-| 分类                 | 分类名              |
-| -------------------- | ------------------- |
-| 所有新闻             |                     |
-| 暗黑破坏神 III       | diablo3             |
+| 分类           | 分类名                 |
+| ------------ | ------------------- |
+| 所有新闻         |                     |
+| 暗黑破坏神 III    | diablo3             |
 | 暗黑破坏神：不朽     | diablo-immortal     |
-| 炉石传说             | hearthstone         |
-| 风暴英雄             | heroes-of-the-storm |
-| 守望先锋             | overwatch           |
+| 炉石传说         | hearthstone         |
+| 风暴英雄         | heroes-of-the-storm |
+| 守望先锋         | overwatch           |
 | 星际争霸：重制版     | starcraft           |
-| 星际争霸 II          | starcraft2          |
-| 魔兽世界             | world-of-warcraft   |
+| 星际争霸 II      | starcraft2          |
+| 魔兽世界         | world-of-warcraft   |
 | 魔兽争霸 III：重制版 | warcraft3           |
-| 暴雪嘉年华           | blizzcon            |
-| 走进暴雪             | blizzard            |
+| 暴雪嘉年华        | blizzcon            |
+| 走进暴雪         | blizzard            |
 
 语言代码
 
-| 语言           | 语言代码 |
-| -------------- | -------- |
-| Deutsch        | de-de    |
-| English (US)   | en-us    |
-| English (EU)   | en-gb    |
-| Español (EU)   | es-es    |
-| Español (AL)   | es-mx    |
-| Français       | fr-fr    |
-| Italiano       | it-it    |
-| Português (AL) | pt-br    |
-| Polski         | pl-pl    |
-| Русский        | ru-ru    |
-| 한국어         | ko-kr    |
-| ภาษาไทย        | th-th    |
-| 日本語         | ja-jp    |
-| 繁體中文       | zh-tw    |
-| 简体中文       | zh-cn    |
+| 语言             | 语言代码  |
+| -------------- | ----- |
+| Deutsch        | de-de |
+| English (US)   | en-us |
+| English (EU)   | en-gb |
+| Español (EU)   | es-es |
+| Español (AL)   | es-mx |
+| Français       | fr-fr |
+| Italiano       | it-it |
+| Português (AL) | pt-br |
+| Polski         | pl-pl |
+| Русский        | ru-ru |
+| 한국어            | ko-kr |
+| ภาษาไทย        | th-th |
+| 日本語            | ja-jp |
+| 繁體中文           | zh-tw |
+| 简体中文           | zh-cn |
 
 </Route>
 
@@ -156,32 +156,32 @@ pageClass: routes
 产业
 
 | 厂商・专访 | 观察・投资 | 产品 | 政策 | 电子竞技 | 直播 | 区块链 |
-| ---------- | ---------- | ---- | ---- | -------- | ---- | ------ |
-| 1          | 11         | 6    | 45   | 14       | 42   | 41     |
+| ----- | ----- | -- | -- | ---- | -- | --- |
+| 1     | 11    | 6  | 45 | 14   | 42 | 41  |
 
 平台
 
 | 手游 | 页游・H5 | 端游・PC | 主机 | 虚拟・VR・AR | 云游戏 |
-| ---- | -------- | -------- | ---- | ------------ | ------ |
-| 5    | 17       | 18       | 21   | 16           | 48     |
+| -- | ----- | ----- | -- | -------- | --- |
+| 5  | 17    | 18    | 21 | 16       | 48  |
 
 研发
 
 | 拆解分析 | 策划 | 程序・引擎 | 美术 | 音乐 | 测试 |
-| -------- | ---- | ---------- | ---- | ---- | ---- |
-| 24       | 25   | 26         | 27   | 28   | 29   |
+| ---- | -- | ----- | -- | -- | -- |
+| 24   | 25 | 26    | 27 | 28 | 29 |
 
 市场
 
 | 职场・创业 | 运营・渠道 | 海外 | 数据・报告 | App Store | Steam |
-| ---------- | ---------- | ---- | ---------- | --------- | ----- |
-| 38         | 34         | 47   | 33         | 46        | 40    |
+| ----- | ----- | -- | ----- | --------- | ----- |
+| 38    | 34    | 47 | 33    | 46        | 40    |
 
 其他
 
 | 原创 | 硬件・周边 | 八卦 | 活动 | 综合 |
-| ---- | ---------- | ---- | ---- | ---- |
-| 43   | 44         | 15   | 22   | 39   |
+| -- | ----- | -- | -- | -- |
+| 43 | 44    | 15 | 22 | 39 |
 
 </Route>
 
@@ -209,14 +209,14 @@ pageClass: routes
 | filter | switch | ps4 | ps5 | steam |
 | ------ | ------ | --- | --- | ----- |
 | all    | ✔      | ✔   | ✔   | ✔     |
-| jx     | ✔      | ✔   | ❌  | ✔     |
+| jx     | ✔      | ✔   | ❌   | ✔     |
 | sd     | ✔      | ✔   | ✔   | ✔     |
-| dl     | ❌     | ✔   | ❌  | ✔     |
-| vip    | ❌     | ❌  | ✔   | ❌    |
+| dl     | ❌      | ✔   | ❌   | ✔     |
+| vip    | ❌      | ❌   | ✔   | ❌     |
 
 | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
-| ---- | ------------ | ---- | ---- | ---- |
-| na   | eu           | fr   | de   | jp   |
+| -- | ------ | -- | -- | -- |
+| na | eu     | fr | de | jp |
 
 </Route>
 
@@ -252,15 +252,15 @@ pageClass: routes
 
 发行类型，默认为 `new`:
 
-| 新游发行 | 即将发行 | 全部 |
-| -------- | -------- | ---- |
-| new      | coming   | all  |
+| 新游发行 | 即将发行   | 全部  |
+| ---- | ------ | --- |
+| new  | coming | all |
 
 排序类型，默认为`date`:
 
-| 日期 | Metacritic 评分 | 用户评分  |
-| ---- | --------------- | --------- |
-| date | metascore       | userscore |
+| 日期   | Metacritic 评分 | 用户评分      |
+| ---- | ------------- | --------- |
+| date | metascore     | userscore |
 
 </Route>
 
@@ -322,7 +322,7 @@ pageClass: routes
 
 适用于 URL 如 <https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570_00-ASIAFULLGAME0000> 的游戏。
 
-比如 PlayStation Store 香港简体中文区的 [《赛博朋克 2077》](https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) 的 lang 为 `zh-hans-hk`， gridName 为 `HP4497-CUSA16570_00-ASIAFULLGAME0000`
+比如 PlayStation Store 香港简体中文区的 [《赛博朋克 2077》](https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570\_00-ASIAFULLGAME0000) 的 lang 为 `zh-hans-hk`， gridName 为 `HP4497-CUSA16570_00-ASIAFULLGAME0000`
 
 </Route>
 
@@ -344,19 +344,19 @@ pageClass: routes
 
 <Route author="nczitzk" example="/psnine/node/news" path="/psnine/node/:id?/:order?" :paramsDesc="['节点 id，见下表，默认为 news', '排序，可选 `date` 即最新，默认为 `obdate` 即综合排序']">
 
-| 站务 | 活动  | 旅记   | 折扣 | 会免 |
-| ---- | ----- | ------ | ---- | ---- |
-| p9   | event | travel | off  | plus |
+| 站务 | 活动    | 旅记     | 折扣  | 会免   |
+| -- | ----- | ------ | --- | ---- |
+| p9 | event | travel | off | plus |
 
-| 新闻 | 攻略  | 测评   | 心得 | 开箱    |
-| ---- | ----- | ------ | ---- | ------- |
-| news | guide | review | exp  | openbox |
+| 新闻   | 攻略    | 测评     | 心得  | 开箱      |
+| ---- | ----- | ------ | --- | ------- |
+| news | guide | review | exp | openbox |
 
-| 游列     | 游计     | Ps4 | Ps5 |
+| 游列       | 游计       | Ps4 | Ps5 |
 | -------- | -------- | --- | --- |
 | gamelist | planlist | ps4 | ps5 |
 
-| 发米通  | Ign | Ucg |
+| 发米通     | Ign | Ucg |
 | ------- | --- | --- |
 | famitsu | ign | ucg |
 
@@ -380,10 +380,10 @@ pageClass: routes
 
 <Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" :paramsDesc="['游戏代码（默认所有）']">
 
-| 游戏代码 | 游戏名称     |
-| -------- | ------------ |
-| GTAV     | 侠盗猎车手 5 |
-| RDR2     | 荒野大镖客 2 |
+| 游戏代码 | 游戏名称    |
+| ---- | ------- |
+| GTAV | 侠盗猎车手 5 |
+| RDR2 | 荒野大镖客 2 |
 
 </Route>
 
@@ -435,9 +435,9 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 <Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '论坛版块ID, 默认显示所有帖子, 论坛版块URL中`group_label_id`参数，特别的有']"/>
 
-| 全部 | 精华  | 官方     |
-| ---- | ----- | -------- |
-| all  | elite | official |
+| 全部  | 精华    | 官方       |
+| --- | ----- | -------- |
+| all | elite | official |
 
 ### 游戏更新
 
@@ -447,9 +447,9 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 <Route author="hoilc" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '排序方式, 空为默认排序, 可选如下']"/>
 
-| 最新   | 最热 | 游戏时长 |
-| ------ | ---- | -------- |
-| update | hot  | spent    |
+| 最新     | 最热  | 游戏时长  |
+| ------ | --- | ----- |
+| update | hot | spent |
 
 ## 巴哈姆特
 
@@ -458,12 +458,12 @@ Steam 新闻中心支持官方的 RSS 订阅:
 <Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
 
 | 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+| -- | -- | ----- | ---- | --- | ---- | ---- | -- |
+| 缺省 | 1  | 3     | 4    | 5   | 9    | 11   | 13 |
 
-| Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
-| ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
-| ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |
+| Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫    | 動畫    |
+| ------ | --- | --- | ------- | ------ | ----- | ----- | --- | ------- | --- | ----- | ----- |
+| ns     | ps5 | ps4 | xbone   | xbsx   | pc    | olg   | ios | android | web | comic | anime |
 
 </Route>
 
@@ -471,9 +471,9 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 <Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" :paramsDesc="['默认为 night']">
 
-| 每日聚焦 | 最好玩 | 触乐夜话 | 动态资讯 |
-| -------- | ------ | -------- | -------- |
-| daily    | pcz    | night    | news     |
+| 每日聚焦  | 最好玩 | 触乐夜话  | 动态资讯 |
+| ----- | --- | ----- | ---- |
+| daily | pcz | night | news |
 
 </Route>
 
@@ -513,9 +513,9 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 <Route author="nczitzk" example="/jx3" path="/jx3/:caty?" :paramsDesc="['分类，见下表，默认为最新']">
 
-| 最新    | 新闻  | 活动 | 公告     |
-| ------- | ----- | ---- | -------- |
-| allnews | press | hd   | announce |
+| 最新      | 新闻    | 活动 | 公告       |
+| ------- | ----- | -- | -------- |
+| allnews | press | hd | announce |
 
 </Route>
 
@@ -534,12 +534,12 @@ Steam 新闻中心支持官方的 RSS 订阅:
 <Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
-| :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
-|    17    |   18   |   16   |   19   |   20   |      329     |      221     |
+| :--: | :-: | :-: | :-: | :-: | :----: | :----: |
+|  17  |  18 |  16 |  19 |  20 |   329  |   221  |
 
 | 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
-| :------: | :------: | :------: | :------: | :------: | :----: |
-|    112   |    389   |    24    |    102   |    23    |   117  |
+| :--: | :--: | :--: | :--: | :--: | :-: |
+|  112 |  389 |  24  |  102 |  23  | 117 |
 
 </Route>
 
@@ -557,9 +557,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
 
-| 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
-| -------- | -------- | -------- | -------- |
-| new      | version  | gach     | event    |
+| 最新公告 | 版本信息    | 祈愿信息 | 活动介绍  |
+| ---- | ------- | ---- | ----- |
+| new  | version | gach | event |
 
 </Route>
 
@@ -567,7 +567,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
 
-| 最新   | 动态 | 公告   | 活动     | 补给     |
+| 最新     | 动态   | 公告     | 活动       | 补给       |
 | ------ | ---- | ------ | -------- | -------- |
 | latest | news | notice | activity | strategy |
 
@@ -600,8 +600,8 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 <Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" :paramsDesc="['分类，见下表，默认为新闻']">
 
 | 新闻 | 公告 |
-| ---- | ---- |
-| 1    | 3    |
+| -- | -- |
+| 1  | 3  |
 
 </Route>
 
@@ -660,8 +660,8 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 <Route author="LogicJake" example="/gamersky/ent/ymfl" path="/gamersky/ent/:category" :paramsDesc="['分类类型']">
 
 | 趣囧时间 | 游民影院 | 游观天下 | 壁纸图库 | 游民盘点 | 游民福利 |
-| -------- | -------- | -------- | -------- | -------- | -------- |
-| qysj     | ymyy     | ygtx     | bztk     | ympd     | ymfl     |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| qysj | ymyy | ygtx | bztk | ympd | ymfl |
 
 </Route>
 
@@ -672,8 +672,8 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 <Route author="LogicJake nczitzk" example="/yxdzqb/popular_cn" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
 
 | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
-| -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
-| discount       | popular            | popular_cn             | low            | low_cn                 |
+| ---------- | ------------ | -------------- | ---------- | -------------- |
+| discount   | popular      | popular_cn     | low        | low_cn         |
 
 </Route>
 
@@ -693,9 +693,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" :paramsDesc="['分类，见下表，默认为PC游戏', '类型，可在各分类页中导航栏中找到']">
 
-| PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
-| ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
-| pcgame  | ps4      | sgame       | nsaita      | ps      | bt      | 3ds      | psv      | jiaocheng    | ps3yx    | zhangji  |
+| PC 游戏  | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机    |
+| ------ | ------ | --------- | ------- | ------- | ----- | ------ | ------ | ---------- | ------ | ------- |
+| pcgame | ps4    | sgame     | nsaita  | ps      | bt    | 3ds    | psv    | jiaocheng  | ps3yx  | zhangji |
 
 </Route>
 
@@ -719,9 +719,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="nczitzk" example="/yxdown/news" path="/yxdown/news/:category?" :paramsDesc="['分类，见下表，默认为资讯首页']">
 
-| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-|          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |
+| 资讯首页 | 业界动态    | 视频预告  | 新作发布   | 游戏资讯  | 游戏评测   | 网络游戏    | 手机游戏    |
+| ---- | ------- | ----- | ------ | ----- | ------ | ------- | ------- |
+|      | dongtai | yugao | xinzuo | zixun | pingce | wangluo | shouyou |
 
 </Route>
 
@@ -735,9 +735,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
 
-| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
-| --------- | ------- | ------ | ------- | ---- | -------- |
-| recommend | history | big    | culture | news | retro    |
+| 推游        | 游戏史     | 大事件 | 文化      | 趣闻   | 经典回顾  |
+| --------- | ------- | --- | ------- | ---- | ----- |
+| recommend | history | big | culture | news | retro |
 
 </Route>
 
@@ -751,7 +751,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="nczitzk" example="/yuanshen" path="/yuanshen/:location?/:category?" :paramsDesc="['区域，可选 zh_CN 或 zh_TW', '分类，见下表，默认为最新']">
 
-| 最新   | 新闻 | 公告   | 活动     |
+| 最新     | 新闻   | 公告     | 活动       |
 | ------ | ---- | ------ | -------- |
 | latest | news | notice | activity |
 
@@ -765,30 +765,31 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户文章
 
-<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID,可在文章html中获取']"/>
+<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID，可在文章html中获取']"/>
 
 ## 最终幻想 14
 
 ### 最终幻想 14 国服
 
-<Route author="Kiotlin" example="/ff14/ff14_zh/news" path="/ff14/ff14_zh/:type" :paramsDesc="['分类名']">
+<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" :paramsDesc="['分类名，预设为 `all`']">
 
-| 新闻 | 公告     | 活动   | 广告      | 所有 |
-| ---- | -------- | ------ | --------- | ---- |
-| news | announce | events | advertise | all  |
+| 新闻   | 公告       | 活动     | 广告        | 所有  |
+| ---- | -------- | ------ | --------- | --- |
+| news | announce | events | advertise | all |
 
 </Route>
 
 ### 最终幻想 14 国际服 （Lodestone）
 
-<Route author="chengyuhui" example="/ff14/ff14_global/na/all" path="/ff14/ff14_global/:lang/:type" :paramsDesc="['地区', '分类名']">
-| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
-| ---- | ------------ | ---- | ---- | ---- |
-| na   | eu           | fr   | de   | jp   |
+<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['地区', '分类名，预设为 `all`']">
 
-| 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
-| ------ | ------- | ----------- | ------- | -------- | ---------- |
-| topics | notices | maintenance | updates | status   | developers |
+| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+| -- | ------ | -- | -- | -- |
+| na | eu     | fr | de | jp |
+
+| 所有  | 话题     | 公告      | 维护          | 更新      | 服务状态   | 开发者博客      |
+| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |
+| all | topics | notices | maintenance | updates | status | developers |
 
 </Route>
 

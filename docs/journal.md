@@ -10,7 +10,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['期刊 id，见下表']" supportScihub="1">
 
-| Id        | 名称                                       |
+| Id        | 名称                                         |
 | --------- | ------------------------------------------ |
 | annals    | Academy of Management Annals               |
 | amd       | Academy of Management Discoveries          |
@@ -51,10 +51,10 @@ pageClass: routes
 
 <Route author="yech1990" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
 
-| `:category` |       类型说明      | 路由                                                       |
-| :---------: | :-----------------: | ---------------------------------------------------------- |
+| `:category` |     类型说明    | 路由                                                         |
+| :---------: | :---------: | ---------------------------------------------------------- |
 |   current   | 本期刊物 (默认选项) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
-|   inpress   |       在线发表      | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
+|   inpress   |     在线发表    | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
 
 </Route>
 
@@ -72,7 +72,7 @@ pageClass: routes
 
 <Route author="laampui" example="/deloitte/industries/consumer" path="/deloitte/industries/:category?" :paramsDesc="['默认为 energy-resources-industrials']">
 
-| 消费行业 | 能源、资源及工业行业         | 金融服务行业       | 政府及公共服务             | 生命科学与医疗行业       | 科技、传媒及电信行业                |
+| 消费行业     | 能源、资源及工业行业                   | 金融服务行业             | 政府及公共服务                    | 生命科学与医疗行业                | 科技、传媒及电信行业                          |
 | -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
 | consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
 
@@ -104,7 +104,7 @@ pageClass: routes
 
 <Route author="queensferryme" example="/ieee/author/37283006000/newest/10" path="/ieee/author/:aid/:sortType/:count?" :paramsDesc="['作者 ID，可以在 URL 中找到，例如 [https://ieeexplore.ieee.org/author/37283006000](https://ieeexplore.ieee.org/author/37283006000)', '排序方式，详细见下', '数量限制，默认为 10 篇']">
 
-| 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
+| 排序方式        | 最新       | 最旧       | 最多论文引用            | 最多专利引用             | 最流行            | 标题升序            | 标题降序             |
 | ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
 | `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
 
@@ -154,7 +154,7 @@ pageClass: routes
 
 <Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
 
-|   `:journal`  |            期刊名           | 路由                                                                               |
+|   `:journal`  |             期刊名             | 路由                                                                                 |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
 |     nature    |            Nature           | [/nature/research/nature](https://rsshub.app/nature/research/nature)               |
 |      nbt      |     Nature Biotechnology    | [/nature/research/nbt](https://rsshub.app/nature/research/nbt)                     |
@@ -177,7 +177,7 @@ pageClass: routes
 
 <Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
 
-|   `:journal`  |            期刊名           | 路由                                                                                               |
+|   `:journal`  |             期刊名             | 路由                                                                                                 |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
 |      nbt      |     Nature Biotechnology    | [/nature/news-and-comment/nbt](https://rsshub.app/nature/news-and-comment/nbt)                     |
 |     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](https://rsshub.app/nature/news-and-comment/neuro)                 |
@@ -210,6 +210,14 @@ pageClass: routes
 
 <Route author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
 
+## Oxford University Press
+
+### Oxford Academic
+
+#### 期刊
+
+<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['期刊名称缩写，可以在网址中得到']" anticrawler="1"/>
+
 ## PNAS
 
 ### 最新文章（可筛选领域）
@@ -233,7 +241,7 @@ pageClass: routes
 
 <Route author="yech1990" example="/sciencemag/current/science" path="/sciencemag/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
 
-| `:journal` |             期刊名             | 路由                                                                               |
+| `:journal` |               期刊名              | 路由                                                                                 |
 | :--------: | :----------------------------: | ---------------------------------------------------------------------------------- |
 |   science  |             Science            | [/sciencemag/current/science](https://rsshub.app/sciencemag/current/science)       |
 |  advances  |        Science Advances        | [/sciencemag/current/advances](https://rsshub.app/sciencemag/current/advances)     |
@@ -261,7 +269,7 @@ pageClass: routes
 
 <Route author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" supportScihub="1"/>
 
-_仅支持 Science 主刊_
+*仅支持 Science 主刊*
 
 </Route>
 
@@ -293,7 +301,7 @@ _仅支持 Science 主刊_
 <Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" :paramsDesc="['查询语句, 支持「简单」和「高级」两种模式:']" anticrawler="1">
 
 1.  简单模式，例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
-2.  高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角，选择高级搜索并提交查询。此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
+2.  高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn\&as_sdt=0,5), 点击左上角，选择高级搜索并提交查询。此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
 
 </Route>
 
@@ -312,8 +320,8 @@ _仅支持 Science 主刊_
 <Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
 
 | 本期要目 | 网络首发 | 学术活动 | 通知公告 |
-| -------- | -------- | -------- | -------- |
-| bqym     | wlsf     | xshd     | tzgg     |
+| ---- | ---- | ---- | ---- |
+| bqym | wlsf | xshd | tzgg |
 
 </Route>
 

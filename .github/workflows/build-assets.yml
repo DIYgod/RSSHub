@@ -10,12 +10,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    name: Build assets
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Use Node.js v14
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.0.0
         with:
           node-version: '14'
           cache: 'yarn'
@@ -26,3 +26,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./assets
+          user_name: 'github-actions[bot]'
+          user_email: '41898282+github-actions[bot]@users.noreply.github.com'
