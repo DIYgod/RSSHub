@@ -770,11 +770,54 @@ Type 栏目：
 
 ### 分类
 
-<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?" :paramsDesc="['分类，见下表，默认为 news']">
+<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" :paramsDesc="['分类，可在对应分类页 URL 中找到，默认为 news', '语言，见下表，默认为 English']">
+
+以下为国际站的部分分类：
+
+| WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |
+| ----- | -------- | -------- | ----- | ---- | ------- |
+| world | covid-19 | business | sport | tech | opinion |
+
+以下为中国站的部分分类：
 
 | 新闻   | 中国    | 俄罗斯    | 国际             | 俄中关系                   | 评论      |
 | ---- | ----- | ------ | -------------- | ---------------------- | ------- |
 | news | china | russia | category_guoji | russia_china_relations | opinion |
+
+语言
+
+| 语言          | 编号          |
+| ----------- | ----------- |
+| English     | english     |
+| Spanish     | spanish     |
+| German      | german      |
+| French      | french      |
+| Greek       | greek       |
+| Italian     | italian     |
+| Czech       | czech       |
+| Polish      | polish      |
+| Serbian     | serbian     |
+| Latvian     | latvian     |
+| Lithuanian  | lithuanian  |
+| Moldavian   | moldavian   |
+| Belarusian  | belarusian  |
+| Armenian    | armenian    |
+| Abkhaz      | abkhaz      |
+| Ssetian     | ssetian     |
+| Georgian    | georgian    |
+| Azerbaijani | azerbaijani |
+| Arabic      | arabic      |
+| Turkish     | turkish     |
+| Persian     | persian     |
+| Dari        | dari        |
+| Kazakh      | kazakh      |
+| Kyrgyz      | kyrgyz      |
+| Uzbek       | uzbek       |
+| Tajik       | tajik       |
+| Vietnamese  | vietnamese  |
+| Japanese    | japanese    |
+| Chinese     | chinese     |
+| Portuguese  | portuguese  |
 
 </Route>
 
