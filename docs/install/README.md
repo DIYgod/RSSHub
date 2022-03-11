@@ -440,7 +440,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 #### 路径前缀
 
-`PREFIX`: URL 的路径前缀，默认为空字符串。如设置为 `/prefix`，则需要使用 <https://rsshub.app/prefix/qdaily/column/59>
+`PATHPREFIX`: URL 路径的前缀，默认为空字符串。如设置为 `/pathprefix`，则需要使用 <https://rsshub.app/pathprefix/qdaily/column/59>
 
 #### 访问密钥 / 码
 
