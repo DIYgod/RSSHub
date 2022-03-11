@@ -38,6 +38,32 @@ pageClass: routes
 
 </Route>
 
+## 35PHOTO
+
+### New photos
+
+<Route author="nczitzk" example="/35photo/new" path="/35photo/new"/>
+
+### Featured photos
+
+<Route author="nczitzk" example="/35photo/actual" path="/35photo/actual"/>
+
+### New interesting
+
+<Route author="nczitzk" example="/35photo/interesting" path="/35photo/interesting"/>
+
+### Photos on the world map
+
+<Route author="nczitzk" example="/35photo/map" path="/35photo/map"/>
+
+### Genre
+
+<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" :paramsDesc="['id，可在对应分类页 URL 中找到']"/>
+
+### Author
+
+<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id，可在对应作者页 URL 中找到']"/>
+
 ## 8KCosplay
 
 ### 最新

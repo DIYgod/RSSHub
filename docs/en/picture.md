@@ -38,6 +38,32 @@ pageClass: routes
 
 </RouteEn>
 
+## 35PHOTO
+
+### New photos
+
+<RouteEn author="nczitzk" example="/35photo/new" path="/35photo/new"/>
+
+### Featured photos
+
+<RouteEn author="nczitzk" example="/35photo/actual" path="/35photo/actual"/>
+
+### New interesting
+
+<RouteEn author="nczitzk" example="/35photo/interesting" path="/35photo/interesting"/>
+
+### Photos on the world map
+
+<RouteEn author="nczitzk" example="/35photo/map" path="/35photo/map"/>
+
+### Genre
+
+<RouteEn author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" :paramsDesc="['id, can be found in URL']"/>
+
+### Author
+
+<RouteEn author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id, can be found in URL']"/>
+
 ## Asian to lick
 
 ### Home

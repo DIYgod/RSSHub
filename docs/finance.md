@@ -4,6 +4,12 @@ pageClass: routes
 
 # 金融
 
+## BigQuant
+
+### 专题报告
+
+<Route author="nczitzk" example="/bigquant/collections" path="/bigquant/collections"/>
+
 ## CFD
 
 ### 每周股指派息调整 (GBP)
@@ -37,6 +43,28 @@ pageClass: routes
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
+
+## TokenInsight
+
+### 博客
+
+<Route author="fuergaosi233" example="/tokeninsight/blog" path="/tokeninsight/blog/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']" />
+
+### 快讯
+
+<Route author="fuergaosi233" example="/tokeninsight/bulletin" path="/tokeninsight/bulletin/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']" />
+
+### 报告
+
+<Route author="fuergaosi233" example="/tokeninsight/report" path="/tokeninsight/report/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']">
+
+语言
+
+| 中文 | 英文 |
+| -- | -- |
+| zh | en |
+
+</Route>
 
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 

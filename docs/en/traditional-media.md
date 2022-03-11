@@ -334,6 +334,61 @@ See the [official RSS page](https://www.scmp.com/rss) to get the ID of each cate
 
 </RouteEn>
 
+## Sputnik News
+
+### Category
+
+<RouteEn author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" :paramsDesc="['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']">
+
+Categories for International site:
+
+| WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |
+| ----- | -------- | -------- | ----- | ---- | ------- |
+| world | covid-19 | business | sport | tech | opinion |
+
+Categories for Chinese site:
+
+| 新闻   | 中国    | 俄罗斯    | 国际             | 俄中关系                   | 评论      |
+| ---- | ----- | ------ | -------------- | ---------------------- | ------- |
+| news | china | russia | category_guoji | russia_china_relations | opinion |
+
+Language
+
+| Language    | Id          |
+| ----------- | ----------- |
+| English     | english     |
+| Spanish     | spanish     |
+| German      | german      |
+| French      | french      |
+| Greek       | greek       |
+| Italian     | italian     |
+| Czech       | czech       |
+| Polish      | polish      |
+| Serbian     | serbian     |
+| Latvian     | latvian     |
+| Lithuanian  | lithuanian  |
+| Moldavian   | moldavian   |
+| Belarusian  | belarusian  |
+| Armenian    | armenian    |
+| Abkhaz      | abkhaz      |
+| Ssetian     | ssetian     |
+| Georgian    | georgian    |
+| Azerbaijani | azerbaijani |
+| Arabic      | arabic      |
+| Turkish     | turkish     |
+| Persian     | persian     |
+| Dari        | dari        |
+| Kazakh      | kazakh      |
+| Kyrgyz      | kyrgyz      |
+| Uzbek       | uzbek       |
+| Tajik       | tajik       |
+| Vietnamese  | vietnamese  |
+| Japanese    | japanese    |
+| Chinese     | chinese     |
+| Portuguese  | portuguese  |
+
+</RouteEn>
+
 ## The Economist
 
 ### Category

@@ -78,6 +78,6 @@ describe('template', () => {
         expect(parsed.itunes.author).toBe('DIYgod');
         expect(parsed.items[0].enclosure.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
         expect(parsed.items[0].enclosure.length).toBe('3661');
-        expect(parsed.items[0].itunes.duration).toBe('1:01:01');
+        expect(parsed.items[0].itunes.duration).toBe('10:10:10');
     });
 });

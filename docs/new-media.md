@@ -467,6 +467,32 @@ Country
 
 </Route>
 
+## Foresight News
+
+### 首页
+
+<Route author="nczitzk" example="/foresightnews" path="/foresightnews"/>
+
+### 文章
+
+<Route author="nczitzk" example="/foresightnews/article" path="/foresightnews/article">
+
+::: tip 提示
+
+**文章** 来自 **首页** 时间流，并筛除 **首页** 时间流中的 **快讯** 获得，所以 `limit` 参数不能按预期返回指定数目的文章。
+
+:::
+
+</Route>
+
+### 快讯
+
+<Route author="nczitzk" example="/foresightnews/news" path="/foresightnews/news"/>
+
+### 专栏
+
+<Route author="nczitzk" example="/foresightnews/column/1" path="/foresightnews/column/:id" :paramsDesc="['专栏 id, 可在专栏页 URL 中找到']"/>
+
 ## Global Disinformation Index
 
 ### Research
@@ -1064,7 +1090,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 分类
 
-<Route author="WhiteWorld nczitzk" example="/readhub" path="/readhub/:category?" :paramsDesc="['分类，见下表，默认为热门话题']">
+<Route author="WhiteWorld nczitzk Fatpandac" example="/readhub" path="/readhub/:category?/:overview?" :paramsDesc="['分类，见下表，默认为热门话题', '获取概述，任意值获取概述，默认为不获取']">
 
 | 热门话题  | 科技动态 | 技术资讯 | 区块链快讯      | 每日早报  |
 | ----- | ---- | ---- | ---------- | ----- |
@@ -1301,6 +1327,30 @@ Supported sub-sites:
 ### 快讯
 
 <Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
+
+## 白话区块链
+
+### 首页
+
+<Route author="Fatpandac" example="/hellobtc/information/latest" path="/hellobtc/information/:channel?" :paramsDesc="['类型，可填 `latest` 和 `application` 及最新和应用，默认为最新']"/>
+
+### 快讯
+
+<Route author="Fatpandac" example="/hellobtc/news" path="/hellobtc/news"/>
+
+### 科普
+
+<Route author="Fatpandac" example="/hellobtc/kepu/latest" path="/hellobtc/kepu/:channel?" :paramsDesc="['类型，见下表，默认为最新']">
+
+| latest | bitcoin | ethereum | defi | inter_blockchain | mining | safety | satoshi_nakomoto | public_blockchain |
+| ------ | ------- | -------- | ---- | ---------------- | ------ | ------ | ---------------- | ----------------- |
+| 最新     | 比特币     | 以太坊      | DeFi | 跨链               | 挖矿     | 安全     | 中本聪              | 公链                |
+
+</Route>
+
+### 专栏
+
+<Route author="Fatpandac" example="/hellobtc/topic/276" path="/hellobtc/topic/:id" :paramsDesc="['专栏 ID，可在网址中获取']"/>
 
 ## 白鲸出海
 
@@ -2004,6 +2054,14 @@ others = 热点新闻 + 滚动新闻
 | 资讯   | 视频     | 电台     | 文章       |
 | ---- | ------ | ------ | -------- |
 | news | videos | radios | articles |
+
+</Route>
+
+### 标签
+
+<Route author="StevenRCE0" example="/gcores/tag/42/articles" path="/gcores/tag/:tag/:category?" :paramsDesc="['标签名，可在选定标签分类页面的 URL 中找到，如视觉动物——42', '分类名']" radar="1">
+
+分类名同上。
 
 </Route>
 
@@ -3325,6 +3383,12 @@ column 为 third 时可选的 category:
 ### 中国大陆新闻动态
 
 <Route author="HenryQW" example="/wikipedia/mainland" path="/wikipedia/mainland"/>
+
+## 维基新闻
+
+### 最新新闻
+
+根据维基新闻的[sitemap](https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85)获取新闻全文。目前仅支持中文维基新闻。 <Route author="KotoriK" example="/wikinews/latest" path="/wikinews/latest"/>
 
 ## 未名新闻
 

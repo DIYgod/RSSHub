@@ -240,6 +240,10 @@ pageClass: routes
 
 </Route>
 
+### 科学技术政策办公室
+
+<Route author="LyleLee" example="/whitehouse/ostp" path="/whitehouse/ostp"/>
+
 ## 美国财政部
 
 ### 新闻稿
@@ -497,6 +501,14 @@ pageClass: routes
 ### 政策解读
 
 <Route author="Yoge-Code" example="/gov/miit/zcjd" path="/gov/miit/zcjd"/>
+
+### 文件发布
+
+<Route author="Fatpandac" example="/gov/miit/wjfb/ghs" path="/gov/miit/wjfb/:ministry" :paramsDesc="['部门缩写，可以在对应 URL 中获取']"/>
+
+### 意见征集
+
+<Route author="Fatpandac" example="/gov/miit/yjzj" path="/gov/miit/yjzj"/>
 
 ### 文件公示
 
@@ -940,9 +952,13 @@ pageClass: routes
 
 ## 中华人民共和国生态环境部
 
-### 公示
+### 要闻动态
 
-<Route author="billyct" example="/gov/mee/gs" path="/gov/mee/gs"/>
+<Route author="liuxsdev" example="/gov/mee/ywdt/hjywnews" path="/gov/mee/ywdt/:category?" :paramsDesc="['分类名，预设 `szyw`']"/>
+
+| 时政要闻 |   环境要闻   |  地方快讯  | 新闻发布 | 视频新闻 | 公示公告 |
+| :--: | :------: | :----: | :--: | :--: | :--: |
+| szyw | hjywnews | dfnews | xwfb | spxw | gsgg |
 
 ## 中华人民共和国退役军人事务部
 
