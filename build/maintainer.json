@@ -981,6 +981,12 @@
     "/literotica/category/:category": [
         "nczitzk"
     ],
+    "/liulinblog/kuaixun": [
+        "Fatpandac"
+    ],
+    "/liulinblog/itnews/:channel?": [
+        "Fatpandac"
+    ],
     "/lkong/forum/:id?/:digest?": [
         "nczitzk",
         "ma6254"
