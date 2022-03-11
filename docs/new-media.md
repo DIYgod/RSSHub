@@ -2686,6 +2686,22 @@ column 为 third 时可选的 category:
 
 <Route author="howel52" example="/jpmorganchase" path="/jpmorganchase"/>
 
+## 木木博客
+
+### 每天六十秒（60 秒）读懂世界
+
+<Route author="Fatpandac" example="/liulinblog/kuaixun" path="/liulinblog/kuaixun"/>
+
+### 科技新闻
+
+<Route author="Fatpandac" example="/liulinblog/itnews/seo" path="/liulinblog/itnews/:channel?" :paramsDesc="['频道，默认为互联网早报']">
+
+|   互联网早报  | 站长圈 |
+| :------: | :-: |
+| internet | seo |
+
+</Route>
+
 ## 鸟哥笔记
 
 ### 首页
