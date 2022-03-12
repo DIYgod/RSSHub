@@ -220,6 +220,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
+### 当前在线
+
+<Route author="TigerCubDen" example="/bilibili/online" path="/bilibili/online/:disableEmbed?" :paramsDesc="['默认为开启内嵌视频, 任意值为关闭']"/>
+
 ### 用户关注动态
 
 <Route author="TigerCubDen" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:disableEmbed?" :paramsDesc="['用户 id', '默认为开启内嵌视频, 任意值为关闭']" selfhost="1">
