@@ -1120,6 +1120,9 @@
     "/nju/zbb/:type": [
         "ret-1"
     ],
+    "/njupt/jwc/:type?": [
+        "shaoye"
+    ],
     "/nltimes/news/:category?": [
         "Hivol"
     ],
@@ -1977,7 +1980,6 @@
     "/ustc/jwc/:type?": [],
     "/ustc/job/:category?": [],
     "/utdallas/isso": [],
-    "/njupt/jwc/:type?": [],
     "/nchu/jwc/:type?": [],
     "/cqu/jwc/:path*": [],
     "/cqu/news/jzyg": [],
