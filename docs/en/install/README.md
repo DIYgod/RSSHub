@@ -531,6 +531,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
+-   Bitbucket: [Basic auth with App passwords](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#basic-auth)
+
+    -   `BITBUCKET_USERNAME`: Your Bitbucket username
+    -   `BITBUCKET_PASSWORD`: Your Bitbucket app password
+
 -   Google Fonts: [API key application](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
 
     -   `GOOGLE_FONTS_API_KEY`: API key

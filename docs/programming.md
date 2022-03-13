@@ -80,6 +80,17 @@ Rated 对象
 
 <Route author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
 
+
+## Bitbucket
+
+### Commits
+
+<Route author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug"/>
+
+### Releases
+
+<Route author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug"/>
+
 ## Bitmovin
 
 ### Blog
