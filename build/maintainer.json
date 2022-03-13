@@ -1302,6 +1302,9 @@
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
+    "/sohu/mp/:id": [
+        "HenryQW"
+    ],
     "/solidot/:type?": [
         "sgqy",
         "hang333",
@@ -2602,7 +2605,6 @@
     "/nciae/tzgg": [],
     "/nciae/xsxx": [],
     "/cfan/news": [],
-    "/sohu/mp/:id": [],
     "/tencent/news/author/:mid": [],
     "/nfmovies/:id?": [],
     "/andyt/:view?": [],
