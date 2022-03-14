@@ -262,6 +262,15 @@
     "/chaoxing/qk/:id/:needContent?": [
         "nczitzk"
     ],
+    "/chaping/banner": [
+        "nczitzk"
+    ],
+    "/chaping/news/:caty?": [
+        "nczitzk"
+    ],
+    "/chaping/newsflash": [
+        "Fatpandac"
+    ],
     "/ciidbnu/:id?": [
         "nczitzk"
     ],
@@ -3082,8 +3091,6 @@
     "/chuhaibiji": [],
     "/blogs/jianning": [],
     "/hudongba/:city/:id": [],
-    "/chaping/banner": [],
-    "/chaping/news/:caty?": [],
     "/feixuew/:id?": [],
     "/1x/:category?": [],
     "/jx3/:caty?": [],
