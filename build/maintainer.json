@@ -191,6 +191,12 @@
     "/bit/rszhaopin": [
         "nczitzk"
     ],
+    "/bitbucket/commits/:workspace/:repo_slug": [
+        "AuroraDysis"
+    ],
+    "/bitbucket/tags/:workspace/:repo_slug": [
+        "AuroraDysis"
+    ],
     "/bitmovin/blog": [
         "elxy"
     ],
