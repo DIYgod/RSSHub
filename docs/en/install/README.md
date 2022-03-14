@@ -508,6 +508,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 :::
 
+-   Bitbucket: [Basic auth with App passwords](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#basic-auth)
+
+    -   `BITBUCKET_USERNAME`: Your Bitbucket username
+    -   `BITBUCKET_PASSWORD`: Your Bitbucket app password
+
 -   Discuz cookie
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by Discuz, cid can be anything from 00 to 99. When visiting a Discuz route, use cid to specify this cookie.

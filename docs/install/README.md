@@ -525,6 +525,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         3.  点击 dynamic_new 请求，找到 Cookie
         4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
 
+-   Bitbucket: [Basic auth with App passwords](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#basic-auth)
+
+    -   `BITBUCKET_USERNAME`: 你的 Bitbucket 用户名
+    -   `BITBUCKET_PASSWORD`: 你的 Bitbucket 密码
+
 -   BTBYR
 
     -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
