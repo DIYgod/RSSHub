@@ -808,6 +808,10 @@
     "/iwara/users/:username?/:type?": [
         "Fatpandac"
     ],
+    "/ixigua/ixigua/user/video/:uid/:disableEmbed?": [
+        "FlashWingShadow",
+        "Fatpandac"
+    ],
     "/jandan/:category?": [
         "nczitzk"
     ],
@@ -3210,7 +3214,6 @@
     "/yinxiang/card/:id": [],
     "/yinxiang/personal/:id": [],
     "/yinxiang/category/:id": [],
-    "/ixigua/user/video/:uid/:disableEmbed?": [],
     "/gvm/index/:category?": [],
     "/chuapp/index/:category?": [],
     "/deloitte/industries/:category?": [],
