@@ -1496,6 +1496,10 @@ Supported sub-sites:
 
 </Route>
 
+### 快讯
+
+<Route author="Fatpandac" example="/chaping/newsflash" path="/chaping/newsflash"/>
+
 ## 城农 Growin' City
 
 ### 城农资讯观点
