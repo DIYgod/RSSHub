@@ -66,6 +66,16 @@ Category
 
 <RouteEn author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
 
+## Bitbucket
+
+### Commits
+
+<RouteEn author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug"/>
+
+### Releases
+
+<RouteEn author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug"/>
+
 ## Bitmovin
 
 ### Blog
