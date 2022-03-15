@@ -1596,6 +1596,9 @@
     "/wikinews/latest": [
         "KotoriK"
     ],
+    "/wp-china/news/:category?": [
+        "nczitzk"
+    ],
     "/wsj/:lang/:category?": [
         "oppilate"
     ],
