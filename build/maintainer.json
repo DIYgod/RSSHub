@@ -1280,6 +1280,9 @@
     "/radio-canada/latest/:language?": [
         "nczitzk"
     ],
+    "/rfa/:language?/:channel?/:subChannel?": [
+        "zphw"
+    ],
     "/rfi/news": [
         "nczitzk"
     ],
@@ -3291,7 +3294,6 @@
     "/ngd/:slug?": [],
     "/simpread/notice": [],
     "/simpread/changelog": [],
-    "/rfa/:language?/:channel?/:subChannel?": [],
     "/booth.pm/shop/:subdomain": [],
     "/feed-the-beast/modpack/:modpackEntry": [],
     "/gab/user/:username": [],
