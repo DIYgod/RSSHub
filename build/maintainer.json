@@ -673,6 +673,18 @@
     "/gov/mee/ywdt?": [
         "liuxsdev"
     ],
+    "/gov/pbc/goutongjiaoliu": [
+        "nczitzk"
+    ],
+    "/gov/pbc/tradeAnnouncement": [
+        "nczitzk"
+    ],
+    "/gov/pbc/zcyj": [
+        "Fatpandac"
+    ],
+    "/gov/pbc/gzlw": [
+        "Fatpandac"
+    ],
     "/guduodata/daily": [
         "Gem1ni"
     ],
@@ -2954,8 +2966,6 @@
     "/fzdm/manhua/:id": [],
     "/aljazeera/news": [],
     "/cfd/gbp_div": [],
-    "/pbc/goutongjiaoliu": [],
-    "/pbc/tradeAnnouncement": [],
     "/monotype/article": [],
     "/stork/keyword/:trackID/:displayKey": [],
     "/zhutix/latest": [],
