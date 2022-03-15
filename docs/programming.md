@@ -74,6 +74,28 @@ Rated 对象
 
 <Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']"/>
 
+## BBC News Labs
+
+### News
+
+<Route author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
+
+## Bitbucket
+
+### Commits
+
+<Route author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+
+### Tags
+
+<Route author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+
+## Bitmovin
+
+### Blog
+
+<Route author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
+
 ## Codeforces
 
 #### 最新比赛
@@ -271,11 +293,27 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']" />
 
+## Gitpod
+
+### 博客
+
+<Route author="TonyRL" example="/gitpod/blog" path="/gitpod/blog" />
+
+### 更新日志
+
+<Route author="TonyRL" example="/gitpod/changelog" path="/gitpod/changelog" />
+
 ## Go 语言中文网
 
 ### 周刊
 
 <Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
+
+## GoCN
+
+### 文章
+
+<Route author="AtlanCI" example="/gocn" path="/gocn"/>
 
 ## Hacker News
 
@@ -304,6 +342,26 @@ GitHub 官方也提供了一些 RSS:
 订阅特定用户的内容
 
 <Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']" />
+
+## HelloGitHub
+
+### 文章列表
+
+<Route author="moke8" example="/hellogithub/article" path="/hellogithub/article"/>
+
+### 编程语言排行榜
+
+<Route author="moke8" example="/hellogithub/ranking" path="/hellogithub/ranking/:type?" :paramsDesc="['分类，见下表']">
+
+| 编程语言排行 | 数据库排行 | 服务端语言排行   |
+| ------ | ----- | --------- |
+| tiobe  | db    | webserver |
+
+</Route>
+
+### 月刊
+
+<Route author="moke8" example="/hellogithub/month" path="/hellogithub/month"/>
 
 ## Hex-Rays
 
@@ -459,11 +517,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 频道
 
-<Route author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
+<Route author="LogicJake Fatpandac" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
 
 ### 用户
 
-<Route author="leyuuu" example="/segmentfault/user/yunqishequ_5aa899aad5395" path="/segmentfault/user/:name" :paramsDesc="['用户Id，用户详情页URL可以找到']"/>
+<Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" :paramsDesc="['用户Id，用户详情页URL可以找到']"/>
 
 ## TesterHome
 
@@ -765,8 +823,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 开源项目
 
-<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects">
-</Route>
+<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects" />
 
 ## 码农网
 

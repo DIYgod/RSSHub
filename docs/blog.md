@@ -20,6 +20,10 @@ pageClass: routes
 
 <Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
+### 文章最近改动
+
+<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" :paramsDesc="['Site ID, 可在 URL 中找到']"/>
+
 ## Gwern Branwen
 
 <Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
@@ -159,6 +163,18 @@ pageClass: routes
 
 <Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
+## 大眼仔旭
+
+### 分类
+
+<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" :paramsDesc="['分类','是否获取全文，需要获取则传入参数`y`']" radar="1"> 
+
+| 微软应用    | 安卓应用    | 教程资源     | 其他资源  |
+| ------- | ------- | -------- | ----- |
+| windows | android | tutorial | other |
+
+</Route>
+
 ## 華康字型故事
 
 <Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
@@ -268,7 +284,11 @@ pageClass: routes
 ### 文章
 
 <Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  :paramsDesc="['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']">
+
 ::: tip 提示
+
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
-::: 
+
+:::
+
 </Route>

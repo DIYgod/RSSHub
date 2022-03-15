@@ -4,6 +4,12 @@ pageClass: routes
 
 # 金融
 
+## BigQuant
+
+### 专题报告
+
+<Route author="nczitzk" example="/bigquant/collections" path="/bigquant/collections"/>
+
 ## CFD
 
 ### 每周股指派息调整 (GBP)
@@ -11,6 +17,16 @@ pageClass: routes
 <Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
 ## DT 财经
+
+### 数据洞察
+
+<Route author="nczitzk" example="/dtcj/datainsight" path="/dtcj/datainsight/:id?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 城数 | NEXT 情报局 | 专业精选 |
+| -- | -------- | ---- |
+| 3  | 1        | 4    |
+
+</Route>
 
 ### 数据侠专栏
 
@@ -27,6 +43,28 @@ pageClass: routes
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
+
+## TokenInsight
+
+### 博客
+
+<Route author="fuergaosi233" example="/tokeninsight/blog" path="/tokeninsight/blog/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']" />
+
+### 快讯
+
+<Route author="fuergaosi233" example="/tokeninsight/bulletin" path="/tokeninsight/bulletin/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']" />
+
+### 报告
+
+<Route author="fuergaosi233" example="/tokeninsight/report" path="/tokeninsight/report/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']">
+
+语言
+
+| 中文 | 英文 |
+| -- | -- |
+| zh | en |
+
+</Route>
 
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
@@ -101,6 +139,12 @@ pageClass: routes
 | 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111 |
 
 </Route>
+
+## 东方财富
+
+### 天天基金用户动态
+
+<Route author="zidekuls" example="/eastmoney/ttjj/user/6551094298949188" path="/eastmoney/ttjj/user/:uid" :paramsDesc="['用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到']"/>
 
 ## 富途牛牛
 
@@ -202,12 +246,6 @@ pageClass: routes
 ### 用户博客
 
 <Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
-
-## 天天基金
-
-### 用户动态
-
-<Route author="zidekuls" example="/eastmoney/user/6551094298949188" path="/eastmoney/user/:uid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
 ## 乌拉邦
 

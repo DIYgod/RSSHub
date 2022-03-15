@@ -13,7 +13,7 @@
 <p>
 <b>Release Notes</b>:
 </p>
-{{@ releaseNotes }}
+{{@ releaseNotes.trim().replaceAll('\n', '<br>') }}
 {{/if}}
 <p>
 {{if downloadUrl===installUrl}}

@@ -54,6 +54,10 @@ pageClass: routes
 
 <Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']"/>
 
+### 苹果邮件
+
+见 [#中国邮政速递物流](/other.html#zhong-guo-you-zheng-su-di-wu-liu)
+
 ### App Store/Mac App Store
 
 见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
@@ -358,6 +362,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 用户动态
 
 <Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
+
+## 澳門特別行政區政府各公共部門獎助貸學金服務平台
+
+官方網址：<https://www.bolsas.gov.mo/>
+
+<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
+
+| 中文 | 葡文 |
+| -- | -- |
+| ch | pt |
+
+</Route>
 
 ## 百度搜索风云榜
 
@@ -735,13 +751,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 上海市教育考试院
-
-### 消息速递
-
-官方网址：<http://www.shmeea.edu.cn>
-
-<Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
 ## 上海证券交易所
 
 ### 上市公司信息最新公告披露
@@ -1050,6 +1059,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" rssbud="1"/>
 
+### 苹果邮件
+
+<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" :paramsDesc="['苹果邮件编号']"/>
+
 ## 自如
 
 ### 房源
@@ -1067,15 +1080,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-### 澳門特別行政區政府各公共部門獎助貸學金服務平台
-
-官方網址：<https://www.bolsas.gov.mo/>
-
-<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
-
-| 中文 | 葡文 |
-| -- | -- |
-| ch | pt |
-
-</Route>

@@ -16,6 +16,28 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
 
+## TokenInsight
+
+### Blogs
+
+<RouteEn author="fuergaosi233" example="/tokeninsight/blog/en" path="/tokeninsight/blog/:lang?" :paramsDesc="['Language, see below, Chinese by default']" />
+
+### Latest
+
+<RouteEn author="fuergaosi233" example="/tokeninsight/bulletin/en" path="/tokeninsight/bulletin/:lang?" :paramsDesc="['Language, see below, Chinese by default']" />
+
+### Research
+
+<RouteEn author="fuergaosi233" example="/tokeninsight/report/en" path="/tokeninsight/report/:lang?" :paramsDesc="['Language, see below, Chinese by default']">
+
+Language:
+
+| Chinese | English |
+| ------- | ------- |
+| zh      | en      |
+
+</RouteEn>
+
 ## World Economic Forum
 
 ### Report

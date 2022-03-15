@@ -38,6 +38,32 @@ pageClass: routes
 
 </Route>
 
+## 35PHOTO
+
+### New photos
+
+<Route author="nczitzk" example="/35photo/new" path="/35photo/new"/>
+
+### Featured photos
+
+<Route author="nczitzk" example="/35photo/actual" path="/35photo/actual"/>
+
+### New interesting
+
+<Route author="nczitzk" example="/35photo/interesting" path="/35photo/interesting"/>
+
+### Photos on the world map
+
+<Route author="nczitzk" example="/35photo/map" path="/35photo/map"/>
+
+### Genre
+
+<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" :paramsDesc="['id，可在对应分类页 URL 中找到']"/>
+
+### Author
+
+<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id，可在对应作者页 URL 中找到']"/>
+
 ## 8KCosplay
 
 ### 最新
@@ -47,6 +73,10 @@ pageClass: routes
 ### 分类
 
 <Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
+
+### 标签
+
+<Route author="KotoriK" example="/8kcos/tag/cosplay"  path="/8kcos/tag/:tag" :paramsDesc="['标签名']"/>
 
 ## Asian to lick
 

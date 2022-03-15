@@ -524,6 +524,18 @@ pageClass: routes
 
 ## 牛客网
 
+### 面经
+
+<Route author="huyyi" example="/nowcoder/experience/639?order=3&companyId=665&phaseId=0" path="/nowcoder/experience/:tagId" :paramsDesc="['职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开']">
+
+可选参数：
+
+-   companyId：公司 id，[🔗查询链接](https://www.nowcoder.com/discuss/tag/exp), 复制打开
+-   order：3 - 最新；1 - 最热
+-   phaseId：0 - 所有；1 - 校招；2 - 实习；3 - 社招
+
+</Route>
+
 ### 讨论区
 
 <Route author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
@@ -536,11 +548,11 @@ pageClass: routes
 
 ### 校招日程
 
-<Route author="junfengP" example="/nowcoder/schedule" path="nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
+<Route author="junfengP" example="/nowcoder/schedule" path="/nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
 
 ### 求职推荐
 
-<Route author="junfengP" example="/nowcoder/recommend" path="nowcoder/recommend"/>
+<Route author="junfengP" example="/nowcoder/recommend" path="/nowcoder/recommend"/>
 
 ### 实习广场 & 社招广场
 
@@ -651,6 +663,18 @@ pageClass: routes
 <Route author="igxlin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
 
 用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
+
+</Route>
+
+## 通信人家园
+
+### 论坛 频道
+
+<Route author="Fatpandac" example="/txrjy/fornumtopic" path="/txrjy/fornumtopic/:channel?" :paramsDesc="['频道的 id，见下表，默认为最新500个主题帖']">
+
+| 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
+| :---------: | :---------: | :---: | :---: | :--: | :--: |
+|      1      |      2      |   3   |   4   |   5  |   6  |
 
 </Route>
 
@@ -885,7 +909,13 @@ pageClass: routes
 
 ### 滚动新闻
 
-<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:caty" :paramsDesc="['分类，可选 `nba` 指 NBA，或 `zuqiu` 指 足球']"/>
+<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" :paramsDesc="['分类，见下表，默认为 NBA']">
+
+| NBA | 足球    | 电竞       | 综合     |
+| --- | ----- | -------- | ------ |
+| nba | zuqiu | dianjing | zonghe |
+
+</Route>
 
 ## 中国灵异网
 

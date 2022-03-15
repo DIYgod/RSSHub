@@ -156,6 +156,10 @@ pageClass: routes
 
 <Route author="Ji4n1ng" example="/99percentinvisible/transcript" path="/99percentinvisible/transcript"/>
 
+## A 姐分享
+
+<Route author="zhenhappy" example="/abskoop" path="/abskoop"/>
+
 ## AcFun
 
 见 [#AcFun](/anime.html#acfun)
@@ -200,6 +204,10 @@ pageClass: routes
 <Route author="I2IMk" example="/avgle/search/橋本ありな" path="/avgle/search/:keyword/:order?/:time?/:top?" :paramsDesc="['搜索的关键词', '视频次序, `bw` 观看中 / `mr` 最新 / `mv` 最多观看 / `tr` 最高评分 / `tf` 最多收藏 / `lg` 最长, 默认 `mr`', '视频的添加时间, `a` 所有 / `t` 今天 / `d` 本周 / `m` 本月, 默认 `a`', '按次序获取的视频数, 不大于 `250`, 默认 `30`']"/>
 
 ## Bandcamp
+
+### Weekly
+
+<Route author="nczitzk" example="/bandcamp/weekly" path="/bandcamp/weekly"/>
 
 ### Tag
 
@@ -389,6 +397,14 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ## JavBus
 
+::: tip 提示
+
+JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus.com> ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.icu>，则在所有 JavBus 路由最后加上 `?domain=javsee.icu` 即可，此时路由为 [`/javbus/home?domain=javsee.icu`](https://rsshub.app/javbus/home?domain=javsee.icu)
+
+值得注意的是 **欧陆风云** 的域名与主域名有所不同，其备用域名亦然，本路由默认使用域名 <https://javbus.red> ，若该域名无法访问，可以通过在路由最后加上 `?western_domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.one>，则在所有 JavBus **欧陆风云** 路由最后加上 `?western_domain=javsee.one` 即可，此时路由为 [`/javbus/western/home?western_domain=javsee.one`](https://rsshub.app/javbus/western/home?western_domain=javsee.one)
+
+:::
+
 ### 首页
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/home" path="/javbus/home"/>
@@ -404,6 +420,14 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 ### 系列
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+
+### 制作商
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/studio/ej" path="/javbus/studio/:studioid" :paramsDesc="['制作商id，详见作品右侧制作商的链接']" />
+
+### 发行商
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/label/x8" path="/javbus/label/:labelid" :paramsDesc="['发行商id，详见作品右侧发行商的链接']" />
 
 ### 首页 / 步兵
 
@@ -1234,6 +1258,18 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
 
+## 秋爸日字
+
+### 分类
+
+<Route author="nczitzk" example="/qq88" path="/qq88/:category?" :paramsDesc="['分类 id，见下表，默认为首页']">
+
+| 首页 | オトナの土ドラ | 日剧 | 日剧 SP |
+| -- | ------- | -- | ----- |
+|    | 10      | 5  | 11    |
+
+</Route>
+
 ## 人人影视
 
 ### 评测推荐
@@ -1252,9 +1288,9 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 **原创 BT 电影**
 
-| 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV |
-| ---- | ---- | ------ | ------ | ------ | ---- | ------ | ----- | ---- | ---- | ------- | -------- |
-| mrhj | gcyc | yzwmyc | yzymyc | gqzwzm | sjxz | yzmzym | vr    | omwm | dmyc | ai      | ydsc     |
+| 每日合集 | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | 亚洲名站有码 | VR 系列 | 欧美无码 | 动漫原创 | AI 换脸电影 | 原档收藏 WMV | 综合讨论区 |
+| ---- | ---- | ------ | ------ | ------ | ---- | ------ | ----- | ---- | ---- | ------- | -------- | ----- |
+| mrhj | gcyc | yzwmyc | yzymyc | gqzwzm | sjxz | yzmzym | vr    | omwm | dmyc | ai      | ydsc     | zhtlq |
 
 **色花图片**
 
@@ -1347,7 +1383,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户视频投稿
 
-<Route author="FlashWingShadow" example="/ixigua/user/video/4234740937" path="/ixigua/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在用户主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="FlashWingShadow Fatpandac" example="/ixigua/user/video/4234740937" path="/ixigua/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在用户主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ## 喜马拉雅
 
@@ -1384,6 +1420,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 :::
 
 </Route>
+
+### 播客
+
+<Route author="hondajojo" example="/xiaoyuzhou/podcast/6021f949a789fca4eff4492c" path="/xiaoyuzhou/podcast/:id" :paramsDesc="['播客id，可以在小宇宙播客的 URL 中找到']"/>
 
 ## 优酷
 

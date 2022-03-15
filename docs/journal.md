@@ -210,6 +210,14 @@ pageClass: routes
 
 <Route author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
 
+## Oxford University Press
+
+### Oxford Academic
+
+#### 期刊
+
+<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['期刊名称缩写，可以在网址中得到']" anticrawler="1"/>
+
 ## PNAS
 
 ### 最新文章（可筛选领域）
