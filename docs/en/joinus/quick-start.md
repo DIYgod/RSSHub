@@ -334,8 +334,9 @@ ctx.state.data = {
     item: [
         {
             itunes_item_image: '', // The item image
+            itunes_duration: '', // The audio length in seconds (or H:mm:ss), optional
             enclosure_url: '', // The item's audio link
-            enclosure_length: '', // The audio length in seconds.
+            enclosure_length: '', // The file size in Bytes, optional
             enclosure_type: '', // Common types are: 'audio/mpeg' for .mp3, 'audio/x-m4a' for .m4a 'video/mp4' for .mp4
         },
     ],
@@ -351,7 +352,7 @@ ctx.state.data = {
     item: [
         {
             enclosure_url: '', // Magnet URI
-            enclosure_length: '', // The audio length, the unit is seconds, optional
+            enclosure_length: '', // The file size in Bytes, optional
             enclosure_type: 'application/x-bittorrent', // Fixed to 'application/x-bittorrent'
         },
     ],
@@ -407,11 +408,11 @@ ctx.state.data = {
 
         Preview:
 
-        ***
+        * * *
 
         <RouteEn author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
-        ***
+        * * *
 
         2. Multiple parameters:
 
@@ -421,11 +422,11 @@ ctx.state.data = {
 
         Preview:
 
-        ***
+        * * *
 
         <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['GitHub username', 'GitHub repo name']"/>
 
-        ***
+        * * *
 
         3. Use component slot for complicated description:
 
@@ -441,7 +442,7 @@ ctx.state.data = {
 
         Preview:
 
-        ***
+        * * *
 
         <RouteEn author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
@@ -451,7 +452,7 @@ ctx.state.data = {
 
         </RouteEn>
 
-        ***
+        * * *
 
 1.  Please be sure to close the tag of `<Route>`!
 

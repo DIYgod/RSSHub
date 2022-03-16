@@ -59,7 +59,7 @@ sidebar: auto
     // 这个对象中包含了数组名为 data，所以 response.data.data 则为需要的数据
     ```
 
-    返回的数据样例之一（response.data.data[0]）：
+    返回的数据样例之一（response.data.data \[0]）：
 
     ```json
     {
@@ -217,7 +217,7 @@ sidebar: auto
 
     4.  **使用通用配置型路由**
 
-    很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
+    很大一部分网站是可以通过一个配置范式来生成 RSS 的。
     通用配置即通过 cheerio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
 
     首先我们需要几个数据：
@@ -335,8 +335,9 @@ ctx.state.data = {
     item: [
         {
             itunes_item_image: '', // 每个track单独的图片
+            itunes_duration: '', // 音频长度，总共的秒数或者 H:mm:ss，可选
             enclosure_url: '', // 音频链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_length: '', // 文件大小 (单位: Byte)，可选
             enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
         },
     ],
@@ -352,7 +353,7 @@ ctx.state.data = {
     item: [
         {
             enclosure_url: '', // 磁力链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_length: '', // 文件大小 (单位: Byte)，可选
             enclosure_type: 'application/x-bittorrent', // 固定为 'application/x-bittorrent'
         },
     ],
@@ -428,8 +429,7 @@ ctx.state.data = {
 
         * * *
 
-
-        3. 复杂说明支持 slot:
+        3.  复杂说明支持 slot:
 
         ```vue
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
@@ -443,21 +443,21 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
-        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
-        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
-        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+        | 前端       | Android | iOS | 后端      | 设计     | 产品      | 工具资源    | 阅读      | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | ------- | ------- | ---- |
+        | frontend | android | ios | backend | design | product | freebie | article | ai   |
 
         </Route>
 
-        ***
+        * * *
 
-1.  请一定要注意把`<Route>`的标签关闭！
+2.  请一定要注意把`<Route>`的标签关闭！
 
-2.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
+3.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
 
 ## 提交新的 RSSHub Radar 规则
 
