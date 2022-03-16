@@ -1663,6 +1663,8 @@ category 对应的关键词有
 
 ## 自由亚洲电台
 
+### 新闻
+
 <Route author="zphw" example="/rfa/mandarin" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['语言，默认 English', '频道', '子频道（如存在）']">
 
 通过指定频道参数，提供比官方源更佳的阅读体验。
