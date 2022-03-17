@@ -2658,13 +2658,13 @@ column 为 third 时可选的 category:
 | --- | ----- | ------ | ---------- | ---------- |
 | all | games | comics | publishing | tablegames |
 
-|卡牌| 潮玩模型 | 影视         | 音乐    | 活动            |
-|-| ---- | ---------- | ----- | ----------  |
-|cards| toys | film-video | music | activities|
+| 卡牌    | 潮玩模型 | 影视         | 音乐    | 活动         |
+| ----- | ---- | ---------- | ----- | ---------- |
+| cards | toys | film-video | music | activities |
 
- | 设计 | 科技         | 食品   | 爱心通道    | 动物救助    |
-| ------| ---------- | ---- | ------- | ------- |
- | design | technology | food | charity | animals |
+| 设计     | 科技         | 食品   | 爱心通道    | 动物救助    |
+| ------ | ---------- | ---- | ------- | ------- |
+| design | technology | food | charity | animals |
 
 | 个人愿望   | 其他     |
 | ------ | ------ |
