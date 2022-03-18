@@ -397,6 +397,14 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ## JavBus
 
+::: tip 提示
+
+JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus.com> ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.icu>，则在所有 JavBus 路由最后加上 `?domain=javsee.icu` 即可，此时路由为 [`/javbus/home?domain=javsee.icu`](https://rsshub.app/javbus/home?domain=javsee.icu)
+
+值得注意的是 **欧陆风云** 的域名与主域名有所不同，其备用域名亦然，本路由默认使用域名 <https://javbus.red> ，若该域名无法访问，可以通过在路由最后加上 `?western_domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.one>，则在所有 JavBus **欧陆风云** 路由最后加上 `?western_domain=javsee.one` 即可，此时路由为 [`/javbus/western/home?western_domain=javsee.one`](https://rsshub.app/javbus/western/home?western_domain=javsee.one)
+
+:::
+
 ### 首页
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/home" path="/javbus/home"/>
@@ -1342,7 +1350,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ::: tip 部分歌单及听歌排行信息为登陆后可见
 
-部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_Cookies`设为登陆后的 Cookie 值，即可正常获取。
+部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_COOKIES`设为登陆后的 Cookie 值，即可正常获取。
 :::
 
 ### 歌单歌曲
@@ -1375,7 +1383,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户视频投稿
 
-<Route author="FlashWingShadow" example="/ixigua/user/video/4234740937" path="/ixigua/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在用户主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+<Route author="FlashWingShadow Fatpandac" example="/ixigua/user/video/4234740937" path="/ixigua/user/video/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在用户主页中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
 
 ## 喜马拉雅
 

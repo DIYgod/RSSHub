@@ -66,6 +66,16 @@ Category
 
 <RouteEn author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
 
+## Bitbucket
+
+### Commits
+
+<RouteEn author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+
+### Tags
+
+<RouteEn author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+
 ## Bitmovin
 
 ### Blog
@@ -205,6 +215,16 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <RouteEn author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']" />
 
+## Gitpod
+
+### Blog
+
+<RouteEn author="TonyRL" example="/gitpod/blog" path="/gitpod/blog" />
+
+### Changelog
+
+<RouteEn author="TonyRL" example="/gitpod/changelog" path="/gitpod/changelog" />
+
 ## Hacker News
 
 ### Section
@@ -237,8 +257,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### Hex-Rays News
 
-<RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news">
-</RouteEn>
+<RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news" />
 
 ## Kaggle
 

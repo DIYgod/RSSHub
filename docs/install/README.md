@@ -362,6 +362,24 @@ gcloud app deploy
 
 通过设置环境变量来配置 RSSHub
 
+### 网络配置
+
+`PORT`: 监听端口，默认为 `1200`
+
+`SOCKET`: 监听 Unix Socket，默认 `null`
+
+`LISTEN_INADDR_ANY`: 是否允许公网连接，默认 `1`
+
+`REQUEST_RETRY`: 请求失败重试次数，默认 `2`
+
+`REQUEST_TIMEOUT`: 请求超时毫秒数，默认 `3000`
+
+`UA`: 用户代理，默认 `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36`
+
+### 跨域请求
+
+RSSHub 默认对跨域请求限制为当前连接所在的域名，即不允许跨域。可以通过 `ALLOW_ORIGIN: *` 或者 `ALLOW_ORIGIN: www.example.com` 以对跨域访问进行修改。
+
 ### 缓存配置
 
 RSSHub 支持 `memory` 和 `redis` 两种缓存方式
@@ -422,10 +440,6 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码，默认为 `passw0rd`，请务必修改
 
-### 跨域请求
-
-RSSHub 默认对跨域请求限制为当前连接所在的域名，即不允许跨域。可以通过 `ALLOW_ORIGIN: *` 或者 `ALLOW_ORIGIN: www.example.com` 以对跨域访问进行修改。
-
 ### 访问控制配置
 
 RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
@@ -460,37 +474,33 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 | 在黑名单中 | ✅          | ❌          | ❌         |
 | 无黑白名单 | ✅          | ❌          | ❌         |
 
-### 其他应用配置
-
-`PORT`: 监听端口，默认为 `1200`
-
-`SOCKET`: 监听 Unix Socket，默认 `null`
-
-`LISTEN_INADDR_ANY`: 是否允许公网连接，默认 `1`
-
-`TITLE_LENGTH_LIMIT`: 限制输出标题的字节长度，一个英文字符的长度为 1 字节，部分语言如中文，日文，韩文或阿拉伯文等，统一算作 2 字节，默认 `100`
-
-`REQUEST_RETRY`: 请求失败重试次数，默认 `2`
-
-`REQUEST_TIMEOUT`: 请求超时毫秒数，默认 `3000`
+### 日志配置
 
 `DEBUG_INFO`: 是否在首页显示路由信息。值为非 `true` `false` 时，在请求中带上参数 `debug` 开启显示，例如：<https://rsshub.app/?debug=value_of_DEBUG_INFO> 。默认 `true`
 
-`NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
-
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大 [等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
-`NODE_NAME`: 节点名，用于负载均衡，识别当前节点
-
-`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer\&version=v1.14.0\&show=api-browserwsendpoint)
+`NO_LOGFILES`: 是否禁用日志文件输出，默认 `false`
 
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
 `SENTRY_ROUTE_TIMEOUT`: 路由耗时超过此毫秒值上报 Sentry，默认 `3000`
 
+### 其他应用配置
+
 `DISALLOW_ROBOT`: 阻止搜索引擎收录，默认开启，设置 false 或 0 关闭
 
+`ENABLE_CLUSTER`: 是否开启集群模式，默认 `false`
+
 `HOTLINK_TEMPLATE`: 用于处理描述中图片的链接，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性，格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
+
+`NODE_ENV`: 是否显示错误输出，默认 `production` （即关闭输出）
+
+`NODE_NAME`: 节点名，用于负载均衡，识别当前节点
+
+`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer\&show=api-browserwsendpoint)
+
+`TITLE_LENGTH_LIMIT`: 限制输出标题的字节长度，一个英文字符的长度为 1 字节，部分语言如中文，日文，韩文或阿拉伯文等，统一算作 2 字节，默认 `150`
 
 ### 部分 RSS 模块配置
 
@@ -500,45 +510,12 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 :::
 
--   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
+-   4399 论坛
 
-    -   `PIXIV_REFRESHTOKEN`: Pixiv Refresh Token, 请参考 [此文](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 获取，或自行对客户端抓包获取
-
-    -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
-
-    -   `PIXIV_BYPASS_HOSTNAME`: Pixiv 源站的主机名或 IP 地址，主机名会被解析为 IPv4 地址，默认为`public-api.secure.pixiv.net`；仅在`PIXIV_BYPASS_CDN`开启时生效
-
-    -   `PIXIV_BYPASS_DOH`: 用于解析 `PIXIV_BYPASS_HOSTNAME` 的 DoH 端点 URL，需要兼容 Cloudflare 或 Google 的 DoH 服务的 JSON 查询格式，默认为 `https://1.1.1.1/dns-query`
-
-    -   `PIXIV_IMG_PROXY`: 用于图片地址的代理，因为 pixiv 图片有防盗链，默认为 `https://i.pixiv.cat`
-
--   pixiv fanbox 用于获取付费内容
-
-    -   `FANBOX_SESSION_ID`: 对应 cookies 中的`FANBOXSESSID`。
-
--   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
-
-    -   `DISQUS_API_KEY`: Disqus API
-
--   twitter 全部路由：[申请地址](https://apps.twitter.com)
-
-    -   `TWITTER_CONSUMER_KEY`: Twitter API key，支持多个 key，用英文逗号 `,` 隔开
-
-    -   `TWITTER_CONSUMER_SECRET`: Twitter API key secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
-
-    -   `TWITTER_TOKEN_{handler}`: 对应 Twitter 用户名生成的 token，`{handler}` 替换为用于生成该 token 的 Twitter 用户名，值为 `Twitter API key, Twitter API key secret, Access token, Access token secret` 用逗号隔开，例如：`TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`
-
--   youtube 全部路由：[申请地址](https://console.developers.google.com/)
-
-    -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
-
--   telegram - 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
-
-    -   `TELEGRAM_TOKEN`: Telegram 机器人 token
-
--   github 全部路由：[申请地址](https://github.com/settings/tokens)
-
-    -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+    -   `GAME_4399`: 对应登录后的 cookie 值，获取方式：
+        1.  在 4399 首页登录。
+        2.  打开开发者工具，切换到 Network 面板，刷新
+        3.  查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.
 
 -   bilibili 用户关注动态系列路由
 
@@ -548,39 +525,63 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         3.  点击 dynamic_new 请求，找到 Cookie
         4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
 
--   spotify 全部路由： [注册地址](https://developer.spotify.com)
+-   Bitbucket: [Basic auth with App passwords](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#basic-auth)
 
-    -   `SPOTIFY_CLIENT_ID`：Spotify 应用的 client ID
+    -   `BITBUCKET_USERNAME`: 你的 Bitbucket 用户名
+    -   `BITBUCKET_PASSWORD`: 你的 Bitbucket 密码
 
-    -   `SPOTIFY_CLIENT_SECRET`：Spotify 应用的 client secret
+-   BTBYR
 
--   spotify 用户相关路由
-
-    -   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
-
--   语雀 全部路由：[注册地址](https://www.yuque.com/register)
-
-    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
-
--   邮箱 邮件列表路由：
-
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
-        -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
-        -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
-
--   吹牛部落 栏目更新
-
-    -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
-        1.  登陆后点开文章正文
+    -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
+    -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：
+        1.  登录后打开网站首页
         2.  打开控制台，刷新
-        3.  找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求
-        4.  找到请求头中的 x-member
+        3.  找到 <https://bt.byr.cn/index.php> 请求
+        4.  找到请求头中的 Cookie
 
--   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
+-   BUPT
 
-    -   `WEIBO_APP_KEY`: 微博 App Key
-    -   `WEIBO_APP_SECRET`: 微博 App Secret
-    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
+    -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
+        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
+        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        3.  打开控制台，刷新
+        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        5.  找到请求头中的 Cookie
+
+-   discuz cookies 设定
+
+    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 \[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
+
+-   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
+
+    -   `DISQUS_API_KEY`: Disqus API
+
+-   E-Hentai
+
+    -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
+    -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
+    -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
+    -   `EH_IGNEOUS`: ExHentai 账户登录后 cookie 中的`igneous`值。若设置此值，RSS 数据将全部从里站获取，`EH_SK`将被忽略
+
+-   github 全部路由：[申请地址](https://github.com/settings/tokens)
+
+    -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
+
+-   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
+
+    -   `GOOGLE_FONTS_API_KEY`: API key
+
+-   Instagram：
+
+    -   `IG_USERNAME`: Instagram 用户名。
+    -   `IG_PASSWORD`: Instagram 密码。
+    -   `IG_PROXY`: Instagram 代理 URL。
+
+    注意，暂**不支持**两步验证。
+
+-   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
+
+    -   `LASTFM_API_KEY`: Last.fm API Key
 
 -   Mastodon 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
 
@@ -593,117 +594,50 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `MINIFLUX_INSTANCE`： 用户所用的实例，默认为 MiniFlux 官方提供的 [付费服务地址](https://reader.miniflux.app)
     -   `MINIFLUX_TOKEN`: 用户的 API 密钥，请登录所用实例后于 `设置` -> `API 密钥` -> `创建一个新的 API 密钥` 处获取
 
--   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
+-   NGA BBS 用于获取帖子内文
 
-    -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
-    -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
-    -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
-    -   `FANFOU_PASSWORD`: 饭否密码
-
--   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
-
-    -   `LASTFM_API_KEY`: Last.fm API Key
-
--   北大未名 BBS 全站十大
-
-    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：
-        1.  登录后打开论坛首页
-        2.  打开控制台， 刷新
-        3.  找到 <https://bbs.pku.edu.cn/v2/home.php> 请求
-        4.  找到请求头中的 Cookie
+    -   `NGA_PASSPORT_UID`: 对应 cookie 中的 `ngaPassportUid`.
+    -   `NGA_PASSPORT_CID`: 对应 cookie 中的 `ngaPassportCid`.
 
 -   nhentai torrent: [注册地址](https://nhentai.net/register/)
 
     -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
     -   `NHENTAI_PASSWORD`: nhentai 密码
 
--   discuz cookies 设定
+-   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
-    -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 \[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
+    -   `PIXIV_REFRESHTOKEN`: Pixiv Refresh Token, 请参考 [此文](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 获取，或自行对客户端抓包获取
+    -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
+    -   `PIXIV_BYPASS_HOSTNAME`: Pixiv 源站的主机名或 IP 地址，主机名会被解析为 IPv4 地址，默认为`public-api.secure.pixiv.net`；仅在`PIXIV_BYPASS_CDN`开启时生效
+    -   `PIXIV_BYPASS_DOH`: 用于解析 `PIXIV_BYPASS_HOSTNAME` 的 DoH 端点 URL，需要兼容 Cloudflare 或 Google 的 DoH 服务的 JSON 查询格式，默认为 `https://1.1.1.1/dns-query`
+    -   `PIXIV_IMG_PROXY`: 用于图片地址的代理，因为 pixiv 图片有防盗链，默认为 `https://i.pixiv.cat`
+
+-   pixiv fanbox 用于获取付费内容
+
+    -   `FANBOX_SESSION_ID`: 对应 cookies 中的`FANBOXSESSID`。
 
 -   Sci-hub 设置，用于科学期刊路由。
 
     -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.se`。
 
--   端传媒设置，用于获取付费内容全文：
+-   spotify 全部路由： [注册地址](https://developer.spotify.com)
 
-    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJxxxx......xx_U8'`。使用 token 部署的好处是避免占据登陆设备数的额度，但这个 token 一般有效期为两周，因此只可作临时测试使用。
+    -   `SPOTIFY_CLIENT_ID`：Spotify 应用的 client ID
+    -   `SPOTIFY_CLIENT_SECRET`：Spotify 应用的 client secret
 
-    -   `INITIUM_IAP_RECEIPT`: 端传媒 iOS 版内购回执认证 token。获取方式：登陆后打开端传媒 iOS app 内任意页面，打开抓包工具，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`X-IAP-Receipt`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_IAP_RECEIPT: 'ef81dee9e4e2fe084a0af1ea82da2f7b16e75f756db321618a119fa62b52550e'`。
+-   spotify 用户相关路由
 
-    Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即可。你也可选择直接在环境设置中填写明文的用户名和密码：
+    -   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
 
-    -   `INITIUM_USERNAME`: 端传媒用户名 （邮箱）
-    -   `INITIUM_PASSWORD`: 端传媒密码
+-   telegram - 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
--   Instagram：
+    -   `TELEGRAM_TOKEN`: Telegram 机器人 token
 
-    -   `IG_USERNAME`: Instagram 用户名。
-    -   `IG_PASSWORD`: Instagram 密码。
-    -   `IG_PROXY`: Instagram 代理 URL。
+-   twitter 全部路由：[申请地址](https://apps.twitter.com)
 
-    注意，暂不支持两步验证。
-
--   BUPT
-
-    -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
-        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
-        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
-        3.  打开控制台，刷新
-        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
-        5.  找到请求头中的 Cookie
-
--   BTBYR
-
-    -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
-    -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：
-        1.  登录后打开网站首页
-        2.  打开控制台，刷新
-        3.  找到 <https://bt.byr.cn/index.php> 请求
-        4.  找到请求头中的 Cookie
-
--   小宇宙：需要 App 登陆后抓包获取相应数据。
-
-    -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
-    -   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
-
--   新榜
-
-    -   `NEWRANK_COOKIE`: 登陆后的 COOKIE 值，其中 token 是必要的，其他可删除
-
--   NGA BBS 用于获取帖子内文
-
-    -   `NGA_PASSPORT_UID`: 对应 cookie 中的 `ngaPassportUid`.
-
-    -   `NGA_PASSPORT_CID`: 对应 cookie 中的 `ngaPassportCid`.
-
--   喜马拉雅
-
-    -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：
-        1.  登陆喜马拉雅网页版
-        2.  打开控制台，刷新
-        3.  查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
-
--   4399 论坛
-
-    -   `GAME_4399`: 对应登录后的 cookie 值，获取方式：
-        1.  在 4399 首页登录。
-        2.  打开开发者工具，切换到 Network 面板，刷新
-        3.  查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.
-
--   滴答清单
-
-    -   `DIDA365_USERNAME`: 滴答清单用户名
-    -   `DIDA365_PASSWORD`: 滴答清单密码
-
--   知乎用户关注时间线
-
-    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
-        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
-
--   网易云歌单及听歌排行
-
-    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
+    -   `TWITTER_CONSUMER_KEY`: Twitter API key，支持多个 key，用英文逗号 `,` 隔开
+    -   `TWITTER_CONSUMER_SECRET`: Twitter API key secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
+    -   `TWITTER_TOKEN_{handler}`: 对应 Twitter 用户名生成的 token，`{handler}` 替换为用于生成该 token 的 Twitter 用户名，值为 `Twitter API key, Twitter API key secret, Access token, Access token secret` 用逗号隔开，例如：`TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`
 
 -   Wordpress
 
@@ -717,20 +651,98 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         | <https://cors.netnr.workers.dev/>        | cloudflare   |
         | <https://netnr-proxy.openode.io/>        | digitalocean |
 
--   E-Hentai
-    -   `EH_IPB_MEMBER_ID`: E-Hentai 账户登录后 cookie 的 `ipb_member_id` 值
-    -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
-    -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
-    -   `EH_IGNEOUS`: ExHentai 账户登录后 cookie 中的`igneous`值。若设置此值，RSS 数据将全部从里站获取，`EH_SK`将被忽略
+-   youtube 全部路由：[申请地址](https://console.developers.google.com/)
+
+    -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
+
+-   北大未名 BBS 全站十大
+
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：
+        1.  登录后打开论坛首页
+        2.  打开控制台， 刷新
+        3.  找到 <https://bbs.pku.edu.cn/v2/home.php> 请求
+        4.  找到请求头中的 Cookie
+
+-   吹牛部落 栏目更新
+
+    -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
+        1.  登陆后点开文章正文
+        2.  打开控制台，刷新
+        3.  找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求
+        4.  找到请求头中的 x-member
+
+-   滴答清单
+
+    -   `DIDA365_USERNAME`: 滴答清单用户名
+    -   `DIDA365_PASSWORD`: 滴答清单密码
+
+-   端传媒设置，用于获取付费内容全文：
+
+    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJxxxx......xx_U8'`。使用 token 部署的好处是避免占据登陆设备数的额度，但这个 token 一般有效期为两周，因此只可作临时测试使用。
+
+    -   `INITIUM_IAP_RECEIPT`: 端传媒 iOS 版内购回执认证 token。获取方式：登陆后打开端传媒 iOS app 内任意页面，打开抓包工具，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`X-IAP-Receipt`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_IAP_RECEIPT: 'ef81dee9e4e2fe084a0af1ea82da2f7b16e75f756db321618a119fa62b52550e'`。
+
+    Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即可。你也可选择直接在环境设置中填写明文的用户名和密码：
+
+    -   `INITIUM_USERNAME`: 端传媒用户名 （邮箱）
+    -   `INITIUM_PASSWORD`: 端传媒密码
+
+-   豆瓣想看
+
+    -   `DOUBAN_COOKIE`: 豆瓣登陆后的 Cookie 值
+
+-   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
+
+    -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
+    -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
+    -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
+    -   `FANFOU_PASSWORD`: 饭否密码
 
 -   南方周末付费全文
+
     -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文
 
 -   轻小说文库
+
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
 
--   Google Fonts：[申请地址](https://developers.google.com/fonts/docs/developer_api#a_quick_example)
-    -   `GOOGLE_FONTS_API_KEY`: API key
+-   语雀 全部路由：[注册地址](https://www.yuque.com/register)
 
--   豆瓣想看
-    -   `DOUBAN_COOKIE`: 豆瓣登陆后的 Cookie 值
+    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
+
+-   邮箱 邮件列表路由：
+
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 替换为 `.`，例如 `EMAIL_CONFIG_xxx.qq.com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
+        -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
+        -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
+
+-   网易云歌单及听歌排行
+
+    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
+
+-   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
+
+    -   `WEIBO_APP_KEY`: 微博 App Key
+    -   `WEIBO_APP_SECRET`: 微博 App Secret
+    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
+
+-   小宇宙：需要 App 登陆后抓包获取相应数据。
+
+    -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
+    -   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
+
+-   新榜
+
+    -   `NEWRANK_COOKIE`: 登陆后的 COOKIE 值，其中 token 是必要的，其他可删除
+
+-   喜马拉雅
+
+    -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：
+        1.  登陆喜马拉雅网页版
+        2.  打开控制台，刷新
+        3.  查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
+
+-   知乎用户关注时间线
+
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.

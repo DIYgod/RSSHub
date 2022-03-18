@@ -221,6 +221,8 @@ Only `s00017` is in English.
 
 ## Radio Free Asia (RFA)
 
+### News
+
 <RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['language, English by default', 'channel', 'subchannel, where applicable']" />
 
 Delivers a better experience by supporting parameter specification. 
@@ -331,6 +333,61 @@ You still can customize `language`, however, it is important to note that not al
 <RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['Category']">
 
 See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
+
+</RouteEn>
+
+## Sputnik News
+
+### Category
+
+<RouteEn author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" :paramsDesc="['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']">
+
+Categories for International site:
+
+| WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |
+| ----- | -------- | -------- | ----- | ---- | ------- |
+| world | covid-19 | business | sport | tech | opinion |
+
+Categories for Chinese site:
+
+| 新闻   | 中国    | 俄罗斯    | 国际             | 俄中关系                   | 评论      |
+| ---- | ----- | ------ | -------------- | ---------------------- | ------- |
+| news | china | russia | category_guoji | russia_china_relations | opinion |
+
+Language
+
+| Language    | Id          |
+| ----------- | ----------- |
+| English     | english     |
+| Spanish     | spanish     |
+| German      | german      |
+| French      | french      |
+| Greek       | greek       |
+| Italian     | italian     |
+| Czech       | czech       |
+| Polish      | polish      |
+| Serbian     | serbian     |
+| Latvian     | latvian     |
+| Lithuanian  | lithuanian  |
+| Moldavian   | moldavian   |
+| Belarusian  | belarusian  |
+| Armenian    | armenian    |
+| Abkhaz      | abkhaz      |
+| Ssetian     | ssetian     |
+| Georgian    | georgian    |
+| Azerbaijani | azerbaijani |
+| Arabic      | arabic      |
+| Turkish     | turkish     |
+| Persian     | persian     |
+| Dari        | dari        |
+| Kazakh      | kazakh      |
+| Kyrgyz      | kyrgyz      |
+| Uzbek       | uzbek       |
+| Tajik       | tajik       |
+| Vietnamese  | vietnamese  |
+| Japanese    | japanese    |
+| Chinese     | chinese     |
+| Portuguese  | portuguese  |
 
 </RouteEn>
 

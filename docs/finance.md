@@ -369,11 +369,19 @@ pageClass: routes
 
 ### 沟通交流
 
-<Route author="nczitzk" example="/pbc/goutongjiaoliu" path="/pbc/goutongjiaoliu"/>
+<Route author="nczitzk" example="/gov/pbc/goutongjiaoliu" path="/gov/pbc/goutongjiaoliu"/>
 
 ### 货币政策司公开市场交易公告
 
-<Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
+<Route author="nczitzk" example="/gov/pbc/tradeAnnouncement" path="/gov/pbc/tradeAnnouncement"/>
+
+### 政策研究
+
+<Route author="Fatpandac" example="/gov/pbc/zcjl" path="/gov/pbc/zcjl"/>
+
+### 工作论文
+
+<Route author="Fatpandac" example="/gov/pbc/gzlw" path="/gov/pbc/gzlw"/>
 
 ## 中证网
 
