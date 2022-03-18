@@ -292,7 +292,7 @@ const description = await ctx.cache.tryGet(link, async () => {
 });
 ```
 
-tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)，第一个参数为缓存的 key，第二个参数为缓存数据获取方法，第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)，且每次访问缓存会重新计算过期时间
+tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)。第一个参数为缓存的 key；第二个参数为缓存未命中时的数据获取方法；第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)；第四个参数为控制本次尝试缓存命中时是否需要重新计算过期时间（给缓存「续期」）的开关，`true` 为打开，`false` 为关闭，默认为打开
 
 * * *
 
