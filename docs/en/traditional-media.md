@@ -437,6 +437,14 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+### News by author
+
+<RouteEn author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/book/:author" :paramsDesc="['Author’s name in New York Times’ URL format']">
+
+Provides all of the articles by the specified New York Times author.
+
+</RouteEn>
+
 ### Best Seller Books
 
 
