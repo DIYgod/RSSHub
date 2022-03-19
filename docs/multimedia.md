@@ -399,15 +399,15 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ::: tip 提示
 
-JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus.com> ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.icu>，则在所有 JavBus 路由最后加上 `?domain=javsee.icu` 即可，此时路由为 [`/javbus/home?domain=javsee.icu`](https://rsshub.app/javbus/home?domain=javsee.icu)
+JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus.com> ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.icu>，则在所有 JavBus 路由最后加上 `?domain=javsee.icu` 即可，此时路由为 [`/javbus?domain=javsee.icu`](https://rsshub.app/javbus?domain=javsee.icu)
 
-值得注意的是 **欧陆风云** 的域名与主域名有所不同，其备用域名亦然，本路由默认使用域名 <https://javbus.red> ，若该域名无法访问，可以通过在路由最后加上 `?western_domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.one>，则在所有 JavBus **欧陆风云** 路由最后加上 `?western_domain=javsee.one` 即可，此时路由为 [`/javbus/western/home?western_domain=javsee.one`](https://rsshub.app/javbus/western/home?western_domain=javsee.one)
+值得注意的是 **欧陆风云** 的域名与主域名有所不同，其备用域名亦然，本路由默认使用域名 <https://javbus.red> ，若该域名无法访问，可以通过在路由最后加上 `?western_domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.one>，则在所有 JavBus **欧陆风云** 路由最后加上 `?western_domain=javsee.one` 即可，此时路由为 [`/javbus/western?western_domain=javsee.one`](https://rsshub.app/javbus/western?western_domain=javsee.one)
 
 :::
 
 ### 首页
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/home" path="/javbus/home"/>
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus" path="/javbus"/>
 
 ### 分类
 
@@ -429,6 +429,10 @@ JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/label/x8" path="/javbus/label/:labelid" :paramsDesc="['发行商id，详见作品右侧发行商的链接']" />
 
+### 导演
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/director/4gv" path="/javbus/director/：directorId" :paramsDesc="['导演id，详见作品右侧导演的链接']" />
+
 ### 首页 / 步兵
 
 <Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/home" path="/javbus/uncensored/home"/>
@@ -447,7 +451,7 @@ JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus
 
 ### 首页 / 欧陆风云
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/home" path="/javbus/western/home"/>
+<Route author="MegrezZhu CoderTonyChan" example="/javbus/western" path="/javbus/western"/>
 
 ### 分类 / 欧陆风云
 
