@@ -686,6 +686,23 @@
     "/gov/pbc/gzlw": [
         "Fatpandac"
     ],
+    "/guancha/:category?": [
+        "nczitzk",
+        "Jeason0228"
+    ],
+    "/guancha/headline": [
+        "nczitzk"
+    ],
+    "/guancha/member/:category?": [
+        "nczitzk"
+    ],
+    "/guancha/personalpage/:uid": [
+        "Jeason0228"
+    ],
+    "/guancha/topic/:id/:order?": [
+        "occupy5",
+        "nczitzk"
+    ],
     "/guduodata/daily": [
         "Gem1ni"
     ],
@@ -2473,14 +2490,6 @@
     "/manhuadb/comics/:id": [],
     "/zfrontier/postlist/:type": [],
     "/zfrontier/board/:boardId": [],
-    "/guancha/headline": [],
-    "/guancha/topic/:id/:order?": [],
-    "/guancha/member/:caty?": [],
-    "/guancha/personalpage/:uid": [],
-    "/guancha/:caty?": [],
-    "/guanchazhe/topic/:id/:order?": [],
-    "/guanchazhe/personalpage/:uid": [],
-    "/guanchazhe/index/:caty?": [],
     "/hpoi/info/:type?": [],
     "/hpoi/:category/:words": [],
     "/hpoi/user/:user_id/:caty": [],
