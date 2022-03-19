@@ -392,6 +392,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `REDIS_URL`: Redis 连接地址（redis 缓存类型时有效），默认为 `redis://localhost:6379/`
 
+`MEMORY_MAX`: 最大缓存数量（memory 缓存类型时有效），默认 `256`
+
 ### 代理配置
 
 部分路由反爬严格，可以配置使用代理抓取。
