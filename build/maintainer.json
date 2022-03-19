@@ -838,6 +838,11 @@
     "/jasa/section/:id": [
         "Derekmini"
     ],
+    "/javbus/": [
+        "MegrezZhu",
+        "CoderTonyChan",
+        "nczitzk"
+    ],
     "/javbus/genre/:gid": [
         "MegrezZhu",
         "CoderTonyChan"
@@ -881,6 +886,11 @@
     "/javbus/uncensored/star/:sid": [
         "MegrezZhu",
         "CoderTonyChan"
+    ],
+    "/javbus/western": [
+        "MegrezZhu",
+        "CoderTonyChan",
+        "nczitzk"
     ],
     "/javbus/western/home": [
         "MegrezZhu",
