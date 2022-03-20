@@ -1,0 +1,18 @@
+{{@ info }}
+<br>
+{{if videoSrc}}
+<a href="{{ videoSrc }}">觀看完整影片</a>
+{{ /if }}
+<br>
+{{if videoPreview}}
+<video controls><source src="{{ videoPreview }}" type="video/mp4"></video>
+{{/if}}
+<br>
+<h4>磁力連結投稿</h4>
+{{each magnets magnet}}
+<li><a href="{{ magnet.link }}">{{ magnet.title }} [{{ magnet.size }}] ({{ magnet.date }})</a></li>
+{{/each}}
+<h4>樣品圖像</h4>
+{{each thumbs}}
+<img src="{{ $value }}">
+{{/each}}
