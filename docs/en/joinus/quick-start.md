@@ -317,6 +317,9 @@ ctx.state.data = {
             pubDate: '', // The article publishing datetime
             guid: '', // The article unique identifier, optional, default to the article link below
             link: '', // The article link
+            upvotes: 0, // default to undefined, how many upvotes for this article,
+            downvotes: 0, // default to undefined, how many downvotes for this article,
+            comments: 0, // default to undefined, how many comments for this article
         },
     ],
 };

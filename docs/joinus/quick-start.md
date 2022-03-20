@@ -318,6 +318,9 @@ ctx.state.data = {
             pubDate: '', // 文章发布时间
             guid: '', // 文章唯一标示, 必须唯一, 可选, 默认为文章链接
             link: '', // 指向文章的链接
+            upvotes: 0, // 默认为空，文章有多少 upvote
+            downvotes: 0, // 默认为空，文章有多少 downvote
+            comments: 0, // 默认为空，文章有多少评论
         },
     ],
 };
