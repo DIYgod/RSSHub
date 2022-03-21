@@ -534,7 +534,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `EH_SK`: The value of `sk` in the cookie header after logging in E-Hentai
     -   `EH_IGNEOUS`: The value of `igneous` in the cookie header after logging in ExHentai. If this value is set, RSS will be generated from ExHentai, `EH_SK` will be ignored.
 
--   github: [Access Token application](https://github.com/settings/tokens)
+-   GitHub: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
