@@ -218,16 +218,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
 
-## Quicker
-
-### 讨论区
-
-<Route author="Cesaryuan" example="/quicker/qa" path="/quicker/qa"/>
-
-### 用户动作更新
-
-<Route author="Cesaryuan" example="/quicker/user/action/18359/Cesaryuan" path="/quicker/user/action/:uid/:person" :paramsDesc="['用户ID，可在用户主页链接里找到', '用户昵称，可在用户主页链接里找到']" />
-
 ## RF 技术社区
 
 ### 文章

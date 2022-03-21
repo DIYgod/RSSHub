@@ -382,7 +382,7 @@ pageClass: routes
 
 ### 版本更新
 
-<Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
+<Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
 
 ## RescueTime
 
