@@ -105,7 +105,7 @@
     "is-localhost-ip": "1.4.0",
     "jsdom": "19.0.0",
     "json-bigint": "1.0.0",
-    "json5": "2.2.0",
+    "json5": "2.2.1",
     "koa": "2.13.4",
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
