@@ -40,8 +40,8 @@ Only works for relative date in Chinese for now
 ```javascript
 const { parseRelativeDate } = require('@/utils/parse-date');
 
-const pubDate = parseRelativeDate('2天前');
-const pubDate = parseRelativeDate('前天 15:36');
+const pubDate = parseRelativeDate('2 days ago');
+const pubDate = parseRelativeDate('day before yesterday 15:36');
 ```
 
 ### Timezone
