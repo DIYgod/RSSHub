@@ -1144,10 +1144,21 @@ category 对应的关键词有
 
 </Route>
 
+### 作者新闻
+
+<Route author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" :paramsDesc="['Author’s name in New York Times’ URL format']">
+
+提供指定作者的所有文章。
+
+</Route>
+
 ### 新闻简报
 
-<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese"/>
+<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
+
 网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
+
+</Route>
 
 ### 畅销书排行榜
 
