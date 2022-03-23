@@ -822,6 +822,9 @@
     "/ielts/": [
         "zenxds"
     ],
+    "/ifeng/feng/:id/:type": [
+        "Jamch"
+    ],
     "/independent/ps5-stock-uk": [
         "DIYgod"
     ],
@@ -2853,7 +2856,6 @@
     "/lastfm/top/:country?": [],
     "/piapro/user/:pid": [],
     "/piapro/public/:type/:tag?/:category?": [],
-    "/ifeng/feng/:id/:type": [],
     "/novel/d1bz/:category/:id": [],
     "/axdzs/:novel": [],
     "/axdzs/:id1/:id2": [],
