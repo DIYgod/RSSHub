@@ -12,13 +12,14 @@ pageClass: routes
 
 ## kakuyomu
 
-### 章节
+### 章节更新
 
 <Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
 
 举例网址：<https://kakuyomu.jp/works/1177354054883783581>
 
 </Route>
+
 ## Kindle Unlimited
 
 ### 会员限时免费读书单
