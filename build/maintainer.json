@@ -1232,6 +1232,20 @@
     "/ntdtv/:language/:id": [
         "Fatpandac"
     ],
+    "/nuaa/cs/:type/:getDescription?": [
+        "LogicJake",
+        "Seiry",
+        "qrzbing"
+    ],
+    "/nuaa/jwc/:type/:getDescription?": [
+        "arcosx",
+        "Seiry",
+        "qrzbing"
+    ],
+    "/nuaa/yjsy/:type?": [
+        "junfengP",
+        "Seiry"
+    ],
     "/nytimes/author/:byline": [
         "kevinschaul"
     ],
@@ -2020,9 +2034,6 @@
     "/seu/yzb/:type": [],
     "/seu/cse/:type?": [],
     "/njtech/jwc": [],
-    "/nuaa/jwc/:type?": [],
-    "/nuaa/cs/:type?": [],
-    "/nuaa/yjsy/:type?": [],
     "/hhu/libNews": [],
     "/hhu/libNewsc": [],
     "/hit/jwc": [],
