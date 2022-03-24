@@ -292,13 +292,3 @@ pageClass: routes
 :::
 
 </Route>
-
-## 政采云前端技术团队
-
-### 博客
-
-<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog"/>
-
-### 小报
-
-<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly"/>

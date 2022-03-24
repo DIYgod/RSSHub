@@ -75,13 +75,3 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### Entry
 
 <RouteEn author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
-
-## zcy zooTeam
-
-### blog
-
-<RouteEn author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog"/>
-
-### weekly
-
-<RouteEn author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly"/>

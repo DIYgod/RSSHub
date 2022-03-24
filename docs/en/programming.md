@@ -70,11 +70,11 @@ Category
 
 ### Commits
 
-<RouteEn author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+<RouteEn author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" />
 
 ### Tags
 
-<RouteEn author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+<RouteEn author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" />
 
 ## Bitmovin
 
@@ -375,3 +375,13 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | featured | trending        | trending_m       | trending_d     | popular      | new            |
 
 </RouteEn>
+
+## zooTeam
+
+### blog
+
+<RouteEn author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog"/>
+
+### weekly
+
+<RouteEn author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly"/>
