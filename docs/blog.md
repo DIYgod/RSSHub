@@ -279,16 +279,6 @@ pageClass: routes
 
 <Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
 
-## 政采云前端技术团队
-
-### 博客
-
-<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog"/>
-
-### 小报
-
-<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly"/>
-
 ::: tip 提示
 
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
@@ -301,4 +291,14 @@ pageClass: routes
 
 ### 文章
 
-<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  :paramsDesc="['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']">
+<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  :paramsDesc="['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']"/>
+
+## 政采云前端技术团队
+
+### 博客
+
+<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog"/>
+
+### 小报
+
+<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly"/>
