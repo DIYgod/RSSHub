@@ -1467,23 +1467,23 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南京航空航天大学
 
-### 教务通知
+### 教务处
 
-<Route author="arcosx Seiry" example="/nuaa/jwc/default" path="/nuaa/jwc/:type" :paramsDesc="['分类名']">
+<Route author="arcosx Seiry qrzbing" example="/nuaa/jwc/tzgg" path="/nuaa/jwc/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']">
 
-| 教学服务          | 教学建设 | 学生培养 | 教学资源 |
-| ------------- | ---- | ---- | ---- |
-| jxfw(default) | jxjs | xspy | jxzy |
+| 通知公告 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
+| ---- | ---- | ---- | ---- | ---- |
+| tzgg | jxfw | jxjs | xspy | jxzy |
 
 </Route>
 
 ### 计算机科学与技术学院
 
-<Route author="LogicJake Seiry" example="/nuaa/cs/kydt" path="/nuaa/cs/:type?" :paramsDesc="['分类名']"/>
+<Route author="LogicJake Seiry qrzbing" example="/nuaa/cs/jxdt" path="/nuaa/cs/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']">
 
-| 通知公告 | 新闻动态 | 科研动态 | 教学动态 | 学生工作 | 招生信息 | 就业信息 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| tzgg | xwdt | kydt | jxdt | xsgz | zsxx | jyxx |
+| 通知公告 | 热点新闻 | 学科科研 | 教学动态 | 本科生培养 | 研究生培养 | 学生工作 |
+| ---- | ---- | ---- | ---- | ----- | ----- | ---- |
+| tzgg | rdxw | xkky | jxdt | be    | me    | xsgz |
 
 </Route>
 
