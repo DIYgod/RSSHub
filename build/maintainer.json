@@ -996,6 +996,9 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
+    "/kakuyomu/episode/:id": [
+        "huangliangshusheng"
+    ],
     "/kbs/news/:category?/:language?": [
         "nczitzk"
     ],
