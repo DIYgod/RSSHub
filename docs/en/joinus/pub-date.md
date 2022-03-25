@@ -33,10 +33,6 @@ const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 
 If you need to parse a relative date, use `parseRelativeDate`.
 
-::: warning Warning
-Only works for relative date in Chinese for now
-:::
-
 ```javascript
 const { parseRelativeDate } = require('@/utils/parse-date');
 
