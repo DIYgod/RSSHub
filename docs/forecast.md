@@ -58,6 +58,16 @@ pageClass: routes
 
 <Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
 
+## 和风天气
+
+### 近三天天气
+
+<Route author="Rein-Ou" example="/weather/广州" path="/weather/:location" selfhost="1">
+
+需自行注册获取和风天气 api 的 key，并在环境变量 HEFENG_KEY 中进行配置，获取订阅近三天天气预报
+
+</Route>
+
 ## 上海市生态环境局
 
 ### 空气质量
@@ -127,15 +137,5 @@ pageClass: routes
 <Route author="ylc395" example="/weatheralarm/广东省" path="/weatheralarm/:province?" :paramsDesc="['省份']">
 
 可通过全局过滤参数订阅您感兴趣的地区.
-
-</Route>
-
-## 和风天气
-
-### 近三天天气
-
-<Route author="Rein-Ou" example="/weather/广州" path="/weather/:location" selfhost="1">
-
-需自行注册获取和风天气 api 的 key，并在环境变量HEFENG_KEY中进行配置，获取订阅近三天天气预报
 
 </Route>
