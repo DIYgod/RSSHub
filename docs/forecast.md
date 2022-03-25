@@ -129,3 +129,13 @@ pageClass: routes
 可通过全局过滤参数订阅您感兴趣的地区.
 
 </Route>
+
+## 和风天气
+
+### 近三天天气
+
+<Route author="Rein-Ou" example="/weather/广州" path="/weather/:location" selfhost="1">
+
+需自行注册获取和风天气 api 的 key，并在环境变量HEFENG_KEY中进行配置，获取订阅近三天天气预报
+
+</Route>
