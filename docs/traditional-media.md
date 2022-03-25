@@ -1175,7 +1175,7 @@ category 对应的关键词有
 
 ### 频道
 
-<Route author="xyqfer nczitzk" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
+<Route author="xyqfer nczitzk" example="/thepaper/channel/25950" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
 
 | 视频    | 时事    | 财经    | 思想    | 澎湃号   | 生活    |
 | ----- | ----- | ----- | ----- | ----- | ----- |
