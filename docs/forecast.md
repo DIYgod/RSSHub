@@ -129,3 +129,12 @@ pageClass: routes
 可通过全局过滤参数订阅您感兴趣的地区.
 
 </Route>
+
+## 天气预报
+
+### 近三天天气
+<Route author="Rein-Ou" example="/weather/广州" path="/weather/:location" selfhost="1">
+
+需自行注册获取和风天气api的key，获取订阅近三天天气预报
+
+</Route>
