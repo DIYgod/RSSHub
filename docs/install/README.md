@@ -700,6 +700,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
     -   `FANFOU_PASSWORD`: 饭否密码
 
+-   和风天气：[申请地址](https://id.qweather.com/#/register?redirect=https%3A%2F%2Fconsole.qweather.com)
+
+    -   `HEFENG_KEY`:API key
+
 -   南方周末付费全文
 
     -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文

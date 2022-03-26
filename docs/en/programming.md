@@ -70,11 +70,11 @@ Category
 
 ### Commits
 
-<RouteEn author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+<RouteEn author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" radar="1" rssbud="1" />
 
 ### Tags
 
-<RouteEn author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" rssbud="1" rssbud="1"/>
+<RouteEn author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" radar="1" rssbud="1" />
 
 ## Bitmovin
 
@@ -125,15 +125,15 @@ GitHub provides some official RSS feeds:
 
 <RouteEn author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" :paramsDesc="['Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:']" radar="1" rssbud="1">
 
-| Parameter | Description | Values |
-| ---- | ---- | ---- |
-| `l` | Language | For instance `php`, which can be found in the URL of the corresponding [Topics page](https://github.com/topics/framework?l=php) |
-| `o` | Sorting Order | `asc`, `desc` |
-| `s` | Sorting Criteria | `stars`, `forks`, `updated` |
+| Parameter | Description      | Values                                                                                                                          |
+| --------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `l`       | Language         | For instance `php`, which can be found in the URL of the corresponding [Topics page](https://github.com/topics/framework?l=php) |
+| `o`       | Sorting Order    | `asc`, `desc`                                                                                                                   |
+| `s`       | Sorting Criteria | `stars`, `forks`, `updated`                                                                                                     |
 
 For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will generate the RSS feed corresponding to this [page](https://github.com/topics/framework?l=php&o=desc&s=stars).
 
-</Route>
+</RouteEn>
 
 ### Repo Issues
 
@@ -174,7 +174,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Search Result
 
-<RouteEn author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['search keyword', 'Sort options (default to bestmatch)','Sort order, desc and asc (desc descending by default)']"/>
+<RouteEn author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['search keyword', 'Sort options (default to bestmatch)','Sort order, desc and asc (desc descending by default)']">
 
 | Sort options     | sort      |
 | ---------------- | --------- |
@@ -182,6 +182,8 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 | Most stars       | stars     |
 | Most forks       | forks     |
 | Recently updated | updated   |
+
+</RouteEn>
 
 ### User Starred Repositories
 
@@ -375,3 +377,13 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | featured | trending        | trending_m       | trending_d     | popular      | new            |
 
 </RouteEn>
+
+## zooTeam
+
+### blog
+
+<RouteEn author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" rssbud="1"/>
+
+### weekly
+
+<RouteEn author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" rssbud="1"/>
