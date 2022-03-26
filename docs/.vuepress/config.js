@@ -1,4 +1,4 @@
-const pinyin = require('pinyin');
+const { pinyin, PINYIN_STYLE } = require('@napi-rs/pinyin');
 const { slugify: _slugify } = require('@vuepress/shared-utils');
 
 module.exports = {
@@ -39,10 +39,10 @@ module.exports = {
         },
         extendMarkdown: (md) => {
             md.use(require('../.format/md/hierarchySlug'), {
-                slugify: function (s) {
+                slugify(s) {
                     return _slugify(
                         pinyin(s, {
-                            style: pinyin.STYLE_NORMAL,
+                            style: PINYIN_STYLE.Plain,
                             heteronym: true,
                             segment: true,
                         })

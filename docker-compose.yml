@@ -16,9 +16,12 @@ services:
             - browserless
 
     browserless:
-        # See issue 6680
-        image: browserless/chrome:1.43-chrome-stable
+        image: browserless/chrome
         restart: always
+        ulimits:
+          core:
+            hard: 0
+            soft: 0
 
     redis:
         image: redis:alpine

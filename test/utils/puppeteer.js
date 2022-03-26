@@ -13,8 +13,8 @@ describe('puppeteer', () => {
         const html = await page.evaluate(() => document.body.innerHTML);
         expect(html.length).toBeGreaterThan(0);
 
-        expect((await browser.process()).exitCode).toBe(null);
+        expect((await browser.process()).signalCode).toBe(null);
         await wait(31 * 1000);
-        expect((await browser.process()).exitCode).toBe(0);
+        expect((await browser.process()).signalCode).toBe('SIGKILL');
     }, 40000);
 });

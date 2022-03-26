@@ -9,8 +9,8 @@ pageClass: routes
 ### Report
 
 <Route author="cxumol" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" :paramsDesc="['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']">
- 
-其中 name 参数, 请略过本地服务的区域码, 例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
+
+其中 name 参数，请略过本地服务的区域码，例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
 
 </Route>
 
@@ -32,6 +32,16 @@ pageClass: routes
 
 </Route>
 
+## 广州天气
+
+### 突发性天气提示
+
+<Route author="Fatpandac" example="/gov/guangdong/tqyb/tfxtq" path="/gov/guangdong/tqyb/tfxtq"/>
+
+### 广东省内城市预警信号
+
+<Route author="Fatpandac" example="/gov/guangdong/tqyb/sncsyjxh" path="/gov/guangdong/tqyb/sncsyjxh"/>
+
 ## 国家突发事件预警信息发布网
 
 ### 当前生效预警
@@ -47,6 +57,16 @@ pageClass: routes
 ### 国内新闻
 
 <Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
+
+## 和风天气
+
+### 近三天天气
+
+<Route author="Rein-Ou" example="/weather/广州" path="/weather/:location" selfhost="1">
+
+需自行注册获取和风天气 api 的 key，并在环境变量 HEFENG_KEY 中进行配置，获取订阅近三天天气预报
+
+</Route>
 
 ## 上海市生态环境局
 

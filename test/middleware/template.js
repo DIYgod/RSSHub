@@ -36,6 +36,8 @@ describe('template', () => {
         delete parsed2.lastBuildDate;
         delete parsed1.feedUrl;
         delete parsed2.feedUrl;
+        delete parsed1.paginationLinks;
+        delete parsed2.paginationLinks;
         expect(parsed2).toMatchObject(parsed1);
     });
 
@@ -60,8 +62,8 @@ describe('template', () => {
 
     it(`.json`, async () => {
         const response = await request.get('/test/1.json');
-        expect(response.status).toBe(404);
-        expect(response.text).toMatch(/Error: <b>JSON output had been removed/);
+        const responseXML = await request.get('/test/1.rss');
+        expect(response.text.slice(0, 50)).toEqual(responseXML.text.slice(0, 50));
     });
 
     it(`long title`, async () => {
@@ -76,6 +78,6 @@ describe('template', () => {
         expect(parsed.itunes.author).toBe('DIYgod');
         expect(parsed.items[0].enclosure.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
         expect(parsed.items[0].enclosure.length).toBe('3661');
-        expect(parsed.items[0].itunes.duration).toBe('1:01:01');
+        expect(parsed.items[0].itunes.duration).toBe('10:10:10');
     });
 });

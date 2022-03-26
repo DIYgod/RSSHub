@@ -10,6 +10,38 @@ pageClass: routes
 
 <RouteEn author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
+## iwara
+
+### User
+
+<RouteEn author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['username, can find in userpage', 'video by default']" radar="1" rssbud="1">
+
+| type | video | image |
+| :--: | :---: | :---: |
+|      | video | image |
+
+</RouteEn>
+
+## Kemono
+
+### Posts
+
+<RouteEn author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" :paramsDesc="['Source, see below, Posts by default', 'User id, can be found in URL']">
+
+Sources
+
+| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+
+::: tip Tip
+
+When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
+
+:::
+
+</RouteEn>
+
 ## Touhougarakuta
 
 ### Articles
