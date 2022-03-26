@@ -197,6 +197,12 @@ For example:
 
 <RouteEn author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
 
+## National Geographic
+
+### Photo of the Day
+
+<RouteEn author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
+
 ## nHentai
 
 ### Filter
