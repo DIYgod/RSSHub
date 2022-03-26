@@ -392,6 +392,8 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 `REDIS_URL`: Redis 连接地址（redis 缓存类型时有效），默认为 `redis://localhost:6379/`
 
+`MEMORY_MAX`: 最大缓存数量（memory 缓存类型时有效），默认 `256`
+
 ### 代理配置
 
 部分路由反爬严格，可以配置使用代理抓取。
@@ -563,7 +565,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
     -   `EH_IGNEOUS`: ExHentai 账户登录后 cookie 中的`igneous`值。若设置此值，RSS 数据将全部从里站获取，`EH_SK`将被忽略
 
--   github 全部路由：[申请地址](https://github.com/settings/tokens)
+-   GitHub 全部路由：[申请地址](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
 
@@ -697,6 +699,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
     -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
     -   `FANFOU_PASSWORD`: 饭否密码
+
+-   和风天气：[申请地址](https://id.qweather.com/#/register?redirect=https%3A%2F%2Fconsole.qweather.com)
+
+    -   `HEFENG_KEY`:API key
 
 -   南方周末付费全文
 

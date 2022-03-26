@@ -43,6 +43,7 @@
 Helpful Information to provide when opening issue:
 Path: {{@ errorPath }}
 Node version: {{@ nodeVersion}}
+Git Hash: {{@ gitHash}}
         </pre>
         <pre class="message">
 如果您认为 RSSHub 导致了该错误，请在Github按照模版，复制本页面信息进行<a href="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+bug&template=bug_report_zh.yml" target="_blank">汇报</a>

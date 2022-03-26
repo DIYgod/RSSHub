@@ -1144,10 +1144,21 @@ category 对应的关键词有
 
 </Route>
 
+### 作者新闻
+
+<Route author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" :paramsDesc="['Author’s name in New York Times’ URL format']">
+
+提供指定作者的所有文章。
+
+</Route>
+
 ### 新闻简报
 
-<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese"/>
+<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
+
 网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
+
+</Route>
 
 ### 畅销书排行榜
 
@@ -1175,7 +1186,7 @@ category 对应的关键词有
 
 ### 频道
 
-<Route author="xyqfer nczitzk" example="/thepaper/channel/27224" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
+<Route author="xyqfer nczitzk" example="/thepaper/channel/25950" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
 
 | 视频    | 时事    | 财经    | 思想    | 澎湃号   | 生活    |
 | ----- | ----- | ----- | ----- | ----- | ----- |
@@ -1186,6 +1197,10 @@ category 对应的关键词有
 ### 列表
 
 <Route author="nczitzk" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['列表 id，可在列表页 URL 中找到']"/>
+
+### 明查
+
+<Route author="nczitzk" example="/thepaper/factpaper" path="/thepaper/factpaper/:status?" :paramsDesc="['状态 id，可选 `1` 即 有定论 或 `0` 即 核查中，默认为 `1`']"/>
 
 ### 澎湃美数组作品集
 
