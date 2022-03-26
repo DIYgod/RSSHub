@@ -1132,6 +1132,17 @@
     "/mygopen/:label?": [
         "nczitzk"
     ],
+    "/natgeo/dailyselection": [
+        "OrangeEd1t"
+    ],
+    "/natgeo/dailyphoto": [
+        "LogicJake",
+        "OrangeEd1t",
+        "TonyRL"
+    ],
+    "/natgeo/:cat/:type?": [
+        "fengkx"
+    ],
     "/nbd/daily": [
         "MeXunco"
     ],
@@ -1958,8 +1969,6 @@
     "/t66y/post/:tid": [],
     "/t66y/:id/:type?": [],
     "/sexinsex/:id/:type?": [],
-    "/natgeo/dailyphoto": [],
-    "/natgeo/:cat/:type?": [],
     "/one": [],
     "/firefox/release/:platform": [],
     "/firefox/addons/:id": [],
