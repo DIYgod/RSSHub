@@ -481,7 +481,7 @@ R18 显示
 
 ### 每日一图
 
-<Route author="LogicJake & OrangeEd1t" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
+<Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
 ## 煎蛋
 
