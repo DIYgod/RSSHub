@@ -635,6 +635,9 @@
     "/google/sites/recentChanges/:id": [
         "nczitzk"
     ],
+    "/gov/anhui/kjt/:path?": [
+        "nczitzk"
+    ],
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
     ],
