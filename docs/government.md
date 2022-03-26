@@ -4,6 +4,22 @@ pageClass: routes
 
 # 政务消息
 
+## 安徽省科技厅
+
+### 科技资讯 & 科技资源
+
+<Route author="nczitzk" example="/gov/anhui/kjt/kjzx/tzgg" path="/gov/anhui/kjt/:path?" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://kjt.ah.gov.cn/` 和 `/index.html` 之间的字段。下面是一个例子。
+
+若订阅 [通知公告](http://kjt.ah.gov.cn/kjzx/tzgg/index.html) 则将对应页面 URL <http://kjt.ah.gov.cn/kjzx/tzgg/index.html> 中 `http://kjt.ah.gov.cn/` 和 `/index.html` 之间的字段 `kjzx/tzgg` 作为路径填入。此时路由为 [`/gov/anhui/kjt/kjzx/tzgg`](https://rsshub.app/gov/anhui/kjt/kjzx/tzgg)
+
+:::
+
+</Route>
+
 ## 澳门廉政公署
 
 ### 最新消息
