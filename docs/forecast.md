@@ -64,7 +64,7 @@ pageClass: routes
 
 <Route author="Rein-Ou" example="/weather/广州" path="/weather/:location" selfhost="1">
 
-需自行注册获取和风天气 api 的 key，并在环境变量 HEFENG_KEY 中进行配置，获取订阅近三天天气预报
+需自行注册获取 api 的 key，并在环境变量 HEFENG_KEY 中进行配置，获取订阅近三天天气预报
 
 </Route>
 
