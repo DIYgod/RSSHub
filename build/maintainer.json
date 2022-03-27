@@ -1361,6 +1361,9 @@
     "/qq88/:category?": [
         "nczitzk"
     ],
+    "/qweather/weather/:location": [
+        "Rein-Ou"
+    ],
     "/radio-canada/latest/:language?": [
         "nczitzk"
     ],
@@ -1667,9 +1670,6 @@
     ],
     "/watchout/": [
         "nczitzk"
-    ],
-    "/weather/weather/:location": [
-        "Rein-Ou"
     ],
     "/wechat/feeddd/:id": [
         "TonyRL",
