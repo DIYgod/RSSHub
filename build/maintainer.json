@@ -1340,6 +1340,9 @@
     "/pts/dailynews": [
         "nczitzk"
     ],
+    "/pubmed/trending/:filters?": [
+        "nczitzk"
+    ],
     "/qidiantu/:category?/:type?/:is_history?": [
         "nczitzk"
     ],
@@ -2779,7 +2782,6 @@
     "/kaggle/discussion/:forumId/:sort?": [],
     "/kaggle/competitions/:category?": [],
     "/kaggle/user/:user": [],
-    "/pubmed/trending": [],
     "/linkresearcher/:params": [],
     "/elife/:tid": [],
     "/ieee/author/:aid/:sortType/:count?": [],
