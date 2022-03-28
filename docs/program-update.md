@@ -502,6 +502,12 @@ pageClass: routes
 
 见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
 
+## 华硕
+
+### 固件
+
+<Route author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" :paramsDesc="['产品型号，可在产品页面找到']"/>
+
 ## 蒲公英应用分发
 
 ### app 更新
