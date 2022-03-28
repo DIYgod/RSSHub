@@ -10420,17 +10420,17 @@ parse-json@^5.2.0:
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
 
-parse-torrent@9.1.4:
-  version "9.1.4"
-  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.1.4.tgz#1fc8a8accd76c7cd6c858061bb7b679288dc2065"
-  integrity sha512-NSlG8ewolqfcEWevUUsrpvxzVWYGaKWwPHMcXTAV2qYYo6pPugVOacQXt8uDlEYh23Ituz+A9pAZK5YaXTV8Pg==
+parse-torrent@9.1.5:
+  version "9.1.5"
+  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.1.5.tgz#fcae5f360d9baf617d9a2de68e74d5de4c8099fd"
+  integrity sha512-K8FXRwTOaZMI0/xuv0dpng1MVHZRtMJ0jRWBJ3qZWVNTrC1MzWUxm9QwaXDz/2qPhV2XC4UIHI92IGHwseAwaA==
   dependencies:
     bencode "^2.0.2"
     blob-to-buffer "^1.2.9"
     get-stdin "^8.0.0"
     magnet-uri "^6.2.0"
     queue-microtask "^1.2.3"
-    simple-get "^4.0.0"
+    simple-get "^4.0.1"
     simple-sha1 "^3.1.0"
 
 parse5-htmlparser2-tree-adapter@^6.0.1:
@@ -12153,7 +12153,7 @@ simple-concat@^1.0.0:
   resolved "https://registry.yarnpkg.com/simple-concat/-/simple-concat-1.0.1.tgz#f46976082ba35c2263f1c8ab5edfe26c41c9552f"
   integrity sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==
 
-simple-get@^4.0.0:
+simple-get@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/simple-get/-/simple-get-4.0.1.tgz#4a39db549287c979d352112fa03fd99fd6bc3543"
   integrity sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==
