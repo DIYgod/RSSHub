@@ -68,6 +68,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/qq/live/10012045" path="/qq/live/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
+## 旺球体育
+
+### 直播间开播
+
+<Route author="nczitzk" example="/wangqiutiyu/anchor/444" path="/wangqiutiyu/anchor/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
 ## 战旗直播
 
 ### 直播间开播
