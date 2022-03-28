@@ -1723,7 +1723,7 @@ type 列表：
 
 将其替换到 RSS 路由地址中即可：
 
-<https://rsshub&#46;app/**nuist**/`bulletin`> 或 <https://rsshub&#46;app/**nuist**/`bulletin`/`791`>
+[https://rsshub.app/**nuist**/`bulletin`](https://rsshub.app/nuist/bulletin) 或 [https://rsshub.app/**nuist**/`bulletin`/`791`](https://rsshub.app/nuist/bulletin)
 
 :::
 
