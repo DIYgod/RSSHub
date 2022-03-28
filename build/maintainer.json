@@ -1123,6 +1123,13 @@
     "/mox/:category?": [
         "nczitzk"
     ],
+    "/mpaypass/main/:type?": [
+        "zhuan-zhu"
+    ],
+    "/mpaypass/news": [
+        "LogicJake",
+        "genghis-yang"
+    ],
     "/mvm/:category?": [
         "nczitzk"
     ],
@@ -2404,8 +2411,6 @@
     "/xiaoheihe/news": [],
     "/xiaoheihe/discount/:platform?": [],
     "/fitchratings/site/:type": [],
-    "/mpaypass/news": [],
-    "/mpaypass/main/:type?": [],
     "/sina/discovery/:type": [],
     "/sina/rollnews": [],
     "/sina/sports/:type": [],
