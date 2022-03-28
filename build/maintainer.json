@@ -146,6 +146,9 @@
     "/ash-maurya/ash-maurya": [
         "james-tindal"
     ],
+    "/asus/bios/:model": [
+        "Fatpandac"
+    ],
     "/atcoder/post/:language?/:keyword?": [
         "nczitzk"
     ],
