@@ -814,6 +814,23 @@
     "/houxu/:category?": [
         "nczitzk"
     ],
+    "/hupu/all/:id?": [
+        "nczitzk"
+    ],
+    "/hupu/bbs/:id?/:order?": [
+        "LogicJake",
+        "nczitzk"
+    ],
+    "/hupu/bxj/:id?/:order?": [
+        "LogicJake",
+        "nczitzk"
+    ],
+    "/hupu/dept/:category?": [
+        "nczitzk"
+    ],
+    "/hupu/:category?": [
+        "nczitzk"
+    ],
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
@@ -2446,10 +2463,6 @@
     "/leetcode/articles": [],
     "/leetcode/submission/us/:user": [],
     "/leetcode/submission/cn/:user": [],
-    "/hupu/bxj/:id/:order?": [],
-    "/hupu/bbs/:id/:order?": [],
-    "/hupu/all/:caty": [],
-    "/hupu/dept/:dept": [],
     "/xiaomieu/releases": [],
     "/sketch/beta": [],
     "/sketch/updates": [],
