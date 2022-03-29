@@ -231,9 +231,19 @@ pageClass: routes
 
 ## PubMed
 
-### 热门文章
+### Trending articles
 
-<Route author="yech1990" example="/pubmed/trending" path="/pubmed/trending" supportScihub="1"/>
+<Route author="yech1990 nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" :paramsDesc="['过滤条件，可在 URL 中找到']" supportScihub="1">
+
+::: tip 提示
+
+对于参数 **过滤条件**，应将 URL 中的 filter 参数用 `,` 分割成一个字段填入，下面是一个例子。
+
+<https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.clinicaltrial&filter=pubt.randomizedcontrolledtrial> 中 filter 参数有 `simsearch1.fha` `pubt.clinicaltrial` `pubt.randomizedcontrolledtrial` 三者。所以，对应到路由的 filter 应填入 `simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial`，于是可获得路由 [`/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial`](https://rsshub.app/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial)
+
+:::
+
+</Route>
 
 ## Science 系列
 
