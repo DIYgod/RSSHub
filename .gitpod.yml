@@ -33,6 +33,7 @@ vscode:
     - foxundermoon.shell-format
     - octref.vetur
     - Shan.code-settings-sync
+    - TabNine.tabnine-vscode
     - vivaxy.vscode-conventional-commits
     - WakaTime.vscode-wakatime
     - yzhang.markdown-all-in-one
