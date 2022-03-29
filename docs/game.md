@@ -573,6 +573,24 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
+### 米游社 - 官方公告
+
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:last_id?" :paramsDesc="['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']" radar="1">
+
+游戏 id
+
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 |
+| --- | -- | --- | ----- | ---- |
+| 1   | 2  | 3   | 4     | 6    |
+
+公告类型
+
+| 公告 | 活动 | 资讯 |
+| -- | -- | -- |
+| 1  | 2  | 3  |
+
+</Route>
+
 ## 明日方舟
 
 ### 游戏公告与新闻
