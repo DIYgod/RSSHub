@@ -62,9 +62,16 @@ pageClass: routes
 
 ### 近三天天气
 
-<Route author="Rein-Ou" example="/qweather/广州" path="/qweather/:location" selfhost="1">
+<Route author="Rein-Ou" example="/qweather/3days/广州" path="/qweather/3days/:location" selfhost="1">
 
 需自行注册获取 api 的 key，并在环境变量 HEFENG_KEY 中进行配置，获取订阅近三天天气预报
+
+</Route>
+
+### 实时天气
+<Route author="Rein-Ou" example="/qweather/广州" path="/qweather/now/:location" selfhost="1">
+
+需自行注册获取api的key，每小时更新一次数据
 
 </Route>
 
