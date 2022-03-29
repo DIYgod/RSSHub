@@ -69,9 +69,10 @@ pageClass: routes
 </Route>
 
 ### 实时天气
+
 <Route author="Rein-Ou" example="/qweather/广州" path="/qweather/now/:location" selfhost="1">
 
-需自行注册获取api的key，每小时更新一次数据
+需自行注册获取 api 的 key，每小时更新一次数据
 
 </Route>
 
