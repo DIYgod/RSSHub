@@ -1377,7 +1377,10 @@
     "/qq88/:category?": [
         "nczitzk"
     ],
-    "/qweather/weather/:location": [
+    "/qweather/qweather/3days/:location": [
+        "Rein-Ou"
+    ],
+    "/qweather/qweather/now/:location": [
         "Rein-Ou"
     ],
     "/radio-canada/latest/:language?": [
