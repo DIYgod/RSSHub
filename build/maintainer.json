@@ -1117,6 +1117,9 @@
     "/medsci/:sid?/:tid?": [
         "nczitzk"
     ],
+    "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
+        "CaoMeiYouRen"
+    ],
     "/mingpao/:type?/:category?": [
         "TonyRL"
     ],
