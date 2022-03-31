@@ -16,7 +16,7 @@ pageClass: routes
 
 <RouteEn author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" :paramsDesc="['Novel id, can be found in URL']">
 
-举例网址：<https://syosetu.org/novel/264928/>
+Eg:<https://syosetu.org/novel/264928/>
 
 </RouteEn>
 
