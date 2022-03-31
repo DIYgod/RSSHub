@@ -10,6 +10,16 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## hameln
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://syosetu.org/novel/264928/>
+
+</Route>
+
 ## kakuyomu
 
 ### 章节更新
