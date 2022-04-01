@@ -17,7 +17,7 @@ jobs:
     name: Jest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.0.0
+      - uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
@@ -38,7 +38,7 @@ jobs:
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.0.0
+      - uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
@@ -54,7 +54,7 @@ jobs:
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.0.0
+      - uses: actions/setup-node@v3.1.0
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
