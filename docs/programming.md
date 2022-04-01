@@ -503,6 +503,58 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
+## Quicker
+
+### 动作分享
+
+<Route author="nczitzk" example="/quicker/share/Recent" path="/quicker/share/:category?" :paramsDesc="['分类，见下表，默认为动作库最新更新']">
+
+| 动作库最新更新 | 动作库最多赞      | 动作库新动作     | 动作库最近赞      |
+| ------- | ----------- | ---------- | ----------- |
+| Recent  | Recommended | NewActions | RecentLiked |
+
+| 子程序         | 扩展热键      | 文本指令         |
+| ----------- | --------- | ------------ |
+| SubPrograms | PowerKeys | TextCommands |
+
+</Route>
+
+### 讨论区
+
+<Route author="Cesaryuan nczitzk" example="/quicker/qa" path="/quicker/qa/:category?/:state?" :paramsDesc="['分类，见下表，默认为全部', '状态，见下表，默认为全部']">
+
+分类
+
+| 使用问题 | 动作开发 | BUG 反馈 | 功能建议 |
+| ---- | ---- | ------ | ---- |
+| 1    | 9    | 3      | 4    |
+
+| 动作需求 | 经验创意 | 动作推荐 | 信息发布 |
+| ---- | ---- | ---- | ---- |
+| 6    | 2    | 7    | 5    |
+
+| 随便聊聊 | 异常报告 | 全部  |
+| ---- | ---- | --- |
+| 8    | 10   | all |
+
+状态
+
+| 全部 | 精华     | 已归档     |
+| -- | ------ | ------- |
+|    | digest | achived |
+
+</Route>
+
+### 用户更新
+
+<Route author="Cesaryuan nczitzk" example="/quicker/user/Actions/3-CL" path="/quicker/user/:category/:id" :paramsDesc="['分类，见下表', '用户 id，可在对应用户页 URL 中找到']">
+
+| 动作      | 子程序         | 动作单         |
+| ------- | ----------- | ----------- |
+| Actions | SubPrograms | ActionLists |
+
+</Route>
+
 ## react
 
 ### react-native
