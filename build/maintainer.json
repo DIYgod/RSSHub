@@ -793,6 +793,9 @@
     "/hkjunkcall/": [
         "nczitzk"
     ],
+    "/hnrb/:id?": [
+        "nczitzk"
+    ],
     "/hongkong/dh/:language?": [
         "nczitzk"
     ],
