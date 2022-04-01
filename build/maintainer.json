@@ -1046,6 +1046,9 @@
     "/knowmedia/:category?": [
         "Fatpandac"
     ],
+    "/kyodonews/:language?/:keyword?": [
+        "Rongronggg9"
+    ],
     "/lanqiao/author/:uid": [
         "huhuhang"
     ],
