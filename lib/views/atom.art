@@ -37,8 +37,10 @@
         <id>{{ $e.guid || $e.id || $e.link }}</id>
         <title><![CDATA[{{@ $e.title }}]]></title>
 
-        <published>{{ $e.pubDate || $e.updated }}</published>
-        <updated>{{ $e.updated }}</updated>
+        {{ if ($e.pubDate && $e.updated) }}
+        <published>{{ $e.pubDate }}</published>
+        {{ /if }}
+        <updated>{{ $e.updated || $e.pubDate }}</updated>
 
         {{ if $e.author }}
         <author>
