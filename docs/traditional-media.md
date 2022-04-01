@@ -879,7 +879,7 @@ Type 栏目：
 
 ### 电子刊物
 
-<Route author="nczitzk" example="/hnrb" path="/hnrb/:id?" :paramsDesc="['编号，见下表，默认为全部']">
+<Route author="nczitzk" example="/hnrb" path="/hnrb/:id?" :paramsDesc="['编号，见下表，默认为全部']" anticrawler="1">
 
 | 版            | 编号 |
 | ------------ | -- |
