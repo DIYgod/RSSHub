@@ -1180,24 +1180,24 @@ rule
 
 对于微博内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制输出的样式
 
-| 键                          | 含义                                | 接受的值           | 默认值                             |
-| -------------------------- | --------------------------------- | -------------- | ------------------------------- |
-| readable                   | 是否开启细节排版可读性优化                     | 0/1/true/false | false                           |
-| authorNameBold             | 是否加粗作者名字                          | 0/1/true/false | false                           |
-| showAuthorInTitle          | 是否在标题处显示作者                        | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
-| showAuthorInDesc           | 是否在正文处显示作者                        | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
-| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）   | 0/1/true/false | false                           |
-| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字               | 0/1/true/false | false                           |
-| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博） | 0/1/true/false | true                            |
-| addLinkForPics             | 为图片添加可点击的链接                       | 0/1/true/false | false                           |
-| showTimestampInDescription | 在正文处显示被转发微博的时间戳                   | 0/1/true/false | false                           |
-| widthOfPics                | 微博配图宽（生效取决于阅读器）                   | 不指定 / 数字       | 不指定                             |
-| heightOfPics               | 微博配图高（生效取决于阅读器）                   | 不指定 / 数字       | 不指定                             |
-| sizeOfAuthorAvatar         | 作者头像大小                            | 数字             | 48                              |
-| displayVideo               | 是否直接显示微博视频，只在博主或个人时间线 RSS 中有效     | 0/1/true/false | true                            |
-| displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效     | 0/1/true/false | false                           |
-| displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效     | 0/1/true/false | false                           |
-| showEmojiInDescription     | 是否展示正文中的 emoji 表情                 | 0/1/true/false | true                            |
+| 键                          | 含义                                        | 接受的值           | 默认值                             |
+| -------------------------- | ----------------------------------------- | -------------- | ------------------------------- |
+| readable                   | 是否开启细节排版可读性优化                             | 0/1/true/false | false                           |
+| authorNameBold             | 是否加粗作者名字                                  | 0/1/true/false | false                           |
+| showAuthorInTitle          | 是否在标题处显示作者                                | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
+| showAuthorInDesc           | 是否在正文处显示作者                                | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）           | 0/1/true/false | false                           |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                       | 0/1/true/false | false                           |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博）         | 0/1/true/false | true                            |
+| addLinkForPics             | 为图片添加可点击的链接                               | 0/1/true/false | false                           |
+| showTimestampInDescription | 在正文处显示被转发微博的时间戳                           | 0/1/true/false | false                           |
+| widthOfPics                | 微博配图宽（生效取决于阅读器）                           | 不指定 / 数字       | 不指定                             |
+| heightOfPics               | 微博配图高（生效取决于阅读器）                           | 不指定 / 数字       | 不指定                             |
+| sizeOfAuthorAvatar         | 作者头像大小                                    | 数字             | 48                              |
+| displayVideo               | 是否直接显示微博视频和 Live Photo，只在博主或个人时间线 RSS 中有效 | 0/1/true/false | true                            |
+| displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效             | 0/1/true/false | false                           |
+| displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效             | 0/1/true/false | false                           |
+| showEmojiInDescription     | 是否展示正文中的 emoji 表情                         | 0/1/true/false | true                            |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
