@@ -1288,6 +1288,9 @@
     "/nowcoder/schedule/:propertyId?/:typeId?": [
         "junfengP"
     ],
+    "/npm/package/:name": [
+        "Fatpandac"
+    ],
     "/nsfc/news/:type?": [
         "Derekmini"
     ],
