@@ -218,16 +218,6 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
 
-## Quicker
-
-### 讨论区
-
-<Route author="Cesaryuan" example="/quicker/qa" path="/quicker/qa"/>
-
-### 用户动作更新
-
-<Route author="Cesaryuan" example="/quicker/user/action/18359/Cesaryuan" path="/quicker/user/action/:uid/:person" :paramsDesc="['用户ID，可在用户主页链接里找到', '用户昵称，可在用户主页链接里找到']" />
-
 ## RF 技术社区
 
 ### 文章
@@ -356,47 +346,43 @@ pageClass: routes
 
 ## 虎扑
 
-### 虎扑 BBS 论坛
+### 首页
 
-<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']">
+<Route author="nczitzk" example="/hupu/nba" path="/hupu/:category?" :paramsDesc="['分类，见下表']">
 
-此路由与旧的 `/hupu/bxj/:id/:order?` 等价，但推荐使用 `/hupu/bbs/:id/:order?`，旧路由可能会在未来被删除。
+| NBA | CBA | 足球     |
+| --- | --- | ------ |
+| nba | cba | soccer |
 
-</Route>
+::: tip 提示
 
-### 分类
+电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。
 
-<Route author="nczitzk" example="/hupu/all/gambia" path="/hupu/all/:caty" :paramsDesc="['分类名，见下表']">
-
-| 分类     | 名称       |
-| ------ | -------- |
-| NBA 论坛 | nba      |
-| CBA 论坛 | cba      |
-| 运动和装备  | gear     |
-| 国际足球论坛 | soccer   |
-| 中国足球论坛 | csl      |
-| 综合体育   | sports   |
-| 步行街    | gambia   |
-| 彩票中心   | lottery  |
-| 自建版块   | boards   |
-| 虎扑社团   | group    |
-| 站务管理   | feedback |
-
-更多参见 [虎扑社区版块目录](https://bbs.hupu.com/boards.php) 左侧导航栏各板块分类页
+:::
 
 </Route>
 
-### 子站
+### 社区
 
-<Route author="nczitzk" example="/hupu/dept/nba" path="/hupu/dept/:dept" :paramsDesc="['名称，见下表']">
+<Route author="LogicJake nczitzk" example="/hupu/bbs/34" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为步行街', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布']">
 
-| 子站   | 名称           |
-| ---- | ------------ |
-| NBA  | nba          |
-| 国际足球 | soccer       |
-| 中国足球 | soccer-china |
-| CBA  | cba          |
-| 电竞   | gg           |
+::: tip 提示
+
+更多社区参见 [社区](https://m.hupu.com/bbs)
+
+:::
+
+</Route>
+
+### 热帖
+
+<Route author="nczitzk" example="/hupu/all/topic-daily" path="/hupu/all/:id?" :paramsDesc="['编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题']">
+
+::: tip 提示
+
+更多热帖版面参见 [论坛](https://bbs.hupu.com)
+
+:::
 
 </Route>
 

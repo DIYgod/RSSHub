@@ -318,6 +318,12 @@ pageClass: routes
 
 见 [#nintendo](/game.html#nintendo)
 
+## NPM
+
+### 包
+
+<Route author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" :paramsDesc="['包名']"/>
+
 ## Nvidia Web Driver
 
 ### 更新日志
@@ -382,7 +388,7 @@ pageClass: routes
 
 ### 版本更新
 
-<Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
+<Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
 
 ## RescueTime
 
