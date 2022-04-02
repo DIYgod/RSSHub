@@ -122,9 +122,17 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 <Route author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" />
 
+## 纽约新美术馆
+
+<Route author="chazeon" example="/newmuseum/exhibitions" path="/newmuseum/exhibitions" />
+
 ## 纽约犹太人博物馆
 
 <Route author="chazeon" example="/jewishmuseum/exhibitions" path="/jewishmuseum/exhibitions" />
+
+## 芝加哥当代艺术博物馆
+
+<Route author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
 
 ## 中国美术馆
 
