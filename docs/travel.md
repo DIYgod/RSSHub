@@ -114,6 +114,10 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 </Route>
 
+## 纽约布鲁克林博物馆
+
+<Route author="chazeon" example="/brooklynmuseum/exhibitions" path="/brooklynmuseum/exhibitions" />
+
 ## 纽约大都会美术馆
 
 <Route author="chazeon" example="/metmuseum/exhibitions" path="/metmusem/exhibitions" />

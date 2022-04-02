@@ -20,6 +20,10 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
 
 </RouteEn>
 
+## Brooklyn Museum
+
+<RouteEn author="chazeon" example="/brooklynmuseum/exhibitions" path="/brooklynmuseum/exhibitions" />
+
 ## Hopper
 
 ### Flight Deals
