@@ -22,7 +22,11 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
 
 ## Brooklyn Museum
 
-<RouteEn author="chazeon" example="/brooklynmuseum/exhibitions" path="/brooklynmuseum/exhibitions" />
+<RouteEn author="chazeon"
+    example="/brooklynmuseum/exhibitions"
+    path="/brooklynmuseum/exhibitions/:state?"
+    :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']"
+/>
 
 ## Hopper
 
@@ -54,4 +58,8 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 ## The Metropolitan Museum of Art
 
-<RouteEn author="chazeon" example="/metmuseum/exhibitions" path="/metmusem/exhibitions" />
+<RouteEn author="chazeon"
+    example="/metmuseum/exhibitions"
+    path="/metmusem/exhibitions/:state?"
+    :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']"
+/>
