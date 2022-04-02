@@ -114,6 +114,18 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 </Route>
 
+## 纽约大都会美术馆
+
+<Route author="chazeon" example="/metmuseum/exhibitions" path="/metmusem/exhibitions" />
+
+## 纽约古根海姆基金会
+
+<Route author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" />
+
+## 纽约犹太人博物馆
+
+<Route author="chazeon" example="/jewishmuseum/exhibitions" path="/jewishmuseum/exhibitions" />
+
 ## 中国美术馆
 
 ### 美术馆新闻
