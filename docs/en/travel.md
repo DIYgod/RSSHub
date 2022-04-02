@@ -34,20 +34,20 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 ## Museum of Contemporary Art Chicago
 
-<Route author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
+<RouteEn author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
 
 ## New Museum
 
-<Route author="chazeon" example="/newmuseum/exhibitions" path="/newmuseum/exhibitions" />
+<RouteEn author="chazeon" example="/newmuseum/exhibitions" path="/newmuseum/exhibitions" />
 
 ## Solomon R. Guggenheim Museum
 
-<Route author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" />
+<RouteEn author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" />
 
 ## The Jewish Museum
 
-<Route author="chazeon" example="/jewishmuseum/exhibitions" path="/jewishmuseum/exhibitions" />
+<RouteEn author="chazeon" example="/jewishmuseum/exhibitions" path="/jewishmuseum/exhibitions" />
 
 ## The Metropolitan Museum of Art
 
-<Route author="chazeon" example="/metmuseum/exhibitions" path="/metmusem/exhibitions" />
+<RouteEn author="chazeon" example="/metmuseum/exhibitions" path="/metmusem/exhibitions" />
