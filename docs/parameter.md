@@ -47,7 +47,7 @@
 
 可以使用 `limit` 参数限制最大条数，主要用于排行榜类 RSS
 
-举例: Bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
+举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
 ## 全文输出
 
