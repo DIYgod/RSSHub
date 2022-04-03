@@ -53,7 +53,7 @@
 
 可以使用 `mode` 参数来开启自动提取全文内容功能
 
-举例: Bilibili 专栏全文输出 <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
+举例: bilibili 专栏全文输出 <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
 
 ## 访问控制
 
