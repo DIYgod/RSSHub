@@ -1544,7 +1544,7 @@
     ".":[ { title:"德阳市政府公开信息",
         docs:"https://docs.rsshub.app/government.html#de-yang-shi-fu-ren-min-zheng-zheng-fu",
         source:[ "/*" ],
-        target:"/sichuan/deyang/govpulicinfo/:countyName/:institutionName?" } ] },
+        target:"/sichuan/deyang/govpulicinfo/:countyName" } ] },
   "huizhou.gov.cn":{ _name:"惠州市人民政府",
     www:[ { title:"政务公开 - 政务要闻",
         docs:"https://docs.rsshub.app/government.html#guang-yan-an-dong-sheng-xing-xian-ren-min-zheng-zheng-fu-hui-zhou-shi-fu-ren-min-zheng-zheng-fu-zheng-zheng-wu-gong-kai",

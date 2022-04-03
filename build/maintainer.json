@@ -666,7 +666,7 @@
     "/gov/huizhou/zwgk/:category?": [
         "Fatpandac"
     ],
-    "/gov/sichuan/deyang/govpulicinfo/:countyName/:institutionName?": [
+    "/gov/sichuan/deyang/govpulicinfo/:countyName": [
         "zytomorrow"
     ],
     "/gov/mfa/wjdt/:category?": [
