@@ -221,6 +221,8 @@ Only `s00017` is in English.
 
 ## Radio Free Asia (RFA)
 
+### News
+
 <RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['language, English by default', 'channel', 'subchannel, where applicable']" />
 
 Delivers a better experience by supporting parameter specification. 
@@ -334,6 +336,61 @@ See the [official RSS page](https://www.scmp.com/rss) to get the ID of each cate
 
 </RouteEn>
 
+## Sputnik News
+
+### Category
+
+<RouteEn author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" :paramsDesc="['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']">
+
+Categories for International site:
+
+| WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |
+| ----- | -------- | -------- | ----- | ---- | ------- |
+| world | covid-19 | business | sport | tech | opinion |
+
+Categories for Chinese site:
+
+| 新闻   | 中国    | 俄罗斯    | 国际             | 俄中关系                   | 评论      |
+| ---- | ----- | ------ | -------------- | ---------------------- | ------- |
+| news | china | russia | category_guoji | russia_china_relations | opinion |
+
+Language
+
+| Language    | Id          |
+| ----------- | ----------- |
+| English     | english     |
+| Spanish     | spanish     |
+| German      | german      |
+| French      | french      |
+| Greek       | greek       |
+| Italian     | italian     |
+| Czech       | czech       |
+| Polish      | polish      |
+| Serbian     | serbian     |
+| Latvian     | latvian     |
+| Lithuanian  | lithuanian  |
+| Moldavian   | moldavian   |
+| Belarusian  | belarusian  |
+| Armenian    | armenian    |
+| Abkhaz      | abkhaz      |
+| Ssetian     | ssetian     |
+| Georgian    | georgian    |
+| Azerbaijani | azerbaijani |
+| Arabic      | arabic      |
+| Turkish     | turkish     |
+| Persian     | persian     |
+| Dari        | dari        |
+| Kazakh      | kazakh      |
+| Kyrgyz      | kyrgyz      |
+| Uzbek       | uzbek       |
+| Tajik       | tajik       |
+| Vietnamese  | vietnamese  |
+| Japanese    | japanese    |
+| Chinese     | chinese     |
+| Portuguese  | portuguese  |
+
+</RouteEn>
+
 ## The Economist
 
 ### Category
@@ -372,11 +429,19 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['language, default to Chinese']">
 
-通过提取文章全文，以提供比官方源更佳的阅读体验。
+By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.
 
 | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
 | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
-| (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+| (empty)            | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+
+</RouteEn>
+
+### News by author
+
+<RouteEn author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" :paramsDesc="['Author’s name in New York Times’ URL format']">
+
+Provides all of the articles by the specified New York Times author.
 
 </RouteEn>
 

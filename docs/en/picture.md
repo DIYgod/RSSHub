@@ -38,6 +38,32 @@ pageClass: routes
 
 </RouteEn>
 
+## 35PHOTO
+
+### New photos
+
+<RouteEn author="nczitzk" example="/35photo/new" path="/35photo/new"/>
+
+### Featured photos
+
+<RouteEn author="nczitzk" example="/35photo/actual" path="/35photo/actual"/>
+
+### New interesting
+
+<RouteEn author="nczitzk" example="/35photo/interesting" path="/35photo/interesting"/>
+
+### Photos on the world map
+
+<RouteEn author="nczitzk" example="/35photo/map" path="/35photo/map"/>
+
+### Genre
+
+<RouteEn author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" :paramsDesc="['id, can be found in URL']"/>
+
+### Author
+
+<RouteEn author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id, can be found in URL']"/>
+
 ## Asian to lick
 
 ### Home
@@ -170,6 +196,12 @@ For example:
 ### Cheng Kung University Mirror
 
 <RouteEn author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
+
+## National Geographic
+
+### Photo of the Day
+
+<RouteEn author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
 ## nHentai
 

@@ -8,7 +8,27 @@ pageClass: routes
 
 ### Poems
 
-<RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
+<RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['Ordering, `best` or `newest`, `best` by default']"/>
+
+## hameln
+
+### chapter
+
+<RouteEn author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" :paramsDesc="['Novel id, can be found in URL']">
+
+Eg:<https://syosetu.org/novel/264928/>
+
+</RouteEn>
+
+## kakuyomu
+
+### episode
+
+<RouteEn author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" :paramsDesc="['Novel id, can be found in URL']">
+
+Eg:<https://kakuyomu.jp/works/1177354054883783581>
+
+</RouteEn>
 
 ## Literotica
 

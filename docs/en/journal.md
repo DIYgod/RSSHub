@@ -237,6 +237,14 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 <RouteEn author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
 
+## Oxford University Press
+
+### Oxford Academic
+
+#### Journal
+
+<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
+
 ## Proceedings of The National Academy of Sciences (PNAS)
 
 ### Latest Articles - Articles by Topic
@@ -254,9 +262,19 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 ## PubMed
 
-### Trending
+### Trending articles
 
-<RouteEn author="yech1990" example="/pubmed/trending" path="/pubmed/trending" supportScihub="1"/>
+<RouteEn author="yech1990 nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" :paramsDesc="['Filters, can be found in URL']" supportScihub="1">
+
+::: tip Tip
+
+For the parameter **filter**, the `filter` parameter in the URL should be split into a string by `,`, here is an example.
+
+In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.clinicaltrial&filter=pubt.randomizedcontrolledtrial>, the filter parameters are `simsearch1.fha`, `pubt.clinicaltrial`, and `pubt.randomizedcontrolledtrial`. Therefore, the filter corresponding to the route should be filled with `simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial`, and the route is [`/pubmed/trending/simsearch1.fha,pubt .clinicaltrial,pubt.randomizedcontrolledtrial`](https://rsshub.app/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial)
+
+:::
+
+</RouteEn>
 
 ## Science Journal
 

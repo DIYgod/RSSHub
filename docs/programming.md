@@ -74,6 +74,28 @@ Rated 对象
 
 <Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" :paramsDesc="['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']"/>
 
+## BBC News Labs
+
+### News
+
+<Route author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
+
+## Bitbucket
+
+### Commits
+
+<Route author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" radar="1" rssbud="1" />
+
+### Tags
+
+<Route author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" :paramsDesc="['Workspace', 'Repository']" radar="1" rssbud="1" />
+
+## Bitmovin
+
+### Blog
+
+<Route author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
+
 ## Codeforces
 
 #### 最新比赛
@@ -92,9 +114,9 @@ Rated 对象
 
 <Route author="nczitzk" example="/dbaplus" path="/dbaplus/:tab?" :paramsDesc="['栏目，见下表，默认为全部']">
 
-| 全部 | 数据库 | 运维 | 大数据 | 架构 | PaaS 云 | 职场生涯 | 这里有毒 |
-| ---- | ------ | ---- | ------ | ---- | ------- | -------- | -------- |
-| All  | 153    | 134  | 73     | 141  | 72      | 149      | 21       |
+| 全部  | 数据库 | 运维  | 大数据 | 架构  | PaaS 云 | 职场生涯 | 这里有毒 |
+| --- | --- | --- | --- | --- | ------ | ---- | ---- |
+| All | 153 | 134 | 73  | 141 | 72     | 149  | 21   |
 
 </Route>
 
@@ -102,9 +124,9 @@ Rated 对象
 
 <Route author="nczitzk" example="/dbaplus/activity" path="/dbaplus/activity/:type?" :paramsDesc="['分类，见下表，默认为线上分享']">
 
-| 线上分享 | 线下峰会 |
-| -------- | -------- |
-| online   | offline  |
+| 线上分享   | 线下峰会    |
+| ------ | ------- |
+| online | offline |
 
 </Route>
 
@@ -132,17 +154,17 @@ Rated 对象
 
 <Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" :paramsDesc="['分类 ID, 置空或`all`代表全部, 具体值需要抓取前端请求, 以下列出可能有变动, 仅供参考','是否只显示严选文章, 任意值为是, 置空为否']" />
 
-| 分类名   | 分类 ID                  |
-| :------- | :----------------------- |
-| 前端     | 58e84f875295227534aad506 |
-| 后端     | 5d8b7c3786194a1921979122 |
+| 分类名  | 分类 ID                    |
+| :--- | :----------------------- |
+| 前端   | 58e84f875295227534aad506 |
+| 后端   | 5d8b7c3786194a1921979122 |
 | 移动开发 | 5d8b7c3786194a1921979123 |
-| 运维     | 5901bd477b61a76bc4016423 |
-| 测试     | 58e84f425295227534aad502 |
-| 架构     | 58e84f6bad952d6b3428af9a |
+| 运维   | 5901bd477b61a76bc4016423 |
+| 测试   | 58e84f425295227534aad502 |
+| 架构   | 58e84f6bad952d6b3428af9a |
 | 人工智能 | 58e84f53ec8e9e7b34457809 |
-| 职场     | 58e84f1584c651693437f27c |
-| 互联网   | 5d8b7c3786194a1921979124 |
+| 职场   | 58e84f1584c651693437f27c |
+| 互联网  | 5d8b7c3786194a1921979124 |
 
 > GitChat 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
@@ -181,13 +203,13 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" :paramsDesc="['名称，可以在相关 [Topics 页](https://github.com/topics/framework) URL 中找到', '过滤规则，形如 `l=php&o=desc&s=stars`，详见下表']" radar="1" rssbud="1">
 
-| 参数名 | 描述     | 可选值                                                                                    |
-| ------ | -------- | ----------------------------------------------------------------------------------------- |
-| `l`    | 编程语言 | 例如 `php`，可以在相关 [Topics 页](https://github.com/topics/framework?l=php) URL 中找到  |
-| `o`    | 排序方法 | `asc`（升序）<br>`desc`（降序）                                                           |
-| `s`    | 排序标准 | `stars`（按 star 数量排序）<br>`forks`（按 fork 数量排序）<br>`updated`（按更新日期排序） |
+| 参数名 | 描述   | 可选值                                                                          |
+| --- | ---- | ---------------------------------------------------------------------------- |
+| `l` | 编程语言 | 例如 `php`，可以在相关 [Topics 页](https://github.com/topics/framework?l=php) URL 中找到 |
+| `o` | 排序方法 | `asc`（升序）<br>`desc`（降序）                                                      |
+| `s` | 排序标准 | `stars`（按 star 数量排序）<br>`forks`（按 fork 数量排序）<br>`updated`（按更新日期排序）           |
 
-例如 `/github/topics/framework/l=php&o=desc&s=stars` 会生成对应[此页面](https://github.com/topics/framework?l=php&o=desc&s=stars)的 RSS。
+例如 `/github/topics/framework/l=php&o=desc&s=stars` 会生成对应[此页面](https://github.com/topics/framework?l=php\&o=desc\&s=stars)的 RSS。
 
 </Route>
 
@@ -197,7 +219,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 仓库 Pull Requests
 
-<Route author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo" :paramsDesc="['用户名', '仓库名']" radar="1" rssbud="1"/>
+<Route author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?" :paramsDesc="['用户名', '仓库名', 'pull request 状态，`open`,`closed`或`all`，默认为`open`']" radar="1" rssbud="1"/>
 
 ### 用户 Followers
 
@@ -215,7 +237,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" :paramsDesc="['用户名', '仓库名', '分支名', '文件路径']" radar="1" rssbud="1">
 
-| 用户名   | 仓库名   | 分支名   | 文件路径        |
+| 用户名      | 仓库名      | 分支名      | 文件路径            |
 | -------- | -------- | -------- | --------------- |
 | `DIYgod` | `RSSHub` | `master` | `lib/router.js` |
 
@@ -230,14 +252,16 @@ GitHub 官方也提供了一些 RSS:
 
 ### 搜索结果
 
-<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']"/>
+<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" :paramsDesc="['搜索关键词', '排序选项（默认为bestmatch）','排序顺序，desc和asc（默认desc降序）']">
 
-| 排序选项           | sort      |
-| ------------------ | --------- |
-| 最佳匹配           | bestmatch |
+| 排序选项         | sort      |
+| ------------ | --------- |
+| 最佳匹配         | bestmatch |
 | 根据 star 数量排序 | stars     |
 | 根据 fork 数量排序 | forks     |
-| 根据更新时间排序   | updated   |
+| 根据更新时间排序     | updated   |
+
+</Route>
 
 ### 用户 Star 的仓库
 
@@ -247,9 +271,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" :paramsDesc="['用户名', '仓库名', 'Commit 数量排序顺序，desc和asc（默认desc降序）', '是否包括匿名用户，默认不包含，任意值包含匿名用户']" radar="1" rssbud="1"/>
 
-### Issues / Pull Requests 评论
+### Issue / Pull Request 评论
 
-<Route author="TonyRL" example="/github/comments/DIYgod/RSSHub/issues/8116" path="/github/comments/:user/:repo/:type/:number" :paramsDesc="['用户名', '仓库', '类型，`issues`或`pull`', '编号']"/>
+<Route author="TonyRL" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number" :paramsDesc="['用户名', '仓库', 'Issue 或 pull 编号']"/>
 
 ## GitLab
 
@@ -271,11 +295,27 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" :paramsDesc="['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']" />
 
+## Gitpod
+
+### 博客
+
+<Route author="TonyRL" example="/gitpod/blog" path="/gitpod/blog" />
+
+### 更新日志
+
+<Route author="TonyRL" example="/gitpod/changelog" path="/gitpod/changelog" />
+
 ## Go 语言中文网
 
 ### 周刊
 
 <Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
+
+## GoCN
+
+### 文章
+
+<Route author="AtlanCI" example="/gocn" path="/gocn"/>
 
 ## Hacker News
 
@@ -291,9 +331,9 @@ GitHub 官方也提供了一些 RSS:
 
 条目指向链接类型
 
-| 用户分享的来源地址 | Hacker News 上的讨论页面 | 读取回复列表  |
-| ------------------ | ------------------------ | ------------- |
-| sources            | comments                 | comments_list |
+| 用户分享的来源地址 | Hacker News 上的讨论页面 | 读取回复列表        |
+| --------- | ------------------ | ------------- |
+| sources   | comments           | comments_list |
 
 > 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 homepage，应优先考虑。
 
@@ -304,6 +344,26 @@ GitHub 官方也提供了一些 RSS:
 订阅特定用户的内容
 
 <Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']" />
+
+## HelloGitHub
+
+### 文章列表
+
+<Route author="moke8" example="/hellogithub/article" path="/hellogithub/article"/>
+
+### 编程语言排行榜
+
+<Route author="moke8" example="/hellogithub/ranking" path="/hellogithub/ranking/:type?" :paramsDesc="['分类，见下表']">
+
+| 编程语言排行 | 数据库排行 | 服务端语言排行   |
+| ------ | ----- | --------- |
+| tiobe  | db    | webserver |
+
+</Route>
+
+### 月刊
+
+<Route author="moke8" example="/hellogithub/month" path="/hellogithub/month"/>
 
 ## Hex-Rays
 
@@ -333,7 +393,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" :paramsDesc="['类别, 默认为空']">
 
-| 空             | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
+| 空              | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
 | -------------- | -------- | -------- | ----------- | --------------- | ------- | ---------- | --------- |
 | All Categories | Featured | Research | Recruitment | Getting started | Masters | Playground | Analytics |
 
@@ -371,7 +431,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" :paramsDesc="['对应发行版标识']">
 
-| 发行版           | 标识               |
+| 发行版              | 标识                 |
 | :--------------- | :----------------- |
 | Arch Linux       | `Arch_Linux`       |
 | CentOS           | `CentOS`           |
@@ -406,16 +466,16 @@ GitHub 官方也提供了一些 RSS:
 | ar      | ca      | de      | es      | fa         |
 
 | Français | Galego | Italiano | 日本語 | 한국어 |
-| -------- | ------ | -------- | ------ | ------ |
-| fr       | gl     | it       | ja     | ko     |
+| -------- | ------ | -------- | --- | --- |
+| fr       | gl     | it       | ja  | ko  |
 
 | Português do Brasil | limba română | Русский | Türkçe | Українська |
 | ------------------- | ------------ | ------- | ------ | ---------- |
 | pt-br               | ro           | ru      | tr     | uk         |
 
-| 简体中文 | 繁體中文 |
-| -------- | -------- |
-| zh-cn    | zh-tw    |
+| 简体中文  | 繁體中文  |
+| ----- | ----- |
+| zh-cn | zh-tw |
 
 </Route>
 
@@ -425,8 +485,8 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind?" :paramsDesc="['对应文章分类']">
 
-| 分类     | 标识       |
-| :------- | :--------- |
+| 分类   | 标识         |
+| :--- | :--------- |
 | 威胁情报 | `threaten` |
 | 安全动态 | `security` |
 | 漏洞预警 | `hole`     |
@@ -442,6 +502,58 @@ GitHub 官方也提供了一些 RSS:
 ### issues
 
 <Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+
+## Quicker
+
+### 动作分享
+
+<Route author="nczitzk" example="/quicker/share/Recent" path="/quicker/share/:category?" :paramsDesc="['分类，见下表，默认为动作库最新更新']">
+
+| 动作库最新更新 | 动作库最多赞      | 动作库新动作     | 动作库最近赞      |
+| ------- | ----------- | ---------- | ----------- |
+| Recent  | Recommended | NewActions | RecentLiked |
+
+| 子程序         | 扩展热键      | 文本指令         |
+| ----------- | --------- | ------------ |
+| SubPrograms | PowerKeys | TextCommands |
+
+</Route>
+
+### 讨论区
+
+<Route author="Cesaryuan nczitzk" example="/quicker/qa" path="/quicker/qa/:category?/:state?" :paramsDesc="['分类，见下表，默认为全部', '状态，见下表，默认为全部']">
+
+分类
+
+| 使用问题 | 动作开发 | BUG 反馈 | 功能建议 |
+| ---- | ---- | ------ | ---- |
+| 1    | 9    | 3      | 4    |
+
+| 动作需求 | 经验创意 | 动作推荐 | 信息发布 |
+| ---- | ---- | ---- | ---- |
+| 6    | 2    | 7    | 5    |
+
+| 随便聊聊 | 异常报告 | 全部  |
+| ---- | ---- | --- |
+| 8    | 10   | all |
+
+状态
+
+| 全部 | 精华     | 已归档     |
+| -- | ------ | ------- |
+|    | digest | achived |
+
+</Route>
+
+### 用户更新
+
+<Route author="Cesaryuan nczitzk" example="/quicker/user/Actions/3-CL" path="/quicker/user/:category/:id" :paramsDesc="['分类，见下表', '用户 id，可在对应用户页 URL 中找到']">
+
+| 动作      | 子程序         | 动作单         |
+| ------- | ----------- | ----------- |
+| Actions | SubPrograms | ActionLists |
+
+</Route>
 
 ## react
 
@@ -459,11 +571,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 频道
 
-<Route author="LogicJake" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
+<Route author="LogicJake Fatpandac" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
 
 ### 用户
 
-<Route author="leyuuu" example="/segmentfault/user/yunqishequ_5aa899aad5395" path="/segmentfault/user/:name" :paramsDesc="['用户Id，用户详情页URL可以找到']"/>
+<Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" :paramsDesc="['用户Id，用户详情页URL可以找到']"/>
 
 ## TesterHome
 
@@ -507,13 +619,13 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="muzea" example="/aliyun/notice" path="/aliyun/notice/:type?"/>
 
-| 类型     | type |
-| -------- | ---- |
-| 全部     |      |
+| 类型   | type |
+| ---- | ---- |
+| 全部   |      |
 | 升级公告 | 1    |
 | 安全公告 | 2    |
 | 备案公告 | 3    |
-| 其他     | 4    |
+| 其他   | 4    |
 
 ### 开发者社区 - 主题
 
@@ -535,9 +647,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
 
-| 360 网络安全周报 | 活动     | 知识      | 资讯 | 招聘 |
-| ---------------- | -------- | --------- | ---- | ---- |
-| week             | activity | knowledge | news | job  |
+| 360 网络安全周报 | 活动       | 知识        | 资讯   | 招聘  |
+| ---------- | -------- | --------- | ---- | --- |
+| week       | activity | knowledge | news | job |
 
 </Route>
 
@@ -591,9 +703,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
-| 后端    | 前端     | Android | iOS | 人工智能 | 开发工具 | 代码人生 | 阅读    |
-| ------- | -------- | ------- | --- | -------- | -------- | -------- | ------- |
-| backend | frontend | android | ios | ai       | freebie  | career   | article |
+| 后端      | 前端       | Android | iOS | 人工智能 | 开发工具    | 代码人生   | 阅读      |
+| ------- | -------- | ------- | --- | ---- | ------- | ------ | ------- |
+| backend | frontend | android | ios | ai   | freebie | career | article |
 
 </Route>
 
@@ -605,22 +717,22 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="moaix" example="/juejin/trending/ios/monthly" path="/juejin/trending/:category/:type" :paramsDesc="['分类名', '类型']">
 
-| category | 标签     |
-| -------- | -------- |
-| android  | Android  |
-| frontend | 前端     |
-| ios      | iOS      |
-| backend  | 后端     |
-| design   | 设计     |
-| product  | 产品     |
-| freebie  | 工具资源 |
-| article  | 阅读     |
-| ai       | 人工智能 |
-| devops   | 运维     |
-| all      | 全部     |
+| category | 标签      |
+| -------- | ------- |
+| android  | Android |
+| frontend | 前端      |
+| ios      | iOS     |
+| backend  | 后端      |
+| design   | 设计      |
+| product  | 产品      |
+| freebie  | 工具资源    |
+| article  | 阅读      |
+| ai       | 人工智能    |
+| devops   | 运维      |
+| all      | 全部      |
 
-| type       | 类型     |
-| ---------- | -------- |
+| type       | 类型   |
+| ---------- | ---- |
 | weekly     | 本周最热 |
 | monthly    | 本月最热 |
 | historical | 历史最热 |
@@ -637,9 +749,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer laampui" example="/juejin/pins/6824710202487472141" :paramsDesc="['默认为 recommend，见下表']" path="/juejin/pins/:type?">
 
-| 推荐      | 热门 | 上班摸鱼            | 内推招聘            | 一图胜千言          | 今天学到了          | 每天一道算法题      | 开发工具推荐        | 树洞一下            |
-| --------- | ---- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
-| recommend | hot  | 6824710203301167112 | 6819970850532360206 | 6824710202487472141 | 6824710202562969614 | 6824710202378436621 | 6824710202000932877 | 6824710203112423437 |
+| 推荐        | 热门  | 上班摸鱼                | 内推招聘                | 一图胜千言               | 今天学到了               | 每天一道算法题             | 开发工具推荐              | 树洞一下                |
+| --------- | --- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- | ------------------- |
+| recommend | hot | 6824710203301167112 | 6819970850532360206 | 6824710202487472141 | 6824710202562969614 | 6824710202378436621 | 6824710202000932877 | 6824710203112423437 |
 
 </Route>
 
@@ -666,8 +778,8 @@ GitHub 官方也提供了一些 RSS:
 <Route author="tgly307 zengxs" example="/oschina/news/project" path="/oschina/news/:category?" :paramsDesc="['板块名']">
 
 | [综合资讯][osc_gen] | [软件更新资讯][osc_proj] | [行业资讯][osc_ind] | [编程语言资讯][osc_pl] |
-| ------------------- | ------------------------ | ------------------- | ---------------------- |
-| industry            | project                  | industry-news       | programming            |
+| --------------- | ------------------ | --------------- | ---------------- |
+| industry        | project            | industry-news   | programming      |
 
 订阅[全部板块资讯][osc_all]可以使用 <https://rsshub.app/oschina/news>
 
@@ -687,7 +799,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="dxmpalb" example="/oschina/user/xxiaobian" path="/oschina/user/:id" :paramsDesc="['用户 id, 可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']">
 
-| 小小编辑  |
+| 小小编辑      |
 | --------- |
 | xxiaobian |
 
@@ -698,8 +810,8 @@ GitHub 官方也提供了一些 RSS:
 <Route author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:id" :paramsDesc="['用户 id, 可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']">
 
 | EAWorld 的博客 |
-| -------------- |
-| 3920392        |
+| ----------- |
+| 3920392     |
 
 </Route>
 
@@ -753,20 +865,19 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="mlogclub" example="/mlog-club/topics/newest" path="/mlog-club/topics/:node" :paramsDesc="['node']">
 
-| node      | 名称     |
-| --------- | -------- |
+| node      | 名称   |
+| --------- | ---- |
 | newest    | 最新话题 |
 | recommend | 热门话题 |
-| 1         | 交流     |
-| 2         | 开源     |
-| 3         | 提问     |
+| 1         | 交流   |
+| 2         | 开源   |
+| 3         | 提问   |
 
 </Route>
 
 ### 开源项目
 
-<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects">
-</Route>
+<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects" />
 
 ## 码农网
 
@@ -778,24 +889,24 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="kt286" example="/codeceo/category/java" path="/codeceo/category/:category?" :paramsDesc="['category']">
 
-| category        | 名称                |
-| --------------- | ------------------- |
-| news            | 资讯                |
-| java            | JAVA 开发           |
-| cpp             | C/C++ 开发          |
-| donet           | .NET 开发           |
-| web             | WEB 开发            |
-| android         | Android 开发        |
-| ios             | iOS 开发            |
-| cloud           | 云计算 / 大数据     |
-| os              | 操作系统            |
-| database        | 数据库              |
+| category        | 名称          |
+| --------------- | ----------- |
+| news            | 资讯          |
+| java            | JAVA 开发     |
+| cpp             | C/C++ 开发    |
+| donet           | .NET 开发     |
+| web             | WEB 开发      |
+| android         | Android 开发  |
+| ios             | iOS 开发      |
+| cloud           | 云计算 / 大数据   |
+| os              | 操作系统        |
+| database        | 数据库         |
 | machine         | 机器学习 / 人工智能 |
-| algorithm       | 算法设计            |
-| design-patterns | 设计模式            |
-| programmer      | 程序员人生          |
-| weekly          | 《快乐码农》        |
-| project         | 开源软件            |
+| algorithm       | 算法设计        |
+| design-patterns | 设计模式        |
+| programmer      | 程序员人生       |
+| weekly          | 《快乐码农》      |
+| project         | 开源软件        |
 
 </Route>
 
@@ -803,7 +914,7 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="kt286" example="/codeceo/tag/node.js" path="/codeceo/tag/:category?" :paramsDesc="['tag']">
 
-| tag        | 名称       |
+| tag        | 名称         |
 | ---------- | ---------- |
 | java       | java       |
 | javascript | javascript |
@@ -846,8 +957,8 @@ GitHub 官方也提供了一些 RSS:
 <Route author="kouchao" example="/jskou/0" path="/jskou/:type?" :paramsDesc="['分类']">
 
 | 前端艺术家 | 飞冰早报 |
-| ---------- | -------- |
-| 0          | 1        |
+| ----- | ---- |
+| 0     | 1    |
 
 </Route>
 
@@ -879,9 +990,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" :paramsDesc="['标签名称，默认为热门']">
 
-| 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
-| ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
-| hot  | plan | program | tech     | audio | project  | yunying  | test     |
+| 热门  | 策划   | 程序      | 技术前沿 | 音频    | 项目管理    | 游戏运营    | 游戏测试 |
+| --- | ---- | ------- | ---- | ----- | ------- | ------- | ---- |
+| hot | plan | program | tech | audio | project | yunying | test |
 
 </Route>
 
@@ -903,9 +1014,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="bestony" example="/wechat-open/community/xyx-question/0" path="/wechat-open/community/xyx-question/:category" :paramsDesc="['0','hot','topic']">
 
-| 全部 | 游戏引擎 | 规则 | 账号  | 运营 | 游戏审核 | API 和组件 | 框架 | 管理后台 | 开发者工具 | 客户端 | 插件 | 云开发 | 教程反馈 | 其他 |
-| ---- | -------- | ---- | ----- | ---- | -------- | ---------- | ---- | -------- | ---------- | ------ | ---- | ------ | -------- | ---- |
-| 0    | 4096     | 8192 | 16384 | 2048 | 1        | 2          | 64   | 4        | 8          | 16     | 256  | 1024   | 128      | 32   |
+| 全部 | 游戏引擎 | 规则   | 账号    | 运营   | 游戏审核 | API 和组件 | 框架 | 管理后台 | 开发者工具 | 客户端 | 插件  | 云开发  | 教程反馈 | 其他 |
+| -- | ---- | ---- | ----- | ---- | ---- | ------- | -- | ---- | ----- | --- | --- | ---- | ---- | -- |
+| 0  | 4096 | 8192 | 16384 | 2048 | 1    | 2       | 64 | 4    | 8     | 16  | 256 | 1024 | 128  | 32 |
 
 </Route>
 
@@ -913,9 +1024,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="bestony" example="/wechat-open/community/xcx-question/new" path="/wechat-open/community/xcx-question/:tag" :paramsDesc="['new','hot','topic']">
 
-| 最新 | 最热 | 热门话题 |
-| ---- | ---- | -------- |
-| new  | hot  | topic    |
+| 最新  | 最热  | 热门话题  |
+| --- | --- | ----- |
+| new | hot | topic |
 
 </Route>
 
@@ -938,8 +1049,8 @@ GitHub 官方也提供了一些 RSS:
 <Route author="nczitzk" example="/weixin/miniprogram/wxcloud/cloud-sdk" path="/weixin/miniprogram/wxcloud/:caty?" :paramsDesc="['日志分类']">
 
 | 小程序基础库更新日志（云开发部分） | IDE 云开发 & 云控制台更新日志 | wx-server-sdk 更新日志 |
-| ---------------------------------- | ----------------------------- | ---------------------- |
-| cloud-sdk                          | ide                           | server-sdk             |
+| ----------------- | ------------------ | ------------------ |
+| cloud-sdk         | ide                | server-sdk         |
 
 </Route>
 
@@ -949,15 +1060,25 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly"/>
 
+## 政采云前端技术团队
+
+### 博客
+
+<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" rssbud="1"/>
+
+### 小报
+
+<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" rssbud="1"/>
+
 ## 知晓程序
 
 ### 文章
 
 <Route author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" :paramsDesc="['分类名称']">
 
-| 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
-| ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
-| all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
+| 全部  | 小程序资讯 | 知晓云   | 小程序推荐          | 榜单   | 晓组织   | 新能力        | 小程序问答 |
+| --- | ----- | ----- | -------------- | ---- | ----- | ---------- | ----- |
+| all | news  | cloud | recommendation | rank | group | capability | qa    |
 
 </Route>
 
