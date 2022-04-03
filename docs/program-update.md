@@ -318,6 +318,12 @@ pageClass: routes
 
 见 [#nintendo](/game.html#nintendo)
 
+## NPM
+
+### 包
+
+<Route author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" :paramsDesc="['包名']"/>
+
 ## Nvidia Web Driver
 
 ### 更新日志
