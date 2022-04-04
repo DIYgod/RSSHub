@@ -61,5 +61,5 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 <RouteEn author="chazeon"
     example="/metmuseum/exhibitions"
     path="/metmusem/exhibitions/:state?"
-    :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']"
+    :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']" anticrawler="1"
 />
