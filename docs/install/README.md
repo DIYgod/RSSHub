@@ -262,6 +262,7 @@ in pkgs.stdenv.mkDerivation {
 2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 （例如 `https://github.com/USERNAME/RSSHub`)。
 3.  检查 Heroku 设置，随代码库更新自动部署。
 4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
+5.  如遇自动检查流程妨碍拉取请求之情况，将流程禁用即可。
 
 ## 部署到 Vercel (Zeit Now)
 
