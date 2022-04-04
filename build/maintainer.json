@@ -550,6 +550,9 @@
     "/gameapps/": [
         "TonyRL"
     ],
+    "/gamer/gnn/:category?": [
+        "Arracc"
+    ],
     "/gamer/hot/:bsn": [
         "nczitzk",
         "TonyRL"
@@ -3310,7 +3313,6 @@
     "/nobelprize/:caty?": [],
     "/gov/taiwan/mnd": [],
     "/yomiuri/:category": [],
-    "/gamer/gnn/:category?": [],
     "/npc/:caty": [],
     "/ofweek/news": [],
     "/popyard/:caty?": [],
