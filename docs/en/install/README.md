@@ -260,6 +260,7 @@ Heroku accounts with unverified payment methods have only 550 hours of credit pe
 2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
 3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
 4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
+5. Disable GitHub Actions on your fork that block the automated pull requests.
 
 ## Deploy to Vercel(Zeit Now)
 
