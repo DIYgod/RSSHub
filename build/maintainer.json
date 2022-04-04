@@ -224,6 +224,9 @@
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
+    "/brooklynmuseum/exhibitions": [
+        "chazeon"
+    ],
     "/bse/:category?/:keyword?": [
         "nczitzk"
     ],
@@ -722,6 +725,9 @@
     "/guduodata/daily": [
         "Gem1ni"
     ],
+    "/guggenheim/exhibitions": [
+        "chazeon"
+    ],
     "/hackernews/:section?/:type?/:user?": [
         "nczitzk",
         "xie-dongping"
@@ -1025,6 +1031,9 @@
     "/javlibrary/:type/:id/:language?": [
         "nczitzk"
     ],
+    "/jewishmuseum/exhibitions": [
+        "chazeon"
+    ],
     "/jisilu/:category?/:sort?/:day?": [
         "nczitzk"
     ],
@@ -1146,8 +1155,14 @@
     "/lvv2/top/:channel/:sort?": [
         "Fatpandac"
     ],
+    "/mcachicago/exhibitions": [
+        "chazeon"
+    ],
     "/medsci/:sid?/:tid?": [
         "nczitzk"
+    ],
+    "/metmuseum/exhibitions": [
+        "chazeon"
     ],
     "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
         "CaoMeiYouRen"
@@ -1211,6 +1226,9 @@
     ],
     "/netease/news/rank/:category?/:type?/:time?": [
         "nczitzk"
+    ],
+    "/newmuseum/exhibitions": [
+        "chazeon"
     ],
     "/news/whxw": [
         "nczitzk"
