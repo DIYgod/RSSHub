@@ -16,7 +16,7 @@
   <p>
     Parameters:
   </p>
-  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)">{{item.replace('?','')}}, {{(item.includes('?'))?'optional':'required'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul>
+  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)"><code>{{item.replace('?','')}}</code>, {{(item.includes('?'))?'optional':'required'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul>
   </div>
   <div v-else><p>Parameters: N/A</p></div>
   <slot></slot>
