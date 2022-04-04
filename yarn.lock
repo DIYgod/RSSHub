@@ -5207,10 +5207,10 @@ enstore@^1.0.1:
   dependencies:
     monotonic-timestamp "0.0.8"
 
-entities@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-3.0.1.tgz#2b887ca62585e96db3903482d336c1006c3001d4"
-  integrity sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==
+entities@4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-4.1.1.tgz#fc6ad5c3b77898165a143356db12d2f62eb1feb4"
+  integrity sha512-AxszXDqnHj5aVzjBpofDDfXX9zC8gugYwJxEYDdA52d6dqoxPKfNDBFxZyIZrkaqUtNy/ip/knBm6mRJed7p1A==
 
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.2"
