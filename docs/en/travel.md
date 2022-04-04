@@ -20,6 +20,14 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
 
 </RouteEn>
 
+## Brooklyn Museum
+
+<RouteEn author="chazeon"
+    example="/brooklynmuseum/exhibitions"
+    path="/brooklynmuseum/exhibitions/:state?"
+    :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']"
+/>
+
 ## Hopper
 
 ### Flight Deals
@@ -31,3 +39,27 @@ This route returns a list of flight deals (in most cases, 6 flight deals) for a 
 For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
 
 </RouteEn>
+
+## Museum of Contemporary Art Chicago
+
+<RouteEn author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
+
+## New Museum
+
+<RouteEn author="chazeon" example="/newmuseum/exhibitions" path="/newmuseum/exhibitions" />
+
+## Solomon R. Guggenheim Museum
+
+<RouteEn author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" />
+
+## The Jewish Museum
+
+<RouteEn author="chazeon" example="/jewishmuseum/exhibitions" path="/jewishmuseum/exhibitions" />
+
+## The Metropolitan Museum of Art
+
+<RouteEn author="chazeon"
+    example="/metmuseum/exhibitions"
+    path="/metmusem/exhibitions/:state?"
+    :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']" anticrawler="1"
+/>
