@@ -1,10 +1,10 @@
-# API 接口
+# API
 
 ::: warning 注意
 API 仍处于开发状态中， 并可能会有改动。欢迎提供建议！
 :::
 
-RSSHub 提供下列 API 接口:
+RSSHub 提供下列 API:
 
 ### 可用公共路由列表
 
