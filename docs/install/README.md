@@ -637,8 +637,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   twitter 全部路由：[申请地址](https://apps.twitter.com)
 
-    -   `TWITTER_CONSUMER_KEY`: Twitter API key，支持多个 key，用英文逗号 `,` 隔开
-    -   `TWITTER_CONSUMER_SECRET`: Twitter API key secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
+    -   `TWITTER_CONSUMER_KEY`: Twitter Developer API key，支持多个 key，用英文逗号 `,` 隔开
+    -   `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
+    -   `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization。如果上述两个环境变量中的任意一个未设置，就会使用 Twitter Web API。然而，没有必要设置这个环境变量，因为所有用户和访客共享同一个 authorization token 且已经内置于 RSSHub 之中。
     -   `TWITTER_TOKEN_{handler}`: 对应 Twitter 用户名生成的 token，`{handler}` 替换为用于生成该 token 的 Twitter 用户名，值为 `Twitter API key, Twitter API key secret, Access token, Access token secret` 用逗号隔开，例如：`TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`
 
 -   Wordpress
