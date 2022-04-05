@@ -731,6 +731,12 @@
     "/guggenheim/exhibitions": [
         "chazeon"
     ],
+    "/gzh360/category/:id?": [
+        "Rongronggg9"
+    ],
+    "/gzh360/gzh/:name?": [
+        "Rongronggg9"
+    ],
     "/hackernews/:section?/:type?/:user?": [
         "nczitzk",
         "xie-dongping"
