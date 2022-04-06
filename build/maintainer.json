@@ -560,6 +560,9 @@
     "/gamersecret/:type?/:category?": [
         "nczitzk"
     ],
+    "/gaze/update/:mid": [
+        "zytomorrow"
+    ],
     "/gcores/category/:category": [
         "MoguCloud",
         "StevenRCE0"
