@@ -389,12 +389,6 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 <Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']" supportBT="1"/>
 
-## 注视影视
-
-### 更新通知
-
-<Route author="zytomorrow" example="/gaze/update/5157c267ee121ab8d1b45092304a1e85" path="/gaze/update/:mid" :paramsDesc="['剧集的id。播放页面play之后的一串字符']"/>
-
 ## Hentaimama
 
 ### 近期更新
@@ -1462,6 +1456,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ### 电台节目
 
 <Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
+
+## 注视影视
+
+### 更新通知
+
+<Route author="zytomorrow" example="/gaze/update/5157c267ee121ab8d1b45092304a1e85" path="/gaze/update/:mid" :paramsDesc="['剧集的id。播放页面play之后的一串字符']"/>
 
 ## 追新番
 
