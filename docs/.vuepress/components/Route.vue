@@ -15,7 +15,8 @@
   <div v-if="path.match(/:.*?(\/|$)/g)">
   <p>
     参数:
-  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)">{{item.replace(':','').replace('/','').replace('?','')}}, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
+  </p>
+  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)"><code>{{item.replace(':','').replace('/','').replace('?','')}}</code>, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul>
   </div>
   <div v-else><p>参数: 无</p></div>
   <slot></slot>
@@ -70,11 +71,11 @@ export default {
     },
   },
   methods: {
-    renderMarkdown(item) {
+    renderMarkdown(item, inline = true) {
     const md = require('markdown-it')({
             html: true,
     });
-        return md.render(item);
+        return inline ? md.renderInline(item) : md.render(item);
     },
   },
   computed: {
