@@ -5,12 +5,13 @@ describe('common-utils', () => {
         expect(utils.toTitleCase('RSSHub IS AS aweSOme aS henry')).toBe('Rsshub Is As Awesome As Henry');
     });
 
+    const date = new Date('2019-01-01');
+
     it('convertDateToISO8601', () => {
         expect(utils.convertDateToISO8601('')).toBe('');
         expect(utils.convertDateToISO8601(null)).toBe(null);
         expect(utils.convertDateToISO8601(undefined)).toBe(undefined);
 
-        const date = new Date('2019-01-01');
         const expected = date.toISOString();
         expect(utils.convertDateToISO8601(date)).toBe(expected);
         expect(utils.convertDateToISO8601(date.toISOString())).toBe(expected);
@@ -19,10 +20,23 @@ describe('common-utils', () => {
         expect(utils.convertDateToISO8601('Tue, 01 Jan 2019 08:00:00 UTC+8')).toBe(expected);
 
         expect(utils.convertDateToISO8601('Tue, 01 Jan 2019 00:00:00')).toBe(new Date(date.getTime() + new Date().getTimezoneOffset() * 60 * 1000).toISOString());
-        // need to pass a function in order to use `toThrow`
-        expect(() => {
-            utils.convertDateToISO8601('something invalid');
-        }).toThrow(RangeError);
+        expect(() => utils.convertDateToISO8601('something invalid')).toThrow(RangeError);
+    });
+
+    it('convertDateToRFC2822', () => {
+        expect(utils.convertDateToRFC2822('')).toBe('');
+        expect(utils.convertDateToRFC2822(null)).toBe(null);
+        expect(utils.convertDateToRFC2822(undefined)).toBe(undefined);
+
+        const expected = date.toUTCString();
+        expect(utils.convertDateToRFC2822(date)).toBe(expected);
+        expect(utils.convertDateToRFC2822(date.toISOString())).toBe(expected);
+        expect(utils.convertDateToRFC2822(date.toUTCString())).toBe(expected);
+        expect(utils.convertDateToRFC2822(date.toLocaleString())).toBe(expected);
+        expect(utils.convertDateToRFC2822('Tue, 01 Jan 2019 08:00:00 UTC+8')).toBe(expected);
+
+        expect(utils.convertDateToRFC2822('Tue, 01 Jan 2019 00:00:00')).toBe(new Date(date.getTime() + new Date().getTimezoneOffset() * 60 * 1000).toUTCString());
+        expect(() => utils.convertDateToRFC2822('something invalid')).toThrow(RangeError);
     });
 
     it('collapseWhitespace', () => {
