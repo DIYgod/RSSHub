@@ -429,11 +429,19 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['language, default to Chinese']">
 
-通过提取文章全文，以提供比官方源更佳的阅读体验。
+By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.
 
 | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
 | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
-| (空)               | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+| (empty)            | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
+
+</RouteEn>
+
+### News by author
+
+<RouteEn author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" :paramsDesc="['Author’s name in New York Times’ URL format']">
+
+Provides all of the articles by the specified New York Times author.
 
 </RouteEn>
 
