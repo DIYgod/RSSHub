@@ -289,7 +289,7 @@ pageClass: routes
 
 <Route author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
-### 基金净值更新
+### 蛋卷基金净值更新
 
 <Route author="HenryQW" example="/danjuanfunds/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
 
