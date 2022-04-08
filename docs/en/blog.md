@@ -73,6 +73,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ## Stratechery by Ben Thompson
 
 <RouteEn author="chazeon" example="/stratechery" path="/stratechery" />
+
 ## WordPress
 
 <RouteEn author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
