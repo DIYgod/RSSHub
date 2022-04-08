@@ -80,6 +80,10 @@ pageClass: routes
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## Miris Whispers
+
+<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
+
 ## Paul Graham 博客
 
 通过提取文章全文，提供比官方源更佳的阅读体验。
@@ -106,6 +110,9 @@ pageClass: routes
 
 :::
 
+## Stratechery by Ben Thompson
+
+<Route author="chazeon" example="/stratechery" path="/stratechery" />
 ## Whoscall
 
 ### 最新文章
