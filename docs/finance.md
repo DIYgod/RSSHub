@@ -291,7 +291,7 @@ pageClass: routes
 
 ### 蛋卷基金净值更新
 
-<Route author="HenryQW" example="/danjuanfunds/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
+<Route author="HenryQW NathanDai" example="/danjuanfunds/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
 
 ### 组合最新调仓信息
 
