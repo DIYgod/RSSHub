@@ -26,9 +26,13 @@ pageClass: routes
 
 ## Gwern Branwen
 
+### 博客
+
 <Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
 
 ## Hedwig.pub
+
+### 博客
 
 <Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
 
@@ -82,6 +86,8 @@ pageClass: routes
 
 ## Miris Whispers
 
+### 博客
+
 <Route author="chazeon" example="/miris/blog" path="/miris/blog" />
 
 ## Paul Graham 博客
@@ -112,6 +118,8 @@ pageClass: routes
 
 ## Stratechery by Ben Thompson
 
+### 博客
+
 <Route author="chazeon" example="/stratechery" path="/stratechery" />
 
 ## Whoscall
@@ -140,6 +148,8 @@ pageClass: routes
 </Route>
 
 ## WordPress
+
+### 博客
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
@@ -184,6 +194,8 @@ pageClass: routes
 </Route>
 
 ## 華康字型故事
+
+### 博客
 
 <Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
 
