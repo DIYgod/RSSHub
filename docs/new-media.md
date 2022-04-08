@@ -3338,7 +3338,7 @@ column 为 third 时可选的 category:
 
 :::
 
-### 公众号（ wemp.app 来源）
+### 公众号（wemp.app 来源）
 
 <Route author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']" anticrawler="1"/>
 
@@ -3383,6 +3383,12 @@ column 为 third 时可选的 category:
 <Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']" anticrawler="1"/>
 
 ### 公众号 (wechat-feeds 来源)
+
+::: warning 注意
+
+wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/issues/3882)，历史文章可以正常订阅阅读
+
+:::
 
 <Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
