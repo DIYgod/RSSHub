@@ -421,8 +421,8 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="OdinZhang" example="/bookfere/skills" path="/bookfere/:category" :paramsDesc="['分类名']">
 
-| 每周一书 | 使用技巧 | 图书推荐 | 新闻速递 | 精选短文|
-| ------ | ------ | ------ | ------ | ------ |
+| 每周一书   | 使用技巧   | 图书推荐  | 新闻速递 | 精选短文  |
+| ------ | ------ | ----- | ---- | ----- |
 | weekly | skills | books | news | essay |
 
 </Route>
