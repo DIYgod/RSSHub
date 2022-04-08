@@ -1257,10 +1257,6 @@ rule
 
 <Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" anticrawler="1"/>
 
-### 热帖
-
-<Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
-
 ## 悟空问答
 
 ### 用户动态
