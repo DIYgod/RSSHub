@@ -80,6 +80,10 @@ pageClass: routes
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## Miris Whispers
+
+<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
+
 ## Paul Graham 博客
 
 通过提取文章全文，提供比官方源更佳的阅读体验。
@@ -105,6 +109,10 @@ pageClass: routes
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
 
 :::
+
+## Stratechery by Ben Thompson
+
+<Route author="chazeon" example="/stratechery" path="/stratechery" />
 
 ## Whoscall
 

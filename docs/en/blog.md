@@ -40,6 +40,10 @@ pageClass: routes
 
 <RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
 
+## Miris Whispers
+
+<RouteEn author="chazeon" example="/miris/blog" path="/miris/blog" />
+
 ## Paul Graham
 
 ### Essays
@@ -65,6 +69,10 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### Article
 
 <RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
+
+## Stratechery by Ben Thompson
+
+<RouteEn author="chazeon" example="/stratechery" path="/stratechery" />
 
 ## WordPress
 
