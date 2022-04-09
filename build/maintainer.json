@@ -1191,6 +1191,9 @@
     "/mingpao/:type?/:category?": [
         "TonyRL"
     ],
+    "/miris/blog": [
+        "chazeon"
+    ],
     "/mohw/clarification": [
         "nczitzk"
     ],
@@ -1591,6 +1594,9 @@
     "/storm/:category?/:id?": [
         "nczitzk"
     ],
+    "/stratechery/": [
+        "chazeon"
+    ],
     "/subhd/sub/:category?": [
         "nczitzk"
     ],
@@ -1681,6 +1687,15 @@
     ],
     "/trow/portal": [
         "shiningdracon"
+    ],
+    "/twreporter/category/:cid": [
+        "emdoe"
+    ],
+    "/twreporter/newest": [
+        "emdoe"
+    ],
+    "/twreporter/photography": [
+        "emdoe"
     ],
     "/txrjy/fornumtopic/:channel?": [
         "Fatpandac"
@@ -1866,6 +1881,31 @@
         "hondajojo",
         "jtsang4"
     ],
+    "/xueqiu/favorite/:id": [
+        "imlonghao"
+    ],
+    "/xueqiu/fund/:id": [
+        "HenryQW",
+        "NathanDai"
+    ],
+    "/xueqiu/hots": [
+        "hillerliao"
+    ],
+    "/xueqiu/snb/:id": [
+        "ZhishanZhang"
+    ],
+    "/xueqiu/stock_comments/:id/:titleLength?": [
+        "zytomorrow"
+    ],
+    "/xueqiu/stock_info/:id/:type?": [
+        "YuYang"
+    ],
+    "/xueqiu/user/:id/:type?": [
+        "imlonghao"
+    ],
+    "/xueqiu/user_stock/:id": [
+        "hillerliao"
+    ],
     "/yaohuo/": [
         "nczitzk"
     ],
@@ -1929,9 +1969,6 @@
     "/bangumi/group/:id": [],
     "/bangumi/subject/:id": [],
     "/bangumi/user/blog/:id": [],
-    "/twreporter/newest": [],
-    "/twreporter/photography": [],
-    "/twreporter/category/:cid": [],
     "/weibo/user/:uid/:routeParams?": [],
     "/weibo/keyword/:keyword/:routeParams?": [],
     "/weibo/search/hot": [],
