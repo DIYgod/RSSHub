@@ -1,6 +1,11 @@
 process.env.REQUEST_TIMEOUT = '500';
 const cheerio = require('cheerio');
-const wechatMp = require('../../lib/utils/wechat-mp');
+const {
+    _internal: { normalizeUrl },
+    fetchArticle,
+    finishArticleItem,
+    fixArticleContent,
+} = require('../../lib/utils/wechat-mp');
 const nock = require('nock');
 const ctx = require('../../lib/app').context;
 
@@ -31,21 +36,47 @@ describe('wechat-mp', () => {
             '<script>const test = "test"</script>';
         const expectedHtmlSection = '<p>test</p>' + '<div><p>test</p></div>' + '<div><div>test</div></div>' + '<div><div><p>test</p></div></div>' + '<div><div><p>test</p></div></div>' + '<p>test</p>' + '<div><p>test</p></div>';
         let $ = cheerio.load(divHeader + htmlSection + divFooter);
-        expect(wechatMp.fixArticleContent(htmlSection)).toBe(expectedHtmlSection);
-        expect(wechatMp.fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlSection);
+        expect(fixArticleContent(htmlSection)).toBe(expectedHtmlSection);
+        expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlSection);
 
         const htmlImg = '<img alt="test" data-src="http://rsshub.test/test.jpg" src="http://rsshub.test/test.jpg">' + '<img alt="test" data-src="http://rsshub.test/test.jpg">' + '<img alt="test" src="http://rsshub.test/test.jpg">';
         const expectedHtmlImg = new Array(3 + 1).join('<img alt="test" src="http://rsshub.test/test.jpg">');
         $ = cheerio.load(divHeader + htmlImg + divFooter);
-        expect(wechatMp.fixArticleContent(htmlImg)).toBe(expectedHtmlImg);
-        expect(wechatMp.fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlImg);
-        expect(wechatMp.fixArticleContent(htmlImg, true)).toBe(htmlImg);
-        expect(wechatMp.fixArticleContent($('div#js_content.rich_media_content'), true)).toBe(htmlImg);
+        expect(fixArticleContent(htmlImg)).toBe(expectedHtmlImg);
+        expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlImg);
+        expect(fixArticleContent(htmlImg, true)).toBe(htmlImg);
+        expect(fixArticleContent($('div#js_content.rich_media_content'), true)).toBe(htmlImg);
 
-        expect(wechatMp.fixArticleContent('')).toBe('');
-        expect(wechatMp.fixArticleContent(null)).toBe('');
-        expect(wechatMp.fixArticleContent(undefined)).toBe('');
-        expect(wechatMp.fixArticleContent($('div#something_not_in.the_document_tree'))).toBe('');
+        expect(fixArticleContent('')).toBe('');
+        expect(fixArticleContent(null)).toBe('');
+        expect(fixArticleContent(undefined)).toBe('');
+        expect(fixArticleContent($('div#something_not_in.the_document_tree'))).toBe('');
+    });
+
+    it('normalizeUrl', () => {
+        const mpRoot = 'https://mp.weixin.qq.com';
+        const mpArticleRoot = mpRoot + '/s';
+
+        const shortUrl = mpArticleRoot + '/-rwvHhqYbKGCVFeXRNknYQ';
+        const shortUrlWithQueryAndHash = shortUrl + '?foo=bar#baz';
+        expect(normalizeUrl(shortUrlWithQueryAndHash)).toBe(shortUrl);
+
+        const longUrlShortened = mpArticleRoot + '?__biz=MzA4MjQxNjQzMA==' + '&mid=2768628484' + '&idx=1' + '&sn=93dcc54ce807f7793739ee2fd2377056';
+        const longUrl = longUrlShortened + '&chksm=bf774d458800c453c94cae866093680e6cac6a1f02cab7e82683f82f35f7f487e2daa1dcde20' + '&scene=75' + '#wechat_redirect';
+        expect(normalizeUrl(longUrl)).toBe(longUrlShortened);
+
+        const temporaryUrlShortened =
+            mpArticleRoot + '?src=11' + '&timestamp=1620536401' + '&ver=3057' + '&signature=vCDI8FQcumnNGv4ScvFP-swQRlirdQSqTfjS8m-oFzgHMkqlNM3ljzjSevcjXLC-z-n0RzzMkNt-lwKMUaskfaqFFrpYZNq4ZCKkFFGj8L*KvH780aEUBJFvWTGmMGLC';
+        const temporaryUrl = temporaryUrlShortened + '&new=1#foo';
+        expect(normalizeUrl(temporaryUrl)).toBe(temporaryUrlShortened);
+
+        const somethingElse = mpRoot + '/something/else?__biz=foo&mid=bar&idx=baz&sn=qux';
+        const somethingElseWithHash = somethingElse + '#foo';
+        expect(normalizeUrl(somethingElseWithHash.replace('https://', 'http://'))).toBe(somethingElse);
+
+        const notWechatMp = 'https://im.not.wechat.mp/and/an/error/is/expected';
+        expect(() => normalizeUrl(notWechatMp)).toThrow();
+        expect(normalizeUrl(notWechatMp, true)).toBe(notWechatMp);
     });
 
     it('fetchArticle_&_finishArticleItem', async () => {
@@ -69,15 +100,6 @@ describe('wechat-mp', () => {
         const httpsUrl = 'https://mp.weixin.qq.com/rsshub_test/wechatMp_fetchArticle';
         const httpUrl = httpsUrl.replace(/^https:\/\//, 'http://');
 
-        let _ret;
-        try {
-            _ret = await wechatMp.fetchArticle(ctx, 'https://im.not.wechat.mp/and/an/error/is/expected');
-        } catch (e) {
-            expect(e.name).toBe('Error');
-        }
-
-        expect(_ret).toBeUndefined();
-
         const expectedItem = {
             title: 'title',
             summary: 'summary',
@@ -88,15 +110,15 @@ describe('wechat-mp', () => {
         };
         const expectedDate = new Date(ct * 1000);
 
-        const fetchArticleItem = await wechatMp.fetchArticle(ctx, httpUrl);
+        const fetchArticleItem = await fetchArticle(ctx, httpUrl);
         expect(compareDate(fetchArticleItem.pubDate, expectedDate)).toBe(true);
         delete fetchArticleItem.pubDate;
         expect(fetchArticleItem).toEqual(expectedItem);
 
         delete expectedItem.mpName;
-        const finishArticleItem = await wechatMp.finishArticleItem(ctx, { link: httpUrl });
-        expect(compareDate(finishArticleItem.pubDate, expectedDate)).toBe(true);
-        delete finishArticleItem.pubDate;
-        expect(finishArticleItem).toEqual(expectedItem);
+        const finishedArticleItem = await finishArticleItem(ctx, { link: httpUrl });
+        expect(compareDate(finishedArticleItem.pubDate, expectedDate)).toBe(true);
+        delete finishedArticleItem.pubDate;
+        expect(finishedArticleItem).toEqual(expectedItem);
     });
 });
