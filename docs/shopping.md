@@ -143,6 +143,24 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
 
+## 逛丢
+
+### 国内折扣
+
+<Route author="Fatpandac" example="/guangdiu/k=daily" path="/guangdiu/:query?" :paramsDesc="['链接参数，对应网址问号后的内容']"/>
+
+### 海外折扣
+
+<Route author="Fatpandac" example="/guangdiu/k=daily&c=us" path="/guangdiu/:query?" :paramsDesc="['链接参数，对应网址问号后的内容']"/>
+
+### 一小时风云榜
+
+<Route author="Fatpandac" example="/guangdiu/rank" path="/guangdiu/rank"/>
+
+### 九块九
+
+<Route author="Fatpandac" example="/guangdiu/cheaps/k=clothes" path="/guangdiu/cheaps/:query?" :paramsDesc="['链接参数，对应网址问号后的内容']"/>
+
 ## 好好住
 
 ### 整屋案例
