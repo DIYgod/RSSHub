@@ -5,8 +5,11 @@ on:
     branches:
       - master
     paths:
-      - 'lib/**'
       - '.github/workflows/docker-release.yml'
+      - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js.js'
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
