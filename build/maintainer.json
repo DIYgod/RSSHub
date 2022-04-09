@@ -224,6 +224,9 @@
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
+    "/bookfere/:category": [
+        "OdinZhang"
+    ],
     "/brooklynmuseum/exhibitions": [
         "chazeon"
     ],
