@@ -1328,6 +1328,12 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="nczitzk" example="/shinybbs/p/1790" path="/shinybbs/p/:id" :paramsDesc="['剧集 id，可在剧集页 URL 中找到']" />
 
+## 时光网
+
+### 资讯
+
+<Route author="TsSmartTT" example="/mtime/news" path="/mtime/news" radar="1" rssbud="1"/>
+
 ## 腾讯视频
 
 ### 播放列表
@@ -1450,6 +1456,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 ### 电台节目
 
 <Route author="kt286" example="/radio/2/520767" path="/radio/:channelname/:name" :paramsDesc="['频道ID, 可在对应专辑页面的 URL 中找到','节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
+
+## 注视影视
+
+### 更新通知
+
+<Route author="zytomorrow" example="/gaze/update/5157c267ee121ab8d1b45092304a1e85" path="/gaze/update/:mid" :paramsDesc="['剧集的id。播放页面play之后的一串字符']"/>
 
 ## 追新番
 
