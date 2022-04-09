@@ -728,6 +728,15 @@
         "occupy5",
         "nczitzk"
     ],
+    "/guangdiu/rank": [
+        "fatpandac"
+    ],
+    "/guangdiu/cheaps/:query?": [
+        "fatpandac"
+    ],
+    "/guangdiu/:query?": [
+        "Fatpandac"
+    ],
     "/guduodata/daily": [
         "Gem1ni"
     ],
