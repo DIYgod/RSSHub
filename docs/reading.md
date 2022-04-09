@@ -417,6 +417,18 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 | ------------------------------- | ------------------ |
 | <http://news.bioon.com/biology> | /shengwugu/biology |
 
+## 书伴
+
+### 分类
+
+<Route author="OdinZhang" example="/bookfere/skills" path="/bookfere/:category" :paramsDesc="['分类名']">
+
+| 每周一书   | 使用技巧   | 图书推荐  | 新闻速递 | 精选短文  |
+| ------ | ------ | ----- | ---- | ----- |
+| weekly | skills | books | news | essay |
+
+</Route>
+
 ## 书趣阁
 
 ### 小说更新
