@@ -459,6 +459,9 @@
     "/dut/eda/:category?": [
         "nczitzk"
     ],
+    "/dut/pjteach/:category?": [
+        "nczitzk"
+    ],
     "/dut/dutdice/:category?": [
         "beautyyuyanli",
         "nczitzk"
