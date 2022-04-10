@@ -663,6 +663,22 @@ pageClass: routes
 
 </Route>
 
+### 盘锦校区教务教学事务办公室
+
+<Route author="nczitzk" example="/dut/pjteach" path="/dut/pjteach/:category?" :paramsDesc="['分类，见下表，默认为 [**新闻快递**](http://pjteach.dlut.edu.cn/index/xwkd.htm)']">
+
+| 新闻快递 | 重要通知 | 教学文件 | 常见问题 | 选课与考试 |
+| ---- | ---- | ---- | ---- | ----- |
+| xwkd | zytz | jxwj | cjwt | xkyks |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区教务教学事务办公室](http://pjteach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
 ### 国际合作与交流处（港澳台办）
 
 <Route author="beautyyuyanli nczitzk" example="/dut/dutdice" path="/dut/dutdice/:category?" :paramsDesc="['分类，见下表，默认为 [**新闻速递**](http://dutdice.dlut.edu.cn/xwsd/xxxw.htm)']">
