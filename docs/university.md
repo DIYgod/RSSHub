@@ -629,6 +629,8 @@ pageClass: routes
 
 :::
 
+</Route>
+
 ### 软件学院
 
 <Route author="nczitzk" example="/dut/ssdut" path="/dut/ssdut/:category?" :paramsDesc="['分类，见下表，默认为 [**焦点新闻**](http://ssdut.dlut.edu.cn/ywgg/xueyuanxinwen/jdxw.htm)']">
