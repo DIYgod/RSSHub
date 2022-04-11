@@ -663,6 +663,38 @@ pageClass: routes
 
 </Route>
 
+### 盘锦校区
+
+<Route author="nczitzk" example="/dut/panjin" path="/dut/panjin/:category?" :paramsDesc="['分类，见下表，默认为 [**公告**](https://panjin.dlut.edu.cn/index/gg.htm)']">
+
+| 校区新闻 | 校园文化 | 学员风采 | 学术动态 | 媒体报道 | 公告 |
+| ---- | ---- | ---- | ---- | ---- | -- |
+| xqxw | xywh | xyfc | xsdt | mtbd | gg |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区](https://panjin.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
+### 盘锦校区学生事务办公室
+
+<Route author="nczitzk" example="/dut/xsgzb" path="/dut/xsgzb/:category?" :paramsDesc="['分类，见下表，默认为 [**通知公告**](http://xsgzb.dlut.edu.cn/index/zytz.htm)']">
+
+| 通知公告 | 学工动态 | 公示公告      |
+| ---- | ---- | --------- |
+| zytz | xgdt | gsgonggao |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区学生事务办公室](http://xsgzb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
 ### 盘锦校区教务教学事务办公室
 
 <Route author="nczitzk" example="/dut/pjteach" path="/dut/pjteach/:category?" :paramsDesc="['分类，见下表，默认为 [**新闻快递**](http://pjteach.dlut.edu.cn/index/xwkd.htm)']">
@@ -674,6 +706,38 @@ pageClass: routes
 ::: tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区教务教学事务办公室](http://pjteach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
+### 盘锦校区总务部
+
+<Route author="nczitzk" example="/dut/pjxqzwb" path="/dut/pjxqzwb/:category?" :paramsDesc="['分类，见下表，默认为 [**通知公告**](http://pjxqzwb.dlut.edu.cn/index/tzgg.htm)']">
+
+| 通知公告 | 党政园地 | 总务快讯 | 法规制度 |
+| ---- | ---- | ---- | ---- |
+| tzgg | dzyd | zwkx | fgzd |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区总务部](http://pjxqzwb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+
+:::
+
+</Route>
+
+### 体育与健康学院盘锦分院
+
+<Route author="nczitzk" example="/dut/tjpj" path="/dut/tjpj/:category?" :paramsDesc="['分类，见下表，默认为 [**学院新闻**](http://tjpj.dlut.edu.cn/index/xyxw.htm)']">
+
+| 学院新闻 | 通知公告 |
+| ---- | ---- |
+| xyxw | zxgg |
+
+::: tip 提示
+
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育与健康学院盘锦分院](http://tjpj.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
 :::
 
