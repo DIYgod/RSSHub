@@ -715,9 +715,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/dut/pjxqzwb" path="/dut/pjxqzwb/:category?" :paramsDesc="['分类，见下表，默认为 [**通知公告**](http://pjxqzwb.dlut.edu.cn/index/tzgg.htm)']">
 
-\| 通知公告 | 党政园地 | 总务快讯 | 法规制度 | 下载专区 |
-\| ---- | ---- | ---- | ---- |
-\| tzgg | dzyd | zwkx | fgzd |
+| 通知公告 | 党政园地 | 总务快讯 | 法规制度 |
+| ---- | ---- | ---- | ---- |
+| tzgg | dzyd | zwkx | fgzd |
 
 ::: tip 提示
 
