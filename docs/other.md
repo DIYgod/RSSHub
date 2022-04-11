@@ -933,6 +933,17 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']"/>
 
+### Telegram频道 - nCoV2019 全国官方消息实时播报
+
+<Route author="vlcheng" example="/coronavirus/tg-nCoV2019/广东" path="/coronavirus/tg-nCoV2019/:district?" :paramsDesc="['省/市、县/辖区名，仅支持一个，缺省则返回全国数据']"/>
+
+| 省 | 市、县 | 辖区 |
+| -- | -- | -- |
+| 广东 | 广州 | 天河 |
+
+由于Telegram搜索功能限制，无法同时添加多个关键词，需要查看多个地区请分开订阅。
+
+
 ## 新趣集
 
 > 官方 Feed 地址为: <https://xinquji.com/rss>
