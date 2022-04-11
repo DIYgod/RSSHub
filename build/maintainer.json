@@ -1478,6 +1478,9 @@
     "/pubmed/trending/:filters?": [
         "nczitzk"
     ],
+    "/qbittorrent/news": [
+        "TonyRL"
+    ],
     "/qidiantu/:category?/:type?/:is_history?": [
         "nczitzk"
     ],
