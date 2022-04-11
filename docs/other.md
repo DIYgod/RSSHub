@@ -935,7 +935,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### Telegram频道 - nCoV2019 全国官方消息实时播报
 
-<Route author="vlcheng" example="/coronavirus/tg-nCoV2019/广东" path="/coronavirus/tg-nCoV2019/:district?" :paramsDesc="['省/市、县/辖区名，仅支持一个，缺省则返回全国数据']"/>
+<Route author="vlcheng" example="/coronavirus/tg-nCoV2019/广东/1" path="/coronavirus/tg-nCoV2019/:district?/:filter?" :paramsDesc="['省/市、县/辖区名，仅支持一个，缺省则返回全国数据','设为1时不接收全国汇总条目']"/>
 
 | 省 | 市、县 | 辖区 |
 | -- | -- | -- |
