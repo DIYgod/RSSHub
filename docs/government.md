@@ -96,7 +96,7 @@ pageClass: routes
 
 ### 德阳市政府公开信息
 
-<Route author="zytomorrow" example="/gov/sichuan/deyang/govpulicinfo/德阳市市/市人社局" path="/gov/sichuan/deyang/govpulicinfo/:countyName/:institutionName?" :paramsDesc="['区县名。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区', '单位名称。可直接输入网页显示单位名称']"/>
+<Route author="zytomorrow" example="/gov/sichuan/deyang/govpulicinfo/绵竹市" path="/gov/sichuan/deyang/govpulicinfo/:countyName" :paramsDesc="['区县名（**其他区县整改中，暂时只支持`绵竹市`**）。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区']"/>
 
 ## 广东省人民政府
 

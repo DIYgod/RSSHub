@@ -360,6 +360,12 @@ pageClass: routes
 
 </Route>
 
+## qBittorrent
+
+### 消息
+
+<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
+
 ## QNAP
 
 ### Release Notes

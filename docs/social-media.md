@@ -1197,7 +1197,8 @@ rule
 | displayVideo               | 是否直接显示微博视频和 Live Photo，只在博主或个人时间线 RSS 中有效 | 0/1/true/false | true                            |
 | displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效             | 0/1/true/false | false                           |
 | displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效             | 0/1/true/false | false                           |
-| showEmojiInDescription     | 是否展示正文中的 emoji 表情                         | 0/1/true/false | true                            |
+| showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 `[表情名]`               | 0/1/true/false | true                            |
+| showLinkIconInDescription  | 是否展示正文中的链接图标                              | 0/1/true/false | true                            |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -1255,10 +1256,6 @@ rule
 ### 用户
 
 <Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" anticrawler="1"/>
-
-### 热帖
-
-<Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
 
 ## 悟空问答
 

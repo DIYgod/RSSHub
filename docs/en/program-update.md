@@ -305,6 +305,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 </RouteEn>
 
+## qBittorrent
+
+### News
+
+<RouteEn author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
+
 ## QNAP
 
 ### Release Notes
