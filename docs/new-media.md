@@ -2235,7 +2235,7 @@ column 为 third 时可选的 category:
 
 ## 科学网
 
-### 博客
+### 精选博客
 
 <Route author="nczitzk" example="/sciencenet/blog" path="/sciencenet/blog/:type?/:time?/:sort?" :paramsDesc="['类型，见下表，默认为推荐', '时间，见下表，默认为所有时间', '排序，见下表，默认为按发表时间排序']">
 
@@ -2258,6 +2258,10 @@ column 为 third 时可选的 category:
 | 1       | 2      | 3      |
 
 </Route>
+
+### 用户博客
+
+<Route author="nczitzk" example="/sciencenet/user/tony8310" path="/sciencenet/user/:id" :paramsDesc="['用户 id，可在对用户博客页 URL 中找到']"/>
 
 ## 快科技
 
@@ -3338,13 +3342,13 @@ column 为 third 时可选的 category:
 
 :::
 
-### 公众号（ wemp.app 来源）
+### 公众号（wemp.app 来源）
 
 <Route author="HenryQW" example="/wechat/wemp/36836fbe-bdec-4758-8967-7cc82722952d" path="/wechat/wemp/:id" :paramsDesc="['wemp 公众号 id, 可在搜索引擎使用 `site:wemp.app` 搜索公众号（例如: 人民日报 site:wemp.app), 打开公众号页, 在 URL 中找到 id']" anticrawler="1"/>
 
 ### 公众号（CareerEngine 来源）
 
-<Route author="HenryQW" example="/wechat/ce/595a5b14d7164e53908f1606" path="/wechat/ce/:id" :paramsDesc="['公众号 id, 在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id']"/>
+<Route author="HenryQW" example="/wechat/ce/595a5b14d7164e53908f1606" path="/wechat/ce/:id" :paramsDesc="['公众号 id, 在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id']" anticrawler="1"/>
 
 ### 公众号（Telegram 频道来源）
 
@@ -3380,9 +3384,15 @@ column 为 third 时可选的 category:
 
 ### 公众号 (wxnmh.com 来源)
 
-<Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']"/>
+<Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']" anticrawler="1"/>
 
 ### 公众号 (wechat-feeds 来源)
+
+::: warning 注意
+
+wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/issues/3882)，历史文章可以正常订阅阅读
+
+:::
 
 <Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
