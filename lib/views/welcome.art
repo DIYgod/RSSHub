@@ -59,7 +59,7 @@
             margin-right: 10px;
         }
 
-       .debug-item {
+        .debug-item {
             white-space: nowrap;
             margin: 5px 0;
             font-size: 12px;
