@@ -785,6 +785,14 @@
     "/guggenheim/exhibitions": [
         "chazeon"
     ],
+    "/guokr/scientific": [
+        "alphardex",
+        "nczitzk"
+    ],
+    "/guokr/:channel": [
+        "DHPO",
+        "hoilc"
+    ],
     "/gzh360/category/:id?": [
         "Rongronggg9"
     ],
@@ -2425,8 +2433,6 @@
     "/fzu_min/:type": [],
     "/xmu/aero/:type": [],
     "/ifanr/:channel?": [],
-    "/guokr/scientific": [],
-    "/guokr/:channel": [],
     "/ipsw/index/:ptype/:pname": [],
     "/curseforge/files/:project": [],
     "/sspai/series": [],
