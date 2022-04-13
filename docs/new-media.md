@@ -1995,7 +1995,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 科学人
 
-<Route author="alphardex" example="/guokr/scientific" path="/guokr/scientific"/>
+<Route author="alphardex nczitzk" example="/guokr/scientific" path="/guokr/scientific"/>
 
 ### 果壳网专栏
 
