@@ -64,6 +64,7 @@
             margin: 5px 0;
             font-size: 12px;
             line-height: 24px;
+            max-width:77%
         }
 
         .debug-value {
@@ -72,9 +73,6 @@
             display: inline-block;
             vertical-align: top;
             white-space: pre;
-        }
-        span {
-            max-width:85%
         }
     </style>
 </head>
