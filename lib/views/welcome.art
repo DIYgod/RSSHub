@@ -64,7 +64,7 @@
             margin: 5px 0;
             font-size: 12px;
             line-height: 24px;
-            max-width:77%
+            max-width:75%
         }
 
         .debug-value {
