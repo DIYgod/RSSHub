@@ -59,16 +59,22 @@
             margin-right: 10px;
         }
 
-        .debug-item {
+       .debug-item {
+            white-space: nowrap;
             margin: 5px 0;
             font-size: 12px;
             line-height: 24px;
         }
 
         .debug-value {
+            white-space: normal !important;
+            overflow-wrap: anywhere
             display: inline-block;
             vertical-align: top;
             white-space: pre;
+        }
+        span {
+            max-width:85%
         }
     </style>
 </head>
