@@ -150,10 +150,7 @@ pageClass: routes
 
 分类字段处填写的是对应北京大学人事处分类页网址中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 
-如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm)
-的网址为 <https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm> 其中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm**
-中间的一段为 `rczp/js/jxkyry`。随后，并将其中的 `/` 修改为 `-`，可以得到 `rczp-js-jxkyry`
-。所以最终我们的路由为 [`/pku/hr/rczp-js-jxkyry`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
+如 [北京大学人事处 - 人才招聘 - 教师 - 教学科研人员](https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm) 的网址为 <https://hr.pku.edu.cn/rczp/js/jxkyry/index.htm> 其中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段为 `rczp/js/jxkyry`。随后，并将其中的 `/` 修改为 `-`，可以得到 `rczp-js-jxkyry`。所以最终我们的路由为 [`/pku/hr/rczp-js-jxkyry`](https://rsshub.app/pku/hr/rczp-js-jxkyry)
 
 :::
 
@@ -562,9 +559,7 @@ pageClass: routes
 
 ::: tip 小小提示
 
-你会发现 [大连理工大学新闻网](https://news.dlut.edu.cn) 的 [人才培养](https://news.dlut.edu.cn/xwjj01/rcpy.htm) 分类栏目在下方 [\*\*
-新闻网 \*\*](#da-lian-li-gong-da-xue-xin-wen-wang) 参数表格中 `category` 参数为 `rcpy`，并非上面例子中给出的 `xwjj01/rcpy`
-。这意味着开发者对路由 `/dut/news/xwjj01/rcpy` 指定了快捷方式 `/dut/news/rcpy`。两者的效果是一致的。
+你会发现 [大连理工大学新闻网](https://news.dlut.edu.cn) 的 [人才培养](https://news.dlut.edu.cn/xwjj01/rcpy.htm) 分类栏目在下方 [**新闻网**](#da-lian-li-gong-da-xue-xin-wen-wang) 参数表格中 `category` 参数为 `rcpy`，并非上面例子中给出的 `xwjj01/rcpy`。这意味着开发者对路由 `/dut/news/xwjj01/rcpy` 指定了快捷方式 `/dut/news/rcpy`。两者的效果是一致的。
 
 :::
 
@@ -678,8 +673,7 @@ pageClass: routes
 
 ::: tip 提示
 
-表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区](https://panjin.dlut.edu.cn/index.htm)，并按照上方 [\*\*
-通用 \*\*](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区](https://panjin.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
 :::
 
@@ -695,8 +689,7 @@ pageClass: routes
 
 ::: tip 提示
 
-表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区学生事务办公室](http://xsgzb.dlut.edu.cn/index.htm)，并按照上方 [\*\*
-通用 \*\*](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区学生事务办公室](http://xsgzb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
 :::
 
@@ -712,8 +705,7 @@ pageClass: routes
 
 ::: tip 提示
 
-表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区教务教学事务办公室](http://pjteach.dlut.edu.cn)，并按照上方 [\*\*
-通用 \*\*](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区教务教学事务办公室](http://pjteach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
 :::
 
@@ -729,8 +721,7 @@ pageClass: routes
 
 ::: tip 提示
 
-表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区总务部](http://pjxqzwb.dlut.edu.cn/index.htm)，并按照上方 [\*\*
-通用 \*\*](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区总务部](http://pjxqzwb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
 :::
 
@@ -746,8 +737,7 @@ pageClass: routes
 
 ::: tip 提示
 
-表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育与健康学院盘锦分院](http://tjpj.dlut.edu.cn/index.htm)，并按照上方 [\*\*
-通用 \*\*](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育与健康学院盘锦分院](http://tjpj.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
 :::
 
@@ -763,8 +753,7 @@ pageClass: routes
 
 ::: tip 提示
 
-表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学国际合作与交流处（港澳台办）](http://dutdice.dlut.edu.cn)，并按照上方 [\*\*
-通用 \*\*](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
+表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学国际合作与交流处（港澳台办）](http://dutdice.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
 :::
 
@@ -948,11 +937,9 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ::: tip 提示
 
-如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 <http://hr.uibe.edu.cn/tzgg>
-，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
+如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 <http://hr.uibe.edu.cn/tzgg>，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
 
-如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL
-为 <http://hr.uibe.edu.cn/jszp/zpxx>，其路由为 [`/uibe/hr/jszp/zpxx`](https://rsshub.app/uibe/jszp/zpxx)
+如 [教师招聘](http://hr.uibe.edu.cn/jszp) 中的 [招聘信息](http://hr.uibe.edu.cn/jszp/zpxx) 的 URL 为 <http://hr.uibe.edu.cn/jszp/zpxx>，其路由为 [`/uibe/hr/jszp/zpxx`](https://rsshub.app/uibe/jszp/zpxx)
 
 :::
 
@@ -3055,10 +3042,7 @@ type 列表：
 
 分类字段处填写的是对应中国人民大学人事处分类页网址中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 
-如 [中国人民大学人事处 - 办事机构 - 教师事务办公室 - 教师通知公告](http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm)
-的网址为 <http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm> 其中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm**
-中间的一段为 `bsjg/bsjsswbgs/jstzgg`。随后，并将其中的 `/` 修改为 `-`，可以得到 `bsjg-bsjsswbgs-jstzgg`
-。所以最终我们的路由为 [`/ruc/hr/bsjg-bsjsswbgs-jstzgg`](https://rsshub.app/ruc/hr/bsjg-bsjsswbgs-jstzgg)
+如 [中国人民大学人事处 - 办事机构 - 教师事务办公室 - 教师通知公告](http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm) 的网址为 <http://hr.ruc.edu.cn/bsjg/bsjsswbgs/jstzgg/index.htm> 其中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段为 `bsjg/bsjsswbgs/jstzgg`。随后，并将其中的 `/` 修改为 `-`，可以得到 `bsjg-bsjsswbgs-jstzgg`。所以最终我们的路由为 [`/ruc/hr/bsjg-bsjsswbgs-jstzgg`](https://rsshub.app/ruc/hr/bsjg-bsjsswbgs-jstzgg)
 
 :::
 
