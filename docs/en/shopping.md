@@ -46,7 +46,7 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### Shop
 
-<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['位置，即Craigslist的子域，如sfbay', '搜索类型，如sso']"/>
+<RouteEn author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']"/>
 
 > We use RSSHub to implement the searching of Craigslist
 > An example of a full original search url:
