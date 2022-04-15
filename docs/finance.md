@@ -4,10 +4,6 @@ pageClass: routes
 
 # 金融
 
-### 首席经济学家论坛
-
-<Route author="FledgeXu" example="/chinacef" path="/chinacef"/>
-
 ## BigQuant
 
 ### 专题报告
@@ -240,6 +236,12 @@ pageClass: routes
 年份 和 平台 这两个参数请参见 [报告页](https://www.weforum.org/reports) 过滤条件处。
 
 </Route>
+
+## 首席经济学家论坛
+
+### 最新更新文章列表
+
+<Route author="FledgeXu" example="/chinacef" path="/chinacef"/>
 
 ## 淘股吧股票论坛
 
