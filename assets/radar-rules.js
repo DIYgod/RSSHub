@@ -1,5 +1,5 @@
 ({
-    'guangfu.bjx.com.cn': { _name: '北极光财经', '.': [{ title: '分类', docs: 'https://docs.rsshub.app/others.html#bei-ji-xing-guang-fu', source: ['/:type', '/'], target: '/bjxgf/:type?' }] },
+    'guangfu.bjx.com.cn': { _name: '北极星光伏', '.': [{ title: '分类', docs: 'https://docs.rsshub.app/others.html#bei-ji-xing-guang-fu', source: ['/:type', '/'], target: '/bjxgf/:type?' }] },
 
     '8world.com': { _name: '8视界', '.': [{ title: '分类', docs: 'https://docs.rsshub.app/new-media.html#_8-shi-jie-fen-lei', source: ['/:category', '/'], target: '/8world/:category?' }] },
     'aamacau.com': { _name: '論盡媒體 AllAboutMacau Media', '.': [{ title: '话题', docs: 'https://docs.rsshub.app/new-media.html#lun-jin-mei-ti-allaboutmacau-media-hua-ti', source: ['/'], target: '/:category?/:id?' }] },
