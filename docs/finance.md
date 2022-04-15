@@ -237,6 +237,12 @@ pageClass: routes
 
 </Route>
 
+## 首席经济学家论坛
+
+### 最新更新文章列表
+
+<Route author="FledgeXu" example="/chinacef" path="/chinacef"/>
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
