@@ -425,6 +425,12 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ## TapTap
 
+::: warning 注意
+
+由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS
+
+:::
+
 ### 游戏论坛
 
 <Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']">
