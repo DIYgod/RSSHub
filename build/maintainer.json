@@ -1698,6 +1698,17 @@
         "xyqfer",
         "Fatpandac"
     ],
+    "/taptap/changelog/:id": [
+        "hoilc"
+    ],
+    "/taptap/review/:id/:order?/:lang?": [
+        "hoilc",
+        "TonyRL"
+    ],
+    "/taptap/topic/:id/:type?/:sort?/:lang?": [
+        "hoilc",
+        "TonyRL"
+    ],
     "/telegram/telegram/channel/:username/:routeParams?": [
         "DIYgod",
         "Rongronggg9"
@@ -2953,9 +2964,6 @@
     "/reuters/channel/:site/:channel": [],
     "/pgyer/:app?": [],
     "/weibo/timeline/:uid/:feature?/:routeParams?": [],
-    "/taptap/topic/:id/:label?": [],
-    "/taptap/changelog/:id": [],
-    "/taptap/review/:id/:order?": [],
     "/watchface/:watch_type?/:list_type?": [],
     "/cnu/selected": [],
     "/cnu/discovery/:type?/:category?": [],
