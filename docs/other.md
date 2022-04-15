@@ -6,7 +6,7 @@ pageClass: routes
 
 ## 北极星光伏
 
-<Route author="Sxuet" example="/bjxgf/sc" path="/bjxgf/:type" :paramsDesc="['type,必选-北极星光伏最后的type字段']"/>
+<Route author="Sxuet" example="/bjxgf/sc" path="/bjxgf/:type" :paramsDesc="['type,必选-北极星光伏最后的type字段']" radar="1" rssbud="1"/>
 
  `:type` 类型可选如下
 
