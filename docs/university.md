@@ -2013,7 +2013,7 @@ type 列表：
 
 ### 新闻网
 
-<Route author="kxxt" example="/sduwh/news/xyyw" path="/sduwh/news/:column?" :paramsDesc="['专栏名称，默认为校园要闻（`xyyw`）']">
+<Route author="kxxt" example="/sdu/wh/news/xyyw" path="/sdu/wh/news/:column?" :paramsDesc="['专栏名称，默认为校园要闻（`xyyw`）']">
 
 | 校园要闻 | 学生动态 | 综合新闻 | 山大视点 | 菁菁校园 | 校园简讯 | 玛珈之窗 | 热点专题 | 媒体视角 | 高教视野 | 理论学习 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
