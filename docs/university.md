@@ -1961,7 +1961,7 @@ type 列表：
 
 ### 软件学院通知
 
-<Route author="Ji4n1ng" example="/sdu/sc/0" path="/sdu/sc/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="Ji4n1ng" example="/sdu/sc/0" path="/sdu/sc/:type?" :paramsDesc="['默认为 `0`']" radar="1" rssbud="1">
 
 | 通知公告 | 学术动态 | 本科教育 | 研究生教育 |
 | ---- | ---- | ---- | ----- |
@@ -1971,7 +1971,7 @@ type 列表：
 
 ### 材料科学与工程学院通知
 
-<Route author="Ji4n1ng" example="/sdu/cmse/0" path="/sdu/cmse/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="Ji4n1ng" example="/sdu/cmse/0" path="/sdu/cmse/:type?" :paramsDesc="['默认为 `0`']" radar="1" rssbud="1">
 
 | 通知公告 | 学院新闻 | 本科生教育 | 研究生教育 | 学术动态 |
 | ---- | ---- | ----- | ----- | ---- |
@@ -1981,7 +1981,7 @@ type 列表：
 
 ### 机械工程学院通知
 
-<Route author="Ji4n1ng" example="/sdu/mech/0" path="/sdu/mech/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="Ji4n1ng" example="/sdu/mech/0" path="/sdu/mech/:type?" :paramsDesc="['默认为 `0`']" radar="1" rssbud="1">
 
 | 通知公告 | 院所新闻 | 教学信息 | 学术动态 | 学院简报 |
 | ---- | ---- | ---- | ---- | ---- |
@@ -1991,7 +1991,7 @@ type 列表：
 
 ### 能源与动力工程学院通知
 
-<Route author="Ji4n1ng" example="/sdu/epe/0" path="/sdu/epe/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="Ji4n1ng" example="/sdu/epe/0" path="/sdu/epe/:type?" :paramsDesc="['默认为 `0`']" radar="1" rssbud="1">
 
 | 学院动态 | 通知公告 | 学术论坛 |
 | ---- | ---- | ---- |
@@ -2001,11 +2001,23 @@ type 列表：
 
 ### 计算机科学与技术学院通知
 
-<Route author="suxb201" example="/sdu/cs/0" path="/sdu/cs/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="suxb201" example="/sdu/cs/0" path="/sdu/cs/:type?" :paramsDesc="['默认为 `0`']" radar="1" rssbud="1">
 
-| 学院公告 | 学术报告 | 新闻动态 |
+| 学院公告 | 学术报告 | 科技简讯 |
 | ---- | ---- | ---- |
 | 0    | 1    | 2    |
+
+</Route>
+
+## 山东大学（威海）
+
+### 新闻网
+
+<Route author="kxxt" example="/sdu/wh/news/xyyw" path="/sdu/wh/news/:column?" :paramsDesc="['专栏名称，默认为校园要闻（`xyyw`）']" radar="1" rssbud="1">
+
+| 校园要闻 | 学生动态 | 综合新闻 | 山大视点 | 菁菁校园 | 校园简讯 | 玛珈之窗 | 热点专题 | 媒体视角 | 高教视野 | 理论学习 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| xyyw | xsdt | zhxw | sdsd | jjxy | xyjx | mjzc | rdzt | mtsj | gjsy | llxx |
 
 </Route>
 
