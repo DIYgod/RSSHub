@@ -1053,12 +1053,6 @@
             },
         ],
     },
-    'eagle.cool': {
-        _name: 'Eagle',
-        cn: [{ title: '更新日志', docs: 'https://docs.rsshub.app/program-update.html#eagle', source: '/changelog', target: '/eagle/changelog/cn' }],
-        tw: [{ title: '更新日誌', docs: 'https://docs.rsshub.app/program-update.html#eagle', source: '/changelog', target: '/eagle/changelog/tw' }],
-        en: [{ title: 'Release Notes', docs: 'https://docs.rsshub.app/program-update.html#eagle', source: '/changelog', target: '/eagle/changelog/en' }],
-    },
     'furaffinity.net': {
         _name: 'Fur Affinity',
         www: [
