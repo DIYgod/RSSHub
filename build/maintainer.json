@@ -280,8 +280,14 @@
     "/chaping/newsflash": [
         "Fatpandac"
     ],
-    "/chinacef/chinacef": [
+    "/chinacef/": [
         "FledgeXu"
+    ],
+    "/chinacef/:experts_id": [
+        "kdanfly"
+    ],
+    "/chinacef/portal/hot": [
+        "kdanfly"
     ],
     "/ciidbnu/:id?": [
         "nczitzk"
