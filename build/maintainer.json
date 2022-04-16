@@ -1589,6 +1589,24 @@
     "/sciencenet/user/:id": [
         "nczitzk"
     ],
+    "/sdu/cmse/:type?": [
+        "Ji4n1ng"
+    ],
+    "/sdu/cs/:type?": [
+        "Ji4n1ng"
+    ],
+    "/sdu/epe/:type?": [
+        "Ji4n1ng"
+    ],
+    "/sdu/mech/:type?": [
+        "Ji4n1ng"
+    ],
+    "/sdu/sc/:type?": [
+        "Ji4n1ng"
+    ],
+    "/sdu/wh/news/:column?": [
+        "kxxt"
+    ],
     "/secnews/index": [
         "kaiili"
     ],
@@ -2415,11 +2433,6 @@
     "/hust/aia/notice/:type?": [],
     "/jgsu/jwc": [],
     "/csu/job/:type?": [],
-    "/sdu/sc/:type?": [],
-    "/sdu/cs/:type?": [],
-    "/sdu/cmse/:type?": [],
-    "/sdu/mech/:type?": [],
-    "/sdu/epe/:type?": [],
     "/ouc/it/:type?": [],
     "/dlu/jiaowu/news": [],
     "/dgut/jwc/:type?": [],
