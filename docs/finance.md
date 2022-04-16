@@ -237,6 +237,22 @@ pageClass: routes
 
 </Route>
 
+## 首席经济学家论坛
+
+### 专家
+
+<Route author="kdanfly" example="/chinacef/17" path="/chinacef/:experts_id" :paramsDesc="['专家编号']" radar="1" rssbud="1">
+
+| 李迅雷 | 夏斌 |
+| --- | -- |
+| 17  | 35 |
+
+</Route>
+
+### 金融热点
+
+<Route author="kdanfly" example="/chinacef/portal/hot" path="/chinacef/portal/hot" radar="1" rssbud="1" />
+
 ## 淘股吧股票论坛
 
 ### 论坛总版
