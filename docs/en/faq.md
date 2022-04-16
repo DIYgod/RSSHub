@@ -6,7 +6,7 @@
 
 **Q: Can I use the demo instance？**
 
-**A:** [rsshub.app](https://rsshub.app) is the demo instance provided, running the latest build of RSSHub from master branch, the cache is set 20 minutes and it's free to use. However, if you see an badge <Badge text="strict anti-crawler policy" vertical="middle" type="warn"/> for route, this means popular websites such as Facebook etc. may pose a request quota on individual IP address, which means it can get unreliable from time to time for the demo instance. You are encouraged to [host your own RSSHub instance](/en/install/) to get a better usability.
+**A:** [rsshub.app](https://rsshub.app) is the demo instance provided, running the latest build of RSSHub from master branch, the cache is set 120 minutes and it's free to use. However, if you see an badge <Badge text="strict anti-crawler policy" vertical="middle" type="warn"/> for route, this means popular websites such as Facebook etc. may pose a request quota on individual IP address, which means it can get unreliable from time to time for the demo instance. You are encouraged to [host your own RSSHub instance](/en/install/) to get a better usability.
 
 **Q: Why are images not loading in some RSSHub routes？**
 
