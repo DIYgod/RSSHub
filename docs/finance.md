@@ -245,7 +245,7 @@ pageClass: routes
 
 ### 专家
 
-<Route author="kdanfly" example="/chinacef/17" path="/chinacef/:experts_id" :paramsDesc="['专家编号']" radar="1" rssbud="1">
+<Route author="kdanfly" example="/chinacef/17/" path="/chinacef/:experts_id/" :paramsDesc="['专家编号']" radar="1" rssbud="1">
 
 | 李迅雷 | 夏斌 |
 | --- | -- |
