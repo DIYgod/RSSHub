@@ -318,9 +318,6 @@ ctx.state.data = {
             pubDate: '', // 文章发布时间
             guid: '', // 文章唯一标示, 必须唯一, 可选, 默认为文章链接
             link: '', // 指向文章的链接
-            upvotes: 0, // 默认为空，文章有多少 upvote
-            downvotes: 0, // 默认为空，文章有多少 downvote
-            comments: 0, // 默认为空，文章有多少评论
         },
     ],
 };
@@ -382,6 +379,22 @@ ctx.state.data = {
                     url: post.preview_url,
                 },
             },
+        },
+    ],
+};
+```
+
+##### 互动
+
+**额外**添加这些字段能使你的 RSS 被支持的软件订阅：
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            upvotes: 0, // 默认为空，文章有多少 upvote
+            downvotes: 0, // 默认为空，文章有多少 downvote
+            comments: 0, // 默认为空，文章有多少评论
         },
     ],
 };
