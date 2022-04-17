@@ -62,7 +62,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 博客
 
-<Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?" :paramsDesc="['分类，默认为全部，见下表']" radar="1" rsshub="1">
+<Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?/:language?" :paramsDesc="['分类，默认为全部，见下表', '语言，`cn`、`tw`、`en` 默认为 `cn`']" radar="1" rsshub="1">
 
 | 全部  | 设计资源             | 设计技巧         | 最新消息         |
 | --- | ---------------- | ------------ | ------------ |
