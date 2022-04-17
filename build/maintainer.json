@@ -918,6 +918,9 @@
     "/houxu/:category?": [
         "nczitzk"
     ],
+    "/huangz/": [
+        "stormbuf"
+    ],
     "/hupu/all/:id?": [
         "nczitzk"
     ],
