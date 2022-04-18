@@ -124,7 +124,7 @@
     "rss-parser": "3.12.0",
     "showdown": "2.0.3",
     "simplecc-wasm": "0.1.4",
-    "socks-proxy-agent": "6.1.1",
+    "socks-proxy-agent": "6.2.0",
     "string-similarity": "4.0.4",
     "tiny-async-pool": "2.0.1",
     "torrent-search-api": "2.1.4",
