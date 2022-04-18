@@ -119,7 +119,7 @@
     "plist": "3.0.5",
     "puppeteer": "13.5.2",
     "query-string": "7.1.1",
-    "rand-user-agent": "1.0.58",
+    "rand-user-agent": "1.0.59",
     "require-all": "3.0.0",
     "rss-parser": "3.12.0",
     "showdown": "2.0.3",

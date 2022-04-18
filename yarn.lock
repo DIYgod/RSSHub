@@ -11374,10 +11374,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.58:
-  version "1.0.58"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.58.tgz#b98eab16708f168a42b144070bc9820b0e69d877"
-  integrity sha512-i+E4FZXDBuj/SgB6YeOJm1ZKwtceoxOm96yI8el13zyecQhHNrf/9ThxjcyH6GqczGVguR+VjovAPDLPQnJTXA==
+rand-user-agent@1.0.59:
+  version "1.0.59"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.59.tgz#c373a8c6d26909953531b7d2ce57b9c0c1e0671c"
+  integrity sha512-Vg/Vrmnlqv4uDbF5UjiZVl5cEAVUyVN27IEkmgwHljwSvmXmOdhptSrYYN765WJIircRwTuIdb3giMNI5QbAyw==
 
 randexp@0.4.6:
   version "0.4.6"
