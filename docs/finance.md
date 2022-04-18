@@ -239,7 +239,7 @@ pageClass: routes
 
 ## 首席经济学家论坛
 
-### 最新更新文章列表
+### 最新更新
 
 <Route author="FledgeXu" example="/chinacef" path="/chinacef"/>
 
