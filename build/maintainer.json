@@ -368,6 +368,24 @@
     "/dockerhub/tag/:owner/:image": [
         "outloudvi"
     ],
+    "/dongqiudi/daily": [
+        "HenryQW"
+    ],
+    "/dongqiudi/player_news/:id": [
+        "HenryQW"
+    ],
+    "/dongqiudi/result/:team": [
+        "HenryQW"
+    ],
+    "/dongqiudi/special/:id": [
+        "dxmpalb"
+    ],
+    "/dongqiudi/team_news/:team": [
+        "HenryQW"
+    ],
+    "/dongqiudi/top_news/:id?": [
+        "HendricksZheng"
+    ],
     "/douban/book/latest": [
         "fengkx"
     ],
@@ -2279,12 +2297,6 @@
     "/namoc/media": [],
     "/namoc/exhibition": [],
     "/namoc/specials": [],
-    "/dongqiudi/daily": [],
-    "/dongqiudi/result/:team": [],
-    "/dongqiudi/team_news/:team": [],
-    "/dongqiudi/player_news/:id": [],
-    "/dongqiudi/special/:id": [],
-    "/dongqiudi/top_news/:id?": [],
     "/wikipedia/mainland": [],
     "/un/scveto": [],
     "/egsea/flash": [],
