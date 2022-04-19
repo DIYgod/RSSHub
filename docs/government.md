@@ -162,10 +162,9 @@ pageClass: routes
 
 <Route author="yuxinliu-alex" example="/gov/nrta/news" path="/gov/nrta/news/:category?" :paramsDesc="['资讯类别， 可从地址中获取，默认为总局要闻']"/>
 
-| 总局要闻 | 公告公示 | 工作动态 | 其他 |
-|:----:|:----:|:----:|:----:|
-| 112  | 113  | 114  | 
-
+| 总局要闻 | 公告公示 | 工作动态 |  其他 |
+| :--: | :--: | :--: | :-: |
+|  112 |  113 |  114 |     |
 
 ## 国家税务总局
 
