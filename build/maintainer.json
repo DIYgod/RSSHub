@@ -242,6 +242,9 @@
     "/cahkms/:category?": [
         "nczitzk"
     ],
+    "/cankaoxiaoxi/news/:category": [
+        "yuxinliu-alex"
+    ],
     "/cbirc/:category?": [
         "JkCheung"
     ],
