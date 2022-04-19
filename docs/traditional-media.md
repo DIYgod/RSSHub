@@ -521,6 +521,16 @@ Category 列表：
 
 <Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
 
+## 参考消息
+
+### 新闻分类
+
+<Route author="yuxinliu-alex" example="/cankaoxiaoxi/news/military_news" path="/cankaoxiaoxi/news/:category">
+
+| 中国         | 国际         | 军事            | 台海          | 财经           | 科技              | 文化           |
+| ---------- | ---------- | ------------- | ----------- | ------------ | --------------- | ------------ |
+| china_news | world_news | military_news | taiwan_news | finance_news | technology_news | culture_news |
+
 ## 朝日新聞中文網（繁體中文版）
 
 ::: tip 提示
