@@ -160,7 +160,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="yuxinliu-alex" example="/nrta/news/important" path="/nrta/news/:category?" :paramsDesc="['资讯类别， 可从地址中获取']"/>
+<Route author="yuxinliu-alex" example="/gov/nrta/news" path="/gov/nrta/news/:category?" :paramsDesc="['资讯类别， 可从地址中获取，默认为总局要闻']"/>
 
 | 总局要闻 | 公告公示 | 工作动态 | 其他 |
 |:----:|:----:|:----:|:----:|
