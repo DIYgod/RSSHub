@@ -6163,10 +6163,10 @@ fs-constants@^1.0.0:
   resolved "https://registry.yarnpkg.com/fs-constants/-/fs-constants-1.0.0.tgz#6be0de9be998ce16af8afc24497b9ee9b7ccd9ad"
   integrity sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==
 
-fs-extra@10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.0.1.tgz#27de43b4320e833f6867cc044bfce29fdf0ef3b8"
-  integrity sha512-NbdoVMZso2Lsrn/QwLXOy6rm0ufY2zEOKCDzJR/0kBsb0E6qed0P3iYK+Ath3BfvXEeu4JhEtXLgILx5psUfag==
+fs-extra@10.1.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-10.1.0.tgz#02873cfbc4084dde127eaa5f9905eef2325d1abf"
+  integrity sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==
   dependencies:
     graceful-fs "^4.2.0"
     jsonfile "^6.0.1"
@@ -11374,10 +11374,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.58:
-  version "1.0.58"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.58.tgz#b98eab16708f168a42b144070bc9820b0e69d877"
-  integrity sha512-i+E4FZXDBuj/SgB6YeOJm1ZKwtceoxOm96yI8el13zyecQhHNrf/9ThxjcyH6GqczGVguR+VjovAPDLPQnJTXA==
+rand-user-agent@1.0.59:
+  version "1.0.59"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.59.tgz#c373a8c6d26909953531b7d2ce57b9c0c1e0671c"
+  integrity sha512-Vg/Vrmnlqv4uDbF5UjiZVl5cEAVUyVN27IEkmgwHljwSvmXmOdhptSrYYN765WJIircRwTuIdb3giMNI5QbAyw==
 
 randexp@0.4.6:
   version "0.4.6"
