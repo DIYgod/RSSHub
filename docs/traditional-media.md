@@ -525,7 +525,7 @@ Category 列表：
 
 ### 新闻分类
 
-<Route author="yuxinliu-alex" example="/cancaoxiaoxi/cankaoxiaoxi/news/military_news" path="/cankaoxiaoxi/news/military_news">
+<Route author="yuxinliu-alex" example="/cancaoxiaoxi/cankaoxiaoxi/news/military_news" path="/cankaoxiaoxi/news/:category">
 
 | 中国 | 国际 | 军事 | 台海 | 财经 | 科技 | 文化 |
 | ---- | ---- | ---- | --------- | ---- | ---- | ---- |
