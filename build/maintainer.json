@@ -783,6 +783,9 @@
     "/gov/mee/ywdt?": [
         "liuxsdev"
     ],
+    "/gov/nrta/news/:category?": [
+        "yuxinliu-alex"
+    ],
     "/gov/pbc/goutongjiaoliu": [
         "nczitzk"
     ],
