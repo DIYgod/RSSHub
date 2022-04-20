@@ -255,6 +255,22 @@
         "EsuRt",
         "Fatpandac"
     ],
+    "/cctv/lm/:id?": [
+        "nczitzk"
+    ],
+    "/cctv/photo/jx": [
+        "nczitzk"
+    ],
+    "/cctv/special/:id?": [
+        "nczitzk"
+    ],
+    "/cctv/xwlb": [
+        "zengxs"
+    ],
+    "/cctv/:category": [
+        "idealclover",
+        "xyqfer"
+    ],
     "/cde/:channel/:category": [
         "Fatpandac"
     ],
@@ -2263,11 +2279,6 @@
     "/tingshuitz/wuhan": [],
     "/mihoyo/bh3/:type": [],
     "/mihoyo/bh2/:type": [],
-    "/cctv/xwlb": [],
-    "/cctv/lm/:id?": [],
-    "/cctv/:category": [],
-    "/cctv/photo/jx": [],
-    "/cctv-special/:id?": [],
     "/caixin/blog/:column": [],
     "/caixin/article": [],
     "/caixin/database": [],
