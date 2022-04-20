@@ -948,10 +948,9 @@ Type 栏目：
 
 <Route author="yuxinliu-alex" example="/huanqiu/news/china" path="/huanqiu/news/:category?" :paramsDesc="['类别，可以使用二级域名作为参数，默认为：china']">
 
-
-| 国内新闻  | 国际新闻 | 军事 | 台海            | 评论      |
-|-------| ----------- | -------- |---------------|---------|
-| china | world | mil | taiwai| opinion |
+| 国内新闻  | 国际新闻  | 军事  | 台海     | 评论      |
+| ----- | ----- | --- | ------ | ------- |
+| china | world | mil | taiwai | opinion |
 
 </Route>
 
