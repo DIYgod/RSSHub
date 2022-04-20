@@ -961,6 +961,9 @@
     "/huangz/": [
         "stormbuf"
     ],
+    "/huanqiu/news/:category?": [
+        "yuxinliu-alex"
+    ],
     "/hupu/all/:id?": [
         "nczitzk"
     ],
