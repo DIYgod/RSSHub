@@ -1611,7 +1611,7 @@ category 对应的关键词有
 
 ### 新闻联播
 
-<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
+<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb" radar="1" rssbud="1">
 
 新闻联播内容摘要。
 
@@ -1619,7 +1619,7 @@ category 对应的关键词有
 
 ### 栏目
 
-<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']">
+<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']" radar="1" rssbud="1">
 
 | 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
 | ---- | --- | ---- | --- |
@@ -1639,7 +1639,7 @@ category 对应的关键词有
 
 ### 新闻专题
 
-<Route author="nczitzk" example="/cctv/special/315" path="/cctv/special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']">
+<Route author="nczitzk" example="/cctv/special/315" path="/cctv/special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']" radar="1" rssbud="1">
 
 ::: tip 提示
 
@@ -1653,7 +1653,7 @@ category 对应的关键词有
 
 ### 专题
 
-<Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
+<Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']" radar="1" rssbud="1">
 
 | 新闻   | 国内    | 国际    | 社会      | 法治  | 文娱  | 科技   | 生活   | 教育  | 每周质量报告 | 新闻 1+1    |
 | ---- | ----- | ----- | ------- | --- | --- | ---- | ---- | --- | ------ | --------- |
@@ -1671,7 +1671,7 @@ category 对应的关键词有
 
 ### 央视网图片《镜象》
 
-<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" />
+<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" radar="1" rssbud="1"/>
 
 ## 中国日报
 
