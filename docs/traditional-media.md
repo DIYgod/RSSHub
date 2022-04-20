@@ -1655,9 +1655,9 @@ category 对应的关键词有
 
 <Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
 
-| 新闻   | 国内    | 国际    | 社会      | 法治  | 文娱  | 科技   | 生活   | 教育  | 每周质量报告 |
-| ---- | ----- | ----- | ------- | --- | --- | ---- | ---- | --- | ------ |
-| news | china | world | society | law | ent | tech | life | edu | mzzlbg |
+| 新闻   | 国内    | 国际    | 社会      | 法治  | 文娱  | 科技   | 生活   | 教育  | 每周质量报告 | 新闻 1+1    |
+| ---- | ----- | ----- | ------- | --- | --- | ---- | ---- | --- | ------ | --------- |
+| news | china | world | society | law | ent | tech | life | edu | mzzlbg | xinwen1j1 |
 
 </Route>
 
