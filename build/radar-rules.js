@@ -5189,6 +5189,13 @@
                         return '/youzhiyouxing/materials/11';
                     }
                 } } ] },
+  "yunspe.com":{ _name:"云奇网",
+    ".":[ { title:"微语简报",
+        docs:"https://docs.rsshub.app/new-media.html#wei-yu-jian-bao",
+        source:[ "/newsflashes/微语简报",
+          "/newsflashes",
+          "/" ],
+        target:"/yunspe/newsflashes" } ] },
   "yxdzqb.com":{ _name:"游戏打折情报",
     ".":[ { title:"游戏折扣",
         docs:"https://docs.rsshub.app/game.html#you-xi-da-zhe-qing-bao-you-xi-zhe-kou",
