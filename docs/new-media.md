@@ -3821,6 +3821,12 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 </Route>
 
+## 云奇网
+
+### 微语简报
+
+<Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
+
 ## 中国纺织经济信息网
 
 ### 资讯
@@ -3995,9 +4001,3 @@ QueryString:
 |      | zh-hk | zh-tw |
 
 </Route>
-
-## 云奇网
-
-### 微语简报
-
-<Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
