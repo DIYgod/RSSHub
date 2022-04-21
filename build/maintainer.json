@@ -308,6 +308,9 @@
     "/chinacef/portal/hot": [
         "kdanfly"
     ],
+    "/chinanews/": [
+        "yuxinliu-alex"
+    ],
     "/ciidbnu/:id?": [
         "nczitzk"
     ],
