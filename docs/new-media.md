@@ -1807,6 +1807,18 @@ area 分区选项
 
 </Route>
 
+## 封面新闻
+
+### 频道
+
+<Route author="yuxinliu-alex" example="/thecover/channel/3560" path="/thecover/channel/:id?" :paramsDesc="['对应id,可在频道链接中获取，默认为3892']">
+
+| 天下   | 四川   | 辟谣   | 国际   | 云招考 | 30 秒 | 拍客   | 体育   | 国内 | 帮扶铁军 | 文娱 | 宽窄 | 商业 | 千面 | 封面号 |
+| ---- | ---- | ---- | ---- | --- | ---- | ---- | ---- | -- | ---- | -- | -- | -- | -- | --- |
+| 3892 | 3560 | 3909 | 3686 | 11  | 3902 | 3889 | 3689 | 1  | 4002 | 12 | 46 | 4  | 21 | 17  |
+
+</Route>
+
 ## 風傳媒
 
 ### 分类
@@ -3435,14 +3447,6 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 </Route>
 
-### 公众平台系统公告栏目
-
-<Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
-
-### 小程序插件
-
-<Route author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
-
 ## 维基百科
 
 ### 中国大陆新闻动态
@@ -3816,6 +3820,12 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 | newest | recommend | opinion | topic | news | politics | society | figure | world | world_focus | cross_strait_politics | money | investment | insurance | retire | fintech    | real_estate | economy | tech | tech_trend | energy | business | industry | service | medical | family_business_succession | startup | management | agriculture | education | higher_education | technological | parent | world_education | sports | life | art  | self_growth | film | travel | environment | health | food | career | survey | county | csr |
 
 </Route>
+
+## 云奇网
+
+### 微语简报
+
+<Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
 
 ## 中国纺织经济信息网
 
