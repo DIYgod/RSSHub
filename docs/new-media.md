@@ -3995,3 +3995,9 @@ QueryString:
 |      | zh-hk | zh-tw |
 
 </Route>
+
+## 云奇网
+
+### 微语简报
+
+<Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
