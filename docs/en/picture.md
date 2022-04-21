@@ -116,6 +116,27 @@ pageClass: routes
 
 <RouteEn name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip"/>
 
+## E-Hentai
+
+For RSS content, specify options in the `routeParams` parameter in query string format to control additional functionality
+
+| Key         | Meaning                                                                          | Accepted keys  | Default value |
+| ----------- | -------------------------------------------------------------------------------- | -------------- | ------------- |
+| bittorrent  | Whether include a link to the latest torrent                                     | 0/1/true/false | false         |
+| embed_thumb | Whether the cover image is embedded in the RSS feed rather than given as a link  | 0/1/true/false | false         |
+
+### Favorites
+
+<RouteEn author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" :paramsDesc="['Favorites folder number','`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', 'Page number', 'Additional parameters, see the table above']" anticrawler="1" supportBT="1" />
+
+### Tag
+
+<RouteEn author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['Tag', 'Page number', 'Additional parameters, see the table above']" anticrawler="1" supportBT="1" />
+
+### Search
+
+<RouteEn author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" :paramsDesc="['Search parameters. You can copy the content after `https://e-hentai.org/?`', 'Page number', 'Additional parameters, see the table above']" anticrawler="1" supportBT="1" />
+
 ## Elite Babes
 
 ### Home
