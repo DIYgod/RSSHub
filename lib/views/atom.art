@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:rsshub="http://rsshub.app/xml/schemas">
     <generator>RSSHub</generator>
     <webMaster>i@diygod.me (DIYgod)</webMaster>
     <language>{{ language || 'zh-cn' }}</language>
@@ -49,6 +49,18 @@
         {{ /if }}
 
         <link href="{{ $e.link }}" />
+
+        {{ if $e.upvotes }}
+        <rsshub:upvotes>{{ $e.upvotes }}</rsshub:upvotes>
+        {{ /if }}
+
+        {{ if $e.downvotes }}
+        <rsshub:downvotes>{{ $e.downvotes }}</rsshub:downvotes>
+        {{ /if }}
+
+        {{ if $e.comments }}
+        <rsshub:comments>{{ $e.comments }}</rsshub:comments>
+        {{ /if }}
 
         {{ if $e.summary }}
         <summary type="html"><![CDATA[{{@ $e.summary }}]]></summary>
