@@ -1709,6 +1709,12 @@ category 对应的关键词有
 
 </Route>
 
+## 中国新闻网
+
+### 最新
+
+<Route author="yuxinliu-alex" example="/chinanews" path="/chinanews" radar="1" rssbud="1" />
+
 ## 中山网
 
 ### 中山网新闻
