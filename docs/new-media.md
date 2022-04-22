@@ -1664,9 +1664,9 @@ area 分区选项
 
 内容类别
 
-| 产业观察                 | 行业报告             | 政策 & 成效            |
-| -------------------- | ---------------- | ------------------ |
-| industry-observation | industry-reports | policy-achievement |
+| 产业观察                 | 行业报告             | 政策     | 数据   |
+| -------------------- | ---------------- | ------ | ---- |
+| industry-observation | industry-reports | policy | data |
 
 行业分类
 
@@ -3208,6 +3208,18 @@ column 为 third 时可选的 category:
 | 全部 | 現代中國 | 今日香港 | 全球化 | 一周時事通識 |
 | -- | ---- | ---- | --- | ------ |
 |    | 76   | 479  | 480 | 379    |
+
+</Route>
+
+## 投中网
+
+### 分类
+
+<Route author="yunxinliu-alex" example="/chinaventure/news/78" path="/chinaventure/news/:id?" :paramsDesc="['分类，见下表，默认为推荐']">
+
+| 推荐 | 商业深度 | 资本市场 | 5G | 健康  | 教育  | 地产  | 金融  | 硬科技 | 新消费 |
+| -- | ---- | ---- | -- | --- | --- | --- | --- | --- | --- |
+|    | 78   | 80   | 83 | 111 | 110 | 112 | 113 | 114 | 116 |
 
 </Route>
 
