@@ -534,6 +534,9 @@
         "beatyyuyanli",
         "nczitzk"
     ],
+    "/dx2025/:type?/:category?": [
+        "nczitzk"
+    ],
     "/e-hentai/category/:category?/:needTorrents?/:needImages?": [
         "nczitzk"
     ],
@@ -3605,7 +3608,6 @@
     "/totalcommander/whatsnew": [],
     "/blizzard/news/:language?/:category?": [],
     "/deepmind/blog/:category?": [],
-    "/dx2025/:type?/:category?": [],
     "/deepl/blog/:lang?": [],
     "/openai/blog/:tag?": [],
     "/muchong/journal/:type?": [],
