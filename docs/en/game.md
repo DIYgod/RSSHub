@@ -221,7 +221,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### Steam search
 
-<RouteEn author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1" rssbud="1">
+<RouteEn author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1" rssbud="1">
 
 Get serach parameters from the URL.
 

@@ -2021,6 +2021,16 @@ type 列表：
 
 </Route>
 
+### 教务处
+
+<Route author="kxxt" example="/sdu/wh/jwc/gztz" path="/sdu/wh/jwc/:column?" :paramsDesc="['专栏名称，默认为工作通知（`gztz`）']" radar="1" rssbud="1">
+
+| 规章制度 | 专业建设 | 实践教学 | 支部风采 | 服务指南 | 教务要闻 | 工作通知 | 教务简报 | 常用下载 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| gzzd | zyjs | sjjx | zbfc | fwzn | jwyw | gztz | jwjb | cyxz |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学官网信息
