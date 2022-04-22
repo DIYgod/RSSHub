@@ -311,6 +311,9 @@
     "/chinanews/": [
         "yuxinliu-alex"
     ],
+    "/chinaventure/news/:id?": [
+        "yuxinliu-alex"
+    ],
     "/ciidbnu/:id?": [
         "nczitzk"
     ],
