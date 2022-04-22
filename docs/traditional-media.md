@@ -285,11 +285,11 @@ pageClass: routes
 
 :::
 
-| 新闻   | 澳大利亚新闻          | 国际新闻               | ​ 商业与财经          |
+| 新闻   | 澳大利亚新闻          | 国际新闻               | ​商业与财经           |
 | ---- | --------------- | ------------------ | ---------------- |
 | news | australian-news | international-news | business-finance |
 
-| 澳中关系                      | ​ 移民与签证     | Stories in English |
+| 澳中关系                      | ​移民与签证      | Stories in English |
 | ------------------------- | ----------- | ------------------ |
 | australia-china-relations | immigration | english            |
 
@@ -389,9 +389,9 @@ Solidot 提供的 feed:
 
 ## The Economist
 
-### section
+### 分类
 
-<Route author="metayoung" example="/the-economist/china" path="/the-economist/:section" :paramsDesc="['section，所有选项可在 [官网 Menu选项中](https://www.economist.com) 找到。">
+<Route author="metayoung" example="/the-economist/china" path="/the-economist/:section" :paramsDesc="['分类名称，可在 [官方页面 ](https://www.economist.com)Menu找到，例如 https://www.economist.com/china 即为 china']"/>
 
 ### GRE Vocabulary
 
@@ -710,9 +710,9 @@ IT・科学 tech_science
 
 无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 新着・速報    | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |
-| -------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- |
-| 　 news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial |
+| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |
+| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- |
+| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial |
 
 </Route>
 
@@ -841,7 +841,7 @@ Type 栏目：
 
 ### 最新报道
 
-<Route author="Rongronggg9" example="/kyodonews" path="/kyodonews/:language?/:keyword?" :paramsDesc="['语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', '关键词']">
+<Route author="Rongronggg9" example="/kyodonews" path="/kyodonews/:language?/:keyword?" :paramsDesc="['语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', '关键词']">  
 
 `keyword` 为关键词，由于共同网有许多关键词并不在主页列出，此处不一一列举，可从关键词页的 URL 的最后一级路径中提取。如 `日中关系` 的关键词页 URL 为 `https://china.kyodonews.net/news/japan-china_relationship`, 则将 `japan-china_relationship` 填入 `keyword`。特别地，当填入 `rss` 时，将从共同网官方 RSS 中抓取文章；略去时，将从首页抓取最新报道 (注意：首页更新可能比官方 RSS 稍慢)。
 
