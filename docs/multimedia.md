@@ -158,7 +158,7 @@ pageClass: routes
 
 ## A 姐分享
 
-<Route author="zhenhappy" example="/abskoop" path="/abskoop"/>
+<Route author="zhenhappy" example="/abskoop/nsfw" path="/abskoop/:type?" :paramsDesc="['目前仅有`nsfw`这个子站点']">
 
 ## AcFun
 
