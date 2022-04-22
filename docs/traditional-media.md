@@ -393,6 +393,12 @@ Solidot 提供的 feed:
 
 <Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
 
+### section
+
+<Route author="metayoung" example="/the-economists/china" path="/the-economists/:section" :paramsDesc="['section，所有选项可在 [官网 Menu选项中](https://www.economist.com) 找到。">
+该路由即为原来的 分类(就是上一个)。 官网提供的rss已经失效。为与原路由区分，路由末尾多了一个s字母。
+</Route>
+
 ### GRE Vocabulary
 
 <Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
