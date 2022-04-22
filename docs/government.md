@@ -933,8 +933,8 @@ pageClass: routes
 
 <Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
 
-|   政策解读   |   最新文件   |  公告公示  |     教育部简报      |      教育要闻      |
-| :---------: | :---------: | :----: | :---------------: | :---------------: |
+|     政策解读    |     最新文件    |  公告公示  |       教育部简报       |      教育要闻      |
+| :---------: | :---------: | :----: | :---------------: | :------------: |
 | policy_anal | newest_file | notice | edu_ministry_news | edu_focus_news |
 
 </Route>
