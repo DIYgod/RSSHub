@@ -3211,6 +3211,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 投中网
+
+### 分类
+
+<Route author="yunxinliu-alex" example="/chinaventure/news/78" path="/chinaventure/news/:id?" :paramsDesc="['分类，见下表，默认为推荐']">
+
+| 推荐 | 商业深度 | 资本市场 | 5G | 健康 | 教育 | 地产 | 金融 | 硬科技 | 新消费 |
+| -- | -- | -- | -- | --- | --- | --- | --- | --- | --- |
+|    | 78 | 80 | 83 | 111 | 110 | 112 | 113 | 114 | 116 |
+
+</Route>
+
 ## 推酷
 
 ### 周刊
