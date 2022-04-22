@@ -146,17 +146,24 @@ pageClass: routes
 
 ## E-Hentai
 
+对于 RSS 内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制额外的功能
+
+| 键           | 含义                         | 接受的值           | 默认值   |
+| ----------- | -------------------------- | -------------- | ----- |
+| bittorrent  | 是否包含最新种子的链接                | 0/1/true/false | false |
+| embed_thumb | 是否将封面图片嵌入 RSS 中而不是以链接的形式给出 | 0/1/true/false | false |
+
 ### 收藏
 
-<Route author="Howard Yin" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:bittorrent?" :paramsDesc="['收藏夹编号，可选','顺序，可选：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" :paramsDesc="['收藏夹编号','顺序：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ### 标签
 
-<Route author="Howard Yin" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:bittorrent?" :paramsDesc="['标签', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['标签', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ### 搜索
 
-<Route author="Howard Yin" example="/ehentai/search/:params?/:page?" path="/ehentai/search/:params?/:page?/:bittorrent?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ## Elite Babes
 

@@ -1036,6 +1036,10 @@ GitHub 官方也提供了一些 RSS:
 
 ## 微信小程序
 
+### 公众平台系统公告栏目
+
+<Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
+
 ### 基础库更新日志
 
 <Route author="magicLaLa nczitzk" example="/weixin/miniprogram/framework" path="/weixin/miniprogram/framework"/>
@@ -1043,6 +1047,10 @@ GitHub 官方也提供了一些 RSS:
 ### 开发者工具更新日志
 
 <Route author="nczitzk" example="/weixin/miniprogram/devtools" path="/weixin/miniprogram/devtools"/>
+
+### 小程序插件
+
+<Route author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
 
 ### 云开发更新日志
 

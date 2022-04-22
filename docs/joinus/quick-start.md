@@ -394,6 +394,22 @@ ctx.state.data = {
 };
 ```
 
+##### 互动
+
+**额外**添加这些字段能使你的 RSS 被支持的软件订阅：
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            upvotes: 0, // 默认为空，文章有多少 upvote
+            downvotes: 0, // 默认为空，文章有多少 downvote
+            comments: 0, // 默认为空，文章有多少评论
+        },
+    ],
+};
+```
+
 * * *
 
 ### 添加脚本文档

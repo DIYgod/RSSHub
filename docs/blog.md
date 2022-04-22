@@ -199,6 +199,12 @@ pageClass: routes
 
 <Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
 
+## 黄健宏博客
+
+### 文章
+
+<Route author="stormbuf" example="/huangz" path="/huangz" radar="1"/>
+
 ## 建宁闲谈
 
 ### 文章

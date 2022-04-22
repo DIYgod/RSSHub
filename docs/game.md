@@ -397,7 +397,7 @@ pageClass: routes
 
 ### Steam search
 
-<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
+<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
 
 参数 params 请从 Steam 的 URL 取得
 
