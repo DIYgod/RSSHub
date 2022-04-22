@@ -765,36 +765,12 @@
     "/google/sites/recentChanges/:id": [
         "nczitzk"
     ],
-    "/gov/anhui/kjt/:path?": [
-        "nczitzk"
-    ],
-    "/gov/beijing/kw/:channel": [
-        "Fatpandac"
-    ],
-    "/gov/shenzhen/hrss/szksy/:caty/:page?": [
-        "zlasd"
-    ],
-    "/gov/shenzhen/zzb/:caty/:page?": [
-        "zlasd"
-    ],
-    "/gov/shanghai/rsj/ksxm": [
-        "Fatpandac"
-    ],
     "/gov/fmprc/:category?": [
         "nicolaszf",
         "nczitzk"
     ],
-    "/gov/guangdong/tqyb/tfxtq": [
-        "Fatpandac"
-    ],
-    "/gov/guangdong/tqyb/sncsyjxh": [
-        "Fatpandac"
-    ],
-    "/gov/huizhou/zwgk/:category?": [
-        "Fatpandac"
-    ],
-    "/gov/sichuan/deyang/govpulicinfo/:countyName": [
-        "zytomorrow"
+    "/gov/mee/ywdt?": [
+        "liuxsdev"
     ],
     "/gov/mfa/wjdt/:category?": [
         "nczitzk"
@@ -814,8 +790,8 @@
     "/gov/miit/zcjd": [
         "Yoge-Code"
     ],
-    "/gov/mee/ywdt?": [
-        "liuxsdev"
+    "/gov/moe/:type": [
+        "Crawler995"
     ],
     "/gov/nrta/news/:category?": [
         "yuxinliu-alex"
@@ -823,14 +799,44 @@
     "/gov/pbc/goutongjiaoliu": [
         "nczitzk"
     ],
+    "/gov/pbc/gzlw": [
+        "Fatpandac"
+    ],
     "/gov/pbc/tradeAnnouncement": [
         "nczitzk"
     ],
     "/gov/pbc/zcyj": [
         "Fatpandac"
     ],
-    "/gov/pbc/gzlw": [
+    "/gov/anhui/kjt/:path?": [
+        "nczitzk"
+    ],
+    "/gov/beijing/kw/:channel": [
         "Fatpandac"
+    ],
+    "/gov/shenzhen/hrss/szksy/:caty/:page?": [
+        "zlasd"
+    ],
+    "/gov/shenzhen/zzb/:caty/:page?": [
+        "zlasd"
+    ],
+    "/gov/shanghai/rsj/ksxm": [
+        "Fatpandac"
+    ],
+    "/gov/shanghai/wsjkw/yqtb": [
+        "zcf0508"
+    ],
+    "/gov/guangdong/tqyb/tfxtq": [
+        "Fatpandac"
+    ],
+    "/gov/guangdong/tqyb/sncsyjxh": [
+        "Fatpandac"
+    ],
+    "/gov/huizhou/zwgk/:category?": [
+        "Fatpandac"
+    ],
+    "/gov/sichuan/deyang/govpulicinfo/:countyName": [
+        "zytomorrow"
     ],
     "/guancha/:category?": [
         "nczitzk",
@@ -2734,7 +2740,6 @@
     "/gov/hunan/notice/:type": [],
     "/gov/ndrc/xwdt/:caty?": [],
     "/gov/customs/list/:gchannel": [],
-    "/gov/moe/:type": [],
     "/gov/mohurd/policy": [],
     "/gov/sapprft/approval/:channel/:detail?": [],
     "/gov/nppa/:channel": [],
