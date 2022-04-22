@@ -1664,9 +1664,9 @@ area 分区选项
 
 内容类别
 
-| 产业观察                 | 行业报告             | 政策 & 成效            |
-| -------------------- | ---------------- | ------------------ |
-| industry-observation | industry-reports | policy-achievement |
+| 产业观察                 | 行业报告             | 政策     | 数据   |
+| -------------------- | ---------------- | ------ | ---- |
+| industry-observation | industry-reports | policy | data |
 
 行业分类
 
