@@ -218,6 +218,12 @@
     "/bjfu/news/:type": [
         "markmingjie"
     ],
+    "/bjx/gf/:type": [
+        "Sxuet"
+    ],
+    "/bjx/huanbao": [
+        "zsimple"
+    ],
     "/blockbeats/:channel?": [
         "Fatpandac"
     ],
@@ -2821,7 +2827,6 @@
     "/dianping/user/:id?": [],
     "/banyuetan/byt/:time?": [],
     "/banyuetan/:name": [],
-    "/bjx/huanbao": [],
     "/gamersky/news": [],
     "/gamersky/ent/:category": [],
     "/konami/pesmobile/:lang?/:os?": [],
