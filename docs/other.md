@@ -4,18 +4,6 @@ pageClass: routes
 
 # 其他
 
-## 北极星光伏
-
-<Route author="Sxuet" example="/bjxgf/sc" path="/bjxgf/:type" :paramsDesc="['type,必选-北极星光伏最后的type字段']" radar="1" rssbud="1"/>
-
- `:type` 类型可选如下
-
-| 要闻 | 政策 | 市场行情 | 企业动态 | 独家观点 | 项目工程 | 招标采购 | 财经 | 国际行情 | 价格趋势 | 技术跟踪 |
-| ---- | ---- | -------- | -------- | -------- | -------- | -------- | ---- | -------- | -------- | -------- |
-| yw   | zc   | sc       | mq       | dj       | xm       | zb       | cj   | gj       | sj       | js       |
-
-</Route>
-
 ## 4399 论坛
 
 ### 4399 论坛
