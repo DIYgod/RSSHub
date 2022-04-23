@@ -19,9 +19,13 @@ test
 process.json
 app.json
 .travis.yml
+app-minimal
+.idea
+.env
 
 #git but keep the git commit hash
 .git/logs
 .git/objects
 .git/index
 .git/info
+.git/hooks

@@ -10,7 +10,9 @@ const resultFolder = 'app-minimal';
     const { fileList: fileSet } = await nodeFileTrace(files, {
         base: path.resolve(path.join(__dirname, '../..')),
     });
-    const fileList = Array.from(fileSet);
-    console.log('Total files need to be copy: ' + fileList.length);
+    let fileList = Array.from(fileSet);
+    console.log('Total touchable files:', fileList.length);
+    fileList = fileList.filter((file) => file.startsWith('node_modules/')); // only need node_modules
+    console.log('Total files need to be copied (touchable files in node_modules/): ', fileList.length);
     return Promise.all(fileList.map((e) => fs.copy(e, path.resolve(path.join(resultFolder, e)))));
 })();
