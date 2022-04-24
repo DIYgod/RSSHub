@@ -1570,8 +1570,26 @@
         "hoilc",
         "Rongronggg9"
     ],
+    "/pku/admission/sszs": [
+        "pkuyjs"
+    ],
+    "/pku/bbs/hot": [
+        "wooddance"
+    ],
+    "/pku/cls/lecture": [
+        "TPOB"
+    ],
+    "/pku/eecs/:type?": [
+        "Ir1d"
+    ],
     "/pku/hr/:category?": [
         "nczitzk"
+    ],
+    "/pku/rccp/mzyt": [
+        "vhxubo"
+    ],
+    "/pku/scc/recruit/:type?": [
+        "DylanXie123"
     ],
     "/polkaworld/polkaworld/newest": [
         "iceqing"
@@ -2469,10 +2487,6 @@
     "/lit/tw/:name?": [],
     "/thu/career": [],
     "/thu/:type": [],
-    "/pku/eecs/:type?": [],
-    "/pku/rccp/mzyt": [],
-    "/pku/cls/lecture": [],
-    "/pku/bbs/hot": [],
     "/shmtu/www/:type": [],
     "/shmtu/jwc/:type": [],
     "/shou/www/:type": [],
@@ -3318,7 +3332,6 @@
     "/scnucs": [],
     "/scutyjs": [],
     "/scauyjs": [],
-    "/pkuyjs": [],
     "/bityjs": [],
     "/hnust/jwc": [],
     "/hnust/computer": [],
