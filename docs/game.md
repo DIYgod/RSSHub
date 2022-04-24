@@ -605,6 +605,24 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
 
+### 游戏内公告
+
+<Route author="swwind" example="/arknights/announce" path="/arknights/announce/:platform?/:group?" :paramsDesc="['平台，默认为 Android','分组，默认为 ALL']">
+
+平台
+
+|   安卓服   | iOS 服 |    B 服   |
+| :-----: | :---: | :------: |
+| Android |  IOS  | Bilibili |
+
+分组
+
+|  全部 |  系统公告  |   活动公告   |
+| :-: | :----: | :------: |
+| ALL | SYSTEM | ACTIVITY |
+
+</Route>
+
 ### アークナイツ (日服新闻)
 
 <Route author="ofyark" example="/arknights/japan" path="/arknights/japan"/>
