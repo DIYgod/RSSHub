@@ -18,7 +18,7 @@ Route: `/api/routes/:name?`
 
 Parameters:
 
--   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). Optional, **returns all public routes if not specified**.
+-   `name`, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). Optional, **returns all public routes if not specified**.
 
 A successful request returns a HTTP status code `200 OK` with the result in JSON:
 

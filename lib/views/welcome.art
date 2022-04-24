@@ -60,15 +60,18 @@
         }
 
         .debug-item {
+            white-space: nowrap;
             margin: 5px 0;
             font-size: 12px;
             line-height: 24px;
+            max-width: 75%;
         }
 
         .debug-value {
+            white-space: pre-wrap !important;
+            overflow-wrap: anywhere;
             display: inline-block;
             vertical-align: top;
-            white-space: pre;
         }
     </style>
 </head>

@@ -15,7 +15,8 @@
   <div v-if="path.match(/(?<=:).*?(?=\/|$)/g)">
   <p>
     Parameters:
-  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)">{{item.replace('?','')}}, {{(item.includes('?'))?'optional':'required'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
+  </p>
+  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)"><code>{{item.replace('?','')}}</code>, {{(item.includes('?'))?'optional':'required'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul>
   </div>
   <div v-else><p>Parameters: N/A</p></div>
   <slot></slot>
@@ -66,11 +67,11 @@ export default {
     },
   },
   methods: {
-    renderMarkdown(item) {
+    renderMarkdown(item, inline = true) {
     const md = require('markdown-it')({
             html: true,
     });
-        return md.render(item);
+        return inline ? md.renderInline(item) : md.render(item);
     },
   },
   computed: {

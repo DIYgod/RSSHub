@@ -4,15 +4,28 @@ on: [push, pull_request]
 
 jobs:
   linter:
+    name: Lint
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '14'
-    - run: yarn install
-    - name: Lint
-      run: |
-        npm run lint
-      env:
-        CI: true
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'yarn'
+      - run: yarn
+      - name: Lint
+        run: yarn lint
+  reviewdog:
+    name: reviewdog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          cache: 'yarn'
+      - run: yarn
+      - name: Lint
+        uses: reviewdog/action-eslint@v1
+        with:
+           github_token: ${{ secrets.GITHUB_TOKEN }}
