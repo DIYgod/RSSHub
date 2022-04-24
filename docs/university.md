@@ -134,18 +134,21 @@ pageClass: routes
 
 <Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot">
 
-### 学生就业指导服务中心
-
-<Route author="DylanXie123" example="/pku/scc/recruit/zpxx" path="/pku/scc/recruit/:type" :paramsDesc="['分区 type，见下表，默认请求 tzgg']">
-| xwrd | tzgg | zpxx | gfjgxx | sxxx | cyxx |
-| ---- | -------- | -------- | -------- | -------- | -------- |
-| 新闻热点 | 通知公告 | 招聘信息 | 国防军工信息 | 实习信息 | 创业信息 |
-
 ::: warning 注意
 
 论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
 
 :::
+
+</Route>
+
+### 学生就业指导服务中心
+
+<Route author="DylanXie123" example="/pku/scc/recruit/zpxx" path="/pku/scc/recruit/:type" :paramsDesc="['分区 type，见下表，默认请求 tzgg']">
+
+| xwrd | tzgg | zpxx | gfjgxx | sxxx | cyxx |
+| ---- | ---- | ---- | ------ | ---- | ---- |
+| 新闻热点 | 通知公告 | 招聘信息 | 国防军工信息 | 实习信息 | 创业信息 |
 
 </Route>
 
