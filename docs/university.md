@@ -144,7 +144,7 @@ pageClass: routes
 
 ### 学生就业指导服务中心
 
-<Route author="DylanXie123" example="/pku/scc/recruit/zpxx" path="/pku/scc/recruit/:type" :paramsDesc="['分区 type，见下表，默认请求 tzgg']" radar="1" rssbud="1">
+<Route author="DylanXie123" example="/pku/scc/recruit/zpxx" path="/pku/scc/recruit/:type?" :paramsDesc="['分区，见下表，默认请求 `tzgg`']" radar="1" rssbud="1">
 
 | xwrd | tzgg | zpxx | gfjgxx | sxxx | cyxx |
 | ---- | ---- | ---- | ------ | ---- | ---- |
