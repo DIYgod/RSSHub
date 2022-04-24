@@ -112,7 +112,7 @@
     "lru-cache": "7.8.1",
     "lz-string": "1.4.4",
     "mailparser": "3.4.0",
-    "markdown-it": "12.3.2",
+    "markdown-it": "13.0.0",
     "module-alias": "2.2.2",
     "parse-torrent": "9.1.5",
     "pidusage": "3.0.0",
