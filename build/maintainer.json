@@ -495,6 +495,9 @@
     "/douban/topic/:id/:sort?": [
         "LogicJake"
     ],
+    "/douyin/user/:uid": [
+        "Max-Tortoise"
+    ],
     "/dtcj/datahero/:category?": [
         "nczitzk"
     ],
