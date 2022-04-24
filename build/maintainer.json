@@ -143,6 +143,15 @@
     "/appstore/gofans": [
         "HenryQW"
     ],
+    "/arknights/announce/:platform?/:group?": [
+        "swwind"
+    ],
+    "/arknights/japan": [
+        "ofyark"
+    ],
+    "/arknights/news": [
+        "Astrian"
+    ],
     "/ash-maurya/ash-maurya": [
         "james-tindal"
     ],
@@ -3002,8 +3011,6 @@
     "/simonsfoundation/articles": [],
     "/simonsfoundation/recommend": [],
     "/tencent/pvp/newsindex/:type": [],
-    "/arknights/news": [],
-    "/arknights/japan": [],
     "/siren/news": [],
     "/xuetangx/course/:cid/:type": [],
     "/xuetangx/course/list/:mode/:credential/:status/:type?": [],
