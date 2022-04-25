@@ -1182,6 +1182,10 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
+## 抖音
+
+见 [#抖音](/social-media.html#dou-yin)
+
 ## 法国国际广播电台
 
 ### 滚动新闻
