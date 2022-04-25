@@ -469,9 +469,21 @@ Provides all of the articles by the specified Yahoo! author.
 
 ## 北极星电力网
 
-### 北极星环保
+### 环保要闻
 
-<Route author="zsimple"  example="/bjx/huanbao" path="/bjx/huanbao" />
+<Route author="zsimple" example="/bjx/huanbao" path="/bjx/huanbao" radar="1" rssbud="1"/>
+
+### 光伏
+
+<Route author="Sxuet" example="/bjx/gf/sc" path="/bjx/gf/:type" :paramsDesc="['分类，北极星光伏最后的`type`字段']" radar="1" rssbud="1"/>
+
+`:type` 类型可选如下
+
+| 要闻 | 政策 | 市场行情 | 企业动态 | 独家观点 | 项目工程 | 招标采购 | 财经 | 国际行情 | 价格趋势 | 技术跟踪 |
+| -- | -- | ---- | ---- | ---- | ---- | ---- | -- | ---- | ---- | ---- |
+| yw | zc | sc   | mq   | dj   | xm   | zb   | cj | gj   | sj   | js   |
+
+</Route>
 
 ## 财新网
 
@@ -520,6 +532,16 @@ Category 列表：
 ### 财新一线
 
 <Route author="boypt"  example="/caixin/yxnews" path="/caixin/yxnews"/>
+
+## 参考消息
+
+### 新闻分类
+
+<Route author="yuxinliu-alex" example="/cankaoxiaoxi/news/military_news" path="/cankaoxiaoxi/news/:category">
+
+| 中国         | 国际         | 军事            | 台海          | 财经           | 科技              | 文化           |
+| ---------- | ---------- | ------------- | ----------- | ------------ | --------------- | ------------ |
+| china_news | world_news | military_news | taiwan_news | finance_news | technology_news | culture_news |
 
 ## 朝日新聞中文網（繁體中文版）
 
@@ -929,6 +951,18 @@ Type 栏目：
 <Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['语言，支持 `en-us`、`zh-cn`、`zh-tw`', '分类，仅 `en-us` 支持分类订阅。支持 `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`。']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</Route>
+
+## 环球网
+
+### 分类
+
+<Route author="yuxinliu-alex" example="/huanqiu/news/china" path="/huanqiu/news/:category?" :paramsDesc="['类别，可以使用二级域名作为参数，默认为：china']">
+
+| 国内新闻  | 国际新闻  | 军事  | 台海     | 评论      |
+| ----- | ----- | --- | ------ | ------- |
+| china | world | mil | taiwai | opinion |
 
 </Route>
 
@@ -1611,7 +1645,7 @@ category 对应的关键词有
 
 ### 新闻联播
 
-<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb">
+<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb" radar="1" rssbud="1">
 
 新闻联播内容摘要。
 
@@ -1619,7 +1653,7 @@ category 对应的关键词有
 
 ### 栏目
 
-<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']">
+<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']" radar="1" rssbud="1">
 
 | 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
 | ---- | --- | ---- | --- |
@@ -1639,7 +1673,7 @@ category 对应的关键词有
 
 ### 新闻专题
 
-<Route author="nczitzk" example="/cctv-special/315" path="/cctv-special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']">
+<Route author="nczitzk" example="/cctv/special/315" path="/cctv/special/:id?" :paramsDesc="['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']" radar="1" rssbud="1">
 
 ::: tip 提示
 
@@ -1653,11 +1687,11 @@ category 对应的关键词有
 
 ### 专题
 
-<Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']">
+<Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" :paramsDesc="['分类名']" radar="1" rssbud="1">
 
-| 新闻   | 国内    | 国际    | 社会      | 法治  | 文娱  | 科技   | 生活   | 教育  | 每周质量报告 |
-| ---- | ----- | ----- | ------- | --- | --- | ---- | ---- | --- | ------ |
-| news | china | world | society | law | ent | tech | life | edu | mzzlbg |
+| 新闻   | 国内    | 国际    | 社会      | 法治  | 文娱  | 科技   | 生活   | 教育  | 每周质量报告 | 新闻 1+1    |
+| ---- | ----- | ----- | ------- | --- | --- | ---- | ---- | --- | ------ | --------- |
+| news | china | world | society | law | ent | tech | life | edu | mzzlbg | xinwen1j1 |
 
 </Route>
 
@@ -1671,7 +1705,7 @@ category 对应的关键词有
 
 ### 央视网图片《镜象》
 
-<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" />
+<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" radar="1" rssbud="1"/>
 
 ## 中国日报
 
@@ -1686,6 +1720,12 @@ category 对应的关键词有
 | thelatest | news_bilingual | news_hotwords | practice_tongue | trans_collect | video_links | audio_cd | columnist | 5af95d44a3103f6866ee845c | englishexams |
 
 </Route>
+
+## 中国新闻网
+
+### 最新
+
+<Route author="yuxinliu-alex" example="/chinanews" path="/chinanews" radar="1" rssbud="1" />
 
 ## 中山网
 

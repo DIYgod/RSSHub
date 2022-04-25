@@ -397,7 +397,7 @@ pageClass: routes
 
 ### Steam search
 
-<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
+<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
 
 参数 params 请从 Steam 的 URL 取得
 
@@ -604,6 +604,24 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游戏公告与新闻
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
+
+### 游戏内公告
+
+<Route author="swwind" example="/arknights/announce" path="/arknights/announce/:platform?/:group?" :paramsDesc="['平台，默认为 Android','分组，默认为 ALL']">
+
+平台
+
+|   安卓服   | iOS 服 |    B 服   |
+| :-----: | :---: | :------: |
+| Android |  IOS  | Bilibili |
+
+分组
+
+|  全部 |  系统公告  |   活动公告   |
+| :-: | :----: | :------: |
+| ALL | SYSTEM | ACTIVITY |
+
+</Route>
 
 ### アークナイツ (日服新闻)
 
