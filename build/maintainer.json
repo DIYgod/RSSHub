@@ -513,8 +513,9 @@
     "/douban/topic/:id/:sort?": [
         "LogicJake"
     ],
-    "/douyin/user/:uid": [
-        "Max-Tortoise"
+    "/douyin/user/:uid/:routeParams?": [
+        "Max-Tortoise",
+        "Rongronggg9"
     ],
     "/dtcj/datahero/:category?": [
         "nczitzk"
