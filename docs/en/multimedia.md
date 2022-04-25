@@ -30,6 +30,16 @@ Full transcript support for better user experience.
 
 <RouteEn author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
 
+## Coomer
+
+### Artist
+
+<RouteEn author="nczitzk" example="/coomer/artist/belledelphine" path="/coomer/artist/:id" :paramsDesc="['Artist id, can be found in URL']"/>
+
+### Recent Posts
+
+<RouteEn author="nczitzk" example="/coomer/posts" path="/coomer/posts"/>
+
 ## EZTV
 
 ::: tip

@@ -303,6 +303,16 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 </Route>
 
+## Coomer
+
+### Artist
+
+<Route author="nczitzk" example="/coomer/artist/belledelphine" path="/coomer/artist/:id" :paramsDesc="['Artist id，可在对应页面中找到']"/>
+
+### Recent Posts
+
+<Route author="nczitzk" example="/coomer/posts" path="/coomer/posts"/>
+
 ## E-Hentai
 
 ### 分类
