@@ -39,3 +39,13 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 ### Category
 
 <RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Categor, can be found in URL']"/>
+
+## syosetu
+
+### chapter
+
+<RouteEn author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" :paramsDesc="['Novel id, can be found in URL']">
+
+Eg:<https://ncode.syosetu.com/n1976ey/>
+
+</RouteEn>

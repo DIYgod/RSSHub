@@ -971,6 +971,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
 
+## 有据
+
+### 最新文章列表
+
+<Route author="kdanfly" example="/chinafactcheck" path="/chinafactcheck" radar="1" rssbud="1"/>
+
 ## 源仓库
 
 ### 源仓库更新

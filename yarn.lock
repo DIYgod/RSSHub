@@ -5203,7 +5203,7 @@ enstore@^1.0.1:
   dependencies:
     monotonic-timestamp "0.0.8"
 
-entities@3.0.1:
+entities@3.0.1, entities@~3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-3.0.1.tgz#2b887ca62585e96db3903482d336c1006c3001d4"
   integrity sha512-WiyBqoomrwMdFG1e0kqvASYfnlb0lp8M5o5Fw2OFq1hNZxxcNk8Ik0Xm7LxzBhuidnZB/UtBqVCgUz3kBOP51Q==
@@ -5217,11 +5217,6 @@ entities@^2.0.0, entities@^2.0.3:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/entities/-/entities-2.2.0.tgz#098dc90ebb83d8dffa089d55256b351d34c4da55"
   integrity sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==
-
-entities@~2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-2.1.0.tgz#992d3129cf7df6870b96c57858c249a120f8b8b5"
-  integrity sha512-hCx1oky9PFrJ611mf0ifBLBRW8lUUVRlFolb5gWRfIELabBlbp9xZvrqZLZAs+NxFnbfQoeGd8wDkygjg7U85w==
 
 envify@^4.0.0:
   version "4.1.0"
@@ -8806,7 +8801,7 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.2.4.tgz#eca284f75d2965079309dc0ad9255abb2ebc1632"
   integrity sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==
 
-linkify-it@3.0.3, linkify-it@^3.0.1:
+linkify-it@3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-3.0.3.tgz#a98baf44ce45a550efb4d49c769d07524cc2fa2e"
   integrity sha512-ynTsyrFSdE5oZ/O9GEf00kPngmOfVwazR5GKDq6EYfhlpFug3J2zybX56a2PRRpc9P+FuSoGNAwjlbDs9jJBPQ==
@@ -8817,6 +8812,13 @@ linkify-it@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
   integrity sha512-GnAl/knGn+i1U/wjBz3akz2stz+HrHLsxMwHQGofCDfPvlf+gDKN58UtfmUquTY4/MXeE2x7k19KQmeoZi94Iw==
+  dependencies:
+    uc.micro "^1.0.1"
+
+linkify-it@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-4.0.0.tgz#4f2d16879adc637cdfe9056cbc02de30e88ffa32"
+  integrity sha512-QAxkXyzT/TXgwGyY4rTgC95Ex6/lZ5/lYTV9nug6eJt93BCBQGOE47D/g2+/m5J1MrVLr2ot97OXkBZ9bBpR4A==
   dependencies:
     uc.micro "^1.0.1"
 
@@ -9174,14 +9176,14 @@ markdown-it-table-of-contents@^0.4.0:
   resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.4.4.tgz#3dc7ce8b8fc17e5981c77cc398d1782319f37fbc"
   integrity sha512-TAIHTHPwa9+ltKvKPWulm/beozQU41Ab+FIefRaQV1NRnpzwcV9QOe6wXQS5WLivm5Q/nlo0rl6laGkMDZE7Gw==
 
-markdown-it@12.3.2:
-  version "12.3.2"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-12.3.2.tgz#bf92ac92283fe983fe4de8ff8abfb5ad72cd0c90"
-  integrity sha512-TchMembfxfNVpHkbtriWltGWc+m3xszaRD0CZup7GFFhzIgQqxIfn3eGj1yZpfuflzPvfkt611B2Q/Bsk1YnGg==
+markdown-it@13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-13.0.0.tgz#f0803ded286980dc9f35972dad159cc4e64848f6"
+  integrity sha512-WArlIpVFvVwb8t3wgJuOsbMLhNWlzuQM7H2qXmuUEnBtXRqKjLjwFUMbZOyJgHygVZSjvcLR4EcXcRilqMavrA==
   dependencies:
     argparse "^2.0.1"
-    entities "~2.1.0"
-    linkify-it "^3.0.1"
+    entities "~3.0.1"
+    linkify-it "^4.0.0"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 

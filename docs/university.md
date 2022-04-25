@@ -114,7 +114,7 @@ pageClass: routes
 
 ### 信科公告通知
 
-<Route author="Ir1d" example="/pku/eecs/0" path="/pku/eecs/:type" :paramsDesc="['分区 type，可在网页 URL 中找到']">
+<Route author="Ir1d" example="/pku/eecs/0" path="/pku/eecs/:type" :paramsDesc="['分区 type，可在网页 URL 中找到']" radar="1" rssbud="1">
 
 | 全部 | 学院通知 | 人事通知 | 教务通知 | 学工通知 | 科研通知 | 财务通知 | 工会通知 | 院友通知 |
 | -- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -124,15 +124,15 @@ pageClass: routes
 
 ### 每周一推 - 中国政治学研究中心
 
-<Route author="vhxubo" example="/pku/rccp/mzyt" path="/pku/rccp/mzyt" />
+<Route author="vhxubo" example="/pku/rccp/mzyt" path="/pku/rccp/mzyt" radar="1" rssbud="1"/>
 
 ### 生命科学学院近期讲座
 
-<Route author="TPOB" example="/pku/cls/lecture" path="/pku/cls/lecture" />
+<Route author="TPOB" example="/pku/cls/lecture" path="/pku/cls/lecture" radar="1" rssbud="1"/>
 
 ### 北大未名 BBS 全站十大
 
-<Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot">
+<Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot" radar="1" rssbud="1">
 
 ::: warning 注意
 
@@ -142,9 +142,19 @@ pageClass: routes
 
 </Route>
 
+### 学生就业指导服务中心
+
+<Route author="DylanXie123" example="/pku/scc/recruit/zpxx" path="/pku/scc/recruit/:type?" :paramsDesc="['分区，见下表，默认请求 `tzgg`']" radar="1" rssbud="1">
+
+| xwrd | tzgg | zpxx | gfjgxx | sxxx | cyxx |
+| ---- | ---- | ---- | ------ | ---- | ---- |
+| 新闻热点 | 通知公告 | 招聘信息 | 国防军工信息 | 实习信息 | 创业信息 |
+
+</Route>
+
 ### 人事处
 
-<Route author="nczitzk" example="/pku/hr" path="/pku/hr/:category?" :paramsDesc="['分类，见下方说明，默认为首页最新公告']">
+<Route author="nczitzk" example="/pku/hr" path="/pku/hr/:category?" :paramsDesc="['分类，见下方说明，默认为首页最新公告']" radar="1" rssbud="1">
 
 ::: tip 提示
 
@@ -155,6 +165,10 @@ pageClass: routes
 :::
 
 </Route>
+
+### 研究生招生网
+
+<Route author="shengmaosu" example="/pku/admission/sszs" path="/pku/admission/sszs" radar="1" rssbud="1"/>
 
 ## 北京航空航天大学
 
