@@ -1834,6 +1834,9 @@
     "/swpu/scs/:code": [
         "CYTMWIA"
     ],
+    "/syosetu/chapter/:id": [
+        "huangliangshusheng"
+    ],
     "/sysu/sysu/cse": [
         "Neutrino3316",
         "MegrezZhu",
