@@ -3120,6 +3120,12 @@ type 列表：
 
 <Route author="sushengmao" example="/zkyai" path="/zkyai" />
 
+## 中南财经政法大学
+
+### 通知公告
+
+<Route author="nczitzk" example="/zuel/notice" path="/zuel/notice"/>
+
 ## 中南大学
 
 ### 招聘信息
