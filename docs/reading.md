@@ -93,6 +93,16 @@ pageClass: routes
 
 </Route>
 
+## syosetu
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://ncode.syosetu.com/n1976ey/>
+
+</Route>
+
 ## UU 看书
 
 ### 小说更新
