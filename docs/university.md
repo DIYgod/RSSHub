@@ -3138,6 +3138,16 @@ type 列表：
 
 </Route>
 
+### 计算机学院
+
+<Route author="j1g5awi" example="/csu/cse" path="/csu/cse/:type?" :paramsDesc="['类型']">
+
+| 类型 | 学院新闻 | 通知公告 | 学术信息 | 学工动态 | 科研动态 |
+| -- | ---- | ---- | ---- | ---- | ---- |
+| 参数 | xyxw | tzgg | xsxx | xgdt | kydt |
+
+</Route>
+
 ## 中山大学
 
 ### 数据科学与计算机学院动态
