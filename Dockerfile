@@ -35,6 +35,7 @@ RUN \
     yarn install --production --frozen-lockfile --network-timeout 1000000 && \
     yarn cache clean
 
+# ---------------------------------------------------------------------------------------------------------------------
 
 FROM debian:bullseye-slim as dep-version-parser
 # This stage is necessary to limit the cache miss scope.
@@ -50,6 +51,7 @@ RUN \
     grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
     grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
+# ---------------------------------------------------------------------------------------------------------------------
 
 FROM node:16-bullseye-slim as docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
@@ -76,11 +78,12 @@ RUN \
     export PROJECT_ROOT=/app && \
     node /minifier/minify-docker.js && \
     rm -rf /app/node_modules /app/scripts && \
-    cp -r /app/app-minimal/node_modules /app/ && \
+    mv /app/app-minimal/node_modules /app/ && \
     rm -rf /app/app-minimal && \
     ls -la /app && \
     du -hd1 /app
 
+# ---------------------------------------------------------------------------------------------------------------------
 
 FROM node:16-bullseye-slim as chromium-downloader
 # This stage is necessary to improve build concurrency and minimize the image size.
@@ -107,6 +110,7 @@ RUN \
         mkdir -p /app/node_modules/puppeteer ; \
     fi;
 
+# ---------------------------------------------------------------------------------------------------------------------
 
 FROM node:16-bullseye-slim as app
 
@@ -130,19 +134,52 @@ RUN \
     ; \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
         apt-get install -yq --no-install-recommends \
-            ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
-            libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 \
-            libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
-            libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release wget xdg-utils \
-            libayatana-appindicator3-1 \
+            ca-certificates fonts-liberation wget xdg-utils \
+            libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 libexpat1 \
+            libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 \
+            libxfixes3 libxkbcommon0 libxrandr2 \
     ; \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=chromium-downloader /app/node_modules/puppeteer /app/node_modules/puppeteer
+
+# if grep matches nothing then it will exit with 1, thus, we cannot `set -e` here
+RUN \
+    set -x && \
+    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
+        echo 'Verifying Chromium installation...' && \
+        ldd $(find /app/node_modules/puppeteer/ -name chrome) | grep "not found" ; \
+        if [ "$?" = 0 ]; then \
+            echo "!!! Chromium has unmet shared libs !!!" && \
+            exit 1 ; \
+        else \
+            echo "Awesome! All shared libs are met!" ; \
+        fi; \
+    fi;
+
 COPY --from=docker-minifier /app /app
 
 EXPOSE 1200
 ENTRYPOINT ["dumb-init", "--"]
 
 CMD ["npm", "run", "start"]
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+# In case Chromium has unmet shared libs, here is some magic to find and install the packages they belong to:
+# In most case you can just stop at `grep ^lib` and add those packages to the above stage.
+#
+# apt-get update && \
+# apt install -yq --no-install-recommends \
+#     apt-file \
+# && \
+# apt-file update && \
+# ldd $(find /app/node_modules/puppeteer/ -name chrome) | grep -Po "\S+(?= => not found)" | \
+# sed 's/\./\\./g' | awk '{print $1"$"}' | apt-file search -xlf - | grep ^lib | \
+# xargs -d '\n' -- \
+#     apt-get install -yq --no-install-recommends \
+# && \
+# apt purge -yq --auto-remove \
+#     apt-file \
+# rm -rf /tmp/.chromium_path /var/lib/apt/lists/*
