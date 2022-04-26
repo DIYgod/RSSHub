@@ -87,7 +87,7 @@ Edit `environment` in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob
 
 ## Docker Deployment
 
-> To enable puppeteer, use `diygod/rsshub:chromium-bundled` instead (only on x86_64)
+> **To enable puppeteer, replace `diygod/rsshub` with `diygod/rsshub:chromium-bundled` in EACH command (only on x86_64)**
 
 ### Install
 

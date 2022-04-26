@@ -4,7 +4,7 @@ sidebar: auto
 
 # 部署
 
-部署 RSSHub 需要基本的计算机编程常识，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new/choose)，我们会尽快给您答复
+部署 RSSHub 需要基本的计算机编程常识，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new/choose)，我们会尽快给您答复。
 
 部署涉及到以下基本编程常识：
 
@@ -23,7 +23,7 @@ sidebar: auto
 
 ## Docker 镜像
 
-默认推荐使用 `diygod/rsshub` 即 `diygod/rsshub:latest` 最新版镜像以获取最新路由
+默认推荐使用 `diygod/rsshub` 即 `diygod/rsshub:latest` 最新版镜像以获取最新路由。
 
 当 `diygod/rsshub:latest` 存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
 
@@ -87,7 +87,7 @@ $ docker pull diygod/rsshub
 
 ## Docker 部署
 
-> 如需启用 puppeteer，请改用 `diygod/rsshub:chromium-bundled` (仅限 x86\_64 架构)
+> **如需启用 puppeteer，请在每条命令中均将 `diygod/rsshub` 替换为 `diygod/rsshub:chromium-bundled` (仅限 x86\_64 架构)**
 
 ### 安装
 
