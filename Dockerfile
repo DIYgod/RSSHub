@@ -15,7 +15,7 @@ FROM node:14-buster-slim as dep-builder
 
 WORKDIR /app
 
-# placing ARG statement before RUN statement which need it to avoid cache miss
+# place ARG statement before RUN statement which need it to avoid cache miss
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
@@ -24,37 +24,68 @@ RUN \
         npm config set registry https://registry.npmmirror.com; \
     fi;
 
-COPY ./yarn.lock /app
-COPY ./package.json /app
+COPY ./yarn.lock /app/
+COPY ./package.json /app/
 
-# lazy install Chromium to avoid cache miss
+# lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
 RUN \
     set -ex && \
     export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && \
-    yarn --frozen-lockfile --network-timeout 1000000 && \
+    yarn install --production --frozen-lockfile --network-timeout 1000000 && \
+    yarn cache clean
+
+
+FROM debian:buster-slim as dep-version-parser
+# This stage is necessary to limit the cache miss scope.
+# With this stage, any modification to package.json won't break the build cache of the next two stages as long as the
+# version unchanged.
+# node:14-buster-slim is based on debian:buster-slim so this stage would not cause any additional download.
+
+WORKDIR /ver
+COPY ./package.json /app/
+RUN \
+    set -ex && \
+    grep -Po '(?<="puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version && \
+    grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
+    grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
+
+
+FROM node:14-buster-slim as docker-minifier
+# The stage is used to further reduce the image size by removing unused files.
+
+WORKDIR /minifier
+COPY --from=dep-version-parser /ver/* /minifier/
+
+ARG USE_CHINA_NPM_REGISTRY=0
+RUN \
+    set -ex && \
+    if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
+        npm config set registry https://registry.npmmirror.com; \
+    fi; \
+    yarn add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) && \
     yarn cache clean
 
 COPY . /app
-RUN node scripts/docker/minify-docker.js
+COPY --from=dep-builder /app /app
 
-
-FROM debian:buster-slim as puppeteer-version-parser
-# This stage is necessary to limit the cache miss scope.
-# With this stage, any modification to package.json won't break the build cache of the next stage as long as the version
-# of puppeteer unchanged.
-# node:14-buster-slim is based on debian:buster-slim so this stage would not cause any additional download.
-
-WORKDIR /app
-COPY ./package.json /app
-RUN grep -Po '(?<="puppeteer": ")[^\s"]*(?=")' package.json | tee .puppeteer_version
+RUN \
+    set -ex && \
+    cp /app/scripts/docker/minify-docker.js /minifier/ && \
+    export PROJECT_ROOT=/app && \
+    node /minifier/minify-docker.js && \
+    rm -rf /app/node_modules /app/scripts && \
+    cp -r /app/app-minimal/node_modules /app/ && \
+    rm -rf /app/app-minimal && \
+    ls -la /app && \
+    du -hd1 /app
 
 
 FROM node:14-buster-slim as chromium-downloader
 # This stage is necessary to improve build concurrency and minimize the image size.
-# Yeah, downloading Chromium never need those dependencies below.
+# Yeah, downloading Chromium never needs those dependencies below.
 
 WORKDIR /app
-COPY --from=puppeteer-version-parser /app/.puppeteer_version /app/.puppeteer_version
+COPY --from=dep-version-parser /ver/.puppeteer_version /app/.puppeteer_version
 
 ARG USE_CHINA_NPM_REGISTRY=0
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
@@ -103,8 +134,7 @@ RUN \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=chromium-downloader /app/node_modules/puppeteer /app/node_modules/puppeteer
-COPY --from=dep-builder /app/app-minimal/node_modules /app/node_modules
-COPY . /app
+COPY --from=docker-minifier /app /app
 
 EXPOSE 1200
 ENTRYPOINT ["dumb-init", "--"]

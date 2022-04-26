@@ -22,6 +22,11 @@ app.json
 app-minimal
 .idea
 .env
+.editorconfig
+Procfile
+now.json
+jsconfig.json
+package-lock.json
 
 #git but keep the git commit hash
 .git/logs
