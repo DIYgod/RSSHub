@@ -21,7 +21,8 @@ RUN \
     set -ex && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
-        npm config set registry https://registry.npmmirror.com; \
+        npm config set registry https://registry.npmmirror.com && \
+        yarn config set registry https://registry.npmmirror.com ; \
     fi;
 
 COPY ./yarn.lock /app/
@@ -60,7 +61,8 @@ ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-        npm config set registry https://registry.npmmirror.com; \
+        npm config set registry https://registry.npmmirror.com && \
+        yarn config set registry https://registry.npmmirror.com ; \
     fi; \
     yarn add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) && \
     yarn cache clean
@@ -94,7 +96,8 @@ RUN \
     set -ex ; \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
         if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
-            npm config set registry https://registry.npmmirror.com; \
+            npm config set registry https://registry.npmmirror.com && \
+            yarn config set registry https://registry.npmmirror.com ; \
         fi; \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && \
