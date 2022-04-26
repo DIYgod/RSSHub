@@ -378,6 +378,9 @@
     "/csc/notice/:type?": [
         "Derekmini"
     ],
+    "/csu/cse/:type?": [
+        "j1g5awi"
+    ],
     "/dahecube/:type?": [
         "linbuxiao"
     ],
@@ -2598,7 +2601,6 @@
     "/hust/aia/news": [],
     "/hust/aia/notice/:type?": [],
     "/jgsu/jwc": [],
-    "/csu/job/:type?": [],
     "/ouc/it/:type?": [],
     "/dlu/jiaowu/news": [],
     "/dgut/jwc/:type?": [],
