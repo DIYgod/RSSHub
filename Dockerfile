@@ -1,4 +1,4 @@
-FROM node:14-buster-slim as dep-builder
+FROM node:16-bullseye-slim as dep-builder
 
 # bash has already been the default shell
 #RUN ln -sf /bin/bash /bin/sh
@@ -35,11 +35,11 @@ RUN \
     yarn cache clean
 
 
-FROM debian:buster-slim as dep-version-parser
+FROM debian:bullseye-slim as dep-version-parser
 # This stage is necessary to limit the cache miss scope.
 # With this stage, any modification to package.json won't break the build cache of the next two stages as long as the
 # version unchanged.
-# node:14-buster-slim is based on debian:buster-slim so this stage would not cause any additional download.
+# node:16-bullseye-slim is based on debian:bullseye-slim so this stage would not cause any additional download.
 
 WORKDIR /ver
 COPY ./package.json /app/
@@ -50,7 +50,7 @@ RUN \
     grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
 
-FROM node:14-buster-slim as docker-minifier
+FROM node:16-bullseye-slim as docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
 
 WORKDIR /minifier
@@ -80,7 +80,7 @@ RUN \
     du -hd1 /app
 
 
-FROM node:14-buster-slim as chromium-downloader
+FROM node:16-bullseye-slim as chromium-downloader
 # This stage is necessary to improve build concurrency and minimize the image size.
 # Yeah, downloading Chromium never needs those dependencies below.
 
@@ -105,7 +105,7 @@ RUN \
     fi;
 
 
-FROM node:14-buster-slim as app
+FROM node:16-bullseye-slim as app
 
 LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
@@ -117,6 +117,8 @@ WORKDIR /app
 # install deps first to avoid cache miss or disturbing buildkit to build concurrently
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
 # https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#chrome-headless-doesnt-launch-on-unix
+# https://github.com/puppeteer/puppeteer/issues/7822
+# https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
 RUN \
     set -ex && \
     apt-get update && \
@@ -125,11 +127,12 @@ RUN \
     ; \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
         apt-get install -yq --no-install-recommends \
-            ca-certificates fonts-liberation libappindicator3-1 libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 \
-            libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 \
-            libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
-            libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release \
-            wget xdg-utils ; \
+            ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
+            libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libgcc1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 \
+            libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 \
+            libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release wget xdg-utils \
+            libayatana-appindicator3-1 \
+    ; \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
