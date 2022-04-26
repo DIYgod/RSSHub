@@ -11,7 +11,6 @@ FROM node:14-buster-slim as dep-builder
 #    apt-get install -yq --no-install-recommends \
 #        libgconf-2-4 apt-transport-https git dumb-init python3 build-essential \
 #    && \
-#    apt-get clean && \
 #    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -77,7 +76,7 @@ RUN \
 
 FROM node:14-buster-slim as app
 
-LABEL MAINTAINER="https://github.com/DIYgod/RSSHub/"
+LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
 ENV NODE_ENV production
 ENV TZ Asia/Shanghai
@@ -101,7 +100,6 @@ RUN \
             libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release \
             wget xdg-utils ; \
     fi; \
-    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=chromium-downloader /app/node_modules/puppeteer /app/node_modules/puppeteer
