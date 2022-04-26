@@ -1221,6 +1221,9 @@
     "/javlibrary/:type/:id/:language?": [
         "nczitzk"
     ],
+    "/jd/price/:id": [
+        "nczitzk"
+    ],
     "/jewishmuseum/exhibitions": [
         "chazeon"
     ],
