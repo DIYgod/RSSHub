@@ -171,6 +171,20 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="hoilc" example="/haohaozhu/discover/厨房" path="/haohaozhu/discover/:keyword?" :paramsDesc="['分类名或关键字，请使用中文']"/>
 
+## 京东
+
+### 商品价格
+
+<Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" :paramsDesc="['商品 id，可在商品详情页 URL 中找到']">
+
+::: tip 提示
+
+如商品 <https://item.jd.com/526835.html> 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
+
+:::
+
+</Route>
+
 ## 京东众筹
 
 ### 众筹项目
