@@ -1290,13 +1290,19 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## 人人影视
 
-### 评测推荐
+### 影视资讯
 
-<Route author="wb121017405" example="/rrys/review" path="/rrys/review" />
+<Route author="wb121017405" example="/yyets/article" path="/yyets/article/:type?" paramsDesc="['分类，见下表，默认为全部']" radar="1" rssbud="1">
 
-### 今日更新
+| 全部 | 影视资讯 | 收视快报   | 人人影评     | 人人剧评     | 新剧评测       | 片单推荐  |
+| -- | ---- | ------ | -------- | -------- | ---------- | ----- |
+|    | news | report | m_review | t_review | new_review | recom |
 
-<Route author="alcarl" example="/yyets/todayfilelist" path="/yyets/todayfilelist" />
+</Route>
+
+### 今日播出
+
+<Route author="bao1991213" example="/yyets/today" path="/yyets/today" radar="1" rssbud="1"/>
 
 ## 色花堂中文论坛
 
