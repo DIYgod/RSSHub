@@ -5,8 +5,13 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
   format:
+    permissions:
+      contents: write  # for Git to git push
     name: Auto format
     runs-on: ubuntu-latest
 

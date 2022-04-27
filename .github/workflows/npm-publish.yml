@@ -7,6 +7,9 @@ on:
     paths:
       - 'lib/**'
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: npm publish

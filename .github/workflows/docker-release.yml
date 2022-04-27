@@ -17,6 +17,8 @@ on:
 
 jobs:
   check-env:
+    permissions:
+      contents: none
     runs-on: ubuntu-latest
     outputs:
       check-docker: ${{ steps.check-docker.outputs.defined }}
