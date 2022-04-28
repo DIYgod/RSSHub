@@ -4,7 +4,7 @@ sidebar: auto
 
 # 部署
 
-部署 RSSHub 需要基本的计算机编程常识，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new/choose)，我们会尽快给您答复
+部署 RSSHub 需要基本的计算机编程常识，如果您在部署过程中遇到无法解决的问题请到 [issues](https://github.com/DIYgod/RSSHub/issues) 寻找类似的问题或 [向我们提问](https://github.com/DIYgod/RSSHub/issues/new/choose)，我们会尽快给您答复。
 
 部署涉及到以下基本编程常识：
 
@@ -23,14 +23,19 @@ sidebar: auto
 
 ## Docker 镜像
 
-默认推荐使用`diygod/rsshub`即`diygod/rsshub:latest`最新版镜像以获取最新路由.
-当`diygod/rsshub:latest`存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
+默认推荐使用 `diygod/rsshub` 即 `diygod/rsshub:latest` 最新版镜像以获取最新路由。
+
+当 `diygod/rsshub:latest` 存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
 
 ```bash
 $ docker pull diygod/rsshub:2021-06-18
 ```
 
-待最新镜像更新后在切换回`diygod/rsshub:latest`最新版镜像.
+待最新镜像更新后再切换回 `diygod/rsshub:latest` 最新版镜像。
+
+如需在 x86\_64 (amd64) 架构上部署启用 puppeteer 的版本，可使用 `diygod/rsshub:chromium-bundled`，若指定日期则为 `diygod/rsshub:chromium-bundled-2021-06-18`。
+
+在所有受支持的架构上，均可使用 Docker Compose 部署以启用 puppeteer，但更消耗磁盘空间和内存。通过修改 `docker-compose.yml` 文件，也可以使用 `diygod/rsshub:chromium-bundled`，这样就没有更消耗资源的问题了。
 
 ## Docker Compose 部署
 
@@ -39,7 +44,13 @@ $ docker pull diygod/rsshub:2021-06-18
 下载 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml)
 
 ```bash
-wget https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml
+$ wget https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml
+```
+
+检查有无需要修改的配置
+
+```bash
+$ vi docker-compose.yml  # 也可以是你喜欢的编辑器
 ```
 
 创建 volume 持久化 Redis 缓存
@@ -75,6 +86,8 @@ $ docker pull diygod/rsshub
 修改 [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml) 中的 `environment` 进行配置
 
 ## Docker 部署
+
+> **如需启用 puppeteer，请在每条命令中均将 `diygod/rsshub` 替换为 `diygod/rsshub:chromium-bundled` (仅限 x86\_64 架构)**
 
 ### 安装
 
@@ -119,7 +132,7 @@ $ docker rm rsshub
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
-该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
+该部署方式不包括 puppeteer (除非在 x86\_64 架构上改用 `diygod/rsshub:chromium-bundled`) 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
 更多配置项请看 [#配置](#pei-zhi)
 
