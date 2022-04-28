@@ -402,3 +402,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### What's New
 
 <RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+
+## Zotero
+
+### Version History
+
+<RouteEn author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
