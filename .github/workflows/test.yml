@@ -2,6 +2,9 @@ name: test
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+
 jobs:
   jest:
     runs-on: ubuntu-latest
