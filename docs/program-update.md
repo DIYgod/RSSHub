@@ -510,7 +510,7 @@ pageClass: routes
 
 ## Zotero
 
-### Version History
+### 版本历史
 
 <Route author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
 
