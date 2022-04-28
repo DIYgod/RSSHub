@@ -130,7 +130,7 @@
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
-    "twit": "2.2.11",
+    "twitter-api-v2": "1.12.0",
     "winston": "3.7.2",
     "xml2js": "0.4.23"
   },
