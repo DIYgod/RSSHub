@@ -775,11 +775,24 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 上市公告 - 可转换债券
 
-<Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
+<Route author="Jeason0228 nczitzk" example="/szse/notice" path="/szse/notice"/>
 
-### 问询函件 (全部 / 主板 / 中小企业板 / 创业板)
+### 问询函件
 
-<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
+<Route author="Jeason0228 nczitzk" example="/szse/inquire" path="/szse/inquire/:category?/:select?/:keyword?" :paramsDesc="['类型，见下表，默认为 `0` 即 主板', '函件类别, 见下表，默认为全部函件类别', '公司代码或简称，默认为空']">
+
+类型
+
+| 主板 | 创业板 |
+| -- | --- |
+| 0  | 1   |
+
+函件类别
+
+| 全部函件类别 | 非许可类重组问询函 | 问询函 | 违法违规线索分析报告 | 许可类重组问询函 | 监管函（会计师事务所模板） | 提请关注函（会计师事务所模板） | 年报问询函 | 向中介机构发函 | 半年报问询函 | 关注函 | 公司部函 | 三季报问询函 |
+| - | - | - | - | - | - | - | - | - | - | - | - | - |
+
+</Route>
 
 ### 最新规则
 
