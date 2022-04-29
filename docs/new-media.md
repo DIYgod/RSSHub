@@ -162,6 +162,12 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## C114 通信网
+
+### 滚动新闻
+
+<Route author="nczitzk" example="/c114/roll" path="/c114/roll"/>
+
 ## CBNData
 
 ### 看点
