@@ -24,10 +24,32 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - run: yarn
-      - run: npm run jest:coverage
+      - name: Install dependencies (yarn)
+        run: yarn
+      - name: Test with coverage
+        run: npm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
+      - name: Install Chromium from Ubuntu and and Chrome from Google
+        # Chromium from Ubuntu is too old (85), but can still pass the tests
+        # That's not really a problem since Chromium-bundled Docker image is based on Debian bullseye,
+        # which updates Chromium frequently, and only on arm/arm64 the image needs Chromium from Debian.
+        run: |
+          set -ex
+          curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
+            sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+          echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
+            sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+          sudo apt-get update
+          sudo apt-get install -yq --no-install-recommends chromium-browser google-chrome-stable
+      - name: Test puppeteer with Chromium from Ubuntu
+        run: npm run jest puppeteer
+        env:
+          CHROMIUM_EXECUTABLE_PATH: chromium-browser
+      - name: Test puppeteer with Chrome from Google
+        run: npm run jest puppeteer
+        env:
+          CHROMIUM_EXECUTABLE_PATH: google-chrome-stable
       - name: Upload coverage to Codecov
         if: ${{ matrix.node-version == '16' }}
         uses: codecov/codecov-action@v3

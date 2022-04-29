@@ -3,8 +3,8 @@ version: '3'
 services:
     rsshub:
         # two ways to enable puppeteer:
-        # * (only on amd64/x86_64) comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
-        # * (on all supported architectures, but consumes more disk space and memory) leave anything unchanged
+        # * comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
+        # * (consumes more disk space and memory) leave everything unchanged
         image: diygod/rsshub
         restart: always
         ports:
