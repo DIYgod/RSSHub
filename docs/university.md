@@ -1723,39 +1723,59 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南京理工大学
 
-### 南京理工大学教务处
+### 教务处
 
-<Route author="MilkShakeYoung" example="/njust/jwc/1" path="/njust/jwc/:type" :paramsDesc="['1 为教师通知，2 为学生通知，3 为新闻，4 为学院动态']">
+<Route author="MilkShakeYoung jasongzy" example="/njust/jwc/xstz" path="/njust/jwc/:type?" :paramsDesc="['分类名，见下表，默认为学生通知']">
 
 | 教师通知 | 学生通知 | 新闻 | 学院动态 |
 | ---- | ---- | -- | ---- |
-| 1    | 2    | 3  | 4    |
+| jstz | xstz | xw | xydt |
 
 </Route>
 
-### 南京理工大学财务处
+### 财务处
 
-<Route author="MilkShakeYoung" example="/njust/cwc/1" path="/njust/cwc/:type" :paramsDesc="['1 为新闻及通知，2 为办事指南']">
+<Route author="MilkShakeYoung jasongzy" example="/njust/cwc/tzgg" path="/njust/cwc/:type?" :paramsDesc="['分类名，见下表，默认为通知公告']">
 
-| 新闻及通知 | 办事指南 |
-| ----- | ---- |
-| 1     | 2    |
+| 通知公告 | 办事流程 |
+| ---- | ---- |
+| tzgg | bslc |
 
 </Route>
 
-### 南京理工大学研究生院
+### 研究生院
 
-<Route author="MilkShakeYoung" example="/njust/gs/1" path="/njust/gs/:type" :paramsDesc="['1 为通知公告，2 为学术公告']">
+<Route author="MilkShakeYoung jasongzy" example="/njust/gs/tzgg" path="/njust/gs/:type?" :paramsDesc="['分类名，见下表，默认为通知公告']">
 
 | 通知公告 | 学术公告 |
 | ---- | ---- |
-| 1    | 2    |
+| tzgg | xsgg |
 
 </Route>
 
-### 南京理工大学电光学院
+### 电光学院
 
-<Route author="jasongzy" example="/njust/eo/17/tz" path="/njust/eo/:grade?/:type?" :paramsDesc="['年级默认为 `17`', '类别默认为 `tz`']">
+<Route author="jasongzy" example="/njust/eoe/tzgg" path="/njust/eoe/:type?" :paramsDesc="['分类名，见下表，默认为通知公告']">
+
+| 通知公告 | 新闻动态 |
+| ---- | ---- |
+| tzgg | xwdt |
+
+</Route>
+
+### 电光学院研学网
+
+<Route author="jasongzy" example="/njust/dgxg/gstz" path="/njust/dgxg/:type?" :paramsDesc="['分类名，见下表，默认为公示通知']">
+
+| 公示通知 | 学术文化 | 就业指导 |
+| ---- | ---- | ---- |
+| gstz | xswh | jyzd |
+
+</Route>
+
+### 电光学院年级网站
+
+<Route author="jasongzy" example="/njust/eo/17/tz" path="/njust/eo/:grade?/:type?" :paramsDesc="['年级，见下表，默认为本科 2017 级，未列出的年级所对应的参数可以从级网二级页面的 URL 中找到，例如：本科 2020 级为 `_t1316`', '类别，见下表，默认为年级通知（通知公告），未列出的年级所对应的参数可以从级网二级页面的 URL 中找到，例如：电光 20 的通知公告为 `tzgg_12969`']">
 
 grade 列表：
 

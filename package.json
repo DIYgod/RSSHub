@@ -118,6 +118,8 @@
     "pidusage": "3.0.0",
     "plist": "3.0.5",
     "puppeteer": "13.7.0",
+    "puppeteer-extra": "*",
+    "puppeteer-extra-plugin-stealth": "*",
     "query-string": "7.1.1",
     "rand-user-agent": "1.0.60",
     "require-all": "3.0.0",
