@@ -19,9 +19,10 @@
     "format": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
     "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
-    "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
-    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
-    "jest:watch": "cross-env NODE_ENV=test jest --watch"
+    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
+    "jest:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --forceExit --detectOpenHandles",
+    "jest:watch": "cross-env NODE_ENV=test jest --watch",
+    "test": "npm run format:check && npm run jest:coverage"
   },
   "repository": {
     "type": "git",
@@ -148,7 +149,9 @@
     ],
     "collectCoverageFrom": [
       "lib/**/*.js",
-      "!lib/routes/**/*.js"
+      "!lib/routes/**/*.js",
+      "!lib/v2/**/*.js",
+      "!lib/radar-rules.js"
     ],
     "bail": true,
     "testEnvironment": "node",
