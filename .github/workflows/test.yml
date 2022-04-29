@@ -25,13 +25,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn
-      - run: npm run jest
+      - run: npm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
+        if: ${{ matrix.node-version == '16' }}
         uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+        # with:
+        #   token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
 
   docs:
     runs-on: ubuntu-latest
