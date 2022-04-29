@@ -57,7 +57,7 @@
     "jest": "28.0.2",
     "mockdate": "3.0.5",
     "nock": "13.2.4",
-    "nodemon": "2.0.15",
+    "nodemon": "2.0.16",
     "prettier": "2.6.2",
     "prettier-check": "2.0.0",
     "pretty-quick": "3.1.3",
