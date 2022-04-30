@@ -1852,6 +1852,17 @@
         "MegrezZhu",
         "nczitzk"
     ],
+    "/szse/inquire/:category?/:select?/:keyword?": [
+        "Jeason0228",
+        "nczitzk"
+    ],
+    "/szse/notice": [
+        "Jeason0228",
+        "nczitzk"
+    ],
+    "/szse/projectdynamic/:type?/:stage?/:status?": [
+        "nczitzk"
+    ],
     "/szse/rule": [
         "nczitzk"
     ],
@@ -3119,9 +3130,6 @@
     "/sse/renewal": [],
     "/sse/inquire": [],
     "/sse/disclosure/:query?": [],
-    "/szse/notice": [],
-    "/szse/inquire/:type": [],
-    "/szse/projectdynamic/:type?/:stage?/:status?": [],
     "/jskou/:type?": [],
     "/cneb/yjxx": [],
     "/cneb/guoneinews": [],
