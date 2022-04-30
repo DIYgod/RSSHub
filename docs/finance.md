@@ -422,7 +422,7 @@ pageClass: routes
 
 ### 有知文章
 
-<Route author="broven Fatpandac" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:column?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="broven Fatpandac nczitzk" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:id?" :paramsDesc="['分类，见下表，默认为全部']">
 
 |  全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
 | :-: | :---: | :---: | :--: | :--: | :---: | :----: |
