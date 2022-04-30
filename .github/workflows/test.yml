@@ -31,8 +31,8 @@ jobs:
       - name: Upload coverage to Codecov
         if: ${{ matrix.node-version == '16' }}
         uses: codecov/codecov-action@v3
-        # with:
-        #   token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
 
   docs:
     runs-on: ubuntu-latest
