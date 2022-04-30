@@ -1297,6 +1297,20 @@ Supported sub-sites:
 
 <Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
 
+## 艾莱资讯
+
+### 世界轨道交通资讯网
+
+<Route author="Rongronggg9" example="/ally/rail/hyzix/chengguijiaotong/" path="/ally/rail/:category?/:topic?" :paramsDesc="['分类，可在 URL 中找到；略去则抓取首页', '话题，可在 URL 中找到；并非所有页面均有此字段']" radar="1" rssbud="1">
+
+::: tip 提示
+
+默认抓取前 20 条，可通过 `?limit=` 改变。
+
+:::
+
+</Route>
+
 ## 爱范儿 ifanr
 
 ### 爱范儿频道
