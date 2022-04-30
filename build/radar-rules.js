@@ -5362,7 +5362,7 @@
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '4') {
+                    if (new URL(url).searchParams.get('column_id') === '4') {
                         return '/youzhiyouxing/materials/4';
                     }
                 } },
@@ -5370,7 +5370,7 @@
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '2') {
+                    if (new URL(url).searchParams.get('column_id') === '2') {
                         return '/youzhiyouxing/materials/2';
                     }
                 } },
@@ -5378,7 +5378,7 @@
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '10') {
+                    if (new URL(url).searchParams.get('column_id') === '10') {
                         return '/youzhiyouxing/materials/10';
                     }
                 } },
@@ -5386,7 +5386,7 @@
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '1') {
+                    if (new URL(url).searchParams.get('column_id') === '1') {
                         return '/youzhiyouxing/materials/1';
                     }
                 } },
@@ -5394,7 +5394,7 @@
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '3') {
+                    if (new URL(url).searchParams.get('column_id') === '3') {
                         return '/youzhiyouxing/materials/3';
                     }
                 } },
@@ -5402,7 +5402,7 @@
         docs:"https://docs.rsshub.app/finance.html#you-you-wei-zhi-zhi-you-you-wei-xing-hang-xing-hang-heng-you-you-wei-zhi-zhi-wen-zhang-zhang",
         source:[ "/materials" ],
         target:(_params, url) => {
-                    if (new URL(url).searchParams.get('column') === '11') {
+                    if (new URL(url).searchParams.get('column_id') === '11') {
                         return '/youzhiyouxing/materials/11';
                     }
                 } } ] },

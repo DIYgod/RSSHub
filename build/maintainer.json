@@ -2208,9 +2208,10 @@
         "xyqfer",
         "Fatpandac"
     ],
-    "/youzhiyouxing/materials/:column?": [
+    "/youzhiyouxing/materials/:id?": [
         "broven",
-        "Fatpandac"
+        "Fatpandac",
+        "nczitzk"
     ],
     "/yunspe/newsflash": [
         "x2009again"
