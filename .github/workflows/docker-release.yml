@@ -92,7 +92,7 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           cache-from: |
             type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
-          # type=gha,scope=docker-release # not needed, Docker automatically use local cache from the builder
+          # type=gha,scope=docker-release # not needed, Docker automatically uses local cache from the builder
           # type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:buildcache
           cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
 

@@ -226,7 +226,7 @@ $ pm2 start lib/index.js --name rsshub
 
 ::: tip 提示
 
-在 arm/arm64 上，此部署方式不包含 puppeteer 依赖。要启用 puppeteer，你需要先从发行版安装 Chromium，然后设置 `CHROMIUM_EXECUTABLE_PATH` 为其可执行路径。
+在 arm /arm64 上，此部署方式不包含 puppeteer 依赖。要启用 puppeteer，你需要先从发行版安装 Chromium，然后设置 `CHROMIUM_EXECUTABLE_PATH` 为其可执行路径。
 
 Debian:
 
@@ -236,7 +236,7 @@ $ echo >> .env
 $ echo 'CHROMIUM_EXECUTABLE_PATH=chromium' >> .env
 ```
 
-Ubuntu/Raspbian:
+Ubuntu / Raspbian:
 
 ```bash
 $ apt install chromium-browser
@@ -541,7 +541,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer\&show=api-browserwsendpoint)
 
-`CHROMIUM_EXECUTABLE_PATH`: Chromium (或 Chrome) 的可执行路径。若 puppeteer 没有下载捆绑的 Chromium (主动跳过或体系架构为 arm/arm64)，设置此项可启用 puppeteer。或者，偏好 Chrome 而不是 Chromium 时，此项也很有用。**注意**：`PUPPETEER_WS_ENDPOINT` 被设置时，此项不生效；仅在手动部署时有用，对于 Docker 部署，请改用 `chromium-bundled` 版本镜像。
+`CHROMIUM_EXECUTABLE_PATH`: Chromium (或 Chrome) 的可执行路径。若 puppeteer 没有下载捆绑的 Chromium (主动跳过下载或体系架构为 arm /arm64)，设置此项可启用 puppeteer。或者，偏好 Chrome 而不是 Chromium 时，此项也很有用。**注意**：`PUPPETEER_WS_ENDPOINT` 被设置时，此项不生效；仅在手动部署时有用，对于 Docker 部署，请改用 `chromium-bundled` 版本镜像。
 
 `TITLE_LENGTH_LIMIT`: 限制输出标题的字节长度，一个英文字符的长度为 1 字节，部分语言如中文，日文，韩文或阿拉伯文等，统一算作 2 字节，默认 `150`
 

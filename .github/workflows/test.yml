@@ -26,11 +26,11 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies (yarn)
         run: yarn
-      - name: Test with coverage
+      - name: Test all and generate coverage
         run: npm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
-      - name: Install Chromium from Ubuntu and and Chrome from Google
+      - name: Install Chromium from Ubuntu and Chrome from Google
         # Chromium from Ubuntu is too old (85), but can still pass the tests
         # That's not really a problem since Chromium-bundled Docker image is based on Debian bullseye,
         # which updates Chromium frequently, and only on arm/arm64 the image needs Chromium from Debian.
