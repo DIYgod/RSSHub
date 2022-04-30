@@ -1684,6 +1684,10 @@
     "/qweather/qweather/now/:location": [
         "Rein-Ou"
     ],
+    "/radio/:id": [
+        "kt286",
+        "nczitzk"
+    ],
     "/radio-canada/latest/:language?": [
         "nczitzk"
     ],
@@ -3018,7 +3022,6 @@
     "/sixthtone/news": [],
     "/aiyanxishe/:id/:sort?": [],
     "/huodongxing/explore": [],
-    "/radio/:channelname/:name": [],
     "/8btc/:authorid": [],
     "/8btc/news/flash": [],
     "/vuevideo/:userid": [],
