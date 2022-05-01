@@ -1809,6 +1809,37 @@
     "/ssm/news": [
         "Fatpandac"
     ],
+    "/sspai/activity/:slug": [
+        "umm233"
+    ],
+    "/sspai/author/:id": [
+        "SunShinenny",
+        "hoilc"
+    ],
+    "/sspai/column/:id": [
+        "LogicJake"
+    ],
+    "/sspai/index": [
+        "HenryQW"
+    ],
+    "/sspai/matrix": [
+        "feigaoxyz"
+    ],
+    "/sspai/series": [
+        "HenryQW"
+    ],
+    "/sspai/shortcuts": [
+        "Andiedie"
+    ],
+    "/sspai/tag/:keyword": [
+        "Jeason0228"
+    ],
+    "/sspai/topic/:id": [
+        "SunShinenny"
+    ],
+    "/sspai/topics": [
+        "SunShinenny"
+    ],
     "/startuplatte/:category?": [
         "nczitzk"
     ],
@@ -2671,15 +2702,6 @@
     "/ifanr/:channel?": [],
     "/ipsw/index/:ptype/:pname": [],
     "/curseforge/files/:project": [],
-    "/sspai/series": [],
-    "/sspai/shortcuts": [],
-    "/sspai/matrix": [],
-    "/sspai/column/:id": [],
-    "/sspai/author/:id": [],
-    "/sspai/topics": [],
-    "/sspai/topic/:id": [],
-    "/sspai/tag/:keyword": [],
-    "/sspai/activity/:slug": [],
     "/iplay/home": [],
     "/xclient/app/:name": [],
     "/embassy/:country/:city?": [],
