@@ -196,7 +196,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ## 爱果果
 
-### 最新H5
+### 最新 H5
 
 <Route author="yuxinliu-alex" example="/iguoguo/html5" path="/iguoguo/html5" />
 
