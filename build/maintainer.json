@@ -2067,6 +2067,25 @@
     "/ustb/yjsy/news/wenfa": [
         "DA1Y1"
     ],
+    "/ustc/eeis/:type?": [
+        "jasongzy"
+    ],
+    "/ustc/gs/:type?": [
+        "jasongzy"
+    ],
+    "/ustc/job/:category?": [
+        "nczitzk"
+    ],
+    "/ustc/jwc/:type?": [
+        "hang333"
+    ],
+    "/ustc/news/:type?": [
+        "hang333",
+        "jasongzy"
+    ],
+    "/ustc/sist/:type?": [
+        "jasongzy"
+    ],
     "/verfghbw/press/:keyword?": [
         "quinn-dev"
     ],
@@ -2595,9 +2614,6 @@
     "/cas/iee/kydt": [],
     "/cas/cg/:caty?": [],
     "/cuc/yz": [],
-    "/ustc/news/:type?": [],
-    "/ustc/jwc/:type?": [],
-    "/ustc/job/:category?": [],
     "/utdallas/isso": [],
     "/nchu/jwc/:type?": [],
     "/cqu/jwc/:path*": [],
