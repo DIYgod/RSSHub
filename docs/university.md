@@ -2982,7 +2982,7 @@ type 列表：
 
 ### 官网通知公告
 
-<Route author="hang333" example="/ustc/news/gl" path="/ustc/news/:type?" :paramsDesc="['可选，默认为 gl']">
+<Route author="hang333 jasongzy" example="/ustc/news/gl" path="/ustc/news/:type?" :paramsDesc="['分类，默认为管理类']" radar="1" rssbud="1">
 
 | 教学类 | 科研类 | 管理类 | 服务类 |
 | --- | --- | --- | --- |
@@ -2992,7 +2992,7 @@ type 列表：
 
 ### 教务处通知新闻
 
-<Route author="hang333" example="/ustc/jwc/info" path="/ustc/jwc/:type?" :paramsDesc="['可选，默认显示所有种类']">
+<Route author="hang333" example="/ustc/jwc/info" path="/ustc/jwc/:type?" :paramsDesc="['分类，默认显示所有种类']" radar="1" rssbud="1">
 
 | 信息   | 教学       | 考试   | 交流       |
 | ---- | -------- | ---- | -------- |
@@ -3000,9 +3000,39 @@ type 列表：
 
 </Route>
 
-### 中国科学技术大学就业信息网
+### 研究生院
 
-<Route author="nczitzk" example="/ustc/job" path="/ustc/job/:category?" :paramsDesc="['分类，见下表，默认为招聘公告']">
+<Route author="jasongzy" example="/ustc/gs/tzgg" path="/ustc/gs/:type?" :paramsDesc="['分类，见下表，默认为通知公告']" radar="1" rssbud="1">
+
+| 通知公告 | 新闻动态 |
+| ---- | ---- |
+| tzgg | xwdt |
+
+</Route>
+
+### 信息科学技术学院
+
+<Route author="jasongzy" example="/ustc/sist/tzgg" path="/ustc/sist/:type?" :paramsDesc="['分类，见下表，默认为通知公告']" radar="1" rssbud="1">
+
+| 通知公告 | 招生工作 |
+| ---- | ---- |
+| tzgg | zsgz |
+
+</Route>
+
+### 电子工程与信息科学系
+
+<Route author="jasongzy" example="/ustc/eeis/tzgg" path="/ustc/eeis/:type?" :paramsDesc="['分类，见下表，默认为通知公告']" radar="1" rssbud="1">
+
+| 通知公告 | 新闻信息 |
+| ---- | ---- |
+| tzgg | xwxx |
+
+</Route>
+
+### 就业信息网
+
+<Route author="nczitzk" example="/ustc/job" path="/ustc/job/:category?" :paramsDesc="['分类，见下表，默认为招聘公告']" radar="1" rssbud="1">
 
 | 专场招聘会       | 校园双选会        | 空中宣讲      | 招聘公告     |
 | ----------- | ------------ | --------- | -------- |
