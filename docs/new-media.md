@@ -162,6 +162,12 @@ pageClass: routes
 
 <Route author="kt286" example="/bof/home" path="/bof/home" />
 
+## C114 通信网
+
+### 滚动新闻
+
+<Route author="nczitzk" example="/c114/roll" path="/c114/roll"/>
+
 ## CBNData
 
 ### 看点
@@ -1291,6 +1297,20 @@ Supported sub-sites:
 
 <Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
 
+## 艾莱资讯
+
+### 世界轨道交通资讯网
+
+<Route author="Rongronggg9" example="/ally/rail/hyzix/chengguijiaotong/" path="/ally/rail/:category?/:topic?" :paramsDesc="['分类，可在 URL 中找到；略去则抓取首页', '话题，可在 URL 中找到；并非所有页面均有此字段']" radar="1" rssbud="1">
+
+::: tip 提示
+
+默认抓取前 20 条，可通过 `?limit=` 改变。
+
+:::
+
+</Route>
+
 ## 爱范儿 ifanr
 
 ### 爱范儿频道
@@ -2388,51 +2408,51 @@ column 为 third 时可选的 category:
 
     -   人工智能
 
-    | 学术       | 开发者      |
-    | -------- | -------- |
-    | academic | yanxishe |
+                | 学术       | 开发者      |
+                | -------- | -------- |
+                | academic | yanxishe |
 
     -   数智化
 
-    | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
-    | --------- | ---------- | ---------- | --------- | ----------- |
-    | redigital | findigital | mandigital | medigital | citydigital |
+                | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
+                | --------- | ---------- | ---------- | --------- | ----------- |
+                | redigital | findigital | mandigital | medigital | citydigital |
 
     -   金融科技
 
-    | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
-    | ------- | ----- | ------------ | ------------ |
-    | BigTech | bank  | FinanceCloud | DataSecurity |
+                | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
+                | ------- | ----- | ------------ | ------------ |
+                | BigTech | bank  | FinanceCloud | DataSecurity |
 
     -   医疗科技
 
-    | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
-    | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
-    | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
+                | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
+                | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
+                | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
     -   芯片
 
-    | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
-    | --------- | ---------- | ------------- | --------- |
-    | materials | chipdesign | manufacturing | packaging |
+                | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
+                | --------- | ---------- | ------------- | --------- |
+                | materials | chipdesign | manufacturing | packaging |
 
     -   智慧城市
 
-    | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
-    | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
-    | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
+                | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
+                | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
+                | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
 
     -   工业互联网
 
-    | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
-    | ---------- | -------- | -------- | --------- |
-    | gysoftware | gysafety | 5ggy     | gypratice |
+                | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
+                | ---------- | -------- | -------- | --------- |
+                | gysoftware | gysafety | 5ggy     | gypratice |
 
     -   AIoT
 
-    | 物联网 | 智能硬件 | 机器人   | 智能家居      |
-    | --- | ---- | ----- | --------- |
-    | 5G  | arvr | robot | smarthome |
+                | 物联网 | 智能硬件 | 机器人   | 智能家居      |
+                | --- | ---- | ----- | --------- |
+                | 5G  | arvr | robot | smarthome |
 
 </Route>
 
@@ -2994,6 +3014,12 @@ column 为 third 时可选的 category:
 
 ## 少数派 sspai
 
+### 首页
+
+<Route author="HenryQW" example="/sspai/index" path="/sspai/index" radar="1">
+
+</Route>
+
 ### 最新上架付费专栏
 
 <Route author="HenryQW" example="/sspai/series" path="/sspai/series" radar="1">
@@ -3012,7 +3038,7 @@ column 为 third 时可选的 category:
 
 ### 专栏
 
-<Route author="LogicJake" example="/sspai/column/104" path="/sspai/column/:id"  :paramsDesc="['专栏 id']" radar="1"/>
+<Route author="LogicJake" example="/sspai/column/262" path="/sspai/column/:id"  :paramsDesc="['专栏 id']" radar="1"/>
 
 ### 作者
 

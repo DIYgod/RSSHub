@@ -508,6 +508,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 
+## Zotero
+
+### 版本历史
+
+<Route author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
+
 ## 怪物猎人世界
 
 ### 更新

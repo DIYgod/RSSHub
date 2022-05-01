@@ -19,9 +19,10 @@
     "format": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
     "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
-    "test": "npm run format:check && cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
-    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit",
-    "jest:watch": "cross-env NODE_ENV=test jest --watch"
+    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
+    "jest:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --forceExit --detectOpenHandles",
+    "jest:watch": "cross-env NODE_ENV=test jest --watch",
+    "test": "npm run format:check && npm run jest:coverage"
   },
   "repository": {
     "type": "git",
@@ -54,10 +55,10 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-yml": "0.14.0",
     "fs-extra": "10.1.0",
-    "jest": "28.0.1",
+    "jest": "28.0.3",
     "mockdate": "3.0.5",
     "nock": "13.2.4",
-    "nodemon": "2.0.15",
+    "nodemon": "2.0.16",
     "prettier": "2.6.2",
     "prettier-check": "2.0.0",
     "pretty-quick": "3.1.3",
@@ -69,7 +70,7 @@
     "remark-stringify": "9.0.1",
     "staged-git-files": "1.3.0",
     "string-width": "4.2.3",
-    "supertest": "6.2.2",
+    "supertest": "6.2.3",
     "tosource": "2.0.0-alpha.3",
     "vuepress": "1.9.7",
     "yorkie": "2.0.0"
@@ -111,13 +112,13 @@
     "koa-mount": "4.0.0",
     "lru-cache": "7.8.1",
     "lz-string": "1.4.4",
-    "mailparser": "3.4.0",
+    "mailparser": "3.5.0",
     "markdown-it": "13.0.0",
     "module-alias": "2.2.2",
     "parse-torrent": "9.1.5",
     "pidusage": "3.0.0",
     "plist": "3.0.5",
-    "puppeteer": "13.6.0",
+    "puppeteer": "13.7.0",
     "query-string": "7.1.1",
     "rand-user-agent": "1.0.60",
     "require-all": "3.0.0",
@@ -130,7 +131,7 @@
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
-    "twit": "2.2.11",
+    "twitter-api-v2": "1.12.0",
     "winston": "3.7.2",
     "xml2js": "0.4.23"
   },
@@ -148,7 +149,10 @@
     ],
     "collectCoverageFrom": [
       "lib/**/*.js",
-      "!lib/routes/**/*.js"
+      "!lib/routes/**/*.js",
+      "!lib/v2/**/*.js",
+      "!lib/radar-rules.js",
+      "!lib/router.js"
     ],
     "bail": true,
     "testEnvironment": "node",
