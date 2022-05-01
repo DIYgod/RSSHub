@@ -624,6 +624,9 @@
         "Derekmini",
         "sunwolf-swb"
     ],
+    "/embassy/:country/:city?": [
+        "HenryQW"
+    ],
     "/ems/news": [
         "luyuhuang"
     ],
@@ -2720,7 +2723,6 @@
     "/curseforge/files/:project": [],
     "/iplay/home": [],
     "/xclient/app/:name": [],
-    "/embassy/:country/:city?": [],
     "/dysfz": [],
     "/dysfz/index": [],
     "/kirara/news": [],
