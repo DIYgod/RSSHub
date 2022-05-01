@@ -2737,8 +2737,6 @@
     "/bbc/:site?/:channel?": [],
     "/verge": [],
     "/pediy/topic/:category?/:type?": [],
-    "/dwnews/yaowen/:region?": [],
-    "/dwnews/rank/:type?/:range?": [],
     "/miniapp/article/:category": [],
     "/miniapp/store/newest": [],
     "/laosiji/hot": [],
