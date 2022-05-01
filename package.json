@@ -151,7 +151,8 @@
       "lib/**/*.js",
       "!lib/routes/**/*.js",
       "!lib/v2/**/*.js",
-      "!lib/radar-rules.js"
+      "!lib/radar-rules.js",
+      "!lib/router.js"
     ],
     "bail": true,
     "testEnvironment": "node",
