@@ -221,6 +221,89 @@ pageClass: routes
 
 </Route>
 
+### 上市公司信息最新公告披露
+
+<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" />
+
+### 可转换公司债券公告
+
+<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
+
+### 科创板项目动态
+
+<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
+
+### 监管问询
+
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+
+## 深圳证券交易所
+
+### 上市公告 - 可转换债券
+
+<Route author="Jeason0228 nczitzk" example="/szse/notice" path="/szse/notice"/>
+
+### 问询函件
+
+<Route author="Jeason0228 nczitzk" example="/szse/inquire" path="/szse/inquire/:category?/:select?/:keyword?" :paramsDesc="['类型，见下表，默认为 `0` 即 主板', '函件类别, 见下表，默认为全部函件类别', '公司代码或简称，默认为空']">
+
+类型
+
+| 主板 | 创业板 |
+| -- | --- |
+| 0  | 1   |
+
+函件类别
+
+| 全部函件类别 | 非许可类重组问询函 | 问询函 | 违法违规线索分析报告 | 许可类重组问询函 | 监管函（会计师事务所模板） | 提请关注函（会计师事务所模板） | 年报问询函 | 向中介机构发函 | 半年报问询函 | 关注函 | 公司部函 | 三季报问询函 |
+| ------ | --------- | --- | ---------- | -------- | ------------- | --------------- | ----- | ------- | ------ | --- | ---- | ------ |
+
+</Route>
+
+### 最新规则
+
+<Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
+
+### 创业板项目动态
+
+<Route author="nczitzk" example="/szse/projectdynamic" path="/szse/projectdynamic/:type?/:stage?/:status?" :paramsDesc="['类型，见下表，默认为IPO', '阶段，见下表，默认为全部', '状态，见下表，默认为全部']">
+
+类型
+
+| IPO | 再融资 | 重大资产重组 |
+| --- | --- | ------ |
+| 1   | 2   | 3      |
+
+阶段
+
+| 全部 | 受理 | 问询 | 上市委会议 |
+| -- | -- | -- | ----- |
+| 0  | 10 | 20 | 30    |
+
+| 提交注册 | 注册结果 | 中止 | 终止 |
+| ---- | ---- | -- | -- |
+| 35   | 40   | 50 | 60 |
+
+状态
+
+| 全部 | 新受理 | 已问询 | 通过 | 未通过 |
+| -- | --- | --- | -- | --- |
+| 0  | 20  | 30  | 45 | 44  |
+
+| 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |
+| ---- | ---- | ----- | ---- |
+| 46   | 56   | 54    | 60   |
+
+| 注册生效 | 不予注册 | 补充审核 | 终止注册 |
+| ---- | ---- | ---- | ---- |
+| 70   | 74   | 78   | 76   |
+
+| 中止 | 审核不通过 | 撤回 |
+| -- | ----- | -- |
+| 80 | 90    | 95 |
+
+</Route>
+
 ## 世界经济论坛
 
 ### 报告
@@ -339,7 +422,7 @@ pageClass: routes
 
 ### 有知文章
 
-<Route author="broven Fatpandac" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:column?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="broven Fatpandac nczitzk" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:id?" :paramsDesc="['分类，见下表，默认为全部']">
 
 |  全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
 | :-: | :---: | :---: | :--: | :--: | :---: | :----: |

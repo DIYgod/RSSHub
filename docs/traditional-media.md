@@ -772,22 +772,6 @@ Type 栏目：
 
 </Route>
 
-## 多维新闻网
-
-### 要闻
-
-<Route author="HenryQW" example="/dwnews/yaowen/global" path="/dwnews/yaowen/:region?" :paramsDesc="['要闻地区，默认`全部`，可选地区如下']">
-
-| 全部     | 国际     | 中国    | 香港       | 台湾     | 经济     | 视觉     |
-| ------ | ------ | ----- | -------- | ------ | ------ | ------ |
-| yaowen | global | china | hongkong | taiwan | jingji | shijue |
-
-</Route>
-
-### 24 小时新闻排行榜
-
-<Route author="HenryQW" example="/dwnews/rank" path="/dwnews/rank"/>
-
 ## 俄罗斯卫星通讯社
 
 ### 分类

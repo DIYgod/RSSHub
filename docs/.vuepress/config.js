@@ -67,6 +67,7 @@ module.exports = {
         ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
         ['link', { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#ff8549' }],
     ],
+    theme: 'vuepress-theme-rsshub',
     themeConfig: {
         repo: 'DIYgod/RSSHub',
         editLinks: true,
