@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-module.exports = async ({ github, context, core }, baseUrl, routes, number) => {
+module.exports = async ({ github, context, core, got }, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
         return;
     }
@@ -15,27 +15,26 @@ module.exports = async ({ github, context, core }, baseUrl, routes, number) => {
     for (const lks of links) {
         core.info(`testing route:  ${lks}`);
         // Intended, one at a time
-        const res = await github.request(`GET ${lks}`).catch((err) => {
+        const res = await got(lks).catch((err) => {
             com += `
-
 <details>
-    <summary><a href="${lks}">${lks}</a>  - **Failed**</summary>
+    <summary><a href="${lks}">${lks}</a> - <b>Failed</b></summary>
 
 \`\`\`
-    ${err}
+${err}
 \`\`\`
 </details>
 
 `;
         });
-        if (res && res.data) {
-            const { data } = res;
+        if (res && res.body) {
+            const { body } = res;
             com += `
 <details>
-    <summary><a href="${lks}">${lks}</a>  - Success</summary>
+    <summary><a href="${lks}">${lks}</a> - Success</summary>
 
-\`\`\`
-    ${data.split('\n').slice(0, 30).join('\n')}
+\`\`\`rss
+${body.replace(/\s+(\n|$)/g, '\n')}
 \`\`\`
 </details>
 
