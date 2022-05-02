@@ -8,6 +8,12 @@
 
 ## 内容过滤
 
+::: warning 注意
+
+请务必显式进行[彻底的 URL 编码](https://gchq.github.io/CyberChef/#recipe=URL_Encode\(true\))。切勿依赖浏览器的自动 URL 编码，某些字符，如 `+`, `&`，将不会被自动编码，进而导致最终解析结果不正确。
+
+:::
+
 可以使用以下 URL query 过滤内容，支持通过正则表达式过滤
 
 `filter` 选出想要的内容
