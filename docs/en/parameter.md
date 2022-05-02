@@ -8,6 +8,12 @@ The parameters can be linked with `&` to used together to generate a complex fee
 
 ## Filtering
 
+::: warning Warning
+
+Please make sure you've [fully URL-encoded](https://gchq.github.io/CyberChef/#recipe=URL_Encode(true)) the parameters. Do not rely on the browser's automatic URL encoding. Some characters, such as `+`, `&`, will not be automatically encoded, resulting in the final parsing result not being correct.
+
+:::
+
 The following URL query parameters are supported, Regex support is built-in.
 
 Set `filter` to include the content
