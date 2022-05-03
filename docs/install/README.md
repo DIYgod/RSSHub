@@ -753,10 +753,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
-    
--   Tapechat动态：需要App登陆后抓包获取相应数据
 
-    -   `TAPECHAT_TOKEN`:tapechat登陆后请求头中的Authorization值.
+-   Tapechat 动态：需要 App 登陆后抓包获取相应数据
 
-
-
+    -   `TAPECHAT_TOKEN`:tapechat 登陆后请求头中的 Authorization 值.
