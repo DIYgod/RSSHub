@@ -1489,6 +1489,27 @@
     "/njupt/jwc/:type?": [
         "shaoye"
     ],
+    "/njust/cwc/:type?": [
+        "MilkShakeYoung",
+        "jasongzy"
+    ],
+    "/njust/dgxg/:type?": [
+        "jasongzy"
+    ],
+    "/njust/eo/:grade?/:type?": [
+        "jasongzy"
+    ],
+    "/njust/eoe/:type?": [
+        "jasongzy"
+    ],
+    "/njust/gs/:type?": [
+        "MilkShakeYoung",
+        "jasongzy"
+    ],
+    "/njust/jwc/:type?": [
+        "MilkShakeYoung",
+        "jasongzy"
+    ],
     "/nltimes/news/:category?": [
         "Hivol"
     ],
@@ -2645,10 +2666,6 @@
     "/cqust/lib/:type?": [],
     "/cczu/jwc/:category?": [],
     "/cczu/news/:category?": [],
-    "/njust/jwc/:type": [],
-    "/njust/cwc/:type": [],
-    "/njust/gs/:type": [],
-    "/njust/eo/:grade?/:type?": [],
     "/sctu/xgxy": [],
     "/sctu/xgxy/:id": [],
     "/sctu/jwc/:type?": [],
