@@ -46,7 +46,11 @@ const origin2 = `<a href="https://mock.com/DIYgod/RSSHub"></a>
 const processed2 = `<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`;
 
-const testAntiHotlink = async (expect1, expect2) => {
+const oriRouteDesc = '<img src="http://mock.com/DIYgod/DIYgod/RSSHub"> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)';
+
+const proRouteDesc = '<img src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)';
+
+const testAntiHotlink = async (expect1, expect2, expectRouteDesc) => {
     server = require('../../lib/index');
     const request = supertest(server);
 
@@ -54,15 +58,13 @@ const testAntiHotlink = async (expect1, expect2) => {
     const parsed = await parser.parseString(response.text);
     expect(parsed.items[0].content).toBe(expect1);
     expect(parsed.items[1].content).toBe(expect2);
+    expect(parsed.description).toBe(expectRouteDesc);
+    return parsed;
 };
 
-const expectOrigin = async () => {
-    await testAntiHotlink(origin1, origin2);
-};
+const expectOrigin = async () => await testAntiHotlink(origin1, origin2, oriRouteDesc);
 
-const expectProcessed = async () => {
-    await testAntiHotlink(processed1, processed2);
-};
+const expectProcessed = async () => await testAntiHotlink(processed1, processed2, proRouteDesc);
 
 describe('anti-hotlink', () => {
     // First-time require is really, really slow.
