@@ -617,6 +617,10 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" :paramsDesc="['提问箱 ID', '查看条数（默认为 20）']" />
 
+### 动态
+
+<Route author="ch1y4" example="/tapechat/dynamic/b006c523a261f0c366f94714c1c8f1d1" path="/tapechat/dynamic/:userId/:pagesize?" :paramsDesc="['用户ID', '查看条数（默认为 20）']" />
+
 ## Telegram
 
 ### 频道
@@ -724,7 +728,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 列表时间线
 
-<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['用户名', 'list 名称', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
+<Route author="xyqfer" example="/twitter/list/ladyleet/Javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['用户名', 'list 名称', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
 
 ### 用户喜欢列表
 
@@ -840,6 +844,35 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
 
+## 抖音
+
+### 博主
+
+<Route author="Max-Tortoise Rongronggg9" example="/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao" path="/douyin/user/:uid/:routeParams?" :paramsDesc="['uid，可在 URL 中找到', '额外参数，query string 格式，请参阅下面的表格']" anticrawler="1" radar="1" rssbud="1">
+
+| 键        | 含义                                  | 值                      | 默认值     |
+| -------- | ----------------------------------- | ---------------------- | ------- |
+| `embed`  | 是否启用内嵌视频                            | `0`/`1`/`true`/`false` | `false` |
+| `iframe` | 是否启用 iframe 变通解决方案，仅在内嵌视频开启时有效，详见下文 | `0`/`1`/`true`/`false` | `false` |
+| `relay`  | 视频反代服务的 URL，仅在内嵌视频开启时有效，详见下文        |                        |         |
+
+::: warning 注意
+
+反爬严格，需要启用 puppeteer。\
+抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
+
+1.  填写 `relay`，开启视频反代 (推荐，适合大部分阅读器)。如该服务接受直接拼接 URL，则可直接填入路径，如 `https://example.com/` ；如该服务仅接受 URL 作为参数传入，则确保该参数置于末尾，如 `https://example.com/?url=` 。注意：该服务必须跟随跳转、允许反代视频，且必须在反代时丢弃 Referer 请求头。[这里有一个符合要求的易于自行搭建的项目](https://github.com/Rongronggg9/rsstt-img-relay)，该项目接受直接拼接 URL。
+2.  启用 iframe 变通解决方案，禁止阅读器发送 Referer。支持该变通解决方案的阅读器较少，且可能造成显示错误。有些阅读器，如 RSS Guard、Akregator，可能不支持前一种方法，则可尝试此方法。
+3.  使用不发送 Referer 的阅读器，如 [Inoreader 网页版](https://www.inoreader.com/)配合[禁用 referer 的 user script](https://greasyfork.org/zh-CN/scripts/376884-%E6%98%BE%E7%A4%BA%E9%98%B2%E7%9B%97%E9%93%BE%E5%9B%BE%E7%89%87-for-inoreader)、[RSS to Telegram Bot](https://github.com/Rongronggg9/RSS-to-Telegram-Bot) 等。如果你的阅读器能够在不启用上述两个变通解决方案时成功播放内嵌视频，那么它就是不发送 Referer 的，请考虑添加到文档里帮助更多的人。
+4.  关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。
+5.  点击原文链接打开抖音网页版的视频详情页播放视频。
+
+上述外部链接与 RSSHub 无关。
+
+:::
+
+</Route>
+
 ## 豆瓣
 
 ### 正在上映的电影
@@ -884,7 +917,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 豆瓣小组
 
-<Route author="DIYgod" example="/douban/group/648102" path="/douban/group/:groupid/:type?" :paramsDesc="['豆瓣小组的 id', '缺省 最新，essence 最热，elite 精华']"/>
+<Route author="DIYgod" example="/douban/group/648102" path="/douban/group/:groupid/:type?" :paramsDesc="['豆瓣小组的 id', '缺省 最新，essence 最热，elite 精华']" anticrawler="1"/>
 
 ### 浏览发现
 
