@@ -1,4 +1,6 @@
-name: '[docker] CI for build tests'
+# name: '[docker] CI for build tests'
+# https://github.community/t/215358
+name: PR - Docker build test
 
 on:
   pull_request:
@@ -9,6 +11,7 @@ on:
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
+      - '.github/workflows/docker-test.yml'
   # Please, always create a pull request instead of push to master.
 
 permissions:
@@ -53,7 +56,14 @@ jobs:
           #   type=gha,scope=docker-release
           # cache-to: type=gha,mode=max,scope=docker-test
 
-      - name: Run dockerfile
-        run: |
-          chmod +x scripts/docker/test-docker.sh
-          scripts/docker/test-docker.sh
+      - name: Test Docker image
+        run: bash scripts/docker/test-docker.sh
+
+      - name: Export Docker image
+        run: docker save rsshub:latest | gzip -1cf > rsshub.tar.gz
+
+      - name: Upload Docker image
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-image
+          path: rsshub.tar.gz
