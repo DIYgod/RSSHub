@@ -619,7 +619,13 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 动态
 
-<Route author="ch1y4" example="/tapechat/dynamic/b006c523a261f0c366f94714c1c8f1d1" path="/tapechat/dynamic/:userId/:pagesize?" :paramsDesc="['用户ID', '查看条数（默认为 20）']" />
+<Route author="ch1y4" example="/tapechat/dynamic/b006c523a261f0c366f94714c1c8f1d1" path="/tapechat/dynamic/:userId/:pagesize?" :paramsDesc="['用户ID', '查看条数（默认为 20）']" selfhost="1"/>
+
+::: warning 注意
+
+查看动态需要 登录后的 token，所以仅支持自建，详情见部署页面的配置模块。
+
+:::
 
 ## Telegram
 
