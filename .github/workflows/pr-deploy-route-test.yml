@@ -58,7 +58,7 @@ jobs:
         run: |
           set -ex
           gzip -cvd docker-image/rsshub.tar.gz | docker load
-          docker run -d -p 1200:1200 rsshub:latest
+          docker run -d --name rsshub -e NODE_ENV=dev -p 1200:1200 rsshub:latest
 
       - uses: actions/setup-node@v3  # just need its cache
         if: (env.TEST_CONTINUE)
@@ -88,3 +88,7 @@ jobs:
             const got = require("got");
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
             return await script({ github, context, core, got }, link, routes, number)
+
+      - name: Print Docker container logs
+        if: (env.TEST_CONTINUE)
+        run: docker logs rsshub  # logs/combined.log? Not so readable...
