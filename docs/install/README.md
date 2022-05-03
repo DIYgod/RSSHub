@@ -531,13 +531,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `HOTLINK_TEMPLATE`: 用于处理描述中图片的 URL，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性，格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
 
-`HOTLINK_INCLUDE`: 限制需要处理的路由，只有匹配成功的路由会被处理，设置多项时用英文逗号 `,` 隔开。若不设置，则所有路由都将被处理
+`HOTLINK_INCLUDE_PATHS`: 限制需要处理的路由，只有匹配成功的路由会被处理，设置多项时用英文逗号 `,` 隔开。若不设置，则所有路由都将被处理
 
-`HOTLINK_EXCLUDE`: 排除不需处理的路由，所有匹配成功的路由都不被处理，设置多项时用英文逗号 `,` 隔开。可单独使用，也可用于排除已被前者包含的路由。若不设置，则没有任何路由会被过滤
+`HOTLINK_EXCLUDE_PATHS`: 排除不需处理的路由，所有匹配成功的路由都不被处理，设置多项时用英文逗号 `,` 隔开。可单独使用，也可用于排除已被前者包含的路由。若不设置，则没有任何路由会被过滤
 
 ::: tip 路由匹配模式
 
-`HOTLINK_INCLUDE` 和 `HOTLINK_EXCLUDE` 均匹配路由根路径及其所有递归子路径，但并非子字符串匹配。注意必须以 `/` 开头，且结尾不需要 `/`。
+`HOTLINK_INCLUDE_PATHS` 和 `HOTLINK_EXCLUDE_PATHS` 均匹配路由根路径及其所有递归子路径，但并非子字符串匹配。注意必须以 `/` 开头，且结尾不需要 `/`。
 
 例：`/example`, `/example/sub` 和 `/example/anthoer/sub/route` 均可被 `/example` 匹配，但 `/example_route` 不会被匹配。
 
