@@ -1,6 +1,6 @@
 name: Linter
 
-on: [push, pull_request]
+on: [push, pull_request_target]
 
 jobs:
   linter:
@@ -28,4 +28,15 @@ jobs:
       - name: Lint
         uses: reviewdog/action-eslint@v1
         with:
-           github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  titleLint:
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ignoreLabels: |
+            dependencies
+          wip: true

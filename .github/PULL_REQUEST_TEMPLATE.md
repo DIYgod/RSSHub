@@ -18,7 +18,7 @@ Please include route starts with /, with all required and optional parameters. F
 /some/route
 /some/other/route
 ```
-如果你的 PR 与路由无关, 请在 route 区域 填写 `NOROUTE`，而不是直接删除 `routes` 区域。否则你的 PR 将会被无条件关闭。
+如果你的 PR 与路由无关, 请在 `routes` 区域 填写 `NOROUTE`，而不是直接删除 `routes` 区域。否则你的 PR 将会被无条件关闭。
 If your changes are not related to route, please fill in `routes` with `NOROUTE`. Fail to comply will result in your PR being closed.
 -->
 
