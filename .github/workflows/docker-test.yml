@@ -67,3 +67,4 @@ jobs:
         with:
           name: docker-image
           path: rsshub.tar.gz
+          retention-days: 1
