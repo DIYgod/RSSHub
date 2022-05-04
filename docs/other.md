@@ -617,7 +617,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 用户
 
-<Route author="SettingDust" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']" radar="1" rssbud="1"/>
+<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']" radar="1" rssbud="1"/>
 
 ## 律师事务所文章
 
