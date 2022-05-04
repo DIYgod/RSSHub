@@ -1,0 +1,3 @@
+<img src="{{ src }}"><br>
+{{@ intro }}
+{{@ desc }}
