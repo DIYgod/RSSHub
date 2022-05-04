@@ -238,3 +238,13 @@ Type
 | all | rec       |
 
 </RouteEn>
+
+## 裏垢女子まとめ
+
+### Homepage
+
+<RouteEn author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1"/>
+
+### User
+
+<RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1"/>
