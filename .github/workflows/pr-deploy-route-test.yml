@@ -58,7 +58,12 @@ jobs:
         run: |
           set -ex
           gzip -cvd docker-image/rsshub.tar.gz | docker load
-          docker run -d --name rsshub -e NODE_ENV=dev -p 1200:1200 rsshub:latest
+          docker run -d \
+            --name rsshub \
+            -e NODE_ENV=dev \
+            -e LOGGER_LEVEL=debug \
+            -p 1200:1200 \
+            rsshub:latest
 
       - uses: actions/setup-node@v3  # just need its cache
         if: (env.TEST_CONTINUE)
