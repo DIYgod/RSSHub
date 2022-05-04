@@ -2028,6 +2028,14 @@
     "/ulapia/reports/:category?": [
         "Fatpandac"
     ],
+    "/uraaka-joshi/": [
+        "SettingDust",
+        "Halcao"
+    ],
+    "/uraaka-joshi/:id": [
+        "SettingDust",
+        "Halcao"
+    ],
     "/ustb/yjsy/news/adma": [
         "DA1Y1"
     ],
@@ -2941,8 +2949,6 @@
     "/blogs/wangyin": [],
     "/blogs/wang54/:id?": [],
     "/blogs/wordpress/:domain/:https?": [],
-    "/uraaka-joshi": [],
-    "/uraaka-joshi/:id": [],
     "/xici/:id?": [],
     "/taoguba/index": [],
     "/taoguba/user/:uid": [],
