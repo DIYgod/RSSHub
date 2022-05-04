@@ -10,18 +10,27 @@ module.exports = async ({ github, context, core, got }, baseUrl, routes, number)
         return `${baseUrl}${l}`;
     });
 
-    let com = 'Successfully generated as following:\n\n';
+    let com = `Successfully [generated](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n\n`;
 
     for (const lks of links) {
         core.info(`testing route:  ${lks}`);
         // Intended, one at a time
         const res = await got(lks).catch((err) => {
+            let errMsg = err.toString();
+            const errInfoList = err.response && err.response.body && err.response.body.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
+            if (errInfoList) {
+                errMsg += '\n\n';
+                errMsg += errInfoList
+                    .slice(0, 3)
+                    .map((e) => e.trim())
+                    .join('\n');
+            }
             com += `
 <details>
     <summary><a href="${lks}">${lks}</a> - <b>Failed</b></summary>
 
 \`\`\`
-${err}
+${errMsg}
 \`\`\`
 </details>
 
