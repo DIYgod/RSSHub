@@ -1683,6 +1683,20 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 南京工程学院
+
+### 南京工程学院通知公告
+
+<Route author="zefengdaguo" example="/njit/tzgg" path="/njit/tzgg" />
+
+### 南京工程学院教务处
+
+<Route author="zefengdaguo" example="/njit/jwc/jx" path="/njit/jwc/:type?" :paramsDesc="['默认为 `jx`']" />
+
+| 教学   | 考试 | 信息 | 实践 |
+| ------ | ---- | ---- | ---- |
+| jx | ks | xx | sj |
+
 ## 南京工业大学
 
 ### 南京工业大学教务处
