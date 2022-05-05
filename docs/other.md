@@ -883,6 +883,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
+## 一念
+
+### 最新便签
+
+<Route author="Ovler-Young" example="/copyidea/link/{token}" path="/copyidea/link/:token" :paramsDesc="['请求头中`token`字段']"/>
+
 ## 邮箱
 
 ### 邮件列表
