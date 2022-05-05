@@ -89,10 +89,10 @@ jobs:
           push: true
           tags: ${{ steps.meta-chromium-bundled.outputs.tags }}
           labels: ${{ steps.meta-chromium-bundled.outputs.labels }}
-          platforms: linux/amd64  # bundled Chromium is only available on amd64
+          platforms: linux/amd64,linux/arm/v7,linux/arm64
           cache-from: |
-            type=gha,scope=docker-release
             type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
+          # type=gha,scope=docker-release # not needed, Docker automatically uses local cache from the builder
           # type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:buildcache
           cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
 

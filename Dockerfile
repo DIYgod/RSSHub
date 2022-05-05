@@ -92,12 +92,14 @@ FROM node:16-bullseye-slim as chromium-downloader
 WORKDIR /app
 COPY --from=dep-version-parser /ver/.puppeteer_version /app/.puppeteer_version
 
+ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
+# The official recommended way to use Puppeteer on x86(_64) is to use the bundled Chromium from Puppeteer:
 # https://github.com/puppeteer/puppeteer#q-why-doesnt-puppeteer-vxxx-work-with-chromium-vyyy
 RUN \
     set -ex ; \
-    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
+    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
             npm config set registry https://registry.npmmirror.com && \
             yarn config set registry https://registry.npmmirror.com ; \
@@ -122,10 +124,13 @@ ENV TZ Asia/Shanghai
 WORKDIR /app
 
 # install deps first to avoid cache miss or disturbing buildkit to build concurrently
+ARG TARGETPLATFORM
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
 # https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#chrome-headless-doesnt-launch-on-unix
 # https://github.com/puppeteer/puppeteer/issues/7822
 # https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
+# The official recommended way to use Puppeteer on arm/arm64 is to install Chromium from the distribution repositories:
+# https://github.com/puppeteer/puppeteer/blob/94cb08c85955c0688d12b6ed10e61a4581a01280/src/node/BrowserFetcher.ts#L116-L119
 RUN \
     set -ex && \
     apt-get update && \
@@ -133,12 +138,19 @@ RUN \
         dumb-init \
     ; \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
-        apt-get install -yq --no-install-recommends \
-            ca-certificates fonts-liberation wget xdg-utils \
-            libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 libexpat1 \
-            libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 \
-            libxfixes3 libxkbcommon0 libxrandr2 \
-    ; \
+        if [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
+            apt-get install -yq --no-install-recommends \
+                ca-certificates fonts-liberation wget xdg-utils \
+                libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libdrm2 \
+                libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 \
+                libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 \
+            ; \
+        else \
+            apt-get install -yq --no-install-recommends \
+                chromium \
+            && \
+            echo 'CHROMIUM_EXECUTABLE_PATH=chromium' | tee /app/.env ; \
+        fi; \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
@@ -147,7 +159,7 @@ COPY --from=chromium-downloader /app/node_modules/puppeteer /app/node_modules/pu
 # if grep matches nothing then it will exit with 1, thus, we cannot `set -e` here
 RUN \
     set -x && \
-    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
+    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
         ldd $(find /app/node_modules/puppeteer/ -name chrome) | grep "not found" ; \
         if [ "$?" = 0 ]; then \
@@ -170,6 +182,7 @@ CMD ["npm", "run", "start"]
 # In case Chromium has unmet shared libs, here is some magic to find and install the packages they belong to:
 # In most case you can just stop at `grep ^lib` and add those packages to the above stage.
 #
+# set -ex && \
 # apt-get update && \
 # apt install -yq --no-install-recommends \
 #     apt-file \
@@ -183,3 +196,5 @@ CMD ["npm", "run", "start"]
 # apt purge -yq --auto-remove \
 #     apt-file \
 # rm -rf /tmp/.chromium_path /var/lib/apt/lists/*
+
+# !!! If you manually build Docker image but with buildx/BuildKit disabled, set TARGETPLATFORM yourself !!!

@@ -33,9 +33,9 @@ $ docker pull diygod/rsshub:2021-06-18
 
 待最新镜像更新后再切换回 `diygod/rsshub:latest` 最新版镜像。
 
-如需在 x86\_64 (amd64) 架构上部署启用 puppeteer 的版本，可使用 `diygod/rsshub:chromium-bundled`，若指定日期则为 `diygod/rsshub:chromium-bundled-2021-06-18`。
+如需启用 puppeteer，可使用 `diygod/rsshub:chromium-bundled`；若指定日期则为 `diygod/rsshub:chromium-bundled-2021-06-18`。
 
-在所有受支持的架构上，均可使用 Docker Compose 部署以启用 puppeteer，但更消耗磁盘空间和内存。通过修改 `docker-compose.yml` 文件，也可以使用 `diygod/rsshub:chromium-bundled`，这样就没有更消耗资源的问题了。
+亦可使用 Docker Compose 部署以启用 puppeteer，但更消耗磁盘空间和内存。通过修改 `docker-compose.yml`，也可以使用 `diygod/rsshub:chromium-bundled`，这样就没有更消耗资源的问题了。
 
 ## Docker Compose 部署
 
@@ -87,7 +87,11 @@ $ docker pull diygod/rsshub
 
 ## Docker 部署
 
-> **如需启用 puppeteer，请在每条命令中均将 `diygod/rsshub` 替换为 `diygod/rsshub:chromium-bundled` (仅限 x86\_64 架构)**
+::: tip 提示
+
+如需启用 puppeteer，请在**每条**命令中均将 `diygod/rsshub` 替换为 `diygod/rsshub:chromium-bundled`。
+
+:::
 
 ### 安装
 
@@ -132,7 +136,7 @@ $ docker rm rsshub
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
-该部署方式不包括 puppeteer (除非在 x86\_64 架构上改用 `diygod/rsshub:chromium-bundled`) 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
+该部署方式不包括 puppeteer（除非改用 `diygod/rsshub:chromium-bundled`）和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
 更多配置项请看 [#配置](#pei-zhi)
 
@@ -220,18 +224,40 @@ $ pm2 start lib/index.js --name rsshub
 
 ### 添加配置
 
+::: tip 提示
+
+在 arm/arm64 上，此部署方式不包含 puppeteer 依赖。要启用 puppeteer，你需要先从发行版安装 Chromium，然后设置 `CHROMIUM_EXECUTABLE_PATH` 为其可执行路径。
+
+Debian:
+
+```bash
+$ apt install chroium
+$ echo >> .env
+$ echo 'CHROMIUM_EXECUTABLE_PATH=chromium' >> .env
+```
+
+Ubuntu/Raspbian:
+
+```bash
+$ apt install chromium-browser
+$ echo >> .env
+$ echo 'CHROMIUM_EXECUTABLE_PATH=chromium-browser' >> .env
+```
+
+:::
+
 可以通过设置环境变量来配置 RSSHub
 
 在项目根目录新建一个 `.env` 文件，每行以 `NAME=VALUE` 格式添加环境变量，例如
 
 ```env
-    CACHE_TYPE=redis
-    CACHE_EXPIRE=600
+CACHE_TYPE=redis
+CACHE_EXPIRE=600
 ```
 
 注意它不会覆盖已有的环境变量，更多规则请参考 [dotenv](https://github.com/motdotla/dotenv)
 
-该部署方式不包括 puppeteer 和 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
+该部署方式不包括 redis 依赖，如有需要请改用 Docker Compose 部署方式或自行部署外部依赖
 
 更多配置项请看 [#配置](#pei-zhi)
 
@@ -514,6 +540,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
 
 `PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer\&show=api-browserwsendpoint)
+
+`CHROMIUM_EXECUTABLE_PATH`: Chromium（或 Chrome）的可执行路径。若 puppeteer 没有下载捆绑的 Chromium（主动跳过下载或体系架构为 arm/arm64），设置此项可启用 puppeteer。或者，偏好 Chrome 而不是 Chromium 时，此项也很有用。**注意**：`PUPPETEER_WS_ENDPOINT` 被设置时，此项不生效；仅在手动部署时有用，对于 Docker 部署，请改用 `chromium-bundled` 版本镜像。
 
 `TITLE_LENGTH_LIMIT`: 限制输出标题的字节长度，一个英文字符的长度为 1 字节，部分语言如中文，日文，韩文或阿拉伯文等，统一算作 2 字节，默认 `150`
 
