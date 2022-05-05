@@ -1473,6 +1473,12 @@
     "/nippon/:category?": [
         "laampui"
     ],
+    "/njit/tzgg": [
+        "zefengdaguo"
+    ],
+    "/njit/jwc/:type?": [
+        "zefengdaguo"
+    ],
     "/njnu/jwc/:type": [
         "Shujakuinkuraudo"
     ],
