@@ -1,4 +1,4 @@
-version: "1"
+version: '1'
 rules:
   - base: master
     upstream: DIYgod:master
