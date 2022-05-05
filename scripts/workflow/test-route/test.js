@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-module.exports = async ({ github, context, core }, baseUrl, routes, number) => {
+module.exports = async ({ github, context, core, got }, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
         return;
     }
@@ -10,32 +10,40 @@ module.exports = async ({ github, context, core }, baseUrl, routes, number) => {
         return `${baseUrl}${l}`;
     });
 
-    let com = 'Successfully generated as following:\n\n';
+    let com = `Successfully [generated](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n\n`;
 
     for (const lks of links) {
         core.info(`testing route:  ${lks}`);
         // Intended, one at a time
-        const res = await github.request(`GET ${lks}`).catch((err) => {
+        const res = await got(lks).catch((err) => {
+            let errMsg = err.toString();
+            const errInfoList = err.response && err.response.body && err.response.body.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
+            if (errInfoList) {
+                errMsg += '\n\n';
+                errMsg += errInfoList
+                    .slice(0, 3)
+                    .map((e) => e.trim())
+                    .join('\n');
+            }
             com += `
-
 <details>
-    <summary><a href="${lks}">${lks}</a>  - **Failed**</summary>
+    <summary><a href="${lks}">${lks}</a> - <b>Failed</b></summary>
 
 \`\`\`
-    ${err}
+${errMsg}
 \`\`\`
 </details>
 
 `;
         });
-        if (res && res.data) {
-            const { data } = res;
+        if (res && res.body) {
+            const { body } = res;
             com += `
 <details>
-    <summary><a href="${lks}">${lks}</a>  - Success</summary>
+    <summary><a href="${lks}">${lks}</a> - Success</summary>
 
-\`\`\`
-    ${data.split('\n').slice(0, 30).join('\n')}
+\`\`\`rss
+${body.replace(/\s+(\n|$)/g, '\n')}
 \`\`\`
 </details>
 
