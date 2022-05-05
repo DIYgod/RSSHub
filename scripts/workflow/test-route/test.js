@@ -10,47 +10,60 @@ module.exports = async ({ github, context, core, got }, baseUrl, routes, number)
         return `${baseUrl}${l}`;
     });
 
-    let com = `Successfully [generated](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n\n`;
+    let com_l = [];
+    let com = `Successfully [generated](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n`;
 
     for (const lks of links) {
         core.info(`testing route:  ${lks}`);
         // Intended, one at a time
-        const res = await got(lks).catch((err) => {
-            let errMsg = err.toString();
+        let success = false;
+        let detail = 'no detail';
+        try {
+            const res = await got(lks);
+            if (res && res.body) {
+                success = true;
+                detail = res.body.replace(/\s+(\n|$)/g, '\n');
+            }
+        } catch (err) {
+            detail = err.toString();
             const errInfoList = err.response && err.response.body && err.response.body.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
             if (errInfoList) {
-                errMsg += '\n\n';
-                errMsg += errInfoList
+                detail += '\n\n';
+                detail += errInfoList
                     .slice(0, 3)
                     .map((e) => e.trim())
                     .join('\n');
             }
-            com += `
-<details>
-    <summary><a href="${lks}">${lks}</a> - <b>Failed</b></summary>
+        }
 
-\`\`\`
-${errMsg}
+        let temp_com = `
+<details>
+<summary><a href="${lks}">${lks}</a> - ${success ? 'Success' : '<b>Failed</b>'}</summary>
+
+\`\`\`${success ? 'rss' : ''}`;
+        temp_com += `
+${detail.slice(0, 65300 - temp_com.length)}
 \`\`\`
 </details>
-
 `;
-        });
-        if (res && res.body) {
-            const { body } = res;
-            com += `
-<details>
-    <summary><a href="${lks}">${lks}</a> - Success</summary>
-
-\`\`\`rss
-${body.replace(/\s+(\n|$)/g, '\n')}
-\`\`\`
-</details>
-
-`;
+        if (com.length + temp_com.length >= 65500) {
+            com += '\n\n...';
+            com_l.push(com);
+            com = temp_com;
+        } else {
+            com += temp_com;
         }
     }
-    github.rest.issues
+
+    if (com.length > 0) {
+        com_l.push(com);
+    }
+
+    if (com_l.length >= 5) {
+        com_l = com_l.slice(0, 5);
+    }
+
+    await github.rest.issues
         .addLabels({
             issue_number: number,
             owner: context.repo.owner,
@@ -60,14 +73,18 @@ ${body.replace(/\s+(\n|$)/g, '\n')}
         .catch((e) => {
             core.warning(e);
         });
-    github.rest.issues
-        .createComment({
-            issue_number: number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: com,
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
+
+    for (const com_s of com_l) {
+        // Intended, one at a time
+        await github.rest.issues
+            .createComment({
+                issue_number: number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: com_s,
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+    }
 };
