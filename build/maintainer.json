@@ -1242,6 +1242,17 @@
     "/jewishmuseum/exhibitions": [
         "chazeon"
     ],
+    "/jike/topic/text/:id": [
+        "HenryQW"
+    ],
+    "/jike/topic/:id": [
+        "DIYgod",
+        "prnake"
+    ],
+    "/jike/user/:id": [
+        "DIYgod",
+        "prnake"
+    ],
     "/jisilu/:category?/:sort?/:day?": [
         "nczitzk"
     ],
@@ -3562,9 +3573,6 @@
     "/lizhi/user/:id": [],
     "/futunn/highlights": [],
     "/waijiedanao/article/:caty": [],
-    "/jike/topic/:id": [],
-    "/jike/topic/text/:id": [],
-    "/jike/user/:id": [],
     "/netease/news/special/:type?": [],
     "/netease/dy/:id": [],
     "/netease/dy2/:id": [],
