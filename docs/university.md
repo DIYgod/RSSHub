@@ -1693,8 +1693,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="zefengdaguo" example="/njit/jwc/jx" path="/njit/jwc/:type?" :paramsDesc="['默认为 `jx`']" />
 
-| 教学   | 考试 | 信息 | 实践 |
-| ------ | ---- | ---- | ---- |
+| 教学 | 考试 | 信息 | 实践 |
+| -- | -- | -- | -- |
 | jx | ks | xx | sj |
 
 ## 南京工业大学
