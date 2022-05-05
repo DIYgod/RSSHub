@@ -50,7 +50,7 @@ jobs:
 
       - name: Extract Docker metadata (ordinary version)
         id: meta-ordinary
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/rsshub
           tags: |
@@ -73,7 +73,7 @@ jobs:
 
       - name: Extract Docker metadata (Chromium-bundled version)
         id: meta-chromium-bundled
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/rsshub
           tags: |
