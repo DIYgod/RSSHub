@@ -8,7 +8,7 @@ pageClass: routes
 
 ### User
 
-<RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/username" :paramsDesc="['name, username that is in the URL']" />
+<RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/kretyn" :paramsDesc="['name, username that is in the URL']" />
 
 ## Dev.to
 
@@ -132,11 +132,17 @@ If you don't want to setup credentials, use Picuki.
 
 ### User
 
-<RouteEn author="hoilc" example="/lofter/user/tingtingtingtingzhi" path="/lofter/user/:name" :paramsDesc="['Lofter user name, in the URL']"/>
+<RouteEn author="hoilc nczitzk" example="/lofter/user/i" path="/lofter/user/:name?" :paramsDesc="['Lofter user name, can be found in the URL']"/>
 
 ### Tag
 
-<RouteEn author="hoilc" example="/lofter/tag/名侦探柯南/date" path="/lofter/tag/:name/:type?" :paramsDesc="['tag name', 'ranking type, default to new, can be new date week month total']"/>
+<RouteEn author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" :paramsDesc="['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']">
+
+| new  | date | week | month | total |
+| ---- | ---- | ---- | ----- | ----- |
+| 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
+
+</Route>
 
 ## Mastodon
 
@@ -144,8 +150,8 @@ If you don't want to setup credentials, use Picuki.
 
 Official user RSS:
 
--   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
--   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
+- RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
+- Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
 
 These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you will need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
@@ -181,7 +187,22 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 ### User Profile
 
-<RouteEn author="hoilc" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:displayVideo?" :paramsDesc="['Instagram id','Default to disable the embedded video, set to any value to enable embedding']" />
+<RouteEn author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" :paramsDesc="['Instagram id','functional flag, see the table below']" radar="1" rssbud="1">
+
+| functionalFlag | Video embedding                         | Fetching Instagram Stories |
+|----------------|-----------------------------------------|----------------------------|
+| 0              | off, only show video poster as an image | off                        |
+| 1 (default)    | on                                      | off                        |
+| 10             | on                                      | on                         |
+
+::: warning
+
+Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
+Though, every Story expires after 24 hours, so it may be not so serious.
+
+:::
+
+</RouteEn>
 
 ## pixiv
 
@@ -235,11 +256,37 @@ Only for self-hosted
 
 ### Channel
 
-<RouteEn path="/telegram/channel/:username/:searchQuery?" example="/telegram/channel/awesomeDIYgod/%23DIYgod的豆瓣动态" :paramsDesc="['channel name', 'search query; replace `#` by `%23` for tag searching']" radar="1" rssbud="1">
+<RouteEn author="DIYgod Rongronggg9" path="/telegram/channel/:username/:routeParams?" example="/telegram/channel/awesomeDIYgod/searchQuery=%23DIYgod的豆瓣动态" :paramsDesc="['channel username', 'extra parameters, see the table below']" radar="1" rssbud="1">
+
+| Key                   | Description                                                           | Accepts                                              | Defaults to       |
+|-----------------------|-----------------------------------------------------------------------|------------------------------------------------------|-------------------|
+| showLinkPreview       | Show the link preview from Telegram                                   | 0/1/true/false                                       | true              |
+| showViaBot            | For messages sent via bot, show the bot                               | 0/1/true/false                                       | true              |
+| showReplyTo           | For reply messages, show the target of the reply                      | 0/1/true/false                                       | true              |
+| showFwdFrom           | For forwarded messages, show the forwarding source                    | 0/1/true/false                                       | true              |
+| showFwdFromAuthor     | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                       | true              |
+| showInlineButtons     | Show inline buttons                                                   | 0/1/true/false                                       | false             |
+| showMediaTagInTitle   | Show media tags in the title                                          | 0/1/true/false                                       | true              |
+| showMediaTagAsEmoji   | Show media tags as emoji                                              | 0/1/true/false                                       | true              |
+| includeFwd            | Include forwarded messages                                            | 0/1/true/false                                       | true              |
+| includeReply          | Include reply messages                                                | 0/1/true/false                                       | true              |
+| includeServiceMsg     | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                       | true              |
+| includeUnsupportedMsg | Include messages unsupported by t.me                                  | 0/1/true/false                                       | false             |
+| searchQuery           | search query                                                          | keywords; replace `#` by `%23` for hashtag searching | (search disabled) |
+
+Specify different option values than default values can meet different needs, URL
+
+```
+https://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0
+```
+
+generates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.
 
 ::: tip
 
-Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting https://t.me/s/:username.
+For backward compatibility reasons, invalid `routeParams` will be treated as `searchQuery` .
+
+Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`.
 
 :::
 
@@ -298,6 +345,10 @@ generates
 
 <RouteEn path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
 
+### User media
+
+<RouteEn author="yindaheng98" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
+
 ## User following timeline
 
 <RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['user id', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1">
@@ -325,6 +376,27 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 ### Trends
 
 <RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']" radar="1" rssbud="1"/>
+
+## Vimeo
+
+### User Profile
+
+<RouteEn author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" :paramsDesc="['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']">
+::: tip Special category name attention
+
+Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
+
+:::
+
+</RouteEn>
+
+### Channel
+
+<RouteEn author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" :paramsDesc="['channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .']" radar="1"/>
+
+### Category
+
+<RouteEn author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" :paramsDesc="['Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ', 'type `staffpicks` to sort with staffpicks']" radar="1"/>
 
 ## YouTube
 
