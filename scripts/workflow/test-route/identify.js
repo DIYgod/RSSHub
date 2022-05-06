@@ -1,5 +1,5 @@
 const noFound = 'Auto: Route No Found';
-const whiteListedUser = ['dependabot[bot]'];
+const whiteListedUser = ['dependabot[bot]', 'pull[bot]']; // dependabot and downstream PR requested by pull[bot]
 
 module.exports = async ({ github, context, core }, body, number, sender) => {
     core.debug(`sender: ${sender}`);
