@@ -60,7 +60,7 @@ Language codes
 
 ### Free games
 
-<RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+<RouteEn author="Zyx-A nczitzk" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
 ## FINAL FANTASY XIV
 

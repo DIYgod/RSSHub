@@ -95,7 +95,7 @@ pageClass: routes
 
 ### 免费游戏
 
-<Route author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+<Route author="Zyx-A nczitzk" example="/epicgames/freegames" path="/epicgames/freegames"/>
 
 ## Fate Grand Order
 
