@@ -1268,7 +1268,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ### 最新资源
 
-<Route author="greatcodeeer jerry1119" example="/pianyuan" path="/pianyuan/:media?" :paramsDesc="['类别，见下表，默认为首页']" radar="1" rssbud="1"/>
+<Route author="greatcodeeer jerry1119" example="/pianyuan/index" path="/pianyuan/index/:media?" :paramsDesc="['类别，见下表，默认为首页']" radar="1" rssbud="1"/>
 
 | 电影 | 剧集 |
 | -- | -- |
