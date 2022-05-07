@@ -12,7 +12,7 @@ pageClass: routes
 
 ### App Store/Mac App Store
 
-见 [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
+See [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
 
 ## AutoTrader
 
