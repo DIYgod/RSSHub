@@ -1260,15 +1260,9 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## 片源网
 
-::: tip 片源网已经关闭公开访问
-
-片源信息为登陆后可见，自建时将环境变量`PIANYUAN_COOKIE`设为登陆后的 Cookie 中的 py_loginauth 值，即可正常获取。
-例: PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
-:::
-
 ### 最新资源
 
-<Route author="greatcodeeer jerry1119" example="/pianyuan/index" path="/pianyuan/index/:media?" :paramsDesc="['类别，见下表，默认为首页']" radar="1" rssbud="1"/>
+<Route author="greatcodeeer jerry1119" example="/pianyuan/index" path="/pianyuan/index/:media?" :paramsDesc="['类别，见下表，默认为首页']" radar="1" rssbud="1" selfhost="1"/>
 
 | 电影 | 剧集 |
 | -- | -- |
@@ -1276,7 +1270,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ### 搜索
 
-<Route author="jerry1119" example="/pianyuan/indexers/pianyuan/results/search/api?t=test&q=长津湖" path="/pianyuan/indexers/pianyuan/results/search/" />
+<Route author="jerry1119" example="/pianyuan/indexers/pianyuan/results/search/api?t=test&q=长津湖" path="/pianyuan/indexers/pianyuan/results/search/" selfhost="1"/>
 
 搜索路由模仿 jackett 的搜索 api, 以提供给 nastools 使用，填写在 nastools 配置 indexer 中
 
