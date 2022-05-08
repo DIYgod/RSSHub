@@ -4,6 +4,11 @@ pageClass: routes
 
 # Government
 
+## Australia Department of Home Affairs
+
+### Immigration and Citizenship - News
+<RouteEn author="liu233w" example="/immiau/news" path="/immiau/news">
+
 ## Central Intelligence Agency
 
 ### Annual FOIA Reports
