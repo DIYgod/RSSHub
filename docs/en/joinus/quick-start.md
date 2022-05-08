@@ -421,9 +421,9 @@ ctx.state.data = {
         -   `path`: route path
         -   `:paramsDesc`: route parameters description, in array, supports markdown
             1. parameter description must be in the order of its appearance in route path
-            1. missing description will cause errors in `npm run docs:dev`
-            1. `'` `"` must be escaped as `\'` `\"`
-            1. it's redundant to indicate `optional/required` as the component will prepend based on `?`
+            2. missing description will cause errors in `npm run docs:dev`
+            3. `'` `"` must be escaped as `\'` `\"`
+            4. route parameters ending with `?`, `*`, `+`, and a word represent `optional`, `zero or more`, `one or more`, and `mandatory` respectively. They are automatically determined by Vue component and do not need to be explicitly mentioned in the description
     -   Documentation examples:
 
         1. No parameter:
@@ -480,9 +480,9 @@ ctx.state.data = {
 
         * * *
 
-1.  Please be sure to close the tag of `<Route>`!
+2.  Please be sure to close the tag of `<Route>`!
 
-1.  Execute `npm run format` to lint the code before you commit and open a pull request
+3.  Execute `npm run format` to lint the code before you commit and open a pull request
 
 ## Submit new RSSHub Radar rule
 
