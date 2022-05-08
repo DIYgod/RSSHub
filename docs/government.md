@@ -24,7 +24,7 @@ pageClass: routes
 
 ### 移民局新闻
 
-<Route author="liu233w" example="/immiau/news" path="/immiau/news">
+<Route author="liu233w" example="/gov/immiau/news" path="/gov/immiau/news">
 
 ## 澳门廉政公署
 
