@@ -515,7 +515,7 @@ pageClass: routes
 
 ### 观点与实践
 
-<Route author="AEliu" example="/chinathinktanks/126" path="/chinathinktanks/:id" radar="1" :paramsDesc="['见下表，亦可在网站 url 里找到']" />
+<Route author="AEliu" example="/chinathinktanks/57" path="/chinathinktanks/:id" radar="1" :paramsDesc="['见下表，亦可在网站 url 里找到']" />
 
 | `:id` | 专题名称 |
 | ----- | -------- |
@@ -527,6 +527,9 @@ pageClass: routes
 | 7     | 文化     |
 | 9     | 热点专题 |
 | 10    | 国际关系 |
+| 13    | 国外智库 |
+| 46    | 智库报告 |
+| 57    | 智库要闻 |
 | 126   | 世界经济 |
 | 127   | 宏观经济 |
 | 128   | 区域经济 |
