@@ -20,6 +20,12 @@ pageClass: routes
 
 </Route>
 
+## 澳大利亚内政部
+
+### 移民局新闻
+
+<Route author="liu233w" example="/gov/immiau/news" path="/gov/immiau/news">
+
 ## 澳门廉政公署
 
 ### 最新消息
