@@ -129,7 +129,7 @@
     "simplecc-wasm": "0.1.4",
     "socks-proxy-agent": "6.2.0",
     "string-similarity": "4.0.4",
-    "tiny-async-pool": "2.0.1",
+    "tiny-async-pool": "2.1.0",
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",

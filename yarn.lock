@@ -13082,10 +13082,10 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tiny-async-pool@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/tiny-async-pool/-/tiny-async-pool-2.0.1.tgz#b91a5e9fa539f2d89b2201cd843a7341fe2710a7"
-  integrity sha512-QIXBQdZdFWb7sLsuS5R8+23YdUXypkplXG+C3AMkEVzUlAZ/2EWrQzfAey0l4/r8ih+F7KgbJdPWHrfOce908A==
+tiny-async-pool@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-async-pool/-/tiny-async-pool-2.1.0.tgz#3ec126568c18a7916912fb9fbecf812337ec6b84"
+  integrity sha512-ltAHPh/9k0STRQqaoUX52NH4ZQYAJz24ZAEwf1Zm+HYg3l9OXTWeqWKyYsHu40wF/F0rxd2N2bk5sLvX2qlSvg==
 
 tlds@1.231.0, tlds@^1.228.0:
   version "1.231.0"
