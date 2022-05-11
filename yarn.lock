@@ -5064,10 +5064,10 @@ dot-prop@^5.2.0:
   dependencies:
     is-obj "^2.0.0"
 
-dotenv@16.0.0:
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.0.tgz#c619001253be89ebb638d027b609c75c26e47411"
-  integrity sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==
+dotenv@16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.1.tgz#8f8f9d94876c35dac989876a5d3a82a267fdce1d"
+  integrity sha512-1K6hR6wtk2FviQ4kEiSjFiH5rpzEVi8WW0x96aztHVMhEspNpc4DVOUTEHtEva5VThQ8IaBX1Pe4gSzpVVUsKQ==
 
 dotenv@^6.2.0:
   version "6.2.0"
@@ -11409,10 +11409,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.61:
-  version "1.0.61"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.61.tgz#971b909baa4cd79e6838c4cf3d42f090ab68b23a"
-  integrity sha512-6HS2bbmHiXOUT4WY7f4J2S9ApkUCxa/ncDP77jTcY/i0buICkd6poXilGuA5x8aJYnhw1y/CZNII2LnzeYi+fw==
+rand-user-agent@1.0.62:
+  version "1.0.62"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.62.tgz#50b648c7df1c26e1b62724506570d547c2c8824b"
+  integrity sha512-gtgj9qp+Unim6N5vDvHY1UdSQQhAT9JmGHXQXVrUDKnUc2Hf8uM/O1X/WwiX1BJTXOUmMsvEHJLs3Of9Yzko3Q==
 
 randexp@0.4.6:
   version "0.4.6"
@@ -13082,10 +13082,10 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tiny-async-pool@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/tiny-async-pool/-/tiny-async-pool-2.0.1.tgz#b91a5e9fa539f2d89b2201cd843a7341fe2710a7"
-  integrity sha512-QIXBQdZdFWb7sLsuS5R8+23YdUXypkplXG+C3AMkEVzUlAZ/2EWrQzfAey0l4/r8ih+F7KgbJdPWHrfOce908A==
+tiny-async-pool@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tiny-async-pool/-/tiny-async-pool-2.1.0.tgz#3ec126568c18a7916912fb9fbecf812337ec6b84"
+  integrity sha512-ltAHPh/9k0STRQqaoUX52NH4ZQYAJz24ZAEwf1Zm+HYg3l9OXTWeqWKyYsHu40wF/F0rxd2N2bk5sLvX2qlSvg==
 
 tlds@1.231.0, tlds@^1.228.0:
   version "1.231.0"
