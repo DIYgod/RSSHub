@@ -664,6 +664,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
     -   `NHENTAI_PASSWORD`: nhentai 密码
 
+-   pianyuan 全部路由： [注册地址](https://pianyuan.org)
+
+    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例: PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
+
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_REFRESHTOKEN`: Pixiv Refresh Token, 请参考 [此文](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) 获取，或自行对客户端抓包获取
