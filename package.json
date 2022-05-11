@@ -48,7 +48,7 @@
     "@vuepress/plugin-google-analytics": "1.9.7",
     "@vuepress/plugin-pwa": "1.9.7",
     "@vuepress/shared-utils": "1.9.7",
-    "ci-info": "3.3.0",
+    "ci-info": "3.3.1",
     "cross-env": "7.0.3",
     "eslint": "8.15.0",
     "eslint-config-prettier": "8.5.0",
