@@ -502,6 +502,20 @@ Provides all of the articles by the specified Yahoo! author.
 
 </RouteEn>
 
+## Yomiuri Shimbun 読売新聞 
+
+### News
+
+<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['category']">
+
+Free articles only.
+
+| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |    皇室    |
+| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
+| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
+
+</RouteEn>
+
 ## 公視新聞網
 
 ### Daily News
