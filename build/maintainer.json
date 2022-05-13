@@ -2376,6 +2376,62 @@
     "/zhibo8/post/:id": [
         "LogicJake"
     ],
+    "/zhihu/bookstore/newest": [
+        "xyqfer"
+    ],
+    "/zhihu/collection/:id/:getAll?": [
+        "huruji",
+        "Colin-XKL",
+        "Fatpandac"
+    ],
+    "/zhihu/daily": [
+        "DHPO"
+    ],
+    "/zhihu/daily/section/:sectionId": [
+        "ccbikai"
+    ],
+    "/zhihu/hot/:category?": [
+        "nczitzk"
+    ],
+    "/zhihu/hotlist": [
+        "DIYgod"
+    ],
+    "/zhihu/people/activities/:id": [
+        "DIYgod"
+    ],
+    "/zhihu/people/answers/:id": [
+        "DIYgod",
+        "prnake"
+    ],
+    "/zhihu/people/pins/:id": [
+        "xyqfer"
+    ],
+    "/zhihu/pin/daily": [
+        "xyqfer"
+    ],
+    "/zhihu/pin/hotlist": [
+        "xyqfer"
+    ],
+    "/zhihu/posts/:usertype/:id": [
+        "whtsky",
+        "Colin-XKL"
+    ],
+    "/zhihu/question/:questionId": [
+        "xyqfer",
+        "hacklu"
+    ],
+    "/zhihu/timeline": [
+        "SeanChao"
+    ],
+    "/zhihu/topic/:topicId": [
+        "xyqfer"
+    ],
+    "/zhihu/weekly": [
+        "LogicJake"
+    ],
+    "/zhihu/zhuanlan/:id": [
+        "DIYgod"
+    ],
     "/zhubai/:id": [
         "naixy28"
     ],
@@ -2452,23 +2508,6 @@
     "/jianshu/trending/:timeframe": [],
     "/jianshu/collection/:id": [],
     "/jianshu/user/:id": [],
-    "/zhihu/collection/:id/:getAll?": [],
-    "/zhihu/people/activities/:id": [],
-    "/zhihu/people/answers/:id": [],
-    "/zhihu/posts/:usertype/:id": [],
-    "/zhihu/zhuanlan/:id": [],
-    "/zhihu/daily": [],
-    "/zhihu/daily/section/:sectionId": [],
-    "/zhihu/hotlist": [],
-    "/zhihu/pin/hotlist": [],
-    "/zhihu/question/:questionId": [],
-    "/zhihu/topic/:topicId": [],
-    "/zhihu/people/pins/:id": [],
-    "/zhihu/bookstore/newest": [],
-    "/zhihu/pin/daily": [],
-    "/zhihu/weekly": [],
-    "/zhihu/timeline": [],
-    "/zhihu/hot/:category?": [],
     "/mzitu/home/:type?": [],
     "/mzitu/tags": [],
     "/mzitu/category/:category": [],
