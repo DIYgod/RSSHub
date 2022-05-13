@@ -1436,6 +1436,28 @@
     "/natgeo/:cat/:type?": [
         "fengkx"
     ],
+    "/nature/cover": [
+        "yech1990"
+    ],
+    "/nature/highlight/:journal?/:year?": [
+        "yech1990",
+        "TonyRL"
+    ],
+    "/nature/news": [
+        "yech1990",
+        "TonyRL"
+    ],
+    "/nature/news-and-comment/:journal?": [
+        "yech1990",
+        "TonyRL"
+    ],
+    "/nature/research/:journal?": [
+        "yech1990",
+        "TonyRL"
+    ],
+    "/nature/siteindex": [
+        "TonyRL"
+    ],
     "/nbd/daily": [
         "MeXunco"
     ],
@@ -3331,11 +3353,6 @@
     "/pnas/:topic?": [],
     "/cell/cell/:category": [],
     "/cell/cover": [],
-    "/nature/research/:journal?": [],
-    "/nature/news-and-comment/:journal?": [],
-    "/nature/cover": [],
-    "/nature/news": [],
-    "/nature/highlight": [],
     "/sciencemag/current/:journal?": [],
     "/sciencemag/cover": [],
     "/sciencemag/early/science": [],
