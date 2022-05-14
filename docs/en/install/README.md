@@ -294,9 +294,15 @@ Heroku accounts with unverified payment methods have only 550 hours of credit pe
 ### Automatic deploy upon update
 
 1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
-2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
-3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
-4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
+~~2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).~~
+~~3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.~~
+~~4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.~~
+
+2. Open fork repository, Setting,Security,Secrets,Actions, add three variables ``HEROKU_API_KEY``, ``HEROKU_APP_NAME``, ``HEROKU_EMAIL``. Never modify them directly in the yml file, otherwise heroku privileges may be stolen. [Get API_KEY official help](https://help.heroku.com/PBGP6IDE/how-should-i-generate-an-api-key-that-allows-me-to-use-the-heroku-platform-api)
+
+3. Open Actions,HerokuCI,enable workflow.
+
+
 
 ## Deploy to Vercel(Zeit Now)
 

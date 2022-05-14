@@ -298,9 +298,14 @@ in pkgs.stdenv.mkDerivation {
 ### 自动更新部署
 
 1.  将 RSSHub [分叉（fork）](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) 到自己的账户下。
-2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 （例如 `https://github.com/USERNAME/RSSHub`)。
-3.  检查 Heroku 设置，随代码库更新自动部署。
-4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
+
+~~ 2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 （例如 `https://github.com/USERNAME/RSSHub`)。~~
+~~ 3.  检查 Heroku 设置，随代码库更新自动部署。~~
+~~ 4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。 ~~
+
+2. 打开fork仓库，Setting,Security,Secrets,Actions,添加三个变量``HEROKU_API_KEY``，``HEROKU_APP_NAME``，``HEROKU_EMAIL``。千万不要直接在yml文件中修改，否则可能被盗用heroku权限。[获取API_KEY官方帮助](https://help.heroku.com/PBGP6IDE/how-should-i-generate-an-api-key-that-allows-me-to-use-the-heroku-platform-api)
+
+3. 打开Actions,HerokuCI,enable workflow。
 
 ## 部署到 Vercel (Zeit Now)
 
