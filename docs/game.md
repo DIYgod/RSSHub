@@ -95,7 +95,7 @@ pageClass: routes
 
 ### 免费游戏
 
-<Route author="Zyx-A nczitzk" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['地区，默认为 en_US', '国家，默认为 en_US']"/>
+<Route author="Zyx-A nczitzk KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['地区，默认为 en_US', '国家，默认为 en_US']"/>
 
 ## Fate Grand Order
 
