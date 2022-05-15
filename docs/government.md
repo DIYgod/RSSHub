@@ -725,6 +725,16 @@ pageClass: routes
 
 </Route>
 
+### 河北省财政厅
+
+<Route author="nczitzk" example="/gov/hebei/czt/xwdt" path="/gov/hebei/czt/xwdt/:category?" :paramsDesc="['分类，见下表，默认为财政动态']">
+
+| 财政动态 | 综合新闻 | 通知公告 |
+| ---- | ---- | ---- |
+| gzdt | zhxw | tzgg |
+
+</Route>
+
 ### 河北省退役军人事务厅
 
 <Route author="SunShinenny" example="/gov/veterans/hebei/sxxx" path="/gov/veterans/hebei/:type" :paramsDesc="['分类名']">
