@@ -815,6 +815,3 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
-
--   知乎问题
-    -   `ZHIHU_COOKIES_NO_LOGIN`: 知乎非登陆状态下的 cookie 值，其中 dc\_0 是必要的，其他可删除
