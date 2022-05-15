@@ -178,9 +178,15 @@ New items may always at the end of the list, when the number of paper entries is
 
 ## Nature Journal
 
+::: tip Tips
+
+You can get all short name of a journal from <https://www.nature.com/siteindex> or [Journal List](#nature-journal-journal-list).
+
+:::
+
 ### Latest Research
 
-<RouteEn author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990 TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1"/>
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                              |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
@@ -194,16 +200,16 @@ New items may always at the end of the list, when the number of paper entries is
 |     nmat      |      Nature Materials       | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
--   Using router (`/nature/research/` + “short name for a journal”) to query latest research paper for a certain journal of Nature Publishing Group.
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
     If the `:journal` parameter is blank, then latest research of Nature will return.
 -   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
--   Only the abstract section is rendered
+-   Only abstract is rendered in some researches
 
 </RouteEn>
 
 ### News & Comment
 
-<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990 TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" supportScihub="1" radar="1" rssbud="1"/>
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                                                                 |
 | :-----------: | :-------------------------: | --------------------------------------------------------------------------------------------------------------------- |
@@ -216,7 +222,7 @@ New items may always at the end of the list, when the number of paper entries is
 |     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                                      |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-https://rsshub.app/comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
--   Using router (`/nature/research/` + “short name for a journal”) to query latest research paper for a certain journal of Nature Publishing Group.
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
 -   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
 
 </RouteEn>
@@ -229,13 +235,25 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 </RouteEn>
 
-### News
+### Nature News
 
-<RouteEn author="yech1990" example="/nature/news" path="/nature/news" />
+<RouteEn author="yech1990 TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
 
 ### Research Highlight
 
-<RouteEn author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
+<RouteEn author="yech1990 TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1">
+
+::: warning Warning
+
+Only some journals are supported.
+
+:::
+
+</RouteEn>
+
+### Journal List
+
+<RouteEn author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
 ## Oxford University Press
 
@@ -243,7 +261,7 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 #### Journal
 
-<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
+<RouteEn author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
 
 ## Proceedings of The National Academy of Sciences (PNAS)
 

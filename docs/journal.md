@@ -150,9 +150,15 @@ pageClass: routes
 
 ## Nature 系列
 
+::: tip Tips
+
+You can get all short name of a journal from <https://www.nature.com/siteindex> or [期刊列表](#nature-xi-lie-qi-kan-lie-biao).
+
+:::
+
 ### 最新成果
 
-<Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
+<Route author="yech1990 TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
 
 |   `:journal`  |             期刊名             | 路由                                                                                 |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
@@ -166,16 +172,16 @@ pageClass: routes
 |      nmat     |       Nature Materials      | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
-    若参数置空（`/nature/research`），则默认获取主刊（Nature）的最新文章。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
--   由于权限的限制，目前仅获取论文的摘要进行展示。
+-   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章 (Latest Research)。
+    若参数置空 (`/nature/research`)，则默认获取主刊 (Nature) 的最新文章。
+-   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以上杂志进行了测试。
+-   由于权限的限制，目前部分论文仅获取摘要进行展示。
 
 </Route>
 
 ### 新闻及评论
 
-<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
+<Route author="yech1990 TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" radar="1" rssbud="1"/>
 
 |   `:journal`  |             期刊名             | 路由                                                                                                 |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
@@ -188,9 +194,9 @@ pageClass: routes
 |      nmat     |       Nature Materials      | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
+-   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章 (Latest Research)。
     主刊由于格式不同，该 router 并未支持，采用 `/nature/news` 来获取新闻。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
+-   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以上杂志进行了测试。
 
 </Route>
 
@@ -204,11 +210,21 @@ pageClass: routes
 
 ### 主刊 - 新闻动态
 
-<Route author="yech1990" example="/nature/news" path="/nature/news" />
+<Route author="yech1990 TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
 
-### 主刊 - 精彩研究
+### 精彩研究
 
-<Route author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
+<Route author="yech1990 TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
+
+::: warning 警告
+
+仅支持部分期刊。
+
+:::
+
+### 期刊列表
+
+<Route author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
 ## Oxford University Press
 

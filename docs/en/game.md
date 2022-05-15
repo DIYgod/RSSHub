@@ -60,7 +60,7 @@ Language codes
 
 ### Free games
 
-<RouteEn author="Zyx-A nczitzk" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['Locale, en_US by default', 'Country, en_US by default']"/>
+<RouteEn author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['Locale, en_US by default', 'Country, en_US by default']"/>
 
 ## FINAL FANTASY XIV
 
