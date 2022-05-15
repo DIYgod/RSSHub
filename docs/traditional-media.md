@@ -1106,51 +1106,53 @@ category 对应的关键词有
 
 ## 路透社
 
-### 实时资讯
+### 导航
 
-<Route author="black-desk" example="/reuters/theWire" path="/reuters/theWire" />
+<Route author="LyleLee HenryQW proletarius101" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['navigation, 网站的导航','category, 导航下的分类，区分大小写']">
 
-### 频道
+-   将 `:navigation` 设置为网站上的导航:
+    | World    | Business | Legal | Markets  | Breakingviews | Technology    | Invstigation |
+    | -------- | -------  | ----- | -------- | ------------- | ------------- | ------------ |
+    | world    | business | legal | markets  | breakingviews | breakingviews | invstigation |
 
-<Route author="HenryQW proletarius101" example="/reuters/channel/cn/analyses" path="/reuters/channel/:site/:channel" :paramsDesc="['语言，支持的分站列表如下','频道名，请注意大小写需与如下表格中一致。']">
 
-支持语言列表
+-   world/ `:category`:
 
--   中国分站 `cn`：
+    | All  | Africa   | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+    | ---- | -------  | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+    |      | afica    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
 
-    -   主频道：
 
-    | 深度分析     | 时事要闻        | 生活   | 投资        |
-    | -------- | ----------- | ---- | --------- |
-    | analyses | generalnews | life | investing |
+-   business/ `:category`:
 
-    -   资讯子频道：
+    | All  | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+    | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+    |      | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
 
-    | 中国财经  | 国际财经                  | 新闻人物      | 财经视点     |
-    | ----- | --------------------- | --------- | -------- |
-    | china | internationalbusiness | newsmaker | opinions |
+-   legal/ `:category`:
 
-    -   专栏子频道：
+    | All | Goverment | Legal Industry | Litigation | Transaction |
+    | --- | --------- | -------------- | ---------- | ----------- |
+    |     | goverment | legalindustry  | litigation | transaction |
 
-    | 中国财经专栏   | 国际财经专栏    | 大宗商品专栏    |
-    | -------- | --------- | --------- |
-    | CnColumn | IntColumn | ComColumn |
 
--   美国分站 `us`：
+</Route>
 
-    -   主频道：
+### 订阅作者
 
-    | Business | Markets | World | Politics | Tech       | Breakingviews | Wealth | Life      |
-    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
-    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+<Route author="LyleLee HenryQW proletarius101" example="/reuters/authors/reuters" path="/reuters/authors/:category?" :paramsDesc="['category, 设置为作者名字, 默认作者是 reuters']">
 
--   英国分站 `uk`：
+-   authors/`:category`:
 
-    -   主频道：
+    | 默认    | Jonathan Landay | 其他作者          |
+    | ------- | --------------- | ----------------- |
+    | reuters | jonathan-landay | 其他作者名字       |
 
-    | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
-    | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
-    | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
+</Route>
+
+### 深度调查栏目
+
+<Route author="LyleLee HenryQW proletarius101" example="/reuters/inverstigates" path="/reuters/inverstigates" :paramsDesc="[]">
 
 </Route>
 

@@ -235,24 +235,53 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters
 
-### Channel
+### Navigation
 
-<RouteEn author="HenryQW proletarius101" example="/reuters/channel/uk/personalFinance" path="/reuters/channel/:site/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
+<RouteEn author="LyleLee HenryQW proletarius101" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['navigation, see the supported list below','category, please note it\'s case-sensitive']">
 
-Supported sub-sites:
+-   set `:navigation` just like navigation on the website:
+    | World    | Business | Legal | Markets  | Breakingviews | Technology    | Invstigation |
+    | -------- | -------  | ----- | -------- | ------------- | ------------- | ------------ |
+    | world    | business | legal | markets  | breakingviews | breakingviews | invstigation |
 
--   中国分站 `cn`：
-    See [路透社中国分站](../traditional-media.html#lu-tou-she)
 
--   US site `us`：
-    | Business | Markets | World | Politics | Tech | Breakingviews | Wealth | Life |
-    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
-    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+-   world/ `:category`:
 
--   UK site `uk`：
-    | Business | World | UK | Tech | Money | Breakingviews | Life |
-    | -------- | ----- | --- | ---------- | --------------- | ------------- | --------- |
-    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
+    | All  | Africa   | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+    | ---- | -------  | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+    |      | afica    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
+
+
+-   business/ `:category`:
+
+    | All  | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+    | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+    |      | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
+
+-   legal/ `:category`:
+
+    | All | Goverment | Legal Industry | Litigation | Transaction |
+    | --- | --------- | -------------- | ---------- | ----------- |
+    |     | goverment | legalindustry  | litigation | transaction |
+
+
+</RouteEn>
+
+### View by author
+
+<RouteEn author="LyleLee HenryQW proletarius101" example="/reuters/authors/reuters" path="/reuters/authors/:category?" :paramsDesc="['category, set it to an author\'s name, default reuters']">
+
+-   authors/`:category`:
+
+    | Default | Jonathan Landay | any other authors |
+    | ------- | --------------- | ----------------- |
+    | reuters | jonathan-landay | any other name    |
+
+</RouteEn>
+
+### Inverstigates
+
+<RouteEn author="LyleLee HenryQW proletarius101" example="/reuters/inverstigates" path="/reuters/inverstigates" :paramsDesc="[]">
 
 </RouteEn>
 
