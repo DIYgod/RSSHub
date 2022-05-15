@@ -5519,10 +5519,10 @@ eslint-plugin-prettier@4.0.0:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-yml@0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-0.14.0.tgz#110e1126ebe983d830e4ab8754e437f2279d2b72"
-  integrity sha512-+0+bBV/07txENbxfrHF9olGoLCHez64vmnOmjWOoLwmXOwfdaSRleBSPIi4nWQs7WwX8lm/fSLadOjbVEcsXQQ==
+eslint-plugin-yml@0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-0.15.0.tgz#99b9ed22a8d9d51e189e822c2f78eeb4eda080ce"
+  integrity sha512-fRx7wNmRvK2FjwCmnsTm71FcHlmH7eMyXpa/GgfwAfb/7RDH0XeOaM8Z8KupYxoizYu8eBLGcPv1DzRZzvhnww==
   dependencies:
     debug "^4.3.2"
     lodash "^4.17.21"
@@ -11422,10 +11422,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.62:
-  version "1.0.62"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.62.tgz#50b648c7df1c26e1b62724506570d547c2c8824b"
-  integrity sha512-gtgj9qp+Unim6N5vDvHY1UdSQQhAT9JmGHXQXVrUDKnUc2Hf8uM/O1X/WwiX1BJTXOUmMsvEHJLs3Of9Yzko3Q==
+rand-user-agent@1.0.63:
+  version "1.0.63"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.63.tgz#eadb7ed4b7a1d0ffb07bca10d40c60346961e205"
+  integrity sha512-asYTDQa/bGvHKqm4XGHYnQZtdMAzE/X/C3roQdJzM3ShfykDx6jCrv12BIR8bF1okhb+6Va7x6UABA/j04Pm4g==
 
 randexp@0.4.6:
   version "0.4.6"
@@ -11683,7 +11683,7 @@ remark-pangu@2.2.0:
     unist-util-is "^4.0.2"
     unist-util-visit "^2.0.2"
 
-remark-parse@^9.0.0:
+remark-parse@9.0.0, remark-parse@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/remark-parse/-/remark-parse-9.0.0.tgz#4d20a299665880e4f4af5d90b7c7b8a935853640"
   integrity sha512-geKatMwSzEXKHuzBNU1z676sGcDcFoChMK38TgdHJNAYfFtsfHDQG7MoJAjs6sgYMqyLduCYWDIWZIxiPeafEw==
@@ -13449,7 +13449,7 @@ unicode-property-aliases-ecmascript@^2.0.0:
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-2.0.0.tgz#0a36cb9a585c4f6abd51ad1deddb285c165297c8"
   integrity sha512-5Zfuy9q/DFr4tfO7ZPeVXb1aPoeQSdeFMLpYuFebehDAhbuevLs5yxSZmIFN1tP5F9Wl4IpJrYojg85/zgyZHQ==
 
-unified@^9.1.0:
+unified@9.2.2, unified@^9.1.0:
   version "9.2.2"
   resolved "https://registry.yarnpkg.com/unified/-/unified-9.2.2.tgz#67649a1abfc3ab85d2969502902775eb03146975"
   integrity sha512-Sg7j110mtefBD+qunSLO1lqOEKdrwBFBrR6Qd8f4uwkhWNlbkaqwHse6e7QvD3AP/MNoJdEDLaf8OxYyoWgorQ==

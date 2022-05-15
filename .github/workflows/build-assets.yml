@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'lib/**'
+      - 'scripts/workflow/*.js'
 
 jobs:
   build:
