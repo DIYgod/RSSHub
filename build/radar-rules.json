@@ -3583,6 +3583,32 @@
       }
     ]
   },
+  "hebei.gov.cn": {
+    "_name": "河北省人民政府",
+    "czt": [
+      {
+        "title": "河北省财政厅 - 财政动态",
+        "docs": "https://docs.rsshub.app/government.html#he-bei-sheng-cai-zheng-ting-cai-zheng-dong-tai",
+        "source": [
+          "/xwdt/:category"
+        ]
+      },
+      {
+        "title": "河北省财政厅 - 综合新闻",
+        "docs": "https://docs.rsshub.app/government.html#he-bei-sheng-cai-zheng-ting-zong-he-xin-wen",
+        "source": [
+          "/xwdt/:category"
+        ]
+      },
+      {
+        "title": "河北省财政厅 - 通知公告",
+        "docs": "https://docs.rsshub.app/government.html#he-bei-sheng-cai-zheng-ting-tong-zhi-gong-gao",
+        "source": [
+          "/xwdt/:category"
+        ]
+      }
+    ]
+  },
   "homeaffairs.gov.au": {
     "_name": "Department of Home Affairs",
     "immi": [
