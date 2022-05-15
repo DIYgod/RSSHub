@@ -13,7 +13,7 @@ body:
     id: routes
     attributes:
       label: 路由地址
-      description: 不包含参数，复制文档路由参数，一行一个，不要重复
+      description: 不包含参数，复制文档路由参数，一行一个，不要重复。如果和路由没有关系，请写`NOROUTE`
       placeholder: /rsshub/someroute/:type?
       render: routes
     validations:
