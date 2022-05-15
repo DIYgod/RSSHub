@@ -5,11 +5,21 @@ on:
     types: [opened]
 
 jobs:
-  comment:
+  testRoute:
+    name: Route test
     runs-on: ubuntu-latest
     steps:
-      - name: Comment
-        uses: ben-z/actions-comment-on-issue@1.0.2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3  # just need its cache
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          message: '👍 感谢提交该 Issue，请确保仔细阅读 [Issue 模板](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/bug_report_zh.yml)，[RSS 提案模板](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/rss_request_zh.yml) 或 [Feature 提案模板](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/feature_request_zh.yml) 以便于测试。不符合模板将导致 Issue 被直接关闭。<br /><br />👍 Thanks for the issue, please follow the [Issue template](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/bug_report_en.yml), [RSS proposal template](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/rss_request_en.yml) or [Feature proposal template](https://github.com/DIYgod/RSSHub/blob/master/.github/ISSUE_TEMPLATE/feature_request_en.yml). Otherwise the issue will be closed.'
+          node-version: 16
+          cache: 'yarn'
+      - name: Install dependencies (yarn)  # needed since we need to parse markdown, so we also use got instead
+        run: yarn
+      - name: Generate feedback
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/find-maintainer.js`)
+            return await script({ github, context, core })
