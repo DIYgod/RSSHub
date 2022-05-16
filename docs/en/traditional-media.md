@@ -240,9 +240,9 @@ Parameters can be obtained from the official website, for instance:
 <RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['see the supported list below', ' please note it\'s case-sensitive']">
 
 -   set `:navigation` just like navigation on the website:
-    | World    | Business | Legal | Markets  | Breakingviews | Technology    | Invstigation |
-    | -------- | -------  | ----- | -------- | ------------- | ------------- | ------------ |
-    | world    | business | legal | markets  | breakingviews | breakingviews | invstigation |
+    | World    | Business | Legal | Markets  | Breakingviews | Technology | Invstigation |
+    | -------- | -------  | ----- | -------- | ------------- | ---------- | ------------ |
+    | world    | business | legal | markets  | breakingviews | technology | invstigation |
 
 
 -   world/ `:category`:
