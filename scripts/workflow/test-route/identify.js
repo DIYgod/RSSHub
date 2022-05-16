@@ -1,8 +1,8 @@
 const noFound = 'Auto: Route No Found';
-const whiteListedUser = ['dependabot[bot]'];
+const whiteListedUser = ['dependabot[bot]', 'pull[bot]']; // dependabot and downstream PR requested by pull[bot]
 
-module.exports = async ({ github, context, core }, body, number) => {
-    core.debug(`sender: ${context.payload.sender.login}`);
+module.exports = async ({ github, context, core }, body, number, sender) => {
+    core.debug(`sender: ${sender}`);
     core.debug(`body: ${body}`);
     const m = body.match(/```routes\r\n((.|\r\n)*)```/);
     core.debug(`match: ${m}`);
@@ -20,7 +20,7 @@ module.exports = async ({ github, context, core }, body, number) => {
                 core.warning(e);
             });
 
-    if (whiteListedUser.includes(context.payload.sender.login)) {
+    if (whiteListedUser.includes(sender)) {
         core.info('PR created by a whitelisted user, passing');
         await removeLabel();
         await github.rest.issues
@@ -35,7 +35,7 @@ module.exports = async ({ github, context, core }, body, number) => {
             });
         return;
     } else {
-        core.debug('PR created by ' + context.payload.sender.login);
+        core.debug('PR created by ' + sender);
     }
 
     if (m && m[1]) {

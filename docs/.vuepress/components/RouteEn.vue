@@ -1,7 +1,7 @@
 <template>
 <div class="routeBlock" :id="path">
   <p class="badge">
-    <Badge text="support BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="support podcast" type="tip" vertical="middle" v-if="supportPodcast"/> <a target="_blank" href="/en/faq.html" v-if="anticrawler"><Badge text="strict anti-crawler policy" vertical="middle" type="warn"/></a> <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="support browser extension" vertical="middle" type="tip"/></a> <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud" v-if="rssbud"><Badge text="support rssbud" vertical="middle" type="tip"/></a> <a target="_blank" href="https://docs.rsshub.app/en/install/" v-if="selfhost"><Badge text="self-host only" vertical="middle" type="warn"/></a>
+    <Badge text="Support BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="Support Podcast" type="tip" vertical="middle" v-if="supportPodcast"/> <Badge text="Support Sci-Hhub" type="tip" vertical="middle" v-if="supportScihub"/> <a target="_blank" href="/en/faq.html" v-if="anticrawler"><Badge text="strict anti-crawler policy" vertical="middle" type="warn"/></a> <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="support browser extension" vertical="middle" type="tip"/></a> <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud" v-if="rssbud"><Badge text="support rssbud" vertical="middle" type="tip"/></a> <a target="_blank" href="https://docs.rsshub.app/en/install/" v-if="selfhost"><Badge text="self-host only" vertical="middle" type="warn"/></a>
   </p>
   <p class="author">
     Author: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
@@ -15,7 +15,8 @@
   <div v-if="path.match(/(?<=:).*?(?=\/|$)/g)">
   <p>
     Parameters:
-  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)">{{item.replace('?','')}}, {{(item.includes('?'))?'optional':'required'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul> </p>
+  </p>
+  <ul><li class="params" v-for="(item, index) in path.match(/(?<=:).*?(?=\/|$)/g)"><code>{{item.replace(/:|\?|\+|\*/g,'')}}</code>, {{{'?':'optional','*':'zero or more','+':'one or more'}[item[item.length-1]]||'required'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul>
   </div>
   <div v-else><p>Parameters: N/A</p></div>
   <slot></slot>
@@ -52,6 +53,10 @@ export default {
       type: String,
       default: null
     },
+    supportScihub: {
+      type: String,
+      default: null
+    },
     radar: {
       type: String,
       default: null
@@ -66,11 +71,11 @@ export default {
     },
   },
   methods: {
-    renderMarkdown(item) {
+    renderMarkdown(item, inline = true) {
     const md = require('markdown-it')({
             html: true,
     });
-        return md.render(item);
+        return inline ? md.renderInline(item) : md.render(item);
     },
   },
   computed: {

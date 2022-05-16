@@ -1,0 +1,3 @@
+{{each desc}}
+<p>{{@ $value}}</p>
+{{/each}}

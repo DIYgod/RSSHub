@@ -39,13 +39,15 @@ module.exports = {
         },
         extendMarkdown: (md) => {
             md.use(require('../.format/md/hierarchySlug'), {
-                slugify: function (s) {
+                slugify(s) {
                     return _slugify(
                         pinyin(s, {
                             style: PINYIN_STYLE.Plain,
                             heteronym: true,
                             segment: true,
-                        }).join('-')
+                        })
+                            .map((item) => item[0])
+                            .join('-')
                     );
                 },
                 level: 2,
@@ -65,6 +67,7 @@ module.exports = {
         ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
         ['link', { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#ff8549' }],
     ],
+    theme: 'vuepress-theme-rsshub',
     themeConfig: {
         repo: 'DIYgod/RSSHub',
         editLinks: true,

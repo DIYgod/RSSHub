@@ -40,7 +40,21 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### Shop
 
-<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['Shop subdomain']" />
+<RouteEn author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['Shop subdomain']" />
+
+## Craigslist
+
+### Shop
+
+<RouteEn author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']"/>
+
+> We use RSSHub to implement the searching of Craigslist
+> An example of a full original search url:
+> <https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel>
+>
+> the `xxx` in `/search/xxx` is the search type, just refer to the original search url.
+> The query string is the actual name of query, in this case is folding bike
+
 
 ## Guiltfree.pl
 
@@ -52,7 +66,7 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### thread
 
-<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
+<RouteEn author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']"/>
 
 ## IKEA
 
@@ -98,4 +112,4 @@ All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
 ### PS5 stock UK
 
-<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
+<RouteEn author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>

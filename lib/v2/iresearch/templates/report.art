@@ -1,0 +1,5 @@
+{{@ data.Content }}
+<% for (let i = 1; i <= data.PagesCount; i++){ %>
+<img src="http://pic.iresearch.cn/rimgs/{{ data.id }}/{{ i }}.jpg" rel="no-referrer">
+<% } %>
+
