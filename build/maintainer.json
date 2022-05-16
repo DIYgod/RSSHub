@@ -2346,6 +2346,9 @@
     "/yaohuo/": [
         "nczitzk"
     ],
+    "/yomiuri/yomiuri/:category?": [
+        "Arracc"
+    ],
     "/youku/channel/:channelId/:embed?": [
         "xyqfer",
         "Fatpandac"
@@ -3786,7 +3789,6 @@
     "/weforum/report/:lang?/:year?/:platform?": [],
     "/nobelprize/:caty?": [],
     "/gov/taiwan/mnd": [],
-    "/yomiuri/:category": [],
     "/npc/:caty": [],
     "/ofweek/news": [],
     "/popyard/:caty?": [],
