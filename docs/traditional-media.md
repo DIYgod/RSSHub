@@ -1106,6 +1106,12 @@ category 对应的关键词有
 
 ## 路透社
 
+::: warning 注意
+
+FIXME: migration notes
+
+:::
+
 ### 导航
 
 <Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['网站的导航', '导航下的分类，区分大小写']">
