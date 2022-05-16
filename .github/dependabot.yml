@@ -19,12 +19,16 @@ updates:
         versions: ['>=4.0.0']
       - dependency-name: remark-gfm
         versions: ['>=2.0.0']
+      - dependency-name: remark-parse
+        versions: ['>=10.0.0']
       - dependency-name: remark-preset-prettier
         versions: ['>=1.0.0']
       - dependency-name: remark-stringify
         versions: ['>=10.0.0']
       - dependency-name: string-width
         versions: ['>=5.0.0']
+      - dependency-name: unified
+        versions: ['>=10.0.0']
 
   - package-ecosystem: 'github-actions'
     directory: '/'

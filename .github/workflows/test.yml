@@ -43,6 +43,7 @@ jobs:
   puppeteer:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [ 14, 16 ]
         chromium:
