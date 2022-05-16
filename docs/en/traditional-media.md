@@ -281,9 +281,7 @@ Parameters can be obtained from the official website, for instance:
 
 ### Inverstigates
 
-<RouteEn author="LyleLee HenryQW proletarius101" example="/reuters/inverstigates" path="/reuters/inverstigates" :paramsDesc="[]">
-
-</RouteEn>
+<RouteEn author="LyleLee" example="/reuters/inverstigates" path="/reuters/inverstigates" />
 
 ## RTHK
 
