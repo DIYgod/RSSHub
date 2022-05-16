@@ -237,7 +237,7 @@ Parameters can be obtained from the official website, for instance:
 
 ### Navigation
 
-<RouteEn author="LyleLee HenryQW proletarius101" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['navigation, see the supported list below','category, please note it\'s case-sensitive']">
+<RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['see the supported list below', ' please note it\'s case-sensitive']">
 
 -   set `:navigation` just like navigation on the website:
     | World    | Business | Legal | Markets  | Breakingviews | Technology    | Invstigation |
