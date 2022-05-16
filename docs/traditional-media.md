@@ -1108,7 +1108,7 @@ category 对应的关键词有
 
 ### 导航
 
-<Route author="LyleLee HenryQW proletarius101" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['navigation, 网站的导航','category, 导航下的分类，区分大小写']">
+<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['网站的导航', '导航下的分类，区分大小写']">
 
 -   将 `:navigation` 设置为网站上的导航:
     | World    | Business | Legal | Markets  | Breakingviews | Technology    | Invstigation |
