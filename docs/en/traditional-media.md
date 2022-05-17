@@ -237,8 +237,6 @@ Parameters can be obtained from the official website, for instance:
 
 ::: warning Migration notes
 
-Migration Notes
-
 1. Reuters Chinese site (`cn.reuters.com`) and British site (`uk.reuters.com`) have been terminated, redirecting to the main site (`www.reuters.com`)
 2. The old routes are deprecated. Please migrate to the new routes documented below
 
