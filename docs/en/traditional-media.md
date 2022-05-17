@@ -271,18 +271,13 @@ Parameters can be obtained from the official website, for instance:
     | --- | --------- | -------------- | ---------- | ----------- |
     |     | goverment | legalindustry  | litigation | transaction |
 
-
-</RouteEn>
-
-### View by author
-
-<RouteEn author="LyleLee HenryQW proletarius101" example="/reuters/authors/reuters" path="/reuters/authors/:category?" :paramsDesc="['category, set it to an author\'s name, default reuters']">
-
--   authors/`:category`:
+-   `authors/:topic`:
 
     | Default | Jonathan Landay | any other authors |
     | ------- | --------------- | ----------------- |
-    | reuters | jonathan-landay | any other name    |
+    | reuters | jonathan-landay | their name in URL |
+
+More could be found in the URL of the category/topic page.
 
 </RouteEn>
 
