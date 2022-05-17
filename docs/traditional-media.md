@@ -1115,7 +1115,7 @@ category 对应的关键词有
 
 ### 导航
 
-<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:common/:category?" :paramsDesc="['网站的导航', '导航下的分类，区分大小写']">
+<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
 -   将 `:common` 设置为网站上的导航:
     | World    | Business | Legal | Markets  | Breakingviews | Technology | Invstigation |
