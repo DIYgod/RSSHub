@@ -6657,6 +6657,26 @@
       }
     ]
   },
+  "mobilism.org": {
+    "_name": "Mobilism",
+    ".": [
+      {
+        "title": "论坛",
+        "docs": "https://docs.rsshub.app/bbs.html#mobilism",
+        "source": "/"
+      },
+      {
+        "title": "门户",
+        "docs": "https://docs.rsshub.app/bbs.html#mobilism",
+        "source": "/portal.php"
+      },
+      {
+        "title": "电子书",
+        "docs": "https://docs.rsshub.app/reading.html#mobilism",
+        "source": "/"
+      }
+    ]
+  },
   "mohw.gov.tw": {
     "_name": "台灣衛生福利部",
     ".": [

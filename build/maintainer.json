@@ -1406,6 +1406,12 @@
     "/miris/blog": [
         "chazeon"
     ],
+    "/mobilism/forums/:category/:type/:fulltext?": [
+        "nitezs"
+    ],
+    "/mobilism/portal/:type/:fulltext?": [
+        "nitezs"
+    ],
     "/mohw/clarification": [
         "nczitzk"
     ],
@@ -3640,7 +3646,6 @@
     "/law/jh": [],
     "/law/dh": [],
     "/law/jctd": [],
-    "/mobilism/release": [],
     "/samsungmembers/latest": [],
     "/dgjyw/:type": [],
     "/gov/caict/bps": [],
