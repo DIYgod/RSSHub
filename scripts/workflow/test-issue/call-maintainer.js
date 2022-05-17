@@ -2,15 +2,17 @@ const unified = require('unified');
 const parse = require('remark-parse');
 const got = require('got');
 
-// @TODO maybe we could use label or better way to separate bug/feature stuff
+// @TODO maybe we could use label or some other better ways to distinguish bug/feature issues
 const matchTitle = ['路由地址', 'Routes'];
 const maintainerURL = 'https://raw.githubusercontent.com/DIYgod/RSSHub/gh-pages/build/maintainer.json';
 const successTag = 'Bug Ping: Pinged';
-const parseFailure = 'Bug Ping: Parse Failure';
+const parseFailTag = 'Bug Ping: Parsing Failed';
 const failTag = 'Bug Ping: Not Found';
 const v1route = 'Route: v1';
 const v2route = 'Route: v2';
-const ignoreUsername = new Set([]); // Wrap user who don't want to be pinged.
+
+// DnD (do-not-disturb) usernames, add yours here to avoid being notified
+const dndUsernames = new Set([]);
 
 async function parseBodyRoutes(body, core) {
     const ast = await unified().use(parse).parse(body);
@@ -22,22 +24,23 @@ async function parseBodyRoutes(body, core) {
         return null;
     }
 
-    const routes = ast.children[1].value.trim();
+    let routes = ast.children[1].value.trim();
     core.debug(`routes: ${JSON.stringify(routes)}`);
     if (routes.localeCompare('NOROUTE') === 0) {
         return null;
     }
 
     if (routes) {
-        const dedup = [...new Set(routes.split(/\r?\n/).filter((n) => n))];
+        routes = routes.split(/\r?\n/).filter((n) => n);
+        const dedup = [...new Set(routes)];
         if (dedup.length !== routes.length) {
-            core.warning('Duplicate Detected.');
+            core.warning('Duplication detected.');
         }
         core.debug(dedup);
         return dedup;
     }
 
-    throw 'unable to parse body: routes does not exist';
+    throw 'unable to parse the issue body: route does not exist';
 }
 
 async function getMaintainersByRoutes(routes, core) {
@@ -46,7 +49,7 @@ async function getMaintainersByRoutes(routes, core) {
     return routes.map((e) => {
         const m = maintainers[e];
         if (m === undefined) {
-            core.warning(`Route ${e} does not match any maintainer`);
+            core.warning(`Route ${e} not found`);
         }
 
         return m;
@@ -66,14 +69,14 @@ module.exports = async ({ github, context, core }) => {
     });
 
     if (routes === null) {
-        return; // Not a bug, or skipped
+        return; // Not a bug report, or NOROUTE
     }
 
     if (routes === undefined) {
         await github.rest.issues
             .addLabels({
                 ...issue_facts,
-                labels: [parseFailure],
+                labels: [parseFailTag],
             })
             .catch((e) => {
                 core.warning(e);
@@ -86,19 +89,19 @@ module.exports = async ({ github, context, core }) => {
     let successCount = 0;
     let emptyCount = 0;
     let failedCount = 0;
-    let comments = '##### Trying to find maintainers: \n\n';
+    let comments = '##### Searching for maintainers: \n\n';
 
     for (let i = 0; i < routes.length; i++) {
         const route = routes[i];
         const main = maintainers[i];
         if (main === undefined) {
-            comments += `- \`${route}\`: **Not found in list**\n`;
+            comments += `- \`${route}\`: **Route not found**\n`;
             failedCount += 1;
             continue;
         }
 
         if (main.length === 0) {
-            comments += `- \`${route}\`: No maintainer listed, possibly v1 route or misconfigure\n`;
+            comments += `- \`${route}\`: No maintainer listed, possibly a v1 or misconfigured route\n`;
             emptyCount += 1;
             continue;
         }
@@ -106,8 +109,8 @@ module.exports = async ({ github, context, core }) => {
         if (main.length > 0) {
             const pingStr = main
                 .map((e) => {
-                    if (e in ignoreUsername) {
-                        return `\`@${e}\``; // Wrap with code so no mention will be sent
+                    if (e in dndUsernames) {
+                        return `\`@${e}\``; // Wrap in an inline code block to make sure no mention will be sent
                     }
                     return `@${e}`;
                 })
@@ -133,7 +136,7 @@ module.exports = async ({ github, context, core }) => {
         labels.push(v2route);
     }
 
-    // Write Affected Route Count
+    // Write labels (status, affected route count)
     await github.rest.issues
         .addLabels({
             ...issue_facts,
@@ -143,17 +146,17 @@ module.exports = async ({ github, context, core }) => {
             core.warning(e);
         });
 
-    // Send out notification
+    // Reply to the issue and notify the maintainers (if any)
     await github.rest.issues
         .createComment({
             ...issue_facts,
             body: `${comments}
 
 
-> Maintainers: if you do not want to be notified, add your name in scripts/test-issue/find-maintainer.js so your name will be wrapped when tagged.
+> To maintainers: if you are not willing to be disturbed, list your username in \`scripts/workflow/test-issue/call-maintainer.js\`. In this way, your username will be wrapped in an inline code block when tagged so you will not be notified.
 
-如果有任何路由无法匹配，Issue将会被自动关闭。如果Issue和路由无关，请使用\`NOROUTE\`关键词，或者留下评论。我们会重新审核  
-If route does not match any record, it will be closed automatically. Please use \`NOROUTE\` for any non-route related issue. Leave comment is this is a mistake.  
+如果有任何路由无法匹配，issue 将会被自动关闭。如果 issue 和路由无关，请使用 \`NOROUTE\` 关键词，或者留下评论。我们会重新审核。
+If there is any route not found, the issue will be closed automatically. Please use \`NOROUTE\` for a route-irrelevant issue or leave a comment if it is a mistake.
 `,
         })
         .catch((e) => {
