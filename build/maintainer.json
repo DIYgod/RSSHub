@@ -90,6 +90,9 @@
     "/95mm/category/:category": [
         "nczitzk"
     ],
+    "/9to5/9to5/:subsite/:tag?": [
+        "HenryQW"
+    ],
     "/aamacau/aamacau/:category?/:id?": [
         "nczitzk"
     ],
@@ -2928,7 +2931,6 @@
     "/udn/global/:tid": [],
     "/gitea/blog": [],
     "/idownloadblog": [],
-    "/9to5/:subsite/:tag?": [],
     "/testerhome/newest": [],
     "/weseepro/newest": [],
     "/weseepro/newest-direct": [],
