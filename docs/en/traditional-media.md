@@ -265,7 +265,7 @@ Parameters can be obtained from the official website, for instance:
     | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
     |      | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
 
--   legal/ `:category`:
+-   `legal/:topic`:
 
     | All | Goverment | Legal Industry | Litigation | Transaction |
     | --- | --------- | -------------- | ---------- | ----------- |
