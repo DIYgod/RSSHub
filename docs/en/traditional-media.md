@@ -235,7 +235,7 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters
 
-::: warning Warning
+::: warning Migration notes
 
 Migration Notes
 
