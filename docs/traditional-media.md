@@ -1147,15 +1147,13 @@ category 对应的关键词有
 
 
 
-### 订阅作者
-
-<Route author="LyleLee HenryQW proletarius101" example="/reuters/authors/reuters" path="/reuters/authors/:category?" :paramsDesc="['category, 设置为作者名字, 默认作者是 reuters']">
-
 -   authors/`:category`:
 
     | 默认    | Jonathan Landay | 其他作者          |
     | ------- | --------------- | ----------------- |
-    | reuters | jonathan-landay | 其他作者名字       |
+    | reuters | jonathan-landay | 作者名，可在 URL 中找到 |
+    
+可在分类 / 话题页的 URL 中找到更多。
 
 </Route>
 
