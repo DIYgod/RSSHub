@@ -60,7 +60,7 @@ The following are some of the supported Channel and Topic ids.
 
 ### Topics
 
-<RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1"/>
+<RouteEn author="zoenglinghou mjysci" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
 
 ## BBC
 
@@ -499,6 +499,20 @@ Provide full article RSS for WSJ topics.
 <RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
 
 Provides all of the articles by the specified Yahoo! author.
+
+</RouteEn>
+
+## Yomiuri Shimbun 読売新聞 
+
+### News
+
+<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['category']">
+
+Free articles only.
+
+| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |    皇室    |
+| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
+| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </RouteEn>
 

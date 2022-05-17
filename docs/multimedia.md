@@ -888,11 +888,13 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ### 系列作品
 
-<Route author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" :paramsDesc="['系列编号', '排序方式，缺省为 near（最新）']"/>
+<Route author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" :paramsDesc="['系列编号', '排序方式，缺省为 near（最新）']" puppeteer="1">
 
 | 人气      | 最新   | 发售日期 | 标题顺序  | 价格升序 | 价格降序 |
 | ------- | ---- | ---- | ----- | ---- | ---- |
 | popular | near | date | title | low  | high |
+
+</Route>
 
 ## rs05 人生 05 电影
 
