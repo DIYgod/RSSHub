@@ -1133,7 +1133,7 @@ category 对应的关键词有
     |      | africa    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
 
 
--   business/ `:category`:
+-   `business/:topic`:
 
     | All  | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
     | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
