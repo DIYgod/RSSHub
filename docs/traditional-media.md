@@ -1108,8 +1108,6 @@ category 对应的关键词有
 
 ::: warning 迁移说明
 
-迁移备注
-
 1. 路透社中文网站(https://cn.reuters.com/)已经关闭，只有英文网站(https://www.reuters.com/)
 2. 路透社英文站点不再不区分美国和英国站点（https://uk.reuters.com）
 3. 根据网站导航调整了所有路由，源路由已经不再适用
