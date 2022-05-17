@@ -235,6 +235,12 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters
 
+::: warning Warning
+
+FIXME: migration notes
+
+:::
+
 ### Navigation
 
 <RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['see the supported list below', ' please note it\'s case-sensitive']">
