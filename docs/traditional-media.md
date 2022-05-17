@@ -1126,7 +1126,7 @@ FIXME: migration notes
 
     | All  | Africa   | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
     | ---- | -------  | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
-    |      | afica    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
+    |      | africa    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
 
 
 -   business/ `:category`:
