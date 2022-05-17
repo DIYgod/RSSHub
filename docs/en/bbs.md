@@ -54,7 +54,7 @@ pageClass: routes
 
 ### Portal
 
-<RouteEn author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['Sections']">
+<RouteEn author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['Sections', 'Retrieve fulltext, specify `y` to enable']">
 
 | Android Apps | Android Games | ebook | iPad Apps | iPad Games | iPhone Apps | iPhone Games |
 | ------------ | ------------- | ----- | --------- | ---------- | ----------- | ------------ |
