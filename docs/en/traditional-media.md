@@ -237,7 +237,11 @@ Parameters can be obtained from the official website, for instance:
 
 ::: warning Warning
 
-FIXME: migration notes
+Migration Notes
+
+1. Reuters Chinese site has long gone (https://cn.reuters.com/), which is redirecting to English site(https://www.reuters.com/)
+2. Reuters no longer has independent `US` and `UK`（https://uk.reuters.com） difference
+3. We now migrating routes adapting to the new website. The old routes are deprecated.
 
 :::
 
