@@ -6,7 +6,7 @@ on:
 
 jobs:
   testRoute:
-    name: Route test
+    name: Call maintainers
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,5 +21,5 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/find-maintainer.js`)
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/call-maintainer.js`)
             return await script({ github, context, core })
