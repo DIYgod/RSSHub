@@ -1126,7 +1126,7 @@ category 对应的关键词有
     | world    | business | legal | markets  | breakingviews | technology | invstigation |
 
 
--   world/ `:category`:
+-   `world/:topic`:
 
     | All  | Africa   | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
     | ---- | -------  | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
