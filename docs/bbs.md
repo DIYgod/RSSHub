@@ -208,6 +208,32 @@ pageClass: routes
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
+## Mobilism
+
+### 论坛
+
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['分类', '种类', '是否获取全文，如需获取全文参数传入 `y`']">
+
+| 安卓      | iPhone | iPad |
+| ------- | ------ | ---- |
+| android | iphone | ipad |
+
+| 应用   | 游戏    |
+| ---- | ----- |
+| apps | games |
+
+</Route>
+
+### 门户
+
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['种类', '是否获取全文，如需获取全文参数传入 `y`']">
+
+| 安卓应用 | 安卓游戏  | 图书    | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
+| ---- | ----- | ----- | ------- | ------- | --------- | --------- |
+| aapp | agame | ebook | ipapp   | ipgame  | iapp      | igame     |
+
+</Route>
+
 ## NGA
 
 ### 分区帖子
