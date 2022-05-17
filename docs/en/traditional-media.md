@@ -245,11 +245,11 @@ Migration Notes
 
 :::
 
-### Navigation
+### Common
 
-<RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:navigation/:category?" :paramsDesc="['see the supported list below', ' please note it\'s case-sensitive']">
+<RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:common/:category?" :paramsDesc="['see the supported list below', ' please note it\'s case-sensitive']">
 
--   set `:navigation` just like navigation on the website:
+-   set `:common` just like common on the website:
     | World    | Business | Legal | Markets  | Breakingviews | Technology | Invstigation |
     | -------- | -------  | ----- | -------- | ------------- | ---------- | ------------ |
     | world    | business | legal | markets  | breakingviews | technology | invstigation |
