@@ -85,7 +85,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 最新消息
 
-<Route author="zenxds" example="/ielts" path="/ielts"/>
+<Route author="zenxds" example="/ielts" path="/ielts" puppeteer="1"/>
 
 ## MarginNote
 
