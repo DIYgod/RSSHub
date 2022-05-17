@@ -1106,7 +1106,7 @@ category 对应的关键词有
 
 ## 路透社
 
-::: warning 注意
+::: warning 迁移说明
 
 迁移备注
 
