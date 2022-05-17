@@ -36,6 +36,32 @@ pageClass: routes
 
 <RouteEn author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" :paramsDesc="['Discussion id']"/>
 
+## Mobilism
+
+### Forums
+
+<RouteEn author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['Category', 'subcategory','Retrieve fulltext, specify `y` to enable']">
+
+| Android | iPhone | iPad |
+| ------- | ------ | ---- |
+| android | iphone | ipad |
+
+| Apps | games |
+| ---- | ----- |
+| apps | games |
+
+</RouteEn>
+
+### Portal
+
+<RouteEn author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['Sections']">
+
+| Android Apps | Android Games | ebook | iPad Apps | iPad Games | iPhone Apps | iPhone Games |
+| ------------ | ------------- | ----- | --------- | ---------- | ----------- | ------------ |
+| aapp         | agame         | ebook | ipapp     | ipgame     | iapp        | igame        |
+
+</RouteEn>
+
 ## SCBOY forum
 
 ### Thread
@@ -47,13 +73,3 @@ If the url of the thread is <https://www.scboy.com/?thread-188673.htm> then tid 
 When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See <https://docs.rsshub.app/en/install/#Deployment> for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
 
 </RouteEn>
-
-### Portal
-
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type" :paramsDesc="['type']">
-
-| Android Apps | Android Games | ebook | iPad Apps | iPad Games | iPhone Apps | iPhone Games |
-| ------------ | ------------- | ----- | --------- | ---------- | ----------- | ------------ |
-| aapp         | agame         | ebook | ipapp     | ipgame     | iapp        | igame        |
-
-</Route>

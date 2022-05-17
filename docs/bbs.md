@@ -210,27 +210,27 @@ pageClass: routes
 
 ## Mobilism
 
-### Forums
+### 论坛
 
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['分类', '种类','是否获取全文,如需获取全文参数传入`y`']">
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['分类', '种类', '是否获取全文，如需获取全文参数传入`y`']">
 
-| 图书  | 安卓    | iPhone | iPad |
-| ----- | ------- | ------ | ---- |
-| books | android | iphone | ipad |
+| 安卓      | iPhone | iPad |
+| ------- | ------ | ---- |
+| android | iphone | ipad |
 
-| 浪漫    | 科幻  | 经典     | 杂志      | 有声读物   | 漫画   | 应用 | 游戏  |
-| ------- | ----- | -------- | --------- | ---------- | ------ | ---- | ----- |
-| romance | scifi | classics | magazines | audioBooks | comics | apps | games |
+| 应用   | 游戏    |
+| ---- | ----- |
+| apps | games |
 
 </Route>
 
-### Portal
+### 门户
 
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['种类','是否获取全文,如需获取全文参数传入`y`']">
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['种类', '是否获取全文，如需获取全文参数传入`y`']">
 
-| 安卓应用 | 安卓游戏 | 图书  | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
-| -------- | -------- | ----- | --------- | --------- | ----------- | ----------- |
-| aapp     | agame    | ebook | ipapp     | ipgame    | iapp        | igame       |
+| 安卓应用 | 安卓游戏  | 图书    | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
+| ---- | ----- | ----- | ------- | ------- | --------- | --------- |
+| aapp | agame | ebook | ipapp   | ipgame  | iapp      | igame     |
 
 </Route>
 

@@ -54,18 +54,18 @@ pageClass: routes
 
 ## Mobilism
 
-### eBook Releases
+### 电子书
 
-<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" :paramsDesc="['种类','是否获取全文,如需获取全文参数传入`y`']">
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" :paramsDesc="['分类','是否获取全文，如需获取全文参数传入 `y`']">
 
-| 分类名   | 参数       |
+| 分类名      | 参数         |
 | -------- | ---------- |
-| 浪漫     | romance    |
-| 科幻小说 | scifi      |
-| 经典     | classics   |
-| 杂志     | magazines  |
-| 有声读物 | audioBooks |
-| 漫画     | comics     |
+| 浪漫       | romance    |
+| 科幻、幻想、恐怖 | scifi      |
+| 普通小说、经典  | classics   |
+| 杂志、报纸    | magazines  |
+| 有声读物     | audioBooks |
+| 漫画       | comics     |
 
 </Route>
 
