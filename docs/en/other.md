@@ -251,4 +251,4 @@ Type
 
 ### Lever
 
-<RouteEn author="tsarlewey" example="/lever/[ lever ]" path="/lever/:domain" :paramsDesc="['Company with Lever Board']"/>
+<RouteEn author="tsarlewey" example="/lever/lever" path="/lever/:domain" :paramsDesc="['Company with Lever Board']"/>
