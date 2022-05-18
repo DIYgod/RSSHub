@@ -120,6 +120,15 @@
     "/ajmide/:id": [
         "Fatpandac"
     ],
+    "/aliyun/database_month": [
+        "junbaor"
+    ],
+    "/aliyun/developer/group/:type": [
+        "umm233"
+    ],
+    "/aliyun/notice/:type?": [
+        "muzea"
+    ],
     "/ally/rail/:category?/:topic?": [
         "Rongronggg9"
     ],
@@ -3272,9 +3281,6 @@
     "/socialclub/events/:game?": [],
     "/ctfhub/upcoming/:limit?": [],
     "/ctfhub/search/:limit?/:form?/:class?/:title?": [],
-    "/aliyun/database_month": [],
-    "/aliyun/notice/:type?": [],
-    "/aliyun/developer/group/:type": [],
     "/liwushuo/index": [],
     "/storyfm/index": [],
     "/chinadaily/english/:category": [],
