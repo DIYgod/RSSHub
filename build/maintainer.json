@@ -607,6 +607,12 @@
     "/eagle/changelog/:language?": [
         "tigercubden"
     ],
+    "/earthquake/ceic/:type?": [
+        "SettingDust"
+    ],
+    "/earthquake/:region?": [
+        "LogicJake"
+    ],
     "/eastday/24/:category?": [
         "nczitzk"
     ],
@@ -2705,8 +2711,6 @@
     "/hopper/:lowestOnly/:from/:to?": [],
     "/mafengwo/note/:type": [],
     "/mafengwo/ziyouxing/:code": [],
-    "/earthquake/:region?": [],
-    "/earthquake/ceic/:type": [],
     "/novel/biquge/:id": [],
     "/novel/biqugeinfo/:id/:limit?": [],
     "/novel/uukanshu/:uid": [],
