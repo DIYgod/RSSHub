@@ -235,13 +235,10 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters
 
-::: warning Warning
+::: warning Migration notes
 
-Migration Notes
-
-1. Reuters Chinese site has long gone (https://cn.reuters.com/), which is redirecting to English site(https://www.reuters.com/)
-2. Reuters no longer has independent `US` and `UK`（https://uk.reuters.com） difference
-3. We now migrating routes adapting to the new website. The old routes are deprecated.
+1. Reuters Chinese site (`cn.reuters.com`) and British site (`uk.reuters.com`) have been terminated, redirecting to the main site (`www.reuters.com`)
+2. The old routes are deprecated. Please migrate to the new routes documented below
 
 :::
 
@@ -268,24 +265,19 @@ Migration Notes
     | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
     |      | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
 
--   legal/ `:category`:
+-   `legal/:topic`:
 
     | All | Goverment | Legal Industry | Litigation | Transaction |
     | --- | --------- | -------------- | ---------- | ----------- |
     |     | goverment | legalindustry  | litigation | transaction |
 
-
-</RouteEn>
-
-### View by author
-
-<RouteEn author="LyleLee HenryQW proletarius101" example="/reuters/authors/reuters" path="/reuters/authors/:category?" :paramsDesc="['category, set it to an author\'s name, default reuters']">
-
--   authors/`:category`:
+-   `authors/:topic`:
 
     | Default | Jonathan Landay | any other authors |
     | ------- | --------------- | ----------------- |
-    | reuters | jonathan-landay | any other name    |
+    | reuters | jonathan-landay | their name in URL |
+
+More could be found in the URL of the category/topic page.
 
 </RouteEn>
 
