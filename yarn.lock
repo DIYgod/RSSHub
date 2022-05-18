@@ -5519,15 +5519,15 @@ eslint-plugin-prettier@4.0.0:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-yml@0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-0.15.0.tgz#99b9ed22a8d9d51e189e822c2f78eeb4eda080ce"
-  integrity sha512-fRx7wNmRvK2FjwCmnsTm71FcHlmH7eMyXpa/GgfwAfb/7RDH0XeOaM8Z8KupYxoizYu8eBLGcPv1DzRZzvhnww==
+eslint-plugin-yml@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-1.0.0.tgz#9a1bd81176d2d70201b8db048533c0f1faebb35e"
+  integrity sha512-0RVoUFh5vpznE2DIP5agSpWO/nU8GgAWwoTAHWopU2X+1SCB5ykHU6DwS0GrZ5Hvejtk6CcADQllpQQJB4C5QA==
   dependencies:
     debug "^4.3.2"
     lodash "^4.17.21"
     natural-compare "^1.4.0"
-    yaml-eslint-parser "^0.5.0"
+    yaml-eslint-parser "^1.0.0"
 
 eslint-scope@^4.0.3:
   version "4.0.3"
@@ -14551,19 +14551,19 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml-eslint-parser@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/yaml-eslint-parser/-/yaml-eslint-parser-0.5.0.tgz#01d4e4d992a820769ea85ef5fd526dfc20ebc6f5"
-  integrity sha512-nJeyLA3YHAzhBTZbRAbu3W6xrSCucyxExmA+ZDtEdUFpGllxAZpto2Zxo2IG0r0eiuEiBM4e+wiAdxTziTq94g==
+yaml-eslint-parser@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/yaml-eslint-parser/-/yaml-eslint-parser-1.0.1.tgz#f1f867dc2e4c5101a3b60533b1cd181bed8cca3e"
+  integrity sha512-acQYWneSXwnJgPQbTyJvDxWx9zlJ/rq267p/zzQMSCE7ljJxQ8elefsQase1gEIJMo+pIqmLRczoo7fPt6VbKQ==
   dependencies:
     eslint-visitor-keys "^3.0.0"
     lodash "^4.17.21"
-    yaml "^1.10.2"
+    yaml "^2.0.0"
 
-yaml@^1.10.2:
-  version "1.10.2"
-  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
-  integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
+yaml@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.1.0.tgz#96ba62ff4dd990c0eb16bd96c6254a085d288b80"
+  integrity sha512-OuAINfTsoJrY5H7CBWnKZhX6nZciXBydrMtTHr1dC4nP40X5jyTIVlogZHxSlVZM8zSgXRfgZGsaHF4+pV+JRw==
 
 yargs-parser@^13.1.2:
   version "13.1.2"
