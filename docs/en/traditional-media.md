@@ -242,7 +242,7 @@ Parameters can be obtained from the official website, for instance:
 
 :::
 
-### Common
+### Category/Topic/Author
 
 <RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
 
