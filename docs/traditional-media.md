@@ -1144,7 +1144,7 @@ category 对应的关键词有
 
 
 
--   authors/`:category`:
+-   `authors/:topic`:
 
     | 默认    | Jonathan Landay | 其他作者          |
     | ------- | --------------- | ----------------- |
