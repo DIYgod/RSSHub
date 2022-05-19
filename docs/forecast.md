@@ -26,7 +26,17 @@ pageClass: routes
 
 ### 中国地震台
 
-<Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type" :paramsDesc="['类型，1 最近24小时地震信息, 2: 最近48小时地震信息, 5: 最近一年3.0级以上地震信息, 7: 最近一年3.0级以下地震, 8: 最近一年4.0级以上地震信息, 9: 最近一年5.0级以上地震信息, 0: 最近一年6.0级以上地震信息']">
+<Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type?" :paramsDesc="['类型，见下表']">
+
+| 参数 | 类型               |
+| -- | ---------------- |
+| 1  | 最近 24 小时地震信息     |
+| 2  | 最近 48 小时地震信息     |
+| 5  | 最近一年 3.0 级以上地震信息 |
+| 7  | 最近一年 3.0 级以下地震   |
+| 8  | 最近一年 4.0 级以上地震信息 |
+| 9  | 最近一年 5.0 级以上地震信息 |
+| 0  | 最近一年 6.0 级以上地震信息 |
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
