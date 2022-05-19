@@ -16,6 +16,10 @@ pageClass: routes
 
 <RouteEn author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, can be found in URL']" />
 
+### Recent Changes
+
+<RouteEn author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" :paramsDesc="['Site ID, can be found in URL']"/>
+
 ## Hexo Blog
 
 ### Blog using Next theme
@@ -25,6 +29,22 @@ pageClass: routes
 ### Blog using Yilia theme
 
 <RouteEn author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+
+### Blog using Fluid theme
+
+<RouteEn author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+
+## Love the Problem
+
+### Ash Maurya's blog
+
+<RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
+
+## Miris Whispers
+
+### Blog
+
+<RouteEn author="chazeon" example="/miris/blog" path="/miris/blog" />
 
 ## Paul Graham
 
@@ -38,7 +58,34 @@ pageClass: routes
 
 <RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
 
+## PolkaWorld
+
+### Newest Articles
+
+<RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest">
+
+::: tip
+
+Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
+
+:::
+
+</RouteEn>
+
+## Stratechery by Ben Thompson
+
+### Blog
+
+<RouteEn author="chazeon" example="/stratechery" path="/stratechery" />
+
 ## WordPress
 
-<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
+### Blog
 
+<RouteEn author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
+
+## yuzu emulator
+
+### Entry
+
+<RouteEn author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />

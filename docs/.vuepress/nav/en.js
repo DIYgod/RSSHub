@@ -9,18 +9,22 @@ module.exports = [
         items: [
             {
                 text: 'Getting Started',
-                link: '/joinus/quick-start',
+                link: '/en/joinus/quick-start',
             },
             {
                 text: 'More details',
                 items: [
                     {
+                        text: 'Script Standard',
+                        link: '/en/joinus/script-standard',
+                    },
+                    {
                         text: 'Date Handling',
-                        link: '/joinus/pub-date',
+                        link: '/en/joinus/pub-date',
                     },
                     {
                         text: 'Use Cache',
-                        link: '/joinus/use-cache',
+                        link: '/en/joinus/use-cache',
                     },
                 ],
             },

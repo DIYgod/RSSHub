@@ -1,15 +1,15 @@
 const noFound = 'Auto: Route No Found';
-const whiteListedUser = ['dependabot[bot]'];
+const whiteListedUser = ['dependabot[bot]', 'pull[bot]']; // dependabot and downstream PR requested by pull[bot]
 
-module.exports = async ({ github, context, core }, body, number) => {
-    core.debug(`sender: ${context.payload.sender.login}`);
+module.exports = async ({ github, context, core }, body, number, sender) => {
+    core.debug(`sender: ${sender}`);
     core.debug(`body: ${body}`);
     const m = body.match(/```routes\r\n((.|\r\n)*)```/);
     core.debug(`match: ${m}`);
     let res = null;
 
-    const removeLabel = async () =>
-        github.issues
+    const removeLabel = () =>
+        github.rest.issues
             .removeLabel({
                 issue_number: number,
                 owner: context.repo.owner,
@@ -20,10 +20,10 @@ module.exports = async ({ github, context, core }, body, number) => {
                 core.warning(e);
             });
 
-    if (whiteListedUser.includes(context.payload.sender.login)) {
+    if (whiteListedUser.includes(sender)) {
         core.info('PR created by a whitelisted user, passing');
         await removeLabel();
-        await github.issues
+        await github.rest.issues
             .addLabels({
                 issue_number: number,
                 owner: context.repo.owner,
@@ -35,7 +35,7 @@ module.exports = async ({ github, context, core }, body, number) => {
             });
         return;
     } else {
-        core.debug('PR created by ' + context.payload.sender.login);
+        core.debug('PR created by ' + sender);
     }
 
     if (m && m[1]) {
@@ -45,7 +45,7 @@ module.exports = async ({ github, context, core }, body, number) => {
         if (res.length > 0 && res[0] === 'NOROUTE') {
             core.info('PR stated no route, passing');
             await removeLabel();
-            await github.issues
+            await github.rest.issues
                 .addLabels({
                     issue_number: number,
                     owner: context.repo.owner,
@@ -66,7 +66,7 @@ module.exports = async ({ github, context, core }, body, number) => {
 
     core.warning('seems no route found, failing');
 
-    await github.issues
+    await github.rest.issues
         .addLabels({
             issue_number: number,
             owner: context.repo.owner,
@@ -76,7 +76,7 @@ module.exports = async ({ github, context, core }, body, number) => {
         .catch((e) => {
             core.warning(e);
         });
-    await github.issues
+    await github.rest.issues
         .createComment({
             issue_number: number,
             owner: context.repo.owner,
@@ -87,7 +87,7 @@ Auto Route test failed, please check your PR body format and reopen pull request
         .catch((e) => {
             core.warning(e);
         });
-    await github.pulls
+    await github.rest.pulls
         .update({
             owner: context.repo.owner,
             repo: context.repo.repo,

@@ -1,0 +1,5 @@
+<p>{{ desc }}</p>
+{{ each pics }}
+    <img src="{{$value}}"/>
+{{/each}}
+{{ author }}

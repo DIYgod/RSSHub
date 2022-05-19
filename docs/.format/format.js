@@ -24,7 +24,7 @@ const loopSideBar = (children, type, lang, prefix) =>
             lang,
         }));
 const loopNav = (nav, lang) =>
-    nav.map((e) => {
+    nav.flatMap((e) => {
         if (e.items) {
             return loopNav(e.items, lang);
         }
@@ -36,7 +36,7 @@ const loopNav = (nav, lang) =>
             };
         } else {
             return {
-                path: path.resolve(__dirname, '..', `${e.link}.md`),
+                path: path.resolve(__dirname, '..', `${e.link.replace(/^\//, '')}.md`),
                 type: file.NAV_TYPE,
                 lang,
             };
