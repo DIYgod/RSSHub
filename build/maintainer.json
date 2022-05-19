@@ -1285,6 +1285,40 @@
     "/jisilu/:category?/:sort?/:day?": [
         "nczitzk"
     ],
+    "/juejin/books": [
+        "xyqfer"
+    ],
+    "/juejin/category/:category": [
+        "DIYgod"
+    ],
+    "/juejin/collection/:collectionId": [
+        "isQ"
+    ],
+    "/juejin/collections/:userId": [
+        "isQ"
+    ],
+    "/juejin/column/:id": [
+        "xiangzy1"
+    ],
+    "/juejin/news/:id": [
+        "CancerGary"
+    ],
+    "/juejin/pins/:type?": [
+        "xyqfer",
+        "laampui"
+    ],
+    "/juejin/posts/:id": [
+        "Maecenas"
+    ],
+    "/juejin/shares/:userId": [
+        "qiwihui"
+    ],
+    "/juejin/tag/:tag": [
+        "isheng5"
+    ],
+    "/juejin/trending/:category/:type": [
+        "moaix"
+    ],
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
@@ -2548,16 +2582,6 @@
     "/ncm/artist/:id": [],
     "/ncm/djradio/:id": [],
     "/ncm/user/playrecords/:uid/:type?": [],
-    "/juejin/category/:category": [],
-    "/juejin/tag/:tag": [],
-    "/juejin/trending/:category/:type": [],
-    "/juejin/books": [],
-    "/juejin/pins/:type?": [],
-    "/juejin/posts/:id": [],
-    "/juejin/collections/:userId": [],
-    "/juejin/collection/:collectionId": [],
-    "/juejin/shares/:userId": [],
-    "/juejin/column/:id": [],
     "/ziroom/room/:city/:iswhole/:room/:keyword": [],
     "/jianshu/home": [],
     "/jianshu/trending/:timeframe": [],
