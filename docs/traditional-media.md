@@ -1113,7 +1113,7 @@ category 对应的关键词有
 
 :::
 
-### 导航
+### 分类 / 话题 / 作者
 
 <Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
