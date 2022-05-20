@@ -1373,6 +1373,9 @@
     "/leiphone/leiphone/newsflash": [
         "vlcheng"
     ],
+    "/lever/:domain": [
+        "tsarlewey"
+    ],
     "/lfsyd/home": [
         "auto-bot-ty"
     ],
