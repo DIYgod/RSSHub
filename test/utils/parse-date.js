@@ -112,6 +112,10 @@ describe('parseRelativeDate', () => {
         expect(+new Date(parseRelativeDate('Today 08:00'))).toBe(+date + 8 * hour);
     });
 
+    it('Today, h:m a', () => {
+        expect(+new Date(parseRelativeDate('Today, 8:00 pm'))).toBe(+date + 20 * hour);
+    });
+
     it('TDA H:m:s', () => {
         expect(+new Date(parseRelativeDate('TDA 08:00:00'))).toBe(+date + 8 * hour);
     });

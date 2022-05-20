@@ -848,7 +848,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 博主
 
-<Route author="Max-Tortoise Rongronggg9" example="/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao" path="/douyin/user/:uid/:routeParams?" :paramsDesc="['uid，可在 URL 中找到', '额外参数，query string 格式，请参阅下面的表格']" anticrawler="1" radar="1" rssbud="1">
+<Route author="Max-Tortoise Rongronggg9" example="/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao" path="/douyin/user/:uid/:routeParams?" :paramsDesc="['uid，可在 URL 中找到', '额外参数，query string 格式，请参阅下面的表格']" anticrawler="1" radar="1" rssbud="1" puppeteer="1">
 
 | 键        | 含义                                  | 值                      | 默认值     |
 | -------- | ----------------------------------- | ---------------------- | ------- |
@@ -895,9 +895,9 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="umm233 nczitzk" example="/douban/movie/weekly" path="/douban/movie/weekly/:type?" :paramsDesc="['分类，可在榜单页 URL 中找到，默认为一周口碑电影榜']">
 
-| 一周口碑电影榜           | 一周口碑剧集榜        | 华语口碑剧集榜                |
-| ----------------- | -------------- | ---------------------- |
-| movie_weekly_best | tv_weekly_best | tv_chinese_best_weekly |
+| 一周口碑电影榜           | 华语口碑剧集榜                |
+| ----------------- | ---------------------- |
+| movie_weekly_best | tv_chinese_best_weekly |
 
 </Route>
 
@@ -1310,15 +1310,15 @@ rule
 
 ### 用户笔记和专辑
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['user_id']"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['user_id']" puppeteer="1"/>
 
 ### 用户专辑
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/album" path="/xiaohongshu/user/:user_id/album" :paramsDesc="['user_id']"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/album" path="/xiaohongshu/user/:user_id/album" :paramsDesc="['user_id']" puppeteer="1"/>
 
 ### 专辑
 
-<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" />
+<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" puppeteer="1"/>
 
 ## 新榜
 

@@ -861,7 +861,7 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ### 信息与通信工程学院
 
-<Route author="huyyi" example="/uestc/sice" path="/uestc/sice" />
+<Route author="huyyi" example="/uestc/sice" path="/uestc/sice" puppeteer="1"/>
 
 ### 信息与软件工程学院
 
@@ -1308,7 +1308,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 学校通知
 
-<Route author="vuhe" example="/ncwu/notice" path="/ncwu/notice"/>
+<Route author="vuhe" example="/ncwu/notice" path="/ncwu/notice" puppeteer="1"/>
 
 ## 华东理工大学
 
@@ -1651,7 +1651,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 人才招聘网
 
-<Route author="ret-1" example="/nju/rczp/xxfb" path="/nju/rczp/:type" :paramsDesc="['分类名']">
+<Route author="ret-1" example="/nju/rczp/xxfb" path="/nju/rczp/:type" :paramsDesc="['分类名']" puppeteer="1">
 
 | 信息发布 | 教研类岗位 | 管理岗位及其他 |
 | ---- | ----- | ------- |
@@ -1707,7 +1707,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处
 
-<Route author="arcosx Seiry qrzbing" example="/nuaa/jwc/tzgg" path="/nuaa/jwc/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']">
+<Route author="arcosx Seiry qrzbing" example="/nuaa/jwc/tzgg" path="/nuaa/jwc/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']" puppeteer="1">
 
 | 通知公告 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
 | ---- | ---- | ---- | ---- | ---- |
@@ -1717,7 +1717,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 计算机科学与技术学院
 
-<Route author="LogicJake Seiry qrzbing" example="/nuaa/cs/jxdt" path="/nuaa/cs/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']">
+<Route author="LogicJake Seiry qrzbing" example="/nuaa/cs/jxdt" path="/nuaa/cs/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']" puppeteer="1">
 
 | 通知公告 | 热点新闻 | 学科科研 | 教学动态 | 本科生培养 | 研究生培养 | 学生工作 |
 | ---- | ---- | ---- | ---- | ----- | ----- | ---- |
@@ -1739,7 +1739,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处
 
-<Route author="MilkShakeYoung jasongzy" example="/njust/jwc/xstz" path="/njust/jwc/:type?" :paramsDesc="['分类名，见下表，默认为学生通知']" radar="1" rssbud="1">
+<Route author="MilkShakeYoung jasongzy" example="/njust/jwc/xstz" path="/njust/jwc/:type?" :paramsDesc="['分类名，见下表，默认为学生通知']" radar="1" rssbud="1" puppeteer="1">
 
 | 教师通知 | 学生通知 | 新闻 | 学院动态 |
 | ---- | ---- | -- | ---- |
@@ -1749,7 +1749,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 财务处
 
-<Route author="MilkShakeYoung jasongzy" example="/njust/cwc/tzgg" path="/njust/cwc/:type?" :paramsDesc="['分类名，见下表，默认为通知公告']" radar="1" rssbud="1">
+<Route author="MilkShakeYoung jasongzy" example="/njust/cwc/tzgg" path="/njust/cwc/:type?" :paramsDesc="['分类名，见下表，默认为通知公告']" radar="1" rssbud="1" puppeteer="1">
 
 | 通知公告 | 办事流程 |
 | ---- | ---- |
@@ -1759,7 +1759,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="MilkShakeYoung jasongzy" example="/njust/gs/sytzgg_4568" path="/njust/gs/:type?" :paramsDesc="['分类 ID，部分示例参数见下表，默认为首页通知公告，其他分类 ID 可以从网站 URL Path 中找到，如国际交流为 `gjjl`']" radar="1" rssbud="1">
+<Route author="MilkShakeYoung jasongzy" example="/njust/gs/sytzgg_4568" path="/njust/gs/:type?" :paramsDesc="['分类 ID，部分示例参数见下表，默认为首页通知公告，其他分类 ID 可以从网站 URL Path 中找到，如国际交流为 `gjjl`']" radar="1" rssbud="1" puppeteer="1">
 
 | 首页通知公告      | 首页新闻动态 | 最新通知  | 招生信息  | 培养信息  | 学术活动    |
 | ----------- | ------ | ----- | ----- | ----- | ------- |
@@ -1769,7 +1769,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 电光学院
 
-<Route author="jasongzy" example="/njust/eoe/tzgg" path="/njust/eoe/:type?" :paramsDesc="['分类名，见下表，默认为通知公告']" radar="1" rssbud="1">
+<Route author="jasongzy" example="/njust/eoe/tzgg" path="/njust/eoe/:type?" :paramsDesc="['分类名，见下表，默认为通知公告']" radar="1" rssbud="1" puppeteer="1">
 
 | 通知公告 | 新闻动态 |
 | ---- | ---- |
@@ -1779,7 +1779,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 电光学院研学网
 
-<Route author="jasongzy" example="/njust/dgxg/gstz" path="/njust/dgxg/:type?" :paramsDesc="['分类名，见下表，默认为公示通知']" radar="1" rssbud="1">
+<Route author="jasongzy" example="/njust/dgxg/gstz" path="/njust/dgxg/:type?" :paramsDesc="['分类名，见下表，默认为公示通知']" radar="1" rssbud="1" puppeteer="1">
 
 | 公示通知 | 学术文化 | 就业指导 |
 | ---- | ---- | ---- |
@@ -1789,7 +1789,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 电光学院年级网站
 
-<Route author="jasongzy" example="/njust/eo/17/tz" path="/njust/eo/:grade?/:type?" :paramsDesc="['年级，见下表，默认为本科 2017 级，未列出的年级所对应的参数可以从级网二级页面的 URL Path 中找到，例如：本科 2020 级为 `_t1316`', '类别，见下表，默认为年级通知（通知公告），未列出的类别所对应的参数可以从级网二级页面的 URL Path 中找到，例如：电光 20 的通知公告为 `tzgg_12969`']" radar="1" rssbud="1">
+<Route author="jasongzy" example="/njust/eo/17/tz" path="/njust/eo/:grade?/:type?" :paramsDesc="['年级，见下表，默认为本科 2017 级，未列出的年级所对应的参数可以从级网二级页面的 URL Path 中找到，例如：本科 2020 级为 `_t1316`', '类别，见下表，默认为年级通知（通知公告），未列出的类别所对应的参数可以从级网二级页面的 URL Path 中找到，例如：电光 20 的通知公告为 `tzgg_12969`']" radar="1" rssbud="1" puppeteer="1">
 
 `grade` 列表：
 
@@ -2346,6 +2346,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 学院公告
 
 <Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xygg" />
+
+## 苏州科技大学
+
+### 教务处
+
+<Route author="Fatpandac" example="/usts/jwch" path="/usts/jwch/:type?" :paramsDesc="['类型，默认为教务动态']" rssbud="1" radar="1">
+
+| 类型 | 教务动态 | 公告在线 | 选课通知 |
+| -- | ---- | ---- | ---- |
+|    | jwdt | ggzx | xktz |
+
+</Route>
 
 ## 太原师范学院
 

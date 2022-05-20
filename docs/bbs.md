@@ -208,6 +208,32 @@ pageClass: routes
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
+## Mobilism
+
+### 论坛
+
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['分类', '种类', '是否获取全文，如需获取全文参数传入 `y`']">
+
+| 安卓      | iPhone | iPad |
+| ------- | ------ | ---- |
+| android | iphone | ipad |
+
+| 应用   | 游戏    |
+| ---- | ----- |
+| apps | games |
+
+</Route>
+
+### 门户
+
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['种类', '是否获取全文，如需获取全文参数传入 `y`']">
+
+| 安卓应用 | 安卓游戏  | 图书    | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
+| ---- | ----- | ----- | ------- | ------- | --------- | --------- |
+| aapp | agame | ebook | ipapp   | ipgame  | iapp      | igame     |
+
+</Route>
+
 ## NGA
 
 ### 分区帖子
@@ -564,7 +590,7 @@ pageClass: routes
 
 ### 发现
 
-<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']" anticrawler="1" />
+<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']" anticrawler="1" puppeteer="1"/>
 
 | 最新  | 推荐        | 热门  |
 | --- | --------- | --- |
@@ -572,11 +598,11 @@ pageClass: routes
 
 ### 精选
 
-<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']" anticrawler="1" />
+<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']" anticrawler="1" puppeteer="1"/>
 
 ### 话题
 
-<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" />
+<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" puppeteer="1"/>
 
 ## 三星盖乐世社区
 
