@@ -106,7 +106,7 @@ Rated 对象
 | ---- | ---- | ------------- | ------- |
 | blog | news | announcements | reports |
 
-</route>
+</Route>
 
 ## Codeforces
 
