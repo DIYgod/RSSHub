@@ -92,7 +92,7 @@ Category
 |------|------|---------------|---------|
 | blog | news | announcements | reports |
 
-</routeEn>
+</RouteEn>
 
 ## Codeforces
 
