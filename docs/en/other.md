@@ -249,6 +249,8 @@ Type
 
 <RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1"/>
 
-### Lever
+## Lever
+
+### Recruitment
 
 <RouteEn author="tsarlewey" example="/lever/lever" path="/lever/:domain" :paramsDesc="['Company with Lever Board']"/>
