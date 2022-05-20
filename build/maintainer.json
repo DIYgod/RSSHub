@@ -365,6 +365,9 @@
     "/cnbeta/topics/:id": [
         "nczitzk"
     ],
+    "/cncf/:cate?": [
+        "Fatpandac"
+    ],
     "/cnki/journals/:name": [
         "Fatpandac"
     ],
