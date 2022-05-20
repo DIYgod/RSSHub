@@ -1334,6 +1334,9 @@
     "/kbs/today/:language?": [
         "nczitzk"
     ],
+    "/kcna/:lang/:category?": [
+        "Rongronggg9"
+    ],
     "/kemono/:source?/:id?": [
         "nczitzk"
     ],
