@@ -895,9 +895,9 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="umm233 nczitzk" example="/douban/movie/weekly" path="/douban/movie/weekly/:type?" :paramsDesc="['分类，可在榜单页 URL 中找到，默认为一周口碑电影榜']">
 
-| 一周口碑电影榜           | 一周口碑剧集榜        | 华语口碑剧集榜                |
-| ----------------- | -------------- | ---------------------- |
-| movie_weekly_best | tv_weekly_best | tv_chinese_best_weekly |
+| 一周口碑电影榜           | 华语口碑剧集榜                |
+| ----------------- | ---------------------- |
+| movie_weekly_best | tv_chinese_best_weekly |
 
 </Route>
 
