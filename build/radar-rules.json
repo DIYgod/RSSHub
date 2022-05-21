@@ -4074,6 +4074,18 @@
       }
     ]
   },
+  "gumroad.com": {
+    "_name": "Gumroad",
+    ".": [
+      {
+        "title": "产品",
+        "docs": "https://docs.rsshub.app/shopping.html#gumroad",
+        "source": [
+          "/l/:products"
+        ]
+      }
+    ]
+  },
   "guokr.com": {
     "_name": "果壳网",
     ".": [

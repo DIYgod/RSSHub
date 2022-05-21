@@ -942,6 +942,9 @@
     "/guggenheim/exhibitions": [
         "chazeon"
     ],
+    "/gumroad/:username/:products": [
+        "Fatpandac"
+    ],
     "/guokr/scientific": [
         "alphardex",
         "nczitzk"

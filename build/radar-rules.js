@@ -2264,6 +2264,15 @@
   "guggenheim.org":{ _name:"Solomon R. Guggenheim Museum",
     www:[ { title:"Exhibitions",
         docs:"https://docs.rsshub.app/en/travel.html#solomon-r-guggenheim-museum" } ] },
+  "gumroad.com":{ _name:"Gumroad",
+    ".":[ { title:"产品",
+        docs:"https://docs.rsshub.app/shopping.html#gumroad",
+        source:[ "/l/:products" ],
+        target:(params, url) => {
+                    const username = new URL(url).host.split('.')[0];
+
+                    return `/gumroad/${username}/${params.products}`;
+                } } ] },
   "guokr.com":{ _name:"果壳网",
     ".":[ { title:"科学人",
         docs:"https://docs.rsshub.app/new-media.html#guo-ke-wang-ke-xue-ren",
