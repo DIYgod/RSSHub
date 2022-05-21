@@ -75,6 +75,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
+## Gumroad
+
+### 商品
+
+<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" :paramsDesc="['链接中用户名称，可在链接中获取', '商品名称，可在链接中获取']" radar="1" rssbud="1">
+
+如：`https://afkmaster.gumroad.com/l/Eve10` 则为 `/gumroad/afkmaster/Eve10`
+
+</Route>
+
 ## hotukdeals
 
 ### thread

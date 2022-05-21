@@ -62,6 +62,16 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 <RouteEn author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
+## Gumroad
+
+### Products
+
+<RouteEn author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" :paramsDesc="['username, can be found in URL', 'products name, can be found in URL']" radar="1" rssbud="1">
+
+`https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
+
+</RouteEn>
+
 ## hotukdeals
 
 ### thread
