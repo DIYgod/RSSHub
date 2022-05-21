@@ -27,7 +27,9 @@ describe('puppeteer', () => {
         puppeteer = require('../../lib/utils/puppeteer');
         const browser = await puppeteer({ stealth: false });
         const page = await browser.newPage();
-        await page.goto('https://bot.sannysoft.com');
+        await page.goto('https://bot.sannysoft.com', {
+            waitUntil: 'networkidle0',
+        });
 
         const html = await page.evaluate(() => document.body.innerHTML);
         const $ = cheerio.load(html);
@@ -37,12 +39,14 @@ describe('puppeteer', () => {
         const chromeTest = $('tbody tr').eq(4).find('td').eq(1).text().trim();
         expect(webDriverTest).toBe('present (failed)');
         expect(chromeTest).toBe('missing (failed)');
-    });
+    }, 10000);
     it('puppeteer with stealth', async () => {
         puppeteer = require('../../lib/utils/puppeteer');
         const browser = await puppeteer({ stealth: true });
         const page = await browser.newPage();
-        await page.goto('https://bot.sannysoft.com');
+        await page.goto('https://bot.sannysoft.com', {
+            waitUntil: 'networkidle0',
+        });
 
         const html = await page.evaluate(() => document.body.innerHTML);
         const $ = cheerio.load(html);
@@ -51,5 +55,5 @@ describe('puppeteer', () => {
         const chromeTest = $('tbody tr').eq(4).find('td').eq(1).text().trim();
         expect(webDriverTest).toBe('missing (passed)');
         expect(chromeTest).toBe('present (passed)');
-    });
+    }, 10000);
 });

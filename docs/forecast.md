@@ -26,7 +26,17 @@ pageClass: routes
 
 ### 中国地震台
 
-<Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type" :paramsDesc="['类型，1 最近24小时地震信息, 2: 最近48小时地震信息, 5: 最近一年3.0级以上地震信息, 7: 最近一年3.0级以下地震, 8: 最近一年4.0级以上地震信息, 9: 最近一年5.0级以上地震信息, 0: 最近一年6.0级以上地震信息']">
+<Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type?" :paramsDesc="['类型，见下表']">
+
+| 参数 | 类型               |
+| -- | ---------------- |
+| 1  | 最近 24 小时地震信息     |
+| 2  | 最近 48 小时地震信息     |
+| 5  | 最近一年 3.0 级以上地震信息 |
+| 7  | 最近一年 3.0 级以下地震   |
+| 8  | 最近一年 4.0 级以上地震信息 |
+| 9  | 最近一年 5.0 级以上地震信息 |
+| 0  | 最近一年 6.0 级以上地震信息 |
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
@@ -86,11 +96,11 @@ pageClass: routes
 
 ### 95598 停电查询网
 
-<Route author="mjysci" example="/tingdiantz/95598/hb1/wh/wc/" path="/tingdiantz/95598/:province/:city/:district?" :paramsDesc="['省，2~3位拼音缩写，详情见http://www.sttcq.com/td/','市，同上', '区，同上']"/>  
+<Route author="mjysci" example="/tingdiantz/95598/hb1/wh/wc/" path="/tingdiantz/95598/:province/:city/:district?" :paramsDesc="['省，2~3位拼音缩写，详情见http://www.sttcq.com/td/', '市，同上', '区，同上']"/>
 
 ### 南京市
 
-<Route author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>  
+<Route author="ocleo1" example="/tingdiantz/nanjing" path="/tingdiantz/nanjing"/>
 
 ## 停水通知
 
@@ -130,7 +140,14 @@ pageClass: routes
 
 ### 武汉市
 
-<Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan"/>
+<Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan/:channelId">
+
+| channelId | 分类    |
+| --------- | ----- |
+| 68        | 计划性停水 |
+| 69        | 突发性停水 |
+
+</Route>
 
 ## 香港天文台
 

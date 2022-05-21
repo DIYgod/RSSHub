@@ -1,7 +1,14 @@
 <template>
 <div class="routeBlock" :id="path">
   <p class="badge">
-    <Badge text="支持 BT" type="tip" vertical="middle" v-if="supportBT"/> <Badge text="支持播客" type="tip" vertical="middle" v-if="supportPodcast"/> <Badge text="支持 Scihub" type="tip" vertical="middle" v-if="supportScihub"/>  <a target="_blank" href="/faq.html" v-if="anticrawler"><Badge text="反爬严格" vertical="middle" type="warn"/></a> <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="支持浏览器扩展" vertical="middle" type="tip"/></a> <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud" v-if="rssbud"><Badge text="支持 RSSBud" vertical="middle" type="tip"/></a> <a target="_blank" href="https://docs.rsshub.app/install/" v-if="selfhost"><Badge text="仅支持自建" vertical="middle" type="warn"/></a>
+    <Badge text="支持 BT" vertical="middle" type="tip" v-if="supportBT"/>
+    <Badge text="支持播客" vertical="middle" type="tip" v-if="supportPodcast"/>
+    <Badge text="支持 Sci-Hub" vertical="middle" type="tip" v-if="supportScihub"/>
+    <Badge text="依赖 Puppeteer" vertical="middle" type="warn" v-if="puppeteer"/>
+    <a target="_blank" href="/faq.html" v-if="anticrawler"><Badge text="反爬严格" vertical="middle" type="warn"/></a>
+    <a target="_blank" href="/install/" v-if="selfhost"><Badge text="仅支持自建" vertical="middle" type="warn"/></a>
+    <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar" v-if="radar"><Badge text="支持浏览器扩展" vertical="middle" type="tip"/></a>
+    <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud" v-if="rssbud"><Badge text="支持 RSSBud" vertical="middle" type="tip"/></a>
   </p>
   <p class="author">
     作者: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
@@ -16,7 +23,7 @@
   <p>
     参数:
   </p>
-  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)"><code>{{item.replace(':','').replace('/','').replace('?','')}}</code>, {{(item.includes('?'))?'可选':'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul>
+  <ul><li class="params" v-for="(item, index) in path.match(/:.*?(\/|$)/g)"><code>{{item.replace(/:|\?|\+|\*|\//g,'')}}</code>, {{{'?':'可选','*':'零个或多个','+':'单个或多个'}[item[item.length-1]]||'必选'}} - <span v-html="renderMarkdown(paramsDesc[index])"></span></li></ul>
   </div>
   <div v-else><p>参数: 无</p></div>
   <slot></slot>
@@ -69,19 +76,23 @@ export default {
       type: String,
       default: null
     },
+    puppeteer: {
+      type: String,
+      default: null
+    },
   },
   methods: {
     renderMarkdown(item, inline = true) {
     const md = require('markdown-it')({
-            html: true,
+      html: true,
     });
-        return inline ? md.renderInline(item) : md.render(item);
+      return inline ? md.renderInline(item) : md.render(item);
     },
   },
   computed: {
-      demoUrl: function () {
-          return 'https://rsshub.app'+ this.example
-      }
+    demoUrl: function () {
+      return 'https://rsshub.app'+ this.example
+    }
   }
 }
 </script>

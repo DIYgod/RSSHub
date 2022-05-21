@@ -66,8 +66,11 @@ pageClass: routes
 
 ### 话题
 
-<Route author="mjysci" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
+<Route author="zoenglinghou mjysci" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']" radar="1" rssbud="1" anticrawler="1" puppeteer="1">
+
 采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
+
+</Route>
 
 ## BBC
 
@@ -722,9 +725,9 @@ IT・科学 tech_science
 
 无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |
-| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- |
-| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial |
+| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        | 皇室        |
+| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
+| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </Route>
 
@@ -1221,7 +1224,7 @@ category 对应的关键词有
 
 ### 新闻
 
-<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言，缺省中文']">
+<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言，缺省中文']" puppeteer="1">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 

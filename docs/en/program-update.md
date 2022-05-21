@@ -70,6 +70,8 @@ Software id
 
 Language
 
+| Language | key |
+| -------- | --- |
 | English | en |
 | 中文 (简体) | cn |
 | 中文 (繁體) | tw |

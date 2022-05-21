@@ -82,6 +82,18 @@ Category
 
 <RouteEn author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
 
+## CNCF
+
+### Category
+
+<RouteEn author="Fatpandac" example="/cncf" path="/cncf/:cate?" radar="1" rssbud="1" :paramsDesc="['blog by default']">
+
+| Blog | News | Announcements | Reports |
+|------|------|---------------|---------|
+| blog | news | announcements | reports |
+
+</RouteEn>
+
 ## Codeforces
 
 ### Latest contests

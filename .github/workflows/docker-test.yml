@@ -25,21 +25,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx  # needed by `cache-from`
+        uses: docker/setup-buildx-action@v2
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: rsshub
           flavor: latest=true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           build-args: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=0  # also test bundling Chromium
