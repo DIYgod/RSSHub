@@ -16,7 +16,7 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
 
-## FX-Markets.com
+## FX Markets
 
 <RouteEn author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['channel, can be found in the navi bar links at the home page']">
 
