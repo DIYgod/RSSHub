@@ -670,6 +670,30 @@ IT・科学 tech_science
 
 </Route>
 
+## 朝鲜中央通讯社
+
+### 新闻
+
+<Route author="Rongronggg9" example="/kcna/cn" path="/kcna/:lang/:category?" :paramsDesc="['语言，见下表', '分类，见下表']" anticrawler="1" radar="1" rssbud="1">
+
+| 语言      | 조선어  | English | 中国语  | Русский | Español | 日本語  |
+| ------- | ---- | ------- | ---- | ------- | ------- | ---- |
+| `:lang` | `kp` | `en`    | `cn` | `ru`    | `es`    | `jp` |
+
+| 分类                      | `:category`                        |
+| ----------------------- | ---------------------------------- |
+| 朝鲜劳动党总书记**金正恩**同志革命活动新闻 | `54c0ca4ca013a92cc9cf95bd4004c61a` |
+| 最新新闻 (默认)               | `1ee9bdb7186944f765208f34ecfb5407` |
+| 主要新闻                    | `5394b80bdae203fadef02522cfb578c0` |
+| 国内新闻                    | `b2b3bcc1b0a4406ab0c36e45d5db58db` |
+| 文件                      | `a8754921399857ebdbb97a98a1e741f5` |
+| 国际新闻                    | `593143484cf15d48ce85c26139582395` |
+| 社会－生活                   | `93102e5a735d03979bc58a3a7aefb75a` |
+| 对外关系                    | `0f98b4623a3ef82aeea78df45c423fd0` |
+| 时事解说                    | `12c03a49f7dbe829bceea8ac77088c21` |
+
+</Route>
+
 ## 第一财经
 
 ### 直播区

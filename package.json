@@ -43,7 +43,7 @@
   "devDependencies": {
     "@napi-rs/pinyin": "1.7.0",
     "@types/koa": "2.13.4",
-    "@vercel/nft": "0.18.2",
+    "@vercel/nft": "0.19.0",
     "@vuepress/plugin-back-to-top": "1.9.7",
     "@vuepress/plugin-google-analytics": "1.9.7",
     "@vuepress/plugin-pwa": "1.9.7",
@@ -83,7 +83,7 @@
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
-    "cheerio": "1.0.0-rc.10",
+    "cheerio": "1.0.0-rc.11",
     "chrono-node": "2.3.8",
     "city-timezones": "1.2.0",
     "crypto-js": "4.1.1",
@@ -133,7 +133,7 @@
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
-    "twitter-api-v2": "1.12.0",
+    "twitter-api-v2": "1.12.1",
     "winston": "3.7.2",
     "xml2js": "0.4.23"
   },

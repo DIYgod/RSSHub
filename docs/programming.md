@@ -96,6 +96,18 @@ Rated 对象
 
 <Route author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
 
+## CNCF
+
+### 栏目
+
+<Route author="Fatpandac" example="/cncf" path="/cncf/:cate?" :paramsDesc="['默认为 blog']">
+
+| Blog | News | Announcements | Reports |
+| ---- | ---- | ------------- | ------- |
+| blog | news | announcements | reports |
+
+</Route>
+
 ## Codeforces
 
 #### 最新比赛
