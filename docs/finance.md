@@ -46,6 +46,8 @@ pageClass: routes
 
 ## FX Markets
 
+### 分类
+
 <Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
 
 | Trading | Infrastructure | Tech and Data | Regulation |

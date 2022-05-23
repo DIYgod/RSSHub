@@ -18,6 +18,8 @@ pageClass: routes
 
 ## FX Markets
 
+### Channel
+
 <RouteEn author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['channel, can be found in the navi bar links at the home page']">
 
 | Trading | Infrastructure | Tech and Data | Regulation |
