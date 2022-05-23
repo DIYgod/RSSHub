@@ -4,6 +4,14 @@ on:
   push:
     branches-ignore:
       - 'dependabot/**'
+    paths:
+      - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/test.yml'
   pull_request: ~
 
 permissions:
