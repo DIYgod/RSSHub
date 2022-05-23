@@ -731,6 +731,9 @@
     "/furstar/archive/:lang?": [
         "NeverBehave"
     ],
+    "/fx-markets/fx-markets/:channel": [
+        "mikkkee"
+    ],
     "/gameapps/": [
         "TonyRL"
     ],
