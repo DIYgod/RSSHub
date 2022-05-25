@@ -3807,7 +3807,8 @@
           "/:game/home/6",
           "/:game/home/31",
           "/:game/home/33",
-          "/:game/home/53" ],
+          "/:game/home/53",
+          "/:game/home/58" ],
         target:(params, url) => {
                     const GITS_MAP = {
                         bh3: 1, // '崩坏三',
@@ -3815,6 +3816,7 @@
                         bh2: 3, // '崩坏二',
                         wd: 4, // '未定事件簿',
                         sr: 6, // '崩坏：星穹铁道',
+                        zzz: 8, // '绝区零'
                     };
                     const { game } = params;
                     const gids = GITS_MAP[game];
