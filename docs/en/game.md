@@ -60,7 +60,7 @@ Language codes
 
 ### Free games
 
-<RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+<RouteEn author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['Locale, en_US by default', 'Country, en_US by default']"/>
 
 ## FINAL FANTASY XIV
 
@@ -221,7 +221,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### Steam search
 
-<RouteEn author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1" rssbud="1">
+<RouteEn author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1" rssbud="1">
 
 Get serach parameters from the URL.
 

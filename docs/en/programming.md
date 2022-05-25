@@ -82,6 +82,18 @@ Category
 
 <RouteEn author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
 
+## CNCF
+
+### Category
+
+<RouteEn author="Fatpandac" example="/cncf" path="/cncf/:cate?" radar="1" rssbud="1" :paramsDesc="['blog by default']">
+
+| Blog | News | Announcements | Reports |
+|------|------|---------------|---------|
+| blog | news | announcements | reports |
+
+</RouteEn>
+
 ## Codeforces
 
 ### Latest contests
@@ -137,7 +149,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Repo Issues
 
-<RouteEn author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/bug" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" rssbud="1"/>
+<RouteEn author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/RSS%20proposal" :paramsDesc="['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" rssbud="1"/>
 
 ### Repo Pull Requests
 

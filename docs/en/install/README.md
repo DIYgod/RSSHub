@@ -24,6 +24,7 @@ Deploy for public access may require:
 ## Docker Image
 
 We recommend using the latest version `diygod/rsshub` (i.e. `diygod/rsshub:latest`) of the docker image.
+
 When the latest version is unstable, you can use the image with a date tag for temporary use. For example:
 
 ```bash
@@ -32,6 +33,10 @@ $ docker pull diygod/rsshub:2021-06-18
 
 You can back to the latest version when the code has been fixed and rebuild the image.
 
+To enable puppeteer, `diygod/rsshub:chromium-bundled` is a good choice. If date specified, it will become: `diygod/rsshub:chromium-bundled-2021-06-18`.
+
+Another approach to enable puppeteer is deploying with Docker Compose. However, it consumes more disk space and memory. By modifying `docker-compose.yml`, you can use `diygod/rsshub:chromium-bundled` instead to reduce the disk space and memory consumption.
+
 ## Docker Compose Deployment
 
 ### Install
@@ -39,7 +44,13 @@ You can back to the latest version when the code has been fixed and rebuild the 
 Download [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml)
 
 ```bash
-wget https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml
+$ wget https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml
+```
+
+Check if any configuration needs to be changed
+
+```bash
+$ vi docker-compose.yml  # or your favorite editor
 ```
 
 Create a docker volume to persist Redis caches
@@ -75,6 +86,12 @@ Then repeat the installation steps
 Edit `environment` in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob/master/docker-compose.yml)
 
 ## Docker Deployment
+
+::: tip Tip
+
+To enable puppeteer, replace `diygod/rsshub` with `diygod/rsshub:chromium-bundled` in **EACH** command.
+
+:::
 
 ### Install
 
@@ -119,7 +136,7 @@ For example, adding `-e CACHE_EXPIRE=3600` will set the cache time to 1 hour.
 $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS_TOKEN=example diygod/rsshub
 ```
 
-This deployment method does not include puppeteer and Redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
+This deployment method does not include puppeteer (unless using `diygod/rsshub:chromium-bundled` instead) and Redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
 
 To configure more options please refer to [Configuration](#configuration).
 
@@ -205,6 +222,26 @@ Refer to our [Guide](https://docs.rsshub.app/en/) for usage. Replace `https://rs
 
 ### Configuration
 
+::: tip Tip
+
+On arm/arm64, this deployment method does not include puppeteer dependencies. To enable puppeteer, install Chromium from your distribution repositories first, then set `CHROMIUM_EXECUTABLE_PATH` to its executable path.
+
+Debian:
+```bash
+$ apt install chroium
+$ echo >> .env
+$ echo 'CHROMIUM_EXECUTABLE_PATH=chromium' >> .env
+```
+
+Ubuntu/Raspbian:
+```bash
+$ apt install chromium-browser
+$ echo >> .env
+$ echo 'CHROMIUM_EXECUTABLE_PATH=chromium-browser' >> .env
+```
+
+:::
+
 RSSHub can be configured by setting environment variables.
 
 Create a `.env` file in the root directory of your project. Add environment-specific variables on new lines in the form of `NAME=VALUE`. For example:
@@ -216,7 +253,7 @@ CACHE_EXPIRE=600
 
 Please notice that it will not override already existed environment variables, more rules please refer to [dotenv](https://github.com/motdotla/dotenv)
 
-This deployment method does not include puppeteer and Redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
+This deployment method does not include Redis dependencies. Use the Docker Compose deployment method or deploy external dependencies yourself if you need it.
 
 To configure more options please refer to [Configuration](#configuration).
 
@@ -484,19 +521,37 @@ See the relation between access key/code and white/blacklisting.
 
 `SENTRY_ROUTE_TIMEOUT`: Report Sentry if route execution takes more than this milliseconds, default to `3000`
 
+### Image Processing
+
+`HOTLINK_TEMPLATE`: replace image URL in the description to avoid anti-hotlink protection, leave it blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
+
+`HOTLINK_INCLUDE_PATHS`: limit the routes to be processed, only matched routes will be processed. Set multiple values with comma `,` as delimiter. If not set, all routes will be processed
+
+`HOTLINK_EXCLUDE_PATHS`: exclude routes that do not need to be processed, all matched routes will be ignored. Set multiple values with comma `,` as delimiter. Can be used alone, or to exclude routes that are already included by `HOTLINK_INCLUDE_PATHS`. If not set, no routes will be ignored
+
+::: tip Route matching pattern
+
+`HOTLINK_INCLUDE_PATHS` and `HOTLINK_EXCLUDE_PATHS` match the root path and all recursive sub-paths of the route, but not substrings. Note that the path must start with `/` and end without `/`.
+
+e.g. `/example`, `/example/sub` and `/example/anthoer/sub/route` will be matched by `/example`, but `/example_route` will not be matched.
+
+It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
+
+:::
+
 ### Other Application Configurations
 
 `DISALLOW_ROBOT`: prevent indexing by search engine, default to enable, set false or 0 to disable
 
 `ENABLE_CLUSTER`: enable cluster mode, default to `false`
 
-`HOTLINK_TEMPLATE`: replace image link in the description to avoid anti-hotlink protection, leave blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
-
 `NODE_ENV`: display error message on pages for authentication failing, default to `production` (i.e. no display)
 
 `NODE_NAME`: node name, used for load balancing, identify the current node
 
 `PUPPETEER_WS_ENDPOINT`: browser WebSocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&show=api-browserwsendpoint)
+
+`CHROMIUM_EXECUTABLE_PATH`: path to the Chromium (or Chrome) executable. If puppeteer is not bundled with Chromium (manually skipped downloading or system architecture is arm/arm64), configuring this can effectively enable puppeteer. Or alternatively, if you prefer Chrome to Chromium, this configuration will help. **WARNING**: only effective when `PUPPETEER_WS_ENDPOINT` is not set; only useful for manual deployment, for Docker, please use the `chromium-bundled` image instead.
 
 `TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `150`
 
@@ -532,7 +587,8 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `EH_IPB_MEMBER_ID`: The value of `ipb_member_id` in the cookie header after logging in E-Hentai
     -   `EH_IPB_PASS_HASH`: The value of `ipb_pass_hash` in the cookie header after logging in E-Hentai
     -   `EH_SK`: The value of `sk` in the cookie header after logging in E-Hentai
-    -   `EH_IGNEOUS`: The value of `igneous` in the cookie header after logging in ExHentai. If this value is set, RSS will be generated from ExHentai, `EH_SK` will be ignored.
+    -   `EH_IGNEOUS`: The value of `igneous` in the cookie header after logging in ExHentai. If this value is set, RSS will be generated from ExHentai
+    -   `EH_IMG_PROXY`: Cover proxy address. If this is set, the link to the cover image will be replaced with this value at the beginning. When using ExHentai, the cover image requires cookies to access it, so you can use this with a cookie-added proxy server to access the cover image without cookies in some readers.
 
 -   GitHub: [Access Token application](https://github.com/settings/tokens)
 
@@ -556,7 +612,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   mail:
 
-    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` in email account with `.`, eg. `EMAIL_CONFIG_xxx.gmail.com`. The value is in the format of `password=password&host=server&port=port`, eg:
+    -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` and `.` in email account with `_`, e.g. `EMAIL_CONFIG_xxx_gmail_com`. The value is in the format of `password=password&host=server&port=port`, eg:
         -   Linux env: `EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
         -   docker env: `EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
 
@@ -602,9 +658,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   twitter: [Application creation](https://apps.twitter.com)
 
-    -   `TWITTER_CONSUMER_KEY`: Twitter Consumer Key, support multiple keys, split them with `,`
-    -   `TWITTER_CONSUMER_SECRET`: Twitter Consumer Secret, support multiple keys, split them with `,`
-    -   `TWITTER_TOKEN_{handler}`: The token generated by the corresponding Twitter handler, replace `{handler}` with the Twitter handler, the value is a combination of `Twitter API key, Twitter API key secret, Access token, Access token secret` connected by a comma `,`. Eg. `TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`.
+    - `TWITTER_CONSUMER_KEY`: Twitter Developer API key, support multiple keys, split them with `,`
+    - `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret, support multiple keys, split them with `,`
+    - `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization. If either of the above environment variables is not set, the Twitter Web API will be used. However, no need to set this environment var since every single user and guest share the same authorization token which has already been built into RSSHub.
+    - `TWITTER_TOKEN_{handler}`: The token generated by the corresponding Twitter handler, replace `{handler}` with the Twitter handler, the value is a combination of `Twitter API key, Twitter API key secret, Access token, Access token secret` connected by a comma `,`. Eg. `TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`.
 
 -   Wordpress:
 

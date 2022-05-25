@@ -42,11 +42,35 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 <RouteEn author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['Shop subdomain']" />
 
+## Craigslist
+
+### Shop
+
+<RouteEn author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']"/>
+
+> We use RSSHub to implement the searching of Craigslist
+> An example of a full original search url:
+> <https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel>
+>
+> the `xxx` in `/search/xxx` is the search type, just refer to the original search url.
+> The query string is the actual name of query, in this case is folding bike
+
+
 ## Guiltfree.pl
 
 ### Onsale
 
 <RouteEn author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+
+## Gumroad
+
+### Products
+
+<RouteEn author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" :paramsDesc="['username, can be found in URL', 'products name, can be found in URL']" radar="1" rssbud="1">
+
+`https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
+
+</RouteEn>
 
 ## hotukdeals
 

@@ -1,4 +1,6 @@
-name: '[docker] CI for build tests'
+# name: '[docker] CI for build tests'
+# https://github.community/t/215358
+name: PR - Docker build test
 
 on:
   pull_request:
@@ -9,7 +11,11 @@ on:
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
+      - '.github/workflows/docker-test.yml'
   # Please, always create a pull request instead of push to master.
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -19,32 +25,43 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Set up Docker Buildx  # needed by `cache-from`
+        uses: docker/setup-buildx-action@v2
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: rsshub
           flavor: latest=true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
+          build-args: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=0  # also test bundling Chromium
           load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64  # explicit
           cache-from: |
-            type=gha,scope=docker-test
+            type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
             type=gha,scope=docker-release
-          cache-to: type=gha,mode=max,scope=docker-test
+          # ! build on amd64 is fast enough, and cache between PRs never hit, so never waste the 10GB cache limit !
+          # cache-from: |
+          #   type=gha,scope=docker-test
+          #   type=gha,scope=docker-release
+          # cache-to: type=gha,mode=max,scope=docker-test
 
-      - name: Run dockerfile
-        run: |
-          chmod +x scripts/docker/test-docker.sh
-          scripts/docker/test-docker.sh
+      - name: Test Docker image
+        run: bash scripts/docker/test-docker.sh
+
+      - name: Export Docker image
+        run: docker save rsshub:latest | gzip -1cf > rsshub.tar.gz
+
+      - name: Upload Docker image
+        uses: actions/upload-artifact@v3
+        with:
+          name: docker-image
+          path: rsshub.tar.gz
+          retention-days: 1

@@ -318,6 +318,12 @@ pageClass: routes
 
 见 [#nintendo](/game.html#nintendo)
 
+## NPM
+
+### 包
+
+<Route author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" :paramsDesc="['包名']"/>
+
 ## Nvidia Web Driver
 
 ### 更新日志
@@ -354,6 +360,12 @@ pageClass: routes
 
 </Route>
 
+## qBittorrent
+
+### 消息
+
+<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
+
 ## QNAP
 
 ### Release Notes
@@ -382,7 +394,7 @@ pageClass: routes
 
 ### 版本更新
 
-<Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
+<Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
 
 ## RescueTime
 
@@ -496,11 +508,23 @@ pageClass: routes
 
 <Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 
+## Zotero
+
+### 版本历史
+
+<Route author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
+
 ## 怪物猎人世界
 
 ### 更新
 
 见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
+
+## 华硕
+
+### 固件
+
+<Route author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" :paramsDesc="['产品型号，可在产品页面找到']"/>
 
 ## 蒲公英应用分发
 

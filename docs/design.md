@@ -58,6 +58,18 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
 
+## Eagle
+
+### 博客
+
+<Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?/:language?" :paramsDesc="['分类，默认为全部，见下表', '语言，`cn`、`tw`、`en` 默认为 `cn`']" radar="1" rsshub="1">
+
+| 全部  | 设计资源             | 设计技巧         | 最新消息         |
+| --- | ---------------- | ------------ | ------------ |
+| all | design-resources | learn-design | inside-eagle |
+
+</Route>
+
 ## Google
 
 ### Google Fonts
@@ -181,6 +193,12 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 ### Films
 
 <Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
+
+## 爱果果
+
+### 最新 H5
+
+<Route author="yuxinliu-alex" example="/iguoguo/html5" path="/iguoguo/html5" />
 
 ## 优设网
 

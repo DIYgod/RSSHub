@@ -26,9 +26,13 @@ pageClass: routes
 
 ## Gwern Branwen
 
+### 博客
+
 <Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
 
 ## Hedwig.pub
+
+### 博客
 
 <Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
 
@@ -80,6 +84,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## Miris Whispers
+
+### 博客
+
+<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
+
 ## Paul Graham 博客
 
 通过提取文章全文，提供比官方源更佳的阅读体验。
@@ -105,6 +115,12 @@ pageClass: routes
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
 
 :::
+
+## Stratechery by Ben Thompson
+
+### 博客
+
+<Route author="chazeon" example="/stratechery" path="/stratechery" />
 
 ## Whoscall
 
@@ -132,6 +148,8 @@ pageClass: routes
 </Route>
 
 ## WordPress
+
+### 博客
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
@@ -177,7 +195,15 @@ pageClass: routes
 
 ## 華康字型故事
 
+### 博客
+
 <Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
+
+## 黄健宏博客
+
+### 文章
+
+<Route author="stormbuf" example="/huangz" path="/huangz" radar="1"/>
 
 ## 建宁闲谈
 

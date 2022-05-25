@@ -5,16 +5,21 @@ on:
     branches:
       - master
 
+permissions:
+  contents: read
+
 jobs:
   format:
+    permissions:
+      contents: write  # for Git to git push
     name: Auto format
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.0.0
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
           cache: 'yarn'
       - run: yarn install
       - run: npm run format

@@ -8,7 +8,7 @@ pageClass: routes
 
 ### User
 
-<RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/username" :paramsDesc="['name, username that is in the URL']" />
+<RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/kretyn" :paramsDesc="['name, username that is in the URL']" />
 
 ## Dev.to
 
@@ -304,34 +304,38 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 ::: warning
 
-Due to Twitter API restrictions, the Twitter Routes currently supports tweets within 7 days
+Due to restrictions from Twitter, currently only tweets within 7 days are available in some routes.
+
+Some routes rely on the Twitter Developer API, which requires to be specially configured to enable.\
+There are two routes (`/twitter/user` and `/twitter/keyword`) comes with Web API implementation which does not require to be specially configured to enable along with the Developer API implementation. By default, the Developer API is prioritized, but if it is not configured or errors, the Web API will be used. However, there are some differences between the two APIs, e.g. `excludeReplies` in the Developer API will treat [threads](https://blog.twitter.com/official/en_us/topics/product/2017/nicethreads.html) (self-replied tweets) as replies and exclude them, while in the Web API it will not. If you would like to exclude replies but include threads, enable `forceWebApi` in the `/twitter/user` route.
 
 :::
 
-Specify options (in query string's format) in parameter `routeParams` to control some extra features for Tweets
+Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets
 
-| Key    | Description | Accepts | Defaults to |
-| ------ | ----------- | ------- | ------------ |
-| readable                  | Enable readable layout    | 0/1/true/false | false |
-| authorNameBold            | Display author name in bold | 0/1/true/false | false |
-| showAuthorInTitle         | Show author name in title | 0/1/true/false | false (true in `/twitter/followings`) |
-| showAuthorInDesc          | Show author name in description (RSS body) | 0/1/true/false | false (true in `/twitter/followings`) |
-| showQuotedAuthorAvatarInDesc | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | 0/1/true/false | false |
-| showAuthorAvatarInDesc    | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)| 0/1/true/false | false |
-| showEmojiForRetweetAndReply | Use "🔁" instead of "Rt", "↩️" & "💬" instead of "Re" | 0/1/true/false | false |
-| showRetweetTextInTitle    | Show quote comments in title | 0/1/true/false | true |
-| addLinkForPics           | Add clickable links for Tweet pictures | 0/1/true/false | false |
-| showTimestampInDescription| Show timestamp in description | 0/1/true/false | false |
-| showQuotedInTitle         | Show quoted tweet in title    | 0/1/true/false | false |
-| widthOfPics               | Width of Tweet pictures | Unspecified/Integer      | Unspecified |
-| heightOfPics              | Height of Tweet pictures | Unspecified/Integer | Unspecified |
-| sizeOfAuthorAvatar        | Size of author's avatar | Integer | 48 |
-| sizeOfQuotedAuthorAvatar  | Size of quoted tweet's author's avatar | Integer | 24 |
-| excludeReplies            | Exclude replies, only available in "User timeline" | 0/1/true/false | false |
-| includeRts                | Include retweets, only available in "User timeline" | 0/1/true/false | true |
-| count                     | `count` parameter passed to Twitter API, only available in "User timeline" | Unspecified/Integer | Unspecified |
+| Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |
+|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|------------------------|-------------------------------------------|
+| `readable`                     | Enable readable layout                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
+| `authorNameBold`               | Display author name in bold                                                                                                          | `0`/`1`/`true`/`false` | `false`                                   |
+| `showAuthorInTitle`            | Show author name in title                                                                                                            | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
+| `showAuthorInDesc`             | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
+| `showQuotedAuthorAvatarInDesc` | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |
+| `showAuthorAvatarInDesc`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |
+| `showEmojiForRetweetAndReply`  | Use "🔁" instead of "Rt", "↩️" & "💬" instead of "Re"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |
+| `showRetweetTextInTitle`       | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |
+| `addLinkForPics`               | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
+| `showTimestampInDescription`   | Show timestamp in description                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |
+| `showQuotedInTitle`            | Show quoted tweet in title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |
+| `widthOfPics`                  | Width of Tweet pictures                                                                                                              | Unspecified/Integer    | Unspecified                               |
+| `heightOfPics`                 | Height of Tweet pictures                                                                                                             | Unspecified/Integer    | Unspecified                               |
+| `sizeOfAuthorAvatar`           | Size of author's avatar                                                                                                              | Integer                | `48`                                      |
+| `sizeOfQuotedAuthorAvatar`     | Size of quoted tweet's author's avatar                                                                                               | Integer                | `24`                                      |
+| `excludeReplies`               | Exclude replies, only available in `/twitter/user`                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |
+| `includeRts`                   | Include retweets, only available in `/twitter/user`                                                                                  | `0`/`1`/`true`/`false` | `true`                                    |
+| `forceWebApi`                  | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                    | `0`/`1`/`true`/`false` | `false`                                   |
+| `count`                        | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                           | Unspecified/Integer    | Unspecified                               |
 
-Specify different option values than default values to improve readablility. The URL
+Specify different option values than default values to improve readability. The URL
 
 ```
 https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
@@ -343,11 +347,11 @@ generates
 
 ### User timeline
 
-<RouteEn path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
 
 ### User media
 
-<RouteEn author="yindaheng98" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
+<RouteEn author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
 
 ## User following timeline
 
@@ -371,7 +375,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### Keyword
 
-<RouteEn author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" :paramsDesc="['keyword', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" :paramsDesc="['keyword', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### Trends
 
