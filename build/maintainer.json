@@ -374,6 +374,9 @@
     "/cnki/journals/debut/:name": [
         "Fatpandac"
     ],
+    "/cntheory/paper/:id?": [
+        "nczitzk"
+    ],
     "/cntv/:column": [
         "WhoIsSure",
         "Fatpandac"
