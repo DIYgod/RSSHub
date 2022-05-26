@@ -965,14 +965,14 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="nczitzk" example="/panewslab" path="/panewslab/:category?" :paramsDesc="['分类，见下表，默认为精选']">
 
-| DAO | 元宇宙 | DeFi | Layer 2 | 链游 | 波卡 | NFT | 央行数字货币 | 融资 | 活动 | 监管 |
-| --- | --- | ---- | ------- | -- | -- | --- | ------ | -- | -- | -- |
+| 精选 | 链游 | 元宇宙 | NFT | DeFi | 监管 | 央行数字货币 | 波卡 | Layer 2 | DAO | 融资 | 活动 |
+| -- | -- | --- | --- | ---- | -- | ------ | -- | ------- | --- | -- | -- |
 
 </Route>
 
 ### 快讯
 
-<Route author="nczitzk" example="/panewslab/newsflash" path="/panewslab/newsflash/:language?" :paramsDesc="['语言，默认为 zh，可在地址栏 URL 中找到']"/>
+<Route author="nczitzk" example="/panewslab/news" path="/panewslab/news"/>
 
 ### 专栏
 
