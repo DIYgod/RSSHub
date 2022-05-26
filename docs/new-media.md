@@ -976,11 +976,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 专栏
 
-<Route author="nczitzk" example="/panewslab/column/N7042814" path="/panewslab/column/:id" :paramsDesc="['专栏 id，可在地址栏 URL 中找到']"/>
+<Route author="nczitzk" example="/panewslab/author/166" path="/panewslab/author/:id" :paramsDesc="['专栏 id，可在地址栏 URL 中找到']"/>
 
 ### 专题
 
-<Route author="nczitzk" example="/panewslab/topic/1582623288184036" path="/panewslab/topic/:id" :paramsDesc="['专题 id，可在地址栏 URL 中找到']"/>
+<Route author="nczitzk" example="/panewslab/topic/1629365774078402" path="/panewslab/topic/:id" :paramsDesc="['专题 id，可在地址栏 URL 中找到']"/>
 
 ## PMCAFF
 
