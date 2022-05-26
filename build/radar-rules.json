@@ -10554,6 +10554,37 @@
       }
     ]
   },
+  "youtube.com": {
+    "_name": "YouTube",
+    "www": [
+      {
+        "title": "用户",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": "/user/:username",
+        "target": "/youtube/user/:username"
+      },
+      {
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": "/channel/:id",
+        "target": "/youtube/channel/:id"
+      },
+      {
+        "title": "播放列表",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": "/playlist"
+      },
+      {
+        "title": "订阅列表",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": [
+          "/feed/subscriptions",
+          "/feed/channels"
+        ],
+        "target": "/youtube/subscriptions"
+      }
+    ]
+  },
   "youzhiyouxing.cn": {
     "_name": "有知有行",
     ".": [
@@ -11227,28 +11258,6 @@
         "title": "关键词",
         "docs": "https://docs.rsshub.app/social-media.html#twitter",
         "source": "/search"
-      }
-    ]
-  },
-  "youtube.com": {
-    "_name": "YouTube",
-    "www": [
-      {
-        "title": "用户",
-        "docs": "https://docs.rsshub.app/social-media.html#youtube",
-        "source": "/user/:username",
-        "target": "/youtube/user/:username"
-      },
-      {
-        "title": "频道",
-        "docs": "https://docs.rsshub.app/social-media.html#youtube",
-        "source": "/channel/:id",
-        "target": "/youtube/channel/:id"
-      },
-      {
-        "title": "播放列表",
-        "docs": "https://docs.rsshub.app/social-media.html#youtube",
-        "source": "/playlist"
       }
     ]
   },

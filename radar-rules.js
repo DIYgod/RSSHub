@@ -105,14 +105,6 @@
             { title: '关键词', docs: 'https://docs.rsshub.app/social-media.html#twitter', source: '/search', target: (params, url) => `/twitter/keyword/${new URL(url).searchParams.get('q')}` },
         ],
     },
-    'youtube.com': {
-        _name: 'YouTube',
-        www: [
-            { title: '用户', docs: 'https://docs.rsshub.app/social-media.html#youtube', source: '/user/:username', target: '/youtube/user/:username' },
-            { title: '频道', docs: 'https://docs.rsshub.app/social-media.html#youtube', source: '/channel/:id', target: '/youtube/channel/:id' },
-            { title: '播放列表', docs: 'https://docs.rsshub.app/social-media.html#youtube', source: '/playlist', target: (params, url) => `/youtube/playlist/${new URL(url).searchParams.get('list')}` },
-        ],
-    },
     'github.com': {
         _name: 'GitHub',
         '.': [
