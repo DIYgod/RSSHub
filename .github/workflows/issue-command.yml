@@ -36,7 +36,7 @@ jobs:
           assign_phrase: '/wip'
           label_phase1: RSS proposal
           label_phase2: RSS bug
- 
+
   test-on-demand:
     name: Test route on demand
     if: startsWith(github.event.comment.body, '/test')
