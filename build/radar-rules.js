@@ -605,6 +605,26 @@
         docs:"https://docs.rsshub.app/programming.html#bbc-news-labs",
         source:"/",
         target:"/bbcnewslabs/news" } ] },
+  "behance.net":{ _name:"Behance",
+    www:[ { title:"User",
+        docs:"https://docs.rsshub.app/design.html#behance-yong-hu-zuo-pin",
+        source:[ "/:user",
+          "/:user/:types",
+          "/gallery/:galleryid/:galleryname" ],
+        target:(params, url, document) => {
+                    let uid;
+                    let type = '';
+                    if (params.types && params.types.match('appreciated')) {
+                        type = '/appreciated';
+                    }
+                    if (url.match(/gallery\/\d+/)) {
+                        uid = document && document.querySelector('.e2e-project-avatar').childNodes[0].attributes[1].value.match(/behance.net\/(.*)/)[1];
+                    } else {
+                        uid = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
+                    }
+
+                    return `/behance/${uid}${type}`;
+                } } ] },
   "bendibao.com":{ _name:"本地宝",
     ".":[ { title:"焦点资讯",
         docs:"https://docs.rsshub.app/new-media.html#ben-di-bao-jiao-dian-zi-xun",
@@ -7263,14 +7283,6 @@
         docs:"https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao",
         source:"/u/:id",
         target:"/acfun/user/video/:id" } ] },
-  "behance.net":{ _name:"Behance",
-    www:[ { title:"User",
-        docs:"https://docs.rsshub.app/design.html#behance-user-works",
-        source:[ "/:user" ],
-        target:(params, url, document) => {
-                    const uid1 = document && document.querySelector('html').innerHTML.match(/([^/]+)\/insights/)[1];
-                    return `/behance/${uid1}`;
-                } } ] },
   "jjmhw.cc":{ _name:"漫小肆",
     www:[ { title:"漫画更新",
         docs:"https://docs.rsshub.app/anime.html#man-xiao-si",
