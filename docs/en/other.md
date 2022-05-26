@@ -136,6 +136,12 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 </RouteEn>
 
+## Lever
+
+### Recruitment
+
+<RouteEn author="tsarlewey" example="/lever/lever" path="/lever/:domain" :paramsDesc="['Company with Lever Board']"/>
+
 ## MITRE
 
 ### All Publications
@@ -243,8 +249,8 @@ Type
 
 ### Homepage
 
-<RouteEn author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1"/>
+<RouteEn author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1" puppeteer="1"/>
 
 ### User
 
-<RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1"/>
+<RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1" puppeteer="1"/>

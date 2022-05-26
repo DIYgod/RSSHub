@@ -1,0 +1,37 @@
+name: Issue Command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+jobs:
+  rebase:
+    name: Automatic Rebase
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the latest code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Automatic Rebase
+        uses: cirrus-actions/rebase@1.7
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_SUPER }}
+  self-assign:
+    name: Self Assign
+    if: github.event.issue.pull_request == '' && startsWith(github.event.comment.body, '/wip')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: bhermann/issue-volunteer@v0.1.20
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          assign_phrase: '/wip'
+          label_phase1: RSS proposal
+          label_phase2: RSS bug

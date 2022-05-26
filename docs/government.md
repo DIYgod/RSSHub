@@ -30,7 +30,7 @@ pageClass: routes
 
 ### 最新消息
 
-<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']">
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']" puppeteer="1">
 
 | 全部  | 案件发布 | 调查报告或勘喻    | 年度报告         | 公署消息    |
 | --- | ---- | ---------- | ------------ | ------- |
@@ -722,6 +722,16 @@ pageClass: routes
 |   通知公告  | 招考政策 | 自考快递 |
 | :-----: | :--: | :--: |
 | bjeeagg | zkzc | zkkd |
+
+</Route>
+
+### 河北省财政厅
+
+<Route author="nczitzk" example="/gov/hebei/czt/xwdt" path="/gov/hebei/czt/xwdt/:category?" :paramsDesc="['分类，见下表，默认为财政动态']">
+
+| 财政动态 | 综合新闻 | 通知公告 |
+| ---- | ---- | ---- |
+| gzdt | zhxw | tzgg |
 
 </Route>
 

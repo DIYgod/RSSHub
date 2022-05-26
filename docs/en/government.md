@@ -66,7 +66,7 @@ Language
 
 ### Latest News
 
-<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']">
+<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']" puppeteer="1">
 Category
 
 | All  | Detected Cases | Investigation Reports or Recommendations  | Annual Reports | CCAC's Updates |

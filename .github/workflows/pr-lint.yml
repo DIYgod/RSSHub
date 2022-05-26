@@ -1,10 +1,11 @@
 name: Linter
 
-on: [push, pull_request_target]
+on: [push, pull_request, pull_request_target]
 
 jobs:
   linter:
     name: Lint
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,6 +18,7 @@ jobs:
         run: yarn lint
   reviewdog:
     name: reviewdog
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,7 +32,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
   titleLint:
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'pull_request_target' }}
+    if: ${{ github.event_name == 'pull_request_target' }}
     name: Validate PR title
     runs-on: ubuntu-latest
     steps:

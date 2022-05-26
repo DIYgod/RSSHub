@@ -1,0 +1,9 @@
+{{@ description }}
+{{ if photo }}
+<br>
+{{@ photo }}
+{{ /if }}
+{{ if video }}
+<br>
+{{@ video }}
+{{ /if }}

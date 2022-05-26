@@ -44,6 +44,18 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
+## FX Markets
+
+### 分类
+
+<Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+
+| Trading | Infrastructure | Tech and Data | Regulation |
+| ------- | -------------- | ------------- | ---------- |
+| trading | infrastructure | tech-and-data | regulation |
+
+</Route>
+
 ## TokenInsight
 
 ### 博客
@@ -476,11 +488,11 @@ pageClass: routes
 
 ### 沟通交流
 
-<Route author="nczitzk" example="/gov/pbc/goutongjiaoliu" path="/gov/pbc/goutongjiaoliu"/>
+<Route author="nczitzk" example="/gov/pbc/goutongjiaoliu" path="/gov/pbc/goutongjiaoliu" puppeteer="1"/>
 
 ### 货币政策司公开市场交易公告
 
-<Route author="nczitzk" example="/gov/pbc/tradeAnnouncement" path="/gov/pbc/tradeAnnouncement"/>
+<Route author="nczitzk" example="/gov/pbc/tradeAnnouncement" path="/gov/pbc/tradeAnnouncement" puppeteer="1"/>
 
 ### 政策研究
 

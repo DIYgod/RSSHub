@@ -66,8 +66,11 @@ pageClass: routes
 
 ### 话题
 
-<Route author="mjysci" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']"  anticrawler="1"/>
+<Route author="zoenglinghou mjysci" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']" radar="1" rssbud="1" anticrawler="1" puppeteer="1">
+
 采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
+
+</Route>
 
 ## BBC
 
@@ -667,6 +670,30 @@ IT・科学 tech_science
 
 </Route>
 
+## 朝鲜中央通讯社
+
+### 新闻
+
+<Route author="Rongronggg9" example="/kcna/cn" path="/kcna/:lang/:category?" :paramsDesc="['语言，见下表', '分类，见下表']" anticrawler="1" radar="1" rssbud="1">
+
+| 语言      | 조선어  | English | 中国语  | Русский | Español | 日本語  |
+| ------- | ---- | ------- | ---- | ------- | ------- | ---- |
+| `:lang` | `kp` | `en`    | `cn` | `ru`    | `es`    | `jp` |
+
+| 分类                      | `:category`                        |
+| ----------------------- | ---------------------------------- |
+| 朝鲜劳动党总书记**金正恩**同志革命活动新闻 | `54c0ca4ca013a92cc9cf95bd4004c61a` |
+| 最新新闻 (默认)               | `1ee9bdb7186944f765208f34ecfb5407` |
+| 主要新闻                    | `5394b80bdae203fadef02522cfb578c0` |
+| 国内新闻                    | `b2b3bcc1b0a4406ab0c36e45d5db58db` |
+| 文件                      | `a8754921399857ebdbb97a98a1e741f5` |
+| 国际新闻                    | `593143484cf15d48ce85c26139582395` |
+| 社会－生活                   | `93102e5a735d03979bc58a3a7aefb75a` |
+| 对外关系                    | `0f98b4623a3ef82aeea78df45c423fd0` |
+| 时事解说                    | `12c03a49f7dbe829bceea8ac77088c21` |
+
+</Route>
+
 ## 第一财经
 
 ### 直播区
@@ -722,9 +749,9 @@ IT・科学 tech_science
 
 无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |
-| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- |
-| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial |
+| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        | 皇室        |
+| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
+| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </Route>
 
@@ -1068,6 +1095,26 @@ category 对应的关键词有
 
 <Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
 
+## 理论网
+
+### 学习时报
+
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['编号，见下表，默认为全部']">
+
+| 版           | 编号 |
+| ----------- | -- |
+| 全部          |    |
+| 第 A1 版：国内大局 | A1 |
+| 第 A2 版：市场经济 | A2 |
+| 第 A3 版：民主法治 | A3 |
+| 第 A4 版：读书治学 | A4 |
+| 第 A5 版：特别策划 | A5 |
+| 第 A6 版：科技前沿 | A6 |
+| 第 A7 版：社会治理 | A7 |
+| 第 A8 版：学员天地 | A8 |
+
+</Route>
+
 ## 连线 Wired
 
 非订阅用户每月有阅读全文次数限制。
@@ -1221,7 +1268,7 @@ category 对应的关键词有
 
 ### 新闻
 
-<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言，缺省中文']">
+<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['语言，缺省中文']" puppeteer="1">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 

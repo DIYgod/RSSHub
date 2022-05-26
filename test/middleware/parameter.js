@@ -246,7 +246,7 @@ describe('wrong_path', () => {
     it(`wrong_path`, async () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
-        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire * 100}`);
+        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire}`);
         expect(response.text).toMatch(/Error: wrong path/);
     });
 });
