@@ -1387,6 +1387,9 @@
     "/lanqiao/questions/:id": [
         "huhuhang"
     ],
+    "/laohu8/personal/:id": [
+        "Fatpandac"
+    ],
     "/latepost/:proma?": [
         "nczitzk"
     ],
