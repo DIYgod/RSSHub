@@ -431,9 +431,11 @@ R18 显示
 
 </Route>
 
-## Wallpaperhub
+## WallpaperHub
 
-<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
+### 壁纸
+
+<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" radar="1" rssbud="1"/>
 
 ## yande.re
 
