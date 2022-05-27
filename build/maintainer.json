@@ -1883,6 +1883,21 @@
     "/radio-canada/latest/:language?": [
         "nczitzk"
     ],
+    "/reuters/investigates": [
+        "LyleLee"
+    ],
+    "/reuters/reuters/channel/:site/:channel": [
+        "LyleLee"
+    ],
+    "/reuters/reuters/theWire": [
+        "LyleLee"
+    ],
+    "/reuters/:category/:topic?": [
+        "LyleLee",
+        "HenryQW",
+        "proletarius101",
+        "black-desk"
+    ],
     "/rfa/:language?/:channel?/:subChannel?": [
         "zphw"
     ],
@@ -3455,7 +3470,6 @@
     "/cug/news": [],
     "/cug/gcxy/:type?": [],
     "/haimaoba/:id?": [],
-    "/reuters/channel/:site/:channel": [],
     "/pgyer/:app?": [],
     "/weibo/timeline/:uid/:feature?/:routeParams?": [],
     "/watchface/:watch_type?/:list_type?": [],
@@ -3811,7 +3825,6 @@
     "/erbingapp/news": [],
     "/dsb/area/:area": [],
     "/kaopunews/:language?": [],
-    "/reuters/theWire": [],
     "/gelonghui/user/:id": [],
     "/gelonghui/subject/:id": [],
     "/gelonghui/keyword/:keyword": [],
