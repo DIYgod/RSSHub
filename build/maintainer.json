@@ -1966,6 +1966,15 @@
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
+    "/sobooks/tag/:id?": [
+        "nczitzk"
+    ],
+    "/sobooks/date/:date?": [
+        "nczitzk"
+    ],
+    "/sobooks/:category?": [
+        "nczitzk"
+    ],
     "/sohu/mp/:id": [
         "HenryQW"
     ],
@@ -3968,9 +3977,6 @@
     "/matataki/tokens/:id/posts/:filterCode/:ipfsFlag?": [],
     "/matataki/tags/:tagId/:tagName/posts/:ipfsFlag?": [],
     "/matataki/users/:userId/favorites/:favoriteListId/posts/:ipfsFlag?": [],
-    "/sobooks/tag/:id?": [],
-    "/sobooks/date/:date?": [],
-    "/sobooks/:category?": [],
     "/zhimap/:categoryUuid?/:recommend?": [],
     "/fantia/search/:type?/:caty?/:peroid?/:order?/:rating?/:keyword?": [],
     "/fantia/user/:id": [],
