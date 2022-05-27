@@ -1746,10 +1746,16 @@
     "/oup/:name": [
         "Fatpandac"
     ],
+    "/panewslab/author/:id": [
+        "nczitzk"
+    ],
     "/panewslab/column/:id": [
         "nczitzk"
     ],
-    "/panewslab/newsflash/:language?": [
+    "/panewslab/news": [
+        "nczitzk"
+    ],
+    "/panewslab/newsflash": [
         "nczitzk"
     ],
     "/panewslab/topic/:id": [
