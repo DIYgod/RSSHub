@@ -104,6 +104,10 @@ pageClass: routes
 
 </Route>
 
+### 归档
+
+<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
+
 ## syosetu
 
 ### 章节更新
@@ -279,10 +283,6 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 用户收藏
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
-
-## 归档
-
-<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
 
 ## 禁忌书屋
 
