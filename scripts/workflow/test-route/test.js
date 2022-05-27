@@ -63,7 +63,7 @@ ${detail.slice(0, 65300 - temp_com.length)}
         com_l = com_l.slice(0, 5);
     }
 
-    if (!!process.env.PULL_REQUEST) {
+    if (process.env.PULL_REQUEST) {
         await github.rest.issues
             .addLabels({
                 issue_number: number,
