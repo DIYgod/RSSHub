@@ -2333,6 +2333,9 @@
         "nczitzk",
         "Fatpandac"
     ],
+    "/wallpaperhub/": [
+        "nczitzk"
+    ],
     "/wallstreetcn/live/:category?": [
         "nczitzk"
     ],
@@ -3845,7 +3848,6 @@
     "/newsmth/section/:section": [],
     "/kotaku/story/:type": [],
     "/medsci/recommend": [],
-    "/wallpaperhub": [],
     "/wukong/user/:id/:type?": [],
     "/tencent/bigdata": [],
     "/souyun/today": [],
