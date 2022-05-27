@@ -1155,8 +1155,8 @@ category 对应的关键词有
 
 ::: warning 迁移说明
 
-1. 路透社中文网站 (`cn.reuters.com`) 和英国网站 (`uk.reuters.com`) 已经关闭，并重定向至主站 (`www.reuters.com`)
-2. 旧路由已被废弃，请迁移至下面列出的新路由
+1.  路透社中文网站 (`cn.reuters.com`) 和英国网站 (`uk.reuters.com`) 已经关闭，并重定向至主站 (`www.reuters.com`)
+2.  旧路由已被废弃，请迁移至下面列出的新路由
 
 :::
 
@@ -1165,23 +1165,21 @@ category 对应的关键词有
 <Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
 -   `:category`:
-    | World    | Business | Legal | Markets  | Breakingviews | Technology |
-    | -------- | -------  | ----- | -------- | ------------- | ---------- |
-    | world    | business | legal | markets  | breakingviews | technology |
-
+    | World | Business | Legal | Markets | Breakingviews | Technology |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- |
+    | world | business | legal | markets | breakingviews | technology |
 
 -   `world/:topic`:
 
-    | All  | Africa   | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
-    | ---- | -------  | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
-    |      | africa    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
-
+    | All | Africa | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+    | --- | ------ | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+    |     | africa | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
 
 -   `business/:topic`:
 
-    | All  | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
-    | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
-    |      | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
+    | All | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+    | --- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
 
 -   `legal/:topic`:
 
@@ -1189,14 +1187,12 @@ category 对应的关键词有
     | --- | --------- | -------------- | ---------- | ----------- |
     |     | goverment | legalindustry  | litigation | transaction |
 
-
-
 -   `authors/:topic`:
 
-    | 默认    | Jonathan Landay | 其他作者          |
-    | ------- | --------------- | ----------------- |
+    | 默认      | Jonathan Landay | 其他作者           |
+    | ------- | --------------- | -------------- |
     | reuters | jonathan-landay | 作者名，可在 URL 中找到 |
-    
+
 可在分类 / 话题页的 URL 中找到更多。
 
 </Route>
