@@ -45,7 +45,7 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 <RouteEn author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" :paramsDesc="['Journals, can be found in URL']"/>
 
-## Caa.reviews
+## caa.reviews
 
 ### Book Reviews
 
