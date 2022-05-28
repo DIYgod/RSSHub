@@ -45,7 +45,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" :paramsDesc="['期刊名，可在期刊页地址栏中找到']"/>
 
-## Caa.reviews
+## caa.reviews
 
 ### Book Reviews
 
