@@ -58,8 +58,6 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 ### Essays
 
 <RouteEn author="Fatpandac" example="/caareviews/essay" path="/caareviews/essay"/>
-
-
 ## Cell Journal
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
