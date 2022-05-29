@@ -3267,18 +3267,6 @@ column 为 third 时可选的 category:
 
 <Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
 
-## 外接大脑
-
-### 文章
-
-<Route author="nczitzk" example="/waijiedanao/article/all" path="/waijiedanao/article/:caty" :paramsDesc="['文章分类']">
-
-| 全部  | 新闻   | 金融      | 区块链        | 互联网      | 科技   | 新媒体      | 商业思考     | 行业 100 强 | 电商        | 娱乐            | 生活   |
-| --- | ---- | ------- | ---------- | -------- | ---- | -------- | -------- | -------- | --------- | ------------- | ---- |
-| all | news | finance | blockchain | internet | tech | newmedia | business | hundred  | ecommerce | entertainment | life |
-
-</Route>
-
 ## 晚点 LatePost
 
 ### 报道
