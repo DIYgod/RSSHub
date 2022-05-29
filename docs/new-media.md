@@ -3723,6 +3723,12 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 </Route>
 
+## 小专栏
+
+### 专栏
+
+<Route author="TonyRL" example="/xiaozhuanlan/column/olddriver-selection" path="/xiaozhuanlan/column/:id" :paramsDesc="['专栏 ID，可在专栏页 URL 中找到']" radar="1" rssbud="1" />
+
 ## 辛華社
 
 ### 首页
