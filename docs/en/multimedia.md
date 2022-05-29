@@ -10,6 +10,79 @@ pageClass: routes
 
 Full transcript support for better user experience.
 
+## 7mmtv
+
+### Category
+
+<RouteEn author="nczitzk" example="/7mmtv/zh/censored_list/all" path="/7mmtv/:language?/:category?/:type?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below, `censored_list` as Censored by default', 'Server, see below, all server by default']">
+
+**Language**
+
+| English | 日本語 | 한국의 | 中文 |
+| ------- | ------ | ------ | ---- |
+| en      | ja     | ko     | zh   |
+
+**Category**
+
+| Chinese subtitles AV | Censored      | Amateur         | Uncensored      | Asian self-timer | H comics    |
+| -------------------- | ------------- | --------------- | --------------- | ---------------- | ----------- |
+| chinese_list         | censored_list | amateurjav_list | uncensored_list | amateur_list     | hcomic_list |
+
+| Chinese subtitles AV random | Censored random | Amateur random    | Uncensored random | Asian self-timer random | H comics random |
+| --------------------------- | --------------- | ----------------- | ----------------- | ----------------------- | --------------- |
+| chinese_random              | censored_random | amateurjav_random | uncensored_random | amateur_random          | hcomic_random   |
+
+**Server**
+
+| All Server | fembed(Full DL) | streamsb(Full DL) | doodstream | streamtape(Full DL) | avgle | embedgram | videovard(Full DL) |
+| ---------- | --------------- | ----------------- | ---------- | ------------------- | ----- | --------- | ------------------ |
+| all        | 21              | 30                | 28         | 29                  | 17    | 34        | 33                 |
+
+</RouteEn>
+
+### Maker
+
+<RouteEn author="nczitzk" example="/7mmtv/zh/amateurjav_makersr/1752" path="/7mmtv/:language?/:category?/:id?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below', 'Id, see below']">
+
+**Language**
+
+| English | 日本語 | 한국의 | 中文 |
+| ------- | ------ | ------ | ---- |
+| en      | ja     | ko     | zh   |
+
+**Category and Id**
+
+When `amateurjav_makersr` as **Amateur** is chosen as **Category**, the available **ids** are:
+
+| Maker                     | Id   |
+| ------------------------- | ---- |
+| シロウトTV(SIRO)          | 1752 |
+| ラグジュTV(LUXU)          | 1586 |
+| ナンパTV(200GANA)         | 1751 |
+| PRESTIGE PREMIUM(300MAAN) | 1318 |
+| S-CUTE                    | 1069 |
+| ARA                       | 1585 |
+
+When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the available **ids** are:
+
+| Maker                              | Id  |
+| ---------------------------------- | --- |
+| HEYZO                              | 17  |
+| 東京熱(Tokyo Hot)                  | 29  |
+| 一本道(1pondo)                     | 32  |
+| カリビアンコム(Caribbeancom)       | 30  |
+| カリビアンコム PPV(Caribbeancompr) | 40  |
+| 天然むすめ(10musume)               | 31  |
+| パコパコママ(pacopacomama)         | 36  |
+| ガチん娘！(Gachinco)               | 35  |
+| エッチな4610                       | 34  |
+| 人妻斬り0930                       | 38  |
+| エッチな0930                       | 39  |
+| トリプルエックス (XXX-AV)          | 126 |
+| FC2                                | 37  |
+
+</RouteEn>
+
 ## 99% Invisible
 
 ### Transcript
@@ -162,9 +235,9 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 <RouteEn author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" :paramsDesc="['Category, see below, 24H by default']">
 
-| 24H | 일간 | 주간 | 월간 |
-| - | - | - | - |
-| | day | week | month |
+| 24H | 일간 | 주간 | 월간  |
+| --- | ---- | ---- | ----- |
+|     | day  | week | month |
 
 </RouteEn>
 
