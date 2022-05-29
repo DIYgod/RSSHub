@@ -69,6 +69,12 @@
     "/52hrtt/:area?/:type?": [
         "nczitzk"
     ],
+    "/7mmtv/:language?/:category?/:type?": [
+        "nczitzk"
+    ],
+    "/7mmtv/:language?/:category?/:id?": [
+        "nczitzk"
+    ],
     "/8kcos/": [
         "KotoriK"
     ],
