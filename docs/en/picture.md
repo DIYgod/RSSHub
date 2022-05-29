@@ -285,6 +285,12 @@ The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpa
 
 </RouteEn>
 
+## WallpaperHub
+
+### Wallpapers
+
+<RouteEn author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" radar="1" rssbud="1"/>
+
 ## yande.re
 
 ::: tip

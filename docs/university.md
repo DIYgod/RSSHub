@@ -170,6 +170,10 @@ pageClass: routes
 
 <Route author="shengmaosu" example="/pku/admission/sszs" path="/pku/admission/sszs" radar="1" rssbud="1"/>
 
+### 观点 - 国家发展研究院
+
+<Route author="MisLink" example="/pku/nsd/gd" path="/pku/nsd/gd" radar="1" rssbud="1"/>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
