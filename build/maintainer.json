@@ -2501,6 +2501,9 @@
         "hondajojo",
         "jtsang4"
     ],
+    "/xiaozhuanlan/column/:id": [
+        "TonyRL"
+    ],
     "/xueqiu/favorite/:id": [
         "imlonghao"
     ],
