@@ -1845,6 +1845,9 @@
     "/qidiantu/shouding": [
         "nczitzk"
     ],
+    "/qipamaijia/:cate?": [
+        "Fatpandac"
+    ],
     "/qm120/news/:category?": [
         "nczitzk"
     ],
