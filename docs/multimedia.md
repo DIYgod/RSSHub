@@ -150,6 +150,79 @@ pageClass: routes
 
 输出 Transcript 从而提供比官方（podcast）更好的使用体验。
 
+## 7mmtv
+
+### 分类
+
+<Route author="nczitzk" example="/7mmtv/zh/censored_list/all" path="/7mmtv/:language?/:category?/:type?" :paramsDesc="['语言，见下表，默认为 `en` 即英语', '分类，见下表，默认为 `censored_list` 即 有碼AV', '空间，见下表，默认为全部']">
+
+**语言**
+
+| English | 日本語 | 한국의 | 中文 |
+| ------- | --- | --- | -- |
+| en      | ja  | ko  | zh |
+
+**分类**
+
+| 中字 AV        | 有碼 AV         | 素人 AV           | 無碼 AV           | 國產影片         | H 漫畫貼圖      |
+| ------------ | ------------- | --------------- | --------------- | ------------ | ----------- |
+| chinese_list | censored_list | amateurjav_list | uncensored_list | amateur_list | hcomic_list |
+
+| 中字 AV 隨機       | 有碼 AV 隨機        | 素人 AV 隨機          | 無碼 AV 隨機          | 國產影片隨機         | H 漫畫貼圖隨機      |
+| -------------- | --------------- | ----------------- | ----------------- | -------------- | ------------- |
+| chinese_random | censored_random | amateurjav_random | uncensored_random | amateur_random | hcomic_random |
+
+**空间**
+
+| 全部空間 | fembed (可下載) | streamsb (可下載) | doodstream | streamtape (可下載) | avgle | embedgram | videovard (可下載) |
+| ---- | ------------ | -------------- | ---------- | ---------------- | ----- | --------- | --------------- |
+| all  | 21           | 30             | 28         | 29               | 17    | 34        | 33              |
+
+</Route>
+
+### 制作商
+
+<Route author="nczitzk" example="/7mmtv/zh/amateurjav_makersr/1752" path="/7mmtv/:language?/:category?/:id?" :paramsDesc="['语言，见下表，默认为 `en` 即英语', '分类，见下表', '编号，见下表']">
+
+**语言**
+
+| English | 日本語 | 한국의 | 中文 |
+| ------- | --- | --- | -- |
+| en      | ja  | ko  | zh |
+
+**分类与编号**
+
+分类为 `amateurjav_makersr` 即 **素人 AV** 时，可选製作商编号有：
+
+| 製作商                       | 编号   |
+| ------------------------- | ---- |
+| シロウト TV (SIRO)            | 1752 |
+| ラグジュ TV (LUXU)            | 1586 |
+| ナンパ TV (200GANA)          | 1751 |
+| PRESTIGE PREMIUM(300MAAN) | 1318 |
+| S-CUTE                    | 1069 |
+| ARA                       | 1585 |
+
+分类为 `uncensored_makersr` 即 **無碼 AV** 时，可选製作商编号有：
+
+| 製作商                          | 编号  |
+| ---------------------------- | --- |
+| HEYZO                        | 17  |
+| 東京熱 (Tokyo Hot)              | 29  |
+| 一本道 (1pondo)                 | 32  |
+| カリビアンコム (Caribbeancom)       | 30  |
+| カリビアンコム PPV (Caribbeancompr) | 40  |
+| 天然むすめ (10musume)             | 31  |
+| パコパコママ (pacopacomama)        | 36  |
+| ガチん娘！(Gachinco)              | 35  |
+| エッチな 4610                    | 34  |
+| 人妻斬り 0930                    | 38  |
+| エッチな 0930                    | 39  |
+| トリプルエックス (XXX-AV)            | 126 |
+| FC2                          | 37  |
+
+</Route>
+
 ## 99% Invisible
 
 ### Transcript
