@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - 'dependabot/**'
     paths:
+      - 'test/**'
       - 'lib/**'
       - '!**/maintainer.js'
       - '!**/radar.js'
