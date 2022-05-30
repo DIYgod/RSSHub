@@ -87,7 +87,7 @@
     "chrono-node": "2.3.8",
     "city-timezones": "1.2.0",
     "crypto-js": "4.1.1",
-    "currency-symbol-map": "5.0.1",
+    "currency-symbol-map": "5.1.0",
     "dayjs": "1.11.2",
     "dotenv": "16.0.1",
     "emailjs-imap-client": "3.1.0",

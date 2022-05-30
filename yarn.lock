@@ -4591,10 +4591,10 @@ cssstyle@^2.3.0:
   dependencies:
     cssom "~0.3.6"
 
-currency-symbol-map@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-5.0.1.tgz#447629c7e26730299aa6174c55bde281f682b2e5"
-  integrity sha512-2yHvoVBPIS9Dx7fjritu9l7UHWo4Z3D2oQnQj8AYwUee2j/PAcoHB4issCqwabfbipISZ/iG6vVYsfrAoks2eA==
+currency-symbol-map@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-5.1.0.tgz#59531fbe977ba95e8d358e90e3c9e9053efb75ad"
+  integrity sha512-LO/lzYRw134LMDVnLyAf1dHE5tyO6axEFkR3TXjQIOmMkAM9YL6QsiUwuXzZAmFnuDJcs4hayOgyIYtViXFrLw==
 
 cyclist@^1.0.1:
   version "1.0.1"
