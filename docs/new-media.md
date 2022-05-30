@@ -3267,18 +3267,6 @@ column 为 third 时可选的 category:
 
 <Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
 
-## 外接大脑
-
-### 文章
-
-<Route author="nczitzk" example="/waijiedanao/article/all" path="/waijiedanao/article/:caty" :paramsDesc="['文章分类']">
-
-| 全部  | 新闻   | 金融      | 区块链        | 互联网      | 科技   | 新媒体      | 商业思考     | 行业 100 强 | 电商        | 娱乐            | 生活   |
-| --- | ---- | ------- | ---------- | -------- | ---- | -------- | -------- | -------- | --------- | ------------- | ---- |
-| all | news | finance | blockchain | internet | tech | newmedia | business | hundred  | ecommerce | entertainment | life |
-
-</Route>
-
 ## 晚点 LatePost
 
 ### 报道
@@ -3722,6 +3710,12 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 | 106  | 107  | 108  | 109  | 110  | 111  | 113  |
 
 </Route>
+
+## 小专栏
+
+### 专栏
+
+<Route author="TonyRL" example="/xiaozhuanlan/column/olddriver-selection" path="/xiaozhuanlan/column/:id" :paramsDesc="['专栏 ID，可在专栏页 URL 中找到']" radar="1" rssbud="1" />
 
 ## 辛華社
 
