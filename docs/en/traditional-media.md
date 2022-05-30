@@ -448,15 +448,19 @@ Language
 
 ### Category
 
-<RouteEn author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']"/>
+<RouteEn author="ImSingee" example="/economist/latest" path="/economist/:endpoint" :paramsDesc="['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']" radar="1" rssbud="1"/>
+
+### Espresso
+
+<RouteEn author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
 
 ### GRE Vocabulary
 
-<RouteEn author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+<RouteEn author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" />
 
 ### Download
 
-<RouteEn author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+<RouteEn author="nczitzk" example="/economist/download" path="/economist/download" >
 
 The download site: http://www.cgx02.xyz/index.php?dir=/te
 

@@ -394,15 +394,19 @@ Solidot 提供的 feed:
 
 ### 分类
 
-<Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
+<Route author="ImSingee" example="/economist/latest" path="/economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']" radar="1" rssbud="1"/>
+
+### Espresso
+
+<Route author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
 
 ### GRE Vocabulary
 
-<Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+<Route author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" radar="1" rssbud="1"/>
 
 ### 下载
 
-<Route author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+<Route author="nczitzk" example="/economist/download" path="/economist/download" >
 
 下载站：<http://www.cgx02.xyz/index.php?dir=/te>
 
