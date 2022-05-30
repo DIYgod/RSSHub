@@ -696,6 +696,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/creaders/headline" path="/creaders/headline"/>
 
+## 威锋
+
+### 社区
+
+<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" :paramsDesc="['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']" radar="1" rssbud="1"> 
+
+| 最新回复   | 最新发布 | 热门  | 精华      |
+| ------ | ---- | --- | ------- |
+| newest | all  | hot | essence |
+
+</Route>
+
 ## 文学城
 
 ### 博客
