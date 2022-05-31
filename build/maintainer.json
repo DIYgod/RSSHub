@@ -2516,6 +2516,9 @@
     "/xiaozhuanlan/column/:id": [
         "TonyRL"
     ],
+    "/xidian/jwc/:category?": [
+        "ShadowySpirits"
+    ],
     "/xueqiu/favorite/:id": [
         "imlonghao"
     ],
@@ -3063,7 +3066,6 @@
     "/dgtle/trade/search/:keyword": [],
     "/chouti/top/:hour?": [],
     "/chouti/:subject?": [],
-    "/xidian/jwc/:category?": [],
     "/westore/new": [],
     "/oilprice/:area": [],
     "/nhentai/search/:keyword/:mode?": [],
