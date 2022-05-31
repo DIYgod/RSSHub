@@ -643,20 +643,20 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `SCIHUB_HOST`: The Sci-hub mirror address that is accessible from your location, default to `https://sci-hub.se`.
 
--   spotify: [API key registration](https://developer.spotify.com)
+-   Spotify: [API key registration](https://developer.spotify.com)
 
-    -   `SPOTIFY_CLIENT_ID`：Client ID of the application
-    -   `SPOTIFY_CLIENT_SECRET`：Client secret of the application
+    -   `SPOTIFY_CLIENT_ID`: Client ID of the application
+    -   `SPOTIFY_CLIENT_SECRET`: Client secret of the application
 
--   spotify (user data related routes):
+-   Spotify (user data related routes):
 
-    -   `SPOTIFY_REFRESHTOKEN`：The refresh token of the user from the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
+    -   `SPOTIFY_REFRESHTOKEN`: The refresh token of the user from the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
 
--   telegram: [Bot application](https://telegram.org/blog/bot-revolution)
+-   Telegram: [Bot application](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram bot token
 
--   twitter: [Application creation](https://apps.twitter.com)
+-   Twitter: [Application creation](https://apps.twitter.com)
 
     - `TWITTER_CONSUMER_KEY`: Twitter Developer API key, support multiple keys, split them with `,`
     - `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret, support multiple keys, split them with `,`
@@ -675,6 +675,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
         | https://cors.netnr.workers.dev/        | cloudflare   |
         | https://netnr-proxy.openode.io/        | digitalocean |
 
--   youtube: [API Key application](https://console.developers.google.com/)
+-   YouTube: [API Key application](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
+    -   All routes:
+        -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
+    -   Extra requirements for subscriptions route:
+        -   `YOUTUBE_CLIENT_ID`: YouTube API OAuth 2.0 client ID
+        -   `YOUTUBE_CLIENT_SECRET`: YouTube API OAuth 2.0 client secret
+        -   `YOUTUBE_REFRESH_TOKEN`: YouTube API OAuth 2.0 refresh token. Check [this gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) for detailed instructions.

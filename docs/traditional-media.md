@@ -394,15 +394,19 @@ Solidot 提供的 feed:
 
 ### 分类
 
-<Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
+<Route author="ImSingee" example="/economist/latest" path="/economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']" radar="1" rssbud="1"/>
+
+### Espresso
+
+<Route author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
 
 ### GRE Vocabulary
 
-<Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+<Route author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" radar="1" rssbud="1"/>
 
 ### 下载
 
-<Route author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+<Route author="nczitzk" example="/economist/download" path="/economist/download" >
 
 下载站：<http://www.cgx02.xyz/index.php?dir=/te>
 
@@ -1095,6 +1099,26 @@ category 对应的关键词有
 
 <Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
 
+## 理论网
+
+### 学习时报
+
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['编号，见下表，默认为全部']">
+
+| 版           | 编号 |
+| ----------- | -- |
+| 全部          |    |
+| 第 A1 版：国内大局 | A1 |
+| 第 A2 版：市场经济 | A2 |
+| 第 A3 版：民主法治 | A3 |
+| 第 A4 版：读书治学 | A4 |
+| 第 A5 版：特别策划 | A5 |
+| 第 A6 版：科技前沿 | A6 |
+| 第 A7 版：社会治理 | A7 |
+| 第 A8 版：学员天地 | A8 |
+
+</Route>
+
 ## 连线 Wired
 
 非订阅用户每月有阅读全文次数限制。
@@ -1133,51 +1157,53 @@ category 对应的关键词有
 
 ## 路透社
 
-### 实时资讯
+::: warning 迁移说明
 
-<Route author="black-desk" example="/reuters/theWire" path="/reuters/theWire" />
+1.  路透社中文网站 (`cn.reuters.com`) 和英国网站 (`uk.reuters.com`) 已经关闭，并重定向至主站 (`www.reuters.com`)
+2.  旧路由已被废弃，请迁移至下面列出的新路由
 
-### 频道
+:::
 
-<Route author="HenryQW proletarius101" example="/reuters/channel/cn/analyses" path="/reuters/channel/:site/:channel" :paramsDesc="['语言，支持的分站列表如下','频道名，请注意大小写需与如下表格中一致。']">
+### 分类 / 话题 / 作者
 
-支持语言列表
+<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
--   中国分站 `cn`：
+-   `:category`:
+    | World | Business | Legal | Markets | Breakingviews | Technology |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- |
+    | world | business | legal | markets | breakingviews | technology |
 
-    -   主频道：
+-   `world/:topic`:
 
-    | 深度分析     | 时事要闻        | 生活   | 投资        |
-    | -------- | ----------- | ---- | --------- |
-    | analyses | generalnews | life | investing |
+    | All | Africa | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+    | --- | ------ | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+    |     | africa | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
 
-    -   资讯子频道：
+-   `business/:topic`:
 
-    | 中国财经  | 国际财经                  | 新闻人物      | 财经视点     |
-    | ----- | --------------------- | --------- | -------- |
-    | china | internationalbusiness | newsmaker | opinions |
+    | All | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+    | --- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
 
-    -   专栏子频道：
+-   `legal/:topic`:
 
-    | 中国财经专栏   | 国际财经专栏    | 大宗商品专栏    |
-    | -------- | --------- | --------- |
-    | CnColumn | IntColumn | ComColumn |
+    | All | Goverment | Legal Industry | Litigation | Transaction |
+    | --- | --------- | -------------- | ---------- | ----------- |
+    |     | goverment | legalindustry  | litigation | transaction |
 
--   美国分站 `us`：
+-   `authors/:topic`:
 
-    -   主频道：
+    | 默认      | Jonathan Landay | 其他作者           |
+    | ------- | --------------- | -------------- |
+    | reuters | jonathan-landay | 作者名，可在 URL 中找到 |
 
-    | Business | Markets | World | Politics | Tech       | Breakingviews | Wealth | Life      |
-    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
-    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+可在分类 / 话题页的 URL 中找到更多。
 
--   英国分站 `uk`：
+</Route>
 
-    -   主频道：
+### 深度调查栏目
 
-    | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
-    | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
-    | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
+<Route author="LyleLee" example="/reuters/inverstigates" path="/reuters/inverstigates" />
 
 </Route>
 

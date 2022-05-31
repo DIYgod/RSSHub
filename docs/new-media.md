@@ -965,22 +965,22 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="nczitzk" example="/panewslab" path="/panewslab/:category?" :paramsDesc="['分类，见下表，默认为精选']">
 
-| DAO | 元宇宙 | DeFi | Layer 2 | 链游 | 波卡 | NFT | 央行数字货币 | 融资 | 活动 | 监管 |
-| --- | --- | ---- | ------- | -- | -- | --- | ------ | -- | -- | -- |
+| 精选 | 链游 | 元宇宙 | NFT | DeFi | 监管 | 央行数字货币 | 波卡 | Layer 2 | DAO | 融资 | 活动 |
+| -- | -- | --- | --- | ---- | -- | ------ | -- | ------- | --- | -- | -- |
 
 </Route>
 
 ### 快讯
 
-<Route author="nczitzk" example="/panewslab/newsflash" path="/panewslab/newsflash/:language?" :paramsDesc="['语言，默认为 zh，可在地址栏 URL 中找到']"/>
+<Route author="nczitzk" example="/panewslab/news" path="/panewslab/news"/>
 
 ### 专栏
 
-<Route author="nczitzk" example="/panewslab/column/N7042814" path="/panewslab/column/:id" :paramsDesc="['专栏 id，可在地址栏 URL 中找到']"/>
+<Route author="nczitzk" example="/panewslab/author/166" path="/panewslab/author/:id" :paramsDesc="['专栏 id，可在地址栏 URL 中找到']"/>
 
 ### 专题
 
-<Route author="nczitzk" example="/panewslab/topic/1582623288184036" path="/panewslab/topic/:id" :paramsDesc="['专题 id，可在地址栏 URL 中找到']"/>
+<Route author="nczitzk" example="/panewslab/topic/1629365774078402" path="/panewslab/topic/:id" :paramsDesc="['专题 id，可在地址栏 URL 中找到']"/>
 
 ## PMCAFF
 
@@ -3267,18 +3267,6 @@ column 为 third 时可选的 category:
 
 <Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
 
-## 外接大脑
-
-### 文章
-
-<Route author="nczitzk" example="/waijiedanao/article/all" path="/waijiedanao/article/:caty" :paramsDesc="['文章分类']">
-
-| 全部  | 新闻   | 金融      | 区块链        | 互联网      | 科技   | 新媒体      | 商业思考     | 行业 100 强 | 电商        | 娱乐            | 生活   |
-| --- | ---- | ------- | ---------- | -------- | ---- | -------- | -------- | -------- | --------- | ------------- | ---- |
-| all | news | finance | blockchain | internet | tech | newmedia | business | hundred  | ecommerce | entertainment | life |
-
-</Route>
-
 ## 晚点 LatePost
 
 ### 报道
@@ -3722,6 +3710,12 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 | 106  | 107  | 108  | 109  | 110  | 111  | 113  |
 
 </Route>
+
+## 小专栏
+
+### 专栏
+
+<Route author="TonyRL" example="/xiaozhuanlan/column/olddriver-selection" path="/xiaozhuanlan/column/:id" :paramsDesc="['专栏 ID，可在专栏页 URL 中找到']" radar="1" rssbud="1" />
 
 ## 辛華社
 
