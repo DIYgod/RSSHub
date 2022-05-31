@@ -2507,16 +2507,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处
 
-<Route author="ShadowySpirits" example="/xidian/jwc/xxfb" path="/xidian/jwc/:category?" :paramsDesc="['通知类别,默认为全部']">
+<Route author="ShadowySpirits" example="/xidian/jwc/xxfb" path="/xidian/jwc/:category?" :paramsDesc="['通知类别，默认为通知公告']" radar="1" rssbud="1">
 
-::: warning 注意
-
-全文内容需使用校园网或 VPN 获取
-:::
-
-|  全部 | 教学信息 | 教学研究 | 实践教学 | 质量监控 | 通知公告 |
-| :-: | :--: | :--: | :--: | :--: | :--: |
-| all | jxxx | jxyj | sjjx | zljk | tzgg |
+| 教学信息 | 教学研究 | 实践教学 | 质量监控 | 通知公告 |
+| :--: | :--: | :--: | :--: | :--: |
+| jxxx | jxyj | sjjx | zljk | tzgg |
 
 </Route>
 
