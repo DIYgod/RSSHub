@@ -244,6 +244,28 @@ pageClass: routes
 
 <Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
 
+## PLAYNO.1 玩樂達人
+
+### AV
+
+<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1"> 
+
+| 全部文章 | AV 新聞 | AV 導覽 |
+| ---- | ----- | ----- |
+| 78   | 3     | 5     |
+
+</Route>
+
+### 情趣
+
+<Route author="sanmmm" example="/playno1/st" path="/playno1/st/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1"> 
+
+| 全部文章 | 情趣體驗報告     | 情趣新聞 | 情趣研究所    |
+| ---- | ---------- | ---- | -------- |
+| all  | experience | news | graduate |
+
+</Route>
+
 ## RF 技术社区
 
 ### 文章
