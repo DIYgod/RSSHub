@@ -3191,7 +3191,7 @@ column 为 third 时可选的 category:
 <Route author="HenryQW" example="/sohu/mp/119097" path="/sohu/mp/:id" :paramsDesc="['搜狐号 ID', '见如下说明']">
 
 1.  通过浏览器搜索相关搜狐号 `果壳 site: mp.sohu.com`。
-2.  通过浏览器控制台执行 `cfgs.author_id`，返回的即为搜狐号 ID。
+2.  通过浏览器控制台执行 `contentData.mkey`，返回的即为搜狐号 ID。
 
 </Route>
 
