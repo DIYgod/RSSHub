@@ -2211,6 +2211,9 @@
     "/thepaper/list/:id": [
         "nczitzk"
     ],
+    "/tiktok/user/:user": [
+        "TonyRL"
+    ],
     "/timednews/news/:type?": [
         "linbuxiao"
     ],

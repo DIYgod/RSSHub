@@ -9754,6 +9754,19 @@
       }
     ]
   },
+  "tiktok.com": {
+    "_name": "TikTok",
+    ".": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/en/social-media.html#tiktok",
+        "source": [
+          "/:user"
+        ],
+        "target": "/tiktok/user/:user"
+      }
+    ]
+  },
   "timednews.com": {
     "_name": "时刻新闻",
     ".": [
