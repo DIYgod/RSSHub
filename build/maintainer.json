@@ -1841,6 +1841,12 @@
     "/pku/scc/recruit/:type?": [
         "DylanXie123"
     ],
+    "/playno1/av/:catid?": [
+        "TonyRL"
+    ],
+    "/playno1/st/:catid?": [
+        "TonyRL"
+    ],
     "/polkaworld/polkaworld/newest": [
         "iceqing"
     ],
