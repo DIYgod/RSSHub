@@ -1821,6 +1821,15 @@
         "hoilc",
         "Rongronggg9"
     ],
+    "/pincong/category/:category?/:sort?": [
+        "zphw"
+    ],
+    "/pincong/hot/:category?": [
+        "zphw"
+    ],
+    "/pincong/topic/:topic": [
+        "zphw"
+    ],
     "/pku/admission/sszs": [
         "pkuyjs"
     ],
@@ -4112,9 +4121,6 @@
     "/anytxt/release-notes": [],
     "/mofish/:id": [],
     "/mcdonalds/:category": [],
-    "/pincong/category/:category?/:sort?": [],
-    "/pincong/hot/:category?": [],
-    "/pincong/topic/:topic": [],
     "/gocomics/:name": [],
     "/comicskingdom/:name": [],
     "/mediadigest/:range/:category?": [],

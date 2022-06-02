@@ -8188,6 +8188,29 @@
       }
     ]
   },
+  "pincong.rocks": {
+    "_name": "品葱",
+    ".": [
+      {
+        "title": "发现",
+        "docs": "https://docs.rsshub.app/bbs.html#pin-cong",
+        "source": "/"
+      },
+      {
+        "title": "精选",
+        "docs": "https://docs.rsshub.app/bbs.html#pin-cong",
+        "source": [
+          "/hot/:category"
+        ]
+      },
+      {
+        "title": "话题",
+        "docs": "https://docs.rsshub.app/bbs.html#pin-cong",
+        "source": "/topic/:topic",
+        "target": "/pincong/topic/:topic"
+      }
+    ]
+  },
   "pku.edu.cn": {
     "_name": "北京大学",
     "admission": [
