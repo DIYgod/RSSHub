@@ -867,6 +867,10 @@
     "/google/sites/recentChanges/:id": [
         "nczitzk"
     ],
+    "/gov/customs/list/:gchannel?": [
+        "Jeason0228",
+        "TonyRL"
+    ],
     "/gov/fmprc/:category?": [
         "nicolaszf",
         "nczitzk"
@@ -3177,7 +3181,6 @@
     "/gov/shanxi/rst/:category": [],
     "/gov/hunan/notice/:type": [],
     "/gov/ndrc/xwdt/:caty?": [],
-    "/gov/customs/list/:gchannel": [],
     "/gov/mohurd/policy": [],
     "/gov/sapprft/approval/:channel/:detail?": [],
     "/gov/nppa/:channel": [],
