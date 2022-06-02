@@ -258,7 +258,7 @@ pageClass: routes
 
 ### 情趣
 
-<Route author="sanmmm" example="/playno1/st" path="/playno1/st/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1"> 
+<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1"> 
 
 | 全部文章 | 情趣體驗報告     | 情趣新聞 | 情趣研究所    |
 | ---- | ---------- | ---- | -------- |
