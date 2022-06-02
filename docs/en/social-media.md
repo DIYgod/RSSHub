@@ -300,6 +300,12 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 <RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
+## TikTok
+
+### User
+
+<RouteEn author="TonyRL" example="/tiktok/user/@linustech" path="/tiktok/user/:user" :paramsDesc="['User ID, including @']" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+
 ## Twitter
 
 ::: warning
