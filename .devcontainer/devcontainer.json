@@ -53,5 +53,9 @@
     // "postAttachCommand": "yarn dev",
 
     // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-    "remoteUser": "node"
+    "remoteUser": "node",
+
+    // https://github.com/tailscale/codespace
+    "runArgs": ["--cap-add=NET_ADMIN", "--cap-add=NET_RAW", "--device=/dev/net/tun"],
+    "postStartCommand": "sudo tailscaled"
 }
