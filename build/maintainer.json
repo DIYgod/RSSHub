@@ -2539,6 +2539,12 @@
         "mocusez",
         "light0926"
     ],
+    "/xiaohongshu/board/:board_id": [
+        "lotosbin"
+    ],
+    "/xiaohongshu/user/:user_id/:category": [
+        "lotosbin"
+    ],
     "/xiaoyuzhou/": [
         "prnake",
         "Maecenas"
@@ -3542,8 +3548,6 @@
     "/cnu/discovery/:type?/:category?": [],
     "/zhanqi/room/:id": [],
     "/wineyun/:category": [],
-    "/xiaohongshu/user/:user_id/:category": [],
-    "/xiaohongshu/board/:board_id": [],
     "/kzfeed/topic/:id": [],
     "/factcheck": [],
     "/x-mol/news/:tag?": [],
