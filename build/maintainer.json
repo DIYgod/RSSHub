@@ -796,6 +796,18 @@
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
+    "/gitee/commits/:owner/:repo": [
+        "TonyRL"
+    ],
+    "/gitee/events/:owner/:repo": [
+        "TonyRL"
+    ],
+    "/gitee/events/:username": [
+        "TonyRL"
+    ],
+    "/gitee/releases/:owner/:repo": [
+        "TonyRL"
+    ],
     "/github/branches/:user/:repo": [
         "max-arnold"
     ],
