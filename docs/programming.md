@@ -190,6 +190,24 @@ Rated 对象
 
 </Route>
 
+## Gitee
+
+### 仓库 Releases
+
+<Route author="TonyRL" example="/gitee/releases/y_project/RuoYi" path="/gitee/releases/:owner/:repo" :paramsDesc="['用户名', '仓库名']" radar="1" rssbud="1"/>
+
+### 仓库提交
+
+<Route author="TonyRL" example="/gitee/commits/y_project/RuoYi" path="/gitee/commits/:owner/:repo" :paramsDesc="['用户名', '仓库名']" radar="1" rssbud="1"/>
+
+### 用户公开动态
+
+<Route author="TonyRL" example="/gitee/events/y_project" path="/gitee/events/:username" :paramsDesc="['用户名']" radar="1" rssbud="1"/>
+
+### 仓库动态
+
+<Route author="TonyRL" example="/gitee/events/y_project/RuoYi" path="/gitee/events/:owner/:repo" :paramsDesc="['用户名', '仓库名']" radar="1" rssbud="1"/>
+
 ## GitHub
 
 ::: tip 提示
