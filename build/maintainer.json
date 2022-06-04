@@ -793,6 +793,9 @@
     "/getdr/": [
         "nczitzk"
     ],
+    "/getitfree/:category?": [
+        "nczitzk"
+    ],
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
