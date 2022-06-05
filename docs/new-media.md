@@ -1616,6 +1616,32 @@ Supported sub-sites:
 
 <Route author="nczitzk" example="/dedao/knowledge" path="/dedao/knowledge/:topic?/:type?" :paramsDesc="['话题 id，可在话题页 URL 中找到', '分享类型，`true` 指精选，`false` 指最新，默认为精选']"/>
 
+## 电动邦
+
+### 资讯
+
+<Route author="Fatpandac" example="/diandong/news" path="/diandong/news/:cate?" :paramsDesc="['分类，见下表，默认为推荐']">
+
+分类
+
+| 推荐 | 新车 | 导购 | 试驾 | 用车 | 技术 | 政策 | 行业 |
+| -- | -- | -- | -- | -- | -- | -- | -- |
+| 0  | 29 | 61 | 30 | 75 | 22 | 24 | 23 |
+
+</Route>
+
+### 电动号
+
+<Route author="Fatpandac" example="/diandong/ddh" path="/diandong/ddh/:cate?" :paramsDesc="['分类，见下表，默认为全部']">
+
+分类
+
+| 全部 | 新车 | 导购 | 评测 | 新闻 | 技术 | 政策 | 用车 | 二手车 |
+| -- | -- | -- | -- | -- | -- | -- | -- | --- |
+| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8   |
+
+</Route>
+
 ## 电商报
 
 ### 分区
@@ -1786,32 +1812,6 @@ area 分区选项
 ### 球员新闻
 
 <Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
-
-## 动车邦
-
-### 资讯
-
-<Route author="Fatpandac" example="/diandong/news" path="/diandong/news/:cate?" :paramsDesc="['分类，见下表，默认为推荐']">
-
-分类
-
-| 推荐 | 新车 | 导购 | 试驾 | 用车 | 技术 | 政策 | 行业 |
-| -- | -- | -- | -- | -- | -- | -- | -- |
-| 0  | 29 | 61 | 30 | 75 | 22 | 24 | 23 |
-
-</Route>
-
-### 电动号
-
-<Route author="Fatpandac" example="/diandong/ddh" path="/diandong/ddh/:cate?" :paramsDesc="['分类，见下表，默认为全部']">
-
-分类
-
-| 全部 | 新车 | 导购 | 评测 | 新闻 | 技术 | 政策 | 用车 | 二手车 |
-| -- | -- | -- | -- | -- | -- | -- | -- | --- |
-| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8   |
-
-</Route>
 
 ## 多知网
 
