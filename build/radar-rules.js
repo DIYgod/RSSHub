@@ -6647,6 +6647,17 @@
         source:[ "/",
           "/notice/list.htm" ],
         target:"/zuel/notice" } ] },
+  "zyshow.net":{ _name:"综艺秀",
+    ".":[ { title:"综艺",
+        docs:"https://docs.rsshub.app/multimedia.html#zong-yi-xiu-zong-yi",
+        source:[ "/:region/:id",
+          "/:id",
+          "/" ],
+        target:(params, url) =>
+                    `/zyshow/${new URL(url)
+                        .toString()
+                        .split(/zyshow\.net/)
+                        .pop()}` } ] },
   "weibo.com":{ _name:"微博",
     ".":[ { title:"博主",
         docs:"https://docs.rsshub.app/social-media.html#wei-bo",
@@ -7724,8 +7735,4 @@
     ".":[ { title:"应用更新",
         docs:"https://docs.rsshub.app/program-update.html#macwk",
         source:"/soft/:name",
-        target:"/macwk/soft/:name" } ] },
-  "zyshow.net":{ www:[ { title:"",
-        docs:"https://docs.rsshub.app/game.html#lv-fa-shi-ying-di",
-        source:"/:name/",
-        target:"/zyshow/:name" } ] } })
+        target:"/macwk/soft/:name" } ] } })
