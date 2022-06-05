@@ -368,6 +368,12 @@ pageClass: routes
 
 </Route>
 
+## 第一会所
+
+### 子版块
+
+<Route author="TonyRL" example="/sis001/forum/322" path="/sis001/forum/:id?" :paramsDesc="['子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`']" radar="1" rssbud="1"/>
+
 ## 电鸭社区
 
 ### 工作机会
