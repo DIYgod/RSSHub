@@ -4032,4 +4032,10 @@ QueryString:
 | ---- | ----- | ----- |
 |      | zh-hk | zh-tw |
 
+## 健康界
+
+### 首页
+
+<Route author="qnloft" example="/healthcare/index" path="/healthcare/index" />
+
 </Route>

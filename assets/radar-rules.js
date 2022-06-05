@@ -1036,4 +1036,5 @@
             },
         ],
     },
+    'cn-healthcare.com': { www: [{ title: '健康界', docs: 'https://docs.rsshub.app/new-media.html#jian-kang-jie', target: '/healthcare/index"' }] },
 });
