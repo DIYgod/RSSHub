@@ -2066,6 +2066,9 @@
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
+    "/sis001/forum/:id": [
+        "TonyRL"
+    ],
     "/sobooks/tag/:id?": [
         "nczitzk"
     ],
