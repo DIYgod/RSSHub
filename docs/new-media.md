@@ -3054,6 +3054,10 @@ column 为 third 时可选的 category:
 
 </Route>
 
+### 付费专栏文章更新
+
+<Route author="TonyRL" example="/sspai/series/77" path="/sspai/series/:id" :paramsDesc="['专栏 id']" radar="1" />
+
 ### Shortcuts Gallery
 
 <Route author="Andiedie" example="/sspai/shortcuts" path="/sspai/shortcuts" radar="1"/>
