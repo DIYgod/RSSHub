@@ -2126,6 +2126,9 @@
     "/sspai/series": [
         "HenryQW"
     ],
+    "/sspai/series/:id": [
+        "TonyRL"
+    ],
     "/sspai/shortcuts": [
         "Andiedie"
     ],
