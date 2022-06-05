@@ -465,6 +465,12 @@
     "/dhu/xxgk/news": [
         "KiraKiseki"
     ],
+    "/diandong/news/:cate?": [
+        "Fatpandac"
+    ],
+    "/diandong/ddh/:cate?": [
+        "Fatpandac"
+    ],
     "/disinfo/publications": [
         "nczitzk"
     ],
