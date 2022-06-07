@@ -118,7 +118,7 @@
     "parse-torrent": "9.1.5",
     "pidusage": "3.0.0",
     "plist": "3.0.5",
-    "puppeteer": "13.7.0",
+    "puppeteer": "14.3.0",
     "puppeteer-extra": "3.2.3",
     "puppeteer-extra-plugin-stealth": "2.9.0",
     "query-string": "7.1.1",
