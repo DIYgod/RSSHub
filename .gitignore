@@ -15,6 +15,7 @@ tmp
 coverage
 .env
 app-minimal/
+dump.rdb
 Session.vim
 
 .now
