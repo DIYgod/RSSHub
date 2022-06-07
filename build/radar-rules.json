@@ -7588,6 +7588,29 @@
       }
     ]
   },
+  "nhk.or.jp": {
+    "_name": "NHK",
+    "www3": [
+      {
+        "title": "News Web Easy",
+        "docs": "https://docs.rsshub.app/traditional-media.html#nhk",
+        "source": [
+          "/news/easy/",
+          "/"
+        ],
+        "target": "/nhk/news_web_easy"
+      },
+      {
+        "title": "WORLD-JAPAN - 新闻提要",
+        "docs": "https://docs.rsshub.app/traditional-media.html#nhk",
+        "source": [
+          "/nhkworld/:lang/news/list/",
+          "/nhkworld/:lang/news/"
+        ],
+        "target": "/nhk/news/:lang"
+      }
+    ]
+  },
   "nifd.cn": {
     "_name": "国家金融与发展实验室",
     "www": [
