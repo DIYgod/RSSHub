@@ -231,6 +231,24 @@ Only `s00017` is in English.
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+### WORLD-JAPAN - Top Stories
+
+<RouteEn author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" :paramsDesc="['Language, see below, `en` by default']" radar="1" rssbud="1">
+
+| العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
+| ------- | ----- | -------------- | ------ | ------ | ------- | -------- | 
+| ar      | bn    | my             | zh     | zt     | en      | fr       | 
+
+| हिन्दी | Bahasa Indonesia | 코리언 | فارسی | Português | Русский | Español |
+| ------  | ---------------- | --- | ----- | --------- | ------- | ------- | 
+| hi     | id               | ko  | fa    | pt        | ru      | es      |
+
+| Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
+| --------- | | ------- | ------ | ---------- | ---- | ---------- |
+| sw        | th      | tr     | uk         | ur   | vi         |
+
+</RouteEn>
+
 ## Nikkei Asia
 
 ### Latest News
