@@ -1575,6 +1575,9 @@
     "/mox/:category?": [
         "nczitzk"
     ],
+    "/mp4er/:type?/:caty?/:area?/:year?/:order?": [
+        "nczitzk"
+    ],
     "/mpaypass/main/:type?": [
         "zhuan-zhu"
     ],
@@ -4160,8 +4163,6 @@
     "/voa/day-photos": [],
     "/voa/:language/:channel?": [],
     "/6park/:id?/:type?/:keyword?": [],
-    "/mp4er/:type?/:caty?/:area?/:year?/:order?": [],
-    "/bde4/:type?/:caty?/:area?/:year?/:order?": [],
     "/sse/sserules/:slug?": [],
     "/gamegrape/:id?": [],
     "/chsi/zszcgd/:category?": [],
