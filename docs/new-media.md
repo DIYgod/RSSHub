@@ -2181,6 +2181,14 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="nczitzk" example="/jiazhen108" path="/jiazhen108" />
 
+## 健康界
+
+### 首页
+
+<Route author="qnloft" example="/cn-healthcare/index" path="/cn-healthcare/index" />
+
+</Route>
+
 ## 今日热榜
 
 ### 榜单
@@ -4061,11 +4069,3 @@ QueryString:
 | 简体中文 | 港澳繁體  | 台灣正體  |
 | ---- | ----- | ----- |
 |      | zh-hk | zh-tw |
-
-## 健康界
-
-### 首页
-
-<Route author="qnloft" example="/healthcare/index" path="/healthcare/index" />
-
-</Route>
