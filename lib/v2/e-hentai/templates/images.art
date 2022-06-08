@@ -1,0 +1,3 @@
+{{ each images image }}
+<div><img src="{{ image }}"></div>
+{{ /each }}

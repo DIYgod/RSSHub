@@ -58,6 +58,30 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 
 <RouteEn path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" :paramsDesc="['desired keyword']" />
 
+## Eagle
+
+### Blog
+
+<RouteEn author="Fatpandac" example="/eagle/blog/en" path="/eagle/blog/:cate?/:language?" :paramsDesc="['Category, get by URL, `all` by default', 'Language, `cn`, `tw`, `en`, `en` by default']" radar="1" rsshub="1"/>
+
+## Google
+
+### Google Fonts
+
+<RouteEn author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" :paramsDesc="['Sorting type, see below, default to `date`']" selfhost="1">
+
+| Newest | Trending | Most popular | Name  | Number of styles |
+| :----: | :------: | :----------: | :--:  | :--------------: |
+| date   | trending | popularity   | alpha | style            |
+
+::: warning
+
+This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/en/install/#configuration-route-specific-configurations) for route-specific configurations.
+
+:::
+
+</RouteEn>
+
 ## Inside Design
 
 ### Recent Stories
