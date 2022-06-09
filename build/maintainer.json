@@ -697,6 +697,9 @@
     "/ehentai/tag/:tag/:page?/:routeParams?": [
         "yindaheng98"
     ],
+    "/elasticsearch-cn/:params?": [
+        "nczitzk"
+    ],
     "/elsevier/:journal/latest": [
         "Derekmini",
         "sunwolf-swb"
