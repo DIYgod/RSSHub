@@ -117,7 +117,7 @@ Or
 
 ## itch.io
 
-#### Browse
+### Browse
 
 <RouteEn author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['Params']">
 
