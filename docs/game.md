@@ -201,7 +201,7 @@ pageClass: routes
 
 ### Browse
 
-<Route author="nczitzk" example="/itch" path="/itch/:params?" :paramsDesc="['参数']">
+<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['参数']">
 
 参数为对应页面 URL 中 `itch.io` 后的字段，如 [Top rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) 的 URL 是 <https://itch.io/games/top-rated/tag-singleplayer>，其中 `itch.io` 后的字段为 `/games/top-rated/tag-singleplayer`。
 
