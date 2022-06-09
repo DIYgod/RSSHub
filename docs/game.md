@@ -217,7 +217,7 @@ pageClass: routes
 
 ### Developer Logs
 
-<Route author="nczitzk" example="/itch/teamterrible/the-baby-in-yellow" path="/itch/:user/:id" :paramsDesc="['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']">
+<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']">
 
 用户 id 为对应页面 URL 中 `.itch.io` 前的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `.itch.io` 前的字段为 `teamterrible`；
 

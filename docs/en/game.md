@@ -135,7 +135,7 @@ You can browse all the tags at [here](https://itch.io/tags).
 
 ### Developer Logs
 
-<RouteEn author="nczitzk" example="/itch/teamterrible/the-baby-in-yellow" path="/itch/:user/:id" :paramsDesc="['User id, can be found in URL', 'Item id, can be found in URL']">
+<RouteEn author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['User id, can be found in URL', 'Item id, can be found in URL']">
 
 `User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field before `.itch.io` is `teamterrible`.
 
