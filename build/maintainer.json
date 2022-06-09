@@ -1215,6 +1215,15 @@
         "brilon",
         "Fatpandac"
     ],
+    "/itch/devlog/:user/:id": [
+        "nczitzk"
+    ],
+    "/itch/posts/:topic/:id": [
+        "nczitzk"
+    ],
+    "/itch/:sort?/:tag?": [
+        "nczitzk"
+    ],
     "/ithome/ranking/:type": [
         "immmortal",
         "luyuhuang"
