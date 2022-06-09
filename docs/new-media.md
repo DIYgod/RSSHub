@@ -1520,6 +1520,12 @@ Supported sub-sites:
 
 <Route author="Fatpandac" example="/chaping/newsflash" path="/chaping/newsflash"/>
 
+## 产品沉思录
+
+### 首页
+
+<Route author="nczitzk" example="/pmthinking" path="/pmthinking" />
+
 ## 城农 Growin' City
 
 ### 城农资讯观点
