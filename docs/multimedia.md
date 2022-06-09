@@ -223,6 +223,24 @@ pageClass: routes
 
 </Route>
 
+## 91porn
+
+::: tip 提示
+
+91porn 有多个备用域名，路由默认使用永久域名 <https://91porn.com>。若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://0122.91p30.com>，则在所有 91porn 路由最后加上 `?domain=0122.91p30.com` 即可，此时路由为 [`/91porn?domain=0122.91p30.com`](https://rsshub.app/91porn?domain=0122.91p30.com)
+
+:::
+
+### 今日排行
+
+<Route author="TonyRL" example="/91porn" path="/91porn/:lang?" :paramsDesc="['语言，见下表，默认 `en_US`']"  radar="1" rssbud="1" anticrawler="1">
+
+| English | 简体中文  | 繁體中文  |
+| ------- | ----- | ----- |
+| en_US   | cn_CN | zh_ZH |
+
+</Route>
+
 ## 99% Invisible
 
 ### Transcript
