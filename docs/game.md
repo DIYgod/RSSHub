@@ -197,6 +197,40 @@ pageClass: routes
 
 <Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
+## itch.io
+
+### Browse
+
+<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['参数']">
+
+参数为对应页面 URL 中 `itch.io` 后的字段，如 [Top rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) 的 URL 是 <https://itch.io/games/top-rated/tag-singleplayer>，其中 `itch.io` 后的字段为 `/games/top-rated/tag-singleplayer`。
+
+所以路由为 [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer)。
+
+::: tip 提示
+
+你可以在 [这里](https://itch.io/tags)，浏览所有的 tags。
+
+:::
+
+</Route>
+
+### Developer Logs
+
+<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']">
+
+用户 id 为对应页面 URL 中 `.itch.io` 前的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `.itch.io` 前的字段为 `teamterrible`；
+
+项目 id 为对应页面 URL 中 `itch.io` 与 `/devlog` 之间的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `itch.io` 与 `/devlog` 之间的字段为 `the-baby-in-yellow`。
+
+所以路由为 [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow)。
+
+</Route>
+
+### Posts
+
+<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" :paramsDesc="['话题 id，可在对应页面地址栏中找到', '话题名，可在对应页面地址栏中找到']"/>
+
 ## JUMP
 
 ### 游戏折扣
