@@ -1612,6 +1612,9 @@
     "/mygopen/:label?": [
         "nczitzk"
     ],
+    "/mysql/release/:version?": [
+        "nczitzk"
+    ],
     "/natgeo/dailyselection": [
         "OrangeEd1t"
     ],

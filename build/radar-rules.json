@@ -7449,6 +7449,18 @@
       }
     ]
   },
+  "mysql.com": {
+    "_name": "MySQL",
+    "dev": [
+      {
+        "title": "Release Notes",
+        "docs": "https://docs.rsshub.app/programming.html#mysql-release-notes",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "nationalgeographic.com": {
     "_name": "国家地理",
     ".": [
