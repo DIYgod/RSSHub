@@ -335,6 +335,17 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 </RouteEn>
 
+## MySQL
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" :paramsDesc="['Version, see below, 8.0 by default']">
+
+| 8.0 | 5.7 | 5.6 |
+| --- | --- | --- |
+
+</RouteEn>
+
 ## Node.js
 
 ### News
