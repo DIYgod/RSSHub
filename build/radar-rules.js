@@ -4035,6 +4035,16 @@
   "miris.design":{ _name:"Stratechery by Ben Thompson",
     blog:[ { title:"Articles",
         docs:"https://docs.rsshub.app/en/blog.html#stratechery-by-ben-thompson" } ] },
+  "mirror.xyz":{ _name:"Mirror",
+    ".":[ { title:"User",
+        docs:"https://docs.rsshub.app/new-media.html#mirror-user",
+        source:[ "/:id",
+          "/" ],
+        target:(params, url) => {
+                    const matches = new URL(url).toString().match(/https:\/\/(.*?)\.mirror\.xyz/);
+                    const id = matches ? matches[1] : params.id;
+                    return `/mirror/${id}`;
+                } } ] },
   "mobilism.org":{ _name:"Mobilism",
     ".":[ { title:"论坛",
         docs:"https://docs.rsshub.app/bbs.html#mobilism",

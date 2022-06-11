@@ -1578,6 +1578,11 @@
     "/miris/blog": [
         "chazeon"
     ],
+    "/mirror/:id": [
+        "fifteen42",
+        "rde9",
+        "nczitzk"
+    ],
     "/mobilism/forums/:category/:type/:fulltext?": [
         "nitezs"
     ],
@@ -4325,6 +4330,5 @@
     "/dykszx/news/:type?": [],
     "/secrss/category/:category?": [],
     "/secrss/author/:author?": [],
-    "/fashionnetwork/headline/:country?": [],
-    "/mirror/:id": []
+    "/fashionnetwork/headline/:country?": []
 }

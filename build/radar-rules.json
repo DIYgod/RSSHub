@@ -7318,6 +7318,19 @@
       }
     ]
   },
+  "mirror.xyz": {
+    "_name": "Mirror",
+    ".": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/new-media.html#mirror-user",
+        "source": [
+          "/:id",
+          "/"
+        ]
+      }
+    ]
+  },
   "mobilism.org": {
     "_name": "Mobilism",
     ".": [
