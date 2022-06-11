@@ -485,6 +485,17 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## MySQL
+
+### Release Notes
+
+<Route author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" :paramsDesc="['版本，见下表，默认为 8.0']">
+
+| 8.0 | 5.7 | 5.6 |
+| --- | --- | --- |
+
+</Route>
+
 ## Node.js
 
 ### News
