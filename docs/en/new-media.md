@@ -459,7 +459,7 @@ Edition
 
 ### User
 
-<RouteEn author="fifteen42 rde9" example="/mirror/tingfei.eth" path="/mirror/:id" :paramsDesc="['user id']" />
+<RouteEn author="fifteen42 rde9 nczitzk" example="/mirror/tingfei.eth" path="/mirror/:id" :paramsDesc="['user id']" />
 
 ## National Association of Colleges and Employers
 
