@@ -260,7 +260,7 @@ pageClass: routes
 
 ### AV
 
-<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1"> 
+<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
 
 | 全部文章 | AV 新聞 | AV 導覽 |
 | ---- | ----- | ----- |
@@ -270,7 +270,7 @@ pageClass: routes
 
 ### 情趣
 
-<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1"> 
+<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
 
 | 全部文章 | 情趣體驗報告     | 情趣新聞 | 情趣研究所    |
 | ---- | ---------- | ---- | -------- |
@@ -740,7 +740,7 @@ pageClass: routes
 
 ### 社区
 
-<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" :paramsDesc="['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']" radar="1" rssbud="1"> 
+<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" :paramsDesc="['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']" radar="1" rssbud="1">
 
 | 最新回复   | 最新发布 | 热门  | 精华      |
 | ------ | ---- | --- | ------- |
@@ -985,7 +985,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']"> 
+<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']">
 
 | 编辑推荐    | 奇闻异事       | 鬼话连篇           |
 | ------- | ---------- | -------------- |
