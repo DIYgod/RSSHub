@@ -1100,6 +1100,26 @@
     "/hizu/:column?": [
         "nczitzk"
     ],
+    "/hk01/channel/:id": [
+        "hoilc",
+        "Fatpandac"
+    ],
+    "/hk01/hot": [
+        "hoilc",
+        "Fatpandac"
+    ],
+    "/hk01/issue/:id": [
+        "hoilc",
+        "Fatpandac"
+    ],
+    "/hk01/tag/:id": [
+        "hoilc",
+        "Fatpandac"
+    ],
+    "/hk01/zone/:id": [
+        "hoilc",
+        "Fatpandac"
+    ],
     "/hkej/:category?": [
         "TonyRL"
     ],
@@ -3640,11 +3660,6 @@
     "/mcbbs/forum/:type": [],
     "/mcbbs/post/:tid/:authorid?": [],
     "/pocket/trending": [],
-    "/hk01/zone/:id": [],
-    "/hk01/channel/:id": [],
-    "/hk01/issue/:id": [],
-    "/hk01/tag/:id": [],
-    "/hk01/hot": [],
     "/manong-weekly": [],
     "/pork-price": [],
     "/noi": [],
