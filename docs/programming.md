@@ -110,7 +110,7 @@ Rated 对象
 
 ## Codeforces
 
-#### 最新比赛
+### 最新比赛
 
 <Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
