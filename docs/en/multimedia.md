@@ -83,6 +83,24 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 </RouteEn>
 
+## 91porn
+
+::: tip Tips
+
+91porn has multiple backup domains, routes use the permanent domain <https://91porn.com> by default. If the domain is not accessible, you can add `?domain=<domain>` to specify the domain to be used. If you want to specify the backup domain to <https://0122.91p30.com>, you can add `?domain=0122.91p30.com` to the end of all 91porn routes, then the route will become [`/91porn?domain=0122.91p30.com`](https://rsshub.app/91porn?domain=0122.91p30.com)
+
+:::
+
+### Hot Video Today
+
+<RouteEn author="TonyRL" example="/91porn" path="/91porn/:lang?" :paramsDesc="['Language, see below, `en_US` by default ']" radar="1" rssbud="1" anticrawler="1">
+
+| English | 简体中文 | 繁體中文 |
+| -- | -- | -- |
+| en_US | cn_CN | zh_ZH |
+
+</RouteEn>
+
 ## 99% Invisible
 
 ### Transcript
