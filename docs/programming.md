@@ -1045,6 +1045,12 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 腾讯云
+
+### 云 + 社区专栏
+
+<Route author="nczitzk" example="/tencent/cloud/column/86410" path="/tencent/cloud/column/:id?/:tag?" :paramsDesc="['专栏 id，可在对应专栏页中找到，默认为 86410（腾讯云数据库专家服务）', '标签 id，可在对应专栏页中找到，默认为空']"/>
+
 ## 微信开放平台
 
 ### 微信开放社区 - 小程序公告
