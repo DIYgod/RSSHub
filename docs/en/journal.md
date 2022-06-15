@@ -355,7 +355,7 @@ _only support Science Journal_
 
 ### Journal
 
-<RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code，the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
+<RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code, the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
 
 ## X-MOL Platform
 
