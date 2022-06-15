@@ -352,6 +352,12 @@ _only support Science Journal_
 
 <RouteEn author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['Journal id, can be found in URL']"/>
 
+## Springer
+
+### Journal
+
+<RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code, the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
+
 ## X-MOL Platform
 
 ### Journal

@@ -319,6 +319,12 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
 
+## Springer
+
+### 期刊
+
+<Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['期刊代码，期刊主页 URL 中的数字']" radar="1" rssbud="1"/>
+
 ## Stork 文献鸟订阅
 
 ### 关键词
