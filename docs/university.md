@@ -2265,7 +2265,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 深圳大学
 
-#### 深圳大学研究生招生网通知公告
+### 深圳大学研究生招生网通知公告
 
 <Route author="sushengmao" example="/szuyjs" path="/szuyjs" />
 

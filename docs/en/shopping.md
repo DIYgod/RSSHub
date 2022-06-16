@@ -55,7 +55,6 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 > the `xxx` in `/search/xxx` is the search type, just refer to the original search url.
 > The query string is the actual name of query, in this case is folding bike
 
-
 ## Guiltfree.pl
 
 ### Onsale
@@ -96,7 +95,7 @@ Transform any search into a feed.
 
 <RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
 
-For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
+For instance, in <https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015>, the query is **category=10&locations=Paris_75015**
 
 </RouteEn>
 

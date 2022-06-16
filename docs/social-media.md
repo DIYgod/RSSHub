@@ -850,16 +850,6 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ## 抖音
 
-### 博主
-
-<Route author="Max-Tortoise Rongronggg9" example="/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao" path="/douyin/user/:uid/:routeParams?" :paramsDesc="['uid，可在用户页面 URL 中找到', '额外参数，query string 格式，请参阅下面的表格']" anticrawler="1" radar="1" rssbud="1" puppeteer="1">
-
-| 键        | 含义                                  | 值                      | 默认值     |
-| -------- | ----------------------------------- | ---------------------- | ------- |
-| `embed`  | 是否启用内嵌视频                            | `0`/`1`/`true`/`false` | `false` |
-| `iframe` | 是否启用 iframe 变通解决方案，仅在内嵌视频开启时有效，详见下文 | `0`/`1`/`true`/`false` | `false` |
-| `relay`  | 视频反代服务的 URL，仅在内嵌视频开启时有效，详见下文        |                        |         |
-
 ::: warning 注意
 
 反爬严格，需要启用 puppeteer。\
@@ -875,7 +865,21 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 :::
 
-</Route>
+额外参数
+
+| 键        | 含义                                  | 值                      | 默认值     |
+| -------- | ----------------------------------- | ---------------------- | ------- |
+| `embed`  | 是否启用内嵌视频                            | `0`/`1`/`true`/`false` | `false` |
+| `iframe` | 是否启用 iframe 变通解决方案，仅在内嵌视频开启时有效，详见下文 | `0`/`1`/`true`/`false` | `false` |
+| `relay`  | 视频反代服务的 URL，仅在内嵌视频开启时有效，详见下文        |                        |         |
+
+### 博主
+
+<Route author="Max-Tortoise Rongronggg9" example="/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao" path="/douyin/user/:uid/:routeParams?" :paramsDesc="['uid，可在用户页面 URL 中找到', '额外参数，query string 格式，请参阅上面的表格']" anticrawler="1" radar="1" rssbud="1" puppeteer="1" />
+
+### 标签
+
+<Route author="TonyRL" example="/douyin/hashtag/1592824105719812" path="/douyin/hashtag/:cid/:routeParams?" :paramsDesc="['标签 ID，可在标签页面 URL 中找到', '额外参数，query string 格式，请参阅上面的表格']" anticrawler="1" radar="1" rssbud="1" puppeteer="1" />
 
 ## 豆瓣
 
@@ -1276,7 +1280,7 @@ rule
 
 ### 个人时间线
 
-<Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
+<Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" :paramsDesc="['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
 
 ::: warning 注意
 

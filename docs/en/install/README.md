@@ -9,17 +9,17 @@ RSSHub provides a painless deployment process if you are equipped with basic pro
 The deployment may involve the followings:
 
 1. Command line interface
-1. [Git](https://git-scm.com/)
-1. [Node.js](https://nodejs.org/)
-1. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+2. [Git](https://git-scm.com/)
+3. [Node.js](https://nodejs.org/)
+4. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 Deploy for public access may require:
 
 1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
-1. [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
-1. [Redis](https://redis.io/download)
-1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-1. [Google App Engine](https://cloud.google.com/appengine/)
+2. [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
+3. [Redis](https://redis.io/download)
+4. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+5. [Google App Engine](https://cloud.google.com/appengine/)
 
 ## Docker Image
 
@@ -283,7 +283,7 @@ in pkgs.stdenv.mkDerivation {
 
 ## Deploy to Heroku
 
-### Notice:
+### Notice
 
 Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
 
@@ -468,7 +468,7 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: <https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes>.
 
 For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
 

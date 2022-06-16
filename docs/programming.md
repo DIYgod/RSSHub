@@ -110,7 +110,7 @@ Rated 对象
 
 ## Codeforces
 
-#### 最新比赛
+### 最新比赛
 
 <Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
@@ -482,6 +482,17 @@ GitHub 官方也提供了一些 RSS:
 注意标识大小写
 
 :::
+
+</Route>
+
+## MySQL
+
+### Release Notes
+
+<Route author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" :paramsDesc="['版本，见下表，默认为 8.0']">
+
+| 8.0 | 5.7 | 5.6 |
+| --- | --- | --- |
 
 </Route>
 
@@ -1033,6 +1044,12 @@ GitHub 官方也提供了一些 RSS:
 | hot | plan | program | tech | audio | project | yunying | test |
 
 </Route>
+
+## 腾讯云
+
+### 云 + 社区专栏
+
+<Route author="nczitzk" example="/tencent/cloud/column/86410" path="/tencent/cloud/column/:id?/:tag?" :paramsDesc="['专栏 id，可在对应专栏页中找到，默认为 86410（腾讯云数据库专家服务）', '标签 id，可在对应专栏页中找到，默认为空']"/>
 
 ## 微信开放平台
 
