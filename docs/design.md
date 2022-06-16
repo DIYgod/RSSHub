@@ -82,7 +82,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ::: warning 注意
 
-需要设置 API key，所以只能自建，详情见[ 部署页面 ](https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)的配置模块。
+需要设置 API key，所以只能自建，详情见[部署页面](https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)的配置模块。
 
 :::
 

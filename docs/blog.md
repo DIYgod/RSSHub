@@ -185,7 +185,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" :paramsDesc="['分类','是否获取全文，需要获取则传入参数`y`']" radar="1"> 
+<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" :paramsDesc="['分类','是否获取全文，需要获取则传入参数`y`']" radar="1">
 
 | 微软应用    | 安卓应用    | 教程资源     | 其他资源  |
 | ------- | ------- | -------- | ----- |

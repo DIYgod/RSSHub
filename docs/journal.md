@@ -319,6 +319,22 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
 
+## Scitation
+
+### 期刊
+
+<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/:pub/:jrn" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分']" radar="1" rssbud="1"/>
+
+### 专栏
+
+<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/:pub/:jrn/:sec" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分','专栏，URL 中 `tocSection` 部分']" radar="1" rssbud="1"/>
+
+## Springer
+
+### 期刊
+
+<Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['期刊代码，期刊主页 URL 中的数字']" radar="1" rssbud="1"/>
+
 ## Stork 文献鸟订阅
 
 ### 关键词

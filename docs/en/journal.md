@@ -58,7 +58,10 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 ### Essays
 
 <RouteEn author="Fatpandac" example="/caareviews/essay" path="/caareviews/essay"/>
+
 ## Cell Journal
+
+### Current Issue
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
 
@@ -172,8 +175,6 @@ New items may always at the end of the list, when the number of paper entries is
 ### Topics
 
 <RouteEn author="laampui" example="/technologyreview/humans-and-technology" path="/technologyreview/:category_name" :paramsDesc="['see below']" />
-
-
 
 | `:category_name` | Route |
 | -------- | ----- |
@@ -350,6 +351,22 @@ _only support Science Journal_
 ### Journal
 
 <RouteEn author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['Journal id, can be found in URL']"/>
+
+## Scitation
+
+### Journal
+
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/:pub/:jrn" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']" radar="1" rssbud="1"/>
+
+### Section
+
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/:pub/:jrn/:sec" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`','Section, the `tocSection` part of the URL']" radar="1" rssbud="1"/>
+
+## Springer
+
+### Journal
+
+<RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code, the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
 
 ## X-MOL Platform
 

@@ -6674,10 +6674,10 @@ googleapis-common@^6.0.0:
     url-template "^2.0.8"
     uuid "^8.0.0"
 
-googleapis@101.0.0:
-  version "101.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-101.0.0.tgz#91273b4bca6743fba9511586930cebbf7155bdf3"
-  integrity sha512-FxsepzOwg28H0ggJSs3kpFIrgZLw0pdCB6ZjNfMH4vNtUyey/6US5zHQx1LCER1Bnjnfw58EVzzWeMTK7BUJ9w==
+googleapis@102.0.0:
+  version "102.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-102.0.0.tgz#3e7c2832e2754601fc998b7e1443ba1c3ef97cc6"
+  integrity sha512-XmTsfnC9PZsmkkzjVA/cTX/37D3VHTq/qZdmsyvKsZr4CcJ7JdZs4WUkwcAxkmWQ0tLXRfo7z6w+xdP/U2QAsA==
   dependencies:
     google-auth-library "^8.0.2"
     googleapis-common "^6.0.0"
@@ -11131,10 +11131,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@2.6.2, "prettier@^1.18.2 || ^2.0.0":
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.6.2.tgz#e26d71a18a74c3d0f0597f55f01fb6c06c206032"
-  integrity sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==
+prettier@2.7.0, "prettier@^1.18.2 || ^2.0.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.0.tgz#a4fdae07e5596c51c9857ea676cd41a0163879d6"
+  integrity sha512-nwoX4GMFgxoPC6diHvSwmK/4yU8FFH3V8XWtLQrbj4IBsK2pkYhG4kf/ljF/haaZ/aii+wNJqISrCDPgxGWDVQ==
 
 pretty-bytes@^5.1.0:
   version "5.6.0"
@@ -11481,10 +11481,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.66:
-  version "1.0.66"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.66.tgz#15830bb6c28e398a9d0bb08973e4c5113aaa9942"
-  integrity sha512-qi/JhTAhE4BODL5pDp3DjdMRVTDoWrbeEH1myjdaa7ioI4AnWP1KZrisrcc1AnBs6KypH5bLnV2QJsImEXEKcA==
+rand-user-agent@1.0.67:
+  version "1.0.67"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.67.tgz#8ac64984fb03f3a9dc38806dcff87ec3d1c135ae"
+  integrity sha512-kGjIKeSCg3GsJ8tKtnyyqS5384k4ONKjWbqSFgL2IyrGfQCxkGmZyIf1DbzOULuI/EajdXR3cRb3GTLdLIE8Vg==
 
 randexp@0.4.6:
   version "0.4.6"
