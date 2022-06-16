@@ -700,11 +700,11 @@
     "/elasticsearch-cn/:params?": [
         "nczitzk"
     ],
-    "/elsevier/:journal/latest": [
+    "/elsevier/:journal": [
         "Derekmini",
         "sunwolf-swb"
     ],
-    "/elsevier/:journal/vol/:id": [
+    "/elsevier/:journal/:issue": [
         "Derekmini",
         "sunwolf-swb"
     ],
