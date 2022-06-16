@@ -5138,12 +5138,12 @@
     "_name": "IEEE",
     "www": [
       {
-        "title": "latestVolume",
+        "title": "Journal",
         "docs": "https://docs.rsshub.app/journal.html#ieee-xplore",
         "source": "/*"
       },
       {
-        "title": "latestDate",
+        "title": "Recent",
         "docs": "https://docs.rsshub.app/journal.html#ieee-xplore",
         "source": "/*"
       }
