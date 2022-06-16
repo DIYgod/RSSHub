@@ -2287,6 +2287,12 @@
         "hoilc",
         "TonyRL"
     ],
+    "/techflow520/newsflash": [
+        "nczitzk"
+    ],
+    "/techflow520/:category?": [
+        "nczitzk"
+    ],
     "/telegram/telegram/channel/:username/:routeParams?": [
         "DIYgod",
         "Rongronggg9"
