@@ -2068,6 +2068,14 @@
     "/sciencenet/user/:id": [
         "nczitzk"
     ],
+    "/scitation/:pub/:jrn": [
+        "Derekmini",
+        "auto-bot-ty"
+    ],
+    "/scitation/:pub/:jrn/:sec": [
+        "Derekmini",
+        "auto-bot-ty"
+    ],
     "/sdu/cmse/:type?": [
         "Ji4n1ng"
     ],
