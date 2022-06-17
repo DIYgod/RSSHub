@@ -140,24 +140,6 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 
 <RouteEn author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['Category, can be found in the url of the page, `orsc` by default']"/>
 
-## JASA
-
-### Latest Research
-
-<RouteEn author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
-
-</RouteEn>
-
-### Section Research
-
-<RouteEn author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name, get it from tocSection of the URL']" radar="1" rssbud="1">
-
-| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
-| :-----: | :---------: | :-----------------: | :----: |
-|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
-
-</RouteEn>
-
 ## MIT Technology Review
 
 <RouteEn author="zphw" example="/technologyreview" path="/technologyreview" />
