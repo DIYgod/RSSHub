@@ -489,6 +489,12 @@
     "/dockerhub/tag/:owner/:image": [
         "outloudvi"
     ],
+    "/domp4/detail/:id": [
+        "savokiss"
+    ],
+    "/domp4/latest/:type?": [
+        "savokiss"
+    ],
     "/dongqiudi/daily": [
         "HenryQW"
     ],
