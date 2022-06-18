@@ -23,6 +23,9 @@
     "/18comic/:category?/:time?/:order?/:keyword?": [
         "nczitzk"
     ],
+    "/19lou/:city?": [
+        "nczitzk"
+    ],
     "/35photo/actual": [
         "nczitzk"
     ],

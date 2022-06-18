@@ -73,6 +73,38 @@
       }
     ]
   },
+  "19lou.com": {
+    "_name": "19 楼",
+    ".": [
+      {
+        "title": "头条",
+        "docs": "https://docs.rsshub.app/bbs.html#19-lou-tou-tiao",
+        "source": [
+          "/"
+        ]
+      }
+    ],
+    "www": [
+      {
+        "title": "头条",
+        "docs": "https://docs.rsshub.app/bbs.html#19-lou-tou-tiao",
+        "source": [
+          "/"
+        ],
+        "target": "/19lou/www"
+      }
+    ],
+    "jiaxing": [
+      {
+        "title": "头条",
+        "docs": "https://docs.rsshub.app/bbs.html#19-lou-tou-tiao",
+        "source": [
+          "/"
+        ],
+        "target": "/19lou/jiaxing"
+      }
+    ]
+  },
   "35photo.pro": {
     "_name": "35PHOTO",
     ".": [
