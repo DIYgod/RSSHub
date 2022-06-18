@@ -1472,50 +1472,50 @@
     domhandler "^4.2.0"
     selderee "^0.6.0"
 
-"@sentry/core@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.1.1.tgz#85f73f8037eec61e37549998de03a6d3d3c635b5"
-  integrity sha512-SADdAoG5u1LTJhPN5KPtn5HHmH6r0mr6h2LokuZnhj6/okrAuCIIKOb6Fh8jV7j2VuABvew8+FjJHORxi7D/3Q==
+"@sentry/core@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.2.0.tgz#bd6ef331c64ff917cb0ad8a8666b2c4c5c52acdb"
+  integrity sha512-9amsbB9/ePkJRgc0cVXCVW2hQUPImgTqBbnKu4frBXBza+9MBC5W3S8ZyZt2InCK22kuhNVo3z61a8mzCgXoCA==
   dependencies:
-    "@sentry/hub" "7.1.1"
-    "@sentry/types" "7.1.1"
-    "@sentry/utils" "7.1.1"
+    "@sentry/hub" "7.2.0"
+    "@sentry/types" "7.2.0"
+    "@sentry/utils" "7.2.0"
     tslib "^1.9.3"
 
-"@sentry/hub@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-7.1.1.tgz#d6aa54e7bd20a71cebd602701dd29d5d581d391a"
-  integrity sha512-ASsRVjYDIii6ZTf36JnIYKHWBQBk0P42Tgq324MpyPgaeVDg3saBcyXO5iAtWvY6Vmdi2H4JCVDoir2Zz3Me1w==
+"@sentry/hub@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-7.2.0.tgz#c19ce0394c7c87647be284fca304d6fa1821ad75"
+  integrity sha512-uzd+GzD++Z4QopRh3AyRc4jz4AzomMnrXTOmdXgud1BH/Du9AYutVlBc5ZYwqCuJH7QPuAW3ySU3P+16UCinIg==
   dependencies:
-    "@sentry/types" "7.1.1"
-    "@sentry/utils" "7.1.1"
+    "@sentry/types" "7.2.0"
+    "@sentry/utils" "7.2.0"
     tslib "^1.9.3"
 
-"@sentry/node@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.1.1.tgz#65fb17e7fd54d95d89782d4a38557fd9a6422666"
-  integrity sha512-QD9KPzVNu4zCL2Rjd5Go2/bjiuR9PLSutX7MkngHdGfy6JnN8CixTAXCjEyxb3oexI9xQyzgrQqns+UP5jdnlA==
+"@sentry/node@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.2.0.tgz#2f3aaecfc63b60946ed641f4c9800d5a94d65a98"
+  integrity sha512-dSI+2DrT98+eqSAv3QG3jMrq4YefBaxRbSCR9Ok7oLQW2/eskbRWH4mgYssrDXEx319SBYHh90qq/EwCOEkHtw==
   dependencies:
-    "@sentry/core" "7.1.1"
-    "@sentry/hub" "7.1.1"
-    "@sentry/types" "7.1.1"
-    "@sentry/utils" "7.1.1"
+    "@sentry/core" "7.2.0"
+    "@sentry/hub" "7.2.0"
+    "@sentry/types" "7.2.0"
+    "@sentry/utils" "7.2.0"
     cookie "^0.4.1"
     https-proxy-agent "^5.0.0"
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/types@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.1.1.tgz#63aa68e7be36d63cc305d01af9119a4cdb186ae3"
-  integrity sha512-5N1UMd2SqvUXprcIUMyDEju3H9lJY2oWfWQBGo0lG6Amn/lGAPAYlchg+4vQCLutDQMyd8K9zPwcbKn4u6gHdw==
+"@sentry/types@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.2.0.tgz#0c20073956bb46bdea3288683aeba2d5c350deb8"
+  integrity sha512-e6w62C2AmE5ULr9w/BuVaKTRpKUMGWyw4PhcBlSdDRoS47QgURGgDFIvr3VlaDwkUfCbASwSv49fDhKRX3aoew==
 
-"@sentry/utils@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.1.1.tgz#7174a1439f8970510207fa7587385119397e1718"
-  integrity sha512-DPRHDf3InfyVgmxToE4Z+AATAR4OVm+wsXDLFGGyncR91CE1x4wLQKOcAJJwX3F0Hz1VHENfmx1DvyYTHOrC/A==
+"@sentry/utils@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.2.0.tgz#b288c204224a9fb1d576323c5168735ec8c03cd5"
+  integrity sha512-uUKIsIXyb6ZXBbl/L8UwG4gy8PBXZl5pGCUFRPbns+vi0U6vtmDRDYa1A/7E17VkBJNRPVNJQr9Pq5Yd0I0MRA==
   dependencies:
-    "@sentry/types" "7.1.1"
+    "@sentry/types" "7.2.0"
     tslib "^1.9.3"
 
 "@sinclair/typebox@^0.23.3":
@@ -6674,10 +6674,10 @@ googleapis-common@^6.0.0:
     url-template "^2.0.8"
     uuid "^8.0.0"
 
-googleapis@102.0.0:
-  version "102.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-102.0.0.tgz#3e7c2832e2754601fc998b7e1443ba1c3ef97cc6"
-  integrity sha512-XmTsfnC9PZsmkkzjVA/cTX/37D3VHTq/qZdmsyvKsZr4CcJ7JdZs4WUkwcAxkmWQ0tLXRfo7z6w+xdP/U2QAsA==
+googleapis@103.0.0:
+  version "103.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-103.0.0.tgz#f08557b5735f7a2affd9b040e8f9f05cfca1825f"
+  integrity sha512-jS/6UJcy3Wci+8EF21EkAh5CA/sPDCiZ1PqCPQEFNtvM6/MPNS4OUH6Ty2aTx2OeoNe8dzIqRW0gF0+c43irlw==
   dependencies:
     google-auth-library "^8.0.2"
     googleapis-common "^6.0.0"
@@ -9856,10 +9856,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@13.2.6:
-  version "13.2.6"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-13.2.6.tgz#35e419cd9d385ffa67e59523d9699e41b29e1a03"
-  integrity sha512-GbyeSwSEP0FYouzETZ0l/XNm5tNcDNcXJKw3LCAb+mx8bZSwg1wEEvdL0FAyg5TkBJYiWSCtw6ag4XfmBy60FA==
+nock@13.2.7:
+  version "13.2.7"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-13.2.7.tgz#c93933b61df42f4f4b3a07fde946a4e209c0c168"
+  integrity sha512-R6NUw7RIPtKwgK7jskuKoEi4VFMqIHtV2Uu9K/Uegc4TA5cqe+oNMYslZcUmnVNQCTG6wcSqUBaGTDd7sq5srg==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
@@ -11131,10 +11131,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@2.7.0, "prettier@^1.18.2 || ^2.0.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.0.tgz#a4fdae07e5596c51c9857ea676cd41a0163879d6"
-  integrity sha512-nwoX4GMFgxoPC6diHvSwmK/4yU8FFH3V8XWtLQrbj4IBsK2pkYhG4kf/ljF/haaZ/aii+wNJqISrCDPgxGWDVQ==
+prettier@2.7.1, "prettier@^1.18.2 || ^2.0.0":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.7.1.tgz#e235806850d057f97bb08368a4f7d899f7760c64"
+  integrity sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==
 
 pretty-bytes@^5.1.0:
   version "5.6.0"

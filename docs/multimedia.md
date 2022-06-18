@@ -404,6 +404,20 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 <Route author="nczitzk" example="/coomer/posts" path="/coomer/posts"/>
 
+## DoMP4 影视
+
+### 最近更新
+
+<Route author="savokiss" example="/domp4/latest/vod" path="/domp4/latest/:type?" :paramsDesc="['`vod` 代表电影，`tv` 代表电视剧，默认 vod']"  radar="1"/>
+
+### 剧集订阅
+
+<Route author="savokiss" example="/domp4/detail/LBTANI22222I" path="/domp4/detail/:id" :paramsDesc="['从剧集详情页 URL 处获取，如：`https://www.domp4.cc/html/LBTANI22222I.html`，取 `.html` 前面部分']" radar="1" supportBT="1"/>
+
+:::tip
+由于大部分详情页是 `/html/xxx.html`，还有部分是 `/detail/123.html`，所以此处做了兼容，id 取 `xxx` 或者 `123` 都可以。
+:::
+
 ## E-Hentai
 
 ### 分类
