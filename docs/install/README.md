@@ -529,7 +529,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 图片处理
 
-`HOTLINK_TEMPLATE`: 用于处理描述中图片的 URL，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性，格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
+::: warning 废弃警告
+
+下面的配置已被废弃，仅为向后兼容性而保留，请转到 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 中进行相关配置。
+
+:::
+
+`HOTLINK_TEMPLATE`: 用于处理描述中图片的 URL，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性（加上后缀 `_ue` 则会对其进行 URL 编码），格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
 
 `HOTLINK_INCLUDE_PATHS`: 限制需要处理的路由，只有匹配成功的路由会被处理，设置多项时用英文逗号 `,` 隔开。若不设置，则所有路由都将被处理
 
