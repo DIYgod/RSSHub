@@ -2060,8 +2060,12 @@
         source:[ "/*" ],
         target:(params, url) => `/gov/anhui/kjt${new URL(url).href.match(/kjt\.ah\.gov\.cn(.*)\/index.html/)[1] ?? ''}` } ] },
   "beijing.gov.cn":{ _name:"北京市人民政府",
+    jw:[ { title:"北京市教育委员会通知公告",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-jiao-yu-wei-yuan-tong-zhi-gong-gao",
+        source:[ "/tzgg" ],
+        target:"/gov/beijing/jw/tzgg" } ],
     kw:[ { title:"北京市科委央地协同",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1132') {
@@ -2069,7 +2073,7 @@
                     }
                 } },
       { title:"北京市科委三城一区",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1134') {
@@ -2077,7 +2081,7 @@
                     }
                 } },
       { title:"北京市科委高精尖产业",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1136') {
@@ -2085,7 +2089,7 @@
                     }
                 } },
       { title:"北京市科委开放创新",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1138') {
@@ -2093,7 +2097,7 @@
                     }
                 } },
       { title:"北京市科委深化改革",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1140') {
@@ -2101,7 +2105,7 @@
                     }
                 } },
       { title:"北京市科委内设机构",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col746') {
@@ -2109,7 +2113,7 @@
                     }
                 } },
       { title:"北京市科委直属机构",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col748') {
@@ -2117,7 +2121,7 @@
                     }
                 } },
       { title:"北京市科委行政许可",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1520') {
@@ -2125,7 +2129,7 @@
                     }
                 } },
       { title:"北京市科委行政处罚",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1522') {
@@ -2133,7 +2137,7 @@
                     }
                 } },
       { title:"北京市科委行政确认",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1524') {
@@ -2141,7 +2145,7 @@
                     }
                 } },
       { title:"北京市科委行政奖励",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1526') {
@@ -2149,7 +2153,7 @@
                     }
                 } },
       { title:"行北京市科委政检查",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1528') {
@@ -2157,7 +2161,7 @@
                     }
                 } },
       { title:"北京市科委其他权力",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1542') {
@@ -2165,7 +2169,7 @@
                     }
                 } },
       { title:"北京市科委最新政策",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2380') {
@@ -2173,7 +2177,7 @@
                     }
                 } },
       { title:"北京市科委科技政策-科技法规规章文件",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2962' || params.channel === 'col2384') {
@@ -2181,7 +2185,7 @@
                     }
                 } },
       { title:"北京市科委科技政策-科委规范性文件",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2962' || params.channel === 'col2386') {
@@ -2189,7 +2193,7 @@
                     }
                 } },
       { title:"北京市科委科技政策-其他科技政策",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2962' || params.channel === 'col2388') {
@@ -2197,7 +2201,7 @@
                     }
                 } },
       { title:"北京市科委国家科技政策",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2964') {
@@ -2205,7 +2209,7 @@
                     }
                 } },
       { title:"北京市科委政策解读",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2396') {
@@ -2213,7 +2217,7 @@
                     }
                 } },
       { title:"北京市科委通知公告",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col736') {
@@ -2221,7 +2225,7 @@
                     }
                 } },
       { title:"北京市科委新闻中心",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col6382') {
@@ -2229,7 +2233,7 @@
                     }
                 } },
       { title:"北京市科委要闻",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col6344') {
@@ -2237,7 +2241,7 @@
                     }
                 } },
       { title:"北京市科委工作动态",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2330') {
@@ -2245,7 +2249,7 @@
                     }
                 } },
       { title:"北京市科委媒体报道",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col2332') {
@@ -2253,7 +2257,7 @@
                     }
                 } },
       { title:"北京市科委图片报道",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col6346') {
@@ -2261,7 +2265,7 @@
                     }
                 } },
       { title:"北京市科委政府网站年报专栏",
-        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-、-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
+        docs:"https://docs.rsshub.app/government.html#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui",
         source:[ "/col/:channel/index.html" ],
         target:(params) => {
                     if (params.channel === 'col1008') {
