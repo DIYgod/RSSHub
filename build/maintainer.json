@@ -407,6 +407,12 @@
     "/cncf/:cate?": [
         "Fatpandac"
     ],
+    "/cnjxol/jxrb/:id?": [
+        "nczitzk"
+    ],
+    "/cnjxol/nhwb/:id?": [
+        "nczitzk"
+    ],
     "/cnki/journals/:name": [
         "Fatpandac"
     ],
