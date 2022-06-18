@@ -5641,22 +5641,6 @@
       }
     ]
   },
-  "scitation.org": {
-    "_name": "scitation",
-    ".": [
-      {
-        "title": "journal",
-        "docs": "https://docs.rsshub.app/journal.html#scitation",
-        "source": ":pub.scitation.org/toc/:jrn",
-        "target": "/scitation/:pub/:jrn"
-      },
-      {
-        "title": "section",
-        "docs": "https://docs.rsshub.app/journal.html#scitation",
-        "source": ":pub.scitation.org/toc/:jrn"
-      }
-    ]
-  },
   "javbus.com": {
     "_name": "JavBus",
     "www": [
@@ -9071,6 +9055,22 @@
           "/"
         ],
         "target": "/sciencenet/user/:id"
+      }
+    ]
+  },
+  "scitation.org": {
+    "_name": "scitation",
+    ".": [
+      {
+        "title": "journal",
+        "docs": "https://docs.rsshub.app/journal.html#scitation",
+        "source": ":pub.scitation.org/toc/:jrn",
+        "target": "/scitation/:pub/:jrn"
+      },
+      {
+        "title": "section",
+        "docs": "https://docs.rsshub.app/journal.html#scitation",
+        "source": ":pub.scitation.org/toc/:jrn"
       }
     ]
   },

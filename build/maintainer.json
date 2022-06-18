@@ -1285,13 +1285,6 @@
     "/jandan/": [
         "nczitzk"
     ],
-    "/jasa/latest": [
-        "Derekmini",
-        "auto-bot-ty"
-    ],
-    "/jasa/section/:id": [
-        "Derekmini"
-    ],
     "/javbus/": [
         "MegrezZhu",
         "CoderTonyChan",
