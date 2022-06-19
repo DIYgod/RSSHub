@@ -280,6 +280,22 @@ describe('complicated_description', () => {
     });
 });
 
+describe('multimedia_description', () => {
+    it(`multimedia_description`, async () => {
+        const response = await request.get('/test/multimedia');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].content).toBe(`<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<video src="https://mock.com/DIYgod/RSSHub.mp4"></video>
+<video src="https://mock.com/DIYgod/undefined">
+<source src="https://mock.com/DIYgod/RSSHub.mp4" type="video/mp4">
+<source src="https://mock.com/DIYgod/RSSHub.webm" type="video/webm">
+</video>
+<audio src="https://mock.com/DIYgod/RSSHub.mp3"></audio>
+<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`);
+    });
+});
+
 describe('sort', () => {
     it(`sort`, async () => {
         const response = await request.get('/test/sort');

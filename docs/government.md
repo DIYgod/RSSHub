@@ -44,6 +44,12 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
+## 北京市教育委员会
+
+### 通知公告
+
+<Route author="nczitzk" example="/gov/beijing/jw/tzgg" path="/gov/beijing/jw/tzgg" />
+
 ## 北京市科学技术委员会、中关村科技园区管理委员会
 
 ### 频道
