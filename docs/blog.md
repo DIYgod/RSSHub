@@ -30,6 +30,19 @@ pageClass: routes
 
 <Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
 
+## hashnode
+
+### 用户博客
+
+<Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" :paramsDesc="['博主名称，用户头像 URL 中找到']">
+
+::: tip 提示
+
+username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
+
+:::
+
+</Route>
 ## Hedwig.pub
 
 ### 博客
