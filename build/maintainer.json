@@ -1867,6 +1867,9 @@
     "/oncc/:language/:channel?": [
         "Fatpandac"
     ],
+    "/openwrt/releases/:model?": [
+        "DIYgod"
+    ],
     "/orcid/:id": [
         "OrangeEd1t"
     ],
