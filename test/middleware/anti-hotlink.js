@@ -100,6 +100,19 @@ const expects = {
             ],
             desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
         },
+        partlyRelayed: {
+            items: [
+                `<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<video src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4"></video>
+<video poster="https://i3.wp.com/mock.com/DIYgod/RSSHub.jpg">
+<source src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp4" type="video/mp4">
+<source src="https://i3.wp.com/mock.com/DIYgod/RSSHub.webm" type="video/webm">
+</video>
+<audio src="https://i3.wp.com/mock.com/DIYgod/RSSHub.mp3"></audio>
+<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`,
+            ],
+            desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
+        },
         wrappedInIframe: {
             items: [
                 `<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
@@ -188,6 +201,7 @@ const expectImgProcessed = async (query) => await testAntiHotlink('/test/complic
 const expectImgUrlencoded = async (query) => await testAntiHotlink('/test/complicated', expects.complicated.urlencoded, query);
 const expectMultimediaOrigin = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.origin, query);
 const expectMultimediaRelayed = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.relayed, query);
+const expectMultimediaPartlyRelayed = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.partlyRelayed, query);
 const expectMultimediaWrappedInIframe = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.wrappedInIframe, query);
 
 describe('anti-hotlink', () => {
@@ -225,6 +239,11 @@ describe('anti-hotlink', () => {
         process.env.HOTLINK_TEMPLATE = '';
         await expectImgOrigin();
         await expectMultimediaOrigin();
+    });
+
+    it('multimedia-template', async () => {
+        await expectMultimediaOrigin({ multimedia_hotlink_template: '${protocol}//${host}${pathname}' });
+        await expectMultimediaPartlyRelayed({ multimedia_hotlink_template: 'https://i3.wp.com/${host}${pathname}' });
     });
 
     it('multimedia-wrapped-in-iframe', async () => {
