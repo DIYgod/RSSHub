@@ -134,24 +134,6 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['类型, 可以在 url 中得到，默认为 `orsc`']"/>
 
-## JASA
-
-### 最新文章
-
-<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
-
-</Route>
-
-### 专栏
-
-<Route author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['专栏名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
-
-| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
-| :-----: | :---------: | :-----------------: | :----: |
-|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
-
-</Route>
-
 ## Nature 系列
 
 ::: tip Tips
@@ -313,11 +295,11 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 期刊
 
-<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/:pub/:jrn" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分']" radar="1" rssbud="1"/>
+<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分']" radar="1" rssbud="1"/>
 
 ### 专栏
 
-<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/:pub/:jrn/:sec" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分','专栏，URL 中 `tocSection` 部分']" radar="1" rssbud="1"/>
+<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分','专栏，URL 中 `tocSection` 部分']" radar="1" rssbud="1"/>
 
 ## Springer
 
