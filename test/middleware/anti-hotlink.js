@@ -3,23 +3,31 @@ jest.mock('request-promise-native');
 const Parser = require('rss-parser');
 const querystring = require('query-string');
 const parser = new Parser();
+
+const env = process.env;
+
 let server;
 
 afterAll(() => {
-    delete process.env.HOTLINK_TEMPLATE;
-    delete process.env.HOTLINK_INCLUDE_PATHS;
-    delete process.env.HOTLINK_EXCLUDE_PATHS;
-    delete process.env.HOTLINK_DISABLE_USER_TEMPLATE;
+    delete env.HOTLINK_TEMPLATE;
+    delete env.HOTLINK_INCLUDE_PATHS;
+    delete env.HOTLINK_EXCLUDE_PATHS;
+    delete env.HOTLINK_DISABLE_USER_TEMPLATE;
 });
 
 afterEach(() => {
-    delete process.env.HOTLINK_TEMPLATE;
-    delete process.env.HOTLINK_INCLUDE_PATHS;
-    delete process.env.HOTLINK_EXCLUDE_PATHS;
-    delete process.env.HOTLINK_DISABLE_USER_TEMPLATE;
+    delete env.HOTLINK_TEMPLATE;
+    delete env.HOTLINK_INCLUDE_PATHS;
+    delete env.HOTLINK_EXCLUDE_PATHS;
+    delete env.HOTLINK_DISABLE_USER_TEMPLATE;
     jest.resetModules();
     server.close();
 });
+
+const templates = {
+    i3_wp: 'https://i3.wp.com/${host}${pathname}',
+    origin: '${protocol}//${host}${pathname}${search}${hash}',
+};
 
 const expects = {
     complicated: {
@@ -215,37 +223,37 @@ describe('anti-hotlink', () => {
     });
 
     it('template', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
         await expectImgProcessed();
-        await expectMultimediaRelayed({ multimedia_hotlink_template: process.env.HOTLINK_TEMPLATE });
+        await expectMultimediaRelayed({ multimedia_hotlink_template: env.HOTLINK_TEMPLATE });
     });
 
     it('url', async () => {
-        process.env.HOTLINK_TEMPLATE = '${protocol}//${host}${pathname}';
+        env.HOTLINK_TEMPLATE = templates.origin;
         await expectImgOrigin();
-        await expectMultimediaOrigin({ multimedia_hotlink_template: process.env.HOTLINK_TEMPLATE });
+        await expectMultimediaOrigin({ multimedia_hotlink_template: env.HOTLINK_TEMPLATE });
     });
 
     it('url-encoded', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://images.weserv.nl?url=${href_ue}';
+        env.HOTLINK_TEMPLATE = 'https://images.weserv.nl?url=${href_ue}';
         await expectImgUrlencoded();
     });
 
     it('template-priority', async () => {
-        process.env.HOTLINK_TEMPLATE = '${protocol}//${host}${pathname}';
+        env.HOTLINK_TEMPLATE = templates.origin;
         await expectImgOrigin();
-        await expectImgProcessed({ image_hotlink_template: 'https://i3.wp.com/${host}${pathname}' });
+        await expectImgProcessed({ image_hotlink_template: templates.i3_wp });
     });
 
     it('no-template', async () => {
-        process.env.HOTLINK_TEMPLATE = '';
+        env.HOTLINK_TEMPLATE = '';
         await expectImgOrigin();
         await expectMultimediaOrigin();
     });
 
     it('multimedia-template', async () => {
-        await expectMultimediaOrigin({ multimedia_hotlink_template: '${protocol}//${host}${pathname}' });
-        await expectMultimediaPartlyRelayed({ multimedia_hotlink_template: 'https://i3.wp.com/${host}${pathname}' });
+        await expectMultimediaOrigin({ multimedia_hotlink_template: templates.origin });
+        await expectMultimediaPartlyRelayed({ multimedia_hotlink_template: templates.i3_wp });
     });
 
     it('multimedia-wrapped-in-iframe', async () => {
@@ -253,72 +261,80 @@ describe('anti-hotlink', () => {
     });
 
     it('include-paths-partial-matched', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_INCLUDE_PATHS = '/test';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_INCLUDE_PATHS = '/test';
         await expectImgProcessed();
     });
 
     it('include-paths-fully-matched', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_INCLUDE_PATHS = '/test/complicated';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_INCLUDE_PATHS = '/test/complicated';
         await expectImgProcessed();
     });
 
     it('include-paths-unmatched', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_INCLUDE_PATHS = '/t';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_INCLUDE_PATHS = '/t';
         await expectImgOrigin();
     });
 
     it('exclude-paths-partial-matched', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_EXCLUDE_PATHS = '/test';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_EXCLUDE_PATHS = '/test';
         await expectImgOrigin();
     });
 
     it('exclude-paths-fully-matched', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_EXCLUDE_PATHS = '/test/complicated';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_EXCLUDE_PATHS = '/test/complicated';
         await expectImgOrigin();
     });
 
     it('exclude-paths-unmatched', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_EXCLUDE_PATHS = '/t';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_EXCLUDE_PATHS = '/t';
         await expectImgProcessed();
     });
 
     it('include-exclude-paths-mixed-filtered-out', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_INCLUDE_PATHS = '/test';
-        process.env.HOTLINK_EXCLUDE_PATHS = '/test/complicated';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_INCLUDE_PATHS = '/test';
+        env.HOTLINK_EXCLUDE_PATHS = '/test/complicated';
         await expectImgOrigin();
     });
 
     it('include-exclude-paths-mixed-unfiltered-out', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
-        process.env.HOTLINK_INCLUDE_PATHS = '/test';
-        process.env.HOTLINK_EXCLUDE_PATHS = '/test/c';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        env.HOTLINK_INCLUDE_PATHS = '/test';
+        env.HOTLINK_EXCLUDE_PATHS = '/test/c';
         await expectImgProcessed();
     });
 
     it('invalid-property', async () => {
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${createObjectURL}';
+        env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${createObjectURL}';
         server = require('../../lib/index');
         const request = supertest(server);
         const response = await request.get('/test/complicated');
         expect(response.text).toContain('Error: Invalid URL property: createObjectURL');
     });
 
+    it('too-may-properties', async () => {
+        env.HOTLINK_TEMPLATE = '${protocol}//${username}:${password}@${host}${pathname}${search}';
+        server = require('../../lib/index');
+        const request = supertest(server);
+        const response = await request.get('/test/complicated');
+        expect(response.text).toContain(`Error: Too many properties (max 5, got 6) in the hotlink template: ${env.HOTLINK_TEMPLATE}`);
+    });
+
     it('disable-user-template', async () => {
-        process.env.HOTLINK_DISABLE_USER_TEMPLATE = 'true';
-        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
+        env.HOTLINK_DISABLE_USER_TEMPLATE = 'true';
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
         const errMsg = 'Error: User-defined hotlink templates are disabled by the instance maintainer';
         await expectImgProcessed();
         const request = supertest(server);
-        const response1 = await request.get(`/test/complicated?image_hotlink_template=${process.env.HOTLINK_TEMPLATE}`);
+        const response1 = await request.get(`/test/complicated?image_hotlink_template=${env.HOTLINK_TEMPLATE}`);
         expect(response1.text).toContain(errMsg);
-        const response2 = await request.get(`/test/complicated?multimedia_hotlink_template=${process.env.HOTLINK_TEMPLATE}`);
+        const response2 = await request.get(`/test/complicated?multimedia_hotlink_template=${env.HOTLINK_TEMPLATE}`);
         expect(response2.text).toContain(errMsg);
     });
 });
