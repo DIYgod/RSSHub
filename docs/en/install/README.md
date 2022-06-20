@@ -545,6 +545,16 @@ It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
 
 :::
 
+### Features
+
+::: tip Experimental features
+
+Configs in this sections are in beta stage, and are turn off by default. Please read corresponded description and turn on if necessary.
+
+:::
+
+`ALLOW_USER_HOTLINK_TEMPLATE`: [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing)
+
 ### Other Application Configurations
 
 `DISALLOW_ROBOT`: prevent indexing by search engine, default to enable, set false or 0 to disable
