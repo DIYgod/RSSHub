@@ -103,7 +103,7 @@
     "ioredis": "5.0.6",
     "ip-regex": "4.3.0",
     "is-localhost-ip": "1.4.0",
-    "jsdom": "19.0.0",
+    "jsdom": "20.0.0",
     "json-bigint": "1.0.0",
     "json5": "2.2.1",
     "koa": "2.13.4",
