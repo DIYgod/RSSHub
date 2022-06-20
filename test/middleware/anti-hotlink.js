@@ -3,20 +3,23 @@ jest.mock('request-promise-native');
 const Parser = require('rss-parser');
 const querystring = require('query-string');
 const parser = new Parser();
+jest.setTimeout(50000);
 let server;
 
 afterAll(() => {
     delete process.env.HOTLINK_TEMPLATE;
     delete process.env.HOTLINK_INCLUDE_PATHS;
     delete process.env.HOTLINK_EXCLUDE_PATHS;
+    delete process.env.ALLOW_USER_HOTLINK_TEMPLATE;
 });
 
 afterEach(() => {
     delete process.env.HOTLINK_TEMPLATE;
     delete process.env.HOTLINK_INCLUDE_PATHS;
     delete process.env.HOTLINK_EXCLUDE_PATHS;
-    jest.resetModules();
+    delete process.env.ALLOW_USER_HOTLINK_TEMPLATE;
     server.close();
+    jest.resetModules();
 });
 
 const expects = {
@@ -193,6 +196,7 @@ const testAntiHotlink = async (path, expectObj, query) => {
         items: parsed.items.slice(0, expectObj.items.length).map((i) => i.content),
         desc: parsed.description,
     }).toStrictEqual(expectObj);
+
     return parsed;
 };
 
@@ -205,15 +209,14 @@ const expectMultimediaPartlyRelayed = async (query) => await testAntiHotlink('/t
 const expectMultimediaWrappedInIframe = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.wrappedInIframe, query);
 
 describe('anti-hotlink', () => {
-    // First-time require is really, really slow.
-    // If someone merely runs this test unit instead of the whole suite and this stage does not exist,
-    // the next one will sometimes time out, so we need to firstly require it once.
-    it('server-require', () => {
-        server = require('../../lib/index');
+    it('template-legacy', async () => {
+        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
+        await expectImgProcessed();
     });
 
-    it('template', async () => {
+    it('template-experimental', async () => {
         process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
+        process.env.ALLOW_USER_HOTLINK_TEMPLATE = 'true';
         await expectImgProcessed();
         await expectMultimediaRelayed({ multimedia_hotlink_template: process.env.HOTLINK_TEMPLATE });
     });
@@ -229,8 +232,13 @@ describe('anti-hotlink', () => {
         await expectImgUrlencoded();
     });
 
-    it('template-priority', async () => {
+    it('template-priority-legacy', async () => {
         process.env.HOTLINK_TEMPLATE = '${protocol}//${host}${pathname}';
+        await expectImgOrigin();
+    });
+
+    it('template-priority-experimental', async () => {
+        process.env.ALLOW_USER_HOTLINK_TEMPLATE = 'true';
         await expectImgOrigin();
         await expectImgProcessed({ image_hotlink_template: 'https://i3.wp.com/${host}${pathname}' });
     });
@@ -241,12 +249,13 @@ describe('anti-hotlink', () => {
         await expectMultimediaOrigin();
     });
 
-    it('multimedia-template', async () => {
+    it('multimedia-template-experimental', async () => {
+        process.env.ALLOW_USER_HOTLINK_TEMPLATE = 'true';
         await expectMultimediaOrigin({ multimedia_hotlink_template: '${protocol}//${host}${pathname}' });
         await expectMultimediaPartlyRelayed({ multimedia_hotlink_template: 'https://i3.wp.com/${host}${pathname}' });
     });
 
-    it('multimedia-wrapped-in-iframe', async () => {
+    it('multimedia-wrapped-in-iframe-experimental', async () => {
         await expectMultimediaWrappedInIframe({ wrap_multimedia_in_iframe: '1' });
     });
 
