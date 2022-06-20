@@ -12,14 +12,14 @@ afterAll(() => {
     delete env.HOTLINK_TEMPLATE;
     delete env.HOTLINK_INCLUDE_PATHS;
     delete env.HOTLINK_EXCLUDE_PATHS;
-    delete env.HOTLINK_DISABLE_USER_TEMPLATE;
+    delete env.DISABLE_USER_HOTLINK_TEMPLATE;
 });
 
 afterEach(() => {
     delete env.HOTLINK_TEMPLATE;
     delete env.HOTLINK_INCLUDE_PATHS;
     delete env.HOTLINK_EXCLUDE_PATHS;
-    delete env.HOTLINK_DISABLE_USER_TEMPLATE;
+    delete env.DISABLE_USER_HOTLINK_TEMPLATE;
     jest.resetModules();
     server.close();
 });
@@ -327,7 +327,7 @@ describe('anti-hotlink', () => {
     });
 
     it('disable-user-template', async () => {
-        env.HOTLINK_DISABLE_USER_TEMPLATE = 'true';
+        env.DISABLE_USER_HOTLINK_TEMPLATE = 'true';
         env.HOTLINK_TEMPLATE = templates.i3_wp;
         const errMsg = 'Error: User-defined hotlink templates are disabled by the instance maintainer';
         await expectImgProcessed();

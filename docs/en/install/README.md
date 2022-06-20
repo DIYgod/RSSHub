@@ -525,11 +525,11 @@ See the relation between access key/code and white/blacklisting.
 
 ::: tip Tip
 
-If `HOTLINK_DISABLE_USER_TEMPLATE` is not enabled, please turn to [Parameters -> Multimedia processing](/en/parameter.html#multimedia-processing) for further configurations.
+If `DISABLE_USER_HOTLINK_TEMPLATE` is not set, please turn to [Parameters -> Multimedia processing](/en/parameter.html#multimedia-processing) for further configurations.
 
 :::
 
-`HOTLINK_DISABLE_USER_TEMPLATE`: Prohibit users to provide their custom templates via [Parameters -> Multimedia processing](/en/parameter.html#multimedia-processing), default to `false`
+`DISABLE_USER_HOTLINK_TEMPLATE`: Prohibit users to provide their custom templates via [Parameters -> Multimedia processing](/en/parameter.html#multimedia-processing), default to `false`
 
 `HOTLINK_TEMPLATE`: replace image URL in the description to avoid anti-hotlink protection, leave it blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) (suffixing with `_ue` results in URL encoding), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
 
