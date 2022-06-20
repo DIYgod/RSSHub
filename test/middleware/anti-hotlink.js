@@ -337,4 +337,10 @@ describe('anti-hotlink', () => {
         const response2 = await request.get(`/test/complicated?multimedia_hotlink_template=${env.HOTLINK_TEMPLATE}`);
         expect(response2.text).toContain(errMsg);
     });
+
+    it('lazy-templating', async () => {
+        env.HOTLINK_TEMPLATE = templates.i3_wp;
+        await expectImgProcessed({ filterout_author: 'buHSSR' });
+        await expectMultimediaRelayed({ multimedia_hotlink_template: env.HOTLINK_TEMPLATE, filterout_author: 'buHSSR' });
+    });
 });
