@@ -1066,6 +1066,9 @@
     "/hameln/chapter/:id": [
         "huangliangshusheng"
     ],
+    "/hashnode/blog/:username": [
+        "hnrainll"
+    ],
     "/hbr/topic/:topic?/:type?": [
         "nczitzk"
     ],
