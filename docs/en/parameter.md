@@ -90,6 +90,12 @@ E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
 ## Multimedia processing
 
+::: tip Tip
+
+`image_hotlink_template` and `multimedia_hotlink_template` could be disabled by the instance maintainer.
+
+:::
+
 -   `image_hotlink_template`: replace image URL in the description to avoid anti-hotlink protection, leave it blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) (suffixing with `_ue` results in URL encoding), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
 -   `multimedia_hotlink_template`: the same as `image_hotlink_template` but apply to audio and video. Note: the service must follow redirects, allow reverse-proxy for audio and video, and must drop the `Referer` header when reverse-proxying. [Here is an easy-to-deploy project that fits these requirements](https://github.com/Rongronggg9/rsstt-img-relay). The project accepts simple URL concatenation, e.g. `https://example.com/${href}`, in which `example.com` should be replaced with the domain name of the service you've deployed
 -   `wrap_multimedia_in_iframe`: wrap audio and video in `<iframe>` to prevent the reader from sending `Referer` header. This workaround is only compatible with a few readers, such as RSS Guard and Akregator, which may not support the previous method. You can try this method in such a case

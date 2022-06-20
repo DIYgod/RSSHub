@@ -9,12 +9,14 @@ afterAll(() => {
     delete process.env.HOTLINK_TEMPLATE;
     delete process.env.HOTLINK_INCLUDE_PATHS;
     delete process.env.HOTLINK_EXCLUDE_PATHS;
+    delete process.env.HOTLINK_DISABLE_USER_TEMPLATE;
 });
 
 afterEach(() => {
     delete process.env.HOTLINK_TEMPLATE;
     delete process.env.HOTLINK_INCLUDE_PATHS;
     delete process.env.HOTLINK_EXCLUDE_PATHS;
+    delete process.env.HOTLINK_DISABLE_USER_TEMPLATE;
     jest.resetModules();
     server.close();
 });
@@ -306,5 +308,17 @@ describe('anti-hotlink', () => {
         const request = supertest(server);
         const response = await request.get('/test/complicated');
         expect(response.text).toContain('Error: Invalid URL property: createObjectURL');
+    });
+
+    it('disable-user-template', async () => {
+        process.env.HOTLINK_DISABLE_USER_TEMPLATE = 'true';
+        process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${host}${pathname}';
+        const errMsg = 'Error: User-defined hotlink templates are disabled by the instance maintainer';
+        await expectImgProcessed();
+        const request = supertest(server);
+        const response1 = await request.get(`/test/complicated?image_hotlink_template=${process.env.HOTLINK_TEMPLATE}`);
+        expect(response1.text).toContain(errMsg);
+        const response2 = await request.get(`/test/complicated?multimedia_hotlink_template=${process.env.HOTLINK_TEMPLATE}`);
+        expect(response2.text).toContain(errMsg);
     });
 });

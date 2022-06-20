@@ -529,11 +529,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 图片处理
 
-::: warning 废弃警告
+::: tip 提示
 
-下面的配置已被废弃，仅为向后兼容性而保留，请转到 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 中进行相关配置。
+若未打开 `HOTLINK_DISABLE_USER_TEMPLATE`，请转到 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 中进行相关配置。
 
 :::
+
+`HOTLINK_DISABLE_USER_TEMPLATE`: 禁止用户通过 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 提供自定义模板，默认 `false`
 
 `HOTLINK_TEMPLATE`: 用于处理描述中图片的 URL，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性（加上后缀 `_ue` 则会对其进行 URL 编码），格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
 
