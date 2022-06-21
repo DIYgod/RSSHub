@@ -503,6 +503,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
 
+## 巨量算数 - 算数指数
+
+### 抖音指数波峰
+
+<Route author="Jkker" example="/oceanengine/index/教材" path="/oceanengine/index/:keyword" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+
+爬取巨量算数近 6 个月的抖音指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
+
+### 头条指数波峰
+
+<Route author="Jkker" example="/oceanengine/index/教材/toutiao" path="/oceanengine/index/:keyword/toutiao" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+
+爬取巨量算数近 6 个月的头条指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
+
 ## 考研帮
 
 ### 考研帮调剂信息
