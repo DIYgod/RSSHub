@@ -523,9 +523,11 @@ See the relation between access key/code and white/blacklisting.
 
 ### Image Processing
 
-::: warning Deprecation warning
+::: tip New Config Format
 
-The options below are deprecated, preserved only for backward compatibility, please refer to [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing) for more details.
+We are currently testing out a new format, providing end-user with more flexibility. For more info, please refer to [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing).
+
+When using our new config, please leave the following environment vairable blank. By default, image hotlink template will be forced when present.
 
 :::
 

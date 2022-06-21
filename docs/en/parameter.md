@@ -94,7 +94,7 @@ E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
 This is an experimental API
 
-The following operation allows user to inject codes, which is harmful in web environment. However, RSS feed reader usually limits these functions. While normally routes won't need these functions, please set  `ALLOW_USER_HOTLINK_TEMPLATE` to `true` if you understand how these parameters works. 
+The following operation allows users to inject codes, which is harmful(similar to XSS) in Web environment. However, RSS feed readers, usually, have restrictions set up. While normally routes won't need these functions, please set  `ALLOW_USER_HOTLINK_TEMPLATE` to `true` if you understand how these parameters works and really need to use these features.
 
 :::
 
