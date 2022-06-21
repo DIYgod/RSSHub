@@ -976,15 +976,6 @@
             { title: '日记评论区', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/journal/:id/', target: '/furaffinity/journal_comments/:id' },
         ],
     },
-    'gcores.com': {
-        _name: '机核网',
-        www: [
-            { title: '资讯', docs: 'https://docs.rsshub.app/new-media.html#ji-he-wang', source: '/news', target: '/gcores/category/news' },
-            { title: '视频', docs: 'https://docs.rsshub.app/new-media.html#ji-he-wang', source: '/videos', target: '/gcores/category/videos' },
-            { title: '电台', docs: 'https://docs.rsshub.app/new-media.html#ji-he-wang', source: '/radios', target: '/gcores/category/radios' },
-            { title: '文章', docs: 'https://docs.rsshub.app/new-media.html#ji-he-wang', source: '/articles', target: '/gcores/category/articles' },
-        ],
-    },
     'bgm.tv': {
         _name: 'Bangumi',
         '.': [
