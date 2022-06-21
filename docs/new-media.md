@@ -3371,6 +3371,12 @@ column 为 third 时可选的 category:
 
 ## 网易新闻
 
+::: warning 注意
+
+若视频因防盗链而无法播放，请参考 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
+
+:::
+
 ### 今日关注
 
 <Route author="nczitzk" example="/netease/today" path="/netease/today/:need_content?" :paramsDesc="['需要获取全文，填写 true/yes 表示需要，默认需要']">

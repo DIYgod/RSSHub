@@ -11320,10 +11320,10 @@ pupa@^2.0.1, pupa@^2.1.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-extra-plugin-stealth@2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.9.0.tgz#aa39f4469bf47343af4517efe9f97846228b3b01"
-  integrity sha512-erZ9lkIcOkfYmLPP2jv2AiqvNBFhQJinWJhcm40pqSjwJTsZXHsTARUyRCsBYEEBvNIs3Wz3E0zVlTRc4IJ6Hg==
+puppeteer-extra-plugin-stealth@2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.10.0.tgz#583512dcef66af79e5736b02ed6856fd4171b80a"
+  integrity sha512-Bpotsjr9cqjzn7On/hL9xzzpxLFWza0mRCwhzNEGPdORbjkXDGu7dg+6mgVg6EtSI9lOr8M1bUJBFvJhVpFJzA==
   dependencies:
     debug "^4.1.1"
     puppeteer-extra-plugin "^3.2.0"
@@ -11357,10 +11357,10 @@ puppeteer-extra-plugin@^3.2.0:
     debug "^4.1.1"
     merge-deep "^3.0.1"
 
-puppeteer-extra@3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra/-/puppeteer-extra-3.2.3.tgz#1b24ae12ab7c7660f81922c1065beb5887cc189e"
-  integrity sha512-CnSN9yIedbAbS8WmRybaDHJLf6goRk+VYM/kbH6i/+EMadCaAeh2O+1/mFUMN2LbkbDNAp2Vd/UwrTVCHjTxyg==
+puppeteer-extra@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra/-/puppeteer-extra-3.3.0.tgz#22fe62cd31cc7fc20ebf9f932c177a8c5c909635"
+  integrity sha512-JVYbLkbo3/gNnMs4LapqNFvOeODpx87XM5Q9FX3v+nyjQ2BtD/Gk+0MDXh9einKmq11Nbn2r2cZPfpK5G47x9w==
   dependencies:
     "@types/debug" "^4.1.0"
     "@types/puppeteer" "*"
@@ -11481,10 +11481,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.67:
-  version "1.0.67"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.67.tgz#8ac64984fb03f3a9dc38806dcff87ec3d1c135ae"
-  integrity sha512-kGjIKeSCg3GsJ8tKtnyyqS5384k4ONKjWbqSFgL2IyrGfQCxkGmZyIf1DbzOULuI/EajdXR3cRb3GTLdLIE8Vg==
+rand-user-agent@1.0.68:
+  version "1.0.68"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.68.tgz#7dcedc6127bcacbee1fe84a118710210964e01f9"
+  integrity sha512-U8L6ra9dKlNj+5mvTPpP/52zHL5fe/Xanthqf/xGSQ7Y4LDFs55Wb0loWBXivyj0F+A7HBBpq9zEtzEVs1fV3Q==
 
 randexp@0.4.6:
   version "0.4.6"

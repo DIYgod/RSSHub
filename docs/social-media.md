@@ -855,23 +855,17 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 反爬严格，需要启用 puppeteer。\
 抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
 
-1.  填写 `relay`，开启视频反代 (推荐，适合大部分阅读器)。如该服务接受直接拼接 URL，则可直接填入路径，如 `https://example.com/` ；如该服务仅接受 URL 作为参数传入，则确保该参数置于末尾，如 `https://example.com/?url=` 。注意：该服务必须跟随跳转、允许反代视频，且必须在反代时丢弃 Referer 请求头。[这里有一个符合要求的易于自行搭建的项目](https://github.com/Rongronggg9/rsstt-img-relay)，该项目接受直接拼接 URL。
-2.  启用 iframe 变通解决方案，禁止阅读器发送 Referer。支持该变通解决方案的阅读器较少，且可能造成显示错误。有些阅读器，如 RSS Guard、Akregator，可能不支持前一种方法，则可尝试此方法。
-3.  使用不发送 Referer 的阅读器，如 [Inoreader 网页版](https://www.inoreader.com/)配合[禁用 referer 的 user script](https://greasyfork.org/zh-CN/scripts/376884-%E6%98%BE%E7%A4%BA%E9%98%B2%E7%9B%97%E9%93%BE%E5%9B%BE%E7%89%87-for-inoreader)、[RSS to Telegram Bot](https://github.com/Rongronggg9/RSS-to-Telegram-Bot) 等。如果你的阅读器能够在不启用上述两个变通解决方案时成功播放内嵌视频，那么它就是不发送 Referer 的，请考虑添加到文档里帮助更多的人。
-4.  关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。
-5.  点击原文链接打开抖音网页版的视频详情页播放视频。
-
-上述外部链接与 RSSHub 无关。
+1.  启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
+2.  关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。
+3.  点击原文链接打开抖音网页版的视频详情页播放视频。
 
 :::
 
 额外参数
 
-| 键        | 含义                                  | 值                      | 默认值     |
-| -------- | ----------------------------------- | ---------------------- | ------- |
-| `embed`  | 是否启用内嵌视频                            | `0`/`1`/`true`/`false` | `false` |
-| `iframe` | 是否启用 iframe 变通解决方案，仅在内嵌视频开启时有效，详见下文 | `0`/`1`/`true`/`false` | `false` |
-| `relay`  | 视频反代服务的 URL，仅在内嵌视频开启时有效，详见下文        |                        |         |
+| 键       | 含义       | 值                      | 默认值     |
+| ------- | -------- | ---------------------- | ------- |
+| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |
 
 ### 博主
 
