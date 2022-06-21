@@ -218,6 +218,12 @@ pageClass: routes
 
 <Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" rssbud="1"/>
 
+## HACKER TALK 黑客说
+
+### 最新帖子
+
+<Route author="hyoban" example="/hackertalk" path="/hackertalk" radar="1" rssbud="1"/>
+
 ## LearnKu
 
 ### 社区
