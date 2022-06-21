@@ -222,7 +222,7 @@ pageClass: routes
 
 ### 最新帖子
 
-<Route author="hyoban" example="/hackertalk/25" path="/hackertalk/:limit?" :paramsDesc="['返回的帖子数目']"/>
+<Route author="hyoban" example="/hackertalk" path="/hackertalk"/>
 
 ## LearnKu
 
