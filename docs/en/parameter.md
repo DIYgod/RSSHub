@@ -88,6 +88,22 @@ E.g. <https://rsshub.app/pnas/latest?scihub=1>
 
 E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
+## Multimedia processing
+
+::: warning 注意
+
+This is an experimental API
+
+The following operation allows user to inject codes, which is harmful in web environment. However, RSS feed reader usually limits these functions. While normally routes won't need these functions, please set  `ALLOW_USER_HOTLINK_TEMPLATE` to `true` if you understand how these parameters works. 
+
+:::
+
+-   `image_hotlink_template`: replace image URL in the description to avoid anti-hotlink protection, leave it blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) (suffixing with `_ue` results in URL encoding), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
+-   `multimedia_hotlink_template`: the same as `image_hotlink_template` but apply to audio and video. Note: the service must follow redirects, allow reverse-proxy for audio and video, and must drop the `Referer` header when reverse-proxying. [Here is an easy-to-deploy project that fits these requirements](https://github.com/Rongronggg9/rsstt-img-relay). The project accepts simple URL concatenation, e.g. `https://example.com/${href}`, in which `example.com` should be replaced with the domain name of the service you've deployed
+-   `wrap_multimedia_in_iframe`: wrap audio and video in `<iframe>` to prevent the reader from sending `Referer` header. This workaround is only compatible with a few readers, such as RSS Guard and Akregator, which may not support the previous method. You can try this method in such a case
+
+There are more details in the [FAQ](/en/faq.html).
+
 ## Output Formats
 
 RSSHub conforms to RSS 2.0 and Atom Standard, simply append `.rss` `.atom` to the end of the feed address to obtain the feed in corresponding format. The default output format is RSS 2.0.
@@ -98,3 +114,21 @@ For example:
 -   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
 -   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
 -   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
+
+### Debug
+
+If the RSSHub instance is running with `debugInfo=true` enabled, suffixing a route with `.debug.json` will result in the value of `ctx.state.json` being returned.
+
+This feature aims to facilitate debugging or developing customized features. A route developer has the freedom to determine whether to adopt it or not, without any format requirement.
+
+For example：
+
+-   `/furstar/characters/cn.debug.json`
+
+## Brief introduction
+
+Set the parameter `brief` to generate a brief pure-text introduction with a limited number of characters ( ≥ `100`).
+
+For example：
+
+-   Brief introduction with 100 characters: `?brief=100`

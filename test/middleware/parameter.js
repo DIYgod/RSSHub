@@ -287,7 +287,7 @@ describe('multimedia_description', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).toBe(`<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
 <video src="https://mock.com/DIYgod/RSSHub.mp4"></video>
-<video src="https://mock.com/DIYgod/undefined">
+<video poster="https://mock.com/DIYgod/RSSHub.jpg">
 <source src="https://mock.com/DIYgod/RSSHub.mp4" type="video/mp4">
 <source src="https://mock.com/DIYgod/RSSHub.webm" type="video/webm">
 </video>

@@ -89,6 +89,22 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 举例: <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
+## 多媒体处理
+
+::: warning 注意
+
+这是个测试中的 API
+
+下方操作允许任意用户注入链接模版到最终输出结果，针对于 Web 环境来说这是有害的（XSS）。但是 RSS 阅读器内通常是有限制的环境，通常不会带来副作用，一般路由通常不会需要这些功能。如果需要开启，请将  `ALLOW_USER_HOTLINK_TEMPLATE` 环境变量设置为 `true`
+
+:::
+
+-   `image_hotlink_template`: 用于处理描述中图片的 URL，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性（加上后缀 `_ue` 则会对其进行 URL 编码），格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
+-   `multimedia_hotlink_template`: 用法同 `image_hotlink_template`，但应用于音频和视频。注意：该服务必须跟随跳转、允许反代音频和视频，且必须在反代时丢弃 `Referer` 请求头。[这里有一个符合要求的易于自行搭建的项目](https://github.com/Rongronggg9/rsstt-img-relay/blob/main/README_zh-CN.md)，该项目接受直接拼接 URL，即 `https://example.com/${href}`，其中 `example.com` 应替换为自行搭建的服务的域名
+-   `wrap_multimedia_in_iframe`: 将音频和视频包裹在 `<iframe>` 中，以阻止阅读器发送 `Referer` 请求头。支持该变通解决方案的阅读器较少，且可能造成显示错误。有些阅读器，如 RSS Guard、Akregator，可能不支持前一种方法，则可尝试此方法。设置为`1`生效
+
+[FAQ](/faq.html) 中有更多信息。
+
 ## 输出格式
 
 RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式，缺省为 RSS 2.0
