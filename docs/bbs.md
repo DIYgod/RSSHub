@@ -222,7 +222,7 @@ pageClass: routes
 
 ### 最新帖子
 
-<Route author="hyoban" example="/hackertalk" path="/hackertalk"/>
+<Route author="hyoban" example="/hackertalk" path="/hackertalk" radar="1" rssbud="1"/>
 
 ## LearnKu
 
