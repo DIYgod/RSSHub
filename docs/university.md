@@ -1655,7 +1655,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 人才招聘网
 
-<Route author="ret-1" example="/nju/rczp/xxfb" path="/nju/rczp/:type" :paramsDesc="['分类名']" puppeteer="1">
+<Route author="ret-1" example="/nju/rczp/xxfb" path="/nju/rczp/:type" :paramsDesc="['分类名']">
 
 | 信息发布 | 教研类岗位 | 管理岗位及其他 |
 | ---- | ----- | ------- |
