@@ -753,6 +753,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 热搜聚合
+
+### 关键词聚合追踪
+
+追踪各大热搜榜上包含特定关键词的条目。
+
+当前收录榜单：*微博热搜*、*今日头条热搜*、*知乎热搜*、*知乎热门视频*、*知乎热门话题*。
+
+数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
+
+<Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']"/>
+
 ## 日本郵便
 
 ### 郵便追跡サービス
@@ -1026,15 +1038,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-## 热搜聚合
-
-### 关键词聚合追踪
-
-追踪各大热搜榜上包含特定关键词的条目。
-
-当前收录榜单：_微博热搜_、_今日头条热搜_、_知乎热搜_、_知乎热门视频_、_知乎热门话题_。
-
-数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
-
-<Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']"/>
