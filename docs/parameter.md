@@ -2,7 +2,19 @@
 
 ::: tip 提示
 
-所有通用参数可以使用 `&` 连接组合使用，效果叠加
+通用参数实际上是 URI 中的 query，可以使用 `&` 连接组合使用，效果叠加。
+
+通用参数需要置于路由路径的最后。有些路由在路由路径（route path）的最后引入了<span color=green>**自定义参数**</span>，<span color=violet>**通用参数**</span>也需要置于它们之后。
+
+举例:
+
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span color=green><b>readable=1\&includeRts=0</b></span>?<span color=violet><b>brief=100\&limit=5</b></span></a>
+
+如果设置了<span color=magenta>**输出格式**</span>（`.atom`, `.rss`, `.debug.json`），则需要置于路由路径（含<span color=green>**自定义参数**</span>）与<span color=violet>**其它通用参数**</span>之间。
+
+举例:
+
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span color=green><b>readable=1\&includeRts=0</b></span><span color=magenta><b>.atom</b></span>?<span color=violet><b>brief=100\&limit=5</b></span></a>
 
 :::
 
@@ -114,7 +126,7 @@ RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss`
 -   缺省 RSS 2.0 - <https://rsshub.app/jianshu/home>
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
--   和 filter 或其他 URL query 一起使用 `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
+-   和 filter 或其他 URL query 一起使用 - `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
 
 ### debug
 
