@@ -1174,6 +1174,16 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## SupChina
+
+### Feed
+
+<Route author="nczitzk" example="/supchina" path="/supchina"/>
+
+### Podcasts
+
+<Route author="nczitzk" example="/supchina/podbcasts" path="/supchina/podbcasts"/>
+
 ## swissinfo
 
 ### 分类
