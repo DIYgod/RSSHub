@@ -144,6 +144,11 @@
     "/ally/rail/:category?/:topic?": [
         "Rongronggg9"
     ],
+    "/apnews/topics/:topic?": [
+        "zoenglinghou",
+        "mjysci",
+        "TonyRL"
+    ],
     "/app-center/release/:user/:app/:distribution_group": [
         "Rongronggg9"
     ],
@@ -3768,7 +3773,6 @@
     "/xinquji/today": [],
     "/xinquji/today/internal": [],
     "/gbcc/trust": [],
-    "/apnews/topics/:topic": [],
     "/cbc/topics/:topic?": [],
     "/discuz/:ver([7|x])/:cid([0-9]{2})/:link(.*)": [],
     "/discuz/:ver([7|x])/:link(.*)": [],

@@ -639,6 +639,17 @@
       }
     ]
   },
+  "apnews.com": {
+    "_name": "AP News",
+    ".": [
+      {
+        "title": "话题",
+        "docs": "https://docs.rsshub.app/traditional-media.html#ap-news",
+        "source": "/hub/:topic",
+        "target": "/apnews/topics/:topic"
+      }
+    ]
+  },
   "appcenter.ms": {
     "_name": "App Center",
     "install": [
@@ -12878,17 +12889,6 @@
         "title": "郵便・荷物の追跡",
         "docs": "https://docs.rsshub.app/other.html#ri-ben-you-bian-you-bian-zhui-ji-サービス",
         "source": "/services/srv/search/direct"
-      }
-    ]
-  },
-  "apnews.com": {
-    "_name": "AP News",
-    ".": [
-      {
-        "title": "话题",
-        "docs": "https://docs.rsshub.app/traditional-media.html#ap-news",
-        "source": "/:topic",
-        "target": "/apnews/topics/:topic"
       }
     ]
   },

@@ -407,6 +407,11 @@
         source:[ "/",
           "/html/:category?/:topic?" ],
         target:"/ally/rail/:category?/:topic?" } ] },
+  "apnews.com":{ _name:"AP News",
+    ".":[ { title:"话题",
+        docs:"https://docs.rsshub.app/traditional-media.html#ap-news",
+        source:"/hub/:topic",
+        target:"/apnews/topics/:topic" } ] },
   "appcenter.ms":{ _name:"App Center",
     install:[ { title:"App Center Release",
         docs:"https://docs.rsshub.app/program-update.html#app-center",
@@ -7353,11 +7358,6 @@
                         return `/japanpost/track/${reqCode}/${locale}`;
                     }
                 } } ] },
-  "apnews.com":{ _name:"AP News",
-    ".":[ { title:"话题",
-        docs:"https://docs.rsshub.app/traditional-media.html#ap-news",
-        source:"/:topic",
-        target:"/apnews/topics/:topic" } ] },
   "biquge5200.com":{ www:[ { title:"biquge5200.com",
         docs:"https://docs.rsshub.app/reading.html#bi-qu-ge-biquge5200-com",
         source:"/:id",
