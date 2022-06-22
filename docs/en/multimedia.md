@@ -305,6 +305,18 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 - `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
+## PRESTIGE(プレステージ)
+
+### シリーズ
+
+<RouteEn author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" :paramsDesc="['Series number', 'Sorting, `near` by default']" puppeteer="1">
+
+| 人気順 | 新着順 | 発売日順 | タイトル順 | 価格の安い順 | 価格の高い順 |
+| ------- | ------ | ---- | ----- | ---- | ---- |
+| popular | near   | date | title | low  | high |
+
+</RouteEn>
+
 ## s-hentai
 
 ### Category
