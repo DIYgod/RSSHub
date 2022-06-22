@@ -3,11 +3,11 @@ jest.mock('request-promise-native');
 jest.setTimeout(50000);
 
 afterAll(() => {
-    delete process.env.FILTER_REGEX_ENGINE
+    delete process.env.FILTER_REGEX_ENGINE;
 });
 
 afterEach(() => {
-    delete process.env.FILTER_REGEX_ENGINE
+    delete process.env.FILTER_REGEX_ENGINE;
     jest.resetModules();
 });
 
@@ -33,7 +33,7 @@ describe('filter-engine', () => {
         server.close();
     });
 
-    it(`filter Regexp engine backward compatibility`, async () => {
+    it(`filter Regexp engine test config`, async () => {
         process.env.FILTER_REGEX_ENGINE = 'somethingelse';
 
         const server = require('../../lib/index');
@@ -44,4 +44,4 @@ describe('filter-engine', () => {
         expect(response.text).toMatch(/somethingelse/);
         server.close();
     });
-})
+});
