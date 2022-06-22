@@ -1182,7 +1182,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### Podcasts
 
-<Route author="nczitzk" example="/supchina/podbcasts" path="/supchina/podbcasts"/>
+<Route author="nczitzk" example="/supchina/podcasts" path="/supchina/podcasts"/>
 
 ## swissinfo
 

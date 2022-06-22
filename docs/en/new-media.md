@@ -618,7 +618,7 @@ Compared to the official one, this feed:
 
 ### Podcasts
 
-<RouteEn author="nczitzk" example="/supchina/podbcasts" path="/supchina/podbcasts" />
+<RouteEn author="nczitzk" example="/supchina/podcasts" path="/supchina/podcasts" />
 
 ## swissinfo
 
