@@ -1865,7 +1865,8 @@
         "melvinto"
     ],
     "/nytimes/daily_briefing_chinese": [
-        "yueyericardo"
+        "yueyericardo",
+        "nczitzk"
     ],
     "/nytimes/:lang?": [
         "HenryQW"
