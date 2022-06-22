@@ -26,6 +26,14 @@
 
 :::
 
+::: warning 注意
+
+filter 支持正则表达式。由于正则部分特性可被利用于 DoS (ReDOS)，默认引擎`RE`屏蔽了部分`Regexp`功能，且在部分情况下表现不一致。具体差异可以[查看文档](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
+
+如果需要指定不同的引擎，请参考[功能特性 -> FILTER_REGEX_ENGINE](install/#pei-zhi-gong-neng-te-xing)。
+
+:::
+
 可以使用以下 URL query 过滤内容，支持通过正则表达式过滤
 
 `filter` 选出想要的内容
