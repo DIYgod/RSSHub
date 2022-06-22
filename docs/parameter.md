@@ -28,7 +28,11 @@
 
 ::: warning 注意
 
+<<<<<<< HEAD
+filter 支持正则表达式。由于正则部分特性可被利用于 DoS (ReDOS)，默认引擎`re2`屏蔽了部分`Regexp`功能，且在部分情况下表现不一致。具体差异可以[查看文档](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
+=======
 filter 支持正则表达式。由于正则部分特性可被利用于 DoS (ReDOS)，默认引擎`RE`屏蔽了部分`Regexp`功能，且在部分情况下表现不一致。具体差异可以[查看文档](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
+>>>>>>> b8f71cef6 (feat(core): regex engine config)
 
 如果需要指定不同的引擎，请参考[功能特性 -> FILTER_REGEX_ENGINE](install/#pei-zhi-gong-neng-te-xing)。
 
