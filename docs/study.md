@@ -533,6 +533,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
+## 中国留学网
+
+### 通知公告
+
+<Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg"/>
+
 ## 中国人事考试网
 
 ### 通知公告
