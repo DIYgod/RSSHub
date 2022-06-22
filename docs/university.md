@@ -1312,7 +1312,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 学校通知
 
-<Route author="vuhe" example="/ncwu/notice" path="/ncwu/notice" puppeteer="1"/>
+<Route author="vuhe" example="/ncwu/notice" path="/ncwu/notice" radar="1" rssbud="1"/>
 
 ## 华东理工大学
 
