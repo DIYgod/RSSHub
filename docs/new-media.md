@@ -3996,6 +3996,12 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['语言，默认为简体中文，可选 `en` 即英文']"/>
 
+## 中国留学网
+
+### 通知公告
+
+<Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg"/>
+
 ## 中国收入分配研究院
 
 ### 分类
