@@ -106,7 +106,7 @@ E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
 This is an experimental API
 
-The following operation allows users to inject codes, which is harmful(similar to XSS) in Web environment. However, RSS feed readers, usually, have restrictions set up. While normally routes won't need these functions, please set  `ALLOW_USER_HOTLINK_TEMPLATE` to `true` if you understand how these parameters works and really need to use these features.
+`image_hotlink_template` and `multimedia_hotlink_template` allow users to supply templates to replace media URLs. Certain routes plus certain RSS readers may result in users needing these features, but it's not very common. Vulnerable characters will be escaped automatically, making XSS attack impossible. The scope of URL replacement is limited to media elements, making any script URL unable to load and unable to cause XSS. As a result, users can only take the control of "where are the media from". These features are commonly side-effect-free. To enable these two parameters, please set  `ALLOW_USER_HOTLINK_TEMPLATE` to `true`
 
 :::
 
