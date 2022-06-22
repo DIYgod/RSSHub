@@ -2426,6 +2426,9 @@
     "/topys/:keyword?": [
         "nczitzk"
     ],
+    "/trending/:keywords/:numberOfDays?": [
+        "Jkker"
+    ],
     "/trow/portal": [
         "shiningdracon"
     ],
