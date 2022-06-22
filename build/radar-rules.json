@@ -7713,13 +7713,24 @@
         "title": "分类",
         "docs": "https://docs.rsshub.app/finance.html#mei-jing-wang",
         "source": "/",
-        "targer": "/nbd"
+        "target": "/nbd"
       },
       {
         "title": "重磅原创",
         "docs": "https://docs.rsshub.app/finance.html#mei-jing-wang",
         "source": "/",
-        "targer": "/nbd/daily"
+        "target": "/nbd/daily"
+      }
+    ]
+  },
+  "ncwu.edu.cn": {
+    "_name": "华北水利水电大学",
+    ".": [
+      {
+        "title": "学校通知",
+        "docs": "https://docs.rsshub.app/university.html#hua-bei-shui-li-shui-dian-da-xue",
+        "source": "/xxtz.htm",
+        "target": "/ncwu/notice"
       }
     ]
   },
@@ -8759,6 +8770,18 @@
           "/articles/:name"
         ],
         "target": "/polkaworld/newest"
+      }
+    ]
+  },
+  "prestige-av.com": {
+    "_name": "Prestige 蚊香社",
+    ".": [
+      {
+        "title": "系列作品",
+        "docs": "https://docs.rsshub.app/multimedia.html#prestige-wen-xiang-she",
+        "source": [
+          "/goods/goods_list.php"
+        ]
       }
     ]
   },

@@ -4221,11 +4221,16 @@
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/finance.html#mei-jing-wang",
         source:"/",
-        targer:"/nbd" },
+        target:"/nbd" },
       { title:"重磅原创",
         docs:"https://docs.rsshub.app/finance.html#mei-jing-wang",
         source:"/",
-        targer:"/nbd/daily" } ] },
+        target:"/nbd/daily" } ] },
+  "ncwu.edu.cn":{ _name:"华北水利水电大学",
+    ".":[ { title:"学校通知",
+        docs:"https://docs.rsshub.app/university.html#hua-bei-shui-li-shui-dian-da-xue",
+        source:"/xxtz.htm",
+        target:"/ncwu/notice" } ] },
   "163.com":{ _name:"网易",
     ds:[ { title:"大神",
         docs:"https://docs.rsshub.app/game.html#wang-yi-da-shen",
@@ -4932,6 +4937,16 @@
         source:[ "/",
           "/articles/:name" ],
         target:"/polkaworld/newest" } ] },
+  "prestige-av.com":{ _name:"Prestige 蚊香社",
+    ".":[ { title:"系列作品",
+        docs:"https://docs.rsshub.app/multimedia.html#prestige-wen-xiang-she",
+        source:[ "/goods/goods_list.php" ],
+        target:(_params, url) => {
+                    const link = new URL(url);
+                    if (link.searchParams.get('mode') === 'series') {
+                        return link.searchParams.has('sort') ? `/prestige-av/series/${link.searchParams.get('mid')}/${link.searchParams.get('sort')}` : `/prestige-av/series/${link.searchParams.get('mid')}`;
+                    }
+                } } ] },
   "producthunt.com":{ _name:"Product Hunt",
     www:[ { title:"Today Popular",
         docs:"https://docs.rsshub.app/other.html#product-hunt",
