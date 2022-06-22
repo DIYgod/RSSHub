@@ -1490,6 +1490,10 @@
     "/kcna/:lang/:category?": [
         "Rongronggg9"
     ],
+    "/keep/user/:id": [
+        "Dectinc",
+        "DIYgod"
+    ],
     "/kemono/:source?/:id?": [
         "nczitzk"
     ],
@@ -3007,7 +3011,6 @@
     "/mi/youpin/new/:sort?": [],
     "/miui/:device/:type?/:region?": [],
     "/mi/bbs/board/:boardId": [],
-    "/keep/user/:id": [],
     "/qidian/chapter/:id": [],
     "/qidian/forum/:id": [],
     "/qidian/free/:type?": [],
