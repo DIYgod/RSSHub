@@ -563,7 +563,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `ALLOW_USER_HOTLINK_TEMPLATE`: [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li)特性控制
 
-`FILTER_REGEX_ENGINE`: 控制 [通用参数 -> 内容过滤](/parameter.html#nei-rong-guo-lu) 使用的正则引擎。可选`[re, regexp]`，默认`re`。我们推荐公开实例不要调整这个选项，这个选项目前主要用于向后兼容。
+`FILTER_REGEX_ENGINE`: 控制 [通用参数 -> 内容过滤](/parameter.html#nei-rong-guo-lu) 使用的正则引擎。可选`[re2, regexp]`，默认`re2`。我们推荐公开实例不要调整这个选项，这个选项目前主要用于向后兼容。
 
 ### 其他应用配置
 

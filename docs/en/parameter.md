@@ -28,7 +28,7 @@ Please make sure you've [fully URL-encoded](https://gchq.github.io/CyberChef/#re
 
 ::: warning Warning
 
-filter supports Regex, and due to the fact that some Regex are vulnerable to DoS (ReDoS), default engine `re` blocks some of these functionalities available in node `Regexp`. These two engines also behaves a bit different in some corner cases. [Details](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
+filter supports Regex, and due to the fact that some Regex are vulnerable to DoS (ReDoS), default engine `re2` blocks some of these functionalities available in node `Regexp`. These two engines also behaves a bit different in some corner cases. [Details](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
 
 
 If you need to use a different engine, please refer to [Deploy->Features->FILTER_REGEX_ENGINE](/en/install/#configuration-features).
