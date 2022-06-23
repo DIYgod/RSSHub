@@ -43,7 +43,6 @@ describe('got', () => {
             .get(/.*/)
             .times(3)
             .reply(function () {
-                expect(this.req.headers.server).toBe('RSSHub');
                 expect(this.req.headers.referer).toBe('http://api.rsshub.test');
                 expect(this.req.headers.host).toBe('api.rsshub.test');
                 return [200, simpleResponse];

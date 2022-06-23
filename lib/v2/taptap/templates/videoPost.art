@@ -1,0 +1,2 @@
+{{ if intro }}{{@ intro }}{{ /if }}
+<video controls src="{{@ videoUrl }}" {{ if posterUrl }}poster="{{@ posterUrl }}"{{ /if }}>Sorry, your browser doesn't support embedded videos.</video>

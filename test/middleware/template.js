@@ -10,6 +10,8 @@ afterAll(() => {
 });
 
 describe('template', () => {
+    const expectPubDate = new Date(1546272000000 - 10 * 1000);
+
     it(`.rss`, async () => {
         const response1 = await request.get('/test/1.rss');
         const parsed1 = await parser.parseString(response1.text);
@@ -25,7 +27,7 @@ describe('template', () => {
         expect(parsed1.items[0]).toEqual(expect.any(Object));
         expect(parsed1.items[0].title).toEqual(expect.any(String));
         expect(parsed1.items[0].link).toEqual(expect.any(String));
-        expect(parsed1.items[0].pubDate).toEqual(expect.any(String));
+        expect(parsed1.items[0].pubDate).toBe(expectPubDate.toUTCString());
         expect(parsed1.items[0].author).toEqual(expect.any(String));
         expect(parsed1.items[0].content).toEqual(expect.any(String));
         expect(parsed1.items[0].guid).toEqual(expect.any(String));
@@ -54,7 +56,7 @@ describe('template', () => {
         expect(parsed.items[0]).toEqual(expect.any(Object));
         expect(parsed.items[0].title).toEqual(expect.any(String));
         expect(parsed.items[0].link).toEqual(expect.any(String));
-        expect(parsed.items[0].pubDate).toEqual(expect.any(String));
+        expect(parsed.items[0].pubDate).toBe(expectPubDate.toISOString());
         expect(parsed.items[0].author).toEqual(expect.any(String));
         expect(parsed.items[0].content).toEqual(expect.any(String));
         expect(parsed.items[0].id).toEqual(expect.any(String));

@@ -33,13 +33,13 @@ pageClass: routes
 | thumbnail   | Thumbnail size |
 | poster      | Art poster     |
 
-</Route>
+</RouteEn>
 
 ## LinkResearch
 
 ### theses
 
-<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']"/>
+<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']">
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
@@ -48,11 +48,13 @@ pageClass: routes
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |
 
+</RouteEn>
+
 ## ORCID
 
 ### Works List
 
-<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
+<RouteEn author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
 
 ## X-MOL
 
@@ -76,7 +78,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']"/>
+<RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']">
 
 | `:type`   | type name |
 | --------- | --------- |
@@ -90,13 +92,15 @@ pageClass: routes
 
 > leave it blank（`/zhishifenzi/news`）to get all
 
+</RouteEn>
+
 ### depth
 
 <RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
 ### innovation
 
-<RouteEn author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']"/>
+<RouteEn author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']">
 
 | `:type`       | type name     |
 | ------------- | ------------- |
@@ -108,3 +112,5 @@ pageClass: routes
 | policy        | Policy        |
 
 > leave it blank（`/zhishifenzi/innovation`）to get all
+
+</RouteEn>

@@ -60,7 +60,7 @@ Language codes
 
 ### Free games
 
-<RouteEn author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+<RouteEn author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['Locale, en_US by default', 'Country, en_US by default']"/>
 
 ## FINAL FANTASY XIV
 
@@ -114,6 +114,40 @@ Or
 | category/xbox | category/xboxen |
 
 </RouteEn>
+
+## itch.io
+
+### Browse
+
+<RouteEn author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['Params']">
+
+`params` is the field after `itch.io` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is <https://itch.io/games/top-rated/tag-singleplayer>, where the field after `itch.io` is `/games/top-rated/tag-singleplayer`.
+
+So the route is [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer).
+
+::: tip tips
+
+You can browse all the tags at [here](https://itch.io/tags).
+
+:::
+
+</RouteEn>
+
+### Developer Logs
+
+<RouteEn author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['User id, can be found in URL', 'Item id, can be found in URL']">
+
+`User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field before `.itch.io` is `teamterrible`.
+
+`Item id` is the field between `itch.io` and `/devlog` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field between `itch.io` and `/devlog` is `the-baby-in-yellow`.
+
+So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).
+
+</RouteEn>
+
+### Posts
+
+<RouteEn author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" :paramsDesc="['Topic id, can be found in URL', 'Topic name, can be found in URL']"/>
 
 ## Konami
 
@@ -221,7 +255,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### Steam search
 
-<RouteEn author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1" rssbud="1">
+<RouteEn author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1" rssbud="1">
 
 Get serach parameters from the URL.
 

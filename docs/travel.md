@@ -92,7 +92,7 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 ### 分类
 
-<Route author="fengkx" example="/natgeo/environment/article" path="/natgeo/:cat/:type?" :paramsDesc="['分类', '类型, 例如`https://www.natgeomedia.com/environment/photo/`对应 cat, type 分别为 environment, photo']"/>
+<Route author="fengkx" example="/natgeo/environment/article" path="/natgeo/:cat/:type?" :paramsDesc="['分类', '类型, 例如`https://www.natgeomedia.com/environment/photo/`对应 `cat`, `type` 分别为 `environment`, `photo`']"/>
 
 ## 活动行
 
@@ -113,6 +113,38 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 目的地代码请参见 [这里](http://www.mafengwo.cn/mdd/)
 
 </Route>
+
+## 纽约布鲁克林博物馆
+
+<Route author="chazeon"
+example="/brooklynmuseum/exhibitions"
+path="/brooklynmuseum/exhibitions/:state?"
+:paramsDesc="['展览进行的状态：`current` 对应展览当前正在进行，`past` 对应过去的展览，`upcoming` 对应即将举办的展览，默认为 `current`']"
+/>
+
+## 纽约大都会美术馆
+
+<Route author="chazeon"
+example="/metmuseum/exhibitions"
+path="/metmusem/exhibitions/:state?"
+:paramsDesc="['展览进行的状态：`current` 对应展览当前正在进行，`past` 对应过去的展览，`upcoming` 对应即将举办的展览，默认为 `current`']" anticrawler="1"
+/>
+
+## 纽约古根海姆基金会
+
+<Route author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" />
+
+## 纽约新美术馆
+
+<Route author="chazeon" example="/newmuseum/exhibitions" path="/newmuseum/exhibitions" />
+
+## 纽约犹太人博物馆
+
+<Route author="chazeon" example="/jewishmuseum/exhibitions" path="/jewishmuseum/exhibitions" />
+
+## 芝加哥当代艺术博物馆
+
+<Route author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
 
 ## 中国美术馆
 

@@ -291,7 +291,7 @@ const description = await ctx.cache.tryGet(link, async () => {
 });
 ```
 
-The implementation of tryGet can be seen [here](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58). The first parameter is the cache key, the second parameter is the cache data acquisition method, and the third parameter is the cache time, it should not be passed in normally. The cache time defaults to [CACHE_CONTENT_EXPIRE](/en/install/#cache-configurations), and each time accessing the cache will recalculate the expiration time
+The implementation of tryGet can be seen [here](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58). The 1st parameter is the cache key; the 2nd parameter is the cache data acquisition method (executed when cache miss); the 3rd parameter is the cache time, it should not be passed in normally and defaults to [CACHE_CONTENT_EXPIRE](/en/install/#cache-configurations); the 4th parameter determines whether to recalculate the expiration time ("renew" the cache) when the current attempt cache hits, `true` is on, `false` is off, default is on
 
 ---
 
@@ -321,6 +321,16 @@ ctx.state.data = {
     ],
 };
 ```
+
+::: warning Warning
+
+`title`, `subtitle` (only for atom), `author` (only for atom), `item.title`, and `item.author` should not contain linebreaks, consecutive white spaces, or start/end with white space(s).  
+Most RSS readers will automatically trim them, so they make no sense. However, some readers may not process them properly, so we will trim them before outputting to ensure these fields contain no linebreaks, consecutive white spaces, or start/end with white space(s).  
+If the route you are writing can not tolerate these trimmings, you should consider change the format of these fields.
+
+In addition, although other fields will not be forced trimmed, you should also try to avoid violations of the above rules. Especially when using Cheerio to extract web pages, you need to keep in mind that Cheerio will retain wraps and indentation. In particular, for `item.description`, any intended linebreaks should be converted to `<br>`, otherwise the RSS reader is likely to trim them; especially if you extract the RSS feed from JSON, the JSON returned by the source website is very likely to contain linebreaks that need to be displayed, so it must be converted in this case.
+
+:::
 
 ##### Podcast feed
 
@@ -361,7 +371,7 @@ ctx.state.data = {
 
 ##### Media RSS
 
-these **additional** data are in accordance with many [Media RSS](http://www.rssboard.org/media-rss) softwares' subscription format:
+These **additional** data are in accordance with many [Media RSS](http://www.rssboard.org/media-rss) softwares' subscription format:
 
 For example:
 
@@ -383,6 +393,22 @@ ctx.state.data = {
 };
 ```
 
+##### Interactions
+
+These **additional** data are in accordance with some softwares' subscription format:
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            upvotes: 0, // default to undefined, how many upvotes for this article,
+            downvotes: 0, // default to undefined, how many downvotes for this article,
+            comments: 0, // default to undefined, how many comments for this article
+        },
+    ],
+};
+```
+
 ---
 
 ### Add the documentation
@@ -395,9 +421,9 @@ ctx.state.data = {
         -   `path`: route path
         -   `:paramsDesc`: route parameters description, in array, supports markdown
             1. parameter description must be in the order of its appearance in route path
-            1. missing description will cause errors in `npm run docs:dev`
-            1. `'` `"` must be escaped as `\'` `\"`
-            1. it's redundant to indicate `optional/required` as the component will prepend based on `?`
+            2. missing description will cause errors in `npm run docs:dev`
+            3. `'` `"` must be escaped as `\'` `\"`
+            4. route parameters ending with `?`, `*`, `+`, and a word represent `optional`, `zero or more`, `one or more`, and `mandatory` respectively. They are automatically determined by Vue component and do not need to be explicitly mentioned in the description
     -   Documentation examples:
 
         1. No parameter:
@@ -454,9 +480,9 @@ ctx.state.data = {
 
         * * *
 
-1.  Please be sure to close the tag of `<Route>`!
+2.  Please be sure to close the tag of `<Route>`!
 
-1.  Execute `npm run format` to lint the code before you commit and open a pull request
+3.  Execute `npm run format` to lint the code before you commit and open a pull request
 
 ## Submit new RSSHub Radar rule
 

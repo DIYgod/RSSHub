@@ -26,9 +26,26 @@ pageClass: routes
 
 ## Gwern Branwen
 
+### 博客
+
 <Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
 
+## hashnode
+
+### 用户博客
+
+<Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" :paramsDesc="['博主名称，用户头像 URL 中找到']">
+
+::: tip 提示
+
+username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
+
+:::
+
+</Route>
 ## Hedwig.pub
+
+### 博客
 
 <Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
 
@@ -80,6 +97,12 @@ pageClass: routes
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## Miris Whispers
+
+### 博客
+
+<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
+
 ## Paul Graham 博客
 
 通过提取文章全文，提供比官方源更佳的阅读体验。
@@ -105,6 +128,12 @@ pageClass: routes
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
 
 :::
+
+## Stratechery by Ben Thompson
+
+### 博客
+
+<Route author="chazeon" example="/stratechery" path="/stratechery" />
 
 ## Whoscall
 
@@ -132,6 +161,8 @@ pageClass: routes
 </Route>
 
 ## WordPress
+
+### 博客
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
@@ -167,7 +198,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" :paramsDesc="['分类','是否获取全文，需要获取则传入参数`y`']" radar="1"> 
+<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" :paramsDesc="['分类','是否获取全文，需要获取则传入参数`y`']" radar="1">
 
 | 微软应用    | 安卓应用    | 教程资源     | 其他资源  |
 | ------- | ------- | -------- | ----- |
@@ -177,7 +208,15 @@ pageClass: routes
 
 ## 華康字型故事
 
+### 博客
+
 <Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
+
+## 黄健宏博客
+
+### 文章
+
+<Route author="stormbuf" example="/huangz" path="/huangz" radar="1"/>
 
 ## 建宁闲谈
 

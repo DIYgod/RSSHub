@@ -40,6 +40,12 @@ pageClass: routes
 
 <RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
 
+## Miris Whispers
+
+### Blog
+
+<RouteEn author="chazeon" example="/miris/blog" path="/miris/blog" />
+
 ## Paul Graham
 
 ### Essays
@@ -47,6 +53,10 @@ pageClass: routes
 <RouteEn author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
 
 ## Phrack Magazine
+
+### Article
+
+<RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
 
 ## PolkaWorld
 
@@ -62,11 +72,15 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 </RouteEn>
 
-### Article
+## Stratechery by Ben Thompson
 
-<RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
+### Blog
+
+<RouteEn author="chazeon" example="/stratechery" path="/stratechery" />
 
 ## WordPress
+
+### Blog
 
 <RouteEn author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress blog domain', 'use https by default. options: `http` or `https`']"/>
 

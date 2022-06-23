@@ -667,32 +667,36 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ::: warning 注意
 
-由于 Twitter Api 限制，关于 Twitter 相关的 RSS 接口目前仅支持 7 天内推文检索
+由于 Twitter 的限制，部分路由目前仅支持 7 天内推文检索。
+
+部分路由的实现依赖 Twitter Developer API，需要特别配置以启用。\
+`/twitter/user` 及 `/twitter/keyword` 两个路由除 Developer API 外，尚有不需特别配置以启用的 Web API 实现。默认情况下，Developer API 优先级更高，只有当其未配置或出错时才会使用 Web API。然而，两个 API 在某些方面存在不同特性，如，`excludeReplies` 在 Developer API 中会将推文串（[Thread](https://blog.twitter.com/official/en_us/topics/product/2017/nicethreads.html)，回复自己推文的推文）视作回复一并排除，而在 Web API 中则不会。如有需要在 `/twitter/user` 中排除回复但包含推文串，请启用 `forceWebApi`。
 
 :::
 
 对于推文内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制额外的功能
 
-| 键                            | 含义                                     | 接受的值           | 默认值                                  |
-| ---------------------------- | -------------------------------------- | -------------- | ------------------------------------ |
-| readable                     | 是否开启细节排版可读性优化                          | 0/1/true/false | false                                |
-| authorNameBold               | 是否加粗作者名字                               | 0/1/true/false | false                                |
-| showAuthorInTitle            | 是否在标题处显示作者                             | 0/1/true/false | false（`/twitter/followings` 中为 true） |
-| showAuthorInDesc             | 是否在正文处显示作者                             | 0/1/true/false | false（`/twitter/followings` 中为 true） |
-| showQuotedAuthorAvatarInDesc | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启） | 0/1/true/false | false                                |
-| showAuthorAvatarInDesc       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）        | 0/1/true/false | false                                |
-| showEmojiForRetweetAndReply  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”           | 0/1/true/false | false                                |
-| showRetweetTextInTitle       | 在标题处显示转推评论（置为 false 则在标题只显示被转推推文）      | 0/1/true/false | true                                 |
-| addLinkForPics               | 为图片添加可点击的链接                            | 0/1/true/false | false                                |
-| showTimestampInDescription   | 在正文处显示推特的时间戳                           | 0/1/true/false | false                                |
-| showQuotedInTitle            | 在标题处显示被引用的推文                           | 0/1/true/false | false                                |
-| widthOfPics                  | 推文配图宽（生效取决于阅读器）                        | 不指定 / 数字       | 不指定                                  |
-| heightOfPics                 | 推文配图高（生效取决于阅读器）                        | 不指定 / 数字       | 不指定                                  |
-| sizeOfAuthorAvatar           | 作者头像大小                                 | 数字             | 48                                   |
-| sizeOfQuotedAuthorAvatar     | 被转推推文作者头像大小                            | 数字             | 24                                   |
-| excludeReplies               | 排除回复，只在用户时间线有效                         | 0/1/true/false | false                                |
-| includeRts                   | 包括转推，只在用户时间线有效                         | 0/1/true/false | true                                 |
-| count                        | 传递给 Twitter API 的 `count` 参数，只在用户时间线有效 | 不指定 / 数字       | 不指定                                  |
+| 键                              | 含义                                                                            | 接受的值                   | 默认值                                       |
+| ------------------------------ | ----------------------------------------------------------------------------- | ---------------------- | ----------------------------------------- |
+| `readable`                     | 是否开启细节排版可读性优化                                                                 | `0`/`1`/`true`/`false` | `false`                                   |
+| `authorNameBold`               | 是否加粗作者名字                                                                      | `0`/`1`/`true`/`false` | `false`                                   |
+| `showAuthorInTitle`            | 是否在标题处显示作者                                                                    | `0`/`1`/`true`/`false` | `false` (`/twitter/followings` 中为 `true`) |
+| `showAuthorInDesc`             | 是否在正文处显示作者                                                                    | `0`/`1`/`true`/`false` | `false` (`/twitter/followings` 中为 `true`) |
+| `showQuotedAuthorAvatarInDesc` | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启）                                        | `0`/`1`/`true`/`false` | `false`                                   |
+| `showAuthorAvatarInDesc`       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）                                               | `0`/`1`/`true`/`false` | `false`                                   |
+| `showEmojiForRetweetAndReply`  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                                  | `0`/`1`/`true`/`false` | `false`                                   |
+| `showRetweetTextInTitle`       | 在标题处显示转推评论（置为 `false` 则在标题只显示被转推推文）                                           | `0`/`1`/`true`/`false` | `true`                                    |
+| `addLinkForPics`               | 为图片添加可点击的链接                                                                   | `0`/`1`/`true`/`false` | `false`                                   |
+| `showTimestampInDescription`   | 在正文处显示推特的时间戳                                                                  | `0`/`1`/`true`/`false` | `false`                                   |
+| `showQuotedInTitle`            | 在标题处显示被引用的推文                                                                  | `0`/`1`/`true`/`false` | `false`                                   |
+| `widthOfPics`                  | 推文配图宽（生效取决于阅读器）                                                               | 不指定 / 数字               | 不指定                                       |
+| `heightOfPics`                 | 推文配图高（生效取决于阅读器）                                                               | 不指定 / 数字               | 不指定                                       |
+| `sizeOfAuthorAvatar`           | 作者头像大小                                                                        | 数字                     | `48`                                      |
+| `sizeOfQuotedAuthorAvatar`     | 被转推推文作者头像大小                                                                   | 数字                     | `24`                                      |
+| `excludeReplies`               | 排除回复，只在 `/twitter/user` 中有效                                                   | `0`/`1`/`true`/`false` | `false`                                   |
+| `includeRts`                   | 包括转推，只在 `/twitter/user` 中有效                                                   | `0`/`1`/`true`/`false` | `true`                                    |
+| `forceWebApi`                  | 强制使用 Web API，即使 Developer API 已配置，只在 `/twitter/user` 和 `/twitter/keyword` 中有效 | `0`/`1`/`true`/`false` | `false`                                   |
+| `count`                        | 传递给 Twitter API 的 `count` 参数，只在 `/twitter/user` 中有效                           | 不指定 / 数字               | 不指定                                       |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -704,11 +708,11 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 用户时间线
 
-<Route author="DIYgod" example="/twitter/user/DIYgod" path="/twitter/user/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=exclude_replies`时去除回复，`routeParams=exclude_rts`去除转推，`routeParams=exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1" rssbud="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/user/DIYgod" path="/twitter/user/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=exclude_replies`时去除回复，`routeParams=exclude_rts`去除转推，`routeParams=exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1" rssbud="1"/>
 
 ### 用户媒体时间线
 
-<Route author="yindaheng98" example="/twitter/media/DIYgod" path="/twitter/media/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格。']" radar="1" rssbud="1"/>
+<Route author="yindaheng98 Rongronggg9" example="/twitter/media/DIYgod" path="/twitter/media/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格。']" radar="1" rssbud="1"/>
 
 ### 用户关注时间线
 
@@ -724,7 +728,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 列表时间线
 
-<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['用户名', 'list 名称', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
+<Route author="xyqfer" example="/twitter/list/ladyleet/Javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['用户名', 'list 名称', '额外参数；请参阅上面的说明和表格']" radar="1" rssbud="1"/>
 
 ### 用户喜欢列表
 
@@ -732,7 +736,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 关键词
 
-<Route author="DIYgod" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?/limit?" :paramsDesc="['关键词', '额外参数；请参阅上面的说明和表格', '查询前多少条']" radar="1" rssbud="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?/limit?" :paramsDesc="['关键词', '额外参数；请参阅上面的说明和表格', '查询前多少条']" radar="1" rssbud="1"/>
 
 ### Trends
 
@@ -796,6 +800,10 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
+### 订阅列表
+
+<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" :paramsDesc="['默认为开启内嵌视频, 任意值为关闭']" selfhost="1" radar="1" rssbud="1"/>
+
 ## 巴哈姆特
 
 ### 个人小屋
@@ -840,6 +848,33 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" :paramsDesc="['用户id，可在 URL 中找到']"/>
 
+## 抖音
+
+::: warning 注意
+
+反爬严格，需要启用 puppeteer。\
+抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
+
+1.  启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
+2.  关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。
+3.  点击原文链接打开抖音网页版的视频详情页播放视频。
+
+:::
+
+额外参数
+
+| 键       | 含义       | 值                      | 默认值     |
+| ------- | -------- | ---------------------- | ------- |
+| `embed` | 是否启用内嵌视频 | `0`/`1`/`true`/`false` | `false` |
+
+### 博主
+
+<Route author="Max-Tortoise Rongronggg9" example="/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao" path="/douyin/user/:uid/:routeParams?" :paramsDesc="['uid，可在用户页面 URL 中找到', '额外参数，query string 格式，请参阅上面的表格']" anticrawler="1" radar="1" rssbud="1" puppeteer="1" />
+
+### 标签
+
+<Route author="TonyRL" example="/douyin/hashtag/1592824105719812" path="/douyin/hashtag/:cid/:routeParams?" :paramsDesc="['标签 ID，可在标签页面 URL 中找到', '额外参数，query string 格式，请参阅上面的表格']" anticrawler="1" radar="1" rssbud="1" puppeteer="1" />
+
 ## 豆瓣
 
 ### 正在上映的电影
@@ -862,9 +897,9 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="umm233 nczitzk" example="/douban/movie/weekly" path="/douban/movie/weekly/:type?" :paramsDesc="['分类，可在榜单页 URL 中找到，默认为一周口碑电影榜']">
 
-| 一周口碑电影榜           | 一周口碑剧集榜        | 华语口碑剧集榜                |
-| ----------------- | -------------- | ---------------------- |
-| movie_weekly_best | tv_weekly_best | tv_chinese_best_weekly |
+| 一周口碑电影榜           | 华语口碑剧集榜                |
+| ----------------- | ---------------------- |
+| movie_weekly_best | tv_chinese_best_weekly |
 
 </Route>
 
@@ -884,7 +919,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 豆瓣小组
 
-<Route author="DIYgod" example="/douban/group/648102" path="/douban/group/:groupid/:type?" :paramsDesc="['豆瓣小组的 id', '缺省 最新，essence 最热，elite 精华']"/>
+<Route author="DIYgod" example="/douban/group/648102" path="/douban/group/:groupid/:type?" :paramsDesc="['豆瓣小组的 id', '缺省 最新，essence 最热，elite 精华']" anticrawler="1"/>
 
 ### 浏览发现
 
@@ -1171,25 +1206,34 @@ rule
 
 ## 微博
 
+::: warning 注意
+
+微博会针对请求的来源地区返回不同的结果。\
+一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 `locallimit.us.sinaimg.cn` 而非 `f.video.weibocdn.com`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。
+
+:::
+
 对于微博内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制输出的样式
 
-| 键                          | 含义                                | 接受的值           | 默认值                             |
-| -------------------------- | --------------------------------- | -------------- | ------------------------------- |
-| readable                   | 是否开启细节排版可读性优化                     | 0/1/true/false | false                           |
-| authorNameBold             | 是否加粗作者名字                          | 0/1/true/false | false                           |
-| showAuthorInTitle          | 是否在标题处显示作者                        | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
-| showAuthorInDesc           | 是否在正文处显示作者                        | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
-| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）   | 0/1/true/false | false                           |
-| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字               | 0/1/true/false | false                           |
-| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博） | 0/1/true/false | true                            |
-| addLinkForPics             | 为图片添加可点击的链接                       | 0/1/true/false | false                           |
-| showTimestampInDescription | 在正文处显示被转发微博的时间戳                   | 0/1/true/false | false                           |
-| widthOfPics                | 微博配图宽（生效取决于阅读器）                   | 不指定 / 数字       | 不指定                             |
-| heightOfPics               | 微博配图高（生效取决于阅读器）                   | 不指定 / 数字       | 不指定                             |
-| sizeOfAuthorAvatar         | 作者头像大小                            | 数字             | 48                              |
-| displayVideo               | 是否直接显示微博视频，只在博主或个人时间线 RSS 中有效     | 0/1/true/false | true                            |
-| displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效     | 0/1/true/false | false                           |
-| showEmojiInDescription     | 是否展示正文中的 emoji 表情                 | 0/1/true/false | true                            |
+| 键                          | 含义                                        | 接受的值           | 默认值                             |
+| -------------------------- | ----------------------------------------- | -------------- | ------------------------------- |
+| readable                   | 是否开启细节排版可读性优化                             | 0/1/true/false | false                           |
+| authorNameBold             | 是否加粗作者名字                                  | 0/1/true/false | false                           |
+| showAuthorInTitle          | 是否在标题处显示作者                                | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
+| showAuthorInDesc           | 是否在正文处显示作者                                | 0/1/true/false | false（`/weibo/keyword/`中为 true） |
+| showAuthorAvatarInDesc     | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）           | 0/1/true/false | false                           |
+| showEmojiForRetweet        | 显示 “🔁” 取代 “转发” 两个字                       | 0/1/true/false | false                           |
+| showRetweetTextInTitle     | 在标题出显示转发评论（置为 false 则在标题只显示被转发微博）         | 0/1/true/false | true                            |
+| addLinkForPics             | 为图片添加可点击的链接                               | 0/1/true/false | false                           |
+| showTimestampInDescription | 在正文处显示被转发微博的时间戳                           | 0/1/true/false | false                           |
+| widthOfPics                | 微博配图宽（生效取决于阅读器）                           | 不指定 / 数字       | 不指定                             |
+| heightOfPics               | 微博配图高（生效取决于阅读器）                           | 不指定 / 数字       | 不指定                             |
+| sizeOfAuthorAvatar         | 作者头像大小                                    | 数字             | 48                              |
+| displayVideo               | 是否直接显示微博视频和 Live Photo，只在博主或个人时间线 RSS 中有效 | 0/1/true/false | true                            |
+| displayArticle             | 是否直接显示微博文章，只在博主或个人时间线 RSS 中有效             | 0/1/true/false | false                           |
+| displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效             | 0/1/true/false | false                           |
+| showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 `[表情名]`               | 0/1/true/false | true                            |
+| showLinkIconInDescription  | 是否展示正文中的链接图标                              | 0/1/true/false | true                            |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -1201,7 +1245,7 @@ rule
 
 ### 博主
 
-<Route author="DIYgod iplusx" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']" anticrawler="1" radar="1" rssbud="1">
+<Route author="DIYgod iplusx Rongronggg9" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" :paramsDesc="['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']" anticrawler="1" radar="1" rssbud="1">
 
 部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
 
@@ -1230,7 +1274,7 @@ rule
 
 ### 个人时间线
 
-<Route author="zytomorrow DIYgod" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" :paramsDesc="['用户的uid', '	过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
+<Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" :paramsDesc="['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
 
 ::: warning 注意
 
@@ -1247,10 +1291,6 @@ rule
 ### 用户
 
 <Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" anticrawler="1"/>
-
-### 热帖
-
-<Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
 
 ## 悟空问答
 
@@ -1270,17 +1310,17 @@ rule
 
 ## 小红书
 
-### 用户笔记和专辑
+### 用户笔记
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['user_id']"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['用户 ID']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 用户专辑
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/album" path="/xiaohongshu/user/:user_id/album" :paramsDesc="['user_id']"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/album" path="/xiaohongshu/user/:user_id/album" :paramsDesc="['用户 ID']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 专辑
 
-<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['board_id']" />
+<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['专辑 ID']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
 
 ## 新榜
 
@@ -1355,7 +1395,7 @@ rule
 
 ### 问题
 
-<Route author="xyqfer" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="xyqfer hacklu" example="/zhihu/question/59895982" path="/zhihu/question/:questionId" :paramsDesc="['问题 id']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 话题
 

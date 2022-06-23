@@ -1,9 +1,0 @@
-<p>
-    <span><big>{{ item.title }}</big></span><br />
-    <span><small><i>{{ item.authors }}</i></small></span><br />
-    <span><small><i>https://doi.org/{{ item.doi }}</i></small></span><br />
-    <img src={{ item.img }}/>
-</p>
-<p>
-    <span>{{ item.abstract }}</span><br />
-</p>

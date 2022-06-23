@@ -4,11 +4,33 @@ pageClass: routes
 
 # 政务消息
 
+## 安徽省科技厅
+
+### 科技资讯 & 科技资源
+
+<Route author="nczitzk" example="/gov/anhui/kjt/kjzx/tzgg" path="/gov/anhui/kjt/:path?" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://kjt.ah.gov.cn/` 和 `/index.html` 之间的字段。下面是一个例子。
+
+若订阅 [通知公告](http://kjt.ah.gov.cn/kjzx/tzgg/index.html) 则将对应页面 URL <http://kjt.ah.gov.cn/kjzx/tzgg/index.html> 中 `http://kjt.ah.gov.cn/` 和 `/index.html` 之间的字段 `kjzx/tzgg` 作为路径填入。此时路由为 [`/gov/anhui/kjt/kjzx/tzgg`](https://rsshub.app/gov/anhui/kjt/kjzx/tzgg)
+
+:::
+
+</Route>
+
+## 澳大利亚内政部
+
+### 移民局新闻
+
+<Route author="liu233w" example="/gov/immiau/news" path="/gov/immiau/news">
+
 ## 澳门廉政公署
 
 ### 最新消息
 
-<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']">
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['类别', '语言，留空为`sc`，支持`sc`（简中），`tc`（繁中），`en`（英文），`pt`（葡萄牙文）']" puppeteer="1">
 
 | 全部  | 案件发布 | 调查报告或勘喻    | 年度报告         | 公署消息    |
 | --- | ---- | ---------- | ------------ | ------- |
@@ -21,6 +43,12 @@ pageClass: routes
 ### 最新消息
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
+
+## 北京市教育委员会
+
+### 通知公告
+
+<Route author="nczitzk" example="/gov/beijing/jw/tzgg" path="/gov/beijing/jw/tzgg" />
 
 ## 北京市科学技术委员会、中关村科技园区管理委员会
 
@@ -80,7 +108,7 @@ pageClass: routes
 
 ### 德阳市政府公开信息
 
-<Route author="zytomorrow" example="/gov/sichuan/deyang/govpulicinfo/德阳市市/市人社局" path="/gov/sichuan/deyang/govpulicinfo/:countyName/:institutionName?" :paramsDesc="['区县名。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区', '单位名称。可直接输入网页显示单位名称']"/>
+<Route author="zytomorrow" example="/gov/sichuan/deyang/govpulicinfo/绵竹市" path="/gov/sichuan/deyang/govpulicinfo/:countyName" :paramsDesc="['区县名（**其他区县整改中，暂时只支持`绵竹市`**）。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区']"/>
 
 ## 广东省人民政府
 
@@ -139,6 +167,16 @@ pageClass: routes
 #### 政务公开
 
 <Route author="Fatpandac" example="/gov/huizhou/zwgk/jgdt" path="/gov/huizhou/zwgk/:category?" :paramsDesc="['资讯类别，可以从网址中得到，默认为政务要闻']"/>
+
+## 国家广播电视总局
+
+### 分类
+
+<Route author="yuxinliu-alex" example="/gov/nrta/news" path="/gov/nrta/news/:category?" :paramsDesc="['资讯类别， 可从地址中获取，默认为总局要闻']"/>
+
+| 总局要闻 | 公告公示 | 工作动态 |  其他 |
+| :--: | :--: | :--: | :-: |
+|  112 |  113 |  114 |     |
 
 ## 国家税务总局
 
@@ -693,6 +731,16 @@ pageClass: routes
 
 </Route>
 
+### 河北省财政厅
+
+<Route author="nczitzk" example="/gov/hebei/czt/xwdt" path="/gov/hebei/czt/xwdt/:category?" :paramsDesc="['分类，见下表，默认为财政动态']">
+
+| 财政动态 | 综合新闻 | 通知公告 |
+| ---- | ---- | ---- |
+| gzdt | zhxw | tzgg |
+
+</Route>
+
 ### 河北省退役军人事务厅
 
 <Route author="SunShinenny" example="/gov/veterans/hebei/sxxx" path="/gov/veterans/hebei/:type" :paramsDesc="['分类名']">
@@ -899,7 +947,15 @@ pageClass: routes
 
 ### 拍卖信息 / 海关法规
 
-<Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
+<Route author="Jeason0228 TonyRL" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel?" :paramsDesc="['支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`']" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+
+::: warning 注意
+
+由于区域限制，建议在国内 IP 的机器上自建
+
+:::
+
+</Route>
 
 ## 中华人民共和国教育部
 
@@ -907,9 +963,9 @@ pageClass: routes
 
 <Route author="Crawler995" example="/gov/moe/policy_anal" path="/gov/moe/:type" :paramsDesc="['分类名']">
 
-|     政策解读    |     最新文件    |  公告公示  |       教育部简报       |
-| :---------: | :---------: | :----: | :---------------: |
-| policy_anal | newest_file | notice | edu_ministry_news |
+|     政策解读    |     最新文件    |  公告公示  |       教育部简报       |      教育要闻      |
+| :---------: | :---------: | :----: | :---------------: | :------------: |
+| policy_anal | newest_file | notice | edu_ministry_news | edu_focus_news |
 
 </Route>
 
@@ -974,9 +1030,23 @@ pageClass: routes
 
 ## 中华人民共和国外交部
 
-### 发言人表态
+### 外交动态
 
-<Route author="nicolaszf" example="/gov/fmprc/fyrbt" path="/gov/fmprc/fyrbt"/>
+<Route author="nczitzk" example="/gov/mfa/wjdt/fyrbt" path="/gov/mfa/wjdt/:category?" :paramsDesc="['分类，见下表，默认为领导人活动']">
+
+| 分类    | category |
+| ----- | -------- |
+| 领导人活动 | gjldrhd  |
+| 外事日程  | wsrc     |
+| 部领导活动 | wjbxw    |
+| 业务动态  | sjxw     |
+| 发言人表态 | fyrbt    |
+| 吹风会   | cfhsl    |
+| 大使任免  | dsrm     |
+| 驻外报道  | zwbd     |
+| 政策解读  | zcjd     |
+
+</Route>
 
 ## 中华人民共和国住房和城乡建设部
 
