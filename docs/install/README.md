@@ -717,6 +717,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
 
+-   Tapechat 动态：需要 App 登陆后抓包获取相应数据
+
+    -   `TAPECHAT_TOKEN`: Tapechat 登陆后请求头中的 Authorization 值。
+
 -   Telegram - 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram 机器人 token
@@ -844,7 +848,3 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
-
--   Tapechat 动态：需要 App 登陆后抓包获取相应数据
-
-    -   `TAPECHAT_TOKEN`:tapechat 登陆后请求头中的 Authorization 值.
