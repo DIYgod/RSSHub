@@ -134,6 +134,12 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['类型, 可以在 url 中得到，默认为 `orsc`']"/>
 
+## MDPI
+
+### 期刊
+
+<Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" :paramsDesc="['期刊名称，从期刊主页 URL 中获得']" radar="1" rssbud="1"/>
+
 ## Nature 系列
 
 ::: tip Tips
