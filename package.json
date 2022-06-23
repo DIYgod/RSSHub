@@ -120,7 +120,7 @@
     "plist": "3.0.5",
     "puppeteer": "13.7.0",
     "puppeteer-extra": "3.3.0",
-    "puppeteer-extra-plugin-stealth": "2.10.0",
+    "puppeteer-extra-plugin-stealth": "2.10.1",
     "query-string": "7.1.1",
     "rand-user-agent": "1.0.68",
     "re2": "1.17.7",
