@@ -610,6 +610,16 @@ Compared to the official one, this feed:
 
 </RouteEn>
 
+## SupChina
+
+### Feed
+
+<RouteEn author="nczitzk" example="/supchina" path="/supchina" />
+
+### Podcasts
+
+<RouteEn author="nczitzk" example="/supchina/podcasts" path="/supchina/podcasts" />
+
 ## swissinfo
 
 ### Category
