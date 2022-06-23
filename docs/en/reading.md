@@ -38,4 +38,31 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 ### Category
 
-<RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Categor, can be found in URL']"/>
+<RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Category, can be found in URL']"/>
+
+## Mobilism
+
+### eBook Releases
+
+<RouteEn author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" :paramsDesc="['Category', 'Retrieve fulltext, specify `y` to enable']">
+
+| Category                 | Parameter  |
+| ------------------------ | ---------- |
+| Romance                  | romance    |
+| Sci-Fi/Fantasy/Horror    | scifi      |
+| General Fiction/Classics | classics   |
+| Magazines & Newspapers   | magazines  |
+| Audiobooks               | audioBooks |
+| Comics                   | comics     |
+
+</RouteEn>
+
+## syosetu
+
+### chapter
+
+<RouteEn author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" :paramsDesc="['Novel id, can be found in URL']">
+
+Eg:<https://ncode.syosetu.com/n1976ey/>
+
+</RouteEn>

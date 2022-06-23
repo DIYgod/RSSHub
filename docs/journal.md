@@ -45,6 +45,20 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" :paramsDesc="['期刊名，可在期刊页地址栏中找到']"/>
 
+## caa.reviews
+
+### Book Reviews
+
+<Route author="Fatpandac" example="/caareviews/book" path="/caareviews/book"/>
+
+### Exhibition Reviews
+
+<Route author="Fatpandac" example="/caareviews/exhibition" path="/caareviews/exhibition"/>
+
+### Essays
+
+<Route author="Fatpandac" example="/caareviews/essay" path="/caareviews/essay"/>
+
 ## Cell
 
 ### 主刊
@@ -86,17 +100,13 @@ pageClass: routes
 
 ## ELSEVIER
 
-### 最新文章
+### 期刊
 
-<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/latest" path="/elsevier/:journal/latest" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing" path="/elsevier/:journal" :paramsDesc="['期刊名称，URL 中 `/journal/` 后部分']" radar="1" rssbud="1"/>
 
-</Route>
+### 期刊指定卷
 
-### 指定卷中的文章
-
-<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/vol/192" path="/elsevier/:journal/vol/:id" :paramsDesc="['期刊名称，复制 URL 中 tocSection 部分','卷号 (如果 `Issue` 存在，使用 `Volume-Issue`, e.g., `/elsevier/aace-clinical-case-reports/vol/7-6`)']" radar="1" rssbud="1">
-
-</Route>
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" :paramsDesc="['期刊名称，URL 中 `/journal/` 后部分','发行号 (如果 Volume 与 Issue 同时存在，采用 `Volume-Issue` 形式, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']" radar="1" rssbud="1"/>
 
 ## IEEE Xplore
 
@@ -110,19 +120,13 @@ pageClass: routes
 
 </Route>
 
-### 最新文章
+### 期刊
 
-<Route author="Derekmini auto-bot-ty" example="/ieee/70/latest/vol" path="/ieee/:journal/latest/vol/:sortType?" :paramsDesc="['期刊名称，复制 URL 中 punumber 部分','排序方式，默认`vol-only-seq`，复制 URL 中 sortType 部分']" radar="1" rssbud="1">
+<Route author="Derekmini auto-bot-ty" example="/ieee/journal/70" path="/ieee/journal/:journal/:sortType?" :paramsDesc="['期刊代码，URL 中 `punumber` 部分','排序方式，默认`vol-only-seq`，URL 中 `sortType` 部分']" radar="1" rssbud="1"/>
 
-</Route>
+### 期刊（近两个月内文章）
 
-### 最新文章（近两个月）
-
-<Route author="Derekmini auto-bot-ty" example="/ieee/78/latest/date" path="/ieee/:journal/latest/date/:sortType?" :paramsDesc="['期刊名称，复制 URL 中 punumber 部分','排序方式，默认`vol-only-seq`，复制 URL 中 sortType 部分']" radar="1" rssbud="1">
-
-当期刊的文章条目过多时，按照 `vol-only-seq` 排序方式可能将近期更新文章淹没在旧条目中，故只筛选当前月与上个月内发表的文章。
-
-</Route>
+<Route author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" :paramsDesc="['期刊代码，URL 中 `punumber` 部分','排序方式，默认`vol-only-seq`，URL 中 `sortType` 部分']" radar="1" rssbud="1"/>
 
 ## INFORMS
 
@@ -130,29 +134,17 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['类型, 可以在 url 中得到，默认为 `orsc`']"/>
 
-## JASA
-
-### 最新文章
-
-<Route author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
-
-</Route>
-
-### 专栏
-
-<Route author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['专栏名称，复制 URL 中 tocSection 部分']" radar="1" rssbud="1">
-
-| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
-| :-----: | :---------: | :-----------------: | :----: |
-|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
-
-</Route>
-
 ## Nature 系列
+
+::: tip Tips
+
+You can get all short name of a journal from <https://www.nature.com/siteindex> or [期刊列表](#nature-xi-lie-qi-kan-lie-biao).
+
+:::
 
 ### 最新成果
 
-<Route author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['期刊名简写']" />
+<Route author="yech1990 TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
 
 |   `:journal`  |             期刊名             | 路由                                                                                 |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
@@ -166,16 +158,16 @@ pageClass: routes
 |      nmat     |       Nature Materials      | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
-    若参数置空（`/nature/research`），则默认获取主刊（Nature）的最新文章。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
--   由于权限的限制，目前仅获取论文的摘要进行展示。
+-   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章 (Latest Research)。
+    若参数置空 (`/nature/research`)，则默认获取主刊 (Nature) 的最新文章。
+-   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以上杂志进行了测试。
+-   由于权限的限制，目前部分论文仅获取摘要进行展示。
 
 </Route>
 
 ### 新闻及评论
 
-<Route author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
+<Route author="yech1990 TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" radar="1" rssbud="1"/>
 
 |   `:journal`  |             期刊名             | 路由                                                                                                 |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
@@ -188,9 +180,9 @@ pageClass: routes
 |      nmat     |       Nature Materials      | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章（Latest Research）。
+-   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章 (Latest Research)。
     主刊由于格式不同，该 router 并未支持，采用 `/nature/news` 来获取新闻。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以下杂志进行了测试。
+-   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以上杂志进行了测试。
 
 </Route>
 
@@ -204,11 +196,21 @@ pageClass: routes
 
 ### 主刊 - 新闻动态
 
-<Route author="yech1990" example="/nature/news" path="/nature/news" />
+<Route author="yech1990 TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
 
-### 主刊 - 精彩研究
+### 精彩研究
 
-<Route author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
+<Route author="yech1990 TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
+
+::: warning 警告
+
+仅支持部分期刊。
+
+:::
+
+### 期刊列表
+
+<Route author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
 ## Oxford University Press
 
@@ -288,6 +290,22 @@ pageClass: routes
 ### Journal
 
 <Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']"/>
+
+## Scitation
+
+### 期刊
+
+<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分']" radar="1" rssbud="1"/>
+
+### 专栏
+
+<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分','专栏，URL 中 `tocSection` 部分']" radar="1" rssbud="1"/>
+
+## Springer
+
+### 期刊
+
+<Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['期刊代码，期刊主页 URL 中的数字']" radar="1" rssbud="1"/>
 
 ## Stork 文献鸟订阅
 

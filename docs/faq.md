@@ -14,11 +14,15 @@
 
 **Q: 演示地址可以用么？**
 
-**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 20 分钟，可以随意使用。但如果你看到路由有 <Badge text="反爬严格" vertical="middle" type="warn"/> 标记，如微博、知乎等，意味着目标网站有严重的反爬策略，demo 无法确保可用性，建议自建来提高稳定性。
+**A:** 演示地址为 [rsshub.app](https://rsshub.app), 缓存时间 120 分钟，可以随意使用。但如果你看到路由有 <Badge text="反爬严格" vertical="middle" type="warn"/> 标记，如微博、知乎等，意味着目标网站有严重的反爬策略，demo 无法确保可用性，建议自建来提高稳定性。
 
-**Q: 为什么 RSSHub 里的图片加载不出来？**
+**Q: 为什么 RSSHub 里的图片 / 视频加载不出来？**
 
-**A:** RSSHub 里的图片地址都是源站地址，大部分有防盗链，所以 RSSHub 给图片加了 `referrerpolicy="no-referrer"` 属性来防止跨域问题，但部分 RSS 服务会自作主张去掉这个属性，如 Feedly、Inoreader，在它们的网页端图片会触发跨域加载不出来
+**A:** RSSHub 里的图片 / 视频地址都是源站地址，部分有防盗链，所以 RSSHub 给图片加了 `referrerpolicy="no-referrer"` 属性来防止跨域问题，但部分 RSS 服务会自作主张去掉这个属性，如 Feedly、Inoreader，在它们的网页端图片会触发跨域加载不出来。同时，视频目前没有类似的属性，因此大部分阅读器都无法通过防盗链检查。下面是一些解决方案：
+
+1.  使用不发送 Referer 的阅读器，如 [Inoreader 网页版](https://www.inoreader.com/)配合[禁用 Referer 的 user script](https://greasyfork.org/zh-CN/scripts/376884)、[RSS to Telegram Bot](https://github.com/Rongronggg9/RSS-to-Telegram-Bot) 等。如果你的阅读器能够绕过防盗链成功播放内嵌视频，那么它就是不发送 Referer 的，请考虑添加到文档里帮助更多的人。
+2.  设置反代，参考 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li)。
+3.  回到原网站查看相关资源。
 
 **Q: 没有我想订阅的网站怎么办嘤嘤嘤 QAQ**
 

@@ -75,6 +75,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
+## Gumroad
+
+### 商品
+
+<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" :paramsDesc="['链接中用户名称，可在链接中获取', '商品名称，可在链接中获取']" radar="1" rssbud="1">
+
+如：`https://afkmaster.gumroad.com/l/Eve10` 则为 `/gumroad/afkmaster/Eve10`
+
+</Route>
+
 ## hotukdeals
 
 ### thread
@@ -170,6 +180,20 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 发现
 
 <Route author="hoilc" example="/haohaozhu/discover/厨房" path="/haohaozhu/discover/:keyword?" :paramsDesc="['分类名或关键字，请使用中文']"/>
+
+## 京东
+
+### 商品价格
+
+<Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" :paramsDesc="['商品 id，可在商品详情页 URL 中找到']">
+
+::: tip 提示
+
+如商品 <https://item.jd.com/526835.html> 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
+
+:::
+
+</Route>
 
 ## 京东众筹
 
@@ -407,3 +431,15 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 商品上新
 
 <Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺id']"/>
+
+## 正版中国
+
+### 分类
+
+<Route author="nczitzk" example="/getitfree" path="/getitfree/:category?" :paramsDesc="['分类，见下表，默认为所有类别']">
+
+| 所有类别 | Android | iOS | Mac | PC | UWP | 公告           | 永久免费 | 限时免费     | 限时折扣     |
+| ---- | ------- | --- | --- | -- | --- | ------------ | ---- | -------- | -------- |
+|      | android | ios | mac | pc | uwp | notification | free | giveaway | discount |
+
+</Route>

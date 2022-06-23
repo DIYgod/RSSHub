@@ -70,6 +70,8 @@ Software id
 
 Language
 
+| Language | key |
+| -------- | --- |
 | English | en |
 | 中文 (简体) | cn |
 | 中文 (繁體) | tw |
@@ -287,6 +289,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
+## OpenWrt
+
+### Releases
+
+<RouteEn author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" :paramsDesc="['Device Model, can be found in url of `Table of Hardware` -> `Device Page`', 'Same as above']"/>
+
 ## PlayStation
 
 ### PlayStation 4 System Update
@@ -402,3 +410,9 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### What's New
 
 <RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+
+## Zotero
+
+### Version History
+
+<RouteEn author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>

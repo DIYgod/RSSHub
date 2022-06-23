@@ -16,6 +16,18 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
 
+## FX Markets
+
+### Channel
+
+<RouteEn author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['channel, can be found in the navi bar links at the home page']">
+
+| Trading | Infrastructure | Tech and Data | Regulation |
+| ------- | -------------- | ------------- | ---------- |
+| trading | infrastructure | tech-and-data | regulation |
+
+</RouteEn>
+
 ## TokenInsight
 
 ### Blogs

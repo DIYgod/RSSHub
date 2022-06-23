@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'lib/**'
+      - 'scripts/workflow/*.js'
 
 jobs:
   build:
@@ -14,10 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Use Node.js v14
+      - name: Use Node.js v16
         uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
           cache: 'yarn'
       - name: Build file
         run: yarn && npm run build:all

@@ -95,7 +95,7 @@ pageClass: routes
 
 ### 免费游戏
 
-<Route author="Zyx-A" example="/epicgames/freegames" path="/epicgames/freegames"/>
+<Route author="Zyx-A nczitzk KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['地区，默认为 en_US', '国家，默认为 en_US']"/>
 
 ## Fate Grand Order
 
@@ -196,6 +196,40 @@ pageClass: routes
 ### indienova 文章
 
 <Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
+
+## itch.io
+
+### Browse
+
+<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['参数']">
+
+参数为对应页面 URL 中 `itch.io` 后的字段，如 [Top rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) 的 URL 是 <https://itch.io/games/top-rated/tag-singleplayer>，其中 `itch.io` 后的字段为 `/games/top-rated/tag-singleplayer`。
+
+所以路由为 [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer)。
+
+::: tip 提示
+
+你可以在 [这里](https://itch.io/tags)，浏览所有的 tags。
+
+:::
+
+</Route>
+
+### Developer Logs
+
+<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']">
+
+用户 id 为对应页面 URL 中 `.itch.io` 前的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `.itch.io` 前的字段为 `teamterrible`；
+
+项目 id 为对应页面 URL 中 `itch.io` 与 `/devlog` 之间的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `itch.io` 与 `/devlog` 之间的字段为 `the-baby-in-yellow`。
+
+所以路由为 [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow)。
+
+</Route>
+
+### Posts
+
+<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" :paramsDesc="['话题 id，可在对应页面地址栏中找到', '话题名，可在对应页面地址栏中找到']"/>
 
 ## JUMP
 
@@ -397,7 +431,7 @@ pageClass: routes
 
 ### Steam search
 
-<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
+<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
 
 参数 params 请从 Steam 的 URL 取得
 
@@ -433,23 +467,31 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 游戏论坛
 
-<Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '论坛版块ID, 默认显示所有帖子, 论坛版块URL中`group_label_id`参数，特别的有']"/>
+<Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']">
 
-| 全部  | 精华    | 官方       |
-| --- | ----- | -------- |
-| all | elite | official |
+| 全部   | 精华    | 官方       | 影片    |
+| ---- | ----- | -------- | ----- |
+| feed | elite | official | video |
+
+| 发布时间    | 回复时间      |
+| ------- | --------- |
+| created | commented |
+
+</Route>
 
 ### 游戏更新
 
-<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏ID, 游戏主页URL中获取']"/>
+<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏 ID，游戏主页 URL 中获取']"/>
 
 ### 游戏评价
 
-<Route author="hoilc" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '排序方式, 空为默认排序, 可选如下']"/>
+<Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']"/>
 
-| 最新     | 最热  | 游戏时长  |
-| ------ | --- | ----- |
-| update | hot | spent |
+| 最新     | 最热  | 游戏时长  | 默认排序    |
+| ------ | --- | ----- | ------- |
+| update | hot | spent | default |
+
+</Route>
 
 ## 巴哈姆特
 
@@ -579,9 +621,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 游戏 id
 
-| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 |
-| --- | -- | --- | ----- | ---- |
-| 1   | 2  | 3   | 4     | 6    |
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
+| --- | -- | --- | ----- | ---- | --- |
+| 1   | 2  | 3   | 4     | 6    | 8   |
 
 公告类型
 
@@ -596,6 +638,24 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游戏公告与新闻
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
+
+### 游戏内公告
+
+<Route author="swwind" example="/arknights/announce" path="/arknights/announce/:platform?/:group?" :paramsDesc="['平台，默认为 Android','分组，默认为 ALL']">
+
+平台
+
+|   安卓服   | iOS 服 |    B 服   |
+| :-----: | :---: | :------: |
+| Android |  IOS  | Bilibili |
+
+分组
+
+|  全部 |  系统公告  |   活动公告   |
+| :-: | :----: | :------: |
+| ALL | SYSTEM | ACTIVITY |
+
+</Route>
 
 ### アークナイツ (日服新闻)
 

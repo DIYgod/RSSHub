@@ -1,46 +1,99 @@
-name: PR route test
-# https://github.com/actions/first-interaction/issues/10#issuecomment-670968624
-# https://github.com/actions/first-interaction/issues/10#issuecomment-752360668
-# Reopen Included
+name: PR - route test
 on:
-  - pull_request_target
+  workflow_run:
+    workflows: [ PR - Docker build test ]  # open, reopen, synchronized included
+    types: [ completed ]
 
 jobs:
   testRoute:
-    name: Vercel Preview
+    name: Route test
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # skip if unsuccessful
     steps:
       - uses: actions/checkout@v3
+
+      # https://github.community/t/154682
+      - name: Search the PR that triggered this workflow
+        uses: potiuk/get-workflow-origin@v1_3
+        id: source-run-info
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sourceRunId: ${{ github.event.workflow_run.id }}
+
+      - name: Fetch PR data via GitHub API
+        uses: octokit/request-action@v2.x
+        id: pr-data
+        with:
+          route: GET /repos/{repo}/pulls/{number}
+          repo: ${{ github.repository }}
+          number: ${{ steps.source-run-info.outputs.pullRequestNumber }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Fetch affected routes
         id: fetchRoute
         uses: actions/github-script@v6
+        env:
+          PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
         with:
           # by default, JSON format returned
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const body = context.payload.pull_request.body
-            const number = context.payload.pull_request.number
+            const PR = JSON.parse(process.env.PULL_REQUEST)
+            const body = PR.body
+            const number = PR.number
+            const sender = PR.user.login
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return await script({github, context, core}, body, number)
-      - name: Waiting for 200 from the Vercel Preview
+            return await script({ github, context, core }, body, number, sender)
+
+      - name: Fetch Docker image
         if: (env.TEST_CONTINUE)
-        uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
-        id: waitFor200
+        uses: dawidd6/action-download-artifact@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          max_timeout: 300
+          workflow: ${{ github.event.workflow_run.workflow_id }}
+          run_id: ${{ github.event.workflow_run.id }}
+
+      - name: Import Docker image and set up Docker container
+        if: (env.TEST_CONTINUE)
+        run: |
+          set -ex
+          gzip -cvd docker-image/rsshub.tar.gz | docker load
+          docker run -d \
+            --name rsshub \
+            -e NODE_ENV=dev \
+            -e LOGGER_LEVEL=debug \
+            -p 1200:1200 \
+            rsshub:latest
+
+      - uses: actions/setup-node@v3  # just need its cache
+        if: (env.TEST_CONTINUE)
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies (yarn)  # `got` needed since `github.request` disallows HTTP requests
+        if: (env.TEST_CONTINUE)
+        run: yarn
+
       - name: Generate feedback
         if: (env.TEST_CONTINUE)
         uses: actions/github-script@v6
         env:
-          TEST_BASEURL: ${{steps.waitFor200.outputs.url}}
+          TEST_BASEURL: http://localhost:1200
           TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
+          PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            const PR = JSON.parse(process.env.PULL_REQUEST)
             const link = process.env.TEST_BASEURL
             const routes = JSON.parse(process.env.TEST_ROUTES)
-            const number = context.payload.pull_request.number
+            const number = PR.number
             core.info(`${link}, ${routes}, ${number}`)
+            const got = require("got");
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return await script({github, context, core}, link, routes, number)
+            return await script({ github, context, core, got }, link, routes, number)
+
+      - name: Print Docker container logs
+        if: (env.TEST_CONTINUE)
+        run: docker logs rsshub  # logs/combined.log? Not so readable...
