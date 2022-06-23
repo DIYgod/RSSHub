@@ -7393,6 +7393,17 @@
       }
     ]
   },
+  "mdpi.com": {
+    "_name": "MDPI",
+    "www": [
+      {
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/journal.html#MDPI",
+        "source": "/journal/:journal",
+        "target": "/mdpi/:journal"
+      }
+    ]
+  },
   "medsci.cn": {
     "_name": "梅斯医学",
     ".": [

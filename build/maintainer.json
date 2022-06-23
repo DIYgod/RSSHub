@@ -1612,6 +1612,9 @@
     "/mcachicago/exhibitions": [
         "chazeon"
     ],
+    "/mdpi/:journal": [
+        "Derekmini"
+    ],
     "/medsci/:sid?/:tid?": [
         "nczitzk"
     ],
