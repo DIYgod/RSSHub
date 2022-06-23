@@ -2277,6 +2277,12 @@
     "/subhd/zu/:category?": [
         "nczitzk"
     ],
+    "/supchina/podcasts": [
+        "nczitzk"
+    ],
+    "/supchina/": [
+        "nczitzk"
+    ],
     "/swissinfo/:language?/:category?": [
         "nczitzk"
     ],
