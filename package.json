@@ -135,7 +135,7 @@
     "tough-cookie": "4.0.0",
     "tunnel": "0.0.6",
     "twitter-api-v2": "1.12.2",
-    "winston": "3.7.2",
+    "winston": "3.8.0",
     "xml2js": "0.4.23"
   },
   "jest": {
