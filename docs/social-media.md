@@ -875,6 +875,10 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="TonyRL" example="/douyin/hashtag/1592824105719812" path="/douyin/hashtag/:cid/:routeParams?" :paramsDesc="['标签 ID，可在标签页面 URL 中找到', '额外参数，query string 格式，请参阅上面的表格']" anticrawler="1" radar="1" rssbud="1" puppeteer="1" />
 
+### 直播
+
+见 [#抖音直播](/live.html#dou-yin-zhi-bo)
+
 ## 豆瓣
 
 ### 正在上映的电影
