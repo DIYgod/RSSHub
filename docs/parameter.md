@@ -2,7 +2,19 @@
 
 ::: tip 提示
 
-所有通用参数可以使用 `&` 连接组合使用，效果叠加
+通用参数实际上是 URI 中的 query，可以使用 `&` 连接组合使用，效果叠加。
+
+通用参数需要置于路由路径的最后。有些路由在路由路径（route path）的最后引入了<span color=green>**自定义参数**</span>，<span color=violet>**通用参数**</span>也需要置于它们之后。
+
+举例:
+
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span color=green><b>readable=1\&includeRts=0</b></span>?<span color=violet><b>brief=100\&limit=5</b></span></a>
+
+如果设置了<span color=magenta>**输出格式**</span>（`.atom`, `.rss`, `.debug.json`），则需要置于路由路径（含<span color=green>**自定义参数**</span>）与<span color=violet>**其它通用参数**</span>之间。
+
+举例:
+
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span color=green><b>readable=1\&includeRts=0</b></span><span color=magenta><b>.atom</b></span>?<span color=violet><b>brief=100\&limit=5</b></span></a>
 
 :::
 
@@ -11,6 +23,14 @@
 ::: warning 注意
 
 请务必显式进行[彻底的 URL 编码](https://gchq.github.io/CyberChef/#recipe=URL_Encode\(true\))。切勿依赖浏览器的自动 URL 编码，某些字符，如 `+`, `&`，将不会被自动编码，进而导致最终解析结果不正确。
+
+:::
+
+::: warning 注意
+
+filter 支持正则表达式。由于正则部分特性可被利用于 DoS (ReDOS)，默认引擎`re2`屏蔽了部分`Regexp`功能，且在部分情况下表现不一致。具体差异可以[查看文档](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
+
+如果需要指定不同的引擎，请参考[功能特性 -> FILTER_REGEX_ENGINE](install/#pei-zhi-gong-neng-te-xing)。
 
 :::
 
@@ -95,7 +115,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 这是个测试中的 API
 
-下方操作允许任意用户注入链接模版到最终输出结果，针对于 Web 环境来说这是有害的（XSS）。但是 RSS 阅读器内通常是有限制的环境，通常不会带来副作用，一般路由通常不会需要这些功能。如果需要开启，请将  `ALLOW_USER_HOTLINK_TEMPLATE` 环境变量设置为 `true`
+`image_hotlink_template` 和 `multimedia_hotlink_template` 允许用户提供链接模版用于替换媒体 URL。特定的路由和阅读器组合可能导致用户需要这些功能，但不是非常普遍。敏感字符将被自动转义，不会发生 XSS 攻击。替换范围仅限于媒体元素，即使注入脚本 URL 也不会被加载而造成 XSS。用户能且仅能控制的是「媒体从哪里来」。该功能通常不会带来副作用，如果需要开启这两个参数，请将  `ALLOW_USER_HOTLINK_TEMPLATE` 环境变量设置为 `true`
 
 :::
 
@@ -114,7 +134,7 @@ RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss`
 -   缺省 RSS 2.0 - <https://rsshub.app/jianshu/home>
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
--   和 filter 或其他 URL query 一起使用 `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
+-   和 filter 或其他 URL query 一起使用 - `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
 
 ### debug
 

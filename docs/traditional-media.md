@@ -66,11 +66,7 @@ pageClass: routes
 
 ### 话题
 
-<Route author="zoenglinghou mjysci" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']" radar="1" rssbud="1" anticrawler="1" puppeteer="1">
-
-采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
-
-</Route>
+<Route author="zoenglinghou mjysci TonyRL" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic?" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`，默认为 `trending-news`']" radar="1" rssbud="1" />
 
 ## BBC
 
@@ -1362,9 +1358,9 @@ category 对应的关键词有
 
 ### 新闻简报
 
-<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
+<Route author="yueyericardo nczitzk" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
 
-网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
+网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese>
 
 </Route>
 

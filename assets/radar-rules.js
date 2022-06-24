@@ -485,7 +485,6 @@
             },
         ],
     },
-    'apnews.com': { _name: 'AP News', '.': [{ title: '话题', docs: 'https://docs.rsshub.app/traditional-media.html#ap-news', source: '/:topic', target: '/apnews/topics/:topic' }] },
     'biquge5200.com': { www: [{ title: 'biquge5200.com', docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge5200-com', source: '/:id', target: '/novel/biquge/:id' }] },
     'biquge.info': { www: [{ title: 'biquge.info', docs: 'https://docs.rsshub.app/reading.html#bi-qu-ge-biquge-info', source: '/:id', target: '/novel/biqugeinfo/:id' }] },
     'matters.news': {
@@ -974,15 +973,6 @@
             { title: '用户的喜爱列表', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/favorites/:username/', target: '/furaffinity/favorites/:username' },
             { title: '作品评论区', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/view/:id/', target: '/furaffinity/submission_comments/:id' },
             { title: '日记评论区', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/journal/:id/', target: '/furaffinity/journal_comments/:id' },
-        ],
-    },
-    'gcores.com': {
-        _name: '机核网',
-        www: [
-            { title: '资讯', docs: 'https://docs.rsshub.app/program-update.html#eagle', source: '/news', target: '/gcores/category/news' },
-            { title: '视频', docs: 'https://docs.rsshub.app/program-update.html#eagle', source: '/videos', target: '/gcores/category/videos' },
-            { title: '电台', docs: 'https://docs.rsshub.app/program-update.html#eagle', source: '/radios', target: '/gcores/category/radios' },
-            { title: '文章', docs: 'https://docs.rsshub.app/program-update.html#eagle', source: '/articles', target: '/gcores/category/articles' },
         ],
     },
     'bgm.tv': {

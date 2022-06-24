@@ -140,6 +140,12 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 
 <RouteEn author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['Category, can be found in the url of the page, `orsc` by default']"/>
 
+## MDPI
+
+### Journal
+
+<RouteEn author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" :paramsDesc="['Journal Name, get it from the journal homepage']" radar="1" rssbud="1"/>
+
 ## MIT Technology Review
 
 <RouteEn author="zphw" example="/technologyreview" path="/technologyreview" />
