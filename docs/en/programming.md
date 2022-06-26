@@ -82,6 +82,18 @@ Category
 
 <RouteEn author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
 
+## CNCF
+
+### Category
+
+<RouteEn author="Fatpandac" example="/cncf" path="/cncf/:cate?" radar="1" rssbud="1" :paramsDesc="['blog by default']">
+
+| Blog | News | Announcements | Reports |
+|------|------|---------------|---------|
+| blog | news | announcements | reports |
+
+</RouteEn>
+
 ## Codeforces
 
 ### Latest contests
@@ -320,6 +332,17 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | Slackware        | `Slackware`        |
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
+
+</RouteEn>
+
+## MySQL
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" :paramsDesc="['Version, see below, 8.0 by default']">
+
+| 8.0 | 5.7 | 5.6 |
+| --- | --- | --- |
 
 </RouteEn>
 

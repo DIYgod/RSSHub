@@ -44,6 +44,18 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
+## FX Markets
+
+### 分类
+
+<Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+
+| Trading | Infrastructure | Tech and Data | Regulation |
+| ------- | -------------- | ------------- | ---------- |
+| trading | infrastructure | tech-and-data | regulation |
+
+</Route>
+
 ## TokenInsight
 
 ### 博客
@@ -181,6 +193,13 @@ pageClass: routes
 ## 金十数据
 
 <Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+
+## 老虎社区
+
+### 个人主页
+
+<Route author="Fatpandac" example="/laohu8/personal/3527667596890271" path="/laohu8/personal/:id" :paramsDesc="['用户 ID，见网址链接']" rssbud="1" radar="1"/>
+
 ## 麦肯锡中国
 
 <Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">

@@ -44,6 +44,12 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
+## 北京市教育委员会
+
+### 通知公告
+
+<Route author="nczitzk" example="/gov/beijing/jw/tzgg" path="/gov/beijing/jw/tzgg" />
+
 ## 北京市科学技术委员会、中关村科技园区管理委员会
 
 ### 频道
@@ -941,7 +947,15 @@ pageClass: routes
 
 ### 拍卖信息 / 海关法规
 
-<Route author="Jeason0228" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel"  :paramsDesc="['支持paimai,fagui等2个频道']" />
+<Route author="Jeason0228 TonyRL" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel?" :paramsDesc="['支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`']" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+
+::: warning 注意
+
+由于区域限制，建议在国内 IP 的机器上自建
+
+:::
+
+</Route>
 
 ## 中华人民共和国教育部
 

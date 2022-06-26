@@ -2,7 +2,19 @@
 
 ::: tip
 
-The parameters can be linked with `&` to used together to generate a complex feed.
+Parameters here are actually URI query and can be linked together with `&` to generate a complex feed.
+
+Parameters here need to be placed after the route path. Some routes may have <span color=green>**custom route parameters**</span> and <span color=violet>**parameters here**</span> need to be placed after them.
+
+E.g.
+
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span color=green><b>readable=1&includeRts=0</b></span>?<span color=violet><b>brief=100&limit=5</b></span></a>
+
+If a <span color=magenta>**output format**</span> (`.atom`, `.rss`, `.debug.json`) is set, it needs to be placed between the route path (including <span color=green>**custom route parameters**</span>) and <span color=violet>**other parameters**</span>.
+
+E.g.
+
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span color=green><b>readable=1&includeRts=0</b></span><span color=magenta><b>.atom</b></span>?<span color=violet><b>brief=100&limit=5</b></span></a>
 
 :::
 
@@ -13,6 +25,16 @@ The parameters can be linked with `&` to used together to generate a complex fee
 Please make sure you've [fully URL-encoded](https://gchq.github.io/CyberChef/#recipe=URL_Encode(true)) the parameters. Do not rely on the browser's automatic URL encoding. Some characters, such as `+`, `&`, will not be automatically encoded, resulting in the final parsing result not being correct.
 
 :::
+
+::: warning Warning
+
+filter supports Regex, and due to the fact that some Regex are vulnerable to DoS (ReDoS), default engine `re2` blocks some of these functionalities available in node `Regexp`. These two engines also behaves a bit different in some corner cases. [Details](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
+
+
+If you need to use a different engine, please refer to [Deploy->Features->FILTER_REGEX_ENGINE](/en/install/#configuration-features).
+
+:::
+
 
 The following URL query parameters are supported, Regex support is built-in.
 
@@ -28,7 +50,7 @@ Set `filter` to include the content
 
 -   `filter_time`: filter `pubDate`, in seconds, return specified time range. Item without `pubDate` will not be filtered.
 
-For example: [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
+E.g. [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
 
 Set `filterout` to exclude unwanted content.
 
@@ -40,13 +62,13 @@ Set `filterout` to exclude unwanted content.
 
 -   `filterout_author`: filter `author` only
 
-For example: [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
+E.g. [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
 Set `filter_case_sensitive` to determine whether the filtering keywords should be case sensitive. The parameter would apply to both `filter` and `filterout`.
 
 Default: `true`
 
-Example: [https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false](https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false)
+E.g. [https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false](https://rsshub.app/dribbble/popular?filter=BluE|yeLLow|BlaCK&filter_case_sensitive=false)
 
 ## Limit Entries
 
@@ -88,13 +110,47 @@ E.g. <https://rsshub.app/pnas/latest?scihub=1>
 
 E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
+## Multimedia processing
+
+::: warning Warning
+
+This is an experimental API
+
+`image_hotlink_template` and `multimedia_hotlink_template` allow users to supply templates to replace media URLs. Certain routes plus certain RSS readers may result in users needing these features, but it's not very common. Vulnerable characters will be escaped automatically, making XSS attack impossible. The scope of URL replacement is limited to media elements, making any script URL unable to load and unable to cause XSS. As a result, users can only take the control of "where are the media from". These features are commonly side-effect-free. To enable these two parameters, please set  `ALLOW_USER_HOTLINK_TEMPLATE` to `true`
+
+:::
+
+-   `image_hotlink_template`: replace image URL in the description to avoid anti-hotlink protection, leave it blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) (suffixing with `_ue` results in URL encoding), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
+-   `multimedia_hotlink_template`: the same as `image_hotlink_template` but apply to audio and video. Note: the service must follow redirects, allow reverse-proxy for audio and video, and must drop the `Referer` header when reverse-proxying. [Here is an easy-to-deploy project that fits these requirements](https://github.com/Rongronggg9/rsstt-img-relay). The project accepts simple URL concatenation, e.g. `https://example.com/${href}`, in which `example.com` should be replaced with the domain name of the service you've deployed
+-   `wrap_multimedia_in_iframe`: wrap audio and video in `<iframe>` to prevent the reader from sending `Referer` header. This workaround is only compatible with a few readers, such as RSS Guard and Akregator, which may not support the previous method. You can try this method in such a case
+
+There are more details in the [FAQ](/en/faq.html).
+
 ## Output Formats
 
 RSSHub conforms to RSS 2.0 and Atom Standard, simply append `.rss` `.atom` to the end of the feed address to obtain the feed in corresponding format. The default output format is RSS 2.0.
 
-For example:
+E.g.
 
 -   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
 -   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
 -   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
--   Apply filters or URL query [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
+-   Apply filters or URL query - [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
+
+### Debug
+
+If the RSSHub instance is running with `debugInfo=true` enabled, suffixing a route with `.debug.json` will result in the value of `ctx.state.json` being returned.
+
+This feature aims to facilitate debugging or developing customized features. A route developer has the freedom to determine whether to adopt it or not, without any format requirement.
+
+For example：
+
+-   `/furstar/characters/cn.debug.json`
+
+## Brief introduction
+
+Set the parameter `brief` to generate a brief pure-text introduction with a limited number of characters ( ≥ `100`).
+
+For example：
+
+-   Brief introduction with 100 characters: `?brief=100`
