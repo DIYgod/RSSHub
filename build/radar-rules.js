@@ -554,6 +554,12 @@
                         return '/appledaily/:channel';
                     }
                 } } ] },
+  "appleinsider.com":{ _name:"AppleInsider",
+    ".":[ { title:"分类",
+        docs:"https://docs.rsshub.app/new-media.html#appleinsider-fen-lei",
+        source:[ "/:category",
+          "/" ],
+        target:"/appleinsider/:category" } ] },
   "app.so":{ _name:"鲜面连线",
     ".":[ { title:"限免应用",
         docs:"https://docs.rsshub.app/program-update.html#app-store-mac-app-store",

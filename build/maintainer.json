@@ -163,6 +163,9 @@
     "/appledaily/:channel?": [
         "Fatpandac"
     ],
+    "/appleinsider/:category?": [
+        "nczitzk"
+    ],
     "/appstore/update/:country/:id": [
         "HenryQW"
     ],
