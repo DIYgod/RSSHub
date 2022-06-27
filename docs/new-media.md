@@ -3253,6 +3253,12 @@ column 为 third 时可选的 category:
 | --- | ------ | ------- | ------------- | ------ | -------- |
 | all | weekly | monthly | international | hot    | favorite |
 
+## 水果派
+
+### 首页
+
+<Route author="nczitzk" example="/shuiguopai" path="/shuiguopai" />
+
 ## 搜狐号
 
 ### 更新
