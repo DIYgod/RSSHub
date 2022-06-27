@@ -142,7 +142,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nczitzk" example="/appleinsider" path="/appleinsider/:category?" :paramsDesc="['分类, 见下表，默认为空，即 News']">
+<Route author="nczitzk" example="/appleinsider" path="/appleinsider/:category?" :paramsDesc="['分类，见下表，默认为空，即 News']">
 
 | News | Reviews | How-tos |
 | ---- | ------- | ------- |
