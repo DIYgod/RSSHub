@@ -152,6 +152,12 @@ pageClass: routes
 
 </Route>
 
+## 第一财经杂志
+
+### 首页
+
+<Route author="nczitzk" example="/cbnweek" path="/cbnweek"/>
+
 ## 东方财富
 
 ### 天天基金用户动态
