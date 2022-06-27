@@ -2725,6 +2725,24 @@
     "/xidian/jwc/:category?": [
         "ShadowySpirits"
     ],
+    "/xjtu/dean/:subpath+": [
+        "hoilc"
+    ],
+    "/xjtu/ee/:id?": [
+        "DylanXie123"
+    ],
+    "/xjtu/gs/tzgg": [
+        "nczitzk"
+    ],
+    "/xjtu/international/:subpath+": [
+        "guitaoliu"
+    ],
+    "/xjtu/job/:subpath?": [
+        "DylanXie123"
+    ],
+    "/xjtu/std/:category?": [
+        "nczitzk"
+    ],
     "/xueqiu/favorite/:id": [
         "imlonghao"
     ],
@@ -3865,11 +3883,6 @@
     "/wolley": [],
     "/wolley/user/:id": [],
     "/wolley/host/:host": [],
-    "/xjtu/gs/tzgg": [],
-    "/xjtu/dean/:subpath+": [],
-    "/xjtu/international/:subpath+": [],
-    "/xjtu/job/:subpath?": [],
-    "/xjtu/ee/:id?": [],
     "/booksource": [],
     "/ku/:name?": [],
     "/blogs/hedwig/:type": [],
