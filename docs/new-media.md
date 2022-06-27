@@ -138,6 +138,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
 
+## AppleInsider
+
+### 分类
+
+<Route author="nczitzk" example="/appleinsider" path="/appleinsider/:category?" :paramsDesc="['分类，见下表，默认为空，即 News']">
+
+| News | Reviews | How-tos |
+| ---- | ------- | ------- |
+|      | reviews | how-to  |
+
+</Route>
+
 ## ASML 阿斯麦
 
 ### Press releases & announcements
