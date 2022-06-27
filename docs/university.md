@@ -2543,17 +2543,29 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 就业创业中心
 
-<Route author="DylanXie123" example="/xjtu/job/xdsgwy" path="/xjtu/job/:subpath?" :paramsDesc="['栏目类型，默认请求`zxtg`，详见下方表格']"  />
+<Route author="DylanXie123" example="/xjtu/job/zxgg" path="/xjtu/job/:subpath?" :paramsDesc="['栏目类型，默认请求`zxgg`，详见下方表格']">
 
 栏目类型
 
-| 中心通告 | 选调生及公务员 | 国际组织实习 | 新闻资讯 | 活动与讲座 |
-| ---- | ------- | ------ | ---- | ----- |
-| zxtg | xdsgwy  | gjzzsx | xwzx | hdyjz |
+| 中心公告 | 选调生 | 重点单位 | 国际组织 | 创新创业 | 就业实习 |
+| ---- | --- | ---- | ---- | ---- | ---- |
+| zxgg | xds | zddw | gjzz | cxcy | jysx |
+
+</Route>
 
 ### 电气学院
 
-<Route author="DylanXie123" example="/xjtu/ee/1114" path="/xjtu/job/:id?" :paramsDesc="['栏目id，默认请求`1114`，可在 URL 中找到']"  />
+<Route author="DylanXie123" example="/xjtu/ee/1114" path="/xjtu/ee/:id?" :paramsDesc="['栏目id，默认请求`1124`，可在 URL 中找到']" />
+
+### 科技在线
+
+<Route author="nczitzk" example="/xjtu/std/zytz" path="/xjtu/std/:category?" :paramsDesc="['分类，见下表，默认为通知公告']">
+
+| 通知公告 | 重要通知 | 项目申报 | 成果申报 | 信息快讯 |
+| ---- | ---- | ---- | ---- | ---- |
+|      | zytz | xmsb | cgsb | xxkx |
+
+</Route>
 
 ## 西安理工大学
 
