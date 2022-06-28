@@ -138,6 +138,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
 
+## AppleInsider
+
+### 分类
+
+<Route author="nczitzk" example="/appleinsider" path="/appleinsider/:category?" :paramsDesc="['分类，见下表，默认为空，即 News']">
+
+| News | Reviews | How-tos |
+| ---- | ------- | ------- |
+|      | reviews | how-to  |
+
+</Route>
+
 ## ASML 阿斯麦
 
 ### Press releases & announcements
@@ -3252,6 +3264,12 @@ column 为 third 时可选的 category:
 | 全部  | 每周项目精选 | 每月项目精选  | 海外项目精选        | 近期热门项目 | 近期最多收藏   |
 | --- | ------ | ------- | ------------- | ------ | -------- |
 | all | weekly | monthly | international | hot    | favorite |
+
+## 水果派
+
+### 首页
+
+<Route author="nczitzk" example="/shuiguopai" path="/shuiguopai" />
 
 ## 搜狐号
 
