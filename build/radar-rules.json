@@ -2443,6 +2443,14 @@
         "source": "/user/:uid",
         "target": "/douyin/user/:uid"
       }
+    ],
+    "live": [
+      {
+        "title": "直播间开播",
+        "docs": "https://docs.rsshub.app/live.html#dou-yin-zhi-bo",
+        "source": "/:rid",
+        "target": "/douyin/live/:rid"
+      }
     ]
   },
   "dtcj.com": {
