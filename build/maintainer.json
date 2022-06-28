@@ -1027,6 +1027,9 @@
     "/gov/sichuan/deyang/govpulicinfo/:countyName": [
         "zytomorrow"
     ],
+    "/gov/xuzhou/hrss/:category?": [
+        "nczitzk"
+    ],
     "/guancha/:category?": [
         "nczitzk",
         "Jeason0228"
