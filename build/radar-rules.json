@@ -8409,6 +8409,23 @@
       }
     ]
   },
+  "nyaa.si": {
+    "_name": "nyaa",
+    ".": [
+      {
+        "title": "搜索结果",
+        "docs": "https://docs.rsshub.app/multimedia.html#nyaa-sou-suo-jie-guo",
+        "source": "/"
+      }
+    ],
+    "sukebei": [
+      {
+        "title": "sukebei 搜索结果",
+        "docs": "https://docs.rsshub.app/multimedia.html#nyaa-sukebei-sou-suo-jie-guo",
+        "source": "/"
+      }
+    ]
+  },
   "nytimes.com": {
     "_name": "纽约时报",
     ".": [
