@@ -1101,6 +1101,16 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" :paramsDesc="['搜索查询']"/>
 
+## u3c3
+
+### 关键词搜索
+
+<Route author="noname1897" example="/u3c3/search/新片速递" path="/u3c3/search/:keyword?" :paramsDesc="['搜索关键字']" supportBT="1" radar="1" />
+
+### 分类
+
+<Route author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" :paramsDesc="['类别名称，注意大小写，需要严格对应！可选的 `type` 有 `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`，如果不设置 type，则展示首页']" supportBT="1" radar="1" />
+
 ## YouTube
 
 见 [#youtube](/social-media.html#youtube)
