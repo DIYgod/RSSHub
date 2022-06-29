@@ -377,7 +377,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### Type
 
-<RouteEn author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" :paramsDesc="['type, pay attention to case, it should be exactly same as the choices: `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`, if no type is provided, show the home index']" supportBT="1" />
+<RouteEn author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" :paramsDesc="['type, pay attention to case, it should be exactly same as the choices: `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`, if no type is provided, show the home index']" supportBT="1" radar="1"/>
 
 ## YouTube
 
