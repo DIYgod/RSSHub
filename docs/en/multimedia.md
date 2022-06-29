@@ -371,9 +371,9 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ## u3c3
 
-### search keyword
+### Keyword Search
 
-<RouteEn author="noname1897" example="/u3c3/search/les" path="/u3c3/search/:keyword?" :paramsDesc="['search keyword']" supportBT="1" />
+<RouteEn author="noname1897" example="/u3c3/search/les" path="/u3c3/search/:keyword?" :paramsDesc="['search keyword']" supportBT="1" radar="1"/>
 
 ### Type
 
