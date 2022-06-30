@@ -617,6 +617,12 @@
     "/douban/topic/:id/:sort?": [
         "LogicJake"
     ],
+    "/douyin/hashtag/:cid/:routeParams?": [
+        "TonyRL"
+    ],
+    "/douyin/live/:rid": [
+        "TonyRL"
+    ],
     "/douyin/user/:uid/:routeParams?": [
         "Max-Tortoise",
         "Rongronggg9"
@@ -2590,6 +2596,9 @@
     "/verfghbw/press/:keyword?": [
         "quinn-dev"
     ],
+    "/vlive/channel/:channel/board/:board": [
+        "TonyRL"
+    ],
     "/wallhaven/search/:filter?/:needDetails?": [
         "nczitzk",
         "Fatpandac"
@@ -2762,6 +2771,9 @@
     ],
     "/xjtu/std/:category?": [
         "nczitzk"
+    ],
+    "/xueqiu/column/:id": [
+        "TonyRL"
     ],
     "/xueqiu/favorite/:id": [
         "imlonghao"
