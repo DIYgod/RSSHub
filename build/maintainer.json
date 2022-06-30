@@ -2124,6 +2124,9 @@
     "/ruc/hr/:category?": [
         "nczitzk"
     ],
+    "/samsung/research/blog": [
+        "nczitzk"
+    ],
     "/sciencedirect/journal/:id": [
         "nczitzk"
     ],
