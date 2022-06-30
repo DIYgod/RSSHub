@@ -568,6 +568,12 @@ Compared to the official one, this feed:
 
 <RouteEn author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
 
+## Samsung
+
+### Research Blog
+
+<RouteEn author="nczitzk" example="/samsung/research/blog" path="/samsung/research/blog"/>
+
 ## Semiconductor Industry Association
 
 ### Latest News
