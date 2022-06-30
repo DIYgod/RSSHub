@@ -2739,6 +2739,9 @@
     "/xidian/jwc/:category?": [
         "ShadowySpirits"
     ],
+    "/xjtu/2yuan/news/:id?": [
+        "nczitzk"
+    ],
     "/xjtu/dean/:subpath+": [
         "hoilc"
     ],

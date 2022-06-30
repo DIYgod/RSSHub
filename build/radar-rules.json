@@ -11645,6 +11645,15 @@
   },
   "xjtu.edu.cn": {
     "_name": "西安交通大学",
+    "2yuan": [
+      {
+        "title": "第二附属医院新闻",
+        "docs": "https://docs.rsshub.app/university.html#xi-an-jiao-tong-da-xue-di-er-fu-shu-yi-yuan-xin-wen",
+        "source": [
+          "/"
+        ]
+      }
+    ],
     "dean": [
       {
         "title": "教务处",
