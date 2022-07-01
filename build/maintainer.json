@@ -1645,6 +1645,9 @@
     "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
         "CaoMeiYouRen"
     ],
+    "/mindmeister/:category?/:language?": [
+        "TonyRL"
+    ],
     "/mingpao/:type?/:category?": [
         "TonyRL"
     ],
