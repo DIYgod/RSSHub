@@ -2050,6 +2050,12 @@
     "/qq/ac/rank/:type?/:time?": [
         "nczitzk"
     ],
+    "/qq/kg/:userId": [
+        "zhangxiang012"
+    ],
+    "/qq/kg/reply/:playId": [
+        "zhangxiang012"
+    ],
     "/qq/live/:id": [
         "nczitzk"
     ],
