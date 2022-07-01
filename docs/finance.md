@@ -58,6 +58,12 @@ pageClass: routes
 
 ## TokenInsight
 
+::: tip 提示
+
+TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/reference/rss>。
+
+:::
+
 ### 博客
 
 <Route author="fuergaosi233" example="/tokeninsight/blog" path="/tokeninsight/blog/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']" />
