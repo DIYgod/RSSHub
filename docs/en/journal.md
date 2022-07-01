@@ -41,7 +41,27 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 <RouteEn author="nczitzk" example="/bioone/featured" path="/bioone/featured"/>
 
+### Journals
+
+<RouteEn author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" :paramsDesc="['Journals, can be found in URL']"/>
+
+## caa.reviews
+
+### Book Reviews
+
+<RouteEn author="Fatpandac" example="/caareviews/book" path="/caareviews/book"/>
+
+### Exhibition Reviews
+
+<RouteEn author="Fatpandac" example="/caareviews/exhibition" path="/caareviews/exhibition"/>
+
+### Essays
+
+<RouteEn author="Fatpandac" example="/caareviews/essay" path="/caareviews/essay"/>
+
 ## Cell Journal
+
+### Current Issue
 
 <RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
 
@@ -68,6 +88,16 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 <RouteEn author="emdoe" example="/elife/cell-biology" path="/elife/:subject" :paramsDesc="['topic name', 'obtain it from the homepage. `latest` will include all topics.']" supportScihub="1"/>
 
+## ELSEVIER
+
+### Journal
+
+<RouteEn author="Derekmini sunwolf-swb" example="/elsevier/signal-processing" path="/elsevier/:journal" :paramsDesc="['Journal Name, the part of the URL after `/journal/`']" radar="1" rssbud="1"/>
+
+### Special Issue
+
+<RouteEn author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" :paramsDesc="['Journal Name, the part of the URL after `/journal/`','Release Number, the number in the URL after `/vol/` (If both Volume and Issue exist, must use the `Volume-Issue` form, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']" radar="1" rssbud="1"/>
+
 ## Google Scholar
 
 ### Keywords Monitoring
@@ -90,9 +120,31 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 
 <RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
-The parameter id in the route is the id in the URL of the user ’s Google Scholar reference page，for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
 
 </RouteEn>
+
+## IEEE Xplore
+
+### Journal
+
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/journal/70" path="/ieee/journal/:journal/:sortType?" :paramsDesc="['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']" radar="1" rssbud="1"/>
+
+### Journal (Papers within the recent 2 months)
+
+<RouteEn author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" :paramsDesc="['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']" radar="1" rssbud="1"/>
+
+## INFORMS
+
+### Category
+
+<RouteEn author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['Category, can be found in the url of the page, `orsc` by default']"/>
+
+## MDPI
+
+### Journal
+
+<RouteEn author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" :paramsDesc="['Journal Name, get it from the journal homepage']" radar="1" rssbud="1"/>
 
 ## MIT Technology Review
 
@@ -101,8 +153,6 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 ### Topics
 
 <RouteEn author="laampui" example="/technologyreview/humans-and-technology" path="/technologyreview/:category_name" :paramsDesc="['see below']" />
-
-
 
 | `:category_name` | Route |
 | -------- | ----- |
@@ -118,12 +168,17 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 | smart-cities | /technologyreview/smart-cities|
 | space | /technologyreview/space |
 
-
 ## Nature Journal
+
+::: tip Tips
+
+You can get all short name of a journal from <https://www.nature.com/siteindex> or [Journal List](#nature-journal-journal-list).
+
+:::
 
 ### Latest Research
 
-<RouteEn author="yech1990" example="/nature/research/ng" path="/nature/research/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990 TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1"/>
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                              |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
@@ -137,16 +192,16 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 |     nmat      |      Nature Materials       | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
--   Using router (`/nature/research/` + “short name for a journal”) to query latest research paper for a certain journal of Nature Publishing Group.
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
     If the `:journal` parameter is blank, then latest research of Nature will return.
 -   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
--   Only the abstract section is rendered
+-   Only abstract is rendered in some researches
 
 </RouteEn>
 
 ### News & Comment
 
-<RouteEn author="yech1990" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" />
+<RouteEn author="yech1990 TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" supportScihub="1" radar="1" rssbud="1"/>
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                                                                 |
 | :-----------: | :-------------------------: | --------------------------------------------------------------------------------------------------------------------- |
@@ -159,7 +214,7 @@ The parameter id in the route is the id in the URL of the user ’s Google Schol
 |     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                                      |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-https://rsshub.app/comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
--   Using router (`/nature/research/` + “short name for a journal”) to query latest research paper for a certain journal of Nature Publishing Group.
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
 -   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
 
 </RouteEn>
@@ -172,13 +227,33 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 </RouteEn>
 
-### News
+### Nature News
 
-<RouteEn author="yech1990" example="/nature/news" path="/nature/news" />
+<RouteEn author="yech1990 TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
 
 ### Research Highlight
 
-<RouteEn author="yech1990" example="/nature/highlight" path="/nature/highlight" supportScihub="1"/>
+<RouteEn author="yech1990 TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1">
+
+::: warning Warning
+
+Only some journals are supported.
+
+:::
+
+</RouteEn>
+
+### Journal List
+
+<RouteEn author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
+
+## Oxford University Press
+
+### Oxford Academic
+
+#### Journal
+
+<RouteEn author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
 
 ## Proceedings of The National Academy of Sciences (PNAS)
 
@@ -197,9 +272,19 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 ## PubMed
 
-### Trending
+### Trending articles
 
-<RouteEn author="yech1990" example="/pubmed/trending" path="/pubmed/trending" supportScihub="1"/>
+<RouteEn author="yech1990 nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" :paramsDesc="['Filters, can be found in URL']" supportScihub="1">
+
+::: tip Tip
+
+For the parameter **filter**, the `filter` parameter in the URL should be split into a string by `,`, here is an example.
+
+In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.clinicaltrial&filter=pubt.randomizedcontrolledtrial>, the filter parameters are `simsearch1.fha`, `pubt.clinicaltrial`, and `pubt.randomizedcontrolledtrial`. Therefore, the filter corresponding to the route should be filled with `simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial`, and the route is [`/pubmed/trending/simsearch1.fha,pubt .clinicaltrial,pubt.randomizedcontrolledtrial`](https://rsshub.app/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial)
+
+:::
+
+</RouteEn>
 
 ## Science Journal
 
@@ -238,6 +323,28 @@ Including ‘Science’, 'Science Advances', 'Science Immunology', 'Science Robo
 _only support Science Journal_
 
 </RouteEn>
+
+## ScienceDirect
+
+### Journal
+
+<RouteEn author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" :paramsDesc="['Journal id, can be found in URL']"/>
+
+## Scitation
+
+### Journal
+
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']" radar="1" rssbud="1"/>
+
+### Section
+
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`','Section, the `tocSection` part of the URL']" radar="1" rssbud="1"/>
+
+## Springer
+
+### Journal
+
+<RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code, the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
 
 ## X-MOL Platform
 

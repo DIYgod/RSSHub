@@ -1,0 +1,25 @@
+name: Comment on Issue
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  testRoute:
+    name: Call maintainers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3  # just need its cache
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - name: Install dependencies (yarn)  # needed since we need to parse markdown, so we also use got instead
+        run: yarn
+      - name: Generate feedback
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/call-maintainer.js`)
+            return await script({ github, context, core })

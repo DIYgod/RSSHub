@@ -10,6 +10,8 @@ afterAll(() => {
 });
 
 describe('template', () => {
+    const expectPubDate = new Date(1546272000000 - 10 * 1000);
+
     it(`.rss`, async () => {
         const response1 = await request.get('/test/1.rss');
         const parsed1 = await parser.parseString(response1.text);
@@ -25,7 +27,7 @@ describe('template', () => {
         expect(parsed1.items[0]).toEqual(expect.any(Object));
         expect(parsed1.items[0].title).toEqual(expect.any(String));
         expect(parsed1.items[0].link).toEqual(expect.any(String));
-        expect(parsed1.items[0].pubDate).toEqual(expect.any(String));
+        expect(parsed1.items[0].pubDate).toBe(expectPubDate.toUTCString());
         expect(parsed1.items[0].author).toEqual(expect.any(String));
         expect(parsed1.items[0].content).toEqual(expect.any(String));
         expect(parsed1.items[0].guid).toEqual(expect.any(String));
@@ -36,6 +38,8 @@ describe('template', () => {
         delete parsed2.lastBuildDate;
         delete parsed1.feedUrl;
         delete parsed2.feedUrl;
+        delete parsed1.paginationLinks;
+        delete parsed2.paginationLinks;
         expect(parsed2).toMatchObject(parsed1);
     });
 
@@ -52,7 +56,7 @@ describe('template', () => {
         expect(parsed.items[0]).toEqual(expect.any(Object));
         expect(parsed.items[0].title).toEqual(expect.any(String));
         expect(parsed.items[0].link).toEqual(expect.any(String));
-        expect(parsed.items[0].pubDate).toEqual(expect.any(String));
+        expect(parsed.items[0].pubDate).toBe(expectPubDate.toISOString());
         expect(parsed.items[0].author).toEqual(expect.any(String));
         expect(parsed.items[0].content).toEqual(expect.any(String));
         expect(parsed.items[0].id).toEqual(expect.any(String));
@@ -60,8 +64,8 @@ describe('template', () => {
 
     it(`.json`, async () => {
         const response = await request.get('/test/1.json');
-        expect(response.status).toBe(404);
-        expect(response.text).toMatch(/Error: <b>JSON output had been removed/);
+        const responseXML = await request.get('/test/1.rss');
+        expect(response.text.slice(0, 50)).toEqual(responseXML.text.slice(0, 50));
     });
 
     it(`long title`, async () => {
@@ -76,6 +80,6 @@ describe('template', () => {
         expect(parsed.itunes.author).toBe('DIYgod');
         expect(parsed.items[0].enclosure.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
         expect(parsed.items[0].enclosure.length).toBe('3661');
-        expect(parsed.items[0].itunes.duration).toBe('1:01:01');
+        expect(parsed.items[0].itunes.duration).toBe('10:10:10');
     });
 });

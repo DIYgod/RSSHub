@@ -1,0 +1,17 @@
+{{ each imageDataArray imageData }}
+    {{ if imageData.type == 'normalHTML' }}
+        {{@ imageData.html }}
+    {{ /if }}
+    {{ if imageData.type == 'data' }}
+        <figure>
+            <img src="{{ imageData.src }}" />
+            <figcaption>
+                {{ imageData.title }}
+            </figcaption>
+        </figure>
+    {{ /if }}
+{{ /each }}
+
+{{ if articleBody }}
+    {{@ articleBody }}
+{{ /if }}

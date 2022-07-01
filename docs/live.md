@@ -32,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 抖音直播
+
+### 直播间开播
+
+<Route author="TonyRL" example="/douyin/live/685317364746" path="/douyin/live/:rid" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']" anticrawler="1" radar="1" rssbud="1" puppeteer="1"/>
+
 ## 斗鱼直播
 
 ### 直播间开播
@@ -61,6 +67,18 @@ pageClass: routes
 ### 直播间开播
 
 <Route author="hoilc" example="/egameqq/room/497383565" path="/egameqq/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
+## 企鹅直播
+
+### 直播间开播
+
+<Route author="nczitzk" example="/qq/live/10012045" path="/qq/live/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
+## 旺球体育
+
+### 直播间开播
+
+<Route author="nczitzk" example="/wangqiutiyu/anchor/444" path="/wangqiutiyu/anchor/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 战旗直播
 
