@@ -50,7 +50,7 @@ pageClass: routes
 
 ### 用户文章
 
-<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户 ID']" />
+<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:id" :paramsDesc="['用户 ID']" />
 
 ### 主题文章
 
