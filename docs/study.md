@@ -123,6 +123,44 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
 
+## MindMeister
+
+### 公开思维导图
+
+<Route author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" :paramsDesc="['分类，见下表，默认为 `mind-map-examples`', '语言，见下表，默认为 `en`']" radar="1" rssbud="1">
+
+| 分类     | 参数                |
+| ------ | ----------------- |
+| 精选思维导图 | mind-map-examples |
+| 商务     | business          |
+| 设计     | design            |
+| 教育     | education         |
+| 娱乐     | entertainment     |
+| 生活     | life              |
+| 营销     | marketing         |
+| 生产力    | productivity      |
+| 概要     | summaries         |
+| 科技     | technology        |
+| 其他     | other             |
+
+| 语言         | 参数    |
+| ---------- | ----- |
+| English    | en    |
+| Deutsch    | de    |
+| Français   | fr    |
+| Español    | es    |
+| Português  | pt    |
+| Nederlands | nl    |
+| Dansk      | da    |
+| Русский    | ru    |
+| 日本語        | ja    |
+| Italiano   | it    |
+| 简体中文       | zh    |
+| 한국어        | ko    |
+| Other      | other |
+
+</Route>
+
 ## NEEA 中国教育考试网
 
 ### 国家教育考试
