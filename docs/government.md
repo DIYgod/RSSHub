@@ -241,7 +241,7 @@ pageClass: routes
 
 ### 信息公开
 
-<Route author="TonyRL" example="/cde/xxgk/priorityApproval" path="/cde/xxgk:category" :paramsDesc="['类别，见下表']" radar="1" rssbud="1">
+<Route author="TonyRL" example="/cde/xxgk/priorityApproval" path="/cde/xxgk/:category" :paramsDesc="['类别，见下表']" radar="1" rssbud="1">
 
 |      优先审评公示      |      突破性治疗公示     | 临床试验默示许可 |
 | :--------------: | :--------------: | :------: |
