@@ -174,6 +174,18 @@ pageClass: routes
 
 <Route author="MisLink" example="/pku/nsd/gd" path="/pku/nsd/gd" radar="1" rssbud="1"/>
 
+### 软微 - 通知公告
+
+<Route author="legr4ndk" example="/pku/ss/notice" path="/pku/ss/notice" radar="1" rssbud="1"/>
+
+### 软微 - 招生通知
+
+<Route author="legr4ndk" example="/pku/ss/admission" path="/pku/ss/admission" radar="1" rssbud="1"/>
+
+### 软微 - 硕士统考招生
+
+<Route author="legr4ndk" example="/pku/ss/pgadmin" path="/pku/ss/pgadmin" radar="1" rssbud="1"/>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
