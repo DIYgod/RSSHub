@@ -405,18 +405,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
 
-## 东莞教研网
-
-### 信息公开
-
-<Route author="nczitzk" example="/dgjyw/news" path="/dgjyw/:type" :paramsDesc="['分类']">
-
-| 动态   | 公示           | 通知     |
-| ---- | ------------ | ------ |
-| news | announcement | notice |
-
-</Route>
-
 ## 福利资源 - met.red
 
 ### 福利资源 - met.red
