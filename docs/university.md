@@ -1214,6 +1214,10 @@ category 列表：
 
 <Route author="legr4ndk" example="/hdu/cs" path="/hdu/cs" radar="1" rssbud="1"/>
 
+### 计算机学院 - 研究生通知
+
+<Route author="legr4ndk" example="/hdu/cs/pg" path="/hdu/cs/pg" radar="1" rssbud="1"/>
+
 ## 合肥工业大学
 
 ### 通知公告
