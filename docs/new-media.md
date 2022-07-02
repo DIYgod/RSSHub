@@ -3384,6 +3384,33 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 网易独家
+
+### 栏目
+
+<Route author="nczitzk" example="/netease/exclusive/qsyk" path="/netease/exclusive/:id?" :paramsDesc="['栏目, 默认为首页']">
+
+| 分类   | 编号   |
+| ---- | ---- |
+| 首页   |      |
+| 轻松一刻 | qsyk |
+| 槽值   | cz   |
+| 人间   | rj   |
+| 大国小民 | dgxm |
+| 三三有梗 | ssyg |
+| 数读   | sd   |
+| 看客   | kk   |
+| 下划线  | xhx  |
+| 谈心社  | txs  |
+| 哒哒   | dd   |
+| 胖编怪聊 | pbgl |
+| 曲一刀  | qyd  |
+| 今日之声 | jrzs |
+| 浪潮   | lc   |
+| 沸点   | fd   |
+
+</Route>
+
 ## 网易号
 
 ### 更新
