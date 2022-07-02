@@ -609,7 +609,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 观点与实践
 
-<Route author="AEliu" example="/chinathinktanks/57" path="/chinathinktanks/:id" radar="1" :paramsDesc="['见下表，亦可在网站 url 里找到']" />
+<Route author="AEliu" example="/chinathinktanks/57" path="/chinathinktanks/:id" radar="1" :paramsDesc="['见下表，亦可在网站 url 里找到']" >
 
 | `:id` | 专题名称 |
 | ----- | ---- |
@@ -658,5 +658,48 @@ path="/ctfhub/upcoming/:limit?"
 | 157   | 大国关系 |
 | 158   | 地区政治 |
 | 181   | 执政能力 |
+
+</Route>
+
+## 中华人民共和国学位证书查询
+
+### 各学位授予单位学位证书上网进度
+
+<Route author="TonyRL" example="/chinadegrees/11" path="/chinadegrees/:province?" :paramsDesc="['省市代号，见下表，亦可在 [这里](http://www.chinadegrees.com.cn/help/provinceSwqk.html) 找到，默认为 `11`']" radar="1" rssbud="1" puppeteer="1" >
+
+| 省市       | 代号 |
+| -------- | -- |
+| 北京市      | 11 |
+| 天津市      | 12 |
+| 河北省      | 13 |
+| 山西省      | 14 |
+| 内蒙古自治区   | 15 |
+| 辽宁省      | 21 |
+| 吉林省      | 22 |
+| 黑龙江省     | 23 |
+| 上海市      | 31 |
+| 江苏省      | 32 |
+| 浙江省      | 33 |
+| 安徽省      | 34 |
+| 福建省      | 35 |
+| 江西省      | 36 |
+| 山东省      | 37 |
+| 河南省      | 41 |
+| 湖北省      | 42 |
+| 湖南省      | 43 |
+| 广东省      | 44 |
+| 广西壮族自治区  | 45 |
+| 海南省      | 46 |
+| 重庆市      | 50 |
+| 四川省      | 51 |
+| 贵州省      | 52 |
+| 云南省      | 53 |
+| 西藏自治区    | 54 |
+| 陕西省      | 61 |
+| 甘肃省      | 62 |
+| 青海省      | 63 |
+| 宁夏回族自治区  | 64 |
+| 新疆维吾尔自治区 | 65 |
+| 台湾       | 71 |
 
 </Route>
