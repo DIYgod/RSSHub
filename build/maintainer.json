@@ -494,6 +494,9 @@
     "/ddosi/category/:category": [
         "XinRoom"
     ],
+    "/dgjyw/:category?": [
+        "nczitzk"
+    ],
     "/dhu/jiaowu/news/:type?": [
         "KiraKiseki"
     ],
@@ -4072,7 +4075,6 @@
     "/law/dh": [],
     "/law/jctd": [],
     "/samsungmembers/latest": [],
-    "/dgjyw/:type": [],
     "/gov/caict/bps": [],
     "/gov/caict/qwsj": [],
     "/gov/caict/caictgd": [],
