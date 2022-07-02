@@ -248,6 +248,28 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 东莞教研网
+
+### 分类
+
+<Route author="nczitzk" example="/dgjyw/tz" path="/dgjyw/:category?" :paramsDesc="['分类，见下表，默认为通知']">
+
+| 通知 | 动态 | 公示 |
+| -- | -- | -- |
+| tz | dt | gs |
+
+::: tip 提示
+
+分类字段处填写的是对应东莞教研网网址中中介于 **<https://www.dgjyw.com/>** 和 **.htm** 中间的一段。
+
+如 [通知](https://www.dgjyw.com/tz.htm) 的网址为 <https://www.dgjyw.com/tz.htm>，其中间字段为 `tz`，所以可得路由为 [`/dgjyw/tz`](https://rsshub.app/dgjyw/tz)；
+
+同理，[教育科研 - 科研文件](https://www.dgjyw.com/jyky/kywj.htm) 的网址为 <https://www.dgjyw.com/jyky/kywj.htm>，其中间字段为 `jyky/kywj`，所以可得路由为 [`/dgjyw/jyky/kywj`](https://rsshub.app/dgjyw/jyky/kywj)。
+
+:::
+
+</Route>
+
 ## 杭州市国家普通话测试网报信息
 
 ### 考试信息
