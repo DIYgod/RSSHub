@@ -1,4 +1,3 @@
 <figure>
 <img src="{{ url }}">
-<figcaption>{{ caption }}</figcaption>
 </figure>

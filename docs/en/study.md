@@ -50,6 +50,44 @@ pageClass: routes
 
 </RouteEn>
 
+## MindMeister
+
+### Public Maps
+
+<RouteEn author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" :paramsDesc="['Categories, see the table below, `mind-map-examples` by default', 'Languages, see the table below, `en` by default']" radar="1" rssbud="1">
+
+| Categories | parameter |
+| -------- | --------------- |
+| Featured Map | mind-map-examples |
+| Business | business |
+| Design | design |
+| Education | education |
+| Entertainment | entertainment |
+| Life | life |
+| Marketing | marketing |
+| Productivity | productivity |
+| Summaries | summaries |
+| Technology | technology |
+| Other | other |
+
+| Languages | parameter |
+| -------- | --------------- |
+| English | en |
+| Deutsch | de |
+| Français | fr |
+| Español | es |
+| Português | pt |
+| Nederlands | nl |
+| Dansk | da |
+| Русский | ru |
+| 日本語 | ja |
+| Italiano | it |
+| 简体中文 | zh |
+| 한국어 | ko |
+| Other | other |
+
+</RouteEn>
+
 ## ORCID
 
 ### Works List
@@ -60,7 +98,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']" />
+<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['Tag number, can be obtained from news list URL. Empty value means news index.']" />
 
 ## XMind
 
