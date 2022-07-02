@@ -1744,6 +1744,9 @@
     "/neea/:type?": [
         "SunShinenny"
     ],
+    "/netease/exclusive/:id?": [
+        "nczitzk"
+    ],
     "/netease/renjian/:category?": [
         "nczitzk"
     ],
