@@ -174,6 +174,18 @@ pageClass: routes
 
 <Route author="MisLink" example="/pku/nsd/gd" path="/pku/nsd/gd" radar="1" rssbud="1"/>
 
+### 软件与微电子学院 - 通知公告
+
+<Route author="legr4ndk" example="/pku/ss/notices" path="/pku/ss/notices" radar="1" rssbud="1"/>
+
+### 软件与微电子学院 - 招生通知
+
+<Route author="legr4ndk" example="/pku/ss/admission" path="/pku/ss/admission" radar="1" rssbud="1"/>
+
+### 软件与微电子学院 - 硕士统考招生通知
+
+<Route author="legr4ndk" example="/pku/ss/pgadmin" path="/pku/ss/pgadmin" radar="1" rssbud="1"/>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
@@ -1213,6 +1225,10 @@ category 列表：
 ### 计算机学院 - 通知公告
 
 <Route author="legr4ndk" example="/hdu/cs" path="/hdu/cs" radar="1" rssbud="1"/>
+
+### 计算机学院 - 研究生通知
+
+<Route author="legr4ndk" example="/hdu/cs/pg" path="/hdu/cs/pg" radar="1" rssbud="1"/>
 
 ## 合肥工业大学
 
