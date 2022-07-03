@@ -4374,9 +4374,21 @@
     ".": [
       {
         "title": "分类",
-        "docs": "https://docs.rsshub.app/government.html#nrta-gov",
+        "docs": "https://docs.rsshub.app/government.html#guo-jia-guang-bo-dian-shi-zong-ju",
         "source": [
           "/col/*category"
+        ]
+      }
+    ]
+  },
+  "nmpa.gov.cn": {
+    "_name": "国家药品监督管理局",
+    ".": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/government.html#guo-jia-yao-pin-jian-du-guan-li-ju",
+        "source": [
+          "/*path"
         ]
       }
     ]

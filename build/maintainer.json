@@ -991,6 +991,9 @@
     "/gov/moe/:type": [
         "Crawler995"
     ],
+    "/gov/nmpa/:path+": [
+        "TonyRL"
+    ],
     "/gov/nrta/news/:category?": [
         "yuxinliu-alex"
     ],
