@@ -100,6 +100,24 @@ pageClass: routes
 
 <Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
+### 文章
+
+<Route author="TonyRL" example="/acfun/article/110" path="/acfun/article/:categoryId/:sortType?/:timeRange?" :paramsDesc="['分区 ID，见下表', '排序，见下表，默认为 `createTime`', '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`']" radar="1" rssbud="1">
+
+| 二次元画师 | 综合  | 生活情感 | 游戏  | 动漫文化 | 漫画文学 |
+| ----- | --- | ---- | --- | ---- | ---- |
+| 184   | 110 | 73   | 164 | 74   | 75   |
+
+| 最新发表       | 最新动态            | 最热文章     |
+| ---------- | --------------- | -------- |
+| createTime | lastCommentTime | hotScore |
+
+| 时间不限 | 24 小时  | 三天       | 一周      | 一个月      |
+| ---- | ------ | -------- | ------- | -------- |
+| all  | oneDay | threeDay | oneWeek | oneMonth |
+
+</Route>
+
 ## AGE 动漫
 
 ### 最近更新
