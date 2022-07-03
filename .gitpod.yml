@@ -25,7 +25,7 @@ tasks:
 
 vscode:
   extensions:
-    - cweijan.vscode-database-client2@5.3.1 # >=5.3.2 remove ability to use in remote env
+    - cweijan.vscode-database-client2
     - DavidAnson.vscode-markdownlint
     - dbaeumer.vscode-eslint
     - eamodio.gitlens
