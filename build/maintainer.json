@@ -1113,6 +1113,9 @@
     "/hdu/cs": [
         "legr4ndk"
     ],
+    "/hdu/cs/pg": [
+        "legr4ndk"
+    ],
     "/hellobtc/information/:channel?": [
         "Fatpandac"
     ],
@@ -2018,6 +2021,15 @@
     ],
     "/pku/scc/recruit/:type?": [
         "DylanXie123"
+    ],
+    "/pku/ss/notice": [
+        "legr4ndk"
+    ],
+    "/pku/ss/admission": [
+        "legr4ndk"
+    ],
+    "/pku/ss/pgadmin": [
+        "legr4ndk"
     ],
     "/playno1/av/:catid?": [
         "TonyRL"
