@@ -845,6 +845,18 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID，可在文章html中获取']"/>
 
+## 掌游宝
+
+### 推荐
+
+<Route author="ztmzzz" example="/zhangyoubao/lol" path="/zhangyoubao/:category" :paramsDesc="['分类，见下表']">
+
+| 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合  | 手游综合   | 云顶之弈     | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗       |
+| ---- | ---- | --- | ---- | ---- | ----- | ------ | -------- | ---- | ---- | ------ | ---------- |
+| lol  | lscs | dnf | swxf | yxzj | steam | mobile | lolchess | blzz | hszz | dnfm   | brawlstars |
+
+</Route>
+
 ## 最终幻想 14
 
 ### 最终幻想 14 国服

@@ -239,6 +239,16 @@ pageClass: routes
 
 </Route>
 
+### 信息公开
+
+<Route author="TonyRL" example="/cde/xxgk/priorityApproval" path="/cde/xxgk/:category" :paramsDesc="['类别，见下表']" radar="1" rssbud="1">
+
+|      优先审评公示      |      突破性治疗公示     | 临床试验默示许可 |
+| :--------------: | :--------------: | :------: |
+| priorityApproval | breakthroughCure | cliniCal |
+
+</Route>
+
 ## 哈尔滨市科技局
 
 ### 政务公开
@@ -519,6 +529,18 @@ pageClass: routes
 | English | 中文简体 | 中文繁體   |
 | ------- | ---- | ------ |
 | english | chs  | tc_chi |
+
+</Route>
+
+## 徐州市人民政府
+
+### 徐州市人力资源和社会保障局
+
+<Route author="nczitzk" example="/gov/xuzhou/hrss" path="/gov/xuzhou/hrss/:category?" :paramsDesc="['分类，见下表，默认为通知公告']">
+
+| 通知公告 | 要闻动态   | 县区动态   | 事业招聘   | 企业招聘   | 政声传递   |
+| ---- | ------ | ------ | ------ | ------ | ------ |
+|      | 001001 | 001002 | 001004 | 001005 | 001006 |
 
 </Route>
 

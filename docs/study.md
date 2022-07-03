@@ -123,6 +123,44 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
 
+## MindMeister
+
+### 公开思维导图
+
+<Route author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" :paramsDesc="['分类，见下表，默认为 `mind-map-examples`', '语言，见下表，默认为 `en`']" radar="1" rssbud="1">
+
+| 分类     | 参数                |
+| ------ | ----------------- |
+| 精选思维导图 | mind-map-examples |
+| 商务     | business          |
+| 设计     | design            |
+| 教育     | education         |
+| 娱乐     | entertainment     |
+| 生活     | life              |
+| 营销     | marketing         |
+| 生产力    | productivity      |
+| 概要     | summaries         |
+| 科技     | technology        |
+| 其他     | other             |
+
+| 语言         | 参数    |
+| ---------- | ----- |
+| English    | en    |
+| Deutsch    | de    |
+| Français   | fr    |
+| Español    | es    |
+| Português  | pt    |
+| Nederlands | nl    |
+| Dansk      | da    |
+| Русский    | ru    |
+| 日本語        | ja    |
+| Italiano   | it    |
+| 简体中文       | zh    |
+| 한국어        | ko    |
+| Other      | other |
+
+</Route>
+
 ## NEEA 中国教育考试网
 
 ### 国家教育考试
@@ -207,6 +245,28 @@ path="/ctfhub/upcoming/:limit?"
 | 热门                               | 学科                               | 学习                               | 语言                               | 工作                               | 提升                               | 生活                               | 互联网                              | 教育                               | 其他                               | 行业                               | 服务发布                             | 医疗                               |
 | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
 | 33b67d1bad1d4e37812f71d42764af34 | 9434268e893a46aa9a1a231059849984 | 820156a42e9a490796c7fd56916aa95b | 959c81f606ca495c882c7e461429eb2a | 5af4bca5496e4733a2d582690627e25f | 5300988dff564756b5d462cea8a865b7 | 02fdcc2ab6374bc6b9b9717e70c87723 | 437d434fe9eb410a94dcefb889994e2b | 9747cbf78f96492c973aa6ab23925eee | d4c3a92a9cf64da7b187763211dc6ff6 | 58231ab9cef34af7819c3f6e2160c007 | 73d89972bee0457997c983d7fca19f9f | 853ce8b3a4c24b87a03f66af95c5e06c |
+
+</Route>
+
+## 东莞教研网
+
+### 分类
+
+<Route author="nczitzk" example="/dgjyw/tz" path="/dgjyw/:category?" :paramsDesc="['分类，见下表，默认为通知']">
+
+| 通知 | 动态 | 公示 |
+| -- | -- | -- |
+| tz | dt | gs |
+
+::: tip 提示
+
+分类字段处填写的是对应东莞教研网网址中中介于 **<https://www.dgjyw.com/>** 和 **.htm** 中间的一段。
+
+如 [通知](https://www.dgjyw.com/tz.htm) 的网址为 <https://www.dgjyw.com/tz.htm>，其中间字段为 `tz`，所以可得路由为 [`/dgjyw/tz`](https://rsshub.app/dgjyw/tz)；
+
+同理，[教育科研 - 科研文件](https://www.dgjyw.com/jyky/kywj.htm) 的网址为 <https://www.dgjyw.com/jyky/kywj.htm>，其中间字段为 `jyky/kywj`，所以可得路由为 [`/dgjyw/jyky/kywj`](https://rsshub.app/dgjyw/jyky/kywj)。
+
+:::
 
 </Route>
 
@@ -549,7 +609,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 观点与实践
 
-<Route author="AEliu" example="/chinathinktanks/57" path="/chinathinktanks/:id" radar="1" :paramsDesc="['见下表，亦可在网站 url 里找到']" />
+<Route author="AEliu" example="/chinathinktanks/57" path="/chinathinktanks/:id" radar="1" :paramsDesc="['见下表，亦可在网站 url 里找到']" >
 
 | `:id` | 专题名称 |
 | ----- | ---- |
@@ -598,5 +658,48 @@ path="/ctfhub/upcoming/:limit?"
 | 157   | 大国关系 |
 | 158   | 地区政治 |
 | 181   | 执政能力 |
+
+</Route>
+
+## 中华人民共和国学位证书查询
+
+### 各学位授予单位学位证书上网进度
+
+<Route author="TonyRL" example="/chinadegrees/11" path="/chinadegrees/:province?" :paramsDesc="['省市代号，见下表，亦可在 [这里](http://www.chinadegrees.com.cn/help/provinceSwqk.html) 找到，默认为 `11`']" radar="1" rssbud="1" puppeteer="1" >
+
+| 省市       | 代号 |
+| -------- | -- |
+| 北京市      | 11 |
+| 天津市      | 12 |
+| 河北省      | 13 |
+| 山西省      | 14 |
+| 内蒙古自治区   | 15 |
+| 辽宁省      | 21 |
+| 吉林省      | 22 |
+| 黑龙江省     | 23 |
+| 上海市      | 31 |
+| 江苏省      | 32 |
+| 浙江省      | 33 |
+| 安徽省      | 34 |
+| 福建省      | 35 |
+| 江西省      | 36 |
+| 山东省      | 37 |
+| 河南省      | 41 |
+| 湖北省      | 42 |
+| 湖南省      | 43 |
+| 广东省      | 44 |
+| 广西壮族自治区  | 45 |
+| 海南省      | 46 |
+| 重庆市      | 50 |
+| 四川省      | 51 |
+| 贵州省      | 52 |
+| 云南省      | 53 |
+| 西藏自治区    | 54 |
+| 陕西省      | 61 |
+| 甘肃省      | 62 |
+| 青海省      | 63 |
+| 宁夏回族自治区  | 64 |
+| 新疆维吾尔自治区 | 65 |
+| 台湾       | 71 |
 
 </Route>

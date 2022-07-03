@@ -50,7 +50,7 @@ pageClass: routes
 
 ### 用户文章
 
-<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:uid" :paramsDesc="['用户 ID']" />
+<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:id" :paramsDesc="['用户 ID']" />
 
 ### 主题文章
 
@@ -1127,6 +1127,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 ### Blog
 
 <Route author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
+
+## Samsung
+
+### Research Blog
+
+<Route author="nczitzk" example="/samsung/research/blog" path="/samsung/research/blog"/>
 
 ## Simons Foundation
 
@@ -3375,6 +3381,33 @@ column 为 third 时可选的 category:
 | 全部  | 天下大势 | 企业动态 | 专家观点 | 研究报告 |
 | --- | ---- | ---- | ---- | ---- |
 | (空) | My01 | My02 | My03 | My04 |
+
+</Route>
+
+## 网易独家
+
+### 栏目
+
+<Route author="nczitzk" example="/netease/exclusive/qsyk" path="/netease/exclusive/:id?" :paramsDesc="['栏目, 默认为首页']">
+
+| 分类   | 编号   |
+| ---- | ---- |
+| 首页   |      |
+| 轻松一刻 | qsyk |
+| 槽值   | cz   |
+| 人间   | rj   |
+| 大国小民 | dgxm |
+| 三三有梗 | ssyg |
+| 数读   | sd   |
+| 看客   | kk   |
+| 下划线  | xhx  |
+| 谈心社  | txs  |
+| 哒哒   | dd   |
+| 胖编怪聊 | pbgl |
+| 曲一刀  | qyd  |
+| 今日之声 | jrzs |
+| 浪潮   | lc   |
+| 沸点   | fd   |
 
 </Route>
 
