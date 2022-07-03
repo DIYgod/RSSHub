@@ -215,6 +215,22 @@ pageClass: routes
 
 <Route author="y2361547758" example="/gov/nppa/318/45948" path="/gov/nppa/:channel/:content" :paramsDesc="['栏目名 id', '文章 id']" radar="1" rssbud="1"/>
 
+## 国家药品监督管理局
+
+### 通用
+
+<Route author="TonyRL" example="/gov/nmpa/xxgk/ggtg" path="/gov/nmpa/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1" puppeteer="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.nmpa.gov.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
+
+若订阅 [公告通告](https://www.nmpa.gov.cn/xxgk/ggtg/index.html) 则将对应页面 URL <https://www.nmpa.gov.cn/xxgk/ggtg/index.html> 中 `https://www.nmpa.gov.cn/` 和 `/index.html` 之间的字段 `xxgk/ggtg` 作为路径填入。此时路由为 [`/gov/nmpa/xxgk/ggtg`](https://rsshub.app/gov/nmpa/xxgk/ggtg)
+
+:::
+
+</Route>
+
 ## 国家药品审评网站
 
 ### 首页
