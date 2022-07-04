@@ -55,7 +55,8 @@
     ],
     "/36kr/search/article/:keyword": [
         "xyqfer",
-        "kt286"
+        "kt286",
+        "nczitzk"
     ],
     "/36kr/user/:uid": [
         "nczitzk"
