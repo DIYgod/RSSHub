@@ -2666,6 +2666,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 慢雾科技
+
+### 动态
+
+<Route author="AtlasQuan" example="/slowmist/research" path="/slowmist/:type?" :paramsDesc="['分类，见下表，默认为公司新闻']">
+
+| 公司新闻 | 漏洞披露 | 技术研究     |
+| ---- | ---- | -------- |
+| news | vul  | research |
+
+</Route>
+
 ## 梅花网
 
 ### 作品
