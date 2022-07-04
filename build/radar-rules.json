@@ -514,6 +514,27 @@
       }
     ]
   },
+  "acfun.cn": {
+    "_name": "AcFun",
+    "www": [
+      {
+        "tilte": "番剧",
+        "docs": "https://docs.rsshub.app/anime.html#acfun-fan-ju",
+        "source": "/bangumi/:id"
+      },
+      {
+        "title": "用户投稿",
+        "docs": "https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao",
+        "source": "/u/:id",
+        "target": "/acfun/user/video/:id"
+      },
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/anime.html#acfun",
+        "source": "/v/:categoryId/index.htm"
+      }
+    ]
+  },
   "ecnu.edu.cn": {
     "_name": "ACM-ECNU",
     "acm": [
@@ -8911,7 +8932,7 @@
         "title": "软微-通知公告",
         "docs": "https://docs.rsshub.app/university.html#bei-jing-da-xue",
         "source": [
-          "index.php/newscenter/notice",
+          "/index.php/newscenter/notice",
           "/"
         ],
         "target": "/pku/ss/notice"
@@ -8920,7 +8941,7 @@
         "title": "软微-招生通知",
         "docs": "https://docs.rsshub.app/university.html#bei-jing-da-xue",
         "source": [
-          "admission/admnotice",
+          "/admission/admnotice",
           "/"
         ],
         "target": "/pku/ss/admission"
@@ -8929,7 +8950,7 @@
         "title": "软微-硕士统考招生",
         "docs": "https://docs.rsshub.app/university.html#bei-jing-da-xue",
         "source": [
-          "admission/admbrochure/admission01",
+          "/admission/admbrochure/admission01",
           "/"
         ],
         "target": "/pku/ss/pgadmin"
@@ -13685,22 +13706,6 @@
         "title": "内容",
         "docs": "https://docs.rsshub.app/government.html#guo-jia-xin-wen-chu-ban-shu",
         "source": "/nppa/contents/:channel/:content"
-      }
-    ]
-  },
-  "acfun.cn": {
-    "_name": "AcFun",
-    "www": [
-      {
-        "tilte": "番剧",
-        "docs": "https://docs.rsshub.app/anime.html#acfun-fan-ju",
-        "source": "/bangumi/:id"
-      },
-      {
-        "title": "用户投稿",
-        "docs": "https://docs.rsshub.app/anime.html#acfun-yong-hu-tou-gao",
-        "source": "/u/:id",
-        "target": "/acfun/user/video/:id"
       }
     ]
   },

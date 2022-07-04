@@ -114,6 +114,15 @@
     "/abskoop/": [
         "zhenhappy"
     ],
+    "/acfun/article/:categoryId/:sortType?/:timeRange?": [
+        "TonyRL"
+    ],
+    "/acfun/bangumi/:id": [
+        "xyqfer"
+    ],
+    "/acfun/user/video/:uid": [
+        "wdssmq"
+    ],
     "/acm-ecnu/contest/:category?": [
         "a180285"
     ],
@@ -3365,8 +3374,6 @@
     "/nhentai/search/:keyword/:mode?": [],
     "/nhentai/:key/:keyword/:mode?": [],
     "/ltaaa/:category?": [],
-    "/acfun/bangumi/:id": [],
-    "/acfun/user/video/:uid": [],
     "/autotrader/:query": [],
     "/geekpark/breakingnews": [],
     "/baidu/doodles": [],
