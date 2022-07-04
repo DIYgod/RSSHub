@@ -370,7 +370,7 @@ pageClass: routes
 
 ### 陕西省科学技术厅
 
-<Route author="nczitzk" example="/gov/shannxi/kjt" path="/gov/shannxi/kjt/:id?" :paramsDesc="['分类，见下表，默认为通知公告']">
+<Route author="nczitzk" example="/gov/shaanxi/kjt" path="/gov/shaanxi/kjt/:id?" :paramsDesc="['分类，见下表，默认为通知公告']">
 
 | 科技头条 | 工作动态 | 基层科技 | 科技博览 | 媒体聚焦 | 通知公告 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
