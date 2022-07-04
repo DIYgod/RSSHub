@@ -1293,16 +1293,15 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@koa/router@10.1.1":
-  version "10.1.1"
-  resolved "https://registry.yarnpkg.com/@koa/router/-/router-10.1.1.tgz#8e5a85c9b243e0bc776802c0de564561e57a5f78"
-  integrity sha512-ORNjq5z4EmQPriKbR0ER3k4Gh7YGNhWDL7JBW+8wXDrHLbWYKYSJaOJ9aN06npF5tbTxe2JBOsurpJDAvjiXKw==
+"@koa/router@11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@koa/router/-/router-11.0.1.tgz#9df822273511ea6d4f709d646eb32c063f4acbc0"
+  integrity sha512-jZ5ISytdHJWUPiXmxIpT/rk7rCRD/gnwYP3WKlQ0kOLWAtCeFbURTlP2zG0VyALKq4NtVMf0uEMFreQJWFOhaw==
   dependencies:
-    debug "^4.1.1"
-    http-errors "^1.7.3"
+    http-errors "^2.0.0"
     koa-compose "^4.1.0"
     methods "^1.1.2"
-    path-to-regexp "^6.1.0"
+    path-to-regexp "^6.2.1"
 
 "@lifeomic/attempt@^3.0.0":
   version "3.0.3"
@@ -7186,7 +7185,7 @@ http-deceiver@^1.2.7:
   resolved "https://registry.yarnpkg.com/http-deceiver/-/http-deceiver-1.2.7.tgz#fa7168944ab9a519d337cb0bec7284dc3e723d87"
   integrity sha1-+nFolEq5pRnTN8sL7HKE3D5yPYc=
 
-http-errors@2.0.0:
+http-errors@2.0.0, http-errors@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-2.0.0.tgz#b7774a1486ef73cf7667ac9ae0858c012c57b9d3"
   integrity sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==
@@ -7197,7 +7196,7 @@ http-errors@2.0.0:
     statuses "2.0.1"
     toidentifier "1.0.1"
 
-http-errors@^1.6.3, http-errors@^1.7.3, http-errors@~1.8.0:
+http-errors@^1.6.3, http-errors@~1.8.0:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.8.1.tgz#7c3f28577cbc8a207388455dbd62295ed07bd68c"
   integrity sha512-Kpk9Sm7NmI+RHhnj6OIWDI1d6fIoFAtFt9RLaTMRlg/8w49juAStsrBgp0Dp4OdxdVbRIeKhtCUvoi/RuAhO4g==
@@ -10713,7 +10712,7 @@ path-to-regexp@0.1.7:
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   integrity sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=
 
-path-to-regexp@^6.1.0:
+path-to-regexp@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.1.tgz#d54934d6798eb9e5ef14e7af7962c945906918e5"
   integrity sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==
