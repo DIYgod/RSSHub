@@ -58,7 +58,7 @@ pageClass: routes
 
 ### 搜索文章
 
-<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
+<Route author="xyqfer kt286 nczitzk" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 52hrtt 华人头条
 
