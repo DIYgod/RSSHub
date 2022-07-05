@@ -265,6 +265,18 @@ pageClass: routes
 
 </Route>
 
+## 国家自然科学基金委员会
+
+### 基金要闻
+
+<Route author="Derekmini nczitzk" example="/gov/nsfc/news/jjyw" path="/gov/nsfc/news/:type?" :paramsDesc="['分类，默认为基金要闻，即 `jjyw`']" radar="1" rssbud="1">
+
+| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
+| ---- | ---- | ---- | ---- |
+| jjyw | tzgg | zzcg | kpkx |
+
+</Route>
+
 ## 哈尔滨市科技局
 
 ### 政务公开

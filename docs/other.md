@@ -461,18 +461,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 国家自然科学基金委员会
-
-### 新闻通知
-
-<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1" rssbud="1">
-
-| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
-| ---- | ---- | ---- | ---- |
-| jjyw | tzgg | zzcg | kpkx |
-
-</Route>
-
 ## 好队友
 
 ### 工作机会
