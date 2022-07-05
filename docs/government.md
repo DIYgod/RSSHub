@@ -388,6 +388,20 @@ pageClass: routes
 
 <Route author="zcf0508" example="/gov/shanghai/wsjkw/yqtb" path="/gov/shanghai/wsjkw/yqtb"/>
 
+### 上海市药品监督管理局
+
+<Route author="nczitzk" example="/gov/shanghai/yjj/zh" path="/gov/shanghai/yjj/:path+" :paramsDesc="['路径参数']" radar="1" rssbud="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://yjj.sh.gov.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
+
+若订阅 [最新信息公开 > 综合](https://yjj.sh.gov.cn/zh/index.html) 则将对应页面 URL <https://yjj.sh.gov.cn/zh/index.html> 中 `https://yjj.sh.gov.cn/` 和 `/index.html` 之间的字段 `zh` 作为路径填入。此时路由为 [`/gov/shanghai/yjj/zh`](https://rsshub.app/gov/shanghai/yjj/zh)
+
+:::
+
+</Route>
+
 ## 世界贸易组织
 
 ### 争端解决新闻
