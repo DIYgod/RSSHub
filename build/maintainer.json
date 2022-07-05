@@ -2179,6 +2179,10 @@
     "/ruc/hr/:category?": [
         "nczitzk"
     ],
+    "/sakurazaka46/blog/:id?": [
+        "victor21813",
+        "nczitzk"
+    ],
     "/samsung/research/blog": [
         "nczitzk"
     ],
@@ -3729,7 +3733,6 @@
     "/hinatazaka46/news": [],
     "/keyakizaka46/blog": [],
     "/hinatazaka46/blog": [],
-    "/sakurazaka46/blog": [],
     "/coolapk/tuwen/:type?": [],
     "/coolapk/tuwen-xinxian": [],
     "/coolapk/toutiao/:type?": [],

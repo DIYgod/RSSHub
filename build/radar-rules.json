@@ -9378,6 +9378,19 @@
       }
     ]
   },
+  "sakurazaka46.com": {
+    "_name": "櫻坂46",
+    ".": [
+      {
+        "title": "公式ブログ",
+        "docs": "https://docs.rsshub.app/new-media.html#ban-dao-xi-lie-guan-wang-zi-xun-ying-ban-46-bo-ke",
+        "source": [
+          "/s/s46/diary/blog/list",
+          "/"
+        ]
+      }
+    ]
+  },
   "samsung.com": {
     "_name": "Samsung",
     "research": [
