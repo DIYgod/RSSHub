@@ -58,7 +58,7 @@ pageClass: routes
 
 ### 搜索文章
 
-<Route author="xyqfer kt286" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
+<Route author="xyqfer kt286 nczitzk" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
 
 ## 52hrtt 华人头条
 
@@ -1432,7 +1432,34 @@ Supported sub-sites:
 
 ### 櫻坂 46 博客
 
-<Route author="victor21813" example="/sakurazaka46/blog" path="/sakurazaka46/blog" />
+<Route author="victor21813 nczitzk" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为全部']">
+
+| 编号 | 姓名     |
+| -- | ------ |
+| 03 | 上村 莉菜  |
+| 04 | 尾関 梨香  |
+| 06 | 小池 美波  |
+| 07 | 小林 由依  |
+| 08 | 齋藤 冬優花 |
+| 11 | 菅井 友香  |
+| 14 | 土生 瑞穂  |
+| 15 | 原田 葵   |
+| 43 | 井上 梨名  |
+| 53 | 遠藤 光莉  |
+| 54 | 大園 玲   |
+| 55 | 大沼 晶保  |
+| 56 | 幸阪 茉里乃 |
+| 44 | 関 有美子  |
+| 45 | 武元 唯衣  |
+| 46 | 田村 保乃  |
+| 47 | 藤吉 夏鈴  |
+| 57 | 増本 綺良  |
+| 48 | 松田 里奈  |
+| 50 | 森田 ひかる |
+| 58 | 守屋 麗奈  |
+| 51 | 山﨑 天   |
+
+</Route>
 
 ### 日向坂 46 新闻
 
@@ -2663,6 +2690,18 @@ column 为 third 时可选的 category:
 | 最新 | 推薦 | 熱門 |
 | -- | -- | -- |
 | 1  | 2  | 3  |
+
+</Route>
+
+## 慢雾科技
+
+### 动态
+
+<Route author="AtlasQuan" example="/slowmist/research" path="/slowmist/:type?" :paramsDesc="['分类，见下表，默认为公司新闻']">
+
+| 公司新闻 | 漏洞披露 | 技术研究     |
+| ---- | ---- | -------- |
+| news | vul  | research |
 
 </Route>
 
