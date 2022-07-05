@@ -1014,6 +1014,10 @@
     "/gov/nrta/news/:category?": [
         "yuxinliu-alex"
     ],
+    "/gov/nsfc/news/:type?": [
+        "Derekmini",
+        "nczitzk"
+    ],
     "/gov/pbc/goutongjiaoliu": [
         "nczitzk"
     ],
@@ -1902,9 +1906,6 @@
     ],
     "/npm/package/:name": [
         "Fatpandac"
-    ],
-    "/nsfc/news/:type?": [
-        "Derekmini"
     ],
     "/ntdtv/:language/:id": [
         "Fatpandac"
