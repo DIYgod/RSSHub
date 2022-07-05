@@ -366,6 +366,18 @@ pageClass: routes
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
+## 陕西省人民政府
+
+### 陕西省科学技术厅
+
+<Route author="nczitzk" example="/gov/shaanxi/kjt" path="/gov/shaanxi/kjt/:id?" :paramsDesc="['分类，见下表，默认为通知公告']">
+
+| 科技头条 | 工作动态 | 基层科技 | 科技博览 | 媒体聚焦 | 通知公告 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 1061 | 24   | 27   | 25   | 28   | 221  |
+
+</Route>
+
 ## 上海市人民政府
 
 ### 上海市职业能力考试院 考试项目
