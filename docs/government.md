@@ -378,7 +378,7 @@ pageClass: routes
 
 ### 上海市药品监督管理局
 
-<Route author="nczitzk" example="/gov/shanghai/yjj" path="/gov/shanghai/yjj/:path+" :paramsDesc="['路径参数']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/gov/shanghai/yjj/zh" path="/gov/shanghai/yjj/:path+" :paramsDesc="['路径参数']" radar="1" rssbud="1">
 
 ::: tip 提示
 
