@@ -19,6 +19,10 @@ WORKDIR /app
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
+    apt-get update && \
+    apt-get install -yq --no-install-recommends \
+        build-essential python3 \
+    ; \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \

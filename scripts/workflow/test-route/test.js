@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable no-await-in-loop */
 
 module.exports = async ({ github, context, core, got }, baseUrl, routes, number) => {
     if (routes[0] === 'NOROUTE') {
@@ -63,16 +63,18 @@ ${detail.slice(0, 65300 - temp_com.length)}
         com_l = com_l.slice(0, 5);
     }
 
-    await github.rest.issues
-        .addLabels({
-            issue_number: number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            labels: ['Auto: Route Test Complete'],
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
+    if (process.env.PULL_REQUEST) {
+        await github.rest.issues
+            .addLabels({
+                issue_number: number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['Auto: Route Test Complete'],
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+    }
 
     for (const com_s of com_l) {
         // Intended, one at a time

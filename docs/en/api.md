@@ -1,4 +1,4 @@
-## API
+# API
 
 ::: warning Warning
 The API is under active development and is subject to change. All suggestions are welcome!
@@ -6,7 +6,7 @@ The API is under active development and is subject to change. All suggestions ar
 
 RSSHub provides the following APIs:
 
-### List of Public Routes
+## List of Public Routes
 
 ::: tip Tip
 This API **will not** return any routes under `lib/protected_router.js`.

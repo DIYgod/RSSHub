@@ -246,7 +246,7 @@ describe('wrong_path', () => {
     it(`wrong_path`, async () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
-        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire * 100}`);
+        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire}`);
         expect(response.text).toMatch(/Error: wrong path/);
     });
 });
@@ -277,6 +277,22 @@ describe('complicated_description', () => {
 <img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
         expect(parsed.items[1].content).toBe(`<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
+    });
+});
+
+describe('multimedia_description', () => {
+    it(`multimedia_description`, async () => {
+        const response = await request.get('/test/multimedia');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].content).toBe(`<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<video src="https://mock.com/DIYgod/RSSHub.mp4"></video>
+<video poster="https://mock.com/DIYgod/RSSHub.jpg">
+<source src="https://mock.com/DIYgod/RSSHub.mp4" type="video/mp4">
+<source src="https://mock.com/DIYgod/RSSHub.webm" type="video/webm">
+</video>
+<audio src="https://mock.com/DIYgod/RSSHub.mp3"></audio>
+<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`);
     });
 });
 
