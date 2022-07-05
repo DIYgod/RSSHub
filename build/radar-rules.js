@@ -1261,6 +1261,12 @@
                         return '/dapenti/subject/' + new URL(url).searchParams.get('subjectid');
                     }
                 } } ] },
+  "darwinawards.com":{ _name:"Darwin Awards",
+    ".":[ { title:"Award Winners",
+        docs:"https://docs.rsshub.app/other.html#darwin-awards-award-winners",
+        source:[ "/darwin",
+          "/" ],
+        target:"/darwinawards" } ] },
   "dayanzai.me":{ _name:"大眼仔旭",
     ".":[ { title:"大眼仔旭",
         docs:"https://docs.rsshub.app/bbs.html#dayanzai",
