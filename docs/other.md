@@ -99,9 +99,9 @@ pageClass: routes
 
 ## Darwin Awards
 
-### 文章
+### Award Winners
 
-<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all"/>
+<Route author="zoenglinghou nciztzk" example="/darwinawards" path="/darwinawards" />
 
 ## dcinside
 
@@ -458,18 +458,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
 | ---- | ------ | ------ | ---- | ---- | ---- |
 | lxtz | xmzl   | wtjd   | lqgg | xwzx | xwgg |
-
-</Route>
-
-## 国家自然科学基金委员会
-
-### 新闻通知
-
-<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1" rssbud="1">
-
-| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
-| ---- | ---- | ---- | ---- |
-| jjyw | tzgg | zzcg | kpkx |
 
 </Route>
 
