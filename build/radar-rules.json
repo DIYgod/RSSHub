@@ -1283,6 +1283,186 @@
       }
     ]
   },
+  "xbiquwx.la": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "biqu5200.net": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "xbiquge.so": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "biqugeu.net": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "b520.cc": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "biquge.biz": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "xbiquge.la": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "qbiqu.com": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "bswtan.com": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "biquge.co": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "zhhbqg.com": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "biqugse.com": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "ibiquge.net": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "shuquge.com": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
+  "mayiwxw.com": {
+    "_name": "笔趣阁",
+    ".": [
+      {
+        "title": "",
+        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-xiao-shuo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "bit.edu.cn": {
     "_name": "北京理工大学",
     "rszhaopin": [
@@ -13457,26 +13637,6 @@
         "title": "郵便・荷物の追跡",
         "docs": "https://docs.rsshub.app/other.html#ri-ben-you-bian-you-bian-zhui-ji-サービス",
         "source": "/services/srv/search/direct"
-      }
-    ]
-  },
-  "biquge5200.com": {
-    "www": [
-      {
-        "title": "biquge5200.com",
-        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-biquge5200-com",
-        "source": "/:id",
-        "target": "/novel/biquge/:id"
-      }
-    ]
-  },
-  "biquge.info": {
-    "www": [
-      {
-        "title": "biquge.info",
-        "docs": "https://docs.rsshub.app/reading.html#bi-qu-ge-biquge-info",
-        "source": "/:id",
-        "target": "/novel/biqugeinfo/:id"
       }
     ]
   },
