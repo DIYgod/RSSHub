@@ -1430,9 +1430,40 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
 
+### 櫻坂 46 新闻
+
+<Route author="nczitzk" example="/sakurazaka46/news" path="/sakurazaka46/news" />
+
 ### 櫻坂 46 博客
 
-<Route author="victor21813" example="/sakurazaka46/blog" path="/sakurazaka46/blog" />
+<Route author="victor21813 nczitzk" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为全部']">
+
+| 编号 | 姓名     |
+| -- | ------ |
+| 03 | 上村 莉菜  |
+| 04 | 尾関 梨香  |
+| 06 | 小池 美波  |
+| 07 | 小林 由依  |
+| 08 | 齋藤 冬優花 |
+| 11 | 菅井 友香  |
+| 14 | 土生 瑞穂  |
+| 15 | 原田 葵   |
+| 43 | 井上 梨名  |
+| 53 | 遠藤 光莉  |
+| 54 | 大園 玲   |
+| 55 | 大沼 晶保  |
+| 56 | 幸阪 茉里乃 |
+| 44 | 関 有美子  |
+| 45 | 武元 唯衣  |
+| 46 | 田村 保乃  |
+| 47 | 藤吉 夏鈴  |
+| 57 | 増本 綺良  |
+| 48 | 松田 里奈  |
+| 50 | 森田 ひかる |
+| 58 | 守屋 麗奈  |
+| 51 | 山﨑 天   |
+
+</Route>
 
 ### 日向坂 46 新闻
 
@@ -4086,6 +4117,35 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 ### 新闻资讯
 
 <Route author="nczitzk" example="/cria/news/1" path="/cria/news/:id?" :paramsDesc="['列表 id，可在列表页的 URL 中找到，默认为首页']"/>
+
+## 重构
+
+### 推荐
+
+<Route author="nczitzk" example="/allrecode/recommends" path="/allrecode/recommends" />
+
+### 快讯
+
+<Route author="nczitzk" example="/allrecode/news" path="/allrecode/news" />
+
+### 资讯
+
+<Route author="nczitzk" example="/allrecode/posts" path="/allrecode/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 分类   | id                 |
+| ---- | ------------------ |
+| 全部   | posts              |
+| NFT  | non-fungible-token |
+| DAO  | dao                |
+| Web3 | web3               |
+| 安全   | security           |
+| 政策   | global-policy      |
+| 元宇宙  | metaverse          |
+| 区块链  | blockchain         |
+| 融资新闻 | financing-news     |
+| 趋势观察 | trend-observation  |
+
+</Route>
 
 ## 眾新聞
 

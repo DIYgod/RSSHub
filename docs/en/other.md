@@ -59,9 +59,9 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ## Darwin Awards
 
-### Articles
+### Award Winners
 
-<RouteEn author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
+<RouteEn author="zoenglinghou nciztzk" example="/darwinawards" path="/darwinawards" />
 
 ## dcinside
 

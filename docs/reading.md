@@ -158,25 +158,59 @@ pageClass: routes
 
 ## 笔趣阁
 
-### biquge5200.com
+::: tip 看我
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
-
-::: tip 提示
-
-由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id.
+此处的 **笔趣阁** 指网络上使用和 **笔趣阁** 样式相似模板的小说阅读网站，包括但不限于下方列举的网址。
 
 :::
 
-### biquge.info
+| 网址                        |
+| ------------------------- |
+| <https://www.xbiquwx.la>  |
+| <http://www.biqu5200.net> |
+| <https://www.xbiquge.so>  |
+| <https://www.biqugeu.net> |
+| <http://www.b520.cc>      |
+| <https://www.biquge.biz>  |
+| <https://www.xbiquge.la>  |
+| <https://www.qbiqu.com>   |
+| <https://www.bswtan.com>  |
+| <https://www.biquge.co>   |
+| <https://www.zhhbqg.com>  |
+| <http://www.biqugse.com>  |
+| <https://www.ibiquge.net> |
+| <https://www.shuquge.com> |
+| <https://www.mayiwxw.com> |
 
-<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
+### 小说
 
-::: tip 提示
+<Route author="nczitzk" example="/biquge/http://www.biqu5200.net/0_7/" path="/biquge/:url" :paramsDesc="['小说 Url，即对应小说详情页的 Url，可在地址栏中找到']" anticrawler="1" radar="1" rssbud="1">
 
-由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge.info`](http://www.biquge.info/)中的小说 id.
+::: tip 看我
+
+#### 使用方法
+
+如订阅 [《大主宰》](http://www.biqu5200.net/0\_7/)，此时在 [biqu5200.net](http://www.biqu5200.net) 中查询得到对应小说详情页 URL 为 <http://www.biqu5200.net/0_7/>。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/)
+
+又如同样订阅 [《大主宰》](https://www.shuquge.com/txt/70/index.html)，此时在 [shuquge.com](https://www.shuquge.com) 中查询得到对应小说详情页 URL 为 <https://www.shuquge.com/txt/70/index.html>。此时，把末尾的 `index.html` 去掉，路由为 [`/biquge/https://www.shuquge.com/txt/70/`](https://rsshub.app/biquge/https://www.shuquge.com/txt/70/)
+
+#### 关于章节数
+
+路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 `limit` 参数。如上面的例子：订阅 [《大主宰》](http://www.biqu5200.net/0\_7/) 并获取最新的 **10** 个章节。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/?limit=10`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/?limit=10)
+
+需要注意的是，单次获取的所有章节更新时间统一设定为最新章节的更新时间。也就是说，获取最新的 **10** 个章节时，除了最新 **1** 个章节的更新时间是准确的（和网站一致的），其他 **9** 个章节的更新时间是不准确的。
+
+另外，若设置获取章节数目过多，可能会触发网站反爬，导致路由不可用。
 
 :::
+
+::: warning 提示
+
+上方列举的网址可能部分不可用，这取决于该网站的维护者是否持续运营网站。请选择可以正常访问的网址，获取更新的前提是该网站可以正常访问。
+
+:::
+
+</Route>
 
 ## 博客来
 

@@ -325,7 +325,7 @@ More could be found in the URL of the category/topic page.
 
 ### Inverstigates
 
-<RouteEn author="LyleLee" example="/reuters/inverstigates" path="/reuters/inverstigates" />
+<RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
 ## RTHK
 

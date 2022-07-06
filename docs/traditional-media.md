@@ -1217,9 +1217,7 @@ category 对应的关键词有
 
 ### 深度调查栏目
 
-<Route author="LyleLee" example="/reuters/inverstigates" path="/reuters/inverstigates" />
-
-</Route>
+<Route author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
 ## 明报
 
