@@ -1430,6 +1430,10 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
 
+### 櫻坂 46 新闻
+
+<Route author="nczitzk" example="/sakurazaka46/news" path="/sakurazaka46/news" />
+
 ### 櫻坂 46 博客
 
 <Route author="victor21813 nczitzk" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为全部']">
