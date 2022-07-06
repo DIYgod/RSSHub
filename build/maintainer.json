@@ -154,6 +154,15 @@
     "/aliyun/notice/:type?": [
         "muzea"
     ],
+    "/allrecode/news": [
+        "nczitzk"
+    ],
+    "/allrecode/recommends": [
+        "nczitzk"
+    ],
+    "/allrecode/:category?": [
+        "nczitzk"
+    ],
     "/ally/rail/:category?/:topic?": [
         "Rongronggg9"
     ],
