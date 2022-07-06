@@ -14,7 +14,7 @@
     Author: <a v-for="uid in author.split(' ')" :href="`https://github.com/${uid}`" target="_blank"> @{{ uid }} </a>
   </p>
   <p  class="example">
-    <span>Example:</span> <a :href="demoUrl" target="_blank">{{demoUrl}}</a> <img :src="'https://img.shields.io/website?label=status&style=flat-square&url=' + encodeURIComponent(encodeURI(demoUrl))">
+    <span>Example:</span> <a :href="demoUrl" target="_blank">{{demoUrl}}</a> <!--<img :src="'https://img.shields.io/website?label=status&style=flat-square&cacheSeconds=86400&url=' + encodeURIComponent(encodeURI(demoUrl))">-->
   </p>
   <p class="path">
     Route: <code>{{ path }}</code>

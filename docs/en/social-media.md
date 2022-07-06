@@ -42,8 +42,8 @@ pageClass: routes
 
 Type
 
-| artwork | crafts | music | writing | 
-| ---- | ---- | ---- | ---- | 
+| artwork | crafts | music | writing |
+| ---- | ---- | ---- | ---- |
 | artwork | crafts | music | writing |
 
 </RouteEn>
@@ -72,7 +72,7 @@ Type
 
 <RouteEn author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
 
-### User's Commission Information 
+### User's Commission Information
 
 <RouteEn author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" :paramsDesc="['Username, can find in userpage']" radar="1"/>
 
@@ -300,6 +300,12 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 <RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
+## TikTok
+
+### User
+
+<RouteEn author="TonyRL" example="/tiktok/user/@linustech" path="/tiktok/user/:user" :paramsDesc="['User ID, including @']" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+
 ## Twitter
 
 ::: warning
@@ -353,7 +359,7 @@ generates
 
 <RouteEn author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
 
-## User following timeline
+### User following timeline
 
 <RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['user id', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1">
 
@@ -412,7 +418,7 @@ Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a re
 
 ### User
 
-<RouteEn path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" :paramsDesc="['YouTuber id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
 ### Channel
 
@@ -422,8 +428,12 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 :::
 
-<RouteEn path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
 ### Playlist
 
-<RouteEn path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
+<RouteEn author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
+
+### Subscriptions
+
+<RouteEn author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" :paramsDesc="['Default to embed the video, set to any value to disable embedding']" selfhost="1" radar="1" rssbud="1"/>

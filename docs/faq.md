@@ -18,12 +18,10 @@
 
 **Q: 为什么 RSSHub 里的图片 / 视频加载不出来？**
 
-**A:** RSSHub 里的图片 / 视频地址都是源站地址，部分有防盗链，所以 RSSHub 给图片加了 `referrerpolicy="no-referrer"` 属性来防止跨域问题，但部分 RSS 服务会自作主张去掉这个属性，如 Feedly、Inoreader，在它们的网页端图片会触发跨域加载不出来。部分网站则要求 Referrer 来防止盗链，这种情况可以通过设置图片反代进行处理。详情请查看文档`部署->图片处理`部分
+**A:** RSSHub 里的图片 / 视频地址都是源站地址，部分有防盗链，所以 RSSHub 给图片加了 `referrerpolicy="no-referrer"` 属性来防止跨域问题，但部分 RSS 服务会自作主张去掉这个属性，如 Feedly、Inoreader，在它们的网页端图片会触发跨域加载不出来。同时，视频目前没有类似的属性，因此大部分阅读器都无法通过防盗链检查。下面是一些解决方案：
 
-视频目前没有类似的属性，下面是一些解决方案：
-
-1.  使用不发送 Referer 的阅读器，如 [Inoreader 网页版](https://www.inoreader.com/)配合[禁用 referer 的 user script](https://greasyfork.org/zh-CN/scripts/376884-%E6%98%BE%E7%A4%BA%E9%98%B2%E7%9B%97%E9%93%BE%E5%9B%BE%E7%89%87-for-inoreader)、[RSS to Telegram Bot](https://github.com/Rongronggg9/RSS-to-Telegram-Bot) 等。如果你的阅读器能够在不启用上述两个变通解决方案时成功播放内嵌视频，那么它就是不发送 Referer 的，请考虑添加到文档里帮助更多的人。
-2.  部分路由支持生成关闭内嵌视频，直接输出视频地址，或者其他可以尝试绕开相关限制的的订阅，可尝试使用。具体说明请查看相关路由（举例：`社交媒体->抖音`)
+1.  使用不发送 Referer 的阅读器，如 [Inoreader 网页版](https://www.inoreader.com/)配合[禁用 Referer 的 user script](https://greasyfork.org/zh-CN/scripts/376884)、[RSS to Telegram Bot](https://github.com/Rongronggg9/RSS-to-Telegram-Bot) 等。如果你的阅读器能够绕过防盗链成功播放内嵌视频，那么它就是不发送 Referer 的，请考虑添加到文档里帮助更多的人。
+2.  设置反代，参考 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li)。
 3.  回到原网站查看相关资源。
 
 **Q: 没有我想订阅的网站怎么办嘤嘤嘤 QAQ**

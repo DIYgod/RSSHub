@@ -289,6 +289,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
+## OpenWrt
+
+### Releases
+
+<RouteEn author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" :paramsDesc="['Device Model, can be found in url of `Table of Hardware` -> `Device Page`', 'Same as above']"/>
+
 ## PlayStation
 
 ### PlayStation 4 System Update

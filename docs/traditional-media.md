@@ -66,11 +66,7 @@ pageClass: routes
 
 ### 话题
 
-<Route author="zoenglinghou mjysci" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`']" radar="1" rssbud="1" anticrawler="1" puppeteer="1">
-
-采用了 `puppeteer` 规避 `Project Shield`，无全文抓取，建议自建。
-
-</Route>
+<Route author="zoenglinghou mjysci TonyRL" example="/apnews/topics/ap-top-news" path="/apnews/topics/:topic?" :paramsDesc="['话题名称，可在 URL 中找到，例如 AP Top News [https://apnews.com/hub/ap-top-news](https://apnews.com/hub/ap-top-news) 的话题为 `ap-top-news`，默认为 `trending-news`']" radar="1" rssbud="1" />
 
 ## BBC
 
@@ -214,6 +210,24 @@ pageClass: routes
 ### News Web Easy
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+
+### WORLD-JAPAN - 新闻提要
+
+<Route author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" :paramsDesc="['语言，见下表，默认为`English`']" radar="1" rssbud="1">
+
+| العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
+| ------- | ----- | -------------- | ------ | ------ | ------- | -------- |
+| ar      | bn    | my             | zh     | zt     | en      | fr       |
+
+| हिन्दी | Bahasa Indonesia | 코리언 | فارسی | Português | Русский | Español |
+| ------ | ---------------- | --- | ----- | --------- | ------- | ------- |
+| hi     | id               | ko  | fa    | pt        | ru      | es      |
+
+| Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
+| --------- | ------- | ------ | ---------- | ---- | ---------- |
+| sw        | th      | tr     | uk         | ur   | vi         |
+
+</Route>
 
 ## Nikkei Asia
 
@@ -394,15 +408,19 @@ Solidot 提供的 feed:
 
 ### 分类
 
-<Route author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']"/>
+<Route author="ImSingee" example="/economist/latest" path="/economist/:endpoint" :paramsDesc="['分类名称，可在 [官方 RSS 页面 ](https://www.economist.com/rss) 找到，例如 https://www.economist.com/china/rss.xml 即为 china']" radar="1" rssbud="1"/>
+
+### Espresso
+
+<Route author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
 
 ### GRE Vocabulary
 
-<Route author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+<Route author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" radar="1" rssbud="1"/>
 
 ### 下载
 
-<Route author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+<Route author="nczitzk" example="/economist/download" path="/economist/download" >
 
 下载站：<http://www.cgx02.xyz/index.php?dir=/te>
 
@@ -1095,6 +1113,26 @@ category 对应的关键词有
 
 <Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
 
+## 理论网
+
+### 学习时报
+
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['编号，见下表，默认为全部']">
+
+| 版           | 编号 |
+| ----------- | -- |
+| 全部          |    |
+| 第 A1 版：国内大局 | A1 |
+| 第 A2 版：市场经济 | A2 |
+| 第 A3 版：民主法治 | A3 |
+| 第 A4 版：读书治学 | A4 |
+| 第 A5 版：特别策划 | A5 |
+| 第 A6 版：科技前沿 | A6 |
+| 第 A7 版：社会治理 | A7 |
+| 第 A8 版：学员天地 | A8 |
+
+</Route>
+
 ## 连线 Wired
 
 非订阅用户每月有阅读全文次数限制。
@@ -1133,53 +1171,53 @@ category 对应的关键词有
 
 ## 路透社
 
-### 实时资讯
+::: warning 迁移说明
 
-<Route author="black-desk" example="/reuters/theWire" path="/reuters/theWire" />
+1.  路透社中文网站 (`cn.reuters.com`) 和英国网站 (`uk.reuters.com`) 已经关闭，并重定向至主站 (`www.reuters.com`)
+2.  旧路由已被废弃，请迁移至下面列出的新路由
 
-### 频道
+:::
 
-<Route author="HenryQW proletarius101" example="/reuters/channel/cn/analyses" path="/reuters/channel/:site/:channel" :paramsDesc="['语言，支持的分站列表如下','频道名，请注意大小写需与如下表格中一致。']">
+### 分类 / 话题 / 作者
 
-支持语言列表
+<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
--   中国分站 `cn`：
+-   `:category`:
+    | World | Business | Legal | Markets | Breakingviews | Technology |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- |
+    | world | business | legal | markets | breakingviews | technology |
 
-    -   主频道：
+-   `world/:topic`:
 
-    | 深度分析     | 时事要闻        | 生活   | 投资        |
-    | -------- | ----------- | ---- | --------- |
-    | analyses | generalnews | life | investing |
+    | All | Africa | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+    | --- | ------ | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+    |     | africa | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
 
-    -   资讯子频道：
+-   `business/:topic`:
 
-    | 中国财经  | 国际财经                  | 新闻人物      | 财经视点     |
-    | ----- | --------------------- | --------- | -------- |
-    | china | internationalbusiness | newsmaker | opinions |
+    | All | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+    | --- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
 
-    -   专栏子频道：
+-   `legal/:topic`:
 
-    | 中国财经专栏   | 国际财经专栏    | 大宗商品专栏    |
-    | -------- | --------- | --------- |
-    | CnColumn | IntColumn | ComColumn |
+    | All | Goverment | Legal Industry | Litigation | Transaction |
+    | --- | --------- | -------------- | ---------- | ----------- |
+    |     | goverment | legalindustry  | litigation | transaction |
 
--   美国分站 `us`：
+-   `authors/:topic`:
 
-    -   主频道：
+    | 默认      | Jonathan Landay | 其他作者           |
+    | ------- | --------------- | -------------- |
+    | reuters | jonathan-landay | 作者名，可在 URL 中找到 |
 
-    | Business | Markets | World | Politics | Tech       | Breakingviews | Wealth | Life      |
-    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
-    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
-
--   英国分站 `uk`：
-
-    -   主频道：
-
-    | Business | Markets | World | UK | Tech       | Money           | Breakingviews | Sport  | Life      |
-    | -------- | ------- | ----- | -- | ---------- | --------------- | ------------- | ------ | --------- |
-    | business | markets | world | uk | technology | personalFinance | breakingviews | sports | lifestyle |
+可在分类 / 话题页的 URL 中找到更多。
 
 </Route>
+
+### 深度调查栏目
+
+<Route author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
 ## 明报
 
@@ -1234,6 +1272,56 @@ category 对应的关键词有
 
 </Route>
 
+## 南湖清风
+
+### 嘉兴日报
+
+<Route author="nczitzk" example="/cnjxol/jxrb" path="/cnjxol/jxrb/:id?" :paramsDesc="['编号，见下表，默认为全部']" anticrawler="1">
+
+| 版            | 编号 |
+| ------------ | -- |
+| 全部           |    |
+| 第 01 版：要闻    | 01 |
+| 第 02 版：要闻    | 02 |
+| 第 03 版：要闻    | 03 |
+| 第 04 版：嘉一度   | 04 |
+| 第 05 版：聚焦    | 05 |
+| 第 06 版：党报热线  | 06 |
+| 第 07 版：天下    | 07 |
+| 第 08 版：聚焦    | 08 |
+| 第 09 版：南湖新闻  | 09 |
+| 第 10 版：综合    | 10 |
+| 第 11 版：梅花洲   | 11 |
+| 第 12 版：南湖纵横  | 12 |
+| 第 13 版：秀洲新闻  | 13 |
+| 第 14 版：综合    | 14 |
+| 第 15 版：秀・观察  | 15 |
+| 第 16 版：走进高新区 | 16 |
+
+</Route>
+
+### 南湖晚报
+
+<Route author="nczitzk" example="/cnjxol/nhwb" path="/cnjxol/nhwb/:id?" :paramsDesc="['编号，见下表，默认为全部']" anticrawler="1">
+
+| 版                    | 编号 |
+| -------------------- | -- |
+| 全部                   |    |
+| 第 01 版：要闻            | 01 |
+| 第 02 版：品质嘉兴・红船旁的美丽城镇 | 02 |
+| 第 03 版：嘉兴新闻          | 03 |
+| 第 04 版：嘉兴新闻          | 04 |
+| 第 05 版：今日聚焦          | 05 |
+| 第 06 版：嘉兴新闻          | 06 |
+| 第 07 版：热线新闻          | 07 |
+| 第 08 版：财经新闻          | 08 |
+| 第 09 版：热线新闻          | 09 |
+| 第 10 版：公益广告          | 10 |
+| 第 11 版：消费周刊          | 11 |
+| 第 12 版：悦读坊           | 12 |
+
+</Route>
+
 ## 南华早报 SCMP
 
 ### 新闻
@@ -1268,9 +1356,9 @@ category 对应的关键词有
 
 ### 新闻简报
 
-<Route author="yueyericardo" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
+<Route author="yueyericardo nczitzk" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
 
-网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese/>
+网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese>
 
 </Route>
 
@@ -1484,23 +1572,23 @@ category 对应的关键词有
 
 ### 热门
 
-<Route author="hoilc" example="/hk01/hot" path="/hk01/hot" radar="1" rssbud="1"/>
+<Route author="hoilc Fatpandac" example="/hk01/hot" path="/hk01/hot" radar="1" rssbud="1"/>
 
 ### 栏目
 
-<Route author="hoilc" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc Fatpandac" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 子栏目
 
-<Route author="hoilc" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc Fatpandac" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 专题
 
-<Route author="hoilc" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc Fatpandac" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 标签
 
-<Route author="hoilc" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc Fatpandac" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 香港電台
 

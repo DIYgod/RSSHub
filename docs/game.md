@@ -197,6 +197,40 @@ pageClass: routes
 
 <Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
 
+## itch.io
+
+### Browse
+
+<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['参数']">
+
+参数为对应页面 URL 中 `itch.io` 后的字段，如 [Top rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) 的 URL 是 <https://itch.io/games/top-rated/tag-singleplayer>，其中 `itch.io` 后的字段为 `/games/top-rated/tag-singleplayer`。
+
+所以路由为 [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer)。
+
+::: tip 提示
+
+你可以在 [这里](https://itch.io/tags)，浏览所有的 tags。
+
+:::
+
+</Route>
+
+### Developer Logs
+
+<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']">
+
+用户 id 为对应页面 URL 中 `.itch.io` 前的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `.itch.io` 前的字段为 `teamterrible`；
+
+项目 id 为对应页面 URL 中 `itch.io` 与 `/devlog` 之间的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `itch.io` 与 `/devlog` 之间的字段为 `the-baby-in-yellow`。
+
+所以路由为 [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow)。
+
+</Route>
+
+### Posts
+
+<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" :paramsDesc="['话题 id，可在对应页面地址栏中找到', '话题名，可在对应页面地址栏中找到']"/>
+
 ## JUMP
 
 ### 游戏折扣
@@ -587,9 +621,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 游戏 id
 
-| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 |
-| --- | -- | --- | ----- | ---- |
-| 1   | 2  | 3   | 4     | 6    |
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
+| --- | -- | --- | ----- | ---- | --- |
+| 1   | 2  | 3   | 4     | 6    | 8   |
 
 公告类型
 
@@ -810,6 +844,18 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 用户文章
 
 <Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID，可在文章html中获取']"/>
+
+## 掌游宝
+
+### 推荐
+
+<Route author="ztmzzz" example="/zhangyoubao/lol" path="/zhangyoubao/:category" :paramsDesc="['分类，见下表']">
+
+| 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合  | 手游综合   | 云顶之弈     | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗       |
+| ---- | ---- | --- | ---- | ---- | ----- | ------ | -------- | ---- | ---- | ------ | ---------- |
+| lol  | lscs | dnf | swxf | yxzj | steam | mobile | lolchess | blzz | hszz | dnfm   | brawlstars |
+
+</Route>
 
 ## 最终幻想 14
 

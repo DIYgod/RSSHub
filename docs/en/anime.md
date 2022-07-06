@@ -86,7 +86,7 @@ Article types:
 
 <RouteEn author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" :paramsDesc="['Language','Category','Name','ID']"/>
 
-For example: https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
+For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894>, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
 
 ### [Naver](https://comic.naver.com)
 
