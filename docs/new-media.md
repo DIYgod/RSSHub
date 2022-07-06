@@ -4114,6 +4114,35 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="nczitzk" example="/cria/news/1" path="/cria/news/:id?" :paramsDesc="['列表 id，可在列表页的 URL 中找到，默认为首页']"/>
 
+## 重构
+
+### 推荐
+
+<Route author="nczitzk" example="/allrecode/recommends" path="/allrecode/recommends" />
+
+### 快讯
+
+<Route author="nczitzk" example="/allrecode/news" path="/allrecode/news" />
+
+### 资讯
+
+<Route author="nczitzk" example="/allrecode/posts" path="/allrecode/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 分类   | id                 |
+| ---- | ------------------ |
+| 全部   | posts              |
+| NFT  | non-fungible-token |
+| DAO  | dao                |
+| Web3 | web3               |
+| 安全   | security           |
+| 政策   | global-policy      |
+| 元宇宙  | metaverse          |
+| 区块链  | blockchain         |
+| 融资新闻 | financing-news     |
+| 趋势观察 | trend-observation  |
+
+</Route>
+
 ## 眾新聞
 
 ### 眾聞
