@@ -1149,6 +1149,9 @@
     "/hackertalk/": [
         "hyoban"
     ],
+    "/hakkatv/news/:type?": [
+        "TonyRL"
+    ],
     "/hameln/chapter/:id": [
         "huangliangshusheng"
     ],
