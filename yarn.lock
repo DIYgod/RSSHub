@@ -11402,38 +11402,38 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-extra-plugin-stealth@2.10.2:
-  version "2.10.2"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.10.2.tgz#276e5daf1238dd4d407718034785da7d46b12204"
-  integrity sha512-2K2WGZNcLgU6kKmdX+Tyv2U2DbapL8YAqs2hpvWcrflhbx04AAGoZT/JZ5eYSj2vUTtd4n9J+emPOa4Aw0qCaw==
+puppeteer-extra-plugin-stealth@2.10.3:
+  version "2.10.3"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.10.3.tgz#4597e3bf8e94d4ee314802f1c743b3325a2361df"
+  integrity sha512-2UBroRMADAO7hsb+ORtvOwM24uPSD3eqmvG0h3cDPgjp4Od4HYsGAKbbJJkn/uIZ9vBINCWXtRRrbpt9SInjKg==
   dependencies:
     debug "^4.1.1"
-    puppeteer-extra-plugin "^3.2.0"
-    puppeteer-extra-plugin-user-preferences "^2.3.1"
+    puppeteer-extra-plugin "^3.2.1"
+    puppeteer-extra-plugin-user-preferences "^2.3.2"
 
-puppeteer-extra-plugin-user-data-dir@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-data-dir/-/puppeteer-extra-plugin-user-data-dir-2.3.1.tgz#1a8777b6383cf212de361497e94616ab29712a38"
-  integrity sha512-yhaYMaNFdfQ1LbA94ZElW1zU8rh+MFmO+GZA0gtQ8BXc+UZ6aRrWS9flIZvlXDzk+ZsXhCbTEohEwZ8lEDLRVA==
+puppeteer-extra-plugin-user-data-dir@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-data-dir/-/puppeteer-extra-plugin-user-data-dir-2.3.2.tgz#fbf6d8e15acd7fd2dedc41e36b8d14fbf8aa569e"
+  integrity sha512-fV92vd5DG5NTVlZhbMGkOvJtAGAwEzOJDBTpDZG47M6P07f6rGlKedOYCZNrQlSHUZ5OnN5LAGWFGIYEoNFRkg==
   dependencies:
     debug "^4.1.1"
     fs-extra "^10.0.0"
-    puppeteer-extra-plugin "^3.2.0"
+    puppeteer-extra-plugin "^3.2.1"
 
-puppeteer-extra-plugin-user-preferences@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-preferences/-/puppeteer-extra-plugin-user-preferences-2.3.1.tgz#20faacd9e4cc00a52e8261604309e897aa569fa5"
-  integrity sha512-t/FyGQj2aqtHOROqL02z+k2kNQe0cjT0Hd9pG5FJ7x0JXx1722PhOuK7FeJLQMJ+BLl2YvCUgaWSC8Zohjts5A==
+puppeteer-extra-plugin-user-preferences@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-preferences/-/puppeteer-extra-plugin-user-preferences-2.3.2.tgz#a7107ab009b08141bec5947f42b7a3f9e097140e"
+  integrity sha512-ItdY02DNdB4VN6qBSG7x91tDg9MoRAwNNI4oiXaYB2V0Hlbf0bXyuiOSY9DJ1VhZdb1LotMfUucZhHiVdKBWRg==
   dependencies:
     debug "^4.1.1"
     deepmerge "^4.2.2"
-    puppeteer-extra-plugin "^3.2.0"
-    puppeteer-extra-plugin-user-data-dir "^2.3.1"
+    puppeteer-extra-plugin "^3.2.1"
+    puppeteer-extra-plugin-user-data-dir "^2.3.2"
 
-puppeteer-extra-plugin@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin/-/puppeteer-extra-plugin-3.2.0.tgz#f964e2a714d0f9c7a00b557c780ac28c6affd5e9"
-  integrity sha512-wbiw12USE3b+maMk/IMaroYsz7rusVI9G+ml6pCFCnFFh91Z9BAEiVzhCpOHuquVXEiCCsDTWhDUgvdNxQHOyw==
+puppeteer-extra-plugin@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin/-/puppeteer-extra-plugin-3.2.1.tgz#6908ee48ea3979f34999e3c100e78cda79898810"
+  integrity sha512-3Ty3SelRZ6Nt7vU6DKqDycXp68is2DEmdF7i77QPcX3YLyrWoDxGxE76beyNmQJdEhHDR2YMZ5kHmkQ+IFKgxQ==
   dependencies:
     "@types/debug" "^4.1.0"
     debug "^4.1.1"
