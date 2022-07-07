@@ -54,7 +54,7 @@ pageClass: routes
 
 ### 主题文章
 
-<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题 ID']" />
+<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:id" :paramsDesc="['主题 ID']" />
 
 ### 搜索文章
 
