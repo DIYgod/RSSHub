@@ -1023,6 +1023,9 @@
     "/gov/moe/:type": [
         "Crawler995"
     ],
+    "/gov/moj/aac/news/:type?": [
+        "TonyRL"
+    ],
     "/gov/nmpa/:path+": [
         "TonyRL"
     ],
