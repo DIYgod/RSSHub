@@ -9019,6 +9019,18 @@
       }
     ]
   },
+  "outage.report": {
+    "_name": "Outage.Report",
+    ".": [
+      {
+        "title": "Report",
+        "docs": "https://docs.rsshub.app/forecast.html#outage-report",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "panewslab.com": {
     "_name": "PANews",
     ".": [

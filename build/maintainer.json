@@ -1990,6 +1990,10 @@
     "/oup/:name": [
         "Fatpandac"
     ],
+    "/outagereport/:name/:count?": [
+        "cxumol",
+        "nczitzk"
+    ],
     "/panewslab/author/:id": [
         "nczitzk"
     ],
@@ -3699,7 +3703,6 @@
     "/dekudeals/:type": [],
     "/metacritic/release/:platform/:type/:sort?": [],
     "/kkj/news": [],
-    "/outagereport/:name/:count?": [],
     "/sixthtone/news": [],
     "/aiyanxishe/:id/:sort?": [],
     "/huodongxing/explore": [],
