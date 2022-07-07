@@ -1740,6 +1740,33 @@ category 对应的关键词有
 
 </Route>
 
+## 星洲网
+
+### 首页
+
+<Route author="nczitzk" example="/sinchew" path="/sinchew" />
+
+### 最新
+
+<Route author="nczitzk" example="/sinchew/latest" path="/sinchew/latest" />
+
+### 分类
+
+<Route author="nczitzk" example="/sinchew/category/头条" path="/sinchew/category/:category?" :paramsDesc="['分类，见下表，亦可以在对应分类页 URL 中找到']">
+
+| 头条 | 国内 | 国际 | 言路 | 财经 | 地方 | 副刊 | 娱乐 | 体育 | 百格 | 星角攝 | 好运来 |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- |
+
+::: tip 提示
+
+若订阅单级分类 [头条](https://www.sinchew.com.my/category/头条)，其 URL 为 [https://www.sinchew.com.my/category/ 头条](https://www.sinchew.com.my/category/头条)，则路由为 [`/sinchew/category/头条`](https://rsshub.app/sinchew/category/头条)。
+
+若订阅多级分类 [国际 > 天下事](https://www.sinchew.com.my/category/国际/天下事)，其 URL 为 [https://www.sinchew.com.my/category/ 国际 / 天下事](https://www.sinchew.com.my/category/国际/天下事)，则路由为 [`/sinchew/category/国际/天下事`](https://rsshub.app/sinchew/category/国际/天下事)。
+
+:::
+
+</Route>
+
 ## 央视新闻
 
 ### 新闻联播
