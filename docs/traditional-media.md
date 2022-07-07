@@ -1113,6 +1113,18 @@ category 对应的关键词有
 
 <Route author="wushijishan nczitzk" example="/kaopunews/:language?" path="/kaopunews" :paramsDesc="['语言，可选 zh-hans 即简体中文，或 zh-hant 即繁体中文']"/>
 
+## 客家電視台
+
+### 新聞首頁
+
+<Route author="TonyRL" example="/hakkatv/news" path="/hakkatv/news/:type?" :paramsDesc="['新聞，見下表，留空為全部']" radar="1" rssbud="1">
+
+| 客家焦點  | 政經要聞      | 民生醫療    | 地方風采  | 國際萬象          |
+| ----- | --------- | ------- | ----- | ------------- |
+| hakka | political | medical | local | international |
+
+</Route>
+
 ## 理论网
 
 ### 学习时报
