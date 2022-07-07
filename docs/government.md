@@ -522,6 +522,18 @@ pageClass: routes
 
 </Route>
 
+## 台灣法務部廉政署
+
+### 最新消息
+
+<Route author="TonyRL" example="/gov/moj/aac/news" path="/gov/moj/aac/news/:type?" :paramsDesc="['資料大類，留空為全部']">
+
+| 全部 | 其他 | 採購公告 | 新聞稿 | 肅貪 | 預防 | 綜合 | 防疫專區 |
+| -- | -- | ---- | --- | -- | -- | -- | ---- |
+|    | 02 | 01   | 06  | 05 | 04 | 03 | 99   |
+
+</Route>
+
 ## 台灣衛生福利部
 
 ### 即時新聞澄清
