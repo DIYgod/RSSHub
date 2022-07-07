@@ -1430,6 +1430,10 @@ Supported sub-sites:
 
 <Route author="nwindz" example="/keyakizaka46/blog" path="/keyakizaka46/blog" />
 
+### 櫻坂 46 新闻
+
+<Route author="nczitzk" example="/sakurazaka46/news" path="/sakurazaka46/news" />
+
 ### 櫻坂 46 博客
 
 <Route author="victor21813 nczitzk" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为全部']">
@@ -4113,6 +4117,35 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 ### 新闻资讯
 
 <Route author="nczitzk" example="/cria/news/1" path="/cria/news/:id?" :paramsDesc="['列表 id，可在列表页的 URL 中找到，默认为首页']"/>
+
+## 重构
+
+### 推荐
+
+<Route author="nczitzk" example="/allrecode/recommends" path="/allrecode/recommends" />
+
+### 快讯
+
+<Route author="nczitzk" example="/allrecode/news" path="/allrecode/news" />
+
+### 资讯
+
+<Route author="nczitzk" example="/allrecode/posts" path="/allrecode/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 分类   | id                 |
+| ---- | ------------------ |
+| 全部   | posts              |
+| NFT  | non-fungible-token |
+| DAO  | dao                |
+| Web3 | web3               |
+| 安全   | security           |
+| 政策   | global-policy      |
+| 元宇宙  | metaverse          |
+| 区块链  | blockchain         |
+| 融资新闻 | financing-news     |
+| 趋势观察 | trend-observation  |
+
+</Route>
 
 ## 眾新聞
 
