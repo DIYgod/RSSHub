@@ -44,7 +44,7 @@
     "/35photo/new": [
         "nczitzk"
     ],
-    "/36kr/motif/:mid": [
+    "/36kr/motif/:id": [
         "nczitzk"
     ],
     "/36kr/news/:category?": [
@@ -58,7 +58,7 @@
         "kt286",
         "nczitzk"
     ],
-    "/36kr/user/:uid": [
+    "/36kr/user/:id": [
         "nczitzk"
     ],
     "/423down/:category/:type": [
