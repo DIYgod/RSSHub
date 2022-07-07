@@ -1899,13 +1899,6 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.6.3.tgz#68ada76827b0010d0db071f739314fa429943d0a"
   integrity sha512-ymZk3LEC/fsut+/Q5qejp6R9O1rMxz3XaRHDV6kX8MrGAhOSPqVARbDi+EZvInBpw+BnCX3TD240byVkOfQsHg==
 
-"@types/puppeteer@*":
-  version "5.4.6"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-5.4.6.tgz#afc438e41dcbc27ca1ba0235ea464a372db2b21c"
-  integrity sha512-98Kghehs7+/GD9b56qryhqdqVCXUTbetTv3PlvDnmFRTHQH0j9DIp1f7rkAW3BAj4U3yoeSEQnKgdW8bDq0Y0Q==
-  dependencies:
-    "@types/node" "*"
-
 "@types/q@^1.5.1":
   version "1.5.5"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.5.tgz#75a2a8e7d8ab4b230414505d92335d1dcb53a6df"
@@ -11439,13 +11432,12 @@ puppeteer-extra-plugin@^3.2.1:
     debug "^4.1.1"
     merge-deep "^3.0.1"
 
-puppeteer-extra@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra/-/puppeteer-extra-3.3.1.tgz#98c1610314fad286887fe81e142db428d03e44cb"
-  integrity sha512-ySlwelCtymixsFY7b6S/5ua9u1Q0SX6bJcbodh1kZgQiySC+yjPa2F8QoC+9rco7mINFkm2V8wupSqyI3ITT2g==
+puppeteer-extra@3.3.3:
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra/-/puppeteer-extra-3.3.3.tgz#025d5474a41d3da219b58e6df837e2dbbc1b5932"
+  integrity sha512-0TiAB617OQr29YQBltLu1q029/vc0s752NvAEXvXHiHgHnxwaNRku+nMMZFIjNEObNwBsk8dx/l+sXbE6peozA==
   dependencies:
     "@types/debug" "^4.1.0"
-    "@types/puppeteer" "*"
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
