@@ -2292,6 +2292,15 @@
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
+    "/sinchew/category/:category?": [
+        "nczitzk"
+    ],
+    "/sinchew/latest": [
+        "nczitzk"
+    ],
+    "/sinchew/": [
+        "nczitzk"
+    ],
     "/sis001/forum/:id": [
         "TonyRL"
     ],
