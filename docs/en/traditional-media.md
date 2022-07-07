@@ -462,6 +462,12 @@ Language
 
 </RouteEn>
 
+## Taiwan News
+
+### Hot News
+
+<RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
+
 ## The Economist
 
 ### Category
@@ -589,9 +595,3 @@ Free articles only.
 | 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </RouteEn>
-
-## 公視新聞網
-
-### Daily News
-
-<RouteEn author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>
