@@ -1,0 +1,5 @@
+<h1>{{ title }}</h1>
+<p>{{ description }}</p>
+<b>Latest: {{ linkTitle }}</b>
+<p>{{@ content }}</p>
+<small>{{ pubDate }}</small>
