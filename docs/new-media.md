@@ -28,37 +28,45 @@ pageClass: routes
 
 ### 资讯
 
-<Route author="nczitzk" example="/36kr/news/latest" path="/36kr/news/:category?" :paramsDesc="['资讯分类，见下表，默认为最新']">
+<Route author="nczitzk" example="/36kr/information/web_news" path="/36kr/information/:category?" :paramsDesc="['资讯分类，见下表，默认为最新']">
 
-| 最新     | 推荐        | 创投      | Markets |
-| ------ | --------- | ------- | ------- |
-| latest | recommend | contact | ccs     |
+| 最新       | 推荐            | 创投      | 财经  |
+| -------- | ------------- | ------- | --- |
+| web_news | web_recommend | contact | ccs |
 
-| 汽车     | 科技         | 企服                | 生活   |
-| ------ | ---------- | ----------------- | ---- |
-| travel | technology | enterpriseservice | life |
+| 汽车     | 科技         | 企服                | 生活         |
+| ------ | ---------- | ----------------- | ---------- |
+| travel | technology | enterpriseservice | happy_life |
 
-| 创新       | 房产          | 职场        | 企业号     | 其他    |
-| -------- | ----------- | --------- | ------- | ----- |
-| innovate | real_estate | workplace | qiyehao | other |
+| 创新       | 房产          | 职场           | 企业号     | 其他    |
+| -------- | ----------- | ------------ | ------- | ----- |
+| innovate | real_estate | web_zhichang | qiyehao | other |
 
 </Route>
 
 ### 快讯
 
-<Route author="hillerliao" example="/36kr/newsflashes" path="/36kr/newsflashes" />
+<Route author="hillerliao nczitzk" example="/36kr/newsflashes" path="/36kr/newsflashes" />
 
 ### 用户文章
 
-<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:id" :paramsDesc="['用户 ID']" />
+<Route author="nczitzk" example="/36kr/user/747305693" path="/36kr/user/:id" :paramsDesc="['用户 id，可在对应用户页面 URL 中找到']" />
 
 ### 主题文章
 
-<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:id" :paramsDesc="['主题 ID']" />
+<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:id" :paramsDesc="['主题 id，可在对应主题页面 URL 中找到']" />
+
+### 专题文章
+
+<Route author="nczitzk" example="/36kr/topics/1818512662032001" path="/36kr/topics/:id" :paramsDesc="['专题 id，可在对应专题页面 URL 中找到']" />
 
 ### 搜索文章
 
-<Route author="xyqfer kt286 nczitzk" example="/36kr/search/article/ofo" path="/36kr/search/article/:keyword" :paramsDesc="['关键字']" />
+<Route author="xyqfer kt286 nczitzk" example="/36kr/search/articles/ofo" path="/36kr/search/articles/:keyword" :paramsDesc="['关键字']" />
+
+### 搜索快讯
+
+<Route author="nczitzk" example="/36kr/search/newsflashes/ofo" path="/36kr/search/newsflashes/:keyword" :paramsDesc="['关键字']" />
 
 ## 52hrtt 华人头条
 
