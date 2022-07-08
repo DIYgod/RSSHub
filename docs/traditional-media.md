@@ -1552,6 +1552,12 @@ category 对应的关键词有
 
 </Route>
 
+## 台灣英文新聞
+
+### 最新熱門消息
+
+<Route author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['語言，`en` 或 `zh`，默認 `en`']" radar="1" rssbud="1"/>
+
 ## 卫报 The Guardian
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
