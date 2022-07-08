@@ -91,7 +91,7 @@
     "dayjs": "1.11.3",
     "dotenv": "16.0.1",
     "emailjs-imap-client": "3.1.0",
-    "entities": "3.0.1",
+    "entities": "4.3.1",
     "etag": "1.8.1",
     "fanfou-sdk": "4.2.0",
     "git-rev-sync": "3.0.2",
