@@ -265,6 +265,16 @@ pageClass: routes
 
 </Route>
 
+### 指导原则专栏
+
+<Route author="TonyRL" example="/cde/zdyz/domesticGuide" path="/cde/zdyz/:category" :paramsDesc="['类别，见下表']" radar="1" rssbud="1">
+
+|      发布通告     |     征求意见    |
+| :-----------: | :---------: |
+| domesticGuide | opinionList |
+
+</Route>
+
 ## 国家自然科学基金委员会
 
 ### 基金要闻

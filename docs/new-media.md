@@ -54,7 +54,7 @@ pageClass: routes
 
 ### 主题文章
 
-<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:mid" :paramsDesc="['主题 ID']" />
+<Route author="nczitzk" example="/36kr/motif/452" path="/36kr/motif/:id" :paramsDesc="['主题 ID']" />
 
 ### 搜索文章
 
@@ -993,6 +993,34 @@ IPFS 网关有可能失效，那时候换成其他网关。
 ### 专题
 
 <Route author="nczitzk" example="/panewslab/topic/1629365774078402" path="/panewslab/topic/:id" :paramsDesc="['专题 id，可在地址栏 URL 中找到']"/>
+
+## PeoPo 公民新聞
+
+### 新聞分類
+
+<Route author="TonyRL" example="/peopo/topic/159" path="/peopo/topic/:topicId?" :paramsDesc="['分類 ID，見下表，默認為社會關懷']" radar="1" rssbud="1">
+
+| 分類   | ID  |
+| ---- | --- |
+| 社會關懷 | 159 |
+| 生態環保 | 113 |
+| 文化古蹟 | 143 |
+| 社區改造 | 160 |
+| 教育學習 | 161 |
+| 農業   | 163 |
+| 生活休閒 | 162 |
+| 媒體觀察 | 164 |
+| 運動科技 | 165 |
+| 政治經濟 | 166 |
+| 北台灣  | 223 |
+| 中台灣  | 224 |
+| 南台灣  | 225 |
+| 東台灣  | 226 |
+| 校園中心 | 167 |
+| 原住民族 | 227 |
+| 天然災害 | 168 |
+
+</Route>
 
 ## PMCAFF
 
