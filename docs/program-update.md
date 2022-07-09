@@ -134,6 +134,12 @@ pageClass: routes
 
 <Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
 
+## Clash
+
+### Premium Releases
+
+<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+
 ## cpython
 
 ### 正式版本发布
