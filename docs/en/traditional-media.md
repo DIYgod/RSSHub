@@ -60,7 +60,7 @@ The following are some of the supported Channel and Topic ids.
 
 ### Topics
 
-<RouteEn author="zoenglinghou" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1"/>
+<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']" radar="1" rssbud="1" />
 
 ## BBC
 
@@ -175,6 +175,30 @@ Generates full-text feeds that the official feed doesn't provide.
 
 </RouteEn>
 
+## Korean Central News Agency (KCNA)
+
+### News
+
+<RouteEn author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" :paramsDesc="['Language, refer to the table below', 'Category, refer to the table below']" anticrawler="1" radar="1" rssbud="1">
+
+| Language | 조선어  | English | 中国语  | Русский | Español | 日本語  |
+|----------|------|---------|------|---------|---------|------|
+| `:lang`  | `kp` | `en`    | `cn` | `ru`    | `es`    | `jp` |
+
+| Category                                                         | `:category`                        |
+|------------------------------------------------------------------|------------------------------------|
+| WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | `54c0ca4ca013a92cc9cf95bd4004c61a` |
+| Latest News (default)                                            | `1ee9bdb7186944f765208f34ecfb5407` |
+| Top News                                                         | `5394b80bdae203fadef02522cfb578c0` |
+| Home News                                                        | `b2b3bcc1b0a4406ab0c36e45d5db58db` |
+| Documents                                                        | `a8754921399857ebdbb97a98a1e741f5` |
+| World                                                            | `593143484cf15d48ce85c26139582395` |
+| Society-Life                                                     | `93102e5a735d03979bc58a3a7aefb75a` |
+| External                                                         | `0f98b4623a3ef82aeea78df45c423fd0` |
+| News Commentary                                                  | `12c03a49f7dbe829bceea8ac77088c21` |
+
+</RouteEn>
+
 ## Ming Pao
 
 ### Ming Pao Daily
@@ -207,6 +231,24 @@ Only `s00017` is in English.
 
 <RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
+### WORLD-JAPAN - Top Stories
+
+<RouteEn author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" :paramsDesc="['Language, see below, `en` by default']" radar="1" rssbud="1">
+
+| العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
+| ------- | ----- | -------------- | ------ | ------ | ------- | -------- |
+| ar      | bn    | my             | zh     | zt     | en      | fr       |
+
+| हिन्दी | Bahasa Indonesia | 코리언 | فارسی | Português | Русский | Español |
+| ------  | ---------------- | --- | ----- | --------- | ------- | ------- |
+| hi     | id               | ko  | fa    | pt        | ru      | es      |
+
+| Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
+| --------- | | ------- | ------ | ---------- | ---- | ---------- |
+| sw        | th      | tr     | uk         | ur   | vi         |
+
+</RouteEn>
+
 ## Nikkei Asia
 
 ### Latest News
@@ -225,7 +267,7 @@ Only `s00017` is in English.
 
 <RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['language, English by default', 'channel', 'subchannel, where applicable']" />
 
-Delivers a better experience by supporting parameter specification. 
+Delivers a better experience by supporting parameter specification.
 
 Parameters can be obtained from the official website, for instance:
 
@@ -235,26 +277,55 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters
 
-### Channel
+::: warning Migration notes
 
-<RouteEn author="HenryQW proletarius101" example="/reuters/channel/uk/personalFinance" path="/reuters/channel/:site/:channel" :paramsDesc="['sub-site, see the supported list below','channel, please note it\'s case-sensitive']">
+1. Reuters Chinese site (`cn.reuters.com`) and British site (`uk.reuters.com`) have been terminated, redirecting to the main site (`www.reuters.com`)
+2. The old routes are deprecated. Please migrate to the new routes documented below
 
-Supported sub-sites:
+:::
 
--   中国分站 `cn`：
-    See [路透社中国分站](../traditional-media.html#lu-tou-she)
+### Category/Topic/Author
 
--   US site `us`：
-    | Business | Markets | World | Politics | Tech | Breakingviews | Wealth | Life |
-    | -------- | ------- | ----- | -------- | ---------- | ------------- | ------ | --------- |
-    | business | markets | world | politics | technology | breakingviews | wealth | lifestyle |
+<RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
 
--   UK site `uk`：
-    | Business | World | UK | Tech | Money | Breakingviews | Life |
-    | -------- | ----- | --- | ---------- | --------------- | ------------- | --------- |
-    | business | world | uk | technology | personalFinance | breakingviews | lifestyle |
+-   `:category`:
+    | World    | Business | Legal | Markets  | Breakingviews | Technology |
+    | -------- | -------  | ----- | -------- | ------------- | ---------- |
+    | world    | business | legal | markets  | breakingviews | technology |
+
+
+-   `world/:topic`:
+
+    | All  | Africa   | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+    | ---- | -------  | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+    |      | africa    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
+
+
+-   `business/:topic`:
+
+    | All  | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+    | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+    |      | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
+
+-   `legal/:topic`:
+
+    | All | Goverment | Legal Industry | Litigation | Transaction |
+    | --- | --------- | -------------- | ---------- | ----------- |
+    |     | goverment | legalindustry  | litigation | transaction |
+
+-   `authors/:topic`:
+
+    | Default | Jonathan Landay | any other authors |
+    | ------- | --------------- | ----------------- |
+    | reuters | jonathan-landay | their name in URL |
+
+More could be found in the URL of the category/topic page.
 
 </RouteEn>
+
+### Inverstigates
+
+<RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
 ## RTHK
 
@@ -391,21 +462,31 @@ Language
 
 </RouteEn>
 
+## Taiwan News
+
+### Hot News
+
+<RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
+
 ## The Economist
 
 ### Category
 
-<RouteEn author="ImSingee" example="/the-economist/latest" path="/the-economist/:endpoint" :paramsDesc="['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']"/>
+<RouteEn author="ImSingee" example="/economist/latest" path="/economist/:endpoint" :paramsDesc="['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']" radar="1" rssbud="1"/>
+
+### Espresso
+
+<RouteEn author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
 
 ### GRE Vocabulary
 
-<RouteEn author="xyqfer" example="/the-economist/gre-vocabulary" path="/the-economist/gre-vocabulary" />
+<RouteEn author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" />
 
 ### Download
 
-<RouteEn author="nczitzk" example="/the-economist/download" path="/the-economist/download" >
+<RouteEn author="nczitzk" example="/economist/download" path="/economist/download" >
 
-The download site: http://www.cgx02.xyz/index.php?dir=/te
+The download site: <http://www.cgx02.xyz/index.php?dir=/te>
 
 </RouteEn>
 
@@ -447,22 +528,21 @@ Provides all of the articles by the specified New York Times author.
 
 ### Best Seller Books
 
-
 <RouteEn author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
 
-| Category | 
-| -------- | 
+| Category |
+| -------- |
 | combined-print-and-e-book-nonfiction |
-| hardcover-nonfiction| 
-| paperback-nonfiction| 
-| advice-how-to-and-miscellaneous| 
+| hardcover-nonfiction|
+| paperback-nonfiction|
+| advice-how-to-and-miscellaneous|
 | combined-print-and-e-book-fiction|
 | hardcover-fiction|
-| trade-fiction-paperback| 
-| childrens-middle-grade-hardcover| 
+| trade-fiction-paperback|
+| childrens-middle-grade-hardcover|
 | picture-books|
 | series-books|
-| young-adult-hardcover| 
+| young-adult-hardcover|
 
 ## The Wall Street Journal (WSJ)
 
@@ -502,8 +582,16 @@ Provides all of the articles by the specified Yahoo! author.
 
 </RouteEn>
 
-## 公視新聞網
+## Yomiuri Shimbun 読売新聞
 
-### Daily News
+### News
 
-<RouteEn author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>
+<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['category']">
+
+Free articles only.
+
+| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |    皇室    |
+| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
+| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
+
+</RouteEn>

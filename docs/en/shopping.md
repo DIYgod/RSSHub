@@ -55,12 +55,21 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 > the `xxx` in `/search/xxx` is the search type, just refer to the original search url.
 > The query string is the actual name of query, in this case is folding bike
 
-
 ## Guiltfree.pl
 
 ### Onsale
 
 <RouteEn author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+
+## Gumroad
+
+### Products
+
+<RouteEn author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" :paramsDesc="['username, can be found in URL', 'products name, can be found in URL']" radar="1" rssbud="1">
+
+`https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
+
+</RouteEn>
 
 ## hotukdeals
 
@@ -86,7 +95,7 @@ Transform any search into a feed.
 
 <RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
 
-For instance, in https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015**, the query is **category=10&locations=Paris_75015**
+For instance, in <https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015>, the query is **category=10&locations=Paris_75015**
 
 </RouteEn>
 

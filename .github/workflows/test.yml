@@ -1,6 +1,19 @@
 name: test
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths:
+      - 'test/**'
+      - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/test.yml'
+  pull_request: ~
 
 permissions:
   contents: read
@@ -39,6 +52,7 @@ jobs:
   puppeteer:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [ 14, 16 ]
         chromium:

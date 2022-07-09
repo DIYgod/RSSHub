@@ -431,9 +431,11 @@ R18 显示
 
 </Route>
 
-## Wallpaperhub
+## WallpaperHub
 
-<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
+### 壁纸
+
+<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" radar="1" rssbud="1"/>
 
 ## yande.re
 
@@ -589,6 +591,12 @@ R18 显示
 ### 主题
 
 <Route author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" :paramsDesc="['主题 id']"/>
+
+## 奇葩买家秀
+
+### 频道
+
+<Route author="Fatpandac" example="/qipamaijia/fuli" path="/qipamaijia/:cate?" :paramsDesc="['频道名，可在对应网址中找到，默认为最新']" radar="1" rssbud="1"/>
 
 ## 涂鸦王国
 

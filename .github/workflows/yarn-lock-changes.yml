@@ -6,6 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     # Permission overwrite is required for Dependabot PRs, see https://github.com/marketplace/actions/yarn-lock-changes#-common-issues.
     permissions:
+      contents: write
       pull-requests: write
     steps:
       - name: Checkout

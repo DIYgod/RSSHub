@@ -24,8 +24,28 @@ describe('wechat-mp', () => {
     it('fixArticleContent', () => {
         const divHeader = '<div class="rich_media_content " id="js_content">';
         const divFooter = '</div>';
-
+        const codeSection =
+            '<section class="code-snippet__fix code-snippet__js">' +
+            '<ul class="code-snippet__line-index code-snippet__js">' +
+            '<li></li><li></li><li></li>' +
+            '</ul >' +
+            '<pre class="code-snippet__js">' +
+            '<code><span class="code-snippet_outer">Line1 {</span></code>' +
+            '<code><span class="code-snippet__keyword">Line2</span></code>' +
+            '<code><span class="code-snippet_outer">Line3 }</span></code>' +
+            '</pre></section>';
+        const expectedCodeSection =
+            '<p class="code-snippet__fix code-snippet__js">' +
+            '<pre class="code-snippet__js">' +
+            '<code><span class="code-snippet_outer">Line1 {</span></code>' +
+            '<br>' +
+            '<code><span class="code-snippet__keyword">Line2</span></code>' +
+            '<br>' +
+            '<code><span class="code-snippet_outer">Line3 }</span></code>' +
+            '<br>' +
+            '</pre></p>';
         const htmlSection =
+            codeSection +
             '<section>test</section>' +
             '<section><p>test</p></section>' +
             '<section><div>test</div></section>' +
@@ -34,7 +54,8 @@ describe('wechat-mp', () => {
             '<p>test</p>' +
             '<div><p>test</p></div>' +
             '<script>const test = "test"</script>';
-        const expectedHtmlSection = '<p>test</p>' + '<div><p>test</p></div>' + '<div><div>test</div></div>' + '<div><div><p>test</p></div></div>' + '<div><div><p>test</p></div></div>' + '<p>test</p>' + '<div><p>test</p></div>';
+        const expectedHtmlSection =
+            expectedCodeSection + '<p>test</p>' + '<div><p>test</p></div>' + '<div><div>test</div></div>' + '<div><div><p>test</p></div></div>' + '<div><div><p>test</p></div></div>' + '<p>test</p>' + '<div><p>test</p></div>';
         let $ = cheerio.load(divHeader + htmlSection + divFooter);
         expect(fixArticleContent(htmlSection)).toBe(expectedHtmlSection);
         expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlSection);

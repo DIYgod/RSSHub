@@ -9,17 +9,17 @@ RSSHub provides a painless deployment process if you are equipped with basic pro
 The deployment may involve the followings:
 
 1. Command line interface
-1. [Git](https://git-scm.com/)
-1. [Node.js](https://nodejs.org/)
-1. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+2. [Git](https://git-scm.com/)
+3. [Node.js](https://nodejs.org/)
+4. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 Deploy for public access may require:
 
 1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
-1. [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
-1. [Redis](https://redis.io/download)
-1. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-1. [Google App Engine](https://cloud.google.com/appengine/)
+2. [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
+3. [Redis](https://redis.io/download)
+4. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+5. [Google App Engine](https://cloud.google.com/appengine/)
 
 ## Docker Image
 
@@ -283,7 +283,7 @@ in pkgs.stdenv.mkDerivation {
 
 ## Deploy to Heroku
 
-### Notice:
+### Notice
 
 Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
 
@@ -468,7 +468,7 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: <https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes>.
 
 For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
 
@@ -523,7 +523,15 @@ See the relation between access key/code and white/blacklisting.
 
 ### Image Processing
 
-`HOTLINK_TEMPLATE`: replace image URL in the description to avoid anti-hotlink protection, leave it blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`
+::: tip New Config Format
+
+We are currently testing out a new format, providing end-user with more flexibility. For more info, please refer to [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing).
+
+When using our new config, please leave the following environment vairable blank. By default, image hotlink template will be forced when present.
+
+:::
+
+`HOTLINK_TEMPLATE`: replace image URL in the description to avoid anti-hotlink protection, leave it blank to disable this function. Usage reference [#2769](https://github.com/DIYgod/RSSHub/issues/2769). You may use any property listed in [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) (suffixing with `_ue` results in URL encoding), format of JS template literal. e.g. `${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
 
 `HOTLINK_INCLUDE_PATHS`: limit the routes to be processed, only matched routes will be processed. Set multiple values with comma `,` as delimiter. If not set, all routes will be processed
 
@@ -538,6 +546,18 @@ e.g. `/example`, `/example/sub` and `/example/anthoer/sub/route` will be matched
 It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
 
 :::
+
+### Features
+
+::: tip Experimental features
+
+Configs in this sections are in beta stage, and are turn off by default. Please read corresponded description and turn on if necessary.
+
+:::
+
+`ALLOW_USER_HOTLINK_TEMPLATE`: [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing)
+
+`FILTER_REGEX_ENGINE`: Define Regex engine used in [Parameters->filtering](/en/parameter.html#filtering). Valid value are `[re2, regexp]`. Default value is `re2`. We suggest public instance should leave this value to default, and this option right now is mainly for backward compatibility.
 
 ### Other Application Configurations
 
@@ -643,20 +663,20 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `SCIHUB_HOST`: The Sci-hub mirror address that is accessible from your location, default to `https://sci-hub.se`.
 
--   spotify: [API key registration](https://developer.spotify.com)
+-   Spotify: [API key registration](https://developer.spotify.com)
 
-    -   `SPOTIFY_CLIENT_ID`：Client ID of the application
-    -   `SPOTIFY_CLIENT_SECRET`：Client secret of the application
+    -   `SPOTIFY_CLIENT_ID`: Client ID of the application
+    -   `SPOTIFY_CLIENT_SECRET`: Client secret of the application
 
--   spotify (user data related routes):
+-   Spotify (user data related routes):
 
-    -   `SPOTIFY_REFRESHTOKEN`：The refresh token of the user from the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
+    -   `SPOTIFY_REFRESHTOKEN`: The refresh token of the user from the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
 
--   telegram: [Bot application](https://telegram.org/blog/bot-revolution)
+-   Telegram: [Bot application](https://telegram.org/blog/bot-revolution)
 
     -   `TELEGRAM_TOKEN`: Telegram bot token
 
--   twitter: [Application creation](https://apps.twitter.com)
+-   Twitter: [Application creation](https://apps.twitter.com)
 
     - `TWITTER_CONSUMER_KEY`: Twitter Developer API key, support multiple keys, split them with `,`
     - `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret, support multiple keys, split them with `,`
@@ -675,6 +695,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
         | https://cors.netnr.workers.dev/        | cloudflare   |
         | https://netnr-proxy.openode.io/        | digitalocean |
 
--   youtube: [API Key application](https://console.developers.google.com/)
+-   YouTube: [API Key application](https://console.developers.google.com/)
 
-    -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
+    -   All routes:
+        -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
+    -   Extra requirements for subscriptions route:
+        -   `YOUTUBE_CLIENT_ID`: YouTube API OAuth 2.0 client ID
+        -   `YOUTUBE_CLIENT_SECRET`: YouTube API OAuth 2.0 client secret
+        -   `YOUTUBE_REFRESH_TOKEN`: YouTube API OAuth 2.0 refresh token. Check [this gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) for detailed instructions.

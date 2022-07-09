@@ -1,0 +1,108 @@
+name: Issue Command
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+jobs:
+  rebase:
+    name: Automatic Rebase
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the latest code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Automatic Rebase
+        uses: cirrus-actions/rebase@1.7
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_SUPER }}
+
+  self-assign:
+    name: Self Assign
+    if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: bhermann/issue-volunteer@v0.1.20
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          assign_phrase: '/wip'
+          label_phase1: RSS proposal
+          label_phase2: RSS bug
+
+  test-on-demand:
+    name: Test route on demand
+    if: startsWith(github.event.comment.body, '/test')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js v16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+
+      - name: Install dependencies (yarn)
+        run: yarn
+
+      - name: Fetch affected routes
+        id: fetchRoute
+        uses: actions/github-script@v6
+        env:
+          EVENT: ${{ toJson(github.event) }}
+        with:
+          script: |
+            const event = JSON.parse(process.env.EVENT)
+            const body = event.comment.body
+            const number = event.issue.number
+            const sender = event.comment.user.login
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
+            return await script({ github, context, core }, body, number, sender)
+
+      - name: Start RSSHub
+        if: env.TEST_CONTINUE
+        run: yarn start &
+        env:
+          NODE_ENV: dev
+          LOGGER_LEVEL: debug
+
+      - name: Generate feedback
+        if: env.TEST_CONTINUE
+        uses: actions/github-script@v6
+        env:
+          TEST_BASEURL: http://localhost:1200
+          TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
+          EVENT: ${{ toJson(github.event) }}
+        with:
+          script: |
+            const event = JSON.parse(process.env.EVENT)
+            const link = process.env.TEST_BASEURL
+            const routes = JSON.parse(process.env.TEST_ROUTES)
+            const number = event.issue.number
+            core.info(`${link}, ${routes}, ${number}`)
+            const got = require("got")
+            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
+            return await script({ github, context, core, got }, link, routes, number)
+
+      - name: Print logs
+        if: (env.TEST_CONTINUE)
+        run: cat ${{ github.workspace }}/logs/combined.log
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: logs
+          path: logs
+          retention-days: 1
