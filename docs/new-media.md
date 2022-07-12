@@ -2178,23 +2178,21 @@ others = 热点新闻 + 滚动新闻
 
 ## 后续
 
-### 分类
+### 热点
 
-<Route author="nczitzk" example="/houxu" path="/houxu/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+<Route author="nczitzk" example="/houxu" path="/houxu" />
 
-| 首页    | 热点       | 跟踪     | 事件     |
-| ----- | -------- | ------ | ------ |
-| index | featured | memory | events |
+### 跟踪
 
-</Route>
+<Route author="nczitzk" example="/houxu/memory" path="/houxu/memory" />
 
-### Lives
+### 专栏
 
-<Route author="ciaranchen sanmmm nczitzk" example="/houxu/lives/33899" path="/houxu/:category?" :paramsDesc="['编号，可在对应 Live 页面的 URL 中找到']"/>
+<Route author="ciaranchen nczitzk" example="/houxu/events" path="/houxu/events"/>
 
-### 最新专栏
+### Live
 
-<Route author="ciaranchen" example="/houxu/events" path="/houxu/events"/>
+<Route author="ciaranchen sanmmm nczitzk" example="/houxu/lives/33899" path="/houxu/lives/:id" :paramsDesc="['编号，可在对应 Live 页面的 URL 中找到']"/>
 
 ## 虎嗅
 
