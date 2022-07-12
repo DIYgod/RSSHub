@@ -1276,10 +1276,16 @@
     "/hotukdeals/:type": [
         "DIYgod"
     ],
-    "/houxu/lives/:id?": [
+    "/houxu/events": [
         "nczitzk"
     ],
-    "/houxu/:category?": [
+    "/houxu/lives/:id": [
+        "nczitzk"
+    ],
+    "/houxu/memory": [
+        "nczitzk"
+    ],
+    "/houxu/": [
         "nczitzk"
     ],
     "/huangz/": [
