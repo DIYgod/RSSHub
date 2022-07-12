@@ -7559,10 +7559,10 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
   integrity sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
 
-ioredis@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-5.1.0.tgz#17bc0bc40f164ef26910ca6e56981c2a9bfdf57e"
-  integrity sha512-HYHnvwxFwefeUBj0hZFejLvd8Q/YNAfnZlZG/hSRxkRhXMs1H8soMEVccHd1WlLrKkynorXBsAtqDGskOdAfVQ==
+ioredis@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/ioredis/-/ioredis-5.2.0.tgz#2644fcebbbcae945f1479f7cf31aa6734bbb13d6"
+  integrity sha512-a1E7qDtuuI+We60TLIm3TMrH5auIhbfINXYag6ZdB+mGJnH8rbmDOpr1V7iUvQQ7pWnEDYI/KXmia5IemsNJEQ==
   dependencies:
     "@ioredis/commands" "^1.1.1"
     cluster-key-slot "^1.1.0"
