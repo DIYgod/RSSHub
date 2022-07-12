@@ -170,7 +170,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 | 每日圖片 | 每週圖片 | 每月圖片 |
 | ---- | ---- | ---- |
-| potw | potw | potm |
+| potd | potw | potm |
 
 </Route>
 
