@@ -146,6 +146,12 @@ path="/metmusem/exhibitions/:state?"
 
 <Route author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
 
+## 中国国际航空公司
+
+### 服务公告
+
+<Route author="LandonLi" example="/airchina/announcement" path="/airchina/announcement" radar="1" />
+
 ## 中国美术馆
 
 ### 美术馆新闻
