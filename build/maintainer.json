@@ -1225,23 +1225,28 @@
     ],
     "/hk01/channel/:id": [
         "hoilc",
-        "Fatpandac"
+        "Fatpandac",
+        "nczitzk"
     ],
     "/hk01/hot": [
         "hoilc",
-        "Fatpandac"
+        "Fatpandac",
+        "nczitzk"
     ],
     "/hk01/issue/:id": [
         "hoilc",
-        "Fatpandac"
+        "Fatpandac",
+        "nczitzk"
     ],
     "/hk01/tag/:id": [
         "hoilc",
-        "Fatpandac"
+        "Fatpandac",
+        "nczitzk"
     ],
     "/hk01/zone/:id": [
         "hoilc",
-        "Fatpandac"
+        "Fatpandac",
+        "nczitzk"
     ],
     "/hkej/:category?": [
         "TonyRL"
