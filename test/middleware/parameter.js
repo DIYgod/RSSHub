@@ -83,6 +83,28 @@ describe('filter', () => {
         expect(parsed.items[1].title).toBe('Title5');
     });
 
+    it(`filter_category`, async () => {
+        const response = await request.get('/test/filter?filter_category=Category0|Category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(2);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+        expect(parsed.items[1].title).toBe('Filter Title2');
+    });
+
+    it(`filter_category filter_case_sensitive default`, async () => {
+        const response = await request.get('/test/filter?filter_category=category0|category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(0);
+    });
+
+    it(`filter_category filter_case_sensitive=false`, async () => {
+        const response = await request.get('/test/filter?filter_category=category0|category1&filter_case_sensitive=false');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(2);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+        expect(parsed.items[1].title).toBe('Filter Title2');
+    });
+
     it(`filter_time`, async () => {
         const response = await request.get('/test/current_time?filter_time=25');
         const parsed = await parser.parseString(response.text);
@@ -180,6 +202,33 @@ describe('filter', () => {
         const response = await request.get('/test/1?filterout_author=diygod4|diygod5&filter_case_sensitive=false');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(3);
+        expect(parsed.items[0].title).toBe('Title1');
+        expect(parsed.items[1].title).toBe('Title2');
+        expect(parsed.items[2].title).toBe('Title3');
+    });
+
+    it(`filterout_category`, async () => {
+        const response = await request.get('/test/filter?filterout_category=Category0|Category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(5);
+        expect(parsed.items[0].title).toBe('Title1');
+        expect(parsed.items[1].title).toBe('Title2');
+        expect(parsed.items[2].title).toBe('Title3');
+    });
+
+    it(`filterout_category filter_case_sensitive default`, async () => {
+        const response = await request.get('/test/filter?filterout_category=category0|category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(7);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+        expect(parsed.items[1].title).toBe('Filter Title2');
+        expect(parsed.items[2].title).toBe('Title1');
+    });
+
+    it(`filterout_category filter_case_sensitive=false`, async () => {
+        const response = await request.get('/test/filter?filterout_category=category0|category1&filter_case_sensitive=false');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(5);
         expect(parsed.items[0].title).toBe('Title1');
         expect(parsed.items[1].title).toBe('Title2');
         expect(parsed.items[2].title).toBe('Title3');
