@@ -42,7 +42,7 @@
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
     "@napi-rs/pinyin": "1.7.0",
-    "@types/koa": "2.13.4",
+    "@types/koa": "2.13.5",
     "@vercel/nft": "0.20.1",
     "@vuepress/plugin-back-to-top": "1.9.7",
     "@vuepress/plugin-google-analytics": "1.9.7",
