@@ -366,6 +366,9 @@
     "/ccac/news/:type/:lang?": [
         "linbuxiao"
     ],
+    "/ccfcv/:channel/:category": [
+        "elxy"
+    ],
     "/ccreports/article": [
         "EsuRt",
         "Fatpandac"
