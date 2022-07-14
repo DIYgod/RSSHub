@@ -21,11 +21,11 @@ sidebar: auto
 
 ### 添加脚本路由
 
-在 [/lib/v2/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中创建对应路由路径，并在 `/lib/v2/routes/:path/router.js` 中添加路由
+在 [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) 中创建对应路由路径，并在 `/lib/v2/:path/router.js` 中添加路由
 
 ### 编写脚本
 
-在 [/lib/v2/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
+在 [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) 中的路由对应路径下创建新的 js 脚本：
 
 #### 获取源数据
 
@@ -493,7 +493,7 @@ ctx.state.data = {
 
 ### 编写规则
 
-在 [/lib/v2/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 的对应路由下创建 `radar.js` 并添加规则
+在 [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) 的对应路由下创建 `radar.js` 并添加规则
 
 下面说明中会用到的简化的规则：
 
