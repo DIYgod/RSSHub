@@ -112,7 +112,7 @@ Language
 
 ### Premium Releases
 
-<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+<RouteEn author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
 
 ## CurseForge
 
