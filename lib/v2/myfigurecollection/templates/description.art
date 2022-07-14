@@ -1,6 +1,6 @@
 {{ if pictures }}
 {{ each pictures picture }}
-<img src="{{ picture }}">
+<img src="{{ picture.src }}" weight="{{ picture.w }}" height="{{ picture.h }}">
 {{ /each }}
 {{ /if }}
 {{ if fields }}
