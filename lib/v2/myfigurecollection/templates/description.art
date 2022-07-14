@@ -1,0 +1,17 @@
+{{ if pictures }}
+{{ each pictures picture }}
+<img src="{{ picture }}">
+{{ /each }}
+{{ /if }}
+{{ if fields }}
+<table>
+<tbody>
+{{ each fields field }}
+<tr>
+<th>{{ field.key }}</th>
+<td>{{ field.value }}</td>
+</tr>
+{{ /each }}
+</tbody>
+</table>
+{{ /if }}
