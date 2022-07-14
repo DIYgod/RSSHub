@@ -732,20 +732,6 @@ GitHub 官方也提供了一些 RSS:
 > -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 > -   极客新闻不需要付费，可通过 RSS 订阅.
 
-## 计算机视觉专委
-
-### 学术动态 - 学术前沿
-
-<Route author="elxy" example="/ccfcv" path="/ccfcv/xsdt/xsqy"/>
-
-### 学术动态 - 热点征文
-
-<Route author="elxy" example="/ccfcv" path="/ccfcv/xsdt/rdzw"/>
-
-### 学术动态 - 学术会议
-
-<Route author="elxy" example="/ccfcv" path="/ccfcv/xsdt/xshy"/>
-
 ## 技术头条
 
 ### 最新分享
