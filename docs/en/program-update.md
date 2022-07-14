@@ -108,6 +108,12 @@ Language
 
 <RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']"/>
 
+## Clash
+
+### Premium Releases
+
+<RouteEn author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+
 ## CurseForge
 
 ### File Update

@@ -48,6 +48,8 @@ Set `filter` to include the content
 
 -   `filter_author`: filter `author` only
 
+-   `filter_category`: filter `category` only
+
 -   `filter_time`: filter `pubDate`, in seconds, return specified time range. Item without `pubDate` will not be filtered.
 
 E.g. [https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filter=Blue|Yellow|Black)
@@ -61,6 +63,8 @@ Set `filterout` to exclude unwanted content.
 -   `filterout_description`: filter `description` only
 
 -   `filterout_author`: filter `author` only
+
+-   `filterout_category`: filter `category` only
 
 E.g. [https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?filterout=Blue|Yellow|Black)
 
