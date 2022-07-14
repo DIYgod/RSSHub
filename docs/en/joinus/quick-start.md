@@ -492,7 +492,7 @@ Open browser's RSSHub Radar extension settings, switch to rules list, scroll dow
 
 ### Code the rule
 
-Add rules to [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)
+Create `radar.js` under the corresponding [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) route and the rules
 
 Simplified rules will be used for the following illustration:
 
