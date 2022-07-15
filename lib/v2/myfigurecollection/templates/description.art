@@ -1,9 +1,16 @@
 {{ if pictures }}
 {{ each pictures picture }}
-<img src="{{ picture.src }}" weight="{{ picture.w }}" height="{{ picture.h }}">
+<img src="{{ picture.src }}"
+{{ if picture.w }}
+weight="{{ picture.w }}"
+{{ /if }}
+{{ if picture.h }}
+height="{{ picture.h }}"
+{{ /if }}
+>
 {{ /each }}
 {{ /if }}
-{{ if fields }}
+{{ if fields.length != 0 }}
 <table>
 <tbody>
 {{ each fields field }}
