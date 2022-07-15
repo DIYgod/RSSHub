@@ -14,7 +14,7 @@ Close #
 如果路由包含在文档中列出可以完全穷举的参数（例如分类），请依次全部列出。
 
 Please include route starts with /, with all required and optional parameters. Fail to comply will result in your pull request being closed automatically.
-```route
+```routes
 /some/route
 /some/other/route
 ```
