@@ -50,7 +50,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### The Office of Academic Affairs
 
-<RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type" :paramsDesc="['default `news`']">
+<RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['default `news`']">
 
 | News | Notification |
 | ---- | ------------ |
