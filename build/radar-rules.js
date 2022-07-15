@@ -4447,6 +4447,273 @@
         docs:"https://docs.rsshub.app/new-media.html#kuai-ke-ji-xin-wen",
         source:[ "/" ],
         target:"/mydrivers/:type?/:id?" } ] },
+  "myfigurecollection.net":{ _name:"MyFigureCollection",
+    ".":[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    de:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    es:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    fi:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    fr:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    it:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    ja:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    nl:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    no:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    pl:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    pt:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    ru:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    sv:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ],
+    zh:[ { title:"活動",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        source:[ "/browse/activity",
+          "/" ],
+        target:"/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" },
+      { title:"資料庫",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        source:[ "/browse",
+          "/" ],
+        target:"/myfigurecollection/:category?/:language?" },
+      { title:"圖片",
+        docs:"https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        source:[ "/picture/browse/:category",
+          "/" ],
+        target:(params) => {
+            if (params.category === 'potd' || params.category === 'potw' || params.category === 'potm') {
+                return '/myfigurecollection/:category?/:language?';
+            }
+        } } ] },
   "mygopen.com":{ _name:"MyGoPen",
     ".":[ { title:"分類",
         docs:"https://docs.rsshub.app/new-media.html#mygopen-fen-lei",

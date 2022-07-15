@@ -1781,6 +1781,12 @@
     "/mydrivers/:type?/:id?": [
         "nczitzk"
     ],
+    "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?": [
+        "nczitzk"
+    ],
+    "/myfigurecollection/:category?/:language?": [
+        "nczitzk"
+    ],
     "/mygopen/:label?": [
         "nczitzk"
     ],

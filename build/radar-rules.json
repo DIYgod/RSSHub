@@ -8226,6 +8226,401 @@
       }
     ]
   },
+  "myfigurecollection.net": {
+    "_name": "MyFigureCollection",
+    ".": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "de": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "es": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "fi": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "fr": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "it": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "ja": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "nl": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "no": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "pl": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "pt": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "ru": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "sv": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ],
+    "zh": [
+      {
+        "title": "活動",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-huo-dong",
+        "source": [
+          "/browse/activity",
+          "/"
+        ],
+        "target": "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?"
+      },
+      {
+        "title": "資料庫",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-zi-liao-ku",
+        "source": [
+          "/browse",
+          "/"
+        ],
+        "target": "/myfigurecollection/:category?/:language?"
+      },
+      {
+        "title": "圖片",
+        "docs": "https://docs.rsshub.app/shopping.html#MyFigureCollection-tu-pian",
+        "source": [
+          "/picture/browse/:category",
+          "/"
+        ]
+      }
+    ]
+  },
   "mygopen.com": {
     "_name": "MyGoPen",
     ".": [
