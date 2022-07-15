@@ -2602,6 +2602,10 @@
     "/tisi/latest": [
         "Fatpandac"
     ],
+    "/tju/oaa/:type?": [
+        "AmosChenYQ",
+        "SuperPung"
+    ],
     "/tokeninsight/blog/:lang?": [
         "fuergaosi233"
     ],
@@ -3413,7 +3417,6 @@
     "/scut/jwc/news": [],
     "/wzbc/:type?": [],
     "/henu/:type?": [],
-    "/tjpyu/ooa/:type?": [],
     "/nku/jwc/:type?": [],
     "/buaa/news/:type": [],
     "/zjut/:type": [],
