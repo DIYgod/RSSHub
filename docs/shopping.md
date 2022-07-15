@@ -121,6 +121,59 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## MyFigureCollection
+
+### 活動
+
+<Route author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" :paramsDesc="['分类，见下表，默认为全部', '语言，见下表，默认为空，即 `en`', '最新加入，默认为开启，即 `1`，可选不开启，即 `0`', '變動，默认为开启，即 `1`，可选不开启，即 `0`', '通知，默认为开启，即 `1`，可选不开启，即 `0`', '圖片，默认为开启，即 `1`，可选不开启，即 `0`']">
+
+分类
+
+| Figures 一覽 | 物品 | 媒体 |
+| ---------- | -- | -- |
+| 0          | 1  | 2  |
+
+语言
+
+| id | 语言         |
+| -- | ---------- |
+|    | en         |
+| de | Deutsch    |
+| es | Español    |
+| fi | Suomeksi   |
+| fr | Français   |
+| it | Italiano   |
+| ja | 日本語        |
+| nl | Nederlands |
+| no | Norsk      |
+| pl | Polski     |
+| pt | Português  |
+| ru | Русский    |
+| sv | Svenska    |
+| zh | 中文         |
+
+</Route>
+
+### 資料庫
+
+<Route author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为 Figures一覽', '语言，见上表，默认为空，即 `en`']">
+
+| Figures 一覽 | 物品    | 媒体    |
+| ---------- | ----- | ----- |
+| figures    | goods | media |
+
+</Route>
+
+### 圖片
+
+<Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为每日圖片', '语言，见上表，默认为空，即 `en`']">
+
+| 每日圖片 | 每週圖片 | 每月圖片 |
+| ---- | ---- | ---- |
+| potd | potw | potm |
+
+</Route>
+
 ## ShopBack
 
 ### Store
