@@ -2385,12 +2385,22 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 天津大学
 
-### 天津大学教务处
+### 智能与计算学部
 
-<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['默认为`news`']">
+<Route author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" :paramsDesc="['默认为 `news`']">
 
-| 新闻动态 | 通知公告         |
-| ---- | ------------ |
+| 学部新闻 |     通知公告     | 北洋智算论坛 |
+| :--: | :----------: | :----: |
+| news | notification |  forum |
+
+</Route>
+
+### 教务处
+
+<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['默认为 `news`']">
+
+| 新闻动态 |     通知公告     |
+| :--: | :----------: |
 | news | notification |
 
 </Route>

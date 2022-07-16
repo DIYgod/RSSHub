@@ -231,6 +231,22 @@ pageClass: routes
 
 </Route>
 
+## 国家药品监督管理局医疗器械标准管理中心
+
+### 通用
+
+<Route author="nczitzk" example="/gov/nifdc/bshff/ylqxbzhgl/qxggtzh" path="/gov/nifdc/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1" puppeteer="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.nifdc.gov.cn/nifdc/` 与 `/index.html` 之间的字段，下面是一个例子。
+
+若订阅 [公告通告](https://www.nifdc.org.cn/nifdc/bshff/ylqxbzhgl/qxggtzh/index.html) 则将对应页面 URL <https://www.nifdc.org.cn/nifdc/bshff/ylqxbzhgl/qxggtzh/index.html> 中 `https://www.nifdc.org.cn/nifdc/` 和 `/index.html` 之间的字段 `bshff/ylqxbzhgl/qxggtzh` 作为路径填入。此时路由为 [`/gov/nifdc/bshff/ylqxbzhgl/qxggtzh`](https://rsshub.app/gov/nifdc/bshff/ylqxbzhgl/qxggtzh)
+
+:::
+
+</Route>
+
 ## 国家药品审评网站
 
 ### 首页
