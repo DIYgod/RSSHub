@@ -46,6 +46,18 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 <RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
+## Tianjin University
+
+### The Office of Academic Affairs
+
+<RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['default `news`']">
+
+| News | Notification |
+| ---- | ------------ |
+| news | notification |
+
+</RouteEn>
+
 ## UMASS Amherst
 
 ### College of Electrical and Computer Engineering

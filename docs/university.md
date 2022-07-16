@@ -2387,7 +2387,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 天津大学教务处
 
-<Route author="AmosChenYQ" example="/tjpyu/ooa/news" path="/tjpyu/ooa/:type" :paramsDesc="['默认为`news`']">
+<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['默认为`news`']">
 
 | 新闻动态 | 通知公告         |
 | ---- | ------------ |
