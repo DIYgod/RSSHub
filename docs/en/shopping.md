@@ -111,6 +111,59 @@ All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
 </RouteEn>
 
+## MyFigureCollection
+
+### Activity
+
+<RouteEn author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" :paramsDesc="['Category, Figures by default', 'Language, as above, `en` by default', 'Latest Additions, on as `1` by default, off as `0`', 'Changes, on as `1` by default, off as `0`', 'Alerts, on as `1` by default, off as `0`', 'Pictures, on as `1` by default, off as `0`']">
+
+Category
+
+| Figures | Goods | Media |
+| ------- | ----- | ----- |
+| 0       | 1     | 2     |
+
+Language
+
+| Id | Language   |
+| -- | ---------- |
+|    | en         |
+| de | Deutsch    |
+| es | Español    |
+| fi | Suomeksi   |
+| fr | Français   |
+| it | Italiano   |
+| ja | 日本語        |
+| nl | Nederlands |
+| no | Norsk      |
+| pl | Polski     |
+| pt | Português  |
+| ru | Русский    |
+| sv | Svenska    |
+| zh | 中文         |
+
+</RouteEn>
+
+### Database
+
+<RouteEn author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" :paramsDesc="['Category, Figures by default', 'Language, as above, `en` by default']">
+
+| Figures | Goods | Media |
+| ------- | ----- | ----- |
+| figures | goods | media |
+
+</RouteEn>
+
+### Pictures
+
+<RouteEn author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" :paramsDesc="['Category, Pictures OTD by default', 'Language, as above, `en` by default']">
+
+| Pictures OTD | Pictures OTW | Pictures OTM |
+| ------------ | ------------ | ------------ |
+| potd         | potw         | potm         |
+
+</RouteEn>
+
 ## ShopBack
 
 ### Store
