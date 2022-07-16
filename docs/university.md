@@ -3290,7 +3290,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 北京校区研究生院
 
-<Route author="nilleo" example="/ncepu/master/tzgg" path="/ncepu/master/:type" :paramsDesc="['类型参数']"/> 
+<Route author="nilleo" example="/ncepu/master/tzgg" path="/ncepu/master/:type" :paramsDesc="['类型参数']">
 
 | 类型 | 硕士招生信息 | 通知公告 |
 | -- | ------ | ---- |
