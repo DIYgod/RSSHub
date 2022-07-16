@@ -1,4 +1,4 @@
-<!-- 
+<!--
 如有疑问，请参考 https://github.com/DIYgod/RSSHub/discussions/8002
 Reference: https://github.com/DIYgod/RSSHub/discussions/8002
 -->
@@ -12,12 +12,8 @@ Close #
 <!--
 请在 `routes` 区域填写以 / 开头的完整路由地址，否则你的 PR 将会被无条件关闭。
 如果路由包含在文档中列出可以完全穷举的参数（例如分类），请依次全部列出。
-
 Please include route starts with /, with all required and optional parameters. Fail to comply will result in your pull request being closed automatically.
-```routes
-/some/route
-/some/other/route
-```
+
 如果你的 PR 与路由无关, 请在 `routes` 区域 填写 `NOROUTE`，而不是直接删除 `routes` 区域。否则你的 PR 将会被无条件关闭。
 If your changes are not related to route, please fill in `routes` with `NOROUTE`. Fail to comply will result in your PR being closed.
 -->
@@ -26,7 +22,7 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
 ```
 
 ## 新 RSS 检查列表 / New RSS Script Checklist
-  
+
 - [ ] 新的路由 New Route
   - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/script-standard.html) Follows [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html)
 - [ ] 文档说明 Documentation
