@@ -2605,6 +2605,9 @@
     "/tisi/latest": [
         "Fatpandac"
     ],
+    "/tju/cic/:type?": [
+        "SuperPung"
+    ],
     "/tju/oaa/:type?": [
         "AmosChenYQ",
         "SuperPung"
