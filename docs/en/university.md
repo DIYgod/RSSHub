@@ -48,12 +48,22 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ## Tianjin University
 
+### College of Intelligence and Computing
+
+<RouteEn author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" :paramsDesc="['default `news`']">
+
+| College News | Notification | TJU Forum for CIC |
+| :----------: | :----------: | :---------------: |
+|     news     | notification |       forum       |
+
+</RouteEn>
+
 ### The Office of Academic Affairs
 
 <RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['default `news`']">
 
 | News | Notification |
-| ---- | ------------ |
+| :--: | :----------: |
 | news | notification |
 
 </RouteEn>
