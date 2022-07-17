@@ -1005,6 +1005,16 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 <Route author="Jiangming1399" example="/gdut/news" path="/gdut/news"/>
 
+### 通知公文网
+
+<Route author="Jim Kirisame" example="/gdut/oa_news" path="/gdut/oa_news/:category" :paramsDesc="['分类名']">
+
+| 校内简讯 | 校内通知   | 公示公告         | 招标公告          | 招标结果          |
+| ---- | ------ | ------------ | ------------- | ------------- |
+| news | notice | announcement | tender_invite | tender_result |
+
+</Route>
+
 ## 广东海洋大学
 
 ### 广东海洋大学
