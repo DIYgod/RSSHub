@@ -2423,6 +2423,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生网
+
+<Route author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" :paramsDesc="['默认为 `notice`']">
+
+|  校级公告  |  统考硕士  |  统考博士  | 在职学位 |
+| :----: | :----: | :----: | :--: |
+| notice | master | doctor |  job |
+
+</Route>
+
 ## 同济大学
 
 ### 同济大学研究生院通知公告
