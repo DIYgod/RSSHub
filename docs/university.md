@@ -3291,3 +3291,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu nczitzk" example="/sysu/cse" path="/sysu/cse"/>
+
+## 华北电力大学
+
+### 北京校区研究生院
+
+<Route author="nilleo" example="/ncepu/master/tzgg" path="/ncepu/master/:type" :paramsDesc="['类型参数']">
+
+| 类型 | 硕士招生信息 | 通知公告 |
+| -- | ------ | ---- |
+| 参数 | zsxx   | tzgg |
+
+</Route>
