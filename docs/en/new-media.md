@@ -739,6 +739,12 @@ Provides all of the Thrillist articles with the specified tag.
 
 </RouteEn>
 
+## Tribal Football
+
+### Latest News
+
+<RouteEn author="Rongronggg9" example="/tribalfootball" path="/tribalfootball" />
+
 ## VOA News
 
 ### Day in Photos
