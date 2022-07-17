@@ -1001,10 +1001,6 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ## 广东工业大学
 
-### 校内新闻网
-
-<Route author="Jiangming1399" example="/gdut/news" path="/gdut/news"/>
-
 ### 通知公文网
 
 <Route author="Jim Kirisame" example="/gdut/oa_news" path="/gdut/oa_news/:category" :paramsDesc="['分类名']">
