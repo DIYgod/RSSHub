@@ -2636,6 +2636,9 @@
         "AmosChenYQ",
         "SuperPung"
     ],
+    "/tju/yzb/:type?": [
+        "SuperPung"
+    ],
     "/tokeninsight/blog/:lang?": [
         "fuergaosi233"
     ],
