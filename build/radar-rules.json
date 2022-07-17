@@ -12030,6 +12030,19 @@
       }
     ]
   },
+  "tribalfootball.com": {
+    "_name": "Tribal Football",
+    ".": [
+      {
+        "title": "Latest News",
+        "docs": "https://docs.rsshub.app/new-media.html#tribal-football",
+        "source": [
+          "/"
+        ],
+        "target": "/tribalfootball"
+      }
+    ]
+  },
   "trow.cc": {
     "_name": "The Ring of Wonder",
     ".": [
