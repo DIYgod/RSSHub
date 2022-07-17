@@ -915,6 +915,9 @@
     "/gcores/tag/:tag/:category?": [
         "StevenRCE0"
     ],
+    "/gdut/oa_news/:type?": [
+        "Jim Kirisame"
+    ],
     "/getdr/": [
         "nczitzk"
     ],
@@ -3346,7 +3349,6 @@
     "/scnu/jw": [],
     "/scnu/library": [],
     "/scnu/cs/match": [],
-    "/gdut/news": [],
     "/cas/sim/academic": [],
     "/cas/mesalab/kb": [],
     "/cas/iee/kydt": [],
