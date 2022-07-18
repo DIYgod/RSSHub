@@ -2403,6 +2403,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 天津大学
 
+### 新闻网
+
+<Route author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" :paramsDesc="['默认为 `focus`']">
+
+|  聚焦天大 |   综合新闻  |   校内新闻   |  媒体报道 |   图说天大  |
+| :---: | :-----: | :------: | :---: | :-----: |
+| focus | general | internal | media | picture |
+
+</Route>
+
 ### 智能与计算学部
 
 <Route author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" :paramsDesc="['默认为 `news`']">
