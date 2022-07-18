@@ -2639,6 +2639,9 @@
     "/tju/cic/:type?": [
         "SuperPung"
     ],
+    "/tju/news/:type?": [
+        "SuperPung"
+    ],
     "/tju/oaa/:type?": [
         "AmosChenYQ",
         "SuperPung"
