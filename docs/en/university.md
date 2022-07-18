@@ -48,6 +48,16 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ## Tianjin University
 
+### Admission Office of Graduate
+
+<RouteEn author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" :paramsDesc="['default `notice`']">
+
+| School-level Notice | Master | Doctor | On-the-job Degree |
+| :-----------------: | :----: | :----: |:-----------------:|
+|       notice        | master | doctor |        job        |
+
+</RouteEn>
+
 ### College of Intelligence and Computing
 
 <RouteEn author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" :paramsDesc="['default `news`']">
