@@ -8768,9 +8768,9 @@
       }
     ]
   },
-  "yjsy.ncepu.edu.cn": {
+  "ncepu.edu.cn": {
     "_name": "华北电力大学研究生院",
-    ".": [
+    "yjsy": [
       {
         "title": "通知公告",
         "docs": " https://docs.rsshub.app/university.html#hua-bei-dian-li-da-xue",
@@ -8788,6 +8788,15 @@
           "/"
         ],
         "target": "/ncepu/master/zsxx"
+      },
+      {
+        "title": "研究生培养信息",
+        "docs": "https://docs.rsshub.app/university.html#hua-bei-dian-li-da-xue",
+        "source": [
+          "/pyxx/pyxx/index.htm",
+          "/"
+        ],
+        "target": "/ncepu/master/pyxx"
       }
     ]
   },
