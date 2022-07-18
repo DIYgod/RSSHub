@@ -68,7 +68,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 </RouteEn>
 
-### 新闻网
+### News
 
 <RouteEn author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" :paramsDesc="['default `focus`']">
 
