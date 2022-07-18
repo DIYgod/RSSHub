@@ -1001,15 +1001,9 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ## 广东工业大学
 
-### 通知公文网
+### 校内新闻网
 
-<Route author="Jim Kirisame" example="/gdut/oa_news" path="/gdut/oa_news/:category" :paramsDesc="['分类名']">
-
-| 校内简讯 | 校内通知   | 公示公告         | 招标公告          | 招标结果          |
-| ---- | ------ | ------------ | ------------- | ------------- |
-| news | notice | announcement | tender_invite | tender_result |
-
-</Route>
+<Route author="Jiangming1399" example="/gdut/news" path="/gdut/news"/>
 
 ## 广东海洋大学
 
@@ -1256,13 +1250,26 @@ category 列表：
 
 ### 河南大学
 
-<Route author="CasterWx" example="/henu/xszl" path="/henu/:type" :paramsDesc="['分类，见下表']">
+<Route author="CasterWx" example="/henu/xszl" path="/henu/:type" :paramsDesc="['分类，见下表']" radar="1" rssbud="1">
 
 | 学生专栏 | 教师专栏 | 新闻公告 | 院部动态 | 高教前沿 |
 | ---- | ---- | ---- | ---- | ---- |
 | xszl | jszl | xwgg | ybdt | gjqy |
 
 </Route>
+
+## 河南财政金融学院
+
+### 河南财政金融学院
+
+<Route author="WenPeiTung" example="/hafu/ggtz" path="/hafu/:type" :paramsDesc="['分类，见下表']" radar="1" rssbud="1">
+
+| 公告通知 | 教务处通知 | 招生就业处通知 |
+| ---- | ---- | ---- |
+| ggtz | jwc | zsjyc |
+
+</Route>
+
 
 ## 湖北大学
 
@@ -1327,18 +1334,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 硕士招生 | 博士招生 |
 | ---- | ---- |
 | sszs | bszs |
-
-</Route>
-
-## 华北电力大学
-
-### 北京校区研究生院
-
-<Route author="nilleo" example="/ncepu/master/tzgg" path="/ncepu/master/:type" :paramsDesc="['类型参数']">
-
-| 类型 | 硕士招生信息 | 通知公告 |
-| -- | ------ | ---- |
-| 参数 | zsxx   | tzgg |
 
 </Route>
 
@@ -2420,16 +2415,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 新闻动态 |     通知公告     |
 | :--: | :----------: |
 | news | notification |
-
-</Route>
-
-### 研究生招生网
-
-<Route author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" :paramsDesc="['默认为 `notice`']">
-
-|  校级公告  |  统考硕士  |  统考博士  | 在职学位 |
-| :----: | :----: | :----: | :--: |
-| notice | master | doctor |  job |
 
 </Route>
 
