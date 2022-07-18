@@ -1338,7 +1338,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 类型 | 硕士招生信息 | 通知公告 | 研究生培养信息 |
 | -- | ------ | ---- | ------- |
-| 参数 |  zsxx   | tzgg | pyxx |
+| 参数 | zsxx   | tzgg | pyxx    |
 
 </Route>
 
