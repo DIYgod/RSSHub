@@ -8910,6 +8910,40 @@
       }
     ]
   },
+  "nga.cn": {
+    "_name": "NGA",
+    "bbs": [
+      {
+        "title": "分区帖子",
+        "docs": "https://docs.rsshub.app/bbs.html#nga",
+        "source": "/thread.php"
+      },
+      {
+        "title": "帖子",
+        "docs": "https://docs.rsshub.app/bbs.html#nga",
+        "source": "/read.php"
+      }
+    ]
+  },
+  "178.com": {
+    "_name": "NGA",
+    "nga": [
+      {
+        "title": "分区帖子",
+        "docs": "https://docs.rsshub.app/bbs.html#nga-fen-qu-tie-zi",
+        "source": [
+          "/thread.php"
+        ]
+      },
+      {
+        "title": "帖子",
+        "docs": "https://docs.rsshub.app/bbs.html#nga-tie-zi",
+        "source": [
+          "/read.php"
+        ]
+      }
+    ]
+  },
   "ngocn2.org": {
     "_name": "NGOCN",
     ".": [
@@ -13914,21 +13948,6 @@
         "docs": "https://docs.rsshub.app/game.html#epicgames-freegame",
         "source": "/store/zh-CN/free-games",
         "target": "/epicgames/freegames"
-      }
-    ]
-  },
-  "nga.cn": {
-    "_name": "NGA",
-    "bbs": [
-      {
-        "title": "分区帖子",
-        "docs": "https://docs.rsshub.app/bbs.html#nga",
-        "source": "/thread.php"
-      },
-      {
-        "title": "帖子",
-        "docs": "https://docs.rsshub.app/bbs.html#nga",
-        "source": "/read.php"
       }
     ]
   },
