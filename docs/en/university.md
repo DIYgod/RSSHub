@@ -68,6 +68,16 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 </RouteEn>
 
+### News
+
+<RouteEn author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" :paramsDesc="['default `focus`']">
+
+| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
+| :----------: | :----------: | :-----------: | :----------: | :-------------: |
+|    focus     |   general    |    internal   |    media     |     picture     |
+
+</RouteEn>
+
 ### The Office of Academic Affairs
 
 <RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['default `news`']">
