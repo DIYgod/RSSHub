@@ -134,6 +134,9 @@
     "/acm-ecnu/contest/:category?": [
         "a180285"
     ],
+    "/acs/journal/:id": [
+        "nczitzk"
+    ],
     "/agirls/topic/:topic": [
         "TonyRL"
     ],
