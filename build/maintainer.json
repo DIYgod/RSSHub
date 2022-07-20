@@ -2005,7 +2005,15 @@
         "Lava-Swimmer",
         "noname1897"
     ],
-    "/nyaa/subekei/search/:query?": [
+    "/nyaa/sukebei/search/:query?": [
+        "Lava-Swimmer",
+        "noname1897"
+    ],
+    "/nyaa/user/:username?": [
+        "Lava-Swimmer",
+        "noname1897"
+    ],
+    "/nyaa/sukebei/user/:username?": [
         "Lava-Swimmer",
         "noname1897"
     ],

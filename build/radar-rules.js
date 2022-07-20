@@ -5259,6 +5259,15 @@
                         const query = searchParams.has('q') ? searchParams.get('q') : '';
                         return `/nyaa/search/${query}`;
                     }
+                } },
+      { title:"用户",
+        docs:"https://docs.rsshub.app/multimedia.html#nyaa-yong-hu",
+        source:"/user/:username",
+        target:(params, url) => {
+                    url = new URL(url);
+                    if (url.hostname.split('.')[0] === 'nyaa') {
+                        return `/nyaa/user/${params.username}`;
+                    }
                 } } ],
     sukebei:[ { title:"sukebei 搜索结果",
         docs:"https://docs.rsshub.app/multimedia.html#nyaa-sukebei-sou-suo-jie-guo",
@@ -5267,7 +5276,11 @@
                     const searchParams = new URL(url).searchParams;
                     const query = searchParams.has('q') ? searchParams.get('q') : '';
                     return `/nyaa/sukebei/search/${query}`;
-                } } ] },
+                } },
+      { title:"sukebei 用户",
+        docs:"https://docs.rsshub.app/multimedia.html#nyaa-sukebei-yong-hu",
+        source:"/user/:username",
+        target:(params) => `/nyaa/sukebei/user/${params.username}` } ] },
   "nytimes.com":{ _name:"纽约时报",
     ".":[ { title:"新闻简报",
         docs:"https://docs.rsshub.app/traditional-media.html#niu-yue-shi-bao",

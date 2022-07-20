@@ -9432,6 +9432,11 @@
         "title": "搜索结果",
         "docs": "https://docs.rsshub.app/multimedia.html#nyaa-sou-suo-jie-guo",
         "source": "/"
+      },
+      {
+        "title": "用户",
+        "docs": "https://docs.rsshub.app/multimedia.html#nyaa-yong-hu",
+        "source": "/user/:username"
       }
     ],
     "sukebei": [
@@ -9439,6 +9444,11 @@
         "title": "sukebei 搜索结果",
         "docs": "https://docs.rsshub.app/multimedia.html#nyaa-sukebei-sou-suo-jie-guo",
         "source": "/"
+      },
+      {
+        "title": "sukebei 用户",
+        "docs": "https://docs.rsshub.app/multimedia.html#nyaa-sukebei-yong-hu",
+        "source": "/user/:username"
       }
     ]
   },
