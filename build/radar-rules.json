@@ -8938,12 +8938,17 @@
     "bbs": [
       {
         "title": "分区帖子",
-        "docs": "https://docs.rsshub.app/bbs.html#nga",
+        "docs": "https://docs.rsshub.app/bbs.html#nga-fen-qu-tie-zi",
         "source": "/thread.php"
       },
       {
         "title": "帖子",
-        "docs": "https://docs.rsshub.app/bbs.html#nga",
+        "docs": "https://docs.rsshub.app/bbs.html#nga-tie-zi",
+        "source": "/read.php"
+      },
+      {
+        "title": "帖子 - 只看作者",
+        "docs": "https://docs.rsshub.app/bbs.html#nga-tie-zi",
         "source": "/read.php"
       }
     ]
@@ -8954,16 +8959,17 @@
       {
         "title": "分区帖子",
         "docs": "https://docs.rsshub.app/bbs.html#nga-fen-qu-tie-zi",
-        "source": [
-          "/thread.php"
-        ]
+        "source": "/thread.php"
       },
       {
         "title": "帖子",
         "docs": "https://docs.rsshub.app/bbs.html#nga-tie-zi",
-        "source": [
-          "/read.php"
-        ]
+        "source": "/read.php"
+      },
+      {
+        "title": "帖子 - 只看作者",
+        "docs": "https://docs.rsshub.app/bbs.html#nga-tie-zi",
+        "source": "/read.php"
       }
     ]
   },
