@@ -372,6 +372,12 @@ pageClass: routes
 
 </Route>
 
+## PuTTY
+
+### Change Log
+
+<Route author="nczitzk" example="/putty/changes" path="/putty/changes"/>
+
 ## qBittorrent
 
 ### 消息
