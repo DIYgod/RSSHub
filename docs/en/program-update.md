@@ -289,6 +289,21 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## O\&O Software
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" :paramsDesc="['Software id, see below, shutup10 by default, can be found in URL']">
+
+| Software       | Id          |
+| -------------- | ----------- |
+| O&O ShutUp10++ | shutup10    |
+| O&O AppBuster  | ooappbuster |
+| O&O Lanytix    | oolanytix   |
+| O&O DeskInfo   | oodeskinfo  |
+
+</RouteEn>
+
 ## Obsidian
 
 ### Announcements
