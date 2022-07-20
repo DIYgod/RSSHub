@@ -265,9 +265,17 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 <RouteEn author="Lava-Swimmer noname1897" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
 
+### User
+
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+
 ### Sukebei Search Result
 
 <RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+
+### Sukebei User
+
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
 
 ## PornHub
 
