@@ -336,6 +336,21 @@ pageClass: routes
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## O\&O Software
+
+### Changelog
+
+<Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" :paramsDesc="['软件 id，见下表，默认为 shutup10，可在对应软件页中找到']">
+
+| Software       | Id          |
+| -------------- | ----------- |
+| O&O ShutUp10++ | shutup10    |
+| O&O AppBuster  | ooappbuster |
+| O&O Lanytix    | oolanytix   |
+| O&O DeskInfo   | oodeskinfo  |
+
+</Route>
+
 ## Obsidian
 
 ### Announcements
