@@ -2043,6 +2043,9 @@
     "/oncc/:language/:channel?": [
         "Fatpandac"
     ],
+    "/oo-software/changelog/:id": [
+        "nczitzk"
+    ],
     "/openwrt/releases/:model?": [
         "DIYgod"
     ],
