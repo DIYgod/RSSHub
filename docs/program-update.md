@@ -577,6 +577,10 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" :paramsDesc="['产品型号，可在产品页面找到']"/>
 
+### GPU Tweak
+
+<Route author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
+
 ## 蒲公英应用分发
 
 ### app 更新

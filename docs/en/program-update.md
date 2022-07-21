@@ -62,6 +62,16 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 <RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
 
+## ASUS
+
+### BIOS
+
+<RouteEn author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" :paramsDesc="['Model, can be found in product page']"/>
+
+### GPU Tweak
+
+<RouteEn author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
+
 ## Bandisoft
 
 ### History
