@@ -1385,6 +1385,12 @@
                         return '/cycey/xfzx';
                     }
                 } } ] },
+  "cpuid.com":{ _name:"CPUID",
+    ".":[ { title:"News",
+        docs:"https://docs.rsshub.app/program-update.html#cpuid",
+        source:[ "/news.html",
+          "/" ],
+        target:"/cpuid/news" } ] },
   "cqwu.net":{ _name:"重庆文理学院",
     www:[ { title:"通知",
         docs:"https://docs.rsshub.app/university.html#chong-qing-wen-li-xue-yuan",
