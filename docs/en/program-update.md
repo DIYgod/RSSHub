@@ -222,6 +222,12 @@ Language
 
 <RouteEn author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
 
+## ImageMagick
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
+
 ## IPSW.me
 
 ### Apple Firmware Update-IPSWs/OTAs version

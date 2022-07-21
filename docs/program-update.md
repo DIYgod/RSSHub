@@ -264,6 +264,12 @@ pageClass: routes
 
 <Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
 
+## ImageMagick
+
+### Changelog
+
+<Route author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
+
 ## IPSW\.me
 
 ### 苹果固件更新 - IPSWs/OTAs 版本
