@@ -261,9 +261,21 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ## Nyaa
 
-### Seatch Result
+### Search Result
 
-<RouteEn author="Lava-Swimmer" example="/nyaa/search/psycho-pass" path="/nyaa/search/:keyword" :paramsDesc="['Search keyword']" supportBT="1"/>
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+
+### User
+
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+
+### Sukebei Search Result
+
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+
+### Sukebei User
+
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
 
 ## PornHub
 
@@ -304,6 +316,18 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 - `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
 
 - `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
+
+## PRESTIGE(プレステージ)
+
+### シリーズ
+
+<RouteEn author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" :paramsDesc="['Series number', 'Sorting, `near` by default']" puppeteer="1">
+
+| 人気順 | 新着順 | 発売日順 | タイトル順 | 価格の安い順 | 価格の高い順 |
+| ------- | ------ | ---- | ----- | ---- | ---- |
+| popular | near   | date | title | low  | high |
+
+</RouteEn>
 
 ## s-hentai
 
@@ -356,6 +380,16 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 ### User Collection
 
 <RouteEn author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
+
+## u3c3
+
+### Keyword Search
+
+<RouteEn author="noname1897" example="/u3c3/search/les" path="/u3c3/search/:keyword?" :paramsDesc="['search keyword']" supportBT="1" radar="1"/>
+
+### Type
+
+<RouteEn author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" :paramsDesc="['type, pay attention to case, it should be exactly same as the choices: `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`, if no type is provided, show the home index']" supportBT="1" radar="1"/>
 
 ## YouTube
 

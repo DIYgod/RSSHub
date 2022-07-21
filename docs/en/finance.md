@@ -29,7 +29,11 @@ pageClass: routes
 </RouteEn>
 
 ## TokenInsight
+::: tip Tips
 
+TokenInsight also provides official RSS, you can take a look at <https://api.tokeninsight.com/reference/rss>.
+
+:::
 ### Blogs
 
 <RouteEn author="fuergaosi233" example="/tokeninsight/blog/en" path="/tokeninsight/blog/:lang?" :paramsDesc="['Language, see below, Chinese by default']" />

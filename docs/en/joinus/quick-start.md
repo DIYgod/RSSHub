@@ -21,11 +21,11 @@ First, `yarn` or `npm install` to install dependencies, then execute `yarn dev` 
 
 ### Add route
 
-Firstly, add a route in [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js)
+First, create the corresponding route path in [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) and add the route in `/lib/v2/:path/router.js`
 
 ### Code the script
 
-Create a new js script in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) corresponding to route path
+Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2/) path
 
 #### Acquiring Data
 
@@ -492,7 +492,7 @@ Open browser's RSSHub Radar extension settings, switch to rules list, scroll dow
 
 ### Code the rule
 
-Add rules to [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js)
+Create `radar.js` under the corresponding [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) route and the rules
 
 Simplified rules will be used for the following illustration:
 

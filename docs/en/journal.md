@@ -23,6 +23,20 @@ pageClass: routes
 
 </RouteEn>
 
+## American Chemistry Society
+
+### Journal
+
+<RouteEn author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
+
+::: tip Tip
+
+See [Browse Content](https://pubs.acs.org)
+
+:::
+
+</RouteEn>
+
 ## arXiv
 
 ### Search Keyword
@@ -140,23 +154,11 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 
 <RouteEn author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" :paramsDesc="['Category, can be found in the url of the page, `orsc` by default']"/>
 
-## JASA
+## MDPI
 
-### Latest Research
+### Journal
 
-<RouteEn author="Derekmini auto-bot-ty" example="/jasa/latest" path="/jasa/latest" radar="1" rssbud="1">
-
-</RouteEn>
-
-### Section Research
-
-<RouteEn author="Derekmini" example="/jasa/section/ANIMAL+BIOACOUSTICS" path="/jasa/section/:id" :paramsDesc="['Section Name, get it from tocSection of the URL']" radar="1" rssbud="1">
-
-| Section | REFLECTIONS | ANIMAL BIOACOUSTICS | others |
-| :-----: | :---------: | :-----------------: | :----: |
-|  `:id`  | REFLECTIONS | ANIMAL+BIOACOUSTICS |   ...  |
-
-</RouteEn>
+<RouteEn author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" :paramsDesc="['Journal Name, get it from the journal homepage']" radar="1" rssbud="1"/>
 
 ## MIT Technology Review
 
@@ -346,11 +348,11 @@ _only support Science Journal_
 
 ### Journal
 
-<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/:pub/:jrn" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']" radar="1" rssbud="1"/>
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']" radar="1" rssbud="1" puppeteer="1"/>
 
 ### Section
 
-<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/:pub/:jrn/:sec" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`','Section, the `tocSection` part of the URL']" radar="1" rssbud="1"/>
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`','Section, the `tocSection` part of the URL']" radar="1" rssbud="1" puppeteer="1"/>
 
 ## Springer
 

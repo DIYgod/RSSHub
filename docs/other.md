@@ -99,9 +99,9 @@ pageClass: routes
 
 ## Darwin Awards
 
-### 文章
+### Award Winners
 
-<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all"/>
+<Route author="zoenglinghou nciztzk" example="/darwinawards" path="/darwinawards" />
 
 ## dcinside
 
@@ -405,18 +405,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
 
-## 东莞教研网
-
-### 信息公开
-
-<Route author="nczitzk" example="/dgjyw/news" path="/dgjyw/:type" :paramsDesc="['分类']">
-
-| 动态   | 公示           | 通知     |
-| ---- | ------------ | ------ |
-| news | announcement | notice |
-
-</Route>
-
 ## 福利资源 - met.red
 
 ### 福利资源 - met.red
@@ -473,18 +461,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 国家自然科学基金委员会
-
-### 新闻通知
-
-<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1" rssbud="1">
-
-| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
-| ---- | ---- | ---- | ---- |
-| jjyw | tzgg | zzcg | kpkx |
-
-</Route>
-
 ## 好队友
 
 ### 工作机会
@@ -502,6 +478,20 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 新品信息
 
 <Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
+
+## 巨量算数 - 算数指数
+
+### 抖音指数波峰
+
+<Route author="Jkker" example="/oceanengine/index/教材" path="/oceanengine/index/:keyword" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+
+爬取巨量算数近 6 个月的抖音指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
+
+### 头条指数波峰
+
+<Route author="Jkker" example="/oceanengine/index/教材/toutiao" path="/oceanengine/index/:keyword/toutiao" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+
+爬取巨量算数近 6 个月的头条指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
 
 ## 考研帮
 
@@ -738,6 +728,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 | dateline | reply   | view | lastpost | heat |
 
 </Route>
+
+## 热搜聚合
+
+### 关键词聚合追踪
+
+追踪各大热搜榜上包含特定关键词的条目。
+
+当前收录榜单：*微博热搜*、*今日头条热搜*、*知乎热搜*、*知乎热门视频*、*知乎热门话题*。
+
+数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
+
+<Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']"/>
 
 ## 日本郵便
 

@@ -60,7 +60,7 @@ The following are some of the supported Channel and Topic ids.
 
 ### Topics
 
-<RouteEn author="zoenglinghou mjysci" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`']" radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
+<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']" radar="1" rssbud="1" />
 
 ## BBC
 
@@ -325,7 +325,7 @@ More could be found in the URL of the category/topic page.
 
 ### Inverstigates
 
-<RouteEn author="LyleLee" example="/reuters/inverstigates" path="/reuters/inverstigates" />
+<RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
 ## RTHK
 
@@ -462,6 +462,12 @@ Language
 
 </RouteEn>
 
+## Taiwan News
+
+### Hot News
+
+<RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
+
 ## The Economist
 
 ### Category
@@ -589,9 +595,3 @@ Free articles only.
 | 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </RouteEn>
-
-## 公視新聞網
-
-### Daily News
-
-<RouteEn author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>

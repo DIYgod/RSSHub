@@ -32,6 +32,12 @@ pageClass: routes
 
 </Route>
 
+## 抖音直播
+
+### 直播间开播
+
+<Route author="TonyRL" example="/douyin/live/685317364746" path="/douyin/live/:rid" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']" anticrawler="1" radar="1" rssbud="1" puppeteer="1"/>
+
 ## 斗鱼直播
 
 ### 直播间开播

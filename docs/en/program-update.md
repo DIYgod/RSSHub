@@ -108,6 +108,12 @@ Language
 
 <RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']"/>
 
+## Clash
+
+### Premium Releases
+
+<RouteEn author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+
 ## CurseForge
 
 ### File Update
@@ -191,6 +197,12 @@ Language
 ### Add-ons Update
 
 <RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
+
+## FossHub
+
+### Software Update
+
+<RouteEn author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" :paramsDesc="['Software id, can be found in URL']"/>
 
 ## Greasy Fork
 
@@ -283,11 +295,32 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## O\&O Software
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" :paramsDesc="['Software id, see below, shutup10 by default, can be found in URL']">
+
+| Software       | Id          |
+| -------------- | ----------- |
+| O&O ShutUp10++ | shutup10    |
+| O&O AppBuster  | ooappbuster |
+| O&O Lanytix    | oolanytix   |
+| O&O DeskInfo   | oodeskinfo  |
+
+</RouteEn>
+
 ## Obsidian
 
 ### Announcements
 
 <RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
+
+## OpenWrt
+
+### Releases
+
+<RouteEn author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" :paramsDesc="['Device Model, can be found in url of `Table of Hardware` -> `Device Page`', 'Same as above']"/>
 
 ## PlayStation
 

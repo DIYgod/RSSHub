@@ -134,6 +134,12 @@ pageClass: routes
 
 <Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
 
+## Clash
+
+### Premium Releases
+
+<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+
 ## cpython
 
 ### 正式版本发布
@@ -234,6 +240,12 @@ pageClass: routes
 
 <Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']" />
 
+## FossHub
+
+### Software Update
+
+<Route author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" :paramsDesc="['软件 id，可在对应软件页 URL 中找到']"/>
+
 ## Greasy Fork
 
 ### 脚本更新
@@ -330,6 +342,21 @@ pageClass: routes
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## O\&O Software
+
+### Changelog
+
+<Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" :paramsDesc="['软件 id，见下表，默认为 shutup10，可在对应软件页中找到']">
+
+| Software       | Id          |
+| -------------- | ----------- |
+| O&O ShutUp10++ | shutup10    |
+| O&O AppBuster  | ooappbuster |
+| O&O Lanytix    | oolanytix   |
+| O&O DeskInfo   | oodeskinfo  |
+
+</Route>
+
 ## Obsidian
 
 ### Announcements
@@ -341,6 +368,12 @@ pageClass: routes
 ### Release History
 
 <Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
+
+## OpenWrt
+
+### Releases
+
+<Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" :paramsDesc="['产品型号，可在 `Table of Hardware` -> `Device Page` 的 URL 中找到', '同上']"/>
 
 ## PlayStation
 
