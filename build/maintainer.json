@@ -243,6 +243,9 @@
     "/asus/bios/:model": [
         "Fatpandac"
     ],
+    "/asus/gpu-tweak": [
+        "TonyRL"
+    ],
     "/atcoder/post/:language?/:keyword?": [
         "nczitzk"
     ],
