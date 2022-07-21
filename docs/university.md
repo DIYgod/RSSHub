@@ -3316,6 +3316,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | -- | ---- | ---- | ---- | ---- | ---- |
 | 参数 | xyxw | tzgg | xsxx | xgdt | kydt |
 
+</Route>
+
 ### 校长信箱
 
 <Route author="j1g5awi" example="/csu/mail" path="/csu/mail/:type?" :paramsDesc="['类型']">
