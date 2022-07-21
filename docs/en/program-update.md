@@ -120,6 +120,12 @@ Language
 
 <RouteEn author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
 
+## CPUID
+
+### News
+
+<RouteEn author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
+
 ## CurseForge
 
 ### File Update

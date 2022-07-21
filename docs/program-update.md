@@ -146,6 +146,12 @@ pageClass: routes
 
 <Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
 
+## CPUID
+
+### 新闻
+
+<Route author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
+
 ## cpython
 
 ### 正式版本发布
