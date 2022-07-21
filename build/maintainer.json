@@ -876,6 +876,9 @@
     "/fortunechina/:category?": [
         "nczitzk"
     ],
+    "/fosshub/:id": [
+        "nczitzk"
+    ],
     "/ft/ft/myft/:key": [
         "HenryQW"
     ],

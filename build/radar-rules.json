@@ -4031,6 +4031,18 @@
       }
     ]
   },
+  "fosshub.com": {
+    "_name": "FossHub",
+    ".": [
+      {
+        "title": "Software Update",
+        "docs": "https://docs.rsshub.app/program-update.html#fosshub-software-update",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "ftchinese.com": {
     "_name": "Financial Times",
     ".": [
