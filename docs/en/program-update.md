@@ -96,6 +96,12 @@ Language
 
 </RouteEn>
 
+## Brave
+
+### Release Notes
+
+<Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
+
 ## Chocolatey
 
 ### Software Update

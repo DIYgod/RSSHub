@@ -104,6 +104,12 @@ pageClass: routes
 | ------- | -------- | --------- | ----- | -------------- |
 | android | iphone   | ipad      | win   | android_tv_yst |
 
+## Brave
+
+### Release Notes
+
+<Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
+
 ## Bugly SDK
 
 ### 更新日志
