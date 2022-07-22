@@ -2208,6 +2208,9 @@
     "/pubmed/trending/:filters?": [
         "nczitzk"
     ],
+    "/putty/changes": [
+        "nczitzk"
+    ],
     "/qbittorrent/news": [
         "TonyRL"
     ],
