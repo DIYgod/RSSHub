@@ -368,6 +368,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 </RouteEn>
 
+## PuTTY
+
+### Change Log
+
+<RouteEn author="nczitzk" example="/putty/changes" path="/putty/changes"/>
+
 ## qBittorrent
 
 ### News
