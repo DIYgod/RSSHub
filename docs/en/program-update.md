@@ -448,6 +448,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
+## WizTree
+
+### What's New
+
+<RouteEn author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
+
 ## X410
 
 ### News
