@@ -393,6 +393,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
+## Western Digital
+
+### Download
+
+<RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
+
 ## X410
 
 ### News
