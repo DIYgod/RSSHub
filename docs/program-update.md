@@ -494,7 +494,7 @@ pageClass: routes
 
 ### Download
 
-<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
+<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
 
 ## X410
 

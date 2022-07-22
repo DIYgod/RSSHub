@@ -397,7 +397,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Download
 
-<RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
+<RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
 
 ## X410
 
