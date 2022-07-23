@@ -23,6 +23,20 @@ pageClass: routes
 
 </Route>
 
+## American Chemistry Society
+
+### Journal
+
+<Route author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']" supportScihub="1">
+
+::: tip 提示
+
+见 [Browse Content](https://pubs.acs.org)
+
+:::
+
+</Route>
+
 ## arXiv
 
 ### 搜索关键字

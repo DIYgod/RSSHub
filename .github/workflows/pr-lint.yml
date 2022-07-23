@@ -42,3 +42,14 @@ jobs:
           ignoreLabels: |
             dependencies
           wip: true
+  labeler:
+    name: Pull Request Labeler
+    if: ${{ github.event_name == 'pull_request_target' }}
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v4
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}

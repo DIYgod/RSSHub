@@ -284,7 +284,7 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
+<Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  :paramsDesc="['帖子 id, 可在帖子 URL 找到', '作者 id']" radar="1" rssbud="1"/>
 
 ## PLAYNO.1 玩樂達人
 

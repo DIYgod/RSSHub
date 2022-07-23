@@ -4,6 +4,12 @@ pageClass: routes
 
 # Application Updates
 
+## Android
+
+### SDK Platform Tools release notes
+
+<RouteEn author="nczitzk" example="/android/platform-tools-releases" path="/android/platform-tools-releases"/>
+
 ## Anki
 
 ### Changes
@@ -56,6 +62,16 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 <RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
 
+## ASUS
+
+### BIOS
+
+<RouteEn author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" :paramsDesc="['Model, can be found in product page']"/>
+
+### GPU Tweak
+
+<RouteEn author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
+
 ## Bandisoft
 
 ### History
@@ -96,6 +112,12 @@ Language
 
 </RouteEn>
 
+## Brave
+
+### Release Notes
+
+<Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
+
 ## Chocolatey
 
 ### Software Update
@@ -113,6 +135,12 @@ Language
 ### Premium Releases
 
 <RouteEn author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+
+## CPUID
+
+### News
+
+<RouteEn author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
 
 ## CurseForge
 
@@ -198,6 +226,12 @@ Language
 
 <RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
 
+## FossHub
+
+### Software Update
+
+<RouteEn author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" :paramsDesc="['Software id, can be found in URL']"/>
+
 ## Greasy Fork
 
 ### Script Update
@@ -209,6 +243,12 @@ Language
 ### Release News
 
 <RouteEn author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
+## ImageMagick
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
 
 ## IPSW.me
 
@@ -289,6 +329,21 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
+## O\&O Software
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" :paramsDesc="['Software id, see below, shutup10 by default, can be found in URL']">
+
+| Software       | Id          |
+| -------------- | ----------- |
+| O&O ShutUp10++ | shutup10    |
+| O&O AppBuster  | ooappbuster |
+| O&O Lanytix    | oolanytix   |
+| O&O DeskInfo   | oodeskinfo  |
+
+</RouteEn>
+
 ## Obsidian
 
 ### Announcements
@@ -318,6 +373,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 | ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
 
 </RouteEn>
+
+## PuTTY
+
+### Change Log
+
+<RouteEn author="nczitzk" example="/putty/changes" path="/putty/changes"/>
 
 ## qBittorrent
 
@@ -398,6 +459,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Download
 
 <RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
+
+## WizTree
+
+### What's New
+
+<RouteEn author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
 ## X410
 
