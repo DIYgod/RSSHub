@@ -110,6 +110,12 @@ pageClass: routes
 | ------- | -------- | --------- | ----- | -------------- |
 | android | iphone   | ipad      | win   | android_tv_yst |
 
+## Brave
+
+### Release Notes
+
+<Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
+
 ## Bugly SDK
 
 ### 更新日志
@@ -411,6 +417,12 @@ pageClass: routes
 
 </Route>
 
+## PuTTY
+
+### Change Log
+
+<Route author="nczitzk" example="/putty/changes" path="/putty/changes"/>
+
 ## qBittorrent
 
 ### 消息
@@ -528,6 +540,12 @@ pageClass: routes
 ### Dev Release Changelog
 
 <Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
+
+## WizTree
+
+### What's New
+
+<Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
 ## X410
 

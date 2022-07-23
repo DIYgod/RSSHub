@@ -112,6 +112,12 @@ Language
 
 </RouteEn>
 
+## Brave
+
+### Release Notes
+
+<Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
+
 ## Chocolatey
 
 ### Software Update
@@ -368,6 +374,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 </RouteEn>
 
+## PuTTY
+
+### Change Log
+
+<RouteEn author="nczitzk" example="/putty/changes" path="/putty/changes"/>
+
 ## qBittorrent
 
 ### News
@@ -441,6 +453,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
+## WizTree
+
+### What's New
+
+<RouteEn author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
 ## X410
 
