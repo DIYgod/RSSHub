@@ -2857,6 +2857,9 @@
     "/watchout/": [
         "nczitzk"
     ],
+    "/wdc/download/:id": [
+        "nczitzk"
+    ],
     "/wechat/announce": [
         "xyqfer"
     ],
