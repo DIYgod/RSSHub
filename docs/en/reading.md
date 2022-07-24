@@ -57,6 +57,16 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 </RouteEn>
 
+## Penguin Random House
+
+### Book Lists
+
+<RouteEn author="StevenRCE0" example="/penguin-random-house/the-read-down" path="/penguin-random-house/the-read-down" />
+
+### Articles
+
+<RouteEn author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
+
 ## syosetu
 
 ### chapter
