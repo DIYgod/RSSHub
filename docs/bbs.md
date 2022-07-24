@@ -290,7 +290,7 @@ pageClass: routes
 
 ### AV
 
-注意：目前观测到该博客可能禁止日本IP加载部分图片，建议订阅此源时使用非日本IP请求图片
+注意：目前观测到该博客可能禁止日本IP访问。建议部署在日本区以外的服务器上。
 
 <Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
 
