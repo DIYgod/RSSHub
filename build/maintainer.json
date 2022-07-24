@@ -2103,6 +2103,12 @@
     "/panewslab/:category?": [
         "nczitzk"
     ],
+    "/penguin-random-house/the-read-down": [
+        "StevenRCE0"
+    ],
+    "/penguin-random-house/articles": [
+        "StevenRCE0"
+    ],
     "/people/cpc/24h": [
         "nczitzk"
     ],
