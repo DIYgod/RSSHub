@@ -348,6 +348,12 @@ pageClass: routes
 
 </Route>
 
+## Neat Download Manager
+
+### Download
+
+<Route author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" :paramsDesc="['操作系统，可选 windows 或 macos，默认为全部']"/>
+
 ## Nintendo Switch
 
 ### Switch 本体更新情报（日本）

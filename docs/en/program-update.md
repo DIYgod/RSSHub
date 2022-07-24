@@ -311,6 +311,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
+## Neat Download Manager
+
+### Download
+
+<RouteEn author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" :paramsDesc="['Operating system, windows or macos, all by default']"/>
+
 ## Nintendo Switch
 
 ### Switch System Update（Japan）
