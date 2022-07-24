@@ -465,6 +465,9 @@
     "/clash/premium": [
         "ttttmr"
     ],
+    "/cmde/:cate*": [
+        "run-ze"
+    ],
     "/cn-healthcare/index": [
         "qnloft"
     ],
