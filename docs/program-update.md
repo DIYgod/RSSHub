@@ -541,6 +541,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
 
+## Western Digital
+
+### Download
+
+<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
+
 ## WizTree
 
 ### What's New
