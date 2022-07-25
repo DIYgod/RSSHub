@@ -10141,6 +10141,20 @@
       }
     ]
   },
+  "postman.com": {
+    "_name": "Postman",
+    ".": [
+      {
+        "title": "Release Notes",
+        "docs": "https://docs.rsshub.app/program-update.html#postman-release-notes",
+        "source": [
+          "/downloads/release-notes",
+          "/"
+        ],
+        "target": "/postman/release-notes"
+      }
+    ]
+  },
   "prestige-av.com": {
     "_name": "Prestige 蚊香社",
     ".": [
