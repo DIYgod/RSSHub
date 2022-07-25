@@ -348,6 +348,12 @@ pageClass: routes
 
 </Route>
 
+## Neat Download Manager
+
+### Download
+
+<Route author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" :paramsDesc="['操作系统，可选 windows 或 macos，默认为全部']"/>
+
 ## Nintendo Switch
 
 ### Switch 本体更新情报（日本）
@@ -546,6 +552,12 @@ pageClass: routes
 ### Flings
 
 <Route author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
+
+## Western Digital
+
+### Download
+
+<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
 
 ## WizTree
 
