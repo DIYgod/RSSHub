@@ -411,6 +411,12 @@ pageClass: routes
 
 见 [#playstation](/game.html#playstation)
 
+## Postman
+
+### Release Notes
+
+<Route author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
+
 ## Potplayer
 
 ### 版本历史
