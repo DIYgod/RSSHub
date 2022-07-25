@@ -311,6 +311,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
+## Neat Download Manager
+
+### Download
+
+<RouteEn author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" :paramsDesc="['Operating system, windows or macos, all by default']"/>
+
 ## Nintendo Switch
 
 ### Switch System Update（Japan）
@@ -453,6 +459,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
+## Western Digital
+
+### Download
+
+<RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
 
 ## WizTree
 
