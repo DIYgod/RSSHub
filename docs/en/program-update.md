@@ -460,6 +460,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
 
+## VMware
+
+### Flings
+
+<RouteEn author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
+
 ## Western Digital
 
 ### Download
