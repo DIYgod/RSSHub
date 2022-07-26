@@ -3038,6 +3038,19 @@
       }
     ]
   },
+  "sehuatang.net": {
+    "_name": "色花堂",
+    ".": [
+      {
+        "title": "分区帖子",
+        "docs": "https://docs.rsshub.app/multimedia.html#se-hua-tang-fen-qu-tie-zi",
+        "source": [
+          "/:category",
+          "/"
+        ]
+      }
+    ]
+  },
   "dtcj.com": {
     "_name": "DT 财经",
     ".": [

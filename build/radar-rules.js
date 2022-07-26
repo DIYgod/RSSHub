@@ -1646,6 +1646,18 @@
         docs:"https://docs.rsshub.app/live.html#dou-yin-zhi-bo",
         source:"/:rid",
         target:"/douyin/live/:rid" } ] },
+  "sehuatang.net":{ _name:"色花堂",
+    ".":[ { title:"分区帖子",
+        docs:"https://docs.rsshub.app/multimedia.html#se-hua-tang-fen-qu-tie-zi",
+        source:[ "/:category",
+          "/" ],
+        target:(params, url) => {
+                    const theUrl = new URL(url);
+                    const matches = String(theUrl).match(/forum-(\d)+-\d+/);
+                    const fid = theUrl.searchParams.get('fid') || (matches ? matches[1] : '');
+                    const tid = theUrl.searchParams.get('typeid');
+                    return `/dsndsht23${fid ? `/${fid}` : ''}${tid ? `/${tid}` : ''}`;
+                } } ] },
   "dtcj.com":{ _name:"DT 财经",
     ".":[ { title:"数据侠专栏",
         docs:"https://docs.rsshub.app/finance.html#dt-cai-jing",
