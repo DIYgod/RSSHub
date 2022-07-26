@@ -411,6 +411,12 @@ pageClass: routes
 
 见 [#playstation](/game.html#playstation)
 
+## Postman
+
+### Release Notes
+
+<Route author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
+
 ## Potplayer
 
 ### 版本历史
@@ -546,6 +552,12 @@ pageClass: routes
 ### Dev Release Changelog
 
 <Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
+
+## VMware
+
+### Flings
+
+<Route author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
 
 ## Western Digital
 

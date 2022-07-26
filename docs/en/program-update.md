@@ -368,6 +368,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#playstation](/game.html#playstation)
 
+## Postman
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
+
 ## Potplayer
 
 ### Version History
@@ -459,6 +465,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
+## VMware
+
+### Flings
+
+<RouteEn author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
 
 ## Western Digital
 
