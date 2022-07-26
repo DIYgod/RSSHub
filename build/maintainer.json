@@ -1672,6 +1672,9 @@
     "/learnku/:community/:category?": [
         "kayw-geek"
     ],
+    "/leetcode/dailyquestion/en": [
+        "NavePnow"
+    ],
     "/leiphone/leiphone": [
         "vlcheng"
     ],
