@@ -543,6 +543,39 @@ pageClass: routes
 
 <Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
+## TradingView
+
+### Blog
+
+<Route author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" :paramsDesc="['语言，见下表，默认为 en 即英语']">
+
+语言
+
+| 编号 | 语言                  |
+| -- | ------------------- |
+| en | English             |
+| ru | Русский             |
+| ja | 日本語                 |
+| es | Español             |
+| tr | Türkçe              |
+| ko | 한국어                 |
+| it | Italiano            |
+| pt | Português do Brasil |
+| de | Deutsch             |
+| fr | Français            |
+| pl | Polski              |
+| id | Bahasa Indonesia    |
+| my | Bahasa Malaysia     |
+| tw | 繁體                  |
+| cn | 简体                  |
+| vi | Tiếng Việt          |
+| th | ภาษาไทย             |
+| sv | Svenska             |
+| ar | العربية             |
+| il | Hebrew              |
+
+</Route>
+
 ## Typora
 
 ### Changelog

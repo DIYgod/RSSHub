@@ -460,6 +460,39 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
+## TradingView
+
+### Blog
+
+<RouteEn author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" :paramsDesc="['Language, see below, `en` as English by default']">
+
+Language
+
+| Id | Language            |
+| -- | ------------------- |
+| en | English             |
+| ru | Русский             |
+| ja | 日本語                 |
+| es | Español             |
+| tr | Türkçe              |
+| ko | 한국어                 |
+| it | Italiano            |
+| pt | Português do Brasil |
+| de | Deutsch             |
+| fr | Français            |
+| pl | Polski              |
+| id | Bahasa Indonesia    |
+| my | Bahasa Malaysia     |
+| tw | 繁體                  |
+| cn | 简体                  |
+| vi | Tiếng Việt          |
+| th | ภาษาไทย             |
+| sv | Svenska             |
+| ar | العربية             |
+| il | Hebrew              |
+
+</RouteEn>
+
 ## Typora
 
 ### Changelog
