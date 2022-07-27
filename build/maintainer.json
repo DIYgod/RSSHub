@@ -1418,6 +1418,9 @@
     "/ifeng/feng/:id/:type": [
         "Jamch"
     ],
+    "/ifi-audio/download/:val/:id": [
+        "NavePnow"
+    ],
     "/iguoguo/html5": [
         "yuxinliu-alex"
     ],
