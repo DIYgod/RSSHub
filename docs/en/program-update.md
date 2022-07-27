@@ -311,6 +311,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
+## Neat Download Manager
+
+### Download
+
+<RouteEn author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" :paramsDesc="['Operating system, windows or macos, all by default']"/>
+
 ## Nintendo Switch
 
 ### Switch System Update（Japan）
@@ -361,6 +367,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### PlayStation 4 System Update
 
 见 [#playstation](/game.html#playstation)
+
+## Postman
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
 
 ## Potplayer
 
@@ -448,11 +460,56 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
+## TradingView
+
+### Blog
+
+<RouteEn author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" :paramsDesc="['Language, see below, `en` as English by default']">
+
+Language
+
+| Id | Language            |
+| -- | ------------------- |
+| en | English             |
+| ru | Русский             |
+| ja | 日本語                 |
+| es | Español             |
+| tr | Türkçe              |
+| ko | 한국어                 |
+| it | Italiano            |
+| pt | Português do Brasil |
+| de | Deutsch             |
+| fr | Français            |
+| pl | Polski              |
+| id | Bahasa Indonesia    |
+| my | Bahasa Malaysia     |
+| tw | 繁體                  |
+| cn | 简体                  |
+| vi | Tiếng Việt          |
+| th | ภาษาไทย             |
+| sv | Svenska             |
+| ar | العربية             |
+| il | Hebrew              |
+
+</RouteEn>
+
 ## Typora
 
 ### Changelog
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
+## VMware
+
+### Flings
+
+<RouteEn author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
+
+## Western Digital
+
+### Download
+
+<RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
 
 ## WizTree
 
