@@ -1,12 +1,12 @@
 'Route: v1':
-- any: ['lib/routes/**/*.js', '!lib/routes/index.js']
+- any: ['lib/router.js', 'lib/routes/**/*.js', '!lib/routes/index.js']
 
 'Route: v2':
 - 'lib/v2/**/*.js'
 
 core enhancement:
 - lib/routes/index.js
-- any: ['lib/**', '!lib/routes/**', '!lib/v2/**']
+- any: ['lib/**', 'lib/router.js', '!lib/routes/**', '!lib/v2/**']
 
 dependencies:
 - yarn.lock
