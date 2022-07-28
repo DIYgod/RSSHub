@@ -86,29 +86,29 @@ Software id
 
 Language
 
-| Language | key |
-| -------- | --- |
-| English | en |
-| 中文 (简体) | cn |
-| 中文 (繁體) | tw |
-| 日本語 | jp |
-| Русский | ru |
-| Español | es |
-| Français | fr |
-| Deutsch | de |
-| Italiano | it |
-| Slovenčina | sk |
-| Українська | uk |
-| Беларуская | be |
-| Dansk | da |
-| Polski | pl |
-| Português Brasileiro | br |
-| Čeština | cs |
-| Nederlands | nl |
-| Slovenščina| sl |
-| Türkçe| tr  |
-| ภาษาไทย | th |
-| 한국어 | kr |
+| Language             | key |
+| -------------------- | --- |
+| English              | en  |
+| 中文 (简体)          | cn  |
+| 中文 (繁體)          | tw  |
+| 日本語               | jp  |
+| Русский              | ru  |
+| Español              | es  |
+| Français             | fr  |
+| Deutsch              | de  |
+| Italiano             | it  |
+| Slovenčina           | sk  |
+| Українська           | uk  |
+| Беларуская           | be  |
+| Dansk                | da  |
+| Polski               | pl  |
+| Português Brasileiro | br  |
+| Čeština              | cs  |
+| Nederlands           | nl  |
+| Slovenščina          | sl  |
+| Türkçe               | tr  |
+| ภาษาไทย              | th  |
+| 한국어               | kr  |
 
 </RouteEn>
 
@@ -193,8 +193,8 @@ Use `library` as the `owner` for official images, such as <https://rsshub.app/do
 Language
 
 | Simplified Chinese | Traditional Chinese | English |
-| ------ | -------- | -------- |
-|  cn  |  tw  |  en  |
+| ------------------ | ------------------- | ------- |
+| cn                 | tw                  | en      |
 
 </RouteEn>
 
@@ -243,6 +243,20 @@ Language
 ### Release News
 
 <RouteEn author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
+## iFi audio
+
+### Download Hub
+
+<RouteEn author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" :paramsDesc="['product val', 'product id']"/>
+
+::: warning
+
+1.  Open <https://ifi-audio.com/download-hub> and the Network panel
+2.  Select the device and the corresponding serial number in the website and click Search
+3.  Find the last request named <https://ifi-audio.com/wp-admin/admin-ajax.php> in the Network panel, find out the val and id in the Payload panel, and fill in the url
+
+:::
 
 ## ImageMagick
 
@@ -423,8 +437,8 @@ Refer to [#minecraft](/en/game.html#minecraft)
 <RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
 
 | Mac OS | Windows |
-| - | - |
-| mac | windows |
+| ------ | ------- |
+| mac    | windows |
 
 </RouteEn>
 
@@ -459,6 +473,39 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### What's New
 
 <RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+
+## TradingView
+
+### Blog
+
+<RouteEn author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" :paramsDesc="['Language, see below, `en` as English by default']">
+
+Language
+
+| Id  | Language            |
+| --- | ------------------- |
+| en  | English             |
+| ru  | Русский             |
+| ja  | 日本語              |
+| es  | Español             |
+| tr  | Türkçe              |
+| ko  | 한국어              |
+| it  | Italiano            |
+| pt  | Português do Brasil |
+| de  | Deutsch             |
+| fr  | Français            |
+| pl  | Polski              |
+| id  | Bahasa Indonesia    |
+| my  | Bahasa Malaysia     |
+| tw  | 繁體                |
+| cn  | 简体                |
+| vi  | Tiếng Việt          |
+| th  | ภาษาไทย             |
+| sv  | Svenska             |
+| ar  | العربية             |
+| il  | Hebrew              |
+
+</RouteEn>
 
 ## Typora
 
