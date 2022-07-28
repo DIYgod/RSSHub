@@ -361,6 +361,35 @@
       }
     ]
   },
+  "78dm.net": {
+    "_name": "78动漫",
+    ".": [
+      {
+        "title": "新品速递",
+        "docs": "https://docs.rsshub.app/anime.html#_78-dong-man-xin-pin-su-di",
+        "source": [
+          "/news",
+          "/"
+        ]
+      },
+      {
+        "title": "精彩评测",
+        "docs": "https://docs.rsshub.app/anime.html#_78-dong-man-jing-cai-ping-ce",
+        "source": [
+          "/eval_list",
+          "/"
+        ]
+      },
+      {
+        "title": "新品速递",
+        "docs": "https://docs.rsshub.app/anime.html#_78-dong-man-hao-tie-tui-jian",
+        "source": [
+          "/ht_list",
+          "/"
+        ]
+      }
+    ]
+  },
   "7mmtv.tv": {
     "_name": "7mmtv.tv",
     ".": [
