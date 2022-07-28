@@ -1252,6 +1252,18 @@ category 列表：
 
 <Route author="plusmultiply0" example="/hhu/libNewsc" path="/hhu/libNewsc"/>
 
+## 河南财政金融学院
+
+### 河南财政金融学院
+
+<Route author="WenPeiTung" example="/hafu/news/ggtz" path="/hafu/news/:type?" radar="1" rssbud="1" :paramsDesc="['分类，见下表（默认为 `ggtz`)']">
+
+| 校内公告通知 | 教务处公告通知 | 招生就业处公告通知 |
+| ------ | ------- | --------- |
+| ggtz   | jwc     | zsjyc     |
+
+</Route>
+
 ## 河南大学
 
 ### 河南大学
@@ -1728,6 +1740,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 本科迎新
 
 <Route author="ret-1" example="/nju/admission" path="/nju/admission" />
+
+### 后勤集团
+
+<Route author="ret-1" example="/nju/hqjt" path="/nju/hqjt" />
 
 ## 南京工程学院
 
