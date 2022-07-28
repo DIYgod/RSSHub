@@ -1230,6 +1230,9 @@
     "/hackertalk/": [
         "hyoban"
     ],
+    "/hafu/news/:tpye?": [
+        "WenPeiTung"
+    ],
     "/hakkatv/news/:type?": [
         "TonyRL"
     ],
