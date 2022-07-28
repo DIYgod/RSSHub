@@ -291,6 +291,121 @@
     "/bigquant/collections": [
         "nczitzk"
     ],
+    "/bilibili/app/:id?": [
+        "nczitzk"
+    ],
+    "/bilibili/audio/:id": [
+        "LogicJake"
+    ],
+    "/bilibili/blackboard": [
+        "Qixingchen"
+    ],
+    "/bilibili/bangumi/:seasonid": [
+        "DIYgod"
+    ],
+    "/bilibili/bangumi/media/:mediaid": [
+        "DIYgod"
+    ],
+    "/bilibili/fav/:uid/:fid/:disableEmbed?": [
+        "Qixingchen"
+    ],
+    "/bilibili/followings/article/:uid": [
+        "woshiluo"
+    ],
+    "/bilibili/followings/dynamic/:uid/:disableEmbed?": [
+        "TigerCubDen"
+    ],
+    "/bilibili/followings/video/:uid/:disableEmbed?": [
+        "LogicJake"
+    ],
+    "/bilibili/link/news/:product": [
+        "Qixingchen"
+    ],
+    "/bilibili/live/area/:areaID/:order": [
+        "Qixingchen"
+    ],
+    "/bilibili/live/room/:roomID": [
+        "Qixingchen"
+    ],
+    "/bilibili/live/search/:key/:order": [
+        "Qixingchen"
+    ],
+    "/bilibili/mall/new/:category?": [
+        "DIYgod"
+    ],
+    "/bilibili/mall/ip/:id": [
+        "DIYgod"
+    ],
+    "/bilibili/manga/update/:comicid": [
+        "hoilc"
+    ],
+    "/bilibili/manga/followings/:uid/:limits?": [
+        "yindaheng98"
+    ],
+    "/bilibili/online/:disableEmbed?": [
+        "TigerCubDen"
+    ],
+    "/bilibili/partion/:tid/:disableEmbed?": [
+        "DIYgod"
+    ],
+    "/bilibili/partion/ranking/:tid/:days?/:disableEmbed?": [
+        "lengthmin"
+    ],
+    "/bilibili/popular/all": [
+        "ziminliu"
+    ],
+    "/bilibili/ranking/:rid?/:day?/:arc_type?/:disableEmbed?": [
+        "DIYgod"
+    ],
+    "/bilibili/readlist/:listid": [
+        "hoilc"
+    ],
+    "/bilibili/topic/:topic": [
+        "Qixingchen"
+    ],
+    "/bilibili/user/article/:uid": [
+        "lengthmin"
+    ],
+    "/bilibili/user/bangumi/:uid/:type?": [
+        "wdssmq"
+    ],
+    "/bilibili/user/channel/:uid/:cid/:disableEmbed?": [
+        "HenryQW"
+    ],
+    "/bilibili/user/coin/:uid/:disableEmbed?": [
+        "DIYgod"
+    ],
+    "/bilibili/user/dynamic/:uid/:disableEmbed?": [
+        "DIYgod",
+        "zytomorrow"
+    ],
+    "/bilibili/user/fav/:uid/:disableEmbed?": [
+        "DIYgod"
+    ],
+    "/bilibili/user/followers/:uid": [
+        "Qixingchen"
+    ],
+    "/bilibili/user/followings/:uid": [
+        "Qixingchen"
+    ],
+    "/bilibili/user/video/:uid/:disableEmbed?": [
+        "DIYgod"
+    ],
+    "/bilibili/video/danmaku/:bvid/:pid?": [
+        "Qixingchen"
+    ],
+    "/bilibili/video/page/:bvid/:disableEmbed?": [
+        "sxzz"
+    ],
+    "/bilibili/video/reply/:bvid": [
+        "Qixingchen"
+    ],
+    "/bilibili/vsearch/:kw/:order?/:disableEmbed?/:tid?": [
+        "Symty"
+    ],
+    "/bilibili/weekly/:disableEmbed?": [
+        "ttttmr"
+    ],
     "/biodiscover/:channel?": [
         "aidistan"
     ],
