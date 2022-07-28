@@ -760,7 +760,7 @@ IT・科学 tech_science
 
 ### 关注
 
-<Route author="nczitzk" example="/yicai/feed" path="/yicai/feed/:id?" :paramsDesc="['主题 id，可在对应主题页中找到，默认为一财早报']">
+<Route author="nczitzk" example="/yicai/feed/669" path="/yicai/feed/:id?" :paramsDesc="['主题 id，可在对应主题页中找到，默认为一财早报']">
 
 ::: tip 提示
 
