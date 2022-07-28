@@ -1256,7 +1256,7 @@ category 列表：
 
 ### 河南财政金融学院
 
-\<Route author="WenPeiTung" example="/hafu/news/ggtz" path="/hafu/news/:type?" radar="1" rssbud="1" :paramsDesc="\[' 分类，见下表（默认为"ggtz")',' 支持全局参数"limit"，默认为"10"']">
+<Route author="WenPeiTung" example="/hafu/news/ggtz" path="/hafu/news/:type?" radar="1" rssbud="1" :paramsDesc="['分类，见下表（默认为 `ggtz`)']">
 
 | 校内公告通知 | 教务处公告通知 | 招生就业处公告通知 |
 | ------ | ------- | --------- |
