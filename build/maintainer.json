@@ -3226,6 +3226,31 @@
     "/yaohuo/": [
         "nczitzk"
     ],
+    "/yicai/author/:id?": [
+        "nczitzk"
+    ],
+    "/yicai/brief": [
+        "sanmmm",
+        "nczitzk"
+    ],
+    "/yicai/feed/:id?": [
+        "nczitzk"
+    ],
+    "/yicai/headline": [
+        "nczitzk"
+    ],
+    "/yicai/latest": [
+        "nczitzk"
+    ],
+    "/yicai/news/:id?": [
+        "nczitzk"
+    ],
+    "/yicai/video/:id?": [
+        "nczitzk"
+    ],
+    "/yicai/vip/:id?": [
+        "nczitzk"
+    ],
     "/yomiuri/yomiuri/:category?": [
         "Arracc"
     ],
@@ -4081,7 +4106,6 @@
     "/zcool/top/:type": [],
     "/zcool/top": [],
     "/zcool/user/:uid": [],
-    "/yicai/brief": [],
     "/yidoutang/index": [],
     "/yidoutang/guide": [],
     "/yidoutang/mtest": [],
