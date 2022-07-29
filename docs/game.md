@@ -693,7 +693,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 新闻中心
 
-<Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类，见下表">
+<Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类，见下表']">
 
 | 全部  | 热门 | 新闻 | 公告 | 活动 | 赛事 | 优化 |
 | --- | -- | -- | -- | -- | -- | -- |
@@ -773,10 +773,11 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="wy916787036" example="/vgn" path="/vgn/:platform?" :paramsDesc="['平台，见下表，默认为全部']">
 
-| Switch   | PS4 | PC | Xbox |
-| -------- | --- | -- | ---- |
-| 1        | 2   | 3  | 4    |
-| </Route> |     |    |      |
+| Switch | PS4 | PC | Xbox |
+| ------ | --- | -- | ---- |
+| 1      | 2   | 3  | 4    |
+
+</Route>
 
 ## 游戏年轮
 
