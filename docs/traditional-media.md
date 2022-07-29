@@ -714,9 +714,111 @@ IT・科学 tech_science
 
 ## 第一财经
 
-### 直播区
+### 最新
 
-<Route author="sanmmm" example="/yicai/brief" path="/yicai/brief" />
+<Route author="nczitzk" example="/yicai/latest" path="/yicai/latest" />
+
+### 头条
+
+<Route author="nczitzk" example="/yicai/headline" path="/yicai/headline" />
+
+### VIP 频道
+
+<Route author="nczitzk" example="/yicai/vip/428" path="/yicai/vip/:id?" :paramsDesc="['频道 id，可在对应频道页中找到，默认为一元点金']" />
+
+### 新闻
+
+<Route author="nczitzk" example="/yicai/news" path="/yicai/news/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为新闻']" />
+
+| Id                     | 名称      |
+| ---------------------- | ------- |
+| gushi                  | A 股     |
+| kechuangban            | 科创板     |
+| hongguan               | 大政      |
+| jinrong                | 金融      |
+| quanqiushichang        | 海外市场    |
+| gongsi                 | 产经      |
+| shijie                 | 全球      |
+| kechuang               | 科技      |
+| quyu                   | 区域      |
+| comment                | 评论      |
+| dafengwenhua           | 商业人文    |
+| books                  | 阅读周刊    |
+| loushi                 | 地产      |
+| automobile             | 汽车      |
+| china_financial_herald | 对话陆家嘴   |
+| fashion                | 时尚      |
+| ad                     | 商业资讯    |
+| info                   | 资讯      |
+| jzfxb                  | 价值风向标   |
+| shuducaijing           | 数读财经    |
+| shujujiepan            | 数据解盘    |
+| shudushenghuo          | 数读生活    |
+| cbndata                | CBNData |
+| dtcj                   | DT 财经   |
+| xfsz                   | 消费数知    |
+
+### 关注
+
+<Route author="nczitzk" example="/yicai/feed/669" path="/yicai/feed/:id?" :paramsDesc="['主题 id，可在对应主题页中找到，默认为一财早报']">
+
+::: tip 提示
+
+全部主题词见 [此处](https://www.yicai.com/feed/alltheme)
+
+:::
+
+</Route>
+
+### 视听
+
+<Route author="nczitzk" example="/yicai/video" path="/yicai/video/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为视听']" />
+
+| Id                   | 名称             |
+| -------------------- | -------------- |
+| youliao              | 有料             |
+| appshipin            | 此刻             |
+| yicaisudi            | 速递             |
+| caishang             | 财商             |
+| shiji                | 史记             |
+| jinrigushi           | 今日股市           |
+| tangulunjin          | 谈股论金           |
+| gongsiyuhangye       | 公司与行业          |
+| cjyxx                | 财经夜行线          |
+| 6thtradingday        | 第六交易日          |
+| cjfw                 | 财经风味           |
+| chuangshidai         | 创时代            |
+| weilaiyaoqinghan     | 未来邀请函          |
+| tounaofengbao        | 头脑风暴           |
+| zhongguojingyingzhe  | 中国经营者          |
+| shichanglingjuli     | 市场零距离          |
+| huanqiucaijing       | 环球财经视界         |
+| zgjcqyjglsxftl       | 中国杰出企业家管理思想访谈录 |
+| jiemacaishang        | 解码财商           |
+| sxpl                 | 首席评论           |
+| zhongguojingjiluntan | 中国经济论坛         |
+| opinionleader        | 意见领袖           |
+| xinjinrong           | 解码新金融          |
+| diyidichan           | 第一地产           |
+| zhichedaren          | 智车达人           |
+| chuangtoufengyun     | 创投风云           |
+| chunxiangrensheng    | 醇享人生           |
+| diyishengyin         | 第一声音           |
+| sanliangboqianjin    | 财智双全           |
+| weilaiyaoqinghan     | 未来邀请函          |
+| zjdy                 | 主角 ▪ 大医        |
+| leye                 | 乐业之城           |
+| sanrenxing           | 价值三人行          |
+| yuandongli           | 中国源动力          |
+| pioneerzone          | 直击引领区          |
+
+### 正在
+
+<Route author="sanmmm nczitzk" example="/yicai/brief" path="/yicai/brief" />
+
+### 一财号
+
+<Route author="nczitzk" example="/yicai/author/100005663" path="/yicai/author/:id?" :paramsDesc="['作者 id，可在对应作者页中找到，默认为第一财经研究院']" />
 
 ## 东方网
 
