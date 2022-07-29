@@ -69,6 +69,16 @@ pageClass: routes
 
 </Route>
 
+## Penguin Random House
+
+### Book Lists
+
+<Route author="StevenRCE0" example="/penguin-random-house/the-read-down" path="/penguin-random-house/the-read-down" />
+
+### Articles
+
+<Route author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
+
 ## SoBooks
 
 ### 首页
