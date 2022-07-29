@@ -10403,6 +10403,13 @@
   },
   "qq.com": {
     "_name": "腾讯",
+    "egame": [
+      {
+        "title": "企鹅电竞直播间",
+        "docs": "https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo",
+        "source": "/:id"
+      }
+    ],
     "mp.weixin": [
       {
         "title": "微信公众号栏目",
@@ -10415,11 +10422,15 @@
         "source": "/mp/appmsgalbum"
       }
     ],
-    "egame": [
+    "pvp": [
       {
-        "title": "企鹅电竞直播间",
-        "docs": "https://docs.rsshub.app/live.html#qi-e-dian-jing-zhi-bo-jian-kai-bo",
-        "source": "/:id"
+        "title": "王者荣耀 - 新闻中心",
+        "docs": "https://docs.rsshub.app/game.html#wang-zhe-rong-yao",
+        "source": [
+          "/web201706/*",
+          "/"
+        ],
+        "target": "/tencent/pvp/newsindex/all"
       }
     ],
     "v": [
