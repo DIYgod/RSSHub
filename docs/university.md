@@ -903,11 +903,25 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ### 东北大学医学与生物信息工程学院
 
-<Route author="TennousuAthena" example="/neu/bmie/news" path="/neu/bmie/:type" :paramsDesc="['种类名']">
+<Route author="TennousuAthena" example="/neu/bmie/news" path="/neu/bmie/:type" :paramsDesc="['分类id 见下表']">
 
-| 学院新闻 | 学术科研 | 人才培养 | 国际交流 | 通知公告 | 本科生培养 | 研究生培养 | 本科生招募 | 研究生招募 | 党的建设 | 党委工作 | 工会工作 |   共青团工作 | 安全管理 | 校友风采 |
-| ---- | ---- | ---- | ---- | ---: | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| news | academic | talent_development | international_exchange | announcement | undergraduate_dev | postgraduate_dev  | undergraduate_recruit | postgraduate_recruit | CPC_build | CPC_work | union_work | CYL_work | security_management | alumni_style |
+| Id                     | 名称      |
+| ---------------------- | ------- |
+| news                | 学院新闻   |
+| academic            | 学术科研   |
+| talent_development  | 人才培养   |
+| international_exchange  | 国际交流   |
+| announcement        | 通知公告   |
+| undergraduate_dev   | 本科生培养 |
+| postgraduate_dev    | 研究生培养 |
+| undergraduate_recruit   | 本科生招募 |
+| postgraduate_recruit    | 研究生招募 |
+| CPC_build               | 党的建设   |
+| CPC_work                | 党委工作   |
+| union_work              | 工会工作   |
+| CYL_work                | 共青团工作 |
+| security_management     | 安全管理   |
+| alumni_style            | 校友风采   |
 
 </Route>
 
