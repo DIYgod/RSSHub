@@ -1557,6 +1557,12 @@
     "/independent/ps5-stock-uk": [
         "DIYgod"
     ],
+    "/infoq/recommend": [
+        "brilon"
+    ],
+    "/infoq/topic/:id": [
+        "brilon"
+    ],
     "/informs/:category?": [
         "Fatpandac"
     ],
@@ -3967,8 +3973,6 @@
     "/zucc/news/latest": [],
     "/zucc/cssearch/latest/:webVpn/:key": [],
     "/ccnu/career": [],
-    "/infoq/recommend": [],
-    "/infoq/topic/:id": [],
     "/checkee/:dispdate": [],
     "/matters/latest/:type?": [],
     "/matters/hot": [],
