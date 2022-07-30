@@ -659,7 +659,7 @@ Tag
 
 ### 话题
 
-<Route author="brilon" example="/infoq/topic/1" path="/infoq/topic/:id" :paramsDesc="['话题id，可在[InfoQ全部话题](https://www.infoq.cn/topics)页面找到URL里的话题id']" />
+<Route author="brilon" example="/infoq/topic/1" path="/infoq/topic/:id" :paramsDesc="['话题id，可在 [InfoQ全部话题](https://www.infoq.cn/topics) 页面找到URL里的话题id']" />
 
 ## IT 之家
 
