@@ -762,23 +762,19 @@ pageClass: routes
 
 ### 任务动态
 
-<Route author="nczitzk" example="/gov/cmse/fxrw/kjzthhxcrw/rwdt" path="/gov/cmse/fxrw/:id/rwdt" :paramsDesc="['任务 id，可在对应任务页 URL 中找到']" />
+<Route author="nczitzk" example="/gov/cmse/fxrw/wtfx/rwdt" path="/gov/cmse/fxrw/:id/:category" :paramsDesc="['任务 id，可在对应任务页 URL 中找到', '分类 id，见下表，可在对应任务页 URL 中找到']">
 
-### 任务综合新闻
+::: tip 提示
 
-<Route author="nczitzk" example="/gov/cmse/fxrw/kjzthhxcrw/zhxw" path="/gov/cmse/fxrw/:id/zhxw" :paramsDesc="['任务 id，可在对应任务页 URL 中找到']" />
+下表分类可能并不完整。请查看各飞行任务详情页获得完整分类。
 
-### 任务视频
+:::
 
-<Route author="nczitzk" example="/gov/cmse/fxrw/kjzthhxcrw/sp" path="/gov/cmse/fxrw/:id/sp" :paramsDesc="['任务 id，可在对应任务页 URL 中找到']" />
+| 任务动态 | 综合新闻 | 视频 | 图片新闻 | 媒体聚焦 |
+| ---- | ---- | -- | ---- | ---- |
+| rwdt | zhxw | sp | tpxw | mtjj |
 
-### 任务图片新闻
-
-<Route author="nczitzk" example="/gov/cmse/fxrw/kjzthhxcrw/tpxw" path="/gov/cmse/fxrw/:id/tpxw" :paramsDesc="['任务 id，可在对应任务页 URL 中找到']" />
-
-### 任务媒体聚焦
-
-<Route author="nczitzk" example="/gov/cmse/fxrw/kjzthhxcrw/mtjj" path="/gov/cmse/fxrw/:id/mtjj" :paramsDesc="['任务 id，可在对应任务页 URL 中找到']" />
+</Route>
 
 ### 空间科学
 
