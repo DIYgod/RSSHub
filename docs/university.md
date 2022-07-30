@@ -891,13 +891,51 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ## 东北大学
 
-### 东北大学新闻网
+### 新闻网
 
-<Route author="JeasonLau" example="/neu/news/ddyw" path="/neu/news/:type" :paramsDesc="['种类名']">
+<Route author="JeasonLau" example="/neu/news/ddyw" path="/neu/news/:type" :paramsDesc="['种类名，见下表']">
 
-| 东大要闻 | 媒体东大 | 通知公告 | 新闻纵横 | 人才培养 | 学术科研 | 英文新闻 | 招生就业 | 考研出国 | 校园文学 | 校友风采 | 时事热点 | 教育前沿 | 文化体育 | 最新科技 |
-| ---- | ---- | ---- | ---- | ---: | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| ddyw | mtdd | tzgg | xwzh | rcpy | xsky | 217  | zsjy | kycg | xywx | xyfc | ssrd | jyqy | whty | zxkj |
+| 种类名  | 参数   |
+| ---- | ---- |
+| 东大要闻 | ddyw |
+| 媒体东大 | mtdd |
+| 通知公告 | tzgg |
+| 新闻纵横 | xwzh |
+| 人才培养 | rcpy |
+| 学术科研 | xsky |
+| 英文新闻 | 217  |
+| 招生就业 | zsjy |
+| 考研出国 | kycg |
+| 校园文学 | xywx |
+| 校友风采 | xyfc |
+| 时事热点 | ssrd |
+| 教育前沿 | jyqy |
+| 文化体育 | whty |
+| 最新科技 | zxkj |
+
+</Route>
+
+### 医学与生物信息工程学院
+
+<Route author="TennousuAthena" example="/neu/bmie/news" path="/neu/bmie/:type" :paramsDesc="['分类 id 见下表']">
+
+| Id                     | 名称    |
+| ---------------------- | ----- |
+| news                   | 学院新闻  |
+| academic               | 学术科研  |
+| talent_development     | 人才培养  |
+| international_exchange | 国际交流  |
+| announcement           | 通知公告  |
+| undergraduate_dev      | 本科生培养 |
+| postgraduate_dev       | 研究生培养 |
+| undergraduate_recruit  | 本科生招募 |
+| postgraduate_recruit   | 研究生招募 |
+| CPC_build              | 党的建设  |
+| CPC_work               | 党委工作  |
+| union_work             | 工会工作  |
+| CYL_work               | 共青团工作 |
+| security_management    | 安全管理  |
+| alumni_style           | 校友风采  |
 
 </Route>
 
