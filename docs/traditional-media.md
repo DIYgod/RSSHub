@@ -961,7 +961,7 @@ Type 栏目：
 
 ### 华尔街见闻
 
-<Route author="conanjunn" example="/wallstreetcn/news/global" path="/wallstreetcn/news/global" />
+<Route author="conanjunn nczitzk" example="/wallstreetcn/news/global" path="/wallstreetcn/news/global" />
 
 ### 实时快讯
 
@@ -972,6 +972,10 @@ Type 栏目：
 | global | a-stock | us-stock | hk-stock | forex | commodity | financing |
 
 </Route>
+
+### 最热文章
+
+<Route author="nczitzk" example="/wallstreetcn/hot" path="/wallstreetcn/hot/:period?" :paramsDesc="['时期，可选 `day` 即 当日 或 `week` 即 当周，默认为当日']"/>
 
 ## 华尔街日报 The Wall Street Journal (WSJ)
 
