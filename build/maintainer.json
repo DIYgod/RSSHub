@@ -2906,6 +2906,9 @@
     "/trow/portal": [
         "shiningdracon"
     ],
+    "/twitter/collection/:uid/:collectionId/:routeParams?": [
+        "TonyRL"
+    ],
     "/twitter/followings/:id/:routeParams?": [
         "DIYgod"
     ],
