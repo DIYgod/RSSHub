@@ -752,7 +752,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 推文收集
 
-<Route author="TonyRL" example="/collection/DIYgod/1527857429467172864" path="/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['用户名，需与生成的 Twitter token 对应', '推文收集 ID，可从 URL 获得']" radar="1" rssbud="1" selfhost="1"/>
+<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['用户名，需与生成的 Twitter token 对应', '推文收集 ID，可从 URL 获得']" radar="1" rssbud="1" selfhost="1"/>
 
 ::: warning 注意
 
