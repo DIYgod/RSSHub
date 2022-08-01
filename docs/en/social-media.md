@@ -389,7 +389,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### Collection
 
-<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['User name, should match the generated token', 'Collection ID, can be found in URL']" radar="1" rssbud="1" selfhost="1"/>
+<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['User name, should match the generated token', 'Collection ID, can be found in URL', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1"/>
 
 ::: warning
 
