@@ -305,6 +305,10 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <RouteEn author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" :paramsDesc="['country, Chines(cn) and US(us)', 'Username, available at the URL of the LeetCode user homepage']"/>
 
+### Daily Question
+
+<RouteEn author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/en"/>
+
 ## Linux Patchwork
 
 ### Patch Comments

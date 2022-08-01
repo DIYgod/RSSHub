@@ -902,9 +902,17 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="Lava-Swimmer noname1897" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" :paramsDesc="['搜索关键字']" supportBT="1" radar="1"/>
 
+### 用户
+
+<Route author="Lava-Swimmer noname1897" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" :paramsDesc="['用户名']" supportBT="1" radar="1"/>
+
 ### Sukebei 搜索结果
 
 <Route author="Lava-Swimmer noname1897" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" :paramsDesc="['搜索关键字']" supportBT="1" radar="1"/>
+
+### Sukebei 用户
+
+<Route author="Lava-Swimmer noname1897" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" :paramsDesc="['用户名']" supportBT="1" radar="1"/>
 
 ## OneJAV
 
@@ -1435,11 +1443,11 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="bao1991213" example="/yyets/today" path="/yyets/today" radar="1" rssbud="1"/>
 
-## 色花堂中文论坛
+## 色花堂
 
 ### 分区帖子
 
-<Route author="qiwihui junfengP" example="/dsndsht23/36/368" path="/dsndsht23/:subforumid?/:type?" supportBT="1" :paramsDesc="['版块 id 或板块名称（见下表）, 为空默认高清中文字幕', '类型 id, 可在分区类型过滤后的 URL 中找到']">
+<Route author="qiwihui junfengP nczitzk" example="/dsndsht23/36/368" path="/dsndsht23/:subforumid?/:type?" supportBT="1" :paramsDesc="['版块 id 或板块名称（见下表）, 为空默认高清中文字幕', '类型 id, 可在分区类型过滤后的 URL 中找到']">
 
 **原创 BT 电影**
 
