@@ -2906,6 +2906,32 @@
     "/trow/portal": [
         "shiningdracon"
     ],
+    "/twitter/followings/:id/:routeParams?": [
+        "DIYgod"
+    ],
+    "/twitter/keyword/:keyword/:routeParams?/:limit?": [
+        "DIYgod",
+        "yindaheng98",
+        "Rongronggg9"
+    ],
+    "/twitter/likes/:id/:routeParams?": [
+        "xyqfer"
+    ],
+    "/twitter/list/:id/:name/:routeParams?": [
+        "xyqfer"
+    ],
+    "/twitter/media/:id/:routeParams?": [
+        "yindaheng98",
+        "Rongronggg9"
+    ],
+    "/twitter/trends/:woeid?": [
+        "sakamossan"
+    ],
+    "/twitter/user/:id/:routeParams?": [
+        "DIYgod",
+        "yindaheng98",
+        "Rongronggg9"
+    ],
     "/twreporter/category/:cid": [
         "emdoe"
     ],
@@ -3483,13 +3509,6 @@
     "/zcfy/hot": [],
     "/jinritoutiao/keyword/:keyword": [],
     "/disqus/posts/:forum": [],
-    "/twitter/user/:id/:routeParams?": [],
-    "/twitter/list/:id/:name/:routeParams?": [],
-    "/twitter/likes/:id/:routeParams?": [],
-    "/twitter/followings/:id/:routeParams?": [],
-    "/twitter/keyword/:keyword/:routeParams?/:limit?": [],
-    "/twitter/trends/:woeid?": [],
-    "/twitter/media/:id/:routeParams?": [],
     "/geektime/column/:cid": [],
     "/geektime/news": [],
     "/jiemian/list/:cid": [],

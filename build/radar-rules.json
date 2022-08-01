@@ -12528,6 +12528,41 @@
       }
     ]
   },
+  "twitter.com": {
+    "_name": "Twitter",
+    ".": [
+      {
+        "title": "用户时间线",
+        "docs": "https://docs.rsshub.app/social-media.html#twitter",
+        "source": "/:id"
+      },
+      {
+        "title": "用户媒体时间线",
+        "docs": "https://docs.rsshub.app/social-media.html#twitter",
+        "source": "/:id/media"
+      },
+      {
+        "title": "用户关注时间线",
+        "docs": "https://docs.rsshub.app/social-media.html#twitter",
+        "source": "/:id"
+      },
+      {
+        "title": "用户喜欢列表",
+        "docs": "https://docs.rsshub.app/social-media.html#twitter",
+        "source": "/:id"
+      },
+      {
+        "title": "列表时间线",
+        "docs": "https://docs.rsshub.app/social-media.html#twitter",
+        "source": "/:id/lists/:name"
+      },
+      {
+        "title": "关键词",
+        "docs": "https://docs.rsshub.app/social-media.html#twitter",
+        "source": "/search"
+      }
+    ]
+  },
   "twreporter.org": {
     "_name": "報導者",
     ".": [
@@ -14245,36 +14280,6 @@
         "docs": "https://docs.rsshub.app/social-media.html#pixiv",
         "source": "/bookmark_new_illust.php",
         "target": "/pixiv/user/illustfollows"
-      }
-    ]
-  },
-  "twitter.com": {
-    "_name": "Twitter",
-    ".": [
-      {
-        "title": "用户时间线",
-        "docs": "https://docs.rsshub.app/social-media.html#twitter",
-        "source": "/:id"
-      },
-      {
-        "title": "用户关注时间线",
-        "docs": "https://docs.rsshub.app/social-media.html#twitter",
-        "source": "/:id"
-      },
-      {
-        "title": "用户喜欢列表",
-        "docs": "https://docs.rsshub.app/social-media.html#twitter",
-        "source": "/:id"
-      },
-      {
-        "title": "列表时间线",
-        "docs": "https://docs.rsshub.app/social-media.html#twitter",
-        "source": "/:id/lists/:name"
-      },
-      {
-        "title": "关键词",
-        "docs": "https://docs.rsshub.app/social-media.html#twitter",
-        "source": "/search"
       }
     ]
   },
