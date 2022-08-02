@@ -802,9 +802,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/cmse/ztbd/xwfbh" path="/gov/cmse/ztbd/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
 
-| 新闻发布会 | 学术大会 | 标准 |
-| ----- | ---- | -- |
-| xwfdh | xsdh | bz |
+| 新闻发布会 | 学术大会 | 标准 | 新闻专题 |
+| ----- | ---- | -- | ---- |
+| xwfdh | xsdh | bz | xwzt |
 
 </Route>
 
