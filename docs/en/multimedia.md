@@ -101,6 +101,10 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 </RouteEn>
 
+### Author
+
+<RouteEn author="TonyRL" example="/91porn/author/2d6d2iWm4vVCwqujAZbSrKt2QJCbbaObv9HQ21Zo8wGJWudWBg" path="/91porn/author/:uid/:lang?" :paramsDesc="['Author ID, can be found in URL', 'Language, see above, `en_US` by default ']" radar="1" rssbud="1" anticrawler="1" />
+
 ## 99% Invisible
 
 ### Transcript
