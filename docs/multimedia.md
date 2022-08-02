@@ -241,6 +241,10 @@ pageClass: routes
 
 </Route>
 
+### 作者
+
+<Route author="TonyRL" example="/91porn/author/2d6d2iWm4vVCwqujAZbSrKt2QJCbbaObv9HQ21Zo8wGJWudWBg" path="/91porn/author/:uid/:lang?" :paramsDesc="['作者 ID，可在 URL 中找到', '语言，见上表，默认 `en_US`']"  radar="1" rssbud="1" anticrawler="1" />
+
 ## 99% Invisible
 
 ### Transcript
