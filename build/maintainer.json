@@ -107,6 +107,9 @@
     "/8world/:category?": [
         "nczitzk"
     ],
+    "/91porn/author/:uid/:lang?": [
+        "TonyRL"
+    ],
     "/91porn/:lang?": [
         "TonyRL"
     ],
