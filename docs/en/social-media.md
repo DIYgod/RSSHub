@@ -387,6 +387,18 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 <RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" :paramsDesc="['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']" radar="1" rssbud="1"/>
 
+### Collection
+
+<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['User name, should match the generated token', 'Collection ID, can be found in URL', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1"/>
+
+::: warning
+
+This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+
+:::
+
+</RouteEn>
+
 ## Vimeo
 
 ### User Profile
