@@ -1170,6 +1170,28 @@
       }
     ]
   },
+  "baijingapp.com": {
+    "_name": "白鲸出海",
+    ".": [
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/new-media.html#bai-jing-chu-hai",
+        "source": [
+          "/article",
+          "/"
+        ],
+        "target": "/baijing"
+      },
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/new-media.html#bai-jing-chu-hai",
+        "source": [
+          "/article",
+          "/"
+        ]
+      }
+    ]
+  },
   "bandcamp.com": {
     "_name": "Bandcamp",
     ".": [
@@ -14849,17 +14871,6 @@
         "title": "search",
         "docs": "https://docs.rsshub.app/game.html#steam",
         "source": "/search/"
-      }
-    ]
-  },
-  "baijingapp.com": {
-    "_name": "白鲸出海",
-    "www": [
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/new-media.html#bai-jing-chu-hai",
-        "source": "",
-        "target": "/baijing"
       }
     ]
   },

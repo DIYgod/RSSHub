@@ -267,6 +267,9 @@
     "/audiobar/latest": [
         "zxzhuty"
     ],
+    "/baijing/:type?": [
+        "nczitzk"
+    ],
     "/bandcamp/tag/:tag?": [
         "nczitzk"
     ],
@@ -4347,7 +4350,6 @@
     "/yahoo-news/:region/:category?": [],
     "/yahoo-jp-tv/:query": [],
     "/yahoo-author/:author": [],
-    "/baijing": [],
     "/ddrk/update/:name/:season?": [],
     "/ddrk/tag/:tag": [],
     "/ddrk/category/:category": [],
