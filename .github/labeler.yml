@@ -7,7 +7,7 @@
 
 core enhancement:
 - lib/routes/index.js
-- any: ['lib/**', '!lib/router.js', '!lib/routes/**', '!lib/v2/**']
+- any: ['lib/**', '!lib/radar-rules.js', '!lib/router.js', '!lib/routes/**', '!lib/v2/**']
 
 dependencies:
 - yarn.lock
