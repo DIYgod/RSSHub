@@ -758,6 +758,84 @@ pageClass: routes
 
 </Route>
 
+## 中国载人航天
+
+### 综合新闻
+
+<Route author="nczitzk" example="/gov/cmse/xwzx/zhxw" path="/gov/cmse/xwzx/zhxw" />
+
+### 研制进展
+
+<Route author="nczitzk" example="/gov/cmse/xwzx/yzjz" path="/gov/cmse/xwzx/yzjz" />
+
+### 官方公告
+
+<Route author="nczitzk" example="/gov/cmse/gfgg" path="/gov/cmse/gfgg" />
+
+### 飞行任务
+
+<Route author="nczitzk" example="/gov/cmse/fxrw" path="/gov/cmse/fxrw" />
+
+### 任务动态
+
+<Route author="nczitzk" example="/gov/cmse/fxrw/wtfx/rwdt" path="/gov/cmse/fxrw/:id/:category" :paramsDesc="['任务 id，可在对应任务页 URL 中找到', '分类 id，见下表，可在对应任务页 URL 中找到']">
+
+::: tip 提示
+
+下表分类可能并不完整。请查看各飞行任务详情页获得完整分类。
+
+:::
+
+| 任务动态 | 综合新闻 | 视频 | 图片新闻 | 媒体聚焦 |
+| ---- | ---- | -- | ---- | ---- |
+| rwdt | zhxw | sp | tpxw | mtjj |
+
+</Route>
+
+### 空间科学
+
+<Route author="nczitzk" example="/gov/cmse/kjkx/kjkxyjyyy" path="/gov/cmse/kjkx/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 空间科学研究与应用 | 航天技术试验 | 航天医学实验 |
+| --------- | ------ | ------ |
+| kjkxyjyyy | htjssy | htyxsy |
+
+</Route>
+
+### 国际合作
+
+<Route author="nczitzk" example="/gov/cmse/gjhz" path="/gov/cmse/gjhz" />
+
+### 环球视野
+
+<Route author="nczitzk" example="/gov/cmse/hqsy/zxdta" path="/gov/cmse/hqsy/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 最新动态  | 美国 | 俄罗斯 | 欧洲 | 日本 | 印度 | 领域动态 |
+| ----- | -- | --- | -- | -- | -- | ---- |
+| zxdta | mg | els | oz | rb | yd | lydt |
+
+</Route>
+
+### 专题报道
+
+<Route author="nczitzk" example="/gov/cmse/ztbd/xwfbh" path="/gov/cmse/ztbd/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 新闻发布会 | 学术大会 | 标准 | 新闻专题 |
+| ----- | ---- | -- | ---- |
+| xwfdh | xsdh | bz | xwzt |
+
+</Route>
+
+### 科普教育
+
+<Route author="nczitzk" example="/gov/cmse/kpjy/kphd" path="/gov/cmse/kpjy/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 科普活动 | 太空课堂 | 航天知识 |
+| ---- | ---- | ---- |
+| kphd | tkkt | ttzs |
+
+</Route>
+
 ## 中国证券监督管理委员会
 
 ### 发审委公告
