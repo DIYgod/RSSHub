@@ -102,7 +102,7 @@
     "instagram-private-api": "1.45.3",
     "ioredis": "5.2.2",
     "ip-regex": "4.3.0",
-    "is-localhost-ip": "1.4.0",
+    "is-localhost-ip": "2.0.0",
     "jsdom": "20.0.0",
     "json-bigint": "1.0.0",
     "json5": "2.2.1",
