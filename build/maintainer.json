@@ -2429,6 +2429,9 @@
     "/pts/dailynews": [
         "nczitzk"
     ],
+    "/pts/live/:id?": [
+        "nczitzk"
+    ],
     "/pts/opinion": [
         "nczitzk"
     ],
