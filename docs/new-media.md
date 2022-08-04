@@ -1444,9 +1444,19 @@ Supported sub-sites:
 
 ## 白鲸出海
 
-### 首页最新帖子
+### 最新
 
-<Route author="jeffcottLu" example="/baijing" path="/baijing"></Route>
+<Route author="jeffcottLu nczitzk" example="/baijing" path="/baijing" />
+
+### 资讯
+
+<Route author="nczitzk" example="/baijing/1" path="/baijing/:type?" :paramsDesc="['分类 id，见下表，默认为最新文章']">
+
+| 最新文章 | 7×24h | 干货 | 专栏 | 手游 | 跨境电商 | 投融资 | 数据报告 | 智能手机 | 活动 |
+| ---- | ----- | -- | -- | -- | ---- | --- | ---- | ---- | -- |
+|      | 1     | 2  | 4  | 3  | 5    | 10  | 9    | 7    | 6  |
+
+</Route>
 
 ## 百度知道日报
 

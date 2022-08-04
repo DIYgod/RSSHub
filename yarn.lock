@@ -7942,10 +7942,10 @@ is-lambda@^1.0.1:
   resolved "https://registry.yarnpkg.com/is-lambda/-/is-lambda-1.0.1.tgz#3d9877899e6a53efc0160504cde15f82e6f061d5"
   integrity sha512-z7CMFGNrENq5iFB9Bqo64Xk6Y9sg+epq1myIcdHaGnbMTYOxvzsEtdYqQUylB7LxfkvgrrjP32T6Ywciio9UIQ==
 
-is-localhost-ip@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/is-localhost-ip/-/is-localhost-ip-1.4.0.tgz#dd66aaabcbb5dbbc943e00adad5f715d2c3b3a1d"
-  integrity sha512-cN7SzlY7BVxSeoJu5equjsZaKSgD4HCfXrTwu0Jgbq5BbT1BU+D7Lyi/l1KO8H0un0JTlxcQaT/GWVapu+DIDg==
+is-localhost-ip@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/is-localhost-ip/-/is-localhost-ip-2.0.0.tgz#c2bf11faa0973657fd6e29e4e848348aeb09a1cd"
+  integrity sha512-vlgs2cSgMOfnKU8c1ewgKPyum9rVrjjLLW2HBdL5i0iAJjOs8NY55ZBd/hqUTaYR0EO9CKZd3hVSC2HlIbygTQ==
 
 is-negative-zero@^2.0.2:
   version "2.0.2"
@@ -11559,10 +11559,10 @@ puppeteer-extra@3.3.4:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@15.5.0:
-  version "15.5.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-15.5.0.tgz#446e01547ba0f47c37ac2148e5333433b4ecb371"
-  integrity sha512-+vZPU8iBSdCx1Kn5hHas80fyo0TiVyMeqLGv/1dygX2HKhAZjO9YThadbRTCoTYq0yWw+w/CysldPsEekDtjDQ==
+puppeteer@16.0.0:
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-16.0.0.tgz#9efb6cdb57e3e51cf060a33f6289e88200dd4672"
+  integrity sha512-FgSe21IHNHkqv1SiJiob4ANsxVujcINa4p3MaDEMyoZsocbgSgwYE0c9lnF8eoinw4id3vx4DOXwhFdOOwVlDg==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
@@ -11575,7 +11575,7 @@ puppeteer@15.5.0:
     rimraf "3.0.2"
     tar-fs "2.1.1"
     unbzip2-stream "1.4.3"
-    ws "8.8.0"
+    ws "8.8.1"
 
 q@^1.1.2:
   version "1.5.1"
@@ -14677,10 +14677,10 @@ write-file-atomic@^4.0.1:
     imurmurhash "^0.1.4"
     signal-exit "^3.0.7"
 
-ws@8.8.0:
-  version "8.8.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.0.tgz#8e71c75e2f6348dbf8d78005107297056cb77769"
-  integrity sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==
+ws@8.8.1, ws@^8.8.0:
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.1.tgz#5dbad0feb7ade8ecc99b830c1d77c913d4955ff0"
+  integrity sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==
 
 ws@^5.2.0:
   version "5.2.3"
@@ -14695,11 +14695,6 @@ ws@^6.2.1:
   integrity sha512-zmhltoSR8u1cnDsD43TX59mzoMZsLKqUweyYBAIvTngR3shc0W6aOZylZmq/7hqyVxPdi+5Ud2QInblgyE72fw==
   dependencies:
     async-limiter "~1.0.0"
-
-ws@^8.8.0:
-  version "8.8.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.1.tgz#5dbad0feb7ade8ecc99b830c1d77c913d4955ff0"
-  integrity sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==
 
 wuzzy@^0.1.4:
   version "0.1.8"
