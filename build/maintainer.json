@@ -2608,6 +2608,9 @@
     "/secnews/index": [
         "kaiili"
     ],
+    "/seekingalpha/:symbol/:category?": [
+        "TonyRL"
+    ],
     "/segmentfault/channel/:name": [
         "LogicJake",
         "Fatpandac"

@@ -6312,6 +6312,12 @@
                     }
                     return `/sdu/sc/${type}`;
                 } } ] },
+  "seekingalpha.com":{ _name:"Seeking Alpha",
+    ".":[ { title:"Summary",
+        docs:"https://docs.rsshub.app/en/finance.html#seeking-alpha",
+        source:[ "/symbol/:symbol/:category",
+          "/symbol/:symbol/earnings/:category" ],
+        target:"/seekingalpha/:symbol/:category" } ] },
   "segmentfault.com":{ _name:"SegmentFault",
     ".":[ { title:"频道",
         docs:"https://docs.rsshub.app/programming.html#segmentfault",
