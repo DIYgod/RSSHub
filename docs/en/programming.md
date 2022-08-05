@@ -307,7 +307,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### Daily Question
 
-<RouteEn author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/en"/>
+<RouteEn author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" :paramsDesc="['site, Chines(cn) and Engligh(en)']"/>
 
 ## Linux Patchwork
 
