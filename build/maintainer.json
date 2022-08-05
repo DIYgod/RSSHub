@@ -1869,11 +1869,14 @@
     "/learnku/:community/:category?": [
         "kayw-geek"
     ],
-    "/leetcode/dailyquestion/en": [
+    "/leetcode/articles": [
+        "LogicJake"
+    ],
+    "/leetcode/dailyquestion/:lang": [
         "NavePnow"
     ],
-    "/leetcode/dailyquestion/cn": [
-        "NavePnow"
+    "/leetcode/submission/:country/:user": [
+        "NathanDai"
     ],
     "/leiphone/leiphone": [
         "vlcheng"
@@ -3989,7 +3992,6 @@
     "/aisixiang/column/:id": [],
     "/aisixiang/ranking/:type?/:range?": [],
     "/aisixiang/thinktank/:name/:type?": [],
-    "/leetcode/articles": [],
     "/leetcode/submission/us/:user": [],
     "/leetcode/submission/cn/:user": [],
     "/xiaomieu/releases": [],

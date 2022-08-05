@@ -8025,6 +8025,54 @@
       }
     ]
   },
+  "leetcode.com": {
+    "_name": "LeetCode",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/programming.html#leetcode",
+        "source": [
+          "/articles"
+        ],
+        "target": "/leetcode/articles"
+      },
+      {
+        "title": "打卡",
+        "docs": "https://docs.rsshub.app/programming.html#leetcode",
+        "source": [
+          "/:user"
+        ]
+      },
+      {
+        "title": "每日一题",
+        "docs": "https://docs.rsshub.app/programming.html#leetcode",
+        "source": [
+          "/"
+        ],
+        "target": "/leetcode/dailyquestion/en"
+      }
+    ]
+  },
+  "leetcode.cn": {
+    "_name": "LeetCode",
+    ".": [
+      {
+        "title": "打卡",
+        "docs": "https://docs.rsshub.app/programming.html#leetcode",
+        "source": [
+          "/:user"
+        ]
+      },
+      {
+        "title": "每日一题",
+        "docs": "https://docs.rsshub.app/programming.html#leetcode",
+        "source": [
+          "/"
+        ],
+        "target": "/leetcode/dailyquestion/cn"
+      }
+    ]
+  },
   "leiphone.com": {
     "_name": "雷峰网",
     ".": [

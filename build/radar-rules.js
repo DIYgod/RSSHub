@@ -4331,6 +4331,36 @@
         docs:"https://docs.rsshub.app/bbs.html#learnku",
         source:[ "/:community" ],
         target:"/learnku/:community" } ] },
+  "leetcode.com":{ _name:"LeetCode",
+    ".":[ { title:"文章",
+        docs:"https://docs.rsshub.app/programming.html#leetcode",
+        source:[ "/articles" ],
+        target:"/leetcode/articles" },
+      { title:"打卡",
+        docs:"https://docs.rsshub.app/programming.html#leetcode",
+        source:[ "/:user" ],
+        target:(params) => {
+                    if (params.user !== 'articles') {
+                        return `/leetcode/submission/us/:user`;
+                    }
+                } },
+      { title:"每日一题",
+        docs:"https://docs.rsshub.app/programming.html#leetcode",
+        source:[ "/" ],
+        target:"/leetcode/dailyquestion/en" } ] },
+  "leetcode.cn":{ _name:"LeetCode",
+    ".":[ { title:"打卡",
+        docs:"https://docs.rsshub.app/programming.html#leetcode",
+        source:[ "/:user" ],
+        target:(params) => {
+                    if (params.user !== 'articles') {
+                        return `/leetcode/submission/cn/:user`;
+                    }
+                } },
+      { title:"每日一题",
+        docs:"https://docs.rsshub.app/programming.html#leetcode",
+        source:[ "/" ],
+        target:"/leetcode/dailyquestion/cn" } ] },
   "leiphone.com":{ _name:"雷峰网",
     ".":[ { title:"最新文章",
         docs:"https://docs.rsshub.app/new-media.html#lei-feng-wang-zui-xin-wen-zhang",
