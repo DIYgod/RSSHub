@@ -149,6 +149,12 @@
     "/acs/journal/:id": [
         "nczitzk"
     ],
+    "/agefans/detail/:id": [
+        "s2marine"
+    ],
+    "/agefans/update": [
+        "nczitzk"
+    ],
     "/agirls/topic/:topic": [
         "TonyRL"
     ],
@@ -4482,8 +4488,6 @@
     "/hnust/chem": [],
     "/hnust/graduate/:type?": [],
     "/swjtu/tl/news": [],
-    "/agefans/detail/:id": [],
-    "/agefans/update": [],
     "/checkra1n/releases": [],
     "/sckjt/news/:type?": [],
     "/jdlingyu/:type": [],
