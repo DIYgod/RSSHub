@@ -438,7 +438,7 @@ pageClass: routes
 
 ### 板块
 
-<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块','排序']">
+<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块','排序']" radar="1">
 
 板块 (更多板块请自行[查看]("http://www.2cycd.com/"))
 
