@@ -434,6 +434,26 @@ pageClass: routes
 
 <Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
 
+## 二次元虫洞
+
+### 板块
+
+<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块', '排序']" radar="1">
+
+板块（更多板块请自行 [查看](http://www.2cycd.com)）
+
+| 音乐下载（默认） | 动漫下载 | 游戏下载 |
+| -------- | ---- | ---- |
+| 43       | 53   | 42   |
+
+排序
+
+| 发布时间排序（默认） | 回复／查看   | 查看    |
+| ---------- | ------- | ----- |
+| dateline   | replies | views |
+
+</Route>
+
 ## 光谷社区
 
 ### 子论坛
