@@ -582,6 +582,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/mohw/clarification" path="/mohw/clarification"/>
 
+## 太原市人民政府
+
+### 太原市人力资源和社会保障局政府公开信息
+
+<Route author="2PoL" example="/gov/taiyuan/rsj/gggs" path="/gov/taiyuan/rsj/:caty/:page?" :paramsDesc="['信息类别', '页码']">
+
+| 工作动态 | 太原新闻 | 通知公告 | 县区动态 | 国内动态 | 图片新闻 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| gzdt | tyxw | gggs | xqdt | gndt | tpxw |
+
+</Route>
+
 ## 武汉东湖新技术开发区
 
 ### 新闻中心
