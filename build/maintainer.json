@@ -1295,8 +1295,17 @@
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
     ],
+    "/gov/guangdong/tqyb/tfxtq": [
+        "Fatpandac"
+    ],
+    "/gov/guangdong/tqyb/sncsyjxh": [
+        "Fatpandac"
+    ],
     "/gov/hebei/czt/xwdt/:category?": [
         "nczitzk"
+    ],
+    "/gov/huizhou/zwgk/:category?": [
+        "Fatpandac"
     ],
     "/gov/shaanxi/kjt/:id?": [
         "nczitzk"
@@ -1316,17 +1325,11 @@
     "/gov/shanghai/wsjkw/yqtb": [
         "zcf0508"
     ],
-    "/gov/guangdong/tqyb/tfxtq": [
-        "Fatpandac"
-    ],
-    "/gov/guangdong/tqyb/sncsyjxh": [
-        "Fatpandac"
-    ],
-    "/gov/huizhou/zwgk/:category?": [
-        "Fatpandac"
-    ],
     "/gov/sichuan/deyang/govpulicinfo/:countyName": [
         "zytomorrow"
+    ],
+    "/gov/taiyuan/rsj/:caty/:page?": [
+        "2PoL"
     ],
     "/gov/xuzhou/hrss/:category?": [
         "nczitzk"
