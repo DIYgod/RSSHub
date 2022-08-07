@@ -51,6 +51,23 @@
         docs:"https://docs.rsshub.app/bbs.html#19-lou-tou-tiao",
         source:[ "/" ],
         target:"/19lou/jiaxing" } ] },
+  "2cycd.com":{ _name:"二次元虫洞",
+    ".":[ { title:"板块",
+        docs:"https://docs.rsshub.app/bbs.html#er-ci-yuan-chong-dong",
+        source:"/:path",
+        target:(params, url) => {
+                    let pid, sort;
+                    const static_matched = params.path.match(/forum-(\d+)-\d+.html/);
+                    if (static_matched) {
+                        pid = static_matched[1];
+                    } else if (params.path === 'forum.php') {
+                        pid = new URL(url).searchParams.get('fid');
+                        sort = new URL(url).searchParams.get('orderby');
+                    } else {
+                        return false;
+                    }
+                    return `/2cycd/${pid}/${sort ? sort : 'dateline'}`;
+                } } ] },
   "35photo.pro":{ _name:"35PHOTO",
     ".":[ { title:"New photos",
         docs:"https://docs.rsshub.app/picture.html#35photo-new-photos",
