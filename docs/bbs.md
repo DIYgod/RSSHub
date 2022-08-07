@@ -466,6 +466,46 @@ pageClass: routes
 
 </Route>
 
+## 海角社区
+
+### 热门
+
+<Route author="nczitzk" example="/hjedd/hot" path="/hjedd/hot"/>
+
+### 新闻
+
+<Route author="nczitzk" example="/hjedd/news" path="/hjedd/news"/>
+
+### 大事记
+
+<Route author="nczitzk" example="/hjedd/event" path="/hjedd/event"/>
+
+### 原创
+
+<Route author="nczitzk" example="/hjedd/original" path="/hjedd/original"/>
+
+### 精华
+
+<Route author="nczitzk" example="/hjedd/top" path="/hjedd/top"/>
+
+### 公告
+
+<Route author="nczitzk" example="/hjedd/notice" path="/hjedd/notice"/>
+
+### 最新
+
+<Route author="nczitzk" example="/hjedd/latest" path="/hjedd/latest"/>
+
+### 文章
+
+<Route author="nczitzk" example="/hjedd/1288/1" path="/hjedd/:node?/:type?" :paramsDesc="['节点 id，可在对应节点页 URL 中找到，默认为 `258`，即 大事记', '类型 id，见下表，默认为 `0`，即 默认']">
+
+| 默认 | 最新 | 热门 | 精华 | 悬赏 | 出售 |
+| -- | -- | -- | -- | -- | -- |
+| 0  | 1  | 2  | 3  | 4  | 5  |
+
+</Route>
+
 ## 虎扑
 
 ### 首页
