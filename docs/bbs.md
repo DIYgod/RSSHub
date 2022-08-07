@@ -438,9 +438,9 @@ pageClass: routes
 
 ### 板块
 
-<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块','排序']" radar="1">
+<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块', '排序']" radar="1">
 
-板块 (更多板块请自行[查看]("http://www.2cycd.com/"))
+板块（更多板块请自行 [查看](http://www.2cycd.com)）
 
 | 音乐下载（默认） | 动漫下载 | 游戏下载 |
 | -------- | ---- | ---- |
@@ -448,7 +448,7 @@ pageClass: routes
 
 排序
 
-| 发布时间排序（默认） | 回复 / 查看 | 查看    |
+| 发布时间排序（默认） | 回复／查看 | 查看    |
 | ---------- | ------- | ----- |
 | dateline   | replies | views |
 
