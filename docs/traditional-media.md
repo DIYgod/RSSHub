@@ -1019,6 +1019,10 @@ Type 栏目：
 
 <Route author="nczitzk" example="/pts/tag/230" path="/pts/tag/:id" :paramsDesc="['標籤 id，可在对应標籤页 URL 中找到']"/>
 
+### 整理報導
+
+<Route author="nczitzk" example="/pts/live/62e8e4bbb4de2cbd74468b2b" path="/pts/live/:id" :paramsDesc="['報導 id，可在对应整理報導页 URL 中找到']"/>
+
 ## 共同网
 
 ### 最新报道
