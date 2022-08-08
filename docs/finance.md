@@ -56,6 +56,18 @@ pageClass: routes
 
 </Route>
 
+## Seeking Alpha
+
+### Summary
+
+<Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" :paramsDesc="['股票代号', '分类，见下表，默认为 `news`']"  radar="1" rssbud="1">
+
+| Analysis | News | Transcripts | Press Releases | Related Analysis |
+| -------- | ---- | ----------- | -------------- | ---------------- |
+| analysis | news | transcripts | press-releases | related-analysis |
+
+</Route>
+
 ## TokenInsight
 
 ::: tip 提示

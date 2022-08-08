@@ -434,6 +434,26 @@ pageClass: routes
 
 <Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
 
+## 二次元虫洞
+
+### 板块
+
+<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块', '排序']" radar="1">
+
+板块（更多板块请自行 [查看](http://www.2cycd.com)）
+
+| 音乐下载（默认） | 动漫下载 | 游戏下载 |
+| -------- | ---- | ---- |
+| 43       | 53   | 42   |
+
+排序
+
+| 发布时间排序（默认） | 回复／查看   | 查看    |
+| ---------- | ------- | ----- |
+| dateline   | replies | views |
+
+</Route>
+
 ## 光谷社区
 
 ### 子论坛
@@ -443,6 +463,46 @@ pageClass: routes
 | 首页 | 你问我答 | 同城活动     | IT 技术 | 金融财经    | 创业创客    | 城市建设 |
 | -- | ---- | -------- | ----- | ------- | ------- | ---- |
 |    | qna  | lowshine | it    | finance | startup | city |
+
+</Route>
+
+## 海角社区
+
+### 热门
+
+<Route author="nczitzk" example="/hjedd/hot" path="/hjedd/hot"/>
+
+### 新闻
+
+<Route author="nczitzk" example="/hjedd/news" path="/hjedd/news"/>
+
+### 大事记
+
+<Route author="nczitzk" example="/hjedd/event" path="/hjedd/event"/>
+
+### 原创
+
+<Route author="nczitzk" example="/hjedd/original" path="/hjedd/original"/>
+
+### 精华
+
+<Route author="nczitzk" example="/hjedd/top" path="/hjedd/top"/>
+
+### 公告
+
+<Route author="nczitzk" example="/hjedd/notice" path="/hjedd/notice"/>
+
+### 最新
+
+<Route author="nczitzk" example="/hjedd/latest" path="/hjedd/latest"/>
+
+### 文章
+
+<Route author="nczitzk" example="/hjedd/1288/1" path="/hjedd/:node?/:type?" :paramsDesc="['节点 id，可在对应节点页 URL 中找到，默认为 `258`，即 大事记', '类型 id，见下表，默认为 `0`，即 默认']">
+
+| 默认 | 最新 | 热门 | 精华 | 悬赏 | 出售 |
+| -- | -- | -- | -- | -- | -- |
+| 0  | 1  | 2  | 3  | 4  | 5  |
 
 </Route>
 
