@@ -2183,6 +2183,9 @@
     "/nju/admission": [
         "ret-1"
     ],
+    "/nju/dafls": [
+        "ret-1"
+    ],
     "/nju/gra": [
         "ret-1"
     ],

@@ -9670,6 +9670,17 @@
         "target": "/nju/admission"
       }
     ],
+    "dafls": [
+      {
+        "title": "大学外语部",
+        "docs": "https://docs.rsshub.app/university.html#nan-jing-da-xue-da-xue-wai-yu-bu",
+        "source": [
+          "/13167/list.html",
+          "/"
+        ],
+        "target": "/nju/dafls"
+      }
+    ],
     "grawww": [
       {
         "title": "研究生院",
