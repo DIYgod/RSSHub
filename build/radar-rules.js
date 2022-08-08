@@ -2165,7 +2165,7 @@
         docs:"https://docs.rsshub.app/government.html#mei-guo-shi-pin-yao-pin-jian-du-guan-li-ju-cdrhnew",
         source:[ "/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates",
           "/" ],
-        target:"/fda/cdrh" } ] },
+        target:"/fda/cdrh/:titleOnly" } ] },
   "feng.com":{ _name:"威锋",
     ".":[ { title:"社区",
         docs:"https://docs.rsshub.app/bbs.html#wei-feng",

@@ -4086,7 +4086,7 @@
           "/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates",
           "/"
         ],
-        "target": "/fda/cdrh"
+        "target": "/fda/cdrh/:titleOnly"
       }
     ]
   },
