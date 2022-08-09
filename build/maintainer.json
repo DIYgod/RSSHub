@@ -288,6 +288,12 @@
     "/bandcamp/weekly": [
         "nczitzk"
     ],
+    "/bangumi/": [
+        "nczitzk"
+    ],
+    "/bangumi/:tags?": [
+        "nczitzk"
+    ],
     "/baozimh/comic/:name": [
         "Fatpandac"
     ],
