@@ -4,6 +4,20 @@ pageClass: routes
 
 # ACG
 
+## Bangumi Moe
+
+### Latest
+
+<RouteEn author="nczitzk" example="/bangumi" path="/bangumi"/>
+
+### Tags
+
+<RouteEn author="nczitzk" example="/bangumi/chs/1080p" path="/bangumi/:tags?" :paramsDesc="['Tags, empty by default, multiple tags separated by `/`']">
+
+For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
+
+</RouteEn>
+
 ## Hanime.tv
 
 ### Recently updated
