@@ -594,7 +594,7 @@ JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus
 
 ### 无码 - 搜索
 
-<Route author="nczitzk" example="/javbus/uncensored/search/REBD" path="/javbus/uncensored/search/:keyword" :paramsDesc="['关键字，默认为空']" />
+<Route author="nczitzk" example="/javbus/uncensored/search/HEYZO" path="/javbus/uncensored/search/:keyword" :paramsDesc="['关键字，默认为空']" />
 
 ### 欧美 - 首页
 
