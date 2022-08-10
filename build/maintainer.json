@@ -2862,6 +2862,18 @@
         "xyqfer",
         "Fatpandac"
     ],
+    "/taoguba/blog/:id": [
+        "nczitzk"
+    ],
+    "/taoguba/index": [
+        "nczitzk"
+    ],
+    "/taoguba/user/:id": [
+        "nczitzk"
+    ],
+    "/taoguba/:category?": [
+        "nczitzk"
+    ],
     "/taptap/changelog/:id": [
         "hoilc"
     ],
@@ -4063,8 +4075,6 @@
     "/blogs/wang54/:id?": [],
     "/blogs/wordpress/:domain/:https?": [],
     "/xici/:id?": [],
-    "/taoguba/index": [],
-    "/taoguba/user/:uid": [],
     "/tophub/:id": [],
     "/vgtime/news": [],
     "/vgtime/release": [],
