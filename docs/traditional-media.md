@@ -1751,6 +1751,26 @@ category 对应的关键词有
 
 <Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名，可在该分类的 URL 中找到（即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
 
+## 无线新闻
+
+### 新闻
+
+<Route author="nczitzk" example="/tvb/news" path="/tvb/news/:category?/:language?" :paramsDesc="['分类，见下表，默认为要聞', '语言，见下表']">
+
+分类
+
+| 要聞    | 快訊      | 港澳    | 兩岸           | 國際    | 財經      | 體育     | 法庭         | 天氣      |
+| ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
+| focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
+
+语言
+
+| 繁  | 简  |
+| -- | -- |
+| tc | sc |
+
+</Route>
+
 ## 希望之声
 
 <Route author="Fatpandac" example="/soundofhope/term/203" path="/soundofhope/:channel/:id" :paramsDesc="['频道', '子频道 ID']">
