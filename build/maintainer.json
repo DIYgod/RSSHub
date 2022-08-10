@@ -1688,71 +1688,84 @@
         "CoderTonyChan",
         "nczitzk"
     ],
-    "/javbus/genre/:gid": [
-        "MegrezZhu",
-        "CoderTonyChan"
-    ],
-    "/javbus/home": [
-        "MegrezZhu",
-        "CoderTonyChan"
-    ],
-    "/javbus/label/:labelid": [
+    "/javbus/genre/:id": [
         "MegrezZhu",
         "CoderTonyChan",
-        "Felix2yu"
+        "nczitzk"
     ],
-    "/javbus/series/:seriesid": [
+    "/javbus/label/:id": [
         "MegrezZhu",
         "CoderTonyChan",
-        "Felix2yu"
+        "Felix2yu",
+        "nczitzk"
     ],
-    "/javbus/star/:sid": [
-        "MegrezZhu",
-        "CoderTonyChan"
-    ],
-    "/javbus/studio/:studioid": [
+    "/javbus/series/:id": [
         "MegrezZhu",
         "CoderTonyChan",
-        "Felix2yu"
+        "Felix2yu",
+        "nczitzk"
     ],
-    "/javbus/uncensored/home": [
-        "MegrezZhu",
-        "CoderTonyChan"
-    ],
-    "/javbus/uncensored/genre/:gid": [
-        "MegrezZhu",
-        "CoderTonyChan"
-    ],
-    "/javbus/uncensored/series/:seriesid": [
+    "/javbus/star/:id": [
         "MegrezZhu",
         "CoderTonyChan",
-        "Felix2yu"
+        "nczitzk"
     ],
-    "/javbus/uncensored/star/:sid": [
+    "/javbus/studio/:id": [
         "MegrezZhu",
-        "CoderTonyChan"
+        "CoderTonyChan",
+        "Felix2yu",
+        "nczitzk"
+    ],
+    "/javbus/search/:keyword": [
+        "nczitzk"
+    ],
+    "/javbus/uncensored": [
+        "MegrezZhu",
+        "CoderTonyChan",
+        "nczitzk"
+    ],
+    "/javbus/uncensored/genre/:id": [
+        "MegrezZhu",
+        "CoderTonyChan",
+        "nczitzk"
+    ],
+    "/javbus/uncensored/series/:id": [
+        "MegrezZhu",
+        "CoderTonyChan",
+        "Felix2yu",
+        "nczitzk"
+    ],
+    "/javbus/uncensored/star/:id": [
+        "MegrezZhu",
+        "CoderTonyChan",
+        "nczitzk"
+    ],
+    "/javbus/uncensored/search/:keyword": [
+        "nczitzk"
     ],
     "/javbus/western": [
         "MegrezZhu",
         "CoderTonyChan",
         "nczitzk"
     ],
-    "/javbus/western/home": [
-        "MegrezZhu",
-        "CoderTonyChan"
-    ],
     "/javbus/western/genre/:gid": [
         "MegrezZhu",
-        "CoderTonyChan"
+        "CoderTonyChan",
+        "nczitzk"
     ],
     "/javbus/western/series/:seriesid": [
         "MegrezZhu",
         "CoderTonyChan",
-        "Felix2yu"
+        "Felix2yu",
+        "nczitzk"
     ],
     "/javbus/western/star/:sid": [
         "MegrezZhu",
-        "CoderTonyChan"
+        "CoderTonyChan",
+        "nczitzk"
+    ],
+    "/javbus/western/search/:keyword": [
+        "nczitzk"
     ],
     "/javdb/home/:category?/:sort?/:filter?": [
         "nczitzk"
