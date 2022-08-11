@@ -345,11 +345,19 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
 
+### 招聘
+
+<Route author="CcccFz" example="/studygolang/jobs" path="/studygolang/jobs" radar="1" rssbud="1"/>
+
 ## GoCN
 
 ### 文章
 
-<Route author="AtlanCI" example="/gocn" path="/gocn"/>
+<Route author="AtlanCI CcccFz" example="/gocn" path="/gocn" radar="1" rssbud="1"/>
+
+### 招聘
+
+<Route author="CcccFz" example="/gocn/jobs" path="/gocn/jobs" radar="1" rssbud="1"/>
 
 ## Hacker News
 
