@@ -3024,6 +3024,9 @@
     "/trow/portal": [
         "shiningdracon"
     ],
+    "/tvb/news/:category?/:language?": [
+        "nczitzk"
+    ],
     "/twitter/collection/:uid/:collectionId/:routeParams?": [
         "TonyRL"
     ],
