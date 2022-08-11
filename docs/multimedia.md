@@ -520,69 +520,113 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus.com> ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.icu>，则在所有 JavBus 路由最后加上 `?domain=javsee.icu` 即可，此时路由为 [`/javbus?domain=javsee.icu`](https://rsshub.app/javbus?domain=javsee.icu)
 
-值得注意的是 **欧陆风云** 的域名与主域名有所不同，其备用域名亦然，本路由默认使用域名 <https://javbus.red> ，若该域名无法访问，可以通过在路由最后加上 `?western_domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.one>，则在所有 JavBus **欧陆风云** 路由最后加上 `?western_domain=javsee.one` 即可，此时路由为 [`/javbus/western?western_domain=javsee.one`](https://rsshub.app/javbus/western?western_domain=javsee.one)
+值得注意的是 **欧美** 的域名与主域名有所不同，其备用域名亦然，本路由默认使用域名 <https://javbus.org> ，若该域名无法访问，可以通过在路由最后加上 `?western_domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.one>，则在所有 JavBus **欧美** 路由最后加上 `?western_domain=javsee.one` 即可，此时路由为 [`/javbus/western?western_domain=javsee.one`](https://rsshub.app/javbus/western?western_domain=javsee.one)
 
 :::
 
-### 首页
+### 有码 - 首页
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus" path="/javbus"/>
 
-### 分类
+### 有码 - 分类
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/genre/7g" path="/javbus/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/genre)的链接']" />
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/genre/7g" path="/javbus/genre/:id" :paramsDesc="['分类 id，可在对应分类页 URL 中找到']">
 
-### 演员
+更多分类前往 [有碼類別 - 影片](https://www.javbus.com/genre)
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/star/2jv" path="/javbus/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/actresses)的链接']" />
+</Route>
 
-### 系列
+### 有码 - 演员
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/series/44q" path="/javbus/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/star/2jv" path="/javbus/star/:id" :paramsDesc="['演员 id，可在对应演员页 URL 中找到']">
 
-### 制作商
+更多演员前往 [有碼女優 - 影片](https://www.javbus.com/actresses)
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/studio/ej" path="/javbus/studio/:studioid" :paramsDesc="['制作商id，详见作品右侧制作商的链接']" />
+</Route>
 
-### 发行商
+### 有码 - 系列
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/label/x8" path="/javbus/label/:labelid" :paramsDesc="['发行商id，详见作品右侧发行商的链接']" />
+<Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/series/44q" path="/javbus/series/:id" :paramsDesc="['系列 id，可在对应系列页 URL 中找到']" />
 
-### 导演
+### 有码 - 制作商
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/director/4gv" path="/javbus/director/：directorId" :paramsDesc="['导演id，详见作品右侧导演的链接']" />
+<Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/studio/ej" path="/javbus/studio/:id" :paramsDesc="['制作商 id，可在对应制作商页 URL 中找到']" />
 
-### 首页 / 步兵
+### 有码 - 发行商
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/home" path="/javbus/uncensored/home"/>
+<Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/label/x8" path="/javbus/label/:id" :paramsDesc="['发行商 id，可在对应发行商页 URL 中找到']" />
 
-### 分类 / 步兵
+### 有码 - 导演
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.com/uncensored/genre)的链接']" />
+<Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/director/4gv" path="/javbus/director/:id" :paramsDesc="['导演 id，可在对应导演页 URL 中找到']" />
 
-### 演员 / 步兵
+### 有码 - 搜索
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.com/uncensored/actresses)的链接']" />
+<Route author="nczitzk" example="/javbus/search/REBD" path="/javbus/search/:keyword" :paramsDesc="['关键字，默认为空']" />
 
-### 系列 / 步兵
+### 无码 - 首页
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/uncensored/series/1ft" path="/javbus/uncensored/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/uncensored" path="/javbus/uncensored"/>
 
-### 首页 / 欧陆风云
+### 无码 - 分类
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western" path="/javbus/western"/>
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/uncensored/genre/1bc" path="/javbus/uncensored/genre/:id" :paramsDesc="['分类 id，可在对应分类页 URL 中找到']">
 
-### 分类 / 欧陆风云
+更多分类前往 [無碼類別 - 影片](https://www.javbus.com/uncensored/genre)
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/genre/86" path="/javbus/western/genre/:gid" :paramsDesc="['分类id，详见[网站里](https://www.javbus.work/genre)的链接']" />
+</Route>
 
-### 演员 / 欧陆风云
+### 无码 - 演员
 
-<Route author="MegrezZhu CoderTonyChan" example="/javbus/western/star/4hv" path="/javbus/western/star/:sid" :paramsDesc="['演员id，详见[网站里](https://www.javbus.work/actresses)的链接']" />
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/uncensored/star/b5b" path="/javbus/uncensored/star/:id" :paramsDesc="['演员 id，可在对应演员页 URL 中找到']">
 
-### 系列 / 欧陆风云
+更多演员前往 [無碼女優 - 影片](https://www.javbus.com/uncensored/actresses)
 
-<Route author="MegrezZhu CoderTonyChan Felix2yu" example="/javbus/western/series/20" path="/javbus/western/series/:seriesid" :paramsDesc="['系列id，详见作品中系列的链接']" />
+</Route>
+
+### 无码 - 系列
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/uncensored/series/1ft" path="/javbus/uncensored/series/:id" :paramsDesc="['系列 id，可在对应系列页 URL 中找到']" />
+
+### 无码 - 制作商
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/uncensored/studio/3n" path="/javbus/uncensored/studio/:id" :paramsDesc="['制作商 id，可在对应制作商页 URL 中找到']" />
+
+### 无码 - 搜索
+
+<Route author="nczitzk" example="/javbus/uncensored/search/HEYZO" path="/javbus/uncensored/search/:keyword" :paramsDesc="['关键字，默认为空']" />
+
+### 欧美 - 首页
+
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/western" path="/javbus/western"/>
+
+### 欧美 - 分类
+
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/western/genre/86" path="/javbus/western/genre/:id" :paramsDesc="['分类 id，可在对应分类页 URL 中找到']">
+
+更多分类前往 [類別 - 影片](https://www.javbus.org/genre)
+
+</Route>
+
+### 欧美 - 演员
+
+<Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/western/star/4hv" path="/javbus/western/star/:id" :paramsDesc="['演员 id，可在对应演员页 URL 中找到']">
+
+更多演员前往 [歐美演員 - 影片](https://www.javbus.org/actresses)
+
+</Route>
+
+### 欧美 - 系列
+
+<Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/western/series/20" path="/javbus/western/series/:id" :paramsDesc="['系列 id，可在对应系列页 URL 中找到']" />
+
+### 欧美 - 制作商
+
+<Route author="nczitzk" example="/javbus/western/studio/4" path="/javbus/western/studio/:id" :paramsDesc="['制作商 id，可在对应制作商页 URL 中找到']" />
+
+### 欧美 - 搜索
+
+<Route author="nczitzk" example="/javbus/western/search/Brazzers" path="/javbus/western/search/:keyword" :paramsDesc="['关键字，默认为空']" />
 
 ## JavDB
 
