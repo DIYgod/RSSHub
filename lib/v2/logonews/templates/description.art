@@ -1,0 +1,4 @@
+{{if isWork}}
+<img src="{{ image }}">
+{{/if}}
+{{ description }}

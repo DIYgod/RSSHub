@@ -21,11 +21,11 @@ sidebar: auto
 
 ### 添加脚本路由
 
-在 [/lib/router.js](https://github.com/DIYgod/RSSHub/blob/master/lib/router.js) 里添加路由
+在 [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) 中创建对应路由路径，并在 `/lib/v2/:path/router.js` 中添加路由
 
 ### 编写脚本
 
-在 [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes) 中的路由对应路径下创建新的 js 脚本：
+在 [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) 中的路由对应路径下创建新的 js 脚本：
 
 #### 获取源数据
 
@@ -59,7 +59,7 @@ sidebar: auto
     // 这个对象中包含了数组名为 data，所以 response.data.data 则为需要的数据
     ```
 
-    返回的数据样例之一（response.data.data[0]）：
+    返回的数据样例之一（response.data.data \[0]）：
 
     ```json
     {
@@ -217,7 +217,7 @@ sidebar: auto
 
     4.  **使用通用配置型路由**
 
-    很大一部分网站是可以通过一个配置范式来生成 RSS 的。  
+    很大一部分网站是可以通过一个配置范式来生成 RSS 的。
     通用配置即通过 cheerio（**CSS 选择器、jQuery 函数**）读取 json 数据来简便的生成 RSS。
 
     首先我们需要几个数据：
@@ -292,7 +292,7 @@ const description = await ctx.cache.tryGet(link, async () => {
 });
 ```
 
-tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)，第一个参数为缓存的 key，第二个参数为缓存数据获取方法，第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)，且每次访问缓存会重新计算过期时间
+tryGet 的实现可以看[这里](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)。第一个参数为缓存的 key；第二个参数为缓存未命中时的数据获取方法；第三个参数为缓存时间，正常情况不应该传入，缓存时间默认为 [CACHE_CONTENT_EXPIRE](/install/#缓存配置)；第四个参数为控制本次尝试缓存命中时是否需要重新计算过期时间（给缓存「续期」）的开关，`true` 为打开，`false` 为关闭，默认为打开
 
 * * *
 
@@ -323,6 +323,16 @@ ctx.state.data = {
 };
 ```
 
+::: warning 注意
+
+`title`, `subtitle` (仅适用于 atom 输出), `author` (仅适用于 atom 输出), `item.title`, `item.author` 不应该包含换行、多于一个的连续空字符，或以空字符开头 / 结尾。\
+多数 RSS 阅读器会自动为上述字段修剪空字符，所以这些空字符没有意义。但是，某些阅读器也许不能正确处理它们，因此，我们会在最终输出前修剪上述字段，确保不含有换行或多于一个空字符，也不以空字符开头或结尾。\
+如果你要编写的路由在上述字段不能容忍空字符修剪，你应该考虑变换一下这些字段的格式。
+
+另外，虽然其它字段不会经过强制空字符修剪，但你也应该尽量避免违反上述规则。尤其是使用 cheerio 提取网页元素或文本时，需要时刻谨记 cheerio 会保留换行和缩进。特别地，对于 `item.description` ，任何预期之内的换行都应被转换为 `<br>` ，否则 RSS 阅读器很可能将它修剪；尤其如果你从 JSON 提取 RSS 源，目标网站返回的 JSON 很有可能含有需要显示的换行，这时候就一定要进行转换。
+
+:::
+
 ##### 播客源
 
 用于音频类 RSS，**额外**添加这些字段能使你的 RSS 被泛用型播客软件订阅：
@@ -335,8 +345,9 @@ ctx.state.data = {
     item: [
         {
             itunes_item_image: '', // 每个track单独的图片
+            itunes_duration: '', // 音频长度，总共的秒数或者 H:mm:ss，可选
             enclosure_url: '', // 音频链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_length: '', // 文件大小 (单位: Byte)，可选
             enclosure_type: '', // [.mp3就填'audio/mpeg'] [.m4a就填'audio/x-m4a'] [.mp4就填'video/mp4'], 或其他类型.
         },
     ],
@@ -352,7 +363,7 @@ ctx.state.data = {
     item: [
         {
             enclosure_url: '', // 磁力链接
-            enclosure_length: '', // 时间戳 (播放长度) , 一般是秒数，可选
+            enclosure_length: '', // 文件大小 (单位: Byte)，可选
             enclosure_type: 'application/x-bittorrent', // 固定为 'application/x-bittorrent'
         },
     ],
@@ -383,6 +394,22 @@ ctx.state.data = {
 };
 ```
 
+##### 互动
+
+**额外**添加这些字段能使你的 RSS 被支持的软件订阅：
+
+```js
+ctx.state.data = {
+    item: [
+        {
+            upvotes: 0, // 默认为空，文章有多少 upvote
+            downvotes: 0, // 默认为空，文章有多少 downvote
+            comments: 0, // 默认为空，文章有多少评论
+        },
+    ],
+};
+```
+
 * * *
 
 ### 添加脚本文档
@@ -397,7 +424,7 @@ ctx.state.data = {
             1.  参数说明必须对应其在路径中出现的顺序
             2.  如缺少说明将会导致`npm run docs:dev`报错
             3.  说明中的 `'` `"` 必须通过反斜杠转义 `\'` `\"`
-            4.  不必在说明中标注`可选 / 必选`，组件会根据路由`?`自动判断
+            4.  路由参数以 `?`、`*`、`+`、普通字符结尾分别表示 “可选”、“零个或多个”、“单个或多个”、“必选”，由组件自动判断，不必在说明中标注
     -   文档样例：
 
         1.  无参数:
@@ -428,8 +455,7 @@ ctx.state.data = {
 
         * * *
 
-
-        3. 复杂说明支持 slot:
+        3.  复杂说明支持 slot:
 
         ```vue
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
@@ -443,21 +469,21 @@ ctx.state.data = {
 
         结果预览：
 
-        ***
+        * * *
 
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
-        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
-        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
-        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
+        | 前端       | Android | iOS | 后端      | 设计     | 产品      | 工具资源    | 阅读      | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | ------- | ------- | ---- |
+        | frontend | android | ios | backend | design | product | freebie | article | ai   |
 
         </Route>
 
-        ***
+        * * *
 
-1.  请一定要注意把`<Route>`的标签关闭！
+2.  请一定要注意把`<Route>`的标签关闭！
 
-2.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
+3.  执行 `npm run format` 自动标准化代码格式，提交代码，然后提交 pull request
 
 ## 提交新的 RSSHub Radar 规则
 
@@ -467,7 +493,7 @@ ctx.state.data = {
 
 ### 编写规则
 
-在 [/assets/radar-rules.js](https://github.com/DIYgod/RSSHub/blob/master/assets/radar-rules.js) 里添加规则
+在 [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) 的对应路由下创建 `radar.js` 并添加规则
 
 下面说明中会用到的简化的规则：
 
