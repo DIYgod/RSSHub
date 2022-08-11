@@ -23,6 +23,20 @@ pageClass: routes
 
 </RouteEn>
 
+## American Chemistry Society
+
+### Journal
+
+<RouteEn author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
+
+::: tip Tip
+
+See [Browse Content](https://pubs.acs.org)
+
+:::
+
+</RouteEn>
+
 ## arXiv
 
 ### Search Keyword

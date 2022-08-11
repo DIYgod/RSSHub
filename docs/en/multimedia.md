@@ -101,6 +101,10 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 </RouteEn>
 
+### Author
+
+<RouteEn author="TonyRL" example="/91porn/author/2d6d2iWm4vVCwqujAZbSrKt2QJCbbaObv9HQ21Zo8wGJWudWBg" path="/91porn/author/:uid/:lang?" :paramsDesc="['Author ID, can be found in URL', 'Language, see above, `en_US` by default ']" radar="1" rssbud="1" anticrawler="1" />
+
 ## 99% Invisible
 
 ### Transcript
@@ -265,9 +269,17 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 <RouteEn author="Lava-Swimmer noname1897" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
 
+### User
+
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+
 ### Sukebei Search Result
 
 <RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+
+### Sukebei User
+
+<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
 
 ## PornHub
 

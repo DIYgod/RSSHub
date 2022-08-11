@@ -4,6 +4,12 @@ pageClass: routes
 
 # Application Updates
 
+## Android
+
+### SDK Platform Tools release notes
+
+<RouteEn author="nczitzk" example="/android/platform-tools-releases" path="/android/platform-tools-releases"/>
+
 ## Anki
 
 ### Changes
@@ -56,6 +62,16 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 <RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" :paramsDesc="['Set any value to include untested actions.']"/>
 
+## ASUS
+
+### BIOS
+
+<RouteEn author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" :paramsDesc="['Model, can be found in product page']"/>
+
+### GPU Tweak
+
+<RouteEn author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
+
 ## Bandisoft
 
 ### History
@@ -70,31 +86,37 @@ Software id
 
 Language
 
-| Language | key |
-| -------- | --- |
-| English | en |
-| 中文 (简体) | cn |
-| 中文 (繁體) | tw |
-| 日本語 | jp |
-| Русский | ru |
-| Español | es |
-| Français | fr |
-| Deutsch | de |
-| Italiano | it |
-| Slovenčina | sk |
-| Українська | uk |
-| Беларуская | be |
-| Dansk | da |
-| Polski | pl |
-| Português Brasileiro | br |
-| Čeština | cs |
-| Nederlands | nl |
-| Slovenščina| sl |
-| Türkçe| tr  |
-| ภาษาไทย | th |
-| 한국어 | kr |
+| Language             | key |
+| -------------------- | --- |
+| English              | en  |
+| 中文 (简体)          | cn  |
+| 中文 (繁體)          | tw  |
+| 日本語               | jp  |
+| Русский              | ru  |
+| Español              | es  |
+| Français             | fr  |
+| Deutsch              | de  |
+| Italiano             | it  |
+| Slovenčina           | sk  |
+| Українська           | uk  |
+| Беларуская           | be  |
+| Dansk                | da  |
+| Polski               | pl  |
+| Português Brasileiro | br  |
+| Čeština              | cs  |
+| Nederlands           | nl  |
+| Slovenščina          | sl  |
+| Türkçe               | tr  |
+| ภาษาไทย              | th  |
+| 한국어               | kr  |
 
 </RouteEn>
+
+## Brave
+
+### Release Notes
+
+<Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
 
 ## Chocolatey
 
@@ -113,6 +135,12 @@ Language
 ### Premium Releases
 
 <RouteEn author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+
+## CPUID
+
+### News
+
+<RouteEn author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
 
 ## CurseForge
 
@@ -165,8 +193,8 @@ Use `library` as the `owner` for official images, such as <https://rsshub.app/do
 Language
 
 | Simplified Chinese | Traditional Chinese | English |
-| ------ | -------- | -------- |
-|  cn  |  tw  |  en  |
+| ------------------ | ------------------- | ------- |
+| cn                 | tw                  | en      |
 
 </RouteEn>
 
@@ -198,6 +226,12 @@ Language
 
 <RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
 
+## FossHub
+
+### Software Update
+
+<RouteEn author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" :paramsDesc="['Software id, can be found in URL']"/>
+
 ## Greasy Fork
 
 ### Script Update
@@ -209,6 +243,26 @@ Language
 ### Release News
 
 <RouteEn author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
+## iFi audio
+
+### Download Hub
+
+<RouteEn author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" :paramsDesc="['product val', 'product id']"/>
+
+::: warning
+
+1.  Open <https://ifi-audio.com/download-hub> and the Network panel
+2.  Select the device and the corresponding serial number in the website and click Search
+3.  Find the last request named <https://ifi-audio.com/wp-admin/admin-ajax.php> in the Network panel, find out the val and id in the Payload panel, and fill in the url
+
+:::
+
+## ImageMagick
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
 
 ## IPSW.me
 
@@ -271,6 +325,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
+## Neat Download Manager
+
+### Download
+
+<RouteEn author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" :paramsDesc="['Operating system, windows or macos, all by default']"/>
+
 ## Nintendo Switch
 
 ### Switch System Update（Japan）
@@ -288,6 +348,21 @@ Refer to [#minecraft](/en/game.html#minecraft)
 ### Changelog
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+
+## O\&O Software
+
+### Changelog
+
+<RouteEn author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" :paramsDesc="['Software id, see below, shutup10 by default, can be found in URL']">
+
+| Software       | Id          |
+| -------------- | ----------- |
+| O&O ShutUp10++ | shutup10    |
+| O&O AppBuster  | ooappbuster |
+| O&O Lanytix    | oolanytix   |
+| O&O DeskInfo   | oodeskinfo  |
+
+</RouteEn>
 
 ## Obsidian
 
@@ -307,6 +382,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 见 [#playstation](/game.html#playstation)
 
+## Postman
+
+### Release Notes
+
+<RouteEn author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
+
 ## Potplayer
 
 ### Version History
@@ -318,6 +399,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 | ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
 
 </RouteEn>
+
+## PuTTY
+
+### Change Log
+
+<RouteEn author="nczitzk" example="/putty/changes" path="/putty/changes"/>
 
 ## qBittorrent
 
@@ -350,8 +437,8 @@ Refer to [#minecraft](/en/game.html#minecraft)
 <RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" :paramsDesc="['OS id, see below']">
 
 | Mac OS | Windows |
-| - | - |
-| mac | windows |
+| ------ | ------- |
+| mac    | windows |
 
 </RouteEn>
 
@@ -387,11 +474,62 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
+## TradingView
+
+### Blog
+
+<RouteEn author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" :paramsDesc="['Language, see below, `en` as English by default']">
+
+Language
+
+| Id  | Language            |
+| --- | ------------------- |
+| en  | English             |
+| ru  | Русский             |
+| ja  | 日本語              |
+| es  | Español             |
+| tr  | Türkçe              |
+| ko  | 한국어              |
+| it  | Italiano            |
+| pt  | Português do Brasil |
+| de  | Deutsch             |
+| fr  | Français            |
+| pl  | Polski              |
+| id  | Bahasa Indonesia    |
+| my  | Bahasa Malaysia     |
+| tw  | 繁體                |
+| cn  | 简体                |
+| vi  | Tiếng Việt          |
+| th  | ภาษาไทย             |
+| sv  | Svenska             |
+| ar  | العربية             |
+| il  | Hebrew              |
+
+</RouteEn>
+
 ## Typora
 
 ### Changelog
 
 <RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+
+## VMware
+
+### Flings
+
+<RouteEn author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
+
+## Western Digital
+
+### Download
+
+<RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
+
+## WizTree
+
+### What's New
+
+<RouteEn author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
 ## X410
 

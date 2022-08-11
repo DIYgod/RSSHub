@@ -247,6 +247,22 @@ pageClass: routes
 
 </Route>
 
+## 国家药品监督管理局医疗器械技术审评中心
+
+### 通用
+
+<Route author="run-ze" example="/cmde/xwdt/zxyw" path="/cmde/:cate*" :paramsDesc="['路径，默认为最新要闻']" radar="1" puppeteer="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.cmde.org.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
+
+若订阅 [最新要闻](https://www.cmde.org.cn/xwdt/zxyw/index.html) 则将对应页面 URL <https://www.cmde.org.cn/xwdt/zxyw/index.html> 中 `https://www.cmde.org.cn/` 和 `/index.html` 之间的字段 `xwdt/zxyw` 作为路径填入。此时路由为 [`/cmde/xwdt/zxyw`](https://rsshub.app//cmde/xwdt/zxyw)
+
+:::
+
+</Route>
+
 ## 国家药品审评网站
 
 ### 首页
@@ -384,7 +400,7 @@ pageClass: routes
 
 ### CDRHNew
 
-<Route author="nczitzk" example="/fda/cdrh" path="/fda/cdrh" />
+<Route author="nczitzk" example="/fda/cdrh" path="/fda/cdrh/:titleOnly?" :paramsDesc="['只显示标题，默认为空，即包含全文，其他任意值则只显示标题']"/>
 
 ## 美国中央情报局
 
@@ -566,6 +582,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/mohw/clarification" path="/mohw/clarification"/>
 
+## 太原市人民政府
+
+### 太原市人力资源和社会保障局政府公开信息
+
+<Route author="2PoL" example="/gov/taiyuan/rsj/gggs" path="/gov/taiyuan/rsj/:caty/:page?" :paramsDesc="['信息类别', '页码']">
+
+| 工作动态 | 太原新闻 | 通知公告 | 县区动态 | 国内动态 | 图片新闻 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| gzdt | tyxw | gggs | xqdt | gndt | tpxw |
+
+</Route>
+
 ## 武汉东湖新技术开发区
 
 ### 新闻中心
@@ -739,6 +767,84 @@ pageClass: routes
 | 监管动态 | 公告通知 | 政策法规 | 政策解读 | 征求意见 | 行政许可 | 行政处罚 | 行政监管措施 | 工作论文 | 金融监管研究 | 统计信息 |
 | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :----: | :--: | :----: | :--: |
 | jgdt | ggtz | zcfg | zcjd | zqyj | xzxk | xzcf | xzjgcs | gzlw | jrjgyj | tjxx |
+
+</Route>
+
+## 中国载人航天
+
+### 综合新闻
+
+<Route author="nczitzk" example="/gov/cmse/xwzx/zhxw" path="/gov/cmse/xwzx/zhxw" />
+
+### 研制进展
+
+<Route author="nczitzk" example="/gov/cmse/xwzx/yzjz" path="/gov/cmse/xwzx/yzjz" />
+
+### 官方公告
+
+<Route author="nczitzk" example="/gov/cmse/gfgg" path="/gov/cmse/gfgg" />
+
+### 飞行任务
+
+<Route author="nczitzk" example="/gov/cmse/fxrw" path="/gov/cmse/fxrw" />
+
+### 任务动态
+
+<Route author="nczitzk" example="/gov/cmse/fxrw/wtfx/rwdt" path="/gov/cmse/fxrw/:id/:category" :paramsDesc="['任务 id，可在对应任务页 URL 中找到', '分类 id，见下表，可在对应任务页 URL 中找到']">
+
+::: tip 提示
+
+下表分类可能并不完整。请查看各飞行任务详情页获得完整分类。
+
+:::
+
+| 任务动态 | 综合新闻 | 视频 | 图片新闻 | 媒体聚焦 |
+| ---- | ---- | -- | ---- | ---- |
+| rwdt | zhxw | sp | tpxw | mtjj |
+
+</Route>
+
+### 空间科学
+
+<Route author="nczitzk" example="/gov/cmse/kjkx/kjkxyjyyy" path="/gov/cmse/kjkx/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 空间科学研究与应用 | 航天技术试验 | 航天医学实验 |
+| --------- | ------ | ------ |
+| kjkxyjyyy | htjssy | htyxsy |
+
+</Route>
+
+### 国际合作
+
+<Route author="nczitzk" example="/gov/cmse/gjhz" path="/gov/cmse/gjhz" />
+
+### 环球视野
+
+<Route author="nczitzk" example="/gov/cmse/hqsy/zxdta" path="/gov/cmse/hqsy/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 最新动态  | 美国 | 俄罗斯 | 欧洲 | 日本 | 印度 | 领域动态 |
+| ----- | -- | --- | -- | -- | -- | ---- |
+| zxdta | mg | els | oz | rb | yd | lydt |
+
+</Route>
+
+### 专题报道
+
+<Route author="nczitzk" example="/gov/cmse/ztbd/xwfbh" path="/gov/cmse/ztbd/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 新闻发布会 | 学术大会 | 标准 | 新闻专题 |
+| ----- | ---- | -- | ---- |
+| xwfdh | xsdh | bz | xwzt |
+
+</Route>
+
+### 科普教育
+
+<Route author="nczitzk" example="/gov/cmse/kpjy/kphd" path="/gov/cmse/kpjy/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 科普活动 | 太空课堂 | 航天知识 |
+| ---- | ---- | ---- |
+| kphd | tkkt | ttzs |
 
 </Route>
 
