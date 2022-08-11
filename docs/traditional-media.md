@@ -1172,9 +1172,13 @@ Type 栏目：
 
 ## 界面新闻
 
+### 快报
+
+<Route author="nczitzk" example="/jiemian" path="/jiemian" />
+
 ### 栏目
 
-<Route author="WenhuWee" example="/jiemian/list/79" path="/jiemian/list/:category" :paramsDesc="['对应栏目后在地址栏找到']"/>
+<Route author="WenhuWee nczitzk" example="/jiemian/list/65" path="/jiemian/list/:id?" :paramsDesc="['栏目，可在对应栏目页 URL 中找到，默认为 `4` 即快报']" />
 
 ## 经济观察网
 
