@@ -412,6 +412,9 @@
     "/bilibili/user/video/:uid/:disableEmbed?": [
         "DIYgod"
     ],
+    "/bilibili/user/video-all/:uid/:disableEmbed?": [
+        "CcccFz"
+    ],
     "/bilibili/video/danmaku/:bvid/:pid?": [
         "Qixingchen"
     ],
@@ -1179,7 +1182,11 @@
         "TonyRL"
     ],
     "/gocn/": [
-        "AtlanCI"
+        "AtlanCI",
+        "CcccFz"
+    ],
+    "/gocn/jobs": [
+        "CcccFz"
     ],
     "/google/album/:id": [
         "hoilc"
@@ -2902,6 +2909,9 @@
     ],
     "/stratechery/": [
         "chazeon"
+    ],
+    "/studygolang/jobs": [
+        "CcccFz"
     ],
     "/subhd/sub/:category?": [
         "nczitzk"
