@@ -10,6 +10,12 @@
 
 </Route>
 
+## Android
+
+### SDK Platform Tools release notes
+
+<Route author="nczitzk" example="/android/platform-tools-releases" path="/android/platform-tools-releases"/>
+
 ## Anki
 
 ### Changes
@@ -100,6 +106,12 @@
 | ------- | -------- | --------- | ----- | -------------- |
 | android | iphone   | ipad      | win   | android_tv_yst |
 
+## Brave
+
+### Release Notes
+
+<Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
+
 ## Bugly SDK
 
 ### 更新日志
@@ -129,6 +141,18 @@
 ### 扩展程序更新
 
 <Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
+
+## Clash
+
+### Premium Releases
+
+<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+
+## CPUID
+
+### 新闻
+
+<Route author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
 
 ## cpython
 
@@ -230,6 +254,12 @@
 
 <Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']" />
 
+## FossHub
+
+### Software Update
+
+<Route author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" :paramsDesc="['软件 id，可在对应软件页 URL 中找到']"/>
+
 ## Greasy Fork
 
 ### 脚本更新
@@ -241,6 +271,26 @@
 ### 更新日志
 
 <Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+
+## iFi audio
+
+### Download Hub
+
+<Route author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" :paramsDesc="['商品 val', '商品 id']"/>
+
+::: warning 注意
+
+1.  打开网站 <https://ifi-audio.com/download-hub> 并打开 Inspect -> Network 调试面板
+2.  在网站中选择设备以及对应的 serial number，点击搜索
+3.  在 Network 面板中找到最后一个 <https://ifi-audio.com/wp-admin/admin-ajax.php> 请求，查看 Payload 中的 val 和 id，填写在 url 中
+
+:::
+
+## ImageMagick
+
+### Changelog
+
+<Route author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
 
 ## IPSW\.me
 
@@ -308,11 +358,23 @@
 
 </Route>
 
+## Neat Download Manager
+
+### Download
+
+<Route author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" :paramsDesc="['操作系统，可选 windows 或 macos，默认为全部']"/>
+
 ## Nintendo Switch
 
 ### Switch 本体更新情报（日本）
 
 见 [#nintendo](/game.html#nintendo)
+
+## NPM
+
+### 包
+
+<Route author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" :paramsDesc="['包名']"/>
 
 ## Nvidia Web Driver
 
@@ -320,7 +382,20 @@
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-<<<<<<< HEAD
+## O\&O Software
+
+### Changelog
+
+<Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" :paramsDesc="['软件 id，见下表，默认为 shutup10，可在对应软件页中找到']">
+
+| Software       | Id          |
+| -------------- | ----------- |
+| O&O ShutUp10++ | shutup10    |
+| O&O AppBuster  | ooappbuster |
+| O&O Lanytix    | oolanytix   |
+| O&O DeskInfo   | oodeskinfo  |
+
+</Route>
 
 ## Obsidian
 
@@ -340,11 +415,23 @@
 
 > > > > > > > 47c73b23a2b2469d4d97e5f2b1007d05468fb737
 
+## OpenWrt
+
+### Releases
+
+<Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" :paramsDesc="['产品型号，可在 `Table of Hardware` -> `Device Page` 的 URL 中找到', '同上']"/>
+
 ## PlayStation
 
 ### PlayStation 4 系统更新纪录
 
 见 [#playstation](/game.html#playstation)
+
+## Postman
+
+### Release Notes
+
+<Route author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
 
 ## Potplayer
 
@@ -357,6 +444,18 @@
 | ko  | zh_CN   | zh_TW   | en      | uk         | ru      | pl     |
 
 </Route>
+
+## PuTTY
+
+### Change Log
+
+<Route author="nczitzk" example="/putty/changes" path="/putty/changes"/>
+
+## qBittorrent
+
+### 消息
+
+<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
 
 ## QNAP
 
@@ -386,7 +485,7 @@
 
 ### 版本更新
 
-<Route author="Cesaryuan" example="/quicker/update" path="/quicker/update"/>
+<Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
 
 ## RescueTime
 
@@ -460,6 +559,39 @@
 
 <Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
+## TradingView
+
+### Blog
+
+<Route author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" :paramsDesc="['语言，见下表，默认为 en 即英语']">
+
+语言
+
+| 编号 | 语言                  |
+| -- | ------------------- |
+| en | English             |
+| ru | Русский             |
+| ja | 日本語                 |
+| es | Español             |
+| tr | Türkçe              |
+| ko | 한국어                 |
+| it | Italiano            |
+| pt | Português do Brasil |
+| de | Deutsch             |
+| fr | Français            |
+| pl | Polski              |
+| id | Bahasa Indonesia    |
+| my | Bahasa Malaysia     |
+| tw | 繁體                  |
+| cn | 简体                  |
+| vi | Tiếng Việt          |
+| th | ภาษาไทย             |
+| sv | Svenska             |
+| ar | العربية             |
+| il | Hebrew              |
+
+</Route>
+
 ## Typora
 
 ### Changelog
@@ -469,6 +601,24 @@
 ### Dev Release Changelog
 
 <Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
+
+## VMware
+
+### Flings
+
+<Route author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
+
+## Western Digital
+
+### Download
+
+<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
+
+## WizTree
+
+### What's New
+
+<Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
 ## X410
 
@@ -500,11 +650,27 @@
 
 <Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 
+## Zotero
+
+### 版本历史
+
+<Route author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
+
 ## 怪物猎人世界
 
 ### 更新
 
 见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
+
+## 华硕
+
+### 固件
+
+<Route author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" :paramsDesc="['产品型号，可在产品页面找到']"/>
+
+### GPU Tweak
+
+<Route author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
 
 ## 蒲公英应用分发
 

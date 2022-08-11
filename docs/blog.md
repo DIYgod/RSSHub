@@ -16,11 +16,32 @@
 
 <Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
+### 文章最近改动
+
+<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" :paramsDesc="['Site ID, 可在 URL 中找到']"/>
+
 ## Gwern Branwen
+
+### 博客
 
 <Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
 
+## hashnode
+
+### 用户博客
+
+<Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" :paramsDesc="['博主名称，用户头像 URL 中找到']">
+
+::: tip 提示
+
+username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
+
+:::
+
+</Route>
 ## Hedwig.pub
+
+### 博客
 
 <Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
 
@@ -72,9 +93,11 @@
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
-## pageClass: routes
+## Miris Whispers
 
-# 博客
+### 博客
+
+<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
 
 ## Paul Graham 博客
 
@@ -102,6 +125,12 @@
 
 :::
 
+## Stratechery by Ben Thompson
+
+### 博客
+
+<Route author="chazeon" example="/stratechery" path="/stratechery" />
+
 ## Whoscall
 
 ### 最新文章
@@ -128,6 +157,8 @@
 </Route>
 
 ## WordPress
+
+### 博客
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
 
@@ -159,9 +190,29 @@
 
 <Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
 
+## 大眼仔旭
+
+### 分类
+
+<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" :paramsDesc="['分类','是否获取全文，需要获取则传入参数`y`']" radar="1">
+
+| 微软应用    | 安卓应用    | 教程资源     | 其他资源  |
+| ------- | ------- | -------- | ----- |
+| windows | android | tutorial | other |
+
+</Route>
+
 ## 華康字型故事
 
+### 博客
+
 <Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
+
+## 黄健宏博客
+
+### 文章
+
+<Route author="stormbuf" example="/huangz" path="/huangz" radar="1"/>
 
 ## 建宁闲谈
 
@@ -223,6 +274,18 @@
 
 <Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
 
+## 零博客
+
+### 分类
+
+<Route author="nczitzk" example="/agora0/initium" path="/agora0/:category?" :paramsDesc="['分类，见下表，默认为 initium，即端传媒']">
+
+| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
+| ------- | ------- | ------- | -- | ----- |
+| initium | inmedia | matters | pq | vocus |
+
+</Route>
+
 ## 每日安全
 
 ### 推送
@@ -268,7 +331,11 @@
 ### 文章
 
 <Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  :paramsDesc="['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']">
+
 ::: tip 提示
+
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
-::: 
+
+:::
+
 </Route>

@@ -79,6 +79,50 @@
 
 <Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
+## 78 动漫
+
+### 新品速递
+
+<Route author="nczitzk" example="/78dm/news" path="/78dm/news/:path+" :paramsDesc="['参数，见说明，默认为空']">
+
+::: tip 提示
+
+若订阅 [新品速递](https://www.78dm.net/news)，网址为 <https://www.78dm.net/news>。截取 `https://www.78dm.net` 到末尾的部分 `/news` 作为参数，此时路由为 [`/78dm/news`](https://rsshub.app/78dm/news)。
+
+若订阅子分类 [新品速递 - 综合](https://www.78dm.net/news/0/9/0/0/0/0/0/1.html)，网址为 <https://www.78dm.net/news/0/9/0/0/0/0/0/1.html>。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/news/0/9/0/0/0/0/0/1` 作为参数，路由为 [`/78dm/news/0/9/0/0/0/0/0/1`](https://rsshub.app/78dm/news/0/9/0/0/0/0/0/1)。
+
+:::
+
+</Route>
+
+### 精彩评测
+
+<Route author="nczitzk" example="/78dm/eval_list" path="/78dm/eval_list/:path+" :paramsDesc="['参数，见说明，默认为空']">
+
+::: tip 提示
+
+若订阅 [精彩评测](https://www.78dm.net/eval_list)，网址为 <https://www.78dm.net/eval_list>。截取 `https://www.78dm.net` 到末尾的部分 `/eval_list` 作为参数，此时路由为 [`/78dm/eval_list`](https://rsshub.app/78dm/eval_list)。
+
+若订阅子分类 [精彩评测 - 综合](https://www.78dm.net/eval_list/120/0/0/1.html)，网址为 <https://www.78dm.net/eval_list/120/0/0/1.html>。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/eval_list/120/0/0/1` 作为参数，路由为 [`/78dm/eval_list/120/0/0/1`](https://rsshub.app/78dm/eval_list/120/0/0/1)。
+
+:::
+
+</Route>
+
+### 好帖推荐
+
+<Route author="nczitzk" example="/78dm/ht_list" path="/78dm/ht_list/:path+" :paramsDesc="['参数，见说明，默认为空']">
+
+::: tip 提示
+
+若订阅 [好帖推荐](https://www.78dm.net/ht_list)，网址为 <https://www.78dm.net/ht_list>。截取 `https://www.78dm.net` 到末尾的部分 `/ht_list` 作为参数，此时路由为 [`/78dm/ht_list`](https://rsshub.app/78dm/ht_list)。
+
+若订阅子分类 [好帖推荐 - 综合](https://www.78dm.net/ht_list/107/0/0/1.html)，网址为 <https://www.78dm.net/ht_list/107/0/0/1.html>。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/ht_list/107/0/0/1` 作为参数，路由为 [`/78dm/ht_list/107/0/0/1`](https://rsshub.app/78dm/ht_list/107/0/0/1)。
+
+:::
+
+</Route>
+
 ## AcFun
 
 ### 番剧
@@ -95,6 +139,24 @@
 ### 用户投稿
 
 <Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
+
+### 文章
+
+<Route author="TonyRL" example="/acfun/article/110" path="/acfun/article/:categoryId/:sortType?/:timeRange?" :paramsDesc="['分区 ID，见下表', '排序，见下表，默认为 `createTime`', '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`']" radar="1" rssbud="1">
+
+| 二次元画师 | 综合  | 生活情感 | 游戏  | 动漫文化 | 漫画文学 |
+| ----- | --- | ---- | --- | ---- | ---- |
+| 184   | 110 | 73   | 164 | 74   | 75   |
+
+| 最新发表       | 最新动态            | 最热文章     |
+| ---------- | --------------- | -------- |
+| createTime | lastCommentTime | hotScore |
+
+| 时间不限 | 24 小时  | 三天       | 一周      | 一个月      |
+| ---- | ------ | -------- | ------- | -------- |
+| all  | oneDay | threeDay | oneWeek | oneMonth |
+
+</Route>
 
 ## AGE 动漫
 
@@ -468,6 +530,20 @@ Sources
 ### 漫画更新
 
 <Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1" rssbud="1"/>
+
+## 萌番组
+
+### 最新
+
+<Route author="nczitzk" example="/bangumi" path="/bangumi"/>
+
+### 标签
+
+<Route author="nczitzk" example="/bangumi/简体中文/1080p" path="/bangumi/:tags?" :paramsDesc="['标签，默认为空，多个标签用 `/` 分隔']">
+
+更多标签请前往 [搜索种子](https://bangumi.moe/search/index)
+
+</Route>
 
 ## 三界异次元
 

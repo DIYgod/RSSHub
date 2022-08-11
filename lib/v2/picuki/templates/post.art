@@ -1,0 +1,7 @@
+{{ if media }}{{@ media.replace(/\n/g, '') }}{{ /if }}
+{{ if desc }}<p>{{@ desc.replace(/\n/g, '<br>') }}</p>{{ /if }}
+{{ if locationLink.length && locationLink.attr('href') }}
+<p>📍 <small><a href="{{ locationLink.attr('href') }}">{{ locationLink.text() }}</a></small></p>
+{{ else if locationLink.length }}
+<p>📍 <small>{{ locationLink.text() }}</small></p>
+{{ /if }}

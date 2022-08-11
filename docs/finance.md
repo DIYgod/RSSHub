@@ -1,5 +1,11 @@
 * * *
 
+## BigQuant
+
+### 专题报告
+
+<Route author="nczitzk" example="/bigquant/collections" path="/bigquant/collections"/>
+
 ## CFD
 
 ### 每周股指派息调整 (GBP)
@@ -34,9 +40,57 @@
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
-## pageClass: routes
+## FX Markets
 
-# 金融
+### 分类
+
+<Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+
+| Trading | Infrastructure | Tech and Data | Regulation |
+| ------- | -------------- | ------------- | ---------- |
+| trading | infrastructure | tech-and-data | regulation |
+
+</Route>
+
+## Seeking Alpha
+
+### Summary
+
+<Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" :paramsDesc="['股票代号', '分类，见下表，默认为 `news`']"  radar="1" rssbud="1">
+
+| Analysis | News | Transcripts | Press Releases | Related Analysis |
+| -------- | ---- | ----------- | -------------- | ---------------- |
+| analysis | news | transcripts | press-releases | related-analysis |
+
+</Route>
+
+## TokenInsight
+
+::: tip 提示
+
+TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/reference/rss>。
+
+:::
+
+### 博客
+
+<Route author="fuergaosi233" example="/tokeninsight/blog" path="/tokeninsight/blog/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']" />
+
+### 快讯
+
+<Route author="fuergaosi233" example="/tokeninsight/bulletin" path="/tokeninsight/bulletin/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']" />
+
+### 报告
+
+<Route author="fuergaosi233" example="/tokeninsight/report" path="/tokeninsight/report/:lang?" :paramsDesc="['语言，见下表，默认为简体中文']">
+
+语言
+
+| 中文 | 英文 |
+| -- | -- |
+| zh | en |
+
+</Route>
 
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
@@ -112,6 +166,12 @@
 
 </Route>
 
+## 第一财经杂志
+
+### 首页
+
+<Route author="nczitzk" example="/cbnweek" path="/cbnweek"/>
+
 ## 东方财富
 
 ### 天天基金用户动态
@@ -153,6 +213,13 @@
 ## 金十数据
 
 <Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+
+## 老虎社区
+
+### 个人主页
+
+<Route author="Fatpandac" example="/laohu8/personal/3527667596890271" path="/laohu8/personal/:id" :paramsDesc="['用户 ID，见网址链接']" rssbud="1" radar="1"/>
+
 ## 麦肯锡中国
 
 <Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">
@@ -193,6 +260,89 @@
 
 </Route>
 
+### 上市公司信息最新公告披露
+
+<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" />
+
+### 可转换公司债券公告
+
+<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
+
+### 科创板项目动态
+
+<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
+
+### 监管问询
+
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+
+## 深圳证券交易所
+
+### 上市公告 - 可转换债券
+
+<Route author="Jeason0228 nczitzk" example="/szse/notice" path="/szse/notice"/>
+
+### 问询函件
+
+<Route author="Jeason0228 nczitzk" example="/szse/inquire" path="/szse/inquire/:category?/:select?/:keyword?" :paramsDesc="['类型，见下表，默认为 `0` 即 主板', '函件类别, 见下表，默认为全部函件类别', '公司代码或简称，默认为空']">
+
+类型
+
+| 主板 | 创业板 |
+| -- | --- |
+| 0  | 1   |
+
+函件类别
+
+| 全部函件类别 | 非许可类重组问询函 | 问询函 | 违法违规线索分析报告 | 许可类重组问询函 | 监管函（会计师事务所模板） | 提请关注函（会计师事务所模板） | 年报问询函 | 向中介机构发函 | 半年报问询函 | 关注函 | 公司部函 | 三季报问询函 |
+| ------ | --------- | --- | ---------- | -------- | ------------- | --------------- | ----- | ------- | ------ | --- | ---- | ------ |
+
+</Route>
+
+### 最新规则
+
+<Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
+
+### 创业板项目动态
+
+<Route author="nczitzk" example="/szse/projectdynamic" path="/szse/projectdynamic/:type?/:stage?/:status?" :paramsDesc="['类型，见下表，默认为IPO', '阶段，见下表，默认为全部', '状态，见下表，默认为全部']">
+
+类型
+
+| IPO | 再融资 | 重大资产重组 |
+| --- | --- | ------ |
+| 1   | 2   | 3      |
+
+阶段
+
+| 全部 | 受理 | 问询 | 上市委会议 |
+| -- | -- | -- | ----- |
+| 0  | 10 | 20 | 30    |
+
+| 提交注册 | 注册结果 | 中止 | 终止 |
+| ---- | ---- | -- | -- |
+| 35   | 40   | 50 | 60 |
+
+状态
+
+| 全部 | 新受理 | 已问询 | 通过 | 未通过 |
+| -- | --- | --- | -- | --- |
+| 0  | 20  | 30  | 45 | 44  |
+
+| 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |
+| ---- | ---- | ----- | ---- |
+| 46   | 56   | 54    | 60   |
+
+| 注册生效 | 不予注册 | 补充审核 | 终止注册 |
+| ---- | ---- | ---- | ---- |
+| 70   | 74   | 78   | 76   |
+
+| 中止 | 审核不通过 | 撤回 |
+| -- | ----- | -- |
+| 80 | 90    | 95 |
+
+</Route>
+
 ## 世界经济论坛
 
 ### 报告
@@ -209,15 +359,41 @@
 
 </Route>
 
-## 淘股吧股票论坛
+## 首席经济学家论坛
 
-### 论坛总版
+### 最新更新
 
-<Route author="emdoe" example="/taoguba/index" path="/taoguba/index"/>
+<Route author="FledgeXu" example="/chinacef" path="/chinacef"/>
+
+### 专家
+
+<Route author="kdanfly" example="/chinacef/17/" path="/chinacef/:experts_id/" :paramsDesc="['专家编号']" radar="1" rssbud="1">
+
+| 李迅雷 | 夏斌 |
+| --- | -- |
+| 17  | 35 |
+
+</Route>
+
+### 金融热点
+
+<Route author="kdanfly" example="/chinacef/portal/hot" path="/chinacef/portal/hot" radar="1" rssbud="1" />
+
+## 淘股吧
+
+### 淘股论坛
+
+<Route author="emdoe nczitzk" example="/taoguba" path="/taoguba/:category?" :paramsDesc="['分类，见下表，默认为社区总版']">
+
+| 淘股论坛 | 社区总版    | 精华加油    | 网友点赞    |
+| ---- | ------- | ------- | ------- |
+| bbs  | zongban | jinghua | dianzan |
+
+</Route>
 
 ### 用户博客
 
-<Route author="emdoe" example="/taoguba/user/252069" path="/taoguba/user/:uid" :paramsDesc="['用户 id']" />
+<Route author="emdoe nczitzk" example="/taoguba/blog/252069" path="/taoguba/blog/:id" :paramsDesc="['博客 id，可在对应博客页中找到']" />
 
 ## 乌拉邦
 
@@ -261,9 +437,13 @@
 
 <Route author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']"/>
 
-### 基金净值更新
+### 用户专栏
 
-<Route author="HenryQW" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
+<Route author="TonyRL" example="/xueqiu/column/9962554712" path="/xueqiu/column/:id" :paramsDesc="['用户 id, 可在用户主页 URL 中找到']" radar="1" rssbud="1"/>
+
+### 蛋卷基金净值更新
+
+<Route author="HenryQW NathanDai" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" :paramsDesc="['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']"/>
 
 ### 组合最新调仓信息
 
@@ -283,11 +463,15 @@
 
 <Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" :paramsDesc="['股票代码（需要带上交易所）', '标题长度']"/>
 
+### 热帖
+
+<Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
+
 ## 有知有行
 
 ### 有知文章
 
-<Route author="broven Fatpandac" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:column?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="broven Fatpandac nczitzk" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:id?" :paramsDesc="['分类，见下表，默认为全部']">
 
 |  全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
 | :-: | :---: | :---: | :--: | :--: | :---: | :----: |
@@ -341,11 +525,19 @@
 
 ### 沟通交流
 
-<Route author="nczitzk" example="/pbc/goutongjiaoliu" path="/pbc/goutongjiaoliu"/>
+<Route author="nczitzk" example="/gov/pbc/goutongjiaoliu" path="/gov/pbc/goutongjiaoliu" puppeteer="1"/>
 
 ### 货币政策司公开市场交易公告
 
-<Route author="nczitzk" example="/pbc/tradeAnnouncement" path="/pbc/tradeAnnouncement"/>
+<Route author="nczitzk" example="/gov/pbc/tradeAnnouncement" path="/gov/pbc/tradeAnnouncement" puppeteer="1"/>
+
+### 政策研究
+
+<Route author="Fatpandac" example="/gov/pbc/zcjl" path="/gov/pbc/zcjl"/>
+
+### 工作论文
+
+<Route author="Fatpandac" example="/gov/pbc/gzlw" path="/gov/pbc/gzlw"/>
 
 ## 中证网
 

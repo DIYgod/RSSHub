@@ -1,5 +1,29 @@
 * * *
 
+## 19 楼
+
+### 头条
+
+<Route author="nczitzk" example="/19lou/jiaxing" path="/19lou/:city?" :paramsDesc="['分类，见下表，默认为 www，即杭州']">
+
+| 杭州  | 台州      | 嘉兴      | 宁波     | 湖州     |
+| --- | ------- | ------- | ------ | ------ |
+| www | taizhou | jiaxing | ningbo | huzhou |
+
+| 绍兴       | 湖州     | 温州      | 金华     | 舟山       |
+| -------- | ------ | ------- | ------ | -------- |
+| shaoxing | huzhou | wenzhou | jinhua | zhoushan |
+
+| 衢州     | 丽水     | 义乌   | 萧山       | 余杭     |
+| ------ | ------ | ---- | -------- | ------ |
+| quzhou | lishui | yiwu | xiaoshan | yuhang |
+
+| 临安    | 富阳     | 桐庐     | 建德     | 淳安     |
+| ----- | ------ | ------ | ------ | ------ |
+| linan | fuyang | tonglu | jiande | chunan |
+
+</Route>
+
 ## 2047
 
 ### 分类
@@ -172,11 +196,29 @@
 
 </Route>
 
+## Elastic 中文社区
+
+### 发现
+
+<Route author="nczitzk" example="/elasticsearch-cn" path="/elasticsearch-cn/:params?" :paramsDesc="['分类，可在对应分类页 URL 中找到']">
+
+如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 <https://elasticsearch.cn/category-2>，则分类参数处填写 `category-2`，最后得到路由地址 [`/elasticsearch-cn/category-2`](https://rsshub.app/elasticsearch-cn/category-2)。
+
+又如 [求职招聘 30 天热门](https://elasticsearch.cn/sort_type-hot\_\_\_\_category-12\__day-30) 的 URL 为 <https://elasticsearch.cn/sort_type-hot____category-12__day-30>，则分类参数处填写 `sort_type-hot____category-12__day-30`，最后得到路由地址 [`/elasticsearch-cn/sort_type-hot____category-12__day-30`](https://rsshub.app/elasticsearch-cn/sort_type-hot\_\_\_\_category-12\__day-30)。
+
+</Route>
+
 ## eTOLAND
 
 ### 主题贴
 
 <Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" rssbud="1"/>
+
+## HACKER TALK 黑客说
+
+### 最新帖子
+
+<Route author="hyoban" example="/hackertalk" path="/hackertalk" radar="1" rssbud="1"/>
 
 ## LearnKu
 
@@ -204,6 +246,32 @@
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
+## Mobilism
+
+### 论坛
+
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['分类', '种类', '是否获取全文，如需获取全文参数传入 `y`']">
+
+| 安卓      | iPhone | iPad |
+| ------- | ------ | ---- |
+| android | iphone | ipad |
+
+| 应用   | 游戏    |
+| ---- | ----- |
+| apps | games |
+
+</Route>
+
+### 门户
+
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['种类', '是否获取全文，如需获取全文参数传入 `y`']">
+
+| 安卓应用 | 安卓游戏  | 图书    | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
+| ---- | ----- | ----- | ------- | ------- | --------- | --------- |
+| aapp | agame | ebook | ipapp   | ipgame  | iapp      | igame     |
+
+</Route>
+
 ## NGA
 
 ### 分区帖子
@@ -212,21 +280,35 @@
 
 ### 帖子
 
-<Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
+<Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  :paramsDesc="['帖子 id, 可在帖子 URL 找到', '作者 id']" radar="1" rssbud="1"/>
 
-## pageClass: routes
+## PLAYNO.1 玩樂達人
 
-# 论坛
+### AV
 
-## Quicker
+::: warning 注意
 
-### 讨论区
+目前观测到该博客可能禁止日本 IP 访问。建议部署在日本区以外的服务器上。
 
-<Route author="Cesaryuan" example="/quicker/qa" path="/quicker/qa"/>
+:::
 
-### 用户动作更新
+<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
 
-<Route author="Cesaryuan" example="/quicker/user/action/18359/Cesaryuan" path="/quicker/user/action/:uid/:person" :paramsDesc="['用户ID，可在用户主页链接里找到', '用户昵称，可在用户主页链接里找到']" />
+| 全部文章 | AV 新聞 | AV 導覽 |
+| ---- | ----- | ----- |
+| 78   | 3     | 5     |
+
+</Route>
+
+### 情趣
+
+<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
+
+| 全部文章 | 情趣體驗報告     | 情趣新聞 | 情趣研究所    |
+| ---- | ---------- | ---- | -------- |
+| all  | experience | news | graduate |
+
+</Route>
 
 ## RF 技术社区
 
@@ -330,6 +412,12 @@
 
 </Route>
 
+## 第一会所
+
+### 子版块
+
+<Route author="TonyRL" example="/sis001/forum/322" path="/sis001/forum/:id?" :paramsDesc="['子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`']" radar="1" rssbud="1"/>
+
 ## 电鸭社区
 
 ### 工作机会
@@ -341,6 +429,26 @@
 ### 板块
 
 <Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
+
+## 二次元虫洞
+
+### 板块
+
+<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块', '排序']" radar="1">
+
+板块（更多板块请自行 [查看](http://www.2cycd.com)）
+
+| 音乐下载（默认） | 动漫下载 | 游戏下载 |
+| -------- | ---- | ---- |
+| 43       | 53   | 42   |
+
+排序
+
+| 发布时间排序（默认） | 回复／查看   | 查看    |
+| ---------- | ------- | ----- |
+| dateline   | replies | views |
+
+</Route>
 
 ## 光谷社区
 
@@ -354,49 +462,85 @@
 
 </Route>
 
+## 海角社区
+
+### 热门
+
+<Route author="nczitzk" example="/hjedd/hot" path="/hjedd/hot"/>
+
+### 新闻
+
+<Route author="nczitzk" example="/hjedd/news" path="/hjedd/news"/>
+
+### 大事记
+
+<Route author="nczitzk" example="/hjedd/event" path="/hjedd/event"/>
+
+### 原创
+
+<Route author="nczitzk" example="/hjedd/original" path="/hjedd/original"/>
+
+### 精华
+
+<Route author="nczitzk" example="/hjedd/top" path="/hjedd/top"/>
+
+### 公告
+
+<Route author="nczitzk" example="/hjedd/notice" path="/hjedd/notice"/>
+
+### 最新
+
+<Route author="nczitzk" example="/hjedd/latest" path="/hjedd/latest"/>
+
+### 文章
+
+<Route author="nczitzk" example="/hjedd/1288/1" path="/hjedd/:node?/:type?" :paramsDesc="['节点 id，可在对应节点页 URL 中找到，默认为 `258`，即 大事记', '类型 id，见下表，默认为 `0`，即 默认']">
+
+| 默认 | 最新 | 热门 | 精华 | 悬赏 | 出售 |
+| -- | -- | -- | -- | -- | -- |
+| 0  | 1  | 2  | 3  | 4  | 5  |
+
+</Route>
+
 ## 虎扑
 
-### 虎扑 BBS 论坛
+### 首页
 
-<Route author="LogicJake" example="/hupu/bbs/bxj/2" path="/hupu/bbs/:id/:order?" :paramsDesc="['板块 id，可在板块 URL 找到', '排序方式，1最新回帖（默认），2最新发帖，3精华帖']">
+<Route author="nczitzk" example="/hupu/nba" path="/hupu/:category?" :paramsDesc="['分类，见下表']">
 
-此路由与旧的 `/hupu/bxj/:id/:order?` 等价，但推荐使用 `/hupu/bbs/:id/:order?`，旧路由可能会在未来被删除。
+| NBA | CBA | 足球     |
+| --- | --- | ------ |
+| nba | cba | soccer |
 
-</Route>
+::: tip 提示
 
-### 分类
+电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。
 
-<Route author="nczitzk" example="/hupu/all/gambia" path="/hupu/all/:caty" :paramsDesc="['分类名，见下表']">
-
-| 分类     | 名称       |
-| ------ | -------- |
-| NBA 论坛 | nba      |
-| CBA 论坛 | cba      |
-| 运动和装备  | gear     |
-| 国际足球论坛 | soccer   |
-| 中国足球论坛 | csl      |
-| 综合体育   | sports   |
-| 步行街    | gambia   |
-| 彩票中心   | lottery  |
-| 自建版块   | boards   |
-| 虎扑社团   | group    |
-| 站务管理   | feedback |
-
-更多参见 [虎扑社区版块目录](https://bbs.hupu.com/boards.php) 左侧导航栏各板块分类页
+:::
 
 </Route>
 
-### 子站
+### 社区
 
-<Route author="nczitzk" example="/hupu/dept/nba" path="/hupu/dept/:dept" :paramsDesc="['名称，见下表']">
+<Route author="LogicJake nczitzk" example="/hupu/bbs/34" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为步行街', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布']">
 
-| 子站   | 名称           |
-| ---- | ------------ |
-| NBA  | nba          |
-| 国际足球 | soccer       |
-| 中国足球 | soccer-china |
-| CBA  | cba          |
-| 电竞   | gg           |
+::: tip 提示
+
+更多社区参见 [社区](https://m.hupu.com/bbs)
+
+:::
+
+</Route>
+
+### 热帖
+
+<Route author="nczitzk" example="/hupu/all/topic-daily" path="/hupu/all/:id?" :paramsDesc="['编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题']">
+
+::: tip 提示
+
+更多热帖版面参见 [论坛](https://bbs.hupu.com)
+
+:::
 
 </Route>
 
@@ -578,7 +722,7 @@
 
 ### 发现
 
-<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']" anticrawler="1" />
+<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']" anticrawler="1" puppeteer="1"/>
 
 | 最新  | 推荐        | 热门  |
 | --- | --------- | --- |
@@ -586,11 +730,11 @@
 
 ### 精选
 
-<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']" anticrawler="1" />
+<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']" anticrawler="1" puppeteer="1"/>
 
 ### 话题
 
-<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" />
+<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" puppeteer="1"/>
 
 ## 三星盖乐世社区
 
@@ -666,11 +810,35 @@
 
 </Route>
 
+## 通信人家园
+
+### 论坛 频道
+
+<Route author="Fatpandac" example="/txrjy/fornumtopic" path="/txrjy/fornumtopic/:channel?" :paramsDesc="['频道的 id，见下表，默认为最新500个主题帖']">
+
+| 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
+| :---------: | :---------: | :---: | :---: | :--: | :--: |
+|      1      |      2      |   3   |   4   |   5  |   6  |
+
+</Route>
+
 ## 万维读者
 
 ### 焦点新闻
 
 <Route author="nczitzk" example="/creaders/headline" path="/creaders/headline"/>
+
+## 威锋
+
+### 社区
+
+<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" :paramsDesc="['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']" radar="1" rssbud="1">
+
+| 最新回复   | 最新发布 | 热门  | 精华      |
+| ------ | ---- | --- | ------- |
+| newest | all  | hot | essence |
+
+</Route>
 
 ## 文学城
 
@@ -909,7 +1077,7 @@
 
 ### 分类
 
-<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']"> 
+<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']">
 
 | 编辑推荐    | 奇闻异事       | 鬼话连篇           |
 | ------- | ---------- | -------------- |
