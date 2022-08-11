@@ -1915,6 +1915,13 @@
     "/jewishmuseum/exhibitions": [
         "chazeon"
     ],
+    "/jiemian/list/:id?": [
+        "WenhuWee",
+        "nczitzk"
+    ],
+    "/jiemian/": [
+        "nczitzk"
+    ],
     "/jike/topic/text/:id": [
         "HenryQW"
     ],
@@ -3735,7 +3742,6 @@
     "/disqus/posts/:forum": [],
     "/geektime/column/:cid": [],
     "/geektime/news": [],
-    "/jiemian/list/:cid": [],
     "/qdaily/:type/:id": [],
     "/iqiyi/dongman/:id": [],
     "/iqiyi/user/video/:uid": [],
