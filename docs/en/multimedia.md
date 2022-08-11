@@ -189,7 +189,7 @@ For more genre, please visit [Censored - Genre](https://www.javbus.com/en/genre)
 
 <RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/star/2jv" path="/javbus/en/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
 
-For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/actresses)
+For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/en/actresses)
 
 </RouteEn>
 
@@ -229,7 +229,7 @@ For more genre, please visit [Uncensored - Genre](https://www.javbus.com/en/unce
 
 <RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/star/b5b" path="/javbus/en/uncensored/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
 
-For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/uncensored/actresses)
+For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/en/uncensored/actresses)
 
 </RouteEn>
 
@@ -253,7 +253,7 @@ For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/u
 
 <RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/genre/86" path="/javbus/en/western/genre/:id" :paramsDesc="['Genre id, can be found in URL']">
 
-For more genre, please visit [Genre - Video](https://www.javbus.org/genre)
+For more genre, please visit [Genre - Video](https://www.javbus.org/en/genre)
 
 </RouteEn>
 
