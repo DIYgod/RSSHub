@@ -409,17 +409,17 @@
 
 # <Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
 
-## pageClass: routes
-
-# 程序更新
-
-> > > > > > > 47c73b23a2b2469d4d97e5f2b1007d05468fb737
-
 ## OpenWrt
 
 ### Releases
 
 <Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" :paramsDesc="['产品型号，可在 `Table of Hardware` -> `Device Page` 的 URL 中找到', '同上']"/>
+
+## pageClass: routes
+
+# 程序更新
+
+> > > > > > > 47c73b23a2b2469d4d97e5f2b1007d05468fb737
 
 ## PlayStation
 

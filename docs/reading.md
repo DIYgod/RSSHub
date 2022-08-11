@@ -65,16 +65,6 @@
 
 </Route>
 
-## Penguin Random House
-
-### Book Lists
-
-<Route author="StevenRCE0" example="/penguin-random-house/the-read-down" path="/penguin-random-house/the-read-down" />
-
-### Articles
-
-<Route author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
-
 ## pageClass: routes
 
 ### 首页
@@ -113,6 +103,16 @@
 ### 归档
 
 <Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
+
+## Penguin Random House
+
+### Book Lists
+
+<Route author="StevenRCE0" example="/penguin-random-house/the-read-down" path="/penguin-random-house/the-read-down" />
+
+### Articles
+
+<Route author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
 
 ## syosetu
 
