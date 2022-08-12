@@ -89,3 +89,10 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### Entry
 
 <RouteEn author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
+
+
+## CSDN
+
+### User Feed
+
+<RouteEn author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" />
