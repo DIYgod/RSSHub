@@ -601,7 +601,7 @@ Sources
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
 
-## oreno3d - 俺の3Dエロ動画
+## 俺の3Dエロ動画(oreno3d)
 ::: tip 提示
 可配合其他RSS解析库(如Python的feedparser库)实现视频的更新检测以及自动下载
 
