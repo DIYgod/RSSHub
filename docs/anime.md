@@ -600,3 +600,53 @@ Sources
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## oreno3d - 俺の3Dエロ動画
+::: tip 提示
+可配合其他RSS解析库(如Python的feedparser库)实现视频的更新检测以及自动下载
+
+:::
+### 关键词搜索
+<Route author="xueli-sherryli" example="/oreno3d/search/latest/布洛妮娅" path="/oreno3d/search/:sort?/:keyword" :paramsDesc="['排序方法,见下表,默认为latest', '关键词']">
+
+| favorites | hot    | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| 高評価    | 急上昇 | 新着   | 人気       |
+
+</Route>
+
+### 角色搜索
+<Route author="xueli-sherryli" example="/oreno3d/characters/latest/283" path="/oreno3d/characters/:sort?/:characterid" :paramsDesc="['排序方法,见下表,默认为latest', '角色id,可在浏览器地址栏中找到']">
+
+| favorites | hot    | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| 高評価    | 急上昇 | 新着   | 人気       |
+
+</Route>
+
+### 作者搜索
+<Route author="xueli-sherryli" example="/oreno3d/authors/latest/3189" path="/oreno3d/authors/:sort?/:authorid" :paramsDesc="['排序方法,见下表,默认为latest', '作者id,可在浏览器地址栏中找到']">
+
+| favorites | hot    | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| 高評価    | 急上昇 | 新着   | 人気       |
+
+</Route>
+
+### 标签搜索
+<Route author="xueli-sherryli" example="/oreno3d/tags/latest/177" path="/oreno3d/tags/:sort?/:tagid" :paramsDesc="['排序方法,见下表,默认为latest', '标签id,可在浏览器地址栏中找到']">
+
+| favorites | hot    | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| 高評価    | 急上昇 | 新着   | 人気       |
+
+</Route>
+
+### 原作搜索
+<Route author="xueli-sherryli" example="/oreno3d/origins/latest/3" path="/oreno3d/origins/:sort?/:originid" :paramsDesc="['排序方法,见下表,默认为latest', '原作id,可在浏览器地址栏中找到']">
+
+| favorites | hot    | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| 高評価    | 急上昇 | 新着   | 人気       |
+
+</Route>
