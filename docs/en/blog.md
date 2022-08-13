@@ -60,7 +60,7 @@ pageClass: routes
 
 ## Polkadot
 
-### Newest Articles
+### Blog
 
 <RouteEn author="iceqing" example="/polkadot/blog" path="/polkadot/blog">
 
