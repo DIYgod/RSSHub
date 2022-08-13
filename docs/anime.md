@@ -610,7 +610,8 @@ Sources
 :::
 
 ### 关键词搜索
-<Route author="xueli-sherryli" example="/oreno3d/search/latest/布洛妮娅" path="/oreno3d/search/:sort?/:keyword" :paramsDesc="['排序方法,见下表,默认为latest', '关键词']">
+
+<Route author="xueli-sherryli" example="/oreno3d/search/latest/布洛妮娅" path="/oreno3d/search/:sort?/:keyword" :paramsDesc="['排序方法，见下表，默认为 `latest`', '关键词']">
 
 | favorites | hot    | latest | popularity |
 | --------- | ------ | ------ | ---------- |
