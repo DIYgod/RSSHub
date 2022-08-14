@@ -105,3 +105,57 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 ### [Naver](https://comic.naver.com)
 
 <RouteEn author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId of naver webtoon']" />
+
+## My 3D Hentai Videos(oreno3d)
+
+::: tip Tips:
+
+You can use some RSS parsing libraries (like`feedpraser`in `Python` ) to receive the video update messages and download them automatically  
+
+:::
+
+### Keyword Search
+
+<Route author="xueli-sherryli" example="/oreno3d/search/yousa/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['Search keyword', 'Sort method, see the table below, the default is latest']">
+
+| favorites |  hot   | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| favorites |  hot   | latest | popularity |
+
+</Route>
+
+### Character Search
+<Route author="xueli-sherryli" example="/oreno3d/characters/1948/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['character's id,it can be found in the browser address bar', 'Sort method, see the table below, the default is latest']">
+
+| favorites |  hot   | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| favorites |  hot   | latest | popularity |
+
+</Route>
+
+###  Author  Search
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest" path="/oreno3d/authors/:authorid/:sort?" :paramsDesc="['author's id,it can be found in the browser address bar', 'Sort method, see the table below, the default is latest']">
+
+| favorites |  hot   | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| favorites |  hot   | latest | popularity |
+
+</Route>
+
+### Tag Search
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest" path="/oreno3d/tags/:tagid/:sort?" :paramsDesc="['tag's id,it can be found in the browser address bar', 'Sort method, see the table below, the default is latest']">
+
+| favorites |  hot   | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| favorites |  hot   | latest | popularity |
+
+</Route>
+
+### Origin Search
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['origin's id,it can be found in the browser address bar', 'Sort method, see the table below, the default is latest']"">
+
+| favorites |  hot   | latest | popularity |
+| --------- | ------ | ------ | ---------- |
+| favorites |  hot   | latest | popularity |
+
+</Route>
