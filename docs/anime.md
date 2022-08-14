@@ -611,7 +611,7 @@ Sources
 
 ### 关键词搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/search/yousa/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['关键词', '排序方法,见下表,默认为latest']">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['关键词', '排序方法,见下表,默认为latest']">
 
 | favorites | hot    | latest | popularity |
 | --------- | ------ | ------ | ---------- |
@@ -620,7 +620,7 @@ Sources
 </Route>
 
 ### 角色搜索
-<Route author="xueli-sherryli" example="/oreno3d/characters/1948/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['角色id,可在浏览器地址栏找到', '排序方法,见下表,默认为latest']">
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['角色id,可在浏览器地址栏找到', '排序方法,见下表,默认为latest']">
 
 | favorites | hot    | latest | popularity |
 | --------- | ------ | ------ | ---------- |
@@ -647,7 +647,7 @@ Sources
 </Route>
 
 ### 原作搜索
-<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['原作id,可在浏览器地址栏找到', '排序方法,见下表,默认为latest']"">
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['原作id,可在浏览器地址栏找到', '排序方法,见下表,默认为latest']">
 
 | favorites | hot    | latest | popularity |
 | --------- | ------ | ------ | ---------- |
