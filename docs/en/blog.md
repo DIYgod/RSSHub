@@ -62,7 +62,7 @@ pageClass: routes
 
 ### Blog
 
-<RouteEn author="iceqing" example="/polkadot/blog" path="/polkadot/blog">
+<RouteEn author="iceqing" example="/polkadot/blog" path="/polkadot/blog" />
 
 ## PolkaWorld
 
