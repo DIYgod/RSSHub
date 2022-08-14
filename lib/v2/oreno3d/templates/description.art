@@ -6,7 +6,8 @@
 <p>标签：<b>{{ tags }}</b></p>
 <p>简介：</p>
 <div style = "white-space: pre-line;">
-{{ desc }}
+<b>{{ desc }}</b>
 </div>
-<p>iwara链接：<b>{{ iwara_link }}</b></p>
-<p>Oreno3D链接：<b>{{ oreno3d_link }}</b></p>
+<p>iwara链接：<b><a href="{{ iwara_link }}">{{ iwara_link }}</a></b></p>
+<p>Oreno3D链接：<b><a href="{{ oreno3d_link }}">{{ oreno3d_link }}</a></b></p>
+
