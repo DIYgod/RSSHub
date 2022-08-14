@@ -106,7 +106,7 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 
 <RouteEn author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" :paramsDesc="['titleId of naver webtoon']" />
 
-## My 3D Hentai Videos(oreno3d)
+## 俺の3Dエロ動画(oreno3d)
 
 ::: tip Tip
 
