@@ -108,7 +108,7 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 
 ## My 3D Hentai Videos(oreno3d)
 
-::: tip Tips:
+::: tip Tip
 
 You can use some RSS parsing libraries (like`feedpraser`in `Python` ) to receive the video update messages and download them automatically
 
