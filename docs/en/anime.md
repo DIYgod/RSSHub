@@ -108,6 +108,12 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 
 ## My 3D Hentai Videos(oreno3d)
 
+::: tip Tip
+
+You can use some RSS parsing libraries (like`feedpraser`in `Python` ) to receive the video update messages and download them automatically  
+
+:::
+
 ### Keyword Search
 
 <RouteEn author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['Search keyword', 'Sort method, see the table below, the default is latest']">
