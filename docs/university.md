@@ -2005,13 +2005,23 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 南信大研究生院学科建设处
+### 研究生院学科建设处
 
-<Route author="gylidian" example="/nuist/yjs/11" path="/nuist/yjs/:category?" :paramsDesc="['默认为 `11`']">
+<Route author="gylidian nczitzk" example="/nuist/yjs/index/tzgg" path="/nuist/yjs/:path+" :paramsDesc="['默认为通知公告']">
 
-| 招生工作 | 培养工作 | 学位工作 | 学生工作 | 就业工作 | 国际合作 | 文件下载 | 工作动态 | 通知公告 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   |
+::: tip 提示
+
+路径字段处填写的是对应南京信息工程大学研究生院学科建设处分类页网址中介于 **<https://yjs.nuist.edu.cn/>** 和 **.htm** 中间的一段。
+
+如 [南京信息工程大学研究生院学科建设处工作动态](https://yjs.nuist.edu.cn/index/gzdt.htm) 的网址为 <https://yjs.nuist.edu.cn/index/gzdt.htm> 其中介于 **<https://yjs.nuist.edu.cn/>** 和 **.htm** 中间的一段为 `index/gzdt`。可以得到路由为 [`/nuist/yjs/index/gzdt`](https://rsshub.app/nuist/yjs/index/gzdt)
+
+:::
+
+以下为部分分类：
+
+| 工作动态       | 通知公告       | 招生工作      | 培养与学位     | 学生工作       |
+| ---------- | ---------- | --------- | --------- | ---------- |
+| index/gzdt | index/tzgg | zsgz/sszs | xwgz/xwtz | xsgz1/xzfc |
 
 </Route>
 
