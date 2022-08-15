@@ -2461,6 +2461,21 @@
     "/orcid/:id": [
         "OrangeEd1t"
     ],
+    "/oreno3d/authors/:authorid/:sort?": [
+        "xueli_sherryli"
+    ],
+    "/oreno3d/characters/:characterid/:sort?": [
+        "xueli_sherryli"
+    ],
+    "/oreno3d/origins/:originid/:sort?": [
+        "xueli_sherryli"
+    ],
+    "/oreno3d/search/:keyword/:sort?": [
+        "xueli_sherryli"
+    ],
+    "/oreno3d/tags/:tagid/:sort?": [
+        "xueli_sherryli"
+    ],
     "/oup/:name": [
         "Fatpandac"
     ],
