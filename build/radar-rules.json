@@ -14283,6 +14283,19 @@
       }
     ]
   },
+  "antibody-software.com": {
+    "_name": "WizFile",
+    ".": [
+      {
+        "title": "更新日志",
+        "docs": "https://docs.rsshub.app/new-media.html#wei-ji-xin-wen",
+        "source": [
+          "/wizfile/download"
+        ],
+        "target": "/wizfile/updates"
+      }
+    ]
+  },
   "wp-china.com": {
     "_name": "中国工人出版社",
     ".": [
