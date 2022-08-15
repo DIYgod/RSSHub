@@ -618,6 +618,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
+## WziFile
+
+### 更新日志
+
+<Route author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
+
 ## X410
 
 ### News
