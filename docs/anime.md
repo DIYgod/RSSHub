@@ -531,6 +531,20 @@ Sources
 
 <Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1" rssbud="1"/>
 
+## 萌番组
+
+### 最新
+
+<Route author="nczitzk" example="/bangumi" path="/bangumi"/>
+
+### 标签
+
+<Route author="nczitzk" example="/bangumi/简体中文/1080p" path="/bangumi/:tags?" :paramsDesc="['标签，默认为空，多个标签用 `/` 分隔']">
+
+更多标签请前往 [搜索种子](https://bangumi.moe/search/index)
+
+</Route>
+
 ## 三界异次元
 
 ### 三界异次元

@@ -400,7 +400,7 @@ pageClass: routes
 
 ### CDRHNew
 
-<Route author="nczitzk" example="/fda/cdrh" path="/fda/cdrh" />
+<Route author="nczitzk" example="/fda/cdrh" path="/fda/cdrh/:titleOnly?" :paramsDesc="['只显示标题，默认为空，即包含全文，其他任意值则只显示标题']"/>
 
 ## 美国中央情报局
 
