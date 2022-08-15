@@ -166,11 +166,10 @@
   "nodemonConfig": {
     "watch": [
       ".env",
-      "*.art",
-      "*.js",
-      "*.mjs",
-      "*.json"
-    ]
+      "lib",
+      "test"
+    ],
+    "ext": "art,js,mjs,json"
   },
   "engines": {
     "node": ">=14"
