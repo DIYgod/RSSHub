@@ -164,7 +164,13 @@
     }
   },
   "nodemonConfig": {
-    "ext": "art,js,mjs,json"
+    "watch": [
+      ".env",
+      "*.art",
+      "*.js",
+      "*.mjs",
+      "*.json"
+    ]
   },
   "engines": {
     "node": ">=14"
