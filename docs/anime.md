@@ -399,6 +399,40 @@ Sources
 
 <Route author="Ye11" example="/xmanhua" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
 
+## 俺の 3D エロ動画 (oreno3d)
+
+::: tip 提示
+
+可配合其他 RSS 解析库 (如`Python`的`feedparser`库) 实现视频的更新检测以及自动下载
+
+:::
+
+### 关键词搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['关键词', '排序方法，见下表，默认为 `latest`']">
+
+| 高評価       | 急上昇 | 新着     | 人気         |
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |
+
+</Route>
+
+### 角色搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['角色 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+
+### 作者搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest" path="/oreno3d/authors/:authorid/:sort?" :paramsDesc="['作者 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+
+### 标签搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest" path="/oreno3d/tags/:tagid/:sort?" :paramsDesc="['标签 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+
+### 原作搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['原作 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+
 ## 包子漫画
 
 #### 订阅漫画
