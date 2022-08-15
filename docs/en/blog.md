@@ -58,6 +58,12 @@ pageClass: routes
 
 <RouteEn author="CitrusIce" example="/phrack" path="/phrack" />
 
+## Polkadot
+
+### Blog
+
+<RouteEn author="iceqing" example="/polkadot/blog" path="/polkadot/blog" />
+
 ## PolkaWorld
 
 ### Newest Articles

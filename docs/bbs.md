@@ -428,6 +428,22 @@ pageClass: routes
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 
+## 斗鱼
+
+### 鱼吧帖子
+
+<Route author="nczitzk" example="/douyu/group/1011" path="/douyu/group/:id/:sort?" :paramsDesc="['鱼吧 id，可在鱼吧页 URL 中找到', '排序方式，见下表，默认为发布时间排序']">
+
+| 回复时间排序 | 发布时间排序 |
+| ------ | ------ |
+| 1      | 2      |
+
+</Route>
+
+### 鱼吧跟帖
+
+<Route author="nczitzk" example="/douyu/post/631737151576473201" path="/douyu/post/:id" :paramsDesc="['帖子 id，可在帖子页 URL 中找到']" />
+
 ## 恩山无线论坛
 
 ### 板块
