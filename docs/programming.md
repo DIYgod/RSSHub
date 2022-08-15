@@ -359,12 +359,6 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="CcccFz" example="/gocn/jobs" path="/gocn/jobs" radar="1" rssbud="1"/>
 
-## Rust语言中文社区
-
-### 招聘
-
-<Route author="CcccFz" example="/rustcc/jobs" path="/rustcc/jobs" radar="1" rssbud="1"/>
-
 ## Hacker News
 
 ### 分区
@@ -623,6 +617,12 @@ GitHub 官方也提供了一些 RSS:
 ### react-native
 
 <Route author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
+
+## Rust 语言中文社区
+
+### 招聘
+
+<Route author="CcccFz" example="/rustcc/jobs" path="/rustcc/jobs" radar="1" rssbud="1"/>
 
 ## Scala
 
