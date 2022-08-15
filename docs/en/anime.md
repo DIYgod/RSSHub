@@ -110,13 +110,13 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 
 ::: tip Tip
 
-You can use some RSS parsing libraries (like`feedpraser`in `Python` ) to receive the video update messages and download them automatically
+You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receive the video update messages and download them automatically
 
 :::
 
 ### Keyword Search
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['Search keyword', 'Sort method, see the table below, the default is latest']">
+<RouteEn author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['Search keyword', 'Sort method, see the table below, `latest` by default']" radar="1" rssbud="1">
 
 | favorites |  hot   | latest | popularity |
 | --------- | ------ | ------ | ---------- |
@@ -126,40 +126,16 @@ You can use some RSS parsing libraries (like`feedpraser`in `Python` ) to receive
 
 ### Character Search
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/characters/283/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['character id,can be found in the browser address bar' , 'Sort method, see the table below, the default is latest']">
-
-| favorites |  hot   | latest | popularity |
-| --------- | ------ | ------ | ---------- |
-| favorites |  hot   | latest | popularity |
-
-</RouteEn>
+<RouteEn author="xueli-sherryli" example="/oreno3d/characters/283/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['Character id, can be found in URL' , 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
 
 ### Author Search
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/authors/3189/latest" path="/oreno3d/authors/:authorid/:sort?" :paramsDesc="['author id,can be found in the browser address bar' , 'Sort method, see the table below, the default is latest']">
-
-| favorites |  hot   | latest | popularity |
-| --------- | ------ | ------ | ---------- |
-| favorites |  hot   | latest | popularity |
-
-</RouteEn>
+<RouteEn author="xueli-sherryli" example="/oreno3d/authors/3189/latest" path="/oreno3d/authors/:authorid/:sort?" :paramsDesc="['Author id, can be found in URL' , 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
 
 ### Tags Search
 
-<RouteEn tag="xueli-sherryli" example="/oreno3d/tags/177/latest" path="/oreno3d/tags/:tagid/:sort?" :paramsDesc="['tag id,can be found in the browser address bar' , 'Sort method, see the table below, the default is latest']">
-
-| favorites |  hot   | latest | popularity |
-| --------- | ------ | ------ | ---------- |
-| favorites |  hot   | latest | popularity |
-
-</RouteEn>
+<RouteEn tag="xueli-sherryli" example="/oreno3d/tags/177/latest" path="/oreno3d/tags/:tagid/:sort?" :paramsDesc="['Tag id, can be found in URL', 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
 
 ### Origins Search
 
-<RouteEn origin="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['origin id,can be found in the browser address bar' , 'Sort method, see the table below, the default is latest']">
-
-| favorites |  hot   | latest | popularity |
-| --------- | ------ | ------ | ---------- |
-| favorites |  hot   | latest | popularity |
-
-</RouteEn>
+<RouteEn origin="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['Origin id, can be found in URL' , 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
