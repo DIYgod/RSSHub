@@ -1,0 +1,6 @@
+{{ if image }}
+<img src="{{ image }}">
+{{ /if }}
+{{ if description }}
+{{@ description }}
+{{ /if }}

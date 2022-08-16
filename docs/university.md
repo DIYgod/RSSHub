@@ -1963,7 +1963,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 南信大信息公告栏
 
-<Route author="gylidian" example="/nuist/bulletin/791" path="/nuist/bulletin/:category?" :paramsDesc="['默认为 `791`']">
+<Route author="gylidian" example="/nuist/bulletin/791" path="/nuist/bulletin/:category?" :paramsDesc="['默认为 `791`']" radar="1" rssbud="1">
 
 | 全部  | 文件公告 | 学术报告  | 招标信息 | 会议通知 | 党政事务 | 组织人事 |
 | --- | ---- | ----- | ---- | ---- | ---- | ---- |
@@ -1983,35 +1983,41 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### NUIST CS（南信大计软院）
 
-<Route author="gylidian" example="/nuist/scs/2242" path="/nuist/scs/:category?" :paramsDesc="['默认为 `2242`']">
+<Route author="gylidian" example="/nuist/scs/xwkx" path="/nuist/scs/:category?" :paramsDesc="['默认为新闻快讯']" radar="1" rssbud="1">
 
-| 学院新闻 | 学生工作 | 通知公告 | 教务通知 | 科研动态 | 招生就业 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 2242 | 2237 | 2245 | 2246 | 2243 | 2244 |
-
-</Route>
-
-### 南信大本科教学信息网
-
-<Route author="gylidian" example="/nuist/jwc/1" path="/nuist/jwc/:category?" :paramsDesc="['默认为 `1`']">
-
-| 通知公告 | 教学新闻 | 规章制度 | 教学研究 | 教务管理 | 考试中心 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 1    | 2    | 4    | 5    | 6    | 7    |
-
-| 教材建设 | 实践教学 | 三百工程 | 创新创业 | 规章制度 | 业务办理 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 8    | 9    | 56   | 60   | 62   | 43   |
+| 新闻快讯 | 通知公告 | 教务信息 | 科研动态 | 学子风采 |
+| ---- | ---- | ---- | ---- | ---- |
+| xwkx | tzgg | jwxx | kydt | xzfc |
 
 </Route>
 
-### 南信大研究生院学科建设处
+### 教务处
 
-<Route author="gylidian" example="/nuist/yjs/11" path="/nuist/yjs/:category?" :paramsDesc="['默认为 `11`']">
+<Route author="gylidian" example="/nuist/jwc/jxyw" path="/nuist/jwc/:category?" :paramsDesc="['默认为教学要闻']" radar="1" rssbud="1">
 
-| 招生工作 | 培养工作 | 学位工作 | 学生工作 | 就业工作 | 国际合作 | 文件下载 | 工作动态 | 通知公告 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 3    | 4    | 5    | 6    | 7    | 8    | 9    | 10   | 11   |
+| 教学要闻 | 学院教学 | 教务管理 | 教学研究 | 教务管理 | 教材建设 | 考试中心 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| jxyw | xyjx | jwgl | jxyj | sjjx | jcjs | kszx |
+
+</Route>
+
+### 研究生院学科建设处
+
+<Route author="gylidian nczitzk" example="/nuist/yjs/index/tzgg" path="/nuist/yjs/:path+" :paramsDesc="['默认为通知公告']">
+
+::: tip 提示
+
+路径字段处填写的是对应南京信息工程大学研究生院学科建设处分类页网址中介于 **<https://yjs.nuist.edu.cn/>** 和 **.htm** 中间的一段。
+
+如 [南京信息工程大学研究生院学科建设处工作动态](https://yjs.nuist.edu.cn/index/gzdt.htm) 的网址为 <https://yjs.nuist.edu.cn/index/gzdt.htm> 其中介于 **<https://yjs.nuist.edu.cn/>** 和 **.htm** 中间的一段为 `index/gzdt`。可以得到路由为 [`/nuist/yjs/index/gzdt`](https://rsshub.app/nuist/yjs/index/gzdt)
+
+:::
+
+以下为部分分类：
+
+| 工作动态       | 通知公告       | 招生工作      | 培养与学位     | 学生工作       |
+| ---------- | ---------- | --------- | --------- | ---------- |
+| index/gzdt | index/tzgg | zsgz/sszs | xwgz/xwtz | xsgz1/xzfc |
 
 </Route>
 
@@ -2021,37 +2027,27 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### NUIST ESE（南信大环科院）
 
-<Route author="gylidian" example="/nuist/sese/11" path="/nuist/sese/:category?" :paramsDesc="['默认为 `11`']">
+<Route author="gylidian" example="/nuist/sese/tzgg1" path="/nuist/sese/:category?" :paramsDesc="['默认为通知公告']" radar="1" rssbud="1">
 
-| 通知公告 | 新闻快讯 | 学术动态 | 学生工作 | 研究生教育 | 本科教育 |
-| ---- | ---- | ---- | ---- | ----- | ---- |
-| 11   | 10   | 12   | 6    | 4     | 3    |
+| 通知公告  | 新闻快讯 | 学术动态  | 学生工作  | 研究生教育  | 本科教育  |
+| ----- | ---- | ----- | ----- | ------ | ----- |
+| tzgg1 | xwkx | xsdt1 | xsgz1 | yjsjy1 | bkjy1 |
 
 </Route>
 
 ### NUIST AS（南信大大气科学学院）
 
-<Route author="gylidian" example="/nuist/cas/12" path="/nuist/cas/:category?" :paramsDesc="['默认为 `12`']">
+<Route author="gylidian" example="/nuist/cas/xxgg" path="/nuist/cas/:category?" :paramsDesc="['默认为信息公告']" radar="1" rssbud="1">
 
 | 信息公告 | 新闻快讯 | 科学研究 | 网上公示 | 本科教育 | 研究生教育 |
 | ---- | ---- | ---- | ---- | ---- | ----- |
-| 12   | 11   | 3    | 110  | 4    | 5     |
+| xxgg | xwkx | kxyj | wsgs | bkjy | yjsjy |
 
 </Route>
 
 ### 南京信息工程大学图书馆
 
-<Route author="gylidian" example="/nuist/lib" path="/nuist/library/lib">
-
-::: tip 提示
-
-学校图书馆官网提供了[新书通报](http://lib2.nuist.edu.cn/newbook/newbook_cls_browse.php)的订阅
-
-由于图书馆通知频率过低 (故只提供 3 条)，有待将其和 **网络信息中心**、**基建处**、**总务处** 等的通知整合起来
-
-:::
-
-</Route>
+<Route author="gylidian" example="/nuist/lib" path="/nuist/library/lib" />
 
 ## 南京邮电大学
 
