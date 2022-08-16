@@ -2040,6 +2040,9 @@
     "/leetcode/dailyquestion/:lang": [
         "NavePnow"
     ],
+    "/leetcode/dailyquestion/solution/:lang": [
+        "woaidouya123"
+    ],
     "/leetcode/submission/:country/:user": [
         "NathanDai"
     ],

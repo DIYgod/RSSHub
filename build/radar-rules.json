@@ -8558,6 +8558,14 @@
           "/"
         ],
         "target": "/leetcode/dailyquestion/en"
+      },
+      {
+        "title": "每日一题题解",
+        "docs": "https://docs.rsshub.app/programming.html#leetcode",
+        "source": [
+          "/"
+        ],
+        "target": "/leetcode/dailyquestion/solution/en"
       }
     ]
   },
@@ -8578,6 +8586,14 @@
           "/"
         ],
         "target": "/leetcode/dailyquestion/cn"
+      },
+      {
+        "title": "每日一题题解",
+        "docs": "https://docs.rsshub.app/programming.html#leetcode",
+        "source": [
+          "/"
+        ],
+        "target": "/leetcode/dailyquestion/solution/cn"
       }
     ]
   },
