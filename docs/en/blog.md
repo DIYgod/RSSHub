@@ -101,4 +101,4 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### User Feed
 
-<RouteEn author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" />
+<RouteEn author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` is the username of a CSDN blog which can be found in the url of the home page']" />
