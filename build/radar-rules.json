@@ -1434,6 +1434,11 @@
         "docs": "https://docs.rsshub.app/social-media.html#bilibili",
         "source": "/:uid",
         "target": "/bilibili/user/bangumi/:uid"
+      },
+      {
+        "title": "当前合集",
+        "docs": "https://docs.rsshub.app/social-media.html#bilibili",
+        "source": "/:uid/channel/collectiondetail"
       }
     ],
     "manga": [

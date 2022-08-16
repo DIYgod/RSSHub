@@ -907,7 +907,14 @@
       { title:"用户追番列表",
         docs:"https://docs.rsshub.app/social-media.html#bilibili",
         source:"/:uid",
-        target:"/bilibili/user/bangumi/:uid" } ],
+        target:"/bilibili/user/bangumi/:uid" },
+      { title:"当前合集",
+        docs:"https://docs.rsshub.app/social-media.html#bilibili",
+        source:"/:uid/channel/collectiondetail",
+        target:(params, url) => {
+                    const sid = new URL(url).searchParams.get('sid');
+                    return `/bilibili/collection/:uid/${sid}`;
+                } } ],
     manga:[ { title:"漫画更新",
         docs:"https://docs.rsshub.app/social-media.html#bilibili-man-hua-geng-xin",
         source:"/detail/:comicid",
