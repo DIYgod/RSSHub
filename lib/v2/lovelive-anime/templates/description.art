@@ -1,5 +1,1 @@
-{{if content}}
-  {{@ content}}
-{{else}}
 {{title}}<br><img src="{{imglink}}">
-{{/if}}
