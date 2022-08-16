@@ -2113,6 +2113,9 @@
     "/logonews/": [
         "nczitzk"
     ],
+    "/lovelive-anime/news/:option?": [
+        "axojhf"
+    ],
     "/lvv2/news/:channel/:sort?": [
         "Fatpandac"
     ],
