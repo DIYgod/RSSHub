@@ -459,6 +459,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" :paramsDesc="['站点,中文(cn)和英文(en)']"/>
 
+### 每日一题题解
+
+<Route author="woaidouya123" example="/leetcode/today" path="/leetcode/today"/>
+
 ## LinkedKeeper
 
 ### 博文
