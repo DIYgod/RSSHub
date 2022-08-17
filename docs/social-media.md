@@ -585,9 +585,10 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 | safe       | r18       | 空或其他任意值 |
 
 </Route>
+
 ### 关注的新作品
 
-<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1"/>
+<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 
 ::: warning 注意
 
@@ -597,9 +598,11 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 </Route>
 
-## pixiv-fanbox
+## pixivFANBOX
 
-<Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['用户名, 可在用户主页 URL 中找到. 默认为官方资讯']"/>
+### User
+
+<Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['用户名，可在用户主页 URL 中找到，默认为官方资讯']"/>
 
 ## Popi 提问箱
 
