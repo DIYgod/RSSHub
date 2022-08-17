@@ -618,7 +618,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
-## WziFile
+## WizFile
 
 ### 更新日志
 
