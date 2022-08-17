@@ -14,6 +14,11 @@ pageClass: routes
 
 <Route author="emdoe" example="/benedictevans" path="/benedictevans"/>
 
+## CSDN
+
+### 用户博客
+
+<Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` 为 CSDN 用户名，可以在主页 url 中找到']" />
 ## Google Sites
 
 ### 文章更新
