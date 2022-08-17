@@ -347,6 +347,12 @@ Sources
 
 </Route>
 
+## lovelive-anime
+
+### Love Live 官网最新 News
+
+<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['`option` 为 `detail` 时抓取全文']" />
+
 ## Mox.moe
 
 ### 首頁

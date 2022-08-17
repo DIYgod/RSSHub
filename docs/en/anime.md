@@ -56,6 +56,12 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 
 </RouteEn>
 
+## lovelive-anime
+
+### Love Live! Official Website Latest NEWS
+
+<RouteEn author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['Crawl full text when `option` is `detail`.']" />
+
 ## Touhougarakuta
 
 ### Articles

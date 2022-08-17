@@ -340,6 +340,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
+### 合集更新
+
+<Route author="shininome" example="/bilibili/collection/245645656/529166" path="/bilibili/collection/:uid/:sid/:disableEmbed?" :paramsDesc="['用户 id，可在 UP 主主页中找到','合集的id，合集上面有','默认为开启内嵌视频，任意值为关闭']"/>
+
 ## Dev.to
 
 ### 最高职位
