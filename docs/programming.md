@@ -635,8 +635,8 @@ GitHub 官方也提供了一些 RSS:
 <Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" :paramsDesc="['用户 Id，用户详情页 URL 可以找到']" radar="1"/>
 
 ### 博客
-<Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" :paramsDesc="['标签名称, 在 https://segmentfault.com/tags 中可以找到']" radar="1"/>
 
+<Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" :paramsDesc="['标签名称, 在 https://segmentfault.com/tags 中可以找到']" radar="1"/>
 
 ## TesterHome
 
