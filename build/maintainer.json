@@ -2522,6 +2522,19 @@
     "/oreno3d/tags/:tagid/:sort?": [
         "xueli_sherryli"
     ],
+    "/oschina/news/:category?": [
+        "tgly307",
+        "zengxs"
+    ],
+    "/oschina/topic/:topic": [
+        "loveely7"
+    ],
+    "/oschina/u/:id": [
+        "dxmpalb"
+    ],
+    "/oschina/user/:id": [
+        "dxmpalb"
+    ],
     "/oup/:name": [
         "Fatpandac"
     ],
@@ -3924,10 +3937,6 @@
     "/greasyfork/:language/:domain?": [],
     "/gwern/:category": [],
     "/linkedkeeper/:type/:id?": [],
-    "/oschina/news/:category?": [],
-    "/oschina/user/:id": [],
-    "/oschina/u/:id": [],
-    "/oschina/topic/:topic": [],
     "/technologyreview": [],
     "/technologyreview/:category_name": [],
     "/aqk/vul": [],
