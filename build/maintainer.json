@@ -2843,6 +2843,9 @@
     "/seekingalpha/:symbol/:category?": [
         "TonyRL"
     ],
+    "/segmentfault/blogs/:tag": [
+        "shiluanzzz"
+    ],
     "/segmentfault/channel/:name": [
         "LogicJake",
         "Fatpandac"

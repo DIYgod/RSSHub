@@ -11937,7 +11937,7 @@
         "source": [
           "/channel/:name"
         ],
-        "target": "/channel/:name"
+        "target": "/segmentfault/channel/:name"
       },
       {
         "title": "用户",
@@ -11945,7 +11945,15 @@
         "source": [
           "/u/:name"
         ],
-        "target": "/user/:name"
+        "target": "/segmentfault/user/:name"
+      },
+      {
+        "title": "博客",
+        "docs": "https://docs.rsshub.app/programming.html#segmentfault",
+        "source": [
+          "/t/:tag/blogs"
+        ],
+        "target": "/segmentfault/blogs/:tag"
       }
     ]
   },
