@@ -4218,12 +4218,12 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 ### 军事 - 军事新闻
 
-<Route author="jiaaoMario" example="/zhonghuawang/military/news/hot" path="/zhonghuawang/military/news/hot">
+<Route author="jiaaoMario" example="/china/news/military" path="/china/news/military">
 </Route>
 
 ### 时事新闻
 
-<Route author="jiaaoMario" example="/zhonghuawang/news" path="/zhonghuawang/news/:category" :paramsDesc="['新闻类型，见下表，默认为国内新闻']">
+<Route author="jiaaoMario" example="/china/news" path="/china/news/:category?" :paramsDesc="['新闻类型，见下表，默认为国内新闻']">
 
 新闻类型
 
