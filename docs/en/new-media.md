@@ -641,6 +641,18 @@ Compared to the official one, this feed:
 
 <RouteEn author="nczitzk" example="/semiconductors/latest-news" path="/semiconductors/latest-news"/>
 
+## Sensor Tower
+
+### Blog
+
+<RouteEn author="nczitzk" example="/sensortower/blog" path="/sensortower/blog/:language?" :paramsDesc="['Language, see below, English by default']">
+
+| English | Chinese | Japanese | Korean |
+| ------- | ------- | -------- | ------ |
+|         | zh-CN   | ja       | ko     |
+
+</RouteEn>
+
 ## Simons Foundation
 
 ### Articles

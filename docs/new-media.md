@@ -1170,6 +1170,18 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="nczitzk" example="/samsung/research/blog" path="/samsung/research/blog"/>
 
+## Sensor Tower
+
+### Blog
+
+<Route author="nczitzk" example="/sensortower/blog" path="/sensortower/blog/:language?" :paramsDesc="['语言，见下表，默认为 English']">
+
+| English | Chinese | Japanese | Korean |
+| ------- | ------- | -------- | ------ |
+|         | zh-CN   | ja       | ko     |
+
+</Route>
+
 ## Simons Foundation
 
 ### 文章
