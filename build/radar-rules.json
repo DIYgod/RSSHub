@@ -6791,6 +6791,12 @@
         "docs": "",
         "source": "/users/:username",
         "target": "/iwara/users/:username?/image"
+      },
+      {
+        "title": "用户订阅列表",
+        "docs": "https://docs.rsshub.app/anime.html#iwara",
+        "source": "",
+        "target": "/iwara/subscriptions"
       }
     ]
   },
