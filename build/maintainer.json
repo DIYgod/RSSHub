@@ -2412,6 +2412,9 @@
     "/ntdtv/:language/:id": [
         "Fatpandac"
     ],
+    "/nua/gra/:type": [
+        "evnydd0sf"
+    ],
     "/nuaa/cs/:type/:getDescription?": [
         "LogicJake",
         "Seiry",
