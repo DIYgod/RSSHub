@@ -15354,6 +15354,19 @@
       }
     ]
   },
+  "zuvio.com.tw": {
+    "_name": "Zuvio",
+    "irs": [
+      {
+        "title": "校園話題",
+        "docs": "https://docs.rsshub.app/bbs.html#zuvio",
+        "source": [
+          "/student5/chickenM/articles/:board",
+          "/student5/chickenM/articles"
+        ]
+      }
+    ]
+  },
   "zyshow.net": {
     "_name": "综艺秀",
     ".": [
