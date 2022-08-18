@@ -384,6 +384,16 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
+## Zuvio
+
+### 校園話題
+
+<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" :paramsDesc="['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']" radar="1" rssbud="1"/>
+
+### 看板列表
+
+<Route author="TonyRL" example="/zuvio/student5/boards" path="/zuvio/student5/boards" />
+
 ## 巴哈姆特電玩資訊站
 
 ### 熱門推薦
