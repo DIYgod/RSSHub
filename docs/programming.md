@@ -459,6 +459,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" :paramsDesc="['站点,中文(cn)和英文(en)']"/>
 
+### 每日一题题解
+
+<Route author="woaidouya123" example="/leetcode/dailyquestion/solution/cn" path="/leetcode/dailyquestion/solution/:lang" :paramsDesc="['站点,中文(cn)和英文(en)']"/>
+
 ## LinkedKeeper
 
 ### 博文
@@ -618,6 +622,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
 
+## Rust 语言中文社区
+
+### 招聘
+
+<Route author="CcccFz" example="/rustcc/jobs" path="/rustcc/jobs" radar="1" rssbud="1"/>
+
 ## Scala
 
 ### Scala Blog
@@ -628,11 +638,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 频道
 
-<Route author="LogicJake Fatpandac" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
+<Route author="LogicJake Fatpandac" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']" radar="1"/>
 
 ### 用户
 
-<Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" :paramsDesc="['用户 Id，用户详情页 URL 可以找到']"/>
+<Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" :paramsDesc="['用户 Id，用户详情页 URL 可以找到']" radar="1"/>
+
+### 博客
+
+<Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" :paramsDesc="['标签名称, 在 https://segmentfault.com/tags 中可以找到']" radar="1"/>
 
 ## TesterHome
 
@@ -843,13 +857,13 @@ GitHub 官方也提供了一些 RSS:
 
 ### 资讯
 
-<Route author="tgly307 zengxs" example="/oschina/news/project" path="/oschina/news/:category?" :paramsDesc="['板块名']">
+<Route author="tgly307 zengxs" example="/oschina/news/project" path="/oschina/news/:category?" :paramsDesc="['板块名']" radar="1" rssbud="1">
 
 | [综合资讯][osc_gen] | [软件更新资讯][osc_proj] | [行业资讯][osc_ind] | [编程语言资讯][osc_pl] |
 | --------------- | ------------------ | --------------- | ---------------- |
 | industry        | project            | industry-news   | programming      |
 
-订阅[全部板块资讯][osc_all]可以使用 <https://rsshub.app/oschina/news>
+订阅 [全部板块资讯][osc_all] 可以使用 <https://rsshub.app/oschina/news>
 
 [osc_all]: https://www.oschina.net/news "开源中国 - 全部资讯"
 
@@ -865,27 +879,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户博客
 
-<Route author="dxmpalb" example="/oschina/user/xxiaobian" path="/oschina/user/:id" :paramsDesc="['用户 id，可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']">
-
-| 小小编辑      |
-| --------- |
-| xxiaobian |
-
-</Route>
+<Route author="dxmpalb" example="/oschina/user/lenve" path="/oschina/user/:id" :paramsDesc="['用户 id，可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']" radar="1" rssbud="1"/>
 
 ### 数字型账号用户博客
 
-<Route author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:id" :paramsDesc="['用户 id，可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']">
-
-| EAWorld 的博客 |
-| ----------- |
-| 3920392     |
-
-</Route>
+<Route author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:uid" :paramsDesc="['用户 id，可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']" radar="1" rssbud="1"/>
 
 ### 问答主题
 
-<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名，可从[全部主题](https://www.oschina.net/question/topics)进入主题页，在 URL 中找到']"/>
+<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 拉勾网
 
