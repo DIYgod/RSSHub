@@ -554,3 +554,25 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | zzkx | hyzx |
 
 </Route>
+
+## 前瞻网
+
+### 文章列表
+
+<Route author="moke8" example="/qianzhan-analyst/column/all" path="/qianzhan-analyst/column/:type" :paramsDesc="['分类，见下表']">
+
+| 全部  | 研究员专栏 | 规划师专栏 | 观察家专栏 |
+| --- | ----- | ----- | ----- |
+| all | 220   | 627   | 329   |
+
+</Route>
+
+### 排行榜
+
+<Route author="moke8" example="/qianzhan-analyst/rank/week" path="/qianzhan-analyst/rank/:type" :paramsDesc="['分类，见下表']">
+
+| 周排行  | 月排行   |
+| ---- | ----- |
+| week | month |
+
+</Route>
