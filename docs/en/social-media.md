@@ -240,7 +240,7 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 ### Following timeline
 
-<RouteEn author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1"/>
+<RouteEn author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 ::: warning
 
 Only for self-hosted
@@ -248,7 +248,9 @@ Only for self-hosted
 :::
 </RouteEn>
 
-## pixiv-fanbox
+## pixivFANBOX
+
+### User
 
 <RouteEn author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['User name. Can be found in URL. Default is official news']"/>
 
