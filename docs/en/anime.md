@@ -36,18 +36,6 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 </RouteEn>
 
-### User Subscriptions
-
-<RouteEn author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
-
-::: warning
-
-This route requires Cookie, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
-
-:::
-
-</RouteEn>
-
 ## Kemono
 
 ### Posts
@@ -67,12 +55,6 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 :::
 
 </RouteEn>
-
-## lovelive-anime
-
-### Love Live! Official Website Latest NEWS
-
-<RouteEn author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['Crawl full text when `option` is `detail`.']" />
 
 ## Touhougarakuta
 
@@ -134,7 +116,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### Keyword Search
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['Search keyword', 'Sort method, see the table below, `latest` by default']" radar="1" rssbud="1">
+<RouteEn author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1, if it exceeds the maximum value']" radar="1" rssbud="1">
 
 | favorites |  hot   | latest | popularity |
 | --------- | ------ | ------ | ---------- |
@@ -144,16 +126,16 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### Character Search
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/characters/283/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['Character id, can be found in URL' , 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
+<RouteEn author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" :paramsDesc="['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1, if it exceeds the maximum value']" radar="1" rssbud="1"/>
 
 ### Author Search
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/authors/3189/latest" path="/oreno3d/authors/:authorid/:sort?" :paramsDesc="['Author id, can be found in URL' , 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
+<RouteEn author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1, if it exceeds the maximum value']" radar="1" rssbud="1"/>
 
 ### Tags Search
 
-<RouteEn tag="xueli-sherryli" example="/oreno3d/tags/177/latest" path="/oreno3d/tags/:tagid/:sort?" :paramsDesc="['Tag id, can be found in URL', 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
+<RouteEn tag="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" :paramsDesc="['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1, if it exceeds the maximum value']" radar="1" rssbud="1"/>
 
 ### Origins Search
 
-<RouteEn origin="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['Origin id, can be found in URL' , 'Sort method, see the table above, `latest` by default']" radar="1" rssbud="1"/>
+<RouteEn origin="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1, if it exceeds the maximum value']" radar="1" rssbud="1"/>

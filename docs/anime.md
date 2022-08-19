@@ -327,18 +327,6 @@ pageClass: routes
 
 </Route>
 
-### 用户订阅列表
-
-<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
-
-::: warning 注意
-
-用户动态需要 iwara 登录后的 Cookie 值，所以只能自建，详情见[部署页面](/install/#route-specific-configurations)的配置模块。
-
-:::
-
-</Route>
-
 ## Kemono
 
 ### Posts
@@ -358,12 +346,6 @@ Sources
 :::
 
 </Route>
-
-## lovelive-anime
-
-### Love Live 官网最新 News
-
-<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['`option` 为 `detail` 时抓取全文']" />
 
 ## Mox.moe
 
@@ -427,7 +409,7 @@ Sources
 
 ### 关键词搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['关键词', '排序方法，见下表，默认为 `latest`']">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表','最大爬取页面数量,默认为1，超出则为最大值']">
 
 | 高評価       | 急上昇 | 新着     | 人気         |
 | --------- | --- | ------ | ---------- |
@@ -437,19 +419,19 @@ Sources
 
 ### 角色搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['角色 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" :paramsDesc="['角色 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']">
 
 ### 作者搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest" path="/oreno3d/authors/:authorid/:sort?" :paramsDesc="['作者 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['作者 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']">
 
 ### 标签搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest" path="/oreno3d/tags/:tagid/:sort?" :paramsDesc="['标签 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" :paramsDesc="['标签 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']">
 
 ### 原作搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['原作 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['原作 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']">
 
 ## 包子漫画
 
