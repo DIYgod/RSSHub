@@ -495,10 +495,11 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ## War Thunder
 
-### 英文News
+### 英文 News
+
 <Route author="axojhf" example="/warthunder/news" path="/warthunder/news">
 
-News的数据来自 https://warthunder.com/en/news/
+News 的数据来自 <https://warthunder.com/en/news/>
 
 </Route>
 
