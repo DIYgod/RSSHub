@@ -285,4 +285,6 @@ Steam provides some official RSS feeds:
 
 ### News
 
-<RouteEn author="axojhf" example="/warthunder/news" path="/warthunder/news" />
+<RouteEn author="axojhf" example="/warthunder/news" path="/warthunder/news">
+News data from https://warthunder.com/en/news/
+</RouteEn>
