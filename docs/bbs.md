@@ -384,6 +384,16 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
+## Zuvio
+
+### 校園話題
+
+<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" :paramsDesc="['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']" radar="1" rssbud="1"/>
+
+### 看板列表
+
+<Route author="TonyRL" example="/zuvio/student5/boards" path="/zuvio/student5/boards" />
+
 ## 巴哈姆特電玩資訊站
 
 ### 熱門推薦
@@ -542,11 +552,11 @@ pageClass: routes
 
 ### 社区
 
-<Route author="LogicJake nczitzk" example="/hupu/bbs/34" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为步行街', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布']">
+<Route author="LogicJake nczitzk" example="/hupu/bbs/topic-daily" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为#步行街主干道', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复']">
 
 ::: tip 提示
 
-更多社区参见 [社区](https://m.hupu.com/bbs)
+更多社区参见 [社区](https://bbs.hupu.com)
 
 :::
 
