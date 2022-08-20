@@ -11149,6 +11149,64 @@
       }
     ]
   },
+  "plurk.com": {
+    "_name": "Plurk",
+    ".": [
+      {
+        "title": "話題",
+        "docs": "https://docs.rsshub.app/social-media.html#plurk",
+        "source": [
+          "/topic/:topic"
+        ],
+        "target": "/plurk/topic/:topic"
+      },
+      {
+        "title": "話題排行榜",
+        "docs": "https://docs.rsshub.app/social-media.html#plurk",
+        "source": [
+          "/top"
+        ]
+      },
+      {
+        "title": "偷偷說",
+        "docs": "https://docs.rsshub.app/social-media.html#plurk",
+        "source": [
+          "/anonymous"
+        ],
+        "target": "/plurk/anonymous"
+      },
+      {
+        "title": "搜尋",
+        "docs": "https://docs.rsshub.app/social-media.html#plurk",
+        "source": [
+          "/search"
+        ]
+      },
+      {
+        "title": "最近分享",
+        "docs": "https://docs.rsshub.app/social-media.html#plurk",
+        "source": [
+          "/hotlinks"
+        ],
+        "target": "/plurk/hotlinks"
+      },
+      {
+        "title": "噗浪消息",
+        "docs": "https://docs.rsshub.app/social-media.html#plurk",
+        "source": [
+          "/news"
+        ],
+        "target": "/plurk/news"
+      },
+      {
+        "title": "用戶",
+        "docs": "https://docs.rsshub.app/social-media.html#plurk",
+        "source": [
+          "/:user"
+        ]
+      }
+    ]
+  },
   "pmthinking.com": {
     "_name": "产品沉思录",
     ".": [

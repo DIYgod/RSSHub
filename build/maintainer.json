@@ -2652,6 +2652,27 @@
     "/playno1/st/:catid?": [
         "TonyRL"
     ],
+    "/plurk/anonymous": [
+        "TonyRL"
+    ],
+    "/plurk/hotlinks": [
+        "TonyRL"
+    ],
+    "/plurk/news/:lang?": [
+        "TonyRL"
+    ],
+    "/plurk/search/:keyword": [
+        "TonyRL"
+    ],
+    "/plurk/top/:category?/:lang?": [
+        "TonyRL"
+    ],
+    "/plurk/topic/:topic": [
+        "TonyRL"
+    ],
+    "/plurk/user/:user": [
+        "TonyRL"
+    ],
     "/pmthinking/": [
         "nczitzk"
     ],
