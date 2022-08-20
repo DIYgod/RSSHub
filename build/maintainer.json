@@ -3645,6 +3645,18 @@
     "/xueqiu/user_stock/:id": [
         "hillerliao"
     ],
+    "/xyzrank/": [
+        "nczitzk"
+    ],
+    "/xyzrank/hot-episodes-new": [
+        "nczitzk"
+    ],
+    "/xyzrank/hot-podcasts": [
+        "nczitzk"
+    ],
+    "/xyzrank/new-podcasts": [
+        "nczitzk"
+    ],
     "/yaohuo/": [
         "nczitzk"
     ],
