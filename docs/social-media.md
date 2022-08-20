@@ -609,11 +609,15 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 話題排行榜
 
-<Route author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" :paramsDesc="['排行榜分類，見下表', '語言']" radar="1" rssbud="1">
+<Route author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" :paramsDesc="['排行榜分類，見下表，默認為 `topReplurks`', '語言，見下表，默認為 `en`']" radar="1" rssbud="1">
 
 | 最多人轉噗       | 最多人喜歡        | 最多人回應        |
 | ----------- | ------------ | ------------ |
 | topReplurks | topFavorites | topResponded |
+
+| English | 中文（繁體） |
+| ------- | ------ |
+| en      | zh     |
 
 </Route>
 
@@ -625,13 +629,13 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" :paramsDesc="['關鍵詞']" radar="1" rssbud="1"/>
 
-### 分享
+### 最近分享
 
 <Route author="TonyRL" path="/plurk/hotlinks" example="/plurk/hotlinks" radar="1" rssbud="1"/>
 
 ### 噗浪消息
 
-<Route author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/:lang?" :paramsDesc="['語言']" radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/zh" :paramsDesc="['語言，見上表，默認為 `en`']" radar="1" rssbud="1"/>
 
 ### 用戶
 

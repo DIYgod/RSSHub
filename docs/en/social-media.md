@@ -262,11 +262,15 @@ Only for self-hosted
 
 ### Top
 
-<RouteEn author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" :paramsDesc="['Category, see the table below', 'Language']" radar="1" rssbud="1">
+<RouteEn author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" :paramsDesc="['Category, see the table below, `topReplurks` by default', 'Language, see the table below, `en` by default']" radar="1" rssbud="1">
 
 | Top Replurks | Top Favorites | Top Responded |
 | ------------ | ------------- | ------------- |
 | topReplurks  | topFavorites  | topResponded  |
+
+| English | 中文（繁體） |
+| ------- | ----------- |
+| en     | zh      |
 
 </RouteEn>
 
@@ -284,7 +288,7 @@ Only for self-hosted
 
 ### Plurk News
 
-<RouteEn author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/:lang?" :paramsDesc="['Language']" radar="1" rssbud="1"/>
+<RouteEn author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/:lang?" :paramsDesc="['Language, see the table above, `en` by default']" radar="1" rssbud="1"/>
 
 ### User
 
