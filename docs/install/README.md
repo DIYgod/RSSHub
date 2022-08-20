@@ -663,6 +663,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     注意，暂**不支持**两步验证。
 
+-   Iwara:
+
+    -   `IWARA_COOKIE`: Iwara 登录后的 Cookie 值
+
 -   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
 
     -   `LASTFM_API_KEY`: Last.fm API Key
