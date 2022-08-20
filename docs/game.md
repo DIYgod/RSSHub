@@ -493,6 +493,11 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 </Route>
 
+## War Thunder
+
+### 英文News
+<Route author="axojhf" example="/warthunder/news" path="/warthunder/news" />
+
 ## 巴哈姆特
 
 ### GNN 新聞
