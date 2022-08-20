@@ -280,3 +280,13 @@ Steam provides some official RSS feeds:
 ### Discussions
 
 <RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['category name, default to All']"/>
+
+## War Thunder
+
+### News
+
+<RouteEn author="axojhf" example="/warthunder/news" path="/warthunder/news">
+
+News data from https://warthunder.com/en/news/
+
+</RouteEn>
