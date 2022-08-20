@@ -409,7 +409,7 @@ Sources
 
 ### 关键词搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表','最大爬取页面数量,默认为1，超出则为最大值']">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1">
 
 | 高評価       | 急上昇 | 新着     | 人気         |
 | --------- | --- | ------ | ---------- |
@@ -419,19 +419,19 @@ Sources
 
 ### 角色搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" :paramsDesc="['角色 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']"/>
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" :paramsDesc="['角色id, 可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量, 默认为1, 超出则为最大值']" />
 
 ### 作者搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['作者 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']"/>
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['作者id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1" />
 
 ### 标签搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" :paramsDesc="['标签 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']"/>
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" :paramsDesc="['标签 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1" />
 
 ### 原作搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['原作 id，可在浏览器地址栏找到','最大爬取页面数量,默认为1，超出则为最大值']"/>
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['原作 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1，超出则为最大值']" radar="1" rssbud="1" />
 
 ## 包子漫画
 
