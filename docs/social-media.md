@@ -604,6 +604,46 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['用户名，可在用户主页 URL 中找到，默认为官方资讯']"/>
 
+## Plurk
+
+### 話題
+
+<Route author="TonyRL" path="/plurk/topic/:topic" example="/plurk/topic/standwithukraine" :paramsDesc="['話題 ID，可在 URL 找到']" radar="1" rssbud="1"/>
+
+### 話題排行榜
+
+<Route author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" :paramsDesc="['排行榜分類，見下表，默認為 `topReplurks`', '語言，見下表，默認為 `en`']" radar="1" rssbud="1">
+
+| 最多人轉噗       | 最多人喜歡        | 最多人回應        |
+| ----------- | ------------ | ------------ |
+| topReplurks | topFavorites | topResponded |
+
+| English | 中文（繁體） |
+| ------- | ------ |
+| en      | zh     |
+
+</Route>
+
+### 偷偷說
+
+<Route author="TonyRL" path="/plurk/anonymous" example="/plurk/anonymous" radar="1" rssbud="1"/>
+
+### 搜尋
+
+<Route author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" :paramsDesc="['關鍵詞']" radar="1" rssbud="1"/>
+
+### 最近分享
+
+<Route author="TonyRL" path="/plurk/hotlinks" example="/plurk/hotlinks" radar="1" rssbud="1"/>
+
+### 噗浪消息
+
+<Route author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/zh" :paramsDesc="['語言，見上表，默認為 `en`']" radar="1" rssbud="1"/>
+
+### 用戶
+
+<Route author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" :paramsDesc="['用戶 ID，可在 URL 找到']" radar="1" rssbud="1"/>
+
 ## Popi 提问箱
 
 ### 提问箱新回答
