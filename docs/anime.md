@@ -657,4 +657,4 @@ Sources
 
 ### 當季新番
 
-<Route author="devinmugen" example="/bangumionline/updates" path="/bangumionline/updates"/>
+<Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
