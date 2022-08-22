@@ -2274,6 +2274,10 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
 
+### 24 小时
+
+<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" />
+
 ### 标签
 
 <Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" :paramsDesc="['标签 id']" />
