@@ -2158,7 +2158,7 @@
     "/meteor/boards": [
         "TonyRL"
     ],
-    "/meteor/:board": [
+    "/meteor/:board?": [
         "TonyRL"
     ],
     "/metmuseum/exhibitions": [
