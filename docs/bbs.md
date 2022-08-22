@@ -254,7 +254,7 @@ pageClass: routes
 
 ### 看板
 
-<Route author="TonyRL" example="/meteor/board/all" path="/meteor/board/:board?" :paramsDesc="['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" :paramsDesc="['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']" radar="1" rssbud="1"/>
 
 ### 看板列表
 
