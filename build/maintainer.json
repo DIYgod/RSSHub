@@ -2155,6 +2155,12 @@
     "/medsci/:sid?/:tid?": [
         "nczitzk"
     ],
+    "/meteor/boards": [
+        "TonyRL"
+    ],
+    "/meteor/:board": [
+        "TonyRL"
+    ],
     "/metmuseum/exhibitions": [
         "chazeon"
     ],
