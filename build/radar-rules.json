@@ -1253,8 +1253,8 @@
       }
     ]
   },
-  "萌番组 Bangumi Moe": {
-    "_name": "bangumi.moe",
+  "bangumi.moe": {
+    "_name": "萌番組",
     ".": [
       {
         "title": "最新",
@@ -1271,6 +1271,19 @@
           "/search/index"
         ],
         "target": "/bangumi/:tags?"
+      }
+    ]
+  },
+  "bangumi.online": {
+    "_name": "アニメ新番組",
+    ".": [
+      {
+        "title": "當季新番",
+        "docs": "https://docs.rsshub.app/anime.html#アニメ-xin-fan-zu-dang-ji-xin-fan",
+        "source": [
+          "/"
+        ],
+        "target": "/bangumi/online"
       }
     ]
   },
