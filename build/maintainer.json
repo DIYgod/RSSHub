@@ -1623,6 +1623,9 @@
     "/huxiu/collection/:id": [
         "AlexdanerZe"
     ],
+    "/huxiu/moment": [
+        "nczitzk"
+    ],
     "/huxiu/tag/:id": [
         "xyqfer",
         "HenryQW"
