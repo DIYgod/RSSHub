@@ -250,6 +250,16 @@ pageClass: routes
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
+## Meteor
+
+### 看板
+
+<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" :paramsDesc="['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']" radar="1" rssbud="1"/>
+
+### 看板列表
+
+<Route author="TonyRL" example="/meteor/boards" path="/meteor/boards" radar="1" rssbud="1"/>
+
 ## Mobilism
 
 ### 论坛

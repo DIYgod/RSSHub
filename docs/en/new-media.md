@@ -468,6 +468,12 @@ Edition
 
 </RouteEn>
 
+## Macfilos
+
+### Blog
+
+<RouteEn author="nczitzk" example="/macfilos/blog" path="/macfilos/blog" />
+
 ## MakeUseOf
 
 <RouteEn author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['Category, Trending by default']"/>

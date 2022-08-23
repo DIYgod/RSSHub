@@ -801,6 +801,12 @@ Edition
 
 </Route>
 
+## Macfilos
+
+### Blog
+
+<Route author="nczitzk" example="/macfilos/blog" path="/macfilos/blog" />
+
 ## MakeUseOf
 
 <Route author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['分类，默认为 Trending']"/>
@@ -2273,6 +2279,10 @@ others = 热点新闻 + 滚动新闻
 ### 首页资讯
 
 <Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
+
+### 24 小时
+
+<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" />
 
 ### 标签
 

@@ -288,5 +288,6 @@ Steam provides some official RSS feeds:
 <RouteEn author="axojhf" example="/warthunder/news" path="/warthunder/news">
 
 News data from https://warthunder.com/en/news/
+The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
 
 </RouteEn>
