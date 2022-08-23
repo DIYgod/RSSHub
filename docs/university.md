@@ -2077,13 +2077,21 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 官网信息
 
-<Route author="evnydd0sf" example="/nua/gindex/346" path="/nua/index/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
+<Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
 
 | 新闻模块   | 参数   |
 | ----- | ---- |
 | 公告  | 346 |
 | 南艺要闻  | 332 |
-| 艺术资讯  | 347 |
+
+</Route>
+
+### 双馨网
+
+<Route author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
+
+| 新闻模块   | 参数   |
+| ----- | ---- |
 | 校园电视  | 230 |
 | 院部动态 | 232 |
 | 动感校园 | 233 |
@@ -2095,29 +2103,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 设计学院
 
-<Route author="evnydd0sf" example="/nua/gindex/346" path="/nua/index/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
+<Route author="evnydd0sf" example="/nua/dc/346" path="/nua/dc/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
 
 | 新闻模块   | 参数   |
 | ----- | ---- |
 | 学院新闻 NEWS  | news |
 | 教学 TEACH  | teach |
 | 项目 PROJECT | project |
-| 研创 RESEARCH & CREATION | rc |
 | 党团 PARTY | party |
-| 后浪 YOUTH | youth |
-
-</Route>
-
-### 研究生处
-
-<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
-
-| 新闻模块   | 参数   |
-| ----- | ---- |
-| 招生工作  | 1959 |
-| 培养工作  | 1962 |
-| 学位工作  | 1958 |
-| 思政与管理 | 1960 |
 
 </Route>
 
