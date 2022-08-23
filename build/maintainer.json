@@ -2808,6 +2808,9 @@
     "/radio-canada/latest/:language?": [
         "nczitzk"
     ],
+    "/remnote/changelog": [
+        "TonyRL"
+    ],
     "/reuters/investigates": [
         "LyleLee"
     ],
