@@ -485,6 +485,12 @@ pageClass: routes
 
 <Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
 
+## RemNote
+
+### 变更日志
+
+<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
+
 ## RescueTime
 
 ### Release Notes
