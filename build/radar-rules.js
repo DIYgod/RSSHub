@@ -4892,6 +4892,12 @@
                         return `/lvv2/top/sort-realtime/${params.sort}`;
                     }
                 } } ] },
+  "macfilos.com":{ _name:"Macfilos",
+    ".":[ { title:"Blog",
+        docs:"https://docs.rsshub.app/new-media.html#macfilos-blog",
+        source:[ "/blog",
+          "/" ],
+        target:"/macfilos/blog" } ] },
   "mcachicago.org":{ _name:"MCA Chicago",
     ".":[ { title:"Exhibitions",
         docs:"https://docs.rsshub.app/en/travel.html#museum-of-contemporary-art-chicago" } ] },
