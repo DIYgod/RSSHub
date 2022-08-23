@@ -2097,7 +2097,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 动感校园 | 233 |
 | 招就指南 | 234 |
 | 南艺院报 | 236 |
-| 媒体南艺 | 237 |
 
 </Route>
 
@@ -2111,6 +2110,19 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 教学 TEACH  | teach |
 | 项目 PROJECT | project |
 | 党团 PARTY | party |
+
+</Route>
+
+### 研究生处
+
+<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
+
+| 新闻模块   | 参数   |
+| ----- | ---- |
+| 招生工作  | 1959 |
+| 培养工作  | 1962 |
+| 学位工作  | 1958 |
+| 思政与管理 | 1960 |
 
 </Route>
 
