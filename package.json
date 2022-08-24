@@ -49,7 +49,7 @@
     "@vuepress/plugin-pwa": "1.9.7",
     "@vuepress/shared-utils": "1.9.7",
     "cross-env": "7.0.3",
-    "eslint": "8.21.0",
+    "eslint": "8.22.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-yml": "1.1.0",
@@ -79,12 +79,12 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/mercury-parser": "2.2.1",
-    "@sentry/node": "7.9.0",
+    "@sentry/node": "7.11.1",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
     "cheerio": "1.0.0-rc.12",
-    "chrono-node": "2.3.9",
+    "chrono-node": "2.4.1",
     "city-timezones": "1.2.1",
     "crypto-js": "4.1.1",
     "currency-symbol-map": "5.1.0",
@@ -95,7 +95,7 @@
     "etag": "1.8.1",
     "fanfou-sdk": "4.2.0",
     "git-rev-sync": "3.0.2",
-    "googleapis": "105.0.0",
+    "googleapis": "107.0.0",
     "got": "11.8.5",
     "https-proxy-agent": "5.0.1",
     "iconv-lite": "0.6.3",
@@ -110,7 +110,7 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
-    "lru-cache": "7.13.2",
+    "lru-cache": "7.14.0",
     "lz-string": "1.4.4",
     "mailparser": "3.5.0",
     "markdown-it": "13.0.1",
@@ -118,7 +118,7 @@
     "parse-torrent": "9.1.5",
     "pidusage": "3.0.0",
     "plist": "3.0.6",
-    "puppeteer": "16.1.1",
+    "puppeteer": "16.2.0",
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.1",
@@ -132,7 +132,7 @@
     "string-similarity": "4.0.4",
     "tiny-async-pool": "2.1.0",
     "torrent-search-api": "2.1.4",
-    "tough-cookie": "4.0.0",
+    "tough-cookie": "4.1.0",
     "tunnel": "0.0.6",
     "twitter-api-v2": "1.12.5",
     "winston": "3.8.1",
@@ -164,6 +164,11 @@
     }
   },
   "nodemonConfig": {
+    "watch": [
+      ".env",
+      "lib",
+      "test"
+    ],
     "ext": "art,js,mjs,json"
   },
   "engines": {

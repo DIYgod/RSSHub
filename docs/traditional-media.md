@@ -1172,9 +1172,13 @@ Type 栏目：
 
 ## 界面新闻
 
+### 快报
+
+<Route author="nczitzk" example="/jiemian" path="/jiemian" />
+
 ### 栏目
 
-<Route author="WenhuWee" example="/jiemian/list/79" path="/jiemian/list/:category" :paramsDesc="['对应栏目后在地址栏找到']"/>
+<Route author="WenhuWee nczitzk" example="/jiemian/list/65" path="/jiemian/list/:id?" :paramsDesc="['栏目，可在对应栏目页 URL 中找到，默认为 `4` 即快报']" />
 
 ## 经济观察网
 
@@ -1332,7 +1336,7 @@ category 对应的关键词有
 
 ### 即时新闻
 
-<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:type?" :paramsDesc="['分类，缺省为 china']">
+<Route author="lengthmin" example="/zaobao/realtime/china" path="/zaobao/realtime/:section?" :paramsDesc="['分类，缺省为 china']">
 
 | 中国    | 新加坡       | 国际    | 财经       |
 | ----- | --------- | ----- | -------- |
@@ -1342,7 +1346,7 @@ category 对应的关键词有
 
 ### 新闻
 
-<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:type?" :paramsDesc="['分类，缺省为 china']">
+<Route author="lengthmin" example="/zaobao/znews/china" path="/zaobao/znews/:section?" :paramsDesc="['分类，缺省为 china']">
 
 | 中国    | 新加坡       | 东南亚 | 国际    | 体育     |
 | ----- | --------- | --- | ----- | ------ |
@@ -1354,7 +1358,11 @@ category 对应的关键词有
 
 除了上面两个兼容规则之外，联合早报网站里所有页面形如 <https://www.zaobao.com/wencui/politic> 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
 
-<Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type/:section" :paramsDesc="['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']" />
+<Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type?/:section?" :paramsDesc="['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']" />
+
+### 互动新闻
+
+<Route author="shunf4" example="/zaobao/interactive-graphics" path="/zaobao/interactive-graphics" />
 
 ## 路透社
 
@@ -1750,6 +1758,26 @@ category 对应的关键词有
 ### 分类
 
 <Route author="hoilc" example="/whb/bihui" path="/whb/:category" :paramsDesc="['文汇报分类名，可在该分类的 URL 中找到（即 http://www.whb.cn/zhuzhan/:category/index.html)']" />
+
+## 无线新闻
+
+### 新闻
+
+<Route author="nczitzk" example="/tvb/news" path="/tvb/news/:category?/:language?" :paramsDesc="['分类，见下表，默认为要聞', '语言，见下表']">
+
+分类
+
+| 要聞    | 快訊      | 港澳    | 兩岸           | 國際    | 財經      | 體育     | 法庭         | 天氣      |
+| ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
+| focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
+
+语言
+
+| 繁  | 简  |
+| -- | -- |
+| tc | sc |
+
+</Route>
 
 ## 希望之声
 

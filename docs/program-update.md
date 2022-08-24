@@ -485,6 +485,12 @@ pageClass: routes
 
 <Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
 
+## RemNote
+
+### 变更日志
+
+<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
+
 ## RescueTime
 
 ### Release Notes
@@ -611,6 +617,12 @@ pageClass: routes
 ### Download
 
 <Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
+
+## WizFile
+
+### 更新日志
+
+<Route author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
 
 ## WizTree
 

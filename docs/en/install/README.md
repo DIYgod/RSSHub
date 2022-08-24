@@ -626,6 +626,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     Warning: Two Factor Authentication is **not** supported.
 
+-   Iwara:
+
+    -   `IWARA_COOKIE`: Cookie of Iwara User
+
 -   Last.fm
 
     -   `LASTFM_API_KEY`: Last.fm API Key
