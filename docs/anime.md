@@ -327,6 +327,18 @@ pageClass: routes
 
 </Route>
 
+### 用户订阅列表
+
+<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
+
+::: warning 注意
+
+用户动态需要 iwara 登录后的 Cookie 值，所以只能自建，详情见[部署页面](/install/#route-specific-configurations)的配置模块。
+
+:::
+
+</Route>
+
 ## Kemono
 
 ### Posts
@@ -346,6 +358,12 @@ Sources
 :::
 
 </Route>
+
+## lovelive-anime
+
+### Love Live 官网最新 News
+
+<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['`option` 为 `detail` 时抓取全文']" />
 
 ## Mox.moe
 
@@ -411,9 +429,9 @@ Sources
 
 <Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表', '最大爬取页面数量，默认为 1']" radar="1" rssbud="1">
 
-| 高評価       | 急上昇 | 新着     | 人気         |
-| --------- | --- | ------ | ---------- |
-| favorites | hot | latest | popularity |
+| 高評価    | 急上昇 | 新着   | 人気       |
+| --------- | ------ | ------ | ---------- |
+| favorites | hot    | latest | popularity |
 
 </Route>
 
@@ -634,3 +652,9 @@ Sources
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## アニメ新番組
+
+### 當季新番
+
+<Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>

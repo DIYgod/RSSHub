@@ -36,6 +36,18 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 </RouteEn>
 
+### User Subscriptions
+
+<RouteEn author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
+
+::: warning
+
+This route requires Cookie, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+
+:::
+
+</RouteEn>
+
 ## Kemono
 
 ### Posts
@@ -55,6 +67,12 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 :::
 
 </RouteEn>
+
+## lovelive-anime
+
+### Love Live! Official Website Latest NEWS
+
+<RouteEn author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['Crawl full text when `option` is `detail`.']" />
 
 ## Touhougarakuta
 
@@ -118,9 +136,9 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <RouteEn author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']" radar="1" rssbud="1">
 
-| favorites |  hot   | latest | popularity |
-| --------- | ------ | ------ | ---------- |
-| favorites |  hot   | latest | popularity |
+| favorites | hot  | latest | popularity |
+| --------- | ---- | ------ | ---------- |
+| favorites | hot  | latest | popularity |
 
 </RouteEn>
 
