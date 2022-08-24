@@ -130,7 +130,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### Author Search
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1, if it exceeds the maximum value']" radar="1" rssbud="1"/>
+<RouteEn author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']" radar="1" rssbud="1"/>
 
 ### Tags Search
 
