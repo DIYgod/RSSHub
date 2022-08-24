@@ -132,7 +132,7 @@
     "string-similarity": "4.0.4",
     "tiny-async-pool": "2.1.0",
     "torrent-search-api": "2.1.4",
-    "tough-cookie": "4.1.0",
+    "tough-cookie": "4.1.1",
     "tunnel": "0.0.6",
     "twitter-api-v2": "1.12.5",
     "winston": "3.8.1",
