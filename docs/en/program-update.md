@@ -430,6 +430,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
 
+## RemNote
+
+### Changelog
+
+<RouteEn author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
+
 ## RescueTime
 
 ### Release Notes
