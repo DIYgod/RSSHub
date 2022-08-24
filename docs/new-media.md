@@ -801,6 +801,12 @@ Edition
 
 </Route>
 
+## Macfilos
+
+### Blog
+
+<Route author="nczitzk" example="/macfilos/blog" path="/macfilos/blog" />
+
 ## MakeUseOf
 
 <Route author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['分类，默认为 Trending']"/>
@@ -1169,6 +1175,18 @@ IPFS 网关有可能失效，那时候换成其他网关。
 ### Research Blog
 
 <Route author="nczitzk" example="/samsung/research/blog" path="/samsung/research/blog"/>
+
+## Sensor Tower
+
+### Blog
+
+<Route author="nczitzk" example="/sensortower/blog" path="/sensortower/blog/:language?" :paramsDesc="['语言，见下表，默认为 English']">
+
+| English | Chinese | Japanese | Korean |
+| ------- | ------- | -------- | ------ |
+|         | zh-CN   | ja       | ko     |
+
+</Route>
 
 ## Simons Foundation
 
@@ -1757,6 +1775,16 @@ Supported sub-sites:
 
 </Route>
 
+## 島民衛星 Islander
+
+### 事件分析
+
+<Route author="TonyRL" example="/islander/search" path="/islander/search" radar="1" rssbud="1"/>
+
+### 單日焦點
+
+<Route author="TonyRL" example="/islander/top30event" path="/islander/top30event" radar="1" rssbud="1"/>
+
 ## 得到
 
 ### 首页
@@ -2262,6 +2290,10 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
 
+### 24 小时
+
+<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" />
+
 ### 标签
 
 <Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" :paramsDesc="['标签 id']" />
@@ -2603,51 +2635,51 @@ column 为 third 时可选的 category:
 
     -   人工智能
 
-                | 学术       | 开发者      |
-                | -------- | -------- |
-                | academic | yanxishe |
+                    | 学术       | 开发者      |
+                    | -------- | -------- |
+                    | academic | yanxishe |
 
     -   数智化
 
-                | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
-                | --------- | ---------- | ---------- | --------- | ----------- |
-                | redigital | findigital | mandigital | medigital | citydigital |
+                    | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
+                    | --------- | ---------- | ---------- | --------- | ----------- |
+                    | redigital | findigital | mandigital | medigital | citydigital |
 
     -   金融科技
 
-                | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
-                | ------- | ----- | ------------ | ------------ |
-                | BigTech | bank  | FinanceCloud | DataSecurity |
+                    | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
+                    | ------- | ----- | ------------ | ------------ |
+                    | BigTech | bank  | FinanceCloud | DataSecurity |
 
     -   医疗科技
 
-                | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
-                | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
-                | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
+                    | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
+                    | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
+                    | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
     -   芯片
 
-                | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
-                | --------- | ---------- | ------------- | --------- |
-                | materials | chipdesign | manufacturing | packaging |
+                    | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
+                    | --------- | ---------- | ------------- | --------- |
+                    | materials | chipdesign | manufacturing | packaging |
 
     -   智慧城市
 
-                | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
-                | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
-                | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
+                    | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
+                    | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
+                    | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
 
     -   工业互联网
 
-                | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
-                | ---------- | -------- | -------- | --------- |
-                | gysoftware | gysafety | 5ggy     | gypratice |
+                    | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
+                    | ---------- | -------- | -------- | --------- |
+                    | gysoftware | gysafety | 5ggy     | gypratice |
 
     -   AIoT
 
-                | 物联网 | 智能硬件 | 机器人   | 智能家居      |
-                | --- | ---- | ----- | --------- |
-                | 5G  | arvr | robot | smarthome |
+                    | 物联网 | 智能硬件 | 机器人   | 智能家居      |
+                    | --- | ---- | ----- | --------- |
+                    | 5G  | arvr | robot | smarthome |
 
 </Route>
 
@@ -4214,6 +4246,25 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="nczitzk" example="/cria/news/1" path="/cria/news/:id?" :paramsDesc="['列表 id，可在列表页的 URL 中找到，默认为首页']"/>
 
+## 中华网
+
+### 军事 - 军事新闻
+
+<Route author="jiaaoMario" example="/china/news/military" path="/china/news/military">
+</Route>
+
+### 时事新闻
+
+<Route author="jiaaoMario" example="/china/news" path="/china/news/:category?" :paramsDesc="['新闻类型，见下表，默认为国内新闻']">
+
+新闻类型
+
+| 国内新闻     | 国际新闻          | 社会新闻   | 新闻热榜    |
+| -------- | ------------- | ------ | ------- |
+| domestic | international | social | news100 |
+
+</Route>
+
 ## 重构
 
 ### 推荐
@@ -4326,4 +4377,4 @@ QueryString:
 | ---- | ----- | ----- |
 |      | zh-hk | zh-tw |
 
- </Route>
+</Route>

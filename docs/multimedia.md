@@ -1664,6 +1664,34 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | -- | ------ | ----- | ---- | -- | ------ |
 | 留空 | bluray | 1080p | 720p | 3d | webdl  |
 
+## 中文播客榜
+
+::: tip 提示
+
+可以通过指定 `limit` 参数确定榜单排名下限，默认为 250。
+
+若只查看榜单前 50，可在订阅 URL 后加入 `?limit=50`。
+
+即，以 [热门节目](https://xyzrank.com/#/) 为例，路由为[`/xyzrank?limit=50`](https://rsshub.app/xyzrank?limit=50)。
+
+:::
+
+### 热门节目
+
+<Route author="nczitzk" example="/xyzrank" path="/xyzrank"/>
+
+### 热门播客
+
+<Route author="nczitzk" example="/xyzrank/hot-podcasts" path="/xyzrank/hot-podcasts"/>
+
+### 新锐节目
+
+<Route author="nczitzk" example="/xyzrank/hot-episodes-new" path="/xyzrank/hot-episodes-new"/>
+
+### 新锐播客
+
+<Route author="nczitzk" example="/xyzrank/new-podcasts" path="/xyzrank/new-podcasts"/>
+
 ## 注视影视
 
 ### 更新通知

@@ -652,3 +652,9 @@ Sources
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## アニメ新番組
+
+### 當季新番
+
+<Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
