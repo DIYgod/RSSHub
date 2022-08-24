@@ -2056,10 +2056,10 @@
   dependencies:
     "@types/node" "*"
 
-"@vercel/nft@0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.21.0.tgz#e0715b1997cd7021a7c7c48b584ef2295fd4b810"
-  integrity sha512-hFCAETfI5cG8l5iAiLhMC2bReC5K7SIybzrxGorv+eGspIbIFsVw7Vg85GovXm/LxA08pIDrAlrhR6GN36XB/Q==
+"@vercel/nft@0.22.0":
+  version "0.22.0"
+  resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.22.0.tgz#586ed4edfd0dabc9bf07525044782198a0b31199"
+  integrity sha512-hB80/093PPiCefN2gVbqv6J93MH+63Zr7uDCwkiS/U4W07DXkLoftbnkBmZoS0Q84LiTSl9DRVSHU4XYCX+sJA==
   dependencies:
     "@mapbox/node-pre-gyp" "^1.0.5"
     acorn "^8.6.0"
