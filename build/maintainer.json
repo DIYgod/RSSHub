@@ -1263,6 +1263,9 @@
     "/gov/cmse/:path+": [
         "nczitzk"
     ],
+    "/gov/cnnic/:path+": [
+        "nczitzk"
+    ],
     "/gov/customs/list/:gchannel?": [
         "Jeason0228",
         "TonyRL"
