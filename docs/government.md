@@ -722,7 +722,7 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="nczitzk" example="/gov/cnnic/gywm/xwzx/rdxw" path="/gov/cnnic/:path?" :paramsDesc="['路径，默认为热点信息']">
+<Route author="nczitzk" example="/gov/cnnic/gywm/xwzx/xwzxtzgg/" path="/gov/cnnic/:path?" :paramsDesc="['路径，默认为热点信息']">
 
 ::: tip 提示
 
