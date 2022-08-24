@@ -13116,6 +13116,28 @@
       }
     ]
   },
+  "taptap.io": {
+    "_name": "TapTap International",
+    ".": [
+      {
+        "title": "Changelog",
+        "docs": "https://docs.rsshub.app/game.html#taptap",
+        "source": [
+          "/app/:id"
+        ],
+        "target": "/taptap/intl/changelog/:id"
+      },
+      {
+        "title": "Ratings & Reviews",
+        "docs": "https://docs.rsshub.app/game.html#taptap",
+        "source": [
+          "/app/:id/review",
+          "/app/:id"
+        ],
+        "target": "/taptap/intl/review/:id"
+      }
+    ]
+  },
   "techflow520.com": {
     "_name": "深潮TechFlow",
     ".": [
