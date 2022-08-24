@@ -409,7 +409,7 @@ Sources
 
 ### 关键词搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表', '最大爬取页面数量，默认为 1']" radar="1" rssbud="1">
 
 | 高評価       | 急上昇 | 新着     | 人気         |
 | --------- | --- | ------ | ---------- |
