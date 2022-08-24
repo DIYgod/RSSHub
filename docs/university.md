@@ -2051,45 +2051,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南京艺术学院
 
-### 研究生处
-
-<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['种类名，见下表']" radar="1">
-
-| 种类名   | 参数   |
-| ----- | ---- |
-| 招生工作  | 1959 |
-| 培养工作  | 1962 |
-| 学位工作  | 1958 |
-| 思政与管理 | 1960 |
-
-</Route>
-
-## 南京邮电大学
-
-### 教务处通知与新闻
-
-<Route author="shaoye" example="/njupt/jwc/notice" path="/njupt/jwc/:type?" :paramsDesc="['默认为 `notice`']">
-
-| 通知公告   | 教务快讯 |
-| ------ | ---- |
-| notice | news |
-
-</Route>
-
-## 南开大学
-
-### 南开大学教务处
-
-<Route author="zhongweili" example="/nku/jwc/1" path="/nku/jwc/:type" :paramsDesc="['分区 type，可在网页 URL 中找到']">
-
-| 通知公告 | 新闻动态 |
-| ---- | ---- |
-| 1    | 2    |
-
-</Route>
-
-## 南京艺术学院
-
 ### 官网信息
 
 <Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
@@ -2138,6 +2099,30 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 培养工作  | 1962 |
 | 学位工作  | 1958 |
 | 思政与管理 | 1960 |
+
+</Route>
+
+## 南京邮电大学
+
+### 教务处通知与新闻
+
+<Route author="shaoye" example="/njupt/jwc/notice" path="/njupt/jwc/:type?" :paramsDesc="['默认为 `notice`']">
+
+| 通知公告   | 教务快讯 |
+| ------ | ---- |
+| notice | news |
+
+</Route>
+
+## 南开大学
+
+### 南开大学教务处
+
+<Route author="zhongweili" example="/nku/jwc/1" path="/nku/jwc/:type" :paramsDesc="['分区 type，可在网页 URL 中找到']">
+
+| 通知公告 | 新闻动态 |
+| ---- | ---- |
+| 1    | 2    |
 
 </Route>
 
