@@ -607,6 +607,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `EH_IPB_MEMBER_ID`: The value of `ipb_member_id` in the cookie header after logging in E-Hentai
     -   `EH_IPB_PASS_HASH`: The value of `ipb_pass_hash` in the cookie header after logging in E-Hentai
     -   `EH_SK`: The value of `sk` in the cookie header after logging in E-Hentai
+    -   `EH_STAR`: The value of `star` in the cookie header if your account has stars. If this value is set, image limit allocation will links to the account rather than IP address
     -   `EH_IGNEOUS`: The value of `igneous` in the cookie header after logging in ExHentai. If this value is set, RSS will be generated from ExHentai
     -   `EH_IMG_PROXY`: Cover proxy address. If this is set, the link to the cover image will be replaced with this value at the beginning. When using ExHentai, the cover image requires cookies to access it, so you can use this with a cookie-added proxy server to access the cover image without cookies in some readers.
 

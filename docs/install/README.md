@@ -641,6 +641,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `EH_IPB_PASS_HASH`: E-Hentai 账户登录后 cookie 的 `ipb_pass_hash` 值
     -   `EH_SK`: E-Hentai 账户登录后 cookie 中的`sk`值
     -   `EH_IGNEOUS`: ExHentai 账户登录后 cookie 中的`igneous`值。若设置此值，RSS 数据将全部从里站获取
+    -   `EH_STAR`: E-Hentai 账户获得捐赠等级后将出现该 cookie。若设置此值，图片访问量限制将与账号关联而非 IP 地址
     -   `EH_IMG_PROXY`: 封面代理访问地址。若设置此值，封面图链接将被替换为以此值开头。使用 ExHentai 时，封面图需要有 Cookie 才能访问，在一些阅读软件上没法显示封面，可以使用此值搭配一个加 Cookie 的代理服务器实现阅读软件无 Cookie 获取封面图。
 
 -   Gitee 全部路由：[申请地址](https://gitee.com/api/v5/swagger)
