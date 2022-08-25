@@ -430,6 +430,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
 
+## RemNote
+
+### Changelog
+
+<RouteEn author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
+
 ## RescueTime
 
 ### Release Notes
@@ -530,6 +536,12 @@ Language
 ### What's New
 
 <RouteEn author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
+
+## WziFile
+
+### Version History
+
+<RouteEn author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
 
 ## X410
 

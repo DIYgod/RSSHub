@@ -190,4 +190,17 @@ describe('cache', () => {
         expect(parsed1.items[0].content).toBe('Cache1');
         expect(parsed2.items[0].content).toBe('Cache2');
     });
+
+    it('throws URL key', async () => {
+        process.env.CACHE_TYPE = 'memory';
+        server = require('../../lib/index');
+        const request = supertest(server);
+
+        try {
+            const response = await request.get('/test/cacheUrlKey');
+            expect(response).toThrow(Error);
+        } catch (e) {
+            expect(e.message).toContain('Cache key must be a string');
+        }
+    });
 });

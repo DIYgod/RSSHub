@@ -1,0 +1,16 @@
+{{@ description }}
+{{ if images }}
+{{ each images image }}
+<img src="{{ image.origin_pic }}" width="{{ image.origin_width }}" height="{{ image.origin_height }}">
+{{ /each }}
+{{ /if }}
+{{ if video }}
+<video width="{{ video.width }}" height="{{ video.height }}" poster="{{ video.cover_path }}" controls>
+  <source src="{{ video.url }}" type="video/{{ video.format }}">
+</video>
+{{ /if }}
+{{ if comments }}
+{{ each comments.datalist comment }}
+<p>{{ comment.user_info.username }}: {{ comment.content }} ({{ comment.show_time }})</p>
+{{ /each }}
+{{ /if }}
