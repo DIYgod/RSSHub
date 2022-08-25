@@ -1202,6 +1202,38 @@
       }
     ]
   },
+  "baidu.com": {
+    "_name": "贴吧",
+    "tieba": [
+      {
+        "title": "帖子列表",
+        "docs": "https://docs.rsshub.app/bbs.html#bai-du-tie-ba",
+        "source": "f"
+      },
+      {
+        "title": "精品帖子",
+        "docs": "https://docs.rsshub.app/bbs.html#bai-du-tie-ba",
+        "source": "f"
+      },
+      {
+        "title": "帖子动态",
+        "docs": "https://docs.rsshub.app/bbs.html#bai-du-tie-ba",
+        "source": "/p/:id",
+        "target": "/tieba/post/:id"
+      },
+      {
+        "title": "只看楼主",
+        "docs": "https://docs.rsshub.app/bbs.html#bai-du-tie-ba",
+        "source": "/p/:id",
+        "target": "/tieba/post/lz/:id"
+      },
+      {
+        "title": "用户帖子",
+        "docs": "https://docs.rsshub.app/bbs.html#tie-ba",
+        "source": "/home/main"
+      }
+    ]
+  },
   "baijingapp.com": {
     "_name": "白鲸出海",
     ".": [
@@ -15857,38 +15889,6 @@
         "docs": "https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa",
         "source": "/:app",
         "target": "/pgyer/:app"
-      }
-    ]
-  },
-  "baidu.com": {
-    "_name": "贴吧",
-    "tieba": [
-      {
-        "title": "帖子列表",
-        "docs": "https://docs.rsshub.app/bbs.html#tie-ba",
-        "source": "f"
-      },
-      {
-        "title": "精品帖子",
-        "docs": "https://docs.rsshub.app/bbs.html#tie-ba",
-        "source": "f"
-      },
-      {
-        "title": "帖子动态",
-        "docs": "https://docs.rsshub.app/bbs.html#tie-ba",
-        "source": "/p/:id",
-        "target": "/tieba/post/:id"
-      },
-      {
-        "title": "只看楼主",
-        "docs": "https://docs.rsshub.app/bbs.html#tie-ba",
-        "source": "/p/:id",
-        "target": "/tieba/post/lz/:id"
-      },
-      {
-        "title": "用户帖子",
-        "docs": "https://docs.rsshub.app/bbs.html#tie-ba",
-        "source": "/home/main"
       }
     ]
   },
