@@ -3670,6 +3670,9 @@
     "/xjtu/std/:category?": [
         "nczitzk"
     ],
+    "/xmnn/epaper/:id?": [
+        "nczitzk"
+    ],
     "/xueqiu/column/:id": [
         "TonyRL"
     ],
