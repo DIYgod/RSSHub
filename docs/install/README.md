@@ -184,16 +184,16 @@ $ cd RSSHub
 
 下载完成后，需要安装依赖（开发不要加 `--production` 参数）
 
-使用 `npm`
-
-```bash
-$ npm ci --production
-```
-
-或 `yarn`
+使用 `yarn`
 
 ```bash
 $ yarn install --production
+```
+
+或 `npm`
+
+```bash
+$ npm ci --production
 ```
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
@@ -203,13 +203,13 @@ $ yarn install --production
 然后在 `RSSHub` 文件夹中运行下面的命令就可以启动
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 或
 
 ```bash
-$ yarn start
+$ npm start
 ```
 
 或使用 [PM2](https://pm2.keymetrics.io/docs/usage/quick-start/)
@@ -287,9 +287,15 @@ in pkgs.stdenv.mkDerivation {
 
 ## 部署到 Heroku
 
-### 注意：
+### 注意
 
-未验证支付方式的 heroku 账户每月仅有 550 小时额度（约 23 天），验证支付方式后可达每月 1000 小时。
+::: warning 更新
+
+Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
+
+:::
+
+~~未验证支付方式的 heroku 账户每月仅有 550 小时额度（约 23 天），验证支付方式后可达每月 1000 小时。~~
 
 ### 一键部署（无自动更新）
 

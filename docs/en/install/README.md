@@ -184,16 +184,16 @@ $ cd RSSHub
 
 Execute the following commands to install dependencies (Do not add the `--production` parameter for development).
 
-Using `npm`
-
-```bash
-$ npm ci --production
-```
-
-Or `yarnv1` (not recommended)
+Using `yarnv1`
 
 ```bash
 $ yarn --production
+```
+
+or using `npm`
+
+```bash
+$ npm ci --production
 ```
 
 ### Launch
@@ -201,13 +201,12 @@ $ yarn --production
 Under `RSSHub`'s root directory, execute the following commands to launch
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 Or
-
 ```bash
-$ yarn start
+$ npm start
 ```
 
 Or use [PM2](https://pm2.io/docs/plus/quick-start/)
@@ -285,7 +284,13 @@ in pkgs.stdenv.mkDerivation {
 
 ### Notice
 
-Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
+::: warning Update
+
+Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product plans.
+
+:::
+
+~~Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.~~
 
 ### Instant deploy (without automatic update)
 
