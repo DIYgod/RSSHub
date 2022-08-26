@@ -1,0 +1,13 @@
+<img src="{{ raw_pic_link }}">
+<p>标题：<b>{{ video_name }}</b></p>
+<p>作者：<b>{{ authors }}</b></p>
+<p>原作：<b>{{ origins }}</b></p>
+<p>角色：<b>{{ characters }}</b></p>
+<p>标签：<b>{{ tags }}</b></p>
+<p>简介：</p>
+<div style = "white-space: pre-line;">
+<b>{{ desc }}</b>
+</div>
+<p>iwara链接：<b><a href="{{ iwara_link }}">{{ iwara_link }}</a></b></p>
+<p>Oreno3D链接：<b><a href="{{ oreno3d_link }}">{{ oreno3d_link }}</a></b></p>
+

@@ -250,6 +250,16 @@ pageClass: routes
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
 
+## Meteor
+
+### 看板
+
+<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" :paramsDesc="['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']" radar="1" rssbud="1"/>
+
+### 看板列表
+
+<Route author="TonyRL" example="/meteor/boards" path="/meteor/boards" radar="1" rssbud="1"/>
+
 ## Mobilism
 
 ### 论坛
@@ -284,11 +294,17 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="xyqfer" example="/nga/post/18449558" path="/nga/post/:tid"  :paramsDesc="['帖子 id, 可在帖子 URL 找到']" radar="1" rssbud="1"/>
+<Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  :paramsDesc="['帖子 id, 可在帖子 URL 找到', '作者 id']" radar="1" rssbud="1"/>
 
 ## PLAYNO.1 玩樂達人
 
 ### AV
+
+::: warning 注意
+
+目前观测到该博客可能禁止日本 IP 访问。建议部署在日本区以外的服务器上。
+
+:::
 
 <Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
 
@@ -378,11 +394,47 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
+## Zuvio
+
+### 校園話題
+
+<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" :paramsDesc="['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']" radar="1" rssbud="1"/>
+
+### 看板列表
+
+<Route author="TonyRL" example="/zuvio/student5/boards" path="/zuvio/student5/boards" />
+
 ## 巴哈姆特電玩資訊站
 
 ### 熱門推薦
 
 <Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
+
+## 百度贴吧
+
+### 帖子列表
+
+<Route author="u3u" example="/baidu/tieba/forum/女图" path="/baidu/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
+
+### 精品帖子
+
+<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
+
+### 帖子动态
+
+<Route author="u3u" example="/baidu/tieba/post/5853240586" path="/baidu/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+
+### 楼主动态
+
+<Route author="u3u" example="/baidu/tieba/post/lz/5853240586" path="/baidu/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+
+### 用户帖子
+
+<Route author="igxlin nczitzk" example="/baidu/tieba/user/斗鱼游戏君" path="/baidu/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
+
+用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
+
+</Route>
 
 ## 才符
 
@@ -422,11 +474,47 @@ pageClass: routes
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
 
+## 斗鱼
+
+### 鱼吧帖子
+
+<Route author="nczitzk" example="/douyu/group/1011" path="/douyu/group/:id/:sort?" :paramsDesc="['鱼吧 id，可在鱼吧页 URL 中找到', '排序方式，见下表，默认为发布时间排序']">
+
+| 回复时间排序 | 发布时间排序 |
+| ------ | ------ |
+| 1      | 2      |
+
+</Route>
+
+### 鱼吧跟帖
+
+<Route author="nczitzk" example="/douyu/post/631737151576473201" path="/douyu/post/:id" :paramsDesc="['帖子 id，可在帖子页 URL 中找到']" />
+
 ## 恩山无线论坛
 
 ### 板块
 
 <Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
+
+## 二次元虫洞
+
+### 板块
+
+<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块', '排序']" radar="1">
+
+板块（更多板块请自行 [查看](http://www.2cycd.com)）
+
+| 音乐下载（默认） | 动漫下载 | 游戏下载 |
+| -------- | ---- | ---- |
+| 43       | 53   | 42   |
+
+排序
+
+| 发布时间排序（默认） | 回复／查看   | 查看    |
+| ---------- | ------- | ----- |
+| dateline   | replies | views |
+
+</Route>
 
 ## 光谷社区
 
@@ -437,6 +525,46 @@ pageClass: routes
 | 首页 | 你问我答 | 同城活动     | IT 技术 | 金融财经    | 创业创客    | 城市建设 |
 | -- | ---- | -------- | ----- | ------- | ------- | ---- |
 |    | qna  | lowshine | it    | finance | startup | city |
+
+</Route>
+
+## 海角社区
+
+### 热门
+
+<Route author="nczitzk" example="/hjedd/hot" path="/hjedd/hot"/>
+
+### 新闻
+
+<Route author="nczitzk" example="/hjedd/news" path="/hjedd/news"/>
+
+### 大事记
+
+<Route author="nczitzk" example="/hjedd/event" path="/hjedd/event"/>
+
+### 原创
+
+<Route author="nczitzk" example="/hjedd/original" path="/hjedd/original"/>
+
+### 精华
+
+<Route author="nczitzk" example="/hjedd/top" path="/hjedd/top"/>
+
+### 公告
+
+<Route author="nczitzk" example="/hjedd/notice" path="/hjedd/notice"/>
+
+### 最新
+
+<Route author="nczitzk" example="/hjedd/latest" path="/hjedd/latest"/>
+
+### 文章
+
+<Route author="nczitzk" example="/hjedd/1288/1" path="/hjedd/:node?/:type?" :paramsDesc="['节点 id，可在对应节点页 URL 中找到，默认为 `258`，即 大事记', '类型 id，见下表，默认为 `0`，即 默认']">
+
+| 默认 | 最新 | 热门 | 精华 | 悬赏 | 出售 |
+| -- | -- | -- | -- | -- | -- |
+| 0  | 1  | 2  | 3  | 4  | 5  |
 
 </Route>
 
@@ -460,11 +588,11 @@ pageClass: routes
 
 ### 社区
 
-<Route author="LogicJake nczitzk" example="/hupu/bbs/34" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为步行街', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布']">
+<Route author="LogicJake nczitzk" example="/hupu/bbs/topic-daily" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为#步行街主干道', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复']">
 
 ::: tip 提示
 
-更多社区参见 [社区](https://m.hupu.com/bbs)
+更多社区参见 [社区](https://bbs.hupu.com)
 
 :::
 
@@ -721,32 +849,6 @@ pageClass: routes
 ### 用户的回帖
 
 <Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" :paramsDesc="['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']"/>
-
-## 贴吧
-
-### 帖子列表
-
-<Route author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
-
-### 精品帖子
-
-<Route author="u3u" example="/tieba/forum/good/女图" path="/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
-
-### 帖子动态
-
-<Route author="u3u" example="/tieba/post/5853240586" path="/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
-
-### 楼主动态
-
-<Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
-
-### 用户帖子
-
-<Route author="igxlin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
-
-用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
-
-</Route>
 
 ## 通信人家园
 
