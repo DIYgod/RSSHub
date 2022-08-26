@@ -3503,6 +3503,9 @@
     "/vmware/flings": [
         "nczitzk"
     ],
+    "/vom/featured/:lang?": [
+        "TonyRL"
+    ],
     "/wallhaven/search/:filter?/:needDetails?": [
         "nczitzk",
         "Fatpandac"
