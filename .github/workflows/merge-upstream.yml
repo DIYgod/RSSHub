@@ -36,14 +36,14 @@ jobs:
       - name: Merge railway
         id: merge-railway
         run: |
-          git checkout deploy/railway
-          git merge DIYgod/master origin/deploy/railway --no-edit
+          git checkout deploy
+          git merge DIYgod/master origin/deploy --no-edit
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: deploy/railway
+          branch: deploy
 
       - name: Merge master
         id: merge-master
