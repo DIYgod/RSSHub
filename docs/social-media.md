@@ -340,6 +340,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
+### 合集更新
+
+<Route author="shininome" example="/bilibili/collection/245645656/529166" path="/bilibili/collection/:uid/:sid/:disableEmbed?" :paramsDesc="['用户 id，可在 UP 主主页中找到','合集的id，合集上面有','默认为开启内嵌视频，任意值为关闭']"/>
+
 ## Dev.to
 
 ### 最高职位
@@ -581,9 +585,10 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 | safe       | r18       | 空或其他任意值 |
 
 </Route>
+
 ### 关注的新作品
 
-<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1"/>
+<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 
 ::: warning 注意
 
@@ -593,9 +598,51 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 </Route>
 
-## pixiv-fanbox
+## pixivFANBOX
 
-<Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['用户名, 可在用户主页 URL 中找到. 默认为官方资讯']"/>
+### User
+
+<Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['用户名，可在用户主页 URL 中找到，默认为官方资讯']"/>
+
+## Plurk
+
+### 話題
+
+<Route author="TonyRL" path="/plurk/topic/:topic" example="/plurk/topic/standwithukraine" :paramsDesc="['話題 ID，可在 URL 找到']" radar="1" rssbud="1"/>
+
+### 話題排行榜
+
+<Route author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" :paramsDesc="['排行榜分類，見下表，默認為 `topReplurks`', '語言，見下表，默認為 `en`']" radar="1" rssbud="1">
+
+| 最多人轉噗       | 最多人喜歡        | 最多人回應        |
+| ----------- | ------------ | ------------ |
+| topReplurks | topFavorites | topResponded |
+
+| English | 中文（繁體） |
+| ------- | ------ |
+| en      | zh     |
+
+</Route>
+
+### 偷偷說
+
+<Route author="TonyRL" path="/plurk/anonymous" example="/plurk/anonymous" radar="1" rssbud="1"/>
+
+### 搜尋
+
+<Route author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" :paramsDesc="['關鍵詞']" radar="1" rssbud="1"/>
+
+### 最近分享
+
+<Route author="TonyRL" path="/plurk/hotlinks" example="/plurk/hotlinks" radar="1" rssbud="1"/>
+
+### 噗浪消息
+
+<Route author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/zh" :paramsDesc="['語言，見上表，默認為 `en`']" radar="1" rssbud="1"/>
+
+### 用戶
+
+<Route author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" :paramsDesc="['用戶 ID，可在 URL 找到']" radar="1" rssbud="1"/>
 
 ## Popi 提问箱
 

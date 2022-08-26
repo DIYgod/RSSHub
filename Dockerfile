@@ -1,17 +1,9 @@
-FROM node:16-bullseye-slim as dep-builder
+FROM node:16-bullseye as dep-builder
+# Here we use the non-slim image to provide build-time deps (compilers and python), thus no need to install later.
+# This effectively speeds up qemu-based cross-build.
 
-# bash has already been the default shell
+# no longer needed
 #RUN ln -sf /bin/bash /bin/sh
-
-# these deps are no longer needed since we use yarn instead of npm to install dependencies
-# the installation of dumb-init has been moved to the app stage to improve concurrency and speed up builds on arm/arm64
-#RUN \
-#    set -ex && \
-#    apt-get update && \
-#    apt-get install -yq --no-install-recommends \
-#        libgconf-2-4 apt-transport-https git dumb-init python3 build-essential \
-#    && \
-#    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -19,10 +11,6 @@ WORKDIR /app
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
-    apt-get update && \
-    apt-get install -yq --no-install-recommends \
-        build-essential python3 \
-    ; \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \

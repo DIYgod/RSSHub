@@ -14,6 +14,12 @@ pageClass: routes
 
 <Route author="emdoe" example="/benedictevans" path="/benedictevans"/>
 
+## CSDN
+
+### 用户博客
+
+<Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` 为 CSDN 用户名，可以在主页 url 中找到']" />
+
 ## Google Sites
 
 ### 文章更新
@@ -116,6 +122,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 ### 文章
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
+
+## Polkadot
+
+### 博客
+
+<Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog"/>
 
 ## PolkaWorld
 
