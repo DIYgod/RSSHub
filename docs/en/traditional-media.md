@@ -554,6 +554,18 @@ Provide full article RSS for WSJ topics.
 
 </RouteEn>
 
+## Voice of Mongolia
+
+### News
+
+<RouteEn author="zphw" example="/vom/featured" path="/vom/featured/:lang?" :paramsDesc="['Language, see the table below, `mn` by default']">
+
+| English | 日本語 | Монгол | Русский | 简体中文 |
+| ------- | --- | ------ | ------- | ---- |
+| en      | ja  | mn     | ru      | zh   |
+
+</RouteEn>
+
 ## Yahoo
 
 ### News
