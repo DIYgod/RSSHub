@@ -35,7 +35,7 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: This is not a duplicated feature request
+      label: This is not a duplicated feature request or new RSS proposal
       options:
-        - label: I have searched [existing issues](https://github.com/DIYgod/RSSHub/issues) to ensure this feature has not already been requested
+        - label: I have searched [existing issues](https://github.com/DIYgod/RSSHub/issues) to ensure this feature has not already been requested and this is not a [new RSS proposal](https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+proposal&template=rss_request_en.yml).
           required: true

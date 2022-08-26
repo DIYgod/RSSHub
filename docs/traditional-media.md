@@ -869,9 +869,9 @@ IT・科学 tech_science
 
 无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        | 皇室        |
-| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
-| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
+| 新着・速報 | 社会       | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        | 皇室        |
+| ----- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
+| news  | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </Route>
 
@@ -1720,6 +1720,18 @@ category 对应的关键词有
 | 総合   | マネーのまなび | 経済・金融   | 政治       | ビジネス     | マネーのまなび | テクノロジー     | 国際            | スポーツ   | 社会・くらし  | オピニオン   | 文化      | FT  | 地域    | 日経ビジネス | ライフ |
 | ---- | ------- | ------- | -------- | -------- | ------- | ---------- | ------------- | ------ | ------- | ------- | ------- | --- | ----- | ------ | --- |
 | news | 未支持     | economy | politics | business | 未支持     | technology | international | sports | society | opinion | culture | 未支持 | local | 未支持    | 未支持 |
+
+</Route>
+
+## 厦门网
+
+### 数字媒体
+
+<Route author="nczitzk" example="/xmnn/epaper/xmrb" path="/xmnn/epaper/:id?" :paramsDesc="['报纸 id，见下表，默认为 `xmrb`，即厦门日报']">
+
+| 厦门日报 | 厦门晚报 | 海西晨报 | 城市捷报 |
+| ---- | ---- | ---- | ---- |
+| xmrb | xmwb | hxcb | csjb |
 
 </Route>
 

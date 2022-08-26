@@ -184,16 +184,16 @@ $ cd RSSHub
 
 Execute the following commands to install dependencies (Do not add the `--production` parameter for development).
 
-Using `npm`
-
-```bash
-$ npm ci --production
-```
-
-Or `yarnv1` (not recommended)
+Using `yarnv1`
 
 ```bash
 $ yarn --production
+```
+
+or using `npm`
+
+```bash
+$ npm ci --production
 ```
 
 ### Launch
@@ -201,13 +201,12 @@ $ yarn --production
 Under `RSSHub`'s root directory, execute the following commands to launch
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 Or
-
 ```bash
-$ yarn start
+$ npm start
 ```
 
 Or use [PM2](https://pm2.io/docs/plus/quick-start/)
@@ -285,7 +284,13 @@ in pkgs.stdenv.mkDerivation {
 
 ### Notice
 
-Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.
+::: warning Update
+
+Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product plans.
+
+:::
+
+~~Heroku accounts with unverified payment methods have only 550 hours of credit per month (about 23 days), and up to 1,000 hours per month with verified payment methods.~~
 
 ### Instant deploy (without automatic update)
 
@@ -607,6 +612,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `EH_IPB_MEMBER_ID`: The value of `ipb_member_id` in the cookie header after logging in E-Hentai
     -   `EH_IPB_PASS_HASH`: The value of `ipb_pass_hash` in the cookie header after logging in E-Hentai
     -   `EH_SK`: The value of `sk` in the cookie header after logging in E-Hentai
+    -   `EH_STAR`: The value of `star` in the cookie header if your account has stars. If this value is set, image limit allocation will links to the account rather than IP address
     -   `EH_IGNEOUS`: The value of `igneous` in the cookie header after logging in ExHentai. If this value is set, RSS will be generated from ExHentai
     -   `EH_IMG_PROXY`: Cover proxy address. If this is set, the link to the cover image will be replaced with this value at the beginning. When using ExHentai, the cover image requires cookies to access it, so you can use this with a cookie-added proxy server to access the cover image without cookies in some readers.
 

@@ -565,7 +565,7 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 ### 新闻
 
-<Route author="wushijishan" example="/erbingapp/news" path="/erbingapp/news"/>
+<Route author="wushijishan" example="/diershoubing/news" path="/diershoubing/news"/>
 
 ## 公主链接
 
