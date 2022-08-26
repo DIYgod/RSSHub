@@ -173,6 +173,18 @@
     "/ahjzu/news": [
         "Yuk-0v0"
     ],
+    "/aicaijing/cover": [
+        "nczitzk"
+    ],
+    "/aicaijing/information/:id?": [
+        "nczitzk"
+    ],
+    "/aicaijing/latest": [
+        "nczitzk"
+    ],
+    "/aicaijing/recommend": [
+        "nczitzk"
+    ],
     "/airchina/announcement": [
         "LandonLi"
     ],
