@@ -25,7 +25,7 @@ module.exports = {
         },
         'vuepress-plugin-meilisearch': {
             hostUrl: 'https://meilisearch.rsshub.app',
-            apiKey: 'd3faa641522b6fb1e1bfaeba838c0627c1a5d235988a8df224cdd6b35abfab22',
+            apiKey: '375c36cd9573a2c1d1e536214158c37120fdd0ba6cd8829f7a848e940cc22245',
             indexUid: 'rsshub',
             maxSuggestions: 14,
         },
