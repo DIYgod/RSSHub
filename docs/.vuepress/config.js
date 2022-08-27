@@ -74,8 +74,9 @@ module.exports = {
         docsDir: 'docs',
         smoothScroll: true,
         algolia: {
-            apiKey: '6247bc0db93150fd9e531b93a3fa4046',
+            apiKey: '4c5f9a5a2c10e6bec73c0f07dbe356a6',
             indexName: 'rsshub',
+            appId: 'I63CFUQ7XF',
             algoliaOptions: {
                 hitsPerPage: 14,
             },
