@@ -1414,6 +1414,18 @@ category 对应的关键词有
 
 <Route author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
+## 蒙古之声
+
+### 新闻
+
+<Route author="zphw" example="/vom/featured" path="/vom/featured/:lang?" :paramsDesc="['语言，见下表，默认 `mn`']">
+
+| English | 日本語 | Монгол | Русский | 简体中文 |
+| ------- | --- | ------ | ------- | ---- |
+| en      | ja  | mn     | ru      | zh   |
+
+</Route>
+
 ## 明报
 
 ### 即时新闻
