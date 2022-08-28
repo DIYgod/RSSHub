@@ -3097,6 +3097,9 @@
     "/stcn/:id?": [
         "nczitzk"
     ],
+    "/stheadline/std/realtime/:category*": [
+        "TonyRL"
+    ],
     "/storm/:category?/:id?": [
         "nczitzk"
     ],
