@@ -658,3 +658,9 @@ Sources
 ### 當季新番
 
 <Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
+
+## 东方活动日程
+
+### THBWiki 日历
+
+<Route author="aether17" path="/touhou-events/thwiki/:before?/:after?" example="/touhou-events/thwiki" :paramsDesc="['从多少天前（默认30）', '到多少天后（默认30）']" radar="1" rssbud="1"/>
