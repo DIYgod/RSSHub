@@ -1335,6 +1335,9 @@
     "/gov/moe/:type": [
         "Crawler995"
     ],
+    "/gov/mofcom/article/:suffix+": [
+        "LogicJake"
+    ],
     "/gov/moj/aac/news/:type?": [
         "TonyRL"
     ],
@@ -4619,7 +4622,6 @@
     "/leboncoin/ad/:query": [],
     "/dhl/:id": [],
     "/japanpost/track/:reqCode/:locale?": [],
-    "/mofcom/article/:suffix": [],
     "/pingwest/status": [],
     "/pingwest/tag/:tag/:type": [],
     "/pingwest/user/:uid/:type?": [],
