@@ -718,6 +718,22 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
 
+## 中国互联网络信息中心
+
+### 新闻中心
+
+<Route author="nczitzk" example="/gov/cnnic/gywm/xwzx/xwzxtzgg/" path="/gov/cnnic/:path+" :paramsDesc="['路径，默认为热点信息']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.cnnic.net.cn/` 后的字段。下面是一个例子。
+
+若订阅 [热点信息](http://www.cnnic.net.cn/gywm/xwzx/rdxw) 则将对应页面 URL <http://www.cnnic.net.cn/gywm/xwzx/rdxw> 中 `http://www.cnnic.net.cn/` 后的字段 `gywm/xwzx/rdxw` 作为路径填入。此时路由为 [`/gov/cnnic/gywm/xwzx/rdxw`](https://rsshub.app/gov/cnnic/gywm/xwzx/rdxw)
+
+:::
+
+</Route>
+
 ## 中国农工民主党
 
 ### 新闻中心

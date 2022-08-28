@@ -25,7 +25,6 @@ describe('puppeteer', () => {
             waitUntil: 'domcontentloaded',
         });
 
-        // eslint-disable-next-line no-undef
         const html = await page.evaluate(() => document.body.innerHTML);
         expect(html.length).toBeGreaterThan(0);
 
@@ -42,9 +41,7 @@ describe('puppeteer', () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer({ stealth: false });
         const page = await browser.newPage();
-        await page.goto('https://bot.sannysoft.com', {
-            waitUntil: 'networkidle0',
-        });
+        await page.goto('https://bot.sannysoft.com');
 
         const html = await page.evaluate(() => document.body.innerHTML);
         const $ = cheerio.load(html);
@@ -63,9 +60,7 @@ describe('puppeteer', () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer({ stealth: true });
         const page = await browser.newPage();
-        await page.goto('https://bot.sannysoft.com', {
-            waitUntil: 'networkidle0',
-        });
+        await page.goto('https://bot.sannysoft.com');
 
         const html = await page.evaluate(() => document.body.innerHTML);
         const $ = cheerio.load(html);

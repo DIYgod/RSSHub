@@ -410,6 +410,32 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
 
+## 百度贴吧
+
+### 帖子列表
+
+<Route author="u3u" example="/baidu/tieba/forum/女图" path="/baidu/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
+
+### 精品帖子
+
+<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
+
+### 帖子动态
+
+<Route author="u3u" example="/baidu/tieba/post/5853240586" path="/baidu/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+
+### 楼主动态
+
+<Route author="u3u" example="/baidu/tieba/post/lz/5853240586" path="/baidu/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+
+### 用户帖子
+
+<Route author="igxlin nczitzk" example="/baidu/tieba/user/斗鱼游戏君" path="/baidu/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
+
+用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
+
+</Route>
+
 ## 才符
 
 ### 用户动态
@@ -823,32 +849,6 @@ pageClass: routes
 ### 用户的回帖
 
 <Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" :paramsDesc="['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']"/>
-
-## 贴吧
-
-### 帖子列表
-
-<Route author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
-
-### 精品帖子
-
-<Route author="u3u" example="/tieba/forum/good/女图" path="/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
-
-### 帖子动态
-
-<Route author="u3u" example="/tieba/post/5853240586" path="/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
-
-### 楼主动态
-
-<Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
-
-### 用户帖子
-
-<Route author="igxlin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
-
-用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
-
-</Route>
 
 ## 通信人家园
 
