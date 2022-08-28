@@ -2710,6 +2710,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 第一附属医院新闻
+
+<Route author="TonyRL" example="/xjtu/dyyy/index/xsxx" path="/xjtu/dyyy/:path+" :paramsDesc="['栏目路径，支持多级，不包括末尾的`.htm`']" radar="1" rssbud="1"/>
+
 ### 第二附属医院新闻
 
 <Route author="nczitzk" example="/xjtu/2yuan/news" path="/xjtu/2yuan/news/:id?" :paramsDesc="['编号，见下表，默认为通知公告']">
