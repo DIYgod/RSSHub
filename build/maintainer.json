@@ -3679,6 +3679,9 @@
     "/xjtu/dean/:subpath+": [
         "hoilc"
     ],
+    "/xjtu/dyyy/:path+": [
+        "TonyRL"
+    ],
     "/xjtu/ee/:id?": [
         "DylanXie123"
     ],
