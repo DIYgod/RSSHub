@@ -5051,7 +5051,7 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docs-searchbar.js@^2.1.1:
+docs-searchbar.js@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-2.2.0.tgz#e60eb0ee4f67853c41fdf7d3a4ef6ac7ac2c8027"
   integrity sha512-rleKMiTkxG14M+6yt3+H8H0w/GKxWsNMinf4+zTVz9aVi04oJ8u37kktTiW3qkpPl9VQ7/i7Yv9wykukMqVxfw==
@@ -14189,12 +14189,12 @@ vuepress-plugin-container@^2.0.2:
     "@vuepress/shared-utils" "^1.2.0"
     markdown-it-container "^2.0.0"
 
-vuepress-plugin-meilisearch@0.12.2:
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.2.tgz#d130fa77a5f1ca5f8ae09af14e504f21779376d1"
-  integrity sha512-ug9+puCPySr/wJEnymWqFqbo3xsQfqXog2kFU8RPjrOQ20miQjgPYnF3u/8Pb+QT0s5zHA6ykT8lTBx0ovWsVw==
+vuepress-plugin-meilisearch@0.12.3:
+  version "0.12.3"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.3.tgz#bb7e04d7d38d61791788a590b7474d94f21845bf"
+  integrity sha512-2Qo7QWuhYMt1VK+PyEawXyqU94JM6V7yOGiKdNETLEEc7s4+zgm9z5kQANRncSamTbmdP0A2vK1d8tPn+EE5ew==
   dependencies:
-    docs-searchbar.js "^2.1.1"
+    docs-searchbar.js "^2.2.0"
 
 vuepress-plugin-sitemap@2.3.1:
   version "2.3.1"
