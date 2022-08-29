@@ -12,10 +12,12 @@ jobs:
   scrape-docs:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Netlify to finish
-        run: sleep 3m
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Pull image
+        run: docker pull getmeili/docs-scraper
+      - name: Wait for Netlify to finish
+        run: sleep 3m
       - name: Run docs-scraper
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
