@@ -5,12 +5,15 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/scrape.yml'
       - 'docs/**'
 
 jobs:
   scrape-docs:
     runs-on: ubuntu-latest
     steps:
+      - name: Wait for Netlify to finish
+        run: sleep 3m
       - name: Checkout
         uses: actions/checkout@v3
       - name: Run docs-scraper
