@@ -1811,7 +1811,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处
 
-<Route author="arcosx Seiry qrzbing" example="/nuaa/jwc/tzgg" path="/nuaa/jwc/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']" puppeteer="1">
+<Route author="arcosx Seiry qrzbing Xm798" example="/nuaa/jwc/tzgg" path="/nuaa/jwc/:type/:getDescription?" :paramsDesc="['分类名', '是否获取全文']" puppeteer="1">
 
 | 通知公告 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
 | ---- | ---- | ---- | ---- | ---- |
@@ -1819,23 +1819,31 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生院
+
+<Route author="junfengP Seiry Xm798" example="/nuaa/yjsy/tzgg" path="/nuaa/yjsy/:getDescription?" :paramsDesc="['分类名', '是否获取全文']" puppeteer="1">
+
+| 通知公告 | 新闻动态 | 学术信息 | 师生风采 |
+| ---- | ---- | ---- | ---- |
+| tzgg | xwdt | xsxx | ssfc |
+
+</Route>
+
+### 自动化学院
+
+<Route author="Seiry qrzbing Xm798" example="/nuaa/cae/zhxw" path="/nuaa/cs/:type/:getDescription?" :paramsDesc="['分类名', '是否获取全文']" puppeteer="1">
+
+| 综合新闻 | 党委行政 | 人事 / 合作 | 研究生培养 | 本科生培养 | 学生工作 | 通知公告 | 学术信息 | 答辩公告 |
+| ---- | ---- | ------- | ----- | ----- | ---- | ---- | ---- | ---- |
+| zhxw | dwxz | rshz    | yjs   | bks   | xsgz | tzgg | xsxx | dbgg |
+
 ### 计算机科学与技术学院
 
-<Route author="LogicJake Seiry qrzbing" example="/nuaa/cs/jxdt" path="/nuaa/cs/:type/:getDescription?" :paramsDesc="['分类名', '是否获取描述']" puppeteer="1">
+<Route author="LogicJake Seiry qrzbing Xm798" example="/nuaa/cs/jxdt" path="/nuaa/cs/:type/:getDescription?" :paramsDesc="['分类名', '是否获取全文']" puppeteer="1">
 
 | 通知公告 | 热点新闻 | 学科科研 | 教学动态 | 本科生培养 | 研究生培养 | 学生工作 |
 | ---- | ---- | ---- | ---- | ----- | ----- | ---- |
 | tzgg | rdxw | xkky | jxdt | be    | me    | xsgz |
-
-</Route>
-
-### 研究生院
-
-<Route author="junfengP Seiry" example="/nuaa/yjsy/latest" path="/nuaa/yjsy/:type?" :paramsDesc="['分类名']"/>
-
-| 最近动态   | 研院新闻 | 上级文件 | 管理文件 | 信息服务 |
-| ------ | ---- | ---- | ---- | ---- |
-| latest | yyxw | sjwj | glwj | xxfw |
 
 </Route>
 
