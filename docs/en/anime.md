@@ -72,7 +72,22 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 
 ### Love Live! Official Website Latest NEWS
 
-<RouteEn author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['Crawl full text when `option` is `detail`.']" />
+<RouteEn author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['Crawl full text when `option` is `detail`.']" radar="1"/>
+
+### Love Live Official Website Categories Topics
+
+<RouteEn author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" :paramsDesc="['The path to the Love Live series of sub-projects on the official website is detailed in the table below', 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details', 'Crawl full text when `option` is `detail`.']" radar="1">
+
+| Sub-project name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! |
+| -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- |
+| `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              |
+
+
+| category name         | 全てのニュース  | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送/配信 | キャスト配信/ラジオ | ライブ/イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
+| -------------- | --------------- | -------- | -------------- | ---------------- | ------- | --------------- | ------------------- | --------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
+| `category`parameter | <u>*No parameter*</u> | music    | anime_movie    | cast_movie       | theater | onair           | radio               | event           | books  | goods  | game   | media    | local      | other  | campaign     |
+
+</RouteEn>
 
 ## Touhougarakuta
 
