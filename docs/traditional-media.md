@@ -1985,6 +1985,12 @@ category 对应的关键词有
 
 </Route>
 
+## 星島日報
+
+### 即時
+
+<Route author="TonyRL" example="/stheadline/std/realtime/即時" path="/stheadline/std/realtime/:category*" :paramsDesc="['分類路徑，URL 中 `/realtime/` 後的部分，預設為`即時`']" radar ="1" rssbud="1"/>
+
 ## 星洲网
 
 ### 首页

@@ -1247,7 +1247,7 @@ pageClass: routes
 
 ### 政务公开
 
-<Route author="LogicJake" example="/mofcom/article/b" path="/mofcom/article/:suffix" :paramsDesc="['支持形如`http://www.mofcom.gov.cn/article/*`的网站，传入 article 之后的后缀']" />
+<Route author="LogicJake" example="/gov/mofcom/article/xwfb" path="/gov/mofcom/article/:suffix+" :paramsDesc="['支持形如 `http://www.mofcom.gov.cn/article/*` 的网站，传入 article 之后的后缀，支持多级']" radar="1" rssbud="1"/>
 
 ## 中华人民共和国生态环境部
 
