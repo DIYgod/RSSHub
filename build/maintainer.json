@@ -2485,15 +2485,15 @@
     "/nua/gra/:type": [
         "evnydd0sf"
     ],
-    "/nuaa/cs/:type/:getDescription?": [
-        "LogicJake",
-        "Seiry",
-        "qrzbing"
-    ],
     "/nuaa/cae/:type/:getDescription?": [
         "Seiry",
         "qrzbing",
         "Xm798"
+    ],
+    "/nuaa/cs/:type/:getDescription?": [
+        "LogicJake",
+        "Seiry",
+        "qrzbing"
     ],
     "/nuaa/jwc/:type/:getDescription?": [
         "arcosx",
@@ -2683,6 +2683,24 @@
     ],
     "/pincong/topic/:topic": [
         "zphw"
+    ],
+    "/pixiv/ranking/:mode/:date?": [
+        "EYHN"
+    ],
+    "/pixiv/search/:keyword/:order?/:mode?": [
+        "DIYgod"
+    ],
+    "/pixiv/user/bookmarks/:id": [
+        "EYHN"
+    ],
+    "/pixiv/user/illustfollows": [
+        "ClarkeCheng"
+    ],
+    "/pixiv/user/novels/:id": [
+        "TonyRL"
+    ],
+    "/pixiv/user/:id": [
+        "DIYgod"
     ],
     "/pku/admission/sszs": [
         "pkuyjs"
@@ -3979,11 +3997,6 @@
     "/mzitu/category/:category": [],
     "/mzitu/post/:id": [],
     "/mzitu/tag/:tag": [],
-    "/pixiv/user/bookmarks/:id": [],
-    "/pixiv/user/illustfollows": [],
-    "/pixiv/user/:id": [],
-    "/pixiv/ranking/:mode/:date?": [],
-    "/pixiv/search/:keyword/:order?/:mode?": [],
     "/fanbox/:user?": [],
     "/plainlaw/archives": [],
     "/dockone/weekly": [],
