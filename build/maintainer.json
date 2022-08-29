@@ -2814,6 +2814,21 @@
     "/qbittorrent/news": [
         "TonyRL"
     ],
+    "/qidian/author/:id": [
+        "miles170"
+    ],
+    "/qidian/chapter/:id": [
+        "Chingyat"
+    ],
+    "/qidian/forum/:id": [
+        "Chingyat"
+    ],
+    "/qidian/free/:type?": [
+        "LogicJake"
+    ],
+    "/qidian/free-next/:type?": [
+        "LogicJake"
+    ],
     "/qidiantu/:category?/:type?/:is_history?": [
         "nczitzk"
     ],
@@ -4074,10 +4089,6 @@
     "/mi/youpin/new/:sort?": [],
     "/miui/:device/:type?/:region?": [],
     "/mi/bbs/board/:boardId": [],
-    "/qidian/chapter/:id": [],
-    "/qidian/forum/:id": [],
-    "/qidian/free/:type?": [],
-    "/qidian/free-next/:type?": [],
     "/zongheng/chapter/:id": [],
     "/ciweimao/chapter/:id": [],
     "/namoc/announcement": [],
