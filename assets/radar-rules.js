@@ -307,17 +307,6 @@
         ],
         sites: [{ title: 'Sites', docs: 'https://docs.rsshub.app/blog.html#google-sites', source: ['/site/:id/*', '/site/:id'], target: '/google/sites/:id' }],
     },
-    'qidian.com': {
-        _name: '起点',
-        book: [
-            { title: '章节', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/info/:id', target: '/qidian/chapter/:id' },
-            { title: '讨论区', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/info/:id', target: '/qidian/forum/:id' },
-        ],
-        www: [
-            { title: '限免', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/free', target: '/qidian/free' },
-            { title: '女生限免', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/mm/free', target: '/qidian/free/mm' },
-        ],
-    },
     'hackerone.com': { _name: 'HackerOne', '.': [{ title: 'HackerOne Hacker Activity', docs: 'https://docs.rsshub.app/other.html#hackerone-hacker-activity', source: '/hacktivity', target: '/hackerone/hacktivity' }] },
     'cowlevel.net': { _name: '奶牛关', '.': [{ title: '元素文章', docs: 'https://docs.rsshub.app/game.html#nai-niu-guan', source: ['/element/:id', '/element/:id/article'], target: '/cowlevel/element/:id' }] },
     'beijing.gov.cn': { wjw: [{ title: '北京卫生健康委员会', docs: 'https://docs.rsshub.app/government.html#bei-jing-shi-wei-sheng-jian-kang-wei-yuan-hui', source: '/xwzx_20031/:caty', target: '/gov/beijing/mhc/:caty' }] },
