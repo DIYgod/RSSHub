@@ -216,7 +216,7 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 ### User Novels
 
-<RouteEn author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" :paramsDesc="['User id, available in user\'s homepage URL]" radar="1" rssbud="1"/>
+<RouteEn author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" :paramsDesc="['User id, available in user\'s homepage URL']" radar="1" rssbud="1"/>
 
 ### Rankings
 
