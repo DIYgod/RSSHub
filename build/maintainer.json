@@ -2189,6 +2189,9 @@
     "/lovelive-anime/news/:option?": [
         "axojhf"
     ],
+    "/lovelive-anime/topics/:abbr/:category?": [
+        "axojhf"
+    ],
     "/lvv2/news/:channel/:sort?": [
         "Fatpandac"
     ],
