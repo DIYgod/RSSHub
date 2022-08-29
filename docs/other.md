@@ -334,6 +334,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="brilon Fatpandac" example="/iresearch/report" path="/iresearch/report"/>
 
+### 周度市场观察
+
+<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
+| ---- | ---- | ---- | ------ |
+
+</Route>
+
 ## 爱 Q 生活网
 
 ### 最近更新
