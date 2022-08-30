@@ -55,6 +55,7 @@
     "eslint-plugin-yml": "1.1.0",
     "fs-extra": "10.1.0",
     "jest": "29.0.1",
+    "meilisearch": "0.27.0",
     "mockdate": "3.0.5",
     "nock": "13.2.9",
     "nodemon": "2.0.19",

@@ -1152,6 +1152,18 @@ Type 栏目：
 
 </Route>
 
+## 華視
+
+### 新聞
+
+<Route author="miles170" example="/cts/real" path="/cts/:category" :paramsDesc="['类别']" radar="1">
+
+| 即時   | 氣象      | 政治       | 國際            | 社會      | 運動     | 生活   | 財經    | 台語        | 地方    | 產業 | 綜合      | 藝文   | 娛樂        |
+| ---- | ------- | -------- | ------------- | ------- | ------ | ---- | ----- | --------- | ----- | -- | ------- | ---- | --------- |
+| real | weather | politics | international | society | sports | life | money | taiwanese | local | pr | general | arts | entertain |
+
+</Route>
+
 ## 环球网
 
 ### 分类
