@@ -20,6 +20,8 @@ jobs:
         with:
           node-version: 16
           cache: 'yarn'
+      - name: Install dependencies (yarn)
+        run: yarn
       - name: Pull image
         run: docker pull getmeili/docs-scraper
       - name: Wait for Netlify to finish
