@@ -2493,14 +2493,13 @@
         "evnydd0sf"
     ],
     "/nuaa/cae/:type/:getDescription?": [
-        "Seiry",
-        "qrzbing",
         "Xm798"
     ],
     "/nuaa/cs/:type/:getDescription?": [
         "LogicJake",
         "Seiry",
-        "qrzbing"
+        "qrzbing",
+        "Xm798"
     ],
     "/nuaa/jwc/:type/:getDescription?": [
         "arcosx",
