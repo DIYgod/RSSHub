@@ -1414,6 +1414,10 @@
     "/gov/xuzhou/hrss/:category?": [
         "nczitzk"
     ],
+    "/greasyfork/:language/:domain?": [
+        "imlonghao",
+        "miles170"
+    ],
     "/guancha/:category?": [
         "nczitzk",
         "Jeason0228"
@@ -4103,7 +4107,6 @@
     "/un/scveto": [],
     "/egsea/flash": [],
     "/xuangubao/subject/:subject_id": [],
-    "/greasyfork/:language/:domain?": [],
     "/gwern/:category": [],
     "/linkedkeeper/:type/:id?": [],
     "/technologyreview": [],
