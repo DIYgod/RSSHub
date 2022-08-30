@@ -1,5 +1,4 @@
-<p>{{ description }}</p>
+{{@ description }}
 {{ if image }}
 <img src="{{ image }}">
 {{ /if }}
-{{ author }}
