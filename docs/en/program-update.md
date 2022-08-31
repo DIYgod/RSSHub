@@ -242,6 +242,10 @@ Language
 
 <RouteEn author="miles170" example="/greasyfork/en/431691-bypass-all-shortlinks/versions" path="/greasyfork/:language/:script/versions" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'Script id, can be found in URL']" radar="1" />
 
+### Script Feedback
+
+<RouteEn author="miles170" example="/greasyfork/en/431691-bypass-all-shortlinks/feedback" path="/greasyfork/:language/:script/feedback" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'Script id, can be found in URL']" radar="1" />
+
 ## Hugo
 
 ### Release News
