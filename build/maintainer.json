@@ -3450,6 +3450,9 @@
     "/ucas/job/:type?": [
         "Fatpandac"
     ],
+    "/udn/news/breakingnews/:id": [
+        "miles170"
+    ],
     "/uibe/hr/:category?/:type?": [
         "nczitzk"
     ],
