@@ -34,6 +34,21 @@
         s: [{ title: '热搜榜', docs: 'https://docs.rsshub.app/social-media.html#wei-bo', source: '/top/summary', target: '/weibo/search/hot' }],
     },
     'weibo.cn': { _name: '微博', m: [{ title: '博主', docs: 'https://docs.rsshub.app/social-media.html#wei-bo', source: ['/u/:uid', '/profile/:uid'], target: '/weibo/user/:uid' }] },
+    'pixiv.net': {
+        _name: 'Pixiv',
+        www: [
+            { title: '用户收藏', docs: 'https://docs.rsshub.app/social-media.html#pixiv', source: '/users/:id/bookmarks/artworks', target: '/pixiv/user/bookmarks/:id' },
+            { title: '用户动态', docs: 'https://docs.rsshub.app/social-media.html#pixiv', source: '/users/:id', target: '/pixiv/user/:id' },
+            { title: '排行榜', docs: 'https://docs.rsshub.app/social-media.html#pixiv', source: '/ranking.php', target: (params, url) => `/pixiv/ranking/${new URL(url).searchParams.get('mode') || 'daily'}` },
+            {
+                title: '关键词',
+                docs: 'https://docs.rsshub.app/social-media.html#pixiv',
+                source: ['/tags/:keyword', '/tags/:keyword/:type?'],
+                target: (params, url) => `/pixiv/search/:keyword/${new URL(url).searchParams.get('order')}/${new URL(url).searchParams.get('mode')}`,
+            },
+            { title: '关注的新作品', docs: 'https://docs.rsshub.app/social-media.html#pixiv', source: '/bookmark_new_illust.php', target: '/pixiv/user/illustfollows' },
+        ],
+    },
     'github.com': {
         _name: 'GitHub',
         '.': [
@@ -306,6 +321,17 @@
             },
         ],
         sites: [{ title: 'Sites', docs: 'https://docs.rsshub.app/blog.html#google-sites', source: ['/site/:id/*', '/site/:id'], target: '/google/sites/:id' }],
+    },
+    'qidian.com': {
+        _name: '起点',
+        book: [
+            { title: '章节', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/info/:id', target: '/qidian/chapter/:id' },
+            { title: '讨论区', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/info/:id', target: '/qidian/forum/:id' },
+        ],
+        www: [
+            { title: '限免', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/free', target: '/qidian/free' },
+            { title: '女生限免', docs: 'https://docs.rsshub.app/reading.html#qi-dian', source: '/mm/free', target: '/qidian/free/mm' },
+        ],
     },
     'hackerone.com': { _name: 'HackerOne', '.': [{ title: 'HackerOne Hacker Activity', docs: 'https://docs.rsshub.app/other.html#hackerone-hacker-activity', source: '/hacktivity', target: '/hackerone/hacktivity' }] },
     'cowlevel.net': { _name: '奶牛关', '.': [{ title: '元素文章', docs: 'https://docs.rsshub.app/game.html#nai-niu-guan', source: ['/element/:id', '/element/:id/article'], target: '/cowlevel/element/:id' }] },
