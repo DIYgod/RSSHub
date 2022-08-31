@@ -214,6 +214,10 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <RouteEn author="EYHN" path="/pixiv/user/:id" example="/pixiv/user/15288095" :paramsDesc="['user id, available in user\'s homepage URL']" radar="1" rssbud="1"/>
 
+### User Novels
+
+<RouteEn author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" :paramsDesc="['User id, available in user\'s homepage URL']" radar="1" rssbud="1"/>
+
 ### Rankings
 
 <RouteEn author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" :paramsDesc="['rank type', 'format: `2018-4-25`']" radar="1" rssbud="1">
