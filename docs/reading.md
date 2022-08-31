@@ -399,6 +399,10 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="LogicJake" example="/qidian/free-next" path="/qidian/free-next/:type?" :paramsDesc="['默认不填为起点中文网，填 mm 为起点女生网']"/>
 
+### 作者
+
+<Route author="miles170" example="/qidian/author/9639927" path="/qidian/author/:id" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
+
 ## 起点图
 
 ### 首订
