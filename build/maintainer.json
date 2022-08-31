@@ -2492,7 +2492,16 @@
     "/ntdtv/:language/:id": [
         "Fatpandac"
     ],
+    "/nua/dc/:type": [
+        "evnydd0sf"
+    ],
     "/nua/gra/:type": [
+        "evnydd0sf"
+    ],
+    "/nua/index/:type": [
+        "evnydd0sf"
+    ],
+    "/nua/sxw/:type": [
         "evnydd0sf"
     ],
     "/nuaa/cae/:type/:getDescription?": [
