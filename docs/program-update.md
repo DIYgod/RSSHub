@@ -270,6 +270,10 @@ pageClass: routes
 
 <Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']" radar="1"/>
 
+### 脚本版本历史
+
+<Route author="miles170" example="/greasyfork/zh-CN/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/versions" path="/greasyfork/:language/:script/versions" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
+
 ## Hugo
 
 ### 更新日志
