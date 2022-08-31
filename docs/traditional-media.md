@@ -1152,6 +1152,18 @@ Type 栏目：
 
 </Route>
 
+## 華視
+
+### 新聞
+
+<Route author="miles170" example="/cts/real" path="/cts/:category" :paramsDesc="['类别']" radar="1">
+
+| 即時   | 氣象      | 政治       | 國際            | 社會      | 運動     | 生活   | 財經    | 台語        | 地方    | 產業 | 綜合      | 藝文   | 娛樂        |
+| ---- | ------- | -------- | ------------- | ------- | ------ | ---- | ----- | --------- | ----- | -- | ------- | ---- | --------- |
+| real | weather | politics | international | society | sports | life | money | taiwanese | local | pr | general | arts | entertain |
+
+</Route>
+
 ## 环球网
 
 ### 分类
@@ -1363,6 +1375,18 @@ category 对应的关键词有
 ### 互动新闻
 
 <Route author="shunf4" example="/zaobao/interactive-graphics" path="/zaobao/interactive-graphics" />
+
+## 聯合新聞網
+
+### 即時新聞
+
+<Route author="miles170" example="/udn/news/breakingnews/99" path="/udn/news/breakingnews/:id" :paramsDesc="['类别']" radar="1">
+
+| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 11 | 12 | 13 | 99  |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- |
+| 精選 | 要聞 | 社會 | 地方 | 兩岸 | 國際 | 財經 | 運動 | 娛樂 | 生活 | 股市 | 文教 | 數位 | 不分類 |
+
+</Route>
 
 ## 路透社
 

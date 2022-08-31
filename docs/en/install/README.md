@@ -307,6 +307,8 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
+After finishing the first deployment, you need to add the environment variable `VERCEL_CLI_VERSION` and its value `vercel@28.1.4` to your project settings following the instructions in [Vercel](https://vercel.com/docs/concepts/projects/environment-variables) and **redeploy**.
+
 ## Deploy to Google App Engine(GAE)
 
 ### Before You Begin
