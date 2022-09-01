@@ -288,6 +288,16 @@ pageClass: routes
 
 </Route>
 
+### 党委学生工作部
+
+<Route author="Fatpandac" example="/bnu/dwxgb/xwzx/tzgg" path="/bnu/dwxgb/:category/:type" :paramsDesc="['大分类', '子分类，例子如下']">
+
+`https://dwxgb.bnu.edu.cn/xwzx/tzgg/index.html`\
+则对应为\
+`/bnu/dwxgb/xwzx/tzgg`
+
+</Route>
+
 ### 信息学院通知
 
 <Route author="wzc-blog" example="/bjfu/it/xyxw" path="/bjfu/it/:type" :paramsDesc="['通知类别']">

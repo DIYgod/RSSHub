@@ -238,6 +238,14 @@ Language
 
 <RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" radar="1" />
 
+### Script Version History
+
+<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/versions" path="/greasyfork/scripts/:script/versions" :paramsDesc="['Script id, can be found in URL']" radar="1" />
+
+### Script Feedback
+
+<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/feedback" path="/greasyfork/scripts/:script/feedback" :paramsDesc="['Script id, can be found in URL']" radar="1" />
+
 ## Hugo
 
 ### Release News
