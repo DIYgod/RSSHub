@@ -771,13 +771,23 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 英雄联盟
 
-### 新闻中心
+### 国服新闻
 
 <Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类，见下表']">
 
 | 全部  | 综合 | 公告 | 赛事 | 攻略 | 社区 |
 | --- | -- | -- | -- | -- | -- |
 | all | zh | gg | ss | gl | sq |
+
+</Route>
+
+### 台服新闻
+
+<Route author="hoilc" example="/loltw/news" path="/loltw/news/:category?" :paramsDesc="['新闻分类，置空为全部新闻']" radar="1" rssbud="1">
+
+| 活动    | 资讯   | 系统     | 电竞     | 版本资讯  | 战棋资讯     |
+| ----- | ---- | ------ | ------ | ----- | -------- |
+| event | info | system | esport | patch | TFTpatch |
 
 </Route>
 
