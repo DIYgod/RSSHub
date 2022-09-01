@@ -1421,6 +1421,12 @@
         "imlonghao",
         "miles170"
     ],
+    "/greasyfork/scripts/:script/feedback": [
+        "miles170"
+    ],
+    "/greasyfork/scripts/:script/versions": [
+        "miles170"
+    ],
     "/guancha/:category?": [
         "nczitzk",
         "Jeason0228"
