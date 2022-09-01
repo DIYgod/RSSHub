@@ -2373,6 +2373,9 @@
     "/newsmarket/:category?": [
         "nczitzk"
     ],
+    "/nextapple/realtime/:category?": [
+        "miles170"
+    ],
     "/nga/forum/:fid/:recommend?": [
         "xyqfer"
     ],
