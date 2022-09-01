@@ -1376,6 +1376,18 @@ category 对应的关键词有
 
 <Route author="shunf4" example="/zaobao/interactive-graphics" path="/zaobao/interactive-graphics" />
 
+## 聯合新聞網
+
+### 即時新聞
+
+<Route author="miles170" example="/udn/news/breakingnews/99" path="/udn/news/breakingnews/:id" :paramsDesc="['类别']" radar="1">
+
+| 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 11 | 12 | 13 | 99  |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- |
+| 精選 | 要聞 | 社會 | 地方 | 兩岸 | 國際 | 財經 | 運動 | 娛樂 | 生活 | 股市 | 文教 | 數位 | 不分類 |
+
+</Route>
+
 ## 路透社
 
 ::: warning 迁移说明

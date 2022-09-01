@@ -82,7 +82,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/mercury-parser": "2.2.1",
-    "@sentry/node": "7.11.1",
+    "@sentry/node": "7.12.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -121,7 +121,7 @@
     "parse-torrent": "9.1.5",
     "pidusage": "3.0.0",
     "plist": "3.0.6",
-    "puppeteer": "16.2.0",
+    "puppeteer": "17.0.0",
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.1",
