@@ -8,6 +8,8 @@ on:
       - '.github/workflows/scrape.yml'
       - 'docs/**'
   workflow_dispatch: ~
+  schedule:
+  - cron: '44 1 * * 1'
 
 jobs:
   scrape-docs:
@@ -25,7 +27,7 @@ jobs:
       - name: Pull image
         run: docker pull getmeili/docs-scraper
       - name: Wait for Netlify to finish
-        run: sleep 3m
+        run: sleep 2m
         if: github.event_name == 'push'
       - name: Run docs-scraper
         env:
