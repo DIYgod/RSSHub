@@ -6494,6 +6494,14 @@
           "/collection/:id",
           "/"
         ]
+      },
+      {
+        "title": "简报",
+        "docs": "https://docs.rsshub.app/new-media.html#hu-xiu",
+        "source": [
+          "/briefColumn/:id",
+          "/"
+        ]
       }
     ]
   },
