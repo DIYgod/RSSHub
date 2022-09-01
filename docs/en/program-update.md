@@ -240,11 +240,11 @@ Language
 
 ### Script Version History
 
-<RouteEn author="miles170" example="/greasyfork/en/431691-bypass-all-shortlinks/versions" path="/greasyfork/:language/:script/versions" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'Script id, can be found in URL']" radar="1" />
+<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/versions" path="/greasyfork/scripts/:script/versions" :paramsDesc="['Script id, can be found in URL']" radar="1" />
 
 ### Script Feedback
 
-<RouteEn author="miles170" example="/greasyfork/en/431691-bypass-all-shortlinks/feedback" path="/greasyfork/:language/:script/feedback" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'Script id, can be found in URL']" radar="1" />
+<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/feedback" path="/greasyfork/scripts/:script/feedback" :paramsDesc="['Script id, can be found in URL']" radar="1" />
 
 ## Hugo
 

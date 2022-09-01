@@ -272,11 +272,11 @@ pageClass: routes
 
 ### 脚本版本历史
 
-<Route author="miles170" example="/greasyfork/zh-CN/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/versions" path="/greasyfork/:language/:script/versions" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
+<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/versions" path="/greasyfork/scripts/:script/versions" :paramsDesc="['脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
 
 ### 脚本反馈
 
-<Route author="miles170" example="/greasyfork/zh-CN/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/feedback" path="/greasyfork/:language/:script/feedback" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
+<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/feedback" path="/greasyfork/scripts/:script/feedback" :paramsDesc="['脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
 
 ## Hugo
 
