@@ -312,8 +312,6 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
-完成第一次部署后，你需要按照 [Vercel](https://vercel.com/docs/concepts/projects/environment-variables) 中的说明，将环境变量 `VERCEL_CLI_VERSION` 及其数值 `vercel@28.1.4` 添加到你的项目设定然后**重新部署**。
-
 ## 部署到 Google App Engine
 
 ### 准备

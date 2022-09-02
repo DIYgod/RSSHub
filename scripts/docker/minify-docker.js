@@ -12,7 +12,6 @@ const files = ['lib/index.js', 'api/vercel.js'].map((file) => path.join(projectR
     console.log('Start analyzing, project root:', projectRoot);
     const { fileList: fileSet } = await nodeFileTrace(files, {
         base: projectRoot,
-        fileIOConcurrency: 2048,
     });
     let fileList = Array.from(fileSet);
     console.log('Total touchable files:', fileList.length);
