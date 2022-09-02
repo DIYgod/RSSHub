@@ -4984,10 +4984,10 @@ detect-node@^2.0.4:
   resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.1.0.tgz#c9c70775a49c3d03bc2c06d9a73be550f978f8b1"
   integrity sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==
 
-devtools-protocol@0.0.1019158:
-  version "0.0.1019158"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1019158.tgz#4b08d06108a784a2134313149626ba55f030a86f"
-  integrity sha512-wvq+KscQ7/6spEV7czhnZc9RM/woz1AY+/Vpd8/h2HFMwJSdTliu7f/yr1A6vDdJfKICZsShqsYpEQbdhg8AFQ==
+devtools-protocol@0.0.1036444:
+  version "0.0.1036444"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1036444.tgz#a570d3cdde61527c82f9b03919847b8ac7b1c2b9"
+  integrity sha512-0y4f/T8H9lsESV9kKP1HDUXgHxCdniFeJh6Erq+FbdOEvp/Ydp9t8kcAAM5gOd17pMrTDlFWntoHtzzeTUWKNw==
 
 dezalgo@1.0.3:
   version "1.0.3"
@@ -11606,14 +11606,14 @@ puppeteer-extra@3.3.4:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@17.0.0:
-  version "17.0.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-17.0.0.tgz#85fea801a7b8b8c9e2913b1491e98c867be49a6b"
-  integrity sha512-T2rdzlPxnPezF218kywFP3O+0YI5/8Kl8riNUicGb+KuMyDTrqRjhSOSDp6coQ1T4QYPBARTFp4EMBepMOzAQA==
+puppeteer@17.1.0:
+  version "17.1.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-17.1.0.tgz#27dfc629092a5ac1b6f6c30ec200c4147af2847c"
+  integrity sha512-cPBHruFaUGNTekw0I8P6vBY4sV9gFyh3WjDDv0UzlwSSRQVSl+igcuPVqa7NKDjKccki9X1nVn6HalIqBoJz6g==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
-    devtools-protocol "0.0.1019158"
+    devtools-protocol "0.0.1036444"
     extract-zip "2.0.1"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
