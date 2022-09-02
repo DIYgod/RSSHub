@@ -153,7 +153,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Repo Pull Requests
 
-<RouteEn author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?" :paramsDesc="['User name', 'Repo name', 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.']" radar="1" rssbud="1"/>
+<RouteEn author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" :paramsDesc="['User name', 'Repo name', 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']" radar="1" rssbud="1"/>
 
 ### User Followers
 
