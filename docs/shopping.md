@@ -415,6 +415,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## 特斯拉中国
+
+### 价格
+
+<Route author="xiaokyo" example="/tesla/price" path="/tesla/price" radar="1"/>
+
 ## 玩物志
 
 ### 最新
