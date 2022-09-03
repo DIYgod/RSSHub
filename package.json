@@ -43,7 +43,7 @@
   "devDependencies": {
     "@napi-rs/pinyin": "1.7.0",
     "@types/koa": "2.13.5",
-    "@vercel/nft": "0.21.0",
+    "@vercel/nft": "0.22.1",
     "@vuepress/plugin-back-to-top": "1.9.7",
     "@vuepress/plugin-google-analytics": "1.9.7",
     "@vuepress/plugin-pwa": "1.9.7",
@@ -82,7 +82,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/mercury-parser": "2.2.1",
-    "@sentry/node": "7.12.0",
+    "@sentry/node": "7.12.1",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -121,7 +121,7 @@
     "parse-torrent": "9.1.5",
     "pidusage": "3.0.0",
     "plist": "3.0.6",
-    "puppeteer": "17.0.0",
+    "puppeteer": "17.1.0",
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.1",
