@@ -59,9 +59,9 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ## Darwin Awards
 
-### Articles
+### Award Winners
 
-<RouteEn author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
+<RouteEn author="zoenglinghou nciztzk" example="/darwinawards" path="/darwinawards" />
 
 ## dcinside
 
@@ -215,7 +215,19 @@ Refer to [the list of supported currencies](https://transferwise.com/tools/excha
 
 </RouteEn>
 
-## TSSstatus（iOS downgrade channel）
+## Trending Search Keyword Aggregator
+
+### Aggregated Keyword Tracker
+
+Track entries containing specific keywords on major social media platforms.
+
+Current listings: *Weibo Search*、*Toutiao Search*、*Zhihu Search*、*Zhihu Videos*、*Zhihu Topics*。
+
+Data Source: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
+
+<RouteEn author="Jkker" example="/trending/taiwan/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['List of keywords separated by commas', 'Number of previous days (defaults to 3)']"/>
+
+## TSSstatus (iOS downgrade channel)
 
 ### Status
 
@@ -254,3 +266,4 @@ Type
 ### User
 
 <RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1" puppeteer="1"/>
+

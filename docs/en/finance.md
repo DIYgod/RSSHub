@@ -28,7 +28,25 @@ pageClass: routes
 
 </RouteEn>
 
+## Seeking Alpha
+
+### Summary
+
+<RouteEn author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" :paramsDesc="['Stock symbol', 'Category, see below, `news` by default']" radar="1" rssbud="1">
+
+| Analysis | News | Transcripts | Press Releases | Related Analysis |
+| ------- | ------- | -------- | ---- | ------ |
+| analysis | news | transcripts | press-releases | related-analysis |
+
+</RouteEn>
+
 ## TokenInsight
+
+::: tip Tips
+
+TokenInsight also provides official RSS, you can take a look at <https://api.tokeninsight.com/reference/rss>.
+
+:::
 
 ### Blogs
 

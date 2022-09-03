@@ -23,6 +23,20 @@ pageClass: routes
 
 </RouteEn>
 
+## American Chemistry Society
+
+### Journal
+
+<RouteEn author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
+
+::: tip Tip
+
+See [Browse Content](https://pubs.acs.org)
+
+:::
+
+</RouteEn>
+
 ## arXiv
 
 ### Search Keyword
@@ -334,11 +348,11 @@ _only support Science Journal_
 
 ### Journal
 
-<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']" radar="1" rssbud="1"/>
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']" radar="1" rssbud="1" puppeteer="1"/>
 
 ### Section
 
-<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`','Section, the `tocSection` part of the URL']" radar="1" rssbud="1"/>
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`','Section, the `tocSection` part of the URL']" radar="1" rssbud="1" puppeteer="1"/>
 
 ## Springer
 

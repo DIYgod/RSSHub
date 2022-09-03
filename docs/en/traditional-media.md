@@ -325,7 +325,7 @@ More could be found in the URL of the category/topic page.
 
 ### Inverstigates
 
-<RouteEn author="LyleLee" example="/reuters/inverstigates" path="/reuters/inverstigates" />
+<RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
 ## RTHK
 
@@ -462,6 +462,12 @@ Language
 
 </RouteEn>
 
+## Taiwan News
+
+### Hot News
+
+<RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
+
 ## The Economist
 
 ### Category
@@ -548,6 +554,18 @@ Provide full article RSS for WSJ topics.
 
 </RouteEn>
 
+## Voice of Mongolia
+
+### News
+
+<RouteEn author="zphw" example="/vom/featured" path="/vom/featured/:lang?" :paramsDesc="['Language, see the table below, `mn` by default']">
+
+| English | 日本語 | Монгол | Русский | 简体中文 |
+| ------- | --- | ------ | ------- | ---- |
+| en      | ja  | mn     | ru      | zh   |
+
+</RouteEn>
+
 ## Yahoo
 
 ### News
@@ -589,9 +607,3 @@ Free articles only.
 | 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </RouteEn>
-
-## 公視新聞網
-
-### Daily News
-
-<RouteEn author="nczitzk" example="/pts/dailynews" path="/pts/dailynews"/>

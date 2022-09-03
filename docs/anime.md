@@ -83,6 +83,50 @@ pageClass: routes
 
 <Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
+## 78 动漫
+
+### 新品速递
+
+<Route author="nczitzk" example="/78dm/news" path="/78dm/news/:path+" :paramsDesc="['参数，见说明，默认为空']">
+
+::: tip 提示
+
+若订阅 [新品速递](https://www.78dm.net/news)，网址为 <https://www.78dm.net/news>。截取 `https://www.78dm.net` 到末尾的部分 `/news` 作为参数，此时路由为 [`/78dm/news`](https://rsshub.app/78dm/news)。
+
+若订阅子分类 [新品速递 - 综合](https://www.78dm.net/news/0/9/0/0/0/0/0/1.html)，网址为 <https://www.78dm.net/news/0/9/0/0/0/0/0/1.html>。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/news/0/9/0/0/0/0/0/1` 作为参数，路由为 [`/78dm/news/0/9/0/0/0/0/0/1`](https://rsshub.app/78dm/news/0/9/0/0/0/0/0/1)。
+
+:::
+
+</Route>
+
+### 精彩评测
+
+<Route author="nczitzk" example="/78dm/eval_list" path="/78dm/eval_list/:path+" :paramsDesc="['参数，见说明，默认为空']">
+
+::: tip 提示
+
+若订阅 [精彩评测](https://www.78dm.net/eval_list)，网址为 <https://www.78dm.net/eval_list>。截取 `https://www.78dm.net` 到末尾的部分 `/eval_list` 作为参数，此时路由为 [`/78dm/eval_list`](https://rsshub.app/78dm/eval_list)。
+
+若订阅子分类 [精彩评测 - 综合](https://www.78dm.net/eval_list/120/0/0/1.html)，网址为 <https://www.78dm.net/eval_list/120/0/0/1.html>。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/eval_list/120/0/0/1` 作为参数，路由为 [`/78dm/eval_list/120/0/0/1`](https://rsshub.app/78dm/eval_list/120/0/0/1)。
+
+:::
+
+</Route>
+
+### 好帖推荐
+
+<Route author="nczitzk" example="/78dm/ht_list" path="/78dm/ht_list/:path+" :paramsDesc="['参数，见说明，默认为空']">
+
+::: tip 提示
+
+若订阅 [好帖推荐](https://www.78dm.net/ht_list)，网址为 <https://www.78dm.net/ht_list>。截取 `https://www.78dm.net` 到末尾的部分 `/ht_list` 作为参数，此时路由为 [`/78dm/ht_list`](https://rsshub.app/78dm/ht_list)。
+
+若订阅子分类 [好帖推荐 - 综合](https://www.78dm.net/ht_list/107/0/0/1.html)，网址为 <https://www.78dm.net/ht_list/107/0/0/1.html>。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/ht_list/107/0/0/1` 作为参数，路由为 [`/78dm/ht_list/107/0/0/1`](https://rsshub.app/78dm/ht_list/107/0/0/1)。
+
+:::
+
+</Route>
+
 ## AcFun
 
 ### 番剧
@@ -99,6 +143,24 @@ pageClass: routes
 ### 用户投稿
 
 <Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
+
+### 文章
+
+<Route author="TonyRL" example="/acfun/article/110" path="/acfun/article/:categoryId/:sortType?/:timeRange?" :paramsDesc="['分区 ID，见下表', '排序，见下表，默认为 `createTime`', '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`']" radar="1" rssbud="1">
+
+| 二次元画师 | 综合  | 生活情感 | 游戏  | 动漫文化 | 漫画文学 |
+| ----- | --- | ---- | --- | ---- | ---- |
+| 184   | 110 | 73   | 164 | 74   | 75   |
+
+| 最新发表       | 最新动态            | 最热文章     |
+| ---------- | --------------- | -------- |
+| createTime | lastCommentTime | hotScore |
+
+| 时间不限 | 24 小时  | 三天       | 一周      | 一个月      |
+| ---- | ------ | -------- | ------- | -------- |
+| all  | oneDay | threeDay | oneWeek | oneMonth |
+
+</Route>
 
 ## AGE 动漫
 
@@ -265,6 +327,18 @@ pageClass: routes
 
 </Route>
 
+### 用户订阅列表
+
+<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
+
+::: warning 注意
+
+用户动态需要 iwara 登录后的 Cookie 值，所以只能自建，详情见[部署页面](/install/#route-specific-configurations)的配置模块。
+
+:::
+
+</Route>
+
 ## Kemono
 
 ### Posts
@@ -282,6 +356,26 @@ Sources
 当选择 `posts` 作为参数 **source** 的值时，参数 **id** 不生效。
 
 :::
+
+</Route>
+
+## lovelive-anime
+
+### Love Live 官网最新 News
+
+<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['`option` 为 `detail` 时抓取全文']" radar="1"/>
+
+### Love Live 官网分类 Topics
+
+<Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" :paramsDesc="['Love Live系列子企划在官网的路径，详见下表', '官网列出的Topics分类，`category` 为 `detail` 时抓取全文，其他分类详见下表', '`option` 为 `detail` 时抓取全文']" radar="1">
+
+| 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! |
+| --------- | ----------- | -------------------- | ------------------------------------------ | --------------------- |
+| `abbr`参数  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              |
+
+| 分类名          | 全てのニュース      | 音楽商品  | アニメ映像商品     | キャスト映像商品   | 劇場      | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック   | グッズ   | ゲーム  | メディア  | ご当地情報 | その他   | キャンペーン   |
+| ------------ | ------------ | ----- | ----------- | ---------- | ------- | ---------- | ------------ | ---------- | ----- | ----- | ---- | ----- | ----- | ----- | -------- |
+| `category`参数 | <u>*无参数*</u> | music | anime_movie | cast_movie | theater | onair      | radio        | event      | books | goods | game | media | local | other | campaign |
 
 </Route>
 
@@ -336,6 +430,40 @@ Sources
 ### 最新动态
 
 <Route author="Ye11" example="/xmanhua" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
+
+## 俺の 3D エロ動画 (oreno3d)
+
+::: tip 提示
+
+可配合其他 RSS 解析库 (如`Python`的`feedparser`库) 实现视频的更新检测以及自动下载
+
+:::
+
+### 关键词搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表', '最大爬取页面数量，默认为 1']" radar="1" rssbud="1">
+
+| 高評価       | 急上昇 | 新着     | 人気         |
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |
+
+</Route>
+
+### 角色搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" :paramsDesc="['角色id, 可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量, 默认为1, 超出则为最大值']" />
+
+### 作者搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['作者id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1" />
+
+### 标签搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" :paramsDesc="['标签 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1" />
+
+### 原作搜索
+
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['原作 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1，超出则为最大值']" radar="1" rssbud="1" />
 
 ## 包子漫画
 
@@ -469,6 +597,20 @@ Sources
 
 <Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" :paramsDesc="['漫画id，漫画主页的地址栏中']" radar="1" rssbud="1"/>
 
+## 萌番组
+
+### 最新
+
+<Route author="nczitzk" example="/bangumi" path="/bangumi"/>
+
+### 标签
+
+<Route author="nczitzk" example="/bangumi/简体中文/1080p" path="/bangumi/:tags?" :paramsDesc="['标签，默认为空，多个标签用 `/` 分隔']">
+
+更多标签请前往 [搜索种子](https://bangumi.moe/search/index)
+
+</Route>
+
 ## 三界异次元
 
 ### 三界异次元
@@ -524,3 +666,9 @@ Sources
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## アニメ新番組
+
+### 當季新番
+
+<Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
