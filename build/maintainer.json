@@ -2933,6 +2933,9 @@
     "/radio-canada/latest/:language?": [
         "nczitzk"
     ],
+    "/rarehistoricalphotos/": [
+        "TonyRL"
+    ],
     "/remnote/changelog": [
         "TonyRL"
     ],
