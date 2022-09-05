@@ -112,6 +112,12 @@ Language
 
 </RouteEn>
 
+## BlueStacks
+
+### BlueStacks 5 Release Notes
+
+<RouteEn author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1"/>
+
 ## Brave
 
 ### Release Notes

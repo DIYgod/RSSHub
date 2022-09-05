@@ -89,6 +89,12 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 
 </RouteEn>
 
+## THBWiki
+
+### Calendar
+
+<RouteEn author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['From how many days ago (default 30)', 'To how many days after (default 30)']" radar="1" rssbud="1"/>
+
 ## Touhougarakuta
 
 ### Articles

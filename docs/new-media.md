@@ -2478,12 +2478,6 @@ column 为 third 时可选的 category:
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
 
-## 看点快报
-
-### 首页
-
-<Route author="nczitzk" example="/kuaibao" path="/kuaibao/index"/>
-
 ## 科技島讀
 
 ### 分類
