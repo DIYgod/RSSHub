@@ -512,6 +512,9 @@
     "/blockbeats/:channel?": [
         "Fatpandac"
     ],
+    "/bluestacks/release/5": [
+        "TonyRL"
+    ],
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
