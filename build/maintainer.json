@@ -1350,6 +1350,9 @@
     "/gov/nmpa/:path+": [
         "TonyRL"
     ],
+    "/gov/nopss/:path+": [
+        "nczitzk"
+    ],
     "/gov/nrta/news/:category?": [
         "yuxinliu-alex"
     ],
