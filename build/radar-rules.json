@@ -13762,6 +13762,20 @@
       }
     ]
   },
+  "thwiki.cc": {
+    "_name": "THBWiki",
+    ".": [
+      {
+        "title": "日历",
+        "docs": "https://docs.rsshub.app/#thbwiki",
+        "source": [
+          "/",
+          "/日程表"
+        ],
+        "target": "/thwiki/calendar"
+      }
+    ]
+  },
   "tiktok.com": {
     "_name": "TikTok",
     ".": [

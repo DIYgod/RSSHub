@@ -3363,6 +3363,9 @@
     "/thepaper/list/:id": [
         "nczitzk"
     ],
+    "/thwiki/calendar/:before?/:after?": [
+        "aether17"
+    ],
     "/tiktok/user/:user": [
         "TonyRL"
     ],
