@@ -74,6 +74,12 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 
 <RouteEn author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['Crawl full text when `option` is `detail`.']" />
 
+## THBWiki
+
+### Calendar
+
+<RouteEn author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['From how many days ago (default 30)', 'To how many days after (default 30)']" radar="1" rssbud="1"/>
+
 ## Touhougarakuta
 
 ### Articles
@@ -157,9 +163,3 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### Origins Search
 
 <RouteEn author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']" radar="1" rssbud="1"/>
-
-## Touhou Event Calendar
-
-### THBWiki Calendar
-
-<RouteEn author="aether17" path="/touhou-events/thwiki/:before?/:after?" example="/touhou-events/thwiki" :paramsDesc="['From how many days ago (default 30)', 'To how many days after (default 30)']" radar="1" rssbud="1"/>
