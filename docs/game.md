@@ -461,7 +461,8 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ::: warning 注意
 
-由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS
+由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。\
+而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。
 
 :::
 
@@ -481,7 +482,19 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 游戏更新
 
-<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏 ID，游戏主页 URL 中获取']"/>
+<Route author="hoilc ETiV" example="/taptap/changelog/60809/en_US" path="/taptap/changelog/:id/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '语言，默认使用 `zh_CN`，亦可使用 `en_US`']"/>
+
+### 游戏更新 - 国际版
+
+<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '语言代码，默认使用 `en_US`，可选项目见下表']">
+
+#### 语言代码
+
+| English (US) | 繁體中文  | 한국어   | 日本語   |
+| ------------ | ----- | ----- | ----- |
+| en_US        | zh_TW | ko_KR | ja_JP |
+
+</Route>
 
 ### 游戏评价
 
@@ -490,6 +503,35 @@ Steam 新闻中心支持官方的 RSS 订阅:
 | 最新     | 最热  | 游戏时长  | 默认排序    |
 | ------ | --- | ----- | ------- |
 | update | hot | spent | default |
+
+</Route>
+
+### 游戏评价 - 国际版
+
+<Route author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new" path="/taptap/intl/review/:id/:order?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言代码，默认使用 `en_US`，可选项目见下表']">
+
+#### 排序方式
+
+| 最相关     | 最新  |
+| ------- | --- |
+| default | new |
+
+#### 语言代码
+
+| English (US) | 繁體中文  | 한국어   | 日本語   |
+| ------------ | ----- | ----- | ----- |
+| en_US        | zh_TW | ko_KR | ja_JP |
+
+</Route>
+
+## War Thunder
+
+### 英文 News
+
+<Route author="axojhf" example="/warthunder/news" path="/warthunder/news">
+
+News 的数据来自 <https://warthunder.com/en/news/>
+在 UTC 时区下提供的年月日与官网上一致，请忽略具体的时间！！！
 
 </Route>
 
@@ -523,7 +565,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 新闻
 
-<Route author="wushijishan" example="/erbingapp/news" path="/erbingapp/news"/>
+<Route author="wushijishan" example="/diershoubing/news" path="/diershoubing/news"/>
 
 ## 公主链接
 
@@ -729,13 +771,23 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 英雄联盟
 
-### 新闻中心
+### 国服新闻
 
 <Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类，见下表']">
 
 | 全部  | 综合 | 公告 | 赛事 | 攻略 | 社区 |
 | --- | -- | -- | -- | -- | -- |
 | all | zh | gg | ss | gl | sq |
+
+</Route>
+
+### 台服新闻
+
+<Route author="hoilc" example="/loltw/news" path="/loltw/news/:category?" :paramsDesc="['新闻分类，置空为全部新闻']" radar="1" rssbud="1">
+
+| 活动    | 资讯   | 系统     | 电竞     | 版本资讯  | 战棋资讯     |
+| ----- | ---- | ------ | ------ | ----- | -------- |
+| event | info | system | esport | patch | TFTpatch |
 
 </Route>
 
