@@ -567,11 +567,24 @@ Sources
 
 <Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
+### 漫画个人订阅
+
+<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1"/>
+
+::: tip 提示
+
+个人订阅需要自建
+环境变量需要添加MHGUI_COOKIE
+
+:::
+
 ## 看漫画镜像站
 
 ### 漫画更新
 
 <Route author="btdwv" path="/mhgui/comic/:id/:chapterCnt?" example="/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+
+
 
 ## 看漫画台湾
 
