@@ -19,7 +19,7 @@
     "format": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
     "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
-    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles -i test/utils/puppeteer.js",
+    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
     "jest:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --forceExit --detectOpenHandles",
     "jest:watch": "cross-env NODE_ENV=test jest --watch",
     "test": "npm run format:check && npm run jest:coverage"
