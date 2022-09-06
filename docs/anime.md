@@ -569,7 +569,7 @@ Sources
 
 ### 漫画个人订阅
 
-<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1"/>
+<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" selfhost="1">
 
 ::: tip 提示
 
