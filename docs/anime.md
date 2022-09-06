@@ -574,7 +574,7 @@ Sources
 ::: tip 提示
 
 个人订阅需要自建
-环境变量需要添加 MHGUI_COOKIE
+环境变量需要添加MHGUI_COOKIE
 
 :::
 
