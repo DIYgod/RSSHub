@@ -15709,6 +15709,27 @@
       }
     ]
   },
+  "yxdown.com": {
+    "_name": "游讯网",
+    ".": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/game.html#you-xun-wang",
+        "source": [
+          "/news/:category",
+          "/news"
+        ]
+      },
+      {
+        "title": "精彩推荐",
+        "docs": "https://docs.rsshub.app/game.html#you-xun-wang",
+        "source": [
+          "/"
+        ],
+        "target": "/yxdown/recommend"
+      }
+    ]
+  },
   "yxdzqb.com": {
     "_name": "游戏打折情报",
     ".": [

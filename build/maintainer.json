@@ -3895,6 +3895,12 @@
     "/yunspe/newsflash": [
         "x2009again"
     ],
+    "/yxdown/news/:category?": [
+        "nczitzk"
+    ],
+    "/yxdown/recommend": [
+        "nczitzk"
+    ],
     "/yxdzqb/:type": [
         "LogicJake",
         "nczitzk"
@@ -5364,8 +5370,6 @@
     "/shinybbs": [],
     "/tianyancha/hot": [],
     "/kingarthur/:type": [],
-    "/yxdown/recommend": [],
-    "/yxdown/news/:category?": [],
     "/babehub/search/:keyword?": [],
     "/babehub/:category?": [],
     "/sznews/press": [],
