@@ -584,8 +584,6 @@ Sources
 
 <Route author="btdwv" path="/mhgui/comic/:id/:chapterCnt?" example="/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
-
-
 ## 看漫画台湾
 
 ### 漫画更新
