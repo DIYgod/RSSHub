@@ -86,7 +86,7 @@ describe('puppeteer', () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
 
-        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/127\.0\.0\.1:\d{1,5}$/.test(arg))).toBe(true);
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/.*$/.test(arg))).toBe(true);
     });
 
     it('puppeteer accept proxy', async () => {
@@ -97,6 +97,6 @@ describe('puppeteer', () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
 
-        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/127\.0\.0\.1:\d{1,5}$/.test(arg))).toBe(true);
-    });
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/.*$/.test(arg))).toBe(true);
+    }, 10000);
 });
