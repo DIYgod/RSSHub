@@ -12,6 +12,12 @@ afterEach(() => {
         browser.close();
         browser = null;
     }
+    delete process.env.PROXY_URI;
+    delete process.env.PROXY_PROTOCOL;
+    delete process.env.PROXY_HOST;
+    delete process.env.PROXY_PORT;
+    delete process.env.PROXY_AUTH;
+
     jest.resetModules();
 });
 
@@ -72,5 +78,25 @@ describe('puppeteer', () => {
         // these are something we really care about
         expect(webDriverTest).toBe('missing (passed)');
         expect(chromeTest).toBe('present (passed)');
+    }, 10000);
+
+    it('puppeteer accept proxy uri', async () => {
+        process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
+
+        puppeteer = require('../../lib/utils/puppeteer');
+        browser = await puppeteer();
+
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/.*$/.test(arg))).toBe(true);
+    });
+
+    it('puppeteer accept proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'http';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        puppeteer = require('../../lib/utils/puppeteer');
+        browser = await puppeteer();
+
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/.*$/.test(arg))).toBe(true);
     }, 10000);
 });
