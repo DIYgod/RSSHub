@@ -131,15 +131,6 @@
         ],
     },
     'bing.com': { _name: 'Bing', www: [{ title: '每日壁纸', docs: 'https://docs.rsshub.app/picture.html#bing-bi-zhi', source: '', target: '/bing' }] },
-    'dcard.tw': {
-        _name: 'Dcard',
-        www: [
-            { title: '首頁帖子-最新', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f', target: '/dcard/posts/latest' },
-            { title: '首頁帖子-熱門', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f', target: '/dcard/posts/popular' },
-            { title: '板塊帖子-最新', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f/:section', target: '/dcard/:section/latest' },
-            { title: '板塊帖子-熱門', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f/:section', target: '/dcard/:section/popular' },
-        ],
-    },
     'wegene.com': {
         _name: 'WeGene',
         www: [

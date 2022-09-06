@@ -401,6 +401,12 @@ Sources
 
 <Route author="junfengP" example="/sayhuahuo" path="/sayhuahuo"/>
 
+## THBWiki
+
+### 日历
+
+<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['从多少天前（默认30）', '到多少天后（默认30）']" radar="1" rssbud="1"/>
+
 ## Vol.moe
 
 ### vol

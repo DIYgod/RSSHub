@@ -110,6 +110,12 @@ pageClass: routes
 | ------- | -------- | --------- | ----- | -------------- |
 | android | iphone   | ipad      | win   | android_tv_yst |
 
+## BlueStacks
+
+### BlueStacks 5 版本日誌
+
+<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1"/>
+
 ## Brave
 
 ### Release Notes

@@ -408,6 +408,22 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 
+## 全国哲学社会科学工作办公室
+
+### 通用
+
+<Route author="nczitzk" example="/gov/nopss/GB/219469" path="/gov/nopss/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.nopss.gov.cn/` 后的字段。下面是一个例子。
+
+若订阅 [年度项目、青年项目和西部项目](http://www.nopss.gov.cn/GB/219469/431027) 则将对应页面 URL <http://www.nopss.gov.cn/GB/219469/431027> 中 `http://www.nopss.gov.cn/` 后的字段 `GB/219469/431027` 作为路径填入。此时路由为 [`/gov/nopss/GB/219469/431027`](https://rsshub.app/gov/nopss/GB/219469/431027)
+
+:::
+
+</Route>
+
 ## 泉州市跨境电子商务协会
 
 ### 新闻动态
