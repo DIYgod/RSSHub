@@ -114,7 +114,7 @@ pageClass: routes
 
 ### BlueStacks 5 版本日誌
 
-<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1"/>
+<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" puppeteer="1"/>
 
 ## Brave
 
