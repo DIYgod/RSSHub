@@ -2871,6 +2871,12 @@
     "/qbittorrent/news": [
         "TonyRL"
     ],
+    "/qianzhan/analyst/column/:type?": [
+        "moke8"
+    ],
+    "/qianzhan/analyst/rank/:type?": [
+        "moke8"
+    ],
     "/qidian/author/:id": [
         "miles170"
     ],

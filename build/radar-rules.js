@@ -6682,6 +6682,24 @@
         source:[ "/news.php",
           "/" ],
         target:"/qbittorrent/news" } ] },
+  "qianzhan.com":{ _name:"前瞻网",
+    ".":[ { title:"文章列表",
+        docs:"https://docs.rsshub.app/finance.html#qian-zhan-wang",
+        source:[ "/analyst",
+          "/analyst/list/:html" ],
+        target:(params) => {
+                    if (params.html) {
+                        const type = params.html.match(/\d+/)[0];
+                        return '/qianzhan/analyst/column/' + type;
+                    } else {
+                        return '/qianzhan/analyst/column/all';
+                    }
+                } },
+      { title:"排行榜",
+        docs:"https://docs.rsshub.app/finance.html#qian-zhan-wang",
+        source:[ "/analyst",
+          "/" ],
+        target:"/qianzhan/analyst/rank" } ] },
   "qidian.com":{ _name:"起点",
     book:[ { title:"章节",
         docs:"https://docs.rsshub.app/reading.html#qi-dian",
