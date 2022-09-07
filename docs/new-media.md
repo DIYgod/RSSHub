@@ -3325,18 +3325,13 @@ column 为 third 时可选的 category:
 
 ## 深潮 TechFlow
 
-### 分类
+### 首页
 
-<Route author="nczitzk" example="/techflow520" path="/techflow520/:category?" :paramsDesc="['分类，见下表，默认为头条']">
-
-| 头条 | 元宇宙 | 项目 | DeFi | 矿业 | 隐私计算 | 碳中和 | 活动 | NFT | 产业 |
-| -- | --- | -- | ---- | -- | ---- | --- | -- | --- | -- |
-
-</Route>
+<Route author="nczitzk" example="/techflowpost" path="/techflowpost" />
 
 ### 快讯
 
-<Route author="nczitzk" example="/techflow520/newsflash" path="/techflow520/newsflash"/>
+<Route author="nczitzk" example="/techflowpost/express" path="/techflowpost/express" />
 
 ## 深焦
 
