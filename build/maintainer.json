@@ -3304,10 +3304,10 @@
         "TonyRL",
         "ETiV"
     ],
-    "/techflow520/newsflash": [
+    "/techflowpost/express": [
         "nczitzk"
     ],
-    "/techflow520/:category?": [
+    "/techflowpost/": [
         "nczitzk"
     ],
     "/telegram/telegram/channel/:username/:routeParams?": [

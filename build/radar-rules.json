@@ -13623,24 +13623,24 @@
       }
     ]
   },
-  "techflow520.com": {
+  "techflowpost.com": {
     "_name": "深潮TechFlow",
     ".": [
       {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/new-media.html#shen-chao-techflow-fen-lei",
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/new-media.html#shen-chao-techflow-shou-ye",
         "source": [
           "/"
         ],
-        "target": "/techflow520/:category?"
+        "target": "/techflowpost"
       },
       {
         "title": "快讯",
         "docs": "https://docs.rsshub.app/new-media.html#shen-chao-techflow-kuai-xun",
         "source": [
-          "/newsflash"
+          "/express"
         ],
-        "target": "/techflow520/newsflash"
+        "target": "/techflowpost/express"
       }
     ]
   },
