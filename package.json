@@ -52,7 +52,7 @@
     "eslint": "8.23.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-yml": "1.1.0",
+    "eslint-plugin-yml": "1.2.0",
     "fs-extra": "10.1.0",
     "jest": "29.0.2",
     "meilisearch": "0.27.0",
