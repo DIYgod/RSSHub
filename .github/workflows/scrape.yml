@@ -40,14 +40,3 @@ jobs:
             -e MEILISEARCH_API_KEY=$API_KEY \
             -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
             getmeili/docs-scraper pipenv run ./docs_scraper config.json
-      - name: Update meilisearch settings
-        uses: actions/github-script@v6
-        env:
-          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
-          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
-        with:
-          script: |
-            const meilisearchHost = process.env.HOST_URL
-            const meilisearchApiKey = process.env.API_KEY
-            const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/docs-scraper/settings.js`)
-            await script({ core }, meilisearchHost, meilisearchApiKey)
