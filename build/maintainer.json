@@ -200,6 +200,9 @@
     "/aliyun/notice/:type?": [
         "muzea"
     ],
+    "/aliyundrive/files/:share_id/:parent_file_id?": [
+        "DIYgod"
+    ],
     "/allrecode/news": [
         "nczitzk"
     ],
