@@ -130,6 +130,12 @@ pageClass: routes
 
 ## Dcard
 
+::: warning 注意
+
+僅能透過台灣 IP 抓取。
+
+:::
+
 ### 首頁帖子
 
 <Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
