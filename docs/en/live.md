@@ -4,6 +4,15 @@ pageClass: routes
 
 # Live
 
+## LiSA
+
+### News
+
+<RouteEn author="Kiotlin" example="/lisa/info" path="/lisa/info" radar="1" rssbud="1" />
+
+### Latest Discography
+
+<RouteEn author="Kiotlin" example="/lisa/disco" path="/lisa/disco" radar="1" rssbud="1" />
 ## V LIVE
 
 ### Board
