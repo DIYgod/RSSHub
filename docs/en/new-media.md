@@ -166,13 +166,7 @@ Category of news
 
 ### Blog
 
-<RouteEn author="nczitzk" example="/deepmind/blog" path="/deepmind/blog/:category?" :paramsDesc="['Category, see below']">
-
-| All | Podcasts | Research | News |
-| --- | -------- | -------- | ---- |
-|     | Podcasts | Research | News |
-
-</RouteEn>
+<RouteEn author="nczitzk" example="/deepmind/blog" path="/deepmind/blog" radar="1" rssbud="1"/>
 
 ## Deutsche Welle
 
