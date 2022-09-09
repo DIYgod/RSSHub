@@ -766,6 +766,10 @@
     "/ddosi/category/:category": [
         "XinRoom"
     ],
+    "/deepmind/blog": [
+        "nczitzk",
+        "TonyRL"
+    ],
     "/dgjyw/:category?": [
         "nczitzk"
     ],
@@ -5298,7 +5302,6 @@
     "/rescuetime/release-notes/:os?": [],
     "/totalcommander/whatsnew": [],
     "/blizzard/news/:language?/:category?": [],
-    "/deepmind/blog/:category?": [],
     "/deepl/blog/:lang?": [],
     "/openai/blog/:tag?": [],
     "/muchong/journal/:type?": [],

@@ -3089,6 +3089,20 @@
       }
     ]
   },
+  "deepmind.com": {
+    "_name": "DeepMind",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/new-media.html#deepmind",
+        "source": [
+          "/blog",
+          "/"
+        ],
+        "target": "/blog"
+      }
+    ]
+  },
   "dgjyw.com": {
     "_name": "东莞教研网",
     ".": [
@@ -12413,7 +12427,7 @@
     ".": [
       {
         "title": "本期刊物",
-        "docs": "https://docs-rsshub.pages.dev/journal.html#science-xi-lie",
+        "docs": "https://docs.rsshub.app/journal.html#science-xi-lie",
         "source": [
           "/journal/:journal",
           "/toc/:journal/current"
@@ -12422,7 +12436,7 @@
       },
       {
         "title": "封面故事",
-        "docs": "https://docs-rsshub.pages.dev/journal.html#science-xi-lie",
+        "docs": "https://docs.rsshub.app/journal.html#science-xi-lie",
         "source": [
           "/"
         ],
@@ -12430,7 +12444,7 @@
       },
       {
         "title": "在线发表",
-        "docs": "https://docs-rsshub.pages.dev/journal.html#science-xi-lie",
+        "docs": "https://docs.rsshub.app/journal.html#science-xi-lie",
         "source": [
           "/journal/:journal",
           "/toc/:journal/0/0"
