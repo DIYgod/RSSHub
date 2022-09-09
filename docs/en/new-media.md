@@ -168,16 +168,6 @@ Category of news
 
 <RouteEn author="nczitzk" example="/deepmind/blog" path="/deepmind/blog" radar="1" rssbud="1"/>
 
-## Deutsche Welle
-
-<RouteEn author="nczitzk" example="/dw/en" path="/dw/:lang?/:caty?" :paramsDesc="['Language, can be found in the URL of the corresponding language version page, German by default', 'Category, all by default']">
-
-| All  | German Press | Culture | Economy | Science & Nature |
-| ---- | -------- | -------- | -------- | -------- |
-| all  | press    | cul      | eco      | sci      |
-
-</RouteEn>
-
 ## Engadget
 
 ### Chinese
