@@ -141,11 +141,17 @@ pageClass: routes
 
 </Route>
 
-## e 公司
+## Deutsche Welle 德国之声
 
-### 快讯
+### 新闻
 
-<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
+<Route author="nczitzk" example="/dw/zh" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
+
+| 全部  | 德语媒体  | 文化经纬 | 经济纵横 | 科技环境 |
+| --- | ----- | ---- | ---- | ---- |
+| all | press | cul  | eco  | sci  |
+
+</Route>
 
 ## Financial Times
 
