@@ -80,6 +80,12 @@ Set `limit` to limit the number of articles in the feed.
 
 E.g. Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](https://rsshub.app/dribbble/popular?limit=10)
 
+## Sorted
+
+Set `sorted` to control whether to sort the output by the publish date (`pubDate`). This is useful for some feeds that pin some entries at the top. Default to `true` i.e. the output is sorted.
+
+E.g. NJU Undergraduate Bulletin Board <https://rsshub.app/nju/jw/ggtz?sorted=false>
+
 ## Fulltext
 
 Enable fulltext via `mode` parameter.
