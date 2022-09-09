@@ -206,10 +206,10 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 |     nmat      |      Nature Materials       | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
--   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
+- Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
     If the `:journal` parameter is blank, then latest research of Nature will return.
--   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
--   Only abstract is rendered in some researches
+- The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+- Only abstract is rendered in some researches
 
 </RouteEn>
 
@@ -228,8 +228,8 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 |     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                                      |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-https://rsshub.app/comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
--   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
--   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+- Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
+- The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
 
 </RouteEn>
 
@@ -277,7 +277,7 @@ Only some journals are supported.
 
 <RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
 
--   Using router (`/pnas/` + Topic of Interest) to query latest research paper for a certain topic from PNAS journal.
+- Using router (`/pnas/` + Topic of Interest) to query latest research paper for a certain topic from PNAS journal.
     If the `:topic` parameter is blank, or equal to 'latest', then all the latest papers will return.
 
 </RouteEn>
@@ -300,41 +300,41 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 </RouteEn>
 
-## Science Journal
+## Science Magazine
 
 ### Current Issue
 
-<RouteEn author="yech1990" example="/sciencemag/current/science" path="/sciencemag/research/:journal" :paramsDesc="['short name for a journal']" supportScihub="1"/>
+<RouteEn author="yech1990 TonyRL" example="/science/current/science" path="/science/current/:journal?" :paramsDesc="['Short name for a journal']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
-| `:journal` |    Full Name of the Journal    | Route                                                                              |
+| Short name |    Full name of the journal    | Route                                                                              |
 | :--------: | :----------------------------: | ---------------------------------------------------------------------------------- |
-|  science   |            Science             | [/sciencemag/current/science](https://rsshub.app/sciencemag/current/science)       |
-|  advances  |        Science Advances        | [/sciencemag/current/advances](https://rsshub.app/sciencemag/current/advances)     |
-| immunology |       Science Immunology       | [/sciencemag/current/immunology](https://rsshub.app/sciencemag/current/immunology) |
-|  robotics  |        Science Robotics        | [/sciencemag/current/robotics](https://rsshub.app/sciencemag/current/robotics)     |
-|    stke    |       Science Signaling        | [/sciencemag/current/stke](https://rsshub.app/sciencemag/current/stke)             |
-|    stm     | Science Translational Medicine | [/sciencemag/current/stm](https://rsshub.app/sciencemag/current/stm)               |
+|   science   |             Science            | [/science/current/science](https://rsshub.app/science/current/science)         |
+|    sciadv   |        Science Advances        | [/science/current/sciadv](https://rsshub.app/science/current/sciadv)           |
+|  sciimmunol |       Science Immunology       | [/science/current/sciimmunol](https://rsshub.app/science/current/sciimmunol)   |
+| scirobotics |        Science Robotics        | [/science/current/scirobotics](https://rsshub.app/science/current/scirobotics) |
+|  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |
+|     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
--   Using router (`/sciencemag/current/` + “short name for a journal”) to query current issue of a journal form AAAS.
-    leave the parameter blank（`/sciencemag/current`）to get update from Science.
+- Using route (`/science/current/` + "short name for a journal") to get current issue of a journal from AAAS.
+- Leaving it empty (`/science/current`) to get update from Science.
 
 </RouteEn>
 
 ### Cover Story
 
-<RouteEn author="yech1990" example="/sciencemag/cover" path="/sciencemag/cover" />
+<RouteEn author="yech1990 TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1"/>
 
-Subscribe to the cover images of the Science journals, and get the latest publication updates in time.
+Subscribe to the cover images of Science journals, and get the latest publication updates in time.
 
-Including ‘Science’, 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.
+Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.
 
 </RouteEn>
 
 ### First Release
 
-<RouteEn author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" supportScihub="1"/>
+<RouteEn author="yech1990 TonyRL" example="/science/early" path="/science/early/:journal?" :paramsDesc="['Short name for a journal']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
-_only support Science Journal_
+*only Science, Science Immunology and Science Translational Medicine have first release*
 
 </RouteEn>
 
