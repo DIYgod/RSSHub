@@ -2184,6 +2184,9 @@
     "/line/today/:edition?/:tab?": [
         "nczitzk"
     ],
+    "/linovelib/novel/:id": [
+        "misakicoca"
+    ],
     "/literotica/new": [
         "nczitzk"
     ],
