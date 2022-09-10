@@ -594,12 +594,6 @@ Sources
 
 <Route author="btdwv marvolo666 yan12125" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/zaiyishijiemigongkaihougong/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
-## 哩哔轻小说
-
-### 小说更新
-
-<Route author="misakicoca" path="/linovelib/novel/:id" example="/linovelib/novel/2547" :paramsDesc="['小说 id，对应书架开始阅读 URL 中找到']"/>
-
 ## 漫画 DB
 
 ### 漫画 DB
