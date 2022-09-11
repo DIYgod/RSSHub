@@ -732,6 +732,15 @@
     "/cts/:category": [
         "miles170"
     ],
+    "/cw/master/:channel": [
+        "TonyRL"
+    ],
+    "/cw/sub/:channel": [
+        "TonyRL"
+    ],
+    "/cw/today": [
+        "TonyRL"
+    ],
     "/dahecube/:type?": [
         "linbuxiao"
     ],

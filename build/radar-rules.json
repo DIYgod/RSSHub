@@ -2969,6 +2969,34 @@
       }
     ]
   },
+  "cw.com.tw": {
+    "_name": "天下雜誌",
+    ".": [
+      {
+        "title": "最新上線",
+        "docs": "https://docs.rsshub.app/traditional-media.html#tian-xia-za-zhi",
+        "source": [
+          "/today",
+          "/"
+        ],
+        "target": "/cw/today"
+      },
+      {
+        "title": "主頻道",
+        "docs": "https://docs.rsshub.app/traditional-media.html#tian-xia-za-zhi",
+        "source": [
+          "/masterChannel.action"
+        ]
+      },
+      {
+        "title": "子頻道",
+        "docs": "https://docs.rsshub.app/traditional-media.html#tian-xia-za-zhi",
+        "source": [
+          "/subchannel.action"
+        ]
+      }
+    ]
+  },
   "dahecube.com": {
     "_name": "大河财立方",
     ".": [
