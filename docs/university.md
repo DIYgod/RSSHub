@@ -1233,22 +1233,32 @@ category 列表：
 
 ## 哈尔滨工业大学
 
-### 哈尔滨工业大学教务处通知公告
+::: warning 注意
+哈工大网站疑似禁止了`rsshub.app`的访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
+:::
 
-<Route author="lty96117" example="/hit/jwc" path="/hit/jwc"/>
+### 教务处通知公告
+
+<Route author="lty96117" example="/hit/jwc" path="/hit/jwc" radar="1" rssbud="1"/>
 
 ### 今日哈工大
 
-<Route author="ranpox" example="/hit/today/10" path="/hit/today/:category" :paramsDesc="['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']"/>
+<Route author="ranpox" example="/hit/today/10" path="/hit/today/:category" :paramsDesc="['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']" radar="1" rssbud="1">
 
 ::: tip 提示
 今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
-例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过`/hit/today/25`订阅该详细类别。
+例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过 [`/hit/today/25`](https://rsshub.app/hit/today/25) 订阅该详细类别。
 :::
 
 ::: warning 注意
 部分文章需要经过统一身份认证后才能阅读全文。
 :::
+
+</Route>
+
+### 研究生院通知公告
+
+<Route author="hlmu" example="/hit/hitgs" path="/hit/hitgs" radar="1" rssbud="1"/>
 
 ## 哈尔滨工业大学（深圳）
 
