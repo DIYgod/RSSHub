@@ -141,11 +141,17 @@ pageClass: routes
 
 </Route>
 
-## e 公司
+## Deutsche Welle 德国之声
 
-### 快讯
+### 新闻
 
-<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
+<Route author="nczitzk" example="/dw/zh" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
+
+| 全部  | 德语媒体  | 文化经纬 | 经济纵横 | 科技环境 |
+| --- | ----- | ---- | ---- | ---- |
+| all | press | cul  | eco  | sci  |
+
+</Route>
 
 ## Financial Times
 
@@ -1788,6 +1794,38 @@ category 对应的关键词有
 ### 最新熱門消息
 
 <Route author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['語言，`en` 或 `zh`，默認 `en`']" radar="1" rssbud="1"/>
+
+## 天下雜誌
+
+### 最新上線
+
+<Route author="TonyRL" example="/cw/today" path="/cw/today" radar="1" rssbud="1"/>
+
+### 主頻道
+
+<Route author="TonyRL" example="/cw/master/8" path="/cw/master/:channel" :paramsDesc="['主頻道 ID，可在 URL 中找到']" radar="1" rssbud="1">
+
+| 主頻道名稱 | 主頻道 ID |
+| ----- | ------ |
+| 財經    | 8      |
+| 產業    | 7      |
+| 國際    | 9      |
+| 管理    | 10     |
+| 環境    | 12     |
+| 教育    | 13     |
+| 人物    | 14     |
+| 政治社會  | 77     |
+| 調查排行  | 15     |
+| 健康關係  | 79     |
+| 時尚品味  | 11     |
+| 運動生活  | 103    |
+| 重磅外媒  | 16     |
+
+</Route>
+
+### 子頻道
+
+<Route author="TonyRL" example="/cw/sub/615" path="/cw/sub/:channel" :paramsDesc="['子頻道 ID，可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 卫报 The Guardian
 
