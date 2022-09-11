@@ -47,6 +47,7 @@ module.exports = {
             level: 999, // Disable original Plugin
         },
         extendMarkdown: (md) => {
+            md.use(require('markdown-it-attrs'));
             md.use(require('../.format/md/hierarchySlug'), {
                 slugify(s) {
                     return _slugify(
