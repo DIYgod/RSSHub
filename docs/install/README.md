@@ -419,7 +419,9 @@ gcloud app deploy
 
 `REQUEST_TIMEOUT`: 请求超时毫秒数，默认 `3000`
 
-`UA`: 用户代理，默认 `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36`
+`UA`: 用户代理，默认为随机用户代理用户代理（macOS 上的 Chrome）
+
+`NO_RANDOM_UA`: 是否禁用随机用户代理，默认 `null`
 
 ### 跨域请求
 
