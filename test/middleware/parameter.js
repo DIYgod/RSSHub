@@ -318,8 +318,8 @@ describe('fulltext_mode', () => {
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).not.toBe(undefined);
-    });
-}, 10000);
+    }, 10000);
+});
 
 describe('complicated_description', () => {
     it(`complicated_description`, async () => {
