@@ -313,7 +313,7 @@ describe('wrong_path', () => {
 });
 
 describe('fulltext_mode', () => {
-    it(`fulltext`, async () => {
+    it.skip(`fulltext`, async () => {
         const response = await request.get('/test/1?mode=fulltext');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
