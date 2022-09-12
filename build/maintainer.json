@@ -2296,6 +2296,9 @@
     "/medsci/:sid?/:tid?": [
         "nczitzk"
     ],
+    "/meituclub/latest": [
+        "ocleo1"
+    ],
     "/meteor/boards": [
         "TonyRL"
     ],
