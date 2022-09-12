@@ -510,15 +510,15 @@ pageClass: routes
 
 </Route>
 
-## 光谷社区
+## 过早客
 
 ### 子论坛
 
-<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:category?" :paramsDesc="['子论坛，默认为首页']">
+<Route author="nczitzk" example="/guozaoke/index" path="/guozaoke/:category?" :paramsDesc="['子论坛，默认为首页']">
 
 | 首页 | 你问我答 | 同城活动     | IT 技术 | 金融财经    | 创业创客    | 城市建设 |
-| -- | ---- | -------- | ----- | ------- | ------- | ---- |
-|    | qna  | lowshine | it    | finance | startup | city |
+| ---- | ---- | -------- | ----- | ------- | ------- | ---- |
+| index | qna  | lowshine | it    | finance | startup | city |
 
 </Route>
 
