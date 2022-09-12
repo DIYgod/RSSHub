@@ -412,7 +412,9 @@ Configure RSSHub by setting environment variables
 
 `REQUEST_TIMEOUT`: milliseconds to wait for the server to end the response before aborting the request with error, default to `3000`
 
-`UA`: user agent, default to `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36`
+`UA`: user agent, using random user agent (Chrome on macOS) by default
+
+`NO_RANDOM_UA`: disable random user agent, default to `null`
 
 ### CORS Request
 
