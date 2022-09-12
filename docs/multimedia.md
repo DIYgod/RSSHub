@@ -1181,6 +1181,12 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="Fatpandac" example="/ajmide/10603594" path="/ajmide/:id" :paramsDesc="['播客 id，可以从播客页面 URL 中找到']" radar="1" rssbud="1"/>
 
+## 阿里云盘
+
+### 文件列表
+
+<Route author="DIYgod" example="/aliyundrive/files/XDFSyJ3J5wk/63035a070a078cf4e55e4b7ea3fd5bd269c4e41c" path="/aliyundrive/files/:share_id/:parent_file_id?" :paramsDesc="['分享 id，可以从分享页面 URL 中找到', '文件夹 id，可以从文件夹页面 URL 中找到']" radar="1" rssbud="1"/>
+
 ## 爱奇艺
 
 ### 用户视频
@@ -1663,6 +1669,34 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | 全部 | 蓝光     | 1080P | 720P | 3D | WEB-DL |
 | -- | ------ | ----- | ---- | -- | ------ |
 | 留空 | bluray | 1080p | 720p | 3d | webdl  |
+
+## 中文播客榜
+
+::: tip 提示
+
+可以通过指定 `limit` 参数确定榜单排名下限，默认为 250。
+
+若只查看榜单前 50，可在订阅 URL 后加入 `?limit=50`。
+
+即，以 [热门节目](https://xyzrank.com/#/) 为例，路由为[`/xyzrank?limit=50`](https://rsshub.app/xyzrank?limit=50)。
+
+:::
+
+### 热门节目
+
+<Route author="nczitzk" example="/xyzrank" path="/xyzrank"/>
+
+### 热门播客
+
+<Route author="nczitzk" example="/xyzrank/hot-podcasts" path="/xyzrank/hot-podcasts"/>
+
+### 新锐节目
+
+<Route author="nczitzk" example="/xyzrank/hot-episodes-new" path="/xyzrank/hot-episodes-new"/>
+
+### 新锐播客
+
+<Route author="nczitzk" example="/xyzrank/new-podcasts" path="/xyzrank/new-podcasts"/>
 
 ## 注视影视
 

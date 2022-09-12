@@ -1,0 +1,4 @@
+{{ if category }}
+    <span>Category: {{category}}</span>
+{{ /if }}
+{{@ description }}

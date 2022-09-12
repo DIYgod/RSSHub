@@ -234,17 +234,26 @@ For example:
 
 <RouteEn author="MegrezZhu hoilc" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only cover，`detail` to all content, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#route-specific-configurations), default to `simple`']" anticrawler="1" supportBT="1"/>
 
+## Rare Historical Photos
+
+### Home
+
+<RouteEn author="TonyRL" example="/rarehistoricalphotos" path="/rarehistoricalphotos" radar="1"/>
+
 ## Tits Guru
 
 ### Home
 
 <RouteEn author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
+
 ### Daily Best
 
 <RouteEn author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+
 ### Models
 
 <RouteEn author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" :paramsDesc="['Module name, see [here](https://tits-guru.com/models) for details']"/>
+
 ### Categories
 
 <RouteEn author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['Category, see [here](https://tits-guru.com/categories) for details']"/>

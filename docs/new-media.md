@@ -282,23 +282,7 @@ pageClass: routes
 
 ### Blog
 
-<Route author="nczitzk" example="/deepmind/blog" path="/deepmind/blog/:category?" :paramsDesc="['分类，见下表']">
-
-| All | Podcasts | Research | News |
-| --- | -------- | -------- | ---- |
-|     | Podcasts | Research | News |
-
-</Route>
-
-## Deutsche Welle 德国之声
-
-<Route author="nczitzk" example="/dw/zh" path="/dw/:lang?/:caty?" :paramsDesc="['语言，可在对应语言版本页的 URL 中找到，默认为德语', '分类，见下表，默认为全部']">
-
-| 全部  | 德语媒体  | 文化经纬 | 经济纵横 | 科技环境 |
-| --- | ----- | ---- | ---- | ---- |
-| all | press | cul  | eco  | sci  |
-
-</Route>
+<Route author="nczitzk" example="/deepmind/blog" path="/deepmind/blog" radar="1" rssbud="1"/>
 
 ## DoNews
 
@@ -311,6 +295,12 @@ pageClass: routes
 | (空) | company | business | ent | digital | idonews |
 
 </Route>
+
+## e 公司
+
+### 快讯
+
+<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
 
 ## Engadget 瘾科技
 
@@ -800,6 +790,12 @@ Edition
 |      | t-hour | t-day | t-week | t-month |
 
 </Route>
+
+## Macfilos
+
+### Blog
+
+<Route author="nczitzk" example="/macfilos/blog" path="/macfilos/blog" />
 
 ## MakeUseOf
 
@@ -1769,6 +1765,16 @@ Supported sub-sites:
 
 </Route>
 
+## 島民衛星 Islander
+
+### 事件分析
+
+<Route author="TonyRL" example="/islander/search" path="/islander/search" radar="1" rssbud="1"/>
+
+### 單日焦點
+
+<Route author="TonyRL" example="/islander/top30event" path="/islander/top30event" radar="1" rssbud="1"/>
+
 ## 得到
 
 ### 首页
@@ -2274,6 +2280,10 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
 
+### 24 小时
+
+<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" />
+
 ### 标签
 
 <Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" :paramsDesc="['标签 id']" />
@@ -2289,6 +2299,10 @@ others = 热点新闻 + 滚动新闻
 ### 文集
 
 <Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" :paramsDesc="['文集 id']" />
+
+### 简报
+
+<Route author="Fatpandac" example="/huxiu/briefcolumn/1" path="/huxiu/briefcolumn/:id" :paramsDesc="['简报 id']" />
 
 ## 互动吧
 
@@ -2454,11 +2468,23 @@ column 为 third 时可选的 category:
 
 <Route author="WenryXu" example="/juesheng" path="/juesheng"/>
 
-## 看点快报
+## 卡卡洛普
 
-### 首页
+### 宅宅新聞 - 分類
 
-<Route author="nczitzk" example="/kuaibao" path="/kuaibao/index"/>
+<Route author="TonyRL" example="/gamme/news" path="/gamme/news/:category?" :paramsDesc="['分類名，可在 URL 找到，預設為 `all`']" radar="1" rssbud="1"/>
+
+### 宅宅新聞 - 標籤
+
+<Route author="TonyRL" example="/gamme/news/tag/歐派" path="/gamme/news/tag/:tag" :paramsDesc="['標籤，可在 URL 找到']" radar="1" rssbud="1"/>
+
+### 西斯新聞 - 分類
+
+<Route author="TonyRL" example="/gamme/sexynews" path="/gamme/sexynews/:category?" :paramsDesc="['分類名，可在 URL 找到，預設為 `all`']" radar="1" rssbud="1"/>
+
+### 西斯新聞 - 標籤
+
+<Route author="TonyRL" example="/gamme/sexynews/tag/歐派" path="/gamme/sexynews/tag/:tag" :paramsDesc="['標籤，可在 URL 找到']" radar="1" rssbud="1"/>
 
 ## 科技島讀
 
@@ -3289,18 +3315,13 @@ column 为 third 时可选的 category:
 
 ## 深潮 TechFlow
 
-### 分类
+### 首页
 
-<Route author="nczitzk" example="/techflow520" path="/techflow520/:category?" :paramsDesc="['分类，见下表，默认为头条']">
-
-| 头条 | 元宇宙 | 项目 | DeFi | 矿业 | 隐私计算 | 碳中和 | 活动 | NFT | 产业 |
-| -- | --- | -- | ---- | -- | ---- | --- | -- | --- | -- |
-
-</Route>
+<Route author="nczitzk" example="/techflowpost" path="/techflowpost" />
 
 ### 快讯
 
-<Route author="nczitzk" example="/techflow520/newsflash" path="/techflow520/newsflash"/>
+<Route author="nczitzk" example="/techflowpost/express" path="/techflowpost/express" />
 
 ## 深焦
 
@@ -4068,6 +4089,18 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 </Route>
 
+## 壹蘋新聞網
+
+### 最新新聞
+
+<Route author="miles170" example="/nextapple/realtime/new" path="/nextapple/realtime/:category?" :paramsDesc="['類別，見下表，默認為最新']">
+
+| 最新  | 娛樂            | 生活   | 社會    | 政治       | 國際            | 財經      | 飲食旅遊      | 房市       | 時尚      | 車市   | 健康     | 體育     | 3C     |
+| --- | ------------- | ---- | ----- | -------- | ------------- | ------- | --------- | -------- | ------- | ---- | ------ | ------ | ------ |
+| new | entertainment | life | local | politics | international | finance | lifestyle | property | fashion | auto | health | sports | gadget |
+
+</Route>
+
 ## 移动支付网
 
 ### 新闻
@@ -4357,4 +4390,4 @@ QueryString:
 | ---- | ----- | ----- |
 |      | zh-hk | zh-tw |
 
- </Route>
+</Route>

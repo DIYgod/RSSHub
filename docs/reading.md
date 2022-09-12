@@ -371,6 +371,12 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 </Route>
 
+## 哩哔轻小说
+
+### 小说更新
+
+<Route author="misakicoca" path="/linovelib/novel/:id" example="/linovelib/novel/2547" :paramsDesc="['小说 id，对应书架开始阅读 URL 中找到']"/>
+
 ## 飘天文学
 
 ### 章节
@@ -398,6 +404,10 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 限时免费下期预告
 
 <Route author="LogicJake" example="/qidian/free-next" path="/qidian/free-next/:type?" :paramsDesc="['默认不填为起点中文网，填 mm 为起点女生网']"/>
+
+### 作者
+
+<Route author="miles170" example="/qidian/author/9639927" path="/qidian/author/:id" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
 
 ## 起点图
 
