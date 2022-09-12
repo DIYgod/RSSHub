@@ -208,6 +208,12 @@ For example:
 
 <RouteEn author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['Manga slug, can be found in URL, including neither `manga-` nor `.html`']" />
 
+## Meituclub
+
+### Latest
+
+<RouteEn author="ocleo1" example="/meituclub/latest" path="/meituclub/latest" />
+
 ## NASA Astronomy Picture of the Day
 
 ### NASA
