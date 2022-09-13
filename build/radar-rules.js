@@ -9260,6 +9260,16 @@
                     }
                     return `/zju/grs/${type}`;
                 } } ] },
+  "zodgame.xyz":{ _name:"zodgame",
+    ".":[ { title:"论坛版块",
+        docs:"https://docs.rsshub.app/bbs.html#zodgame",
+        source:"/forum.php",
+        target:(params, url) => {
+                    const fid = new URL(url).searchParams.get('fid');
+                    if (fid) {
+                        return `/zodgame/forum/${fid}`;
+                    }
+                } } ] },
   "zoo.team":{ _name:"政采云前端技术团队",
     weekly:[ { title:"小报",
         docs:"https://docs.rsshub.app/blog.html#zheng-cai-yun-qian-duan-ji-shu-tuan-dui",
