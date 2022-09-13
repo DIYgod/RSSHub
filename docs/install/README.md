@@ -762,6 +762,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         -   `YOUTUBE_CLIENT_SECRET`: YouTube API 的 OAuth 2.0 客户端 Secret
         -   `YOUTUBE_REFRESH_TOKEN`: YouTube API 的 OAuth 2.0 客户端 Refresh Token。可以按照[此 gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) 获取。
 
+-   ZodGame:
+
+    -   `ZODGAME_COOKIE`: ZodGame 登录后的 Cookie 值
+
 -   北大未名 BBS 全站十大
 
     -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：

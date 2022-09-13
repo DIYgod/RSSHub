@@ -715,3 +715,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
         -   `YOUTUBE_CLIENT_ID`: YouTube API OAuth 2.0 client ID
         -   `YOUTUBE_CLIENT_SECRET`: YouTube API OAuth 2.0 client secret
         -   `YOUTUBE_REFRESH_TOKEN`: YouTube API OAuth 2.0 refresh token. Check [this gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) for detailed instructions.
+
+-   ZodGame:
+
+    -   `ZODGAME_COOKIE`: Cookie of ZodGame User

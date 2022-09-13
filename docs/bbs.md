@@ -388,8 +388,14 @@ pageClass: routes
 
 </Route>
 
-## Zuvio
+## ZodGame
 
+### 论坛版块
+
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['版块 id，在 URL 可以找到']" radar="1" rssbud="1"/>
+
+## Zuvio
+ 
 ### 校園話題
 
 <Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" :paramsDesc="['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']" radar="1" rssbud="1"/>
