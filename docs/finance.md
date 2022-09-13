@@ -314,13 +314,13 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 本所业务规则
 
-<Route author="nczitzk" example="/sse/sserules" path="/sse/sserules/:slug?" :paramsDesc="['见下文，默认为 latest']">
+<Route author="nczitzk" example="/sse/lawandrules" path="/sse/lawandrules/:slug?" :paramsDesc="['见下文，默认为 latest']">
 
-将目标栏目的网址拆解为 `http://www.sse.com.cn/lawandrules/sserules/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+将目标栏目的网址拆解为 `http://www.sse.com.cn/lawandrules/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
 
-如：（最新规则）<http://www.sse.com.cn/lawandrules/sserules/latest> 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/sserules/latest`
+如：（最新规则）<http://www.sse.com.cn/lawandrules/latest> 的网址在 `http://www.sse.com.cn/lawandrules/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/lawandrules/latest`
 
-又如：（设立科创板并试点注册制规则 - 发行上市审核类）<http://www.sse.com.cn/lawandrules/sserules/tib/review> 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `tib/review`，则对应的 slug 为 `tib-review`，对应的路由即为 `/sse/sserules/tib-review`
+又如：（设立科创板并试点注册制规则 - 发行上市审核类）<http://www.sse.com.cn/lawandrules/tib/review> 的网址在 `http://www.sse.com.cn/lawandrules/` 后的字段是 `tib/review`，则对应的 slug 为 `tib-review`，对应的路由即为 `/sse/lawandrules/tib-review`
 
 </Route>
 
