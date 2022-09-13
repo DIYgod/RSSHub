@@ -312,7 +312,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 上海证券交易所
 
-### 本所业务规则
+### 本所业务指南与流程
 
 <Route author="nczitzk" example="/sse/lawandrules" path="/sse/lawandrules/:slug?" :paramsDesc="['见下文，默认为 latest']">
 
