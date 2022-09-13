@@ -732,6 +732,9 @@
     "/cts/:category": [
         "miles170"
     ],
+    "/cuc/yz": [
+        "niuyi1017"
+    ],
     "/cw/master/:channel": [
         "TonyRL"
     ],
@@ -4316,7 +4319,6 @@
     "/cas/mesalab/kb": [],
     "/cas/iee/kydt": [],
     "/cas/cg/:caty?": [],
-    "/cuc/yz": [],
     "/utdallas/isso": [],
     "/nchu/jwc/:type?": [],
     "/cqu/jwc/:path*": [],
