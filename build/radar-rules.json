@@ -7197,6 +7197,20 @@
       }
     ]
   },
+  "ithome.com.tw": {
+    "_name": "iThome",
+    "www": [
+      {
+        "title": "Feeds",
+        "docs": "https://docs.rsshub.app/new-media.html#ithome-tai-wan",
+        "source": [
+          "/:category",
+          "/:category/feeds"
+        ],
+        "target": "/ithome/tw/feeds/:category"
+      }
+    ]
+  },
   "iwara.tv": {
     "_name": "iwara",
     "ecchi": [
