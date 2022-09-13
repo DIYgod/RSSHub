@@ -554,6 +554,12 @@ R18 显示
 
 <Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
 
+## 妹图社
+
+### 最新
+
+<Route author="ocleo1" example="/meituclub/latest" path="/meituclub/latest" />
+
 ## 妹子图
 
 ### 首页（最新）
