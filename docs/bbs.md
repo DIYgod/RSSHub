@@ -392,7 +392,7 @@ pageClass: routes
 
 ### 论坛版块
 
-<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['版块 id，在 URL 可以找到']" radar="1" rssbud="1"/>
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['版块 id，在 URL 可以找到']" radar="1" rssbud="1" selfhost="1"/>
 
 ## Zuvio
 
