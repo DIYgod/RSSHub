@@ -78,4 +78,4 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### forum
 
-<RouteEn author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['forum id，can be found in URL']" radar="1" rssbud="1"/>
+<RouteEn author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['forum id，can be found in URL']" radar="1" rssbud="1" selfhost="1"/>
