@@ -8,11 +8,11 @@ pageClass: routes
 
 ### Latest
 
-<RouteEn author="nczitzk" example="/bangumi" path="/bangumi"/>
+<RouteEn author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
 
 ### Tags
 
-<RouteEn author="nczitzk" example="/bangumi/chs/1080p" path="/bangumi/:tags?" :paramsDesc="['Tags, empty by default, multiple tags separated by `/`']">
+<RouteEn author="nczitzk" example="/bangumi/moe/chs/1080p" path="/bangumi/moe/:tags?" :paramsDesc="['Tags, empty by default, multiple tags separated by `/`']">
 
 For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 

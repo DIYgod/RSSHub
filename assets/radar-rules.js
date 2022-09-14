@@ -827,20 +827,6 @@
             { title: '日记评论区', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/journal/:id/', target: '/furaffinity/journal_comments/:id' },
         ],
     },
-    'bgm.tv': {
-        _name: 'Bangumi',
-        '.': [
-            { title: '小组话题', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/group/:id', target: '/bangumi/group/:id' },
-            { title: '小组话题的新回复', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/group/topic/:id', target: '/bangumi/topic/:id' },
-            { title: '现实人物的新作品', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/person/:id', target: '/bangumi/person/:id' },
-            { title: '用户日志', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/user/:id', target: '/bangumi/user/blog/:id' },
-            { title: '条目的讨论', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id/topics' },
-            { title: '条目的评论', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id/blogs' },
-            { title: '条目的章节', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id' },
-            { title: '条目的吐槽箱', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id/comments' },
-            { title: '放送列表', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/calendar', target: '/bangumi/calendar/today' },
-        ],
-    },
     'e-hentai.org/': {
         _name: 'E-Hentai',
         '.': [
