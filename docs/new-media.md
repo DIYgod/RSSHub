@@ -695,6 +695,18 @@ Tag
 
 <Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
 
+## iThome 台灣
+
+### Feeds
+
+<Route author="miles170" example="/ithome/tw/feeds/news" path="/ithome/tw/feeds/:category" :paramsDesc="['類別']" radar="1">
+
+| 新聞   | AI       | Cloud | DevOps | 資安       |
+| ---- | -------- | ----- | ------ | -------- |
+| news | big-data | cloud | devops | security |
+
+</Route>
+
 ## KBS
 
 ### News
