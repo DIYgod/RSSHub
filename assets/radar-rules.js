@@ -262,7 +262,7 @@
             { title: '站内 Top 榜单', docs: 'https://docs.rsshub.app/multimedia.html#last-fm', source: '/charts', target: '/lastfm/top' },
         ],
     },
-    'ddrk.me': {
+    'ddys.tv': {
         _name: '低端影视',
         www: [
             { title: '首页', docs: 'https://docs.rsshub.app/multimedia.html#di-duan-ying-shi', source: '/', target: '/ddrk/index' },
