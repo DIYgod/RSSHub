@@ -312,33 +312,33 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 上海证券交易所
 
-### 本所业务规则
+### 本所业务指南与流程
 
-<Route author="nczitzk" example="/sse/sserules" path="/sse/sserules/:slug?" :paramsDesc="['见下文，默认为 latest']">
+<Route author="nczitzk" example="/sse/lawandrules" path="/sse/lawandrules/:slug?" :paramsDesc="['见下文，默认为 `latest`']" radar="1" rssbud="1">
 
-将目标栏目的网址拆解为 `http://www.sse.com.cn/lawandrules/sserules/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+将目标栏目的网址拆解为 `https://www.sse.com.cn/lawandrules/guide/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
 
-如：（最新规则）<http://www.sse.com.cn/lawandrules/sserules/latest> 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/sserules/latest`
+如：（最新指南与流程）<https://www.sse.com.cn/lawandrules/guide/latest> 的网址在 `https://www.sse.com.cn/lawandrules/guide/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/lawandrules/latest`
 
-又如：（设立科创板并试点注册制规则 - 发行上市审核类）<http://www.sse.com.cn/lawandrules/sserules/tib/review> 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `tib/review`，则对应的 slug 为 `tib-review`，对应的路由即为 `/sse/sserules/tib-review`
+又如：（主板业务指南与流程 - 发行承销业务指南）<https://www.sse.com.cn/lawandrules/guide/zbywznylc/fxcxywzn> 的网址在 `https://www.sse.com.cn/lawandrules/guide/` 后的字段是 `zbywznylc/fxcxywzn`，则对应的 slug 为 `zbywznylc-fxcxywzn`，对应的路由即为 `/sse/lawandrules/zbywznylc-fxcxywzn`
 
 </Route>
 
 ### 上市公司信息最新公告披露
 
-<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" />
+<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" radar="1" rssbud="1"/>
 
 ### 可转换公司债券公告
 
-<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
+<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']" radar="1" rssbud="1"/>
 
 ### 科创板项目动态
 
-<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
+<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal" radar="1" rssbud="1"/>
 
 ### 监管问询
 
-<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire" radar="1" rssbud="1"/>
 
 ## 深圳证券交易所
 
