@@ -232,7 +232,7 @@ pageClass: routes
 
 ### 小组话题的新回复
 
-<Route author="ylc395" example="/bangumi/tv/topic/24657" path="/bangumi/tv/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/topic/367032" path="/bangumi/tv/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
 
 ### 小组话题
 
