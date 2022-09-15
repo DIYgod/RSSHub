@@ -3958,6 +3958,12 @@
     "/xueqiu/user_stock/:id": [
         "hillerliao"
     ],
+    "/xwlb/": [
+        "xfangbao"
+    ],
+    "/xwlb/index": [
+        "xfangbao"
+    ],
     "/xyzrank/": [
         "nczitzk"
     ],
@@ -5152,7 +5158,6 @@
     "/199it/tag/:tag": [],
     "/jijitang/article/:id": [],
     "/jijitang/publication": [],
-    "/xwlb": [],
     "/initium/:type?/:language?": [],
     "/theinitium/:model/:type?/:language?": [],
     "/grubstreet": [],
