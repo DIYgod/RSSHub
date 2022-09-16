@@ -1276,13 +1276,13 @@ category 列表：
 
 ### 今日工大 - 通知公告
 
-<Route author="raptazure" example="/hitwh/today" path="hitwh/today" />
+<Route author="raptazure" example="/hitwh/today" path="/hitwh/today" radar="1" rssbud="1"/>
 
 ## 海南大学
 
 ### 硕士研究生招生动态
 
-<Route author="OdinZhang" example="/hainanu/ssszs" path="hainanu/ssszs"/>
+<Route author="OdinZhang" example="/hainanu/ssszs" path="/hainanu/ssszs"/>
 
 ## 杭州电子科技大学
 
