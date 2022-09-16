@@ -1629,6 +1629,9 @@
     "/hit/today/:category": [
         "ranpox"
     ],
+    "/hitwh/today": [
+        "raptazure"
+    ],
     "/hizu/:column?": [
         "nczitzk"
     ],
@@ -4344,7 +4347,6 @@
     "/hhu/libNews": [],
     "/hhu/libNewsc": [],
     "/hitsz/article/:category?": [],
-    "/hitwh/today": [],
     "/shanghaitech/activity": [],
     "/shanghaitech/sist/activity": [],
     "/sjtu/seiee/academic": [],
