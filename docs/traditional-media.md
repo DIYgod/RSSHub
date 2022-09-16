@@ -2138,9 +2138,9 @@ category 对应的关键词有
 
 <Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1" rssbud="1"/>
 
-### 新闻联播文字版全文
+### 新闻联播文字版完整版
 
-<Route author="xfangbao" example="/xwlb" path="/xwlb/index" />
+<Route author="xfangbao" example="/xwlb" path="/xwlb/index" radar="1" rssbud="1"/>
 
 ### 央视网图片《镜象》
 
