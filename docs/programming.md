@@ -712,17 +712,13 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-### 最新漏洞列表
-
-<Route author="qwertyuiop6" example="/aqk/vul" path="/aqk/vul"/>
-
 ### 分类订阅
 
-<Route author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
+<Route author="qwertyuiop6" example="/anquanke/week" path="/anquanke/:category" :paramsDesc="['分类订阅']" radar="1" rssbud="1">
 
-| 360 网络安全周报 | 活动       | 知识        | 资讯   | 招聘  |
-| ---------- | -------- | --------- | ---- | --- |
-| week       | activity | knowledge | news | job |
+| 360 网络安全周报 | 活动       | 知识        | 资讯   | 招聘  | 工具   |
+| ---------- | -------- | --------- | ---- | --- | ---- |
+| week       | activity | knowledge | news | job | tool |
 
 </Route>
 
@@ -730,11 +726,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分类
 
-<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category"/>
+<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category?" radar="1" rssbud="1"/>
 
 ### 作者
 
-<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author"/>
+<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author" radar="1" rssbud="1"/>
 
 ## 安全文摘
 
