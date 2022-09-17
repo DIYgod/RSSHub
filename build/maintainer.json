@@ -1139,6 +1139,15 @@
     "/ezone/:category?": [
         "nczitzk"
     ],
+    "/fastbull/express-news": [
+        "nczitzk"
+    ],
+    "/fastbull/news": [
+        "nczitzk"
+    ],
+    "/fastbull/": [
+        "nczitzk"
+    ],
     "/fda/cdrh": [
         "nczitzk"
     ],
