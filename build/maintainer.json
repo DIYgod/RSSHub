@@ -294,6 +294,9 @@
     "/audiobar/latest": [
         "zxzhuty"
     ],
+    "/baidu/gushitong/index": [
+        "CaoMeiYouRen"
+    ],
     "/baidu/tieba/forum/:kw": [
         "u3u"
     ],
