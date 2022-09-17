@@ -110,6 +110,12 @@ pageClass: routes
 | ------- | -------- | --------- | ----- | -------------- |
 | android | iphone   | ipad      | win   | android_tv_yst |
 
+## BlueStacks
+
+### BlueStacks 5 版本日誌
+
+<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" puppeteer="1"/>
+
 ## Brave
 
 ### Release Notes
@@ -269,6 +275,14 @@ pageClass: routes
 ### 脚本更新
 
 <Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']" radar="1"/>
+
+### 脚本版本历史
+
+<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/versions" path="/greasyfork/scripts/:script/versions" :paramsDesc="['脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
+
+### 脚本反馈
+
+<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/feedback" path="/greasyfork/scripts/:script/feedback" :paramsDesc="['脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
 
 ## Hugo
 

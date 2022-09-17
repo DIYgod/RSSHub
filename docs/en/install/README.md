@@ -412,7 +412,9 @@ Configure RSSHub by setting environment variables
 
 `REQUEST_TIMEOUT`: milliseconds to wait for the server to end the response before aborting the request with error, default to `3000`
 
-`UA`: user agent, default to `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36`
+`UA`: user agent, using random user agent (Chrome on macOS) by default
+
+`NO_RANDOM_UA`: disable random user agent, default to `null`
 
 ### CORS Request
 
@@ -574,7 +576,7 @@ Configs in this sections are in beta stage, and are turn off by default. Please 
 
 `NODE_NAME`: node name, used for load balancing, identify the current node
 
-`PUPPETEER_WS_ENDPOINT`: browser WebSocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/#?product=Puppeteer&show=api-browserwsendpoint)
+`PUPPETEER_WS_ENDPOINT`: browser WebSocket endpoint which can be used as an argument to puppeteer.connect, refer to [browserWSEndpoint](https://pptr.dev/api/puppeteer.browser.wsendpoint)
 
 `CHROMIUM_EXECUTABLE_PATH`: path to the Chromium (or Chrome) executable. If puppeteer is not bundled with Chromium (manually skipped downloading or system architecture is arm/arm64), configuring this can effectively enable puppeteer. Or alternatively, if you prefer Chrome to Chromium, this configuration will help. **WARNING**: only effective when `PUPPETEER_WS_ENDPOINT` is not set; only useful for manual deployment, for Docker, please use the `chromium-bundled` image instead.
 
@@ -713,3 +715,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
         -   `YOUTUBE_CLIENT_ID`: YouTube API OAuth 2.0 client ID
         -   `YOUTUBE_CLIENT_SECRET`: YouTube API OAuth 2.0 client secret
         -   `YOUTUBE_REFRESH_TOKEN`: YouTube API OAuth 2.0 refresh token. Check [this gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) for detailed instructions.
+
+-   ZodGame:
+
+    -   `ZODGAME_COOKIE`: Cookie of ZodGame User

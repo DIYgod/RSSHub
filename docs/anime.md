@@ -204,43 +204,43 @@ pageClass: routes
 
 <Route author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
 
-## Bangumi
+## Bangumi 番组计划
 
 ### 放送列表
 
-<Route author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today" radar="1"/>
+<Route author="magic-akari" example="/bangumi/tv/calendar/today" path="/bangumi/tv/calendar/today" radar="1"/>
 
 ### 条目的章节
 
-<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
+<Route author="SettingDust" example="/bangumi/tv/subject/240038" path="/bangumi/tv/subject/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的吐槽箱
 
-<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/subject/214265/comments?minLength=100" path="/bangumi/tv/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']" radar="1"/>
 
 ### 条目的评论
 
-<Route author="ylc395" example="/bangumi/subject/214265/blogs" path="/bangumi/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/subject/214265/blogs" path="/bangumi/tv/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的讨论
 
-<Route author="ylc395" example="/bangumi/subject/214265/topics" path="/bangumi/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/subject/214265/topics" path="/bangumi/tv/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 现实人物的新作品
 
-<Route author="ylc395" example="/bangumi/person/32943" path="/bangumi/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/person/32943" path="/bangumi/tv/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']" radar="1"/>
 
 ### 小组话题的新回复
 
-<Route author="ylc395" example="/bangumi/topic/24657" path="/bangumi/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/topic/367032" path="/bangumi/tv/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
 
 ### 小组话题
 
-<Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']" radar="1"/>
+<Route author="SettingDust" example="/bangumi/tv/group/boring" path="/bangumi/tv/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']" radar="1"/>
 
 ### 用户日志
 
-<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']" radar="1"/>
+<Route author="nczitzk" example="/bangumi/tv/user/blog/sai" path="/bangumi/tv/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']" radar="1"/>
 
 ## bilibili
 
@@ -400,6 +400,12 @@ Sources
 ### 文章
 
 <Route author="junfengP" example="/sayhuahuo" path="/sayhuahuo"/>
+
+## THBWiki
+
+### 日历
+
+<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['从多少天前（默认30）', '到多少天后（默认30）']" radar="1" rssbud="1"/>
 
 ## Vol.moe
 
@@ -561,17 +567,26 @@ Sources
 
 <Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
-## 看漫画镜像站
+### 漫画个人订阅
 
-### 漫画更新
+<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" selfhost="1">
 
-<Route author="btdwv" path="/mhgui/comic/:id/:chapterCnt?" example="/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+::: tip 提示
 
-## 看漫画台湾
+个人订阅需要自建
+环境变量需要添加 MHGUI_COOKIE
 
-### 漫画更新
+:::
 
-<Route author="btdwv" path="/twmanhuagui/comic/:id/:chapterCnt?" example="/twmanhuagui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+</Route>
+
+### 镜像站 - 漫画更新
+
+<Route author="btdwv" path="/manhuagui/mhgui/comic/:id/:chapterCnt?" example="/manhuagui/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+
+### 台湾站 - 漫画更新
+
+<Route author="btdwv" path="/manhuagui/twmanhuagui/comic/:id/:chapterCnt?" example="/manhuagui/twmanhuagui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 拷贝漫画
 
@@ -601,11 +616,11 @@ Sources
 
 ### 最新
 
-<Route author="nczitzk" example="/bangumi" path="/bangumi"/>
+<Route author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
 
 ### 标签
 
-<Route author="nczitzk" example="/bangumi/简体中文/1080p" path="/bangumi/:tags?" :paramsDesc="['标签，默认为空，多个标签用 `/` 分隔']">
+<Route author="nczitzk" example="/bangumi/moe/简体中文/1080p" path="/bangumi/moe/:tags?" :paramsDesc="['标签，默认为空，多个标签用 `/` 分隔']">
 
 更多标签请前往 [搜索种子](https://bangumi.moe/search/index)
 

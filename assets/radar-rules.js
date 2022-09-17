@@ -97,9 +97,6 @@
     'ishuhui.com': { _name: '鼠绘漫画', www: [{ title: '鼠绘漫画', docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua', source: '/comics/anime/:id', target: '/shuhui/comics/:id' }] },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/traditional_media.html#chicago-tribune', source: '/' }] },
     'haimaoba.com': { _name: '海猫吧', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba', source: '/catalog/:id', target: '/haimaoba/:id' }] },
-    'manhuagui.com': { _name: '漫画柜', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua', source: '/comic/:id/', target: '/manhuagui/comic/:id/5' }] },
-    'mhgui.com': { _name: '漫画柜镜像站', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-jing-xiang-zhan', source: '/comic/:id/', target: '/mhgui/comic/:id/5' }] },
-    'tw.manhuagui.com': { _name: '漫画柜台湾', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kan-man-hua-tai-wan', source: '/comic/:id/', target: '/twmanhuagui/comic/:id' }] },
     'copymanga.com': { _name: '拷贝漫画', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kao-bei-man-hua', source: '/comic/:id/', target: '/manhuagui/comic/:id/5' }] },
     'pgyer.com': { _name: '蒲公英应用分发', www: [{ title: 'app更新', docs: 'https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa', source: '/:app', target: '/pgyer/:app' }] },
     'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
@@ -131,15 +128,6 @@
         ],
     },
     'bing.com': { _name: 'Bing', www: [{ title: '每日壁纸', docs: 'https://docs.rsshub.app/picture.html#bing-bi-zhi', source: '', target: '/bing' }] },
-    'dcard.tw': {
-        _name: 'Dcard',
-        www: [
-            { title: '首頁帖子-最新', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f', target: '/dcard/posts/latest' },
-            { title: '首頁帖子-熱門', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f', target: '/dcard/posts/popular' },
-            { title: '板塊帖子-最新', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f/:section', target: '/dcard/:section/latest' },
-            { title: '板塊帖子-熱門', docs: 'https://docs.rsshub.app/bbs.html#dcard', source: '/f/:section', target: '/dcard/:section/popular' },
-        ],
-    },
     'wegene.com': {
         _name: 'WeGene',
         www: [
@@ -837,20 +825,6 @@
             { title: '用户的喜爱列表', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/favorites/:username/', target: '/furaffinity/favorites/:username' },
             { title: '作品评论区', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/view/:id/', target: '/furaffinity/submission_comments/:id' },
             { title: '日记评论区', docs: 'https://docs.rsshub.app/social-media.html#fur-affinity', source: '/journal/:id/', target: '/furaffinity/journal_comments/:id' },
-        ],
-    },
-    'bgm.tv': {
-        _name: 'Bangumi',
-        '.': [
-            { title: '小组话题', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/group/:id', target: '/bangumi/group/:id' },
-            { title: '小组话题的新回复', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/group/topic/:id', target: '/bangumi/topic/:id' },
-            { title: '现实人物的新作品', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/person/:id', target: '/bangumi/person/:id' },
-            { title: '用户日志', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/user/:id', target: '/bangumi/user/blog/:id' },
-            { title: '条目的讨论', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id/topics' },
-            { title: '条目的评论', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id/blogs' },
-            { title: '条目的章节', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id' },
-            { title: '条目的吐槽箱', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/subject/:id', target: '/bangumi/subject/:id/comments' },
-            { title: '放送列表', docs: 'https://docs.rsshub.app/anime.html#bangumi', source: '/calendar', target: '/bangumi/calendar/today' },
         ],
     },
     'e-hentai.org/': {

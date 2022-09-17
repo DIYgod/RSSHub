@@ -419,7 +419,9 @@ gcloud app deploy
 
 `REQUEST_TIMEOUT`: 请求超时毫秒数，默认 `3000`
 
-`UA`: 用户代理，默认 `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36`
+`UA`: 用户代理，默认为随机用户代理用户代理（macOS 上的 Chrome）
+
+`NO_RANDOM_UA`: 是否禁用随机用户代理，默认 `null`
 
 ### 跨域请求
 
@@ -759,6 +761,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         -   `YOUTUBE_CLIENT_ID`: YouTube API 的 OAuth 2.0 客户端 ID
         -   `YOUTUBE_CLIENT_SECRET`: YouTube API 的 OAuth 2.0 客户端 Secret
         -   `YOUTUBE_REFRESH_TOKEN`: YouTube API 的 OAuth 2.0 客户端 Refresh Token。可以按照[此 gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) 获取。
+
+-   ZodGame:
+
+    -   `ZODGAME_COOKIE`: ZodGame 登录后的 Cookie 值
 
 -   北大未名 BBS 全站十大
 
