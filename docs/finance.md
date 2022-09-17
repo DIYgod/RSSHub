@@ -158,6 +158,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## 百度股市通
+
+### 首页指数
+
+<Route author="CaoMeiYouRen" example="/baidu/gushitong/index" path="/baidu/gushitong/index"></Route>
+
 ## 北京证券交易所
 
 ### 栏目
