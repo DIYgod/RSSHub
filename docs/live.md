@@ -22,7 +22,7 @@ pageClass: routes
 
 ### 直播分区
 
-<Route author="Qixingchen" example="/bilibili/live/area/143/online" path="/bilibili/live/area/:areaID/:order" :paramsDesc="['分区 ID 分区增删较多, 可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询', '排序方式, live_time 开播时间, online 人气']">
+<Route author="Qixingchen" example="/bilibili/live/area/207/online" path="/bilibili/live/area/:areaID/:order" :paramsDesc="['分区 ID 分区增删较多, 可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询', '排序方式, live_time 开播时间, online 人气']">
 
 ::: warning 注意
 
@@ -32,23 +32,23 @@ pageClass: routes
 
 </Route>
 
+## 抖音直播
+
+### 直播间开播
+
+<Route author="TonyRL" example="/douyin/live/685317364746" path="/douyin/live/:rid" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']" anticrawler="1" radar="1" rssbud="1" puppeteer="1"/>
+
 ## 斗鱼直播
 
 ### 直播间开播
 
 <Route author="DIYgod" example="/douyu/room/24422" path="/douyu/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
-## 黑白直播
-
-### 直播间开播
-
-<Route author="laampui" example="/heibaizhibo/room/195976" path="/heibaizhibo/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
-
 ## 虎牙直播
 
 ### 直播间开播
 
-<Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']"/>
+<Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']" radar="1" rssbud="1"/>
 
 ## 浪 Play (原 kingkong) 直播
 
@@ -67,6 +67,18 @@ pageClass: routes
 ### 直播间开播
 
 <Route author="hoilc" example="/egameqq/room/497383565" path="/egameqq/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
+## 企鹅直播
+
+### 直播间开播
+
+<Route author="nczitzk" example="/qq/live/10012045" path="/qq/live/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+
+## 旺球体育
+
+### 直播间开播
+
+<Route author="nczitzk" example="/wangqiutiyu/anchor/444" path="/wangqiutiyu/anchor/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 战旗直播
 
