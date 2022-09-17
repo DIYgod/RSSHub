@@ -371,6 +371,12 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 </Route>
 
+## 哩哔轻小说
+
+### 小说更新
+
+<Route author="misakicoca" path="/linovelib/novel/:id" example="/linovelib/novel/2547" :paramsDesc="['小说 id，对应书架开始阅读 URL 中找到']"/>
+
 ## 飘天文学
 
 ### 章节

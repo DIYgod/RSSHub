@@ -8,11 +8,11 @@ pageClass: routes
 
 ### Latest
 
-<RouteEn author="nczitzk" example="/bangumi" path="/bangumi"/>
+<RouteEn author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
 
 ### Tags
 
-<RouteEn author="nczitzk" example="/bangumi/chs/1080p" path="/bangumi/:tags?" :paramsDesc="['Tags, empty by default, multiple tags separated by `/`']">
+<RouteEn author="nczitzk" example="/bangumi/moe/chs/1080p" path="/bangumi/moe/:tags?" :paramsDesc="['Tags, empty by default, multiple tags separated by `/`']">
 
 For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
@@ -88,6 +88,12 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 | `category`parameter | <u>*No parameter*</u> | music    | anime_movie    | cast_movie       | theater | onair           | radio               | event           | books  | goods  | game   | media    | local      | other  | campaign     |
 
 </RouteEn>
+
+## THBWiki
+
+### Calendar
+
+<RouteEn author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['From how many days ago (default 30)', 'To how many days after (default 30)']" radar="1" rssbud="1"/>
 
 ## Touhougarakuta
 

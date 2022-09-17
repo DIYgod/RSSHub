@@ -271,37 +271,37 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 本期刊物
 
-<Route author="yech1990" example="/sciencemag/current/science" path="/sciencemag/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1"/>
+<Route author="yech1990 TonyRL" example="/science/current/science" path="/science/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
-| `:journal` |               期刊名              | 路由                                                                                 |
-| :--------: | :----------------------------: | ---------------------------------------------------------------------------------- |
-|   science  |             Science            | [/sciencemag/current/science](https://rsshub.app/sciencemag/current/science)       |
-|  advances  |        Science Advances        | [/sciencemag/current/advances](https://rsshub.app/sciencemag/current/advances)     |
-| immunology |       Science Immunology       | [/sciencemag/current/immunology](https://rsshub.app/sciencemag/current/immunology) |
-|  robotics  |        Science Robotics        | [/sciencemag/current/robotics](https://rsshub.app/sciencemag/current/robotics)     |
-|    stke    |        Science Signaling       | [/sciencemag/current/stke](https://rsshub.app/sciencemag/current/stke)             |
-|     stm    | Science Translational Medicine | [/sciencemag/current/stm](https://rsshub.app/sciencemag/current/stm)               |
+|      简写     |               期刊名              | 路由                                                                             |
+| :---------: | :----------------------------: | ------------------------------------------------------------------------------ |
+|   science   |             Science            | [/science/current/science](https://rsshub.app/science/current/science)         |
+|    sciadv   |        Science Advances        | [/science/current/sciadv](https://rsshub.app/science/current/sciadv)           |
+|  sciimmunol |       Science Immunology       | [/science/current/sciimmunol](https://rsshub.app/science/current/sciimmunol)   |
+| scirobotics |        Science Robotics        | [/science/current/scirobotics](https://rsshub.app/science/current/scirobotics) |
+|  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |
+|     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
--   通过 `/sciencemag/current/` + “杂志简写” 来获取对应杂志最新一期的文章（Current Issue）。
-    若参数置空（`/sciencemag/current`），则默认获取主刊（Science）的最新文章。
+-   通过 `/science/current/` + "期刊名简写" 来获取对应杂志最新一期的文章（Current Issue）。
+    若参数置空（`/science/current`），则默认获取主刊（Science）的最新文章。
 
 </Route>
 
 ### 封面故事
 
-<Route author="yech1990" example="/sciencemag/cover" path="/sciencemag/cover" />
+<Route author="yech1990 TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1"/>
 
 订阅 Science 系列杂志的封面图片，并及时获取刊物更新状态。
 
-包含了： ‘Science’, 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' 和 'Science Translational Medicine'。
+包含了： 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' 和 'Science Translational Medicine'。
 
 </Route>
 
-### 主刊 - 在线发表
+### 在线发表
 
-<Route author="yech1990" example="/sciencemag/early/science" path="/sciencemag/early/science" supportScihub="1"/>
+<Route author="yech1990 TonyRL" example="/science/early" path="/science/early/:journal?" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
-*仅支持 Science 主刊*
+*仅 Science, Science Immunology 和 Science Translational Medicine 提供在线发表*
 
 </Route>
 
