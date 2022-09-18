@@ -158,6 +158,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## 百度股市通
+
+### 首页指数
+
+<Route author="CaoMeiYouRen" example="/baidu/gushitong/index" path="/baidu/gushitong/index"></Route>
+
 ## 北京证券交易所
 
 ### 栏目
@@ -219,6 +225,16 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 ### 天天基金用户动态
 
 <Route author="zidekuls" example="/eastmoney/ttjj/user/6551094298949188" path="/eastmoney/ttjj/user/:uid" :paramsDesc="['用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到']"/>
+
+## 法布财经
+
+### 新闻
+
+<Route author="nczitzk" example="/fastbull/news" path="/fastbull/news"/>
+
+### 快讯
+
+<Route author="nczitzk" example="/fastbull/express-news" path="/fastbull/express-news"/>
 
 ## 富途牛牛
 
