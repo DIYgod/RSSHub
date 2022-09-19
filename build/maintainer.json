@@ -394,9 +394,6 @@
     "/bilibili/bangumi/media/:mediaid": [
         "DIYgod"
     ],
-    "/bilibili/collection/:uid/:sid/:disableEmbed?": [
-        "shininome"
-    ],
     "/bilibili/fav/:uid/:fid/:disableEmbed?": [
         "Qixingchen"
     ],
@@ -460,11 +457,14 @@
     "/bilibili/user/bangumi/:uid/:type?": [
         "wdssmq"
     ],
-    "/bilibili/user/channel/:uid/:cid/:disableEmbed?": [
-        "HenryQW"
+    "/bilibili/user/channel/:uid/:sid/:disableEmbed?": [
+        "weirongxu"
     ],
     "/bilibili/user/coin/:uid/:disableEmbed?": [
         "DIYgod"
+    ],
+    "/bilibili/user/collection/:uid/:sid/:disableEmbed?": [
+        "shininome"
     ],
     "/bilibili/user/dynamic/:uid/:disableEmbed?": [
         "DIYgod",

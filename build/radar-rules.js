@@ -1033,6 +1033,20 @@
         docs:"https://docs.rsshub.app/social-media.html#bilibili",
         source:"/:uid",
         target:"/bilibili/user/video-all/:uid" },
+      { title:"UP 主频道的合集",
+        docs:"https://docs.rsshub.app/social-media.html#bilibili",
+        source:"/:uid/channel/collectiondetail",
+        target:(params, url) => {
+                    const sid = new URL(url).searchParams.get('sid');
+                    return `/bilibili/user/collection/${params.uid}/${sid}`;
+                } },
+      { title:"UP 主频道的视频列表",
+        docs:"https://docs.rsshub.app/social-media.html#bilibili",
+        source:"/:uid/channel/seriesdetail",
+        target:(params, url) => {
+                    const sid = new URL(url).searchParams.get('sid');
+                    return `/bilibili/user/channel/${params.uid}/${sid}`;
+                } },
       { title:"UP 主专栏",
         docs:"https://docs.rsshub.app/social-media.html#bilibili",
         source:"/:uid",
@@ -1056,14 +1070,7 @@
       { title:"用户追番列表",
         docs:"https://docs.rsshub.app/social-media.html#bilibili",
         source:"/:uid",
-        target:"/bilibili/user/bangumi/:uid" },
-      { title:"当前合集",
-        docs:"https://docs.rsshub.app/social-media.html#bilibili",
-        source:"/:uid/channel/collectiondetail",
-        target:(params, url) => {
-                    const sid = new URL(url).searchParams.get('sid');
-                    return `/bilibili/collection/:uid/${sid}`;
-                } } ],
+        target:"/bilibili/user/bangumi/:uid" } ],
     manga:[ { title:"漫画更新",
         docs:"https://docs.rsshub.app/social-media.html#bilibili-man-hua-geng-xin",
         source:"/detail/:comicid",

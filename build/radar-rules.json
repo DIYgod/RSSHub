@@ -1638,6 +1638,16 @@
         "target": "/bilibili/user/video-all/:uid"
       },
       {
+        "title": "UP 主频道的合集",
+        "docs": "https://docs.rsshub.app/social-media.html#bilibili",
+        "source": "/:uid/channel/collectiondetail"
+      },
+      {
+        "title": "UP 主频道的视频列表",
+        "docs": "https://docs.rsshub.app/social-media.html#bilibili",
+        "source": "/:uid/channel/seriesdetail"
+      },
+      {
         "title": "UP 主专栏",
         "docs": "https://docs.rsshub.app/social-media.html#bilibili",
         "source": "/:uid",
@@ -1672,11 +1682,6 @@
         "docs": "https://docs.rsshub.app/social-media.html#bilibili",
         "source": "/:uid",
         "target": "/bilibili/user/bangumi/:uid"
-      },
-      {
-        "title": "当前合集",
-        "docs": "https://docs.rsshub.app/social-media.html#bilibili",
-        "source": "/:uid/channel/collectiondetail"
       }
     ],
     "manga": [
