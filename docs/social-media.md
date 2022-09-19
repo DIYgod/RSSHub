@@ -48,9 +48,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="DIYgod zytomorrow" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
-### UP 主频道
+### UP 主频道的合集
 
-<Route author="HenryQW" example="/bilibili/user/channel/142821407/49017" path="/bilibili/user/channel/:uid/:cid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']" anticrawler="1"/>
+<Route author="shininome" example="/bilibili/user/collection/245645656/529166" path="/bilibili/user/collection/:uid/:sid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '合集 id, 可在合集页面的 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+### UP 主频道的视频列表
+
+<Route author="weirongxu" example="/bilibili/user/channel/2267573/396050" path="/bilibili/user/channel/:uid/:sid/:disableEmbed?" :paramsDesc="['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']" anticrawler="1"/>
 
 ### UP 主默认收藏夹
 
@@ -339,10 +343,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 :::
 
 </Route>
-
-### 合集更新
-
-<Route author="shininome" example="/bilibili/collection/245645656/529166" path="/bilibili/collection/:uid/:sid/:disableEmbed?" :paramsDesc="['用户 id，可在 UP 主主页中找到','合集的id，合集上面有','默认为开启内嵌视频，任意值为关闭']"/>
 
 ## Dev.to
 
@@ -1122,14 +1122,14 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 对于豆瓣用户想看的内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式
 
-| 键                | 含义                                                 | 接受的值                            | 默认值 |
-| ---------------- | -------------------------------------------------- | ------------------------------- | --- |
-| pagesCount       | 查询页面数                                              |                                 | 1   |
-| torrentProvider  | 启用 torrent 搜索                                      | all/1337x/Eztv/Rarbg/Yts/HDHome |     |
-| passkey          | HDHome 密钥，当 torrentProvider 为 `all` 或  `HDHome` 必填 |                                 |     |
-| torrentQuery     | 额外关键词，如 `1080p`， 逗号分割                              |                                 |     |
-| torrentMinSeeds  | 最小 seeds 数                                         |                                 | 1   |
-| torrentMinRating | 种子和电影标题最小匹配度                                       |                                 | 0.5 |
+| 键                | 含义                                                | 接受的值                            | 默认值 |
+| ---------------- | ------------------------------------------------- | ------------------------------- | --- |
+| pagesCount       | 查询页面数                                             |                                 | 1   |
+| torrentProvider  | 启用 torrent 搜索                                     | all/1337x/Eztv/Rarbg/Yts/HDHome |     |
+| passkey          | HDHome 密钥，当 torrentProvider 为 `all` 或 `HDHome` 必填 |                                 |     |
+| torrentQuery     | 额外关键词，如 `1080p`， 逗号分割                             |                                 |     |
+| torrentMinSeeds  | 最小 seeds 数                                        |                                 | 1   |
+| torrentMinRating | 种子和电影标题最小匹配度                                      |                                 | 0.5 |
 
 </Route>
 
