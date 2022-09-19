@@ -2116,7 +2116,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 设计学院
 
-<Route author="evnydd0sf" example="/nua/dc/346" path="/nua/dc/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
+<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
 
 | 新闻模块       | 参数      |
 | ---------- | ------- |
