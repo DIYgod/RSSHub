@@ -11613,10 +11613,10 @@ puppeteer-extra@3.3.4:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@18.0.2:
-  version "18.0.2"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-18.0.2.tgz#caa908d58aefdbf4308f843c486d9925f9f77bd7"
-  integrity sha512-EdquaZg1n5IgZJzUc/EXDmtghJU6aCZJ/pl2onwL2g+cfG5HkxwSRVNKkDf76qTk3fMh1OUtqvAJMUJ+6HvYEg==
+puppeteer@18.0.3:
+  version "18.0.3"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-18.0.3.tgz#3f06b649d3ceef191318b8cb1193c1eaf23eba52"
+  integrity sha512-IiW4Zz0xbphl1lQEAB7grPucbk/aM+GND4aJ7I8gOzOSp7Ika1bz35maox4FbELpPL8sqXsVQRNrXQnzBMiCzQ==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
