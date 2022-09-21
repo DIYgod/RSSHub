@@ -1,0 +1,7 @@
+<video class="cont_video"
+    src="{{ videos.url }}"
+    controls="controls" webkit-playsinline="" playsinline="" x5-playsinline=""
+    x-webkit-airplay="allow" preload="preload"
+    poster="{{ videos.coverUrl}}"
+    data-duration="{{ videos.duration }}">
+</video>
