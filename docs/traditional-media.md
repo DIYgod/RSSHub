@@ -1648,7 +1648,7 @@ category 对应的关键词有
 
 ### 栏目
 
-<Route author="nczitzk bigfei" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['栏目 id，可在栏目页 URL 中找到']"/>
+<Route author="nczitzk bigfei" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['栏目 id，可在栏目页 URL 中找到']">
 
 | 栏目 ID  | 栏目名     |
 | ------ | ------- |
@@ -1749,6 +1749,8 @@ category 对应的关键词有
 | 26490  | 汽车圈     |
 | 115327 | IP SH   |
 | 117340 | 酒业      |
+
+</Route>
 
 ### 明查
 
