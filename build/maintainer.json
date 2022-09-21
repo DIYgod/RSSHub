@@ -3891,6 +3891,9 @@
     "/wizfile/updates": [
         "Fatpandac"
     ],
+    "/worldjournal/:path*": [
+        "TonyRL"
+    ],
     "/wp-china/news/:category?": [
         "nczitzk"
     ],
