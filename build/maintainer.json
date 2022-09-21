@@ -3801,6 +3801,9 @@
     "/wdc/download/:id": [
         "nczitzk"
     ],
+    "/web3caff/:path?": [
+        "nczitzk"
+    ],
     "/wechat/announce": [
         "xyqfer"
     ],
