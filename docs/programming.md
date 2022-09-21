@@ -162,6 +162,12 @@ Rated 对象
 
 <Route author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
 
+## gihyo.jp
+
+### 記事一覧
+
+<Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" :paramsDesc="['連載']"/>
+
 ## GitChat
 
 ### 最新文章

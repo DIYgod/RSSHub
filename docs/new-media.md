@@ -1413,6 +1413,22 @@ Supported sub-sites:
 
 </Route>
 
+## Web3Caff
+
+### 发现
+
+<Route author="nczitzk" example="/web3caff" path="/web3caff/:path?" :paramsDesc="['路径，默认为首页']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://web3caff.com/` 后的字段。下面是一个例子。
+
+若订阅 [叙事 - Web3Caff](https://web3caff.com/zh/archives/category/news_zh) 则将对应页面 URL <https://web3caff.com/zh/archives/category/news_zh> 中 `https://web3caff.com/` 后的字段 `zh/archives/category/news_zh` 作为路径填入。此时路由为 [`/web3caff/zh/archives/category/news_zh`](https://rsshub.app/web3caff/zh/archives/category/news_zh)
+
+:::
+
+</Route>
+
 ## World Happiness
 
 ### Blog
@@ -3427,15 +3443,21 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 世界新聞網
+
+### 新聞
+
+<Route author="TonyRL" example="/worldjournal" path="/worldjournal/:path*" :paramsDesc="['URL 中 `/wj/` 後的路徑，預設為 `cate/breaking`']" radar="1" rssbud="1" />
+
 ## 数英网
 
 ### 数英网最新文章
 
-<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章, 数英网']" />
+<Route author="occupy5" example="/digitaling/index" path="/digitaling/index" :paramsDesc="['首页最新文章，数英网']" />
 
 ### 数英网文章专题
 
-<Route author="occupy5" example="/digitaling/articles/latest" path="/digitaling/articles/:category/:subcate?" :paramsDesc="['文章专题分类 ','hot分类下的子类']" />
+<Route author="occupy5" example="/digitaling/articles/latest" path="/digitaling/articles/:category/:subcate?" :paramsDesc="['文章专题分类','hot 分类下的子类']" />
 
 | 最新文章   | 头条       | 热文  | 精选     |
 | ------ | -------- | --- | ------ |
