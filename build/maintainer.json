@@ -3508,17 +3508,20 @@
     ],
     "/thepaper/channel/:id": [
         "xyqfer",
-        "nczitzk"
+        "nczitzk",
+        "bigfei"
     ],
     "/thepaper/featured": [
         "HenryQW",
-        "nczitzk"
+        "nczitzk",
+        "bigfei"
     ],
     "/thepaper/factpaper/:status?": [
         "nczitzk"
     ],
     "/thepaper/list/:id": [
-        "nczitzk"
+        "nczitzk",
+        "bigfei"
     ],
     "/thwiki/calendar/:before?/:after?": [
         "aether17"
