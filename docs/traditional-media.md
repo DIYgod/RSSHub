@@ -1621,21 +1621,34 @@ category 对应的关键词有
 
 ### 首页头条
 
-<Route author="HenryQW nczitzk" example="/thepaper/featured" path="/thepaper/featured"/>
+<Route author="HenryQW nczitzk bigfei" example="/thepaper/featured" path="/thepaper/featured"/>
 
 ### 频道
 
-<Route author="xyqfer nczitzk" example="/thepaper/channel/25950" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
+<Route author="xyqfer nczitzk bigfei" example="/thepaper/channel/25950" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
 
-| 视频    | 时事    | 财经    | 思想    | 澎湃号   | 生活    |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-| 26916 | 25950 | 25951 | 25952 | 36079 | 25953 |
+| 频道名    | ID  |
+| ------ | --- |
+| 25949  | 要闻  |
+| 26916  | 视频  |
+| 108856 | 战疫  |
+| 25950  | 时事  |
+| 25951  | 财经  |
+| 36079  | 澎湃号 |
+| 119908 | 科技  |
+| 25952  | 思想  |
+| 119489 | 智库  |
+| 25953  | 生活  |
+| 26161  | 问吧  |
+| -21    | 体育  |
+| -24    | 评论  |
+| -23    | 国际  |
 
 </Route>
 
-### 列表
+### 栏目
 
-<Route author="nczitzk" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['列表 id，可在列表页 URL 中找到']"/>
+<Route author="nczitzk" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['栏目 id，可在栏目页 URL 中找到']"/>
 
 ### 明查
 
