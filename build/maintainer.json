@@ -1264,6 +1264,9 @@
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
+    "/gihyo/list/group/:id": [
+        "masakichi"
+    ],
     "/gitee/commits/:owner/:repo": [
         "TonyRL"
     ],
