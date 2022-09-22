@@ -382,6 +382,12 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+## Indians in Kuwait
+
+### News
+
+<RouteEn author="TonyRL" example="/indiansinkuwait/latest" path="/indiansinkuwait/latest" radar="1" rssbud="1"/>
+
 ## Institute of International Education
 
 ### Blog
