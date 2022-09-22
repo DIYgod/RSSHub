@@ -184,6 +184,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/chinatax/latest" path="/gov/chinatax/latest"/>
 
+## 国家统计局
+
+### 统计数据 > 最新发布
+
+<Route author="bigfei" example="/statsgov/zxfb" path="/statsgov/zxfb"/>
+
 ## 国家新闻出版广电总局（弃用）
 
 ### 游戏审批结果
