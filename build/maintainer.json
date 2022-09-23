@@ -1469,6 +1469,9 @@
     "/gov/pbc/zcyj": [
         "Fatpandac"
     ],
+    "/gov/stats/:path+": [
+        "bigfei"
+    ],
     "/gov/anhui/kjt/:path?": [
         "nczitzk"
     ],
