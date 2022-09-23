@@ -313,12 +313,12 @@ describe('wrong_path', () => {
 });
 
 describe('fulltext_mode', () => {
-    it.skip(`fulltext`, async () => {
+    it(`fulltext`, async () => {
         const response = await request.get('/test/1?mode=fulltext');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).not.toBe(undefined);
-    }, 10000);
+    }, 20000);
 });
 
 describe('complicated_description', () => {
