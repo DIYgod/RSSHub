@@ -5391,6 +5391,18 @@
       }
     ]
   },
+  "ccdi.gov.cn": {
+    "_name": "中央纪委国家监委",
+    "www": [
+      {
+        "title": "要闻",
+        "docs": "https://docs.rsshub.app/government.html#zhong-yang-ji-wei-guo-jia-jian-wei-yao-wen",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "cmse.gov.cn": {
     "_name": "中国载人航天",
     "www": [

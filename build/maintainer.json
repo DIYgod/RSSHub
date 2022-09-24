@@ -1367,6 +1367,9 @@
     "/google/sites/recentChanges/:id": [
         "nczitzk"
     ],
+    "/gov/ccdi/:path+": [
+        "bigfei"
+    ],
     "/gov/cmse/xwzx/zhxw": [
         "nczitzk"
     ],
@@ -4850,7 +4853,6 @@
     "/im2maker/:channel?": [],
     "/cninfo/announcement/:column/:code/:orgId/:category?/:search?": [],
     "/jinshi/index": [],
-    "/ccdi/scdc": [],
     "/gov/moa/sjzxfb": [],
     "/gov/moa/:suburl(.*)": [],
     "/nosetime/:id/:type/:sort?": [],
