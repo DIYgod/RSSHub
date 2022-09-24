@@ -4,6 +4,44 @@ pageClass: routes
 
 # 金融
 
+## AI 财经社
+
+### 最新文章
+
+<Route author="nczitzk" example="/aicaijing/latest" path="/aicaijing/latest"/>
+
+### 封面文章
+
+<Route author="nczitzk" example="/aicaijing/cover" path="/aicaijing/cover"/>
+
+### 推荐资讯
+
+<Route author="nczitzk" example="/aicaijing/recommend" path="/aicaijing/recommend"/>
+
+### 热点 & 深度
+
+<Route author="nczitzk" example="/aicaijing/information/14" path="/aicaijing/information/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 14，即热点最新']">
+
+| 栏目 id | 栏目      |
+| ----- | ------- |
+| 14    | 热点 - 最新 |
+| 5     | 热点 - 科技 |
+| 9     | 热点 - 消费 |
+| 7     | 热点 - 出行 |
+| 13    | 热点 - 文娱 |
+| 10    | 热点 - 教育 |
+| 25    | 热点 - 地产 |
+| 11    | 热点 - 更多 |
+| 28    | 深度 - 出行 |
+| 29    | 深度 - 科技 |
+| 31    | 深度 - 消费 |
+| 33    | 深度 - 教育 |
+| 34    | 深度 - 更多 |
+| 8     | 深度 - 地产 |
+| 6     | 深度 - 文娱 |
+
+</Route>
+
 ## BigQuant
 
 ### 专题报告
@@ -120,6 +158,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## 百度股市通
+
+### 首页指数
+
+<Route author="CaoMeiYouRen" example="/baidu/gushitong/index" path="/baidu/gushitong/index"></Route>
+
 ## 北京证券交易所
 
 ### 栏目
@@ -182,6 +226,16 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="zidekuls" example="/eastmoney/ttjj/user/6551094298949188" path="/eastmoney/ttjj/user/:uid" :paramsDesc="['用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到']"/>
 
+## 法布财经
+
+### 新闻
+
+<Route author="nczitzk" example="/fastbull/news" path="/fastbull/news"/>
+
+### 快讯
+
+<Route author="nczitzk" example="/fastbull/express-news" path="/fastbull/express-news"/>
+
 ## 富途牛牛
 
 ### 要闻
@@ -190,17 +244,27 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 格隆汇
 
+### 首页
+
+<Route author="TonyRL" example="/gelonghui/home" path="/gelonghui/home/:tag?" :paramsDesc="['分类标签，见下表，默认为 `web_home_page`']" radar="1" rssbud="1">
+
+| 推荐            | 股票    | 基金   | 新股        | 研报       |
+| ------------- | ----- | ---- | --------- | -------- |
+| web_home_page | stock | fund | new_stock | research |
+
+</Route>
+
 ### 用户文章
 
-<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 主题文章
 
-<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']"/>
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 搜索关键字
 
-<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
+<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']" radar="1" rssbud="1"/>
 
 ## 国家金融与发展实验室
 
@@ -250,35 +314,57 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="MeXunco" example="/nbd/daily" path="/nbd/daily"/>
 
+## 前瞻网
+
+### 文章列表
+
+<Route author="moke8" example="/qianzhan/analyst/column/all" path="/qianzhan/analyst/column/:type?" :paramsDesc="['分类，见下表']">
+
+| 全部  | 研究员专栏 | 规划师专栏 | 观察家专栏 |
+| --- | ----- | ----- | ----- |
+| all | 220   | 627   | 329   |
+
+</Route>
+
+### 排行榜
+
+<Route author="moke8" example="/qianzhan/analyst/rank/week" path="/qianzhan/analyst/rank/:type?" :paramsDesc="['分类，见下表']">
+
+| 周排行  | 月排行   |
+| ---- | ----- |
+| week | month |
+
+</Route>
+
 ## 上海证券交易所
 
-### 本所业务规则
+### 本所业务指南与流程
 
-<Route author="nczitzk" example="/sse/sserules" path="/sse/sserules/:slug?" :paramsDesc="['见下文，默认为 latest']">
+<Route author="nczitzk" example="/sse/lawandrules" path="/sse/lawandrules/:slug?" :paramsDesc="['见下文，默认为 `latest`']" radar="1" rssbud="1">
 
-将目标栏目的网址拆解为 `http://www.sse.com.cn/lawandrules/sserules/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
+将目标栏目的网址拆解为 `https://www.sse.com.cn/lawandrules/guide/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
 
-如：（最新规则）<http://www.sse.com.cn/lawandrules/sserules/latest> 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/sserules/latest`
+如：（最新指南与流程）<https://www.sse.com.cn/lawandrules/guide/latest> 的网址在 `https://www.sse.com.cn/lawandrules/guide/` 后的字段是 `latest`，则对应的 slug 为 `latest`，对应的路由即为 `/sse/lawandrules/latest`
 
-又如：（设立科创板并试点注册制规则 - 发行上市审核类）<http://www.sse.com.cn/lawandrules/sserules/tib/review> 的网址在 `http://www.sse.com.cn/lawandrules/sserules/` 后的字段是 `tib/review`，则对应的 slug 为 `tib-review`，对应的路由即为 `/sse/sserules/tib-review`
+又如：（主板业务指南与流程 - 发行承销业务指南）<https://www.sse.com.cn/lawandrules/guide/zbywznylc/fxcxywzn> 的网址在 `https://www.sse.com.cn/lawandrules/guide/` 后的字段是 `zbywznylc/fxcxywzn`，则对应的 slug 为 `zbywznylc-fxcxywzn`，对应的路由即为 `/sse/lawandrules/zbywznylc-fxcxywzn`
 
 </Route>
 
 ### 上市公司信息最新公告披露
 
-<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" />
+<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" radar="1" rssbud="1"/>
 
 ### 可转换公司债券公告
 
-<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
+<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']" radar="1" rssbud="1"/>
 
 ### 科创板项目动态
 
-<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
+<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal" radar="1" rssbud="1"/>
 
 ### 监管问询
 
-<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
+<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire" radar="1" rssbud="1"/>
 
 ## 深圳证券交易所
 

@@ -20,6 +20,15 @@ module.exports = {
             },
         },
         '@vuepress/back-to-top': true,
+        sitemap: {
+            hostname: 'https://docs.rsshub.app',
+        },
+        'vuepress-plugin-meilisearch': {
+            hostUrl: 'https://meilisearch.rsshub.app',
+            apiKey: '375c36cd9573a2c1d1e536214158c37120fdd0ba6cd8829f7a848e940cc22245',
+            indexUid: 'rsshub',
+            maxSuggestions: 14,
+        },
     },
     locales: {
         '/': {
@@ -73,13 +82,6 @@ module.exports = {
         editLinks: true,
         docsDir: 'docs',
         smoothScroll: true,
-        algolia: {
-            apiKey: '6247bc0db93150fd9e531b93a3fa4046',
-            indexName: 'rsshub',
-            algoliaOptions: {
-                hitsPerPage: 14,
-            },
-        },
         locales: {
             '/': {
                 lang: 'zh-CN',

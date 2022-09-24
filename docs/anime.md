@@ -204,43 +204,43 @@ pageClass: routes
 
 <Route author="ranpox" path="/anitama/:channel?" example="/anitama" :paramsDesc="['频道id，从频道的地址栏中查看']"/>
 
-## Bangumi
+## Bangumi 番组计划
 
 ### 放送列表
 
-<Route author="magic-akari" example="/bangumi/calendar/today" path="/bangumi/calendar/today" radar="1"/>
+<Route author="magic-akari" example="/bangumi/tv/calendar/today" path="/bangumi/tv/calendar/today" radar="1"/>
 
 ### 条目的章节
 
-<Route author="SettingDust" example="/bangumi/subject/240038" path="/bangumi/subject/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
+<Route author="SettingDust" example="/bangumi/tv/subject/240038" path="/bangumi/tv/subject/:id" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的吐槽箱
 
-<Route author="ylc395" example="/bangumi/subject/214265/comments?minLength=100" path="/bangumi/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/subject/214265/comments?minLength=100" path="/bangumi/tv/subject/:id/comments" :paramsDesc="['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']" radar="1"/>
 
 ### 条目的评论
 
-<Route author="ylc395" example="/bangumi/subject/214265/blogs" path="/bangumi/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/subject/214265/blogs" path="/bangumi/tv/subject/:id/blogs" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 条目的讨论
 
-<Route author="ylc395" example="/bangumi/subject/214265/topics" path="/bangumi/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/subject/214265/topics" path="/bangumi/tv/subject/:id/topics" :paramsDesc="['条目 id, 在条目页面的地址栏查看']" radar="1"/>
 
 ### 现实人物的新作品
 
-<Route author="ylc395" example="/bangumi/person/32943" path="/bangumi/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/person/32943" path="/bangumi/tv/person/:id" :paramsDesc="['人物 id, 在人物页面的地址栏查看']" radar="1"/>
 
 ### 小组话题的新回复
 
-<Route author="ylc395" example="/bangumi/topic/24657" path="/bangumi/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
+<Route author="ylc395" example="/bangumi/tv/topic/367032" path="/bangumi/tv/topic/:id" :paramsDesc="['话题 id, 在话题页面地址栏查看']" radar="1"/>
 
 ### 小组话题
 
-<Route author="SettingDust" example="/bangumi/group/boring" path="/bangumi/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']" radar="1"/>
+<Route author="SettingDust" example="/bangumi/tv/group/boring" path="/bangumi/tv/group/:id" :paramsDesc="['小组 id, 在小组页面地址栏查看']" radar="1"/>
 
 ### 用户日志
 
-<Route author="nczitzk" example="/bangumi/user/blog/sai" path="/bangumi/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']" radar="1"/>
+<Route author="nczitzk" example="/bangumi/tv/user/blog/sai" path="/bangumi/tv/user/blog/:id" :paramsDesc="['用户 id, 在用户页面地址栏查看']" radar="1"/>
 
 ## bilibili
 
@@ -327,6 +327,18 @@ pageClass: routes
 
 </Route>
 
+### 用户订阅列表
+
+<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
+
+::: warning 注意
+
+用户动态需要 iwara 登录后的 Cookie 值，所以只能自建，详情见[部署页面](/install/#route-specific-configurations)的配置模块。
+
+:::
+
+</Route>
+
 ## Kemono
 
 ### Posts
@@ -344,6 +356,26 @@ Sources
 当选择 `posts` 作为参数 **source** 的值时，参数 **id** 不生效。
 
 :::
+
+</Route>
+
+## lovelive-anime
+
+### Love Live 官网最新 News
+
+<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" :paramsDesc="['`option` 为 `detail` 时抓取全文']" radar="1"/>
+
+### Love Live 官网分类 Topics
+
+<Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" :paramsDesc="['Love Live系列子企划在官网的路径，详见下表', '官网列出的Topics分类，`category` 为 `detail` 时抓取全文，其他分类详见下表', '`option` 为 `detail` 时抓取全文']" radar="1">
+
+| 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! |
+| --------- | ----------- | -------------------- | ------------------------------------------ | --------------------- |
+| `abbr`参数  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              |
+
+| 分类名          | 全てのニュース      | 音楽商品  | アニメ映像商品     | キャスト映像商品   | 劇場      | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック   | グッズ   | ゲーム  | メディア  | ご当地情報 | その他   | キャンペーン   |
+| ------------ | ------------ | ----- | ----------- | ---------- | ------- | ---------- | ------------ | ---------- | ----- | ----- | ---- | ----- | ----- | ----- | -------- |
+| `category`参数 | <u>*无参数*</u> | music | anime_movie | cast_movie | theater | onair      | radio        | event      | books | goods | game | media | local | other | campaign |
 
 </Route>
 
@@ -368,6 +400,12 @@ Sources
 ### 文章
 
 <Route author="junfengP" example="/sayhuahuo" path="/sayhuahuo"/>
+
+## THBWiki
+
+### 日历
+
+<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['从多少天前（默认30）', '到多少天后（默认30）']" radar="1" rssbud="1"/>
 
 ## Vol.moe
 
@@ -409,7 +447,7 @@ Sources
 
 ### 关键词搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest" path="/oreno3d/search/:keyword/:sort?" :paramsDesc="['关键词', '排序方法，见下表，默认为 `latest`']">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表', '最大爬取页面数量，默认为 1']" radar="1" rssbud="1">
 
 | 高評価       | 急上昇 | 新着     | 人気         |
 | --------- | --- | ------ | ---------- |
@@ -419,19 +457,19 @@ Sources
 
 ### 角色搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest" path="/oreno3d/characters/:characterid/:sort?" :paramsDesc="['角色 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" :paramsDesc="['角色id, 可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量, 默认为1, 超出则为最大值']" />
 
 ### 作者搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest" path="/oreno3d/authors/:authorid/:sort?" :paramsDesc="['作者 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" :paramsDesc="['作者id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1" />
 
 ### 标签搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest" path="/oreno3d/tags/:tagid/:sort?" :paramsDesc="['标签 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" :paramsDesc="['标签 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']" radar="1" rssbud="1" />
 
 ### 原作搜索
 
-<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest" path="/oreno3d/origins/:originid/:sort?" :paramsDesc="['原作 id，可在浏览器地址栏找到', '排序方法，见上表，默认为 `latest`']" />
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['原作 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1，超出则为最大值']" radar="1" rssbud="1" />
 
 ## 包子漫画
 
@@ -529,17 +567,26 @@ Sources
 
 <Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
-## 看漫画镜像站
+### 漫画个人订阅
 
-### 漫画更新
+<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" selfhost="1">
 
-<Route author="btdwv" path="/mhgui/comic/:id/:chapterCnt?" example="/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+::: tip 提示
 
-## 看漫画台湾
+个人订阅需要自建
+环境变量需要添加 MHGUI_COOKIE
 
-### 漫画更新
+:::
 
-<Route author="btdwv" path="/twmanhuagui/comic/:id/:chapterCnt?" example="/twmanhuagui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+</Route>
+
+### 镜像站 - 漫画更新
+
+<Route author="btdwv" path="/manhuagui/mhgui/comic/:id/:chapterCnt?" example="/manhuagui/mhgui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+
+### 台湾站 - 漫画更新
+
+<Route author="btdwv" path="/manhuagui/twmanhuagui/comic/:id/:chapterCnt?" example="/manhuagui/twmanhuagui/comic/13317/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 拷贝漫画
 
@@ -569,11 +616,11 @@ Sources
 
 ### 最新
 
-<Route author="nczitzk" example="/bangumi" path="/bangumi"/>
+<Route author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
 
 ### 标签
 
-<Route author="nczitzk" example="/bangumi/简体中文/1080p" path="/bangumi/:tags?" :paramsDesc="['标签，默认为空，多个标签用 `/` 分隔']">
+<Route author="nczitzk" example="/bangumi/moe/简体中文/1080p" path="/bangumi/moe/:tags?" :paramsDesc="['标签，默认为空，多个标签用 `/` 分隔']">
 
 更多标签请前往 [搜索种子](https://bangumi.moe/search/index)
 
@@ -634,3 +681,9 @@ Sources
 ### 最新汉化
 
 <Route author="junfengP" example="/zdfx" path="/zdfx"/>
+
+## アニメ新番組
+
+### 當季新番
+
+<Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>

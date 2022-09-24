@@ -43,7 +43,7 @@ pageClass: routes
 Type
 
 | artwork | crafts | music | writing |
-| ---- | ---- | ---- | ---- |
+| ------- | ------ | ----- | ------- |
 | artwork | crafts | music | writing |
 
 </RouteEn>
@@ -150,8 +150,8 @@ If you don't want to setup credentials, use Picuki.
 
 Official user RSS:
 
-- RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
-- Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
+-   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
+-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
 
 These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you will need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
@@ -190,7 +190,7 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 <RouteEn author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" :paramsDesc="['Instagram id','functional flag, see the table below']" radar="1" rssbud="1">
 
 | functionalFlag | Video embedding                         | Fetching Instagram Stories |
-|----------------|-----------------------------------------|----------------------------|
+| -------------- | --------------------------------------- | -------------------------- |
 | 0              | off, only show video poster as an image | off                        |
 | 1 (default)    | on                                      | off                        |
 | 10             | on                                      | on                         |
@@ -214,6 +214,10 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <RouteEn author="EYHN" path="/pixiv/user/:id" example="/pixiv/user/15288095" :paramsDesc="['user id, available in user\'s homepage URL']" radar="1" rssbud="1"/>
 
+### User Novels
+
+<RouteEn author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" :paramsDesc="['User id, available in user\'s homepage URL']" radar="1" rssbud="1"/>
+
 ### Rankings
 
 <RouteEn author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" :paramsDesc="['rank type', 'format: `2018-4-25`']" radar="1" rssbud="1">
@@ -232,25 +236,69 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']" radar="1" rssbud="1">
 
-| only not R18 | only R18 | no filter |
-| ----------------- | ------------------------- | ------------------------- |
-| safe           | r18              | empty or other            |
+| only not R18 | only R18 | no filter      |
+| ------------ | -------- | -------------- |
+| safe         | r18      | empty or other |
 
 </RouteEn>
 
 ### Following timeline
 
-<RouteEn author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1"/>
+<RouteEn author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
+
 ::: warning
 
 Only for self-hosted
 
 :::
+
 </RouteEn>
 
-## pixiv-fanbox
+## pixivFANBOX
+
+### User
 
 <RouteEn author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" :paramsDesc="['User name. Can be found in URL. Default is official news']"/>
+
+## Plurk
+
+### Topic
+
+<RouteEn author="TonyRL" path="/plurk/topic/:topic" example="/plurk/topic/standwithukraine" :paramsDesc="['Topic ID, can be found in URL']" radar="1" rssbud="1"/>
+
+### Top
+
+<RouteEn author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" :paramsDesc="['Category, see the table below, `topReplurks` by default', 'Language, see the table below, `en` by default']" radar="1" rssbud="1">
+
+| Top Replurks | Top Favorites | Top Responded |
+| ------------ | ------------- | ------------- |
+| topReplurks  | topFavorites  | topResponded  |
+
+| English | 中文（繁體） |
+| ------- | ----------- |
+| en     | zh      |
+
+</RouteEn>
+
+### Anonymous
+
+<RouteEn author="TonyRL" path="/plurk/anonymous" example="/plurk/anonymous" radar="1" rssbud="1"/>
+
+### Search
+
+<RouteEn author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" :paramsDesc="['Search keyword']" radar="1" rssbud="1"/>
+
+### Hotlinks
+
+<RouteEn author="TonyRL" path="/plurk/hotlinks" example="/plurk/hotlinks" radar="1" rssbud="1"/>
+
+### Plurk News
+
+<RouteEn author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/:lang?" :paramsDesc="['Language, see the table above, `en` by default']" radar="1" rssbud="1"/>
+
+### User
+
+<RouteEn author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" :paramsDesc="['User ID, can be found in URL']" radar="1" rssbud="1"/>
 
 ## Telegram
 
@@ -259,7 +307,7 @@ Only for self-hosted
 <RouteEn author="DIYgod Rongronggg9" path="/telegram/channel/:username/:routeParams?" example="/telegram/channel/awesomeDIYgod/searchQuery=%23DIYgod的豆瓣动态" :paramsDesc="['channel username', 'extra parameters, see the table below']" radar="1" rssbud="1">
 
 | Key                   | Description                                                           | Accepts                                              | Defaults to       |
-|-----------------------|-----------------------------------------------------------------------|------------------------------------------------------|-------------------|
+| --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |
 | showLinkPreview       | Show the link preview from Telegram                                   | 0/1/true/false                                       | true              |
 | showViaBot            | For messages sent via bot, show the bot                               | 0/1/true/false                                       | true              |
 | showReplyTo           | For reply messages, show the target of the reply                      | 0/1/true/false                                       | true              |
@@ -320,7 +368,7 @@ There are two routes (`/twitter/user` and `/twitter/keyword`) comes with Web API
 Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets
 
 | Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |
-|--------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|------------------------|-------------------------------------------|
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ----------------------------------------- |
 | `readable`                     | Enable readable layout                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
 | `authorNameBold`               | Display author name in bold                                                                                                          | `0`/`1`/`true`/`false` | `false`                                   |
 | `showAuthorInTitle`            | Show author name in title                                                                                                            | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |

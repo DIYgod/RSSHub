@@ -7,6 +7,7 @@
       {{each channel.data item}}
       <li>
         <a href="{{item.url}}" rel="noopener noreferrer" target="_blank">{{item.title}}</a>
+        {{if item.new}}🆕{{/if}}
       </li>
       {{/each}}
     </ul>
