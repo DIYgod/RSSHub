@@ -728,20 +728,6 @@
     },
     'huya.com': { _name: '虎牙直播', '.': [{ title: '直播间开播', docs: 'https://docs.rsshub.app/live.html#hu-ya-zhi-bo-zhi-bo-jian-kai-bo', source: '/:id', target: '/huya/live/:id' }] },
     'craigslist.org': { _name: 'Craigslist', '.': [{ title: '商品搜索列表', docs: 'https://docs.rsshub.app/shopping.html#craigslist' }] },
-    'saraba1st.com': {
-        _name: 'Saraba1st',
-        bbs: [
-            {
-                title: '帖子',
-                docs: 'https://docs.rsshub.app/bbs.html#saraba1st',
-                source: '/2b/:id',
-                target: (params) => {
-                    const id = params.id.includes('thread') ? params.id.split('-')[1] : '';
-                    return id ? `/saraba1st/thread/${id}` : '';
-                },
-            },
-        ],
-    },
     'scboy.com': {
         _name: 'scboy 论坛',
         www: [
