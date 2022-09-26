@@ -68,6 +68,12 @@ Language:
 
 </RouteEn>
 
+## Unusual Whales
+
+### News Flow
+
+<RouteEn author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
+
 ## World Economic Forum
 
 ### Report
