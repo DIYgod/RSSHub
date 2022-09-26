@@ -1339,7 +1339,7 @@ pageClass: routes
 
 ### 要闻
 
-<Route author="bigfei" example="/gov/ccdi/yaowenn" path="/gov/ccdi/:path+" :paramsDesc="['路径，默认为 要闻']" anticrawler="1">
+<Route author="bigfei" example="/gov/ccdi/yaowenn" path="/gov/ccdi/:path+" :paramsDesc="['路径，默认为 要闻']">
 
 ::: tip 提示
 
