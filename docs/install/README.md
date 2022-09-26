@@ -719,7 +719,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Saraba1st 用于获取帖子里的图片
 
-    -   `SARABA1ST_COOKIE`: 对应网页端的Cookie。
+    -   `SARABA1ST_COOKIE`: 对应网页端的 Cookie。
 
 -   Sci-hub 设置，用于科学期刊路由。
 
