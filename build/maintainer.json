@@ -1165,6 +1165,12 @@
     "/filmdeepfocus/:category?": [
         "nczitzk"
     ],
+    "/finviz/news/:ticker": [
+        "HenryQW"
+    ],
+    "/finviz/:category?": [
+        "nczitzk"
+    ],
     "/firefox/breaches": [
         "TonyRL"
     ],
@@ -5097,7 +5103,6 @@
     "/google/news/:category/:locale": [],
     "/p-articles/section/:section": [],
     "/p-articles/contributors/:author": [],
-    "/finviz/news/:ticker": [],
     "/haohaozhu/whole-house/:keyword?": [],
     "/haohaozhu/discover/:keyword?": [],
     "/kuaidi100/track/:number/:id/:phone?": [],
