@@ -78,6 +78,16 @@ pageClass: routes
 
 ## finviz
 
+### News
+
+<Route author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['分类，见下表，默认为 News']">
+
+| News | Blog |
+| ---- | ---- |
+| news | blog |
+
+</Route>
+
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>

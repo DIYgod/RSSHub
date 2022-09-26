@@ -12,6 +12,16 @@ pageClass: routes
 
 ## finviz
 
+### News
+
+<RouteEn author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['Category, see below, News by default']">
+
+| News | Blog |
+| ---- | ---- |
+| news | blog |
+
+</RouteEn>
+
 ### US Stock News
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
