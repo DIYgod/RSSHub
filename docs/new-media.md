@@ -2022,6 +2022,50 @@ area 分区选项
 
 <Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
 
+## 端传媒
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+::: warning 注意
+
+付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
+
+:::
+
+### 专题・栏目
+
+<Route author="prnake" example="/theinitium/channel/latest/zh-hans" path="/theinitium/channel/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+Type 栏目：
+
+| 最新     | 深度      | What’s New | 广场                | 科技         | 风物      | 特约      | ... |
+| ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
+| latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
+
+更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
+
+</Route>
+
+### 话题・标签
+
+<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题 ID，可从话题页 URL 中获取，如 <https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+### 作者
+
+<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="/theinitium/author/:type/:language?" :paramsDesc="['作者 ID，可从作者主页 URL 中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+### 个人订阅追踪动态
+
+<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="/theinitium/follow/articles/:language?" :paramsDesc="['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
+
+::: warning 注意
+
+需要自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
 ## 多知网
 
 ### 首页
