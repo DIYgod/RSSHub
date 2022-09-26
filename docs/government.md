@@ -184,6 +184,22 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/chinatax/latest" path="/gov/chinatax/latest"/>
 
+## 国家统计局
+
+### 统计数据 > 最新发布
+
+<Route author="bigfei" example="/gov/stats/tjsj/zxfb" path="/gov/stats/:path+" :paramsDesc="['路径，默认为 统计数据 > 最新发布']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.stats.gov.cn/` 后的字段。下面是一个例子。
+
+若订阅 [统计数据 > 统计标准](http://www.stats.gov.cn/tjsj/tjbz/) 则将对应页面 URL <http://www.stats.gov.cn/tjsj/tjbz/> 中 `http://www.stats.gov.cn/` 后的字段 `tjsj/tjbz` 作为路径填入。此时路由为 [`/gov/stats/tjsj/tjbz`](https://rsshub.app/gov/stats/tjsj/tjbz)
+
+:::
+
+</Route>
+
 ## 国家新闻出版广电总局（弃用）
 
 ### 游戏审批结果
@@ -1321,6 +1337,16 @@ pageClass: routes
 
 ## 中央纪委国家监委
 
-### 审查调查
+### 要闻
 
-<Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
+<Route author="bigfei" example="/gov/ccdi/yaowenn" path="/gov/ccdi/:path+" :paramsDesc="['路径，默认为 要闻']" anticrawler="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.ccdi.gov.cn/` 后的字段。下面是一个例子。
+
+若订阅 [审查调查 > 中管干部 > 执纪审查](https://www.ccdi.gov.cn/scdcn/zggb/zjsc/) 则将对应页面 URL <https://www.ccdi.gov.cn/scdcn/zggb/zjsc/> 中 `http://www.ccdi.gov.cn/` 后的字段 `scdcn/zggb/zjsc` 作为路径填入。此时路由为 [`/gov/ccdi/scdcn/zggb/zjsc`](https://rsshub.app/gov/ccdi/scdcn/zggb/zjsc)
+
+:::
+
+</Route>
