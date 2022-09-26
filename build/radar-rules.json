@@ -15217,6 +15217,20 @@
       }
     ]
   },
+  "unusualwhales.com": {
+    "_name": "Unusual Whales",
+    ".": [
+      {
+        "title": "News Flow",
+        "docs": "https://docs.rsshub.app/en/finance.html#unusual-whales",
+        "source": [
+          "/news",
+          "/"
+        ],
+        "target": "/unusualwhales/news"
+      }
+    ]
+  },
   "uraaka-joshi.com": {
     "_name": "裏垢女子まとめ",
     ".": [
