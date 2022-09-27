@@ -593,9 +593,6 @@
     "/cbirc/:category?": [
         "JkCheung"
     ],
-    "/cbnc/rss/:id?": [
-        "TonyRL"
-    ],
     "/cbnweek/": [
         "nczitzk"
     ],
@@ -700,6 +697,9 @@
     ],
     "/cn-healthcare/index": [
         "qnloft"
+    ],
+    "/cnbc/rss/:id?": [
+        "TonyRL"
     ],
     "/cnbeta/": [
         "nczitzk"
