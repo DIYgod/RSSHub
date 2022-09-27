@@ -654,7 +654,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Fantia
 
-    - `FANTIA_COOKIE`: 登录后的 `cookie` ,可以在控制台中查看请求头获取。如果不填会导致部分需要登录后才能阅读的帖子获取异常
+    -   `FANTIA_COOKIE`: 登录后的 `cookie` , 可以在控制台中查看请求头获取。如果不填会导致部分需要登录后才能阅读的帖子获取异常
 
 -   Gitee 全部路由：[申请地址](https://gitee.com/api/v5/swagger)
 
