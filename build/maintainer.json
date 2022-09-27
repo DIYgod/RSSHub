@@ -2229,6 +2229,12 @@
     "/knowmedia/:category?": [
         "Fatpandac"
     ],
+    "/kuwaitlocal/": [
+        "TonyRL"
+    ],
+    "/kuwaitlocal/:category?": [
+        "TonyRL"
+    ],
     "/kyodonews/:language?/:keyword?": [
         "Rongronggg9"
     ],
