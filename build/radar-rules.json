@@ -2298,6 +2298,28 @@
       }
     ]
   },
+  "cnbc.com": {
+    "_name": "CNBC",
+    "search": [
+      {
+        "title": "全文 RSS",
+        "docs": "https://docs.rsshub.app/traditional-media.html#cnbc",
+        "source": [
+          "/rs/search/combinedcms/view.xml"
+        ]
+      }
+    ],
+    "www": [
+      {
+        "title": "全文 RSS",
+        "docs": "https://docs.rsshub.app/traditional-media.html#cnbc",
+        "source": [
+          "/id/:id/device/rss/rss.html"
+        ],
+        "target": "/cnbc/rss/:id"
+      }
+    ]
+  },
   "cbnweek.com": {
     "_name": "第一财经杂志",
     ".": [

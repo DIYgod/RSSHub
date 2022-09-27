@@ -593,6 +593,9 @@
     "/cbirc/:category?": [
         "JkCheung"
     ],
+    "/cbnc/rss/:id?": [
+        "TonyRL"
+    ],
     "/cbnweek/": [
         "nczitzk"
     ],
