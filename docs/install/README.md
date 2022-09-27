@@ -717,6 +717,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `FANBOX_SESSION_ID`: 对应 cookies 中的`FANBOXSESSID`。
 
+-   Saraba1st 用于获取帖子里的图片
+
+    -   `SARABA1ST_COOKIE`: 对应网页端的 Cookie。
+
 -   Sci-hub 设置，用于科学期刊路由。
 
     -   `SCIHUB_HOST`: 可访问的 sci-hub 镜像地址，默认为 `https://sci-hub.se`。
