@@ -2,7 +2,7 @@
     <img src={{image}} />
 {{ /if }}
 {{@ description }}
-{{ each sessions se i}}
+{{ each sessions se }}
     <div style="margin: 0.5em 0; padding: 0.5em 1em; border: 0.1em solid palevioletred;">
         <p>{{se.date}} [{{se.youbi}}]</p>
         <p style="color: palevioletred;">{{se.tourName}}</p>
