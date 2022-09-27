@@ -78,6 +78,16 @@ pageClass: routes
 
 ## finviz
 
+### News
+
+<Route author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['分类，见下表，默认为 News']">
+
+| News | Blog |
+| ---- | ---- |
+| news | blog |
+
+</Route>
+
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
@@ -133,6 +143,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | zh | en |
 
 </Route>
+
+## Unusual Whales
+
+### News Flow
+
+<Route author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
 
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
