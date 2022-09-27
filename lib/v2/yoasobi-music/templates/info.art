@@ -1,0 +1,7 @@
+{{ if image }}
+    <img src="{{ image}}" />
+{{ /if }}
+{{ if category }}
+    <p>Category: {{category}}</p>
+{{ /if }}
+{{@ description }}
