@@ -4094,6 +4094,15 @@
     "/yicai/vip/:id?": [
         "nczitzk"
     ],
+    "/yoasobi-music/info/:category": [
+        "Kiotlin"
+    ],
+    "/yoasobi-music/live": [
+        "Kiotlin"
+    ],
+    "/yoasobi-music/media": [
+        "Kiotlin"
+    ],
     "/yomiuri/yomiuri/:category?": [
         "Arracc"
     ],
