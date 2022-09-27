@@ -144,6 +144,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## Unusual Whales
+
+### News Flow
+
+<Route author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
+
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
 ### 资讯
