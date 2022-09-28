@@ -720,7 +720,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分类订阅
 
-<Route author="qwertyuiop6" example="/anquanke/week" path="/anquanke/:category" :paramsDesc="['分类订阅']" radar="1" rssbud="1">
+<Route author="qwertyuiop6" example="/anquanke/week" path="/anquanke/:category/:fulltext?" :paramsDesc="['分类订阅', '是否获取全文，如需获取全文参数传入 `quanwen` 或 `fulltext`']" radar="1" rssbud="1">
 
 | 360 网络安全周报 | 活动       | 知识        | 资讯   | 招聘  | 工具   |
 | ---------- | -------- | --------- | ---- | --- | ---- |

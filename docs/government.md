@@ -106,13 +106,13 @@ pageClass: routes
 
 ## 德阳市人民政府
 
-### 德阳市政府公开信息
+### 政府公开信息
 
 <Route author="zytomorrow" example="/gov/sichuan/deyang/govpulicinfo/绵竹市" path="/gov/sichuan/deyang/govpulicinfo/:countyName" :paramsDesc="['区县名（**其他区县整改中，暂时只支持`绵竹市`**）。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区']"/>
 
 ## 广东省人民政府
 
-### 广东省教育厅
+### 省教育厅
 
 <Route author="nczitzk" example="/gov/guangdong/edu/tzgg" path="/gov/guangdong/edu/:caty" :paramsDesc="['资讯类别']">
 
@@ -122,7 +122,7 @@ pageClass: routes
 
 </Route>
 
-### 广东省教育考试院
+### 省教育考试院
 
 <Route author="icealtria" example="/gov/guangdong/eea/kszs" path="/gov/guangdong/eea/:caty" :paramsDesc="['资讯类别']">
 
@@ -132,7 +132,7 @@ pageClass: routes
 
 </Route>
 
-### 广东省深圳市人民政府
+### 深圳市人民政府
 
 <Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
 

@@ -12,6 +12,16 @@ pageClass: routes
 
 ## finviz
 
+### News
+
+<RouteEn author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['Category, see below, News by default']">
+
+| News | Blog |
+| ---- | ---- |
+| news | blog |
+
+</RouteEn>
+
 ### US Stock News
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
@@ -67,6 +77,12 @@ Language:
 | zh      | en      |
 
 </RouteEn>
+
+## Unusual Whales
+
+### News Flow
+
+<RouteEn author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
 
 ## World Economic Forum
 

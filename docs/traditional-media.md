@@ -141,6 +141,18 @@ pageClass: routes
 
 </Route>
 
+## CNBC
+
+### 全文 RSS
+
+<Route author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，留空为 `100003114` (Top News)']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+支持所有频道，频道名称见 [官方频道 RSS](https://www.cnbc.com/rss-feeds/)。
+
+</Route>
+
 ## Deutsche Welle 德国之声
 
 ### 新闻
@@ -878,50 +890,6 @@ IT・科学 tech_science
 | 新着・速報 | 社会       | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        | 皇室        |
 | ----- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
 | news  | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
-
-</Route>
-
-## 端传媒
-
-通过提取文章全文，以提供比官方源更佳的阅读体验。
-
-::: warning 注意
-
-付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
-
-:::
-
-### 专题・栏目
-
-<Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-Type 栏目：
-
-| 最新     | 深度      | What’s New | 广场                | 科技         | 风物      | 特约      | ... |
-| ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
-| latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
-
-更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
-
-</Route>
-
-### 话题・标签
-
-<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题 ID，可从话题页 URL 中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-### 作者
-
-<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="theinitium/author/:type/:language?" :paramsDesc="['作者 ID，可从作者主页 URL 中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-### 个人订阅追踪动态
-
-<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="theinitium/follow/articles/:language?" :paramsDesc="['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
-
-::: warning 注意
-
-需要自建，详情见部署页面的配置模块。
-
-:::
 
 </Route>
 
