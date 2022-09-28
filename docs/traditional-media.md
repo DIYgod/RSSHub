@@ -141,6 +141,18 @@ pageClass: routes
 
 </Route>
 
+## CNBC
+
+### 全文 RSS
+
+<Route author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，留空为 `100003114` (Top News)']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+支持所有频道，频道名称见 [官方频道 RSS](https://www.cnbc.com/rss-feeds/)。
+
+</Route>
+
 ## Deutsche Welle 德国之声
 
 ### 新闻

@@ -160,6 +160,18 @@ Generates full-text feeds that the official feed doesn't provide.
 
 </RouteEn>
 
+## CNBC
+
+### Full article RSS
+
+<RouteEn author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" :paramsDesc="['Channel ID, can be found in Official RSS URL, `100003114` (Top News) by default']">
+
+Provides a better reading experience (full articles) over the official ones.
+
+Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).
+
+</RouteEn>
+
 ## Deutsche Welle
 
 ### News
