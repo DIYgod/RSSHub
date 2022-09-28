@@ -384,19 +384,19 @@
             { title: '党建活动', docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue', source: '/djhd/djhd.htm', target: '/hbut/cs/djhd' },
         ],
     },
-    'zcool.com.cn': {
-        _name: '站酷',
-        www: [
-            { title: '发现', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover' },
-            { title: '发现 - 精选 - 全部推荐', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/all' },
-            { title: '发现 - 精选 - 首页推荐', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/home' },
-            { title: '发现 - 精选 - 编辑精选', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/home' },
-            { title: '发现 - 精选 - 文章 - 编辑精选', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/article' },
-            { title: '作品榜单', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/top/design' },
-            { title: '文章榜单', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/top/article' },
-            { title: '用户作品', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: ['/u/:id'], target: '/zcool/user/:id' },
-        ],
-    },
+    // 'zcool.com.cn': {
+    //     _name: '站酷',
+    //     www: [
+    //         { title: '发现', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover' },
+    //         { title: '发现 - 精选 - 全部推荐', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/all' },
+    //         { title: '发现 - 精选 - 首页推荐', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/home' },
+    //         { title: '发现 - 精选 - 编辑精选', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/home' },
+    //         { title: '发现 - 精选 - 文章 - 编辑精选', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/discover/article' },
+    //         { title: '作品榜单', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/top/design' },
+    //         { title: '文章榜单', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: '', target: '/zcool/top/article' },
+    //         { title: '用户作品', docs: 'https://docs.rsshub.app/design.html#zhan-ku', source: ['/u/:id'], target: '/zcool/user/:id' },
+    //     ],
+    // },
     't.me': {
         _name: 'Telegram',
         '.': [
@@ -728,20 +728,6 @@
     },
     'huya.com': { _name: '虎牙直播', '.': [{ title: '直播间开播', docs: 'https://docs.rsshub.app/live.html#hu-ya-zhi-bo-zhi-bo-jian-kai-bo', source: '/:id', target: '/huya/live/:id' }] },
     'craigslist.org': { _name: 'Craigslist', '.': [{ title: '商品搜索列表', docs: 'https://docs.rsshub.app/shopping.html#craigslist' }] },
-    'saraba1st.com': {
-        _name: 'Saraba1st',
-        bbs: [
-            {
-                title: '帖子',
-                docs: 'https://docs.rsshub.app/bbs.html#saraba1st',
-                source: '/2b/:id',
-                target: (params) => {
-                    const id = params.id.includes('thread') ? params.id.split('-')[1] : '';
-                    return id ? `/saraba1st/thread/${id}` : '';
-                },
-            },
-        ],
-    },
     'scboy.com': {
         _name: 'scboy 论坛',
         www: [

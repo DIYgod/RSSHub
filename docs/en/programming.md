@@ -112,6 +112,12 @@ Category
 
 <RouteEn author="nczitzk" example="/distill" path="/distill"/>
 
+## gihyo.jp
+
+### Series
+
+<Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" :paramsDesc="['Series']"/>
+
 ## GitHub
 
 ::: tip
