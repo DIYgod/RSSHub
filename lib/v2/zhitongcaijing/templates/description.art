@@ -1,0 +1,8 @@
+{{ if digest }}
+<backquote>
+{{ digest }}
+</backquote>
+{{ /if }}
+{{ if description }}
+{{@ description }}
+{{ /if }}
