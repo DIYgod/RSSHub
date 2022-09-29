@@ -3721,6 +3721,13 @@
     "/ucas/job/:type?": [
         "Fatpandac"
     ],
+    "/udn/global/:category?": [
+        "nczitzk"
+    ],
+    "/udn/global/tag/:tag?": [
+        "emdoe",
+        "nczitzk"
+    ],
     "/udn/news/breakingnews/:id": [
         "miles170"
     ],
@@ -4655,7 +4662,6 @@
     "/tssstatus/:board/:build": [],
     "/anime1/anime/:time/:name": [],
     "/anime1/search/:keyword": [],
-    "/udn/global/:tid": [],
     "/gitea/blog": [],
     "/idownloadblog": [],
     "/testerhome/newest": [],
