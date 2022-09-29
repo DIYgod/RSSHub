@@ -100,13 +100,24 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类，见下表，默认为即时']">
+<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类 id，见下表，默认为即时 REALTIME']">
 
-| 即时       | 新加坡       | 东南亚            | 中港台           | 国际    | 财经      | 体育     |
-| -------- | --------- | -------------- | ------------- | ----- | ------- | ------ |
-| realtime | singapore | southeast-asia | greater-china | world | finance | sports |
+| 分类                  | id             |
+| ------------------- | -------------- |
+| 即时 REALTIME         | realtime       |
+| 新加坡 SINGAPORE       | singapore      |
+| 东南亚 SOUTH-EAST ASIA | southeast-asia |
+| 中港台 GREATER CHINA   | greater-china  |
+| 国际 WORLD            | world          |
+| 财经 FINANCE          | finance        |
+| 体育 SPORTS           | sports         |
+| 社团 COMMUNITY        | community      |
 
 </Route>
+
+### 标签
+
+<Route author="nczitzk" example="/8world/topic/xianggang-3" path="/8world/topic/:id" :paramsDesc="['标签 id，可在对应标签页中找到']" />
 
 ## 9To5
 
