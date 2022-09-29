@@ -1,5 +1,8 @@
+{{ if description }}
+<p>{{ description }}</p>
+{{ /if }}
+{{ if enclosure_url && enclosure_type }}
 <audio controls="controls">
-{{each streams stream}}
-<source src="{{ stream.url }}" type="audio/x-m4a">
-{{/each}}
+<source src="{{ enclosure_url }}" type="{{ enclosure_type }}">
 </audio>
+{{ /if }}
