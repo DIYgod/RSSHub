@@ -1496,6 +1496,9 @@
     "/gov/anhui/kjt/:path?": [
         "nczitzk"
     ],
+    "/gov/beijing/bphc/:channel": [
+        "bigfei"
+    ],
     "/gov/beijing/jw/tzgg": [
         "nczitzk"
     ],
