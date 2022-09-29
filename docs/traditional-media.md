@@ -444,12 +444,6 @@ Solidot 提供的 feed:
 
 </Route>
 
-## UDN
-
-### 轉角國際
-
-<Route author="emdoe" example="/udn/global/鏡頭背後" path="/udn/global/:tid" :paramsDesc="['標籤名稱，請在轉角國際首頁獲取；如果選擇輸入 `newest` 則輸出最新文章']">
-
 ## Voice of America (VOA)
 
 透過提取全文，以獲得更好的閱讀體驗
@@ -1359,6 +1353,25 @@ category 对应的关键词有
 | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 11 | 12 | 13 | 99  |
 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- |
 | 精選 | 要聞 | 社會 | 地方 | 兩岸 | 國際 | 財經 | 運動 | 娛樂 | 生活 | 股市 | 文教 | 數位 | 不分類 |
+
+</Route>
+
+### 轉角國際 - 首頁
+
+<Route author="emdoe nczitzk" example="/udn/global" path="/udn/global/:category?" :paramsDesc="['分类，见下表，默认为首頁']">
+
+| 首頁 | 最新文章 | 熱門文章 |
+| -- | ---- | ---- |
+|    | new  | hot  |
+
+</Route>
+
+### 轉角國際 - 標籤
+
+<Route author="nczitzk" example="/udn/global/tag/過去24小時" path="/udn/global/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+
+| 過去 24 小時 | 鏡頭背後 | 深度專欄 | 重磅廣播 |
+| -------- | ---- | ---- | ---- |
 
 </Route>
 
