@@ -3592,6 +3592,9 @@
         "nczitzk",
         "bigfei"
     ],
+    "/theverge/": [
+        "HenryQW"
+    ],
     "/thwiki/calendar/:before?/:after?": [
         "aether17"
     ],
@@ -4602,7 +4605,6 @@
     "/rs05/rs05": [],
     "/qutoutiao/category/:cid": [],
     "/bbc/:site?/:channel?": [],
-    "/verge": [],
     "/pediy/topic/:category?/:type?": [],
     "/miniapp/article/:category": [],
     "/miniapp/store/newest": [],
