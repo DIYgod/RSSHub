@@ -87,6 +87,7 @@
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
+    "canvas": "2.10.1",
     "cheerio": "1.0.0-rc.12",
     "chrono-node": "2.4.1",
     "city-timezones": "1.2.1",
