@@ -4286,6 +4286,9 @@
     "/zhihu/zhuanlan/:id": [
         "DIYgod"
     ],
+    "/zhitongcaijing/:id?/:category?": [
+        "nczitzk"
+    ],
     "/zhubai/:id": [
         "naixy28"
     ],

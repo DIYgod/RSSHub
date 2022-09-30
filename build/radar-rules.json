@@ -16958,6 +16958,19 @@
       }
     ]
   },
+  "zhitongcaijing.com": {
+    "_name": "智通财经",
+    ".": [
+      {
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/finance.html#zhi-tong-cai-jing-zi-xun",
+        "source": [
+          "/:category",
+          "/"
+        ]
+      }
+    ]
+  },
   "zhubai.love": {
     "_name": "竹白",
     ".": [
