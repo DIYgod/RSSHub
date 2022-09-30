@@ -44,6 +44,18 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
+## 北京市保障房中心有限公司
+
+### 北京市共有产权住房租赁服务平台
+
+<Route author="bigfei" example="/gov/beijing/bphc/announcement" path="/gov/beijing/bphc/:caty" :paramsDesc="['类别']">
+
+|     通知公告     |   项目介绍  |
+| :----------: | :-----: |
+| announcement | project |
+
+</Route>
+
 ## 北京市教育委员会
 
 ### 通知公告
