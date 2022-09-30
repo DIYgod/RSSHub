@@ -687,3 +687,9 @@ Sources
 ### 當季新番
 
 <Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
+
+## nocturnalscans漫画
+
+### nocturnalscans章节订阅
+
+<Route author="wuchuheng" example="/nocturnalscans/the-greatest-estate-developer" path="/nocturnalscans/:name"/>
