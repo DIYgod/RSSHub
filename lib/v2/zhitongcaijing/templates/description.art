@@ -1,7 +1,5 @@
 {{ if digest }}
-<backquote>
-{{ digest }}
-</backquote>
+{{@ digest }}
 {{ /if }}
 {{ if description }}
 {{@ description }}
