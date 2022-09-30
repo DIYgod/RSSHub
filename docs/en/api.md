@@ -1,4 +1,4 @@
-## API
+# API
 
 ::: warning Warning
 The API is under active development and is subject to change. All suggestions are welcome!
@@ -6,7 +6,7 @@ The API is under active development and is subject to change. All suggestions ar
 
 RSSHub provides the following APIs:
 
-### List of Public Routes
+## List of Public Routes
 
 ::: tip Tip
 This API **will not** return any routes under `lib/protected_router.js`.
@@ -18,7 +18,7 @@ Route: `/api/routes/:name?`
 
 Parameters:
 
--   name, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). Optional, **returns all public routes if not specified**.
+-   `name`, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). Optional, **returns all public routes if not specified**.
 
 A successful request returns a HTTP status code `200 OK` with the result in JSON:
 

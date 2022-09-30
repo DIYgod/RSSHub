@@ -38,6 +38,32 @@ pageClass: routes
 
 </Route>
 
+## 35PHOTO
+
+### New photos
+
+<Route author="nczitzk" example="/35photo/new" path="/35photo/new"/>
+
+### Featured photos
+
+<Route author="nczitzk" example="/35photo/actual" path="/35photo/actual"/>
+
+### New interesting
+
+<Route author="nczitzk" example="/35photo/interesting" path="/35photo/interesting"/>
+
+### Photos on the world map
+
+<Route author="nczitzk" example="/35photo/map" path="/35photo/map"/>
+
+### Genre
+
+<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" :paramsDesc="['id，可在对应分类页 URL 中找到']"/>
+
+### Author
+
+<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id，可在对应作者页 URL 中找到']"/>
+
 ## 8KCosplay
 
 ### 最新
@@ -47,6 +73,10 @@ pageClass: routes
 ### 分类
 
 <Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
+
+### 标签
+
+<Route author="KotoriK" example="/8kcos/tag/cosplay"  path="/8kcos/tag/:tag" :paramsDesc="['标签名']"/>
 
 ## Asian to lick
 
@@ -98,9 +128,9 @@ pageClass: routes
 
 <Route author="hoilc" example="/cnu/discovery/hot/自然" path="/cnu/discovery/:type?/:category?" :paramsDesc="['板块类型, 默认为`热门`, 具体参见下表', '图片类别, 默认为`0`代表全部, 可参见[这里](http://www.cnu.cc/discoveryPage/hot-0)']"/>
 
-| 热门 | 推荐      | 最新   |
-| ---- | --------- | ------ |
-| hot  | recommend | recent |
+| 热门  | 推荐        | 最新     |
+| --- | --------- | ------ |
+| hot | recommend | recent |
 
 ## DailyArt 每日艺术
 
@@ -116,17 +146,24 @@ pageClass: routes
 
 ## E-Hentai
 
+对于 RSS 内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制额外的功能
+
+| 键           | 含义                         | 接受的值           | 默认值   |
+| ----------- | -------------------------- | -------------- | ----- |
+| bittorrent  | 是否包含最新种子的链接                | 0/1/true/false | false |
+| embed_thumb | 是否将封面图片嵌入 RSS 中而不是以链接的形式给出 | 0/1/true/false | false |
+
 ### 收藏
 
-<Route author="Howard Yin" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:bittorrent?" :paramsDesc="['收藏夹编号，可选','顺序，可选：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" :paramsDesc="['收藏夹编号','顺序：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ### 标签
 
-<Route author="Howard Yin" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:bittorrent?" :paramsDesc="['标签', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['标签', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ### 搜索
 
-<Route author="Howard Yin" example="/ehentai/search/:params?/:page?" path="/ehentai/search/:params?/:page?/:bittorrent?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '爬获取第多少页的数据', '是否获取种子链接']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ## Elite Babes
 
@@ -158,57 +195,57 @@ pageClass: routes
 
 ### 搜索
 
-<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:peroid?/:order?/:rating?/:keyword?" :paramsDesc="['类型，见下表，默认为 posts','分类，见下表，也可在搜索页的 URL 中找到，默认为 すべてのクリエイター', '排行时段，见下表，填写该字段即返回排行榜，默认为空，即不排名' ,'排序，见下表，默认为 更新の新しい順', 'R18显示，见下表，默认为 すべて', '关键字，默认为空']">
+<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" :paramsDesc="['类型，见下表，默认为 posts','分类，见下表，也可在搜索页的 URL 中找到，默认为 すべてのクリエイター', '排行时段，见下表，填写该字段即返回排行榜，默认为空，即不排名' ,'排序，见下表，默认为 更新の新しい順', 'R18显示，见下表，默认为 すべて', '关键字，默认为空']">
 
 类型
 
-| クリエイター | 投稿  | 商品     | コミッション |
-| ------------ | ----- | -------- | ------------ |
-| fanclubs     | posts | products | commissions  |
+| クリエイター   | 投稿    | 商品       | コミッション      |
+| -------- | ----- | -------- | ----------- |
+| fanclubs | posts | products | commissions |
 
 分类
 
-| 分类                   | 分类名     |
-| ---------------------- | ---------- |
-| イラスト               | illust     |
-| 漫画                   | comic      |
-| コスプレ               | cosplay    |
-| YouTuber・配信者       | youtuber   |
-| Vtuber                 | vtuber     |
-| 音声作品・ASMR         | voice      |
-| 声優・歌い手           | voiceactor |
-| アイドル               | idol       |
-| アニメ・映像・写真     | anime      |
-| 3D                     | 3d         |
-| ゲーム制作             | game       |
-| 音楽                   | music      |
-| 小説                   | novel      |
-| ドール                 | doll       |
-| アート・デザイン       | art        |
-| プログラム             | program    |
-| 創作・ハンドメイド     | handmade   |
-| 歴史・評論・情報       | history    |
-| 鉄道・旅行・ミリタリー | railroad   |
-| ショップ               | shop       |
-| その他                 | other      |
+| 分类           | 分类名        |
+| ------------ | ---------- |
+| イラスト         | illust     |
+| 漫画           | comic      |
+| コスプレ         | cosplay    |
+| YouTuber・配信者 | youtuber   |
+| Vtuber       | vtuber     |
+| 音声作品・ASMR    | voice      |
+| 声優・歌い手       | voiceactor |
+| アイドル         | idol       |
+| アニメ・映像・写真    | anime      |
+| 3D           | 3d         |
+| ゲーム制作        | game       |
+| 音楽           | music      |
+| 小説           | novel      |
+| ドール          | doll       |
+| アート・デザイン     | art        |
+| プログラム        | program    |
+| 創作・ハンドメイド    | handmade   |
+| 歴史・評論・情報     | history    |
+| 鉄道・旅行・ミリタリー  | railroad   |
+| ショップ         | shop       |
+| その他          | other      |
 
 排行时段
 
-| デイリー | ウィークリー | マンスリー | 全期間 |
-| -------- | ------------ | ---------- | ------ |
-| daily    | weekly       | monthly    | all    |
+| デイリー  | ウィークリー | マンスリー   | 全期間 |
+| ----- | ------ | ------- | --- |
+| daily | weekly | monthly | all |
 
 排序
 
-| 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
-| -------------- | ------------ | -------------- | ------------ | -------------- |
-| updater        | update_old   | newer          | create_old   | popular        |
+| 更新の新しい順 | 更新の古い順     | 投稿の新しい順 | 投稿の古い順     | お気に入り数順 |
+| ------- | ---------- | ------- | ---------- | ------- |
+| updater | update_old | newer   | create_old | popular |
 
 R18 显示
 
-| すべて | 一般のみ | R18 のみ |
-| ------ | -------- | -------- |
-| all    | general  | adult    |
+| すべて | 一般のみ    | R18 のみ |
+| --- | ------- | ------ |
+| all | general | adult  |
 
 </Route>
 
@@ -287,7 +324,7 @@ R18 显示
 <Route author="nczitzk" example="/95mm/tab/热门" path="/95mm/tab/:tab?" :paramsDesc="['分类，见下表，默认为最新']">
 
 | 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| -- | -- | -- | -- | -- | -- | -- | -- |
 
 </Route>
 
@@ -300,8 +337,8 @@ R18 显示
 <Route author="nczitzk" example="/95mm/category/1" path="/95mm/category/:category" :paramsDesc="['集合，见下表']">
 
 | 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |
-| -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |
-| 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |
+| ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- |
+| 1    | 2    | 4    | 5   | 6    | 7    | 9    | 11   |
 
 </Route>
 
@@ -388,15 +425,17 @@ R18 显示
 
 订阅以 `https://wallhaven.cc/search` 起始的页面，将 `?` 后的字段作为 `filter` 填写入路由。下面是一个例子：
 
-如 [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)，中 `?` 后的字段为 `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd`，所以可以得到路由是 [/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)
+如 [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd)，中 `?` 后的字段为 `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd`，所以可以得到路由是 [/wallhaven/search/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd](https://rsshub.app/wallhaven/search/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd)
 
 :::
 
 </Route>
 
-## Wallpaperhub
+## WallpaperHub
 
-<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" />
+### 壁纸
+
+<Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" radar="1" rssbud="1"/>
 
 ## yande.re
 
@@ -438,16 +477,20 @@ R18 显示
 <Route author="kba977" example="/dbmv" path="/dbmv/:category?" :paramsDesc="['分类 id - 若不填该参数, 默认所有']">
 
 | 大胸妹 | 小翘臀 | 黑丝袜 | 美腿控 | 有颜值 | 大杂烩 |
-| ------ | ------ | ------ | ------ | ------ | ------ |
-| 2      | 6      | 7      | 3      | 4      | 5      |
+| --- | --- | --- | --- | --- | --- |
+| 2   | 6   | 7   | 3   | 4   | 5   |
 
 </Route>
 
 ## 国家地理
 
+### 每日精选
+
+<Route author="OrangeEd1t" example="/natgeo/dailyselection" path="/natgeo/dailyselection"/>
+
 ### 每日一图
 
-<Route author="LogicJake" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
+<Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
 ## 煎蛋
 
@@ -455,9 +498,9 @@ R18 显示
 
 <Route author="nczitzk" example="/jandan/top" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']">
 
-| 问答 | 树洞     | 动物园 | 女装 | 随手拍 | 无聊图 | 鱼塘 |
-| ---- | -------- | ------ | ---- | ------ | ------ | ---- |
-| qa   | treehole | zoo    | girl | ooxx   | pic    | pond |
+| 问答 | 树洞       | 动物园 | 女装   | 随手拍  | 无聊图 | 鱼塘   |
+| -- | -------- | --- | ---- | ---- | --- | ---- |
+| qa | treehole | zoo | girl | ooxx | pic | pond |
 
 </Route>
 
@@ -465,9 +508,9 @@ R18 显示
 
 <Route author="kobemtl Xuanwo xyqfer 9uanhuo nczitzk" example="/jandan/top-4h" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']"/>
 
-| 4 小时热门 | 吐槽      | 无聊图 | 随手拍   | 动物园  | 优评         | 3 日最佳  | 7 日最佳  |
-| ---------- | --------- | ------ | -------- | ------- | ------------ | --------- | --------- |
-| top-4h     | top-tucao | top    | top-ooxx | top-zoo | top-comments | top-3days | top-7days |
+| 4 小时热门 | 吐槽        | 无聊图 | 随手拍      | 动物园     | 优评           | 3 日最佳     | 7 日最佳     |
+| ------ | --------- | --- | -------- | ------- | ------------ | --------- | --------- |
+| top-4h | top-tucao | top | top-ooxx | top-zoo | top-comments | top-3days | top-7days |
 
 ### 首页
 
@@ -479,9 +522,9 @@ R18 显示
 
 <Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
 
-| 图集 | 文章 |
-| ---- | ---- |
-| tuji | as   |
+| 图集   | 文章 |
+| ---- | -- |
+| tuji | as |
 
 ## 酷 18
 
@@ -490,8 +533,8 @@ R18 显示
 <Route author="nczitzk" example="/cool18" path="/cool18/:id?" :paramsDesc="['分站，见下表，默认为禁忌书屋']">
 
 | 性趣贴图 | 色色动漫 | 情色靓影 | 私房自拍 | 禁忌书屋 | 性趣论坛 | 情色无忌 | 成人影视 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| bbs      | bbs7     | bbs2     | bbs6     | bbs4     | bj       | bbs5     | bbs3     |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| bbs  | bbs7 | bbs2 | bbs6 | bbs4 | bj   | bbs5 | bbs3 |
 
 ::: tip 提示
 
@@ -511,6 +554,12 @@ R18 显示
 
 <Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
 
+## 妹图社
+
+### 最新
+
+<Route author="ocleo1" example="/meituclub/latest" path="/meituclub/latest" />
+
 ## 妹子图
 
 ### 首页（最新）
@@ -521,9 +570,9 @@ R18 显示
 
 <Route author="gee1k xyqfer LogicJake" example="/mzitu/category/xinggan" path="/mzitu/category/:category" :paramsDesc="['分类名']" anticrawler="1">
 
-| 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
-| -------- | -------- | -------- | -------- |
-| xinggan  | japan    | taiwan   | mm       |
+| 性感妹子    | 日本妹子  | 台湾妹子   | 清纯妹子 |
+| ------- | ----- | ------ | ---- |
+| xinggan | japan | taiwan | mm   |
 
 </Route>
 
@@ -548,6 +597,12 @@ R18 显示
 ### 主题
 
 <Route author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" :paramsDesc="['主题 id']"/>
+
+## 奇葩买家秀
+
+### 频道
+
+<Route author="Fatpandac" example="/qipamaijia/fuli" path="/qipamaijia/:cate?" :paramsDesc="['频道名，可在对应网址中找到，默认为最新']" radar="1" rssbud="1"/>
 
 ## 涂鸦王国
 

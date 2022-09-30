@@ -1,0 +1,4 @@
+<div>
+    {{ data.name }}已于{{ data.update_time }}更新第{{ data.episodes }}集。<br/>
+    观看地址：<a href="https://gaze.run/play/{{ data.cid }}">{{ data.name }}第{{ data.episodes }}集</a>
+</div>

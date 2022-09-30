@@ -1,19 +1,55 @@
 name: Linter
 
-on: [push, pull_request]
+on: [push, pull_request, pull_request_target]
 
 jobs:
   linter:
+    name: Lint
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
           cache: 'yarn'
       - run: yarn
       - name: Lint
-        run: |
-          npm run lint
+        run: yarn lint
+  reviewdog:
+    name: reviewdog
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+      - run: yarn
+      - name: Lint
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+  titleLint:
+    if: ${{ github.event_name == 'pull_request_target' }}
+    name: Validate PR title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v4
         env:
-          CI: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ignoreLabels: |
+            dependencies
+          wip: true
+  labeler:
+    name: Pull Request Labeler
+    if: ${{ github.event_name == 'pull_request_target' }}
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@v4
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}

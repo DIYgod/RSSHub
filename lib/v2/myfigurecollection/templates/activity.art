@@ -1,0 +1,8 @@
+{{ if changelog }}
+Changed field: {{ changelog }}
+{{ /if }}
+{{ if pictures }}
+{{ each pictures picture }}
+<img src="{{ picture }}">
+{{ /each }}
+{{ /if }}

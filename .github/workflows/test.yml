@@ -1,35 +1,137 @@
 name: test
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths:
+      - 'test/**'
+      - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/test.yml'
+  pull_request: ~
+
+permissions:
+  contents: read
 
 jobs:
-  build:
+  jest:
     runs-on: ubuntu-latest
-
     services:
       redis:
         image: redis
         ports:
           - 6379/tcp
         options: --entrypoint redis-server
-
     strategy:
       matrix:
-        node-version: ['14', '16']
-
-    name: Node ${{ matrix.node-version }}
+        node-version: [ 14, 16 ]
+    name: Jest on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install dependencies (yarn)
+        run: yarn
+      - name: Test all and generate coverage
+        run: npm run jest:coverage
+        env:
+          REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
+      - name: Upload coverage to Codecov
+        if: ${{ matrix.node-version == '16' }}
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+
+  puppeteer:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [ 14, 16 ]
+        chromium:
+          - name: bundled Chromium
+            dependency: ''
+            environment: '{}'
+          - name: Chromium from Ubuntu
+            dependency: chromium-browser
+            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "chromium-browser" }'
+          - name: Chrome from Google
+            dependency: google-chrome-stable
+            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
+    name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install dependencies (yarn)
+        run: yarn
+      - name: Install Chromium
+        if: ${{ matrix.chromium.dependency != '' }}
+        # Chromium from Ubuntu is too old (85), but can still pass the tests
+        # That's not really a problem since Chromium-bundled Docker image is based on Debian bullseye,
+        # which updates Chromium frequently, and only on arm/arm64 the image needs Chromium from Debian.
+        run: |
+          set -ex
+          curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
+            sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+          echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
+            sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+          sudo apt-get update
+          sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
+      - name: Test puppeteer
+        run: npm run jest puppeteer
+        env: ${{ fromJSON(matrix.chromium.environment) }}
+
+  docs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 14, 16 ]
+    name: Build docs on Node ${{ matrix.node-version }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn
-      - run: npm run jest
-        env:
-          REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
-      - run: npm run docs:build
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.1.0
+      - name: Build docs
+        run: npm run docs:build
+
+  all:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 14, 16 ]
+    name: Build radar and maintainer on Node ${{ matrix.node-version }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn
+      - name: Build radar and maintainer
+        run: npm run build:all
+
+  automerge:
+    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    needs: [ jest, puppeteer, docs, all ]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          target: patch

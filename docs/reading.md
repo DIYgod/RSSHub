@@ -10,6 +10,26 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## hameln
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://syosetu.org/novel/264928/>
+
+</Route>
+
+## kakuyomu
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://kakuyomu.jp/works/1177354054883783581>
+
+</Route>
+
 ## Kindle Unlimited
 
 ### 会员限时免费读书单
@@ -17,8 +37,8 @@ pageClass: routes
 <Route author="nczitzk" example="/amazon/ku/this" path="/amazon/ku/:type?" :paramsDesc="['书单类型，见下表']">
 
 | 本月书单 | 好评返场 | 次月预告 |
-| -------- | -------- | -------- |
-| this     | back     | next     |
+| ---- | ---- | ---- |
+| this | back | next |
 
 </Route>
 
@@ -34,9 +54,30 @@ pageClass: routes
 
 ## Mobilism
 
-### eBook Releases
+### 电子书
 
-<Route author="nczitzk" example="/mobilism/release" path="/mobilism/release" />
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" :paramsDesc="['分类','是否获取全文，如需获取全文参数传入 `y`']">
+
+| 分类名      | 参数         |
+| -------- | ---------- |
+| 浪漫       | romance    |
+| 科幻、幻想、恐怖 | scifi      |
+| 普通小说、经典  | classics   |
+| 杂志、报纸    | magazines  |
+| 有声读物     | audioBooks |
+| 漫画       | comics     |
+
+</Route>
+
+## Penguin Random House
+
+### Book Lists
+
+<Route author="StevenRCE0" example="/penguin-random-house/the-read-down" path="/penguin-random-house/the-read-down" />
+
+### Articles
+
+<Route author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
 
 ## SoBooks
 
@@ -44,8 +85,8 @@ pageClass: routes
 
 <Route author="nczitzk" example="/sobooks" path="/sobooks/:category?" :paramsDesc="['分类, 见下表']">
 
-| 分类     | 分类名           |
-| -------- | ---------------- |
+| 分类   | 分类名              |
+| ---- | ---------------- |
 | 小说文学 | xiaoshuowenxue   |
 | 历史传记 | lishizhuanji     |
 | 人文社科 | renwensheke      |
@@ -63,13 +104,27 @@ pageClass: routes
 
 热门标签
 
-| 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
-| 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |
-| 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |
+| 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济  |
+| -- | -- | -- | -- | -- | -- | -- | -- | --- |
+| 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典  |
+| 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治  |
 | 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |
-| 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |
-| 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |
+| 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业  |
+| 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通  |
+
+</Route>
+
+### 归档
+
+<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
+
+## syosetu
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://ncode.syosetu.com/n1976ey/>
 
 </Route>
 
@@ -90,8 +145,8 @@ pageClass: routes
 <Route author="HenryQW" example="/aisixiang/ranking/1/7" path="/aisixiang/ranking/:type?/:range?" :paramsDesc="['排行榜类型', '排行榜范围, 仅适用于点击排行榜, 可选日(1)，周(7)，月(30)']">
 
 | 文章点击排行 | 最近更新文章 | 文章推荐排行 |
-| ------------ | ------------ | ------------ |
-| 1            | 10           | 11           |
+| ------ | ------ | ------ |
+| 1      | 10     | 11     |
 
 </Route>
 
@@ -99,7 +154,7 @@ pageClass: routes
 
 <Route author="hoilc" example="/aisixiang/thinktank/WuQine/lunw" path="/aisixiang/thinktank/:name/:type?" :paramsDesc="['专栏 ID，一般为作者拼音，可在URL中找到', '栏目类型，参考下表，默认为`lunw`']">
 
-| 论文 | 时评 | 随笔  | 演讲 | 访谈  | 著作   | 读书  | 史论   | 译作  | 诗歌  | 书信   | 科学  |
+| 论文   | 时评   | 随笔    | 演讲   | 访谈    | 著作     | 读书    | 史论     | 译作    | 诗歌    | 书信     | 科学    |
 | ---- | ---- | ----- | ---- | ----- | ------ | ----- | ------ | ----- | ----- | ------ | ----- |
 | lunw | ship | shuib | yanj | fangt | zhuanz | dushu | shilun | yizuo | shige | shuxin | kexue |
 
@@ -113,25 +168,59 @@ pageClass: routes
 
 ## 笔趣阁
 
-### biquge5200.com
+::: tip 看我
 
-<Route author="jjeejj" example="/novel/biquge/52_52542" path="/novel/biquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
-
-::: tip 提示
-
-由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge5200.com`](https://www.biquge5200.com/)中的小说 id.
+此处的 **笔趣阁** 指网络上使用和 **笔趣阁** 样式相似模板的小说阅读网站，包括但不限于下方列举的网址。
 
 :::
 
-### biquge.info
+| 网址                        |
+| ------------------------- |
+| <https://www.xbiquwx.la>  |
+| <http://www.biqu5200.net> |
+| <https://www.xbiquge.so>  |
+| <https://www.biqugeu.net> |
+| <http://www.b520.cc>      |
+| <https://www.biquge.biz>  |
+| <https://www.xbiquge.la>  |
+| <https://www.qbiqu.com>   |
+| <https://www.bswtan.com>  |
+| <https://www.biquge.co>   |
+| <https://www.zhhbqg.com>  |
+| <http://www.biqugse.com>  |
+| <https://www.ibiquge.net> |
+| <https://www.shuquge.com> |
+| <https://www.mayiwxw.com> |
 
-<Route author="machsix" example="/novel/biqugeinfo/81_81797" path="/novel/biqugeinfo/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']" anticrawler="1" radar="1" rssbud="1"></Route>
+### 小说
 
-::: tip 提示
+<Route author="nczitzk" example="/biquge/http://www.biqu5200.net/0_7/" path="/biquge/:url" :paramsDesc="['小说 Url，即对应小说详情页的 Url，可在地址栏中找到']" anticrawler="1" radar="1" rssbud="1">
 
-由于笔趣阁网站有多个，各站点小说对应的小说 id 不同。此 feed 只对应在[`www.biquge.info`](http://www.biquge.info/)中的小说 id.
+::: tip 看我
+
+#### 使用方法
+
+如订阅 [《大主宰》](http://www.biqu5200.net/0\_7/)，此时在 [biqu5200.net](http://www.biqu5200.net) 中查询得到对应小说详情页 URL 为 <http://www.biqu5200.net/0_7/>。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/)
+
+又如同样订阅 [《大主宰》](https://www.shuquge.com/txt/70/index.html)，此时在 [shuquge.com](https://www.shuquge.com) 中查询得到对应小说详情页 URL 为 <https://www.shuquge.com/txt/70/index.html>。此时，把末尾的 `index.html` 去掉，路由为 [`/biquge/https://www.shuquge.com/txt/70/`](https://rsshub.app/biquge/https://www.shuquge.com/txt/70/)
+
+#### 关于章节数
+
+路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 `limit` 参数。如上面的例子：订阅 [《大主宰》](http://www.biqu5200.net/0\_7/) 并获取最新的 **10** 个章节。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/?limit=10`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/?limit=10)
+
+需要注意的是，单次获取的所有章节更新时间统一设定为最新章节的更新时间。也就是说，获取最新的 **10** 个章节时，除了最新 **1** 个章节的更新时间是准确的（和网站一致的），其他 **9** 个章节的更新时间是不准确的。
+
+另外，若设置获取章节数目过多，可能会触发网站反爬，导致路由不可用。
 
 :::
+
+::: warning 提示
+
+上方列举的网址可能部分不可用，这取决于该网站的维护者是否持续运营网站。请选择可以正常访问的网址，获取更新的前提是该网站可以正常访问。
+
+:::
+
+</Route>
 
 ## 博客来
 
@@ -149,7 +238,7 @@ pageClass: routes
 
 全部期刊可以在 [这里](http://qk.chaoxing.com/space/index) 找到，你也可以从 [学科分类](https://qikan.chaoxing.com/jourclassify) 和 [期刊导航](https://qikan.chaoxing.com/search/openmag) 中发现更多期刊。
 
-如订阅 [**上海文艺**](http://m.chaoxing.com/mqk/list?sw=&mags=6b5c39b3dd84352be512e29df0297437&isort=20&from=space)，其 URL 为 <http://m.chaoxing.com/mqk/list?mags=6b5c39b3dd84352be512e29df0297437>。`6b5c39b3dd84352be512e29df0297437` 即为期刊 id，所得路由为 [`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437)
+如订阅 [**上海文艺**](http://m.chaoxing.com/mqk/list?sw=\&mags=6b5c39b3dd84352be512e29df0297437\&isort=20\&from=space)，其 URL 为 <http://m.chaoxing.com/mqk/list?mags=6b5c39b3dd84352be512e29df0297437>。`6b5c39b3dd84352be512e29df0297437` 即为期刊 id，所得路由为 [`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437)
 
 :::
 
@@ -175,6 +264,7 @@ pageClass: routes
 
 正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
 :::
+
 </Route>
 
 ### 专栏列表
@@ -194,8 +284,8 @@ pageClass: routes
 <Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
 
 | 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
-| ---- | ---- | ---- | ---- | ------ | ---- |
-| 0    | 1    | 2    | 3    | 4      | 6    |
+| -- | -- | -- | -- | --- | -- |
+| 0  | 1  | 2  | 3  | 4   | 6  |
 
 </Route>
 
@@ -238,10 +328,6 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
-## 归档
-
-<Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" :paramsDesc="['日期，见例子，默认为当前年月']"/>
-
 ## 禁忌书屋
 
 ### 首页
@@ -257,7 +343,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 <Route author="nczitzk" example="/cool18/bbs4/type/都市" path="/cool18/bbs4/type/:keyword?" :paramsDesc="['分类，见下表，默认为首页']">
 
 | 都市 | 校园 | 乡野 | 古风 | 异国 | 玄幻 | 红杏 | 伦理 | 浪漫 | 暴虐 | 摄心 | 其他 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
 
 </Route>
 
@@ -284,6 +370,12 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 举例网址：<http://booksky.so/BookDetail.aspx?Level=1&bid=98619>
 
 </Route>
+
+## 哩哔轻小说
+
+### 小说更新
+
+<Route author="misakicoca" path="/linovelib/novel/:id" example="/linovelib/novel/2547" :paramsDesc="['小说 id，对应书架开始阅读 URL 中找到']"/>
 
 ## 飘天文学
 
@@ -312,6 +404,10 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 限时免费下期预告
 
 <Route author="LogicJake" example="/qidian/free-next" path="/qidian/free-next/:type?" :paramsDesc="['默认不填为起点中文网，填 mm 为起点女生网']"/>
+
+### 作者
+
+<Route author="miles170" example="/qidian/author/9639927" path="/qidian/author/:id" :paramsDesc="['作者 id, 可在作者页面 URL 找到']"/>
 
 ## 起点图
 
@@ -365,9 +461,9 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 :::
 
-|  今日更新  | 完结全本 | 新书一览 | 动画化作品 | 热门轻小说 |  轻小说列表 |
-| :--------: | :------: | :------: | :--------: | :--------: | :---------: |
-| lastupdate | fullflag | postdate |    anime   |  allvisit  | articlelist |
+|    今日更新    |   完结全本   |   新书一览   | 动画化作品 |   热门轻小说  |    轻小说列表    |
+| :--------: | :------: | :------: | :---: | :------: | :---------: |
+| lastupdate | fullflag | postdate | anime | allvisit | articlelist |
 
 </Route>
 
@@ -379,7 +475,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 具体栏目编号，去网站上看标签
 
-| 网址                                             | 对应路由                            |
+| 网址                                               | 对应路由                                |
 | ------------------------------------------------ | ----------------------------------- |
 | <http://science.bio1000.com/ecology-environment> | /biobio/science/ecology-environment |
 | <http://www.bio1000.com/gnjz>                    | /biobio/gnjz                        |
@@ -392,9 +488,21 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 具体栏目编号，去网站上看标签
 
-| 网址                            | 对应路由           |
+| 网址                              | 对应路由               |
 | ------------------------------- | ------------------ |
 | <http://news.bioon.com/biology> | /shengwugu/biology |
+
+## 书伴
+
+### 分类
+
+<Route author="OdinZhang" example="/bookfere/skills" path="/bookfere/:category" :paramsDesc="['分类名']">
+
+| 每周一书   | 使用技巧   | 图书推荐  | 新闻速递 | 精选短文  |
+| ------ | ------ | ----- | ---- | ----- |
+| weekly | skills | books | news | essay |
+
+</Route>
 
 ## 书趣阁
 

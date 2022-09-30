@@ -6,18 +6,19 @@ on:
       - master
     paths:
       - 'lib/**'
+      - 'scripts/workflow/*.js'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    name: Build assets
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js v14
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v3
+      - name: Use Node.js v16
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 16
           cache: 'yarn'
       - name: Build file
         run: yarn && npm run build:all
@@ -26,3 +27,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./assets
+          user_name: 'github-actions[bot]'
+          user_email: '41898282+github-actions[bot]@users.noreply.github.com'
