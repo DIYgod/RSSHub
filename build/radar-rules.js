@@ -1749,6 +1749,11 @@
                         return '/cqwu/news/academiceve';
                     }
                 } } ] },
+  "creative-comic.tw":{ _name:"CCC 創作集",
+    ".":[ { title:"漫畫",
+        docs:"https://docs.rsshub.app/anime.html#ccc-chuang-zuo-ji",
+        source:[ "/book/:id/*" ],
+        target:"/creative-comic/:id" } ] },
   "csc.edu.cn":{ _name:"国家留学网",
     www:[ { title:"遴选通知",
         docs:"https://docs.rsshub.app/other.html#guo-jia-liu-xue-wang",

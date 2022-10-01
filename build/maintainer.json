@@ -765,6 +765,9 @@
     "/cqwu/news/:type?": [
         "Fatpandac"
     ],
+    "/creative-comic/book/:id/:coverOnly?/:quality?": [
+        "TonyRL"
+    ],
     "/csc/notice/:type?": [
         "Derekmini"
     ],
