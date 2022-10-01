@@ -178,3 +178,17 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### Origins Search
 
 <RouteEn author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']" radar="1" rssbud="1"/>
+
+
+## nocturnalscans漫画
+
+### nocturnalscans章节订阅
+
+<Route author="wuchuheng" example="/nocturnalscans/the-greatest-estate-developer" path="/nocturnalscans/:name"/>
+
+## baozimh
+
+### baozhmh
+
+<Route author="wuchuheng" example="/baozimh/xuebadexingchendahai-meiyumuxiao" path="/baozimh/:name"/>
+
