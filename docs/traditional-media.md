@@ -141,6 +141,18 @@ pageClass: routes
 
 </Route>
 
+## CNBC
+
+### 全文 RSS
+
+<Route author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，留空为 `100003114` (Top News)']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+支持所有频道，频道名称见 [官方频道 RSS](https://www.cnbc.com/rss-feeds/)。
+
+</Route>
+
 ## Deutsche Welle 德国之声
 
 ### 新闻
@@ -431,12 +443,6 @@ Solidot 提供的 feed:
 下载站：<http://www.cgx02.xyz/index.php?dir=/te>
 
 </Route>
-
-## UDN
-
-### 轉角國際
-
-<Route author="emdoe" example="/udn/global/鏡頭背後" path="/udn/global/:tid" :paramsDesc="['標籤名稱，請在轉角國際首頁獲取；如果選擇輸入 `newest` 則輸出最新文章']">
 
 ## Voice of America (VOA)
 
@@ -878,50 +884,6 @@ IT・科学 tech_science
 | 新着・速報 | 社会       | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        | 皇室        |
 | ----- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
 | news  | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
-
-</Route>
-
-## 端传媒
-
-通过提取文章全文，以提供比官方源更佳的阅读体验。
-
-::: warning 注意
-
-付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
-
-:::
-
-### 专题・栏目
-
-<Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-Type 栏目：
-
-| 最新     | 深度      | What’s New | 广场                | 科技         | 风物      | 特约      | ... |
-| ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
-| latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
-
-更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
-
-</Route>
-
-### 话题・标签
-
-<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题 ID，可从话题页 URL 中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-### 作者
-
-<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="theinitium/author/:type/:language?" :paramsDesc="['作者 ID，可从作者主页 URL 中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-### 个人订阅追踪动态
-
-<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="theinitium/follow/articles/:language?" :paramsDesc="['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
-
-::: warning 注意
-
-需要自建，详情见部署页面的配置模块。
-
-:::
 
 </Route>
 
@@ -1394,6 +1356,25 @@ category 对应的关键词有
 
 </Route>
 
+### 轉角國際 - 首頁
+
+<Route author="emdoe nczitzk" example="/udn/global" path="/udn/global/:category?" :paramsDesc="['分类，见下表，默认为首頁']">
+
+| 首頁 | 最新文章 | 熱門文章 |
+| -- | ---- | ---- |
+|    | new  | hot  |
+
+</Route>
+
+### 轉角國際 - 標籤
+
+<Route author="nczitzk" example="/udn/global/tag/過去24小時" path="/udn/global/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+
+| 過去 24 小時 | 鏡頭背後 | 深度專欄 | 重磅廣播 |
+| -------- | ---- | ---- | ---- |
+
+</Route>
+
 ## 路透社
 
 ::: warning 迁移说明
@@ -1621,21 +1602,136 @@ category 对应的关键词有
 
 ### 首页头条
 
-<Route author="HenryQW nczitzk" example="/thepaper/featured" path="/thepaper/featured"/>
+<Route author="HenryQW nczitzk bigfei" example="/thepaper/featured" path="/thepaper/featured"/>
 
 ### 频道
 
-<Route author="xyqfer nczitzk" example="/thepaper/channel/25950" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
+<Route author="xyqfer nczitzk bigfei" example="/thepaper/channel/25950" path="/thepaper/channel/:id" :paramsDesc="['频道 id，可在频道页 URL 中找到']">
 
-| 视频    | 时事    | 财经    | 思想    | 澎湃号   | 生活    |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-| 26916 | 25950 | 25951 | 25952 | 36079 | 25953 |
+| 频道 ID  | 频道名 |
+| ------ | --- |
+| 25949  | 要闻  |
+| 26916  | 视频  |
+| 108856 | 战疫  |
+| 25950  | 时事  |
+| 25951  | 财经  |
+| 36079  | 澎湃号 |
+| 119908 | 科技  |
+| 25952  | 思想  |
+| 119489 | 智库  |
+| 25953  | 生活  |
+| 26161  | 问吧  |
+| -21    | 体育  |
+| -24    | 评论  |
+| -23    | 国际  |
 
 </Route>
 
-### 列表
+### 栏目
 
-<Route author="nczitzk" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['列表 id，可在列表页 URL 中找到']"/>
+<Route author="nczitzk bigfei" example="/thepaper/list/25457" path="/thepaper/list/:id" :paramsDesc="['栏目 id，可在栏目页 URL 中找到']">
+
+| 栏目 ID  | 栏目名     |
+| ------ | ------- |
+| 26912  | 上直播     |
+| 26913  | 七环视频    |
+| 26965  | 温度计     |
+| 26908  | 一级视场    |
+| 27260  | World 湃 |
+| 26907  | 湃客科技    |
+| 33168  | 纪录湃     |
+| 26911  | 围观      |
+| 26918  | @所有人    |
+| 26906  | 大都会     |
+| 26909  | 追光灯     |
+| 26910  | 运动装     |
+| 26914  | 健寻记     |
+| 82188  | AI 播报   |
+| 89035  | 眼界      |
+| 92278  | 关键帧     |
+| 90069  | 战疫      |
+| 25462  | 中国政库    |
+| 25488  | 中南海     |
+| 97924  | 初心之路    |
+| 25489  | 舆论场     |
+| 25490  | 打虎记     |
+| 25423  | 人事风向    |
+| 25426  | 法治中国    |
+| 25424  | 一号专案    |
+| 25463  | 港台来信    |
+| 25491  | 长三角政商   |
+| 25428  | 直击现场    |
+| 68750  | 公益湃     |
+| 27604  | 暖闻      |
+| 25464  | 澎湃质量报告  |
+| 25425  | 绿政公署    |
+| 25429  | 澎湃国际    |
+| 25481  | 外交学人    |
+| 25430  | 澎湃防务    |
+| 25678  | 唐人街     |
+| 25427  | 澎湃人物    |
+| 25422  | 浦江头条    |
+| 25487  | 教育家     |
+| 25634  | 全景现场    |
+| 25635  | 美数课     |
+| 25600  | 快看      |
+| 25434  | 10% 公司  |
+| 25436  | 能见度     |
+| 25433  | 地产界     |
+| 25438  | 财经上下游   |
+| 25435  | 金改实验室   |
+| 25437  | 牛市点线面   |
+| 119963 | IPO 最前线 |
+| 25485  | 澎湃商学院   |
+| 25432  | 自贸区连线   |
+| 37978  | 进博会在线   |
+| 36079  | 湃客      |
+| 27392  | 政务      |
+| 77286  | 媒体      |
+| 27234  | 科学湃     |
+| 119445 | 生命科学    |
+| 119447 | 未来 2%   |
+| 119446 | 元宇宙观察   |
+| 119448 | 科创 101  |
+| 119449 | 科学城邦    |
+| 25444  | 社论      |
+| 27224  | 澎湃评论    |
+| 26525  | 思想湃     |
+| 26878  | 上海书评    |
+| 25483  | 思想市场    |
+| 25457  | 私家历史    |
+| 25574  | 翻书党     |
+| 25455  | 艺术评论    |
+| 26937  | 古代艺术    |
+| 25450  | 文化课     |
+| 25482  | 逝者      |
+| 25536  | 专栏      |
+| 26506  | 异次元     |
+| 97313  | 海平面     |
+| 103076 | 一问三知    |
+| 25445  | 澎湃研究所   |
+| 25446  | 全球智库    |
+| 26915  | 城市漫步    |
+| 25456  | 市政厅     |
+| 104191 | 世界会客厅   |
+| 25448  | 有戏      |
+| 26609  | 文艺范     |
+| 25942  | 身体      |
+| 26015  | 私・奔     |
+| 25599  | 运动家     |
+| 25842  | 私家地理    |
+| 80623  | 非常品     |
+| 26862  | 楼市      |
+| 25769  | 生活方式    |
+| 25990  | 澎湃联播    |
+| 26173  | 视界      |
+| 26202  | 亲子学堂    |
+| 26404  | 赢家      |
+| 26490  | 汽车圈     |
+| 115327 | IP SH   |
+| 117340 | 酒业      |
+
+</Route>
 
 ### 明查
 

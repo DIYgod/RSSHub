@@ -78,6 +78,16 @@ pageClass: routes
 
 ## finviz
 
+### News
+
+<Route author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['分类，见下表，默认为 News']">
+
+| News | Blog |
+| ---- | ---- |
+| news | blog |
+
+</Route>
+
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
@@ -134,6 +144,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## Unusual Whales
+
+### News Flow
+
+<Route author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
+
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
 ### 资讯
@@ -157,6 +173,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 :::
 
 </Route>
+
+## 百度股市通
+
+### 首页指数
+
+<Route author="CaoMeiYouRen" example="/baidu/gushitong/index" path="/baidu/gushitong/index"></Route>
 
 ## 北京证券交易所
 
@@ -220,6 +242,16 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="zidekuls" example="/eastmoney/ttjj/user/6551094298949188" path="/eastmoney/ttjj/user/:uid" :paramsDesc="['用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到']"/>
 
+## 法布财经
+
+### 新闻
+
+<Route author="nczitzk" example="/fastbull/news" path="/fastbull/news"/>
+
+### 快讯
+
+<Route author="nczitzk" example="/fastbull/express-news" path="/fastbull/express-news"/>
+
 ## 富途牛牛
 
 ### 要闻
@@ -228,17 +260,27 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 格隆汇
 
+### 首页
+
+<Route author="TonyRL" example="/gelonghui/home" path="/gelonghui/home/:tag?" :paramsDesc="['分类标签，见下表，默认为 `web_home_page`']" radar="1" rssbud="1">
+
+| 推荐            | 股票    | 基金   | 新股        | 研报       |
+| ------------- | ----- | ---- | --------- | -------- |
+| web_home_page | stock | fund | new_stock | research |
+
+</Route>
+
 ### 用户文章
 
-<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 主题文章
 
-<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']"/>
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 搜索关键字
 
-<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']"/>
+<Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']" radar="1" rssbud="1"/>
 
 ## 国家金融与发展实验室
 
@@ -582,6 +624,31 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | 数据 | 机器人新闻 | 独家数据 |
 | -- | ----- | ---- |
 |    | jqrxw | djsj |
+
+</Route>
+
+## 智通财经网
+
+### 推荐
+
+<Route author="nczitzk" example="/zhitongcaijing" path="/zhitongcaijing/:id?/:category?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部']">
+
+| id           | 栏目  |
+| ------------ | --- |
+| recommend    | 推荐  |
+| hkstock      | 港股  |
+| meigu        | 美股  |
+| agu          | 沪深  |
+| ct           | 创投  |
+| esg          | ESG |
+| aqs          | 券商  |
+| ajj          | 基金  |
+| focus        | 要闻  |
+| announcement | 公告  |
+| research     | 研究  |
+| shares       | 新股  |
+| bazaar       | 市场  |
+| company      | 公司  |
 
 </Route>
 
