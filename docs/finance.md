@@ -525,6 +525,10 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 雪球
 
+### 今日话题
+
+<Route author="nczitzk" example="/xueqiu/today" path="/xueqiu/today"/>
+
 ### 用户动态
 
 <Route author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" :paramsDesc="['用户 id, 可在用户主页 URL 中找到', '动态的类型, 不填则默认全部']">
