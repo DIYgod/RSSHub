@@ -508,7 +508,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 小说更新
 
-<Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']">
+<Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']" puppeteer="1">
 
 举例网址：<http://www.shuquge.com/txt/8659/index.html>
 需启用 puppeteer 并使用国内网络环境 </Route>
