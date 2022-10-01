@@ -693,3 +693,9 @@ Sources
 ### nocturnalscans章节订阅
 
 <Route author="wuchuheng" example="/nocturnalscans/the-greatest-estate-developer" path="/nocturnalscans/:name"/>
+
+## baozimh
+
+### baozhmh(包子漫画)
+
+<Route author="wuchuheng" example="/baozimh/xuebadexingchendahai-meiyumuxiao" path="/baozimh/:name"/>
