@@ -206,6 +206,15 @@
     "/aliyundrive/files/:share_id/:parent_file_id?": [
         "DIYgod"
     ],
+    "/aljazeera/:language?/:category?": [
+        "nczitzk"
+    ],
+    "/aljazeera/:language?/tag/:id": [
+        "nczitzk"
+    ],
+    "/aljazeera/:language?/rss": [
+        "nczitzk"
+    ],
     "/allrecode/news": [
         "nczitzk"
     ],
@@ -5297,7 +5306,6 @@
     "/grubstreet": [],
     "/manhuadui/manhua/:name/:serial?": [],
     "/fzdm/manhua/:id": [],
-    "/aljazeera/news": [],
     "/cfd/gbp_div": [],
     "/monotype/article": [],
     "/stork/keyword/:trackID/:displayKey": [],
