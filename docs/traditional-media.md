@@ -62,6 +62,64 @@ pageClass: routes
 
 </Route>
 
+## Aljazeera 半岛电视台
+
+### 新闻
+
+<Route author="nczitzk" example="/aljazeera/chinese/news" path="/aljazeera/:language?/:category?" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文', '分类，可在对应新闻分类页 URL 中找到，默认为空，即首页']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+若订阅 [Al Jazeera English - Economy](https://www.aljazeera.com/economy)，其语言为 `english`，路径为 `economy`，可得到其路由为 [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)
+
+若订阅 [半岛电视台中文频道 - 政治](https://chinese.aljazeera.net/news/political)，其语言为 `chinese`，路径为 `news/political`，可得到其路由为 [`/aljazeera/chinese/news/political`](https://rsshub.app/aljazeera/chinese/news/political)
+
+:::
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文', '标签 id，可在对应标签页 URL 中找到']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+若订阅 [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology)，其语言为 `english`，标签 id 为 `science-and-technology`，可得到其路由为 [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
+
+:::
+
+</Route>
+
+### 官方 RSS
+
+<Route author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+半岛电视台中文频道无对应的 RSS，故默认返回首页内容
+
+:::
+
+</Route>
+
 ## AP News
 
 ### 话题
