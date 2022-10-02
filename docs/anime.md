@@ -688,9 +688,9 @@ Sources
 
 <Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
 
-## nocturnalscans漫画
+## nocturnal scanlations
 
-### nocturnalscans章节订阅
+### 章节
 
 <Route author="wuchuheng" example="/nocturnalscans/the-greatest-estate-developer" path="/nocturnalscans/:name"/>
 
