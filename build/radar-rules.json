@@ -16408,6 +16408,14 @@
     "_name": "雪球",
     ".": [
       {
+        "title": "今日话题",
+        "docs": "https://docs.rsshub.app/finance.html#xue-qiu",
+        "source": [
+          "/today"
+        ],
+        "target": "/xueqiu/today"
+      },
+      {
         "title": "用户动态",
         "docs": "https://docs.rsshub.app/finance.html#xue-qiu",
         "source": [
