@@ -1,0 +1,5 @@
+<div >
+    {{each images}}
+         <img src='{{$value}}' />
+    {{/each}}
+</div>
