@@ -2118,12 +2118,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
 
-| 新闻模块       | 参数      |
-| ---------- | ------- |
-| 学院新闻 NEWS  | news    |
-| 教学 TEACH   | teach   |
-| 项目 PROJECT | project |
-| 党团 PARTY   | party   |
+| 新闻模块                   | 参数         |
+| ---------------------- | ---------- |
+| 学院新闻 NEWS              | news       |
+| 展览 EXHIBITION          | exhibition |
+| 研创 RESEARCH & CREATION | rc         |
+| 项目 PROJECT             | project    |
+| 党团 PARTY               | party      |
+| 后浪 YOUTH               | youth      |
 
 </Route>
 
