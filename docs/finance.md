@@ -525,6 +525,10 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 雪球
 
+### 今日话题
+
+<Route author="nczitzk" example="/xueqiu/today" path="/xueqiu/today"/>
+
 ### 用户动态
 
 <Route author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" :paramsDesc="['用户 id, 可在用户主页 URL 中找到', '动态的类型, 不填则默认全部']">
@@ -624,6 +628,31 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | 数据 | 机器人新闻 | 独家数据 |
 | -- | ----- | ---- |
 |    | jqrxw | djsj |
+
+</Route>
+
+## 智通财经网
+
+### 推荐
+
+<Route author="nczitzk" example="/zhitongcaijing" path="/zhitongcaijing/:id?/:category?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部']">
+
+| id           | 栏目  |
+| ------------ | --- |
+| recommend    | 推荐  |
+| hkstock      | 港股  |
+| meigu        | 美股  |
+| agu          | 沪深  |
+| ct           | 创投  |
+| esg          | ESG |
+| aqs          | 券商  |
+| ajj          | 基金  |
+| focus        | 要闻  |
+| announcement | 公告  |
+| research     | 研究  |
+| shares       | 新股  |
+| bazaar       | 市场  |
+| company      | 公司  |
 
 </Route>
 

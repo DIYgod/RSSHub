@@ -62,6 +62,64 @@ pageClass: routes
 
 </Route>
 
+## Aljazeera 半岛电视台
+
+### 新闻
+
+<Route author="nczitzk" example="/aljazeera/chinese/news" path="/aljazeera/:language?/:category?" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文', '分类，可在对应新闻分类页 URL 中找到，默认为空，即首页']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+若订阅 [Al Jazeera English - Economy](https://www.aljazeera.com/economy)，其语言为 `english`，路径为 `economy`，可得到其路由为 [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)
+
+若订阅 [半岛电视台中文频道 - 政治](https://chinese.aljazeera.net/news/political)，其语言为 `chinese`，路径为 `news/political`，可得到其路由为 [`/aljazeera/chinese/news/political`](https://rsshub.app/aljazeera/chinese/news/political)
+
+:::
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文', '标签 id，可在对应标签页 URL 中找到']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+若订阅 [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology)，其语言为 `english`，标签 id 为 `science-and-technology`，可得到其路由为 [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
+
+:::
+
+</Route>
+
+### 官方 RSS
+
+<Route author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+半岛电视台中文频道无对应的 RSS，故默认返回首页内容
+
+:::
+
+</Route>
+
 ## AP News
 
 ### 话题
@@ -443,12 +501,6 @@ Solidot 提供的 feed:
 下载站：<http://www.cgx02.xyz/index.php?dir=/te>
 
 </Route>
-
-## UDN
-
-### 轉角國際
-
-<Route author="emdoe" example="/udn/global/鏡頭背後" path="/udn/global/:tid" :paramsDesc="['標籤名稱，請在轉角國際首頁獲取；如果選擇輸入 `newest` 則輸出最新文章']">
 
 ## Voice of America (VOA)
 
@@ -1359,6 +1411,25 @@ category 对应的关键词有
 | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 11 | 12 | 13 | 99  |
 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- |
 | 精選 | 要聞 | 社會 | 地方 | 兩岸 | 國際 | 財經 | 運動 | 娛樂 | 生活 | 股市 | 文教 | 數位 | 不分類 |
+
+</Route>
+
+### 轉角國際 - 首頁
+
+<Route author="emdoe nczitzk" example="/udn/global" path="/udn/global/:category?" :paramsDesc="['分类，见下表，默认为首頁']">
+
+| 首頁 | 最新文章 | 熱門文章 |
+| -- | ---- | ---- |
+|    | new  | hot  |
+
+</Route>
+
+### 轉角國際 - 標籤
+
+<Route author="nczitzk" example="/udn/global/tag/過去24小時" path="/udn/global/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+
+| 過去 24 小時 | 鏡頭背後 | 深度專欄 | 重磅廣播 |
+| -------- | ---- | ---- | ---- |
 
 </Route>
 

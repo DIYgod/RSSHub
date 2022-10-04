@@ -56,6 +56,64 @@ The following are some of the supported Channel and Topic ids.
 
 </RouteEn>
 
+## Aljazeera
+
+### News
+
+<RouteEn author="nczitzk" example="/aljazeera/english/news" path="/aljazeera/:language?/:category?" :paramsDesc="['Language, see below, arbric by default, as Arbric', 'Category, can be found in URL, homepage by default']">
+
+Language
+
+| Arbric | Chinese | English |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip Tip
+
+If you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is `english` and whose path is `economy`, you can get the route as [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)
+
+If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.net/news/political) with language `chinese` and path `news/political`, you can get the route as [`/aljazeera/chinese/news/political`](https://rsshub.app/aljazeera/chinese/news/political)
+
+:::
+
+</RouteEn>
+
+### Tag
+
+<RouteEn author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" :paramsDesc="['Language, see below, arbric by default, as Arbric', 'Tag id, can be found in URL']">
+
+Language
+
+| Arbric | Chinese | English |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip Tip
+
+If you subscribe to [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology), whose language is `english` and whose path is `science-and-technology`, you can get the route as [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
+
+:::
+
+</RouteEn>
+
+### Official RSS
+
+<RouteEn author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" :paramsDesc="['Language, see below, arbric by default, as Arbric']">
+
+Language
+
+| Arbric | Chinese | English |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip Tip
+
+There is no RSS source for Al Jazeera Chinese, returning homepage content by default
+
+:::
+
+</RouteEn>
+
 ## AP News
 
 ### Topics

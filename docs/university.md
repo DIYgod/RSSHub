@@ -2989,6 +2989,26 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 财经学院
+
+<Route author="RiverTwilight" example="/swpu/cjxy/xyxw" path="/swpu/cjxy/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 学院新闻 | 学院通知 |
+| -- | ---- | ---- |
+| 代码 | xyxw | xytz |
+
+</Route>
+
+### 信息学院
+
+<Route author="RiverTwilight" example="/swpu/is/xyxw" path="/swpu/is/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 学院新闻 | 通知公告 | 教育教学 | 学生工作 | 招生就业 |
+| -- | ---- | ---- | ---- | ---- | ---- |
+| 代码 | xyxw | tzgg | jyjx | xsgz | zsjy |
+
+</Route>
+
 ## 信阳师范学院
 
 ### 高等教育自学考试办公室
