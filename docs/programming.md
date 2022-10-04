@@ -426,7 +426,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 文章
 
-<Route author="moke8 nczitzk" example="/hellogithub/article" path="/hellogithub/article:sort?/:id?" :paramsDesc="['排序方式，见下表，默认为 `hot`，即热门', '标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+<Route author="moke8 nczitzk" example="/hellogithub/article" path="/hellogithub/article/:sort?/:id?" :paramsDesc="['排序方式，见下表，默认为 `hot`，即热门', '标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
 
 | 热门  | 最近   |
 | --- | ---- |
