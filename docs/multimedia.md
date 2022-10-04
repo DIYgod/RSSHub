@@ -1656,9 +1656,55 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ## 云听
 
-### 电台节目
+### 专辑
 
-<Route author="kt286 nczitzk" example="/radio/1552135" path="/radio/:id" :paramsDesc="['节目ID，可在对应专辑页面的 URL 中找到']" supportPodcast="1"/>
+<Route author="nczitzk" example="/radio/album/15682090498666" path="/radio/album/:id" :paramsDesc="['专辑 id，可在对应专辑页面的 URL 中找到']" supportPodcast="1">
+
+如果订阅 [中国相声榜](https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666)，其 URL 为 <https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666>，可以得到 `columnId` 为 `15682090498666`
+
+所以对应路由为 [`/radio/album/15682090498666`](https://rsshub.app/radio/album/15682090498666)
+
+::: tip 提示
+
+部分专辑不适用该路由，此时可以尝试 [节目](#yun-ting-jie-mu) 路由
+
+:::
+
+</Route>
+
+### 节目
+
+<Route author="kt286 nczitzk" example="/radio/1552135" path="/radio/:id" :paramsDesc="['专辑 id，可在对应专辑页面的 URL 中找到']" supportPodcast="1">
+
+如果订阅 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)，其 URL 为 <https://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135>，可以得到 `columnId` 为 `1552135`
+
+所以对应路由为 [`/radio/1552135`](https://rsshub.app/radio/1552135)
+
+::: tip 提示
+
+该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)
+
+与适用于 [专辑](#yun-ting-zhuan-ji) 路由的专辑其 `columnId` 长度相比，它们的 `columnId` 长度较短
+
+:::
+
+</Route>
+
+### 直播
+
+<Route author="nczitzk" example="/radio/zhibo/1395528" path="/radio/zhibo/:id" :paramsDesc="['直播 id，可在对应点播页面的 URL 中找到']" supportPodcast="1">
+
+如果订阅 [新闻和报纸摘要](http://www.radio.cn/pc-portal/sanji/zhibo\_2.html?name=1395528)，其 URL 为 <http://www.radio.cn/pc-portal/sanji/zhibo_2.html?name=1395528>，可以得到 `name` 为 `1395528`
+
+所以对应路由为 [`/radio/zhibo/1395528`](https://rsshub.app/radio/zhibo/1395528)
+
+::: tip 提示
+
+查看更多电台直播节目，可前往 [电台直播](http://www.radio.cn/pc-portal/erji/radioStation.html)
+
+:::
+
+</Route>
 
 ## 中国高清网
 
