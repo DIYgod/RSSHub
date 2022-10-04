@@ -5007,13 +5007,13 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docs-searchbar.js@^2.1.1:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-2.2.0.tgz#e60eb0ee4f67853c41fdf7d3a4ef6ac7ac2c8027"
-  integrity sha512-rleKMiTkxG14M+6yt3+H8H0w/GKxWsNMinf4+zTVz9aVi04oJ8u37kktTiW3qkpPl9VQ7/i7Yv9wykukMqVxfw==
+docs-searchbar.js@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/docs-searchbar.js/-/docs-searchbar.js-2.4.0.tgz#d2f65e11ae8662787fc1571d682823046cb15c94"
+  integrity sha512-R5SOwIwVul6cssi+omE2h6JaFSCFp/k3xDgLKZfb6oDhF8Yed15hR1vcrKsSnF+XkNruhCJvTYoMGb9+MEPWvg==
   dependencies:
     autocomplete.js "^0.38.1"
-    meilisearch "^0.27.0"
+    meilisearch "^0.28.0"
     to-factory "^1.0.0"
     zepto "^1.2.0"
 
@@ -9479,17 +9479,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-meilisearch@0.28.0:
+meilisearch@0.28.0, meilisearch@^0.28.0:
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.28.0.tgz#650f08a56ef0a989a41d13233f7a744cfa7f54df"
   integrity sha512-zC50xLyPWBtfAIZiFTSJyYJp/a5bO+dSSigBKUEoShFkuv9+/KC4J3T3ZejNVHXG2DU0ohOMf8TZ3HAHXNd3EA==
-  dependencies:
-    cross-fetch "^3.1.5"
-
-meilisearch@^0.27.0:
-  version "0.27.0"
-  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.27.0.tgz#8bd57ddb77b975f93e054cb977b951c488ece297"
-  integrity sha512-kZOZFIuSO7c6xRf+Y2/9/h6A9pl0sCl/G44X4KuaSwxGbruOZPhmxbeVEgLHBv4pUFvQ56rNVTA/2d/5GCU1YA==
   dependencies:
     cross-fetch "^3.1.5"
 
@@ -13095,10 +13088,10 @@ superagent@^8.0.0:
     readable-stream "^3.6.0"
     semver "^7.3.7"
 
-supertest@6.2.4:
-  version "6.2.4"
-  resolved "https://registry.yarnpkg.com/supertest/-/supertest-6.2.4.tgz#3dcebe42f7fd6f28dd7ac74c6cba881f7101b2f0"
-  integrity sha512-M8xVnCNv+q2T2WXVzxDECvL2695Uv2uUj2O0utxsld/HRyJvOU8W9f1gvsYxSNU4wmIe0/L/ItnpU4iKq0emDA==
+supertest@6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/supertest/-/supertest-6.3.0.tgz#06c21234ff0be9e398ba19f7a75f237930d57442"
+  integrity sha512-QgWju1cNoacP81Rv88NKkQ4oXTzGg0eNZtOoxp1ROpbS4OHY/eK5b8meShuFtdni161o5X0VQvgo7ErVyKK+Ow==
   dependencies:
     methods "^1.1.2"
     superagent "^8.0.0"
@@ -14110,12 +14103,12 @@ vuepress-plugin-container@^2.0.2:
     "@vuepress/shared-utils" "^1.2.0"
     markdown-it-container "^2.0.0"
 
-vuepress-plugin-meilisearch@0.12.2:
-  version "0.12.2"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.2.tgz#d130fa77a5f1ca5f8ae09af14e504f21779376d1"
-  integrity sha512-ug9+puCPySr/wJEnymWqFqbo3xsQfqXog2kFU8RPjrOQ20miQjgPYnF3u/8Pb+QT0s5zHA6ykT8lTBx0ovWsVw==
+vuepress-plugin-meilisearch@0.12.4:
+  version "0.12.4"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.4.tgz#35012abfa637c0182032d329d7abb6eaa4d49212"
+  integrity sha512-plD+xCmjF5I5BChHLTeLu2cCzu1fusrW9Ubak8Iyt0wTThV4l8eKeaxSnt0JEFhTv5cF1nosPtuubczeSJjjaA==
   dependencies:
-    docs-searchbar.js "^2.1.1"
+    docs-searchbar.js "^2.4.0"
 
 vuepress-plugin-sitemap@2.3.1:
   version "2.3.1"
