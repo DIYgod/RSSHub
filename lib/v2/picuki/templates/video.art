@@ -1,3 +1,0 @@
-<video poster="{{ videoPoster }}" controls>
-    <source src="{{ videoSrc }}" type="video/mp4">
-</video>
