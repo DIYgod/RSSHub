@@ -397,7 +397,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 热门
 
-<Route author="nczitzk" example="/hellogithub/hot/:id?" path="/hellogithub/hot/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+<Route author="nczitzk" example="/hellogithub/hot" path="/hellogithub/hot/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
 
 以下为部分标签：
 
@@ -418,7 +418,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 最近
 
-<Route author="nczitzk" example="/hellogithub/last/:id?" path="/hellogithub/last/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+<Route author="nczitzk" example="/hellogithub/last" path="/hellogithub/last/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
 
 部分标签见上表
 
@@ -430,7 +430,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 排行榜
 
-<Route author="moke8 nczitzk" example="/hellogithub/report" path="/hellogithub/report/:type?" :paramsDesc="['分类，见下表']">
+<Route author="moke8 nczitzk" example="/hellogithub/report" path="/hellogithub/report/:type?" :paramsDesc="['分类，见下表，默认为编程语言排行榜']">
 
 | 编程语言  | 服务器      | 数据库        |
 | ----- | -------- | ---------- |
