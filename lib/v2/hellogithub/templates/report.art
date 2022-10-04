@@ -8,7 +8,7 @@
       <th>对比上月</th>
       <th>年度明星语言</th>
     </tr>
-    {{ each list l }}
+    {{ each tiobe_list l }}
     <tr>
       <td>{{ l.position }}</td>
       <td>{{ l.name }}</td>
