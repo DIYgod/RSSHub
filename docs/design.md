@@ -202,6 +202,12 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ## 优设网
 
+### 最新文章
+
+<Route author="evnydd0sf" example="/uisdc/index" path="/uisdc/index" :paramsDesc="['最新文章']">
+
+</Route>
+
 ### 设计专题
 
 <Route author="nczitzk" example="/uisdc/zt/design-history" path="/uisdc/zt/:title?" :paramsDesc="['专题名称，可在标签页的 URL 中找到，如 `design-history`；也可填入 `hot` 展示最热门专题，默认展示最新鲜专题']">
