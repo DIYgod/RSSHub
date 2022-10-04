@@ -2133,12 +2133,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
 
-| 新闻模块  | 参数   |
-| ----- | ---- |
-| 招生工作  | 1959 |
-| 培养工作  | 1962 |
-| 学位工作  | 1958 |
-| 思政与管理 | 1960 |
+| 新闻模块 | 参数   |
+| ---- | ---- |
+| 招生工作 | 1959 |
+| 培养工作 | 1962 |
+| 学位工作 | 1958 |
 
 </Route>
 
