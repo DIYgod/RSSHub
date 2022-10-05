@@ -528,64 +528,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 1.  显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>
 2.  逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
 
-## 酷安
-
-### 图文
-
-<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen/:type?" :paramsDesc="['默认为hot']">
-
-| 参数名称 | 编辑精选 | 最新     |
-| ---- | ---- | ------ |
-| type | hot  | latest |
-
-</Route>
-
-### 头条
-
-<Route author="xizeyoupan" example="/coolapk/toutiao" path="/coolapk/toutiao/:type?" :paramsDesc="['默认为history']">
-
-| 参数名称 | 历史头条    | 最新     |
-| ---- | ------- | ------ |
-| type | history | latest |
-
-</Route>
-
-### 看看号
-
-<Route author="xizeyoupan" example="/coolapk/dyh/1524" path="/coolapk/dyh/:dyhId" :paramsDesc="['看看号ID']">
-
-::: tip
-仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
-:::
-
-</Route>
-
-### 话题
-
-<Route author="xizeyoupan" example="/coolapk/huati/酷安夜话" path="/coolapk/huati/:tag" :paramsDesc="['话题名称']"/>
-
-### 用户
-
-<Route author="xizeyoupan" example="/coolapk/user/3177668/dynamic" path="/coolapk/user/:uid/dynamic" :paramsDesc="['在个人界面右上分享-复制链接获取']"/>
-
-### 热榜
-
-<Route author="xizeyoupan" example="/coolapk/hot" path="/coolapk/hot/:type?/:period?" :paramsDesc="['默认为`jrrm`','默认为`daily`']">
-
-| 参数名称 | 今日热门 | 点赞榜 | 评论榜 | 收藏榜 | 酷图榜 |
-| ---- | ---- | --- | --- | --- | --- |
-| type | jrrm | dzb | plb | scb | ktb |
-
-| 参数名称   | 日榜    | 周榜     |
-| ------ | ----- | ------ |
-| period | daily | weekly |
-
-::: tip
-今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
-:::
-
-</Route>
-
 ## 快递 100
 
 ### 快递订单追踪
