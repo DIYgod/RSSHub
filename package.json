@@ -124,7 +124,7 @@
     "pidusage": "3.0.0",
     "plist": "3.0.6",
     "proxy-chain": "2.1.0",
-    "puppeteer": "18.0.5",
+    "puppeteer": "18.2.0",
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.1",
