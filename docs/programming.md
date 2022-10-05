@@ -397,23 +397,58 @@ GitHub 官方也提供了一些 RSS:
 
 ## HelloGitHub
 
-### 文章列表
+### 热门
 
-<Route author="moke8" example="/hellogithub/article" path="/hellogithub/article"/>
+<Route author="nczitzk" example="/hellogithub/hot" path="/hellogithub/hot/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
 
-### 编程语言排行榜
+以下为部分标签：
 
-<Route author="moke8" example="/hellogithub/ranking" path="/hellogithub/ranking/:type?" :paramsDesc="['分类，见下表']">
+| id         | 标签     |
+| ---------- | ------ |
+| Z8PipJsHCX | Python |
+| YQHn0gERoi | C      |
+| WTbsu5GAfC | CLI    |
+| juBLV86qa5 | 机器学习   |
+| D4JBAUo967 | Rust   |
+| dFA60uKLgr | GUI    |
+| 0LByh3tjUO | 教程     |
+| 4lpGK0sUyk | Web 应用 |
+| yrZkGsUC9M | C++    |
+| mbP20HIEYD | Ruby   |
 
-| 编程语言排行 | 数据库排行 | 服务端语言排行   |
-| ------ | ----- | --------- |
-| tiobe  | db    | webserver |
+</Route>
+
+### 最近
+
+<Route author="nczitzk" example="/hellogithub/last" path="/hellogithub/last/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+
+部分标签见上表
+
+</Route>
+
+### 文章
+
+<Route author="moke8 nczitzk" example="/hellogithub/article" path="/hellogithub/article/:sort?/:id?" :paramsDesc="['排序方式，见下表，默认为 `hot`，即热门', '标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+
+| 热门  | 最近   |
+| --- | ---- |
+| hot | last |
+
+</Route>
+
+### 排行榜
+
+<Route author="moke8 nczitzk" example="/hellogithub/report" path="/hellogithub/report/:type?" :paramsDesc="['分类，见下表，默认为编程语言排行榜']">
+
+| 编程语言  | 服务器      | 数据库        |
+| ----- | -------- | ---------- |
+| tiobe | netcraft | db-engines |
 
 </Route>
 
 ### 月刊
 
-<Route author="moke8" example="/hellogithub/month" path="/hellogithub/month"/>
+<Route author="moke8 nczitzk" example="/hellogithub/volume" path="/hellogithub/volume"/>
 
 ## Hex-Rays
 
