@@ -3527,19 +3527,40 @@
         source:[ "/topic/:id" ],
         target:(params) => `/hellobtc/topic/${params.id.split('.')[0]}` } ] },
   "hellogithub.com":{ _name:"HelloGitHub",
-    ".":[ { title:"文章列表",
-        docs:"https://docs.rsshub.app/programming.html#hellogithub",
-        source:[ "/article",
-          "/article/?url=/periodical/volume/" ],
-        target:"/hellogithub/article" },
-      { title:"编程语言排行榜",
-        docs:"https://docs.rsshub.app/programming.html#hellogithub",
-        source:"/report/:type/?url=/periodical/volume/",
-        target:"/hellogithub/ranking/:type" },
+    ".":[ { title:"热门",
+        docs:"https://docs.rsshub.app/programming.html#hellogithub-re-men",
+        source:[ "/" ],
+        target:(params, url) => {
+                    const sort = new URL(url).searchParams.get('sort_by');
+                    const id = new URL(url).searchParams.get('tid');
+                    return `/hellogithub${sort ? `/sort` : ''}${id ? `/id` : ''}`;
+                } },
+      { title:"最近",
+        docs:"https://docs.rsshub.app/programming.html#hellogithub-zui-jin",
+        source:[ "/" ],
+        target:(params, url) => {
+                    const sort = new URL(url).searchParams.get('sort_by');
+                    const id = new URL(url).searchParams.get('tid');
+                    return `/hellogithub${sort ? `/sort` : ''}${id ? `/id` : ''}`;
+                } },
+      { title:"文章",
+        docs:"https://docs.rsshub.app/programming.html#hellogithub-wen-zhang",
+        source:[ "/" ],
+        target:(params, url) => {
+                    const sort = new URL(url).searchParams.get('sort_by');
+                    const id = new URL(url).searchParams.get('tid');
+                    return `/hellogithub/article${sort ? `/sort` : ''}${id ? `/id` : ''}`;
+                } },
+      { title:"排行榜",
+        docs:"https://docs.rsshub.app/programming.html#hellogithub-pai-hang-bang",
+        source:[ "/report/:type",
+          "/" ],
+        target:"/hellogithub/report/:type" },
       { title:"月刊",
-        docs:"https://docs.rsshub.app/programming.html#hellogithub",
-        source:"/periodical/volume/",
-        target:"/hellogithub/month" } ] },
+        docs:"https://docs.rsshub.app/programming.html#hellogithub-yue-kan",
+        source:[ "/periodical/volume/:id",
+          "/" ],
+        target:"/hellogithub/volume" } ] },
   "hrbeu.edu.cn":{ _name:"哈尔滨工程大学",
     yjsy:[ { title:"研究生院 - 通知公告",
         docs:"https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue",
