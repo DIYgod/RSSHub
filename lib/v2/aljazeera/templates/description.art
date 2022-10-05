@@ -1,0 +1,8 @@
+{{ if image }}
+<figure>
+{{@ image }}
+</figure>
+{{ /if }}
+{{ if description }}
+{{@ description }}
+{{ /if }}
