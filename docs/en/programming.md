@@ -249,7 +249,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Section
 
-<RouteEn author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['Section, see below, `index` by default', 'Link, see below, `sources` by default', 'User, only valid for section `threads`,`submitted`', 'When `over` section is used, `User` means the threshold points for post' ]">
+<RouteEn author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['Section, see below, `index` by default', 'Link, see below, `sources` by default', 'User, only valid for section `threads` and `submitted`. When `over` section is used, `User` means the threshold points for post']">
 
 Section
 
