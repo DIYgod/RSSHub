@@ -6,7 +6,6 @@ WORKDIR /app
 
 # place ARG statement before RUN statement which need it to avoid cache miss
 ARG USE_CHINA_NPM_REGISTRY=0
-ARG TARGETPLATFORM
 RUN \
     set -ex && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
@@ -17,15 +16,6 @@ RUN \
 
 COPY ./yarn.lock /app/
 COPY ./package.json /app/
-
-# required for building canvas in arm64 and arm/v7 (introduce in #10954)
-RUN \
-    set -ex && \
-    if [ "$TARGETPLATFORM" != "linux/amd64" ]; then \
-        apt-get update && \
-        apt-get install -yq --no-install-recommends \
-            libpango1.0-dev ; \
-    fi;
 
 # lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
 RUN \
@@ -146,7 +136,7 @@ RUN \
             ; \
         else \
             apt-get install -yq --no-install-recommends \
-                chromium librsvg2-2 \
+                chromium \
             && \
             echo 'CHROMIUM_EXECUTABLE_PATH=chromium' | tee /app/.env ; \
         fi; \
