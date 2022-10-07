@@ -2,9 +2,6 @@ FROM node:16-bullseye as dep-builder
 # Here we use the non-slim image to provide build-time deps (compilers and python), thus no need to install later.
 # This effectively speeds up qemu-based cross-build.
 
-# no longer needed
-#RUN ln -sf /bin/bash /bin/sh
-
 WORKDIR /app
 
 # place ARG statement before RUN statement which need it to avoid cache miss
