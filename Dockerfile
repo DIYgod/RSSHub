@@ -146,7 +146,7 @@ RUN \
             ; \
         else \
             apt-get install -yq --no-install-recommends \
-                chromium \
+                chromium librsvg2-2 \
             && \
             echo 'CHROMIUM_EXECUTABLE_PATH=chromium' | tee /app/.env ; \
         fi; \
