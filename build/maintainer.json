@@ -1918,6 +1918,9 @@
     "/ifeng/feng/:id/:type": [
         "Jamch"
     ],
+    "/ifeng/news/:path?": [
+        "nczitzk"
+    ],
     "/ifi-audio/download/:val/:id": [
         "NavePnow"
     ],
