@@ -98,7 +98,7 @@ RUN \
         yarn add puppeteer@$(cat /app/.puppeteer_version) && \
         yarn cache clean ; \
     else \
-        mkdir -p /app/node_modules/puppeteer ; \
+        mkdir -p /app/node_modules/puppeteer-core ; \
     fi;
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -143,14 +143,14 @@ RUN \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=chromium-downloader /app/node_modules/puppeteer /app/node_modules/puppeteer
+COPY --from=chromium-downloader /app/node_modules/puppeteer-core /app/node_modules/puppeteer-core
 
 # if grep matches nothing then it will exit with 1, thus, we cannot `set -e` here
 RUN \
     set -x && \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
-        ldd $(find /app/node_modules/puppeteer/ -name chrome) | grep "not found" ; \
+        ldd $(find /app/node_modules/puppeteer-core/ -name chrome) | grep "not found" ; \
         if [ "$?" = 0 ]; then \
             echo "!!! Chromium has unmet shared libs !!!" && \
             exit 1 ; \
