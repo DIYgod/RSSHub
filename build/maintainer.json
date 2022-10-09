@@ -4052,6 +4052,9 @@
     "/wikinews/latest": [
         "KotoriK"
     ],
+    "/wise/pair/:source/:target": [
+        "HenryQW"
+    ],
     "/wizfile/updates": [
         "Fatpandac"
     ],
@@ -5159,7 +5162,6 @@
     "/itslide/new": [],
     "/remote-work/:caty?": [],
     "/chinatimes/:caty": [],
-    "/transferwise/pair/:source/:target": [],
     "/chocolatey/software/:name?": [],
     "/bahamut/creation/:author/:category?": [],
     "/bahamut/creation_index/:category?/:subcategory?/:type?": [],
