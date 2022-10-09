@@ -1176,11 +1176,11 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 印记中文周刊
+## 印记中文
 
-### 最新一期
+### 周刊 - JavaScript
 
-<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly"/>
+<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" rssbud="1"/>
 
 ## 政采云前端技术团队
 
