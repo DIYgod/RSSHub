@@ -269,16 +269,6 @@ pageClass: routes
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
-## TransferWise
-
-### 昨日汇率变动
-
-<Route author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']">
-
-参见支持的[货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
-
-</Route>
-
 ## TSSstatus（iOS 降级通道）
 
 ### Status
@@ -325,6 +315,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 所有  | 推荐  |
 | --- | --- |
 | all | rec |
+
+</Route>
+
+## Wise
+
+### 昨日汇率变动
+
+<Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']" radar="1">
+
+参见支持的 [货币列表](https://wise.com/tools/exchange-rate-alerts/)。
 
 </Route>
 
