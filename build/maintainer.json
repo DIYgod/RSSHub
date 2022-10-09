@@ -905,6 +905,9 @@
     "/dockerhub/tag/:owner/:image": [
         "outloudvi"
     ],
+    "/docschina/jsweekly": [
+        "daijinru"
+    ],
     "/domp4/detail/:id": [
         "savokiss"
     ],
@@ -5000,7 +5003,6 @@
     "/tprtc/news": [],
     "/archdaily": [],
     "/aptonic/action/:untested?": [],
-    "/docschina/jsweekly": [],
     "/im2maker/:channel?": [],
     "/cninfo/announcement/:column/:code/:orgId/:category?/:search?": [],
     "/jinshi/index": [],
