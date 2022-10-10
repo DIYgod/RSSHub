@@ -3129,7 +3129,8 @@
         "nczitzk"
     ],
     "/qipamaijia/:cate?": [
-        "Fatpandac"
+        "Fatpandac",
+        "nczitzk"
     ],
     "/qm120/news/:category?": [
         "nczitzk"
