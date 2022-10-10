@@ -8285,6 +8285,16 @@ jest-haste-map@^29.1.2:
   optionalDependencies:
     fsevents "^2.3.2"
 
+jest-junit@^14.0.1:
+  version "14.0.1"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-14.0.1.tgz#5b357d6f5d333459585d628a24cd48b5bbc92ba2"
+  integrity sha512-h7/wwzPbllgpQhhVcRzRC76/cc89GlazThoV1fDxcALkf26IIlRsu/AcTG64f4nR2WPE3Cbd+i/sVf+NCUHrWQ==
+  dependencies:
+    mkdirp "^1.0.4"
+    strip-ansi "^6.0.1"
+    uuid "^8.3.2"
+    xml "^1.0.1"
+
 jest-leak-detector@^29.1.2:
   version "29.1.2"
   resolved "https://registry.yarnpkg.com/jest-leak-detector/-/jest-leak-detector-29.1.2.tgz#4c846db14c58219430ccbc4f01a1ec52ebee4fc2"
@@ -14674,6 +14684,11 @@ xml2js@0.4.23, xml2js@^0.4.19:
   dependencies:
     sax ">=0.6.0"
     xmlbuilder "~11.0.0"
+
+xml@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/xml/-/xml-1.0.1.tgz#78ba72020029c5bc87b8a81a3cfcd74b4a2fc1e5"
+  integrity sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==
 
 xmlbuilder@^13.0.0:
   version "13.0.2"
