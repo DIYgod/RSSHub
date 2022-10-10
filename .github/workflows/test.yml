@@ -32,6 +32,11 @@ jobs:
         node-version: [ 14, 16 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
+      - name: Collect Workflow Telemetry
+        uses: runforesight/foresight-workflow-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: ${{ secrets.FORESIGHT_KEY }}
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -48,6 +53,14 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+      - name: Analyze Test and/or Coverage Results
+        uses: runforesight/foresight-test-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: ${{ secrets.FORESIGHT_KEY }}
+          test_format: JUNIT
+          test_framework: JEST
+          coverage_format: JACOCO/XML
 
   puppeteer:
     runs-on: ubuntu-latest
