@@ -2380,6 +2380,9 @@
     "/line/today/:edition?/:tab?": [
         "nczitzk"
     ],
+    "/linkresearcher/:params": [
+        "yech1990"
+    ],
     "/linovelib/novel/:id": [
         "misakicoca"
     ],
@@ -5129,7 +5132,6 @@
     "/kaggle/discussion/:forumId/:sort?": [],
     "/kaggle/competitions/:category?": [],
     "/kaggle/user/:user": [],
-    "/linkresearcher/:params": [],
     "/elife/:tid": [],
     "/ieee/author/:aid/:sortType/:count?": [],
     "/pnas/:topic?": [],

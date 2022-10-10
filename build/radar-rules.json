@@ -9743,6 +9743,20 @@
       }
     ]
   },
+  "linkresearcher": {
+    "_name": "领研",
+    ".": [
+      {
+        "title": "论文",
+        "docs": "https://docs.rsshub.app/study.html#ling-yan",
+        "source": [
+          "/theses",
+          "/information",
+          "/careers"
+        ]
+      }
+    ]
+  },
   "linovelib.com": {
     "_name": "哩哔轻小说",
     ".": [
