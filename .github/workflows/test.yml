@@ -61,7 +61,7 @@ jobs:
           test_format: JUNIT
           test_framework: JEST
           coverage_format: JACOCO/XML
-          test_path: ./coverage/junit.xml
+          coverage_path: ./coverage/junit.xml
 
   puppeteer:
     runs-on: ubuntu-latest
