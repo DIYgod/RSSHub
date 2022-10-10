@@ -205,16 +205,6 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 <RouteEn author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
-## TransferWise
-
-### FX Pair Yesterday
-
-<RouteEn author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']">
-
-Refer to [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
-
-</RouteEn>
-
 ## Trending Search Keyword Aggregator
 
 ### Aggregated Keyword Tracker
@@ -254,6 +244,16 @@ Type
 | All | Recommend |
 | --- | --------- |
 | all | rec       |
+
+</RouteEn>
+
+## Wise
+
+### FX Pair Yesterday
+
+<RouteEn author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']" radar="1">
+
+Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).
 
 </RouteEn>
 

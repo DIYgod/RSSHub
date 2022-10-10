@@ -1812,7 +1812,7 @@ Supported sub-sites:
 
 ### 首页
 
-<Route author="nczitzk" example="/dedao/list/年度日更" path="/dedao/list/:caty?" :paramsDesc="['分类名，默认为年度日更']"/>
+<Route author="nczitzk" example="/dedao/list/年度日更" path="/dedao/list/:category?" :paramsDesc="['分类名，默认为年度日更']"/>
 
 ### 新闻
 
@@ -1828,7 +1828,17 @@ Supported sub-sites:
 
 ### 知识城邦
 
-<Route author="nczitzk" example="/dedao/knowledge" path="/dedao/knowledge/:topic?/:type?" :paramsDesc="['话题 id，可在话题页 URL 中找到', '分享类型，`true` 指精选，`false` 指最新，默认为精选']"/>
+<Route author="nczitzk" example="/dedao/knowledge" path="/dedao/knowledge/:topic?/:type?" :paramsDesc="['话题 id，可在对应话题页 URL 中找到', '分享类型，`true` 指精选，`false` 指最新，默认为精选']"/>
+
+### 用户主页
+
+<Route author="nczitzk" example="/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og" path="/dedao/user/:id/:type?" :paramsDesc="['用户 id，可在对应用户主页 URL 中找到', '类型，见下表，默认为`0`，即动态']">
+
+| 动态 | 书评 | 视频 |
+| -- | -- | -- |
+| 0  | 7  | 12 |
+
+</Route>
 
 ## 电动邦
 
@@ -2144,6 +2154,20 @@ Type 栏目：
 </Route>
 
 ## 凤凰网
+
+### 资讯
+
+<Route author="nczitzk" example="/ifeng/news" path="/ifeng/news/:path?" :paramsDesc="['路径，对应分类资讯页 URL 路径，默认为空']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://news.ifeng.com/` 后的字段。下面是一个例子。
+
+若订阅 [大湾区\_资讯\_凤凰网](https://news.ifeng.com/shanklist/3-305565-) 则将对应页面 URL <https://news.ifeng.com/shanklist/3-305565-> 中 `https://news.ifeng.com/` 后的字段 `shanklist/3-305565-` 作为路径填入。此时路由为 [`/ifeng/news/shanklist/3-305565-`](https://rsshub.app/ifeng/news/shanklist/3-305565-)
+
+:::
+
+</Route>
 
 ### 大风号
 
