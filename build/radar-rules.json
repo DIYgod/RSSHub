@@ -10128,6 +10128,19 @@
       }
     ]
   },
+  "mckinsey.com.cn": {
+    "_name": "McKinsey Greater China",
+    ".": [
+      {
+        "title": "洞见",
+        "docs": "https://docs.rsshub.app/finance.html#mai-ken-xi",
+        "source": [
+          "/insights/:category",
+          "/insights"
+        ]
+      }
+    ]
+  },
   "mdpi.com": {
     "_name": "MDPI",
     "www": [
