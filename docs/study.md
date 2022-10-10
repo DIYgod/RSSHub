@@ -317,7 +317,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']"/>
+<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']" radar="1" rssbud="1">
 
 | `:param` | 举例              | 定义                                |
 | -------- | --------------- | --------------------------------- |
@@ -325,6 +325,8 @@ path="/ctfhub/upcoming/:limit?"
 | subject  | subject = 生物    | 可置空                               |
 | columns  | columns = 健康    | 可置空                               |
 | query    | query = 病毒      | 可置空                               |
+
+</Route>
 
 ## 码农周刊
 
