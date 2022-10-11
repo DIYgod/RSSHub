@@ -958,15 +958,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 日报
 
-<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 2020 年日报']"/>
+<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 `47327`']" radar="1" rssbud="1"/>
 
-### 近期比赛
+### 比赛列表
 
-<Route author="prnake" example="/luogu/contest" path="/luogu/contest"/>
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest" radar="1" rssbud="1"/>
 
 ### 用户动态
 
-<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']"/>
+<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
 ## 码农俱乐部
 
