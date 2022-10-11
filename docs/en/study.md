@@ -35,15 +35,15 @@ pageClass: routes
 
 </RouteEn>
 
-## LinkResearch
+## Link Research
 
-### theses
+### Theses
 
-<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']">
+<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']" radar="1" rssbud="1">
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
-| category | category=thesis | **one of**，theses/information/careers |
+| category | category=thesis | **one of** theses/information/careers |
 | subject  | subject=生物    | string / undefined                     |
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |

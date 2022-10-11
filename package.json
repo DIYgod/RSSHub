@@ -20,9 +20,16 @@
     "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
-    "jest:coverage": "cross-env NODE_ENV=test jest --coverage --runInBand --forceExit --detectOpenHandles",
+    "jest:coverage": "cross-env NODE_ENV=test jest --coverage --reporters=default --reporters=jest-junit --runInBand --forceExit --detectOpenHandles",
     "jest:watch": "cross-env NODE_ENV=test jest --watch",
     "test": "npm run format:check && npm run jest:coverage"
+  },
+  "reporters": [
+    "default",
+    "jest-junit"
+  ],
+  "jest-junit" : {
+    "outputDirectory": "coverage"
   },
   "repository": {
     "type": "git",
@@ -49,12 +56,13 @@
     "@vuepress/plugin-pwa": "1.9.7",
     "@vuepress/shared-utils": "1.9.7",
     "cross-env": "7.0.3",
-    "eslint": "8.24.0",
+    "eslint": "8.25.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-yml": "1.2.0",
     "fs-extra": "10.1.0",
     "jest": "29.1.2",
+    "jest-junit": "^14.0.1",
     "meilisearch": "0.28.0",
     "mockdate": "3.0.5",
     "nock": "13.2.9",
@@ -83,7 +91,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.2",
-    "@sentry/node": "7.14.2",
+    "@sentry/node": "7.15.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -127,7 +135,7 @@
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.1",
-    "rand-user-agent": "1.0.84",
+    "rand-user-agent": "1.0.85",
     "re2": "1.17.7",
     "require-all": "3.0.0",
     "rss-parser": "3.12.0",
@@ -139,7 +147,7 @@
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.1.2",
     "tunnel": "0.0.6",
-    "twitter-api-v2": "1.12.7",
+    "twitter-api-v2": "1.12.8",
     "winston": "3.8.2",
     "xml2js": "0.4.23"
   },
