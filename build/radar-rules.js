@@ -5672,7 +5672,7 @@
           "/" ],
         target:(params) => `/mpaypass/main/${params.type.replace('.html', '')}` } ] },
   "mtime.com":{ _name:"时光网",
-    news:[ { title:"资讯",
+    news:[ { title:"时光新闻",
         docs:"https://docs.rsshub.app/multimedia.html#shi-guang-wang",
         source:"/",
         target:"/mtime/news" } ] },
