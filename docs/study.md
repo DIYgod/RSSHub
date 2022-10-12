@@ -248,6 +248,18 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 德阳考试中心
+
+### 考试新闻
+
+<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型']">
+
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |   其他  |
+| :--: | :---: | :--: | :---------: | :---: |
+|  all |  gwy  | sydw |     zyzc    | other |
+
+</Route>
+
 ## 东莞教研网
 
 ### 分类
