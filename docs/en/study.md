@@ -39,7 +39,7 @@ pageClass: routes
 
 ### Theses
 
-<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']" radar="1" rssbud="1">
+<RouteEn author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']" radar="1" rssbud="1">
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
@@ -116,7 +116,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']">
+<RouteEn author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']">
 
 | `:type`   | type name |
 | --------- | --------- |
@@ -134,11 +134,11 @@ pageClass: routes
 
 ### depth
 
-<RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+<RouteEn author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
 ### innovation
 
-<RouteEn author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']">
+<RouteEn author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']">
 
 | `:type`       | type name     |
 | ------------- | ------------- |
