@@ -286,9 +286,10 @@ Language
 
 ## Logseq
 
-### Changelog
-
-<RouteEn author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+::: warning
+Logseq dev team has abandoned the [old website](https://logseq.com/blog).
+Please use <https://github.com/logseq/logseq/releases.atom> instead.
+:::
 
 ## MacKed
 
