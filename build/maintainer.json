@@ -2581,22 +2581,22 @@
         "fengkx"
     ],
     "/nature/cover": [
-        "yech1990"
+        "y9c"
     ],
     "/nature/highlight/:journal?/:year?": [
-        "yech1990",
+        "y9c",
         "TonyRL"
     ],
     "/nature/news": [
-        "yech1990",
+        "y9c",
         "TonyRL"
     ],
     "/nature/news-and-comment/:journal?": [
-        "yech1990",
+        "y9c",
         "TonyRL"
     ],
     "/nature/research/:journal?": [
-        "yech1990",
+        "y9c",
         "TonyRL"
     ],
     "/nature/siteindex": [
@@ -3279,15 +3279,15 @@
         "zengxs"
     ],
     "/science/cover": [
-        "yech1990",
+        "y9c",
         "TonyRL"
     ],
     "/science/current/:journal?": [
-        "yech1990",
+        "y9c",
         "TonyRL"
     ],
     "/science/early/:journal?": [
-        "yech1990",
+        "y9c",
         "TonyRL"
     ],
     "/sciencedirect/journal/:id": [
