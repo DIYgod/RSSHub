@@ -16963,6 +16963,12 @@
         "target": "/youtube/channel/:id"
       },
       {
+        "title": "自定义网址",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": "/c/:id",
+        "target": "/youtube/c/:id"
+      },
+      {
         "title": "播放列表",
         "docs": "https://docs.rsshub.app/social-media.html#youtube",
         "source": "/playlist"
