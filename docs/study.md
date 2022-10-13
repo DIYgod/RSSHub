@@ -248,6 +248,18 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 德阳考试中心
+
+### 考试新闻
+
+<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型']">
+
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |   其他  |
+| :--: | :---: | :--: | :---------: | :---: |
+|  all |  gwy  | sydw |     zyzc    | other |
+
+</Route>
+
 ## 东莞教研网
 
 ### 分类
@@ -317,7 +329,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']" radar="1" rssbud="1">
+<Route author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']" radar="1" rssbud="1">
 
 | `:param` | 举例              | 定义                                |
 | -------- | --------------- | --------------------------------- |
@@ -568,7 +580,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 新聞
 
-<Route author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
+<Route author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
 
 | `:type`   | 类别名称 |
 | --------- | ---- |
@@ -584,11 +596,11 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 深度
 
-<Route author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+<Route author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
 ### 创新
 
-<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
+<Route author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
 
 | `:type`       | 类别名称   |
 | ------------- | ------ |
