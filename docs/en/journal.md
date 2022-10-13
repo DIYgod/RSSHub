@@ -77,7 +77,7 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 ### Current Issue
 
-<RouteEn author="yech1990" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
+<RouteEn author="y9c" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1" />
 
 | `:category` |       Query Type        | Route                                                      |
 | :---------: | :---------------------: | ---------------------------------------------------------- |
@@ -88,7 +88,7 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 ### Cover Story
 
-<RouteEn author="yech1990" example="/cell/cover" path="/cell/cover" />
+<RouteEn author="y9c" example="/cell/cover" path="/cell/cover" />
 
 Subscribe to the cover images of the Cell journals, and get the latest publication updates in time.
 
@@ -192,7 +192,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### Latest Research
 
-<RouteEn author="yech1990 TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1"/>
+<RouteEn author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1"/>
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                              |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
@@ -215,7 +215,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### News & Comment
 
-<RouteEn author="yech1990 TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" supportScihub="1" radar="1" rssbud="1"/>
+<RouteEn author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['short name for a journal']" supportScihub="1" radar="1" rssbud="1"/>
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                                                                 |
 | :-----------: | :-------------------------: | --------------------------------------------------------------------------------------------------------------------- |
@@ -235,7 +235,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### Cover Story
 
-<RouteEn author="yech1990" example="/nature/cover" path="/nature/cover" />
+<RouteEn author="y9c" example="/nature/cover" path="/nature/cover" />
 
 Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.
 
@@ -243,11 +243,11 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 ### Nature News
 
-<RouteEn author="yech1990 TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
+<RouteEn author="y9c TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
 
 ### Research Highlight
 
-<RouteEn author="yech1990 TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1">
+<RouteEn author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['short name for a journal, `nature` by default']" supportScihub="1" radar="1" rssbud="1">
 
 ::: warning Warning
 
@@ -288,7 +288,7 @@ Only some journals are supported.
 
 ### Trending articles
 
-<RouteEn author="yech1990 nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" :paramsDesc="['Filters, can be found in URL']" supportScihub="1">
+<RouteEn author="y9c nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" :paramsDesc="['Filters, can be found in URL']" supportScihub="1">
 
 ::: tip Tip
 
@@ -304,7 +304,7 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 ### Current Issue
 
-<RouteEn author="yech1990 TonyRL" example="/science/current/science" path="/science/current/:journal?" :paramsDesc="['Short name for a journal']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+<RouteEn author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal?" :paramsDesc="['Short name for a journal']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
 | Short name |    Full name of the journal    | Route                                                                              |
 | :--------: | :----------------------------: | ---------------------------------------------------------------------------------- |
@@ -322,7 +322,7 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 ### Cover Story
 
-<RouteEn author="yech1990 TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1"/>
+<RouteEn author="y9c TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1"/>
 
 Subscribe to the cover images of Science journals, and get the latest publication updates in time.
 
@@ -332,7 +332,7 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 
 ### First Release
 
-<RouteEn author="yech1990 TonyRL" example="/science/early" path="/science/early/:journal?" :paramsDesc="['Short name for a journal']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+<RouteEn author="y9c TonyRL" example="/science/early" path="/science/early/:journal?" :paramsDesc="['Short name for a journal']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
 *only Science, Science Immunology and Science Translational Medicine have first release*
 
