@@ -111,6 +111,9 @@ jobs:
         run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
         run: npm run docs:build
+      - name: Unset environment variable for Node v18
+        if: ${{ matrix.node-version == '18' }}
+        run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
 
   all:
     runs-on: ubuntu-latest
