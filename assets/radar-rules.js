@@ -309,24 +309,6 @@
         ],
         grs: [{ title: '研究生院通知', docs: 'https://docs.rsshub.app/university.html#yun-nan-da-xue', source: '/*', target: '' }],
     },
-    'kuaidi100.com': {
-        _name: '快递100',
-        '.': [
-            {
-                title: '快递追踪',
-                docs: 'https://docs.rsshub.app/other.html#kuai-di-100',
-                source: '/',
-                target: (params, url, document) => {
-                    const postid = document && document.querySelector('#postid').value;
-                    const com = document && document.querySelector('#selectComBtn').childNodes[1].attributes[1].value;
-                    if (com && com !== 'default' && postid) {
-                        return `/kuaidi100/track/${com}/${postid}`;
-                    }
-                },
-            },
-            { title: '支持的快递公司列表', docs: 'https://docs.rsshub.app/other.html#kuai-di-100', source: '/', target: '/kuaidi100/company' },
-        ],
-    },
     'japanpost.jp': {
         _name: '日本郵便',
         'trackings.post': [
