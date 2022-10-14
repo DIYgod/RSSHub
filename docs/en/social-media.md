@@ -32,7 +32,7 @@ pageClass: routes
 
 ### Page
 
-<RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
+<RouteEn author="maple3142 kennyfong19931" example="/facebook/page/SonetPCR" path="/facebook/page/:id" :paramsDesc="['page id']" anticrawler="1"/>
 
 ## Fur Affinity
 
