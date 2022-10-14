@@ -9493,6 +9493,22 @@
       }
     ]
   },
+  "kuaidi100.com": {
+    "_name": "快递 100",
+    ".": [
+      {
+        "title": "快递订单追踪",
+        "docs": "https://docs.rsshub.app/other.html#kuai-di-100",
+        "source": "/"
+      },
+      {
+        "title": "支持的快递公司列表",
+        "docs": "https://docs.rsshub.app/other.html#kuai-di-100",
+        "source": "/",
+        "target": "/kuaidi100/company"
+      }
+    ]
+  },
   "kuwaitlocal.com": {
     "_name": "Kuwait Local",
     ".": [
@@ -18151,22 +18167,6 @@
         "docs": "https://docs.rsshub.app/university.html#yun-nan-da-xue",
         "source": "/*",
         "target": ""
-      }
-    ]
-  },
-  "kuaidi100.com": {
-    "_name": "快递100",
-    ".": [
-      {
-        "title": "快递追踪",
-        "docs": "https://docs.rsshub.app/other.html#kuai-di-100",
-        "source": "/"
-      },
-      {
-        "title": "支持的快递公司列表",
-        "docs": "https://docs.rsshub.app/other.html#kuai-di-100",
-        "source": "/",
-        "target": "/kuaidi100/company"
       }
     ]
   },

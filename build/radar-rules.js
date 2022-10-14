@@ -5152,6 +5152,21 @@
         source:[ "/",
           "/topics/影音專區" ],
         target:"/knowmedia/yyzq" } ] },
+  "kuaidi100.com":{ _name:"快递 100",
+    ".":[ { title:"快递订单追踪",
+        docs:"https://docs.rsshub.app/other.html#kuai-di-100",
+        source:"/",
+        target:(params, url, document) => {
+                    const postid = document && document.querySelector('#postid').value;
+                    const com = document && document.querySelector('#selectComBtn').childNodes[1].attributes[1].value;
+                    if (com && com !== 'default' && postid) {
+                        return `/kuaidi100/track/${com}/${postid}`;
+                    }
+                } },
+      { title:"支持的快递公司列表",
+        docs:"https://docs.rsshub.app/other.html#kuai-di-100",
+        source:"/",
+        target:"/kuaidi100/company" } ] },
   "kuwaitlocal.com":{ _name:"Kuwait Local",
     ".":[ { title:"Latest News",
         docs:"https://docs.rsshub.app/en/new-media.html#kuwait-local",
@@ -10178,21 +10193,6 @@
         docs:"https://docs.rsshub.app/university.html#yun-nan-da-xue",
         source:"/*",
         target:"" } ] },
-  "kuaidi100.com":{ _name:"快递100",
-    ".":[ { title:"快递追踪",
-        docs:"https://docs.rsshub.app/other.html#kuai-di-100",
-        source:"/",
-        target:(params, url, document) => {
-                    const postid = document && document.querySelector('#postid').value;
-                    const com = document && document.querySelector('#selectComBtn').childNodes[1].attributes[1].value;
-                    if (com && com !== 'default' && postid) {
-                        return `/kuaidi100/track/${com}/${postid}`;
-                    }
-                } },
-      { title:"支持的快递公司列表",
-        docs:"https://docs.rsshub.app/other.html#kuai-di-100",
-        source:"/",
-        target:"/kuaidi100/company" } ] },
   "gongxue.cn":{ _name:"工学网",
     ".":[ { title:"要闻",
         docs:"https://docs.rsshub.app/university.html#ha-er-bin-gong-cheng-da-xue",
