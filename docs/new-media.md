@@ -1359,7 +1359,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### The Verge
 
-<Route author="HenryQW" example="/verge" path="/verge">
+<Route author="HenryQW" example="/theverge" path="/theverge">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
@@ -2947,6 +2947,18 @@ column 为 third 时可选的 category:
 | 公司新闻 | 漏洞披露 | 技术研究     |
 | ---- | ---- | -------- |
 | news | vul  | research |
+
+</Route>
+
+## 貓奴日常
+
+### 分類
+
+<Route author="TonyRL" example="/thecatcity" path="/thecatcity/:term?" :paramsDesc="['見下表，留空為全部文章']" radar="1" rssbud="1">
+
+| 貓物分享 | 貓咪新聞 | 養貓大全 | 貓奴景點 | 新手養貓教學 |
+| ---- | ---- | ---- | ---- | ------ |
+| 1    | 2    | 3    | 4    | 5      |
 
 </Route>
 
