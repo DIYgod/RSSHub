@@ -28,8 +28,9 @@ jobs:
           - 6379/tcp
         options: --entrypoint redis-server
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [ 14, 16 ]
+        node-version: [ 14, 16, 18 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
       - name: Collect Workflow Telemetry
@@ -49,7 +50,7 @@ jobs:
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == '16' }}
+        if: ${{ matrix.node-version == '18' }}
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
@@ -61,14 +62,14 @@ jobs:
           test_format: JUNIT
           test_framework: JEST
           coverage_format: JACOCO/XML
-          coverage_path: ./coverage/junit.xml
+          test_path: ./coverage/junit.xml
 
   puppeteer:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16 ]
+        node-version: [ 14, 16, 18 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
@@ -108,8 +109,9 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [ 14, 16 ]
+        node-version: [ 14, 16, 18 ]
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
@@ -118,14 +120,21 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn
+      - name: Set environment variable for Node v18
+        if: ${{ matrix.node-version == '18' }}
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
         run: npm run docs:build
+      - name: Unset environment variable for Node v18
+        if: ${{ matrix.node-version == '18' }}
+        run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
 
   all:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node-version: [ 14, 16 ]
+        node-version: [ 14, 16, 18 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
