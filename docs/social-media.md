@@ -867,6 +867,10 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:disableEmbed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
 
+### 自定义网址
+
+<Route author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" :paramsDesc="['YouTube 自定义网址', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
+
 ### 播放列表
 
 <Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
