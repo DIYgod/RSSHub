@@ -304,13 +304,32 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="Fatpandac" example="/laohu8/personal/3527667596890271" path="/laohu8/personal/:id" :paramsDesc="['用户 ID，见网址链接']" rssbud="1" radar="1"/>
 
-## 麦肯锡中国
+## 麦肯锡
 
-<Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">
+### 洞见
 
-| 汽车    | 金融服务              | 数字化                 | 消费者       | 医药与医疗                      | 麦肯锡全球研究院                  | 全球基础材料 | 创新         | 宏观经济         | 制造业           | 人才与领导力            | 技术，媒体与通信                     | 城市化与可持续发展                   | 资本项目和基础设施                       | 旅游、运输和物流 |
-| ----- | ----------------- | ------------------- | --------- | -------------------------- | ------------------------- | ------ | ---------- | ------------ | ------------- | ----------------- | ---------------------------- | --------------------------- | ------------------------------- | -------- |
-| autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流  |
+<Route author="laampui" example="/mckinsey/cn" path="/mckinsey/cn/:category?" :paramsDesc="['分类，见下表，默认为全部']" radar="1" rssbud="1">
+
+| 分类 | 分类名       |
+| -- | --------- |
+| 25 | 全部洞见      |
+| 2  | 汽车        |
+| 3  | 金融服务      |
+| 4  | 消费者       |
+| 5  | 医药        |
+| 7  | 数字化       |
+| 8  | 制造业       |
+| 9  | 私募        |
+| 10 | 技术，媒体与通信  |
+| 12 | 城市化与可持续发展 |
+| 13 | 创新        |
+| 16 | 人才与领导力    |
+| 18 | 宏观经济      |
+| 19 | 麦肯锡全球研究院  |
+| 37 | 麦肯锡季刊     |
+| 41 | 资本项目和基础设施 |
+| 42 | 旅游、运输和物流  |
+| 45 | 全球基础材料    |
 
 </Route>
 

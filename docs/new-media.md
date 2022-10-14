@@ -524,6 +524,12 @@ Country
 
 <Route author="nczitzk" example="/disinformationindex/blog" path="/disinformationindex/blog"/>
 
+## Good.news
+
+### 今日要闻
+
+<Route author="nczitzk" example="/good" path="/good" />
+
 ## GQ
 
 ### GQ 台湾

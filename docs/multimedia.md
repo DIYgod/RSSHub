@@ -1469,6 +1469,14 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="nczitzk" example="/qingting/channel/293411" path="/qingting/channel/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']"/>
 
+### 播客
+
+<Route author="RookieZoe huyyi" example="/qingting/podcast/293411" path="/qingting/podcast/:id" :paramsDesc="['专辑id, 可在专辑页 URL 中找到']" radar="1" supportPodcast="1">
+
+获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。
+
+</Route>
+
 ## 秋爸日字
 
 ### 分类
@@ -1543,7 +1551,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## 时光网
 
-### 资讯
+### 时光新闻
 
 <Route author="TsSmartTT" example="/mtime/news" path="/mtime/news" radar="1" rssbud="1"/>
 
