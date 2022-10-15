@@ -34,23 +34,15 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Special Sponsors
 
-<div>
+<p>
 <a href="https://rss3.io/" target="_blank"><img height="60px" src="https://i.imgur.com/vHtI4bz.png"></a>
-</div>
+</p>
 
 <table width="100%">
 <tr>
-<td>
-  <img width="1000" height="0">
-  <a href="https://www.runforesight.com/?utm_source=RSSHub&utm_medium=sponsorship">
-  <img src="https://www.thundra.io/hubfs/RunForesight/GitHub%20Sponsorship%20banners/github-actions-observability.png"
-alt="Foresight" width="260" align="right">
-  </a>
-
-<h3>Foresight: Increase CI/CD Health & Test Performance</h3>
-
-  <p>
-Foresight provides full visibility and deep insights into the health and performance of your tests and CI pipelines. Assess the risk of code changes, deal with flaky tests, see workflow and test trends over time, and improve the contributing experience with Foresight.
+<td><img width="1000" height="0"><a href="https://www.runforesight.com/?utm_source=RSSHub&utm_medium=sponsorship"><img src="https://www.thundra.io/hubfs/RunForesight/GitHub%20Sponsorship%20banners/github-actions-observability.png"
+alt="Foresight" width="260" align="right"></a><h3>Foresight: Increase CI/CD Health & Test Performance</h3><p>
+Foresight provides full visibility and deep insights into the health and performance of your tests and CI pipelines. Assess the risk of code changes, deal with flaky tests, see workflow and test trends over time, and improve the contributing experience with Foresight.</p>
 
 [Sign up now!](https://runforesight.com/?utm_source=RSSHub&utm_medium=sponsorship)
 
