@@ -61,7 +61,6 @@ jobs:
           api_key: ${{ secrets.FORESIGHT_KEY }}
           test_format: JUNIT
           test_framework: JEST
-          coverage_format: JACOCO/XML
           test_path: ./coverage/junit.xml
 
   puppeteer:
