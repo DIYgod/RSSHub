@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3  # just need its cache
         with:
-          node-version: 16
+          node-version: 18
           cache: 'yarn'
       - name: Install dependencies (yarn)  # needed since we need to parse markdown, so we also use got instead
         run: yarn
