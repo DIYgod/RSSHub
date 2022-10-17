@@ -46,7 +46,10 @@ jobs:
       - name: Install dependencies (yarn)
         run: yarn
       - name: Test all and generate coverage
-        run: npm run jest:coverage
+        run: |
+            npm run jest:coverage
+            ls -la
+            ls -la ./coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
@@ -62,6 +65,9 @@ jobs:
           test_format: JUNIT
           test_framework: JEST
           test_path: ./coverage/junit.xml
+          coverage_format: LCOV
+          coverage_path: ./coverage
+
 
   puppeteer:
     runs-on: ubuntu-latest
