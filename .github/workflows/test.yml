@@ -50,6 +50,10 @@ jobs:
             npm run jest:coverage
             ls -la
             ls -la ./coverage
+      - name: List files
+        run: |
+            ls -lR
+            ls -la ./coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
