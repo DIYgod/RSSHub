@@ -1,4 +1,5 @@
 name: test
+
 on:
   push:
     branches-ignore:
@@ -45,8 +46,7 @@ jobs:
       - name: Install dependencies (yarn)
         run: yarn
       - name: Test all and generate coverage
-        run: |
-            npm run jest:coverage
+        run: npm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
