@@ -48,9 +48,8 @@ jobs:
       - name: Test all and generate coverage
         run: |
             npm run jest:coverage
-            ls -la
-            ls -la ./coverage
       - name: List files
+        if: success() || failure()
         run: |
             ls -lR
             ls -la ./coverage
