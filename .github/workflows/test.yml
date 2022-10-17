@@ -63,7 +63,7 @@ jobs:
           test_format: JUNIT
           test_framework: JEST
           test_path: ./coverage/junit.xml
-          coverage_format: LCOV
+          coverage_format: LCOV/TXT
           coverage_path: ./coverage/lcov.info
 
 
