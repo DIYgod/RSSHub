@@ -11336,10 +11336,10 @@ proxy-agent@^4.0.0:
     proxy-from-env "^1.0.0"
     socks-proxy-agent "^5.0.0"
 
-proxy-chain@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/proxy-chain/-/proxy-chain-2.1.0.tgz#aa887029505656c9ff2899197b97f3e6f951e922"
-  integrity sha512-i5JC8YGYpW27eQf4dFoV8N5NsEfqmgG2SOG3csa3lcdCCev4J8LH5UaKej1kXXtDkhaREXKivqw0LOLY21BiEQ==
+proxy-chain@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/proxy-chain/-/proxy-chain-2.1.1.tgz#a29127259aa36d9dbe3b5fe642b091223655a875"
+  integrity sha512-QwE+UnWggX3JNPzUBz2xdUWVNFeSO9d0Y31j7LTQPMProFt9UCQqLvLhik9ZK8aFzaj0VVahjxeQ704aUkvVjQ==
   dependencies:
     tslib "^2.3.1"
 
@@ -11596,10 +11596,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.85:
-  version "1.0.85"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.85.tgz#2ece4741dcfdd97f8febf8f12a9fa00876b50f57"
-  integrity sha512-as+57QQ+vPBizcl5Ij33PZ2AMeqW6xPNogc0oBjwnEKuxJC2Ra9mIbHG5wmvBSBJT+G/Wbbd2j5pw96cTnlejw==
+rand-user-agent@1.0.86:
+  version "1.0.86"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.86.tgz#d91558527504d01768c0ee5701ad9ae43a36447b"
+  integrity sha512-eop+Tqa+XEPeSETqgC8YmwgpmBzBk4ompcKcIyKs6xgMufe9RmTZlm0D1kARjDsd5U/0H9c99zmHkj2SruFT2w==
 
 randexp@0.4.6:
   version "0.4.6"
