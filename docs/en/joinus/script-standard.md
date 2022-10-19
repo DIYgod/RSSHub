@@ -29,7 +29,7 @@ When writing a new route, RSSHub will read the following in a folder :
 ...
 ```
 
-**All eligible routes under `/v2` path will be loaded automatically without the need of updating `router.js`**
+**All eligible routes under `/v2` path will be loaded automatically without the need of updating `lib/router.js`**
 
 ## Route Example
 

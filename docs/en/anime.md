@@ -82,7 +82,6 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 | -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- |
 | `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              |
 
-
 | category name         | 全てのニュース  | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送/配信 | キャスト配信/ラジオ | ライブ/イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
 | -------------- | --------------- | -------- | -------------- | ---------------- | ------- | --------------- | ------------------- | --------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
 | `category`parameter | <u>*No parameter*</u> | music    | anime_movie    | cast_movie       | theater | onair           | radio               | event           | books  | goods  | game   | media    | local      | other  | campaign     |

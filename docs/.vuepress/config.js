@@ -46,6 +46,7 @@ module.exports = {
         anchor: {
             level: 999, // Disable original Plugin
         },
+        lineNumbers: true,
         extendMarkdown: (md) => {
             md.use(require('../.format/md/hierarchySlug'), {
                 slugify(s) {
@@ -82,6 +83,7 @@ module.exports = {
         editLinks: true,
         docsDir: 'docs',
         smoothScroll: true,
+        logo: '/logo.png',
         locales: {
             '/': {
                 lang: 'zh-CN',
@@ -138,6 +140,71 @@ module.exports = {
                 lastUpdated: 'Last Updated',
                 nav: require('./nav/en'),
                 sidebar: {
+                    '/en/joinus/': [
+                        {
+                            title: '🤝 Join Us',
+                            path: '/en/joinus/quick-start.html',
+                            collapsable: false,
+                            sidebarDepth: 1,
+                        },
+                        {
+                            title: '📰 New RSS rules',
+                            path: '/en/joinus/new-rss/prerequisites.html',
+                            collapsable: false,
+                            sidebarDepth: 1,
+                            children: [
+                                {
+                                    title: 'Prerequisites',
+                                    path: 'new-rss/prerequisites',
+                                },
+                                {
+                                    title: 'Just before you start',
+                                    path: 'new-rss/before-start',
+                                },
+                                {
+                                    title: 'Create your own RSSHub route',
+                                    path: 'new-rss/start-code',
+                                },
+                            ],
+                        },
+                        {
+                            title: '📡 New Radar rules',
+                            path: '/en/joinus/new-radar.html',
+                            collapsable: false,
+                            sidebarDepth: 1,
+                            children: [
+                                {
+                                    title: '📰 New RSS rules',
+                                },
+                                {
+                                    title: '📡 New RSSHub Radar rules',
+                                },
+                                {
+                                    title: '🦾 Advanced',
+                                },
+                            ],
+                        },
+                        {
+                            title: '🦾 Advanced',
+                            // path: '/en/joinus/quick-start.html',
+                            collapsable: false,
+                            sidebarDepth: 1,
+                            children: [
+                                {
+                                    title: '⚖️ Script Standard',
+                                    path: 'script-standard',
+                                },
+                                {
+                                    title: '💾 Caching',
+                                    path: 'use-cache',
+                                },
+                                {
+                                    title: '📅 Date Handling',
+                                    path: 'pub-date'
+                                },
+                            ],
+                        },
+                    ],
                     '/en/': [
                         {
                             title: 'Guide',
