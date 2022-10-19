@@ -602,7 +602,7 @@ R18 显示
 
 ### 频道
 
-<Route author="Fatpandac" example="/qipamaijia/fuli" path="/qipamaijia/:cate?" :paramsDesc="['频道名，可在对应网址中找到，默认为最新']" radar="1" rssbud="1"/>
+<Route author="Fatpandac nczitzk" example="/qipamaijia/fuli" path="/qipamaijia/:cate?" :paramsDesc="['频道名，可在对应网址中找到，默认为最新']" radar="1" rssbud="1"/>
 
 ## 涂鸦王国
 

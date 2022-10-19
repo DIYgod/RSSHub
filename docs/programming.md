@@ -954,19 +954,70 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 `id` 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
 
+## 连享会
+
+### 精彩资讯
+
+<Route author="nczitzk" example="/lianxh" path="/lianxh/:category?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为空，即全部']">
+
+| 分类              | id |
+| --------------- | -- |
+| 全部              |    |
+| Stata 入门        | 16 |
+| Stata 教程        | 17 |
+| 计量专题            | 18 |
+| 内生性 - 因果推断      | 19 |
+| 面板数据            | 20 |
+| 交乘项 - 调节 - 中介   | 21 |
+| 结果输出            | 22 |
+| 工具软件            | 23 |
+| Stata 绘图        | 24 |
+| 数据处理            | 25 |
+| Stata 程序        | 26 |
+| Probit-Logit    | 27 |
+| 时间序列            | 28 |
+| 空间计量 - 网络分析     | 29 |
+| Markdown-LaTeX  | 30 |
+| 论文写作            | 31 |
+| 回归分析            | 32 |
+| 其它              | 33 |
+| 数据分享            | 34 |
+| Stata 资源        | 35 |
+| 文本分析 - 爬虫       | 36 |
+| Python-R-Matlab | 37 |
+| IV-GMM          | 38 |
+| 倍分法 DID         | 39 |
+| 断点回归 RDD        | 40 |
+| PSM-Matching    | 41 |
+| 合成控制法           | 42 |
+| Stata 命令        | 43 |
+| 专题课程            | 44 |
+| 风险管理            | 45 |
+| 生存分析            | 46 |
+| 机器学习            | 47 |
+| 分位数回归           | 48 |
+| SFA-DEA - 效率分析  | 49 |
+| 答疑 - 板书         | 50 |
+| 论文重现            | 51 |
+| 最新课程            | 52 |
+| 公开课             | 53 |
+| Stata33 讲       | 54 |
+
+</Route>
+
 ## 洛谷
 
 ### 日报
 
-<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 2020 年日报']"/>
+<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 `47327`']" radar="1" rssbud="1"/>
 
-### 近期比赛
+### 比赛列表
 
-<Route author="prnake" example="/luogu/contest" path="/luogu/contest"/>
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest" radar="1" rssbud="1"/>
 
 ### 用户动态
 
-<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']"/>
+<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
 ## 码农俱乐部
 
@@ -1176,11 +1227,11 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 印记中文周刊
+## 印记中文
 
-### 最新一期
+### 周刊 - JavaScript
 
-<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly"/>
+<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" rssbud="1"/>
 
 ## 政采云前端技术团队
 

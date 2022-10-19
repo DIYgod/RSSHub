@@ -68,7 +68,7 @@ jobs:
       - uses: actions/setup-node@v3  # just need its cache
         if: (env.TEST_CONTINUE)
         with:
-          node-version: 16
+          node-version: 18
           cache: 'yarn'
 
       - name: Install dependencies (yarn)  # `got` needed since `github.request` disallows HTTP requests
