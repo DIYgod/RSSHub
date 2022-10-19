@@ -285,7 +285,7 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 ### News
 
-<RouteEn author="thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" :paramsDesc="['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']" radar="1">
+<RouteEn author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" :paramsDesc="['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']" radar="1">
 
 Provides a way to get an specific rss feed by date and category over the official one.
 
