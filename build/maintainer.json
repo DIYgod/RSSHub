@@ -2252,6 +2252,9 @@
     "/jisilu/:category?/:sort?/:day?": [
         "nczitzk"
     ],
+    "/jornada/:date?/:category?": [
+        "Thealf154"
+    ],
     "/jseea/news/:type?": [
         "schen1024"
     ],
