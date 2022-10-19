@@ -3323,6 +3323,9 @@
         "Derekmini",
         "auto-bot-ty"
     ],
+    "/scmp/:category_id": [
+        "proletarius101"
+    ],
     "/scvtc/xygg": [
         "nczitzk"
     ],
@@ -5448,7 +5451,6 @@
     "/boston/:tag?": [],
     "/changku": [],
     "/changku/cate/:postid": [],
-    "/scmp/:category_id": [],
     "/gov/shanghai/sthj": [],
     "/91ddcc/user/:user": [],
     "/91ddcc/stage/:stage": [],
