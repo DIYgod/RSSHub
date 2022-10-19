@@ -281,6 +281,30 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 </RouteEn>
 
+## La Jornada
+
+### News
+
+<RouteEn author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" :paramsDesc="['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']" radar="1">
+
+Provides a way to get an specific rss feed by date and category over the official one.
+
+| Category               | `:category`|
+|------------------------|------------|
+| Capital                | capital    |
+| Cartones               | cartones   |
+| Ciencia y Tecnología   | ciencia    |
+| Cultura                | cultura    |
+| Deportes               | deportes   |
+| Economía               | economia   |
+| Estados                | estados    |
+| Mundo                  | mundo      |
+| Opinión                | opinion    |
+| Política               | politica   |
+| Sociedad               | sociedad   |
+
+</RouteEn>
+
 ## Ming Pao
 
 ### Ming Pao Daily
