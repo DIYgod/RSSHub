@@ -6,7 +6,6 @@ WORKDIR /app
 
 # place ARG statement before RUN statement which need it to avoid cache miss
 ARG USE_CHINA_NPM_REGISTRY=0
-ARG TARGETPLATFORM
 RUN \
     set -ex && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
@@ -17,15 +16,6 @@ RUN \
 
 COPY ./yarn.lock /app/
 COPY ./package.json /app/
-
-# required for building canvas in arm64 and arm/v7 (introduce in #10954)
-RUN \
-    set -ex && \
-    if [ "$TARGETPLATFORM" != "linux/amd64" ]; then \
-        apt-get update && \
-        apt-get install -yq --no-install-recommends \
-            libpango1.0-dev ; \
-    fi;
 
 # lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
 RUN \
@@ -108,7 +98,7 @@ RUN \
         yarn add puppeteer@$(cat /app/.puppeteer_version) && \
         yarn cache clean ; \
     else \
-        mkdir -p /app/node_modules/puppeteer ; \
+        mkdir -p /root/.cache/puppeteer ; \
     fi;
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -153,14 +143,14 @@ RUN \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=chromium-downloader /app/node_modules/puppeteer /app/node_modules/puppeteer
+COPY --from=chromium-downloader /root/.cache/puppeteer /root/.cache/puppeteer
 
 # if grep matches nothing then it will exit with 1, thus, we cannot `set -e` here
 RUN \
     set -x && \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
-        ldd $(find /app/node_modules/puppeteer/ -name chrome) | grep "not found" ; \
+        ldd $(find /root/.cache/puppeteer/ -name chrome) | grep "not found" ; \
         if [ "$?" = 0 ]; then \
             echo "!!! Chromium has unmet shared libs !!!" && \
             exit 1 ; \
