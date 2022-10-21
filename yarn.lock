@@ -1911,6 +1911,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.0.tgz#f38c7139247a1d619f6cc6f27b072606af7c289d"
   integrity sha512-IOXCvVRToe7e0ny7HpT/X9Rb2RYtElG1a+VshjwT00HxrM2dWBApHQoqsI6WiY7Q03vdf2bCrIGzVrkF/5t10w==
 
+"@types/parse-json@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
+  integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
 "@types/prettier@^2.1.5":
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.7.1.tgz#dfd20e2dc35f027cdd6c1908e80a5ddc7499670e"
@@ -4286,6 +4291,17 @@ core-util-is@~1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.3.tgz#a6042d3634c2b27e9328f837b965fac83808db85"
   integrity sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
+
+cosmiconfig@7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-7.0.1.tgz#714d756522cace867867ccb4474c5d01bbae5d6d"
+  integrity sha512-a1YWNUV2HwGimB7dU2s1wUMurNKjpx60HxBB6xUM8Re+2s1g1IIfJvFR0/iCF+XHdE0GMTKTuLR32UQff4TEyQ==
+  dependencies:
+    "@types/parse-json" "^4.0.0"
+    import-fresh "^3.2.1"
+    parse-json "^5.0.0"
+    path-type "^4.0.0"
+    yaml "^1.10.0"
 
 cosmiconfig@^5.0.0:
   version "5.2.1"
@@ -10586,7 +10602,7 @@ parse-json@^4.0.0:
     error-ex "^1.3.1"
     json-parse-better-errors "^1.0.1"
 
-parse-json@^5.2.0:
+parse-json@^5.0.0, parse-json@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/parse-json/-/parse-json-5.2.0.tgz#c76fc66dee54231c962b22bcc8a72cf2f99753cd"
   integrity sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==
@@ -11427,10 +11443,10 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@19.0.0:
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.0.0.tgz#8d0198550e04c7d5e0847200ba257b2a777dbd3b"
-  integrity sha512-OljQ9W5M4cBX68vnOAGbcRkVENDHn6lfj6QYoGsnLQsxPAh6ExTQAhHauwdFdQkhYdDExZFWlKArnBONzeHY+g==
+puppeteer-core@19.1.0:
+  version "19.1.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.1.0.tgz#783153a553e2ad7d9fb9e4ff480fb37c64abf5aa"
+  integrity sha512-xIIJJuvqWbUwNzaB7l0TyChJYHdLvLhcHQiBLLKsMfvaQXnVa0Fzooq3Zb5bc01Q/b7XiP9pqDvUcYWSmzZQHA==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
@@ -11490,15 +11506,16 @@ puppeteer-extra@3.3.4:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@19.0.0:
-  version "19.0.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.0.0.tgz#848986e6ecec37b19cd5a7327ad2fcf1f1cb83fd"
-  integrity sha512-3Ga5IVerQQ2hKU9q7T28RmcUsd8F2kL6cYuPcPCzeclSjmHhGydPBZL/KJKC02sG6J6Wfry85uiWpbkjQ5qBiw==
+puppeteer@19.1.0:
+  version "19.1.0"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.1.0.tgz#96999e2adb3f6435fa01fd563665bd9dff375d49"
+  integrity sha512-UyJ5gz5JNjuFo6VJzIf+qDNjbSWGSoAMLuW990eErcrH6sZP85EbpLi6yG50euTMudxO/lsj4w1VNDNogHv6dA==
   dependencies:
+    cosmiconfig "7.0.1"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.0.0"
+    puppeteer-core "19.1.0"
 
 q@^1.1.2:
   version "1.5.1"
@@ -14731,6 +14748,11 @@ yaml-eslint-parser@^1.1.0:
     eslint-visitor-keys "^3.0.0"
     lodash "^4.17.21"
     yaml "^2.0.0"
+
+yaml@^1.10.0:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
+  integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
 yaml@^2.0.0:
   version "2.1.3"
