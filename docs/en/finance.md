@@ -7,7 +7,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:category?" :paramsDesc="['Site, see below, News by default']">
+<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:category?" :paramsDesc="['Site, see below, News by default']" anticrawler="1">
 | Site | Blog |
 | ---- | ---- |
 | / | News |
