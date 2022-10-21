@@ -4603,7 +4603,6 @@
     "/novel/uukanshu/:uid": [],
     "/novel/wenxuemi/:id1/:id2": [],
     "/novel/booksky/:id": [],
-    "/novel/shuquge/:id": [],
     "/novel/ptwxz/:id1/:id2": [],
     "/novel/zhaishuyuan/:id": [],
     "/weatheralarm/:province?": [],
