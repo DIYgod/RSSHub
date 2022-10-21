@@ -1,0 +1,10 @@
+<figure>
+    <img src="{{ image.src }}" alt="{{ image.alt }}">
+    {{if image.caption}}
+    <figcaption>
+        <div class="caption">"{{ image.caption }}"</div>
+        <div class="credit">"{{ image.credit }}"</div>
+    </figcaption>
+    {{/if}}
+</figure>
+
