@@ -3,6 +3,26 @@ pageClass: routes
 ---
 
 # Finance
+## Bloomberg
+
+### News
+
+<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:category?" :paramsDesc="['Site, see below, News by default']">
+| Site | Blog |
+| ---- | ---- |
+| / | News |
+| bpol | Politics |
+| bbiz | Business |
+| markets | Markets |
+| technology | Technology |
+| green | Green |
+| wealth | Wealth |
+| pursuits | Pursuits |
+| bview | Opinion |
+| equality | Equality |
+| businessweek | Businessweek |
+| citylab | CityLab |
+</RouteEn>
 
 ## CFD
 
