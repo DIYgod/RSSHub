@@ -19,7 +19,7 @@
   </video>
     {{if caption}}
     <figcaption>
-        <div class="caption">{{ caption }}</div>
+        <div class="caption">{{@ caption }}</div>
     </figcaption>
     {{/if}}
 </figure>
