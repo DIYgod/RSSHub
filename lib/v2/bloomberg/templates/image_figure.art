@@ -1,10 +1,9 @@
 <figure>
-    <img src="{{ image.src }}" alt="{{ image.alt }}">
+    <img src="{{ image.src }}" alt="{{ image.alt }}" loading="lazy" style="display:block; margin-left:auto; margin-right:auto;" width:100%;>
     {{if image.caption}}
     <figcaption>
-        <div class="caption">"{{ image.caption }}"</div>
-        <div class="credit">"{{ image.credit }}"</div>
+        <div class="caption">{{ image.caption }}</div>
+        <div class="credit">{{ image.credit }}</div>
     </figcaption>
     {{/if}}
 </figure>
-

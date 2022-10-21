@@ -1,0 +1,38 @@
+{{if (media.kind =='image') }}
+<figure>
+    <img src="{{ media.src }}" alt="{{ media.description }}" loading="lazy" style="display:block; margin-left:auto; margin-right:auto;" width:100%;>
+    {{if media.caption}}
+    <figcaption>
+        <div class="caption">{{ media.caption }}</div>
+        <div class="credit">{{ media.credit }}</div>
+    </figcaption>
+    {{/if}}
+</figure>
+{{/if}}
+{{if (media.kind =='video') }}
+<figure>
+    <video controls
+        playsinline="true"
+        webkit-playsinline="true"
+        x5-playsinline="true"
+        x5-video-player-type="h5"
+        x5-video-orientation="landscape|portrait"
+        x5-video-player-fullscreen="true"
+        x-webkit-airplay="allow"
+        preload="metadata"
+        poster="{{ media.video.poster }}">
+            {{if media.video.stream }}
+            <source src="{{ media.video.stream }}" type="application/x-mpegURL">
+            {{/if}}
+            {{if media.video.mp4 }}
+            <source src="{{ media.video.mp4 }}" type="video/mp4"/>
+            {{/if}}
+
+  </video>
+    {{if media.video.caption}}
+    <figcaption>
+        <div class="caption">{{ media.caption }}</div>
+    </figcaption>
+    {{/if}}
+</figure>
+{{/if}}
