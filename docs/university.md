@@ -1993,7 +1993,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 官网通知公告
 
-<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" />
+<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" radar="1"/>
 
 ## 南京信息工程大学
 
