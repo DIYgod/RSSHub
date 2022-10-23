@@ -3431,7 +3431,8 @@
         "LogicJake"
     ],
     "/smzdm/keyword/:keyword": [
-        "DIYgod"
+        "DIYgod",
+        "MeanZhang"
     ],
     "/smzdm/ranking/:rank_type/:rank_id/:hour": [
         "DIYgod"
